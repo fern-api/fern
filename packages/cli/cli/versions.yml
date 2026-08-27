@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.108.0
+  changelogEntry:
+    - summary: |
+        Send generator-compatible Fern runtime bundles with sdk-gen-api build requests.
+      type: internal
+  createdAt: "2026-08-27"
+  irVersion: 67
 - version: 5.107.0
   changelogEntry:
     - summary: |

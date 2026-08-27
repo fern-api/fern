@@ -110,6 +110,7 @@ describe("runPipeline", () => {
         apiDisplayName: overrides.apiDisplayName,
         auth: overrides.auth ?? { schemes: [] },
         globalParameters: overrides.globalParameters ?? [],
+        headers: overrides.headers ?? [],
         services: overrides.services ?? {},
         environments: overrides.environments,
         whiteLabel: overrides.whiteLabel ?? false

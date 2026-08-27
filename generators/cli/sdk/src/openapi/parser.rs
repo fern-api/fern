@@ -451,6 +451,28 @@ struct OpenApiServer {
     /// doc-comment on `x_fern_server_name` for the precedence citation.
     #[serde(default, rename = "x-name")]
     x_name: Option<String>,
+    /// Fern's `x-fern-default-url` extension: the concrete URL to use when
+    /// the caller supplies no value for any of the server's template
+    /// variables. Without it, a templated server falls back to
+    /// substituting each variable's `default`.
+    #[serde(default, rename = "x-fern-default-url")]
+    x_fern_default_url: Option<String>,
+    /// OpenAPI `variables:` block. A `BTreeMap` so the lowered order is
+    /// deterministic (flag registration and `--help` rows are derived
+    /// from it).
+    #[serde(default)]
+    variables: std::collections::BTreeMap<String, OpenApiServerVariable>,
+}
+
+/// One entry of a server's OpenAPI `variables:` block.
+#[derive(Debug, Deserialize)]
+struct OpenApiServerVariable {
+    #[serde(default)]
+    default: Option<String>,
+    #[serde(default)]
+    description: Option<String>,
+    #[serde(default, rename = "enum")]
+    enum_values: Vec<String>,
 }
 
 impl OpenApiServer {
@@ -482,6 +504,17 @@ impl OpenApiServer {
             url: self.url.clone(),
             name: self.resolved_name(),
             description: self.description.clone(),
+            default_url: self.x_fern_default_url.clone(),
+            variables: self
+                .variables
+                .iter()
+                .map(|(name, var)| crate::openapi::discovery::ServerVariable {
+                    name: name.clone(),
+                    default: var.default.clone(),
+                    description: var.description.clone(),
+                    enum_values: var.enum_values.clone(),
+                })
+                .collect(),
         }
     }
 }
