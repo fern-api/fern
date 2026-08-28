@@ -905,10 +905,13 @@ async fn run_case(id: &str) {
         .register_as_scoped(mock.respond_with(template).expect(1).named(format!("case {id}")))
         .await;
 
+    // \`--no-pager\` is deliberately not passed: it is only registered on
+    // operations the spec describes pagination for, so a non-paginated command
+    // rejects it as an unknown argument. The harness captures stdout anyway, so
+    // the pager never spawns.
     let mut args: Vec<String> = command.chain.clone();
     args.push("--base-url".to_string());
     args.push(server.uri());
-    args.push("--no-pager".to_string());
     if !case.params.is_empty() {
         // The CLI reads path params off the baked spec by their wire name, which
         // can differ from the manifest's (IR-renamed) name — remap those keys so

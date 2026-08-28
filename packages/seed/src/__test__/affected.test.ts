@@ -45,7 +45,8 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("swift-sdk"),
     createGenerator("rust-sdk"),
     createGenerator("rust-model"),
-    createGenerator("openapi")
+    createGenerator("openapi"),
+    createGenerator("cli")
 ];
 
 // Standard set of fixtures
@@ -130,6 +131,16 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).not.toContain("csharp-sdk");
             expect(result.affectedGenerators).not.toContain("csharp-model");
+        });
+
+        it("detects cli generator source changes", () => {
+            const result = detectAffected(
+                ["generators/cli/src/wireTests/harness.ts", "generators/cli/sdk/src/openapi/commands.rs"],
+                ALL_GENERATORS
+            );
+
+            expect(result.affectedGenerators).toContain("cli");
+            expect(result.generatorsWithAllFixtures).toContain("cli");
         });
 
         it("does not ignore non-changelog /changes/ paths under generator source", () => {

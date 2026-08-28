@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated wire tests no longer pass `--no-pager`. The flag is only registered on
+    operations whose spec describes pagination, so every wire test against a
+    non-paginated operation failed argument parsing (`unexpected argument '--no-pager'
+    found`) before a request was ever sent. The harness captures stdout, so the pager
+    could never have spawned anyway.
+  type: fix
