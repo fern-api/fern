@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A schema that declares `properties` alongside an `anyOf` whose branches only
+    re-declare some of those same properties as required is now converted as the
+    object it declares, rather than as an undiscriminated union. Per JSON Schema
+    such an `anyOf` is an "at least one of" constraint over sibling properties,
+    not a set of variants, so converting it to a union discarded the declared
+    `properties` and made the fields mutually exclusive -- a request body setting
+    two of them silently sent only one.
+
+    A branch that introduces a property, or that is a reference, is still a real
+    variant and continues to produce a union. Set the new
+    `preserve-any-of-as-union` setting to restore the previous behavior.
+  type: fix

@@ -54,6 +54,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     typeDatesAsStrings: "typeDatesAsStrings",
     preserveSingleSchemaOneOf: "preserveSingleSchemaOneOf",
     preserveOneOfInAllOf: "preserveOneOfInAllOf",
+    preserveAnyOfAsUnion: "preserveAnyOfAsUnion",
     inlineAllOfSchemas: "inlineAllOfSchemas",
     resolveAliases: "resolveAliases",
     groupMultiApiEnvironments: "groupMultiApiEnvironments",

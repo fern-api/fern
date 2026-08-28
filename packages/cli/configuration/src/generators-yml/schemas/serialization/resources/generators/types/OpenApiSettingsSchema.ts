@@ -31,6 +31,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "type-dates-as-strings": core.serialization.boolean().optional(),
         "preserve-single-schema-oneof": core.serialization.boolean().optional(),
         "preserve-one-of-in-all-of": core.serialization.boolean().optional(),
+        "preserve-any-of-as-union": core.serialization.boolean().optional(),
         "inline-all-of-schemas": core.serialization.boolean().optional(),
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
@@ -61,6 +62,7 @@ export declare namespace OpenApiSettingsSchema {
         "type-dates-as-strings"?: boolean | null;
         "preserve-single-schema-oneof"?: boolean | null;
         "preserve-one-of-in-all-of"?: boolean | null;
+        "preserve-any-of-as-union"?: boolean | null;
         "inline-all-of-schemas"?: boolean | null;
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;

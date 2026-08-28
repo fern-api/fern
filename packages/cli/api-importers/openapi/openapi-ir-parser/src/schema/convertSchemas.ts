@@ -1197,6 +1197,30 @@ export function convertSchemaObject(
 
         // treat anyOf as undiscriminated unions
         if (schema.anyOf != null && schema.anyOf.length > 0) {
+            // An anyOf whose branches only re-declare sibling properties as required is
+            // an "at least one of" constraint, not a set of variants. Convert the schema
+            // as the object it declares so a body carrying several of those properties
+            // keeps all of them. See anyOfIsAtLeastOneOfConstraint.
+            if (!context.options.preserveAnyOfAsUnion && anyOfIsAtLeastOneOfConstraint(schema)) {
+                context.logger.warn(
+                    `Treating the anyOf at ${breadcrumbs.join(".")} as an "at least one of" constraint over its ` +
+                        `sibling properties rather than a union, and converting the schema as an object. ` +
+                        `Set the preserve-any-of-as-union setting to restore the previous behavior.`
+                );
+                const { anyOf: _constraint, ...schemaWithoutAnyOf } = schema;
+                const convertedSchema = convertSchema(
+                    schemaWithoutAnyOf,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    source,
+                    namespace,
+                    referencedAsRequest
+                );
+                return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
+            }
+
             if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
                 const convertedSchema = convertSchema(
                     schema.anyOf[0],
@@ -2055,4 +2079,66 @@ function getEncoding({
         return undefined;
     }
     return convertEncoding(encoding);
+}
+
+
+/**
+ * Detects an `anyOf` that constrains its own sibling `properties` rather than
+ * introducing variants:
+ *
+ *     type: object
+ *     properties: { a: {...}, b: {...} }
+ *     anyOf:
+ *       - { properties: { a: {...} }, required: [a] }
+ *       - { properties: { b: {...} }, required: [b] }
+ *
+ * Per JSON Schema an instance must satisfy `properties` *and* at least one `anyOf`
+ * branch, so this spells "at least one of a, b" over an object that may carry
+ * both. Converting it as an undiscriminated union drops the sibling `properties`
+ * and makes the branches mutually exclusive, so a body with both `a` and `b`
+ * silently loses one.
+ *
+ * Only inline object branches whose properties and required entries are all drawn
+ * from the sibling `properties` qualify. A branch that introduces a property, or
+ * that is a reference or carries any other shape keyword, is a real variant.
+ *
+ * The "at least one" requirement itself is not expressible in the IR and is not
+ * enforced; the properties are emitted as declared.
+ */
+function anyOfIsAtLeastOneOfConstraint(schema: OpenAPIV3.SchemaObject): boolean {
+    const anyOf = schema.anyOf;
+    if (anyOf == null || anyOf.length === 0 || schema.oneOf != null || schema.allOf != null) {
+        return false;
+    }
+    const siblingProperties = schema.properties;
+    if (siblingProperties == null || Object.keys(siblingProperties).length === 0) {
+        return false;
+    }
+    const siblingPropertyNames = new Set(Object.keys(siblingProperties));
+
+    for (const branch of anyOf) {
+        if (branch == null || isReferenceObject(branch)) {
+            return false;
+        }
+        if (
+            branch.allOf != null ||
+            branch.oneOf != null ||
+            branch.anyOf != null ||
+            branch.additionalProperties != null ||
+            (branch.type != null && (branch.type as string) !== "object")
+        ) {
+            return false;
+        }
+        const branchPropertyNames = Object.keys(branch.properties ?? {});
+        const branchRequired = branch.required ?? [];
+        if (branchPropertyNames.length === 0 && branchRequired.length === 0) {
+            return false;
+        }
+        for (const name of [...branchPropertyNames, ...branchRequired]) {
+            if (!siblingPropertyNames.has(name)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

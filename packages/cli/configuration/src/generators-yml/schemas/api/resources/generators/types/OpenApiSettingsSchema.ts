@@ -48,6 +48,7 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "preserve-one-of-in-all-of"?: boolean;
+    "preserve-any-of-as-union"?: boolean;
     /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.

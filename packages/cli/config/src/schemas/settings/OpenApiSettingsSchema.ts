@@ -73,6 +73,15 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     preserveOneOfInAllOf: z.boolean().optional(),
 
     /**
+     * When a schema declares `properties` alongside an `anyOf` that only marks
+     * some of those same properties required, the `anyOf` is a constraint rather
+     * than a set of variants and the schema is converted as an object. Set to true
+     * to restore the previous union conversion, which drops the sibling
+     * `properties`. Defaults to false.
+     */
+    preserveAnyOfAsUnion: z.boolean().optional(),
+
+    /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
      */

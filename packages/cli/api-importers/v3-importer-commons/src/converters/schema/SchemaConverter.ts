@@ -114,6 +114,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedTypeArraySchema;
         }
 
+        const maybeConvertedSiblingAnyOfConstraint = this.tryConvertSiblingAnyOfConstraint();
+        if (maybeConvertedSiblingAnyOfConstraint != null) {
+            return maybeConvertedSiblingAnyOfConstraint;
+        }
+
         const maybeConvertedOneOfAnyOfSchema = this.tryConvertOneOfAnyOfSchema();
         if (maybeConvertedOneOfAnyOfSchema != null) {
             return maybeConvertedOneOfAnyOfSchema;
@@ -537,6 +542,92 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return this.convert();
         }
         return undefined;
+    }
+
+    /**
+     * A schema may declare `properties` alongside an `anyOf` whose branches only
+     * re-declare some of those same properties as required, for example:
+     *
+     *     type: object
+     *     properties: { a: {...}, b: {...} }
+     *     anyOf:
+     *       - { properties: { a: {...} }, required: [a] }
+     *       - { properties: { b: {...} }, required: [b] }
+     *
+     * Per JSON Schema an instance must satisfy both keywords, so the `anyOf` here
+     * is a validation constraint -- "at least one of a, b" -- and not a set of
+     * variants. Converting it as a union discards the sibling `properties`
+     * entirely and makes the variants mutually exclusive, so a body carrying both
+     * `a` and `b` silently loses one on the wire.
+     *
+     * Drop the `anyOf` and convert the schema as the object it declares. The "at
+     * least one" constraint is not expressible in the IR and is not enforced.
+     *
+     * This only applies when every branch is an inline object whose properties are
+     * a subset of the sibling `properties`. A branch that introduces a property,
+     * or is a reference, is a genuine variant and is left to the union converter.
+     */
+    private tryConvertSiblingAnyOfConstraint(): SchemaConverter.Output | undefined {
+        if (this.context.settings.preserveAnyOfAsUnion) {
+            return undefined;
+        }
+        const anyOf = this.schema.anyOf;
+        // A oneOf alongside the anyOf is a real union; leave it alone.
+        if (!Array.isArray(anyOf) || anyOf.length === 0 || this.schema.oneOf != null) {
+            return undefined;
+        }
+        const siblingProperties = this.schema.properties;
+        if (siblingProperties == null || Object.keys(siblingProperties).length === 0) {
+            return undefined;
+        }
+        const siblingPropertyNames = new Set(Object.keys(siblingProperties));
+
+        for (const branch of anyOf) {
+            if (branch == null || typeof branch !== "object" || "$ref" in branch) {
+                return undefined;
+            }
+            const branchSchema = branch as OpenAPIV3_1.SchemaObject;
+            // Anything that carries shape beyond naming existing properties makes
+            // this a variant rather than a constraint.
+            if (
+                branchSchema.allOf != null ||
+                branchSchema.oneOf != null ||
+                branchSchema.anyOf != null ||
+                branchSchema.additionalProperties != null ||
+                (branchSchema.type != null && branchSchema.type !== "object")
+            ) {
+                return undefined;
+            }
+            const branchPropertyNames = Object.keys(branchSchema.properties ?? {});
+            const branchRequired = branchSchema.required ?? [];
+            if (branchPropertyNames.length === 0 && branchRequired.length === 0) {
+                return undefined;
+            }
+            for (const name of [...branchPropertyNames, ...branchRequired]) {
+                if (!siblingPropertyNames.has(name)) {
+                    return undefined;
+                }
+            }
+        }
+
+        this.context.logger.warn(
+            `Treating the anyOf at ${this.breadcrumbs.join(".")} as an "at least one of" constraint ` +
+                `over its sibling properties rather than a union, and converting the schema as an object. ` +
+                `Set the preserve-any-of-as-union setting to restore the previous behavior.`
+        );
+
+        // Convert a copy rather than mutating this.schema: the schema object belongs
+        // to the spec document and may be reached again through a $ref.
+        const { anyOf: _constraint, ...schemaWithoutAnyOf } = this.schema;
+        return new SchemaConverter({
+            id: this.id,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: schemaWithoutAnyOf,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        }).convert();
     }
 
     private tryConvertOneOfAnyOfSchema(): SchemaConverter.Output | undefined {
