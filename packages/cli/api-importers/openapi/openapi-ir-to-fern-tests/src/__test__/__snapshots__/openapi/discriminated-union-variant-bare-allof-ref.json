@@ -1,0 +1,209 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "err",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "string",
+                  "type": "WithProps",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "BaseError",
+          },
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getThing": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "BadRequestError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "nullableError": {
+                        "detail": "detail",
+                        "message": "nullableError",
+                        "type": "WithProps",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/thing",
+              "response": {
+                "docs": "ok",
+                "status-code": 200,
+                "type": "Holder",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "BareRef": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "BaseError": {
+            "availability": undefined,
+            "base-properties": {
+              "message": "string",
+            },
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "BareRef": "BareRef",
+              "EmptyObj": "EmptyObj",
+              "WithProps": "WithProps",
+            },
+          },
+          "EmptyObj": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Holder": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "nullableError": "nullable<BaseError>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WithProps": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "detail": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: BaseError
+    docs: err
+    examples:
+      - value:
+          type: WithProps
+          message: string
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getThing:
+      path: /thing
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: ok
+        type: Holder
+        status-code: 200
+      errors:
+        - BadRequestError
+      examples:
+        - response:
+            body:
+              nullableError:
+                detail: detail
+                type: WithProps
+                message: nullableError
+  source:
+    openapi: ../openapi.yml
+types:
+  BaseError:
+    discriminant:
+      value: type
+      context: data
+    base-properties:
+      message: string
+    union:
+      WithProps: WithProps
+      EmptyObj: EmptyObj
+      BareRef: BareRef
+    source:
+      openapi: ../openapi.yml
+  WithProps:
+    properties:
+      detail: optional<string>
+    source:
+      openapi: ../openapi.yml
+  EmptyObj:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+  BareRef:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+  Holder:
+    properties:
+      nullableError: nullable<BaseError>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminated union variants declared as a bare allOf reference",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminated union variants declared as a bare allOf reference
+",
+  },
+  "specVersion": "1.0.0",
+}
