@@ -2498,6 +2498,25 @@ fn convert_parameter(
         None
     };
 
+    // Element enum, resolved from the same element schema as `item_type`. An
+    // array parameter's own `enum_values` is empty (the enum lives on the
+    // items), so without this the flag was unconstrained: `--event-types
+    // bogus` was accepted and sent, while the scalar `--direction bogus` was
+    // correctly rejected. Enforced in the executor rather than by a clap
+    // `value_parser` — see `MethodParameter::item_enum_values`.
+    let item_enum_values = if repeated {
+        match resolved_ref {
+            Some(schema) => array_item_enum_values(schema, component_schemas),
+            None => param
+                .schema
+                .as_ref()
+                .and_then(|s| s.items.as_deref())
+                .and_then(|items| param_item_enum_values(items, component_schemas)),
+        }
+    } else {
+        None
+    };
+
     // `x-fern-default` is the only source of a client-side default —
     // i.e. a value the CLI will (a) advertise in `--help` via clap's
     // `[default: ...]` and (b) substitute into the outgoing request
@@ -2568,6 +2587,7 @@ fn convert_parameter(
         variable_reference,
         repeated,
         item_type,
+        item_enum_values,
         ..Default::default()
     };
 
@@ -3956,6 +3976,36 @@ fn array_item_type(
     }
 }
 
+/// Enum members an element of an array schema may take — the `items.enum` of
+/// `type: array, items: {$ref: SomeEnum}`. Mirrors [`array_item_type`]'s
+/// resolution (`$ref` chain, then nullable composition) so the two always
+/// describe the same element schema.
+fn array_item_enum_values(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<Vec<String>> {
+    let items = schema.items.as_deref()?;
+    let resolved = resolve_ref_chain(items, component_schemas)
+        .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    effective_enum_values(resolved)
+}
+
+/// `array_item_enum_values` for an inline `items:` on a *parameter* schema,
+/// which is an [`OpenApiParamSchema`] rather than an [`OpenApiSchemaObject`].
+/// A parameter's inline items can still be a `$ref` to an enum component,
+/// which is the spelling that actually occurs in the wild.
+fn param_item_enum_values(
+    items: &OpenApiParamSchema,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<Vec<String>> {
+    if let Some(ref_path) = &items.schema_ref {
+        let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+        let terminal = resolve_ref_chain(resolved, component_schemas)?;
+        return effective_enum_values(terminal);
+    }
+    items.enum_values.clone()
+}
+
 /// True when a multipart property holds a list, so its flag must be
 /// repeatable. `type: array` counts whether it is declared inline, behind a
 /// `$ref`, or inside a nullable composition (`anyOf: [{type: array}, null]` —
@@ -5093,6 +5143,76 @@ mod tests {
         let (_, mp) = convert_parameter(&scalar, None, &components);
         assert!(!mp.repeated);
         assert_eq!(mp.item_type, None);
+    }
+
+    #[test]
+    fn test_array_parameter_resolves_its_element_enum() {
+        // An array-of-enum parameter carries no enum of its own — it lives on
+        // `items` — so the flag was entirely unconstrained while its scalar
+        // twin was checked by a clap value_parser.
+        let mut components = HashMap::new();
+        components.insert(
+            "EventType".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: string\nenum:\n  - message.sent\n  - message.received\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "EventTypes".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  $ref: '#/components/schemas/EventType'\n",
+            )
+            .unwrap(),
+        );
+        let expected = vec!["message.sent".to_string(), "message.received".to_string()];
+
+        // Inline `items: {$ref: Enum}` — the spelling that occurs in the wild.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    type: array\n    items:\n        $ref: '#/components/schemas/EventType'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // Inline `items: {type: string, enum: [...]}`.
+        let inline_enum: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    type: array\n    items:\n        type: string\n        enum:\n          - message.sent\n          - message.received\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline_enum, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // `$ref` to an array component whose items are a `$ref` to the enum.
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    $ref: '#/components/schemas/EventTypes'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // `anyOf: [array, null]` — pydantic's `Optional[list[Enum]]`.
+        let nullable: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    anyOf:\n      - $ref: '#/components/schemas/EventTypes'\n      - type: 'null'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&nullable, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // A non-enum array records nothing, and neither does a scalar.
+        let plain: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&plain, None, &components);
+        assert_eq!(mp.item_enum_values, None);
+        let scalar: OpenApiParameter = serde_yaml::from_str(
+            "name: direction\nin: query\nschema:\n    $ref: '#/components/schemas/EventType'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&scalar, None, &components);
+        assert_eq!(mp.item_enum_values, None, "a scalar enum belongs on enum_values");
+        assert!(mp.enum_values.is_some());
     }
 
     #[test]

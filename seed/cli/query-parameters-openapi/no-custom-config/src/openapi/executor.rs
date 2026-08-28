@@ -740,10 +740,23 @@ fn parse_and_validate_inputs(
     // (3) object-shorthand JSON for a single field (`--name '{...}'`).
     // Mixing any two is a validation error so the user's intent is
     // unambiguous and the precedence rules are not surprising.
+    // Both messages name flags, so they must go through the same resolver
+    // `build_resource_command` registered them with. Interpolating the raw
+    // wire key advised flags that do not exist — `--permissions.inbox_read`
+    // for a flag registered as `--permissions.inbox-read`, and clap rejects
+    // the spelling it suggests. `--schema` discloses the resolved name, so
+    // the error also contradicted the contract.
+    let flag_for = |key: &str| -> String {
+        method
+            .parameters
+            .get(key)
+            .and_then(|param| crate::openapi::commands::resolve_param_flag_name(param, key))
+            .map_or_else(|| format!("--{key}"), |flag| format!("--{flag}"))
+    };
     if body_json.is_some() && !raw_body_flag_keys.is_empty() {
         let conflicting = raw_body_flag_keys
             .iter()
-            .map(|k| format!("--{k}"))
+            .map(|k| flag_for(k))
             .collect::<Vec<_>>()
             .join(", ");
         return Err(CliError::Validation(format!(
@@ -762,7 +775,9 @@ fn parse_and_validate_inputs(
         let prefix = format!("{object_key}.");
         if let Some(leaf_key) = raw_body_flag_keys.iter().find(|k| k.starts_with(&prefix)) {
             return Err(CliError::Validation(format!(
-                "Cannot combine --{object_key} with --{leaf_key}. Use the JSON shorthand or individual flags, not both."
+                "Cannot combine {} with {}. Use the JSON shorthand or individual flags, not both.",
+                flag_for(object_key),
+                flag_for(leaf_key),
             )));
         }
     }
@@ -4091,6 +4106,33 @@ fn validate_non_body_param_type(
     if value.is_null() {
         return Ok(());
     }
+    // Element enum for an array parameter. Deliberately above the
+    // `param_type` early-return: an array param's `param_type` is the
+    // container type, so nothing below this point ever learns what an element
+    // is allowed to be. This is the only enforcement point for these — a clap
+    // `value_parser` would reject the `--labels '["a","b"]'` form, which is
+    // valid input. Non-string elements are left alone, matching the body
+    // validator's string-only enum check.
+    if let Some(allowed) = param.item_enum_values.as_deref() {
+        let elements: &[Value] = match value {
+            Value::Array(items) => items,
+            single => std::slice::from_ref(single),
+        };
+        for element in elements {
+            let Value::String(raw) = element else {
+                continue;
+            };
+            if !allowed.iter().any(|candidate| candidate == raw) {
+                let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                    .map(|f| format!("--{f}"))
+                    .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+                return Err(CliError::Validation(format!(
+                    "Invalid value for {flag}: '{raw}' is not a valid enum member. \
+                     Valid options: {allowed:?}"
+                )));
+            }
+        }
+    }
     let Some(expected) = param.param_type.as_deref() else {
         return Ok(());
     };
@@ -4257,8 +4299,18 @@ fn validate_value(
     // body whose fields were all the wrong type, which reads as confirmation
     // to an agent. Only inline-typed properties were ever checked.
     let Some(expected_type) = schema.schema_type.as_deref() else {
-        // No `type` keyword, no properties, no `allOf` — a free-form or
-        // pure-union component. Nothing to assert.
+        // A `$ref`'d component that is itself a nullable union has its type in
+        // the branch, exactly as at the property level above. Without this a
+        // component spelled `anyOf: [{type: string}, {type: null}]` accepted
+        // any value, while the identical property spelled inline did not.
+        if let Some(branch) = sole_non_null_branch(&schema.any_of)
+            .or_else(|| sole_non_null_branch(&schema.one_of))
+        {
+            validate_property(value, branch, doc, path, errors);
+            return;
+        }
+        // No `type` keyword, no properties, no `allOf`, no single-branch
+        // union — a free-form or genuine-union component. Nothing to assert.
         return;
     };
     if !check_json_type(value, expected_type, path, errors) {
@@ -4404,6 +4456,32 @@ fn has_null_branch(branches: &[crate::openapi::discovery::JsonSchemaProperty]) -
         .any(|b| b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none()))
 }
 
+/// The single non-null branch of a nullable union, i.e. the `T` in
+/// `anyOf: [T, {type: null}]` — pydantic's `Optional[T]`. `None` when the
+/// composition is empty or has more than one non-null branch, so a genuine
+/// union like `oneOf: [string, array]` is left alone (asserting one branch
+/// there would reject values the other branch permits).
+///
+/// The validator needs this because such a property carries no `type:` of its
+/// own: the type lives in the branch. Everything downstream keyed off
+/// `prop_type`, so `--json '{"name": 123}'` on a `name` declared
+/// `anyOf: [{type: string}, {type: null}]` was accepted and forwarded to the
+/// wire, while the same property spelled `type: string` was correctly
+/// rejected. The parser already promotes these shapes (ADR-0005 / ADR-0010) —
+/// this is the validator's half of that.
+fn sole_non_null_branch(
+    branches: &[crate::openapi::discovery::JsonSchemaProperty],
+) -> Option<&crate::openapi::discovery::JsonSchemaProperty> {
+    let mut non_null = branches
+        .iter()
+        .filter(|b| !(b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none())));
+    let first = non_null.next()?;
+    if non_null.next().is_some() {
+        return None;
+    }
+    Some(first)
+}
+
 fn validate_properties(
     obj: &Map<String, Value>,
     properties: &HashMap<String, crate::openapi::discovery::JsonSchemaProperty>,
@@ -4473,6 +4551,20 @@ fn validate_property(
             || has_null_branch(&prop_schema.any_of))
     {
         return;
+    }
+
+    // 1b. A nullable union carries its type in the branch, not on the
+    // property, so every check below this point was a no-op for it. Non-null
+    // values are validated against the sole non-null branch; `null` already
+    // returned above. A multi-branch union resolves to `None` and is left
+    // alone, as before.
+    if prop_schema.prop_type.is_none() && prop_schema.all_of.is_empty() {
+        if let Some(branch) = sole_non_null_branch(&prop_schema.any_of)
+            .or_else(|| sole_non_null_branch(&prop_schema.one_of))
+        {
+            validate_property(value, branch, doc, path, errors);
+            return;
+        }
     }
 
     // 2. Type checking
@@ -7515,6 +7607,270 @@ mod tests {
         assert!(
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
             "null on nullable-union must validate via any_of null branch",
+        );
+    }
+
+    #[test]
+    fn test_array_parameter_enforces_its_element_enum() {
+        // `--event-types bogus` was accepted and sent to the API, while the
+        // scalar `--direction bogus` was correctly rejected: the same spec
+        // construct validated or not purely based on array-ness.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+
+        // Legal members pass, in the collected-array form and singly.
+        for value in [json!(["sent", "received"]), json!(["sent"]), json!("sent")] {
+            assert!(
+                validate_non_body_param_type("event_types", &value, Some(&param)).is_ok(),
+                "legal enum members must pass: {value}",
+            );
+        }
+
+        // An illegal member is caught locally, and the message names the flag.
+        for value in [json!(["bogus"]), json!(["sent", "bogus"]), json!("bogus")] {
+            let error = validate_non_body_param_type("event_types", &value, Some(&param))
+                .expect_err(&format!("must reject a non-member: {value}"));
+            let message = error.to_string();
+            assert!(message.contains("--event-types"), "got: {message}");
+            assert!(message.contains("bogus"), "got: {message}");
+            assert!(message.contains("sent"), "must list valid options; got: {message}");
+        }
+
+        // Null still short-circuits, and an array param with no element enum
+        // stays unconstrained.
+        assert!(validate_non_body_param_type("event_types", &json!(null), Some(&param)).is_ok());
+        let unconstrained = MethodParameter {
+            item_enum_values: None,
+            ..param
+        };
+        assert!(
+            validate_non_body_param_type("labels", &json!(["anything"]), Some(&unconstrained))
+                .is_ok()
+        );
+    }
+
+    #[test]
+    fn test_mutual_exclusion_errors_name_the_registered_flag() {
+        // Both messages advised flags clap then rejects: they interpolated the
+        // raw wire key, so a body property `event_types` was reported as
+        // `--event_types` (registered: `--event-types`) and an object leaf
+        // `permissions.inbox_read` as `--permissions.inbox_read` (registered:
+        // `--permissions.inbox-read`). `--schema` discloses the resolved name,
+        // so the error contradicted the contract it sits next to.
+        let body_param = |param_type: &str| MethodParameter {
+            param_type: Some(param_type.to_string()),
+            location: Some("body".to_string()),
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/keys".to_string(),
+            parameters: HashMap::from([
+                ("event_types".to_string(), body_param("string")),
+                ("permissions".to_string(), body_param("object")),
+                ("permissions.inbox_read".to_string(), body_param("boolean")),
+            ]),
+            ..Default::default()
+        };
+        let doc = RestDescription::default();
+
+        // --json against a per-field flag.
+        let error = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"event_types":"a"}"#),
+            Some("{}"),
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .expect_err("combining --json with a body flag must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--event-types"), "got: {message}");
+        assert!(!message.contains("--event_types"), "got: {message}");
+
+        // Object shorthand against its own dotted leaf.
+        let error = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"permissions":{},"permissions.inbox_read":true}"#),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .expect_err("combining an object shorthand with its leaf must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--permissions.inbox-read"), "got: {message}");
+        assert!(!message.contains("--permissions.inbox_read"), "got: {message}");
+    }
+
+    #[test]
+    fn test_validate_body_type_checks_the_non_null_branch_of_a_nullable_union() {
+        // The mirror of the test above: a nullable union must accept null, but
+        // it must also still enforce its branch type. Everything downstream of
+        // the null short-circuit keyed off `prop_type`, which is None here, so
+        // this property accepted *any* value and forwarded it to the wire —
+        // while the same property spelled `type: string` was rejected.
+        let branch_union = |inner: JsonSchemaProperty| JsonSchemaProperty {
+            prop_type: None,
+            nullable: false,
+            any_of: vec![
+                inner,
+                JsonSchemaProperty {
+                    prop_type: Some("null".to_string()),
+                    ..Default::default()
+                },
+            ],
+            ..Default::default()
+        };
+        let properties = HashMap::from([
+            (
+                "name".to_string(),
+                branch_union(JsonSchemaProperty {
+                    prop_type: Some("string".to_string()),
+                    ..Default::default()
+                }),
+            ),
+            (
+                "tags".to_string(),
+                branch_union(JsonSchemaProperty {
+                    prop_type: Some("array".to_string()),
+                    items: Some(Box::new(JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    })),
+                    ..Default::default()
+                }),
+            ),
+        ]);
+        let schemas = HashMap::from([(
+            "Agent".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        // Valid values, including null, still pass.
+        for body in [
+            json!({ "name": "ok" }),
+            json!({ "name": null }),
+            json!({ "tags": ["a", "b"] }),
+            json!({ "tags": null }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Agent", &doc).is_ok(),
+                "must still accept a valid value: {body}",
+            );
+        }
+
+        // Wrong branch types are now caught locally instead of being sent.
+        for body in [
+            json!({ "name": 123 }),
+            json!({ "tags": "not-an-array" }),
+            json!({ "tags": [1, 2] }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Agent", &doc).is_err(),
+                "must reject a value the branch type forbids: {body}",
+            );
+        }
+    }
+
+    #[test]
+    fn test_validate_body_leaves_a_genuine_multi_branch_union_alone() {
+        // `oneOf: [string, array<string>]` — the scalar-or-array shape. Two
+        // non-null branches, so asserting either one would reject values the
+        // other permits. Must stay permissive.
+        let properties = HashMap::from([(
+            "to".to_string(),
+            JsonSchemaProperty {
+                prop_type: None,
+                one_of: vec![
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                    JsonSchemaProperty {
+                        prop_type: Some("array".to_string()),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+        )]);
+        let schemas = HashMap::from([(
+            "Msg".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        for body in [json!({ "to": "a@b.c" }), json!({ "to": ["a@b.c"] })] {
+            assert!(
+                validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+                "both branches of a genuine union must be accepted: {body}",
+            );
+        }
+    }
+
+    #[test]
+    fn test_validate_body_type_checks_a_ref_to_a_nullable_union_component() {
+        // Same gap one level up: a `$ref`'d component that is itself
+        // `anyOf: [T, null]` has no `type:` of its own, so it fell through
+        // `validate_value`'s "pure-union component, nothing to assert" exit.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([(
+                        "subject".to_string(),
+                        JsonSchemaProperty {
+                            schema_ref: Some("MaybeSubject".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "MaybeSubject".to_string(),
+                JsonSchema {
+                    schema_type: None,
+                    any_of: vec![
+                        JsonSchemaProperty {
+                            prop_type: Some("string".to_string()),
+                            ..Default::default()
+                        },
+                        JsonSchemaProperty {
+                            prop_type: Some("null".to_string()),
+                            ..Default::default()
+                        },
+                    ],
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        assert!(validate_body_against_schema(&json!({ "subject": "hi" }), "Msg", &doc).is_ok());
+        assert!(validate_body_against_schema(&json!({ "subject": null }), "Msg", &doc).is_ok());
+        assert!(
+            validate_body_against_schema(&json!({ "subject": 5 }), "Msg", &doc).is_err(),
+            "a nullable-union component must still enforce its branch type",
         );
     }
 

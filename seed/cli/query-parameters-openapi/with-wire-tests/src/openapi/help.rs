@@ -211,9 +211,18 @@ fn build_operation_schema(
                 "location": param.location.as_deref().unwrap_or("query"),
             })
         } else if param.repeated {
+            // Element enum belongs on `items`, not the property: the property
+            // is the array. Advertising it is half the fix — the executor
+            // enforces it (see `MethodParameter::item_enum_values`) — but
+            // without it an agent has no way to learn the legal values, and
+            // `--schema` is the surface it reads.
+            let mut items = json!({ "type": element_type });
+            if let (Some(values), Some(map)) = (&param.item_enum_values, items.as_object_mut()) {
+                map.insert("enum".to_string(), json!(values));
+            }
             json!({
                 "type": "array",
-                "items": { "type": element_type },
+                "items": items,
                 "description": param.description.as_deref().unwrap_or(""),
                 "location": param.location.as_deref().unwrap_or("query"),
             })
@@ -2104,6 +2113,50 @@ mod tests {
         // Scalar param: plain type.
         assert_eq!(props["subject"]["type"], "string");
         assert!(props["subject"]["items"].is_null());
+    }
+
+    #[test]
+    fn test_repeated_param_advertises_its_element_enum_on_items() {
+        // An array-of-enum parameter advertised no enum at all, so an agent
+        // reading the contract had no way to learn the legal values — and the
+        // CLI accepted anything and sent it.
+        let mut params = HashMap::new();
+        params.insert(
+            "event_types".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "labels".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "/events".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["events"], "list", &method, &HashMap::new());
+        let props = &schema["input"]["properties"];
+
+        // The enum belongs on `items`, not the property: the property is the array.
+        assert_eq!(props["event_types"]["items"]["type"], "string");
+        assert_eq!(props["event_types"]["items"]["enum"], json!(["sent", "received"]));
+        assert!(props["event_types"]["enum"].is_null());
+        // A non-enum array is unchanged — no empty `enum` key invented.
+        assert!(props["labels"]["items"]["enum"].is_null());
     }
 
     #[test]

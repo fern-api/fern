@@ -1100,6 +1100,20 @@ pub struct MethodParameter {
     /// `None` means "string" — the overwhelmingly common case, and the value
     /// every pre-existing lowering produced.
     pub item_type: Option<String>,
+    /// Enum members an *element* of an array parameter may take, i.e. the
+    /// `items.enum` of `type: array, items: {$ref: SomeEnum}`.
+    ///
+    /// Separate from [`MethodParameter::enum_values`] because that one is
+    /// enforced by a clap `value_parser`, which cannot work here: a repeated
+    /// flag also accepts a whole JSON array in one argument
+    /// (`--labels '["a","b"]'`), and clap would reject that literal as a
+    /// non-member. So element enums are enforced after collection, in the
+    /// executor, and advertised as `items.enum` by `--schema`.
+    ///
+    /// Without this an array-of-enum parameter was completely unconstrained
+    /// while its scalar twin was checked — `--event-types bogus` went to the
+    /// API, `--direction bogus` did not.
+    pub item_enum_values: Option<Vec<String>>,
     /// True for `oneOf/anyOf [string, array<string>]` unions where a single
     /// value should be sent as a scalar string, not wrapped in a length-1
     /// array. Pure `type: array` params leave this `false`.
