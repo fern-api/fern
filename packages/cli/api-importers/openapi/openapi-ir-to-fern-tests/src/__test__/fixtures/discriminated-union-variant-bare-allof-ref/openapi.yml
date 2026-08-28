@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Discriminated union variants declared as a bare allOf reference
+  version: 1.0.0
+paths:
+  /thing:
+    get:
+      operationId: getThing
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Holder"
+        "400":
+          description: err
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseError"
+components:
+  schemas:
+    BaseError:
+      type: object
+      required:
+        - type
+        - message
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          WithProps: "#/components/schemas/WithProps"
+          EmptyObj: "#/components/schemas/EmptyObj"
+          BareRef: "#/components/schemas/BareRef"
+    # a variant that adds properties of its own
+    WithProps:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+        - type: object
+          properties:
+            detail:
+              type: string
+    # a variant that adds nothing, spelled with a trailing empty object
+    EmptyObj:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+        - type: object
+    # the same variant, spelled as a bare reference. This must not short-circuit to an
+    # alias of BaseError: the variant would then refer to the union it belongs to, and
+    # every generator would expect the payload under a `value` key.
+    BareRef:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+    # not a variant - a single-reference allOf used only to attach `nullable`. This must
+    # still short-circuit to a reference to BaseError.
+    Holder:
+      type: object
+      properties:
+        nullableError:
+          allOf:
+            - $ref: "#/components/schemas/BaseError"
+          nullable: true
+      required:
+        - nullableError

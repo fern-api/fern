@@ -1,0 +1,302 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Discriminated union variants declared as a bare allOf reference",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getThing",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetThingRequest",
+      "response": {
+        "description": "ok",
+        "schema": {
+          "generatedName": "GetThingResponse",
+          "schema": "Holder",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "schema": "BaseError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "err",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "type": {
+                      "value": {
+                        "value": "WithProps",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "string",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/thing",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "nullableError": {
+                  "value": {
+                    "value": {
+                      "detail": {
+                        "value": {
+                          "value": "detail",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": {
+                        "value": {
+                          "value": "WithProps",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "nullableError",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "discriminated"
+                  },
+                  "type": "oneOf"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "BaseError": {
+        "value": {
+          "commonProperties": [
+            {
+              "key": "message",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BaseErrorMessage",
+                "groupName": [],
+                "type": "primitive"
+              }
+            }
+          ],
+          "discriminantProperty": "type",
+          "discriminatorContext": "data",
+          "generatedName": "BaseError",
+          "schemas": {
+            "WithProps": {
+              "generatedName": "ComponentsSchemasWithProps",
+              "schema": "WithProps",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "EmptyObj": {
+              "generatedName": "ComponentsSchemasEmptyObj",
+              "schema": "EmptyObj",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "BareRef": {
+              "generatedName": "ComponentsSchemasBareRef",
+              "schema": "BareRef",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "WithProps": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "withPropsDetail",
+            "key": "detail",
+            "schema": {
+              "generatedName": "WithPropsDetail",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WithPropsDetail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "WithProps",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "EmptyObj": {
+        "allOf": [],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "generatedName": "EmptyObj",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "BareRef": {
+        "allOf": [],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "generatedName": "BareRef",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Holder": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "holderNullableError",
+            "key": "nullableError",
+            "schema": {
+              "generatedName": "HolderNullableError",
+              "value": {
+                "generatedName": "HolderNullableError",
+                "schema": "BaseError",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Holder",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

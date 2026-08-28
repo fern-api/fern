@@ -1336,6 +1336,7 @@ export function convertSchemaObject(
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfs.length === 1 &&
                 filteredAllOfs[0] != null &&
+                !isVariantOfDiscriminatedBase({ schema, element: filteredAllOfs[0], context }) &&
                 (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // If we end up with a single element, we short-circuit and convert it directly.
@@ -1373,6 +1374,7 @@ export function convertSchemaObject(
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfObjects.length === 1 &&
                 filteredAllOfObjects[0] != null &&
+                !isVariantOfDiscriminatedBase({ schema, element: filteredAllOfObjects[0], context }) &&
                 (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // Try to short-circuit again.
@@ -1723,6 +1725,51 @@ function maybeInjectDescriptionOrGroupName(
         });
     }
     return schema;
+}
+
+// isVariantOfDiscriminatedBase returns true if `schema` is one of the variants named in the
+// discriminator mapping of the schema that `element` references.
+//
+// `Variant: {allOf: [$ref Base]}` where `Base` declares a discriminator that maps back to
+// `Variant` is a subtype of that base, not an alias for it. Short-circuiting it would declare
+// `Variant: Base`, making the variant refer to the union it belongs to. The IR generator only
+// emits a variant as `samePropertiesAsObject` when the referenced type is an object, so an
+// aliased variant degrades to `singleProperty` and every generator then expects the payload
+// under a `value` key that the wire format does not have.
+//
+// The mapping check is what keeps this narrow. A single-reference allOf that is *not* a
+// variant - most commonly `{allOf: [$ref X], nullable: true}` used to attach `nullable` to a
+// reference - still short-circuits to a reference to X, as it should.
+//
+// `{allOf: [$ref Base, {type: object}]}` never reached the short-circuit and already converts
+// to an object, so this only brings the two spellings of the same subtype into agreement.
+function isVariantOfDiscriminatedBase({
+    schema,
+    element,
+    context
+}: {
+    schema: OpenAPIV3.SchemaObject;
+    element: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+    context: SchemaParserContext;
+}): boolean {
+    if (!isReferenceObject(element)) {
+        return false;
+    }
+    const mapping = context.resolveSchemaReference(element).discriminator?.mapping;
+    if (mapping == null) {
+        return false;
+    }
+    return Object.values(mapping).some((target) => {
+        // A mapping value is either a reference or a bare schema name.
+        const $ref = target.startsWith("#/") ? target : `${SCHEMA_REFERENCE_PREFIX}${target}`;
+        try {
+            // resolveSchemaReference indexes into the parsed document, so the resolved variant
+            // and the schema being converted are the same object when they are the same schema.
+            return context.resolveSchemaReference({ $ref }) === schema;
+        } catch {
+            return false;
+        }
+    });
 }
 
 // isValidAllOfObject returns true if the given allOf is a valid object according to the following:
