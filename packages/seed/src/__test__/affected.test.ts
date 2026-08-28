@@ -133,6 +133,14 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).not.toContain("csharp-model");
         });
 
+        it("skips all seed tests when only top-level generator changelog files change", () => {
+            const result = detectAffected(["generators/cli/changes/unreleased/some-fix.yml"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
         it("detects cli generator source changes", () => {
             const result = detectAffected(
                 ["generators/cli/src/wireTests/harness.ts", "generators/cli/sdk/src/openapi/commands.rs"],
