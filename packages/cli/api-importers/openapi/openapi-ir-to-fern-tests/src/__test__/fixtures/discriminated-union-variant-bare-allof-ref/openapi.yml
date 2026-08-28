@@ -37,6 +37,8 @@ components:
           WithProps: "#/components/schemas/WithProps"
           EmptyObj: "#/components/schemas/EmptyObj"
           BareRef: "#/components/schemas/BareRef"
+          DescribedRef: "#/components/schemas/DescribedRef"
+          TitledRef: "#/components/schemas/TitledRef"
     # a variant that adds properties of its own
     WithProps:
       allOf:
@@ -54,6 +56,18 @@ components:
     # alias of BaseError: the variant would then refer to the union it belongs to, and
     # every generator would expect the payload under a `value` key.
     BareRef:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+    # the same again, but carrying a description on the allOf wrapper. Sibling keys next to
+    # allOf are a common trigger for the schema being copied before it is converted; the
+    # guard compares object identity, so this pins that the variant is still recognised.
+    DescribedRef:
+      description: a variant that describes itself
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+    # and with a title, which is what drives generated naming
+    TitledRef:
+      title: Titled
       allOf:
         - $ref: "#/components/schemas/BaseError"
     # not a variant - a single-reference allOf used only to attach `nullable`. This must

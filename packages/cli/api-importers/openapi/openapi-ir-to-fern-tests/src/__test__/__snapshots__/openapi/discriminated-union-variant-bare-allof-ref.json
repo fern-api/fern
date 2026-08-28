@@ -88,8 +88,20 @@
             },
             "union": {
               "BareRef": "BareRef",
+              "DescribedRef": "DescribedRef",
               "EmptyObj": "EmptyObj",
+              "TitledRef": {
+                "type": "TitledRef",
+              },
               "WithProps": "WithProps",
+            },
+          },
+          "DescribedRef": {
+            "docs": "a variant that describes itself",
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
             },
           },
           "EmptyObj": {
@@ -106,6 +118,14 @@
             "properties": {
               "nullableError": "nullable<BaseError>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TitledRef": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {},
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -166,6 +186,9 @@ types:
       WithProps: WithProps
       EmptyObj: EmptyObj
       BareRef: BareRef
+      DescribedRef: DescribedRef
+      TitledRef:
+        type: TitledRef
     source:
       openapi: ../openapi.yml
   WithProps:
@@ -178,6 +201,15 @@ types:
     source:
       openapi: ../openapi.yml
   BareRef:
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+  DescribedRef:
+    docs: a variant that describes itself
+    properties: {}
+    source:
+      openapi: ../openapi.yml
+  TitledRef:
     properties: {}
     source:
       openapi: ../openapi.yml

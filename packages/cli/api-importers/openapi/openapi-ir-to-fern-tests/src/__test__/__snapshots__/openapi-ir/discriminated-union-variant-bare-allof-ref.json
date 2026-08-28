@@ -185,6 +185,24 @@
                 "type": "openapi"
               },
               "type": "reference"
+            },
+            "DescribedRef": {
+              "generatedName": "ComponentsSchemasDescribedRef",
+              "schema": "DescribedRef",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "TitledRef": {
+              "generatedName": "ComponentsSchemasTitledRef",
+              "schema": "TitledRef",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
             }
           },
           "groupName": [],
@@ -247,6 +265,34 @@
         "properties": [],
         "allOfPropertyConflicts": [],
         "generatedName": "BareRef",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DescribedRef": {
+        "allOf": [],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "description": "a variant that describes itself",
+        "generatedName": "DescribedRef",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TitledRef": {
+        "allOf": [],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "generatedName": "TitledRef",
+        "title": "Titled",
         "groupName": [],
         "additionalProperties": false,
         "source": {
