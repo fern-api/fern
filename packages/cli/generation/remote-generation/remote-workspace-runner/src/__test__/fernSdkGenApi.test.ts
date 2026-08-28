@@ -1214,6 +1214,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(getFernSdkGenApiCandidateIndexes([validRoute, invalidRoute], preflightErrors)).toEqual(new Set([0]));
     });
 
+    it("ignores source resolution errors for generators that do not use sdk-gen-api", () => {
+        const generator = invocation({ name: "acme/custom-generator" });
+        const { preflightErrors } = preflightFernSdkGenApiSources({
+            generators: [generator],
+            routes: [undefined],
+            sourceResolution: {
+                sourceArchives: new Map(),
+                errors: new Map([[0, new Error("source resolution failed")]])
+            }
+        });
+
+        expect(preflightErrors).toEqual([undefined]);
+    });
+
     it("enables only explicitly supplied runtime entitlements", async () => {
         const compressed = await prepareFernSdkGenApiRuntimeBundle({
             apiName: "Petstore",

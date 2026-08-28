@@ -401,13 +401,13 @@ export function preflightFernSdkGenApiSources({
             if (routeErrors?.[index] != null) {
                 return undefined;
             }
-            const sourceError = sourceResolution.errors.get(index);
-            if (sourceError != null) {
-                return sourceError;
-            }
             const route = routes[index];
             if (route == null) {
                 return undefined;
+            }
+            const sourceError = sourceResolution.errors.get(index);
+            if (sourceError != null) {
+                return sourceError;
             }
             const sourceArchive = sourceResolution.sourceArchives.get(index);
             if (sourceArchive == null) {
