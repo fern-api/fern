@@ -184,11 +184,18 @@ fn build_operation_schema(
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        // A repeated flag carries `param_type: "string"` because clap collects
-        // strings; the spec's real element type lives in `item_type`. Rendering
-        // `param_type` as the element type advertised `items: {type: string}`
-        // for an array of objects, so an agent reading the contract sent
-        // `["x"]` and the validator rejected it.
+        // A repeated *body* flag carries `param_type: "string"` because clap
+        // collects strings; the spec's real element type lives in `item_type`.
+        // Rendering `param_type` as the element type advertised
+        // `items: {type: string}` for an array of objects, so an agent reading
+        // the contract sent `["x"]` and the validator rejected it.
+        //
+        // The `param_type` fallback is therefore correct for body arrays only.
+        // For a query, header or path array `param_type` is the *container*
+        // type `"array"`, which rendered `items: {"type": "array"}` — an array
+        // of arrays. `convert_parameter` resolves `item_type` eagerly for those
+        // (defaulting to `"string"`) so the fallback is never reached; it stays
+        // here for the body path and as a floor for hand-built parameters.
         let element_type = param
             .item_type
             .as_deref()
@@ -2097,6 +2104,50 @@ mod tests {
         // Scalar param: plain type.
         assert_eq!(props["subject"]["type"], "string");
         assert!(props["subject"]["items"].is_null());
+    }
+
+    #[test]
+    fn test_repeated_query_param_advertises_its_element_type_not_the_container() {
+        // A query array's `param_type` is the container type, so falling back
+        // to it advertised `items: {"type": "array"}` — an array of arrays —
+        // for every string-element query parameter. An agent reading that
+        // contract has no way to construct a correct value.
+        let mut params = HashMap::new();
+        params.insert(
+            "labels".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "ids".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("integer".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "/threads".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["threads"], "list", &method, &HashMap::new());
+        let props = &schema["input"]["properties"];
+
+        assert_eq!(props["labels"]["type"], "array");
+        assert_eq!(
+            props["labels"]["items"]["type"], "string",
+            "a string-element query array must not advertise an array of arrays",
+        );
+        assert_eq!(props["ids"]["items"]["type"], "integer");
     }
 
     #[test]

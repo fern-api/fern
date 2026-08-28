@@ -40,11 +40,14 @@
 
 - summary: |
     `--schema` and `--help` report the real element type of an array-typed
-    query, header or path parameter. Only body arrays carried one, so the
-    renderer fell back to the container type and advertised
-    `items: {"type": "array"}` — an array of arrays. All three spellings
+    query, header or path parameter. Only body arrays carried one, so both
+    renderers fell back to the container type: `--schema` advertised
+    `items: {"type": "array"}` — an array of arrays — and `--help` showed
+    `<JSON_ARRAY>` where a single element belongs. All three spellings now
     resolve: inline `type: array`, a `$ref` to an array component, and
-    `anyOf: [array, null]`. Advertisement-only — the collector already treated
-    these elements as strings, which is what they are on both specs this was
-    tested against.
+    `anyOf: [array, null]`; anything that still doesn't resolve reports
+    `string` rather than the container type. Advertisement-only: the value
+    collector branches on the element type being something other than
+    `string`, so no request changes on the wire — verified against two
+    customer specs (56 array parameters, 4 input forms each).
   type: fix

@@ -2463,19 +2463,25 @@ fn convert_parameter(
     let repeated = param_type.as_deref() == Some("array");
 
     // Element type of an array parameter, so `--schema` and `--help` describe
-    // what a value actually is. Without it `help.rs` falls back to
-    // `param_type` — which for a query array is `"array"` — and advertised
-    // `items: {"type": "array"}`: an array of arrays. Body arrays were already
-    // correct because they carry the element type in `param_type` and set this
-    // field; query, header and path arrays never did. Uses the same
-    // `array_item_type` resolution as the body path, so `$ref` and
-    // `anyOf: [T, null]` element schemas resolve identically.
+    // what a value actually is. Without it both renderers fall back to
+    // `param_type` — which for a query array is the container type `"array"` —
+    // and advertise `items: {"type": "array"}` / `<JSON_ARRAY>`: an array of
+    // arrays. Body arrays were already correct because for them `param_type`
+    // *is* the element type; query, header and path arrays never were.
     //
-    // Advertisement-only for these parameters: `None` means "string", which is
-    // what the collector already assumed and what every array parameter on the
-    // specs this was tested against actually is.
+    // Resolved eagerly to `Some(..)`, defaulting to `"string"`, rather than
+    // leaning on the body path's `None`-means-string convention: that
+    // convention only holds where `param_type` already carries the element
+    // type, so on this branch a `None` would fall straight back through to
+    // `"array"` and fix nothing. `array_item_type` is still what resolves the
+    // element schema, so `$ref` and `anyOf: [T, null]` spellings agree with
+    // the body path.
+    //
+    // Advertisement-only: the collector at `app.rs` branches on
+    // `item_type != "string"`, so an explicit `Some("string")` and `None`
+    // drive the wire identically.
     let item_type = if repeated {
-        match resolved_ref {
+        let resolved = match resolved_ref {
             // `$ref`'d or `anyOf: [array, null]` — the resolved branch is an
             // `OpenApiSchemaObject`, so the body path's resolver applies.
             Some(schema) => array_item_type(schema, component_schemas),
@@ -2486,7 +2492,8 @@ fn convert_parameter(
                 .as_ref()
                 .and_then(|s| s.items.as_deref())
                 .and_then(|items| param_schema_type(items, component_schemas)),
-        }
+        };
+        Some(resolved.unwrap_or_else(|| "string".to_string()))
     } else {
         None
     };
@@ -5022,15 +5029,37 @@ mod tests {
             .unwrap(),
         );
 
-        // Inline, string elements -> `None`, which downstream reads as string
-        // (byte-identical to every previous lowering).
+        // Inline, string elements -> `Some("string")`, spelled out rather than
+        // left implicit. `None` here would fall back through both renderers to
+        // `param_type`, which on a query array is the container type "array" —
+        // the exact no-op this assertion exists to catch.
         let inline: OpenApiParameter = serde_yaml::from_str(
             "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
         )
         .unwrap();
         let (_, mp) = convert_parameter(&inline, None, &components);
         assert!(mp.repeated);
-        assert_eq!(mp.item_type, None, "string elements stay implicit");
+        assert_eq!(
+            mp.item_type.as_deref(),
+            Some("string"),
+            "string elements must be explicit, not left to the param_type fallback",
+        );
+
+        // No spelling of a string-element array parameter may leave the
+        // element type unresolved.
+        for spec in [
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: header\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: query\nschema:\n    type: array\n",
+        ] {
+            let p: OpenApiParameter = serde_yaml::from_str(spec).unwrap();
+            let (_, mp) = convert_parameter(&p, None, &components);
+            assert_eq!(
+                mp.item_type.as_deref(),
+                Some("string"),
+                "unresolved element type falls back to the container type: {spec}",
+            );
+        }
 
         // Inline, non-string elements -> recorded.
         let inline_int: OpenApiParameter = serde_yaml::from_str(
