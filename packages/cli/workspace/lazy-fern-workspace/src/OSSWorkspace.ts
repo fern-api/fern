@@ -330,6 +330,26 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
 
+        // This gate reads `auth`, not `auth-schemes`, so declaring the latter
+        // without the former discards the whole block — `env:` overrides
+        // included — before the importer ever sees it. Nothing is invalid, so
+        // `fern check` stays clean; the schemes are simply never read. The
+        // importer then re-derives auth from `components.securitySchemes`,
+        // which carries no env var, and each generator falls back to its own
+        // default name (the CLI generator to `<BINARY>_TOKEN`). The result is
+        // a CLI that reads an env var the user never configured and never
+        // mentioned it had switched.
+        //
+        // Warn rather than widen the gate: `buildAuthSchemes` returns early on
+        // the override path without selecting a scheme when `auth` is absent,
+        // so admitting this config there would trade a wrong env var for no
+        // auth at all. Making it work needs the selection logic sorted out,
+        // which is a behavior change for every generator.
+        const orphanedAuthSchemeWarning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
+        if (orphanedAuthSchemeWarning != null) {
+            context.logger.warn(orphanedAuthSchemeWarning);
+        }
+
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
             authOverrides = await getAuthFromOverrideFiles(specs);
@@ -879,4 +899,33 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
         }
     }
     return undefined;
+}
+
+/**
+ * Warning text for an `auth-schemes` block that no `api.auth` selects, or
+ * `undefined` when the configuration is fine.
+ *
+ * Pulled out of `getIntermediateRepresentation` so the condition and the
+ * guidance are testable without standing up a workspace: the bug this detects
+ * is invisible by construction (valid YAML, clean `fern check`, generation
+ * succeeds), so the warning is the only thing standing between the user and a
+ * CLI that silently reads an environment variable they never configured.
+ */
+export function getOrphanedAuthSchemeWarning(api: generatorsYml.APIDefinition | undefined): string | undefined {
+    if (api?.auth != null) {
+        return undefined;
+    }
+    const names = Object.keys(api?.["auth-schemes"] ?? {});
+    const first = names[0];
+    if (first == null) {
+        return undefined;
+    }
+    return (
+        `generators.yml declares auth-schemes (${names.join(", ")}) but no \`api.auth\`, ` +
+        "so the entire auth-schemes block is ignored — including any `env:` overrides. " +
+        `Add \`auth: ${first}\`` +
+        (names.length > 1 ? ` (or \`auth: { any: [${names.join(", ")}] }\` for several)` : "") +
+        " under `api` to apply it. Without it, auth is re-derived from the spec's securitySchemes and each " +
+        "generator falls back to its own default environment variable name."
+    );
 }
