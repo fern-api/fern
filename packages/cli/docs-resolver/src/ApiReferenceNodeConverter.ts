@@ -1349,7 +1349,7 @@ export class ApiReferenceNodeConverter {
     }
 
     /**
-     * Builds the GraphQL Types navigation: a single "GraphQL Types" section holding one sub-section
+     * Builds the GraphQL types navigation: a single "Types" section holding one sub-section
      * per GraphQL kind, each with one page per named type declared with that kind. Every GraphQL
      * spec in the API section contributes to this one section.
      *
