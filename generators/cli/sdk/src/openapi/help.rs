@@ -355,13 +355,19 @@ fn build_operation_schema(
         .collect();
     required.retain(|name| !covered.contains(name));
 
-    // Per ADR-0006: `--schema` is the agent-facing contract. Drop HTTP
-    // plumbing (`httpMethod`, `path`) — agents drive the CLI, not raw
-    // HTTP. Rename `parameters` → `input` to sidestep OpenAPI's narrow
-    // meaning (which excludes body fields) and pair symmetrically with
-    // `output`.
+    // `parameters` is renamed to `input` to sidestep OpenAPI's narrow meaning
+    // (which excludes body fields) and to pair symmetrically with `output`.
+    //
+    // `httpMethod` and `path` are present per ADR-0006's 2026-08-28 amendment.
+    // They were dropped as "HTTP-execution detail an agent never uses", but a
+    // real agent consumer needs them for a reason the original decision did not
+    // consider: they are how you tell a read from a write *before* running the
+    // command. `operation` and `description` are prose an agent has to guess
+    // from. That is a safety property, not plumbing.
     let mut output = json!({
         "operation": format!("{}.{}", resource_path.join("."), method_name),
+        "httpMethod": method.http_method,
+        "path": method.path,
         "description": method.description.as_deref().unwrap_or(""),
         "input": {
             "type": "object",
@@ -746,11 +752,13 @@ fn collect_resource_ops(res: &RestResource, path: &[&str], ops: &mut Vec<Value>)
     method_names.sort();
     for method_name in method_names {
         let m = &res.methods[method_name];
-        // Per ADR-0006: drop `httpMethod` and `path` from listings —
-        // they're HTTP-execution detail an agent driving the CLI never
-        // uses. Agents pick by `operation` + `description`.
+        // `httpMethod` / `path` are in the catalog too, per ADR-0006's
+        // 2026-08-28 amendment: an agent picking an operation from the listing
+        // is exactly when it most needs to know whether the call mutates.
         let mut entry = json!({
             "operation": format!("{}.{}", path.join("."), method_name),
+            "httpMethod": m.http_method,
+            "path": m.path,
             "description": m.description.as_deref().unwrap_or(""),
         });
         if let Some(availability) = m.availability {
@@ -833,26 +841,36 @@ mod tests {
     fn test_render_operation_schema() {
         let doc = make_doc();
         let schema = operation_schema(&doc, &["users"], "get").unwrap();
-        // Per ADR-0006: `httpMethod` and `path` are dropped from the
-        // per-op envelope, `parameters` is renamed to `input`.
-        assert!(schema.get("httpMethod").is_none(), "httpMethod should be dropped");
-        assert!(schema.get("path").is_none(), "path should be dropped");
+        // `parameters` is renamed to `input`; `httpMethod` and `path` are
+        // present per ADR-0006's 2026-08-28 amendment — they are how an agent
+        // tells a read from a write before running the command.
+        assert_eq!(schema["httpMethod"], "GET", "httpMethod must be advertised");
+        assert!(
+            schema["path"].is_string(),
+            "path must be advertised: {schema}",
+        );
         assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
     }
 
     #[test]
-    fn test_root_listing_drops_http_method_and_path() {
-        // Per ADR-0006: listings expose `operation` + `description` only.
-        // HTTP-plumbing fields are agent-irrelevant noise.
+    fn test_root_listing_advertises_http_method_and_path() {
+        // ADR-0006 originally dropped these as agent-irrelevant noise. The
+        // 2026-08-28 amendment restores them: the catalog is exactly where an
+        // agent chooses an operation, so it is where knowing whether the call
+        // mutates matters most. `operation` and `description` are prose it
+        // would otherwise have to guess from.
         let doc = make_doc();
         let output = list_all_operations(&doc);
         let arr = output.as_array().unwrap();
         assert!(!arr.is_empty());
         for op in arr {
-            assert!(op.get("httpMethod").is_none(), "httpMethod must be dropped from listings");
-            assert!(op.get("path").is_none(), "path must be dropped from listings");
+            assert!(
+                op["httpMethod"].is_string(),
+                "httpMethod must be advertised in listings: {op}",
+            );
+            assert!(op["path"].is_string(), "path must be advertised: {op}");
             assert!(op["operation"].is_string());
             assert!(op["description"].is_string());
         }

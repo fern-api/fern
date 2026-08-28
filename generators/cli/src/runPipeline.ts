@@ -63,8 +63,15 @@ export async function runPipeline(args: {
      * every other Fern generator. See `writeLicense.ts`.
      */
     license?: LicenseConfigLike;
+    /**
+     * `GeneratorConfig.organization`. Only used as the copyright-holder
+     * fallback for a `license: MIT` LICENSE when `packageIdentity.authors` is
+     * unset.
+     */
+    organization?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir, license } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir, license, organization } =
+        args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -120,7 +127,13 @@ export async function runPipeline(args: {
     // Right after copySdk so the LICENSE lands in the same pass that lays down
     // the rest of the repo, and before patchCargoToml — which is where a
     // `license-file` pointer would have to agree with what actually exists.
-    await writeLicense({ outputDir, license });
+    await writeLicense({
+        outputDir,
+        license,
+        // `license: MIT` needs a copyright holder; the first declared author is
+        // the closest thing the config has, falling back to the Fern org.
+        copyrightHolder: customConfig.packageIdentity?.authors?.[0] ?? organization
+    });
     await patchCargoToml({
         outputDir,
         binaryName,
@@ -268,7 +281,8 @@ export async function runPipeline(args: {
                 outputDir,
                 binaryName,
                 npmPublishInfo: outputConfig.npmPublishInfo,
-                repoUrl: outputConfig.repoUrl
+                repoUrl: outputConfig.repoUrl,
+                packageIdentity: customConfig.packageIdentity
             });
         } else {
             await emitCiWorkflow({ outputDir, binaryName });

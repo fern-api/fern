@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `packageIdentity` now reaches the published npm package. The launcher's
+    `package.json` carried only name/version/bin/optionalDependencies plus a
+    hardcoded description, so npm rendered the CLI as "License: none" with no
+    keywords, homepage or author — while the same config already populated
+    `Cargo.toml`. The license is the part that matters: dependency scanners and
+    corporate policy gates reject unlicensed packages. `authors[0]` becomes npm's
+    single `author` and the rest `contributors`.
+  type: fix
+
+- summary: |
+    Query- and path-parameter values are type-checked locally. `--limit nope`
+    used to serialize as `?limit=nope` and fail at the API; it now fails
+    immediately naming the flag and the expected type. Only numeric and boolean
+    types are enforced — `string` accepts anything (it is what the wire carries)
+    and arrays/objects are left to the style-aware serializer — so the check
+    catches typos without rejecting requests a server would accept.
+  type: fix
+
+- summary: |
+    `--schema` advertises `httpMethod` and `path` again, per ADR-0006's
+    2026-08-28 amendment. They were dropped as HTTP-execution detail, but they
+    are how an agent tells a read from a write *before* running a command, which
+    is a safety property rather than plumbing. Additive — the `{globalFlags,
+    operations}` shape, the `parameters` to `input` rename and the capability
+    hints are unchanged.
+  type: fix
+
+- summary: |
+    A `license: MIT` entry in `generators.yml` now emits a matching LICENSE.
+    Fern's `LicenseConfig.Basic` mounts no file, so no generator honored it and
+    a repo publishing to npm as MIT shipped no LICENSE at all. The copyright
+    holder comes from `packageIdentity.authors[0]`, falling back to the
+    organization; when neither is known nothing is written, since a copyright
+    line naming nobody is worse than no file. `Apache-2.0` is left to
+    `license: { type: custom }`.
+  type: fix

@@ -1,6 +1,6 @@
 # ADR-0006: `--schema` is the agent-facing contract, not an OpenAPI mirror
 
-**Status:** Accepted — 2026-06-11
+**Status:** Accepted — 2026-06-11. **Amended 2026-08-28** — `httpMethod` and `path` are restored at every scope; see *Amendment* below.
 **Context:** PR #169 introduced the `--schema` global flag as a machine-readable counterpart to `--help`. The initial shape mirrored what was easy to render from the IR — `{operation, httpMethod, path, description, parameters}` at the per-op view, a flat list of those at root/resource. As LLM-agent use of the CLI matured, that shape proved a poor fit: it surfaced HTTP-execution detail an agent never uses, omitted request-body schemas and response schemas entirely, and inherited OpenAPI's narrow meaning of `parameters` even though body fields are part of the agent's input surface. This ADR resolves the contract `--schema` exposes to agents.
 
 ## Decision
@@ -76,6 +76,40 @@ False booleans are omitted to keep the JSON tight. The root-level `globalFlags` 
 3. **`output` is OpenAPI-only at ship.** GraphQL agents get `defaultSelection` instead of a JSON Schema, which is information-rich but structurally asymmetric. Documented; intentional; revisitable when the parser extension lands.
 4. **`globalFlags` and capability hints couple `--schema` to the CLI harness.** A spec-derived field (`input`) and a harness-derived field (`globalFlags`) now share one document. The coupling is one-way (the schema describes what the harness exposes), and the alternative — splitting into two docs — costs the agent a second call.
 
+## Amendment — 2026-08-28: `httpMethod` and `path` are restored
+
+The original decision dropped both fields at every scope, and alternative (G)
+below rejected keeping them with: *"HTTP plumbing is execution detail the CLI
+handles, not contract the agent uses."*
+
+That reasoning missed the use an actual agent consumer had for them. Reported
+by a customer building agent tooling on a generated CLI:
+
+> without the method and path, an agent reading `--schema` can't tell a read
+> from a write before running it.
+
+Distinguishing a read from a mutation before acting is a **safety** property,
+not execution detail. Nothing else in the contract carries it: `operation` and
+`description` are prose, and an agent would have to infer intent from a verb in
+a method name. The original framing — "what the agent needs to use the command"
+— actually argues *for* these fields once you count "decide whether it is safe
+to run" as part of using the command.
+
+Both fields are therefore emitted again in the per-operation envelope and in the
+root/resource catalog. The catalog matters most: that is where an agent picks an
+operation.
+
+This amendment is **additive**. It does not revert the rest of the redesign —
+the `{globalFlags, operations}` root wrap, the `parameters` → `input` rename,
+`output`, and the per-op capability hints all stand. The `jq` pipelines that
+cli-sdk#190 ported from `.[]` to `.operations[]` are unaffected, so nothing
+downstream needs to change to absorb this.
+
+The one cost is the one the original decision named: an agent that does not need
+the fields now reads two more keys per operation. Measured against a 337-op spec
+that is a rounding error next to the response schemas the same ADR chose to
+inline.
+
 ## Alternatives considered
 
 - **(A) Keep `parameters` as the per-op input key and add `responseSchema` for output.** The path of least change. Rejected because `parameters` inherits OpenAPI's narrow meaning (excludes body), and adding body fields to it under that name guarantees confusion. `input`/`output` is symmetric and CLI-native.
@@ -84,7 +118,7 @@ False booleans are omitted to keep the JSON tight. The root-level `globalFlags` 
 - **(D) Render `output` with a `$defs` map (JSON Schema 2020-12 style) instead of full inlining.** Compact, no duplication, no cycle worries. Rejected: most response schemas are shallow enough that duplication isn't a problem, and the agent gets a single self-contained blob without a second lookup table. Cycle detection (leave `$ref` pointer on re-entry) covers the pathological cases.
 - **(E) Polymorphic `output`: object (JSON Schema) for OpenAPI, string (GraphQL fragment) for GraphQL.** Rejected: the agent loses the simple "is `output` present? then it's a JSON Schema" check, and downstream tooling has to type-check. Separate sibling field (`defaultSelection`) keeps each shape pure.
 - **(F) Omit `output` for GraphQL entirely until the parser extension lands.** Rejected because `defaultSelection` is sitting in the IR today and gives the agent real, actionable response-shape information. Strictly worse for the agent than (E)'s rejected polymorphism but worse than the chosen sibling-field approach.
-- **(G) Keep `httpMethod` and `path` for human debugging.** Rejected: the design principle is "what the agent needs to use the command." HTTP plumbing is execution detail the CLI handles, not contract the agent uses. Debuggers can still read the spec directly.
+- **(G) Keep `httpMethod` and `path` for human debugging.** ~~Rejected~~ — **superseded by the 2026-08-28 amendment above**, on a rationale this entry did not consider (read/write classification before acting, not human debugging). Original reasoning: the design principle is "what the agent needs to use the command." HTTP plumbing is execution detail the CLI handles, not contract the agent uses. Debuggers can still read the spec directly.
 - **(H) Brutalist `{input, output}`-only per-op shape — drop `operation`, `description`, `availability` too.** Rejected: `operation` makes the JSON self-describing when cached, `description` is a confirmation signal that the agent landed on the right op, and `availability` is a guardrail. All three are cheap.
 - **(I) Skip capability hints; document `--page-all`/`--dry-run`/etc. in `--help` only.** Rejected: an agent doing pagination would have to trial-and-error to figure out that `--page-all` works on `list-events` but not `get-event`. Hints make this deterministic.
 - **(J) Surface `examples` capped at N per property or N bytes total.** Deferred — trust spec authors for now and revisit if real specs bloat the output.
