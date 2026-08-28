@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Operation Id Word Boundaries API
+  version: 1.0.0
+paths:
+  /sharing/list-folder-members:
+    get:
+      operationId: Sharing_ListFolderMembers
+      tags:
+        - sharing
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /files/thumbnail:
+    get:
+      operationId: filesGetThumbnail
+      tags:
+        - files
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /files/thumbnail/v2:
+    get:
+      operationId: filesGetThumbnailV2
+      tags:
+        - files
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /file-properties/templates/get-for-user:
+    get:
+      operationId: FileProperties_TemplatesGetForUser
+      tags:
+        - file_properties
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /team/members/add/v2:
+    post:
+      operationId: TeamMembers_AddV2
+      tags:
+        - team members
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /auth/token/from-oauth1:
+    post:
+      operationId: auth_token_from_oauth1
+      tags:
+        - auth
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string

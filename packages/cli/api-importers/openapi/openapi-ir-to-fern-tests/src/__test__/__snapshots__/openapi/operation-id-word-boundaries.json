@@ -1,0 +1,338 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "auth.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "tokenFromOauth1": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/auth/token/from-oauth1",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    tokenFromOauth1:
+      path: /auth/token/from-oauth1
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "fileProperties.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "templatesGetForUser": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/file-properties/templates/get-for-user",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    templatesGetForUser:
+      path: /file-properties/templates/get-for-user
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "files.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getThumbnail": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/files/thumbnail",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getThumbnailV2": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/files/thumbnail/v2",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getThumbnail:
+      path: /files/thumbnail
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+    getThumbnailV2:
+      path: /files/thumbnail/v2
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "sharing.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listFolderMembers": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/sharing/list-folder-members",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listFolderMembers:
+      path: /sharing/list-folder-members
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "teamMembers.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "addV2": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/team/members/add/v2",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    addV2:
+      path: /team/members/add/v2
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Operation Id Word Boundaries API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Operation Id Word Boundaries API
+",
+  },
+  "specVersion": "1.0.0",
+}
