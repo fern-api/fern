@@ -61,6 +61,9 @@ service:
             non_nullable_text:
               docs: Regular non-nullable field
               type: optional<string>
+            required_nullable_text:
+              docs: Must be sent, but may be null to clear the value
+              type: nullable<string>
         headers:
           X-Idempotency-Key: string
       response:
