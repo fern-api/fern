@@ -2517,8 +2517,8 @@ function isPaginationCursorMissingInExample({
 
     const cursor = getJsonValueAtPath({ json: responseJson, segments: getResponsePropertySegments(cursorProperty) });
 
-    // If the leaf is absent, explicitly undefined, or null, treat it as "missing"
-    return cursor == null;
+    // The generated pager also treats an empty string cursor as the end of pagination.
+    return cursor == null || cursor === "";
 }
 
 /**
