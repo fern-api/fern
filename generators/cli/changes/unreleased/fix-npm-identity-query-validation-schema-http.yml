@@ -64,3 +64,45 @@
     2/2 after); that fixture also declares no pagination, so it is why the
     breakage was not caught when the registration gate landed.
   type: fix
+
+- summary: |
+    Array-of-enum parameters are now constrained. `type: array, items:
+    {$ref: SomeEnum}` carries no enum of its own — it lives on `items` — so
+    the flag was completely unchecked while its scalar twin was enforced by a
+    clap `value_parser`: `--event-types bogus` reached the API, `--direction
+    bogus` did not. `--schema` now advertises `items.enum` and the executor
+    rejects a non-member before any request is sent, naming the flag and
+    listing the valid options. Enforced after value collection rather than by
+    a `value_parser`, because a repeated flag also accepts a whole JSON array
+    in one argument (`--event-types '["a","b"]'`) and clap would reject that
+    literal as a non-member; all four input forms (repeated, single, JSON
+    array, `--params`) are verified to serialize exactly as before.
+    Note this can newly reject a request that previously went out: that is the
+    point, but a spec whose enum is stale will now block values the API still
+    accepts.
+  type: fix
+
+- summary: |
+    Body properties spelled `anyOf: [T, null]` are type-checked. Such a
+    property carries no `type:` of its own — the type is in the branch — and
+    every check downstream keyed off it, so `--json '{"name": 123}'` on a
+    `name` declared `anyOf: [{type: string}, {type: null}]` was forwarded to
+    the wire unvalidated, while the same property spelled `type: string` was
+    correctly rejected. Non-null values are now validated against the sole
+    non-null branch, at both the property level and for a `$ref`'d component
+    that is itself a nullable union. A genuine multi-branch union
+    (`oneOf: [string, array]`) is deliberately left permissive: asserting one
+    branch would reject values the other allows.
+  type: fix
+
+- summary: |
+    The two mutual-exclusion errors name flags that exist. Both interpolated
+    the raw wire key, so combining `--json` with a body flag reported
+    `--event_types` where `--event-types` is registered, and an object
+    shorthand against its own leaf reported `--permissions.inbox_read` where
+    `--permissions.inbox-read` is registered — clap rejects the spelling the
+    error suggests, and `--schema` discloses the resolved name, so the
+    message contradicted the contract beside it. Both now route through
+    `resolve_param_flag_name`, the shared resolver the command builder and
+    the missing-parameter hint already use.
+  type: fix
