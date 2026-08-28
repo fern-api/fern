@@ -321,6 +321,17 @@ describe("resolveThemeFileUrls (non-presigned)", () => {
         expect(result.js).toEqual([{ url: "https://cdn.example.com/script.js" }]);
     });
 
+    it("preserves plain-string JS entries that aren't presigned", async () => {
+        const config = { js: "https://cdn.example.com/script.js" };
+        const result = await resolveThemeFileUrls(config, "/tmp/test");
+        expect(result.js).toEqual(["https://cdn.example.com/script.js"]);
+    });
+
+    it("leaves js absent when the theme declares none", async () => {
+        const result = await resolveThemeFileUrls({ favicon: "https://example.com/favicon.ico" }, "/tmp/test");
+        expect(result.js).toBeUndefined();
+    });
+
     it("preserves regular https CSS string without downloading", async () => {
         const config = { css: "https://example.com/styles.css" };
         const result = await resolveThemeFileUrls(config, "/tmp/test");
@@ -337,6 +348,50 @@ describe("resolveThemeFileUrls (non-presigned)", () => {
         const config = { favicon: "https://example.com/favicon.ico" };
         await resolveThemeFileUrls(config, "/tmp/test");
         expect(config).toEqual({ favicon: "https://example.com/favicon.ico" });
+    });
+});
+
+// ---------------------------------------------------------------------------
+// resolveThemeFileUrls — presigned assets are downloaded to the theme directory
+// ---------------------------------------------------------------------------
+
+describe("resolveThemeFileUrls (presigned)", () => {
+    const PRESIGNED_JS =
+        "https://cas.example.com/abc123?X-Amz-Signature=sig&response-content-disposition=attachment%3B%20filename%3D%22header-scroll.js%22";
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(tmpdir(), "fern-theme-test-"));
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                status: 200,
+                arrayBuffer: () => Promise.resolve(new TextEncoder().encode("console.log('hi')").buffer),
+                headers: { get: () => null }
+            } as unknown as Response)
+        );
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    // A theme that declares `js: ./assets/header-scroll.js` uploads the file to CAS and
+    // gets the presigned URL back as a bare string — it has to be downloaded, otherwise
+    // the consuming repo resolves it as a path relative to its own docs directory.
+    it("downloads a presigned plain-string JS entry", async () => {
+        const result = await resolveThemeFileUrls({ js: PRESIGNED_JS }, tmpDir);
+        expect(result.js).toEqual([path.join(tmpDir, "header-scroll.js")]);
+    });
+
+    it("downloads a presigned JS entry declared as { path }", async () => {
+        const result = await resolveThemeFileUrls(
+            { js: [{ path: PRESIGNED_JS, strategy: "afterInteractive" }] },
+            tmpDir
+        );
+        expect(result.js).toEqual([{ path: path.join(tmpDir, "header-scroll.js"), strategy: "afterInteractive" }]);
     });
 });
 

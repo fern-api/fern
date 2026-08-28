@@ -1,0 +1,5 @@
+- summary: |
+    Fix `js` declared as a plain string in a global theme breaking publishes in consuming repos.
+    The uploaded file's presigned URL was left in the stitched config and then resolved as a path
+    relative to the consumer's docs directory, failing with ENOENT.
+  type: fix
