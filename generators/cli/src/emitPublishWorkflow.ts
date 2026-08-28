@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import type { CargoPackageIdentity } from "./patchCargoToml.js";
 import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
 
 /**
@@ -55,11 +56,20 @@ export async function emitPublishWorkflow(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    /**
+     * `customConfig.packageIdentity`. Already feeds `Cargo.toml`; without it
+     * here the published npm package carried none of it — npm rendered the
+     * launcher as "License: none", with no keywords, no homepage and a
+     * hardcoded description. The license is the part that isn't cosmetic:
+     * dependency scanners and corporate policy gates reject unlicensed
+     * packages.
+     */
+    packageIdentity?: CargoPackageIdentity;
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo, repoUrl } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, packageIdentity });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -122,8 +132,9 @@ function constructWorkflowYaml(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    packageIdentity?: CargoPackageIdentity;
 }): string {
-    const { binaryName, npmPublishInfo, repoUrl } = args;
+    const { binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
@@ -160,6 +171,31 @@ function constructWorkflowYaml(args: {
     // reported SUCCESS to anything checking `$?`, on the npm install path
     // only. The launcher now requires a numeric status and otherwise reports
     // 128+signum, matching the shell convention (SIGTERM -> 143).
+    // Identity fields for the launcher's package.json. `packageIdentity`
+    // already feeds Cargo.toml; the npm package got none of it, so npm rendered
+    // the CLI as "License: none" with no keywords and a hardcoded description.
+    //
+    // Values are `JSON.stringify`d rather than interpolated raw: a description
+    // legitimately contains apostrophes and commas, and a stray quote here
+    // would emit a package.json that npm cannot parse.
+    const identityLines: string[] = [];
+    const identityField = (key: string, value: string | string[] | undefined): void => {
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return;
+        }
+        identityLines.push(`            ${JSON.stringify(key)}: ${JSON.stringify(value)},`);
+    };
+    identityField("license", packageIdentity?.license);
+    identityField("keywords", packageIdentity?.keywords);
+    identityField("homepage", packageIdentity?.homepage);
+    // npm takes a single `author` string; `packageIdentity.authors` is a list
+    // (Cargo's shape), so the first entry becomes `author` and the rest
+    // `contributors`.
+    const [firstAuthor, ...otherAuthors] = packageIdentity?.authors ?? [];
+    identityField("author", firstAuthor);
+    identityField("contributors", otherAuthors);
+    const launcherDescription = packageIdentity?.description ?? `CLI for ${binaryName}`;
+
     const launcherPlatformEntries = TARGETS.map(
         (t) => `            "${t.npmPlatformSuffix}": "${npmPublishInfo.packageName}-${t.npmPlatformSuffix}",`
     ).join("\n");
@@ -410,7 +446,12 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": "CLI for ${binaryName}",${
+            "description": ${JSON.stringify(launcherDescription)},${
+                identityLines.length > 0
+                    ? `
+${identityLines.join("\n")}`
+                    : ""
+            }${
                 repoUrl != null
                     ? `
             "repository": {
