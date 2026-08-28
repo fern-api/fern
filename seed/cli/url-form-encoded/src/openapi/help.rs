@@ -174,6 +174,12 @@ fn build_operation_schema(
     let mut properties: Map<String, Value> = Map::new();
     let mut required: Vec<String> = Vec::new();
 
+    // Mirrors `commands::build_resource_command`: when two wire names
+    // sanitize to the same flag only the first in sorted order is
+    // registered, so the loser must not advertise a flag that belongs to
+    // the winner.
+    let mut flag_to_wire: HashMap<String, String> = HashMap::new();
+
     let mut param_names: Vec<_> = method.parameters.keys().collect();
     param_names.sort();
     for name in param_names {
@@ -277,7 +283,24 @@ fn build_operation_schema(
             prop["variable"] = json!(var_name);
             prop["globalFlag"] = json!(format!("--{}", crate::text::to_kebab_flag(var_name)));
             prop["envVar"] = json!(crate::text::to_screaming_snake(var_name));
-        } else if param.required || param.required_by_spec {
+        } else if let Some(flag) = crate::openapi::commands::resolve_param_flag_name(param, name) {
+            // Property keys are wire names, which diverge from the flag an
+            // agent types (header casing, `x-fern-parameter-name` renames, a
+            // `-param` suffix on builtin collisions). Derived from the same
+            // `resolve_param_flag_name` the command builder uses so the two
+            // cannot drift; absent means the parameter is reachable only via
+            // `--params`, because the builder registers no flag for it.
+            match flag_to_wire.entry(flag.clone()) {
+                std::collections::hash_map::Entry::Vacant(slot) => {
+                    slot.insert(name.clone());
+                    prop["flag"] = json!(format!("--{flag}"));
+                }
+                // The builder skipped this parameter: `--{flag}` sets the
+                // wire name that claimed it first, not this one.
+                std::collections::hash_map::Entry::Occupied(_) => {}
+            }
+        }
+        if param.variable_reference.is_none() && (param.required || param.required_by_spec) {
             // `required_by_spec` catches object-valued body properties whose
             // shorthand flag is deliberately clap-optional (the caller may use
             // dot-notation leaves instead) but which the wire still requires.
@@ -296,14 +319,16 @@ fn build_operation_schema(
     // undiscoverable, so an agent driving purely from `--schema` could not
     // invoke *any* multipart operation.
     //
-    // Skips fields whose kebab name collides with a builtin flag, mirroring
+    // Skips fields whose kebab name is reserved by the runtime, mirroring
     // `commands::build_resource_command` — those args are never registered, so
-    // advertising them would be the same class of lie.
+    // advertising them would be the same class of lie. Both loops resolve the
+    // name through `resolve_multipart_field_flag_name` so they cannot drift.
     for field in &method.multipart_fields {
-        let kebab = crate::text::to_kebab_flag(&field.wire_name);
-        if crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab.as_str()) {
+        let Some(kebab) =
+            crate::openapi::commands::resolve_multipart_field_flag_name(&field.wire_name)
+        else {
             continue;
-        }
+        };
         // The flag surface is a string either way: a text part takes its value
         // verbatim, a file part takes a filesystem path (`@path` / `-` for
         // stdin are accepted too — see `--help`). `file: true` is what tells an
@@ -324,6 +349,7 @@ fn build_operation_schema(
         if let Some(content_type) = &field.content_type {
             prop["contentType"] = json!(content_type);
         }
+        prop["flag"] = json!(format!("--{kebab}"));
         if field.required {
             required.push(field.wire_name.clone());
         }
@@ -2239,5 +2265,102 @@ mod tests {
             .map(|v| v.as_str().unwrap())
             .collect();
         assert_eq!(required, vec!["audio"], "only the required part is listed");
+    }
+
+    /// Every settable property must disclose the flag an agent types.
+    ///
+    /// Property keys are wire names and diverge from flags more often than
+    /// they look. The case that made a contract unfollowable: a spec parameter
+    /// named `query` is registered as `--query-param`, because `--query` is the
+    /// JMESPath global — `required` named `query` and no such flag existed.
+    #[test]
+    fn every_settable_property_discloses_its_flag() {
+        use crate::openapi::discovery::{MethodParameter, MultipartField};
+        let mut parameters = HashMap::new();
+        // Collides with the JMESPath global -> registered with a `-param` suffix.
+        parameters.insert("query".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            required: true,
+            ..Default::default()
+        });
+        // Header wire-casing -> kebab flag.
+        parameters.insert("Idempotency-Key".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("header".to_string()),
+            ..Default::default()
+        });
+        // Ordinary name -> unchanged.
+        parameters.insert("limit".to_string(), MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        });
+        // Two wire names sanitizing to `--page-size`: the command builder
+        // registers only the first in sorted order, so the loser must stay
+        // silent rather than point at the winner's flag.
+        for wire in ["pageSize", "page_size"] {
+            parameters.insert(wire.to_string(), MethodParameter {
+                param_type: Some("integer".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            });
+        }
+
+        let mut methods = HashMap::new();
+        methods.insert(
+            "search".to_string(),
+            RestMethod {
+                parameters,
+                multipart_fields: vec![MultipartField {
+                    wire_name: "audio_file".to_string(),
+                    is_file: true,
+                    description: None,
+                    required: true,
+                    content_type: None,
+                    repeated: false,
+                }],
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+
+        let schema = operation_schema(&doc, &["things"], "search").expect("schema");
+        let props = &schema["input"]["properties"];
+
+        assert_eq!(
+            props["query"]["flag"], "--query-param",
+            "a builtin-colliding name must disclose its suffixed flag: {props}",
+        );
+        assert_eq!(props["Idempotency-Key"]["flag"], "--idempotency-key");
+        assert_eq!(props["limit"]["flag"], "--limit");
+        assert_eq!(props["audio_file"]["flag"], "--audio-file");
+        assert_eq!(props["pageSize"]["flag"], "--page-size");
+        assert!(
+            props["page_size"].get("flag").is_none(),
+            "the parameter that lost the flag collision must not advertise it: {props}",
+        );
+
+        // The required list still uses wire names (the `--params` route), so
+        // both spellings stay usable.
+        let required: Vec<&str> = schema["input"]["required"]
+            .as_array()
+            .expect("required")
+            .iter()
+            .map(|v| v.as_str().unwrap())
+            .collect();
+        assert!(required.contains(&"query"), "{required:?}");
+        assert!(required.contains(&"audio_file"), "{required:?}");
     }
 }
