@@ -658,8 +658,7 @@ fn build_resource_command(
         // Skip fields whose kebab name collides with a builtin flag,
         // matching the regular-param convention above.
         for field in &method.multipart_fields {
-            let kebab = to_kebab_flag(&field.wire_name);
-            if is_reserved_flag_name(&kebab) {
+            if resolve_multipart_field_flag_name(&field.wire_name).is_none() {
                 continue;
             }
             method_cmd = method_cmd.arg(build_multipart_field_arg(field));
@@ -964,6 +963,19 @@ pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) 
         flag = format!("{flag}-param");
     }
     Some(flag)
+}
+
+/// Resolve the CLI flag name for a multipart field, replicating what
+/// `build_resource_command` registers. `None` when the kebab name is
+/// reserved by the runtime: the builder skips those args, so no flag
+/// exists and the field is reachable only through `--params`.
+pub(crate) fn resolve_multipart_field_flag_name(wire_name: &str) -> Option<String> {
+    let kebab = to_kebab_flag(wire_name);
+    if is_reserved_flag_name(&kebab) {
+        None
+    } else {
+        Some(kebab)
+    }
 }
 
 /// Whether a parameter-derived flag long name is reserved by the runtime
