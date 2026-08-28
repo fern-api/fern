@@ -85,7 +85,7 @@ const GRAPHQL_TYPES_URL_SLUG = "types";
  * Title of the single section holding every GraphQL kind. Types belong to the schema rather than
  * to any one package, so every GraphQL spec in the API section contributes to this one section.
  */
-const GRAPHQL_TYPES_TITLE = "GraphQL Types";
+const GRAPHQL_TYPES_TITLE = "Types";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;

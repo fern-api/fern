@@ -112,8 +112,7 @@ async function convertFixture({
 /** The single section holding every kind, or undefined when the schema declares no types. */
 function typesRoot(node: FernNavigation.V1.ApiReferenceNode): FernNavigation.V1.ApiPackageNode | undefined {
     return node.children.find(
-        (child): child is FernNavigation.V1.ApiPackageNode =>
-            child.type === "apiPackage" && child.title === "GraphQL Types"
+        (child): child is FernNavigation.V1.ApiPackageNode => child.type === "apiPackage" && child.title === "Types"
     );
 }
 
@@ -198,7 +197,7 @@ describe("GraphQL type navigation", () => {
         expect(typeSection(node, "Scalars")).toBeDefined();
     });
 
-    it("nests every kind under a single GraphQL Types section", async () => {
+    it("nests every kind under a single Types section", async () => {
         const node = await convertFixture();
 
         const root = typesRoot(node);
@@ -218,8 +217,7 @@ describe("GraphQL type navigation", () => {
         const node = await convertFixture({ fixture: FIXTURE_WITH_SUBPACKAGES });
 
         const subpackages = node.children.filter(
-            (child): child is FernNavigation.V1.ApiPackageNode =>
-                child.type === "apiPackage" && child.title !== "GraphQL Types"
+            (child): child is FernNavigation.V1.ApiPackageNode => child.type === "apiPackage" && child.title !== "Types"
         );
         expect(subpackages.length).toBeGreaterThan(0);
         for (const subpackage of subpackages) {
