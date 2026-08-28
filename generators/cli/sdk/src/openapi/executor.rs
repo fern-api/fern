@@ -4410,6 +4410,25 @@ fn validate_value(
     if !check_json_type(value, expected_type, path, errors) {
         return;
     }
+    // A `$ref`'d enum component. `validate_property` checks `enum_values` on an
+    // inline property (step 5), but a property that reaches its enum through a
+    // `$ref` landed here and fell off the end, so the members were advertised
+    // and never enforced: `webhooks create --event-types bogus` was accepted
+    // and sent while the query-parameter equivalent was rejected. Also covers
+    // an array's element enum, since the items schema recurses through
+    // `validate_property` into this function.
+    //
+    // Exact match is safe: the flag layer canonicalizes an `x-fern-enum`
+    // display name to its wire value before the executor sees it
+    // (`MethodParameter::resolve_enum_display_to_wire`).
+    if let (Some(members), Value::String(raw)) = (&schema.enum_values, value) {
+        if !members.iter().any(|member| member == raw) {
+            errors.push(format!(
+                "{path}: Value '{raw}' is not a valid enum member. Valid options: {members:?}"
+            ));
+            return;
+        }
+    }
     if expected_type == "array" {
         if let (Some(items), Value::Array(arr)) = (&schema.items, value) {
             for (index, item) in arr.iter().enumerate() {
@@ -7813,6 +7832,78 @@ mod tests {
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
             "null on nullable-union must validate via any_of null branch",
         );
+    }
+
+    #[test]
+    fn test_ref_to_enum_component_is_enforced_in_a_body() {
+        // `validate_property` checks `enum_values` on an inline property, but a
+        // property reaching its enum through a `$ref` resolved to a
+        // `JsonSchema` -- which had no `enum_values` field at all, so the
+        // members were advertised in `--schema` and never enforced. On a real
+        // spec, `webhooks create --event-types bogus` was accepted and sent
+        // while the query-parameter equivalent was rejected.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([
+                        (
+                            "direction".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Direction".to_string()),
+                                ..Default::default()
+                            },
+                        ),
+                        (
+                            "event_types".to_string(),
+                            JsonSchemaProperty {
+                                prop_type: Some("array".to_string()),
+                                items: Some(Box::new(JsonSchemaProperty {
+                                    schema_ref: Some("Direction".to_string()),
+                                    ..Default::default()
+                                })),
+                                ..Default::default()
+                            },
+                        ),
+                    ]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "Direction".to_string(),
+                JsonSchema {
+                    schema_type: Some("string".to_string()),
+                    enum_values: Some(vec!["send".to_string(), "receive".to_string()]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        // Legal members pass, as a scalar and as array elements.
+        for body in [
+            json!({ "direction": "send" }),
+            json!({ "event_types": ["send", "receive"] }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+                "legal members must pass: {body}",
+            );
+        }
+
+        // Non-members are caught, including inside an array.
+        for body in [
+            json!({ "direction": "bogus" }),
+            json!({ "event_types": ["bogus"] }),
+            json!({ "event_types": ["send", "bogus"] }),
+        ] {
+            let error = validate_body_against_schema(&body, "Msg", &doc)
+                .expect_err(&format!("must reject a non-member: {body}"));
+            let message = format!("{error}");
+            assert!(message.contains("bogus"), "got: {message}");
+            assert!(message.contains("send"), "must list valid options; got: {message}");
+        }
     }
 
     #[test]

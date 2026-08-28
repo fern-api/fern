@@ -2066,6 +2066,10 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         properties,
         schema_ref: None,
         items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
+        // `effective_enum_values` rather than `obj.enum_values` so a `const:`
+        // lowers to a single-member enum here exactly as it does everywhere
+        // else the parser reads an enum.
+        enum_values: effective_enum_values(obj),
         required: obj.required.clone(),
         one_of: convert_composition_branches(&obj.one_of),
         any_of: convert_composition_branches(&obj.any_of),

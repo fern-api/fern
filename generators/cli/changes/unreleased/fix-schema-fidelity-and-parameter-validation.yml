@@ -122,3 +122,24 @@
     `x-fern-enum` display name and the `null` sentinel on a nullable parameter
     are still accepted.
   type: fix
+
+- summary: |
+    A `$ref` to an enum component is enforced inside a request body. The
+    validator's component model carried no `enum` field at all, so a property
+    that reached its enum through a `$ref` had its members advertised in
+    `--schema` and never checked — `webhooks create --event-types bogus` was
+    accepted and sent, while the identical enum declared inline on the property,
+    or used as a query parameter, was rejected. Covers array elements too, and
+    a `const:` lowers to a single-member enum as it does elsewhere. Exact
+    matching is safe because the flag layer canonicalizes an `x-fern-enum`
+    display name to its wire value before validation.
+  type: fix
+
+- summary: |
+    A repeatable flag's `--help` now says it is repeatable. The value name can
+    only show one form, and once it correctly reports the element type
+    (`<STRING>` rather than `<JSON_ARRAY>`) nothing on the surface indicated
+    that the flag can be passed more than once or handed a whole JSON array —
+    both of which work. The long help now discloses both forms; the one-line
+    form is unchanged, since it is width-limited and truncated.
+  type: fix

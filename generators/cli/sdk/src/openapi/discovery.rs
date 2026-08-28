@@ -1247,6 +1247,13 @@ pub struct JsonSchema {
     #[serde(rename = "$ref")]
     pub schema_ref: Option<String>,
     pub items: Option<Box<JsonSchemaProperty>>,
+    /// The component's own `enum`. A property that reaches its enum through a
+    /// `$ref` resolves to a component, so without this field the members were
+    /// unreachable from the validator and an invalid value was accepted and
+    /// sent — while the identical enum declared inline on the property was
+    /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
+    #[serde(rename = "enum")]
+    pub enum_values: Option<Vec<String>>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors
