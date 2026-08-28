@@ -7,7 +7,11 @@ import fs from "fs";
 import { resolve } from "path";
 import { afterEach, beforeEach, vi } from "vitest";
 
-import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths.js";
+import {
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage
+} from "../parseImagePaths.js";
 
 const CONTEXT = createMockTaskContext();
 
@@ -1724,5 +1728,39 @@ describe("angle bracket delimited destinations", () => {
             CONTEXT
         );
         expect(result.trim()).toBe("[other page](</docs/other>)");
+    });
+});
+
+describe("replaceImagePathsAndUrlsInTranslatedPage", () => {
+    const TRANSLATED_MDX_PATH = AbsoluteFilePath.of("/Volume/git/fern/translations/tr/my/docs/folder/file.mdx");
+    const IMAGE_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png");
+
+    function replace(markdown: string, fileIds: Map<AbsoluteFilePath, string> = new Map([[IMAGE_PATH, "fileID"]])) {
+        return replaceImagePathsAndUrlsInTranslatedPage({
+            markdown,
+            fileIdsMap: fileIds,
+            markdownFilesToPathName: {},
+            absolutePathToFernFolder: DOCS_PATH,
+            absolutePathToDefaultLocaleMarkdownFile: MDX_PATH,
+            absolutePathToTranslatedMarkdownFile: TRANSLATED_MDX_PATH,
+            context: CONTEXT
+        }).trim();
+    }
+
+    it("replaces a path authored relative to the translated page", () => {
+        expect(replace('<img src="../../../my/docs/folder/path/to/image.png" />')).toBe('<img src="file:fileID" />');
+    });
+
+    it("replaces a path copied verbatim from the default-locale page", () => {
+        expect(replace('<img src="path/to/image.png" />')).toBe('<img src="file:fileID" />');
+    });
+
+    it("leaves a reference with no uploaded file as authored", () => {
+        expect(replace('<img src="path/to/missing.png" />')).toBe('<img src="path/to/missing.png" />');
+    });
+
+    it("leaves markdown and code includes untouched", () => {
+        const page = '<Markdown src="../shared/snippet.mdx" />\n<Code src="../shared/example.ts" />';
+        expect(replace(page)).toBe(page);
     });
 });

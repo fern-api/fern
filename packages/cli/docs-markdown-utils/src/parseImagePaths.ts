@@ -1241,6 +1241,43 @@ export function replaceImagePathsAndUrls(
     return requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data));
 }
 
+/**
+ * Replaces image paths in a translated page with the uploaded file IDs.
+ *
+ * Translated pages either copy the default-locale page's relative paths verbatim or write them
+ * relative to their own location under `translations/<locale>/`, so both locations are tried.
+ * References that resolve to no uploaded file are left as authored.
+ */
+export function replaceImagePathsAndUrlsInTranslatedPage({
+    markdown,
+    fileIdsMap,
+    markdownFilesToPathName,
+    absolutePathToFernFolder,
+    absolutePathToDefaultLocaleMarkdownFile,
+    absolutePathToTranslatedMarkdownFile,
+    context
+}: {
+    markdown: string;
+    fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>;
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToDefaultLocaleMarkdownFile: AbsoluteFilePath;
+    absolutePathToTranslatedMarkdownFile: AbsoluteFilePath;
+    context: TaskContext;
+}): string {
+    return [absolutePathToDefaultLocaleMarkdownFile, absolutePathToTranslatedMarkdownFile].reduce(
+        (replaced, absolutePathToMarkdownFile) =>
+            replaceImagePathsAndUrls(
+                replaced,
+                fileIdsMap,
+                markdownFilesToPathName,
+                { absolutePathToMarkdownFile, absolutePathToFernFolder },
+                context
+            ),
+        markdown
+    );
+}
+
 function getPosition(
     markdown: string,
     position: { start: { line: number; column: number }; end: { line: number; column: number } }

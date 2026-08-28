@@ -6,13 +6,20 @@ export {
     isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     trimAnchor
 } from "./parseImagePaths.js";
 export { parseMarkdownBodyToTree, parseMarkdownToTree } from "./parseMarkdownToTree.js";
-export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";
+export {
+    collectCodeSrcUrls,
+    prefetchCodeSrcUrls,
+    removeCodeIncludeTags,
+    replaceReferencedCode
+} from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
     type ReplaceReferencedMarkdownResult,
+    removeMarkdownIncludeTags,
     replaceReferencedMarkdown
 } from "./replaceReferencedMarkdown.js";
 export { stripMdxComments } from "./stripMdxComments.js";

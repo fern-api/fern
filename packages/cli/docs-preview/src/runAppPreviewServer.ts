@@ -5,7 +5,7 @@ import {
     applyTranslatedNavigationOverlays,
     findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
+    replaceImagePathsAndUrlsInTranslatedPage,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -910,17 +910,15 @@ export async function runAppPreviewServer({
                         // Strip MDX comments
                         let processedMarkdown = stripMdxComments(importsResolved);
 
-                        // Replace image paths using collected file IDs
-                        processedMarkdown = replaceImagePathsAndUrls(
-                            processedMarkdown,
-                            collectedFileIds,
+                        processedMarkdown = replaceImagePathsAndUrlsInTranslatedPage({
+                            markdown: processedMarkdown,
+                            fileIdsMap: collectedFileIds,
                             markdownFilesToPathName,
-                            {
-                                absolutePathToMarkdownFile,
-                                absolutePathToFernFolder: docsWorkspacePath
-                            },
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToDefaultLocaleMarkdownFile: absolutePathToMarkdownFile,
+                            absolutePathToTranslatedMarkdownFile: await resolveLocalePath(absolutePathToMarkdownFile),
                             context
-                        );
+                        });
 
                         translatedPages[pagePath] = {
                             markdown: processedMarkdown,

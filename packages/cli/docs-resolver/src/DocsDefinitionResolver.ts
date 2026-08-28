@@ -14,6 +14,8 @@ import {
     parseImagePaths,
     prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
+    removeCodeIncludeTags,
+    removeMarkdownIncludeTags,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
@@ -625,6 +627,7 @@ export class DocsDefinitionResolver {
                 });
             }
         }
+        this.collectImageFilesInTranslationPages(filesToUploadSet);
         const imageParseTime = performance.now() - imageParseStart;
         this.taskContext.logger.debug(`Parsed image paths in ${imageParseTime.toFixed(0)}ms`);
 
@@ -825,6 +828,61 @@ export class DocsDefinitionResolver {
         );
 
         return { config, pages, jsFiles };
+    }
+
+    /**
+     * Collects assets referenced by translated pages so that images only a translation uses are
+     * uploaded. The translated markdown itself is rewritten per locale when the translated docs
+     * definition is built, so it is left untouched here.
+     */
+    private collectImageFilesInTranslationPages(filesToUploadSet: Set<AbsoluteFilePath>): void {
+        const translationPages = this.parsedDocsConfig.translationPages;
+        if (translationPages == null) {
+            return;
+        }
+
+        for (const [locale, pages] of Object.entries(translationPages)) {
+            for (const [relativePath, rawMarkdown] of Object.entries(pages)) {
+                const relativeFilePath = RelativeFilePath.of(relativePath);
+                // `<Markdown src="..."/>` and `<Code src="..."/>` includes are inlined per locale
+                // downstream, so their references are not assets to upload.
+                const markdown = removeCodeIncludeTags(removeMarkdownIncludeTags(rawMarkdown));
+                // Image paths are authored either relative to the translated file or copied verbatim
+                // from the default-locale page, so both locations are considered.
+                const filepaths = [
+                    this.resolveTranslationFilepath(locale, relativeFilePath),
+                    this.resolveFilepath(relativeFilePath)
+                ].flatMap(
+                    (absolutePathToMarkdownFile) =>
+                        parseImagePaths(
+                            markdown,
+                            {
+                                absolutePathToMarkdownFile,
+                                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                            },
+                            this.taskContext
+                        ).filepaths
+                );
+
+                for (const filepath of filepaths) {
+                    if (existsSync(filepath)) {
+                        filesToUploadSet.add(filepath);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Translated pages live at `translations/<locale>/<relative path of the default-locale page>`.
+     */
+    private resolveTranslationFilepath(locale: string, relativeFilePath: RelativeFilePath): AbsoluteFilePath {
+        return join(
+            this.docsWorkspace.absoluteFilePath,
+            RelativeFilePath.of("translations"),
+            RelativeFilePath.of(locale),
+            relativeFilePath
+        );
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;
