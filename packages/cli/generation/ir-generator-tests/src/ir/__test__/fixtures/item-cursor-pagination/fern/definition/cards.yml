@@ -1,0 +1,27 @@
+types:
+  Card:
+    properties:
+      token: string
+      last_four: string
+
+  ListCardsResponse:
+    properties:
+      data: list<Card>
+      has_more: boolean
+
+service:
+  auth: false
+  base-path: /cards
+  endpoints:
+    list:
+      method: GET
+      path: ""
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.data[-1].token
+        results: $response.data
+      request:
+        name: ListCardsRequest
+        query-parameters:
+          starting_after: optional<string>
+      response: ListCardsResponse

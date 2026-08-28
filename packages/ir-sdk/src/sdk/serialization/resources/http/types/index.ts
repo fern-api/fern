@@ -44,6 +44,8 @@ export * from "./HttpResponseBody.js";
 export * from "./HttpService.js";
 export * from "./InlinedRequestBody.js";
 export * from "./InlinedRequestBodyProperty.js";
+export * from "./ItemCursorElement.js";
+export * from "./ItemCursorPagination.js";
 export * from "./JsonResponse.js";
 export * from "./JsonResponseBody.js";
 export * from "./JsonResponseBodyWithProperty.js";

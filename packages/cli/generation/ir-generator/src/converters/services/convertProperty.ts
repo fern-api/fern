@@ -187,6 +187,19 @@ export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined
     return undefined;
 }
 
+export function maybeListItemType(resolvedType: ResolvedType | undefined): ResolvedType | undefined {
+    if (resolvedType?._type !== "container") {
+        return undefined;
+    }
+    if (resolvedType.container._type === "list" || resolvedType.container._type === "set") {
+        return resolvedType.container.itemType;
+    }
+    if (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable") {
+        return maybeListItemType(resolvedType.container.itemType);
+    }
+    return undefined;
+}
+
 function maybeObjectSchema(resolvedType: ResolvedType | undefined): RawSchemas.ObjectSchema | undefined {
     if (resolvedType == null) {
         return undefined;

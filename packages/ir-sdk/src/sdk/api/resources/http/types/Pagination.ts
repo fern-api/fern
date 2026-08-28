@@ -7,6 +7,7 @@ import * as FernIr from "../../../index.js";
  */
 export type Pagination =
     | FernIr.Pagination.Cursor
+    | FernIr.Pagination.ItemCursor
     | FernIr.Pagination.Offset
     | FernIr.Pagination.Custom
     | FernIr.Pagination.Uri
@@ -15,6 +16,10 @@ export type Pagination =
 export namespace Pagination {
     export interface Cursor extends FernIr.CursorPagination, _Utils {
         type: "cursor";
+    }
+
+    export interface ItemCursor extends FernIr.ItemCursorPagination, _Utils {
+        type: "itemCursor";
     }
 
     export interface Offset extends FernIr.OffsetPagination, _Utils {
@@ -39,6 +44,7 @@ export namespace Pagination {
 
     export interface _Visitor<_Result> {
         cursor: (value: FernIr.CursorPagination) => _Result;
+        itemCursor: (value: FernIr.ItemCursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
         custom: (value: FernIr.CustomPagination) => _Result;
         uri: (value: FernIr.UriPagination) => _Result;
@@ -53,6 +59,19 @@ export const Pagination = {
             ...value,
             type: "cursor",
             _visit: function <_Result>(this: FernIr.Pagination.Cursor, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    itemCursor: (value: FernIr.ItemCursorPagination): FernIr.Pagination.ItemCursor => {
+        return {
+            ...value,
+            type: "itemCursor",
+            _visit: function <_Result>(
+                this: FernIr.Pagination.ItemCursor,
+                visitor: FernIr.Pagination._Visitor<_Result>,
+            ) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -102,6 +121,8 @@ export const Pagination = {
         switch (value.type) {
             case "cursor":
                 return visitor.cursor(value);
+            case "itemCursor":
+                return visitor.itemCursor(value);
             case "offset":
                 return visitor.offset(value);
             case "custom":

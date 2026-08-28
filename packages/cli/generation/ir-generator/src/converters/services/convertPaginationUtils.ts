@@ -1,12 +1,16 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ItemCursorElement } from "@fern-api/ir-sdk";
 import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import { getRequestPropertyComponents, getResponsePropertyComponents } from "./convertProperty.js";
+import { parseNextCursorPath } from "./itemCursorPath.js";
 
 export type PaginationPropertyComponents =
     | CursorPaginationPropertyComponents
+    | ItemCursorPaginationPropertyComponents
     | OffsetPaginationPropertyComponents
     | CustomPaginationPropertyComponents
     | UriPaginationPropertyComponents
@@ -17,6 +21,14 @@ export interface CursorPaginationPropertyComponents {
     cursor: string[];
     next_cursor: string[];
     results: string[];
+}
+
+export interface ItemCursorPaginationPropertyComponents {
+    type: "itemCursor";
+    cursor: string[];
+    results: string[];
+    itemCursor: string[];
+    element: ItemCursorElement;
 }
 
 export interface OffsetPaginationPropertyComponents {
@@ -71,12 +83,34 @@ export function getPaginationPropertyComponents(
                     : undefined
         };
     } else if (isRawCursorPaginationSchema(endpointPagination)) {
-        return {
-            type: "cursor",
-            cursor: getRequestPropertyComponents(endpointPagination.cursor),
-            next_cursor: getResponsePropertyComponents(endpointPagination.next_cursor),
-            results: getResponsePropertyComponents(endpointPagination.results)
-        };
+        const cursor = getRequestPropertyComponents(endpointPagination.cursor);
+        const results = getResponsePropertyComponents(endpointPagination.results);
+        const nextCursor = getResponsePropertyComponents(endpointPagination.next_cursor);
+        const parsedNextCursor = parseNextCursorPath(nextCursor);
+        switch (parsedNextCursor.type) {
+            case "responseProperty":
+                return {
+                    type: "cursor",
+                    cursor,
+                    next_cursor: nextCursor,
+                    results
+                };
+            case "itemCursor":
+                return {
+                    type: "itemCursor",
+                    cursor,
+                    results: parsedNextCursor.resultsComponents,
+                    itemCursor: parsedNextCursor.itemComponents,
+                    element: parsedNextCursor.element
+                };
+            case "invalid":
+                throw new CliError({
+                    message: `Invalid 'next_cursor' ${endpointPagination.next_cursor}: ${parsedNextCursor.message}`,
+                    code: CliError.Code.ValidationError
+                });
+            default:
+                assertNever(parsedNextCursor);
+        }
     } else if (isRawCustomPaginationSchema(endpointPagination)) {
         return {
             type: "custom",

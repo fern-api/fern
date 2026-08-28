@@ -487,6 +487,7 @@ types:
       If set, the endpoint will be generated with auto-pagination features.
     union:
       cursor: CursorPagination
+      itemCursor: ItemCursorPagination
       offset: OffsetPagination
       custom: CustomPagination
       uri: UriPagination
@@ -503,6 +504,31 @@ types:
       page: RequestProperty
       next: ResponseProperty
       results: ResponseProperty
+
+  ItemCursorPagination:
+    docs: |
+      Cursor pagination where the cursor for the next page is read from one of the
+      elements of the current page's results, rather than from a property defined at
+      the top-level of the response.
+
+      For example, an API that returns `{ "data": [{ "token": "..." }] }` and expects
+      the token of the last element to be sent back as the cursor for the next page.
+    properties:
+      page: RequestProperty
+      results: ResponseProperty
+      itemCursor:
+        docs: |
+          The property that contains the cursor, resolved relative to an element of
+          the results.
+        type: ResponseProperty
+      element:
+        docs: The element of the results that the cursor is read from.
+        type: ItemCursorElement
+
+  ItemCursorElement:
+    enum:
+      - first
+      - last
 
   OffsetPagination:
     docs: |

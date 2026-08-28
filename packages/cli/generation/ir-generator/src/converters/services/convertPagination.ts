@@ -6,6 +6,7 @@ import { FernFileContext } from "../../FernFileContext.js";
 import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
 import { convertCursorPagination } from "./convertCursorPagination.js";
 import { convertCustomPagination } from "./convertCustomPagination.js";
+import { convertItemCursorPagination } from "./convertItemCursorPagination.js";
 import { convertOffsetPagination } from "./convertOffsetPagination.js";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils.js";
 import { convertPathPagination } from "./convertPathPagination.js";
@@ -35,6 +36,13 @@ export function convertPagination({
                 file,
                 endpointName,
                 endpointSchema,
+                paginationPropertyComponents
+            });
+        case "itemCursor":
+            return convertItemCursorPagination({
+                propertyResolver,
+                file,
+                endpointName,
                 paginationPropertyComponents
             });
         case "offset":

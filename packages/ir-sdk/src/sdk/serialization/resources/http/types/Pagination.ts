@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CursorPagination } from "./CursorPagination.js";
 import { CustomPagination } from "./CustomPagination.js";
+import { ItemCursorPagination } from "./ItemCursorPagination.js";
 import { OffsetPagination } from "./OffsetPagination.js";
 import { PathPagination } from "./PathPagination.js";
 import { UriPagination } from "./UriPagination.js";
@@ -12,6 +13,7 @@ import { UriPagination } from "./UriPagination.js";
 export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, FernIr.Pagination> = core.serialization
     .union("type", {
         cursor: CursorPagination,
+        itemCursor: ItemCursorPagination,
         offset: OffsetPagination,
         custom: CustomPagination,
         uri: UriPagination,
@@ -22,6 +24,8 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
             switch (value.type) {
                 case "cursor":
                     return FernIr.Pagination.cursor(value);
+                case "itemCursor":
+                    return FernIr.Pagination.itemCursor(value);
                 case "offset":
                     return FernIr.Pagination.offset(value);
                 case "custom":
@@ -38,10 +42,20 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
     });
 
 export declare namespace Pagination {
-    export type Raw = Pagination.Cursor | Pagination.Offset | Pagination.Custom | Pagination.Uri | Pagination.Path;
+    export type Raw =
+        | Pagination.Cursor
+        | Pagination.ItemCursor
+        | Pagination.Offset
+        | Pagination.Custom
+        | Pagination.Uri
+        | Pagination.Path;
 
     export interface Cursor extends CursorPagination.Raw {
         type: "cursor";
+    }
+
+    export interface ItemCursor extends ItemCursorPagination.Raw {
+        type: "itemCursor";
     }
 
     export interface Offset extends OffsetPagination.Raw {

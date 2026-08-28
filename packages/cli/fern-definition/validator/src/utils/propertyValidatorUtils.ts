@@ -1,5 +1,5 @@
 import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { FernFileContext, maybeListItemType, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
 
 export const REQUEST_PREFIX = "$request.";
@@ -187,6 +187,46 @@ export function resolvedTypeHasProperty({
         objectSchema,
         propertyComponents,
         validate
+    });
+}
+
+/**
+ * Validates a property defined on the elements of a list property, e.g. the `token` of
+ * `$response.data[-1].token`.
+ */
+export function resolvedTypeListItemHasProperty({
+    typeResolver,
+    file,
+    resolvedType,
+    listPropertyComponents,
+    itemPropertyComponents,
+    validate
+}: {
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedType: ResolvedType | undefined;
+    listPropertyComponents: string[];
+    itemPropertyComponents: string[];
+    validate: RequestPropertyValidatorFunc;
+}): boolean {
+    return resolvedTypeHasProperty({
+        typeResolver,
+        file,
+        resolvedType,
+        propertyComponents: listPropertyComponents,
+        validate: ({ resolvedType: resolvedListType }) => {
+            const resolvedItemType = maybeListItemType(resolvedListType);
+            if (resolvedItemType == null) {
+                return false;
+            }
+            return resolvedTypeHasProperty({
+                typeResolver,
+                file: maybeFileFromResolvedType(resolvedItemType) ?? file,
+                resolvedType: resolvedItemType,
+                propertyComponents: itemPropertyComponents,
+                validate
+            });
+        }
     });
 }
 
