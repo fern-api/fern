@@ -159,7 +159,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
     };
 }
 
-function parseOpenApiDefinitionSettingsSchema(
+export function parseOpenApiDefinitionSettingsSchema(
     settings: generatorsYml.OpenApiSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {

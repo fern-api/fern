@@ -6414,6 +6414,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
+      '@postman/sdk-config':
+        specifier: 0.1.0
+        version: 0.1.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -10436,6 +10439,10 @@ packages:
 
   '@posthog/types@1.376.0':
     resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
+
+  '@postman/sdk-config@0.1.0':
+    resolution: {integrity: sha512-YneEmeCEKIYcxcXe5de0h6wUUfbgh9hZVrcU80E+6Vfxx9YNGcckIps/0hxnwQR/1WY/j0xEfyxQ4g//DYL/Bw==}
+    engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
     resolution: {integrity: sha512-ZPW2gRiwpPzEfgeZgaekhqXrbW+Y2RJKHVqUmlhZhKzRNCcvR6DykzylDrynpArKKRQtLxoZy36fK7U0p3pdgQ==}
@@ -17545,6 +17552,11 @@ snapshots:
       '@posthog/types': 1.376.0
 
   '@posthog/types@1.376.0': {}
+
+  '@postman/sdk-config@0.1.0':
+    dependencies:
+      semver: 7.8.4
+      zod: 4.3.6
 
   '@prisma/instrumentation@7.6.0(@opentelemetry/api@1.9.1)':
     dependencies:

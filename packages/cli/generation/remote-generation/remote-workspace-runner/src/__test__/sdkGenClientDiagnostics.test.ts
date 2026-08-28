@@ -110,14 +110,14 @@ describe("generator configuration diagnostics", () => {
                 ...VALID_INPUT,
                 requestedVersion: "4.0.0+build.123"
             }).payloadKind
-        ).toBe("sdk-config-ir-v1");
+        ).toBe("sdk-config-v1");
 
         expect(
             validateGeneratorConfigCompatibility({
                 ...VALID_INPUT,
                 requestedVersion: "900719925474099300000.0.0"
             }).payloadKind
-        ).toBe("sdk-config-ir-v1");
+        ).toBe("sdk-config-v1");
     });
 
     it("follows SemVer prerelease precedence", () => {

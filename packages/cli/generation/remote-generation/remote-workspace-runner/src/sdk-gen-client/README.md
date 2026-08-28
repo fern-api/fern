@@ -14,12 +14,12 @@ const route = validateGeneratorConfigCompatibility({
     configKind: "sdk-config-v1"
 });
 
-// route.payloadKind === "sdk-config-ir-v1"
+// route.payloadKind === "sdk-config-v1"
 ```
 
 Versions below a generator's cutover require `legacy-fern` and route to a Fern
 runtime bundle. Versions at or above cutover require `sdk-config-v1` and route to
-SDK Config IR v1.
+SDK Config v1. sdk-gen-api adds source and operational metadata and constructs SDK Config IR v1 downstream.
 
 Failures throw `GeneratorConfigCompatibilityError`, which carries stable input,
 expected-value, retryability, and recommended-action fields. Product-specific

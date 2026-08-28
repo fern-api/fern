@@ -1,5 +1,8 @@
+import { isDeepStrictEqual } from "node:util";
 import {
     type GraphQLSpec,
+    getOpenAPISettings,
+    type OpenAPISettings,
     type OpenAPISpec,
     type OpenRPCSpec,
     type ProtobufSpec,
@@ -9,8 +12,9 @@ import { type Audiences } from "@fern-api/configuration";
 import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
+import type { FernSdkGenApiSourceManifest, FernSdkGenApiSourceManifestEntry } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { copyFile, cp, readFile, writeFile } from "fs/promises";
+import { chmod, copyFile, cp, readdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import * as tar from "tar";
@@ -18,31 +22,12 @@ import tmp from "tmp-promise";
 
 import { SPECS_MANIFEST_FILENAME } from "./constants.js";
 
-export interface RawSpecsManifestEntry {
-    type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
-    specPath: string;
-    overridePaths?: string[];
-    /**
-     * The namespace the user declared for this spec in `generators.yml`
-     * (per-spec `namespace:` field on each entry of `api.specs`). Carried
-     * through to the generator so a generator that wants to organize
-     * multi-spec output by namespace can do so without inferring one from
-     * the filename. Undefined when the spec was declared at the root with
-     * no namespace.
-     */
-    namespace?: string;
-}
-
-export interface RawSpecsManifest {
-    specs: RawSpecsManifestEntry[];
-}
+export type RawSpecsManifestEntry = FernSdkGenApiSourceManifestEntry;
+export type RawSpecsManifest = FernSdkGenApiSourceManifest;
 
 /**
- * Pre-processes API specs by bundling external $refs, merging overrides, and
- * applying overlays, then writes each resolved spec as compact JSON (no
- * whitespace). Schemas referenced from multiple external files are
- * deduplicated into a single `#/components/schemas/` entry by Redocly's
- * bundler.
+ * Pre-processes API specs by bundling external $refs, applying overrides and overlays, and writing
+ * each resolved spec as compact JSON.
  *
  * Protobuf and GraphQL specs are copied as-is since they cannot be
  * meaningfully bundled.
@@ -113,7 +98,14 @@ async function resolveAndWriteSpec({
 }): Promise<RawSpecsManifestEntry> {
     switch (spec.type) {
         case "openapi":
-            return resolveOpenAPIOrAsyncAPI({ spec, hostOutputDir, containerBaseDir, context, index, audiences });
+            return resolveOpenAPIOrAsyncAPI({
+                spec,
+                hostOutputDir,
+                containerBaseDir,
+                context,
+                index,
+                audiences
+            });
         case "openrpc":
             return resolveOpenRPC({ spec, hostOutputDir, containerBaseDir, context, index });
         case "protobuf":
@@ -167,11 +159,30 @@ async function resolveOpenAPIOrAsyncAPI({
 
     await writeFile(path.join(hostOutputDir, filename), JSON.stringify(resolved));
     context.logger.debug(`Resolved ${isAsync ? "AsyncAPI" : "OpenAPI"} spec ${spec.absoluteFilepath} -> ${filename}`);
-
     return {
         type: isAsync ? "asyncapi" : "openapi",
         specPath: toContainerPath(filename, containerBaseDir),
-        namespace: spec.namespace
+        namespace: spec.namespace,
+        ...(spec.settings != null ? { apiImportSettings: mapApiImportSettings(spec.settings) } : {})
+    };
+}
+
+function mapApiImportSettings(
+    settings: NonNullable<OpenAPISpec["settings"]>
+): RawSpecsManifestEntry["apiImportSettings"] {
+    return {
+        respectNullableSchemas: settings.respectNullableSchemas,
+        titleAsSchemaName: settings.useTitlesAsName,
+        coerceEnumsToLiterals: settings.coerceEnumsToLiterals,
+        idiomaticRequestNames: settings.shouldUseIdiomaticRequestNames,
+        wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable: settings.coerceOptionalSchemasToNullable,
+        pathParameterOrder: settings.pathParameterOrder,
+        onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas,
+        objectQueryParameters: settings.objectQueryParameters,
+        typeDatesAsStrings: settings.typeDatesAsStrings,
+        groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
+        defaultIntegerFormat: settings.defaultIntegerFormat
     };
 }
 
@@ -443,6 +454,167 @@ export async function createSpecsTarGzBuffer({
     context: TaskContext;
     audiences?: Audiences;
 }): Promise<Buffer> {
+    return (
+        await createSpecsTarGzArchive({
+            specs,
+            context,
+            audiences
+        })
+    ).buffer;
+}
+
+export interface SpecsTarGzArchive {
+    buffer: Buffer;
+    manifest: RawSpecsManifest;
+}
+
+export interface SpecsTarGzTargetSelection {
+    targetIndex: number;
+    specs: Spec[];
+}
+
+export interface GroupedSpecsTarGzArchive extends SpecsTarGzArchive {
+    specIndexesByTargetIndex: Map<number, number[]>;
+}
+
+export interface SettledGroupedSpecsTarGzArchive {
+    archive: GroupedSpecsTarGzArchive | undefined;
+    errorsByTargetIndex: Map<number, unknown>;
+}
+
+/** Materializes target sources independently before aggregating only successful selections. */
+export async function createGroupedSpecsTarGzArchiveSettled({
+    targetSelections,
+    context,
+    audiences
+}: {
+    targetSelections: SpecsTarGzTargetSelection[];
+    context: TaskContext;
+    audiences?: Audiences;
+}): Promise<SettledGroupedSpecsTarGzArchive> {
+    const settled = await Promise.allSettled(
+        targetSelections.map(async (selection) => {
+            await createSpecsTarGzArchive({ specs: selection.specs, context, audiences });
+            return selection;
+        })
+    );
+    const successfulSelections: SpecsTarGzTargetSelection[] = [];
+    const errorsByTargetIndex = new Map<number, unknown>();
+    settled.forEach((result, index) => {
+        const selection = targetSelections[index];
+        if (selection == null) {
+            return;
+        }
+        if (result.status === "fulfilled") {
+            successfulSelections.push(result.value);
+        } else {
+            errorsByTargetIndex.set(selection.targetIndex, result.reason);
+        }
+    });
+    if (successfulSelections.length === 0) {
+        return { archive: undefined, errorsByTargetIndex };
+    }
+    try {
+        return {
+            archive: await createGroupedSpecsTarGzArchive({
+                targetSelections: successfulSelections,
+                context,
+                audiences
+            }),
+            errorsByTargetIndex
+        };
+    } catch (error) {
+        for (const selection of successfulSelections) {
+            errorsByTargetIndex.set(selection.targetIndex, error);
+        }
+        return { archive: undefined, errorsByTargetIndex };
+    }
+}
+
+/** Builds one archive for explicit target selections, deduplicating equivalent source entries. */
+export async function createGroupedSpecsTarGzArchive({
+    targetSelections,
+    context,
+    audiences
+}: {
+    targetSelections: SpecsTarGzTargetSelection[];
+    context: TaskContext;
+    audiences?: Audiences;
+}): Promise<GroupedSpecsTarGzArchive> {
+    const uniqueSpecs: Spec[] = [];
+    const indexesBySpecKey = new Map<string, number>();
+    const specIndexesByTargetIndex = new Map<number, number[]>();
+    const orderedSelections = [...targetSelections].sort((left, right) => left.targetIndex - right.targetIndex);
+    for (const selection of orderedSelections) {
+        if (specIndexesByTargetIndex.has(selection.targetIndex)) {
+            throw new Error(`Duplicate source selection for generator index ${selection.targetIndex}`);
+        }
+        const indexes = selection.specs.map((spec) => {
+            const key = createSpecDeduplicationKey(spec);
+            const existingIndex = indexesBySpecKey.get(key);
+            if (existingIndex != null) {
+                return existingIndex;
+            }
+            const index = uniqueSpecs.length;
+            uniqueSpecs.push(spec);
+            indexesBySpecKey.set(key, index);
+            return index;
+        });
+        specIndexesByTargetIndex.set(selection.targetIndex, indexes);
+    }
+    const archive = await createSpecsTarGzArchive({
+        specs: uniqueSpecs,
+        context,
+        audiences
+    });
+    return { ...archive, specIndexesByTargetIndex };
+}
+
+const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set<keyof OpenAPISettings>([
+    "respectNullableSchemas",
+    "useTitlesAsName",
+    "coerceEnumsToLiterals",
+    "shouldUseIdiomaticRequestNames",
+    "wrapReferencesToNullableInOptional",
+    "coerceOptionalSchemasToNullable",
+    "pathParameterOrder",
+    "onlyIncludeReferencedSchemas",
+    "objectQueryParameters",
+    "typeDatesAsStrings",
+    "groupMultiApiEnvironments",
+    "defaultIntegerFormat"
+]);
+const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
+
+/** Rejects effective Fern import behavior that the downstream SDK Config contract cannot carry. */
+export function validateSdkConfigImportSettings(specs: Spec[]): void {
+    for (const spec of specs) {
+        if (spec.type !== "openapi" || spec.settings == null) {
+            continue;
+        }
+        for (const key of Object.keys(spec.settings) as Array<keyof OpenAPISettings>) {
+            if (
+                SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
+                isDeepStrictEqual(spec.settings[key], DEFAULT_OPENAPI_SETTINGS[key])
+            ) {
+                continue;
+            }
+            throw new Error(
+                `SDK Config v1 cannot preserve effective OpenAPI import setting ${key}=${JSON.stringify(spec.settings[key])} for ${spec.absoluteFilepath}. Remove that setting or use a pre-cutover generator version until the shared SDK Config contract supports it.`
+            );
+        }
+    }
+}
+
+export async function createSpecsTarGzArchive({
+    specs,
+    context,
+    audiences
+}: {
+    specs: Spec[];
+    context: TaskContext;
+    audiences?: Audiences;
+}): Promise<SpecsTarGzArchive> {
     const tmpDir = await tmp.dir({ unsafeCleanup: true });
     try {
         const manifest = await collectRawSpecs({
@@ -458,6 +630,7 @@ export async function createSpecsTarGzBuffer({
             JSON.stringify(manifest, undefined, 4)
         );
 
+        const archiveEntries = await listDeterministicArchiveEntries(tmpDir.path);
         const tarGzPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("specs.tar.gz"));
         await tar.create(
             {
@@ -465,13 +638,94 @@ export async function createSpecsTarGzBuffer({
                 cwd: tmpDir.path,
                 file: tarGzPath,
                 portable: true,
-                filter: (entryPath: string) => entryPath !== "./specs.tar.gz"
+                mtime: new Date(0)
             },
-            ["."]
+            archiveEntries
         );
 
-        return await readFile(tarGzPath);
+        return { buffer: await readFile(tarGzPath), manifest };
     } finally {
         await tmpDir.cleanup();
     }
+}
+
+async function listDeterministicArchiveEntries(root: string, relativeDirectory = ""): Promise<string[]> {
+    const absoluteDirectory = path.join(root, relativeDirectory);
+    const directoryEntries = await readdir(absoluteDirectory, { withFileTypes: true });
+    const archiveEntries: string[] = [];
+    for (const entry of directoryEntries.sort((left, right) => compareArchiveEntryNames(left.name, right.name))) {
+        const relativePath = path.posix.join(relativeDirectory.split(path.sep).join(path.posix.sep), entry.name);
+        if (entry.isDirectory()) {
+            archiveEntries.push(...(await listDeterministicArchiveEntries(root, relativePath)));
+            continue;
+        }
+        if (!entry.isFile()) {
+            throw new Error(`Unsupported generated source archive entry: ${relativePath}`);
+        }
+        await chmod(path.join(root, relativePath), 0o644);
+        archiveEntries.push(relativePath);
+    }
+    return archiveEntries;
+}
+
+function compareArchiveEntryNames(left: string, right: string): number {
+    return left < right ? -1 : left > right ? 1 : 0;
+}
+
+function createSpecDeduplicationKey(spec: Spec): string {
+    switch (spec.type) {
+        case "openapi":
+            return stableStringify({
+                type: spec.type,
+                path: spec.absoluteFilepath,
+                overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+                overlay: spec.absoluteFilepathToOverlays,
+                namespace: spec.namespace,
+                settings: spec.settings
+            });
+        case "openrpc":
+            return stableStringify({
+                type: spec.type,
+                path: spec.absoluteFilepath,
+                overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+                namespace: spec.namespace
+            });
+        case "protobuf":
+            return stableStringify({
+                type: spec.type,
+                root: spec.absoluteFilepathToProtobufRoot,
+                target: spec.absoluteFilepathToProtobufTarget,
+                overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+                dependencies: spec.dependencies,
+                settings: spec.settings
+            });
+        case "graphql":
+            return stableStringify({
+                type: spec.type,
+                path: spec.absoluteFilepath,
+                overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+                examples: spec.absoluteFilepathToExamples,
+                namespace: spec.namespace
+            });
+        default:
+            assertNever(spec);
+    }
+}
+
+function stableStringify(value: unknown): string {
+    return JSON.stringify(sortJsonValue(value));
+}
+
+function sortJsonValue(value: unknown): unknown {
+    if (Array.isArray(value)) {
+        return value.map(sortJsonValue);
+    }
+    if (value == null || typeof value !== "object") {
+        return value;
+    }
+    return Object.fromEntries(
+        Object.entries(value as Record<string, unknown>)
+            .sort(([left], [right]) => compareArchiveEntryNames(left, right))
+            .map(([key, child]) => [key, sortJsonValue(child)])
+    );
 }

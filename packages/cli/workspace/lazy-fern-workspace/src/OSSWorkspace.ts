@@ -14,6 +14,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { mergeSettings, parseOpenApiDefinitionSettingsSchema } from "@fern-api/configuration-loader";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
@@ -609,6 +610,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
+    public async getAllSpecsForGenerator(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
+    ): Promise<Spec[]> {
+        if (specsOverride == null) {
+            return this.allSpecs;
+        }
+        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride);
+        return overrideSpecs.filter((spec) => spec.type !== "protobuf" || !spec.fromOpenAPI);
+    }
+
     private async createWorkspaceWithSpecsOverride(
         { context }: { context: TaskContext },
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema,
@@ -705,8 +716,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
                     absoluteFilepathToOverlays,
-                    // Use default settings from existing specs for compatibility
-                    settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
+                    settings: getOpenAPISettings({
+                        options: mergeSettings(
+                            this.generatorsConfiguration?.api?.settings ??
+                                parseOpenApiDefinitionSettingsSchema(undefined),
+                            parseOpenApiDefinitionSettingsSchema(spec.settings)
+                        )
+                    }),
                     source: {
                         type: "openapi",
                         file: absoluteFilepath

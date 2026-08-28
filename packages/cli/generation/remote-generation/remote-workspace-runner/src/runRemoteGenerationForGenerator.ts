@@ -34,16 +34,21 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
 import {
     FernSdkGenApiBatch,
+    FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiBuildParameters,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
-    isFernSdkGenApiEnabled,
+    preflightFernSdkGenApiBuild,
     runFernSdkGenApiBuild
 } from "./fernSdkGenApi.js";
+import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
+import { formatFernSdkConfigMappingError, prepareFernSdkConfigV1Payload } from "./prepareFernSdkConfigV1Payload.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
+import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -76,6 +81,9 @@ export async function runRemoteGenerationForGenerator({
     disableTelemetry,
     loginCommand,
     specsTarGzBuffer,
+    sdkGenApiSourceArchive,
+    sdkGenApiRoute,
+    sdkGenApiPreparationBatch,
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
     generateFullProject
@@ -128,6 +136,9 @@ export async function runRemoteGenerationForGenerator({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    sdkGenApiSourceArchive?: FernSdkGenApiSourceArchive;
+    sdkGenApiRoute: GenerationConfigRoute | undefined;
+    sdkGenApiPreparationBatch?: FernSdkGenApiPreparationBatch;
     sdkGenApiBatch?: FernSdkGenApiBatch;
     sdkGenApiTargetIdSeed?: string;
     /**
@@ -242,10 +253,105 @@ export async function runRemoteGenerationForGenerator({
         }
     });
 
-    const venus = createVenusService({ token: token.value });
+    let sdkGenApiCandidate:
+        | {
+              generatorInvocation: generatorsYml.GeneratorInvocation;
+              sdkVersion: string;
+              specsTarGzBuffer: Buffer;
+          }
+        | undefined;
+    let sdkConfigV1Payload: ReturnType<typeof prepareFernSdkConfigV1Payload> | undefined;
+    let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
+    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocationWithEnvVarSubstitutions.name);
+    if (sdkGenApiRoute != null) {
+        if (replay?.enabled === true) {
+            return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+        if (generateFullProject === true) {
+            return interactiveTaskContext.failAndThrow(
+                "sdk-gen-api does not yet support full-project generation",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        const candidate = {
+            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            sdkVersion: resolvedVersion,
+            specsTarGzBuffer,
+            whitelabel
+        };
+        if (!isEligibleForFernSdkGenApi(candidate)) {
+            const reason =
+                resolvedVersion == null
+                    ? "the SDK version could not be resolved"
+                    : isAutoVersion(resolvedVersion)
+                      ? "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
+                      : whitelabel != null
+                        ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
+                        : specsTarGzBuffer == null
+                          ? "the source archive is unavailable"
+                          : `generator language ${generatorInvocationWithEnvVarSubstitutions.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
+            return interactiveTaskContext.failAndThrow(
+                `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
+                undefined,
+                {
+                    code: CliError.Code.ConfigError
+                }
+            );
+        }
+        sdkGenApiCandidate = candidate;
+        if (verify === true) {
+            interactiveTaskContext.logger.warn("sdk-gen-api does not yet run Fern's post-generation verification step");
+        }
+        if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
+            try {
+                sdkConfigV1Payload = prepareFernSdkConfigV1Payload({
+                    apiName: getOriginalName(ir.apiName),
+                    generatorInvocation: candidate.generatorInvocation,
+                    sdkVersion: candidate.sdkVersion,
+                    audiences,
+                    intermediateRepresentation: ir,
+                    route: sdkGenApiRoute
+                });
+            } catch (error) {
+                return interactiveTaskContext.failAndThrow(
+                    `Cannot prepare SDK Config v1 submission for ${candidate.generatorInvocation.name}: ${formatFernSdkConfigMappingError(error)}`,
+                    error,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            sdkConfigBuildParameters = {
+                apiName: getOriginalName(ir.apiName),
+                organization,
+                cliVersion: workspace.cliVersion,
+                generatorInvocation: candidate.generatorInvocation,
+                sdkVersion: candidate.sdkVersion,
+                apiVersion: ir.specVersion,
+                token,
+                specsTarGzBuffer: candidate.specsTarGzBuffer,
+                payload: { payloadKind: sdkGenApiRoute.payloadKind, ...sdkConfigV1Payload },
+                absolutePathToPreview,
+                context: interactiveTaskContext,
+                targetIdSeed: sdkGenApiTargetIdSeed,
+                sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
+                audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                skipFernignore
+            };
+            preflightFernSdkGenApiBuild(sdkConfigBuildParameters);
+        }
+        if (sdkGenApiTargetIdSeed == null) {
+            throw new Error("sdk-gen-api target is missing its preparation ID");
+        }
+        await sdkGenApiPreparationBatch?.ready(sdkGenApiTargetIdSeed, sdkConfigBuildParameters);
+    }
+
+    const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     let generateOauthClients = false;
     let generatePaginatedClients = false;
-    if (!isAirGapped) {
+    if (!isAirGapped && requiresFdrRegistration) {
+        const venus = createVenusService({ token: token.value });
         const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
 
         if (orgResponse.ok) {
@@ -261,54 +367,54 @@ export async function runRemoteGenerationForGenerator({
         }
     }
 
-    const sources = workspace.getSources();
     let fdrApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
-    let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
-
-    const apiDefinition = convertIrToFdrApi({
-        ir,
-        snippetsConfig: {
-            typescriptSdk: undefined,
-            pythonSdk: undefined,
-            javaSdk: undefined,
-            rubySdk: undefined,
-            goSdk: undefined,
-            csharpSdk: undefined,
-            phpSdk: undefined,
-            swiftSdk: undefined,
-            rustSdk: undefined
-        },
-        context: interactiveTaskContext
-    });
-    try {
-        const response = await fdr.api.register.registerApiDefinition({
-            orgId: FdrAPI.OrgId(organization),
-            apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
-            definition: apiDefinition,
-            sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+    if (requiresFdrRegistration) {
+        const sources = workspace.getSources();
+        let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
+        const apiDefinition = convertIrToFdrApi({
+            ir,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            context: interactiveTaskContext
         });
-        fdrApiDefinitionId = response.apiDefinitionId;
-        sourceUploads = response.sources ?? undefined;
-    } catch (error) {
-        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
-        if (sourceUploader.sourceTypes.has("protobuf")) {
-            interactiveTaskContext.failAndThrow(`Failed to register API definition: ${JSON.stringify(error)}`);
+        try {
+            const response = await fdr.api.register.registerApiDefinition({
+                orgId: FdrAPI.OrgId(organization),
+                apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
+                definition: apiDefinition,
+                sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+            });
+            fdrApiDefinitionId = response.apiDefinitionId;
+            sourceUploads = response.sources ?? undefined;
+        } catch (error) {
+            const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+            if (sourceUploader.sourceTypes.has("protobuf")) {
+                interactiveTaskContext.failAndThrow(`Failed to register API definition: ${JSON.stringify(error)}`);
+            }
         }
-    }
+        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+        if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+            interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.", undefined, {
+                code: CliError.Code.NetworkError
+            });
+        }
 
-    const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
-    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
-        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.", undefined, {
-            code: CliError.Code.NetworkError
-        });
-    }
+        if (sourceUploads != null) {
+            interactiveTaskContext.logger.debug("Uploading source files ...");
+            const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
 
-    if (sourceUploads != null) {
-        interactiveTaskContext.logger.debug("Uploading source files ...");
-        const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
-
-        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
-        ir.sourceConfig = sourceConfig;
+            interactiveTaskContext.logger.debug("Setting IR source configuration ...");
+            ir.sourceConfig = sourceConfig;
+        }
     }
 
     // handle dynamic-ir-only mode: skip SDK generation and only upload dynamic IR
@@ -385,83 +491,48 @@ export async function runRemoteGenerationForGenerator({
     };
 
     let result: RemoteTaskHandler.Response | undefined;
-    let usedSdkGenApi = false;
-    const sdkGenApiEnabled = isFernSdkGenApiEnabled();
-    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocationWithEnvVarSubstitutions.name);
-    if (sdkGenApiEnabled && sdkGenApiLanguage != null) {
-        if (replay?.enabled === true) {
-            return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
-                code: CliError.Code.ConfigError
-            });
+    if (sdkGenApiRoute != null) {
+        if (sdkGenApiCandidate == null) {
+            throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
-        if (generateFullProject === true) {
-            return interactiveTaskContext.failAndThrow(
-                "sdk-gen-api does not yet support full-project generation",
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
+        const parameters =
+            sdkGenApiRoute.payloadKind === "sdk-config-v1"
+                ? sdkConfigBuildParameters
+                : {
+                      apiName: getOriginalName(ir.apiName),
+                      organization,
+                      cliVersion: workspace.cliVersion,
+                      generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                      sdkVersion: sdkGenApiCandidate.sdkVersion,
+                      apiVersion: ir.specVersion,
+                      token,
+                      specsTarGzBuffer: sdkGenApiCandidate.specsTarGzBuffer,
+                      payload: {
+                          payloadKind: sdkGenApiRoute.payloadKind,
+                          body: await prepareFernSdkGenApiRuntimeBundle({
+                              apiName: getOriginalName(ir.apiName),
+                              organization,
+                              generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                              sdkVersion: sdkGenApiCandidate.sdkVersion,
+                              intermediateRepresentation: enrichedIntermediateRepresentation,
+                              irVersionOverride,
+                              generateOauthClients,
+                              generatePaginatedClients,
+                              context: interactiveTaskContext
+                          })
+                      },
+                      absolutePathToPreview,
+                      context: interactiveTaskContext,
+                      targetIdSeed: sdkGenApiTargetIdSeed,
+                      sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
+                      audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                      skipFernignore
+                  };
+        if (parameters == null) {
+            throw new Error("sdk-gen-api target passed preflight without build parameters");
         }
-        const candidate = {
-            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
-            sdkVersion: resolvedVersion,
-            specsTarGzBuffer,
-            whitelabel
-        };
-        if (!isEligibleForFernSdkGenApi(candidate)) {
-            const reason =
-                resolvedVersion == null
-                    ? "the SDK version could not be resolved"
-                    : isAutoVersion(resolvedVersion)
-                      ? "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
-                      : whitelabel != null
-                        ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
-                        : specsTarGzBuffer == null
-                          ? "the source archive is unavailable"
-                          : `generator language ${generatorInvocationWithEnvVarSubstitutions.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
-            return interactiveTaskContext.failAndThrow(
-                `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
-                undefined,
-                {
-                    code: CliError.Code.ConfigError
-                }
-            );
-        }
-        if (verify === true) {
-            interactiveTaskContext.logger.warn("sdk-gen-api does not yet run Fern's post-generation verification step");
-        }
-        const runtimeBundle = await prepareFernSdkGenApiRuntimeBundle({
-            apiName: getOriginalName(ir.apiName),
-            organization,
-            generatorInvocation: candidate.generatorInvocation,
-            sdkVersion: candidate.sdkVersion,
-            intermediateRepresentation: enrichedIntermediateRepresentation,
-            irVersionOverride,
-            generateOauthClients,
-            generatePaginatedClients,
-            context: interactiveTaskContext
-        });
-        const parameters = {
-            apiName: getOriginalName(ir.apiName),
-            organization,
-            cliVersion: workspace.cliVersion,
-            generatorInvocation: candidate.generatorInvocation,
-            sdkVersion: candidate.sdkVersion,
-            token,
-            specsTarGzBuffer: candidate.specsTarGzBuffer,
-            runtimeBundle,
-            absolutePathToPreview,
-            context: interactiveTaskContext,
-            targetIdSeed: sdkGenApiTargetIdSeed,
-            audiences: audiences.type === "select" ? audiences.audiences : undefined,
-            skipFernignore
-        };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
-        usedSdkGenApi = true;
     } else {
-        sdkGenApiBatch?.skip();
-    }
-
-    if (!usedSdkGenApi) {
         const job = await createAndStartJob({
             projectConfig,
             workspace,

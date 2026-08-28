@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Select sdk-gen-api payload routes before generation work, preserve legacy Fern runtime bundles, and submit validated SDK Config v1 with deterministic, deduplicated source archives for core-backed targets. Preserve source transforms and supported import settings, reject unsupported behavior before remote mutations, and let sdk-gen-api own downstream IR construction.
+  type: internal

@@ -1,9 +1,19 @@
+import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { createHash } from "crypto";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
+import * as tar from "tar";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { collectRawSpecs, filterSpec } from "../rawSpecs.js";
+import {
+    collectRawSpecs,
+    createGroupedSpecsTarGzArchive,
+    createGroupedSpecsTarGzArchiveSettled,
+    createSpecsTarGzArchive,
+    filterSpec,
+    validateSdkConfigImportSettings
+} from "../rawSpecs.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
 function createMockContext(): any {
@@ -36,6 +46,21 @@ function createMockContext(): any {
 }
 
 const MINIMAL_OPENAPI = ['openapi: "3.0.0"', "info:", "  title: Test", '  version: "1.0"', "paths: {}", ""].join("\n");
+
+function openApiSpec(filepath: string) {
+    const absoluteFilepath = AbsoluteFilePath.of(filepath);
+    return {
+        type: "openapi" as const,
+        absoluteFilepath,
+        absoluteFilepathToOverrides: undefined,
+        absoluteFilepathToOverlays: undefined,
+        source: {
+            type: "openapi" as const,
+            file: absoluteFilepath,
+            relativePathToDependency: undefined
+        }
+    };
+}
 
 describe("collectRawSpecs", () => {
     let tmpDir: tmp.DirectoryResult;
@@ -86,7 +111,13 @@ describe("collectRawSpecs", () => {
                         type: "openapi",
                         file: AbsoluteFilePath.of(specFile),
                         relativePathToDependency: undefined
-                    }
+                    },
+                    settings: {
+                        respectNullableSchemas: false,
+                        useTitlesAsName: true,
+                        pathParameterOrder: "spec-order",
+                        defaultIntegerFormat: "int64"
+                    } as never
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -98,6 +129,12 @@ describe("collectRawSpecs", () => {
         expect(manifest.specs[0]?.type).toBe("openapi");
         expect(manifest.specs[0]?.specPath).toBe("/fern/specs/openapi0.json");
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
+        expect(manifest.specs[0]?.apiImportSettings).toMatchObject({
+            respectNullableSchemas: false,
+            titleAsSchemaName: true,
+            pathParameterOrder: "spec-order",
+            defaultIntegerFormat: "int64"
+        });
 
         const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
@@ -105,6 +142,155 @@ describe("collectRawSpecs", () => {
         expect(parsed.info.title).toBe("Test");
         // Compact JSON has no newlines
         expect(content).not.toContain("\n");
+    });
+
+    it("creates byte-identical source archives for identical inputs", async () => {
+        const specFile = path.join(sourceDir, "api", "deterministic.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        const spec = {
+            type: "openapi" as const,
+            absoluteFilepath: AbsoluteFilePath.of(specFile),
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            source: {
+                type: "openapi" as const,
+                file: AbsoluteFilePath.of(specFile),
+                relativePathToDependency: undefined
+            }
+        };
+
+        const first = await createSpecsTarGzArchive({ specs: [spec], context: createMockContext() });
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        const second = await createSpecsTarGzArchive({ specs: [spec], context: createMockContext() });
+
+        expect(second.manifest).toEqual(first.manifest);
+        expect(second.buffer.equals(first.buffer)).toBe(true);
+        expect(createHash("sha256").update(second.buffer).digest("hex")).toBe(
+            createHash("sha256").update(first.buffer).digest("hex")
+        );
+        expect(first.buffer.subarray(4, 8)).toEqual(Buffer.alloc(4));
+    });
+
+    it("deduplicates grouped sources and retains per-target manifest indexes", async () => {
+        const firstFile = path.join(sourceDir, "api", "first.yaml");
+        const secondFile = path.join(sourceDir, "api", "second.yaml");
+        await writeFile(firstFile, MINIMAL_OPENAPI);
+        await writeFile(secondFile, MINIMAL_OPENAPI.replace("title: Test", "title: Second"));
+        const first = openApiSpec(firstFile);
+        const second = openApiSpec(secondFile);
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            targetSelections: [
+                { targetIndex: 3, specs: [first] },
+                { targetIndex: 1, specs: [first, second] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs.map((entry) => entry.specPath)).toEqual([
+            "/fern/specs/openapi0.json",
+            "/fern/specs/openapi1.json"
+        ]);
+        expect(archive.specIndexesByTargetIndex.get(1)).toEqual([0, 1]);
+        expect(archive.specIndexesByTargetIndex.get(3)).toEqual([0]);
+    });
+
+    it("excludes a failed target before constructing the aggregate source archive", async () => {
+        const validFile = path.join(sourceDir, "api", "valid.yaml");
+        await writeFile(validFile, MINIMAL_OPENAPI);
+        const invalidFile = path.join(sourceDir, "api", "missing.yaml");
+
+        const result = await createGroupedSpecsTarGzArchiveSettled({
+            targetSelections: [
+                { targetIndex: 0, specs: [openApiSpec(validFile)] },
+                { targetIndex: 1, specs: [openApiSpec(invalidFile)] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(result.errorsByTargetIndex.has(0)).toBe(false);
+        expect(result.errorsByTargetIndex.get(1)).toBeInstanceOf(Error);
+        expect(result.archive?.specIndexesByTargetIndex).toEqual(new Map([[0, [0]]]));
+        expect(result.archive?.manifest.specs).toHaveLength(1);
+    });
+
+    it("applies OpenAPI overrides and overlays before writing the correlated archive source", async () => {
+        const specFile = path.join(sourceDir, "api", "transforms.yaml");
+        const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
+        const overlayFile = path.join(sourceDir, "overlays", "overlay.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        await writeFile(overrideFile, 'info:\n  description: "from override"\n');
+        await writeFile(overlayFile, ["overlay: 1.0.0", "info:", "  title: test", "actions: []", ""].join("\n"));
+        const spec = {
+            ...openApiSpec(specFile),
+            absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile),
+            absoluteFilepathToOverlays: AbsoluteFilePath.of(overlayFile)
+        };
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            targetSelections: [{ targetIndex: 0, specs: [spec] }],
+            context: createMockContext()
+        });
+        const archivePath = path.join(tmpDir.path, "sources.tar.gz");
+        const extractDir = path.join(tmpDir.path, "extracted");
+        await writeFile(archivePath, archive.buffer);
+        await mkdir(extractDir);
+        await tar.extract({ file: archivePath, cwd: extractDir });
+
+        expect(archive.manifest.specs[0]).toMatchObject({ specPath: "/fern/specs/openapi0.json" });
+        expect(archive.manifest.specs[0]).not.toHaveProperty("overridePaths");
+        expect(archive.manifest.specs[0]).not.toHaveProperty("overlayPaths");
+        await expect(readFile(path.join(extractDir, "openapi0-override-0.yaml"), "utf8")).rejects.toThrow();
+        await expect(readFile(path.join(extractDir, "openapi0-overlay-0.yaml"), "utf8")).rejects.toThrow();
+        expect(JSON.parse(await readFile(path.join(extractDir, "openapi0.json"), "utf8")).info.description).toBe(
+            "from override"
+        );
+    });
+
+    it("applies AsyncAPI overrides without emitting transform manifest paths", async () => {
+        const specFile = path.join(sourceDir, "api", "events.yaml");
+        const overrideFile = path.join(sourceDir, "overrides", "events-override.yaml");
+        await writeFile(
+            specFile,
+            ["asyncapi: 2.6.0", "info:", "  title: Events", "  version: 1.0.0", "channels: {}", ""].join("\n")
+        );
+        await writeFile(overrideFile, 'info:\n  description: "resolved async override"\n');
+        const spec = {
+            ...openApiSpec(specFile),
+            absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile)
+        };
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            targetSelections: [{ targetIndex: 0, specs: [spec] }],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs[0]).toMatchObject({
+            type: "asyncapi",
+            specPath: "/fern/specs/asyncapi0.json"
+        });
+        expect(archive.manifest.specs[0]).not.toHaveProperty("overridePaths");
+        expect(archive.manifest.specs[0]).not.toHaveProperty("overlayPaths");
+        const archivePath = path.join(tmpDir.path, "async-sources.tar.gz");
+        const extractDir = path.join(tmpDir.path, "async-extracted");
+        await writeFile(archivePath, archive.buffer);
+        await mkdir(extractDir);
+        await tar.extract({ file: archivePath, cwd: extractDir });
+        expect(JSON.parse(await readFile(path.join(extractDir, "asyncapi0.json"), "utf8")).info.description).toBe(
+            "resolved async override"
+        );
+    });
+
+    it("rejects effective import settings that SDK Config cannot preserve", () => {
+        const spec = {
+            ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),
+            settings: getOpenAPISettings({ overrides: { respectReadonlySchemas: true } })
+        };
+
+        expect(() => validateSdkConfigImportSettings([spec])).toThrow(
+            "cannot preserve effective OpenAPI import setting respectReadonlySchemas=true"
+        );
+        expect(() => validateSdkConfigImportSettings([spec])).toThrow("use a pre-cutover generator version");
     });
 
     it("merges overrides into the resolved OpenAPI spec", async () => {
@@ -309,8 +495,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
-        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("protobuf0-override-0");
+        expect(manifest.specs[0]?.overridePaths).toEqual(["/fern/specs/protobuf0-override-0.yaml"]);
     });
 
     it("copies GraphQL spec as-is", async () => {
@@ -556,8 +741,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
-        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("graphql0-override-0");
+        expect(manifest.specs[0]?.overridePaths).toEqual(["/fern/specs/graphql0-override-0.yaml"]);
     });
 
     it("filters out x-fern-ignore operations from resolved OpenAPI spec", async () => {

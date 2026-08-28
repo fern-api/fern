@@ -61,6 +61,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generator-exec-sdk": "catalog:",
+    "@postman/sdk-config": "0.1.0",
     "axios": "catalog:",
     "chalk": "catalog:",
     "form-data": "catalog:",
