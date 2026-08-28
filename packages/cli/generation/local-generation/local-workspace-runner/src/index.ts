@@ -18,7 +18,7 @@ export type {
     RawSpecsManifestEntry,
     SettledGroupedSpecsTarGzArchive,
     SpecsTarGzArchive,
-    SpecsTarGzTargetSelection
+    SpecsTarGzGeneratorSelection
 } from "./rawSpecs.js";
 export {
     collectRawSpecs,

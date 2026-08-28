@@ -219,7 +219,7 @@ export async function generateWorkspace({
                                 return { request, specs };
                             })
                         );
-                        const targetSelections = settledSelections.flatMap((result, index) => {
+                        const generatorSelections = settledSelections.flatMap((result, index) => {
                             const request = requests[index];
                             if (result.status === "rejected") {
                                 if (request != null) {
@@ -229,21 +229,21 @@ export async function generateWorkspace({
                             }
                             return result.value.specs == null
                                 ? []
-                                : [{ targetIndex: result.value.request.generatorIndex, specs: result.value.specs }];
+                                : [{ generatorIndex: result.value.request.generatorIndex, specs: result.value.specs }];
                         });
-                        if (targetSelections.length > 0) {
+                        if (generatorSelections.length > 0) {
                             const settledArchive = await createGroupedSpecsTarGzArchiveSettled({
-                                targetSelections,
+                                generatorSelections,
                                 context: groupContext,
                                 audiences: group.audiences
                             });
-                            for (const [targetIndex, error] of settledArchive.errorsByTargetIndex) {
-                                errors.set(targetIndex, error);
+                            for (const [generatorIndex, error] of settledArchive.errorsByGeneratorIndex) {
+                                errors.set(generatorIndex, error);
                             }
                             if (settledArchive.archive != null) {
                                 const archive = settledArchive.archive;
-                                const { specIndexesByTargetIndex, ...sourceArchive } = archive;
-                                for (const [generatorIndex, specIndexes] of specIndexesByTargetIndex) {
+                                const { specIndexesByGeneratorIndex, ...sourceArchive } = archive;
+                                for (const [generatorIndex, specIndexes] of specIndexesByGeneratorIndex) {
                                     sourceArchives.set(generatorIndex, { ...sourceArchive, specIndexes });
                                 }
                             }

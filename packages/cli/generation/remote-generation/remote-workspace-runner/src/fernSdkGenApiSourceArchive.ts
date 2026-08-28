@@ -1,33 +1,16 @@
+import type {
+    RawSpecImportSettings,
+    RawSpecsManifest,
+    RawSpecsManifestEntry,
+    RawSpecType
+} from "@fern-api/api-workspace-commons";
+
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
 
-export type FernSdkGenApiSourceType = "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
-
-export interface FernSdkGenApiImportSettings {
-    respectNullableSchemas?: boolean;
-    titleAsSchemaName?: boolean;
-    coerceEnumsToLiterals?: boolean;
-    idiomaticRequestNames?: boolean;
-    wrapReferencesToNullableInOptional?: boolean;
-    coerceOptionalSchemasToNullable?: boolean;
-    pathParameterOrder?: "url-order" | "spec-order";
-    onlyIncludeReferencedSchemas?: boolean;
-    objectQueryParameters?: boolean;
-    typeDatesAsStrings?: boolean;
-    groupMultiApiEnvironments?: boolean;
-    defaultIntegerFormat?: "int32" | "int64" | "uint32" | "uint64";
-}
-
-export interface FernSdkGenApiSourceManifestEntry {
-    type: FernSdkGenApiSourceType;
-    specPath: string;
-    overridePaths?: string[];
-    namespace?: string;
-    apiImportSettings?: FernSdkGenApiImportSettings;
-}
-
-export interface FernSdkGenApiSourceManifest {
-    specs: FernSdkGenApiSourceManifestEntry[];
-}
+export type FernSdkGenApiSourceType = RawSpecType;
+export type FernSdkGenApiImportSettings = RawSpecImportSettings;
+export type FernSdkGenApiSourceManifestEntry = RawSpecsManifestEntry;
+export type FernSdkGenApiSourceManifest = RawSpecsManifest;
 
 export interface FernSdkGenApiSourceArchive {
     buffer: Buffer;
