@@ -4093,6 +4093,30 @@ fn coerce_body_param_value(
 /// Deliberately narrow: the value of this check is catching a typo locally
 /// instead of paying an API round-trip, not enforcing every JSON-Schema
 /// keyword. Over-reaching here would reject requests a server accepts.
+/// Whether a string is an integer literal, ignoring magnitude.
+///
+/// Shape-based rather than `parse::<i64>()` so an unbounded integer parameter
+/// is not rejected for exceeding a limit the spec never declared, and so this
+/// agrees with the JSON-number path, which accepts the full `u64` range.
+fn is_integer_literal(raw: &str) -> bool {
+    let digits = raw.strip_prefix('-').or_else(|| raw.strip_prefix('+')).unwrap_or(raw);
+    !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit())
+}
+
+/// Whether a string is a boolean literal.
+///
+/// Deliberately lenient. A strict `true|false|1|0` list rejected `True`,
+/// `TRUE`, `False`, `yes`, `no`, `on` and `off` — spellings the CLI forwarded
+/// before any type-checking existed, and which the frameworks that generate
+/// these specs accept on the wire. A local check exists to catch typos before
+/// a round trip, not to be stricter than the server it is standing in for.
+fn is_boolean_literal(raw: &str) -> bool {
+    matches!(
+        raw.to_ascii_lowercase().as_str(),
+        "true" | "false" | "1" | "0" | "yes" | "no" | "on" | "off" | "t" | "f" | "y" | "n"
+    )
+}
+
 fn validate_non_body_param_type(
     name: &str,
     value: &Value,
@@ -4144,10 +4168,24 @@ fn validate_non_body_param_type(
         }
         return Ok(());
     }
+    // An empty string is the shape a shell produces from an unset variable
+    // (`--limit "$LIMIT"`). Rejecting it turned a request that previously went
+    // out — as `?limit=` — into a hard local failure, so it stays accepted and
+    // the server decides. Only reached for a declared non-string type; the
+    // `_ => true` arm below already accepts anything on a string param.
+    if value.as_str() == Some("") {
+        return Ok(());
+    }
     let ok = match expected {
+        // The string arm checks digit shape rather than `parse::<i64>()`, so
+        // it agrees with the `Value::Number` arm: `n.is_u64()` accepted values
+        // above `i64::MAX` that `parse::<i64>()` rejected, so the same number
+        // was valid via `--params` and invalid via the flag. Range is a
+        // separate concern (`minimum`/`maximum`); this only asserts "is an
+        // integer", and the spec need not declare a `maximum`.
         "integer" => match value {
             Value::Number(n) => n.is_i64() || n.is_u64(),
-            Value::String(raw) => raw.parse::<i64>().is_ok(),
+            Value::String(raw) => is_integer_literal(raw),
             _ => false,
         },
         "number" => match value {
@@ -4155,9 +4193,18 @@ fn validate_non_body_param_type(
             Value::String(raw) => raw.parse::<f64>().is_ok_and(f64::is_finite),
             _ => false,
         },
+        // Booleans are the one place a strict list actively broke working
+        // commands: the previous `"true" | "false" | "1" | "0"` rejected
+        // `True`, `TRUE`, `False`, `yes`, `on` and friends, all of which the
+        // CLI forwarded before this check existed and which the server-side
+        // frameworks that emit these specs (pydantic/FastAPI) accept. A
+        // numeric `1`/`0` is accepted too, since the string forms are — the
+        // asymmetry meant `--params '{"ascending": 1}'` failed while
+        // `--ascending 1` passed.
         "boolean" => match value {
             Value::Bool(_) => true,
-            Value::String(raw) => matches!(raw.as_str(), "true" | "false" | "1" | "0"),
+            Value::Number(n) => matches!(n.as_i64(), Some(0) | Some(1)),
+            Value::String(raw) => is_boolean_literal(raw),
             _ => false,
         },
         _ => true,
@@ -7207,10 +7254,92 @@ mod tests {
             location: Some("query".to_string()),
             ..Default::default()
         };
-        for good in [json!("true"), json!("false"), json!("1"), json!("0"), json!(true)] {
-            validate_non_body_param_type("flag", &good, Some(&bool_param)).expect("accepted");
+        // This list started as `true|false|1|0` — strict enough to reject
+        // `True`, `yes` and `on`, which the CLI forwarded happily before any
+        // type-checking existed. A local check is here to catch typos before a
+        // round trip, not to be stricter than the server it stands in for, and
+        // the frameworks that emit these specs accept all of these.
+        for good in [
+            json!("true"),
+            json!("false"),
+            json!("True"),
+            json!("TRUE"),
+            json!("False"),
+            json!("yes"),
+            json!("no"),
+            json!("on"),
+            json!("off"),
+            json!("t"),
+            json!("f"),
+            json!("1"),
+            json!("0"),
+            json!(true),
+            // The numeric forms, which were rejected while the string "1"/"0"
+            // were accepted — so `--params '{"flag": 1}'` failed where
+            // `--flag 1` passed.
+            json!(1),
+            json!(0),
+        ] {
+            validate_non_body_param_type("flag", &good, Some(&bool_param))
+                .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
         }
-        assert!(validate_non_body_param_type("flag", &json!("yes"), Some(&bool_param)).is_err());
+        // Still catches an actual typo, which is the whole point.
+        for bad in [json!("ture"), json!("maybe"), json!("2"), json!(2)] {
+            assert!(
+                validate_non_body_param_type("flag", &bad, Some(&bool_param)).is_err(),
+                "{bad} should be rejected",
+            );
+        }
+    }
+
+    #[test]
+    fn test_typed_param_accepts_an_empty_string() {
+        // A shell turns an unset variable into an empty argument, so
+        // `--limit "$LIMIT"` arrives as "". Rejecting it converted a request
+        // that previously went out as `?limit=` into a hard local failure —
+        // a working script broken by a validation check.
+        for param_type in ["integer", "number", "boolean"] {
+            let param = MethodParameter {
+                param_type: Some(param_type.to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            };
+            validate_non_body_param_type("limit", &json!(""), Some(&param))
+                .unwrap_or_else(|e| panic!("empty string on {param_type} must pass: {e}"));
+        }
+    }
+
+    #[test]
+    fn test_integer_param_agrees_across_the_flag_and_params_paths() {
+        // `n.is_u64()` accepted values above `i64::MAX` while
+        // `raw.parse::<i64>()` rejected them, so the same number was valid via
+        // `--params` and invalid via the flag. The spec need not declare a
+        // `maximum`, so magnitude is not ours to police.
+        let param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        let huge = "9223372036854775808"; // i64::MAX + 1
+        validate_non_body_param_type("limit", &json!(huge), Some(&param))
+            .expect("flag path must accept a large integer");
+        validate_non_body_param_type(
+            "limit",
+            &serde_json::from_str::<Value>(huge).unwrap(),
+            Some(&param),
+        )
+        .expect("--params path must agree with the flag path");
+
+        // Shape is still enforced.
+        for bad in [json!("12a"), json!(""), json!("-"), json!("+"), json!("1_0")] {
+            if bad.as_str() == Some("") {
+                continue; // covered by the empty-string case above
+            }
+            assert!(
+                validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
+                "{bad} should be rejected",
+            );
+        }
     }
 
     #[test]

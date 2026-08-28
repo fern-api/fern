@@ -4626,6 +4626,11 @@ fn flatten_body_params_prefix(
                         } else {
                             None
                         },
+                        item_enum_values: if is_array {
+                            array_item_enum_values(effective, component_schemas)
+                        } else {
+                            None
+                        },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
                             || promoted_composite.is_some(),
@@ -4768,6 +4773,11 @@ fn flatten_body_params_prefix(
                 repeated: is_array,
                 item_type: if is_array {
                     array_item_type(effective, component_schemas)
+                } else {
+                    None
+                },
+                item_enum_values: if is_array {
+                    array_item_enum_values(effective, component_schemas)
                 } else {
                     None
                 },
@@ -5143,6 +5153,61 @@ mod tests {
         let (_, mp) = convert_parameter(&scalar, None, &components);
         assert!(!mp.repeated);
         assert_eq!(mp.item_type, None);
+    }
+
+    #[test]
+    fn test_body_array_of_enum_resolves_its_element_enum() {
+        // The element-enum resolution was wired into `convert_parameter` only,
+        // so a body array of enums advertised no enum at all. On a real spec
+        // that meant `metrics query-events --event-types bogus` was rejected
+        // while `webhooks create --event-types bogus` — same 10-member enum,
+        // and required there — was not.
+        let mut components = HashMap::new();
+        components.insert(
+            "EventType".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: string\nenum:\n  - message.sent\n  - message.received\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "EventTypes".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  $ref: '#/components/schemas/EventType'\n",
+            )
+            .unwrap(),
+        );
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+type: object
+properties:
+  event_types:
+    $ref: '#/components/schemas/EventTypes'
+  inline_types:
+    type: array
+    items:
+      $ref: '#/components/schemas/EventType'
+  labels:
+    type: array
+    items:
+      type: string
+"#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &components, 0);
+        let expected = vec!["message.sent".to_string(), "message.received".to_string()];
+
+        for name in ["event_types", "inline_types"] {
+            let p = &params[name];
+            assert!(p.repeated, "{name} must be repeated");
+            assert_eq!(
+                p.item_enum_values.as_deref(),
+                Some(expected.as_slice()),
+                "{name} must resolve its element enum",
+            );
+        }
+        // A plain string array invents nothing.
+        assert_eq!(params["labels"].item_enum_values, None);
     }
 
     #[test]
