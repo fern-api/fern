@@ -48,7 +48,14 @@ impl allof_composition_sdk::RequestExecutor for CliExecutorAdapter {
 pub fn client(ctx: &AppContext) -> allof_composition_sdk::api::ApiClient {
     let executor = ctx.build_sdk_executor();
     let adapter = Arc::new(CliExecutorAdapter(executor));
-    let config = allof_composition_sdk::ClientConfig::default();
+    // Seed the base URL from the CLI's own resolution (--base-url / env >
+    // spec base_url > server root). `ClientConfig::default()` carries an
+    // empty `base_url` for any API that declares no environment, which made
+    // every custom command fail on a relative URL before the executor ran.
+    let config = allof_composition_sdk::ClientConfig {
+        base_url: ctx.effective_base_url(),
+        ..Default::default()
+    };
     let http_client = allof_composition_sdk::HttpClient::with_executor(
         adapter as Arc<dyn allof_composition_sdk::RequestExecutor>,
         config.clone(),

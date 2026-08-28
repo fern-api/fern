@@ -48,7 +48,14 @@ impl server_url_templating_api_single_base_url_sdk::RequestExecutor for CliExecu
 pub fn client(ctx: &AppContext) -> server_url_templating_api_single_base_url_sdk::api::ApiClient {
     let executor = ctx.build_sdk_executor();
     let adapter = Arc::new(CliExecutorAdapter(executor));
-    let config = server_url_templating_api_single_base_url_sdk::ClientConfig::default();
+    // Seed the base URL from the CLI's own resolution (--base-url / env >
+    // spec base_url > server root). `ClientConfig::default()` carries an
+    // empty `base_url` for any API that declares no environment, which made
+    // every custom command fail on a relative URL before the executor ran.
+    let config = server_url_templating_api_single_base_url_sdk::ClientConfig {
+        base_url: ctx.effective_base_url(),
+        ..Default::default()
+    };
     let http_client = server_url_templating_api_single_base_url_sdk::HttpClient::with_executor(
         adapter as Arc<dyn server_url_templating_api_single_base_url_sdk::RequestExecutor>,
         config.clone(),

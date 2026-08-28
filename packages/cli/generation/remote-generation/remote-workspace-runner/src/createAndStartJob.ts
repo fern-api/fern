@@ -1,12 +1,8 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
+import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import {
-    migrateIntermediateRepresentationForGenerator,
-    migrateIntermediateRepresentationToVersionForGenerator
-} from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
@@ -18,6 +14,7 @@ import yaml from "js-yaml";
 import urlJoin from "url-join";
 import { promisify } from "util";
 import { gzip } from "zlib";
+import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 const gzipAsync = promisify(gzip);
@@ -395,29 +392,12 @@ async function startJob({
     irVersionOverride: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
 }): Promise<void> {
-    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
-        version == null ? undefined : "v" + version.toString()
-    );
-    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
-    const migratedIntermediateRepresentation =
-        resolvedIrVersionOverride == null
-            ? await migrateIntermediateRepresentationForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              })
-            : await migrateIntermediateRepresentationToVersionForGenerator({
-                  intermediateRepresentation,
-                  context,
-                  irVersion: resolvedIrVersionOverride,
-                  targetGenerator: {
-                      name: generatorInvocation.name,
-                      version: generatorInvocation.version
-                  }
-              });
+    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForInvocation({
+        intermediateRepresentation,
+        generatorInvocation,
+        context,
+        irVersionOverride
+    });
 
     const formData = new FormData();
 

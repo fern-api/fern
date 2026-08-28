@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
@@ -18,8 +19,17 @@ export interface DetectedGlobalParam {
 }
 
 /**
- * Visit each entry in the IR's `globalParameters` and emit a
- * `DetectedGlobalParam` for every supported parameter.
+ * Visit each entry in the IR's `globalParameters` plus its API-wide
+ * `headers` and emit a `DetectedGlobalParam` for every supported
+ * parameter.
+ *
+ * API-wide headers (the root API file / `generators.yml` `headers:` block,
+ * i.e. `x-fern-global-headers`) are header-location global parameters with
+ * `auto` apply: they are sent on every request. They live in `ir.headers`
+ * rather than `ir.globalParameters`, and the copied raw OpenAPI specs the
+ * Rust runtime parses don't carry them, so the generator has to wire them
+ * explicitly. A `globalParameters` entry targeting the same header wins —
+ * it is the richer declaration.
  *
  * Each detected param produces a `.global_parameter(GlobalParameter { ... })`
  * builder call that the `renderMainRs` layer splices into the
@@ -29,15 +39,25 @@ export interface DetectedGlobalParam {
  */
 export function detectGlobalParams(args: {
     globalParameters: FernIr.GlobalParameter[] | undefined;
+    apiWideHeaders?: FernIr.HttpHeader[] | undefined;
 }): DetectedGlobalParam[] {
-    const { globalParameters } = args;
-    if (globalParameters == null || globalParameters.length === 0) {
-        return [];
-    }
+    const { globalParameters, apiWideHeaders } = args;
 
     const bindings: DetectedGlobalParam[] = [];
-    for (const param of globalParameters) {
+    const declaredHeaderTargets = new Set<string>();
+    for (const param of globalParameters ?? []) {
+        if (param.location === "header") {
+            declaredHeaderTargets.add(param.target.toLowerCase());
+        }
         bindings.push(buildBinding(param));
+    }
+    for (const header of apiWideHeaders ?? []) {
+        const binding = buildHeaderBinding(header);
+        if (binding == null || declaredHeaderTargets.has(binding.paramName.toLowerCase())) {
+            continue;
+        }
+        declaredHeaderTargets.add(binding.paramName.toLowerCase());
+        bindings.push(binding);
     }
     return bindings;
 }
@@ -103,6 +123,87 @@ function resolveParamName(nameField: FernIr.NameAndWireValueOrString): {
     return {
         wireValue: nameField.wireValue,
         sdkName: sdkNameValue !== nameField.wireValue ? sdkNameValue : undefined
+    };
+}
+
+/**
+ * Whether a header's declared type makes it optional on the wire —
+ * `optional<string>` / `nullable<string>` headers may be omitted, while a
+ * bare `string` header must be resolvable or the CLI errors up front.
+ * Literal-typed headers are constants, so they too need no caller input.
+ */
+function headerIsOptional(valueType: FernIr.TypeReference): boolean {
+    return visitDiscriminatedUnion(valueType)._visit<boolean>({
+        container: ({ container }) =>
+            visitDiscriminatedUnion(container)._visit<boolean>({
+                optional: () => true,
+                nullable: () => true,
+                literal: () => true,
+                list: () => false,
+                map: () => false,
+                set: () => false,
+                _other: () => false
+            }),
+        named: () => false,
+        primitive: () => false,
+        unknown: () => false,
+        _other: () => false
+    });
+}
+
+/**
+ * The value a literal-typed header always sends, so it needs no flag value.
+ */
+function headerLiteralValue(valueType: FernIr.TypeReference): FernIr.Literal | undefined {
+    return visitDiscriminatedUnion(valueType)._visit<FernIr.Literal | undefined>({
+        container: ({ container }) =>
+            visitDiscriminatedUnion(container)._visit<FernIr.Literal | undefined>({
+                literal: ({ literal }) => literal,
+                optional: () => undefined,
+                nullable: () => undefined,
+                list: () => undefined,
+                map: () => undefined,
+                set: () => undefined,
+                _other: () => undefined
+            }),
+        named: () => undefined,
+        primitive: () => undefined,
+        unknown: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Lower an API-wide header into a header-location global parameter with
+ * `auto` apply (sent on every request). Returns `undefined` when the
+ * header has no usable wire name.
+ */
+function buildHeaderBinding(header: FernIr.HttpHeader): DetectedGlobalParam | undefined {
+    const { wireValue, sdkName } = resolveParamName(header.name);
+    if (wireValue.length === 0) {
+        return undefined;
+    }
+
+    const defaultRust = optionLiteralDefault(header.clientDefault ?? headerLiteralValue(header.valueType));
+    const rustCall = [
+        `.global_parameter(GlobalParameter {`,
+        `            name: "${escapeRustString(wireValue)}".into(),`,
+        `            location: GlobalParameterLocation::Header,`,
+        `            target: "${escapeRustString(wireValue)}".into(),`,
+        `            env: ${optionString(header.env)},`,
+        `            default: ${defaultRust},`,
+        `            optional: ${headerIsOptional(header.valueType) ? "true" : "false"},`,
+        `            apply: GlobalParameterApplyMode::Auto,`,
+        `            parameter_name: ${optionString(sdkName)},`,
+        `            docs: ${optionString(header.docs)},`,
+        `        })`
+    ].join("\n");
+
+    return {
+        paramName: wireValue,
+        rustCall,
+        imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
+        envVar: header.env ?? undefined
     };
 }
 

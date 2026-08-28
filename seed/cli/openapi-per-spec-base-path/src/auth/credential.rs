@@ -233,6 +233,42 @@ impl AuthCredentialSource {
         }
     }
 
+    /// Like [`credential_hints`](Self::credential_hints), but only the sources
+    /// that currently hold a value.
+    ///
+    /// The 401/403 path used to list every *declared* source — so a CLI with
+    /// two schemes told the user "Credentials were supplied via: TOKEN env var,
+    /// keyring …, API_KEY env var, keyring …" when exactly one of them had
+    /// supplied anything, and then advised hunting for shadowing that did not
+    /// exist. Naming only what actually resolved makes the message true, and
+    /// lets the caller decide whether shadowing is even possible.
+    ///
+    /// Resolution cost is paid only on the error path. `Cli` sources always
+    /// report empty (they resolve post-finalize, so `try_resolve` cannot see
+    /// them) and `Closure` sources are reported without invoking the closure —
+    /// re-running it here could have side effects, and it has already run
+    /// during `apply()`.
+    pub fn populated_credential_hints(&self) -> Vec<String> {
+        match self {
+            AuthCredentialSource::Chain(sources) => sources
+                .iter()
+                .flat_map(|s| s.populated_credential_hints())
+                .collect(),
+            // Can't be checked here without side effects or post-finalize
+            // state; keep them so the user still sees a source they can use.
+            AuthCredentialSource::Cli(_) | AuthCredentialSource::Closure(_, Some(_)) => {
+                self.credential_hints()
+            }
+            // `try_resolve` rather than `resolve`: a keyring entry that exists
+            // but could not be read (denied prompt) is *configured*, and saying
+            // otherwise would send the user looking in the wrong place.
+            _ => match self.try_resolve() {
+                Ok(Some(_)) | Err(_) => self.credential_hints(),
+                Ok(None) => Vec::new(),
+            },
+        }
+    }
+
     /// Recursively collect every CLI arg name this source references.
     /// CliApp uses this before clap parsing to register the corresponding
     /// global `--<name>` flags.

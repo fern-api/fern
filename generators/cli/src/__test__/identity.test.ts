@@ -6,6 +6,7 @@ const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => (
     apiDisplayName,
     auth: { schemes: [] },
     globalParameters: [],
+    headers: [],
     services: {},
     environments: undefined,
     whiteLabel: false

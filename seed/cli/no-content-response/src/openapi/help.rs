@@ -174,11 +174,26 @@ fn build_operation_schema(
     let mut properties: Map<String, Value> = Map::new();
     let mut required: Vec<String> = Vec::new();
 
+    // Mirrors `commands::build_resource_command`: when two wire names
+    // sanitize to the same flag only the first in sorted order is
+    // registered, so the loser must not advertise a flag that belongs to
+    // the winner.
+    let mut flag_to_wire: HashMap<String, String> = HashMap::new();
+
     let mut param_names: Vec<_> = method.parameters.keys().collect();
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        let element_type = param.param_type.as_deref().unwrap_or("string");
+        // A repeated flag carries `param_type: "string"` because clap collects
+        // strings; the spec's real element type lives in `item_type`. Rendering
+        // `param_type` as the element type advertised `items: {type: string}`
+        // for an array of objects, so an agent reading the contract sent
+        // `["x"]` and the validator rejected it.
+        let element_type = param
+            .item_type
+            .as_deref()
+            .or(param.param_type.as_deref())
+            .unwrap_or("string");
         let mut prop = if param.scalar_or_array {
             json!({
                 "oneOf": [
@@ -268,12 +283,103 @@ fn build_operation_schema(
             prop["variable"] = json!(var_name);
             prop["globalFlag"] = json!(format!("--{}", crate::text::to_kebab_flag(var_name)));
             prop["envVar"] = json!(crate::text::to_screaming_snake(var_name));
-        } else if param.required {
+        } else if let Some(flag) = crate::openapi::commands::resolve_param_flag_name(param, name) {
+            // Property keys are wire names, which diverge from the flag an
+            // agent types (header casing, `x-fern-parameter-name` renames, a
+            // `-param` suffix on builtin collisions). Derived from the same
+            // `resolve_param_flag_name` the command builder uses so the two
+            // cannot drift; absent means the parameter is reachable only via
+            // `--params`, because the builder registers no flag for it.
+            match flag_to_wire.entry(flag.clone()) {
+                std::collections::hash_map::Entry::Vacant(slot) => {
+                    slot.insert(name.clone());
+                    prop["flag"] = json!(format!("--{flag}"));
+                }
+                // The builder skipped this parameter: `--{flag}` sets the
+                // wire name that claimed it first, not this one.
+                std::collections::hash_map::Entry::Occupied(_) => {}
+            }
+        }
+        if param.variable_reference.is_none() && (param.required || param.required_by_spec) {
+            // `required_by_spec` catches object-valued body properties whose
+            // shorthand flag is deliberately clap-optional (the caller may use
+            // dot-notation leaves instead) but which the wire still requires.
+            // Reporting only `required` made this contract disagree with the
+            // validator — an agent supplied every listed field and the request
+            // was rejected for one that was never advertised.
             required.push(name.clone());
         }
         properties.insert(name.clone(), prop);
     }
+
+    // `multipart/form-data` body fields live in `method.multipart_fields`, not
+    // `method.parameters`, so this contract omitted them entirely: an
+    // upload operation advertised only its query params and headers, with an
+    // empty `required`. The flags exist and work — they were simply
+    // undiscoverable, so an agent driving purely from `--schema` could not
+    // invoke *any* multipart operation.
+    //
+    // Skips fields whose kebab name is reserved by the runtime, mirroring
+    // `commands::build_resource_command` — those args are never registered, so
+    // advertising them would be the same class of lie. Both loops resolve the
+    // name through `resolve_multipart_field_flag_name` so they cannot drift.
+    for field in &method.multipart_fields {
+        let Some(kebab) =
+            crate::openapi::commands::resolve_multipart_field_flag_name(&field.wire_name)
+        else {
+            continue;
+        };
+        // The flag surface is a string either way: a text part takes its value
+        // verbatim, a file part takes a filesystem path (`@path` / `-` for
+        // stdin are accepted too — see `--help`). `file: true` is what tells an
+        // agent to pass a path rather than the content.
+        let mut prop = if field.repeated {
+            json!({
+                "type": "array",
+                "items": { "type": "string" },
+                "location": "body",
+            })
+        } else {
+            json!({ "type": "string", "location": "body" })
+        };
+        prop["description"] = json!(field.description.as_deref().unwrap_or(""));
+        if field.is_file {
+            prop["file"] = json!(true);
+        }
+        if let Some(content_type) = &field.content_type {
+            prop["contentType"] = json!(content_type);
+        }
+        prop["flag"] = json!(format!("--{kebab}"));
+        if field.required {
+            required.push(field.wire_name.clone());
+        }
+        properties.insert(field.wire_name.clone(), prop);
+    }
+
     required.sort();
+    // A parent object flag and its dotted leaves are mutually exclusive on the
+    // command line — the executor rejects `--a` combined with `--a.b`. So when
+    // both a parent and its leaves are spec-required, advertising both makes
+    // the contract literally unsatisfiable: an agent supplies everything listed
+    // and gets "Cannot combine --settings with --settings.auth_type".
+    //
+    // Drop the ancestor. The required leaves already imply the parent must be
+    // present, and they are the form a caller can actually use together. A
+    // required parent with no required leaves (the case `required_by_spec` was
+    // added for) has no descendants here and is kept.
+    let covered: std::collections::HashSet<String> = required
+        .iter()
+        .flat_map(|name| {
+            let mut ancestors = Vec::new();
+            let mut rest = name.as_str();
+            while let Some((parent, _)) = rest.rsplit_once('.') {
+                ancestors.push(parent.to_string());
+                rest = parent;
+            }
+            ancestors
+        })
+        .collect();
+    required.retain(|name| !covered.contains(name));
 
     // Per ADR-0006: `--schema` is the agent-facing contract. Drop HTTP
     // plumbing (`httpMethod`, `path`) — agents drive the CLI, not raw
@@ -2006,5 +2112,255 @@ mod tests {
         assert_eq!(one_of[1]["type"], "array");
         assert_eq!(one_of[1]["items"]["type"], "string");
         assert_eq!(props["to"]["description"], "Recipient addresses");
+    }
+
+    /// A parent flag and its leaves cannot both be advertised as required —
+    /// the executor rejects combining them, so the contract would be
+    /// unsatisfiable. Caught by driving all 337 operations of a real spec:
+    /// 8 of them listed both and could not be followed as advertised.
+    #[test]
+    fn required_drops_an_ancestor_whose_leaves_are_also_required() {
+        use crate::openapi::discovery::MethodParameter;
+        let body = |required_by_spec: bool| MethodParameter {
+            location: Some("body".to_string()),
+            required_by_spec,
+            ..Default::default()
+        };
+        let mut parameters = HashMap::new();
+        // `settings` is spec-required and so are three of its leaves.
+        parameters.insert("settings".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            parameters.insert(leaf.to_string(), MethodParameter {
+                param_type: Some("string".to_string()),
+                required: true,
+                ..body(true)
+            });
+        }
+        // A required parent with NO required leaves must survive — that is the
+        // case `required_by_spec` was added for.
+        parameters.insert("workflow".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        parameters.insert("workflow.nodes".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            ..body(false)
+        });
+
+        let mut methods = HashMap::new();
+        methods.insert(
+            "create".to_string(),
+            RestMethod {
+                parameters,
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+        let schema = operation_schema(&doc, &["things"], "create").expect("schema");
+        let required: Vec<String> = schema["input"]["required"]
+            .as_array()
+            .expect("required array")
+            .iter()
+            .map(|v| v.as_str().unwrap().to_string())
+            .collect();
+
+        assert!(
+            !required.contains(&"settings".to_string()),
+            "an ancestor of a required leaf must be dropped: {required:?}",
+        );
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            assert!(required.contains(&leaf.to_string()), "{leaf} missing: {required:?}");
+        }
+        assert!(
+            required.contains(&"workflow".to_string()),
+            "a required parent with no required leaves must survive: {required:?}",
+        );
+    }
+
+    /// Multipart body fields must reach the contract.
+    ///
+    /// They live in `method.multipart_fields`, not `method.parameters`, so
+    /// `--schema` omitted them entirely — an upload operation advertised only
+    /// its query params and headers with an empty `required`, which made every
+    /// multipart operation uninvokable by an agent driving from the contract.
+    #[test]
+    fn multipart_fields_appear_in_the_input_contract() {
+        use crate::openapi::discovery::MultipartField;
+        let field = |wire: &str, is_file: bool, required: bool, repeated: bool| MultipartField {
+            wire_name: wire.to_string(),
+            is_file,
+            description: Some(format!("the {wire} field")),
+            required,
+            content_type: None,
+            repeated,
+        };
+        let mut methods = HashMap::new();
+        methods.insert(
+            "convert".to_string(),
+            RestMethod {
+                multipart_fields: vec![
+                    field("audio", true, true, false),
+                    field("files", true, false, true),
+                    field("file_format", false, false, false),
+                    // Collides with the builtin `--format`; never registered,
+                    // so it must not be advertised either.
+                    field("format", false, false, false),
+                ],
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "audio".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+
+        let schema = operation_schema(&doc, &["audio"], "convert").expect("schema");
+        let props = &schema["input"]["properties"];
+
+        // A required file part: string-typed (the flag takes a path), flagged
+        // `file` so an agent passes a path rather than the content.
+        assert_eq!(props["audio"]["type"], "string");
+        assert_eq!(props["audio"]["location"], "body");
+        assert_eq!(props["audio"]["file"], true);
+        assert_eq!(props["audio"]["description"], "the audio field");
+
+        // A repeated file part is an array of paths.
+        assert_eq!(props["files"]["type"], "array");
+        assert_eq!(props["files"]["items"]["type"], "string");
+        assert_eq!(props["files"]["file"], true);
+
+        // A text part carries no `file` marker.
+        assert_eq!(props["file_format"]["type"], "string");
+        assert!(props["file_format"].get("file").is_none());
+
+        // Builtin-colliding field is skipped, matching flag registration.
+        assert!(props.get("format").is_none(), "builtin collision must be skipped");
+
+        let required: Vec<&str> = schema["input"]["required"]
+            .as_array()
+            .expect("required")
+            .iter()
+            .map(|v| v.as_str().unwrap())
+            .collect();
+        assert_eq!(required, vec!["audio"], "only the required part is listed");
+    }
+
+    /// Every settable property must disclose the flag an agent types.
+    ///
+    /// Property keys are wire names and diverge from flags more often than
+    /// they look. The case that made a contract unfollowable: a spec parameter
+    /// named `query` is registered as `--query-param`, because `--query` is the
+    /// JMESPath global — `required` named `query` and no such flag existed.
+    #[test]
+    fn every_settable_property_discloses_its_flag() {
+        use crate::openapi::discovery::{MethodParameter, MultipartField};
+        let mut parameters = HashMap::new();
+        // Collides with the JMESPath global -> registered with a `-param` suffix.
+        parameters.insert("query".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            required: true,
+            ..Default::default()
+        });
+        // Header wire-casing -> kebab flag.
+        parameters.insert("Idempotency-Key".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("header".to_string()),
+            ..Default::default()
+        });
+        // Ordinary name -> unchanged.
+        parameters.insert("limit".to_string(), MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        });
+        // Two wire names sanitizing to `--page-size`: the command builder
+        // registers only the first in sorted order, so the loser must stay
+        // silent rather than point at the winner's flag.
+        for wire in ["pageSize", "page_size"] {
+            parameters.insert(wire.to_string(), MethodParameter {
+                param_type: Some("integer".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            });
+        }
+
+        let mut methods = HashMap::new();
+        methods.insert(
+            "search".to_string(),
+            RestMethod {
+                parameters,
+                multipart_fields: vec![MultipartField {
+                    wire_name: "audio_file".to_string(),
+                    is_file: true,
+                    description: None,
+                    required: true,
+                    content_type: None,
+                    repeated: false,
+                }],
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            crate::openapi::discovery::RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            resources,
+            ..Default::default()
+        };
+
+        let schema = operation_schema(&doc, &["things"], "search").expect("schema");
+        let props = &schema["input"]["properties"];
+
+        assert_eq!(
+            props["query"]["flag"], "--query-param",
+            "a builtin-colliding name must disclose its suffixed flag: {props}",
+        );
+        assert_eq!(props["Idempotency-Key"]["flag"], "--idempotency-key");
+        assert_eq!(props["limit"]["flag"], "--limit");
+        assert_eq!(props["audio_file"]["flag"], "--audio-file");
+        assert_eq!(props["pageSize"]["flag"], "--page-size");
+        assert!(
+            props["page_size"].get("flag").is_none(),
+            "the parameter that lost the flag collision must not advertise it: {props}",
+        );
+
+        // The required list still uses wire names (the `--params` route), so
+        // both spellings stay usable.
+        let required: Vec<&str> = schema["input"]["required"]
+            .as_array()
+            .expect("required")
+            .iter()
+            .map(|v| v.as_str().unwrap())
+            .collect();
+        assert!(required.contains(&"query"), "{required:?}");
+        assert!(required.contains(&"audio_file"), "{required:?}");
     }
 }

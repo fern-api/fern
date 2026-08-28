@@ -234,15 +234,65 @@ describe("emitPublishWorkflow", () => {
         // No publish() wrapper is defined anymore — npm publish is inlined.
         expect(yaml).not.toMatch(/publish\(\)\s*\{/);
 
-        // Each step inlines four npm publish calls (alpha, beta, backport,
-        // stable) across the two publish steps.
+        // Each step inlines three npm publish calls (pre-release, backport,
+        // stable) across the two publish steps. The pre-release branch used to
+        // be two hardcoded calls for -alpha and -beta; it is now one call whose
+        // dist-tag is derived from the version.
         const npmPublishMatches = yaml.match(/npm publish --access public/g);
-        expect(npmPublishMatches).toHaveLength(8);
+        expect(npmPublishMatches).toHaveLength(6);
 
         // Both platform and launcher steps should have backport logic
         // Each step has 2 occurrences: the echo message + the publish call
         const backportMatches = yaml.match(/--tag backport/g);
         expect(backportMatches).toHaveLength(4);
+    });
+
+    it("builds npm binaries with the same profile as the GitHub Release", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // `ci.yml` built `--release` while cargo-dist's `release.yml` builds
+        // `--profile dist` (release + thin LTO), so npm and the GitHub Release
+        // shipped different bytes under one version tag.
+        expect(yaml).toContain("cargo build --profile dist --target");
+        expect(yaml).not.toMatch(/cargo build --release --target/);
+        // A custom cargo profile writes to target/<triple>/<profile>/.
+        expect(yaml).toContain("/dist/${BINARY_NAME}");
+        expect(yaml).not.toContain("/release/${BINARY_NAME}");
+    });
+
+    it("gives every SemVer pre-release a non-latest dist-tag", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // Matching only -alpha/-beta let a v1.1.0-rc.1 or -next.1 tag fall
+        // through to a bare `npm publish`, moving `latest` to a pre-release.
+        // The branch condition must now be the generic SemVer "-" test.
+        expect(yaml).not.toMatch(/== \*-alpha\*/);
+        expect(yaml).not.toMatch(/== \*-beta\*/);
+
+        const prereleaseBranches = yaml.match(/if \[\[ "\$\{VERSION\}" == \*-\* \]\]; then/g);
+        expect(prereleaseBranches).toHaveLength(2);
+
+        // The tag is the first pre-release identifier, with a fallback for an
+        // all-numeric or empty one (npm rejects a numeric dist-tag).
+        const derivedTags = yaml.match(/TAG=\$\(echo "\$\{PRERELEASE%%\.\*\}" \| tr -cd/g);
+        expect(derivedTags).toHaveLength(2);
+        const fallbacks = yaml.match(/TAG=prerelease/g);
+        expect(fallbacks).toHaveLength(2);
+    });
+
+    it("exits non-zero when the binary dies on a signal", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // `execFileSync` throws with `status: null` and `signal: "SIGTERM"` on
+        // a signal death. The old `"status" in e` test matched that and called
+        // `process.exit(null)`, which Node coerces to 0 — so CI timeouts,
+        // SIGSEGV and OOM-kills all reported success to `$?`.
+        expect(yaml).not.toMatch(/"status" in e/);
+        expect(yaml).toMatch(/typeof e\.status === "number"/);
+        expect(yaml).toMatch(/typeof e\.signal === "string"/);
+        // 128 + signum is the shell convention (SIGTERM -> 143).
+        expect(yaml).toMatch(/process\.exit\(128 \+ \(SIGNUM\[e\.signal\] \|\| 0\)\)/);
+        expect(yaml).toMatch(/SIGTERM: 15/);
     });
 });
 
