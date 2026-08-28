@@ -10,6 +10,18 @@ import { FernIr } from "@fern-fern/ir-sdk";
 export interface DetectedGlobalParam {
     /** Canonical parameter name (used as the CLI flag base). */
     paramName: string;
+    /**
+     * The name the CLI kebab-cases into the `--<flag>` surface: the SDK-facing
+     * override when the declaration carries one, else the wire name. Mirrors
+     * the Rust runtime's `global_parameter_flag_name`.
+     */
+    flagSource: string;
+    /** Where the resolved value is injected on the wire. */
+    location: "header" | "query" | "body" | "path";
+    /** Whether requests may omit the parameter when nothing resolves. */
+    optional: boolean;
+    /** Whether an env var or baked-in default supplies a value without the flag. */
+    hasFallbackValue: boolean;
     /** Literal Rust struct-expression for the `GlobalParameter` value. */
     rustCall: string;
     /** Rust `use` imports needed for this binding. */
@@ -60,6 +72,16 @@ export function detectGlobalParams(args: {
         bindings.push(binding);
     }
     return bindings;
+}
+
+function locationOf(location: FernIr.GlobalParameterLocation): DetectedGlobalParam["location"] {
+    return FernIr.GlobalParameterLocation._visit<DetectedGlobalParam["location"]>(location, {
+        header: () => "header",
+        query: () => "query",
+        body: () => "body",
+        path: () => "path",
+        _other: () => "query"
+    });
 }
 
 function locationToRust(location: FernIr.GlobalParameterLocation): string {
@@ -201,6 +223,10 @@ function buildHeaderBinding(header: FernIr.HttpHeader): DetectedGlobalParam | un
 
     return {
         paramName: wireValue,
+        flagSource: sdkName ?? wireValue,
+        location: "header",
+        optional: headerIsOptional(header.valueType),
+        hasFallbackValue: header.env != null || defaultRust !== "None",
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: header.env ?? undefined
@@ -243,6 +269,10 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
 
     return {
         paramName: wireValue,
+        flagSource: sdkName ?? wireValue,
+        location: locationOf(param.location),
+        optional: param.optional === true,
+        hasFallbackValue: param.env != null || defaultRust !== "None",
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: param.env ?? undefined

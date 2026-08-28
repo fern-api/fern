@@ -17,6 +17,12 @@
       "value": "test"
     }
   ],
+  "globalFlags": [
+    {
+      "name": "apiKey",
+      "value": "test"
+    }
+  ],
   "authMock": null,
   "loginTokenSetup": null,
   "endpointSecurityAuth": false,
