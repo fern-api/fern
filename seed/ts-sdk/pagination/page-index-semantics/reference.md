@@ -41,7 +41,7 @@ let page = await client.complex.search("index", {
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -121,7 +121,7 @@ let page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -186,7 +186,7 @@ let page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPaginatio
     cursor: "cursor"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -255,7 +255,7 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -326,7 +326,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -397,7 +397,7 @@ let page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -466,7 +466,7 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -535,7 +535,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
     order: "asc"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -604,7 +604,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextP
     order: "asc"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -669,7 +669,7 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -734,7 +734,7 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOption
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -799,7 +799,7 @@ let page = await client.inlineUsers.inlineUsers.listUsernames({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -864,7 +864,7 @@ let page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
     offset: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -936,7 +936,7 @@ let page = await client.users.listWithCursorPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1001,7 +1001,7 @@ let page = await client.users.listWithMixedTypeCursorPagination({
     cursor: "cursor"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1070,7 +1070,7 @@ let page = await client.users.listWithBodyCursorPagination({
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1153,7 +1153,7 @@ let page = await client.users.listWithTopLevelBodyCursorPagination({
     filter: "active"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1224,7 +1224,7 @@ let page = await client.users.listWithOffsetPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1295,7 +1295,7 @@ let page = await client.users.listWithDoubleOffsetPagination({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1364,7 +1364,7 @@ let page = await client.users.listWithBodyOffsetPagination({
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1433,7 +1433,7 @@ let page = await client.users.listWithOffsetStepPagination({
     order: "asc"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1502,7 +1502,7 @@ let page = await client.users.listWithOffsetPaginationHasNextPage({
     order: "asc"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1567,7 +1567,7 @@ let page = await client.users.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1632,7 +1632,7 @@ let page = await client.users.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1697,7 +1697,7 @@ let page = await client.users.listUsernames({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1762,7 +1762,7 @@ let page = await client.users.listUsernamesWithOptionalResponse({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1827,7 +1827,7 @@ let page = await client.users.listWithGlobalConfig({
     offset: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1892,7 +1892,7 @@ let page = await client.users.listWithOptionalData({
     page: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -1961,7 +1961,7 @@ let page = await client.users.listWithAliasedData({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
