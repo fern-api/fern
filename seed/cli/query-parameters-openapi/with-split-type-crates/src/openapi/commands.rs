@@ -1038,8 +1038,13 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
 /// strings — so the spec's real element type lives in `item_type`. Reading
 /// `param_type` here made an array-of-objects flag advertise `<STRING>` while
 /// `--schema` (correctly) said `items: {type: object}` and the collector
-/// decoded objects: three surfaces, two answers. `item_type: None` means
-/// string, so non-array and string-array flags are unchanged.
+/// decoded objects: three surfaces, two answers.
+///
+/// The `param_type` fallback is only correct for *body* arrays, where
+/// `param_type` already holds the element type. On a query, header or path
+/// array it is the container type `"array"`, so those must arrive with
+/// `item_type` resolved — `convert_parameter` spells it out, defaulting to
+/// `Some("string")`, rather than leaving it `None` and falling through here.
 fn value_name_for(param: &MethodParameter) -> &'static str {
     let value_type = if param.repeated {
         param.item_type.as_deref().or(param.param_type.as_deref())
@@ -3358,9 +3363,20 @@ paths:
             location: Some("body".to_string()),
             ..Default::default()
         };
+        // A query array: `param_type` is the *container* type, so falling back
+        // to it rendered `<JSON_ARRAY>` — an array of arrays — on every
+        // string-element query parameter.
+        let query_strings = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            repeated: true,
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
         assert_eq!(value_name_for(&objects), "JSON_OBJECT");
-        // `item_type: None` means string — unchanged from before.
+        // Body array: `item_type: None` means string — unchanged from before.
         assert_eq!(value_name_for(&strings), "STRING");
+        assert_eq!(value_name_for(&query_strings), "STRING");
     }
 
     #[test]

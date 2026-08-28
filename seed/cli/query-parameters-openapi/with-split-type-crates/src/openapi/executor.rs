@@ -722,6 +722,14 @@ fn parse_and_validate_inputs(
                 set_nested_value(&mut body_from_flags, key, coerced);
             }
             _ => {
+                // Query and path parameters go on the wire as strings, so
+                // nothing downstream ever type-checked them: `--limit nope`
+                // serialized as `?limit=nope` and 400'd at the API. Bodies have
+                // been checked since the `$ref` work; this is the other half of
+                // the same surface, and it only became possible once `$ref`'d
+                // parameters started resolving their type at all.
+                let param_def = method.parameters.get(key);
+                validate_non_body_param_type(key, value, param_def)?;
                 non_header_params.insert(key.clone(), value.clone());
             }
         }
@@ -4059,6 +4067,71 @@ fn coerce_body_param_value(
     }
 }
 
+/// Type-check a query- or path-located parameter against its schema type.
+///
+/// Only the numeric and boolean types are enforced. `string` accepts anything
+/// (it is what the wire carries), and `array`/`object` are left alone because
+/// their CLI surface is a repeated flag or a JSON literal whose shape the
+/// style-aware serializer handles. A `nullable` parameter accepts the resolved
+/// `null` sentinel.
+///
+/// Deliberately narrow: the value of this check is catching a typo locally
+/// instead of paying an API round-trip, not enforcing every JSON-Schema
+/// keyword. Over-reaching here would reject requests a server accepts.
+fn validate_non_body_param_type(
+    name: &str,
+    value: &Value,
+    param_def: Option<&MethodParameter>,
+) -> Result<(), CliError> {
+    let Some(param) = param_def else {
+        // Not a declared parameter (e.g. a multipart field routed elsewhere, or
+        // an extra `--params` key). Nothing to check it against.
+        return Ok(());
+    };
+    if value.is_null() {
+        return Ok(());
+    }
+    let Some(expected) = param.param_type.as_deref() else {
+        return Ok(());
+    };
+    // A repeated flag's `param_type` describes the element, and the collected
+    // value is an array — check each element instead of the container.
+    if let Value::Array(items) = value {
+        for item in items {
+            validate_non_body_param_type(name, item, param_def)?;
+        }
+        return Ok(());
+    }
+    let ok = match expected {
+        "integer" => match value {
+            Value::Number(n) => n.is_i64() || n.is_u64(),
+            Value::String(raw) => raw.parse::<i64>().is_ok(),
+            _ => false,
+        },
+        "number" => match value {
+            Value::Number(_) => true,
+            Value::String(raw) => raw.parse::<f64>().is_ok_and(f64::is_finite),
+            _ => false,
+        },
+        "boolean" => match value {
+            Value::Bool(_) => true,
+            Value::String(raw) => matches!(raw.as_str(), "true" | "false" | "1" | "0"),
+            _ => false,
+        },
+        _ => true,
+    };
+    if ok {
+        return Ok(());
+    }
+    let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+        .map(|f| format!("--{f}"))
+        .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+    Err(CliError::Validation(format!(
+        "Invalid value for {flag}: expected {expected}, got {}",
+        get_value_type(value)
+    )))
+}
+
 /// Validates a JSON body against a Discovery Document schema.
 fn validate_body_against_schema(
     body: &Value,
@@ -7011,6 +7084,75 @@ mod tests {
             schemas,
             ..Default::default()
         }
+    }
+
+    #[test]
+    fn test_query_param_type_is_validated_locally() {
+        // `--limit nope` used to serialize as `?limit=nope` and 400 at the API.
+        // Bodies have been checked since the `$ref` work; this is the other
+        // half of the same surface.
+        let int_param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        let err = validate_non_body_param_type("limit", &json!("nope"), Some(&int_param))
+            .expect_err("a non-numeric integer must be rejected");
+        let msg = format!("{err}");
+        assert!(msg.contains("--limit"), "names the flag: {msg}");
+        assert!(msg.contains("expected integer"), "{msg}");
+
+        // Numeric strings are how clap delivers them, so these must pass.
+        for good in [json!("5"), json!(5), json!("-3")] {
+            validate_non_body_param_type("limit", &good, Some(&int_param))
+                .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
+        }
+        // A float is not an integer.
+        assert!(validate_non_body_param_type("limit", &json!("1.5"), Some(&int_param)).is_err());
+
+        let bool_param = MethodParameter {
+            param_type: Some("boolean".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        for good in [json!("true"), json!("false"), json!("1"), json!("0"), json!(true)] {
+            validate_non_body_param_type("flag", &good, Some(&bool_param)).expect("accepted");
+        }
+        assert!(validate_non_body_param_type("flag", &json!("yes"), Some(&bool_param)).is_err());
+    }
+
+    #[test]
+    fn test_query_param_validation_stays_narrow() {
+        // Deliberately permissive where the wire is permissive: over-reaching
+        // would reject requests a server accepts.
+        let string_param = MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        // Anything goes for a string.
+        for v in [json!("x"), json!("123"), json!("{\"a\":1}")] {
+            validate_non_body_param_type("q", &v, Some(&string_param)).expect("string accepts all");
+        }
+        // A nullable param accepts the resolved null sentinel.
+        let nullable = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            nullable: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("limit", &Value::Null, Some(&nullable)).expect("null ok");
+        // An undeclared key (e.g. an extra `--params` entry) is not our business.
+        validate_non_body_param_type("unknown", &json!("whatever"), None).expect("undeclared ok");
+        // A repeated flag checks each element, not the container.
+        let repeated = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&repeated)).expect("elements ok");
+        assert!(validate_non_body_param_type("ids", &json!(["1", "no"]), Some(&repeated)).is_err());
     }
 
     #[test]

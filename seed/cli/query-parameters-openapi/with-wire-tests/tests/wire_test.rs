@@ -874,7 +874,11 @@ async fn run_case(id: &str) {
     let mut args: Vec<String> = command.chain.clone();
     args.push("--base-url".to_string());
     args.push(server.uri());
-    args.push("--no-pager".to_string());
+    // Deliberately no --no-pager: it is registered only on operations that
+    // declare pagination metadata, so pushing it unconditionally made clap
+    // reject every invocation ("unexpected argument '--no-pager'") on any spec
+    // without pagination markers — the whole suite, not one case. It was also
+    // inert here: the pager only spawns under --page-all, which no case passes.
     if !case.params.is_empty() {
         // The CLI reads path params off the baked spec by their wire name, which
         // can differ from the manifest's (IR-renamed) name — remap those keys so

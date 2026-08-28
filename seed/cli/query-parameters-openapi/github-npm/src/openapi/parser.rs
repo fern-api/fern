@@ -735,6 +735,11 @@ struct OpenApiParamSchema {
     /// one silently became a single-value string flag.
     #[serde(rename = "$ref", default)]
     schema_ref: Option<String>,
+    /// Element schema for an inline `type: array` parameter. Consumed only to
+    /// resolve the element type for `--schema` / `--help`; a `$ref`'d or
+    /// `anyOf`-wrapped array resolves through `component_schemas` instead.
+    #[serde(default)]
+    items: Option<Box<OpenApiParamSchema>>,
     /// `oneOf` / `anyOf` branches on the parameter's own schema. Needed for
     /// pydantic's `Optional[list[T]]` spelling — see
     /// [`resolve_param_nullable_branch`].
@@ -2387,6 +2392,28 @@ fn resolve_param_nullable_branch<'a>(
     resolve_ref_chain(non_null?, component_schemas)
 }
 
+/// Resolved `type` of a parameter-shaped schema, following one `$ref` into
+/// `component_schemas`. `None` for an untyped or `string` schema — callers
+/// treat `None` as "string", which is what every lowering produced before
+/// element types were tracked at all.
+fn param_schema_type(
+    schema: &OpenApiParamSchema,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    if let Some(ref_path) = &schema.schema_ref {
+        let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+        let terminal = resolve_ref_chain(resolved, component_schemas)?;
+        return match terminal.schema_type() {
+            Some("string") | None => None,
+            Some(other) => Some(other.to_string()),
+        };
+    }
+    match schema.schema_type.as_deref() {
+        Some("string") | None => None,
+        Some(other) => Some(other.to_string()),
+    }
+}
+
 fn convert_parameter(
     param: &OpenApiParameter,
     ref_site_default: Option<&serde_yaml::Value>,
@@ -2434,6 +2461,42 @@ fn convert_parameter(
     // renders per `style`/`explode`. A single JSON-array argument still works
     // (the repeated collector splices it), so both spellings now agree.
     let repeated = param_type.as_deref() == Some("array");
+
+    // Element type of an array parameter, so `--schema` and `--help` describe
+    // what a value actually is. Without it both renderers fall back to
+    // `param_type` — which for a query array is the container type `"array"` —
+    // and advertise `items: {"type": "array"}` / `<JSON_ARRAY>`: an array of
+    // arrays. Body arrays were already correct because for them `param_type`
+    // *is* the element type; query, header and path arrays never were.
+    //
+    // Resolved eagerly to `Some(..)`, defaulting to `"string"`, rather than
+    // leaning on the body path's `None`-means-string convention: that
+    // convention only holds where `param_type` already carries the element
+    // type, so on this branch a `None` would fall straight back through to
+    // `"array"` and fix nothing. `array_item_type` is still what resolves the
+    // element schema, so `$ref` and `anyOf: [T, null]` spellings agree with
+    // the body path.
+    //
+    // Advertisement-only: the collector at `app.rs` branches on
+    // `item_type != "string"`, so an explicit `Some("string")` and `None`
+    // drive the wire identically.
+    let item_type = if repeated {
+        let resolved = match resolved_ref {
+            // `$ref`'d or `anyOf: [array, null]` — the resolved branch is an
+            // `OpenApiSchemaObject`, so the body path's resolver applies.
+            Some(schema) => array_item_type(schema, component_schemas),
+            // Inline `type: array` — the element schema is an
+            // `OpenApiParamSchema`, which has its own (possibly `$ref`'d) type.
+            None => param
+                .schema
+                .as_ref()
+                .and_then(|s| s.items.as_deref())
+                .and_then(|items| param_schema_type(items, component_schemas)),
+        };
+        Some(resolved.unwrap_or_else(|| "string".to_string()))
+    } else {
+        None
+    };
 
     // `x-fern-default` is the only source of a client-side default —
     // i.e. a value the CLI will (a) advertise in `--help` via clap's
@@ -2504,6 +2567,7 @@ fn convert_parameter(
         fern_enum,
         variable_reference,
         repeated,
+        item_type,
         ..Default::default()
     };
 
@@ -4947,6 +5011,88 @@ mod tests {
             "but the contract must still advertise it as required",
         );
         assert!(!params["optional_thing"].required_by_spec);
+    }
+
+    #[test]
+    fn test_array_parameter_records_its_element_type() {
+        // `--schema` advertised `items: {"type": "array"}` for an array query
+        // parameter — an array of arrays. Only body arrays carried an element
+        // type, so `help.rs` fell back to `param_type`, which is `"array"` for
+        // these. All three spellings appear in real specs, so all three are
+        // covered here: inline, `$ref`'d, and `anyOf: [array, null]`.
+        let mut components = HashMap::new();
+        components.insert(
+            "Labels".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  type: integer\n",
+            )
+            .unwrap(),
+        );
+
+        // Inline, string elements -> `Some("string")`, spelled out rather than
+        // left implicit. `None` here would fall back through both renderers to
+        // `param_type`, which on a query array is the container type "array" —
+        // the exact no-op this assertion exists to catch.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(
+            mp.item_type.as_deref(),
+            Some("string"),
+            "string elements must be explicit, not left to the param_type fallback",
+        );
+
+        // No spelling of a string-element array parameter may leave the
+        // element type unresolved.
+        for spec in [
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: header\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: query\nschema:\n    type: array\n",
+        ] {
+            let p: OpenApiParameter = serde_yaml::from_str(spec).unwrap();
+            let (_, mp) = convert_parameter(&p, None, &components);
+            assert_eq!(
+                mp.item_type.as_deref(),
+                Some("string"),
+                "unresolved element type falls back to the container type: {spec}",
+            );
+        }
+
+        // Inline, non-string elements -> recorded.
+        let inline_int: OpenApiParameter = serde_yaml::from_str(
+            "name: ids\nin: query\nschema:\n    type: array\n    items:\n        type: integer\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline_int, None, &components);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // `$ref` to an array component.
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    $ref: '#/components/schemas/Labels'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&via_ref, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // `anyOf: [array, null]` — pydantic's `Optional[list[T]]`.
+        let nullable: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    anyOf:\n      - $ref: '#/components/schemas/Labels'\n      - type: 'null'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&nullable, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // A scalar parameter records nothing.
+        let scalar: OpenApiParameter =
+            serde_yaml::from_str("name: limit\nin: query\nschema:\n    type: integer\n").unwrap();
+        let (_, mp) = convert_parameter(&scalar, None, &components);
+        assert!(!mp.repeated);
+        assert_eq!(mp.item_type, None);
     }
 
     #[test]
