@@ -37,3 +37,14 @@
     line naming nobody is worse than no file. `Apache-2.0` is left to
     `license: { type: custom }`.
   type: fix
+
+- summary: |
+    `--schema` and `--help` report the real element type of an array-typed
+    query, header or path parameter. Only body arrays carried one, so the
+    renderer fell back to the container type and advertised
+    `items: {"type": "array"}` — an array of arrays. All three spellings
+    resolve: inline `type: array`, a `$ref` to an array component, and
+    `anyOf: [array, null]`. Advertisement-only — the collector already treated
+    these elements as strings, which is what they are on both specs this was
+    tested against.
+  type: fix
