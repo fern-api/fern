@@ -110,8 +110,10 @@ const GLOBAL_PARAM_VALUE = "test";
  * parameter '<x>' has no value").
  *
  * Only parameters the caller genuinely has to supply are listed: an optional
- * one is omitted from requests that don't resolve it, and one with an env-var
- * or baked-in default already resolves without a flag.
+ * one is omitted from requests that don't resolve it, and a baked-in default
+ * resolves on its own. A declared env var does not count — the harness exports
+ * only auth credentials, so an env-backed global still has nothing to resolve
+ * from.
  *
  * Header and query locations only. Both are invisible to the case's mocks
  * (matchers assert the request's own headers/query params, never the absence
@@ -122,9 +124,7 @@ function collectGlobalFlags(globalParams: DetectedGlobalParam[]): Array<{ name: 
     return globalParams
         .filter(
             (param) =>
-                !param.optional &&
-                !param.hasFallbackValue &&
-                (param.location === "header" || param.location === "query")
+                !param.optional && !param.hasDefaultValue && (param.location === "header" || param.location === "query")
         )
         .map((param) => ({ name: param.flagSource, value: GLOBAL_PARAM_VALUE }));
 }

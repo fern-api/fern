@@ -20,8 +20,12 @@ export interface DetectedGlobalParam {
     location: "header" | "query" | "body" | "path";
     /** Whether requests may omit the parameter when nothing resolves. */
     optional: boolean;
-    /** Whether an env var or baked-in default supplies a value without the flag. */
-    hasFallbackValue: boolean;
+    /**
+     * Whether a baked-in default supplies a value when nothing else does. An
+     * env fallback deliberately doesn't count: it only resolves in a process
+     * that happens to export the variable.
+     */
+    hasDefaultValue: boolean;
     /** Literal Rust struct-expression for the `GlobalParameter` value. */
     rustCall: string;
     /** Rust `use` imports needed for this binding. */
@@ -226,7 +230,7 @@ function buildHeaderBinding(header: FernIr.HttpHeader): DetectedGlobalParam | un
         flagSource: sdkName ?? wireValue,
         location: "header",
         optional: headerIsOptional(header.valueType),
-        hasFallbackValue: header.env != null || defaultRust !== "None",
+        hasDefaultValue: defaultRust !== "None",
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: header.env ?? undefined
@@ -272,7 +276,7 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
         flagSource: sdkName ?? wireValue,
         location: locationOf(param.location),
         optional: param.optional === true,
-        hasFallbackValue: param.env != null || defaultRust !== "None",
+        hasDefaultValue: defaultRust !== "None",
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: param.env ?? undefined

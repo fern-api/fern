@@ -305,7 +305,7 @@ describe("copySpecs", () => {
                 flagSource: "api-version",
                 location: "query",
                 optional: false,
-                hasFallbackValue: false,
+                hasDefaultValue: false,
                 rustCall:
                     ".global_parameter(GlobalParameter {\n" +
                     '            name: "api-version".into(),\n' +
