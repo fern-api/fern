@@ -275,6 +275,70 @@ describe("isEligibleForFernSdkGenApi", () => {
         });
     });
 
+    it("keeps pre-cutover GitHub delivery on Fiddle", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.githubV2(
+                        FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                    )
+                })
+            ],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+    });
+
+    it.each([
+        [
+            "GitHub delivery",
+            {
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                )
+            }
+        ],
+        [
+            "registry publication",
+            {
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "secret"
+                    })
+                )
+            }
+        ],
+        ["verification", { verify: true }],
+        ["skip-if-no-diff", { skipIfNoDiff: true }],
+        ["auto-merge", { autoMerge: true }]
+    ] as const)("rejects post-cutover %s before source preparation", (_name, options) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "4.0.0",
+                    ...("outputMode" in options ? { outputMode: options.outputMode } : {})
+                })
+            ],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false,
+            verify: "verify" in options ? options.verify : undefined,
+            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined,
+            autoMerge: "autoMerge" in options ? options.autoMerge : undefined
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeInstanceOf(Error);
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("cannot fall back"));
+    });
+
     it("settles route failures per target while retaining successful siblings", async () => {
         const results = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" }), invocation({ version: "not-semver" })],

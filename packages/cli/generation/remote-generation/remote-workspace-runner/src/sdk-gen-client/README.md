@@ -28,6 +28,14 @@ CLI guidance belongs at the call site.
 The alias and cutover matrix is private. Call `getGeneratorLanguage()` or the
 validator instead of importing or copying policy data.
 
+## Output ownership
+
+The sdk-gen-api route currently supports only `downloadFiles`. Fern downloads that artifact to the
+configured local output path. It does not perform GitHub or registry delivery after polling the API,
+and the API cannot resolve Fern's raw credentials or preserve `verify`, `skipIfNoDiff`, and
+`autoMerge` yet. Pre-cutover targets requiring those behaviors remain on Fiddle. Cutover-or-newer
+targets fail before source preparation or remote work instead of silently changing behavior.
+
 ## Tests
 
 Compatibility tests live in the runner's `src/__test__` directory and cover all

@@ -172,7 +172,10 @@ export async function runRemoteGenerationForAPIWorkspace({
         generators: generatorGroup.generators,
         enabled: isFernSdkGenApiEnabled(),
         requireEnvVars,
-        isPreview: isPreview ?? absolutePathToPreview != null
+        isPreview: isPreview ?? absolutePathToPreview != null,
+        verify,
+        skipIfNoDiff,
+        autoMerge
     });
     const sdkGenApiRoutes = routePreparation.map((result) => result.route);
     const resolvedGenerators = routePreparation.map((result) => result.generatorInvocation);
@@ -290,12 +293,18 @@ export function prepareFernSdkGenApiRoutes({
     generators,
     enabled,
     requireEnvVars,
-    isPreview
+    isPreview,
+    verify,
+    skipIfNoDiff,
+    autoMerge
 }: {
     generators: generatorsYml.GeneratorInvocation[];
     enabled: boolean;
     requireEnvVars: boolean;
     isPreview: boolean;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+    autoMerge?: boolean;
 }): Array<{
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
@@ -317,15 +326,59 @@ export function prepareFernSdkGenApiRoutes({
                 },
                 { substituteAsEmpty: isPreview }
             );
+            const route = selectFernSdkGenApiRoute(resolved);
+            const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
+                generatorInvocation: resolved,
+                verify,
+                skipIfNoDiff,
+                autoMerge
+            });
+            if (route != null && unsupportedOutput != null) {
+                if (route.configKind === "legacy-fern") {
+                    return { generatorInvocation: resolved, route: undefined, error: undefined };
+                }
+                throw new Error(
+                    `Cannot route ${resolved.name} ${resolved.version} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
+                );
+            }
             return {
                 generatorInvocation: resolved,
-                route: selectFernSdkGenApiRoute(resolved),
+                route,
                 error: undefined
             };
         } catch (error) {
             return { generatorInvocation, route: undefined, error };
         }
     });
+}
+
+function getFernSdkGenApiUnsupportedOutput({
+    generatorInvocation,
+    verify,
+    skipIfNoDiff,
+    autoMerge
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+    autoMerge?: boolean;
+}): string | undefined {
+    const unsupported: string[] = [];
+    if (generatorInvocation.outputMode.type !== "downloadFiles") {
+        unsupported.push(
+            `${generatorInvocation.outputMode.type} delivery requires Fern-managed GitHub or registry credentials that sdk-gen-api cannot resolve`
+        );
+    }
+    if (verify === true) {
+        unsupported.push("verify=true is not implemented by sdk-gen-api");
+    }
+    if (skipIfNoDiff === true) {
+        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api");
+    }
+    if (autoMerge === true) {
+        unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
+    }
+    return unsupported.length > 0 ? unsupported.join("; ") : undefined;
 }
 
 export function preflightFernSdkGenApiSources({

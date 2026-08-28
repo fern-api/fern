@@ -34,8 +34,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
 import {
     FernSdkGenApiBatch,
-    FernSdkGenApiPreparationBatch,
     type FernSdkGenApiBuildParameters,
+    FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
     preflightFernSdkGenApiBuild,
@@ -302,9 +302,6 @@ export async function runRemoteGenerationForGenerator({
             );
         }
         sdkGenApiCandidate = candidate;
-        if (verify === true) {
-            interactiveTaskContext.logger.warn("sdk-gen-api does not yet run Fern's post-generation verification step");
-        }
         if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
             try {
                 sdkConfigV1Payload = prepareFernSdkConfigV1Payload({
