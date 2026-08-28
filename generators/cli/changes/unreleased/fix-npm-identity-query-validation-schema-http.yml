@@ -106,3 +106,28 @@
     `resolve_param_flag_name`, the shared resolver the command builder and
     the missing-parameter hint already use.
   type: fix
+
+- summary: |
+    Non-body parameter type-checking no longer rejects values the CLI used to
+    send. The boolean check accepted only `true|false|1|0`, case-sensitively,
+    so `--flag True`, `TRUE`, `False`, `yes`, `no`, `on` and `off` became hard
+    local failures — spellings that were forwarded before the check existed and
+    that the frameworks generating these specs accept. It now matches
+    case-insensitively over `true/false/1/0/yes/no/on/off/t/f/y/n`, and accepts
+    a JSON `1`/`0` (previously the string `"1"` passed while
+    `--params '{"flag": 1}'` failed). An empty string on a typed parameter is
+    accepted again, since a shell turns an unset variable into one and the
+    request previously went out. The integer check reads digit shape rather
+    than parsing as `i64`, so the flag path and the `--params` path agree on
+    values above `i64::MAX` and an integer with no declared `maximum` is not
+    rejected for its magnitude. Measured across two customer specs: 41 boolean
+    query parameters on one and 8 on the other were affected.
+  type: fix
+
+- summary: |
+    Body arrays of enums advertise `items.enum` in `--schema`. The element-enum
+    resolution reached parameters only, so on a spec where the same enum array
+    appears both as a query parameter and as a body property, `--schema`
+    disclosed the members for one and not the other — including on operations
+    where the body property is required.
+  type: fix
