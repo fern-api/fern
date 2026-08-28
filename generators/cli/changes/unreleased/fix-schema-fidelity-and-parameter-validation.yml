@@ -98,3 +98,27 @@
     whole-valued number is an integer for this purpose; range remains a
     `minimum`/`maximum` concern, checked separately.
   type: fix
+
+- summary: |
+    A body property spelled `{$ref: X, nullable: true}` accepts `null` again.
+    This is how OpenAPI 3.0 expresses a nullable object — the counterpart of
+    3.1's `anyOf: [{$ref: X}, {type: null}]` — but the validator resolved the
+    `$ref` before consulting the property's own `nullable`, so `null` was
+    handed to a plain object schema and rejected with "Expected object". On one
+    customer's 3.0.1 spec that blocked `null` on 112 body properties the spec
+    explicitly permits. A `$ref` property that is not nullable still rejects
+    `null`, and non-null values are still validated against the referenced
+    schema.
+  type: fix
+
+- summary: |
+    Enum members are enforced when supplied through `--params`. A scalar enum
+    was gated only by clap's value parser, which `--params` bypasses entirely,
+    so `--params '{"direction":"bogus"}'` reached the wire — and for a path
+    parameter landed in the URL. Array element enums had the same hole for
+    non-string values: `--params '{"event_types":[5]}'` sent `?event_types=5`
+    because the check only inspected strings. The accepted set deliberately
+    mirrors clap's rather than just the declared wire values, so an
+    `x-fern-enum` display name and the `null` sentinel on a nullable parameter
+    are still accepted.
+  type: fix

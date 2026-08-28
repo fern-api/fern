@@ -4143,9 +4143,16 @@ fn validate_non_body_param_type(
             single => std::slice::from_ref(single),
         };
         for element in elements {
-            let Value::String(raw) = element else {
-                continue;
+            // A non-string element cannot be a member of a string enum, so
+            // `--params '{"event_types": [5]}'` was routing around the check
+            // entirely — `?event_types=5` went out. Compared by rendered form
+            // so the diagnostic names what the user actually wrote.
+            let rendered = match element {
+                Value::String(raw) => raw.clone(),
+                Value::Null => continue, // null handled by the nullable path
+                other => other.to_string(),
             };
+            let raw = &rendered;
             if !allowed.iter().any(|candidate| candidate == raw) {
                 let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
                     .map(|f| format!("--{f}"))
@@ -4157,6 +4164,38 @@ fn validate_non_body_param_type(
             }
         }
     }
+    // Scalar enum. `--flag` is already gated by clap's `PossibleValuesParser`,
+    // but `--params` bypasses clap entirely, so
+    // `--params '{"direction": "bogus"}'` went on the wire and 400'd — and in
+    // one spec landed in the *path*, producing `/v0/lists/bogus/allow`.
+    //
+    // The accepted set has to match what clap accepts, not just the wire
+    // values, or this would reject input the flag path allows: an
+    // `x-fern-enum` display name is registered as the canonical name with the
+    // wire value as an alias, and a nullable param additionally accepts the
+    // literal `null` sentinel. Getting this wrong is precisely how the boolean
+    // check ended up rejecting `True`.
+    if !param.repeated {
+        if let Some(members) = param.enum_values.as_deref() {
+            if let Value::String(raw) = value {
+                let is_member = members.iter().any(|wire| wire == raw)
+                    || param.fern_enum.as_ref().is_some_and(|m| {
+                        m.values().any(|cfg| cfg.display_name.as_deref() == Some(raw.as_str()))
+                    })
+                    || (param.nullable && raw == "null");
+                if !is_member {
+                    let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                        .map(|f| format!("--{f}"))
+                        .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+                    return Err(CliError::Validation(format!(
+                        "Invalid value for {flag}: '{raw}' is not a valid enum member. \
+                         Valid options: {members:?}"
+                    )));
+                }
+            }
+        }
+    }
+
     let Some(expected) = param.param_type.as_deref() else {
         return Ok(());
     };
@@ -4587,12 +4626,6 @@ fn validate_property(
     path: &str,
     errors: &mut Vec<String>,
 ) {
-    // 1. Resolve $ref if present
-    if let Some(ref_name) = &prop_schema.schema_ref {
-        validate_value(value, ref_name, doc, path, errors);
-        return;
-    }
-
     // Null on a nullable property is always valid — short-circuits type
     // checking that would otherwise reject `null` for a `string` /
     // `integer` / etc. base type. Also honors ADR-0005's nullable-union
@@ -4600,11 +4633,27 @@ fn validate_property(
     // branch accepts null even when the intrinsic `nullable` flag is
     // false (which it is for `anyOf: [scalar, null]` shapes, since the
     // null-ness lives in the branch, not on the parent schema).
+    //
+    // This runs *before* `$ref` resolution, and the order is the whole
+    // point. `{$ref: X, nullable: true}` is how OpenAPI 3.0 spells a
+    // nullable object — the 3.0 counterpart of 3.1's
+    // `anyOf: [{$ref: X}, {type: null}]`. Resolving the ref first handed
+    // `null` to the referenced schema, which is a plain object and quite
+    // reasonably answered "Expected object", so the property's own
+    // `nullable: true` was never consulted. On one customer's 3.0.1 spec
+    // that rejected `null` on 112 body properties the spec explicitly
+    // permits.
     if value.is_null()
         && (prop_schema.nullable
             || has_null_branch(&prop_schema.one_of)
             || has_null_branch(&prop_schema.any_of))
     {
+        return;
+    }
+
+    // 1. Resolve $ref if present
+    if let Some(ref_name) = &prop_schema.schema_ref {
+        validate_value(value, ref_name, doc, path, errors);
         return;
     }
 
@@ -7764,6 +7813,140 @@ mod tests {
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
             "null on nullable-union must validate via any_of null branch",
         );
+    }
+
+    #[test]
+    fn test_nullable_ref_property_accepts_null() {
+        // `{$ref: X, nullable: true}` is how OpenAPI 3.0 spells a nullable
+        // object — the counterpart of 3.1's `anyOf: [{$ref: X}, {type: null}]`.
+        // The validator resolved the ref before consulting the property's own
+        // `nullable`, so null was handed to a plain object schema, which
+        // answered "Expected object". 112 body properties on one customer's
+        // 3.0.1 spec rejected a value the spec permits.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([
+                        (
+                            "metadata".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Metadata".to_string()),
+                                nullable: true,
+                                ..Default::default()
+                            },
+                        ),
+                        (
+                            "required_meta".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Metadata".to_string()),
+                                nullable: false,
+                                ..Default::default()
+                            },
+                        ),
+                    ]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "Metadata".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        assert!(
+            validate_body_against_schema(&json!({ "metadata": null }), "Msg", &doc).is_ok(),
+            "a nullable $ref property must accept null",
+        );
+        // A real value still validates against the referenced schema.
+        assert!(validate_body_against_schema(&json!({ "metadata": {} }), "Msg", &doc).is_ok());
+        assert!(
+            validate_body_against_schema(&json!({ "metadata": 5 }), "Msg", &doc).is_err(),
+            "the referenced schema is still enforced for non-null values",
+        );
+        // And a $ref property that is NOT nullable still rejects null.
+        assert!(
+            validate_body_against_schema(&json!({ "required_meta": null }), "Msg", &doc).is_err(),
+            "nullable: false must still reject null",
+        );
+    }
+
+    #[test]
+    fn test_scalar_enum_is_enforced_through_params() {
+        // `--flag` is gated by clap, but `--params` bypasses clap entirely, so
+        // an invalid member went on the wire — and for a path param it landed
+        // in the URL (`/v0/lists/bogus/allow`).
+        let param = MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            enum_values: Some(vec!["send".to_string(), "receive".to_string()]),
+            ..Default::default()
+        };
+        validate_non_body_param_type("direction", &json!("send"), Some(&param))
+            .expect("a legal member must pass");
+        let error = validate_non_body_param_type("direction", &json!("bogus"), Some(&param))
+            .expect_err("a non-member must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--direction"), "got: {message}");
+        assert!(message.contains("send"), "must list valid options; got: {message}");
+
+        // The accepted set must match clap's, not just the wire values, or this
+        // rejects input the flag path allows. clap registers an `x-fern-enum`
+        // display name as the canonical value with the wire value as an alias.
+        let mut fern_enum = HashMap::new();
+        fern_enum.insert(
+            "send".to_string(),
+            crate::openapi::discovery::FernEnumValue {
+                display_name: Some("Outbound".to_string()),
+                ..Default::default()
+            },
+        );
+        let aliased = MethodParameter {
+            fern_enum: Some(fern_enum),
+            ..param.clone()
+        };
+        validate_non_body_param_type("direction", &json!("Outbound"), Some(&aliased))
+            .expect("an x-fern-enum display name must be accepted");
+        validate_non_body_param_type("direction", &json!("send"), Some(&aliased))
+            .expect("the wire value must still be accepted");
+
+        // A nullable enum param accepts the `null` sentinel, as clap does.
+        let nullable = MethodParameter {
+            nullable: true,
+            ..param.clone()
+        };
+        validate_non_body_param_type("direction", &json!("null"), Some(&nullable))
+            .expect("the null sentinel must be accepted on a nullable enum param");
+    }
+
+    #[test]
+    fn test_array_enum_rejects_non_string_elements() {
+        // `--params '{"event_types": [5]}'` routed around the element-enum
+        // check, which only inspected strings, and `?event_types=5` went out.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        for bad in [json!([5]), json!([true]), json!(["sent", 5])] {
+            assert!(
+                validate_non_body_param_type("event_types", &bad, Some(&param)).is_err(),
+                "{bad} must be rejected",
+            );
+        }
+        // Legal members and a null element are unaffected.
+        validate_non_body_param_type("event_types", &json!(["sent"]), Some(&param))
+            .expect("legal member");
+        validate_non_body_param_type("event_types", &json!([Value::Null]), Some(&param))
+            .expect("a null element is the nullable path's business");
     }
 
     #[test]
