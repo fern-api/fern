@@ -446,16 +446,20 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": ${JSON.stringify(launcherDescription)},
-${identityLines.join("\n")}${
-    repoUrl != null
-        ? `
+            "description": ${JSON.stringify(launcherDescription)},${
+                identityLines.length > 0
+                    ? `
+${identityLines.join("\n")}`
+                    : ""
+            }${
+                repoUrl != null
+                    ? `
             "repository": {
               "type": "git",
               "url": "${repoUrl}"
             },`
-        : ""
-}
+                    : ""
+            }
             "bin": {
               "${binaryName}": "bin/cli.js"
             },

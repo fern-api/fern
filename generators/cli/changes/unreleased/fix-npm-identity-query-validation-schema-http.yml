@@ -51,3 +51,16 @@
     `string`, so no request changes on the wire — verified against two
     customer specs (56 array parameters, 4 input forms each).
   type: fix
+
+- summary: |
+    `generateWireTests: true` no longer emits a suite in which every test
+    fails. The harness passed `--no-pager` on every invocation, but the CLI
+    registers that flag only on operations that declare pagination metadata,
+    so on a spec with no `x-fern-pagination` markers clap rejected the whole
+    command line with "unexpected argument" — 100% of cases, not a subset.
+    The flag was also inert there: the pager only spawns under `--page-all`,
+    which no case passes. Reproduced end to end on the
+    `query-parameters-openapi:with-wire-tests` fixture (0/2 passing before,
+    2/2 after); that fixture also declares no pagination, so it is why the
+    breakage was not caught when the registration gate landed.
+  type: fix

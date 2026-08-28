@@ -353,6 +353,31 @@ describe("renderWireTestHarness", () => {
         expect(rust).toContain("match_header_regex(h.name.as_str()");
     });
 
+    it("passes only flags the SDK registers on every operation", () => {
+        // A flag the SDK registers conditionally cannot be pushed
+        // unconditionally here: clap rejects the whole invocation with
+        // "unexpected argument", so one mismatched flag fails 100% of cases on
+        // any spec that misses the condition — not one case, the entire suite.
+        //
+        // This happened with --no-pager, which the SDK registers only inside
+        // `if method_has_pagination(...)`. Every generated suite for a spec
+        // without pagination metadata failed outright, and the seed fixture
+        // that would have caught it also has no pagination markers.
+        const rust = renderWireTestHarness({ binaryName: "acme-cli", cases: [searchCase] });
+        const pushedFlags = [...rust.matchAll(/args\.push\("(--[a-z0-9-]+)"\.to_string\(\)\)/g)].map(
+            (match) => match[1]
+        );
+        // Registered unconditionally in `commands::build_cli` for every method.
+        const alwaysRegistered = ["--base-url", "--params", "--json"];
+        expect(pushedFlags.length).toBeGreaterThan(0);
+        for (const flag of pushedFlags) {
+            expect(
+                alwaysRegistered,
+                `${flag} is pushed unconditionally; confirm the SDK registers it on every operation`
+            ).toContain(flag);
+        }
+    });
+
     it("mirrors the SDK's namespace stutter-elision when resolving command chains", () => {
         const rust = renderWireTestHarness({ binaryName: "acme-cli", cases: [searchCase] });
         // The harness must replicate `merge_into_path`'s stutter elision so a

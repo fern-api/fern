@@ -332,6 +332,15 @@ describe("emitPublishWorkflow", () => {
         const launcher = yaml.slice(yaml.indexOf("publish-launcher"));
         expect(launcher).not.toContain('"license"');
         expect(launcher).not.toContain('"keywords"');
+
+        // With every identity field absent the join produced an empty string on
+        // its own line, leaving a blank line inside the emitted package.json.
+        // Valid JSON, but it churned every fixture and read like a template bug.
+        const heredoc = launcher.slice(
+            launcher.indexOf("<<PKGJSON"),
+            launcher.indexOf("PKGJSON", launcher.indexOf("<<PKGJSON") + 1)
+        );
+        expect(heredoc.split("\n").filter((line) => line.trim() === "")).toHaveLength(0);
     });
 
     it("gives every SemVer pre-release a non-latest dist-tag", async () => {
