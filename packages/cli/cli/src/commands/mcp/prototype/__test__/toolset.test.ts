@@ -12,6 +12,9 @@ function endpoint(overrides: Partial<EndpointSummary>): EndpointSummary {
         summary: undefined,
         description: undefined,
         estimatedTokens: 100,
+        deprecated: false,
+        internal: false,
+        schemaRefs: [],
         ...overrides
     };
 }

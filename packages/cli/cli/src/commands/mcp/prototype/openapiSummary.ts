@@ -11,6 +11,11 @@ export interface EndpointSummary {
     description: string | undefined;
     /** Rough estimate of the tokens this endpoint costs as a tool definition. */
     estimatedTokens: number;
+    deprecated: boolean;
+    /** `x-internal: true` on the operation. */
+    internal: boolean;
+    /** Component schema names referenced by the operation's request/response bodies. */
+    schemaRefs: string[];
 }
 
 export interface SpecSummary {
@@ -26,6 +31,19 @@ const PER_TOOL_TOKEN_OVERHEAD = 60;
 const CHARS_PER_TOKEN = 4;
 
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete", "head", "options"] as const;
+
+const SCHEMA_REF_PATTERN = /#\/components\/schemas\/([A-Za-z0-9_.-]+)/g;
+
+function extractSchemaRefs(serializedOperation: string): string[] {
+    const names = new Set<string>();
+    for (const match of serializedOperation.matchAll(SCHEMA_REF_PATTERN)) {
+        const name = match[1];
+        if (name != null) {
+            names.add(name);
+        }
+    }
+    return [...names];
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value != null && !Array.isArray(value);
@@ -67,7 +85,7 @@ function summarizeEndpoints(document: Record<string, unknown>): EndpointSummary[
             if (!isRecord(operation)) {
                 continue;
             }
-            const operationSize = JSON.stringify(operation).length;
+            const serializedOperation = JSON.stringify(operation);
             endpoints.push({
                 method: method.toUpperCase(),
                 path: endpointPath,
@@ -75,7 +93,10 @@ function summarizeEndpoints(document: Record<string, unknown>): EndpointSummary[
                 tags: asStringArray(operation.tags),
                 summary: asOptionalString(operation.summary),
                 description: asOptionalString(operation.description),
-                estimatedTokens: Math.round(operationSize / CHARS_PER_TOKEN) + PER_TOOL_TOKEN_OVERHEAD
+                estimatedTokens: Math.round(serializedOperation.length / CHARS_PER_TOKEN) + PER_TOOL_TOKEN_OVERHEAD,
+                deprecated: operation.deprecated === true,
+                internal: operation["x-internal"] === true,
+                schemaRefs: extractSchemaRefs(serializedOperation)
             });
         }
     }
