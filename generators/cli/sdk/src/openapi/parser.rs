@@ -2048,6 +2048,9 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         let name = strip_ref_prefix(ref_path);
         return JsonSchema {
             schema_ref: Some(name),
+            // Same reasoning as `convert_schema_property`: nullability is
+            // declared at the ref site and must survive the indirection.
+            nullable: obj.is_nullable(),
             ..Default::default()
         };
     }
@@ -2086,6 +2089,15 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         let name = strip_ref_prefix(ref_path);
         return JsonSchemaProperty {
             schema_ref: Some(name),
+            // `nullable` lives at the ref *site*, not on the component — a
+            // component is shared, so it cannot be nullable for one referrer
+            // and not another. Dropping it here made `{$ref: X, nullable: true}`
+            // — the OpenAPI 3.0 spelling of a nullable object — lower to
+            // `nullable: false`, so the validator's null short-circuit could
+            // never fire for the one shape it exists to handle: it resolved the
+            // ref and rejected `null` with "Expected object". 121 body
+            // properties on one customer's 3.0.1 spec.
+            nullable: obj.is_nullable(),
             ..Default::default()
         };
     }
@@ -5212,6 +5224,42 @@ properties:
         }
         // A plain string array invents nothing.
         assert_eq!(params["labels"].item_enum_values, None);
+    }
+
+    #[test]
+    fn test_ref_site_nullability_survives_the_ref_indirection() {
+        // This is the test that was missing, and its absence is why the
+        // executor-side null guard shipped as dead code. That guard had a unit
+        // test, but the test hand-built `JsonSchemaProperty { schema_ref,
+        // nullable: true }` — a state `convert_schema_property` could not
+        // produce, because its `$ref` early-return dropped every sibling
+        // keyword. The guard passed its test and never fired on a real spec.
+        //
+        // So this asserts the lowering from spec YAML, not a struct literal.
+        let nullable_ref: OpenApiSchemaObject = serde_yaml::from_str(
+            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
+        )
+        .unwrap();
+        let lowered = convert_schema_property(&nullable_ref);
+        assert_eq!(lowered.schema_ref.as_deref(), Some("Metadata"));
+        assert!(
+            lowered.nullable,
+            "nullability is declared at the ref site and must survive the indirection",
+        );
+
+        // A `$ref` without `nullable` stays non-nullable — the fix must not
+        // make every referenced property accept null.
+        let plain_ref: OpenApiSchemaObject =
+            serde_yaml::from_str("$ref: '#/components/schemas/Metadata'\n").unwrap();
+        assert!(!convert_schema_property(&plain_ref).nullable);
+
+        // The 3.1 spelling, for contrast: null-ness lives in the branch, which
+        // `has_null_branch` handles on the executor side.
+        let component: OpenApiSchemaObject = serde_yaml::from_str(
+            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
+        )
+        .unwrap();
+        assert!(convert_schema_object(&component).nullable);
     }
 
     #[test]

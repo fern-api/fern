@@ -100,15 +100,16 @@
   type: fix
 
 - summary: |
-    A body property spelled `{$ref: X, nullable: true}` accepts `null` again.
-    This is how OpenAPI 3.0 expresses a nullable object — the counterpart of
-    3.1's `anyOf: [{$ref: X}, {type: null}]` — but the validator resolved the
-    `$ref` before consulting the property's own `nullable`, so `null` was
-    handed to a plain object schema and rejected with "Expected object". On one
-    customer's 3.0.1 spec that blocked `null` on 112 body properties the spec
-    explicitly permits. A `$ref` property that is not nullable still rejects
-    `null`, and non-null values are still validated against the referenced
-    schema.
+    A body property spelled `{$ref: X, nullable: true}` accepts `null`.
+    Nullability is declared at the `$ref` *site* — a component is shared, so it
+    cannot be nullable for one referrer and not another — but the parser's
+    `$ref` early-return dropped every sibling keyword, lowering the property to
+    `nullable: false`. The validator's null short-circuit therefore never fired
+    for the one shape it exists to handle, and resolving the ref rejected `null`
+    with "Expected object". On one customer's OpenAPI 3.0.1 spec that blocked
+    `null` on 121 body properties the spec explicitly permits.
+    A `$ref` property that is not nullable still rejects `null`, and non-null
+    values are still validated against the referenced schema.
   type: fix
 
 - summary: |
