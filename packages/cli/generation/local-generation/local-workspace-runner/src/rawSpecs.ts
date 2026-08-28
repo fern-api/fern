@@ -6,6 +6,7 @@ import {
     type OpenAPISpec,
     type OpenRPCSpec,
     type ProtobufSpec,
+    type RawSpecImportSettings,
     type RawSpecsManifest,
     type RawSpecsManifestEntry,
     Spec
@@ -15,7 +16,7 @@ import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { copyFile, cp, readdir, readFile, writeFile } from "fs/promises";
+import { copyFile, cp, mkdir, readdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import * as tar from "tar";
@@ -163,27 +164,44 @@ async function resolveOpenAPIOrAsyncAPI({
         type: isAsync ? "asyncapi" : "openapi",
         specPath: toContainerPath(filename, containerBaseDir),
         namespace: spec.namespace,
-        ...(spec.settings != null ? { apiImportSettings: mapApiImportSettings(spec.settings) } : {})
+        ...(spec.settings != null
+            ? { apiImportSettings: mapApiImportSettings(getOpenAPISettings({ overrides: spec.settings })) }
+            : {})
     };
 }
 
-function mapApiImportSettings(
-    settings: NonNullable<OpenAPISpec["settings"]>
-): RawSpecsManifestEntry["apiImportSettings"] {
-    return {
-        respectNullableSchemas: settings.respectNullableSchemas,
-        titleAsSchemaName: settings.useTitlesAsName,
-        coerceEnumsToLiterals: settings.coerceEnumsToLiterals,
-        idiomaticRequestNames: settings.shouldUseIdiomaticRequestNames,
-        wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable: settings.coerceOptionalSchemasToNullable,
-        pathParameterOrder: settings.pathParameterOrder,
-        onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas,
-        objectQueryParameters: settings.objectQueryParameters,
-        typeDatesAsStrings: settings.typeDatesAsStrings,
-        groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
-        defaultIntegerFormat: settings.defaultIntegerFormat
-    };
+type ApiImportSettingMapper = (settings: OpenAPISettings) => RawSpecImportSettings;
+
+const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
+    respectNullableSchemas: (settings) => ({ respectNullableSchemas: settings.respectNullableSchemas }),
+    useTitlesAsName: (settings) => ({ titleAsSchemaName: settings.useTitlesAsName }),
+    coerceEnumsToLiterals: (settings) => ({ coerceEnumsToLiterals: settings.coerceEnumsToLiterals }),
+    shouldUseIdiomaticRequestNames: (settings) => ({
+        idiomaticRequestNames: settings.shouldUseIdiomaticRequestNames
+    }),
+    wrapReferencesToNullableInOptional: (settings) => ({
+        wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional
+    }),
+    coerceOptionalSchemasToNullable: (settings) => ({
+        coerceOptionalSchemasToNullable: settings.coerceOptionalSchemasToNullable
+    }),
+    pathParameterOrder: (settings) => ({ pathParameterOrder: settings.pathParameterOrder }),
+    onlyIncludeReferencedSchemas: (settings) => ({
+        onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas
+    }),
+    objectQueryParameters: (settings) => ({ objectQueryParameters: settings.objectQueryParameters }),
+    typeDatesAsStrings: (settings) => ({ typeDatesAsStrings: settings.typeDatesAsStrings }),
+    groupMultiApiEnvironments: (settings) => ({
+        groupMultiApiEnvironments: settings.groupMultiApiEnvironments
+    }),
+    defaultIntegerFormat: (settings) => ({ defaultIntegerFormat: settings.defaultIntegerFormat })
+} satisfies Partial<Record<keyof OpenAPISettings, ApiImportSettingMapper>>;
+
+function mapApiImportSettings(settings: OpenAPISettings): RawSpecImportSettings {
+    return Object.values(SDK_CONFIG_IMPORT_SETTING_MAPPERS).reduce<RawSpecImportSettings>(
+        (mappedSettings, mapSetting) => ({ ...mappedSettings, ...mapSetting(settings) }),
+        {}
+    );
 }
 
 /**
@@ -482,7 +500,18 @@ export interface SettledGroupedSpecsTarGzArchive {
     errorsByGeneratorIndex: Map<number, unknown>;
 }
 
-/** Materializes generator sources independently before aggregating only successful selections. */
+interface DeduplicatedGeneratorSelections {
+    uniqueSpecs: Spec[];
+    uniqueSpecIndexesByGeneratorIndex: Map<number, number[]>;
+    generatorIndexesByUniqueSpecIndex: Array<Set<number>>;
+}
+
+interface MaterializedSpec {
+    directory: string;
+    manifestEntry: RawSpecsManifestEntry;
+}
+
+/** Materializes each unique source once before aggregating only fully successful selections. */
 export async function createGroupedSpecsTarGzArchiveSettled({
     generatorSelections,
     context,
@@ -492,63 +521,65 @@ export async function createGroupedSpecsTarGzArchiveSettled({
     context: TaskContext;
     audiences?: Audiences;
 }): Promise<SettledGroupedSpecsTarGzArchive> {
-    const settled = await Promise.allSettled(
-        generatorSelections.map(async (selection) => {
-            await validateSpecsCanBeMaterialized({ specs: selection.specs, context, audiences });
-            return selection;
-        })
-    );
-    const successfulSelections: SpecsTarGzGeneratorSelection[] = [];
+    const deduplicated = deduplicateGeneratorSelections(generatorSelections);
     const errorsByGeneratorIndex = new Map<number, unknown>();
-    settled.forEach((result, index) => {
-        const selection = generatorSelections[index];
-        if (selection == null) {
-            return;
-        }
-        if (result.status === "fulfilled") {
-            successfulSelections.push(result.value);
-        } else {
-            errorsByGeneratorIndex.set(selection.generatorIndex, result.reason);
-        }
-    });
-    if (successfulSelections.length === 0) {
-        return { archive: undefined, errorsByGeneratorIndex };
-    }
-    try {
-        return {
-            archive: await createGroupedSpecsTarGzArchive({
-                generatorSelections: successfulSelections,
-                context,
-                audiences
-            }),
-            errorsByGeneratorIndex
-        };
-    } catch (error) {
-        for (const selection of successfulSelections) {
-            errorsByGeneratorIndex.set(selection.generatorIndex, error);
-        }
-        return { archive: undefined, errorsByGeneratorIndex };
-    }
-}
-
-async function validateSpecsCanBeMaterialized({
-    specs,
-    context,
-    audiences
-}: {
-    specs: Spec[];
-    context: TaskContext;
-    audiences?: Audiences;
-}): Promise<void> {
     const tmpDir = await tmp.dir({ unsafeCleanup: true });
     try {
-        await collectRawSpecs({
-            specs,
-            hostOutputDir: AbsoluteFilePath.of(tmpDir.path),
-            containerBaseDir: "/fern/specs",
-            context,
-            audiences
+        const materializedRoot = path.join(tmpDir.path, "materialized");
+        await mkdir(materializedRoot);
+        const materializedSpecs = await Promise.allSettled(
+            deduplicated.uniqueSpecs.map(async (spec, uniqueSpecIndex) => {
+                const directory = path.join(materializedRoot, uniqueSpecIndex.toString());
+                await mkdir(directory);
+                const manifest = await collectRawSpecs({
+                    specs: [spec],
+                    hostOutputDir: AbsoluteFilePath.of(directory),
+                    containerBaseDir: "/fern/specs",
+                    context,
+                    audiences
+                });
+                const manifestEntry = manifest.specs[0];
+                if (manifestEntry == null) {
+                    throw new Error(`Materialized source ${uniqueSpecIndex} did not produce a manifest entry`);
+                }
+                return { directory, manifestEntry };
+            })
+        );
+        materializedSpecs.forEach((result, uniqueSpecIndex) => {
+            if (result.status === "fulfilled") {
+                return;
+            }
+            for (const generatorIndex of deduplicated.generatorIndexesByUniqueSpecIndex[uniqueSpecIndex] ?? []) {
+                if (!errorsByGeneratorIndex.has(generatorIndex)) {
+                    errorsByGeneratorIndex.set(generatorIndex, result.reason);
+                }
+            }
         });
+
+        const successfulGeneratorIndexes = new Set(
+            generatorSelections
+                .map((selection) => selection.generatorIndex)
+                .filter((generatorIndex) => !errorsByGeneratorIndex.has(generatorIndex))
+        );
+        if (successfulGeneratorIndexes.size === 0) {
+            return { archive: undefined, errorsByGeneratorIndex };
+        }
+
+        try {
+            const archive = await createArchiveFromMaterializedSpecs({
+                materializedSpecs,
+                deduplicated,
+                successfulGeneratorIndexes,
+                root: tmpDir.path
+            });
+            assertGeneratorSelectionOutcomes({ generatorSelections, archive, errorsByGeneratorIndex });
+            return { archive, errorsByGeneratorIndex };
+        } catch (error) {
+            for (const generatorIndex of successfulGeneratorIndexes) {
+                errorsByGeneratorIndex.set(generatorIndex, error);
+            }
+            return { archive: undefined, errorsByGeneratorIndex };
+        }
     } finally {
         await tmpDir.cleanup();
     }
@@ -564,14 +595,29 @@ export async function createGroupedSpecsTarGzArchive({
     context: TaskContext;
     audiences?: Audiences;
 }): Promise<GroupedSpecsTarGzArchive> {
+    const settled = await createGroupedSpecsTarGzArchiveSettled({ generatorSelections, context, audiences });
+    const firstError = settled.errorsByGeneratorIndex.values().next();
+    if (!firstError.done) {
+        throw firstError.value;
+    }
+    if (settled.archive == null) {
+        throw new Error("Grouped source archive was not created");
+    }
+    return settled.archive;
+}
+
+function deduplicateGeneratorSelections(
+    generatorSelections: SpecsTarGzGeneratorSelection[]
+): DeduplicatedGeneratorSelections {
     const uniqueSpecs: Spec[] = [];
     const indexesBySpecKey = new Map<string, number>();
-    const specIndexesByGeneratorIndex = new Map<number, number[]>();
+    const uniqueSpecIndexesByGeneratorIndex = new Map<number, number[]>();
+    const generatorIndexesByUniqueSpecIndex: Array<Set<number>> = [];
     const orderedSelections = [...generatorSelections].sort(
         (left, right) => left.generatorIndex - right.generatorIndex
     );
     for (const selection of orderedSelections) {
-        if (specIndexesByGeneratorIndex.has(selection.generatorIndex)) {
+        if (uniqueSpecIndexesByGeneratorIndex.has(selection.generatorIndex)) {
             throw new Error(`Duplicate source selection for generator index ${selection.generatorIndex}`);
         }
         const indexes = selection.specs.map((spec) => {
@@ -583,32 +629,147 @@ export async function createGroupedSpecsTarGzArchive({
             const index = uniqueSpecs.length;
             uniqueSpecs.push(spec);
             indexesBySpecKey.set(key, index);
+            generatorIndexesByUniqueSpecIndex[index] = new Set();
             return index;
         });
-        specIndexesByGeneratorIndex.set(selection.generatorIndex, indexes);
+        for (const index of new Set(indexes)) {
+            generatorIndexesByUniqueSpecIndex[index]?.add(selection.generatorIndex);
+        }
+        uniqueSpecIndexesByGeneratorIndex.set(selection.generatorIndex, indexes);
     }
-    const archive = await createSpecsTarGzArchive({
-        specs: uniqueSpecs,
-        context,
-        audiences
+    return { uniqueSpecs, uniqueSpecIndexesByGeneratorIndex, generatorIndexesByUniqueSpecIndex };
+}
+
+async function createArchiveFromMaterializedSpecs({
+    materializedSpecs,
+    deduplicated,
+    successfulGeneratorIndexes,
+    root
+}: {
+    materializedSpecs: Array<PromiseSettledResult<MaterializedSpec>>;
+    deduplicated: DeduplicatedGeneratorSelections;
+    successfulGeneratorIndexes: Set<number>;
+    root: string;
+}): Promise<GroupedSpecsTarGzArchive> {
+    const contentDirectory = path.join(root, "content");
+    await mkdir(contentDirectory);
+    const manifest: RawSpecsManifest = { specs: [] };
+    const archiveSpecIndexByUniqueSpecIndex = new Map<number, number>();
+    const typeCounters = new Map<RawSpecsManifestEntry["type"], number>();
+
+    for (const [uniqueSpecIndex, generatorIndexes] of deduplicated.generatorIndexesByUniqueSpecIndex.entries()) {
+        if (![...generatorIndexes].some((generatorIndex) => successfulGeneratorIndexes.has(generatorIndex))) {
+            continue;
+        }
+        const materialized = materializedSpecs[uniqueSpecIndex];
+        if (materialized?.status !== "fulfilled") {
+            throw new Error(`Successful generator references source ${uniqueSpecIndex}, which was not materialized`);
+        }
+        const type = materialized.value.manifestEntry.type;
+        const typeIndex = typeCounters.get(type) ?? 0;
+        typeCounters.set(type, typeIndex + 1);
+        const manifestEntry = await copyMaterializedSpec({
+            materialized: materialized.value,
+            contentDirectory,
+            typeIndex
+        });
+        archiveSpecIndexByUniqueSpecIndex.set(uniqueSpecIndex, manifest.specs.length);
+        manifest.specs.push(manifestEntry);
+    }
+
+    const specIndexesByGeneratorIndex = new Map<number, number[]>();
+    for (const [generatorIndex, uniqueSpecIndexes] of deduplicated.uniqueSpecIndexesByGeneratorIndex) {
+        if (!successfulGeneratorIndexes.has(generatorIndex)) {
+            continue;
+        }
+        specIndexesByGeneratorIndex.set(
+            generatorIndex,
+            uniqueSpecIndexes.map((uniqueSpecIndex) => {
+                const archiveSpecIndex = archiveSpecIndexByUniqueSpecIndex.get(uniqueSpecIndex);
+                if (archiveSpecIndex == null) {
+                    throw new Error(`Source ${uniqueSpecIndex} is unavailable for generator index ${generatorIndex}`);
+                }
+                return archiveSpecIndex;
+            })
+        );
+    }
+
+    const archive = await createArchiveFromDirectory({
+        contentDirectory,
+        tarGzPath: path.join(root, "specs.tar.gz"),
+        manifest
     });
     return { ...archive, specIndexesByGeneratorIndex };
 }
 
-const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set<keyof OpenAPISettings>([
-    "respectNullableSchemas",
-    "useTitlesAsName",
-    "coerceEnumsToLiterals",
-    "shouldUseIdiomaticRequestNames",
-    "wrapReferencesToNullableInOptional",
-    "coerceOptionalSchemasToNullable",
-    "pathParameterOrder",
-    "onlyIncludeReferencedSchemas",
-    "objectQueryParameters",
-    "typeDatesAsStrings",
-    "groupMultiApiEnvironments",
-    "defaultIntegerFormat"
-]);
+async function copyMaterializedSpec({
+    materialized,
+    contentDirectory,
+    typeIndex
+}: {
+    materialized: MaterializedSpec;
+    contentDirectory: string;
+    typeIndex: number;
+}): Promise<RawSpecsManifestEntry> {
+    const sourcePrefix = `${materialized.manifestEntry.type}0`;
+    const targetPrefix = `${materialized.manifestEntry.type}${typeIndex}`;
+    for (const entry of await readdir(materialized.directory, { withFileTypes: true })) {
+        if (!entry.name.startsWith(sourcePrefix) || (!entry.isFile() && !entry.isDirectory())) {
+            throw new Error(`Unsupported materialized source entry: ${entry.name}`);
+        }
+        await cp(
+            path.join(materialized.directory, entry.name),
+            path.join(contentDirectory, replacePrefix(entry.name)),
+            {
+                recursive: entry.isDirectory()
+            }
+        );
+    }
+
+    return {
+        ...materialized.manifestEntry,
+        specPath: replaceContainerPathPrefix(materialized.manifestEntry.specPath),
+        ...(materialized.manifestEntry.overridePaths == null
+            ? {}
+            : {
+                  overridePaths: materialized.manifestEntry.overridePaths.map(replaceContainerPathPrefix)
+              })
+    };
+
+    function replacePrefix(value: string): string {
+        return `${targetPrefix}${value.slice(sourcePrefix.length)}`;
+    }
+
+    function replaceContainerPathPrefix(value: string): string {
+        const basename = path.posix.basename(value);
+        if (!basename.startsWith(sourcePrefix)) {
+            throw new Error(`Unexpected materialized source path: ${value}`);
+        }
+        return path.posix.join(path.posix.dirname(value), replacePrefix(basename));
+    }
+}
+
+function assertGeneratorSelectionOutcomes({
+    generatorSelections,
+    archive,
+    errorsByGeneratorIndex
+}: {
+    generatorSelections: SpecsTarGzGeneratorSelection[];
+    archive: GroupedSpecsTarGzArchive;
+    errorsByGeneratorIndex: Map<number, unknown>;
+}): void {
+    for (const { generatorIndex } of generatorSelections) {
+        const hasArchive = archive.specIndexesByGeneratorIndex.has(generatorIndex);
+        const hasError = errorsByGeneratorIndex.has(generatorIndex);
+        if (hasArchive === hasError) {
+            throw new Error(
+                `Generator index ${generatorIndex} must have exactly one source archive or materialization error outcome`
+            );
+        }
+    }
+}
+
+const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set(Object.keys(SDK_CONFIG_IMPORT_SETTING_MAPPERS));
 const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
 
 /** Rejects effective Fern import behavior that the downstream SDK Config contract cannot carry. */
@@ -618,15 +779,24 @@ export function validateSdkConfigImportSettings(specs: Spec[]): void {
             continue;
         }
         const settings = getOpenAPISettings({ overrides: spec.settings });
-        for (const key of Object.keys(DEFAULT_OPENAPI_SETTINGS) as Array<keyof OpenAPISettings>) {
+        const settingKeys = new Set([
+            ...Object.getOwnPropertyNames(DEFAULT_OPENAPI_SETTINGS),
+            ...Object.getOwnPropertyNames(settings),
+            ...(spec.settings == null ? [] : Object.getOwnPropertyNames(spec.settings))
+        ]);
+        for (const key of settingKeys) {
+            const value =
+                spec.settings != null && Object.hasOwn(spec.settings, key)
+                    ? Reflect.get(spec.settings, key)
+                    : Reflect.get(settings, key);
             if (
                 SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
-                isDeepStrictEqual(settings[key], DEFAULT_OPENAPI_SETTINGS[key])
+                isDeepStrictEqual(value, Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))
             ) {
                 continue;
             }
             throw new Error(
-                `SDK Config v1 cannot preserve effective OpenAPI import setting ${key}=${JSON.stringify(settings[key])} for ${spec.absoluteFilepath}. Remove that setting or use a pre-cutover generator version until the shared SDK Config contract supports it.`
+                `SDK Config v1 cannot preserve effective OpenAPI import setting ${key}=${JSON.stringify(value)} for ${spec.absoluteFilepath}. Remove that setting or use a pre-cutover generator version until the shared SDK Config contract supports it.`
             );
         }
     }
@@ -643,49 +813,64 @@ export async function createSpecsTarGzArchive({
 }): Promise<SpecsTarGzArchive> {
     const tmpDir = await tmp.dir({ unsafeCleanup: true });
     try {
+        const contentDirectory = path.join(tmpDir.path, "content");
+        await mkdir(contentDirectory);
         const manifest = await collectRawSpecs({
             specs,
-            hostOutputDir: AbsoluteFilePath.of(tmpDir.path),
+            hostOutputDir: AbsoluteFilePath.of(contentDirectory),
             containerBaseDir: "/fern/specs",
             context,
             audiences
         });
-
-        await writeFile(
-            join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(SPECS_MANIFEST_FILENAME)),
-            JSON.stringify(manifest, undefined, 4)
-        );
-
-        const archiveEntries = await listDeterministicArchiveEntries(tmpDir.path);
-        const tarGzPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("specs.tar.gz"));
-        await tar.create(
-            {
-                gzip: true,
-                cwd: tmpDir.path,
-                file: tarGzPath,
-                portable: true,
-                mtime: new Date(0),
-                onWriteEntry: (entry) => {
-                    if (entry.stat != null) {
-                        entry.stat.mode = 0o644;
-                    }
-                }
-            },
-            archiveEntries
-        );
-
-        return { buffer: await readFile(tarGzPath), manifest };
+        return await createArchiveFromDirectory({
+            contentDirectory,
+            tarGzPath: path.join(tmpDir.path, "specs.tar.gz"),
+            manifest
+        });
     } finally {
         await tmpDir.cleanup();
     }
 }
 
+async function createArchiveFromDirectory({
+    contentDirectory,
+    tarGzPath,
+    manifest
+}: {
+    contentDirectory: string;
+    tarGzPath: string;
+    manifest: RawSpecsManifest;
+}): Promise<SpecsTarGzArchive> {
+    await writeFile(
+        join(AbsoluteFilePath.of(contentDirectory), RelativeFilePath.of(SPECS_MANIFEST_FILENAME)),
+        JSON.stringify(manifest, undefined, 4)
+    );
+    const archiveEntries = await listDeterministicArchiveEntries(contentDirectory);
+    await tar.create(
+        {
+            gzip: true,
+            cwd: contentDirectory,
+            file: tarGzPath,
+            portable: true,
+            mtime: new Date(0),
+            onWriteEntry: (entry) => {
+                if (entry.stat != null) {
+                    entry.stat.mode = 0o644;
+                }
+            }
+        },
+        archiveEntries
+    );
+    return { buffer: await readFile(tarGzPath), manifest };
+}
+
 async function listDeterministicArchiveEntries(root: string, relativeDirectory = ""): Promise<string[]> {
-    const absoluteDirectory = path.join(root, relativeDirectory);
+    const absoluteDirectory =
+        relativeDirectory === "" ? root : path.join(root, ...relativeDirectory.split(path.posix.sep));
     const directoryEntries = await readdir(absoluteDirectory, { withFileTypes: true });
     const archiveEntries: string[] = [];
     for (const entry of directoryEntries.sort((left, right) => compareStrings(left.name, right.name))) {
-        const relativePath = path.posix.join(relativeDirectory.split(path.sep).join(path.posix.sep), entry.name);
+        const relativePath = path.posix.join(relativeDirectory, entry.name);
         if (entry.isDirectory()) {
             archiveEntries.push(...(await listDeterministicArchiveEntries(root, relativePath)));
             continue;
@@ -703,6 +888,8 @@ function compareStrings(left: string, right: string): number {
 }
 
 function createSpecDeduplicationKey(spec: Spec): string {
+    // Every selection in one grouped archive shares the same audiences argument, so audience filtering
+    // cannot differ between otherwise equivalent specs and does not need to be part of this key.
     switch (spec.type) {
         case "openapi":
             return stableStringify({
@@ -711,7 +898,7 @@ function createSpecDeduplicationKey(spec: Spec): string {
                 overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
                 overlay: spec.absoluteFilepathToOverlays,
                 namespace: spec.namespace,
-                settings: spec.settings
+                settings: getOpenAPISettings({ overrides: spec.settings })
             });
         case "openrpc":
             return stableStringify({
@@ -727,7 +914,7 @@ function createSpecDeduplicationKey(spec: Spec): string {
                 target: spec.absoluteFilepathToProtobufTarget,
                 overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
                 dependencies: spec.dependencies,
-                settings: spec.settings
+                settings: getOpenAPISettings({ overrides: spec.settings })
             });
         case "graphql":
             return stableStringify({

@@ -208,7 +208,7 @@ export async function generateWorkspace({
                         const settledSelections = await Promise.allSettled(
                             requests.map(async (request) => {
                                 if (request.sdkGenApiRoute == null) {
-                                    return { request, specs: undefined };
+                                    return undefined;
                                 }
                                 const specs = await ossWorkspace.getAllSpecsForGenerator(
                                     request.generatorInvocation.apiOverride?.specs
@@ -216,20 +216,21 @@ export async function generateWorkspace({
                                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
                                     validateSdkConfigImportSettings(specs);
                                 }
-                                return { request, specs };
+                                return specs;
                             })
                         );
                         const generatorSelections = settledSelections.flatMap((result, index) => {
                             const request = requests[index];
+                            if (request == null) {
+                                throw new Error(`Missing source archive request at settled index ${index}`);
+                            }
                             if (result.status === "rejected") {
-                                if (request != null) {
-                                    errors.set(request.generatorIndex, result.reason);
-                                }
+                                errors.set(request.generatorIndex, result.reason);
                                 return [];
                             }
-                            return result.value.specs == null
+                            return result.value == null
                                 ? []
-                                : [{ generatorIndex: result.value.request.generatorIndex, specs: result.value.specs }];
+                                : [{ generatorIndex: request.generatorIndex, specs: result.value }];
                         });
                         if (generatorSelections.length > 0) {
                             const settledArchive = await createGroupedSpecsTarGzArchiveSettled({
@@ -269,6 +270,24 @@ export async function generateWorkspace({
                                 for (const request of rootRequests) {
                                     errors.set(request.generatorIndex, error);
                                 }
+                            }
+                        }
+                        for (const request of requests) {
+                            const requiresSourceArchive =
+                                request.sdkGenApiRoute != null || generatorWantsSpecs(request.generatorInvocation.name);
+                            if (!requiresSourceArchive) {
+                                continue;
+                            }
+                            const hasArchive = sourceArchives.has(request.generatorIndex);
+                            const hasError = errors.has(request.generatorIndex);
+                            if (hasArchive === hasError) {
+                                sourceArchives.delete(request.generatorIndex);
+                                errors.set(
+                                    request.generatorIndex,
+                                    new Error(
+                                        `Generator index ${request.generatorIndex} must have exactly one source archive or source preparation error outcome`
+                                    )
+                                );
                             }
                         }
                         return { sourceArchives, errors };

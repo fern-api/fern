@@ -112,12 +112,14 @@ describe("collectRawSpecs", () => {
                         file: AbsoluteFilePath.of(specFile),
                         relativePathToDependency: undefined
                     },
-                    settings: {
-                        respectNullableSchemas: false,
-                        useTitlesAsName: true,
-                        pathParameterOrder: "spec-order",
-                        defaultIntegerFormat: "int64"
-                    } as never
+                    settings: getOpenAPISettings({
+                        overrides: {
+                            respectNullableSchemas: false,
+                            useTitlesAsName: true,
+                            pathParameterOrder: "spec-order",
+                            defaultIntegerFormat: "int64"
+                        }
+                    })
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -201,6 +203,7 @@ describe("collectRawSpecs", () => {
 
         expect(modes.get("protobuf0/service/api.proto")).toBe(0o644);
         expect(modes.get("specs-manifest.json")).toBe(0o644);
+        expect(modes.has("specs.tar.gz")).toBe(false);
     });
 
     it("deduplicates grouped sources and retains per-generator manifest indexes", async () => {
@@ -227,6 +230,28 @@ describe("collectRawSpecs", () => {
         expect(archive.specIndexesByGeneratorIndex.get(3)).toEqual([0]);
     });
 
+    it("deduplicates specs with implicit and explicit default import settings", async () => {
+        const specFile = path.join(sourceDir, "api", "defaults.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        const spec = openApiSpec(specFile);
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            generatorSelections: [
+                { generatorIndex: 0, specs: [spec] },
+                { generatorIndex: 1, specs: [{ ...spec, settings: getOpenAPISettings() }] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs).toHaveLength(1);
+        expect(archive.specIndexesByGeneratorIndex).toEqual(
+            new Map([
+                [0, [0]],
+                [1, [0]]
+            ])
+        );
+    });
+
     it("excludes a failed generator before constructing the aggregate source archive", async () => {
         const validFile = path.join(sourceDir, "api", "valid.yaml");
         await writeFile(validFile, MINIMAL_OPENAPI);
@@ -244,6 +269,48 @@ describe("collectRawSpecs", () => {
         expect(result.errorsByGeneratorIndex.get(1)).toBeInstanceOf(Error);
         expect(result.archive?.specIndexesByGeneratorIndex).toEqual(new Map([[0, [0]]]));
         expect(result.archive?.manifest.specs).toHaveLength(1);
+    });
+
+    it("keeps a shared valid source when only one referring generator has another failing source", async () => {
+        const validFile = path.join(sourceDir, "api", "shared-valid.yaml");
+        await writeFile(validFile, MINIMAL_OPENAPI);
+        const validSpec = openApiSpec(validFile);
+        const invalidSpec = openApiSpec(path.join(sourceDir, "api", "missing.yaml"));
+
+        const result = await createGroupedSpecsTarGzArchiveSettled({
+            generatorSelections: [
+                { generatorIndex: 0, specs: [validSpec] },
+                { generatorIndex: 1, specs: [validSpec, invalidSpec] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(result.errorsByGeneratorIndex.has(0)).toBe(false);
+        expect(result.errorsByGeneratorIndex.get(1)).toBeInstanceOf(Error);
+        expect(result.archive?.manifest.specs).toHaveLength(1);
+        expect(result.archive?.specIndexesByGeneratorIndex).toEqual(new Map([[0, [0]]]));
+    });
+
+    it("maps one shared materialization failure to every referring generator", async () => {
+        const missingSpec = openApiSpec(path.join(sourceDir, "api", "shared-missing.yaml"));
+        const selections = [
+            { generatorIndex: 2, specs: [missingSpec] },
+            { generatorIndex: 4, specs: [missingSpec] }
+        ];
+
+        const result = await createGroupedSpecsTarGzArchiveSettled({
+            generatorSelections: selections,
+            context: createMockContext()
+        });
+
+        expect(result.archive).toBeUndefined();
+        expect(result.errorsByGeneratorIndex.get(2)).toBeInstanceOf(Error);
+        expect(result.errorsByGeneratorIndex.get(4)).toBeInstanceOf(Error);
+        for (const { generatorIndex } of selections) {
+            expect(result.archive?.specIndexesByGeneratorIndex.has(generatorIndex) ?? false).not.toBe(
+                result.errorsByGeneratorIndex.has(generatorIndex)
+            );
+        }
     });
 
     it("applies OpenAPI overrides and overlays before writing the correlated archive source", async () => {
