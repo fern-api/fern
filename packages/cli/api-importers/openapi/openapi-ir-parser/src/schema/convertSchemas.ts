@@ -1727,6 +1727,13 @@ function maybeInjectDescriptionOrGroupName(
     return schema;
 }
 
+// Resolved discriminator mapping targets, keyed by the base schema they belong to. The guard
+// below runs for every single-element allOf in the document, and a union's variants each ask
+// the same question of the same base, so without this the work is quadratic in the number of
+// variants. Keyed on the object rather than the $ref string so that two documents in one
+// process cannot collide, and weak so it does not outlive the parse.
+const discriminatedVariantsByBase = new WeakMap<OpenAPIV3.SchemaObject, ReadonlySet<OpenAPIV3.SchemaObject>>();
+
 // isVariantOfDiscriminatedBase returns true if `schema` is one of the variants named in the
 // discriminator mapping of the schema that `element` references.
 //
@@ -1743,6 +1750,18 @@ function maybeInjectDescriptionOrGroupName(
 //
 // `{allOf: [$ref Base, {type: object}]}` never reached the short-circuit and already converts
 // to an object, so this only brings the two spellings of the same subtype into agreement.
+//
+// Membership is by object identity. `resolveSchemaReference` indexes into the parsed document
+// and returns the stored object, and `convertSchemaObject` does not copy `schema` on any path
+// that reaches an allOf - the one `{...schema}` it performs is inside a `type: "string"`
+// branch that returns first - so the resolved variant and the schema being converted are the
+// same instance. Sibling keys alongside `allOf` (`description`, `title`) do not disturb that;
+// the fixture covers both. If the invariant ever breaks, the guard returns false and the
+// short-circuit reappears, which the fixture would catch.
+//
+// An unresolvable mapping target - a reference into another document, which this resolver
+// cannot follow - yields a fresh `x-fern-type: unknown` sentinel rather than an error, so it
+// never matches and simply leaves the short-circuit in place for that variant.
 function isVariantOfDiscriminatedBase({
     schema,
     element,
@@ -1755,21 +1774,23 @@ function isVariantOfDiscriminatedBase({
     if (!isReferenceObject(element)) {
         return false;
     }
-    const mapping = context.resolveSchemaReference(element).discriminator?.mapping;
+    const base = context.resolveSchemaReference(element);
+    const mapping = base.discriminator?.mapping;
     if (mapping == null) {
         return false;
     }
-    return Object.values(mapping).some((target) => {
-        // A mapping value is either a reference or a bare schema name.
-        const $ref = target.startsWith("#/") ? target : `${SCHEMA_REFERENCE_PREFIX}${target}`;
-        try {
-            // resolveSchemaReference indexes into the parsed document, so the resolved variant
-            // and the schema being converted are the same object when they are the same schema.
-            return context.resolveSchemaReference({ $ref }) === schema;
-        } catch {
-            return false;
+    let variants = discriminatedVariantsByBase.get(base);
+    if (variants == null) {
+        const resolved = new Set<OpenAPIV3.SchemaObject>();
+        for (const target of Object.values(mapping)) {
+            // a mapping value is either a reference or a bare schema name
+            const $ref = target.startsWith("#/") ? target : `${SCHEMA_REFERENCE_PREFIX}${target}`;
+            resolved.add(context.resolveSchemaReference({ $ref }));
         }
-    });
+        variants = resolved;
+        discriminatedVariantsByBase.set(base, resolved);
+    }
+    return variants.has(schema);
 }
 
 // isValidAllOfObject returns true if the given allOf is a valid object according to the following:
