@@ -15,6 +15,7 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js"
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator.js";
 import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { RawServiceClientGenerator } from "./raw-client/RawServiceClientGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
 import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
@@ -107,6 +108,14 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         if (rootServiceId != null) {
             const service = context.getHttpServiceOrThrow(rootServiceId);
             this.generateRequests(context, service, rootServiceId);
+            if (service.endpoints.length > 0) {
+                const rawRootClient = new RawServiceClientGenerator({
+                    context,
+                    serviceId: rootServiceId,
+                    service
+                });
+                context.project.addSourceFiles(rawRootClient.generate());
+            }
         }
     }
 
@@ -127,6 +136,15 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
 
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
+                if (service.endpoints.length > 0) {
+                    const rawSubClient = new RawServiceClientGenerator({
+                        context,
+                        serviceId: subpackage.service,
+                        service,
+                        subpackage
+                    });
+                    context.project.addSourceFiles(rawSubClient.generate());
+                }
             }
         }
     }
