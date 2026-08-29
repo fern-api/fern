@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Expose the http status code on the raw response. `withRawResponse()` gave a caller the
+    body and the headers but not the status, so 200, 201 and 202 were indistinguishable -
+    and for an api that answers 202 when a command was accepted but is still running, and
+    200 when it is done, that is the whole signal. `HttpResponse` now has `statusCode()`
+    next to `body()` and `headers()`.
+  type: feat
