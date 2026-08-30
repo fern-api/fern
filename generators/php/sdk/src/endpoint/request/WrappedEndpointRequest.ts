@@ -134,6 +134,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
+        if (
+            this.context.isEquivalentToPrimitive({
+                typeReference: header.valueType,
+                primitive: FernIr.PrimitiveTypeV1.Boolean
+            })
+        ) {
+            // a boolean header must be spelled out: the transport casts the raw value,
+            // and php's string cast turns true into "1" and false into ""
+            const parameter = this.context.accessRequestProperty({
+                requestParameterName: this.requestParameterName,
+                propertyName: header.name
+            });
+            writer.writeTextStatement(`${parameter} ? 'true' : 'false'`);
+            return;
+        }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
     }
 

@@ -6,5 +6,7 @@
     and `''` were treated as unset and silently dropped: a caller setting `total: false`
     on a listing sent no `total` parameter at all. The guards now compare with
     `!== null`, so every explicitly set value reaches the wire and only an actual null
-    means "unset".
+    means "unset". Boolean headers and multipart values are also spelled `true`/`false`
+    now instead of going through php's string cast, which renders `true` as `1` and
+    `false` as an empty string.
   type: fix

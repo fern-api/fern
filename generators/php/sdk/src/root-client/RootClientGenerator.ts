@@ -611,9 +611,20 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     ) {
                         writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
-                        writer.writeNodeStatement(
-                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                        );
+                        if (
+                            this.context.isEquivalentToPrimitive({
+                                typeReference: param.typeReference,
+                                primitive: FernIr.PrimitiveTypeV1.Boolean
+                            })
+                        ) {
+                            // same spelling the literal boolean headers below use: the
+                            // transport's string cast would turn true into "1" and false into ""
+                            writer.writeTextStatement(`$${param.name} ? 'true' : 'false'`);
+                        } else {
+                            writer.writeNodeStatement(
+                                this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                            );
+                        }
                         writer.endControlFlow();
                     }
                 }
