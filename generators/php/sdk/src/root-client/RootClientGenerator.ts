@@ -609,7 +609,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             anyAuthMultiScheme ||
                             (param.isGlobalHeader && param.isOptional && param.clientDefault == null))
                     ) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
