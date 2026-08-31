@@ -5,7 +5,8 @@ import {
     DocsConfigFileAstNodeVisitor,
     DocsConfigFileAstVisitor
 } from "./docsAst/DocsConfigFileAstVisitor.js";
-import { RuleVisitor } from "./Rule.js";
+import { formatInitError } from "./formatInitError.js";
+import { RuleViolation, RuleVisitor } from "./Rule.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 export interface RuleWithVisitor {
@@ -36,8 +37,25 @@ export function createDocsConfigFileAstVisitorForRules({
             for (const { ruleName, visitor } of allRulesWithVisitors) {
                 const visitFromRule = visitor[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = await visitFromRule(node);
                     const severityOverride = severityOverrides?.get(ruleName);
+                    let ruleViolations: RuleViolation[];
+                    try {
+                        ruleViolations = await visitFromRule(node);
+                    } catch (error) {
+                        // A rule that blows up mid-visit shouldn't take the rest of validation down
+                        // with it: report it like any other violation, honoring the configured
+                        // severity so `warn` keeps `fern check` green.
+                        addViolations([
+                            {
+                                name: ruleName,
+                                severity: severityOverride ?? "fatal",
+                                relativeFilepath: RelativeFilePath.of(""),
+                                nodePath,
+                                message: `Rule "${ruleName}" failed to run: ${formatInitError(error)}`
+                            }
+                        ]);
+                        continue;
+                    }
                     addViolations(
                         ruleViolations.map((violation) => ({
                             name: violation.name ?? ruleName,

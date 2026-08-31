@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern check` and docs previews failing with an uncaught error (e.g. "Expected one of ...
+    Received [object Object]") when the `broken-links` rule builds an API definition for an
+    api section. The rule now resolves the API definition the same way the docs build does,
+    skips link validation for an API it cannot load, and a rule that throws mid-validation is
+    reported as a violation honoring its configured severity instead of aborting the command.
+  type: fix
