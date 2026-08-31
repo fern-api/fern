@@ -76,6 +76,7 @@
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
     "preserveOneOfInAllOf": false,
+    "preserveAnyOfAsUnion": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,

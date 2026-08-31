@@ -4002,6 +4002,9 @@
                       "preserveOneOfInAllOf": {
                         "type": "boolean"
                       },
+                      "preserveAnyOfAsUnion": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4592,6 +4595,9 @@
                           "type": "boolean"
                         },
                         "preserveOneOfInAllOf": {
+                          "type": "boolean"
+                        },
+                        "preserveAnyOfAsUnion": {
                           "type": "boolean"
                         },
                         "inlineAllOfSchemas": {
