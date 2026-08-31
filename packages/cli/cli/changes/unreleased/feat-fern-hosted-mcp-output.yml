@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `output: { location: fern-hosted, slug: <slug> }` to `generators.yml` for
+    `fernapi/fern-mcp-server`. After generation, `fern generate` deploys the generated MCP server
+    bundle to Fern's hosted MCP platform and prints the server URL. `slug` is optional and
+    defaults to `mcp`.
+
+    This output is not yet usable end to end: generating `fernapi/fern-mcp-server` requires
+    sdk-gen-api, which does not serve Fern credentials in production yet.
+  type: feat

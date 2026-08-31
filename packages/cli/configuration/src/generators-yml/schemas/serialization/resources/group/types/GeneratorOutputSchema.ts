@@ -4,6 +4,7 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CratesOutputLocationSchema } from "./CratesOutputLocationSchema.js";
+import { FernHostedOutputLocationSchema } from "./FernHostedOutputLocationSchema.js";
 import { LocalFileSystemOutputLocationSchema } from "./LocalFileSystemOutputLocationSchema.js";
 import { MavenOutputLocationSchema } from "./MavenOutputLocationSchema.js";
 import { NpmOutputLocationSchema } from "./NpmOutputLocationSchema.js";
@@ -22,6 +23,7 @@ export const GeneratorOutputSchema: core.serialization.Schema<
         pypi: PypiOutputLocationSchema,
         postman: PostmanOutputLocationSchema,
         "local-file-system": LocalFileSystemOutputLocationSchema,
+        "fern-hosted": FernHostedOutputLocationSchema,
         nuget: NugetOutputLocationSchema,
         rubygems: RubyGemsOutputLocationSchema,
         crates: CratesOutputLocationSchema,
@@ -38,6 +40,7 @@ export declare namespace GeneratorOutputSchema {
         | GeneratorOutputSchema.Pypi
         | GeneratorOutputSchema.Postman
         | GeneratorOutputSchema.LocalFileSystem
+        | GeneratorOutputSchema.FernHosted
         | GeneratorOutputSchema.Nuget
         | GeneratorOutputSchema.Rubygems
         | GeneratorOutputSchema.Crates;
@@ -60,6 +63,10 @@ export declare namespace GeneratorOutputSchema {
 
     export interface LocalFileSystem extends LocalFileSystemOutputLocationSchema.Raw {
         location: "local-file-system";
+    }
+
+    export interface FernHosted extends FernHostedOutputLocationSchema.Raw {
+        location: "fern-hosted";
     }
 
     export interface Nuget extends NugetOutputLocationSchema.Raw {

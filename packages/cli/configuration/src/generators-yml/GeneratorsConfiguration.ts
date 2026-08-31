@@ -209,6 +209,12 @@ export interface GeneratorInvocation {
     // and the same schema
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    /**
+     * Set when `output.location` is `fern-hosted`: this invocation's generated MCP server is
+     * deployed to Fern's hosted platform after generation. `slug` is the user-configured URL
+     * slug; when undefined it is derived from the generated server's metadata.
+     */
+    fernHostedOutput?: { slug: string | undefined };
     absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
