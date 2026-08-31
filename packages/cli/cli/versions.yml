@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.109.3
+  changelogEntry:
+    - summary: |
+        Preserve `deprecated`/`x-fern-availability` on OpenAPI object properties whose value is a
+        `$ref` (or a single-`$ref` `allOf`). Previously availability was only read off inline
+        schemas, so a request body property referencing a deprecated component schema rendered
+        without a Deprecated badge, while the equivalent query parameter did.
+
+        `x-fern-availability` written alongside a `$ref` now overrides the referenced schema's
+        availability, so a property can opt out of an inherited `deprecated`.
+
+        Note: existing specs may start showing Deprecated (or Beta) badges on properties that
+        reference an already-deprecated component schema, and the corresponding fields in
+        generated SDKs will pick up deprecation annotations. No spec changes are required.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
 - version: 5.109.2
   changelogEntry:
     - summary: |
