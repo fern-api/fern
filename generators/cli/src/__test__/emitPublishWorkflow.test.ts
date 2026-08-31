@@ -325,6 +325,51 @@ describe("emitPublishWorkflow", () => {
         expect(parsed.version).toBe("1.2.3");
     });
 
+    it("emits identity values that no shell can act on", async () => {
+        // The launcher package.json goes through an UNQUOTED heredoc
+        // (`<<PKGJSON`), which it must, since `${VERSION}` and
+        // `${OPTIONAL_DEPS}` are meant to expand. So the shell also expands
+        // `$VAR` / `${...}` / `$(...)` and backticks in user prose and collapses
+        // `\\` to `\`. `JSON.stringify` guards the JSON syntax and nothing else:
+        // a description reading `Uses ${HOME}` was substituted at publish time,
+        // a backtick or `$(...)` ran a command in the publish workflow, and a
+        // literal backslash corrupted the JSON.
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, {
+            license: "MIT",
+            description: "Uses ${HOME} and $(whoami) and `hostname` and a \\ backslash",
+            homepage: "https://acme.example",
+            authors: ["Acme `id` <dev@acme.example>"]
+        });
+
+        // The launcher block is the second `cat > .../package.json` heredoc.
+        const blocks = [...yaml.matchAll(/cat > "\$\{PKG_DIR\}\/package\.json" <<PKGJSON\n([\s\S]*?)\n\s*PKGJSON/g)];
+        const heredoc = blocks[1]?.[1];
+        if (heredoc == null) {
+            throw new Error("expected the launcher heredoc body to be captured");
+        }
+
+        // Escaped as \uXXXX rather than backslash-escaped, so the body stays
+        // valid JSON as written instead of only becoming valid once the shell
+        // has processed it.
+        expect(heredoc).toContain("\\u0024{HOME}");
+        expect(heredoc).toContain("\\u0024(whoami)");
+        expect(heredoc).toContain("\\u0060hostname\\u0060");
+        expect(heredoc).toContain("Acme \\u0060id\\u0060");
+
+        // The property that actually matters: nothing the shell acts on is left
+        // in any identity value. `${VERSION}` and friends are the workflow's
+        // own placeholders and are meant to expand, so only the value lines are
+        // checked.
+        const valueLines = heredoc
+            .split("\n")
+            .filter((line) => /"(description|license|homepage|author|contributors|keywords)":/.test(line));
+        expect(valueLines.length).toBeGreaterThan(0);
+        for (const line of valueLines) {
+            expect(line).not.toMatch(/[$`]/);
+            expect(line).not.toMatch(/\\(?!u)/);
+        }
+    });
+
     it("falls back to the generated description and omits absent identity fields", async () => {
         const yaml = await emitAndRead(baseInfo);
         expect(yaml).toContain('"description": "CLI for acme"');

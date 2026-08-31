@@ -4,6 +4,30 @@ import type { CargoPackageIdentity } from "./patchCargoToml.js";
 import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
 
 /**
+ * JSON-encode a value for embedding in an **unquoted** heredoc.
+ *
+ * `JSON.stringify` alone stops a quote or newline from breaking the JSON, but
+ * the launcher's `package.json` is written through `<<PKGJSON` rather than
+ * `<<'PKGJSON'` — it has to be, because `${VERSION}` and `${OPTIONAL_DEPS}` are
+ * meant to expand. So the shell also expands `$VAR`, `${...}`, `$(...)` and
+ * backticks inside user-supplied prose, and collapses `\\` to `\`: a
+ * description reading `Uses ${HOME}` was silently substituted at publish time,
+ * a backtick or `$(...)` executed a command in the publish workflow, and a
+ * literal backslash corrupted the JSON.
+ *
+ * Rather than backslash-escape those characters — which would leave the
+ * heredoc body invalid JSON until the shell processed it — they are emitted as
+ * `\uXXXX`. The result is simultaneously valid JSON *and* free of every
+ * character the shell acts on, so nothing depends on how the file is written.
+ *
+ * Order matters: JSON's escaped backslash (`\\`) is rewritten first, because
+ * the `$` and backtick replacements introduce backslashes of their own.
+ */
+function shellSafeJson(value: string | string[]): string {
+    return JSON.stringify(value).replace(/\\\\/g, "\\u005c").replace(/\$/g, "\\u0024").replace(/`/g, "\\u0060");
+}
+
+/**
  * Cross-compilation targets for the CLI binary. Each entry maps a
  * Rust target triple to the npm platform package suffix that cargo-dist
  * / the npm embedded-binary convention expects.
@@ -183,7 +207,7 @@ function constructWorkflowYaml(args: {
         if (value == null || (Array.isArray(value) && value.length === 0)) {
             return;
         }
-        identityLines.push(`            ${JSON.stringify(key)}: ${JSON.stringify(value)},`);
+        identityLines.push(`            ${JSON.stringify(key)}: ${shellSafeJson(value)},`);
     };
     identityField("license", packageIdentity?.license);
     identityField("keywords", packageIdentity?.keywords);
@@ -446,7 +470,7 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": ${JSON.stringify(launcherDescription)},${
+            "description": ${shellSafeJson(launcherDescription)},${
                 identityLines.length > 0
                     ? `
 ${identityLines.join("\n")}`

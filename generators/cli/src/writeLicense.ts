@@ -33,8 +33,15 @@ export interface LicenseConfigLike {
     type: string;
     /** `type: "custom"` — the filename to write the mounted file to. */
     filename?: string;
-    /** `type: "basic"` — an SPDX id the CLI enumerates (`MIT` / `Apache-2.0`). */
-    id?: string;
+    /**
+     * `type: "basic"` — an SPDX id the CLI enumerates (`MIT` / `Apache-2.0`).
+     *
+     * The union is open (`string & {}`) rather than closed: this mirrors an
+     * upstream config value, so a new id appearing there must not fail to
+     * typecheck here. Naming the two known ids still lets the compiler catch
+     * the `id !== "MIT"` branch drifting.
+     */
+    id?: "MIT" | "Apache-2.0" | (string & {});
 }
 
 /**
@@ -138,9 +145,13 @@ async function writeBasicLicense(args: {
     if (holder == null || holder === "") {
         return undefined;
     }
-    const text = MIT_TEMPLATE.replace("{{YEAR}}", String(year ?? new Date().getFullYear())).replace(
+    // Function replacements, not string ones: `String.prototype.replace` treats
+    // `$&`, `$'` and `` $` `` in the *replacement* as capture references, so a
+    // holder like `Acme $& Co` would expand to the matched text and emit
+    // `Acme {{HOLDER}} Co`. A function replacement is passed through verbatim.
+    const text = MIT_TEMPLATE.replace("{{YEAR}}", () => String(year ?? new Date().getFullYear())).replace(
         "{{HOLDER}}",
-        holder
+        () => holder
     );
     await writeFile(path.join(outputDir, DEFAULT_LICENSE_FILENAME), text, "utf-8");
     return DEFAULT_LICENSE_FILENAME;

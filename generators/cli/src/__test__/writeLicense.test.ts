@@ -81,6 +81,23 @@ describe("writeLicense", () => {
         expect(text).toContain('THE SOFTWARE IS PROVIDED "AS IS"');
     });
 
+    it("does not let a $ in the holder be read as a capture reference", async () => {
+        // `String.prototype.replace` treats `$&`, `$\'` and `` $` `` in the
+        // *replacement* as references to the match. A string replacement
+        // therefore expanded `Acme $& Co` into `Acme {{HOLDER}} Co` — the
+        // placeholder leaking into the copyright line of a shipped LICENSE.
+        const written = await writeLicense({
+            outputDir,
+            license: { type: "basic", id: "MIT" },
+            copyrightHolder: "Acme $& Co and $` and $'",
+            year: 2026
+        });
+        expect(written).toBe("LICENSE");
+        const text = await readFile(path.join(outputDir, "LICENSE"), "utf-8");
+        expect(text).toContain("Copyright (c) 2026 Acme $& Co and $` and $'");
+        expect(text).not.toContain("{{HOLDER}}");
+    });
+
     it("writes nothing for a basic license with no known copyright holder", async () => {
         // A copyright line naming nobody is worse than no LICENSE.
         await expect(
