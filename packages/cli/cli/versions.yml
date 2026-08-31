@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.109.1
+  changelogEntry:
+    - summary: |
+        Fix `fern check` and docs previews failing with an uncaught error (e.g. "Expected one of ...
+        Received [object Object]") when the `broken-links` rule builds an API definition for an
+        api section. The rule now resolves the API definition the same way the docs build does,
+        skips link validation for an API it cannot load, and a rule that throws mid-validation is
+        reported as a violation honoring its configured severity instead of aborting the command.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 5.109.0
+  changelogEntry:
+    - summary: |
+        Convert a GraphQL interface to its own set of fields and record each `implements` clause on the
+        implementing type, so docs can list an interface's fields and the types that implement it.
+      type: fix
+    - summary: |
+        Don't document GraphQL operation-namespace types (e.g. a `Mutation.checkout: CheckoutMutations`
+        grouping type) as types of their own. Their fields are already documented as operations, so a
+        type page for them duplicated every field and argument on the referenced types' pages.
+      type: fix
+    - summary: |
+        Record the GraphQL kind (object, input, enum, scalar, interface, union) of every named type
+        read from a GraphQL schema, so docs can render a Types section.
+      type: feat
+    - summary: |
+        GraphQL API references now get a page per named type in the schema, collected under a single
+        "Types" section and grouped within it by the kind each type was declared with (Objects,
+        Inputs, Enums, Scalars, Interfaces, Unions). Every GraphQL spec in the API section contributes
+        to that one section, and it sits at the API root rather than under a subpackage. A kind the
+        schema does not declare produces no group, and type pages live at `<api>/types/<kind>/<type-name>`.
+      type: feat
+  createdAt: "2026-08-31"
+  irVersion: 67
 - version: 5.108.0
   changelogEntry:
     - summary: |

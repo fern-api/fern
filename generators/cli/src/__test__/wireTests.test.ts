@@ -422,7 +422,8 @@ describe("generateWireTests", () => {
             binaryName: "acme-cli",
             irFilepath: path.join(tmpDir, "ir.json"),
             specsDir,
-            authBindings: []
+            authBindings: [],
+            globalParams: []
         });
         expect(result.status).toBe("skipped");
         expect(result.caseCount).toBe(0);

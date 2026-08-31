@@ -1,0 +1,121 @@
+# GraphQL schema exercising every type category: object, input, enum, scalar,
+# interface (implemented and orphaned) and union.
+
+"""
+An ISO-8601 timestamp.
+"""
+scalar DateTime
+
+"""
+How a list of products is sorted.
+"""
+enum ProductSortKeys {
+  """
+  Sort by title.
+  """
+  TITLE
+
+  """
+  Sort by creation date.
+  """
+  CREATED_AT
+}
+
+"""
+Anything addressable by a global id.
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
+"""
+An interface no type implements, so it only ever appears as a type of its own.
+"""
+interface Auditable {
+  """
+  When the record last changed.
+  """
+  updatedAt: DateTime!
+}
+
+"""
+A product for sale.
+"""
+type Product implements Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+
+  """
+  The product title.
+  """
+  title: String!
+
+  """
+  When the product was created.
+  """
+  createdAt: DateTime!
+}
+
+"""
+A collection of products.
+"""
+type Collection implements Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+
+  """
+  The collection title.
+  """
+  title: String!
+}
+
+"""
+Anything returned by a search.
+"""
+union SearchResult = Product | Collection
+
+"""
+Fields used to create a product.
+"""
+input ProductCreateInput {
+  """
+  The product title.
+  """
+  title: String!
+
+  """
+  When the product should be published.
+  """
+  publishAt: DateTime
+}
+
+type Query {
+  """
+  Fetch a product by id.
+  """
+  product(id: ID!): Product
+
+  """
+  List products.
+  """
+  products(sortKey: ProductSortKeys): [Product!]!
+
+  """
+  Search products and collections.
+  """
+  search(query: String!): [SearchResult!]!
+}
+
+type Mutation {
+  """
+  Create a product.
+  """
+  productCreate(input: ProductCreateInput!): Product
+}
