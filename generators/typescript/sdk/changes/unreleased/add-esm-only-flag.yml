@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `esmOnly` configuration flag. When enabled, the generated package ships
+    only the existing ESM build: `package.json` is marked `type: "module"`, the exports map
+    only exposes the `.mjs`/`.d.mts` entry points, and the CommonJS build (`tsconfig.cjs.json`,
+    `build:cjs`) is no longer generated. This avoids the dual package hazard for consumers who
+    want a pure-ESM package. The default behavior (dual CJS + ESM output, including with
+    `outputEsm: true`) is unchanged. `esmOnly` is incompatible with `useLegacyExports` and
+    `bundle`.
+  type: feat

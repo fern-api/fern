@@ -517,6 +517,9 @@ fixtures:
     - outputFolder: legacy-exports
       customConfig:
         useLegacyExports: true
+    - outputFolder: esm-only
+      customConfig:
+        esmOnly: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm
