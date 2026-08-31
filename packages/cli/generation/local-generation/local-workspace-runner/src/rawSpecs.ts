@@ -595,11 +595,13 @@ export async function createGroupedSpecsTarGzArchive({
     audiences?: Audiences;
 }): Promise<GroupedSpecsTarGzArchive> {
     const settled = await createGroupedSpecsTarGzArchiveSettled({ generatorSelections, context, audiences });
-    const firstError = settled.errorsByGeneratorIndex.values().next();
-    if (!firstError.done) {
-        throw firstError.value instanceof Error
-            ? firstError.value
-            : new Error("Grouped source archive preparation failed", { cause: firstError.value });
+    const errors = [...new Set(settled.errorsByGeneratorIndex.values())];
+    if (errors.length > 1) {
+        throw new AggregateError(errors, "Grouped source archive preparation failed");
+    }
+    const error = errors[0];
+    if (error != null) {
+        throw error instanceof Error ? error : new Error("Grouped source archive preparation failed", { cause: error });
     }
     if (settled.archive == null) {
         throw new Error("Grouped source archive was not created");
@@ -636,7 +638,7 @@ function deduplicateGeneratorSelections(
         for (const index of new Set(indexes)) {
             generatorIndexesByUniqueSpecIndex[index]?.add(selection.generatorIndex);
         }
-        uniqueSpecIndexesByGeneratorIndex.set(selection.generatorIndex, indexes);
+        uniqueSpecIndexesByGeneratorIndex.set(selection.generatorIndex, [...new Set(indexes)]);
     }
     return { uniqueSpecs, uniqueSpecIndexesByGeneratorIndex, generatorIndexesByUniqueSpecIndex };
 }

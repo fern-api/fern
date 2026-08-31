@@ -98,14 +98,15 @@ export function createFernSourceArchiveResolver({
             }
             const hasArchive = sourceArchives.has(request.generatorIndex);
             const hasError = errors.has(request.generatorIndex);
-            if (hasArchive === hasError) {
-                const cause = errors.get(request.generatorIndex);
+            if (hasArchive && hasError) {
                 sourceArchives.delete(request.generatorIndex);
+                continue;
+            }
+            if (!hasArchive && !hasError) {
                 errors.set(
                     request.generatorIndex,
                     new Error(
-                        `Generator index ${request.generatorIndex} must have exactly one source archive or source preparation error outcome`,
-                        hasError ? { cause } : undefined
+                        `Generator index ${request.generatorIndex} did not produce a source archive or source preparation error`
                     )
                 );
             }

@@ -217,7 +217,7 @@ describe("collectRawSpecs", () => {
         const archive = await createGroupedSpecsTarGzArchive({
             generatorSelections: [
                 { generatorIndex: 3, specs: [first] },
-                { generatorIndex: 1, specs: [first, second] }
+                { generatorIndex: 1, specs: [first, first, second] }
             ],
             context: createMockContext()
         });
@@ -299,6 +299,46 @@ describe("collectRawSpecs", () => {
         expect(result.errorsByGeneratorIndex.get(1)).toBeInstanceOf(Error);
         expect(result.archive?.manifest.specs).toHaveLength(1);
         expect(result.archive?.specIndexesByGeneratorIndex).toEqual(new Map([[0, [0]]]));
+    });
+
+    it("aggregates independent source preparation failures", async () => {
+        let failure: unknown;
+        try {
+            await createGroupedSpecsTarGzArchive({
+                generatorSelections: [
+                    { generatorIndex: 0, specs: [openApiSpec(path.join(sourceDir, "api", "first-missing.yaml"))] },
+                    { generatorIndex: 1, specs: [openApiSpec(path.join(sourceDir, "api", "second-missing.yaml"))] }
+                ],
+                context: createMockContext()
+            });
+        } catch (error) {
+            failure = error;
+        }
+
+        expect(failure).toBeInstanceOf(AggregateError);
+        if (!(failure instanceof AggregateError)) {
+            throw new Error("Expected grouped source preparation to throw AggregateError");
+        }
+        expect(failure.errors).toHaveLength(2);
+    });
+
+    it("throws one shared source preparation failure without duplicating it", async () => {
+        const missingSpec = openApiSpec(path.join(sourceDir, "api", "shared-missing.yaml"));
+        let failure: unknown;
+        try {
+            await createGroupedSpecsTarGzArchive({
+                generatorSelections: [
+                    { generatorIndex: 0, specs: [missingSpec] },
+                    { generatorIndex: 1, specs: [missingSpec] }
+                ],
+                context: createMockContext()
+            });
+        } catch (error) {
+            failure = error;
+        }
+
+        expect(failure).toBeInstanceOf(Error);
+        expect(failure).not.toBeInstanceOf(AggregateError);
     });
 
     it("maps one shared materialization failure to every referring generator", async () => {
