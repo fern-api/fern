@@ -1,0 +1,5 @@
+- summary: |
+    Don't document GraphQL operation-namespace types (e.g. a `Mutation.checkout: CheckoutMutations`
+    grouping type) as types of their own. Their fields are already documented as operations, so a
+    type page for them duplicated every field and argument on the referenced types' pages.
+  type: fix

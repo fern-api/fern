@@ -920,5 +920,24 @@
       },
       "description": "Input for filtering users"
     }
+  },
+  "typeCategories": {
+    "DateTime": "scalar",
+    "Date": "scalar",
+    "Email": "scalar",
+    "URL": "scalar",
+    "UUID": "scalar",
+    "JSON": "scalar",
+    "Upload": "scalar",
+    "BigInt": "scalar",
+    "Decimal": "scalar",
+    "User": "object",
+    "Post": "object",
+    "UserRole": "enum",
+    "PostStatus": "enum",
+    "SearchResult": "union",
+    "CreateUserInput": "input",
+    "CreatePostInput": "input",
+    "UserFilter": "input"
   }
 }
