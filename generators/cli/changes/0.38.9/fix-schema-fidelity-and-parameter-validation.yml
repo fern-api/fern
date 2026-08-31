@@ -1,0 +1,146 @@
+- summary: |
+    Query- and path-parameter values are type-checked locally. `--limit nope`
+    used to serialize as `?limit=nope` and fail at the API; it now fails
+    immediately naming the flag and the expected type. Only numeric and boolean
+    types are enforced — `string` accepts anything (it is what the wire carries)
+    and arrays/objects are left to the style-aware serializer — so the check
+    catches typos without rejecting requests a server would accept.
+  type: fix
+- summary: |
+    `--schema` advertises `httpMethod` and `path` again, per ADR-0006's
+    2026-08-28 amendment. They were dropped as HTTP-execution detail, but they
+    are how an agent tells a read from a write *before* running a command, which
+    is a safety property rather than plumbing. Additive — the `{globalFlags,
+    operations}` shape, the `parameters` to `input` rename and the capability
+    hints are unchanged.
+  type: fix
+- summary: |
+    `--schema` and `--help` report the real element type of an array-typed
+    query, header or path parameter. Only body arrays carried one, so both
+    renderers fell back to the container type: `--schema` advertised
+    `items: {"type": "array"}` — an array of arrays — and `--help` showed
+    `<JSON_ARRAY>` where a single element belongs. All three spellings now
+    resolve: inline `type: array`, a `$ref` to an array component, and
+    `anyOf: [array, null]`; anything that still doesn't resolve reports
+    `string` rather than the container type. Advertisement-only: the value
+    collector branches on the element type being something other than
+    `string`, so no request changes on the wire — verified against two
+    customer specs (56 array parameters, 4 input forms each).
+  type: fix
+- summary: |
+    Array-of-enum parameters are now constrained. `type: array, items:
+    {$ref: SomeEnum}` carries no enum of its own — it lives on `items` — so
+    the flag was completely unchecked while its scalar twin was enforced by a
+    clap `value_parser`: `--event-types bogus` reached the API, `--direction
+    bogus` did not. `--schema` now advertises `items.enum` and the executor
+    rejects a non-member before any request is sent, naming the flag and
+    listing the valid options. Enforced after value collection rather than by
+    a `value_parser`, because a repeated flag also accepts a whole JSON array
+    in one argument (`--event-types '["a","b"]'`) and clap would reject that
+    literal as a non-member; all four input forms (repeated, single, JSON
+    array, `--params`) are verified to serialize exactly as before.
+    Note this can newly reject a request that previously went out: that is the
+    point, but a spec whose enum is stale will now block values the API still
+    accepts.
+  type: fix
+- summary: |
+    Body properties spelled `anyOf: [T, null]` are type-checked. Such a
+    property carries no `type:` of its own — the type is in the branch — and
+    every check downstream keyed off it, so `--json '{"name": 123}'` on a
+    `name` declared `anyOf: [{type: string}, {type: null}]` was forwarded to
+    the wire unvalidated, while the same property spelled `type: string` was
+    correctly rejected. Non-null values are now validated against the sole
+    non-null branch, at both the property level and for a `$ref`'d component
+    that is itself a nullable union. A genuine multi-branch union
+    (`oneOf: [string, array]`) is deliberately left permissive: asserting one
+    branch would reject values the other allows.
+  type: fix
+- summary: |
+    The two mutual-exclusion errors name flags that exist. Both interpolated
+    the raw wire key, so combining `--json` with a body flag reported
+    `--event_types` where `--event-types` is registered, and an object
+    shorthand against its own leaf reported `--permissions.inbox_read` where
+    `--permissions.inbox-read` is registered — clap rejects the spelling the
+    error suggests, and `--schema` discloses the resolved name, so the
+    message contradicted the contract beside it. Both now route through
+    `resolve_param_flag_name`, the shared resolver the command builder and
+    the missing-parameter hint already use.
+  type: fix
+- summary: |
+    Non-body parameter type-checking no longer rejects values the CLI used to
+    send. The boolean check accepted only `true|false|1|0`, case-sensitively,
+    so `--flag True`, `TRUE`, `False`, `yes`, `no`, `on` and `off` became hard
+    local failures — spellings that were forwarded before the check existed and
+    that the frameworks generating these specs accept. It now matches
+    case-insensitively over `true/false/1/0/yes/no/on/off/t/f/y/n`, and accepts
+    a JSON `1`/`0` (previously the string `"1"` passed while
+    `--params '{"flag": 1}'` failed). An empty string on a typed parameter is
+    accepted again, since a shell turns an unset variable into one and the
+    request previously went out. The integer check reads digit shape rather
+    than parsing as `i64`, so the flag path and the `--params` path agree on
+    values above `i64::MAX` and an integer with no declared `maximum` is not
+    rejected for its magnitude. Measured across two customer specs: 41 boolean
+    query parameters on one and 8 on the other were affected.
+  type: fix
+- summary: |
+    Body arrays of enums advertise `items.enum` in `--schema`. The element-enum
+    resolution reached parameters only, so on a spec where the same enum array
+    appears both as a query parameter and as a body property, `--schema`
+    disclosed the members for one and not the other — including on operations
+    where the body property is required.
+  type: fix
+
+- summary: |
+    The integer check for a non-body parameter agrees between the flag path and
+    `--params` past `u64::MAX`. `serde_json` widens an integer literal beyond
+    that to a float, so `--params '{"limit": 18446744073709551616}'` was
+    rejected while the identical value supplied as a flag was accepted. A
+    whole-valued number is an integer for this purpose; range remains a
+    `minimum`/`maximum` concern, checked separately.
+  type: fix
+
+- summary: |
+    A body property spelled `{$ref: X, nullable: true}` accepts `null`.
+    Nullability is declared at the `$ref` *site* — a component is shared, so it
+    cannot be nullable for one referrer and not another — but the parser's
+    `$ref` early-return dropped every sibling keyword, lowering the property to
+    `nullable: false`. The validator's null short-circuit therefore never fired
+    for the one shape it exists to handle, and resolving the ref rejected `null`
+    with "Expected object". On one customer's OpenAPI 3.0.1 spec that blocked
+    `null` on 121 body properties the spec explicitly permits.
+    A `$ref` property that is not nullable still rejects `null`, and non-null
+    values are still validated against the referenced schema.
+  type: fix
+
+- summary: |
+    Enum members are enforced when supplied through `--params`. A scalar enum
+    was gated only by clap's value parser, which `--params` bypasses entirely,
+    so `--params '{"direction":"bogus"}'` reached the wire — and for a path
+    parameter landed in the URL. Array element enums had the same hole for
+    non-string values: `--params '{"event_types":[5]}'` sent `?event_types=5`
+    because the check only inspected strings. The accepted set deliberately
+    mirrors clap's rather than just the declared wire values, so an
+    `x-fern-enum` display name and the `null` sentinel on a nullable parameter
+    are still accepted.
+  type: fix
+
+- summary: |
+    A `$ref` to an enum component is enforced inside a request body. The
+    validator's component model carried no `enum` field at all, so a property
+    that reached its enum through a `$ref` had its members advertised in
+    `--schema` and never checked — `webhooks create --event-types bogus` was
+    accepted and sent, while the identical enum declared inline on the property,
+    or used as a query parameter, was rejected. Covers array elements too, and
+    a `const:` lowers to a single-member enum as it does elsewhere. Exact
+    matching is safe because the flag layer canonicalizes an `x-fern-enum`
+    display name to its wire value before validation.
+  type: fix
+
+- summary: |
+    A repeatable flag's `--help` now says it is repeatable. The value name can
+    only show one form, and once it correctly reports the element type
+    (`<STRING>` rather than `<JSON_ARRAY>`) nothing on the surface indicated
+    that the flag can be passed more than once or handed a whole JSON array —
+    both of which work. The long help now discloses both forms; the one-line
+    form is unchanged, since it is width-limited and truncated.
+  type: fix

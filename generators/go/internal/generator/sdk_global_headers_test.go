@@ -9,9 +9,9 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir/common"
 )
 
-// newGlobalHeaderTestWriter builds a bare fileWriter suitable for exercising the
+// newHeaderTestWriter builds a bare fileWriter suitable for exercising the
 // emitted core.RequestOptions definition.
-func newGlobalHeaderTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWriter {
+func newHeaderTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWriter {
 	return newFileWriter(
 		"request_option.go",
 		"core",
@@ -35,9 +35,9 @@ func newGlobalHeaderTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fil
 	)
 }
 
-// newGlobalHeaderForTest builds an IR global header with the given wire value,
+// newHeaderForTest builds an IR header with the given wire value,
 // Go field name, and type.
-func newGlobalHeaderForTest(wireValue string, fieldName string, valueType *ir.TypeReference) *ir.HttpHeader {
+func newHeaderForTest(wireValue string, fieldName string, valueType *ir.TypeReference) *ir.HttpHeader {
 	return &ir.HttpHeader{
 		Name: &common.NameAndWireValue{
 			WireValue: wireValue,
@@ -87,7 +87,7 @@ func newNamedTypeReferenceForTest(typeId string, name string) *ir.TypeReference 
 // only configuration is the given global headers.
 func requestOptionsSourceForHeaders(t *testing.T, headers []*ir.HttpHeader, types map[common.TypeId]*ir.TypeDeclaration) string {
 	t.Helper()
-	f := newGlobalHeaderTestWriter(types)
+	f := newHeaderTestWriter(types)
 	if err := f.WriteRequestOptionsDefinition(
 		&ir.ApiAuth{},
 		headers,
@@ -120,13 +120,13 @@ func TestGlobalHeadersAreOmittedWhenUnset(t *testing.T) {
 	src := requestOptionsSourceForHeaders(
 		t,
 		[]*ir.HttpHeader{
-			newGlobalHeaderForTest("PLAID-CLIENT-ID", "ClientId", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1String)),
-			newGlobalHeaderForTest("X-API-Count", "Count", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Integer)),
-			newGlobalHeaderForTest("X-API-Enabled", "Enabled", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Boolean)),
-			newGlobalHeaderForTest("X-API-Datetime", "Datetime", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1DateTime)),
-			newGlobalHeaderForTest("X-API-Uuid", "Uuid", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Uuid)),
-			newGlobalHeaderForTest("X-API-Version", "Version", newNamedTypeReferenceForTest(string(enumTypeId), "Version")),
-			newGlobalHeaderForTest("X-API-Optional-Name", "OptionalName", newOptionalTypeReferenceForTest(newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1String))),
+			newHeaderForTest("PLAID-CLIENT-ID", "ClientId", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1String)),
+			newHeaderForTest("X-API-Count", "Count", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Integer)),
+			newHeaderForTest("X-API-Enabled", "Enabled", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Boolean)),
+			newHeaderForTest("X-API-Datetime", "Datetime", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1DateTime)),
+			newHeaderForTest("X-API-Uuid", "Uuid", newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1Uuid)),
+			newHeaderForTest("X-API-Version", "Version", newNamedTypeReferenceForTest(string(enumTypeId), "Version")),
+			newHeaderForTest("X-API-Optional-Name", "OptionalName", newOptionalTypeReferenceForTest(newPrimitiveTypeReferenceForTest(common.PrimitiveTypeV1String))),
 		},
 		types,
 	)
@@ -176,7 +176,7 @@ func TestGlobalHeadersWithUncomparableTypesAreUnguarded(t *testing.T) {
 	src := requestOptionsSourceForHeaders(
 		t,
 		[]*ir.HttpHeader{
-			newGlobalHeaderForTest("X-API-Metadata", "Metadata", newNamedTypeReferenceForTest(string(objectTypeId), "Metadata")),
+			newHeaderForTest("X-API-Metadata", "Metadata", newNamedTypeReferenceForTest(string(objectTypeId), "Metadata")),
 		},
 		types,
 	)
