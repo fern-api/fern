@@ -281,11 +281,13 @@ export async function generateWorkspace({
                             const hasArchive = sourceArchives.has(request.generatorIndex);
                             const hasError = errors.has(request.generatorIndex);
                             if (hasArchive === hasError) {
+                                const cause = errors.get(request.generatorIndex);
                                 sourceArchives.delete(request.generatorIndex);
                                 errors.set(
                                     request.generatorIndex,
                                     new Error(
-                                        `Generator index ${request.generatorIndex} must have exactly one source archive or source preparation error outcome`
+                                        `Generator index ${request.generatorIndex} must have exactly one source archive or source preparation error outcome`,
+                                        hasError ? { cause } : undefined
                                     )
                                 );
                             }

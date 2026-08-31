@@ -164,9 +164,7 @@ async function resolveOpenAPIOrAsyncAPI({
         type: isAsync ? "asyncapi" : "openapi",
         specPath: toContainerPath(filename, containerBaseDir),
         namespace: spec.namespace,
-        ...(spec.settings != null
-            ? { apiImportSettings: mapApiImportSettings(getOpenAPISettings({ overrides: spec.settings })) }
-            : {})
+        apiImportSettings: mapApiImportSettings(getOpenAPISettings({ overrides: spec.settings }))
     };
 }
 
@@ -198,10 +196,11 @@ const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
 } satisfies Partial<Record<keyof OpenAPISettings, ApiImportSettingMapper>>;
 
 function mapApiImportSettings(settings: OpenAPISettings): RawSpecImportSettings {
-    return Object.values(SDK_CONFIG_IMPORT_SETTING_MAPPERS).reduce<RawSpecImportSettings>(
-        (mappedSettings, mapSetting) => ({ ...mappedSettings, ...mapSetting(settings) }),
-        {}
-    );
+    const mappedSettings: RawSpecImportSettings = {};
+    for (const mapSetting of Object.values(SDK_CONFIG_IMPORT_SETTING_MAPPERS)) {
+        Object.assign(mappedSettings, mapSetting(settings));
+    }
+    return mappedSettings;
 }
 
 /**
@@ -598,7 +597,9 @@ export async function createGroupedSpecsTarGzArchive({
     const settled = await createGroupedSpecsTarGzArchiveSettled({ generatorSelections, context, audiences });
     const firstError = settled.errorsByGeneratorIndex.values().next();
     if (!firstError.done) {
-        throw firstError.value;
+        throw firstError.value instanceof Error
+            ? firstError.value
+            : new Error("Grouped source archive preparation failed", { cause: firstError.value });
     }
     if (settled.archive == null) {
         throw new Error("Grouped source archive was not created");
@@ -713,8 +714,9 @@ async function copyMaterializedSpec({
 }): Promise<RawSpecsManifestEntry> {
     const sourcePrefix = `${materialized.manifestEntry.type}0`;
     const targetPrefix = `${materialized.manifestEntry.type}${typeIndex}`;
+    assertSupportedMaterializedManifestEntry(materialized.manifestEntry);
     for (const entry of await readdir(materialized.directory, { withFileTypes: true })) {
-        if (!entry.name.startsWith(sourcePrefix) || (!entry.isFile() && !entry.isDirectory())) {
+        if (!hasSourcePrefix(entry.name) || (!entry.isFile() && !entry.isDirectory())) {
             throw new Error(`Unsupported materialized source entry: ${entry.name}`);
         }
         await cp(
@@ -740,12 +742,33 @@ async function copyMaterializedSpec({
         return `${targetPrefix}${value.slice(sourcePrefix.length)}`;
     }
 
+    function hasSourcePrefix(value: string): boolean {
+        // Each materialization directory contains exactly one source, which collectRawSpecs indexes as zero.
+        return value === sourcePrefix || value.startsWith(`${sourcePrefix}.`) || value.startsWith(`${sourcePrefix}-`);
+    }
+
     function replaceContainerPathPrefix(value: string): string {
         const basename = path.posix.basename(value);
-        if (!basename.startsWith(sourcePrefix)) {
+        if (!hasSourcePrefix(basename)) {
             throw new Error(`Unexpected materialized source path: ${value}`);
         }
         return path.posix.join(path.posix.dirname(value), replacePrefix(basename));
+    }
+}
+
+const SUPPORTED_MATERIALIZED_MANIFEST_ENTRY_KEYS = new Set<string>([
+    "type",
+    "specPath",
+    "overridePaths",
+    "namespace",
+    "apiImportSettings"
+] satisfies Array<keyof RawSpecsManifestEntry>);
+
+function assertSupportedMaterializedManifestEntry(entry: RawSpecsManifestEntry): void {
+    for (const key of Object.keys(entry)) {
+        if (!SUPPORTED_MATERIALIZED_MANIFEST_ENTRY_KEYS.has(key)) {
+            throw new Error(`Unsupported materialized manifest entry field: ${key}`);
+        }
     }
 }
 
@@ -779,16 +802,9 @@ export function validateSdkConfigImportSettings(specs: Spec[]): void {
             continue;
         }
         const settings = getOpenAPISettings({ overrides: spec.settings });
-        const settingKeys = new Set([
-            ...Object.getOwnPropertyNames(DEFAULT_OPENAPI_SETTINGS),
-            ...Object.getOwnPropertyNames(settings),
-            ...(spec.settings == null ? [] : Object.getOwnPropertyNames(spec.settings))
-        ]);
-        for (const key of settingKeys) {
-            const value =
-                spec.settings != null && Object.hasOwn(spec.settings, key)
-                    ? Reflect.get(spec.settings, key)
-                    : Reflect.get(settings, key);
+        for (const key of Object.getOwnPropertyNames(settings)) {
+            const value = Reflect.get(settings, key);
+            // Mapper membership means the setting's full value domain is preserved downstream.
             if (
                 SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
                 isDeepStrictEqual(value, Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))

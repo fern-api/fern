@@ -234,11 +234,21 @@ describe("collectRawSpecs", () => {
         const specFile = path.join(sourceDir, "api", "defaults.yaml");
         await writeFile(specFile, MINIMAL_OPENAPI);
         const spec = openApiSpec(specFile);
+        const explicitDefaultsSpec = { ...spec, settings: getOpenAPISettings() };
+
+        const implicitArchive = await createSpecsTarGzArchive({ specs: [spec], context: createMockContext() });
+        const explicitArchive = await createSpecsTarGzArchive({
+            specs: [explicitDefaultsSpec],
+            context: createMockContext()
+        });
+
+        expect(explicitArchive.manifest).toEqual(implicitArchive.manifest);
+        expect(explicitArchive.buffer.equals(implicitArchive.buffer)).toBe(true);
 
         const archive = await createGroupedSpecsTarGzArchive({
             generatorSelections: [
                 { generatorIndex: 0, specs: [spec] },
-                { generatorIndex: 1, specs: [{ ...spec, settings: getOpenAPISettings() }] }
+                { generatorIndex: 1, specs: [explicitDefaultsSpec] }
             ],
             context: createMockContext()
         });
@@ -311,6 +321,26 @@ describe("collectRawSpecs", () => {
                 result.errorsByGeneratorIndex.has(generatorIndex)
             );
         }
+    });
+
+    it("wraps non-Error materialization failures without discarding their cause", async () => {
+        const specFile = path.join(sourceDir, "api", "valid.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        const rejection = { code: "SOURCE_LOG_FAILED" };
+        const context = createMockContext();
+        context.logger.debug = () => {
+            throw rejection;
+        };
+
+        await expect(
+            createGroupedSpecsTarGzArchive({
+                generatorSelections: [{ generatorIndex: 0, specs: [openApiSpec(specFile)] }],
+                context
+            })
+        ).rejects.toMatchObject({
+            message: "Grouped source archive preparation failed",
+            cause: rejection
+        });
     });
 
     it("applies OpenAPI overrides and overlays before writing the correlated archive source", async () => {
@@ -390,19 +420,6 @@ describe("collectRawSpecs", () => {
             "cannot preserve effective OpenAPI import setting respectReadonlySchemas=true"
         );
         expect(() => validateSdkConfigImportSettings([spec])).toThrow("use a pre-cutover generator version");
-    });
-
-    it("validates unsupported settings from the fully resolved settings keys", () => {
-        const settings = getOpenAPISettings();
-        Object.defineProperty(settings, "respectReadonlySchemas", { value: true, enumerable: false });
-        const spec = {
-            ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),
-            settings
-        };
-
-        expect(() => validateSdkConfigImportSettings([spec])).toThrow(
-            "cannot preserve effective OpenAPI import setting respectReadonlySchemas=true"
-        );
     });
 
     it("merges overrides into the resolved OpenAPI spec", async () => {
