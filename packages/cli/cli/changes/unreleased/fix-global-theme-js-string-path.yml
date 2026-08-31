@@ -3,3 +3,7 @@
     The uploaded file's presigned URL was left in the stitched config and then resolved as a path
     relative to the consumer's docs directory, failing with ENOENT.
   type: fix
+- summary: |
+    Fix a global theme that declares no `js` overwriting the consuming repo's own `js` with an
+    empty list, so scripts declared in a repo's `docs.yml` never reached the published site.
+  type: fix

@@ -287,6 +287,15 @@ describe("mergeThemeOverride", () => {
         expect(result.colors).toEqual({ accentPrimary: "#000", background: "#fff" });
     });
 
+    // A theme that only ships css must not silently delete the consumer's own
+    // `js: ./assets/header-scroll.js` — the script never reaches the published site.
+    it("keeps the local js when the resolved theme declares none", async () => {
+        const themeFromFdr = await resolveThemeFileUrls({ css: "https://cas.example.com/styles.css" }, "/tmp/test");
+        const local = { js: "./assets/header-scroll.js" } as never;
+        const result = mergeThemeOverride(local, themeFromFdr) as unknown as Record<string, unknown>;
+        expect(result.js).toBe("./assets/header-scroll.js");
+    });
+
     it("non-theme-eligible fields in local config are preserved unchanged", () => {
         const local = { title: "My Docs", tabs: [{ tab: "API" }] } as never;
         const result = mergeThemeOverride(local, { favicon: "f.ico" }) as unknown as Record<string, unknown>;
