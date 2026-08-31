@@ -50,6 +50,7 @@ export class SdkConfigMapper {
         if (apiDefinition == null) {
             throw new CliError({ message: `API '${selection.apiName}' not found`, code: CliError.Code.ConfigError });
         }
+        // The adapter resolves definition-derived API identity and version values that ApiDefinition does not retain.
         const fernWorkspace = await new LegacyFernWorkspaceAdapter({
             context: this.context,
             cliVersion: workspace.cliVersion

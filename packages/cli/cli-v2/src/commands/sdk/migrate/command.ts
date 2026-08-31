@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
 import { randomUUID } from "crypto";
-import { rename, unlink, writeFile } from "fs/promises";
+import { mkdir, rename, unlink, writeFile } from "fs/promises";
 import { basename, dirname, join } from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
@@ -73,8 +73,9 @@ export class MigrateCommand {
                 ? sdkConfig.targets
                 : sdkConfig.targets.filter((target) => target.groups?.includes(groupName));
         if (groupTargets.length === 0) {
+            const availableGroups = [...new Set(sdkConfig.targets.flatMap((target) => target.groups ?? []))].sort();
             throw new CliError({
-                message: `SDK group '${groupName}' not found`,
+                message: `SDK group '${groupName}' not found. Available groups: ${availableGroups.join(", ") || "none"}`,
                 code: CliError.Code.ConfigError
             });
         }
@@ -161,13 +162,14 @@ export class MigrateCommand {
                 code: CliError.Code.ConfigError
             });
         }
-        await writeFileAtomically(outputPath, data, args.force);
+        await writeOutputFile(outputPath, data, args.force);
         context.stderr.info(`Created SDK Config v1 at ${outputPath}`);
     }
 }
 
-async function writeFileAtomically(outputPath: AbsoluteFilePath, data: string, force: boolean): Promise<void> {
+async function writeOutputFile(outputPath: AbsoluteFilePath, data: string, force: boolean): Promise<void> {
     const output = outputPath.toString();
+    await mkdir(dirname(output), { recursive: true });
     if (!force) {
         try {
             await writeFile(output, data, { flag: "wx" });
