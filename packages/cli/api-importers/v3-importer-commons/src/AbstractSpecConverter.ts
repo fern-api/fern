@@ -316,7 +316,7 @@ export abstract class AbstractSpecConverter<
             groupParts: endpointGroup,
             namespace: this.context.namespace
         });
-        const pkg = this.getOrCreatePackage({ group: endpointGroup });
+        const pkg = this.getOrCreatePackage({ group: endpointGroup, displayName: endpointGroupDisplayName });
 
         const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
         const finalpart = allParts[allParts.length - 1];
@@ -325,8 +325,13 @@ export abstract class AbstractSpecConverter<
             pkg.service = serviceName ?? `service_${group.map((part) => camelCase(part)).join("/")}`;
         }
 
-        if (this.ir.services[pkg.service] == null) {
+        const existingService = this.ir.services[pkg.service];
+        if (existingService == null) {
             this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart, endpointGroupDisplayName });
+        } else if (endpointGroupDisplayName != null && existingService.displayName == null) {
+            // An earlier endpoint in this group may have reached it without a tag, in which case the
+            // display name only becomes known now.
+            existingService.displayName = endpointGroupDisplayName;
         }
         this.ir.services[pkg.service]?.endpoints.push(endpoint);
 
@@ -585,7 +590,7 @@ export abstract class AbstractSpecConverter<
      * @param context The converter context
      * @returns The package object
      */
-    protected getOrCreatePackage({ group }: { group?: string[] }): Package {
+    protected getOrCreatePackage({ group, displayName }: { group?: string[]; displayName?: string }): Package {
         const groupParts = [];
         if (this.context.namespace != null) {
             groupParts.push(this.context.namespace);
@@ -601,14 +606,20 @@ export abstract class AbstractSpecConverter<
             const name = groupParts[i] ?? "";
             const groupPartsSubset = groupParts.slice(0, i + 1);
             const subpackageId = `subpackage_${groupPartsSubset.join("/")}`;
-            if (this.ir.subpackages[subpackageId] == null) {
-                this.ir.subpackages[subpackageId] = {
-                    name: this.context.casingsGenerator.generateName(name),
-                    displayName: undefined,
-                    ...this.createPackage({ name })
-                };
+            // Only the deepest package corresponds to the group itself; the packages above it are
+            // intermediate namespaces that the display name does not describe.
+            const isLeaf = i === groupParts.length - 1;
+            const existingSubpackage = this.ir.subpackages[subpackageId];
+            const curr: FernIr.Subpackage = existingSubpackage ?? {
+                name: this.context.casingsGenerator.generateName(name),
+                displayName: isLeaf ? displayName : undefined,
+                ...this.createPackage({ name })
+            };
+            if (existingSubpackage == null) {
+                this.ir.subpackages[subpackageId] = curr;
+            } else if (isLeaf && displayName != null && curr.displayName == null) {
+                curr.displayName = displayName;
             }
-            const curr = this.ir.subpackages[subpackageId];
             if (!pkg.subpackages.includes(subpackageId)) {
                 pkg.subpackages.push(subpackageId);
             }

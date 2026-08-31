@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve the `x-displayName` declared on an OpenAPI tag in V3 IR services and subpackages, so
+    documentation renders the label the spec asks for instead of a title-cased version of the tag
+    name (`BMC Credential` rather than `Bmc Credential`). A tag with no `x-displayName` is used as
+    written when it contains a space; single-token tags such as `OrganizationUsers` continue to be
+    split into words.
+  type: fix
