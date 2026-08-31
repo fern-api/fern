@@ -25,6 +25,25 @@ service:
       method: GET
       path: /uri
       response: ListUsersUriPaginationResponse
+      examples:
+        - name: WithNextPage
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+              next: "next"
+        - name: WithoutNextPage
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+              next: ""
 
     listWithPathPagination:
       pagination:
@@ -33,3 +52,22 @@ service:
       method: GET
       path: /path
       response: ListUsersPathPaginationResponse
+      examples:
+        - name: WithNextPage
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+              next: "next"
+        - name: WithoutNextPage
+          response:
+            body:
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+              next: ""
