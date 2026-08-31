@@ -1,5 +1,6 @@
-import pydantic
 import pytest
+
+import pydantic
 from core_utilities.shared.pydantic_utilities import (
     UniversalBaseModel,
     _coerce_keys_to_aliases,
@@ -29,6 +30,12 @@ class Ambiguous(UniversalBaseModel):
     second: str = pydantic.Field(alias="second_alias")
 
 
+class Shadowed(UniversalBaseModel):
+    # `alias` of `first` collides with the field name of `second`, which has no alias of its own
+    first: str = pydantic.Field(alias="second")
+    second: str
+
+
 def test_field_names_are_coerced_to_aliases() -> None:
     parsed = parse_obj_as(Outer, {"type_": "outer", "content": {"type_": "text", "text": "hello"}})
     assert parsed.type_ == "outer"
@@ -52,6 +59,15 @@ def test_ambiguous_key_accepted_when_disambiguated() -> None:
     parsed = parse_obj_as(Ambiguous, {"second": "a", "second_alias": "b"})
     assert parsed.first == "a"
     assert parsed.second == "b"
+
+
+def test_key_shadowing_a_non_aliased_field_is_not_ambiguous() -> None:
+    # `second` is the alias of `first` and the name of a field that has no alias of its own, so there is no
+    # other key that could disambiguate it: it feeds both fields rather than raising.
+    assert _coerce_keys_to_aliases(Shadowed, {"second": "value"}) == {"second": "value"}
+    parsed = parse_obj_as(Shadowed, {"second": "value"})
+    assert parsed.first == "value"
+    assert parsed.second == "value"
 
 
 def test_field_aliases_are_computed_once_per_model() -> None:
