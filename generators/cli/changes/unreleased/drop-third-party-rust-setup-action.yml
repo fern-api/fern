@@ -1,0 +1,12 @@
+- summary: |
+    The generated `ci.yml` no longer uses `actions-rust-lang/setup-rust-toolchain`.
+    Organizations that restrict GitHub Actions to a first-party allowlist cannot
+    run third-party actions, and an unrunnable action fails the workflow before
+    any job starts — leaving no option but to fernignore `ci.yml` and
+    hand-maintain it, including the npm publish jobs. The toolchain is now taken
+    from the runner (with a rustup fallback for containers and self-hosted
+    runners), matching the step cargo-dist emits into `release.yml`. Caching came
+    from that action wrapping `Swatinem/rust-cache`, so the cargo registry and
+    `target/` are now cached with `actions/cache` instead — keyed per rust target,
+    since the publish matrix cross-compiles five of them.
+  type: fix

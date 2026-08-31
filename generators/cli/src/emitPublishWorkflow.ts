@@ -25,11 +25,15 @@ const TARGETS: ReadonlyArray<{
  * publish info is configured.
  *
  */
-export async function emitCiWorkflow(args: { outputDir: string; binaryName: string }): Promise<void> {
-    const { outputDir, binaryName } = args;
+export async function emitCiWorkflow(args: {
+    outputDir: string;
+    binaryName: string;
+    generatedCrateDirs?: readonly string[];
+}): Promise<void> {
+    const { outputDir, binaryName, generatedCrateDirs = [] } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructBuildTestYaml({ binaryName });
+    const yaml = constructBuildTestYaml({ binaryName, generatedCrateDirs });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -55,19 +59,89 @@ export async function emitPublishWorkflow(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    generatedCrateDirs?: readonly string[];
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo, repoUrl } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, generatedCrateDirs = [] } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, generatedCrateDirs });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
+ * Install a Rust toolchain without a third-party action.
+ *
+ * `actions-rust-lang/setup-rust-toolchain` is the obvious choice here, but
+ * organizations that restrict GitHub Actions to a first-party allowlist
+ * cannot run it — the workflow fails at startup, before any job, which
+ * leaves the customer no option but to take `ci.yml` out of generation and
+ * hand-maintain it. GitHub-hosted runners ship a stable toolchain already,
+ * so the step is a no-op there; the rustup fallback covers containers and
+ * self-hosted runners. Same shape as the equivalent step cargo-dist emits
+ * into `release.yml`, which is why that file needs no allowlist exception.
+ */
+const RUST_SETUP_STEP = `      - name: Set up Rust
+        shell: bash
+        run: |
+          if ! command -v cargo > /dev/null 2>&1; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          fi
+`;
+
+/**
+ * Cache the cargo registry and the build directory between runs.
+ *
+ * `actions-rust-lang/setup-rust-toolchain` did this implicitly by wrapping
+ * `Swatinem/rust-cache`; both are third-party, so caching is done here with
+ * `actions/cache` instead. `restore-keys` gives a prefix match when
+ * `Cargo.lock` changes, so a dependency bump still starts from the previous
+ * run's artifacts rather than from nothing.
+ *
+ * `target/` holds per-triple artifacts, hence `cacheKeySuffix` — the publish
+ * matrix passes its target so the five cross-compiles don't fight over one
+ * cache entry.
+ */
+function rustCacheStep(cacheKeySuffix: string): string {
+    return `      - name: Cache cargo registry and build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            target
+          key: cargo-\${{ runner.os }}-${cacheKeySuffix}-\${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-\${{ runner.os }}-${cacheKeySuffix}-
+`;
+}
+
+/**
+ * `cargo test` steps for the generated model/SDK crates.
+ *
+ * Those crates are path dependencies of the CLI crate, not workspace members,
+ * and `cargo test` only builds test targets for the packages it is invoked on
+ * — so the generated serialization tests never run without this. Each crate
+ * needs its own `--manifest-path`, including the nested type partitions, which
+ * are path dependencies of the types facade rather than members of it.
+ */
+function generatedCrateTestSteps(generatedCrateDirs: readonly string[]): string {
+    return generatedCrateDirs
+        .map((crateDir) => {
+            const manifestPath = crateDir.split(path.sep).join("/");
+            return `
+      - name: Test ${manifestPath}
+        run: cargo test --manifest-path ${manifestPath}/Cargo.toml`;
+        })
+        .join("");
 }
 
 /**
  * Build+test-only workflow YAML — the `check`, `compile`, and `test`
  * jobs with no publish steps.
  */
-function constructBuildTestYaml(args: { binaryName: string }): string {
+function constructBuildTestYaml(args: { binaryName: string; generatedCrateDirs: readonly string[] }): string {
     return `name: ci
 
 on: [push]
@@ -86,9 +160,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("check")}
       - name: Check
         run: cargo check
 
@@ -98,9 +171,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("compile")}
       - name: Compile
         run: cargo build
 
@@ -110,11 +182,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("test")}
       - name: Test
-        run: cargo test
+        run: cargo test${generatedCrateTestSteps(args.generatedCrateDirs)}
 `;
 }
 
@@ -122,6 +193,7 @@ function constructWorkflowYaml(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    generatedCrateDirs: readonly string[];
 }): string {
     const { binaryName, npmPublishInfo, repoUrl } = args;
     const { useOidc } = npmPublishInfo;
@@ -182,9 +254,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("check")}
       - name: Check
         run: cargo check
 
@@ -194,9 +265,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("compile")}
       - name: Compile
         run: cargo build
 
@@ -206,11 +276,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
+${rustCacheStep("test")}
       - name: Test
-        run: cargo test
+        run: cargo test${generatedCrateTestSteps(args.generatedCrateDirs)}
 
   # The npm packages take their version from the release tag, while the
   # binary reports the version in Cargo.toml. Publishing when they disagree
@@ -224,9 +293,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
+${RUST_SETUP_STEP}
       - name: Check tag matches crate version
         shell: bash
         run: |
@@ -268,11 +335,12 @@ ${matrixIncludes}
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: \${{ matrix.rust-target }}
+${RUST_SETUP_STEP}
+      - name: Add Rust target
+        shell: bash
+        run: rustup target add \${{ matrix.rust-target }}
 
+${rustCacheStep("${{ matrix.rust-target }}")}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:

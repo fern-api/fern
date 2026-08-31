@@ -1,0 +1,8 @@
+- summary: |
+    The generated `ci.yml` `test` job now runs the generated model and SDK
+    crates' tests. Those crates are path dependencies of the CLI crate rather
+    than workspace members, so `cargo test` never built their test targets —
+    the serialization tests shipped with every generated CLI had never run.
+    Each crate is now tested by `--manifest-path`, including the nested type
+    partition crates.
+  type: fix
