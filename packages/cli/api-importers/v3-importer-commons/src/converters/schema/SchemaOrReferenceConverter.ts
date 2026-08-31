@@ -113,7 +113,9 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         // remaining elements are inline primitive constraints (no properties, no enum,
         // no composition keywords, no additional validation rules), reference the $ref
         // type directly instead of creating a synthetic merged copy.
-        const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
+        const refElements = this.schemaOrReference.allOf.filter((s): s is OpenAPIV3_1.ReferenceObject =>
+            this.context.isReferenceObject(s)
+        );
         const inlineElements = this.schemaOrReference.allOf.filter(
             (s): s is OpenAPIV3_1.SchemaObject =>
                 typeof s === "object" && s !== null && !this.context.isReferenceObject(s)
@@ -135,14 +137,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 !resolved.format
             ) {
                 const response = this.context.convertReferenceToTypeReference({
-                    reference: singleRef as OpenAPIV3_1.ReferenceObject,
+                    reference: singleRef,
                     breadcrumbs: this.breadcrumbs
                 });
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
                         inlinedTypes: response.inlinedTypes ?? {},
-                        availability: this.getAvailabilityOfSelfOrReference(singleRef as OpenAPIV3_1.ReferenceObject)
+                        availability: this.getAvailabilityOfSelfOrReference(singleRef)
                     };
                 }
             }
