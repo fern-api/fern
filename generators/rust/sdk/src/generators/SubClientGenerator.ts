@@ -3,7 +3,11 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { escapeRustKeyword, RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
+import {
+    dedupeQueryParameterNames,
+    generateRustTypeForTypeReference,
+    getQueryParameterFieldName
+} from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
@@ -1169,8 +1173,8 @@ export class SubClientGenerator {
     }
 
     private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
-        for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
+        for (const queryParam of dedupeQueryParameterNames(endpoint.queryParameters, this.context)) {
+            const paramName = getQueryParameterFieldName(queryParam, this.context);
             params.push({
                 name: paramName,
                 type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
@@ -1480,7 +1484,7 @@ export class SubClientGenerator {
     }
 
     private buildQueryParameters(endpoint: FernIr.HttpEndpoint): string {
-        const queryParams = endpoint.queryParameters;
+        const queryParams = dedupeQueryParameterNames(endpoint.queryParameters, this.context);
         if (queryParams.length === 0) {
             return "None";
         }
@@ -1490,7 +1494,7 @@ export class SubClientGenerator {
     }
 
     private buildQueryParametersWithoutPagination(endpoint: FernIr.HttpEndpoint, paginationConfig: FernIr.Pagination): string {
-        const queryParams = endpoint.queryParameters;
+        const queryParams = dedupeQueryParameterNames(endpoint.queryParameters, this.context);
         if (queryParams.length === 0) {
             return "None";
         }
@@ -1528,7 +1532,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
-        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
+        const fieldName = getQueryParameterFieldName(queryParam, this.context);
 
         if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
@@ -2480,7 +2484,7 @@ export class SubClientGenerator {
         });
 
         // Add query parameter docs
-        endpoint.queryParameters.forEach((queryParam) => {
+        dedupeQueryParameterNames(endpoint.queryParameters, this.context).forEach((queryParam) => {
             if (queryParam.docs) {
                 paramDocs.push({
                     name: this.context.case.snakeSafe(queryParam.name),
