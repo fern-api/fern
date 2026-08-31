@@ -190,6 +190,63 @@ describe("replaceEnvVariables", () => {
         ]);
     });
 
+    describe("deferred (self-hosted runtime) env vars", () => {
+        beforeEach(() => {
+            process.env.FERN_RUNTIME_ENV_VARS = "APP_SERVER,API_SERVER";
+            process.env.APP_SERVER = "https://build-time.example.com";
+        });
+
+        afterEach(() => {
+            delete process.env.FERN_RUNTIME_ENV_VARS;
+            delete process.env.APP_SERVER;
+        });
+
+        it("rewrites deferred vars to a runtime placeholder instead of their build-time value", () => {
+            const onError = vi.fn();
+            const substituted = replaceEnvVariables("App server: ${APP_SERVER}", { onError });
+
+            expect(onError).toHaveBeenCalledTimes(0);
+            expect(substituted).toEqual("App server: FERN_SELF_HOSTED_ENV_APP_SERVER");
+        });
+
+        it("does not report deferred vars that are undefined at build time", () => {
+            const onError = vi.fn();
+            const substituted = replaceEnvVariables("${API_SERVER}/v1", { onError });
+
+            expect(onError).toHaveBeenCalledTimes(0);
+            expect(substituted).toEqual("https://FERN_SELF_HOSTED_ENV_API_SERVER/v1");
+        });
+
+        it("keeps link targets absolute so markdown does not resolve them as relative paths", () => {
+            const onError = vi.fn();
+            const substituted = replaceEnvVariables(
+                {
+                    markdown: 'See [runs](${APP_SERVER}/runs) and <a href="${APP_SERVER}">app</a>',
+                    url: "${APP_SERVER}",
+                    withScheme: "https://${APP_SERVER}"
+                },
+                { onError }
+            );
+
+            expect(substituted).toEqual({
+                markdown:
+                    "See [runs](https://FERN_SELF_HOSTED_ENV_APP_SERVER/runs) and " +
+                    '<a href="https://FERN_SELF_HOSTED_ENV_APP_SERVER">app</a>',
+                url: "https://FERN_SELF_HOSTED_ENV_APP_SERVER",
+                withScheme: "https://FERN_SELF_HOSTED_ENV_APP_SERVER"
+            });
+        });
+
+        it("still substitutes vars that are not deferred", () => {
+            process.env.INSTANCE_NAME = "acme";
+            const onError = vi.fn();
+            const substituted = replaceEnvVariables("${INSTANCE_NAME}.docs.buildwithfern.com", { onError });
+
+            expect(onError).toHaveBeenCalledTimes(0);
+            expect(substituted).toEqual("acme.docs.buildwithfern.com");
+        });
+    });
+
     it("throws error for missing env vars in docs instances config when substituteAsEmpty is false", () => {
         process.env.DOCS_URL = "my-docs.docs.buildwithfern.com";
         const instances = [
