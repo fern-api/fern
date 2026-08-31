@@ -118,6 +118,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // This avoids running buf generate twice when both toFernWorkspace() and
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+    /** Guards the orphaned-`auth-schemes` warning so one command warns once. */
+    private hasWarnedOrphanedAuthSchemes = false;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
@@ -332,10 +334,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         // This gate reads `auth`, not `auth-schemes` — see
         // `getOrphanedAuthSchemeWarning` for what that silently discards.
-        const orphanedAuthSchemeWarning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
-        if (orphanedAuthSchemeWarning != null) {
-            context.logger.warn(orphanedAuthSchemeWarning);
-        }
+        this.warnOnOrphanedAuthSchemes(context);
 
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
@@ -575,6 +574,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return results;
     }
 
+    /**
+     * Emit the orphaned-`auth-schemes` warning, at most once per workspace.
+     *
+     * Called from BOTH `toFernWorkspace` and `getIntermediateRepresentation`,
+     * because they are different entry points: `fern generate` and plain
+     * `fern check` go through the former, and only `fern check --from-openapi`
+     * reaches the latter (see `validateWorkspaces.ts`, where that branch is
+     * gated on `directFromOpenapi`). Warning from only one of them meant the
+     * customer who hits this bug — silently, on `fern generate` — saw nothing,
+     * which is the entire failure mode.
+     */
+    private warnOnOrphanedAuthSchemes(context: TaskContext): void {
+        if (this.hasWarnedOrphanedAuthSchemes) {
+            return;
+        }
+        const warning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
+        if (warning != null) {
+            this.hasWarnedOrphanedAuthSchemes = true;
+            context.logger.warn(warning);
+        }
+    }
+
     public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings,
@@ -584,6 +605,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (specsOverride != null) {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
+
+        this.warnOnOrphanedAuthSchemes(context);
 
         // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
         let effectiveSettings = settings;
