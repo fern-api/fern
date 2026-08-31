@@ -4,14 +4,14 @@ import { SeedPaginationUriPathClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UsersClient", () => {
-    test("listWithUriPagination", async () => {
+    test("listWithUriPagination (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationUriPathClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             data: [
-                { name: "name", id: 1 },
-                { name: "name", id: 1 },
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
             ],
             next: "next",
         };
@@ -33,14 +33,34 @@ describe("UsersClient", () => {
         expect(expected.data).toEqual(nextPage.data);
     });
 
-    test("listWithPathPagination", async () => {
+    test("listWithUriPagination (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationUriPathClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             data: [
-                { name: "name", id: 1 },
-                { name: "name", id: 1 },
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+            next: "",
+        };
+        const mockResponseBody = { ...rawResponseBody, next: `${server.baseUrl}/users/uri` };
+        server.mockEndpoint().get("/users/uri").respondWith().statusCode(200).jsonBody(mockResponseBody).build();
+
+        const expected = rawResponseBody;
+        const page = await client.users.listWithUriPagination();
+
+        expect(expected.data).toEqual(page.data);
+    });
+
+    test("listWithPathPagination (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationUriPathClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
             ],
             next: "next",
         };
@@ -60,5 +80,25 @@ describe("UsersClient", () => {
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
+    });
+
+    test("listWithPathPagination (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationUriPathClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+            next: "",
+        };
+        const mockResponseBody = { ...rawResponseBody, next: "/users/path" };
+        server.mockEndpoint().get("/users/path").respondWith().statusCode(200).jsonBody(mockResponseBody).build();
+
+        const expected = rawResponseBody;
+        const page = await client.users.listWithPathPagination();
+
+        expect(expected.data).toEqual(page.data);
     });
 });

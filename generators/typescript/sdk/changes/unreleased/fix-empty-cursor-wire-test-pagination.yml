@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests for cursor, URI, and path pagination when the example
+    response uses an empty string to indicate there is no next page. The tests now
+    skip `hasNextPage()` and `getNextPage()` assertions, matching the generated pager.
+  type: fix
