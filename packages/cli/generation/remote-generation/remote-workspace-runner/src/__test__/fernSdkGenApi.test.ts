@@ -203,14 +203,12 @@ function invocationWithSerializedRequestBytes(requestBytes: number): generatorsY
 }
 
 function createPreflightBatch({
-    runtimeBundles,
     payloads,
     specsTarGzBuffer = validSourceArchive,
     generatorInvocation = invocation(),
     generatorInvocations
 }: {
-    runtimeBundles?: Buffer[];
-    payloads?: FernSdkGenApiPayload[];
+    payloads: FernSdkGenApiPayload[];
     specsTarGzBuffer?: Buffer;
     generatorInvocation?: generatorsYml.GeneratorInvocation;
     generatorInvocations?: generatorsYml.GeneratorInvocation[];
@@ -219,12 +217,11 @@ function createPreflightBatch({
     post: ReturnType<typeof vi.spyOn>;
     get: ReturnType<typeof vi.spyOn>;
 } {
-    const targetPayloads = payloads ?? runtimeBundles?.map(runtimePayload) ?? [];
     vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
     const post = vi.spyOn(axios, "post").mockRejectedValue(new Error("axios should not be called"));
     const get = vi.spyOn(axios, "get").mockRejectedValue(new Error("axios should not be called"));
-    const batch = new FernSdkGenApiBatch(targetPayloads.length);
-    const builds = targetPayloads.map((payload, index) =>
+    const batch = new FernSdkGenApiBatch(payloads.length);
+    const builds = payloads.map((payload, index) =>
         batch.run({
             apiName: "Petstore",
             organization: "acme",
@@ -1551,7 +1548,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         ["INVALID_GENERATOR_VERSION", invocation({ version: "latest" })]
     ])("rejects %s before submission", async (code, generatorInvocation) => {
         const { builds, post, get } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             generatorInvocation
         });
 
@@ -1562,7 +1559,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects a legacy payload at the generator cutover", async () => {
         const { builds, post, get } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             generatorInvocation: invocation({ version: "4.0.0" })
         });
 
@@ -1575,7 +1572,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("requires sdk-config for MCP at its first core-backed version", async () => {
         const { builds, post, get } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             generatorInvocation: invocation({
                 name: "fernapi/fern-mcp-server",
                 language: "mcp",
@@ -1592,7 +1589,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects an incompatible later batch target before submitting any target", async () => {
         const { builds, post, get } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle, validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle), runtimePayload(validRuntimeBundle)],
             generatorInvocations: [invocation(), invocation({ version: "4.0.0" })]
         });
 
@@ -1603,7 +1600,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects more than 64 target payloads before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: Array.from({ length: 65 }, () => Buffer.alloc(0))
+            payloads: Array.from({ length: 65 }, () => runtimePayload(Buffer.alloc(0)))
         });
         await expect(Promise.all(builds)).rejects.toThrow("at most 64 target payloads");
         expect(post).not.toHaveBeenCalled();
@@ -1611,7 +1608,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects a bundle larger than 5 MiB before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [Buffer.alloc(5 * 1024 * 1024 + 1)]
+            payloads: [runtimePayload(Buffer.alloc(5 * 1024 * 1024 + 1))]
         });
         await expect(Promise.all(builds)).rejects.toThrow("exceeding the 5.00 MiB upload limit");
         expect(post).not.toHaveBeenCalled();
@@ -1619,7 +1616,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects a source archive larger than 25 MiB compressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             specsTarGzBuffer: Buffer.alloc(25 * 1024 * 1024 + 1)
         });
         await expect(Promise.all(builds)).rejects.toThrow("source archive is 25.00 MiB");
@@ -1628,7 +1625,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects a source archive larger than 25 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             specsTarGzBuffer: gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1))
         });
         await expect(Promise.all(builds)).rejects.toThrow("source archive is 25.00 MiB decompressed");
@@ -1637,15 +1634,15 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects a bundle larger than 25 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1))]
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1)))]
         });
         await expect(Promise.all(builds)).rejects.toThrow("fern-runtime-bundle 0 is 25.00 MiB decompressed");
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects more than 25 MiB of bundles before submission", async () => {
+    it("rejects more than 25 MiB of runtime bundle payloads before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: Array.from({ length: 6 }, () => Buffer.alloc(5 * 1024 * 1024))
+            payloads: Array.from({ length: 6 }, () => runtimePayload(Buffer.alloc(5 * 1024 * 1024)))
         });
         await expect(Promise.all(builds)).rejects.toThrow("exceeding the 25 MiB compressed limit");
         expect(post).not.toHaveBeenCalled();
@@ -1697,7 +1694,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects more than 100 MiB of decoded payloads before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: Array.from({ length: 5 }, () => gzipSync(Buffer.alloc(21 * 1024 * 1024)))
+            payloads: Array.from({ length: 5 }, () => runtimePayload(gzipSync(Buffer.alloc(21 * 1024 * 1024))))
         });
         await expect(Promise.all(builds)).rejects.toThrow("exceeding the 100 MiB decoded limit");
         expect(post).not.toHaveBeenCalled();
@@ -1705,7 +1702,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects malformed source gzip before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             specsTarGzBuffer: Buffer.from("not-gzip")
         });
         await expect(Promise.all(builds)).rejects.toThrow("source archive is malformed gzip");
@@ -1714,7 +1711,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects malformed runtime bundle gzip before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [Buffer.from("not-gzip")]
+            payloads: [runtimePayload(Buffer.from("not-gzip"))]
         });
         await expect(Promise.all(builds)).rejects.toThrow("fern-runtime-bundle 0 is malformed gzip");
         expect(post).not.toHaveBeenCalled();
@@ -1723,7 +1720,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("accepts a serialized UTF-8 request field of exactly 1 MiB", async () => {
         const generatorInvocation = invocationWithSerializedRequestBytes(1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             generatorInvocation
         });
 
@@ -1735,7 +1732,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects a serialized UTF-8 request field one byte over 1 MiB", async () => {
         const generatorInvocation = invocationWithSerializedRequestBytes(1024 * 1024 + 1);
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle],
+            payloads: [runtimePayload(validRuntimeBundle)],
             generatorInvocation
         });
 
@@ -1749,7 +1746,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects a multipart body larger than 60 MiB before submission", async () => {
         vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(60 * 1024 * 1024 + 1);
         const { builds, post } = createPreflightBatch({
-            runtimeBundles: [validRuntimeBundle]
+            payloads: [runtimePayload(validRuntimeBundle)]
         });
         await expect(Promise.all(builds)).rejects.toThrow("exceeding the 60 MiB limit");
         expect(post).not.toHaveBeenCalled();
