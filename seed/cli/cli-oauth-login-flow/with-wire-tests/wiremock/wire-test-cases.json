@@ -8,6 +8,7 @@
     }
   ],
   "authEnvVars": [],
+  "globalFlags": [],
   "authMock": null,
   "loginTokenSetup": {
     "schemeName": "OAuth2",

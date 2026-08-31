@@ -36,9 +36,10 @@ const IGNORED_FILENAMES = ["versions.yml"];
 /**
  * Regex patterns for changelog / release metadata paths that live under
  * generator source trees but do not affect generated code.
- * Matches paths like `generators/typescript/sdk/changes/unreleased/.template.yml`.
+ * Matches paths like `generators/typescript/sdk/changes/unreleased/.template.yml`
+ * and `generators/cli/changes/unreleased/some-fix.yml`.
  */
-const IGNORED_PATH_PATTERNS = [/\/sdk\/changes\//];
+const IGNORED_PATH_PATTERNS = [/\/sdk\/changes\//, /^generators\/[^/]+\/changes\//];
 
 /**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
@@ -108,7 +109,8 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "swift-sdk": ["generators/swift/"],
     "rust-sdk": ["generators/rust/"],
     "rust-model": ["generators/rust/"],
-    openapi: ["generators/openapi/"]
+    openapi: ["generators/openapi/"],
+    cli: ["generators/cli/"]
 };
 
 /**

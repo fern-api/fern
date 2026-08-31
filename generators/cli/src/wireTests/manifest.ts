@@ -152,6 +152,13 @@ export interface WireTestManifest {
      */
     authEnvVars: Array<{ name: string; value: string }>;
     /**
+     * Required global parameters the harness passes as `--<kebab(name)> <value>`
+     * on every command. Without them the CLI rejects the invocation up front
+     * ("Required global parameter '<x>' has no value") and never issues a
+     * request. Empty for a CLI whose globals are all optional or defaulted.
+     */
+    globalFlags: Array<{ name: string; value: string }>;
+    /**
      * When the CLI declares OAuth client-credentials auth, the token endpoint
      * the harness must stub on every mock server. The generated CLI performs
      * a real token exchange before each authenticated request, and the token
@@ -259,6 +266,11 @@ export function buildWireTestManifest(
         specs: Array<{ file: string; namespace: string | null }>;
         authEnvVars: Array<{ name: string; value: string }>;
         /**
+         * Required global-parameter flags every command must carry — see
+         * {@link WireTestManifest.globalFlags}.
+         */
+        globalFlags?: Array<{ name: string; value: string }>;
+        /**
          * The OAuth client-credentials token endpoint, when the CLI declares
          * one. Turned into the shared `authMock` the harness mounts on every
          * server so token exchanges succeed.
@@ -350,6 +362,7 @@ export function buildWireTestManifest(
         rootGroup: options.rootGroup,
         specs: options.specs,
         authEnvVars: options.authEnvVars,
+        globalFlags: options.globalFlags ?? [],
         authMock: buildAuthMock(options.oauthTokenEndpoint ?? null),
         loginTokenSetup: buildLoginTokenSetup(options.loginFlowSchemes ?? []),
         endpointSecurityAuth: ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity,

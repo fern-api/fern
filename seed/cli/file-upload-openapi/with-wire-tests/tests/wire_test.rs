@@ -40,6 +40,8 @@ struct Manifest {
     specs: Vec<SpecEntry>,
     #[serde(rename = "authEnvVars")]
     auth_env_vars: Vec<AuthEnvVar>,
+    #[serde(rename = "globalFlags", default)]
+    global_flags: Vec<GlobalFlag>,
     #[serde(rename = "authMock")]
     auth_mock: Option<AuthMock>,
     #[serde(rename = "loginTokenSetup")]
@@ -60,6 +62,15 @@ struct Manifest {
 /// match its own mock. Presence-only schemes (bearer, apiKey) get `"test"`.
 #[derive(Deserialize)]
 struct AuthEnvVar {
+    name: String,
+    value: String,
+}
+
+/// A required global parameter, and the value to pass for it. `name` is the
+/// pre-kebab source the CLI derives `--<flag>` from, kebab-cased here with the
+/// runtime's own helper so the two never drift.
+#[derive(Deserialize)]
+struct GlobalFlag {
     name: String,
     value: String,
 }
@@ -874,7 +885,12 @@ async fn run_case(id: &str) {
     let mut args: Vec<String> = command.chain.clone();
     args.push("--base-url".to_string());
     args.push(server.uri());
-    args.push("--no-pager".to_string());
+    // Required globals: the CLI refuses to run without them, and no mock
+    // matches on them.
+    for flag in &manifest.global_flags {
+        args.push(format!("--{}", fern_cli_sdk::to_kebab_flag(&flag.name)));
+        args.push(flag.value.clone());
+    }
     if !case.params.is_empty() {
         // The CLI reads path params off the baked spec by their wire name, which
         // can differ from the manifest's (IR-renamed) name — remap those keys so
