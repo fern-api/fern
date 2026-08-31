@@ -722,6 +722,14 @@ fn parse_and_validate_inputs(
                 set_nested_value(&mut body_from_flags, key, coerced);
             }
             _ => {
+                // Query and path parameters go on the wire as strings, so
+                // nothing downstream ever type-checked them: `--limit nope`
+                // serialized as `?limit=nope` and 400'd at the API. Bodies have
+                // been checked since the `$ref` work; this is the other half of
+                // the same surface, and it only became possible once `$ref`'d
+                // parameters started resolving their type at all.
+                let param_def = method.parameters.get(key);
+                validate_non_body_param_type(key, value, param_def)?;
                 non_header_params.insert(key.clone(), value.clone());
             }
         }
@@ -732,10 +740,23 @@ fn parse_and_validate_inputs(
     // (3) object-shorthand JSON for a single field (`--name '{...}'`).
     // Mixing any two is a validation error so the user's intent is
     // unambiguous and the precedence rules are not surprising.
+    // Both messages name flags, so they must go through the same resolver
+    // `build_resource_command` registered them with. Interpolating the raw
+    // wire key advised flags that do not exist — `--permissions.inbox_read`
+    // for a flag registered as `--permissions.inbox-read`, and clap rejects
+    // the spelling it suggests. `--schema` discloses the resolved name, so
+    // the error also contradicted the contract.
+    let flag_for = |key: &str| -> String {
+        method
+            .parameters
+            .get(key)
+            .and_then(|param| crate::openapi::commands::resolve_param_flag_name(param, key))
+            .map_or_else(|| format!("--{key}"), |flag| format!("--{flag}"))
+    };
     if body_json.is_some() && !raw_body_flag_keys.is_empty() {
         let conflicting = raw_body_flag_keys
             .iter()
-            .map(|k| format!("--{k}"))
+            .map(|k| flag_for(k))
             .collect::<Vec<_>>()
             .join(", ");
         return Err(CliError::Validation(format!(
@@ -754,7 +775,9 @@ fn parse_and_validate_inputs(
         let prefix = format!("{object_key}.");
         if let Some(leaf_key) = raw_body_flag_keys.iter().find(|k| k.starts_with(&prefix)) {
             return Err(CliError::Validation(format!(
-                "Cannot combine --{object_key} with --{leaf_key}. Use the JSON shorthand or individual flags, not both."
+                "Cannot combine {} with {}. Use the JSON shorthand or individual flags, not both.",
+                flag_for(object_key),
+                flag_for(leaf_key),
             )));
         }
     }
@@ -4059,6 +4082,235 @@ fn coerce_body_param_value(
     }
 }
 
+/// Type-check a query- or path-located parameter against its schema type.
+///
+/// Only the numeric and boolean types are enforced. `string` accepts anything
+/// (it is what the wire carries), and `array`/`object` are left alone because
+/// their CLI surface is a repeated flag or a JSON literal whose shape the
+/// style-aware serializer handles. A `nullable` parameter accepts the resolved
+/// `null` sentinel.
+///
+/// Deliberately narrow: the value of this check is catching a typo locally
+/// instead of paying an API round-trip, not enforcing every JSON-Schema
+/// keyword. Over-reaching here would reject requests a server accepts.
+/// Whether a string is an integer literal, ignoring magnitude.
+///
+/// Shape-based rather than `parse::<i64>()` so an unbounded integer parameter
+/// is not rejected for exceeding a limit the spec never declared, and so this
+/// agrees with the JSON-number path, which accepts the full `u64` range.
+fn is_integer_literal(raw: &str) -> bool {
+    // A leading `+` is not a valid JSON integer and most servers will not parse
+    // it as one, so accepting it here would just defer the 400 this check
+    // exists to prevent. Leading zeros are tolerated: `007` is unambiguous and
+    // servers routinely accept it.
+    let digits = raw.strip_prefix('-').unwrap_or(raw);
+    !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit())
+}
+
+/// Whether a string is a boolean literal.
+///
+/// Deliberately lenient. A strict `true|false|1|0` list rejected `True`,
+/// `TRUE`, `False`, `yes`, `no`, `on` and `off` — spellings the CLI forwarded
+/// before any type-checking existed, and which the frameworks that generate
+/// these specs accept on the wire. A local check exists to catch typos before
+/// a round trip, not to be stricter than the server it is standing in for.
+fn is_boolean_literal(raw: &str) -> bool {
+    // Exactly what pydantic/FastAPI accept for a query boolean. Single-letter
+    // forms (`t`/`f`/`y`/`n`) are deliberately absent: those frameworks reject
+    // them, and since the value is forwarded verbatim rather than normalized,
+    // accepting one locally only moves the 400 later — the opposite of the
+    // point. The rule is "do not be stricter than the server", not "accept
+    // anything plausible".
+    matches!(
+        raw.to_ascii_lowercase().as_str(),
+        "true" | "false" | "1" | "0" | "yes" | "no" | "on" | "off"
+    )
+}
+
+fn validate_non_body_param_type(
+    name: &str,
+    value: &Value,
+    param_def: Option<&MethodParameter>,
+) -> Result<(), CliError> {
+    let Some(param) = param_def else {
+        // Not a declared parameter (e.g. a multipart field routed elsewhere, or
+        // an extra `--params` key). Nothing to check it against.
+        return Ok(());
+    };
+    if value.is_null() {
+        return Ok(());
+    }
+    // Element enum for an array parameter. Deliberately above the
+    // `param_type` early-return: an array param's `param_type` is the
+    // container type, so nothing below this point ever learns what an element
+    // is allowed to be. This is the only enforcement point for these — a clap
+    // `value_parser` would reject the `--labels '["a","b"]'` form, which is
+    // valid input. Non-string elements are left alone, matching the body
+    // validator's string-only enum check.
+    if let Some(allowed) = param.item_enum_values.as_deref() {
+        let elements: &[Value] = match value {
+            Value::Array(items) => items,
+            single => std::slice::from_ref(single),
+        };
+        for element in elements {
+            // A non-string element cannot be a member of a string enum, so
+            // `--params '{"event_types": [5]}'` was routing around the check
+            // entirely — `?event_types=5` went out. Compared by rendered form
+            // so the diagnostic names what the user actually wrote.
+            let rendered = match element {
+                Value::String(raw) => raw.clone(),
+                Value::Null => continue, // null handled by the nullable path
+                other => other.to_string(),
+            };
+            let raw = &rendered;
+            if !allowed.iter().any(|candidate| candidate == raw) {
+                let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                    .map(|f| format!("--{f}"))
+                    .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+                return Err(CliError::Validation(format!(
+                    "Invalid value for {flag}: '{raw}' is not a valid enum member. \
+                     Valid options: {allowed:?}"
+                )));
+            }
+        }
+    }
+    // Scalar enum. `--flag` is already gated by clap's `PossibleValuesParser`,
+    // but `--params` bypasses clap entirely, so
+    // `--params '{"direction": "bogus"}'` went on the wire and 400'd — and in
+    // one spec landed in the *path*, producing `/v0/lists/bogus/allow`.
+    //
+    // The accepted set has to match what clap accepts, not just the wire
+    // values, or this would reject input the flag path allows: an
+    // `x-fern-enum` display name is registered as the canonical name with the
+    // wire value as an alias, and a nullable param additionally accepts the
+    // literal `null` sentinel. Getting this wrong is precisely how the boolean
+    // check ended up rejecting `True`.
+    if !param.repeated {
+        if let Some(members) = param.enum_values.as_deref() {
+            if let Value::String(raw) = value {
+                let is_member = members.iter().any(|wire| wire == raw)
+                    || param.fern_enum.as_ref().is_some_and(|m| {
+                        m.values().any(|cfg| cfg.display_name.as_deref() == Some(raw.as_str()))
+                    })
+                    || (param.nullable && raw == "null");
+                if !is_member {
+                    let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                        .map(|f| format!("--{f}"))
+                        .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+                    return Err(CliError::Validation(format!(
+                        "Invalid value for {flag}: '{raw}' is not a valid enum member. \
+                         Valid options: {members:?}"
+                    )));
+                }
+            }
+        }
+    }
+
+    let Some(expected) = param.param_type.as_deref() else {
+        return Ok(());
+    };
+    // The collected value of a repeated flag is an array, so check the
+    // elements. Against `item_type`, NOT `param_type`: for a non-body
+    // parameter `param_type` is the *container* type `"array"`, so recursing
+    // through this function compared every element against `"array"` and fell
+    // into the permissive `_ => true` arm below. `--ids abc` on an integer
+    // array passed local validation and reached the API as `?ids=abc` —
+    // exactly what this function exists to prevent. (`param_type` does
+    // describe the element for a *body* array, but body params never reach
+    // here.) `None` means string, which accepts anything.
+    if let Value::Array(items) = value {
+        // `item_type` is authoritative when set. Falling back to `param_type`
+        // covers a param whose `param_type` already *is* the element type
+        // (the body-array convention) without ever comparing an element
+        // against the container type, which is the bug this fixes. `None`
+        // means string, which accepts anything.
+        let element_type = param
+            .item_type
+            .as_deref()
+            .or_else(|| param.param_type.as_deref().filter(|t| *t != "array"))
+            .unwrap_or("string");
+        for item in items {
+            check_param_value_type(name, item, param, element_type)?;
+        }
+        return Ok(());
+    }
+    // An empty string is the shape a shell produces from an unset variable
+    // (`--limit "$LIMIT"`). Rejecting it turned a request that previously went
+    // out — as `?limit=` — into a hard local failure, so it stays accepted and
+    // the server decides. Deliberately below the array branch: that rationale
+    // is about a whole flag value, not about an empty element inside a
+    // collected array, where nothing was ever omitted.
+    if value.as_str() == Some("") {
+        return Ok(());
+    }
+    check_param_value_type(name, value, param, expected)
+}
+
+/// Type-check one already-unwrapped value against `expected`.
+///
+/// Split out of [`validate_non_body_param_type`] so an array element can be
+/// checked against its *element* type. Recursing through the outer function
+/// instead compared each element against the container type `"array"`, which
+/// falls into the permissive arm — so numeric array parameters went unchecked.
+fn check_param_value_type(
+    name: &str,
+    value: &Value,
+    param: &MethodParameter,
+    expected: &str,
+) -> Result<(), CliError> {
+    let ok = match expected {
+        // The string arm checks digit shape rather than `parse::<i64>()`, so
+        // it agrees with the `Value::Number` arm: `n.is_u64()` accepted values
+        // above `i64::MAX` that `parse::<i64>()` rejected, so the same number
+        // was valid via `--params` and invalid via the flag. Range is a
+        // separate concern (`minimum`/`maximum`); this only asserts "is an
+        // integer", and the spec need not declare a `maximum`.
+        "integer" => match value {
+            // `is_i64() || is_u64()` alone left the same asymmetry one boundary
+            // further out: serde widens an integer literal beyond `u64::MAX` to
+            // `f64`, so `--params '{"limit": 18446744073709551616}'` was
+            // rejected while the identical value via the flag was accepted.
+            // A whole-valued float is an integer for this purpose; range is
+            // `minimum`/`maximum` business, checked separately.
+            Value::Number(n) => {
+                n.is_i64() || n.is_u64() || n.as_f64().is_some_and(|f| f.fract() == 0.0)
+            }
+            Value::String(raw) => is_integer_literal(raw),
+            _ => false,
+        },
+        "number" => match value {
+            Value::Number(_) => true,
+            Value::String(raw) => raw.parse::<f64>().is_ok_and(f64::is_finite),
+            _ => false,
+        },
+        // Booleans are the one place a strict list actively broke working
+        // commands: the previous `"true" | "false" | "1" | "0"` rejected
+        // `True`, `TRUE`, `False`, `yes`, `on` and friends, all of which the
+        // CLI forwarded before this check existed and which the server-side
+        // frameworks that emit these specs (pydantic/FastAPI) accept. A
+        // numeric `1`/`0` is accepted too, since the string forms are — the
+        // asymmetry meant `--params '{"ascending": 1}'` failed while
+        // `--ascending 1` passed.
+        "boolean" => match value {
+            Value::Bool(_) => true,
+            Value::Number(n) => matches!(n.as_i64(), Some(0) | Some(1)),
+            Value::String(raw) => is_boolean_literal(raw),
+            _ => false,
+        },
+        _ => true,
+    };
+    if ok {
+        return Ok(());
+    }
+    let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+        .map(|f| format!("--{f}"))
+        .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+    Err(CliError::Validation(format!(
+        "Invalid value for {flag}: expected {expected}, got {}",
+        get_value_type(value)
+    )))
+}
+
 /// Validates a JSON body against a Discovery Document schema.
 fn validate_body_against_schema(
     body: &Value,
@@ -4184,12 +4436,41 @@ fn validate_value(
     // body whose fields were all the wrong type, which reads as confirmation
     // to an agent. Only inline-typed properties were ever checked.
     let Some(expected_type) = schema.schema_type.as_deref() else {
-        // No `type` keyword, no properties, no `allOf` — a free-form or
-        // pure-union component. Nothing to assert.
+        // A `$ref`'d component that is itself a nullable union has its type in
+        // the branch, exactly as at the property level above. Without this a
+        // component spelled `anyOf: [{type: string}, {type: null}]` accepted
+        // any value, while the identical property spelled inline did not.
+        if let Some(branch) = sole_non_null_branch(&schema.any_of)
+            .or_else(|| sole_non_null_branch(&schema.one_of))
+        {
+            validate_property(value, branch, doc, path, errors);
+            return;
+        }
+        // No `type` keyword, no properties, no `allOf`, no single-branch
+        // union — a free-form or genuine-union component. Nothing to assert.
         return;
     };
     if !check_json_type(value, expected_type, path, errors) {
         return;
+    }
+    // A `$ref`'d enum component. `validate_property` checks `enum_values` on an
+    // inline property (step 5), but a property that reaches its enum through a
+    // `$ref` landed here and fell off the end, so the members were advertised
+    // and never enforced: `webhooks create --event-types bogus` was accepted
+    // and sent while the query-parameter equivalent was rejected. Also covers
+    // an array's element enum, since the items schema recurses through
+    // `validate_property` into this function.
+    //
+    // Exact match is safe: the flag layer canonicalizes an `x-fern-enum`
+    // display name to its wire value before the executor sees it
+    // (`MethodParameter::resolve_enum_display_to_wire`).
+    if let (Some(members), Value::String(raw)) = (&schema.enum_values, value) {
+        if !members.iter().any(|member| member == raw) {
+            errors.push(format!(
+                "{path}: Value '{raw}' is not a valid enum member. Valid options: {members:?}"
+            ));
+            return;
+        }
     }
     if expected_type == "array" {
         if let (Some(items), Value::Array(arr)) = (&schema.items, value) {
@@ -4331,6 +4612,32 @@ fn has_null_branch(branches: &[crate::openapi::discovery::JsonSchemaProperty]) -
         .any(|b| b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none()))
 }
 
+/// The single non-null branch of a nullable union, i.e. the `T` in
+/// `anyOf: [T, {type: null}]` — pydantic's `Optional[T]`. `None` when the
+/// composition is empty or has more than one non-null branch, so a genuine
+/// union like `oneOf: [string, array]` is left alone (asserting one branch
+/// there would reject values the other branch permits).
+///
+/// The validator needs this because such a property carries no `type:` of its
+/// own: the type lives in the branch. Everything downstream keyed off
+/// `prop_type`, so `--json '{"name": 123}'` on a `name` declared
+/// `anyOf: [{type: string}, {type: null}]` was accepted and forwarded to the
+/// wire, while the same property spelled `type: string` was correctly
+/// rejected. The parser already promotes these shapes (ADR-0005 / ADR-0010) —
+/// this is the validator's half of that.
+fn sole_non_null_branch(
+    branches: &[crate::openapi::discovery::JsonSchemaProperty],
+) -> Option<&crate::openapi::discovery::JsonSchemaProperty> {
+    let mut non_null = branches
+        .iter()
+        .filter(|b| !(b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none())));
+    let first = non_null.next()?;
+    if non_null.next().is_some() {
+        return None;
+    }
+    Some(first)
+}
+
 fn validate_properties(
     obj: &Map<String, Value>,
     properties: &HashMap<String, crate::openapi::discovery::JsonSchemaProperty>,
@@ -4381,12 +4688,6 @@ fn validate_property(
     path: &str,
     errors: &mut Vec<String>,
 ) {
-    // 1. Resolve $ref if present
-    if let Some(ref_name) = &prop_schema.schema_ref {
-        validate_value(value, ref_name, doc, path, errors);
-        return;
-    }
-
     // Null on a nullable property is always valid — short-circuits type
     // checking that would otherwise reject `null` for a `string` /
     // `integer` / etc. base type. Also honors ADR-0005's nullable-union
@@ -4394,12 +4695,42 @@ fn validate_property(
     // branch accepts null even when the intrinsic `nullable` flag is
     // false (which it is for `anyOf: [scalar, null]` shapes, since the
     // null-ness lives in the branch, not on the parent schema).
+    //
+    // This runs *before* `$ref` resolution, and the order is the whole
+    // point. `{$ref: X, nullable: true}` is how OpenAPI 3.0 spells a
+    // nullable object — the 3.0 counterpart of 3.1's
+    // `anyOf: [{$ref: X}, {type: null}]`. Resolving the ref first handed
+    // `null` to the referenced schema, which is a plain object and quite
+    // reasonably answered "Expected object", so the property's own
+    // `nullable: true` was never consulted. On one customer's 3.0.1 spec
+    // that rejected `null` on 112 body properties the spec explicitly
+    // permits.
     if value.is_null()
         && (prop_schema.nullable
             || has_null_branch(&prop_schema.one_of)
             || has_null_branch(&prop_schema.any_of))
     {
         return;
+    }
+
+    // 1. Resolve $ref if present
+    if let Some(ref_name) = &prop_schema.schema_ref {
+        validate_value(value, ref_name, doc, path, errors);
+        return;
+    }
+
+    // 1b. A nullable union carries its type in the branch, not on the
+    // property, so every check below this point was a no-op for it. Non-null
+    // values are validated against the sole non-null branch; `null` already
+    // returned above. A multi-branch union resolves to `None` and is left
+    // alone, as before.
+    if prop_schema.prop_type.is_none() && prop_schema.all_of.is_empty() {
+        if let Some(branch) = sole_non_null_branch(&prop_schema.any_of)
+            .or_else(|| sole_non_null_branch(&prop_schema.one_of))
+        {
+            validate_property(value, branch, doc, path, errors);
+            return;
+        }
     }
 
     // 2. Type checking
@@ -7014,6 +7345,224 @@ mod tests {
     }
 
     #[test]
+    fn test_query_param_type_is_validated_locally() {
+        // `--limit nope` used to serialize as `?limit=nope` and 400 at the API.
+        // Bodies have been checked since the `$ref` work; this is the other
+        // half of the same surface.
+        let int_param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        let err = validate_non_body_param_type("limit", &json!("nope"), Some(&int_param))
+            .expect_err("a non-numeric integer must be rejected");
+        let msg = format!("{err}");
+        assert!(msg.contains("--limit"), "names the flag: {msg}");
+        assert!(msg.contains("expected integer"), "{msg}");
+
+        // Numeric strings are how clap delivers them, so these must pass.
+        for good in [json!("5"), json!(5), json!("-3")] {
+            validate_non_body_param_type("limit", &good, Some(&int_param))
+                .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
+        }
+        // A float is not an integer.
+        assert!(validate_non_body_param_type("limit", &json!("1.5"), Some(&int_param)).is_err());
+
+        let bool_param = MethodParameter {
+            param_type: Some("boolean".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        // This list started as `true|false|1|0` — strict enough to reject
+        // `True`, `yes` and `on`, which the CLI forwarded happily before any
+        // type-checking existed. A local check is here to catch typos before a
+        // round trip, not to be stricter than the server it stands in for, and
+        // the frameworks that emit these specs accept all of these.
+        for good in [
+            json!("true"),
+            json!("false"),
+            json!("True"),
+            json!("TRUE"),
+            json!("False"),
+            json!("yes"),
+            json!("no"),
+            json!("on"),
+            json!("off"),
+            json!("1"),
+            json!("0"),
+            json!(true),
+            // The numeric forms, which were rejected while the string "1"/"0"
+            // were accepted — so `--params '{"flag": 1}'` failed where
+            // `--flag 1` passed.
+            json!(1),
+            json!(0),
+        ] {
+            validate_non_body_param_type("flag", &good, Some(&bool_param))
+                .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
+        }
+        // Still catches an actual typo, which is the whole point. The
+        // single-letter forms are rejected on purpose — pydantic/FastAPI do not
+        // accept them, and the value is forwarded verbatim, so accepting one
+        // here would only move the 400 later.
+        for bad in [json!("ture"), json!("maybe"), json!("2"), json!(2), json!("t"), json!("y")] {
+            assert!(
+                validate_non_body_param_type("flag", &bad, Some(&bool_param)).is_err(),
+                "{bad} should be rejected",
+            );
+        }
+    }
+
+    #[test]
+    fn test_array_param_elements_are_checked_against_the_element_type() {
+        // The realistic shape, straight from `convert_parameter`: a repeated
+        // non-body param has `param_type: "array"` (the CONTAINER type) and
+        // carries the element type in `item_type`. Recursing through the outer
+        // function compared each element against `"array"`, which falls into
+        // the permissive arm — so `--ids abc` on an integer array passed local
+        // validation and reached the API as `?ids=abc`.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&param))
+            .expect("integer elements must pass");
+        for bad in [json!(["abc"]), json!(["1", "abc"]), json!(["1.5"]), json!([""])] {
+            assert!(
+                validate_non_body_param_type("ids", &bad, Some(&param)).is_err(),
+                "{bad} must be rejected",
+            );
+        }
+
+        // A string-element array still accepts anything, as before.
+        let strings = MethodParameter {
+            item_type: Some("string".to_string()),
+            ..param.clone()
+        };
+        validate_non_body_param_type("labels", &json!(["a", "1", ""]), Some(&strings))
+            .expect("string elements accept anything");
+    }
+
+    #[test]
+    fn test_whole_valued_json_number_counts_as_an_integer() {
+        // Recorded rather than incidental: the `Value::Number` arm accepts a
+        // whole-valued float so the flag and `--params` paths agree past
+        // `u64::MAX`, where serde widens the literal. `1.0` therefore passes
+        // and `1.5` does not.
+        let param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        validate_non_body_param_type("limit", &json!(1.0), Some(&param))
+            .expect("a whole-valued number is an integer here");
+        assert!(validate_non_body_param_type("limit", &json!(1.5), Some(&param)).is_err());
+    }
+
+    #[test]
+    fn test_typed_param_accepts_an_empty_string() {
+        // A shell turns an unset variable into an empty argument, so
+        // `--limit "$LIMIT"` arrives as "". Rejecting it converted a request
+        // that previously went out as `?limit=` into a hard local failure —
+        // a working script broken by a validation check.
+        for param_type in ["integer", "number", "boolean"] {
+            let param = MethodParameter {
+                param_type: Some(param_type.to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            };
+            validate_non_body_param_type("limit", &json!(""), Some(&param))
+                .unwrap_or_else(|e| panic!("empty string on {param_type} must pass: {e}"));
+        }
+    }
+
+    #[test]
+    fn test_integer_param_agrees_across_the_flag_and_params_paths() {
+        // `n.is_u64()` accepted values above `i64::MAX` while
+        // `raw.parse::<i64>()` rejected them, so the same number was valid via
+        // `--params` and invalid via the flag. The spec need not declare a
+        // `maximum`, so magnitude is not ours to police.
+        let param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        let huge = "9223372036854775808"; // i64::MAX + 1
+        validate_non_body_param_type("limit", &json!(huge), Some(&param))
+            .expect("flag path must accept a large integer");
+        validate_non_body_param_type(
+            "limit",
+            &serde_json::from_str::<Value>(huge).unwrap(),
+            Some(&param),
+        )
+        .expect("--params path must agree with the flag path");
+
+        // And one boundary further out, where serde widens the literal to f64.
+        let past_u64 = "18446744073709551616"; // u64::MAX + 1
+        validate_non_body_param_type("limit", &json!(past_u64), Some(&param))
+            .expect("flag path must accept an integer past u64::MAX");
+        validate_non_body_param_type(
+            "limit",
+            &serde_json::from_str::<Value>(past_u64).unwrap(),
+            Some(&param),
+        )
+        .expect("--params path must agree past u64::MAX too");
+
+        // A genuine float is still not an integer, at any magnitude.
+        for bad in [json!(1.5), json!(-2.25), json!("1.5")] {
+            assert!(
+                validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
+                "{bad} is not an integer",
+            );
+        }
+
+        // Shape is still enforced. (An empty string is deliberately accepted —
+        // see `test_typed_param_accepts_an_empty_string`.)
+        for bad in [json!("12a"), json!("-"), json!("+"), json!("1_0")] {
+            assert!(
+                validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
+                "{bad} should be rejected",
+            );
+        }
+    }
+
+    #[test]
+    fn test_query_param_validation_stays_narrow() {
+        // Deliberately permissive where the wire is permissive: over-reaching
+        // would reject requests a server accepts.
+        let string_param = MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        // Anything goes for a string.
+        for v in [json!("x"), json!("123"), json!("{\"a\":1}")] {
+            validate_non_body_param_type("q", &v, Some(&string_param)).expect("string accepts all");
+        }
+        // A nullable param accepts the resolved null sentinel.
+        let nullable = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            nullable: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("limit", &Value::Null, Some(&nullable)).expect("null ok");
+        // An undeclared key (e.g. an extra `--params` entry) is not our business.
+        validate_non_body_param_type("unknown", &json!("whatever"), None).expect("undeclared ok");
+        // A repeated flag checks each element, not the container.
+        let repeated = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&repeated)).expect("elements ok");
+        assert!(validate_non_body_param_type("ids", &json!(["1", "no"]), Some(&repeated)).is_err());
+    }
+
+    #[test]
     fn test_validate_body_rejects_wrong_type_behind_a_ref() {
         // `validate_value` only had an object branch, so a `$ref` to a scalar
         // or array component fell off the end unchecked and ANY value was
@@ -7373,6 +7922,476 @@ mod tests {
         assert!(
             validate_body_against_schema(&body, "Msg", &doc).is_ok(),
             "null on nullable-union must validate via any_of null branch",
+        );
+    }
+
+    #[test]
+    fn test_ref_to_enum_component_is_enforced_in_a_body() {
+        // `validate_property` checks `enum_values` on an inline property, but a
+        // property reaching its enum through a `$ref` resolved to a
+        // `JsonSchema` -- which had no `enum_values` field at all, so the
+        // members were advertised in `--schema` and never enforced. On a real
+        // spec, `webhooks create --event-types bogus` was accepted and sent
+        // while the query-parameter equivalent was rejected.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([
+                        (
+                            "direction".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Direction".to_string()),
+                                ..Default::default()
+                            },
+                        ),
+                        (
+                            "event_types".to_string(),
+                            JsonSchemaProperty {
+                                prop_type: Some("array".to_string()),
+                                items: Some(Box::new(JsonSchemaProperty {
+                                    schema_ref: Some("Direction".to_string()),
+                                    ..Default::default()
+                                })),
+                                ..Default::default()
+                            },
+                        ),
+                    ]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "Direction".to_string(),
+                JsonSchema {
+                    schema_type: Some("string".to_string()),
+                    enum_values: Some(vec!["send".to_string(), "receive".to_string()]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        // Legal members pass, as a scalar and as array elements.
+        for body in [
+            json!({ "direction": "send" }),
+            json!({ "event_types": ["send", "receive"] }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+                "legal members must pass: {body}",
+            );
+        }
+
+        // Non-members are caught, including inside an array.
+        for body in [
+            json!({ "direction": "bogus" }),
+            json!({ "event_types": ["bogus"] }),
+            json!({ "event_types": ["send", "bogus"] }),
+        ] {
+            let error = validate_body_against_schema(&body, "Msg", &doc)
+                .expect_err(&format!("must reject a non-member: {body}"));
+            let message = format!("{error}");
+            assert!(message.contains("bogus"), "got: {message}");
+            assert!(message.contains("send"), "must list valid options; got: {message}");
+        }
+    }
+
+    #[test]
+    fn test_nullable_ref_property_accepts_null() {
+        // `{$ref: X, nullable: true}` is how OpenAPI 3.0 spells a nullable
+        // object — the counterpart of 3.1's `anyOf: [{$ref: X}, {type: null}]`.
+        // The validator resolved the ref before consulting the property's own
+        // `nullable`, so null was handed to a plain object schema, which
+        // answered "Expected object". 112 body properties on one customer's
+        // 3.0.1 spec rejected a value the spec permits.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([
+                        (
+                            "metadata".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Metadata".to_string()),
+                                nullable: true,
+                                ..Default::default()
+                            },
+                        ),
+                        (
+                            "required_meta".to_string(),
+                            JsonSchemaProperty {
+                                schema_ref: Some("Metadata".to_string()),
+                                nullable: false,
+                                ..Default::default()
+                            },
+                        ),
+                    ]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "Metadata".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        assert!(
+            validate_body_against_schema(&json!({ "metadata": null }), "Msg", &doc).is_ok(),
+            "a nullable $ref property must accept null",
+        );
+        // A real value still validates against the referenced schema.
+        assert!(validate_body_against_schema(&json!({ "metadata": {} }), "Msg", &doc).is_ok());
+        assert!(
+            validate_body_against_schema(&json!({ "metadata": 5 }), "Msg", &doc).is_err(),
+            "the referenced schema is still enforced for non-null values",
+        );
+        // And a $ref property that is NOT nullable still rejects null.
+        assert!(
+            validate_body_against_schema(&json!({ "required_meta": null }), "Msg", &doc).is_err(),
+            "nullable: false must still reject null",
+        );
+    }
+
+    #[test]
+    fn test_scalar_enum_is_enforced_through_params() {
+        // `--flag` is gated by clap, but `--params` bypasses clap entirely, so
+        // an invalid member went on the wire — and for a path param it landed
+        // in the URL (`/v0/lists/bogus/allow`).
+        let param = MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            enum_values: Some(vec!["send".to_string(), "receive".to_string()]),
+            ..Default::default()
+        };
+        validate_non_body_param_type("direction", &json!("send"), Some(&param))
+            .expect("a legal member must pass");
+        let error = validate_non_body_param_type("direction", &json!("bogus"), Some(&param))
+            .expect_err("a non-member must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--direction"), "got: {message}");
+        assert!(message.contains("send"), "must list valid options; got: {message}");
+
+        // The accepted set must match clap's, not just the wire values, or this
+        // rejects input the flag path allows. clap registers an `x-fern-enum`
+        // display name as the canonical value with the wire value as an alias.
+        let mut fern_enum = HashMap::new();
+        fern_enum.insert(
+            "send".to_string(),
+            crate::openapi::discovery::FernEnumValue {
+                display_name: Some("Outbound".to_string()),
+                ..Default::default()
+            },
+        );
+        let aliased = MethodParameter {
+            fern_enum: Some(fern_enum),
+            ..param.clone()
+        };
+        validate_non_body_param_type("direction", &json!("Outbound"), Some(&aliased))
+            .expect("an x-fern-enum display name must be accepted");
+        validate_non_body_param_type("direction", &json!("send"), Some(&aliased))
+            .expect("the wire value must still be accepted");
+
+        // A nullable enum param accepts the `null` sentinel, as clap does.
+        let nullable = MethodParameter {
+            nullable: true,
+            ..param.clone()
+        };
+        validate_non_body_param_type("direction", &json!("null"), Some(&nullable))
+            .expect("the null sentinel must be accepted on a nullable enum param");
+    }
+
+    #[test]
+    fn test_array_enum_rejects_non_string_elements() {
+        // `--params '{"event_types": [5]}'` routed around the element-enum
+        // check, which only inspected strings, and `?event_types=5` went out.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        for bad in [json!([5]), json!([true]), json!(["sent", 5])] {
+            assert!(
+                validate_non_body_param_type("event_types", &bad, Some(&param)).is_err(),
+                "{bad} must be rejected",
+            );
+        }
+        // Legal members and a null element are unaffected.
+        validate_non_body_param_type("event_types", &json!(["sent"]), Some(&param))
+            .expect("legal member");
+        validate_non_body_param_type("event_types", &json!([Value::Null]), Some(&param))
+            .expect("a null element is the nullable path's business");
+    }
+
+    #[test]
+    fn test_array_parameter_enforces_its_element_enum() {
+        // `--event-types bogus` was accepted and sent to the API, while the
+        // scalar `--direction bogus` was correctly rejected: the same spec
+        // construct validated or not purely based on array-ness.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+
+        // Legal members pass, in the collected-array form and singly.
+        for value in [json!(["sent", "received"]), json!(["sent"]), json!("sent")] {
+            assert!(
+                validate_non_body_param_type("event_types", &value, Some(&param)).is_ok(),
+                "legal enum members must pass: {value}",
+            );
+        }
+
+        // An illegal member is caught locally, and the message names the flag.
+        for value in [json!(["bogus"]), json!(["sent", "bogus"]), json!("bogus")] {
+            let error = validate_non_body_param_type("event_types", &value, Some(&param))
+                .expect_err(&format!("must reject a non-member: {value}"));
+            let message = error.to_string();
+            assert!(message.contains("--event-types"), "got: {message}");
+            assert!(message.contains("bogus"), "got: {message}");
+            assert!(message.contains("sent"), "must list valid options; got: {message}");
+        }
+
+        // Null still short-circuits, and an array param with no element enum
+        // stays unconstrained.
+        assert!(validate_non_body_param_type("event_types", &json!(null), Some(&param)).is_ok());
+        let unconstrained = MethodParameter {
+            item_enum_values: None,
+            ..param
+        };
+        assert!(
+            validate_non_body_param_type("labels", &json!(["anything"]), Some(&unconstrained))
+                .is_ok()
+        );
+    }
+
+    #[test]
+    fn test_mutual_exclusion_errors_name_the_registered_flag() {
+        // Both messages advised flags clap then rejects: they interpolated the
+        // raw wire key, so a body property `event_types` was reported as
+        // `--event_types` (registered: `--event-types`) and an object leaf
+        // `permissions.inbox_read` as `--permissions.inbox_read` (registered:
+        // `--permissions.inbox-read`). `--schema` discloses the resolved name,
+        // so the error contradicted the contract it sits next to.
+        let body_param = |param_type: &str| MethodParameter {
+            param_type: Some(param_type.to_string()),
+            location: Some("body".to_string()),
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/keys".to_string(),
+            parameters: HashMap::from([
+                ("event_types".to_string(), body_param("string")),
+                ("permissions".to_string(), body_param("object")),
+                ("permissions.inbox_read".to_string(), body_param("boolean")),
+            ]),
+            ..Default::default()
+        };
+        let doc = RestDescription::default();
+
+        // --json against a per-field flag.
+        let error = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"event_types":"a"}"#),
+            Some("{}"),
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .expect_err("combining --json with a body flag must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--event-types"), "got: {message}");
+        assert!(!message.contains("--event_types"), "got: {message}");
+
+        // Object shorthand against its own dotted leaf.
+        let error = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"permissions":{},"permissions.inbox_read":true}"#),
+            None,
+            false,
+            None,
+            &[],
+            &[],
+        )
+        .expect_err("combining an object shorthand with its leaf must be rejected");
+        let message = error.to_string();
+        assert!(message.contains("--permissions.inbox-read"), "got: {message}");
+        assert!(!message.contains("--permissions.inbox_read"), "got: {message}");
+    }
+
+    #[test]
+    fn test_validate_body_type_checks_the_non_null_branch_of_a_nullable_union() {
+        // The mirror of the test above: a nullable union must accept null, but
+        // it must also still enforce its branch type. Everything downstream of
+        // the null short-circuit keyed off `prop_type`, which is None here, so
+        // this property accepted *any* value and forwarded it to the wire —
+        // while the same property spelled `type: string` was rejected.
+        let branch_union = |inner: JsonSchemaProperty| JsonSchemaProperty {
+            prop_type: None,
+            nullable: false,
+            any_of: vec![
+                inner,
+                JsonSchemaProperty {
+                    prop_type: Some("null".to_string()),
+                    ..Default::default()
+                },
+            ],
+            ..Default::default()
+        };
+        let properties = HashMap::from([
+            (
+                "name".to_string(),
+                branch_union(JsonSchemaProperty {
+                    prop_type: Some("string".to_string()),
+                    ..Default::default()
+                }),
+            ),
+            (
+                "tags".to_string(),
+                branch_union(JsonSchemaProperty {
+                    prop_type: Some("array".to_string()),
+                    items: Some(Box::new(JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    })),
+                    ..Default::default()
+                }),
+            ),
+        ]);
+        let schemas = HashMap::from([(
+            "Agent".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        // Valid values, including null, still pass.
+        for body in [
+            json!({ "name": "ok" }),
+            json!({ "name": null }),
+            json!({ "tags": ["a", "b"] }),
+            json!({ "tags": null }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Agent", &doc).is_ok(),
+                "must still accept a valid value: {body}",
+            );
+        }
+
+        // Wrong branch types are now caught locally instead of being sent.
+        for body in [
+            json!({ "name": 123 }),
+            json!({ "tags": "not-an-array" }),
+            json!({ "tags": [1, 2] }),
+        ] {
+            assert!(
+                validate_body_against_schema(&body, "Agent", &doc).is_err(),
+                "must reject a value the branch type forbids: {body}",
+            );
+        }
+    }
+
+    #[test]
+    fn test_validate_body_leaves_a_genuine_multi_branch_union_alone() {
+        // `oneOf: [string, array<string>]` — the scalar-or-array shape. Two
+        // non-null branches, so asserting either one would reject values the
+        // other permits. Must stay permissive.
+        let properties = HashMap::from([(
+            "to".to_string(),
+            JsonSchemaProperty {
+                prop_type: None,
+                one_of: vec![
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                    JsonSchemaProperty {
+                        prop_type: Some("array".to_string()),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+        )]);
+        let schemas = HashMap::from([(
+            "Msg".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        for body in [json!({ "to": "a@b.c" }), json!({ "to": ["a@b.c"] })] {
+            assert!(
+                validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+                "both branches of a genuine union must be accepted: {body}",
+            );
+        }
+    }
+
+    #[test]
+    fn test_validate_body_type_checks_a_ref_to_a_nullable_union_component() {
+        // Same gap one level up: a `$ref`'d component that is itself
+        // `anyOf: [T, null]` has no `type:` of its own, so it fell through
+        // `validate_value`'s "pure-union component, nothing to assert" exit.
+        let schemas = HashMap::from([
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([(
+                        "subject".to_string(),
+                        JsonSchemaProperty {
+                            schema_ref: Some("MaybeSubject".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "MaybeSubject".to_string(),
+                JsonSchema {
+                    schema_type: None,
+                    any_of: vec![
+                        JsonSchemaProperty {
+                            prop_type: Some("string".to_string()),
+                            ..Default::default()
+                        },
+                        JsonSchemaProperty {
+                            prop_type: Some("null".to_string()),
+                            ..Default::default()
+                        },
+                    ],
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        assert!(validate_body_against_schema(&json!({ "subject": "hi" }), "Msg", &doc).is_ok());
+        assert!(validate_body_against_schema(&json!({ "subject": null }), "Msg", &doc).is_ok());
+        assert!(
+            validate_body_against_schema(&json!({ "subject": 5 }), "Msg", &doc).is_err(),
+            "a nullable-union component must still enforce its branch type",
         );
     }
 
