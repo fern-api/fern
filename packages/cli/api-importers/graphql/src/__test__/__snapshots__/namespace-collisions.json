@@ -317,5 +317,8 @@
       },
       "description": "A second query namespace that shares the `search` child field name with InventoryQueries."
     }
+  },
+  "typeCategories": {
+    "Widget": "object"
   }
 }

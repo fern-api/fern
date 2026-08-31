@@ -17,6 +17,7 @@
       "value": "test-username"
     }
   ],
+  "globalFlags": [],
   "authMock": null,
   "loginTokenSetup": null,
   "endpointSecurityAuth": false,

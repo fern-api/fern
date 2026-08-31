@@ -151,5 +151,9 @@
       },
       "description": "An image source interface with no implementing types.\nSome fields have arguments to exercise argument capture on orphaned interfaces."
     }
+  },
+  "typeCategories": {
+    "ImageFormat": "enum",
+    "ImageSource": "interface"
   }
 }

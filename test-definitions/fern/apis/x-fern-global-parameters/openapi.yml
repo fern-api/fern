@@ -93,7 +93,14 @@ paths:
     get:
       x-fern-sdk-group-name: products
       x-fern-sdk-method-name: get
-      x-fern-global-parameter: region
+      # Opts into the two globals the caller must supply for themselves:
+      # `x-custom-header` (required, env-backed, no default) and `api-version`
+      # (required, nothing to fall back on). The command refuses to run until
+      # both resolve.
+      x-fern-global-parameter:
+        - region
+        - x-custom-header
+        - api-version
       operationId: getProduct
       parameters:
         - in: path

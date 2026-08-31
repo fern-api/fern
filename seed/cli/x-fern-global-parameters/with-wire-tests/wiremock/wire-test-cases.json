@@ -1,0 +1,94 @@
+{
+  "binaryName": "test-x-fern-global-parameters-extension",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/test-x-fern-global-parameters-extension/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [],
+  "globalFlags": [
+    {
+      "name": "x-custom-header",
+      "value": "test"
+    },
+    {
+      "name": "api-version",
+      "value": "test"
+    }
+  ],
+  "authMock": null,
+  "loginTokenSetup": null,
+  "endpointSecurityAuth": false,
+  "cases": [
+    {
+      "id": "search",
+      "method": "POST",
+      "path": "/v1/products/{regionId}/search",
+      "params": {
+        "regionId": "regionId"
+      },
+      "body": {},
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"price\": 1.1\n    }\n  ]\n}"
+      }
+    },
+    {
+      "id": "get",
+      "method": "GET",
+      "path": "/v1/products/{regionId}/{productId}",
+      "params": {
+        "regionId": "regionId",
+        "productId": "productId"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"price\": 1.1\n}"
+      }
+    },
+    {
+      "id": "search_error",
+      "method": "POST",
+      "path": "/v1/products/{regionId}/search",
+      "params": {
+        "regionId": "regionId"
+      },
+      "body": {},
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    },
+    {
+      "id": "get_error",
+      "method": "GET",
+      "path": "/v1/products/{regionId}/{productId}",
+      "params": {
+        "regionId": "regionId",
+        "productId": "productId"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "requiresAuth": false,
+      "response": {
+        "status": 422,
+        "body": "{\"error\":{\"code\":422,\"message\":\"wire-test forced error response\"}}"
+      },
+      "expectError": true
+    }
+  ]
+}
