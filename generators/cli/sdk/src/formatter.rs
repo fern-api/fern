@@ -420,8 +420,14 @@ fn format_jsonl_array(arr: &[Value]) -> String {
 /// Extract a "data array" from a typical API list response.
 /// APIs often return lists as `{ "collection": [...], "pagination": {...} }`
 /// where the array key varies by resource type.
+///
+/// Dry-run payloads are exempt: their `headers`/`query_params` arrays describe a
+/// single request rather than a collection to tabulate.
 fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
     if let Value::Object(obj) = value {
+        if obj.get("dry_run") == Some(&Value::Bool(true)) {
+            return None;
+        }
         for (key, val) in obj {
             if key == "nextPageToken" || key == "kind" || key.starts_with('_') {
                 continue;
@@ -1028,6 +1034,33 @@ mod tests {
     fn test_extract_items_none() {
         let val = json!({"status": "ok"});
         assert!(extract_items(&val).is_none());
+    }
+
+    #[test]
+    fn test_extract_items_ignores_dry_run_payloads() {
+        let val = json!({"dry_run": true, "headers": [["Api-Version", "2026-11-01"]]});
+        assert!(extract_items(&val).is_none());
+    }
+
+    #[test]
+    fn test_format_table_dry_run_with_headers_shows_all_fields() {
+        let val = json!({
+            "dry_run": true,
+            "method": "GET",
+            "url": "https://api.example.com/v1/Messages",
+            "headers": [["Api-Version", "2026-11-01"]],
+            "query_params": [],
+            "body": null,
+        });
+        let output = format_value(&val, &OutputFormat::Table);
+        assert!(
+            output.contains("method"),
+            "expected method row, got:\n{output}"
+        );
+        assert!(
+            output.contains("https://api.example.com/v1/Messages"),
+            "expected url row, got:\n{output}"
+        );
     }
 
     // --- YAML block-scalar regression tests ---
