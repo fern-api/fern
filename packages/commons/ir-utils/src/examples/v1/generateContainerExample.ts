@@ -104,7 +104,14 @@ export function generateContainerExample({
         case "nullable": {
             // A nullable property is still required, so it is emitted as an explicit null rather than omitted.
             if (skipOptionalProperties) {
-                return generateEmptyContainerExample({ containerType });
+                return {
+                    type: "success",
+                    example: ExampleContainer.nullable({
+                        nullable: undefined,
+                        valueType: containerType.nullable
+                    }),
+                    jsonExample: null
+                };
             }
             const example = generateTypeReferenceExample({
                 fieldName,
@@ -247,7 +254,7 @@ export function generateEmptyContainerExample({
                     nullable: undefined,
                     valueType: containerType.nullable
                 }),
-                jsonExample: null
+                jsonExample: undefined
             };
         }
         case "set": {
