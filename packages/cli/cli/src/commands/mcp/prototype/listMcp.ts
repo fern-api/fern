@@ -6,7 +6,7 @@ import { CliContext } from "../../../cli-context/CliContext.js";
 import { getMcpGeneratorEntries } from "./mcpGeneratorsYml.js";
 import { loadSpecSummaries } from "./openapiSummary.js";
 import { computeVerdict, resolveTools, Verdict } from "./toolset.js";
-import { command, hint, keyValueRows, styledVerdictLine } from "./ui.js";
+import { budgetLine, command, hint, keyValueRows } from "./ui.js";
 
 interface McpListRow {
     api: string;
@@ -85,7 +85,7 @@ export async function listMcp({
         if (row.presets.length > 0) {
             kvRows.push(["presets", row.presets.map((preset) => chalk.cyan(preset)).join(", ")]);
         }
-        kvRows.push(["tools", styledVerdictLine(row.verdict)]);
+        kvRows.push(["tools", budgetLine(row.verdict)]);
         for (const line of keyValueRows(kvRows)) {
             cliContext.logger.info(line);
         }

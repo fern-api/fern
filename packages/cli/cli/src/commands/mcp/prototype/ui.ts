@@ -67,6 +67,17 @@ export function styledVerdictLine(verdict: Verdict): string {
     return `${verdictBadge(verdict)} ${counts} ${chalk.dim("—")} ${verdict.level === "red" ? chalk.red(verdict.label) : label}`;
 }
 
+/**
+ * Budget is exception-based in human-facing output: within budget shows only a
+ * quiet tool count; over budget gets the full count/token/verdict treatment.
+ */
+export function budgetLine(verdict: Verdict): string {
+    if (verdict.level === "green") {
+        return `${chalk.bold(verdict.toolCount)} tools`;
+    }
+    return styledVerdictLine(verdict);
+}
+
 export function toolTable(tools: ResolvedTool[]): string[] {
     if (tools.length === 0) {
         return [];

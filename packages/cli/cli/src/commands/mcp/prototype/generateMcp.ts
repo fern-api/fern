@@ -8,7 +8,7 @@ import { dirname, join } from "path";
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { findMcpGroup, MCP_GENERATOR_NAME, MCP_GENERATOR_VERSION } from "./mcpGeneratorsYml.js";
 import { computeVerdict, resolveTools } from "./toolset.js";
-import { banner, command, hint, ICONS, sleep, styledVerdictLine, withSpinner } from "./ui.js";
+import { banner, budgetLine, command, hint, ICONS, sleep, withSpinner } from "./ui.js";
 import { pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const STUB_STEP_DELAY_MS = 400;
@@ -58,7 +58,7 @@ export async function generateMcp({
     await withSpinner(`Parsing spec…`, () => sleep(STUB_STEP_DELAY_MS));
     cliContext.logger.info(`${ICONS.success} Parsed spec ${hint(`· ${spec.endpoints.length} endpoints`)}`);
     await withSpinner(`Resolving tool surface…`, () => sleep(STUB_STEP_DELAY_MS));
-    cliContext.logger.info(`${ICONS.success} Resolved tool surface  ${styledVerdictLine(verdict)}`);
+    cliContext.logger.info(`${ICONS.success} Resolved tool surface  ${budgetLine(verdict)}`);
     await withSpinner(`Building tool schemas…`, () => sleep(STUB_STEP_DELAY_MS));
     cliContext.logger.info(`${ICONS.success} Built tool schemas ${hint(`· ${tools.length}/${tools.length}`)}`);
 

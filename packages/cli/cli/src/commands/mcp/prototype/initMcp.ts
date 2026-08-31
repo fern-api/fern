@@ -16,7 +16,18 @@ import { EndpointSummary } from "./openapiSummary.js";
 import { BuiltinPresetKey, buildBuiltinPresets, PresetResolution } from "./presets.js";
 import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
-import { banner, command, hint, ICONS, radioChoice, selectTheme, sleep, styledVerdictLine, withSpinner } from "./ui.js";
+import {
+    banner,
+    budgetLine,
+    command,
+    hint,
+    ICONS,
+    radioChoice,
+    selectTheme,
+    sleep,
+    styledVerdictLine,
+    withSpinner
+} from "./ui.js";
 import { announceSpecDiscovery, pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 const AI_SPINNER_DELAY_MS = 1200;
@@ -234,7 +245,7 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
             .join("\n")
     );
     cliContext.logger.info("");
-    cliContext.logger.info(styledVerdictLine(verdict));
+    cliContext.logger.info(budgetLine(verdict));
     cliContext.logger.info("");
     cliContext.logger.info(chalk.bold("Next steps"));
     cliContext.logger.info(`  ${ICONS.pointer} ${command(`fern generate --group ${groupName}`)}   ${hint("build it")}`);
@@ -291,7 +302,7 @@ async function promptForToolsetChoice({
     for (const existing of existingPresets) {
         const verdict = computeVerdict(resolveTools(endpoints, existing.config));
         choices.push({
-            name: `${radioChoice(existing.name)}\n         ${styledVerdictLine(verdict)}`,
+            name: `${radioChoice(existing.name)}\n         ${budgetLine(verdict)}`,
             short: existing.name,
             value: { presetKey: existing.name, config: existing.config }
         });
@@ -309,7 +320,7 @@ async function promptForToolsetChoice({
         }
         const noteSuffix = preset.notes.length > 0 ? `\n         ${chalk.dim(preset.notes.join(" · "))}` : "";
         choices.push({
-            name: `${radioChoice(preset.label)}\n         ${styledVerdictLine(preset.verdict)}${noteSuffix}`,
+            name: `${radioChoice(preset.label)}\n         ${budgetLine(preset.verdict)}${noteSuffix}`,
             short: preset.label,
             value: { presetKey: key, config: preset.config }
         });
@@ -321,7 +332,7 @@ async function promptForToolsetChoice({
     });
     const everything = presets.everything;
     choices.push({
-        name: `${radioChoice(everything.label)}\n         ${styledVerdictLine(everything.verdict)}`,
+        name: `${radioChoice(everything.label)}\n         ${budgetLine(everything.verdict)}`,
         short: everything.label,
         value: { presetKey: "everything", config: everything.config }
     });

@@ -5,7 +5,7 @@ import { CliContext } from "../../../cli-context/CliContext.js";
 import { findMcpGroup, parseToolsConfig, writeMcpGroupToGeneratorsYml } from "./mcpGeneratorsYml.js";
 import { computeVerdict, resolveTools, ToolsConfig } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
-import { hint, ICONS, styledVerdictLine, toolTable } from "./ui.js";
+import { budgetLine, hint, ICONS, toolTable } from "./ui.js";
 import { announceSpecDiscovery, pickWorkspaceAndLoadSpec } from "./workspace.js";
 
 export async function toolsMcp({
@@ -125,5 +125,5 @@ export async function toolsMcp({
         cliContext.logger.info(line);
     }
     cliContext.logger.info("");
-    cliContext.logger.info(styledVerdictLine(verdict));
+    cliContext.logger.info(budgetLine(verdict));
 }
