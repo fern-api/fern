@@ -4,7 +4,7 @@
 //!
 //! Transforms JSON API responses into human-readable formats (table, YAML, CSV).
 
-use serde_json::Value;
+use serde_json::{Map, Value};
 use std::fmt::Write;
 use std::io::IsTerminal;
 
@@ -420,8 +420,14 @@ fn format_jsonl_array(arr: &[Value]) -> String {
 /// Extract a "data array" from a typical API list response.
 /// APIs often return lists as `{ "collection": [...], "pagination": {...} }`
 /// where the array key varies by resource type.
+///
+/// Dry-run envelopes are exempt: their `headers`/`query_params` arrays describe a
+/// single request rather than a collection to tabulate.
 fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
     if let Value::Object(obj) = value {
+        if is_dry_run_envelope(obj) {
+            return None;
+        }
         for (key, val) in obj {
             if key == "nextPageToken" || key == "kind" || key.starts_with('_') {
                 continue;
@@ -434,6 +440,15 @@ fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
         }
     }
     None
+}
+
+/// Recognize the request description emitted by `--dry-run`, as opposed to an API
+/// response that happens to carry a `dry_run` property: the envelope always
+/// pairs `dry_run: true` with the request's `url` and `method` strings.
+fn is_dry_run_envelope(obj: &Map<String, Value>) -> bool {
+    obj.get("dry_run") == Some(&Value::Bool(true))
+        && obj.get("url").is_some_and(Value::is_string)
+        && obj.get("method").is_some_and(Value::is_string)
 }
 
 fn format_table(value: &Value) -> String {
@@ -1028,6 +1043,47 @@ mod tests {
     fn test_extract_items_none() {
         let val = json!({"status": "ok"});
         assert!(extract_items(&val).is_none());
+    }
+
+    #[test]
+    fn test_extract_items_ignores_dry_run_envelopes() {
+        let val = json!({
+            "dry_run": true,
+            "url": "https://api.example.com/v1/Messages",
+            "method": "GET",
+            "headers": [["Api-Version", "2026-11-01"]],
+        });
+        assert!(extract_items(&val).is_none());
+    }
+
+    #[test]
+    fn test_extract_items_keeps_responses_with_a_dry_run_property() {
+        // An API whose response has its own `dry_run` field is still a list.
+        let val = json!({"dry_run": true, "files": [{"id": "1"}]});
+        let (key, items) = extract_items(&val).unwrap();
+        assert_eq!(key, "files");
+        assert_eq!(items.len(), 1);
+    }
+
+    #[test]
+    fn test_format_table_dry_run_with_headers_shows_all_fields() {
+        let val = json!({
+            "dry_run": true,
+            "method": "GET",
+            "url": "https://api.example.com/v1/Messages",
+            "headers": [["Api-Version", "2026-11-01"]],
+            "query_params": [],
+            "body": null,
+        });
+        let output = format_value(&val, &OutputFormat::Table);
+        assert!(
+            output.contains("method"),
+            "expected method row, got:\n{output}"
+        );
+        assert!(
+            output.contains("https://api.example.com/v1/Messages"),
+            "expected url row, got:\n{output}"
+        );
     }
 
     // --- YAML block-scalar regression tests ---
