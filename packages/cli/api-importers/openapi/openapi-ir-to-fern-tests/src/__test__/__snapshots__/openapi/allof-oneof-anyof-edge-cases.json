@@ -115,6 +115,97 @@
           },
         },
         "types": {
+          "AnyOfBranchAddsProperty": {
+            "base-properties": {
+              "a": "optional<boolean>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "AnyOfBranchAddsPropertyA",
+              "AnyOfBranchAddsPropertyB",
+            ],
+          },
+          "AnyOfBranchAddsPropertyA": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "a": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchAddsPropertyB": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "b": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsProperty": {
+            "base-properties": {
+              "kind": "optional<string>",
+              "value": "optional<string>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "AnyOfBranchNarrowsPropertyZero",
+              "AnyOfBranchNarrowsPropertyOne",
+            ],
+          },
+          "AnyOfBranchNarrowsPropertyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "AnyOfBranchNarrowsPropertyOneKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyOneKind": {
+            "enum": [
+              "b",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "AnyOfBranchNarrowsPropertyZeroKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyZeroKind": {
+            "enum": [
+              "a",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Base": {
             "docs": undefined,
             "inline": undefined,
@@ -410,6 +501,18 @@
               "openapi": "../openapi.yml",
             },
           },
+          "UpdateDomainRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "autorenewEnabled": "optional<boolean>",
+              "locked": "optional<boolean>",
+              "privacyEnabled": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "service:
@@ -641,6 +744,68 @@ types:
   ItemListExplicitType:
     properties:
       results: optional<list<Item>>
+    source:
+      openapi: ../openapi.yml
+  UpdateDomainRequest:
+    properties:
+      autorenewEnabled: optional<boolean>
+      privacyEnabled: optional<boolean>
+      locked: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchAddsPropertyA:
+    properties:
+      a: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchAddsPropertyB:
+    properties:
+      b: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchAddsProperty:
+    discriminated: false
+    base-properties:
+      a: optional<boolean>
+    union:
+      - AnyOfBranchAddsPropertyA
+      - AnyOfBranchAddsPropertyB
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyZeroKind:
+    enum:
+      - a
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyZero:
+    properties:
+      kind: AnyOfBranchNarrowsPropertyZeroKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchNarrowsPropertyOneKind:
+    enum:
+      - b
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyOne:
+    properties:
+      kind: AnyOfBranchNarrowsPropertyOneKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchNarrowsProperty:
+    discriminated: false
+    base-properties:
+      kind: optional<string>
+      value: optional<string>
+    union:
+      - AnyOfBranchNarrowsPropertyZero
+      - AnyOfBranchNarrowsPropertyOne
     source:
       openapi: ../openapi.yml
 ",

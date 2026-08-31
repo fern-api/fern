@@ -1,0 +1,153 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "UpdateDomain": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "autorenewEnabled": true,
+                  },
+                },
+              ],
+              "method": "PATCH",
+              "pagination": undefined,
+              "path": "/domain",
+              "request": "UpdateDomainRequest",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "UpdateDomainRequest": {
+            "base-properties": {
+              "autorenewEnabled": "optional<boolean>",
+              "locked": "optional<boolean>",
+              "privacyEnabled": "optional<boolean>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "UpdateDomainRequestAutorenewEnabled",
+              "UpdateDomainRequestPrivacyEnabled",
+              "UpdateDomainRequestLocked",
+            ],
+          },
+          "UpdateDomainRequestAutorenewEnabled": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "autorenewEnabled": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateDomainRequestLocked": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "locked": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateDomainRequestPrivacyEnabled": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "privacyEnabled": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    UpdateDomain:
+      path: /domain
+      method: PATCH
+      source:
+        openapi: ../openapi.yml
+      request: UpdateDomainRequest
+      examples:
+        - request:
+            autorenewEnabled: true
+  source:
+    openapi: ../openapi.yml
+types:
+  UpdateDomainRequestAutorenewEnabled:
+    properties:
+      autorenewEnabled: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateDomainRequestPrivacyEnabled:
+    properties:
+      privacyEnabled: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateDomainRequestLocked:
+    properties:
+      locked: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateDomainRequest:
+    discriminated: false
+    base-properties:
+      autorenewEnabled: optional<boolean>
+      privacyEnabled: optional<boolean>
+      locked: optional<boolean>
+    union:
+      - UpdateDomainRequestAutorenewEnabled
+      - UpdateDomainRequestPrivacyEnabled
+      - UpdateDomainRequestLocked
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test spec for the preserve-any-of-as-union setting.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test spec for the preserve-any-of-as-union setting.
+",
+  },
+  "specVersion": "1.0.0",
+}

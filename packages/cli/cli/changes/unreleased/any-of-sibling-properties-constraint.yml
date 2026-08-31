@@ -1,6 +1,9 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
+    **Behavior change.** Affected schemas produce a different type, so generated
+    SDK call sites for them change shape.
+
     A schema that declares `properties` alongside an `anyOf` whose branches only
     re-declare some of those same properties as required is now converted as the
     object it declares, rather than as an undiscriminated union. Per JSON Schema
@@ -9,7 +12,8 @@
     `properties` and made the fields mutually exclusive -- a request body setting
     two of them silently sent only one.
 
-    A branch that introduces a property, or that is a reference, is still a real
-    variant and continues to produce a union. Set the new
-    `preserve-any-of-as-union` setting to restore the previous behavior.
-  type: fix
+    A branch that introduces a property, that narrows one to a different value,
+    or that is a reference, is still a real variant and continues to produce a
+    union. Set the new `preserve-any-of-as-union` setting to restore the previous
+    behavior.
+  type: feat
