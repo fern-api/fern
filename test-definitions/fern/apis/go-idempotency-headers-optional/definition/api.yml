@@ -1,0 +1,5 @@
+name: go-idempotency-headers-optional
+idempotency-headers:
+  Idempotency-Key: string
+  X-Idempotency-Token: optional<string>
+  X-Idempotency-Signature: optional<base64>
