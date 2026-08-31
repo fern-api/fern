@@ -99,7 +99,7 @@ for await (const item of pageableResponse) {
 // Or you can manually iterate page-by-page
 let page = result;
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 // You can also access the underlying response
 const response = page.response;"

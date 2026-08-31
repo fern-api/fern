@@ -72,7 +72,7 @@ let page = await client.complex.search("index", {
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -148,7 +148,7 @@ let page = await client.complex.search("index", {
     }
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
