@@ -132,6 +132,21 @@ describe("GraphQLConverter custom scalars", () => {
         expect(types[FdrAPI.TypeId("DateTime")]).toBeUndefined();
     });
 
+    it("keeps declared type names out of the namespace prefix", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: BASIC_SCHEMA,
+            namespace: "myapi"
+        });
+
+        const { types } = await converter.convert();
+
+        // The prefix exists so ids stay unique across specs; surfacing it as the name would
+        // render every type as `myapi_User` in the docs.
+        expect(types[FdrAPI.TypeId("myapi_User")]?.name).toBe("User");
+        expect(types[FdrAPI.TypeId("myapi_DateTime")]?.name).toBe("DateTime");
+    });
+
     it("keeps the first examples and warns when two specs document the same operation", async () => {
         const mockContext = createMockTaskContext();
         const warnings: string[] = [];
