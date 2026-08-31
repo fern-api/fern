@@ -17,6 +17,7 @@
       "value": "test"
     }
   ],
+  "globalFlags": [],
   "authMock": {
     "method": "POST",
     "path": "/identity/token",

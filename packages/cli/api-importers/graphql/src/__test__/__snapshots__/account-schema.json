@@ -1474,7 +1474,9 @@
       "name": "Checkout",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
@@ -3125,25 +3127,18 @@
     "Node": {
       "name": "Node",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "Checkout",
-            "displayName": "Checkout",
-            "type": {
-              "type": "id",
-              "value": "Checkout"
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             },
-            "description": "A container for all information needed to charge a Merchant for products on a one-time or recurring basis."
-          },
-          {
-            "typeName": "Subscription",
-            "displayName": "Subscription",
-            "type": {
-              "type": "id",
-              "value": "Subscription"
-            },
-            "description": "A one-time or recurring charge for a Product created as a result of a Merchant completing a Checkout."
+            "description": "The ID of the object."
           }
         ]
       },
@@ -4080,7 +4075,9 @@
       "name": "Subscription",
       "shape": {
         "type": "object",
-        "extends": [],
+        "extends": [
+          "Node"
+        ],
         "properties": [
           {
             "key": "id",
@@ -5397,5 +5394,102 @@
       },
       "description": "User mutations."
     }
+  },
+  "typeCategories": {
+    "Account": "object",
+    "AccountInfo": "object",
+    "AddUserToAccountInput": "input",
+    "AddUserToAccountResult": "object",
+    "AddUserToStoreInput": "input",
+    "AddUserToStoreResult": "object",
+    "AddUsersToUserGroupsInput": "input",
+    "AddUsersToUserGroupsResult": "object",
+    "App": "object",
+    "AppsConnection": "object",
+    "AppsEdge": "object",
+    "AwsEventSource": "object",
+    "AwsEventSourcesConnection": "object",
+    "AwsEventSourcesEdge": "object",
+    "AwsRegion": "enum",
+    "BigDecimal": "scalar",
+    "CancelSubscriptionInput": "input",
+    "CancelSubscriptionResult": "object",
+    "Checkout": "object",
+    "CheckoutItem": "object",
+    "CheckoutItemConnection": "object",
+    "CheckoutItemEdge": "object",
+    "CheckoutItemInput": "input",
+    "CheckoutItemPricingInterval": "enum",
+    "CheckoutItemPricingPlan": "object",
+    "CheckoutItemProduct": "object",
+    "CheckoutItemProductInput": "input",
+    "CheckoutItemProductType": "enum",
+    "CheckoutItemScope": "object",
+    "CheckoutItemScopeInput": "input",
+    "CheckoutItemScopeType": "enum",
+    "CheckoutItemStatus": "enum",
+    "CheckoutStatus": "enum",
+    "CollectionInfo": "object",
+    "CreateCheckoutInput": "input",
+    "CreateCheckoutResult": "object",
+    "CreateEventSourceInput": "input",
+    "CreateEventSourceResult": "object",
+    "CreateUserInput": "input",
+    "CreateUserResult": "object",
+    "CreateUserWithPasswordInput": "input",
+    "CreateUserWithPasswordResult": "object",
+    "CurrencyCode": "enum",
+    "DateTime": "scalar",
+    "DeleteEventSourceInput": "input",
+    "DeleteEventSourceResult": "object",
+    "Long": "scalar",
+    "Money": "object",
+    "MoneyInput": "input",
+    "Node": "interface",
+    "PageInfo": "object",
+    "PricingPlanInput": "input",
+    "RemoveUserFromAccountInput": "input",
+    "RemoveUserFromAccountResult": "object",
+    "RemoveUserFromStoreInput": "input",
+    "RemoveUserFromStoreResult": "object",
+    "RemoveUsersFromUserGroupInput": "input",
+    "RemoveUsersFromUserGroupResult": "object",
+    "Status": "object",
+    "Store": "object",
+    "StoreConnection": "object",
+    "StoreEdge": "object",
+    "StoreFilterInput": "input",
+    "StoreStatus": "object",
+    "StoreStatusEnum": "enum",
+    "StoreUser": "object",
+    "StoreUserConnection": "object",
+    "StoreUserEdge": "object",
+    "StoreUserStatus": "enum",
+    "Subscription": "object",
+    "SubscriptionBillingInterval": "enum",
+    "SubscriptionConnection": "object",
+    "SubscriptionEdge": "object",
+    "SubscriptionFiltersInput": "input",
+    "SubscriptionProduct": "object",
+    "SubscriptionProductType": "enum",
+    "SubscriptionScope": "object",
+    "SubscriptionScopeType": "enum",
+    "SubscriptionStatus": "enum",
+    "System": "object",
+    "TargetByUserGroup": "object",
+    "TargetConnection": "object",
+    "TargetEdge": "object",
+    "TargetType": "enum",
+    "UUID": "scalar",
+    "User": "object",
+    "UserConnection": "object",
+    "UserEdge": "object",
+    "UserGroup": "object",
+    "UserGroupByUser": "object",
+    "UserGroupByUserConnection": "object",
+    "UserGroupByUserEdge": "object",
+    "UserGroupConnection": "object",
+    "UserGroupEdge": "object",
+    "UserIdentifierInput": "input"
   }
 }

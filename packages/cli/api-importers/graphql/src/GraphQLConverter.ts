@@ -1,4 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { assertNever } from "@fern-api/core-utils";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -13,6 +14,7 @@ import {
     GraphQLInputType,
     GraphQLInterfaceType,
     GraphQLList,
+    GraphQLNamedType,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLOutputType,
@@ -26,6 +28,17 @@ import { mergeGraphQlDocuments } from "./mergeGraphQlDocuments.js";
 export interface GraphQLConverterResult {
     graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
     types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
+    /**
+     * The GraphQL kind each documented type was declared with, keyed like `types`.
+     *
+     * This is the set of types that get a page, so it is a subset of `types`: an operation
+     * namespace is left out because its fields are documented as operations, while its definition
+     * stays in `types` for the namespace query's page to render. Look up with a null check.
+     *
+     * The FDR type shape is shared with OpenAPI and gRPC and cannot express a GraphQL kind, so
+     * the kind travels alongside the types rather than inside them.
+     */
+    typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
 }
 
 export interface GraphQlExampleInput {
@@ -55,6 +68,8 @@ export class GraphQLConverter {
     private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+    private typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory> = {};
+    private namespaceTypeNames: Set<string> = new Set();
     private examplesByOperation: Map<string, FdrAPI.api.v1.register.GraphQlExample[]> = new Map();
 
     constructor({
@@ -235,7 +250,14 @@ export class GraphQLConverter {
 
         const graphqlOperations = this.resolveOperationIds(pendingOperations);
 
-        return { graphqlOperations, types: this.types };
+        // A namespace type's fields are documented as operations, so it groups operations rather
+        // than being a documented type: no kind means no type page. Its definition stays in
+        // `types` because a namespace query's page renders the nested fields from it.
+        for (const typeName of this.namespaceTypeNames) {
+            delete this.typeCategories[this.getNamespacedTypeId(typeName)];
+        }
+
+        return { graphqlOperations, types: this.types, typeCategories: this.typeCategories };
     }
 
     private resolveOperationIds(
@@ -289,6 +311,7 @@ export class GraphQLConverter {
             }
 
             const typeId = this.getNamespacedTypeId(typeName);
+            this.typeCategories[typeId] = this.typeCategoryOf(type);
 
             if (type instanceof GraphQLEnumType) {
                 this.processingTypes.add(typeName);
@@ -374,6 +397,31 @@ export class GraphQLConverter {
         }
     }
 
+    // Derived from the declared kind, never from the converted FDR shape: an interface and an
+    // object both convert to `object` and a custom scalar to `alias`, so shape-sniffing would
+    // mislabel types.
+    private typeCategoryOf(type: GraphQLNamedType): FernNavigation.GraphQlTypeCategory {
+        if (type instanceof GraphQLObjectType) {
+            return "object";
+        }
+        if (type instanceof GraphQLInputObjectType) {
+            return "input";
+        }
+        if (type instanceof GraphQLEnumType) {
+            return "enum";
+        }
+        if (type instanceof GraphQLInterfaceType) {
+            return "interface";
+        }
+        if (type instanceof GraphQLUnionType) {
+            return "union";
+        }
+        if (type instanceof GraphQLScalarType) {
+            return "scalar";
+        }
+        assertNever(type);
+    }
+
     // Builds an operation id of the form `<operationType>_<segments joined by ".">`.
     // Flat (top-level) ids use a single segment; namespaced ids include the full field
     // path so that fields sharing a leaf name across namespaces resolve to distinct ids.
@@ -409,6 +457,7 @@ export class GraphQLConverter {
                         operation: this.convertField(field, fieldName, operationType)
                     });
                 }
+                this.namespaceTypeNames.add(returnRawType.name);
                 this.convertNamespaceOperations(returnRawType, operationType, pending, [fieldName]);
             } else {
                 const flatId = this.buildOperationId(operationType, [fieldName]);
@@ -688,21 +737,10 @@ export class GraphQLConverter {
             })
         );
 
-        // Only extend interfaces that are converted to plain objects (no implementations).
-        // Interfaces with implementations are converted to undiscriminatedUnion, and the
-        // frontend's unwrapObjectType only supports extending object types.
-        // GraphQL implementing types already include all interface fields, so extends is
-        // only needed for documentation purposes when the interface is a plain object.
-        const interfaces = type.getInterfaces();
-        const extendsIds = interfaces
-            .filter((iface) => {
-                if (!this.schema) {
-                    return true;
-                }
-                const implementations = this.schema.getPossibleTypes(iface);
-                return implementations.length === 0;
-            })
-            .map((iface) => this.getNamespacedTypeId(iface.name));
+        // `extends` carries the `implements` clause, which is the only edge the docs have to
+        // resolve an interface's implementors. Implementing types already inline every interface
+        // field, so the extended properties are deduplicated away when rendering.
+        const extendsIds = type.getInterfaces().map((iface) => this.getNamespacedTypeId(iface.name));
 
         return {
             type: "object",
@@ -712,33 +750,9 @@ export class GraphQLConverter {
         };
     }
 
+    // An interface is its own set of fields, not the union of the types that implement it: the
+    // implementors are reachable from each implementing type's `extends`.
     private convertInterfaceTypeDefinition(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
-        if (!this.schema) {
-            return this.convertInterfaceAsObject(type);
-        }
-
-        const implementations = this.schema.getPossibleTypes(type);
-        if (implementations.length === 0) {
-            return this.convertInterfaceAsObject(type);
-        }
-
-        return {
-            type: "undiscriminatedUnion",
-            variants: implementations.map((impl) => ({
-                typeName: impl.name,
-                displayName: impl.name,
-                type: {
-                    type: "id",
-                    value: this.getNamespacedTypeId(impl.name),
-                    default: undefined
-                },
-                description: impl.description ?? undefined,
-                availability: undefined
-            }))
-        };
-    }
-
-    private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
         const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
             ([fieldName, field]) => ({

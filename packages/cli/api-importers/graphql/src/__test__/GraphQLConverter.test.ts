@@ -167,3 +167,73 @@ describe("GraphQLConverter custom scalars", () => {
         expect(graphqlOperations[FdrAPI.GraphQlOperationId("query_users")]?.examples?.[0]?.name).toBe("from spec A");
     });
 });
+
+describe("GraphQLConverter type categories", () => {
+    const TYPE_CATEGORIES_SCHEMA = join(
+        FIXTURES_DIR,
+        RelativeFilePath.of("type-categories"),
+        RelativeFilePath.of("schema.graphql")
+    );
+
+    it("categorizes every emitted type by its GraphQL kind", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: TYPE_CATEGORIES_SCHEMA
+        });
+
+        const { types, typeCategories } = await converter.convert();
+
+        // Asserted as a whole map: a type gaining or losing a category is as much a
+        // regression as a miscategorized one. `Auditable` is implemented by nothing and
+        // `Node` by two types, and both stay interfaces — the category comes from the
+        // declared kind, not from the converted shape (which is `object` for either).
+        expect(typeCategories).toEqual({
+            [FdrAPI.TypeId("Product")]: "object",
+            [FdrAPI.TypeId("Collection")]: "object",
+            [FdrAPI.TypeId("ProductCreateInput")]: "input",
+            [FdrAPI.TypeId("ProductSortKeys")]: "enum",
+            [FdrAPI.TypeId("DateTime")]: "scalar",
+            [FdrAPI.TypeId("Node")]: "interface",
+            [FdrAPI.TypeId("Auditable")]: "interface",
+            [FdrAPI.TypeId("SearchResult")]: "union"
+        });
+
+        // Nothing here is an operation namespace, so every type is documented and the two maps
+        // line up. See the namespace test below for the case where they deliberately do not.
+        expect(Object.keys(typeCategories).sort()).toEqual(Object.keys(types).sort());
+    });
+
+    it("gives an operation namespace no category, so it gets no type page", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: join(FIXTURES_DIR, RelativeFilePath.of("namespace-types"), RelativeFilePath.of("schema.graphql"))
+        });
+
+        const { types, typeCategories } = await converter.convert();
+
+        // A namespace type's fields are documented as operations, so listing it as a type too
+        // would duplicate every one of its fields and arguments on the referenced types' pages.
+        expect(typeCategories).toEqual({
+            [FdrAPI.TypeId("Account")]: "object",
+            [FdrAPI.TypeId("InventoryLocation")]: "object"
+        });
+
+        // The definitions stay: a namespace query's page renders its nested fields from them.
+        expect(Object.keys(types)).toContain("AccountMutations");
+        expect(Object.keys(types)).toContain("InventoryQueries");
+    });
+
+    it("namespaces category keys alongside type ids", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: TYPE_CATEGORIES_SCHEMA,
+            namespace: "myapi"
+        });
+
+        const { types, typeCategories } = await converter.convert();
+
+        expect(typeCategories[FdrAPI.TypeId("myapi_ProductCreateInput")]).toBe("input");
+        expect(typeCategories[FdrAPI.TypeId("ProductCreateInput")]).toBeUndefined();
+        expect(Object.keys(typeCategories).sort()).toEqual(Object.keys(types).sort());
+    });
+});

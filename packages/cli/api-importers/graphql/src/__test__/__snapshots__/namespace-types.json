@@ -303,5 +303,9 @@
       },
       "description": "Namespace grouping for inventory queries.\nAll fields have arguments — this makes it a namespace type.\nA parent operation should be created since the root Query field has no arguments."
     }
+  },
+  "typeCategories": {
+    "Account": "object",
+    "InventoryLocation": "object"
   }
 }
