@@ -1,3 +1,4 @@
+import { anyOfIsPresenceConstraint } from "@fern-api/core-utils";
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
@@ -571,45 +572,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (this.context.settings.preserveAnyOfAsUnion) {
             return undefined;
         }
-        const anyOf = this.schema.anyOf;
-        // A oneOf or allOf alongside the anyOf composes with it; leave those to the union
-        // and allOf paths. Kept in step with anyOfIsAtLeastOneOfConstraint in
-        // openapi-ir-parser so both importers classify the same schema identically.
-        if (!Array.isArray(anyOf) || anyOf.length === 0 || this.schema.oneOf != null || this.schema.allOf != null) {
+        if (!anyOfIsPresenceConstraint(this.schema)) {
             return undefined;
-        }
-        const siblingProperties = this.schema.properties;
-        if (siblingProperties == null || Object.keys(siblingProperties).length === 0) {
-            return undefined;
-        }
-        const siblingPropertyNames = new Set(Object.keys(siblingProperties));
-
-        for (const branch of anyOf) {
-            if (branch == null || typeof branch !== "object" || "$ref" in branch) {
-                return undefined;
-            }
-            const branchSchema = branch as OpenAPIV3_1.SchemaObject;
-            // Anything that carries shape beyond naming existing properties makes
-            // this a variant rather than a constraint.
-            if (
-                branchSchema.allOf != null ||
-                branchSchema.oneOf != null ||
-                branchSchema.anyOf != null ||
-                branchSchema.additionalProperties != null ||
-                (branchSchema.type != null && branchSchema.type !== "object")
-            ) {
-                return undefined;
-            }
-            const branchPropertyNames = Object.keys(branchSchema.properties ?? {});
-            const branchRequired = branchSchema.required ?? [];
-            if (branchPropertyNames.length === 0 && branchRequired.length === 0) {
-                return undefined;
-            }
-            for (const name of [...branchPropertyNames, ...branchRequired]) {
-                if (!siblingPropertyNames.has(name)) {
-                    return undefined;
-                }
-            }
         }
 
         this.context.logger.warn(

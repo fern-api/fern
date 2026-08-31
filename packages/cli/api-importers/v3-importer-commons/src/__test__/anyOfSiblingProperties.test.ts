@@ -150,6 +150,71 @@ describe("anyOf alongside sibling properties", () => {
         expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
     });
 
+    // A branch that narrows a property is a variant, not a presence constraint:
+    // collapsing these would discard a real discriminant under a warning that
+    // claims to be preserving fields.
+    it("leaves a union alone when branches narrow a property to different literals", () => {
+        const output = convert({
+            type: "object",
+            properties: { kind: { type: "string" }, value: { type: "string" } },
+            anyOf: [
+                { type: "object", properties: { kind: { const: "a" } }, required: ["kind"] },
+                { type: "object", properties: { kind: { const: "b" } }, required: ["kind"] }
+            ]
+        });
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
+    });
+
+    // A branch that merely names a property, with an empty subschema or one
+    // restating the sibling's, is a presence constraint.
+    it("treats an empty or restating branch subschema as a presence constraint", () => {
+        const branchSubschemas: OpenAPIV3_1.SchemaObject[] = [{}, { type: "boolean" }];
+        for (const branchSubschema of branchSubschemas) {
+            const output = convert({
+                type: "object",
+                properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+                anyOf: [
+                    { type: "object", properties: { a: branchSubschema }, required: ["a"] },
+                    { type: "object", properties: { b: branchSubschema }, required: ["b"] }
+                ]
+            });
+            expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("object");
+        }
+    });
+
+    // Both converters must accept the array spelling of `type`.
+    it('accepts a branch written type: ["object"]', () => {
+        const output = convert({
+            type: "object",
+            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+            anyOf: [
+                { type: ["object"], properties: { a: {} }, required: ["a"] },
+                { type: ["object"], properties: { b: {} }, required: ["b"] }
+            ]
+        });
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("object");
+    });
+
+    // type: ["object","null"] is an ordinary 3.1 spelling of a nullable object.
+    // openapi-ir-parser normalizes it to type:"object" + nullable before reaching
+    // the anyOf block, so the constraint is detected there; this path must not
+    // silently leave the union in place.
+    it("detects the constraint on a nullable object written type: [object, null]", () => {
+        const output = convert({
+            type: ["object", "null"],
+            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+            anyOf: [
+                { type: "object", properties: { a: {} }, required: ["a"] },
+                { type: "object", properties: { b: {} }, required: ["b"] }
+            ]
+        });
+        // The nullable wrapper becomes an alias over an inlined named type; the
+        // constraint must have been applied to that inlined object.
+        const inlinedShapes = Object.values(output?.inlinedTypes ?? {}).map((t) => t.typeDeclaration.shape?.type);
+        expect(inlinedShapes).toContain("object");
+        expect(inlinedShapes).not.toContain("undiscriminatedUnion");
+    });
+
     it("leaves a bare anyOf with no sibling properties alone", () => {
         const output = convert({
             anyOf: [{ type: "string" }, { type: "number" }]
