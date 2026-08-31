@@ -235,7 +235,9 @@ describe("BufDownloader", () => {
             const result = await resolveBuf(logger);
 
             expect(result).toBeUndefined();
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("Failed to download buf"));
+            expect(mockFetch).toHaveBeenCalledOnce();
+            expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("Failed to download buf"));
+            expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("404 Not Found"));
 
             vi.unstubAllGlobals();
         });
@@ -248,7 +250,8 @@ describe("BufDownloader", () => {
             const result = await resolveBuf(logger);
 
             expect(result).toBeUndefined();
-            expect(logger.debug).toHaveBeenCalledWith(expect.stringContaining("network error"));
+            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("network error"));
 
             vi.unstubAllGlobals();
         });

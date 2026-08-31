@@ -57,4 +57,27 @@ describe("JavaProject formatting", () => {
         await project.persist();
         expect(loggingExecaMock).toHaveBeenCalledOnce();
     });
+
+    it("retries when the wrapper fails to download the Gradle distribution", async () => {
+        const downloadFailure = Object.assign(new Error("Command failed with exit code 1: ./gradlew :spotlessApply"), {
+            stderr:
+                'Exception in thread "main" java.net.SocketException: Unexpected end of file from server\n' +
+                "\tat org.gradle.wrapper.Install.forceFetch(SourceFile:2)\n" +
+                "\tat org.gradle.wrapper.GradleWrapperMain.main(SourceFile:67)"
+        });
+        loggingExecaMock.mockRejectedValueOnce(downloadFailure);
+        const project = await createProjectWithGradlew();
+        await project.persist();
+        expect(loggingExecaMock).toHaveBeenCalledTimes(2);
+    });
+
+    it("does not retry when the build itself fails", async () => {
+        const buildFailure = Object.assign(new Error("Command failed with exit code 1: ./gradlew :spotlessApply"), {
+            stderr: "> Task :spotlessJavaCheck FAILED"
+        });
+        loggingExecaMock.mockRejectedValue(buildFailure);
+        const project = await createProjectWithGradlew();
+        await expect(project.persist()).rejects.toThrow(buildFailure);
+        expect(loggingExecaMock).toHaveBeenCalledOnce();
+    });
 });

@@ -1,0 +1,4 @@
+- summary: |
+    Retry transient failures when downloading `buf` during `fern install-dependencies`,
+    and report the HTTP status or network error instead of failing silently.
+  type: fix

@@ -7,6 +7,22 @@ import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext.js";
 
+const GRADLE_DOWNLOAD_ATTEMPTS = 3;
+const GRADLE_DOWNLOAD_RETRY_DELAY_MS = 2_000;
+
+/**
+ * The wrapper's downloader is `org.gradle.wrapper.Install`, and it reports a failed fetch as an
+ * uncaught exception naming that class before any build work happens.
+ */
+function isGradleDistributionDownloadFailure(error: unknown): boolean {
+    if (!(error instanceof Error)) {
+        return false;
+    }
+    const stderr = "stderr" in error && typeof error.stderr === "string" ? error.stderr : "";
+    const output = `${error.message}\n${stderr}`;
+    return output.includes("org.gradle.wrapper.Install") || output.includes("org.gradle.wrapper.GradleWrapperMain");
+}
+
 /**
  * In memory representation of a Java project.
  */
@@ -69,10 +85,7 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
                     `JavaProject: Running spotlessApply. Set ${FERN_JAVA_SKIP_FORMATTING_ENV_VAR}=true to skip it.`
                 );
             }
-            await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
-                doNotPipeOutput: false,
-                cwd: this.absolutePathToOutputDirectory
-            });
+            await this.runGradle(gradleArgs);
             this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
             if (enableProfiling) {
                 // Copy build/reports/ to reports/ at the root so it's not gitignored
@@ -85,6 +98,31 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
                 } else {
                     this.context.logger.info(`JavaProject: No profiling report found in build/reports/`);
                 }
+            }
+        }
+    }
+
+    /**
+     * Runs the wrapper, retrying while it fails fetching the Gradle distribution it needs. The
+     * wrapper downloads the distribution on its first run and gives up on the first network error.
+     */
+    private async runGradle(gradleArgs: string[]): Promise<void> {
+        for (let attempt = 1; ; attempt++) {
+            try {
+                await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
+                    doNotPipeOutput: false,
+                    cwd: this.absolutePathToOutputDirectory
+                });
+                return;
+            } catch (error) {
+                if (attempt >= GRADLE_DOWNLOAD_ATTEMPTS || !isGradleDistributionDownloadFailure(error)) {
+                    throw error;
+                }
+                this.context.logger.warn(
+                    `JavaProject: the Gradle wrapper failed to download its distribution ` +
+                        `(attempt ${attempt} of ${GRADLE_DOWNLOAD_ATTEMPTS}); retrying.`
+                );
+                await new Promise((resolve) => setTimeout(resolve, GRADLE_DOWNLOAD_RETRY_DELAY_MS * attempt));
             }
         }
     }
