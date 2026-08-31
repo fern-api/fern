@@ -2010,7 +2010,8 @@ export class DocsDefinitionResolver {
             hideChildren,
             parentAvailability ?? item.availability,
             openApiTags,
-            graphqlData.namespacesByOperationId
+            graphqlData.namespacesByOperationId,
+            graphqlData.typeCategories
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -2109,13 +2110,19 @@ export class DocsDefinitionResolver {
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
+        /**
+         * The GraphQL kind of every named type, keyed like `types`. Drives the per-category
+         * sections of the GraphQL Types navigation; types absent from this map get no page.
+         */
+        typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
     }> {
         const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
+        const typeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory> = {};
 
         if (workspace == null) {
-            return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+            return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId, typeCategories };
         }
 
         const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
@@ -2140,6 +2147,7 @@ export class DocsDefinitionResolver {
 
                 Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
                 Object.assign(graphqlTypes, graphqlResult.types);
+                Object.assign(typeCategories, graphqlResult.typeCategories);
 
                 if (namespace) {
                     for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
@@ -2154,7 +2162,7 @@ export class DocsDefinitionResolver {
             }
         }
 
-        return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+        return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId, typeCategories };
     }
 
     private async loadGraphQlExamples(

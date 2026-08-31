@@ -157,7 +157,8 @@ export async function runPipeline(args: {
             irFilepath,
             specsDir,
             rootGroup: customConfig.rootGroup,
-            authBindings
+            authBindings,
+            globalParams: globalParamBindings
         });
     }
 

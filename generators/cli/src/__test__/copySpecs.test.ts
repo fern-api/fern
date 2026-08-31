@@ -302,6 +302,10 @@ describe("copySpecs", () => {
         const globalParamBindings: DetectedGlobalParam[] = [
             {
                 paramName: "api-version",
+                flagSource: "api-version",
+                location: "query",
+                optional: false,
+                hasDefaultValue: false,
                 rustCall:
                     ".global_parameter(GlobalParameter {\n" +
                     '            name: "api-version".into(),\n' +

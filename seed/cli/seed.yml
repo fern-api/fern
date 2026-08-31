@@ -148,6 +148,14 @@ fixtures:
   x-fern-global-parameters:
     - customConfig: null
       outputFolder: no-custom-config
+    # Required-global wire coverage. The spec declares `x-custom-header`
+    # (required, env-backed, no default) and `api-version` (required, nothing
+    # to fall back on): the CLI refuses to run either command without a value,
+    # so this fails at `cargo test` if the harness stops passing a required
+    # global as a flag. Defaulted and optional globals stay unflagged.
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
