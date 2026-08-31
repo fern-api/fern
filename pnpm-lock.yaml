@@ -4531,6 +4531,9 @@ importers:
       '@inquirer/prompts':
         specifier: 'catalog:'
         version: 7.10.1(@types/node@22.19.17)
+      '@postman/sdk-config':
+        specifier: 0.1.0
+        version: 0.1.0
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -4959,9 +4962,6 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
-      '@postman/sdk-config':
-        specifier: 0.1.0
-        version: 0.1.0
       '@sentry/node':
         specifier: ^10.45.0
         version: 10.49.0
