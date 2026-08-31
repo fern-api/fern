@@ -746,6 +746,7 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        fernHostedOutput: generator.output?.location === "fern-hosted" ? { slug: generator.output.slug } : undefined,
         absolutePathToLocalSnippets:
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
@@ -971,6 +972,7 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
+        case "fern-hosted":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
             });
@@ -1097,6 +1099,11 @@ function getGithubPublishInfo(
         case "local-file-system":
             throw new CliError({
                 message: "Cannot use local-file-system with github publishing",
+                code: CliError.Code.ConfigError
+            });
+        case "fern-hosted":
+            throw new CliError({
+                message: "Cannot use fern-hosted with github publishing",
                 code: CliError.Code.ConfigError
             });
         case "npm":
