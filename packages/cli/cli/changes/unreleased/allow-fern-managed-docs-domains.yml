@@ -1,0 +1,5 @@
+- summary: |
+    Allow docs instance URLs on the Fern-managed `buildwithfern.dev`, `fernapi.dev`, `ferndocs.com`,
+    `ferndocs.dev`, and `fernmcp.dev` zones in addition to `docs.buildwithfern.com` and
+    `docs.dev.buildwithfern.com`.
+  type: fix
