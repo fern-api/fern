@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payment",
+                "method": "POST",
+                "identifier_override": "endpoint_service.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-idempotency-headers-optional/fern\"\n\tfernclient \"github.com/go-idempotency-headers-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreatePaymentRequest{\n\t\tAmount: 1,\n\t},\n)\n"
+            }
+        }
+    ]
+}

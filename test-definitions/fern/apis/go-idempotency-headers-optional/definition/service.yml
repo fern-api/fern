@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /payment
+  endpoints:
+    create:
+      docs: POST request that sends the idempotency headers
+      method: POST
+      path: ""
+      idempotent: true
+      request:
+        name: CreatePaymentRequest
+        body:
+          properties:
+            amount: integer
+      response: uuid
