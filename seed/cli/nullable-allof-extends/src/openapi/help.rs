@@ -184,11 +184,18 @@ fn build_operation_schema(
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        // A repeated flag carries `param_type: "string"` because clap collects
-        // strings; the spec's real element type lives in `item_type`. Rendering
-        // `param_type` as the element type advertised `items: {type: string}`
-        // for an array of objects, so an agent reading the contract sent
-        // `["x"]` and the validator rejected it.
+        // A repeated *body* flag carries `param_type: "string"` because clap
+        // collects strings; the spec's real element type lives in `item_type`.
+        // Rendering `param_type` as the element type advertised
+        // `items: {type: string}` for an array of objects, so an agent reading
+        // the contract sent `["x"]` and the validator rejected it.
+        //
+        // The `param_type` fallback is therefore correct for body arrays only.
+        // For a query, header or path array `param_type` is the *container*
+        // type `"array"`, which rendered `items: {"type": "array"}` — an array
+        // of arrays. `convert_parameter` resolves `item_type` eagerly for those
+        // (defaulting to `"string"`) so the fallback is never reached; it stays
+        // here for the body path and as a floor for hand-built parameters.
         let element_type = param
             .item_type
             .as_deref()
@@ -204,9 +211,18 @@ fn build_operation_schema(
                 "location": param.location.as_deref().unwrap_or("query"),
             })
         } else if param.repeated {
+            // Element enum belongs on `items`, not the property: the property
+            // is the array. Advertising it is half the fix — the executor
+            // enforces it (see `MethodParameter::item_enum_values`) — but
+            // without it an agent has no way to learn the legal values, and
+            // `--schema` is the surface it reads.
+            let mut items = json!({ "type": element_type });
+            if let (Some(values), Some(map)) = (&param.item_enum_values, items.as_object_mut()) {
+                map.insert("enum".to_string(), json!(values));
+            }
             json!({
                 "type": "array",
-                "items": { "type": element_type },
+                "items": items,
                 "description": param.description.as_deref().unwrap_or(""),
                 "location": param.location.as_deref().unwrap_or("query"),
             })
@@ -381,13 +397,19 @@ fn build_operation_schema(
         .collect();
     required.retain(|name| !covered.contains(name));
 
-    // Per ADR-0006: `--schema` is the agent-facing contract. Drop HTTP
-    // plumbing (`httpMethod`, `path`) — agents drive the CLI, not raw
-    // HTTP. Rename `parameters` → `input` to sidestep OpenAPI's narrow
-    // meaning (which excludes body fields) and pair symmetrically with
-    // `output`.
+    // `parameters` is renamed to `input` to sidestep OpenAPI's narrow meaning
+    // (which excludes body fields) and to pair symmetrically with `output`.
+    //
+    // `httpMethod` and `path` are present per ADR-0006's 2026-08-28 amendment.
+    // They were dropped as "HTTP-execution detail an agent never uses", but a
+    // real agent consumer needs them for a reason the original decision did not
+    // consider: they are how you tell a read from a write *before* running the
+    // command. `operation` and `description` are prose an agent has to guess
+    // from. That is a safety property, not plumbing.
     let mut output = json!({
         "operation": format!("{}.{}", resource_path.join("."), method_name),
+        "httpMethod": method.http_method,
+        "path": method.path,
         "description": method.description.as_deref().unwrap_or(""),
         "input": {
             "type": "object",
@@ -772,11 +794,13 @@ fn collect_resource_ops(res: &RestResource, path: &[&str], ops: &mut Vec<Value>)
     method_names.sort();
     for method_name in method_names {
         let m = &res.methods[method_name];
-        // Per ADR-0006: drop `httpMethod` and `path` from listings —
-        // they're HTTP-execution detail an agent driving the CLI never
-        // uses. Agents pick by `operation` + `description`.
+        // `httpMethod` / `path` are in the catalog too, per ADR-0006's
+        // 2026-08-28 amendment: an agent picking an operation from the listing
+        // is exactly when it most needs to know whether the call mutates.
         let mut entry = json!({
             "operation": format!("{}.{}", path.join("."), method_name),
+            "httpMethod": m.http_method,
+            "path": m.path,
             "description": m.description.as_deref().unwrap_or(""),
         });
         if let Some(availability) = m.availability {
@@ -859,26 +883,36 @@ mod tests {
     fn test_render_operation_schema() {
         let doc = make_doc();
         let schema = operation_schema(&doc, &["users"], "get").unwrap();
-        // Per ADR-0006: `httpMethod` and `path` are dropped from the
-        // per-op envelope, `parameters` is renamed to `input`.
-        assert!(schema.get("httpMethod").is_none(), "httpMethod should be dropped");
-        assert!(schema.get("path").is_none(), "path should be dropped");
+        // `parameters` is renamed to `input`; `httpMethod` and `path` are
+        // present per ADR-0006's 2026-08-28 amendment — they are how an agent
+        // tells a read from a write before running the command.
+        assert_eq!(schema["httpMethod"], "GET", "httpMethod must be advertised");
+        assert!(
+            schema["path"].is_string(),
+            "path must be advertised: {schema}",
+        );
         assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
     }
 
     #[test]
-    fn test_root_listing_drops_http_method_and_path() {
-        // Per ADR-0006: listings expose `operation` + `description` only.
-        // HTTP-plumbing fields are agent-irrelevant noise.
+    fn test_root_listing_advertises_http_method_and_path() {
+        // ADR-0006 originally dropped these as agent-irrelevant noise. The
+        // 2026-08-28 amendment restores them: the catalog is exactly where an
+        // agent chooses an operation, so it is where knowing whether the call
+        // mutates matters most. `operation` and `description` are prose it
+        // would otherwise have to guess from.
         let doc = make_doc();
         let output = list_all_operations(&doc);
         let arr = output.as_array().unwrap();
         assert!(!arr.is_empty());
         for op in arr {
-            assert!(op.get("httpMethod").is_none(), "httpMethod must be dropped from listings");
-            assert!(op.get("path").is_none(), "path must be dropped from listings");
+            assert!(
+                op["httpMethod"].is_string(),
+                "httpMethod must be advertised in listings: {op}",
+            );
+            assert!(op["path"].is_string(), "path must be advertised: {op}");
             assert!(op["operation"].is_string());
             assert!(op["description"].is_string());
         }
@@ -2079,6 +2113,94 @@ mod tests {
         // Scalar param: plain type.
         assert_eq!(props["subject"]["type"], "string");
         assert!(props["subject"]["items"].is_null());
+    }
+
+    #[test]
+    fn test_repeated_param_advertises_its_element_enum_on_items() {
+        // An array-of-enum parameter advertised no enum at all, so an agent
+        // reading the contract had no way to learn the legal values — and the
+        // CLI accepted anything and sent it.
+        let mut params = HashMap::new();
+        params.insert(
+            "event_types".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                item_enum_values: Some(vec!["sent".to_string(), "received".to_string()]),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "labels".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "/events".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["events"], "list", &method, &HashMap::new());
+        let props = &schema["input"]["properties"];
+
+        // The enum belongs on `items`, not the property: the property is the array.
+        assert_eq!(props["event_types"]["items"]["type"], "string");
+        assert_eq!(props["event_types"]["items"]["enum"], json!(["sent", "received"]));
+        assert!(props["event_types"]["enum"].is_null());
+        // A non-enum array is unchanged — no empty `enum` key invented.
+        assert!(props["labels"]["items"]["enum"].is_null());
+    }
+
+    #[test]
+    fn test_repeated_query_param_advertises_its_element_type_not_the_container() {
+        // A query array's `param_type` is the container type, so falling back
+        // to it advertised `items: {"type": "array"}` — an array of arrays —
+        // for every string-element query parameter. An agent reading that
+        // contract has no way to construct a correct value.
+        let mut params = HashMap::new();
+        params.insert(
+            "labels".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("string".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "ids".to_string(),
+            MethodParameter {
+                param_type: Some("array".to_string()),
+                item_type: Some("integer".to_string()),
+                location: Some("query".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "/threads".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["threads"], "list", &method, &HashMap::new());
+        let props = &schema["input"]["properties"];
+
+        assert_eq!(props["labels"]["type"], "array");
+        assert_eq!(
+            props["labels"]["items"]["type"], "string",
+            "a string-element query array must not advertise an array of arrays",
+        );
+        assert_eq!(props["ids"]["items"]["type"], "integer");
     }
 
     #[test]

@@ -1100,6 +1100,20 @@ pub struct MethodParameter {
     /// `None` means "string" — the overwhelmingly common case, and the value
     /// every pre-existing lowering produced.
     pub item_type: Option<String>,
+    /// Enum members an *element* of an array parameter may take, i.e. the
+    /// `items.enum` of `type: array, items: {$ref: SomeEnum}`.
+    ///
+    /// Separate from [`MethodParameter::enum_values`] because that one is
+    /// enforced by a clap `value_parser`, which cannot work here: a repeated
+    /// flag also accepts a whole JSON array in one argument
+    /// (`--labels '["a","b"]'`), and clap would reject that literal as a
+    /// non-member. So element enums are enforced after collection, in the
+    /// executor, and advertised as `items.enum` by `--schema`.
+    ///
+    /// Without this an array-of-enum parameter was completely unconstrained
+    /// while its scalar twin was checked — `--event-types bogus` went to the
+    /// API, `--direction bogus` did not.
+    pub item_enum_values: Option<Vec<String>>,
     /// True for `oneOf/anyOf [string, array<string>]` unions where a single
     /// value should be sent as a scalar string, not wrapped in a length-1
     /// array. Pure `type: array` params leave this `false`.
@@ -1233,6 +1247,13 @@ pub struct JsonSchema {
     #[serde(rename = "$ref")]
     pub schema_ref: Option<String>,
     pub items: Option<Box<JsonSchemaProperty>>,
+    /// The component's own `enum`. A property that reaches its enum through a
+    /// `$ref` resolves to a component, so without this field the members were
+    /// unreachable from the validator and an invalid value was accepted and
+    /// sent — while the identical enum declared inline on the property was
+    /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
+    #[serde(rename = "enum")]
+    pub enum_values: Option<Vec<String>>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors
