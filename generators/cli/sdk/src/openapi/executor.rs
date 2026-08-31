@@ -4099,7 +4099,11 @@ fn coerce_body_param_value(
 /// is not rejected for exceeding a limit the spec never declared, and so this
 /// agrees with the JSON-number path, which accepts the full `u64` range.
 fn is_integer_literal(raw: &str) -> bool {
-    let digits = raw.strip_prefix('-').or_else(|| raw.strip_prefix('+')).unwrap_or(raw);
+    // A leading `+` is not a valid JSON integer and most servers will not parse
+    // it as one, so accepting it here would just defer the 400 this check
+    // exists to prevent. Leading zeros are tolerated: `007` is unambiguous and
+    // servers routinely accept it.
+    let digits = raw.strip_prefix('-').unwrap_or(raw);
     !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit())
 }
 
@@ -4111,9 +4115,15 @@ fn is_integer_literal(raw: &str) -> bool {
 /// these specs accept on the wire. A local check exists to catch typos before
 /// a round trip, not to be stricter than the server it is standing in for.
 fn is_boolean_literal(raw: &str) -> bool {
+    // Exactly what pydantic/FastAPI accept for a query boolean. Single-letter
+    // forms (`t`/`f`/`y`/`n`) are deliberately absent: those frameworks reject
+    // them, and since the value is forwarded verbatim rather than normalized,
+    // accepting one locally only moves the 400 later — the opposite of the
+    // point. The rule is "do not be stricter than the server", not "accept
+    // anything plausible".
     matches!(
         raw.to_ascii_lowercase().as_str(),
-        "true" | "false" | "1" | "0" | "yes" | "no" | "on" | "off" | "t" | "f" | "y" | "n"
+        "true" | "false" | "1" | "0" | "yes" | "no" | "on" | "off"
     )
 }
 
@@ -4199,22 +4209,55 @@ fn validate_non_body_param_type(
     let Some(expected) = param.param_type.as_deref() else {
         return Ok(());
     };
-    // A repeated flag's `param_type` describes the element, and the collected
-    // value is an array — check each element instead of the container.
+    // The collected value of a repeated flag is an array, so check the
+    // elements. Against `item_type`, NOT `param_type`: for a non-body
+    // parameter `param_type` is the *container* type `"array"`, so recursing
+    // through this function compared every element against `"array"` and fell
+    // into the permissive `_ => true` arm below. `--ids abc` on an integer
+    // array passed local validation and reached the API as `?ids=abc` —
+    // exactly what this function exists to prevent. (`param_type` does
+    // describe the element for a *body* array, but body params never reach
+    // here.) `None` means string, which accepts anything.
     if let Value::Array(items) = value {
+        // `item_type` is authoritative when set. Falling back to `param_type`
+        // covers a param whose `param_type` already *is* the element type
+        // (the body-array convention) without ever comparing an element
+        // against the container type, which is the bug this fixes. `None`
+        // means string, which accepts anything.
+        let element_type = param
+            .item_type
+            .as_deref()
+            .or_else(|| param.param_type.as_deref().filter(|t| *t != "array"))
+            .unwrap_or("string");
         for item in items {
-            validate_non_body_param_type(name, item, param_def)?;
+            check_param_value_type(name, item, param, element_type)?;
         }
         return Ok(());
     }
     // An empty string is the shape a shell produces from an unset variable
     // (`--limit "$LIMIT"`). Rejecting it turned a request that previously went
     // out — as `?limit=` — into a hard local failure, so it stays accepted and
-    // the server decides. Only reached for a declared non-string type; the
-    // `_ => true` arm below already accepts anything on a string param.
+    // the server decides. Deliberately below the array branch: that rationale
+    // is about a whole flag value, not about an empty element inside a
+    // collected array, where nothing was ever omitted.
     if value.as_str() == Some("") {
         return Ok(());
     }
+    check_param_value_type(name, value, param, expected)
+}
+
+/// Type-check one already-unwrapped value against `expected`.
+///
+/// Split out of [`validate_non_body_param_type`] so an array element can be
+/// checked against its *element* type. Recursing through the outer function
+/// instead compared each element against the container type `"array"`, which
+/// falls into the permissive arm — so numeric array parameters went unchecked.
+fn check_param_value_type(
+    name: &str,
+    value: &Value,
+    param: &MethodParameter,
+    expected: &str,
+) -> Result<(), CliError> {
     let ok = match expected {
         // The string arm checks digit shape rather than `parse::<i64>()`, so
         // it agrees with the `Value::Number` arm: `n.is_u64()` accepted values
@@ -7345,8 +7388,6 @@ mod tests {
             json!("no"),
             json!("on"),
             json!("off"),
-            json!("t"),
-            json!("f"),
             json!("1"),
             json!("0"),
             json!(true),
@@ -7359,13 +7400,65 @@ mod tests {
             validate_non_body_param_type("flag", &good, Some(&bool_param))
                 .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
         }
-        // Still catches an actual typo, which is the whole point.
-        for bad in [json!("ture"), json!("maybe"), json!("2"), json!(2)] {
+        // Still catches an actual typo, which is the whole point. The
+        // single-letter forms are rejected on purpose — pydantic/FastAPI do not
+        // accept them, and the value is forwarded verbatim, so accepting one
+        // here would only move the 400 later.
+        for bad in [json!("ture"), json!("maybe"), json!("2"), json!(2), json!("t"), json!("y")] {
             assert!(
                 validate_non_body_param_type("flag", &bad, Some(&bool_param)).is_err(),
                 "{bad} should be rejected",
             );
         }
+    }
+
+    #[test]
+    fn test_array_param_elements_are_checked_against_the_element_type() {
+        // The realistic shape, straight from `convert_parameter`: a repeated
+        // non-body param has `param_type: "array"` (the CONTAINER type) and
+        // carries the element type in `item_type`. Recursing through the outer
+        // function compared each element against `"array"`, which falls into
+        // the permissive arm — so `--ids abc` on an integer array passed local
+        // validation and reached the API as `?ids=abc`.
+        let param = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            repeated: true,
+            ..Default::default()
+        };
+        validate_non_body_param_type("ids", &json!(["1", "2"]), Some(&param))
+            .expect("integer elements must pass");
+        for bad in [json!(["abc"]), json!(["1", "abc"]), json!(["1.5"]), json!([""])] {
+            assert!(
+                validate_non_body_param_type("ids", &bad, Some(&param)).is_err(),
+                "{bad} must be rejected",
+            );
+        }
+
+        // A string-element array still accepts anything, as before.
+        let strings = MethodParameter {
+            item_type: Some("string".to_string()),
+            ..param.clone()
+        };
+        validate_non_body_param_type("labels", &json!(["a", "1", ""]), Some(&strings))
+            .expect("string elements accept anything");
+    }
+
+    #[test]
+    fn test_whole_valued_json_number_counts_as_an_integer() {
+        // Recorded rather than incidental: the `Value::Number` arm accepts a
+        // whole-valued float so the flag and `--params` paths agree past
+        // `u64::MAX`, where serde widens the literal. `1.0` therefore passes
+        // and `1.5` does not.
+        let param = MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
+        validate_non_body_param_type("limit", &json!(1.0), Some(&param))
+            .expect("a whole-valued number is an integer here");
+        assert!(validate_non_body_param_type("limit", &json!(1.5), Some(&param)).is_err());
     }
 
     #[test]
@@ -7425,11 +7518,9 @@ mod tests {
             );
         }
 
-        // Shape is still enforced.
-        for bad in [json!("12a"), json!(""), json!("-"), json!("+"), json!("1_0")] {
-            if bad.as_str() == Some("") {
-                continue; // covered by the empty-string case above
-            }
+        // Shape is still enforced. (An empty string is deliberately accepted —
+        // see `test_typed_param_accepts_an_empty_string`.)
+        for bad in [json!("12a"), json!("-"), json!("+"), json!("1_0")] {
             assert!(
                 validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
                 "{bad} should be rejected",
