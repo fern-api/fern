@@ -43,6 +43,10 @@ abstract class AbstractRegistryPublicationMapper<
 
     public abstract map({ prefix, publish }: RegistryMappingArgs): PublicationMapper.Result | undefined;
 
+    public normalize(publish: PublishConfig): PublishConfig {
+        return publish;
+    }
+
     protected credentialDiagnostics(
         prefix: DiagnosticPath,
         registry: string,
@@ -104,8 +108,19 @@ class PypiPublicationMapper extends AbstractRegistryPublicationMapper<"python", 
 }
 
 class MavenPublicationMapper extends AbstractRegistryPublicationMapper<"java", "maven", "maven"> {
-    public map({ prefix, publish }: RegistryMappingArgs): PublicationMapper.Result | undefined {
+    public override normalize(publish: PublishConfig): PublishConfig {
         const maven = publish[this.mapping.fernPublishField];
+        if (maven == null) {
+            return publish;
+        }
+        return {
+            ...publish,
+            maven: { ...maven, coordinate: this.normalizeCoordinate(maven.coordinate) }
+        };
+    }
+
+    public map({ prefix, publish }: RegistryMappingArgs): PublicationMapper.Result | undefined {
+        const maven = this.normalize(publish)[this.mapping.fernPublishField];
         if (maven == null) {
             return undefined;
         }
@@ -122,7 +137,7 @@ class MavenPublicationMapper extends AbstractRegistryPublicationMapper<"java", "
                     {
                         code: "FERN_PUBLICATION_UNSUPPORTED",
                         severity: "warning",
-                        path: [...prefix, "maven.coordinate"],
+                        path: [...prefix, "maven", "coordinate"],
                         reason: "Maven coordinates must use groupId:artifactId format",
                         suggestedAction: "Set target.output.publish and target.package manually in SDK Config v1."
                     }
@@ -134,6 +149,13 @@ class MavenPublicationMapper extends AbstractRegistryPublicationMapper<"java", "
             package: { groupId, artifactId },
             publish: { registry: this.mapping.sdkConfigRegistry, ...(maven.url == null ? {} : { url: maven.url }) }
         };
+    }
+
+    private normalizeCoordinate(coordinate: string): string {
+        return coordinate
+            .split(":")
+            .map((part) => part.trim())
+            .join(":");
     }
 }
 
@@ -229,6 +251,17 @@ const PUBLICATION_MAPPERS_BY_LANGUAGE: PublicationMappersByLanguage = {
 
 /** Maps Fern package publication settings to SDK Config package and publish blocks. */
 export class PublicationMapper {
+    public normalizeTarget(target: Target): Target {
+        if (target.publish == null) {
+            return target;
+        }
+        const mapper = PUBLICATION_MAPPERS_BY_LANGUAGE[target.lang];
+        if (mapper == null) {
+            return target;
+        }
+        return { ...target, publish: mapper.normalize(target.publish) };
+    }
+
     public map({ index, target }: PublicationMapper.Args): PublicationMapper.Result {
         if (target.publish == null) {
             return { diagnostics: [] };

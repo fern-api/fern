@@ -34,17 +34,22 @@ export class TargetMapper {
     }
 
     public async map({ index, target }: TargetMapper.Args): Promise<TargetMapper.Result> {
-        const invocation = await this.invocationAdapter.adapt(target);
+        const normalizedTarget = this.publicationMapper.normalizeTarget(target);
+        const invocation = await this.invocationAdapter.adapt(normalizedTarget);
+        // Git delivery and its publishInfo are already represented by invocation.outputMode.
         const publication =
-            target.output.git == null ? this.publicationMapper.map({ target, index }) : { diagnostics: [] };
-        const packageConfig = { ...target.metadata, ...publication.package };
+            normalizedTarget.output.git == null
+                ? this.publicationMapper.map({ target: normalizedTarget, index })
+                : { diagnostics: [] };
+        // Registry package identity is more specific than general target metadata.
+        const packageConfig = { ...normalizedTarget.metadata, ...publication.package };
         const output: SdkConfigV1OutputConfig | undefined =
-            target.output.git != null
+            normalizedTarget.output.git != null
                 ? undefined
-                : target.output.path != null
+                : normalizedTarget.output.path != null
                   ? {
                         delivery: "files",
-                        path: target.output.path,
+                        path: normalizedTarget.output.path,
                         ...(publication.publish == null ? {} : { publish: publication.publish })
                     }
                   : publication.publish == null
@@ -54,8 +59,8 @@ export class TargetMapper {
             diagnostics: publication.diagnostics,
             generator: {
                 ...invocation,
-                sdkLanguage: target.lang,
-                readme: target.readme,
+                sdkLanguage: normalizedTarget.lang,
+                readme: normalizedTarget.readme,
                 ...(Object.keys(packageConfig).length > 0 ? { package: packageConfig } : {}),
                 ...(output == null ? {} : { output })
             }

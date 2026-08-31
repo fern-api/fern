@@ -2,7 +2,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
 import { randomUUID } from "crypto";
-import { link, rename, unlink, writeFile } from "fs/promises";
+import { constants } from "fs";
+import { copyFile, link, rename, unlink, writeFile } from "fs/promises";
 import { basename, dirname, join } from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
@@ -142,12 +143,15 @@ export class MigrateCommand {
         data: string
     ): Promise<void> {
         if (args.output === "-") {
-            context.stdout.info(data.trimEnd());
+            context.ttyAwareLogger.write(data);
             return;
         }
         const outputPath = context.resolveOutputFilePath(args.output);
         if (outputPath == null) {
-            throw new CliError({ message: "--output is required", code: CliError.Code.ConfigError });
+            throw new CliError({
+                message: `Could not resolve output path '${args.output}'`,
+                code: CliError.Code.ConfigError
+            });
         }
         await writeFileAtomically(outputPath, data, args.force);
         context.stderr.info(`Created SDK Config v1 at ${outputPath}`);
@@ -162,9 +166,10 @@ async function writeFileAtomically(outputPath: AbsoluteFilePath, data: string, f
         if (force) {
             await rename(temporary, output);
         } else {
-            await link(temporary, output);
+            await publishWithoutOverwrite(temporary, output);
         }
     } catch (error) {
+        await removeTemporaryFile(temporary, error);
         if (!force && isErrorWithCode(error, "EEXIST")) {
             throw new CliError({
                 message: `Output file '${output}' already exists. Use --force to replace it.`,
@@ -172,17 +177,44 @@ async function writeFileAtomically(outputPath: AbsoluteFilePath, data: string, f
             });
         }
         throw error;
-    } finally {
-        try {
-            await unlink(temporary);
-        } catch {
-            // The temporary file was already moved, linked and removed, or never created.
+    }
+    await removeTemporaryFile(temporary);
+}
+
+async function publishWithoutOverwrite(temporary: string, output: string): Promise<void> {
+    try {
+        await link(temporary, output);
+    } catch (error) {
+        if (!isUnsupportedHardLinkError(error)) {
+            throw error;
         }
+        await copyFile(temporary, output, constants.COPYFILE_EXCL);
+    }
+}
+
+async function removeTemporaryFile(temporary: string, originalError?: unknown): Promise<void> {
+    try {
+        await unlink(temporary);
+    } catch (cleanupError) {
+        if (isErrorWithCode(cleanupError, "ENOENT")) {
+            return;
+        }
+        if (originalError != null) {
+            throw new AggregateError(
+                [originalError, cleanupError],
+                `Could not complete the output write or remove '${temporary}'`
+            );
+        }
+        throw cleanupError;
     }
 }
 
 function isErrorWithCode(error: unknown, code: string): error is NodeJS.ErrnoException {
     return error instanceof Error && "code" in error && error.code === code;
+}
+
+function isUnsupportedHardLinkError(error: unknown): boolean {
+    return ["EPERM", "EXDEV", "ENOSYS", "ENOTSUP", "EOPNOTSUPP"].some((code) => isErrorWithCode(error, code));
 }
 
 export function addMigrateCommand(cli: Argv<GlobalArgs>): void {

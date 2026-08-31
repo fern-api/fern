@@ -62,6 +62,15 @@ describe("fern sdk migrate", () => {
         expect(JSON.parse(stdout)).toMatchObject({ schemaVersion: "sdk-config/v1" });
     });
 
+    it.each(["debug", "warn"])("writes raw JSON to stdout at %s log level", async (logLevel) => {
+        const { context, getStdout } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+        Object.defineProperty(context, "logLevel", { value: logLevel });
+
+        await new MigrateCommand().handle(context, args({ "log-level": logLevel }));
+
+        expect(JSON.parse(getStdout())).toMatchObject({ schemaVersion: "sdk-config/v1" });
+    });
+
     it("preserves API facts and local publication settings", async () => {
         const { context, getStdout } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
         const workspace = await context.loadWorkspaceOrThrow();

@@ -29,7 +29,7 @@ const MAPPINGS: MappingTestCase[] = [
     },
     {
         language: "java",
-        publish: { maven: { coordinate: "com.acme:sdk" } },
+        publish: { maven: { coordinate: " com.acme : sdk " } },
         expectedPackage: { groupId: "com.acme", artifactId: "sdk" },
         expectedRegistry: "maven"
     },
@@ -89,6 +89,24 @@ describe("PublicationMapper", () => {
 
         expect(result.diagnostics).toEqual([
             expect.objectContaining({ path: ["group", "generators", 0, "publish", "typescript"] })
+        ]);
+    });
+
+    it("uses discrete path segments for invalid Maven coordinates", async () => {
+        const { context } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+        const workspace = await context.loadWorkspaceOrThrow();
+        const target = workspace.sdks?.targets[0];
+        if (target == null) {
+            throw new Error("Expected an SDK target in test workspace");
+        }
+
+        const result = new PublicationMapper().map({
+            index: 0,
+            target: { ...target, lang: "java", publish: { maven: { coordinate: ":artifact" } } }
+        });
+
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({ path: ["group", "generators", 0, "publish", "maven", "coordinate"] })
         ]);
     });
 });
