@@ -84,6 +84,40 @@ service:
               the next page of results.
       response: ListUsersCursorPaginationResponse
 
+    listWithItemCursorPagination:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.data[-1].name
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListUsersItemCursorPaginationRequest
+        query-parameters:
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithFirstItemCursorPagination:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.data[0].name
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListUsersFirstItemCursorPaginationRequest
+        query-parameters:
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersCursorPaginationResponse
+
     listWithBodyCursorPagination:
       pagination:
         cursor: $request.starting_after

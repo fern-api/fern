@@ -12,7 +12,8 @@ import { CliError } from "@fern-api/task-context";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
-    maybeFileFromResolvedType
+    maybeFileFromResolvedType,
+    maybeListItemType
 } from "../converters/services/convertProperty.js";
 import { convertQueryParameter } from "../converters/services/convertQueryParameter.js";
 import { FernFileContext } from "../FernFileContext.js";
@@ -40,6 +41,12 @@ export interface PropertyResolver {
         file: FernFileContext;
         endpoint: string;
         propertyComponents: string[];
+    }) => ResponseProperty;
+    resolveResponseItemPropertyOrThrow: (args: {
+        file: FernFileContext;
+        endpoint: string;
+        listPropertyComponents: string[];
+        itemPropertyComponents: string[];
     }) => ResponseProperty;
 }
 
@@ -171,6 +178,79 @@ export class PropertyResolverImpl implements PropertyResolver {
                 propertyComponents,
                 resolvedType: resolvedEndpointResponseType,
                 file
+            }),
+            property: objectProperty
+        };
+    }
+
+    /**
+     * Resolves a property defined on the elements of a list property of the response,
+     * e.g. the `token` of `$response.data[-1].token`.
+     */
+    public resolveResponseItemPropertyOrThrow({
+        file,
+        endpoint,
+        listPropertyComponents,
+        itemPropertyComponents
+    }: {
+        file: FernFileContext;
+        endpoint: string;
+        listPropertyComponents: string[];
+        itemPropertyComponents: string[];
+    }): ResponseProperty {
+        const resolvedEndpoint = this.endpointResolver.resolveEndpointOrThrow({
+            endpoint,
+            file
+        });
+        const resolvedResponseType = this.typeResolver.resolveTypeOrThrow({
+            type:
+                (typeof resolvedEndpoint.endpoint.response !== "string"
+                    ? resolvedEndpoint.endpoint.response?.type
+                    : resolvedEndpoint.endpoint.response) ?? "",
+            file: resolvedEndpoint.file
+        });
+
+        const rootTypeTitle = getTitleForResolvedType(resolvedResponseType);
+        const breadcrumbs: string[] = [];
+        let resolvedListType = resolvedResponseType;
+        for (const component of listPropertyComponents) {
+            breadcrumbs.push(component);
+            resolvedListType = getNestedObjectPropertyTypeOrThrow({
+                typeResolver: this.typeResolver,
+                file: resolvedEndpoint.file,
+                resolvedType: resolvedListType,
+                propertyName: component,
+                breadcrumbs,
+                rootTypeTitle
+            });
+        }
+
+        const resolvedItemType = maybeListItemType(resolvedListType);
+        if (resolvedItemType == null) {
+            throw new CliError({
+                message: `Property '${listPropertyComponents.join(".")}' in ${rootTypeTitle} is not a list.`,
+                code: CliError.Code.ResolutionError
+            });
+        }
+
+        const itemFile = maybeFileFromResolvedType(resolvedItemType) ?? resolvedEndpoint.file;
+        const objectProperty = this.resolveObjectProperty({
+            file: itemFile,
+            resolvedType: resolvedItemType,
+            propertyComponents: itemPropertyComponents
+        });
+        if (objectProperty == null) {
+            throw new CliError({
+                message:
+                    "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
+        }
+        return {
+            propertyPath: this.propertyPathFromPropertyComponents({
+                propertyComponents: itemPropertyComponents,
+                resolvedType: resolvedItemType,
+                file: itemFile
             }),
             property: objectProperty
         };

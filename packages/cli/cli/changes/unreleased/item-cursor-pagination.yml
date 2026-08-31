@@ -1,0 +1,6 @@
+- summary: |
+    Support cursor pagination where the next cursor lives on an element of the current page's
+    results, e.g. `next_cursor: $response.data[-1].token`. `[0]` selects the first element and
+    `[-1]` the last; the indexed path must match the configured `results` property. This is
+    represented in the IR as the new `Pagination.itemCursor` variant.
+  type: feat

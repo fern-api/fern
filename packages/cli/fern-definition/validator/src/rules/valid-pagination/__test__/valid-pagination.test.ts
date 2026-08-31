@@ -108,6 +108,38 @@ describe("valid-pagination", () => {
             },
             {
                 message:
+                    "Pagination configuration for endpoint listWithUnsupportedItemCursorIndex specifies 'next_cursor' $response.data[2].name, but '[2]' is not a supported results index; only '[0]' (the first element) and '[-1]' (the last element) are supported.",
+                nodePath: ["service", "endpoints", "listWithUnsupportedItemCursorIndex"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-pagination",
+                severity: "fatal"
+            },
+            {
+                message:
+                    "Pagination configuration for endpoint listWithMismatchedItemCursorResults specifies 'next_cursor' $response.page.next[-1].starting_after, which must index into 'results' $response.data.",
+                nodePath: ["service", "endpoints", "listWithMismatchedItemCursorResults"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-pagination",
+                severity: "fatal"
+            },
+            {
+                message:
+                    "Pagination configuration for endpoint listWithMissingItemCursorProperty specifies 'next_cursor' $response.data[-1].typo, which is not a valid 'next_cursor' type on the elements of the results.",
+                nodePath: ["service", "endpoints", "listWithMissingItemCursorProperty"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-pagination",
+                severity: "fatal"
+            },
+            {
+                message:
+                    "Pagination configuration for endpoint listWithNonListItemCursorResults specifies 'next_cursor' $response.page[-1].per_page, which is not a valid 'next_cursor' type on the elements of the results.",
+                nodePath: ["service", "endpoints", "listWithNonListItemCursorResults"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-pagination",
+                severity: "fatal"
+            },
+            {
+                message:
                     "Pagination configuration for endpoint listWithInvalidGlobalConfig specifies 'offset' $request.offset, which is not a valid 'offset' type.",
                 nodePath: ["service", "endpoints", "listWithInvalidGlobalConfig"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),

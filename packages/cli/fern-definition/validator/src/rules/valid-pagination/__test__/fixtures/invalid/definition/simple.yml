@@ -122,6 +122,58 @@ service:
               the next page of results.
       response: ListUsersResponse
 
+    listWithUnsupportedItemCursorIndex:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.data[2].name
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListWithUnsupportedItemCursorIndexRequest
+        query-parameters:
+          starting_after: optional<string>
+      response: ListUsersResponse
+
+    listWithMismatchedItemCursorResults:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.page.next[-1].starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListWithMismatchedItemCursorResultsRequest
+        query-parameters:
+          starting_after: optional<string>
+      response: ListUsersResponse
+
+    listWithMissingItemCursorProperty:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.data[-1].typo
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListWithMissingItemCursorPropertyRequest
+        query-parameters:
+          starting_after: optional<string>
+      response: ListUsersResponse
+
+    listWithNonListItemCursorResults:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.page[-1].per_page
+        results: $response.page
+      method: GET
+      path: ""
+      request:
+        name: ListWithNonListItemCursorResultsRequest
+        query-parameters:
+          starting_after: optional<string>
+      response: ListUsersResponse
+
     listWithInvalidGlobalConfig:
       method: GET
       path: ""

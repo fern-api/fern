@@ -5,8 +5,10 @@ export {
 } from "./converters/services/convertHttpSdkRequest.js";
 export { getHeaderName, resolvePathParameter } from "./converters/services/convertHttpService.js";
 export { isRawPathPaginationSchema, isRawUriPaginationSchema } from "./converters/services/convertPaginationUtils.js";
+export { maybeListItemType } from "./converters/services/convertProperty.js";
 export { getQueryParameterName } from "./converters/services/convertQueryParameter.js";
 export { convertResponseErrors } from "./converters/services/convertResponseErrors.js";
+export { type ParsedNextCursorPath, parseNextCursorPath } from "./converters/services/itemCursorPath.js";
 export {
     getSingleUnionTypeName,
     getUnionDiscriminant,

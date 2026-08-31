@@ -1,12 +1,15 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { FernFileContext, parseNextCursorPath, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
 import { RuleViolation } from "../../Rule.js";
 import {
+    getResponsePropertyComponents,
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolvedTypeHasProperty,
+    resolvedTypeListItemHasProperty,
     resolveResponseType
 } from "../../utils/propertyValidatorUtils.js";
 import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils.js";
@@ -51,7 +54,7 @@ export function validateCursorPagination({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
             resolvedResponseType,
-            nextProperty: cursorPagination.next_cursor
+            cursorPagination
         })
     );
 
@@ -99,25 +102,85 @@ function validateNextCursorProperty({
     typeResolver,
     file,
     resolvedResponseType,
-    nextProperty
+    cursorPagination
 }: {
     endpointId: string;
     typeResolver: TypeResolver;
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
-    nextProperty: string;
+    cursorPagination: RawSchemas.CursorPaginationSchema;
 }): RuleViolation[] {
-    return validateResponseProperty({
-        endpointId,
-        typeResolver,
-        file,
-        resolvedResponseType,
-        responseProperty: nextProperty,
-        propertyValidator: {
-            propertyID: "next_cursor",
-            validate: isValidCursorProperty
+    const nextCursorComponents = getResponsePropertyComponents(cursorPagination.next_cursor);
+    const parsedNextCursor = nextCursorComponents != null ? parseNextCursorPath(nextCursorComponents) : undefined;
+
+    if (parsedNextCursor == null || parsedNextCursor.type === "responseProperty") {
+        return validateResponseProperty({
+            endpointId,
+            typeResolver,
+            file,
+            resolvedResponseType,
+            responseProperty: cursorPagination.next_cursor,
+            propertyValidator: {
+                propertyID: "next_cursor",
+                validate: isValidCursorProperty
+            }
+        });
+    }
+
+    switch (parsedNextCursor.type) {
+        case "invalid":
+            return [
+                {
+                    severity: "fatal",
+                    message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies 'next_cursor' ${
+                        cursorPagination.next_cursor
+                    }, but ${parsedNextCursor.message}.`
+                }
+            ];
+        case "itemCursor": {
+            const resultsComponents = getResponsePropertyComponents(cursorPagination.results);
+            if (resultsComponents != null && !isSamePath(resultsComponents, parsedNextCursor.resultsComponents)) {
+                return [
+                    {
+                        severity: "fatal",
+                        message: `Pagination configuration for endpoint ${chalk.bold(
+                            endpointId
+                        )} specifies 'next_cursor' ${cursorPagination.next_cursor}, which must index into 'results' ${
+                            cursorPagination.results
+                        }.`
+                    }
+                ];
+            }
+            if (
+                !resolvedTypeListItemHasProperty({
+                    typeResolver,
+                    file,
+                    resolvedType: resolvedResponseType,
+                    listPropertyComponents: parsedNextCursor.resultsComponents,
+                    itemPropertyComponents: parsedNextCursor.itemComponents,
+                    validate: isValidCursorType
+                })
+            ) {
+                return [
+                    {
+                        severity: "fatal",
+                        message: `Pagination configuration for endpoint ${chalk.bold(
+                            endpointId
+                        )} specifies 'next_cursor' ${
+                            cursorPagination.next_cursor
+                        }, which is not a valid 'next_cursor' type on the elements of the results.`
+                    }
+                ];
+            }
+            return [];
         }
-    });
+        default:
+            assertNever(parsedNextCursor);
+    }
+}
+
+function isSamePath(a: string[], b: string[]): boolean {
+    return a.length === b.length && a.every((component, index) => component === b[index]);
 }
 
 function isValidCursorProperty({
