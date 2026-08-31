@@ -308,9 +308,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "i." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		f.P("if i.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-		// valueTypeFormat.Prefix is a Go expression prefix (e.g. "*" to dereference an
-		// optional, or a base64 encode call) and belongs only in the value expression
-		// built above -- never in the format string, where it would be sent on the wire.
+		// Prefix is a Go expression prefix, not a wire prefix: it belongs in value, not the format string.
 		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v",`, value, "))")
 		f.P("}")
 	}

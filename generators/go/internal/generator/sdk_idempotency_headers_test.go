@@ -3,6 +3,7 @@ package generator
 import (
 	"strings"
 	"testing"
+	"unicode"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"github.com/fern-api/fern-go/internal/fern/ir/common"
@@ -17,6 +18,17 @@ func idempotentRequestOptionsSourceForHeaders(t *testing.T, headers []*ir.HttpHe
 		t.Fatalf("WriteIdempotentRequestOptionsDefinition returned error: %v", err)
 	}
 	return f.buffer.String()
+}
+
+// stripSpace removes all whitespace so assertions on emitted source do not depend
+// on how the file writer joins its arguments. The buffer is pre-gofmt.
+func stripSpace(s string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsSpace(r) {
+			return -1
+		}
+		return r
+	}, s)
 }
 
 // TestIdempotencyHeadersSendTheSuppliedValue asserts that the emitted ToHeader
@@ -42,17 +54,17 @@ func TestIdempotencyHeadersSendTheSuppliedValue(t *testing.T) {
 		`fmt.Sprintf("*%v"`,
 		`fmt.Sprintf("base64.StdEncoding.EncodeToString(`,
 	} {
-		if strings.Contains(src, unwanted) {
+		if strings.Contains(stripSpace(src), stripSpace(unwanted)) {
 			t.Errorf("emitted source must not contain %q, but does:\n%s", unwanted, src)
 		}
 	}
 
 	for _, want := range []string{
-		`header.Set("Idempotency-Key", fmt.Sprintf("%v",i.IdempotencyKey))`,
-		`header.Set("X-Idempotency-Key", fmt.Sprintf("%v",*i.XIdempotencyKey))`,
-		`header.Set("X-Idempotency-Bytes", fmt.Sprintf("%v",base64.StdEncoding.EncodeToString(*i.XIdempotencyBytes)))`,
+		`header.Set("Idempotency-Key", fmt.Sprintf("%v", i.IdempotencyKey))`,
+		`header.Set("X-Idempotency-Key", fmt.Sprintf("%v", *i.XIdempotencyKey))`,
+		`header.Set("X-Idempotency-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*i.XIdempotencyBytes)))`,
 	} {
-		if !strings.Contains(src, want) {
+		if !strings.Contains(stripSpace(src), stripSpace(want)) {
 			t.Errorf("emitted source must contain %q, but does not:\n%s", want, src)
 		}
 	}
