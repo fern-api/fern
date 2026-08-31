@@ -78,13 +78,13 @@ export interface ParseOpenAPIOptions {
     /**
      * A schema may declare `properties` alongside an `anyOf` whose branches only
      * re-declare those same properties as required. The `anyOf` is then a
-     * validation constraint ("at least one of these"), not a set of variants, so
-     * the schema is converted as an object from its own `properties`.
+     * validation constraint ("at least one of these"), not a set of variants.
      *
-     * Set to true to restore the previous behavior of converting such a schema to
-     * a union, which discards the sibling `properties`. Defaults to false.
+     * If true, such a schema is converted as an object from its own `properties`.
+     * If false, it is converted to a union, which discards the sibling
+     * `properties`. Defaults to false.
      */
-    preserveAnyOfAsUnion: boolean;
+    anyOfSiblingPropertiesAsObject: boolean;
 
     /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
@@ -216,7 +216,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
     preserveOneOfInAllOf: false,
-    preserveAnyOfAsUnion: false,
+    anyOfSiblingPropertiesAsObject: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,

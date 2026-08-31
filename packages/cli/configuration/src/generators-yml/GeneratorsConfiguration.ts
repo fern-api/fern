@@ -86,7 +86,7 @@ export interface APIDefinitionSettings {
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
     preserveOneOfInAllOf: boolean | undefined;
-    preserveAnyOfAsUnion: boolean | undefined;
+    anyOfSiblingPropertiesAsObject: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;

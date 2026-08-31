@@ -1202,11 +1202,10 @@ export function convertSchemaObject(
             // an "at least one of" constraint, not a set of variants. Convert the schema
             // as the object it declares so a body carrying several of those properties
             // keeps all of them. See anyOfIsPresenceConstraint.
-            if (!context.options.preserveAnyOfAsUnion && anyOfIsPresenceConstraint(schema)) {
-                context.logger.warn(
+            if (context.options.anyOfSiblingPropertiesAsObject && anyOfIsPresenceConstraint(schema)) {
+                context.logger.debug(
                     `Treating the anyOf at ${breadcrumbs.join(".")} as an "at least one of" constraint over its ` +
-                        `sibling properties rather than a union, and converting the schema as an object. ` +
-                        `Set the preserve-any-of-as-union setting to restore the previous behavior.`
+                        `sibling properties rather than a union, and converting the schema as an object.`
                 );
                 const { anyOf: _constraint, ...schemaWithoutAnyOf } = schema;
                 const convertedSchema = convertSchema(

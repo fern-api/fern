@@ -37,7 +37,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "type-dates-as-strings": "typeDatesAsStrings",
     "preserve-single-schema-oneof": "preserveSingleSchemaOneof",
     "preserve-one-of-in-all-of": "preserveOneOfInAllOf",
-    "preserve-any-of-as-union": "preserveAnyOfAsUnion",
+    "any-of-sibling-properties-as-object": "anyOfSiblingPropertiesAsObject",
     "inline-all-of-schemas": "inlineAllOfSchemas",
     "resolve-aliases": "resolveAliases",
     "group-multi-api-environments": "groupMultiApiEnvironments",

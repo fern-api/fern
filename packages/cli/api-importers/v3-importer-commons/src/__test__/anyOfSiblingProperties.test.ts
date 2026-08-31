@@ -76,9 +76,14 @@ function createContext(settingsOverrides?: Parameters<typeof getOpenAPISettings>
 // A schema may declare `properties` alongside an `anyOf` whose branches only mark
 // some of those same properties required. Per JSON Schema an instance must satisfy
 // both keywords, so the anyOf is an "at least one of" constraint, not a set of
-// variants. Converting it as a union dropped the sibling `properties` and made the
-// variants mutually exclusive, so a body carrying two of them silently lost one.
+// variants. Converting it as a union drops the sibling `properties` and makes the
+// variants mutually exclusive, so a body carrying two of them silently loses one.
+// The object conversion is opt-in via `any-of-sibling-properties-as-object`.
 describe("anyOf alongside sibling properties", () => {
+    const asObject: Parameters<typeof getOpenAPISettings>[0] = {
+        options: { anyOfSiblingPropertiesAsObject: true }
+    };
+
     const constraintSchema: OpenAPIV3_1.SchemaObject = {
         type: "object",
         properties: {
@@ -103,8 +108,13 @@ describe("anyOf alongside sibling properties", () => {
         }).convert();
     }
 
-    it("converts to an object carrying every sibling property, not a union", () => {
+    it("converts to a union by default", () => {
         const output = convert(constraintSchema);
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("undiscriminatedUnion");
+    });
+
+    it("converts to an object carrying every sibling property when enabled", () => {
+        const output = convert(constraintSchema, asObject);
         const shape = output?.convertedSchema.typeDeclaration.shape;
         expect(shape?.type).toBe("object");
         const propertyNames = shape?.type === "object" ? shape.properties.map((p) => String(p.name)) : [];
@@ -112,41 +122,42 @@ describe("anyOf alongside sibling properties", () => {
     });
 
     it("marks the properties optional, since the anyOf constraint is not expressible", () => {
-        const output = convert(constraintSchema);
+        const output = convert(constraintSchema, asObject);
         const shape = output?.convertedSchema.typeDeclaration.shape;
         const allOptional = shape?.type === "object" && shape.properties.every((p) => p.valueType.type === "container");
         expect(allOptional).toBe(true);
     });
 
-    it("still converts to a union when preserveAnyOfAsUnion is set", () => {
-        const output = convert(constraintSchema, { options: { preserveAnyOfAsUnion: true } });
-        expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("undiscriminatedUnion");
-    });
-
     it("leaves a genuine union alone when a branch introduces a property", () => {
-        const output = convert({
-            type: "object",
-            properties: { shared: { type: "string" } },
-            anyOf: [
-                { type: "object", properties: { shared: { type: "string" } }, required: ["shared"] },
-                { type: "object", properties: { extra: { type: "string" } }, required: ["extra"] }
-            ]
-        });
+        const output = convert(
+            {
+                type: "object",
+                properties: { shared: { type: "string" } },
+                anyOf: [
+                    { type: "object", properties: { shared: { type: "string" } }, required: ["shared"] },
+                    { type: "object", properties: { extra: { type: "string" } }, required: ["extra"] }
+                ]
+            },
+            asObject
+        );
         expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("undiscriminatedUnion");
     });
 
     // The openapi-ir-parser detector excludes a sibling allOf, so this path must too:
     // otherwise the two importers classify the same schema differently.
     it("leaves a schema alone when an allOf composes with the anyOf", () => {
-        const output = convert({
-            type: "object",
-            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
-            allOf: [{ type: "object", properties: { c: { type: "string" } } }],
-            anyOf: [
-                { type: "object", properties: { a: { type: "boolean" } }, required: ["a"] },
-                { type: "object", properties: { b: { type: "boolean" } }, required: ["b"] }
-            ]
-        });
+        const output = convert(
+            {
+                type: "object",
+                properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+                allOf: [{ type: "object", properties: { c: { type: "string" } } }],
+                anyOf: [
+                    { type: "object", properties: { a: { type: "boolean" } }, required: ["a"] },
+                    { type: "object", properties: { b: { type: "boolean" } }, required: ["b"] }
+                ]
+            },
+            asObject
+        );
         expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
     });
 
@@ -154,14 +165,17 @@ describe("anyOf alongside sibling properties", () => {
     // collapsing these would discard a real discriminant under a warning that
     // claims to be preserving fields.
     it("leaves a union alone when branches narrow a property to different literals", () => {
-        const output = convert({
-            type: "object",
-            properties: { kind: { type: "string" }, value: { type: "string" } },
-            anyOf: [
-                { type: "object", properties: { kind: { const: "a" } }, required: ["kind"] },
-                { type: "object", properties: { kind: { const: "b" } }, required: ["kind"] }
-            ]
-        });
+        const output = convert(
+            {
+                type: "object",
+                properties: { kind: { type: "string" }, value: { type: "string" } },
+                anyOf: [
+                    { type: "object", properties: { kind: { const: "a" } }, required: ["kind"] },
+                    { type: "object", properties: { kind: { const: "b" } }, required: ["kind"] }
+                ]
+            },
+            asObject
+        );
         expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
     });
 
@@ -170,28 +184,34 @@ describe("anyOf alongside sibling properties", () => {
     it("treats an empty or restating branch subschema as a presence constraint", () => {
         const branchSubschemas: OpenAPIV3_1.SchemaObject[] = [{}, { type: "boolean" }];
         for (const branchSubschema of branchSubschemas) {
-            const output = convert({
-                type: "object",
-                properties: { a: { type: "boolean" }, b: { type: "boolean" } },
-                anyOf: [
-                    { type: "object", properties: { a: branchSubschema }, required: ["a"] },
-                    { type: "object", properties: { b: branchSubschema }, required: ["b"] }
-                ]
-            });
+            const output = convert(
+                {
+                    type: "object",
+                    properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+                    anyOf: [
+                        { type: "object", properties: { a: branchSubschema }, required: ["a"] },
+                        { type: "object", properties: { b: branchSubschema }, required: ["b"] }
+                    ]
+                },
+                asObject
+            );
             expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("object");
         }
     });
 
     // Both converters must accept the array spelling of `type`.
     it('accepts a branch written type: ["object"]', () => {
-        const output = convert({
-            type: "object",
-            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
-            anyOf: [
-                { type: ["object"], properties: { a: {} }, required: ["a"] },
-                { type: ["object"], properties: { b: {} }, required: ["b"] }
-            ]
-        });
+        const output = convert(
+            {
+                type: "object",
+                properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+                anyOf: [
+                    { type: ["object"], properties: { a: {} }, required: ["a"] },
+                    { type: ["object"], properties: { b: {} }, required: ["b"] }
+                ]
+            },
+            asObject
+        );
         expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("object");
     });
 
@@ -200,14 +220,17 @@ describe("anyOf alongside sibling properties", () => {
     // the anyOf block, so the constraint is detected there; this path must not
     // silently leave the union in place.
     it("detects the constraint on a nullable object written type: [object, null]", () => {
-        const output = convert({
-            type: ["object", "null"],
-            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
-            anyOf: [
-                { type: "object", properties: { a: {} }, required: ["a"] },
-                { type: "object", properties: { b: {} }, required: ["b"] }
-            ]
-        });
+        const output = convert(
+            {
+                type: ["object", "null"],
+                properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+                anyOf: [
+                    { type: "object", properties: { a: {} }, required: ["a"] },
+                    { type: "object", properties: { b: {} }, required: ["b"] }
+                ]
+            },
+            asObject
+        );
         // The nullable wrapper becomes an alias over an inlined named type; the
         // constraint must have been applied to that inlined object.
         const inlinedShapes = Object.values(output?.inlinedTypes ?? {}).map((t) => t.typeDeclaration.shape?.type);
@@ -216,9 +239,12 @@ describe("anyOf alongside sibling properties", () => {
     });
 
     it("leaves a bare anyOf with no sibling properties alone", () => {
-        const output = convert({
-            anyOf: [{ type: "string" }, { type: "number" }]
-        });
+        const output = convert(
+            {
+                anyOf: [{ type: "string" }, { type: "number" }]
+            },
+            asObject
+        );
         expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("undiscriminatedUnion");
     });
 });

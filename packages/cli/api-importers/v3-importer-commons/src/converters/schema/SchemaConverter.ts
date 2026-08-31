@@ -567,19 +567,20 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
      * This only applies when every branch is an inline object whose properties are
      * a subset of the sibling `properties`. A branch that introduces a property,
      * or is a reference, is a genuine variant and is left to the union converter.
+     *
+     * Gated behind the `any-of-sibling-properties-as-object` setting.
      */
     private tryConvertSiblingAnyOfConstraint(): SchemaConverter.Output | undefined {
-        if (this.context.settings.preserveAnyOfAsUnion) {
+        if (!this.context.settings.anyOfSiblingPropertiesAsObject) {
             return undefined;
         }
         if (!anyOfIsPresenceConstraint(this.schema)) {
             return undefined;
         }
 
-        this.context.logger.warn(
+        this.context.logger.debug(
             `Treating the anyOf at ${this.breadcrumbs.join(".")} as an "at least one of" constraint ` +
-                `over its sibling properties rather than a union, and converting the schema as an object. ` +
-                `Set the preserve-any-of-as-union setting to restore the previous behavior.`
+                `over its sibling properties rather than a union, and converting the schema as an object.`
         );
 
         // Convert a copy rather than mutating this.schema: the schema object belongs

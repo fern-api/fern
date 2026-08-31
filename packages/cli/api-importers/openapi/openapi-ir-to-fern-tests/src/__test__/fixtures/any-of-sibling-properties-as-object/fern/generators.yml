@@ -3,4 +3,4 @@ api:
   specs:
     - openapi: ../openapi.yml
       settings:
-        preserve-any-of-as-union: true
+        any-of-sibling-properties-as-object: true
