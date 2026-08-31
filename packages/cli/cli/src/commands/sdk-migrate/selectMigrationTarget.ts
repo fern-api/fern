@@ -57,13 +57,6 @@ async function selectWorkspace(
         if (workspace != null) {
             return workspace;
         }
-        const onlyWorkspace = workspaces[0];
-        if (workspaces.length === 1 && onlyWorkspace != null && onlyWorkspace.workspaceName == null) {
-            throw new CliError({
-                message: `This project contains one API; omit --api instead of using '${requestedApi}'.`,
-                code: CliError.Code.ConfigError
-            });
-        }
         throw new CliError({
             message: `API '${requestedApi}' not found. Available APIs: ${workspaceNames(workspaces).join(", ")}`,
             code: CliError.Code.ConfigError

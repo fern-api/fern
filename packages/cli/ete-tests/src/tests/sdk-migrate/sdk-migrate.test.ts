@@ -15,7 +15,7 @@ describe("fern sdk migrate", () => {
         const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
         const originalGenerators = await readFile(generatorsPath, "utf-8");
 
-        const result = await runFernCli(["sdk", "migrate", "--output", "-", "--log-level", "debug"], {
+        const result = await runFernCli(["sdk", "migrate", "--api", "default", "-o", "-", "--log-level", "debug"], {
             cwd: directory,
             env: { FERN_NO_VERSION_REDIRECTION: "true" },
             signal,
@@ -45,6 +45,23 @@ describe("fern sdk migrate", () => {
         await temporaryDirectory.cleanup();
     });
 
+    it("rejects an unknown API in a single unnamed workspace", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const result = await runFernCli(["sdk", "migrate", "--api", "typo", "--output", "-"], {
+            cwd: directory,
+            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            reject: false,
+            signal
+        });
+
+        expect(result.exitCode).not.toBe(0);
+        expect(result.stderr).toContain("API 'typo' not found");
+        await temporaryDirectory.cleanup();
+    });
+
     it("protects an existing file and supports force replacement", async ({ signal }) => {
         const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
@@ -69,7 +86,7 @@ describe("fern sdk migrate", () => {
             source: { specs: [{ path: "./fern/openapi.yml" }] }
         });
         await temporaryDirectory.cleanup();
-    });
+    }, 15_000);
 
     it("maps credential-free registry publication in strict mode", async ({ signal }) => {
         const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });

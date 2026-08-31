@@ -48,11 +48,13 @@ export function mapFernDefinitionToSdkConfigApi(definition: FernDefinition): {
     diagnostics: FernConfigMappingDiagnostic[];
 } {
     const root = definition.rootApiFile.contents;
-    const environments = Object.entries(root.environments ?? {}).map(([name, environment]) => ({
-        name,
-        urls: mapEnvironmentUrls(environment),
-        ...(typeof environment === "string" || environment.docs == null ? {} : { description: environment.docs })
-    }));
+    const environments = Object.entries(root.environments ?? {})
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([name, environment]) => ({
+            name,
+            urls: mapEnvironmentUrls(environment),
+            ...(typeof environment === "string" || environment.docs == null ? {} : { description: environment.docs })
+        }));
     const headers = Object.entries(root.headers ?? {}).map(([headerName, header]) =>
         typeof header === "string"
             ? { name: headerName }
@@ -217,7 +219,9 @@ function mapEnvironmentUrls(
     if ("url" in environment) {
         return [{ name: "default", url: environment.url }];
     }
-    return Object.entries(environment.urls).map(([name, url]) => ({ name, url }));
+    return Object.entries(environment.urls)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([name, url]) => ({ name, url }));
 }
 
 function normalizeGeneratorForMapping(generator: generatorsYml.GeneratorInvocation): FernResolvedGeneratorInput {
@@ -228,6 +232,7 @@ function normalizeGeneratorForMapping(generator: generatorsYml.GeneratorInvocati
 }
 
 function normalizeResolvedOutput(value: unknown, fieldName?: string): unknown {
+    // Coordinates are normalized before the SDK Config mapper validates their segments.
     if (fieldName === "coordinate" && typeof value === "string") {
         return value
             .split(":")
@@ -242,6 +247,9 @@ function normalizeResolvedOutput(value: unknown, fieldName?: string): unknown {
     }
     return Object.fromEntries(
         Object.entries(value).flatMap(([key, child]) => {
+            // `_visit` is a generated Fern union helper. Empty credential placeholders are removed
+            // to avoid false diagnostics; configured credentials remain so the mapper can warn.
+            // False `downloadSnippets` is the default rather than explicit migration intent.
             if (key === "_visit" || isEmptyCredential(key, child) || (key === "downloadSnippets" && child === false)) {
                 return [];
             }

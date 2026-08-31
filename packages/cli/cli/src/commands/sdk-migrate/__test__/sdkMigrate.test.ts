@@ -172,6 +172,35 @@ describe("SDK Config migration", () => {
         ]);
     });
 
+    it("sorts named environment URLs deterministically", () => {
+        const definition = createDefinition();
+        definition.rootApiFile.contents.environments = {
+            Secondary: {
+                urls: {
+                    secondary: "https://secondary.example.com",
+                    primary: "https://primary.example.com"
+                }
+            },
+            Primary: "https://default.example.com"
+        };
+
+        const result = mapFernDefinitionToSdkConfigApi(definition);
+
+        expect(result.api.environments).toEqual([
+            {
+                name: "Primary",
+                urls: [{ name: "default", url: "https://default.example.com" }]
+            },
+            {
+                name: "Secondary",
+                urls: [
+                    { name: "primary", url: "https://primary.example.com" },
+                    { name: "secondary", url: "https://secondary.example.com" }
+                ]
+            }
+        ]);
+    });
+
     it("rejects duplicate target languages", () => {
         const group = createGroup([
             createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3"),
@@ -315,7 +344,7 @@ describe("SDK Config migration target selection", () => {
         ).rejects.toSatisfy(
             (error) =>
                 error instanceof CliError &&
-                error.message === "This project contains one API; omit --api instead of using 'missing'."
+                error.message === "API 'missing' not found. Available APIs: default"
         );
     });
 });
