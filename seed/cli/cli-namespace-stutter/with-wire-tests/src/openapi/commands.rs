@@ -836,11 +836,31 @@ fn build_resource_command(
                 crate::text::CLI_SHORT_DESCRIPTION_LIMIT,
                 true,
             ));
-            let long_help_text = decorate(&crate::text::truncate_description(
-                &description,
-                crate::text::CLI_LONG_DESCRIPTION_LIMIT,
-                true,
-            ));
+            let long_help_text = {
+                let text = decorate(&crate::text::truncate_description(
+                    &description,
+                    crate::text::CLI_LONG_DESCRIPTION_LIMIT,
+                    true,
+                ));
+                // A repeated flag accepts two forms and the value name can only
+                // show one. It used to read `<JSON_ARRAY>`, which at least
+                // hinted at the array form; now that it correctly shows the
+                // element type, nothing on the surface says the flag can be
+                // repeated or handed a whole array. Both work, so say so — in
+                // the long help only, since the short form is width-limited and
+                // truncated.
+                if param.repeated {
+                    let hint = "Repeatable: pass the flag once per value, \
+                                or supply a JSON array as a single value.";
+                    if text.is_empty() {
+                        hint.to_string()
+                    } else {
+                        format!("{text}\n\n{hint}")
+                    }
+                } else {
+                    text
+                }
+            };
 
             let arg_id = param_clap_arg_id(param_name);
             let mut arg = Arg::new(arg_id)
@@ -1038,8 +1058,13 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
 /// strings — so the spec's real element type lives in `item_type`. Reading
 /// `param_type` here made an array-of-objects flag advertise `<STRING>` while
 /// `--schema` (correctly) said `items: {type: object}` and the collector
-/// decoded objects: three surfaces, two answers. `item_type: None` means
-/// string, so non-array and string-array flags are unchanged.
+/// decoded objects: three surfaces, two answers.
+///
+/// The `param_type` fallback is only correct for *body* arrays, where
+/// `param_type` already holds the element type. On a query, header or path
+/// array it is the container type `"array"`, so those must arrive with
+/// `item_type` resolved — `convert_parameter` spells it out, defaulting to
+/// `Some("string")`, rather than leaving it `None` and falling through here.
 fn value_name_for(param: &MethodParameter) -> &'static str {
     let value_type = if param.repeated {
         param.item_type.as_deref().or(param.param_type.as_deref())
@@ -3340,6 +3365,80 @@ paths:
     }
 
     #[test]
+    fn test_repeated_flag_long_help_discloses_both_input_forms() {
+        // The value name can only show one form. It used to read
+        // `<JSON_ARRAY>`, which at least hinted at the array form; once it
+        // correctly shows the element type, nothing on the surface says the
+        // flag is repeatable or accepts a whole array. Both work.
+        let doc = crate::openapi::discovery::RestDescription {
+            resources: HashMap::from([(
+                "threads".to_string(),
+                crate::openapi::discovery::RestResource {
+                    methods: HashMap::from([(
+                        "list".to_string(),
+                        crate::openapi::discovery::RestMethod {
+                            http_method: "GET".to_string(),
+                            path: "/threads".to_string(),
+                            parameters: HashMap::from([
+                                (
+                                    "labels".to_string(),
+                                    MethodParameter {
+                                        param_type: Some("array".to_string()),
+                                        item_type: Some("string".to_string()),
+                                        location: Some("query".to_string()),
+                                        repeated: true,
+                                        description: Some("Filter by label.".to_string()),
+                                        ..Default::default()
+                                    },
+                                ),
+                                (
+                                    "limit".to_string(),
+                                    MethodParameter {
+                                        param_type: Some("integer".to_string()),
+                                        location: Some("query".to_string()),
+                                        description: Some("Page size.".to_string()),
+                                        ..Default::default()
+                                    },
+                                ),
+                            ]),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        let cmd = build_cli(&doc);
+        let sub = cmd
+            .get_subcommands()
+            .find(|c| c.get_name() == "threads")
+            .and_then(|c| c.get_subcommands().find(|m| m.get_name() == "list"))
+            .expect("threads list");
+
+        let long_help_for = |flag: &str| -> String {
+            sub.get_arguments()
+                .find(|a| a.get_long() == Some(flag))
+                .map(|a| {
+                    a.get_long_help()
+                        .or_else(|| a.get_help())
+                        .map(|h| h.to_string())
+                        .unwrap_or_default()
+                })
+                .unwrap_or_default()
+        };
+
+        let labels = long_help_for("labels");
+        assert!(labels.contains("Filter by label."), "keeps the description: {labels}");
+        assert!(labels.contains("Repeatable"), "must disclose repeatability: {labels}");
+        assert!(labels.contains("JSON array"), "must disclose the array form: {labels}");
+
+        // A non-repeated flag gains nothing.
+        let limit = long_help_for("limit");
+        assert!(!limit.contains("Repeatable"), "not repeatable: {limit}");
+    }
+
+    #[test]
     fn test_repeated_flag_value_name_uses_the_element_type() {
         // An array-of-objects flag advertised `<STRING>` in `--help` while
         // `--schema` said `items: {type: object}` and the collector decoded
@@ -3358,9 +3457,20 @@ paths:
             location: Some("body".to_string()),
             ..Default::default()
         };
+        // A query array: `param_type` is the *container* type, so falling back
+        // to it rendered `<JSON_ARRAY>` — an array of arrays — on every
+        // string-element query parameter.
+        let query_strings = MethodParameter {
+            param_type: Some("array".to_string()),
+            item_type: Some("string".to_string()),
+            repeated: true,
+            location: Some("query".to_string()),
+            ..Default::default()
+        };
         assert_eq!(value_name_for(&objects), "JSON_OBJECT");
-        // `item_type: None` means string — unchanged from before.
+        // Body array: `item_type: None` means string — unchanged from before.
         assert_eq!(value_name_for(&strings), "STRING");
+        assert_eq!(value_name_for(&query_strings), "STRING");
     }
 
     #[test]
