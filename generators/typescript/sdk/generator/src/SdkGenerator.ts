@@ -1331,6 +1331,9 @@ export class SdkGenerator {
                     context,
                     endpointSnippets: this.endpointSnippets
                 });
+                if (readmeContent == null) {
+                    return;
+                }
                 sourceFile.replaceWithText(readmeContent);
             },
             packagePath: "/"
@@ -1346,6 +1349,9 @@ export class SdkGenerator {
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateFileContext({ sourceFile, importsManager });
                 const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
+                if (referenceContent == null) {
+                    return;
+                }
                 sourceFile.replaceWithText(referenceContent);
             },
             packagePath: "/"

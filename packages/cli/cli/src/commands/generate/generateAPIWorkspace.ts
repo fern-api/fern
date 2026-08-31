@@ -58,6 +58,7 @@ export async function generateWorkspace({
     autoMerge,
     skipIfNoDiff,
     generateTests,
+    referenceOptional,
     automation,
     pack,
     packMode,
@@ -96,6 +97,11 @@ export async function generateWorkspace({
     skipIfNoDiff?: boolean;
     generateTests?: boolean;
     /**
+     * When true, README.md / reference.md generation failures are tolerated: the generator warns and
+     * skips the artifact instead of failing generation. Set by `fern generate --reference-optional`.
+     */
+    referenceOptional?: boolean;
+    /**
      * When provided, this call runs in fan-out automation mode: iterate every group (ignoring
      * `default-group`), silently skip generators opted out of automation, and route per-generator
      * outcomes through the recorder so siblings keep running when one fails.
@@ -119,6 +125,12 @@ export async function generateWorkspace({
     }
 
     const { ai, replay } = workspace.generatorsConfiguration;
+
+    if (referenceOptional && !useLocalDocker) {
+        context.logger.warn(
+            "--reference-optional only applies to local generation (--local) and is ignored for remote generation."
+        );
+    }
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
@@ -190,6 +202,7 @@ export async function generateWorkspace({
                         autoMerge,
                         skipIfNoDiff,
                         generateTests,
+                        referenceOptional,
                         generateFullProject: pack,
                         verify,
                         disableTelemetry: isTelemetryDisabled()

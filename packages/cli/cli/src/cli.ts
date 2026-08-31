@@ -854,6 +854,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
                 })
+                .option("reference-optional", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Continue generating the SDK when README.md or reference.md generation fails, warning instead of failing generation. Only applies to --local"
+                })
                 .option("require-env-vars", {
                     boolean: true,
                     default: true,
@@ -1030,6 +1036,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
                     generateTests: argv["generate-tests"],
+                    referenceOptional: argv["reference-optional"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
                     packOnly: argv.packageOnly
@@ -1096,6 +1103,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
                 generateTests: argv["generate-tests"],
+                referenceOptional: argv["reference-optional"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
                 packOnly: argv.packageOnly

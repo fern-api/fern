@@ -20,6 +20,20 @@ const FEATURES_CONFIG_PATHS = [
     path.join(__dirname, "../../assets/features.yml")
 ];
 
+function hasReferenceOptionalKey(value: unknown): value is { referenceOptional?: unknown } {
+    return typeof value === "object" && value != null;
+}
+
+/**
+ * Whether the user passed `fern generate --reference-optional`. The CLI writes `referenceOptional`
+ * into config.json, which is not part of the published generator-exec schema but survives parsing
+ * because the generator parses config.json with `unrecognizedObjectKeys: "passthrough"`.
+ */
+function isReferenceOptional(config: FernGeneratorExec.GeneratorConfig): boolean {
+    const rawConfig: unknown = config;
+    return hasReferenceOptionalKey(rawConfig) && rawConfig.referenceOptional === true;
+}
+
 export declare namespace AbstractGeneratorAgent {
     interface ReadmeConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
         context: GeneratorContext;
@@ -38,7 +52,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     public SNIPPET_FILENAME = "snippet.json";
     public REFERENCE_FILENAME = "reference.md";
 
-    private logger: Logger;
+    protected logger: Logger;
     private config: FernGeneratorExec.GeneratorConfig;
     private cli: GeneratorAgentClient;
     public constructor({
@@ -63,6 +77,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     /**
      * Generates the README.md content using the given generator context.
+     *
+     * Returns undefined when the README could not be generated and `--reference-optional` was passed;
+     * otherwise the failure is rethrown and fails generation.
      */
     public async generateReadme({
         context,
@@ -70,7 +87,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }: {
         context: GeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-    }): Promise<string> {
+    }): Promise<string | undefined> {
         this.logger.debug("AbstractGeneratorAgent.generateReadme: Starting README generation...");
         this.logger.debug(
             `AbstractGeneratorAgent.generateReadme: Received ${endpointSnippets.length} endpoint snippets`
@@ -87,7 +104,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to get remote config: ${errorMessage}`);
-            throw error;
+            return this.skipReadmeOrThrow(error);
         }
 
         // Load feature config
@@ -101,7 +118,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to load feature config: ${errorMessage}`);
-            throw error;
+            return this.skipReadmeOrThrow(error);
         }
 
         // Build README config
@@ -129,7 +146,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReadme: Stack trace: ${errorStack}`);
             }
-            throw error;
+            return this.skipReadmeOrThrow(error);
         }
 
         // Call CLI
@@ -141,7 +158,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${errorMessage}`);
-            throw error;
+            return this.skipReadmeOrThrow(error);
         }
     }
 
@@ -161,8 +178,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     /**
      * Generates the reference.md content using the given builder.
+     *
+     * Returns undefined when the reference could not be generated and `--reference-optional` was passed;
+     * otherwise the failure is rethrown and fails generation.
      */
-    public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
+    public async generateReference(builder: ReferenceConfigBuilder): Promise<string | undefined> {
         this.logger.debug("AbstractGeneratorAgent.generateReference: Starting reference generation...");
 
         // Get language
@@ -173,7 +193,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReference: FAILED to get language: ${errorMessage}`);
-            throw error;
+            return this.skipReferenceOrThrow(error);
         }
 
         // Build reference config
@@ -201,7 +221,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReference: Stack trace: ${errorStack}`);
             }
-            throw error;
+            return this.skipReferenceOrThrow(error);
         }
 
         // Call CLI
@@ -213,8 +233,36 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI FAILED with error: ${errorMessage}`);
+            return this.skipReferenceOrThrow(error);
+        }
+    }
+
+    /**
+     * Skips the README when the user opted into `--reference-optional`, warning with the underlying
+     * reason. Without the flag the failure is rethrown, so generation fails loudly.
+     */
+    protected skipReadmeOrThrow(error: unknown): undefined {
+        if (!isReferenceOptional(this.config)) {
             throw error;
         }
+        this.logger.warn(
+            `Skipping README.md generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+        );
+        return undefined;
+    }
+
+    /**
+     * Skips the API reference when the user opted into `--reference-optional`, warning with the
+     * underlying reason. Without the flag the failure is rethrown, so generation fails loudly.
+     */
+    protected skipReferenceOrThrow(error: unknown): undefined {
+        if (!isReferenceOptional(this.config)) {
+            throw error;
+        }
+        this.logger.warn(
+            `Skipping API reference (reference.md) generation; the rest of the SDK was generated normally. Reason: ${extractErrorMessage(error)}`
+        );
+        return undefined;
     }
 
     /**
