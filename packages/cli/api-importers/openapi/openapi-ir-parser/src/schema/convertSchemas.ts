@@ -1,3 +1,4 @@
+import { MediaType } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     type Availability,
@@ -56,6 +57,48 @@ export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
 // Module-level collision tracker for title-based name overrides
 const globalTitleCollisionTracker = createSchemaCollisionTracker();
+
+const RAW_BINARY_SCHEMA_ALLOWED_KEYS = new Set([
+    "$anchor",
+    "$comment",
+    "$id",
+    "$schema",
+    "contentMediaType",
+    "default",
+    "deprecated",
+    "description",
+    "example",
+    "examples",
+    "externalDocs",
+    "format",
+    "maxLength",
+    "minLength",
+    "pattern",
+    "readOnly",
+    "title",
+    "writeOnly"
+]);
+
+function isRawBinarySchema(schema: OpenAPIV3.SchemaObject): boolean {
+    const { contentEncoding, contentMediaType } = schema as Record<string, unknown>;
+    if (
+        schema.type != null ||
+        contentEncoding != null ||
+        typeof contentMediaType !== "string" ||
+        (schema.format != null && schema.format !== "binary")
+    ) {
+        return false;
+    }
+    if (
+        Object.keys(schema).some(
+            (key) => !RAW_BINARY_SCHEMA_ALLOWED_KEYS.has(key) && !key.toLowerCase().startsWith("x-")
+        )
+    ) {
+        return false;
+    }
+    const mediaType = MediaType.parse(contentMediaType);
+    return mediaType?.isBinary() === true && !mediaType.isXML();
+}
 
 // Reset the global collision tracker (called at the start of document processing)
 export function resetTitleCollisionTracker(): void {
@@ -1426,6 +1469,29 @@ export function convertSchemaObject(
                 source,
                 minProperties: schema.minProperties,
                 maxProperties: schema.maxProperties
+            });
+        }
+
+        // OpenAPI 3.1 raw binary data has no JSON type or content encoding.
+        if (isRawBinarySchema(schema)) {
+            return wrapPrimitive({
+                nameOverride,
+                generatedName,
+                title,
+                primitive: PrimitiveSchemaValueWithExample.string({
+                    default: getDefaultAsString(schema),
+                    pattern: schema.pattern,
+                    format: "binary",
+                    minLength: schema.minLength,
+                    maxLength: schema.maxLength,
+                    example: getExamplesString({ schema, logger: context.logger, fallback })
+                }),
+                namespace,
+                groupName,
+                wrapAsOptional,
+                wrapAsNullable,
+                description,
+                availability
             });
         }
 

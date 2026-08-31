@@ -341,14 +341,7 @@ function convertResolvedResponse({
             continue;
         }
 
-        if (
-            mimeType.isOctetStream() ||
-            mimeType.isPDF() ||
-            mimeType.isAudio() ||
-            mimeType.isImage() ||
-            mimeType.isVideo() ||
-            mimeType.isMultiPartMixed()
-        ) {
+        if (mimeType.isBinary() || mimeType.isMultiPartMixed()) {
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
 

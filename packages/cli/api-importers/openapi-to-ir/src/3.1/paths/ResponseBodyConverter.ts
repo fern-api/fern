@@ -166,6 +166,15 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             if (mediaTypeObject == null) {
                 continue;
             }
+            if (this.isBinaryContentType(contentType)) {
+                return this.shouldReturnBytesResponse()
+                    ? this.returnBytesResponse({
+                          mediaTypeObject
+                      })
+                    : this.returnFileDownloadResponse({
+                          mediaTypeObject
+                      });
+            }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId,
@@ -452,6 +461,14 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
 
     private shouldReturnJsonResponse(contentType: string): boolean {
         return contentType.includes("json");
+    }
+
+    private isBinaryContentType(contentType: string): boolean {
+        const mediaType = MediaType.parse(contentType);
+        if (mediaType == null) {
+            return false;
+        }
+        return mediaType.isBinary();
     }
 
     private shouldReturnBytesResponse(): boolean {

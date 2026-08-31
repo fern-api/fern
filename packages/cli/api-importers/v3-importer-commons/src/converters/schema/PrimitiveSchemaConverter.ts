@@ -1,3 +1,4 @@
+import { MediaType } from "@fern-api/core-utils";
 import {
     ContainerType,
     IntegerValidationRules,
@@ -10,6 +11,27 @@ import {
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+
+const RAW_BINARY_SCHEMA_ALLOWED_KEYS = new Set([
+    "$anchor",
+    "$comment",
+    "$id",
+    "$schema",
+    "contentMediaType",
+    "default",
+    "deprecated",
+    "description",
+    "example",
+    "examples",
+    "externalDocs",
+    "format",
+    "maxLength",
+    "minLength",
+    "pattern",
+    "readOnly",
+    "title",
+    "writeOnly"
+]);
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -26,6 +48,16 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
     }
 
     public convert(): TypeReference | undefined {
+        if (this.isRawBinarySchema(this.schema)) {
+            return TypeReference.primitive({
+                v1: PrimitiveTypeV1.String,
+                v2: PrimitiveTypeV2.string({
+                    default: this.context.getAsString(this.schema.default),
+                    validation: this.getStringValidation({ ...this.schema, format: "binary" })
+                })
+            });
+        }
+
         switch (this.schema.type) {
             case "string": {
                 const stringConst = this.context.getAsString(this.schema.const);
@@ -199,6 +231,28 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
             default:
                 return undefined;
         }
+    }
+
+    private isRawBinarySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+        // OpenAPI 3.1 raw binary data has no JSON type or content encoding.
+        const { contentEncoding, contentMediaType } = schema as Record<string, unknown>;
+        if (
+            schema.type != null ||
+            contentEncoding != null ||
+            typeof contentMediaType !== "string" ||
+            (schema.format != null && schema.format !== "binary")
+        ) {
+            return false;
+        }
+        if (
+            Object.keys(schema).some(
+                (key) => !RAW_BINARY_SCHEMA_ALLOWED_KEYS.has(key) && !key.toLowerCase().startsWith("x-")
+            )
+        ) {
+            return false;
+        }
+        const mediaType = MediaType.parse(contentMediaType);
+        return mediaType?.isBinary() === true && !mediaType.isXML();
     }
 
     private getNumberValidation(schema: OpenAPIV3_1.SchemaObject): IntegerValidationRules | undefined {
