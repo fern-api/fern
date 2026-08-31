@@ -1076,6 +1076,15 @@ types:
           By default, a 404 page will be displayed.
 
           @default: false
+      show-permission-denied-page:
+        type: optional<boolean>
+        docs: |
+          If set to true, an authenticated user who navigates to a page they do not have permission to view
+          will see a "You don't have permission to view this page" screen (with a login button) instead of the
+          default 404 page. By default, a 404 page is displayed so that restricted pages are indistinguishable
+          from pages that do not exist.
+
+          @default: false
       use-javascript-as-typescript:
         type: optional<boolean>
         docs: |

@@ -2981,6 +2981,9 @@
             "hide-404-page": {
               "type": "boolean"
             },
+            "show-permission-denied-page": {
+              "type": "boolean"
+            },
             "use-javascript-as-typescript": {
               "type": "boolean"
             },
