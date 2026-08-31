@@ -129,9 +129,22 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLoca
         });
     }
 
+    const remainingTokens = operationIdTokens.slice(fileParts.length);
+    const file = RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml");
+
+    // A leading digit is not a valid identifier in most target languages, so keep the whole
+    // operation id rather than stripping the prefix (e.g. tag `files` + `files2GetThumbnail`).
+    if (remainingTokens[0] != null && /^\d/.test(remainingTokens[0])) {
+        return {
+            file,
+            endpointId: sanitizeEndpointId(operationId),
+            tag
+        };
+    }
+
     return {
-        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
-        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
+        file,
+        endpointId: camelCase(remainingTokens.join("_")),
         tag
     };
 }
@@ -168,7 +181,7 @@ export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocatio
  */
 export function tokenizeString(input: string, respectWordBoundaries = false): string[] {
     if (respectWordBoundaries) {
-        return compact(words(input).map((token) => token.toLowerCase()));
+        return words(input).map((token) => token.toLowerCase());
     }
 
     let tokens: string[];

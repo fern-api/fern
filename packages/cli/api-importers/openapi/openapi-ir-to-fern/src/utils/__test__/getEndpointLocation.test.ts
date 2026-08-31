@@ -93,6 +93,15 @@ describe("getEndpointLocation", () => {
             expect(endpointId).toBe("templatesGetForUser");
         });
 
+        it("keeps the operation id when stripping the tag prefix would leave a leading digit", () => {
+            const { file, endpointId } = getEndpointLocation(
+                createEndpoint({ operationId: "files2GetThumbnail", tags: ["files"] }),
+                options
+            );
+            expect(file).toBe("files.yml");
+            expect(endpointId).toBe("files2GetThumbnail");
+        });
+
         it("keeps the operation id when it does not share a prefix with the tag", () => {
             const { file, endpointId } = getEndpointLocation(
                 createEndpoint({ operationId: "listFolderMembers", tags: ["sharing"] }),
