@@ -154,12 +154,30 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     /**
      * Availability declared alongside the `allOf` takes precedence over the availability
      * of the referenced schema, since the outer schema is the more specific declaration.
+     * Inline `allOf` siblings are consulted next: when the sibling carries nothing but
+     * metadata we short-circuit to the `$ref`, so a `deprecated` written there would
+     * otherwise be dropped.
      */
     private getAvailabilityOfSelfOrReference(reference: OpenAPIV3_1.ReferenceObject): Availability | undefined {
-        return (
-            this.context.getAvailability({ node: this.schemaOrReference, breadcrumbs: this.breadcrumbs }) ??
-            this.context.getAvailability({ node: reference, breadcrumbs: this.breadcrumbs })
-        );
+        for (const node of [...this.getSelfAndInlineAllOfElements(), reference]) {
+            const availability = this.context.getAvailability({ node, breadcrumbs: this.breadcrumbs });
+            if (availability != null) {
+                return availability;
+            }
+        }
+        return undefined;
+    }
+
+    private getSelfAndInlineAllOfElements(): (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] {
+        if (this.context.isReferenceObject(this.schemaOrReference) || this.schemaOrReference.allOf == null) {
+            return [this.schemaOrReference];
+        }
+        return [
+            this.schemaOrReference,
+            ...this.schemaOrReference.allOf.filter(
+                (element): element is OpenAPIV3_1.SchemaObject => !this.context.isReferenceObject(element)
+            )
+        ];
     }
 
     private convertSchemaObject({
