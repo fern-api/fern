@@ -55,6 +55,8 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { installMcpServer } from "./commands/agent/installMcpServer.js";
+import { MCP_CLIENTS, McpClient } from "./commands/agent/mcpConfig.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
@@ -83,8 +85,6 @@ import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAP
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
-import { installMcpServer } from "./commands/mcp/installMcpServer.js";
-import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
@@ -278,7 +278,8 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addLogoutCommand(cli, cliContext);
-    addMcpCommand(cli, cliContext);
+    addAgentCommand(cli, cliContext);
+    addMcpCommand(cli, cliContext); // Deprecated: use `fern agent install` instead
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
@@ -1661,38 +1662,66 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("mcp", "Manage the Fern MCP server", (yargs) => {
+function addAgentCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("agent", "Manage the Fern agent", (yargs) => {
         yargs
             .command(
                 "install",
-                "Connect your coding agent to the Fern MCP server using your Fern login",
-                (installYargs) =>
-                    installYargs
-                        .option("client", {
-                            type: "string",
-                            array: true,
-                            choices: MCP_CLIENTS,
-                            description:
-                                "The coding agent(s) to configure. Defaults to every one found on this machine."
-                        })
-                        .option("organization", {
-                            alias: "org",
-                            type: "string",
-                            description: "The organization to connect to. Defaults to the one in `fern.config.json`."
-                        }),
+                "Connect your coding agent to the Fern agent's MCP server using your Fern login",
+                addInstallAgentOptions,
                 async (argv) => {
-                    cliContext.instrumentPostHogEvent({ command: "fern mcp install" });
-                    await cliContext.runTask(async (context) => {
-                        await installMcpServer({
-                            clients: argv.client as McpClient[] | undefined,
-                            organization: argv.organization ?? (await getOrganization(cliContext)),
-                            context
-                        });
-                    });
+                    cliContext.instrumentPostHogEvent({ command: "fern agent install" });
+                    await runInstallAgent({ argv, cliContext });
                 }
             )
-            .demandCommand(1, "Specify a subcommand, e.g. `fern mcp install`.");
+            .demandCommand(1, "Specify a subcommand, e.g. `fern agent install`.");
+    });
+}
+
+/**
+ * @deprecated Use `fern agent install` instead. The `fern mcp` namespace is
+ * reserved for the customer's own generated MCP server.
+ */
+function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("mcp", false, (yargs) => {
+        yargs
+            .command("install", false, addInstallAgentOptions, async (argv) => {
+                cliContext.logger.warn("The 'mcp install' command is deprecated. Use 'fern agent install' instead.");
+                cliContext.instrumentPostHogEvent({ command: "fern mcp install" });
+                await runInstallAgent({ argv, cliContext });
+            })
+            .demandCommand(1, "Specify a subcommand, e.g. `fern agent install`.");
+    });
+}
+
+function addInstallAgentOptions<T>(yargs: Argv<T>) {
+    return yargs
+        .option("client", {
+            type: "string",
+            array: true,
+            choices: MCP_CLIENTS,
+            description: "The coding agent(s) to configure. Defaults to every one found on this machine."
+        })
+        .option("organization", {
+            alias: "org",
+            type: "string",
+            description: "The organization to connect to. Defaults to the one in `fern.config.json`."
+        });
+}
+
+async function runInstallAgent({
+    argv,
+    cliContext
+}: {
+    argv: { client: string[] | undefined; organization: string | undefined };
+    cliContext: CliContext;
+}): Promise<void> {
+    await cliContext.runTask(async (context) => {
+        await installMcpServer({
+            clients: argv.client as McpClient[] | undefined,
+            organization: argv.organization ?? (await getOrganization(cliContext)),
+            context
+        });
     });
 }
 

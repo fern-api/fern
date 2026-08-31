@@ -1,0 +1,5 @@
+- summary: |
+    Rename `fern mcp install` to `fern agent install`, freeing the `fern mcp`
+    namespace for your own generated MCP server. `fern mcp install` still works
+    but is hidden and prints a deprecation warning.
+  type: feat
