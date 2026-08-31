@@ -1,6 +1,8 @@
 import { type FernConfigMappingDiagnostic, type SdkConfigV1ApiConfigInput } from "@postman/sdk-config/sdk-config/v1";
 import type { ApiDefinition } from "../../../../api/config/ApiDefinition.js";
 
+type Environment = NonNullable<ApiDefinition["environments"]>[string];
+
 export declare namespace ApiDefinitionMapper {
     export interface Result {
         api: SdkConfigV1ApiConfigInput;
@@ -13,12 +15,7 @@ export class ApiDefinitionMapper {
     public map(definition: ApiDefinition): ApiDefinitionMapper.Result {
         const environments = Object.entries(definition.environments ?? {}).map(([name, environment]) => ({
             name,
-            urls:
-                typeof environment === "string"
-                    ? [{ name: "default", url: environment }]
-                    : "url" in environment
-                      ? [{ name: "default", url: environment.url }]
-                      : Object.entries(environment.urls).map(([serverName, url]) => ({ name: serverName, url })),
+            urls: this.mapEnvironmentUrls(environment),
             ...(typeof environment === "string" || environment.docs == null ? {} : { description: environment.docs })
         }));
         const headers = Object.entries(definition.headers ?? {}).map(([headerName, header]) =>
@@ -50,5 +47,15 @@ export class ApiDefinitionMapper {
             },
             diagnostics
         };
+    }
+
+    private mapEnvironmentUrls(environment: Environment): Array<{ name: string; url: string }> {
+        if (typeof environment === "string") {
+            return [{ name: "default", url: environment }];
+        }
+        if ("url" in environment) {
+            return [{ name: "default", url: environment.url }];
+        }
+        return Object.entries(environment.urls).map(([name, url]) => ({ name, url }));
     }
 }

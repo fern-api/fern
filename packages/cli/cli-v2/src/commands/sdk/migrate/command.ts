@@ -2,8 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
 import { randomUUID } from "crypto";
-import { constants } from "fs";
-import { copyFile, link, rename, unlink, writeFile } from "fs/promises";
+import { rename, unlink, writeFile } from "fs/promises";
 import { basename, dirname, join } from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
@@ -36,7 +35,10 @@ export class MigrateCommand {
         } catch (error) {
             if (error instanceof FernConfigMappingError) {
                 this.printDiagnostics(context, error.issues);
-                throw new CliError({ message: "Could not create SDK Config v1", code: CliError.Code.ValidationError });
+                throw new CliError({
+                    message: `Could not create SDK Config v1: ${error.message}`,
+                    code: CliError.Code.ValidationError
+                });
             }
             throw error;
         }
@@ -87,7 +89,10 @@ export class MigrateCommand {
         const targets = groupTargets.filter((target) => target.api === apiName);
         if (targets.length === 0) {
             throw new CliError({
-                message: `SDK group '${groupName ?? "default"}' has no targets for API '${apiName}'`,
+                message:
+                    groupName == null
+                        ? `No SDK targets found for API '${apiName}'`
+                        : `SDK group '${groupName}' has no targets for API '${apiName}'`,
                 code: CliError.Code.ConfigError
             });
         }
@@ -103,12 +108,15 @@ export class MigrateCommand {
         if (groups.length === 1 && !hasUngroupedTargets) {
             return groups[0];
         }
-        return promptSelect({
+        return promptSelect<string | undefined>({
             isTTY: context.isTTY,
             message: "Multiple SDK groups found. Select one:",
-            choices: groups.map((group) => ({ name: group, value: group })),
+            choices: [
+                { name: `all (${targets.length} targets)`, value: undefined },
+                ...groups.map((group) => ({ name: group, value: group }))
+            ],
             nonInteractiveError: `Multiple SDK groups found: ${groups.join(", ")}. Use --group to select one.`,
-            flagHint: (group) => `--group ${group}`
+            flagHint: (group) => (group == null ? undefined : `--group ${group}`)
         });
     }
 
@@ -160,35 +168,28 @@ export class MigrateCommand {
 
 async function writeFileAtomically(outputPath: AbsoluteFilePath, data: string, force: boolean): Promise<void> {
     const output = outputPath.toString();
+    if (!force) {
+        try {
+            await writeFile(output, data, { flag: "wx" });
+            return;
+        } catch (error) {
+            if (isErrorWithCode(error, "EEXIST")) {
+                throw new CliError({
+                    message: `Output file '${output}' already exists. Use --force to replace it.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            throw error;
+        }
+    }
+
     const temporary = join(dirname(output), `.${basename(output)}.${randomUUID()}.tmp`);
     try {
         await writeFile(temporary, data, { flag: "wx" });
-        if (force) {
-            await rename(temporary, output);
-        } else {
-            await publishWithoutOverwrite(temporary, output);
-        }
+        await rename(temporary, output);
     } catch (error) {
         await removeTemporaryFile(temporary, error);
-        if (!force && isErrorWithCode(error, "EEXIST")) {
-            throw new CliError({
-                message: `Output file '${output}' already exists. Use --force to replace it.`,
-                code: CliError.Code.ConfigError
-            });
-        }
         throw error;
-    }
-    await removeTemporaryFile(temporary);
-}
-
-async function publishWithoutOverwrite(temporary: string, output: string): Promise<void> {
-    try {
-        await link(temporary, output);
-    } catch (error) {
-        if (!isUnsupportedHardLinkError(error)) {
-            throw error;
-        }
-        await copyFile(temporary, output, constants.COPYFILE_EXCL);
     }
 }
 
@@ -211,10 +212,6 @@ async function removeTemporaryFile(temporary: string, originalError?: unknown): 
 
 function isErrorWithCode(error: unknown, code: string): error is NodeJS.ErrnoException {
     return error instanceof Error && "code" in error && error.code === code;
-}
-
-function isUnsupportedHardLinkError(error: unknown): boolean {
-    return ["EPERM", "EXDEV", "ENOSYS", "ENOTSUP", "EOPNOTSUPP"].some((code) => isErrorWithCode(error, code));
 }
 
 export function addMigrateCommand(cli: Argv<GlobalArgs>): void {

@@ -124,13 +124,14 @@ class MavenPublicationMapper extends AbstractRegistryPublicationMapper<"java", "
         if (maven == null) {
             return undefined;
         }
-        const [groupId, artifactId, extra] = maven.coordinate.split(":");
+        const parts = maven.coordinate.split(":");
+        const [groupId, artifactId] = parts;
         const diagnostics = [
             ...this.credentialDiagnostics(prefix, "maven", "username", maven.username),
             ...this.credentialDiagnostics(prefix, "maven", "password", maven.password),
             ...this.credentialDiagnostics(prefix, "maven", "signature", maven.signature)
         ];
-        if (!groupId || !artifactId || extra != null) {
+        if (parts.length !== 2 || !groupId || !artifactId) {
             return {
                 diagnostics: [
                     ...diagnostics,
