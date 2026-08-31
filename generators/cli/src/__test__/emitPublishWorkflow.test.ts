@@ -27,9 +27,10 @@ describe("emitPublishWorkflow", () => {
     async function emitAndRead(
         npmPublishInfo: ResolvedNpmPublishInfo,
         binaryName = "acme",
-        repoUrl: string | undefined = undefined
+        repoUrl: string | undefined = undefined,
+        packageIdentity: Parameters<typeof emitPublishWorkflow>[0]["packageIdentity"] = undefined
     ): Promise<string> {
-        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl });
+        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl, packageIdentity });
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
@@ -258,6 +259,133 @@ describe("emitPublishWorkflow", () => {
         // A custom cargo profile writes to target/<triple>/<profile>/.
         expect(yaml).toContain("/dist/${BINARY_NAME}");
         expect(yaml).not.toContain("/release/${BINARY_NAME}");
+    });
+
+    it("carries packageIdentity into the published npm package", async () => {
+        // `packageIdentity` fed Cargo.toml but not the launcher's package.json,
+        // so npm rendered the CLI as "License: none" with no keywords, no
+        // homepage and a hardcoded description. The license is the part that
+        // isn't cosmetic — scanners and policy gates reject unlicensed packages.
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, {
+            license: "MIT",
+            description: "Command-line interface for the Acme API, it's great",
+            homepage: "https://acme.example",
+            keywords: ["acme", "cli"],
+            authors: ["Acme <dev@acme.example>", "Second <two@acme.example>"]
+        });
+
+        expect(yaml).toContain('"license": "MIT"');
+        expect(yaml).toContain('"keywords": ["acme","cli"]');
+        expect(yaml).toContain('"homepage": "https://acme.example"');
+        expect(yaml).toContain('"author": "Acme <dev@acme.example>"');
+        expect(yaml).toContain('"contributors": ["Second <two@acme.example>"]');
+        // The apostrophe must survive as valid JSON, not break the heredoc.
+        expect(yaml).toContain('"description": "Command-line interface for the Acme API, it\'s great"');
+        expect(yaml).not.toContain('"description": "CLI for acme"');
+    });
+
+    it("emits a launcher package.json that parses as JSON", async () => {
+        // The identity values are user prose interpolated into a JSON heredoc.
+        // A stray quote or newline would emit something npm cannot parse, and
+        // the failure would only surface at publish time.
+        const yaml = await emitAndRead(baseInfo, "acme", "https://github.com/acme/cli", {
+            license: "MIT",
+            description: 'He said "hello", then left — with a comma, and an \\ escape',
+            keywords: ["a", "b"],
+            authors: ["Acme <dev@acme.example>"]
+        });
+
+        // The launcher block is the second `cat > .../package.json` heredoc.
+        const blocks = [...yaml.matchAll(/cat > "\$\{PKG_DIR\}\/package\.json" <<PKGJSON\n([\s\S]*?)\n\s*PKGJSON/g)];
+        expect(blocks).toHaveLength(2);
+        const launcherMatch = blocks[1];
+        if (launcherMatch == null) {
+            throw new Error("expected a launcher package.json heredoc");
+        }
+        const launcher = launcherMatch[1];
+        if (launcher == null) {
+            throw new Error("expected the heredoc body to be captured");
+        }
+
+        // Strip the workflow's indentation and substitute the shell variables
+        // the runner would expand, then parse.
+        const rendered = launcher
+            .split("\n")
+            .map((line) => line.replace(/^ {10}/, ""))
+            .join("\n")
+            .replace(/\$\{VERSION\}/g, "1.2.3")
+            .replace(/\$\{OPTIONAL_DEPS\}/g, '"acme-linux-x64": "1.2.3"');
+
+        const parsed = JSON.parse(rendered);
+        expect(parsed.license).toBe("MIT");
+        expect(parsed.description).toBe('He said "hello", then left — with a comma, and an \\ escape');
+        expect(parsed.keywords).toEqual(["a", "b"]);
+        expect(parsed.author).toBe("Acme <dev@acme.example>");
+        expect(parsed.bin).toEqual({ acme: "bin/cli.js" });
+        expect(parsed.version).toBe("1.2.3");
+    });
+
+    it("emits identity values that no shell can act on", async () => {
+        // The launcher package.json goes through an UNQUOTED heredoc
+        // (`<<PKGJSON`), which it must, since `${VERSION}` and
+        // `${OPTIONAL_DEPS}` are meant to expand. So the shell also expands
+        // `$VAR` / `${...}` / `$(...)` and backticks in user prose and collapses
+        // `\\` to `\`. `JSON.stringify` guards the JSON syntax and nothing else:
+        // a description reading `Uses ${HOME}` was substituted at publish time,
+        // a backtick or `$(...)` ran a command in the publish workflow, and a
+        // literal backslash corrupted the JSON.
+        const yaml = await emitAndRead(baseInfo, "acme", undefined, {
+            license: "MIT",
+            description: "Uses ${HOME} and $(whoami) and `hostname` and a \\ backslash",
+            homepage: "https://acme.example",
+            authors: ["Acme `id` <dev@acme.example>"]
+        });
+
+        // The launcher block is the second `cat > .../package.json` heredoc.
+        const blocks = [...yaml.matchAll(/cat > "\$\{PKG_DIR\}\/package\.json" <<PKGJSON\n([\s\S]*?)\n\s*PKGJSON/g)];
+        const heredoc = blocks[1]?.[1];
+        if (heredoc == null) {
+            throw new Error("expected the launcher heredoc body to be captured");
+        }
+
+        // Escaped as \uXXXX rather than backslash-escaped, so the body stays
+        // valid JSON as written instead of only becoming valid once the shell
+        // has processed it.
+        expect(heredoc).toContain("\\u0024{HOME}");
+        expect(heredoc).toContain("\\u0024(whoami)");
+        expect(heredoc).toContain("\\u0060hostname\\u0060");
+        expect(heredoc).toContain("Acme \\u0060id\\u0060");
+
+        // The property that actually matters: nothing the shell acts on is left
+        // in any identity value. `${VERSION}` and friends are the workflow's
+        // own placeholders and are meant to expand, so only the value lines are
+        // checked.
+        const valueLines = heredoc
+            .split("\n")
+            .filter((line) => /"(description|license|homepage|author|contributors|keywords)":/.test(line));
+        expect(valueLines.length).toBeGreaterThan(0);
+        for (const line of valueLines) {
+            expect(line).not.toMatch(/[$`]/);
+            expect(line).not.toMatch(/\\(?!u)/);
+        }
+    });
+
+    it("falls back to the generated description and omits absent identity fields", async () => {
+        const yaml = await emitAndRead(baseInfo);
+        expect(yaml).toContain('"description": "CLI for acme"');
+        // Nothing invented: no license key at all rather than a wrong one.
+        const launcher = yaml.slice(yaml.indexOf("publish-launcher"));
+        expect(launcher).not.toContain('"license"');
+        expect(launcher).not.toContain('"keywords"');
+
+        // With every identity field absent the join produced an empty string on
+        // its own line, leaving a blank line inside the emitted package.json.
+        // Valid JSON, but it churned every fixture and read like a template bug.
+        const heredoc = launcher.slice(
+            launcher.indexOf("<<PKGJSON"),
+            launcher.indexOf("PKGJSON", launcher.indexOf("<<PKGJSON") + 1)
+        );
+        expect(heredoc.split("\n").filter((line) => line.trim() === "")).toHaveLength(0);
     });
 
     it("gives every SemVer pre-release a non-latest dist-tag", async () => {

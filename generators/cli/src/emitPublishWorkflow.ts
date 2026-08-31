@@ -1,6 +1,31 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import type { CargoPackageIdentity } from "./patchCargoToml.js";
 import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
+
+/**
+ * JSON-encode a value for embedding in an **unquoted** heredoc.
+ *
+ * `JSON.stringify` alone stops a quote or newline from breaking the JSON, but
+ * the launcher's `package.json` is written through `<<PKGJSON` rather than
+ * `<<'PKGJSON'` — it has to be, because `${VERSION}` and `${OPTIONAL_DEPS}` are
+ * meant to expand. So the shell also expands `$VAR`, `${...}`, `$(...)` and
+ * backticks inside user-supplied prose, and collapses `\\` to `\`: a
+ * description reading `Uses ${HOME}` was silently substituted at publish time,
+ * a backtick or `$(...)` executed a command in the publish workflow, and a
+ * literal backslash corrupted the JSON.
+ *
+ * Rather than backslash-escape those characters — which would leave the
+ * heredoc body invalid JSON until the shell processed it — they are emitted as
+ * `\uXXXX`. The result is simultaneously valid JSON *and* free of every
+ * character the shell acts on, so nothing depends on how the file is written.
+ *
+ * Order matters: JSON's escaped backslash (`\\`) is rewritten first, because
+ * the `$` and backtick replacements introduce backslashes of their own.
+ */
+function shellSafeJson(value: string | string[]): string {
+    return JSON.stringify(value).replace(/\\\\/g, "\\u005c").replace(/\$/g, "\\u0024").replace(/`/g, "\\u0060");
+}
 
 /**
  * Cross-compilation targets for the CLI binary. Each entry maps a
@@ -55,11 +80,20 @@ export async function emitPublishWorkflow(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    /**
+     * `customConfig.packageIdentity`. Already feeds `Cargo.toml`; without it
+     * here the published npm package carried none of it — npm rendered the
+     * launcher as "License: none", with no keywords, no homepage and a
+     * hardcoded description. The license is the part that isn't cosmetic:
+     * dependency scanners and corporate policy gates reject unlicensed
+     * packages.
+     */
+    packageIdentity?: CargoPackageIdentity;
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo, repoUrl } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl, packageIdentity });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -122,8 +156,9 @@ function constructWorkflowYaml(args: {
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
     repoUrl: string | undefined;
+    packageIdentity?: CargoPackageIdentity;
 }): string {
-    const { binaryName, npmPublishInfo, repoUrl } = args;
+    const { binaryName, npmPublishInfo, repoUrl, packageIdentity } = args;
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
@@ -160,6 +195,31 @@ function constructWorkflowYaml(args: {
     // reported SUCCESS to anything checking `$?`, on the npm install path
     // only. The launcher now requires a numeric status and otherwise reports
     // 128+signum, matching the shell convention (SIGTERM -> 143).
+    // Identity fields for the launcher's package.json. `packageIdentity`
+    // already feeds Cargo.toml; the npm package got none of it, so npm rendered
+    // the CLI as "License: none" with no keywords and a hardcoded description.
+    //
+    // Values are `JSON.stringify`d rather than interpolated raw: a description
+    // legitimately contains apostrophes and commas, and a stray quote here
+    // would emit a package.json that npm cannot parse.
+    const identityLines: string[] = [];
+    const identityField = (key: string, value: string | string[] | undefined): void => {
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return;
+        }
+        identityLines.push(`            ${JSON.stringify(key)}: ${shellSafeJson(value)},`);
+    };
+    identityField("license", packageIdentity?.license);
+    identityField("keywords", packageIdentity?.keywords);
+    identityField("homepage", packageIdentity?.homepage);
+    // npm takes a single `author` string; `packageIdentity.authors` is a list
+    // (Cargo's shape), so the first entry becomes `author` and the rest
+    // `contributors`.
+    const [firstAuthor, ...otherAuthors] = packageIdentity?.authors ?? [];
+    identityField("author", firstAuthor);
+    identityField("contributors", otherAuthors);
+    const launcherDescription = packageIdentity?.description ?? `CLI for ${binaryName}`;
+
     const launcherPlatformEntries = TARGETS.map(
         (t) => `            "${t.npmPlatformSuffix}": "${npmPublishInfo.packageName}-${t.npmPlatformSuffix}",`
     ).join("\n");
@@ -410,7 +470,12 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": "CLI for ${binaryName}",${
+            "description": ${shellSafeJson(launcherDescription)},${
+                identityLines.length > 0
+                    ? `
+${identityLines.join("\n")}`
+                    : ""
+            }${
                 repoUrl != null
                     ? `
             "repository": {
