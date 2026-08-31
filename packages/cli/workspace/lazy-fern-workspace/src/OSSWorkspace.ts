@@ -330,21 +330,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
 
-        // This gate reads `auth`, not `auth-schemes`, so declaring the latter
-        // without the former discards the whole block — `env:` overrides
-        // included — before the importer ever sees it. Nothing is invalid, so
-        // `fern check` stays clean; the schemes are simply never read. The
-        // importer then re-derives auth from `components.securitySchemes`,
-        // which carries no env var, and each generator falls back to its own
-        // default name (the CLI generator to `<BINARY>_TOKEN`). The result is
-        // a CLI that reads an env var the user never configured and never
-        // mentioned it had switched.
-        //
-        // Warn rather than widen the gate: `buildAuthSchemes` returns early on
-        // the override path without selecting a scheme when `auth` is absent,
-        // so admitting this config there would trade a wrong env var for no
-        // auth at all. Making it work needs the selection logic sorted out,
-        // which is a behavior change for every generator.
+        // This gate reads `auth`, not `auth-schemes` — see
+        // `getOrphanedAuthSchemeWarning` for what that silently discards.
         const orphanedAuthSchemeWarning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
         if (orphanedAuthSchemeWarning != null) {
             context.logger.warn(orphanedAuthSchemeWarning);
@@ -905,11 +892,25 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
  * Warning text for an `auth-schemes` block that no `api.auth` selects, or
  * `undefined` when the configuration is fine.
  *
- * Pulled out of `getIntermediateRepresentation` so the condition and the
- * guidance are testable without standing up a workspace: the bug this detects
- * is invisible by construction (valid YAML, clean `fern check`, generation
- * succeeds), so the warning is the only thing standing between the user and a
- * CLI that silently reads an environment variable they never configured.
+ * `getIntermediateRepresentation` only reads the `auth-schemes` block when
+ * `api.auth` is set, so declaring schemes without selecting them discards the
+ * whole block — `env:` overrides included — before the importer sees it. The
+ * importer then re-derives auth from `components.securitySchemes`, which
+ * carries no environment variable, and each generator applies its own default
+ * name (the CLI generator `<BINARY>_TOKEN`). The result is a client reading an
+ * environment variable the user never configured.
+ *
+ * Nothing about the config is invalid, so `fern check` stays clean and
+ * generation succeeds — the bug is invisible by construction, which makes this
+ * warning the only thing between the user and that outcome. Hence it is pulled
+ * out here: the condition and the guidance are testable without standing up a
+ * workspace.
+ *
+ * Warning rather than widening the gate is deliberate. `buildAuthSchemes`
+ * returns early on the override path without selecting a scheme when `auth` is
+ * absent, so admitting this config there would trade a wrong environment
+ * variable for no auth at all; making it work needs the selection logic
+ * settled, which changes behavior for every generator.
  */
 export function getOrphanedAuthSchemeWarning(api: generatorsYml.APIDefinition | undefined): string | undefined {
     if (api?.auth != null) {
@@ -923,9 +924,9 @@ export function getOrphanedAuthSchemeWarning(api: generatorsYml.APIDefinition | 
     return (
         `generators.yml declares auth-schemes (${names.join(", ")}) but no \`api.auth\`, ` +
         "so the entire auth-schemes block is ignored — including any `env:` overrides. " +
-        `Add \`auth: ${first}\`` +
-        (names.length > 1 ? ` (or \`auth: { any: [${names.join(", ")}] }\` for several)` : "") +
-        " under `api` to apply it. Without it, auth is re-derived from the spec's securitySchemes and each " +
+        `Add \`auth: ${first}\` under \`api\`` +
+        (names.length > 1 ? ", or list them all under an `auth.any` key" : "") +
+        ". Without it, auth is re-derived from the spec's securitySchemes and each " +
         "generator falls back to its own default environment variable name."
     );
 }

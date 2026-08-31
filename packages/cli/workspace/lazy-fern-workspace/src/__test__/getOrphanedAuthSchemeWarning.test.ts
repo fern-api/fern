@@ -68,6 +68,6 @@ describe("getOrphanedAuthSchemeWarning", () => {
             })
         );
         expect(warning).toContain("BearerAuth, TokenAuth");
-        expect(warning).toContain("any: [BearerAuth, TokenAuth]");
+        expect(warning).toContain("auth.any");
     });
 });
