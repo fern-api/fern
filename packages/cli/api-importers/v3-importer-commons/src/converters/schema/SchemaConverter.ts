@@ -572,8 +572,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return undefined;
         }
         const anyOf = this.schema.anyOf;
-        // A oneOf alongside the anyOf is a real union; leave it alone.
-        if (!Array.isArray(anyOf) || anyOf.length === 0 || this.schema.oneOf != null) {
+        // A oneOf or allOf alongside the anyOf composes with it; leave those to the union
+        // and allOf paths. Kept in step with anyOfIsAtLeastOneOfConstraint in
+        // openapi-ir-parser so both importers classify the same schema identically.
+        if (!Array.isArray(anyOf) || anyOf.length === 0 || this.schema.oneOf != null || this.schema.allOf != null) {
             return undefined;
         }
         const siblingProperties = this.schema.properties;

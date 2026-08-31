@@ -2081,7 +2081,6 @@ function getEncoding({
     return convertEncoding(encoding);
 }
 
-
 /**
  * Detects an `anyOf` that constrains its own sibling `properties` rather than
  * introducing variants:

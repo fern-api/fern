@@ -73,7 +73,6 @@ function createContext(settingsOverrides?: Parameters<typeof getOpenAPISettings>
     });
 }
 
-
 // A schema may declare `properties` alongside an `anyOf` whose branches only mark
 // some of those same properties required. Per JSON Schema an instance must satisfy
 // both keywords, so the anyOf is an "at least one of" constraint, not a set of
@@ -115,8 +114,7 @@ describe("anyOf alongside sibling properties", () => {
     it("marks the properties optional, since the anyOf constraint is not expressible", () => {
         const output = convert(constraintSchema);
         const shape = output?.convertedSchema.typeDeclaration.shape;
-        const allOptional =
-            shape?.type === "object" && shape.properties.every((p) => p.valueType.type === "container");
+        const allOptional = shape?.type === "object" && shape.properties.every((p) => p.valueType.type === "container");
         expect(allOptional).toBe(true);
     });
 
@@ -135,6 +133,21 @@ describe("anyOf alongside sibling properties", () => {
             ]
         });
         expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("undiscriminatedUnion");
+    });
+
+    // The openapi-ir-parser detector excludes a sibling allOf, so this path must too:
+    // otherwise the two importers classify the same schema differently.
+    it("leaves a schema alone when an allOf composes with the anyOf", () => {
+        const output = convert({
+            type: "object",
+            properties: { a: { type: "boolean" }, b: { type: "boolean" } },
+            allOf: [{ type: "object", properties: { c: { type: "string" } } }],
+            anyOf: [
+                { type: "object", properties: { a: { type: "boolean" } }, required: ["a"] },
+                { type: "object", properties: { b: { type: "boolean" } }, required: ["b"] }
+            ]
+        });
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
     });
 
     it("leaves a bare anyOf with no sibling properties alone", () => {
