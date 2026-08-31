@@ -14,7 +14,7 @@ import {
 } from "./mcpGeneratorsYml.js";
 import { EndpointSummary } from "./openapiSummary.js";
 import { BuiltinPresetKey, buildBuiltinPresets, PresetResolution } from "./presets.js";
-import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig } from "./toolset.js";
+import { computeVerdict, formatTokens, formatVerdictLine, resolveTools, ToolsConfig, Verdict } from "./toolset.js";
 import { runTrimLoop } from "./trimLoop.js";
 import {
     banner,
@@ -173,13 +173,29 @@ export async function initMcp(args: InitMcpArgs): Promise<void> {
             toolsConfig = { ...toolsConfig, intent: args.intent };
         }
     } else {
-        const existingPresets = await loadExistingPresets({ cliContext, absolutePathToWorkspace });
-        const choice = await promptForToolsetChoice({ cliContext, presets, existingPresets, endpoints });
-        presetKey = choice.presetKey;
-        if (choice.presetKey === "ai-curated") {
-            toolsConfig = await promptForAiCuratedConfig({ cliContext, endpoints, initialIntent: undefined });
+        const everythingWithinBudget = everythingVerdict.level === "green";
+        const deployEverything =
+            everythingWithinBudget && (await promptForDefaultDeploy({ cliContext, everythingVerdict }));
+        if (deployEverything) {
+            presetKey = "everything";
+            toolsConfig = presets.everything.config;
         } else {
-            toolsConfig = choice.config;
+            if (!everythingWithinBudget) {
+                cliContext.logger.info(`${ICONS.warning} All ${styledVerdictLine(everythingVerdict)}`);
+                cliContext.logger.info(
+                    hint(
+                        "Recommended: Main resources — a smaller surface agents handle well. Everything is still an option."
+                    )
+                );
+            }
+            const existingPresets = await loadExistingPresets({ cliContext, absolutePathToWorkspace });
+            const choice = await promptForToolsetChoice({ cliContext, presets, existingPresets, endpoints });
+            presetKey = choice.presetKey;
+            if (choice.presetKey === "ai-curated") {
+                toolsConfig = await promptForAiCuratedConfig({ cliContext, endpoints, initialIntent: undefined });
+            } else {
+                toolsConfig = choice.config;
+            }
         }
     }
 
@@ -274,6 +290,32 @@ async function loadExistingPresets({
         }
     });
     return existing;
+}
+
+async function promptForDefaultDeploy({
+    cliContext,
+    everythingVerdict
+}: {
+    cliContext: CliContext;
+    everythingVerdict: Verdict;
+}): Promise<boolean> {
+    cliContext.logger.info("");
+    return await select<boolean>({
+        message: `Create MCP with all endpoints? (${everythingVerdict.toolCount} tools)`,
+        choices: [
+            {
+                name: radioChoice(`Create MCP — ${chalk.bold(everythingVerdict.toolCount)} tools`),
+                short: "Create MCP",
+                value: true
+            },
+            {
+                name: `${radioChoice("Customize toolset")}\n         ${hint("pick Read-only / Main resources / AI-curated")}`,
+                short: "Customize toolset",
+                value: false
+            }
+        ],
+        theme: selectTheme
+    });
 }
 
 interface ToolsetChoice {
