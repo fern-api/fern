@@ -106,7 +106,8 @@ export class SeedApiClient {
      *         "X-Idempotency-Key": "X-Idempotency-Key",
      *         nullable_text: "nullable_text",
      *         nullable_number: 1.1,
-     *         non_nullable_text: "non_nullable_text"
+     *         non_nullable_text: "non_nullable_text",
+     *         required_nullable_text: "required_nullable_text"
      *     })
      */
     public updateFoo(

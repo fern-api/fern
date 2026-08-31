@@ -106,6 +106,7 @@ client.update_foo(
     nullable_text="nullable_text",
     nullable_number=1.1,
     non_nullable_text="non_nullable_text",
+    required_nullable_text="required_nullable_text",
 )
 
 ```
@@ -155,6 +156,14 @@ client.update_foo(
 <dd>
 
 **non_nullable_text:** `typing.Optional[str]` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**required_nullable_text:** `typing.Optional[str]` — Must be sent, but may be null to clear the value
     
 </dd>
 </dl>
