@@ -1690,7 +1690,7 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext.instrumentPostHogEvent({ command: "fern mcp install" });
                 await runInstallAgent({ argv, cliContext });
             })
-            .demandCommand(1, "Specify a subcommand, e.g. `fern agent install`.");
+            .demandCommand(1, "`fern mcp` is deprecated. Use `fern agent install`.");
     });
 }
 
@@ -1713,12 +1713,12 @@ async function runInstallAgent({
     argv,
     cliContext
 }: {
-    argv: { client: string[] | undefined; organization: string | undefined };
+    argv: { client: McpClient[] | undefined; organization: string | undefined };
     cliContext: CliContext;
 }): Promise<void> {
     await cliContext.runTask(async (context) => {
         await installMcpServer({
-            clients: argv.client as McpClient[] | undefined,
+            clients: argv.client,
             organization: argv.organization ?? (await getOrganization(cliContext)),
             context
         });
