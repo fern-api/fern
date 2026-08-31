@@ -24,6 +24,8 @@ Matches `gh` / `aws` / `gcloud` / `op`. Adding keyring is a new `AuthCredentialS
 
 Entry key is `(service=<cli_name>, account=<scheme_name>)`. Value is a JSON token bundle for OAuth (`{access_token, refresh_token, expires_at}`) or a plain string for `--with-token`.
 
+HTTP Basic needs two values, so it uses two entries — `account=<scheme_name>:username` and `account=<scheme_name>:password` — each a plain string. `auth login --with-token` prompts for both, `auth logout` clears both, and `auth status` reports them as two separate slots that must *both* resolve for the scheme to be usable (they are not fallbacks for one another).
+
 ### Shadowing-aware UX
 
 Higher-priority sources mask lower-priority ones. `auth status` lists every visible source and marks shadowing explicitly. `auth login` warns at flow start when an env var would shadow the keyring entry the flow is about to write — so users discover the footgun before they're confused by it. Error messages on 401/403 disclose *which* source supplied the credential, so users know where to look when the shadow is unintended.

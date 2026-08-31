@@ -1,0 +1,17 @@
+- summary: |
+    Make `auth login --with-token` work for HTTP Basic schemes. It now prompts
+    for both halves of the credential and stores them in per-part keyring slots
+    (`<scheme>:username` / `<scheme>:password`) that the Basic binding resolves
+    at request time, instead of silently storing a single token no provider
+    reads. `auth logout` clears both slots.
+  type: fix
+- summary: |
+    `auth status` now reports HTTP Basic as two required credential slots, so a
+    scheme with only one half set is no longer reported as logged in with the
+    other half "shadowed".
+  type: fix
+- summary: |
+    `auth login`/`auth logout` reject an undeclared `--scheme` name with the
+    list of schemes the CLI declares, rather than the misleading "No login flow
+    declared for scheme `<name>`".
+  type: fix
