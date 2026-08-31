@@ -238,6 +238,52 @@ describe("anyOf alongside sibling properties", () => {
         expect(inlinedShapes).not.toContain("undiscriminatedUnion");
     });
 
+    // The shape real specs actually have: the branch restates only `type`, while the
+    // sibling also carries description/example. Those are annotations, not
+    // constraints, so the branch is still merely naming the property. Requiring the
+    // subschemas to be deep-equal rejected every real-world spec of this shape.
+    it("treats a branch restating only type as a constraint when the sibling adds annotations", () => {
+        const output = convert(
+            {
+                type: "object",
+                properties: {
+                    autorenewEnabled: {
+                        type: "boolean",
+                        description: "Enable or disable automatic renewal for the domain.",
+                        example: true
+                    },
+                    locked: { type: "boolean", description: "Set the transfer lock status", example: true }
+                },
+                anyOf: [
+                    {
+                        type: "object",
+                        properties: { autorenewEnabled: { type: "boolean" } },
+                        required: ["autorenewEnabled"]
+                    },
+                    { type: "object", properties: { locked: { type: "boolean" } }, required: ["locked"] }
+                ]
+            },
+            asObject
+        );
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).toBe("object");
+    });
+
+    // A branch that retypes a property is narrowing it, not naming it.
+    it("leaves a union alone when a branch retypes a property", () => {
+        const output = convert(
+            {
+                type: "object",
+                properties: { a: { type: "string" }, b: { type: "string" } },
+                anyOf: [
+                    { type: "object", properties: { a: { type: "number" } }, required: ["a"] },
+                    { type: "object", properties: { b: { type: "string" } }, required: ["b"] }
+                ]
+            },
+            asObject
+        );
+        expect(output?.convertedSchema.typeDeclaration.shape?.type).not.toBe("object");
+    });
+
     it("leaves a bare anyOf with no sibling properties alone", () => {
         const output = convert(
             {

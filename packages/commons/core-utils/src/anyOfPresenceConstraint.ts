@@ -59,18 +59,54 @@ function isObjectTypeOrAbsent(type: unknown): boolean {
 }
 
 /**
- * True when the two subschemas describe the same thing for the purpose of this
- * check: an empty branch subschema (`{}` or `true`) merely names the property,
- * and one deep-equal to the sibling's restates it. Anything else narrows it.
+ * JSON Schema annotation keywords. They describe a value but do not restrict which
+ * values are allowed, so a branch that omits them is still restating the sibling.
+ * `default` is included: dropping the `anyOf` leaves the sibling's `default` in
+ * force, so a branch that repeats or omits it narrows nothing.
+ */
+const ANNOTATION_KEYWORDS = new Set([
+    "title",
+    "description",
+    "default",
+    "deprecated",
+    "example",
+    "examples",
+    "readOnly",
+    "writeOnly",
+    "externalDocs",
+    "xml",
+    "$comment"
+]);
+
+/**
+ * True when the branch subschema adds no constraint of its own relative to the
+ * sibling's: every constraint keyword it states must appear on the sibling with an
+ * equal value. Annotations are ignored, and keywords the sibling states but the
+ * branch omits are fine -- both schemas apply, so the sibling's still binds.
+ *
+ * This is what separates naming a property from constraining it. A branch
+ * `{ type: boolean }` against a sibling
+ * `{ type: boolean, description: "...", example: true }` merely names it. A branch
+ * `{ const: "a" }` against a sibling `{ type: string }` introduces `const`, which
+ * the sibling does not have, and so is a variant.
  */
 function restatesSiblingSubschema(branchSubschema: unknown, siblingSubschema: unknown): boolean {
     if (branchSubschema === true) {
         return true;
     }
-    if (isRecord(branchSubschema) && Object.keys(branchSubschema).length === 0) {
-        return true;
+    if (!isRecord(branchSubschema)) {
+        return false;
     }
-    return deepEquals(branchSubschema, siblingSubschema);
+    const sibling = isRecord(siblingSubschema) ? siblingSubschema : undefined;
+    for (const [keyword, value] of Object.entries(branchSubschema)) {
+        if (ANNOTATION_KEYWORDS.has(keyword)) {
+            continue;
+        }
+        if (sibling == null || !(keyword in sibling) || !deepEquals(value, sibling[keyword])) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function deepEquals(a: unknown, b: unknown): boolean {
