@@ -30,10 +30,15 @@ class Ambiguous(UniversalBaseModel):
     second: str = pydantic.Field(alias="second_alias")
 
 
-class Shadowed(UniversalBaseModel):
-    # `alias` of `first` collides with the field name of `second`, which has no alias of its own
-    first: str = pydantic.Field(alias="second")
-    second: str
+# `alias` of `first` collides with the field name of `second`, which has no alias of its own. Built with
+# `create_model` because the two fields would collide in the `__init__` signature Pydantic's mypy plugin
+# synthesizes for a class definition.
+Shadowed = pydantic.create_model(
+    "Shadowed",
+    __base__=UniversalBaseModel,
+    first=(str, pydantic.Field(alias="second")),
+    second=(str, ...),
+)
 
 
 def test_field_names_are_coerced_to_aliases() -> None:
@@ -66,8 +71,7 @@ def test_key_shadowing_a_non_aliased_field_is_not_ambiguous() -> None:
     # other key that could disambiguate it: it feeds both fields rather than raising.
     assert _coerce_keys_to_aliases(Shadowed, {"second": "value"}) == {"second": "value"}
     parsed = parse_obj_as(Shadowed, {"second": "value"})
-    assert parsed.first == "value"
-    assert parsed.second == "value"
+    assert parsed.dict() == {"second": "value"}
 
 
 def test_field_aliases_are_computed_once_per_model() -> None:
