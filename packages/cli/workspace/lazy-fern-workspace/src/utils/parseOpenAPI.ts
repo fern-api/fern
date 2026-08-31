@@ -2,6 +2,7 @@ import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons"
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { bundle, Source } from "@redocly/openapi-core";
+import { NormalizedProblem } from "@redocly/openapi-core/lib/walk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
@@ -9,18 +10,33 @@ import { OpenAPI } from "openapi-types";
 import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver.js";
 import { type CircularRefInfo, findCircularRefs } from "./findCircularRefs.js";
 
+/**
+ * A `$ref` that Redocly's bundler could not resolve. The bundler leaves the unresolved `$ref`
+ * in the bundled output, so these problems are the only signal that the reference is dangling.
+ */
+export interface UnresolvedRefProblem {
+    message: string;
+    /** The file that declares the unresolved `$ref`, if Redocly reported one. */
+    sourceFilepath: string | undefined;
+    /** A JSON pointer into `sourceFilepath` locating the unresolved `$ref`, if reported. */
+    pointer: string | undefined;
+}
+
 export async function parseOpenAPI({
     absolutePathToOpenAPI,
     absolutePathToOpenAPIOverrides,
     absolutePathToOpenAPIOverlays,
     parsed,
-    logger
+    logger,
+    onUnresolvedRef
 }: {
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
     absolutePathToOpenAPIOverlays?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
     logger?: Logger;
+    /** Invoked for every `$ref` the bundler failed to resolve. */
+    onUnresolvedRef?: (problem: UnresolvedRefProblem) => void;
 }): Promise<OpenAPI.Document> {
     try {
         const result =
@@ -44,6 +60,12 @@ export async function parseOpenAPI({
                           absolutePathToOpenAPIOverlays
                       })
                   });
+
+        if (onUnresolvedRef != null) {
+            for (const problem of collectUnresolvedRefProblems(result.problems)) {
+                onUnresolvedRef(problem);
+            }
+        }
 
         return result.bundle.parsed;
     } catch (error) {
@@ -85,6 +107,19 @@ export async function parseOpenAPI({
         }
         throw error;
     }
+}
+
+function collectUnresolvedRefProblems(problems: NormalizedProblem[]): UnresolvedRefProblem[] {
+    return problems
+        .filter((problem) => problem.ruleId === "bundler" && problem.severity === "error")
+        .map((problem) => {
+            const location = problem.location[0];
+            return {
+                message: problem.message,
+                sourceFilepath: location?.source.absoluteRef,
+                pointer: location?.pointer
+            };
+        });
 }
 
 async function readAndParseFile(absoluteFilePath: AbsoluteFilePath): Promise<OpenAPI.Document> {

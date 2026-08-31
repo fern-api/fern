@@ -1,0 +1,3 @@
+api:
+  specs:
+    - openapi: ./specs/openapi.yml

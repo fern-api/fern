@@ -1,0 +1,6 @@
+- summary: |
+    `fern check` now reports OpenAPI `$ref`s that could not be resolved (dangling local pointers and
+    refs to files that are missing on disk) as warnings instead of silently dropping them. Overlay
+    `update` actions whose target matches no node now log a warning rather than being silently
+    ignored.
+  type: fix

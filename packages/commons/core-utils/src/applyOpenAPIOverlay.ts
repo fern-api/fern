@@ -17,7 +17,19 @@ export interface Overlay {
     actions: OverlayAction[];
 }
 
-export function applyOpenAPIOverlay<T extends object>({ data, overlay }: { data: T; overlay: Overlay }): T {
+export function applyOpenAPIOverlay<T extends object>({
+    data,
+    overlay,
+    onUnmatchedUpdate
+}: {
+    data: T;
+    overlay: Overlay;
+    /**
+     * Invoked when an `update` action's target matches no node, in which case the update is a no-op.
+     * `remove` actions are not reported, since removing an absent node is expected to be idempotent.
+     */
+    onUnmatchedUpdate?: (action: OverlayAction) => void;
+}): T {
     // Use structuredClone to avoid mutating the input data
     // This prevents shared object references and ensures the input remains unchanged
     const output = structuredClone(data);
@@ -27,6 +39,10 @@ export function applyOpenAPIOverlay<T extends object>({ data, overlay }: { data:
             json: output,
             resultType: "all"
         }) as Array<{ value: unknown; parent: unknown; parentProperty: string | number }>;
+
+        if (results.length === 0 && !action.remove) {
+            onUnmatchedUpdate?.(action);
+        }
 
         for (const { value, parent, parentProperty } of results) {
             // When parent is null, this indicates we're targeting the root

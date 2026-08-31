@@ -1,0 +1,7 @@
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        name:
+          type: string

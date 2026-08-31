@@ -1358,4 +1358,67 @@ describe("applyOpenAPIOverlay", () => {
         // Verify that the original data was not mutated
         expect(data).toEqual(originalData);
     });
+
+    it("should report update actions whose target matches no node", () => {
+        const data = {
+            components: {
+                securitySchemes: {
+                    apiKey: {
+                        type: "apiKey"
+                    }
+                }
+            }
+        };
+
+        const action = {
+            target: "$.components.schemas",
+            description: "Add an error schema",
+            update: {
+                PlantErrorResponse: {
+                    type: "object"
+                }
+            },
+            remove: false
+        };
+
+        const unmatched: string[] = [];
+        const result = applyOpenAPIOverlay({
+            data,
+            overlay: { actions: [action] },
+            onUnmatchedUpdate: (unmatchedAction) => unmatched.push(unmatchedAction.target)
+        });
+
+        expect(unmatched).toEqual(["$.components.schemas"]);
+        expect(result).toEqual(data);
+    });
+
+    it("should not report remove actions whose target matches no node", () => {
+        const data = {
+            components: {
+                securitySchemes: {
+                    apiKey: {
+                        type: "apiKey"
+                    }
+                }
+            }
+        };
+
+        const unmatched: string[] = [];
+        applyOpenAPIOverlay({
+            data,
+            overlay: {
+                actions: [
+                    {
+                        target: "$.components.schemas.PlantErrorResponse",
+                        description: "Remove the error schema",
+                        update: undefined,
+                        remove: true
+                    }
+                ]
+            },
+            onUnmatchedUpdate: (unmatchedAction) => unmatched.push(unmatchedAction.target)
+        });
+
+        expect(unmatched).toEqual([]);
+    });
 });

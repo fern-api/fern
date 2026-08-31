@@ -1,5 +1,5 @@
 import { OpenAPISpec } from "@fern-api/api-workspace-commons";
-import { loadOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { loadOpenAPI, OSSWorkspace, UnresolvedRefProblem } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { OpenAPI } from "openapi-types";
@@ -18,14 +18,12 @@ export async function validateOSSWorkspace(
  * Pre-loads all OpenAPI documents once so that validation rules can share
  * the parsed results instead of each rule calling loadOpenAPI() independently.
  */
-async function preloadOpenAPIDocuments({
-    specs,
-    context
-}: {
-    specs: OpenAPISpec[];
-    context: TaskContext;
-}): Promise<Map<string, OpenAPI.Document>> {
+async function preloadOpenAPIDocuments({ specs, context }: { specs: OpenAPISpec[]; context: TaskContext }): Promise<{
+    loadedDocuments: Map<string, OpenAPI.Document>;
+    unresolvedRefs: Map<string, UnresolvedRefProblem[]>;
+}> {
     const loadedDocuments = new Map<string, OpenAPI.Document>();
+    const unresolvedRefs = new Map<string, UnresolvedRefProblem[]>();
 
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
@@ -37,13 +35,16 @@ async function preloadOpenAPIDocuments({
             absolutePathToOpenAPI: spec.absoluteFilepath,
             context,
             absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
-            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
+            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays,
+            onUnresolvedRefs: (problems) => {
+                unresolvedRefs.set(spec.absoluteFilepath, problems);
+            }
         });
 
         loadedDocuments.set(spec.absoluteFilepath, document);
     }
 
-    return loadedDocuments;
+    return { loadedDocuments, unresolvedRefs };
 }
 
 export async function runRulesOnOSSWorkspace({
@@ -58,11 +59,17 @@ export async function runRulesOnOSSWorkspace({
     const openApiSpecs = await workspace.getOpenAPISpecsCached({ context });
 
     // Pre-load all OpenAPI documents once to avoid redundant parsing and overlay application
-    const loadedDocuments = await preloadOpenAPIDocuments({ specs: openApiSpecs, context });
+    const { loadedDocuments, unresolvedRefs } = await preloadOpenAPIDocuments({ specs: openApiSpecs, context });
 
     const ruleResults = await Promise.all(
         rules.map(async (rule) => {
-            const violations = await rule.run({ workspace, specs: openApiSpecs, context, loadedDocuments });
+            const violations = await rule.run({
+                workspace,
+                specs: openApiSpecs,
+                context,
+                loadedDocuments,
+                unresolvedRefs
+            });
             return violations.map((violation) => ({ ...violation, name: violation.name ?? rule.name }));
         })
     );
