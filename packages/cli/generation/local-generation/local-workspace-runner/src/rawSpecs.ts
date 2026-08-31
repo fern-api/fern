@@ -807,6 +807,7 @@ export function validateSdkConfigImportSettings(specs: Spec[]): void {
             // Mapper membership means the setting's full value domain is preserved downstream.
             if (
                 SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
+                (key === "audiences" && Array.isArray(value) && value.length === 0) ||
                 isDeepStrictEqual(value, Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))
             ) {
                 continue;

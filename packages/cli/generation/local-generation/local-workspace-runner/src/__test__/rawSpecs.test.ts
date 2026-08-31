@@ -422,6 +422,15 @@ describe("collectRawSpecs", () => {
         expect(() => validateSdkConfigImportSettings([spec])).toThrow("use a pre-cutover generator version");
     });
 
+    it("accepts an empty default audience filter for SDK Config", () => {
+        const spec = {
+            ...openApiSpec(path.join(sourceDir, "api", "default-audiences.yaml")),
+            settings: getOpenAPISettings({ overrides: { audiences: [] } })
+        };
+
+        expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
+    });
+
     it("merges overrides into the resolved OpenAPI spec", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");

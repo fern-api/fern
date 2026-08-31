@@ -2,18 +2,9 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import {
-    createGroupedSpecsTarGzArchiveSettled,
-    createSpecsTarGzArchive,
-    generatorWantsSpecs,
-    runLocalGenerationForWorkspace,
-    validateSdkConfigImportSettings
-} from "@fern-api/local-workspace-runner";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import {
     AutomationRunOptions,
-    type FernSourceArchiveRequest,
-    type FernSourceArchiveResolution,
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
     getOutputRepoUrl,
@@ -24,6 +15,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
@@ -196,104 +188,11 @@ export async function generateWorkspace({
                         disableTelemetry: isTelemetryDisabled()
                     });
                 } else if (token != null) {
-                    const ossWorkspace = workspace instanceof OSSWorkspace ? workspace : undefined;
-                    const getSpecsTarGz = async (
-                        requests: FernSourceArchiveRequest[]
-                    ): Promise<FernSourceArchiveResolution> => {
-                        const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
-                        const errors = new Map<number, unknown>();
-                        if (ossWorkspace == null) {
-                            return { sourceArchives, errors };
-                        }
-                        const settledSelections = await Promise.allSettled(
-                            requests.map(async (request) => {
-                                if (request.sdkGenApiRoute == null) {
-                                    return undefined;
-                                }
-                                const specs = await ossWorkspace.getAllSpecsForGenerator(
-                                    request.generatorInvocation.apiOverride?.specs
-                                );
-                                if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                                    validateSdkConfigImportSettings(specs);
-                                }
-                                return specs;
-                            })
-                        );
-                        const generatorSelections = settledSelections.flatMap((result, index) => {
-                            const request = requests[index];
-                            if (request == null) {
-                                throw new Error(`Missing source archive request at settled index ${index}`);
-                            }
-                            if (result.status === "rejected") {
-                                errors.set(request.generatorIndex, result.reason);
-                                return [];
-                            }
-                            return result.value == null
-                                ? []
-                                : [{ generatorIndex: request.generatorIndex, specs: result.value }];
-                        });
-                        if (generatorSelections.length > 0) {
-                            const settledArchive = await createGroupedSpecsTarGzArchiveSettled({
-                                generatorSelections,
-                                context: groupContext,
-                                audiences: group.audiences
-                            });
-                            for (const [generatorIndex, error] of settledArchive.errorsByGeneratorIndex) {
-                                errors.set(generatorIndex, error);
-                            }
-                            if (settledArchive.archive != null) {
-                                const archive = settledArchive.archive;
-                                const { specIndexesByGeneratorIndex, ...sourceArchive } = archive;
-                                for (const [generatorIndex, specIndexes] of specIndexesByGeneratorIndex) {
-                                    sourceArchives.set(generatorIndex, { ...sourceArchive, specIndexes });
-                                }
-                            }
-                        }
-                        const rootRequests = requests.filter(
-                            (request) =>
-                                request.sdkGenApiRoute == null &&
-                                generatorWantsSpecs(request.generatorInvocation.name) &&
-                                !errors.has(request.generatorIndex)
-                        );
-                        if (rootRequests.length > 0) {
-                            try {
-                                const archive = await createSpecsTarGzArchive({
-                                    specs: ossWorkspace.allSpecs,
-                                    context: groupContext,
-                                    audiences: group.audiences
-                                });
-                                const specIndexes = archive.manifest.specs.map((_, index) => index);
-                                for (const request of rootRequests) {
-                                    sourceArchives.set(request.generatorIndex, { ...archive, specIndexes });
-                                }
-                            } catch (error) {
-                                for (const request of rootRequests) {
-                                    errors.set(request.generatorIndex, error);
-                                }
-                            }
-                        }
-                        for (const request of requests) {
-                            const requiresSourceArchive =
-                                request.sdkGenApiRoute != null || generatorWantsSpecs(request.generatorInvocation.name);
-                            if (!requiresSourceArchive) {
-                                continue;
-                            }
-                            const hasArchive = sourceArchives.has(request.generatorIndex);
-                            const hasError = errors.has(request.generatorIndex);
-                            if (hasArchive === hasError) {
-                                const cause = errors.get(request.generatorIndex);
-                                sourceArchives.delete(request.generatorIndex);
-                                errors.set(
-                                    request.generatorIndex,
-                                    new Error(
-                                        `Generator index ${request.generatorIndex} must have exactly one source archive or source preparation error outcome`,
-                                        hasError ? { cause } : undefined
-                                    )
-                                );
-                            }
-                        }
-                        return { sourceArchives, errors };
-                    };
+                    const getSpecsTarGz = createFernSourceArchiveResolver({
+                        workspace,
+                        context: groupContext,
+                        group
+                    });
 
                     await runRemoteGenerationForAPIWorkspace({
                         projectConfig,
