@@ -16,8 +16,12 @@ export interface DetectedGlobalParam {
      * the Rust runtime's `global_parameter_flag_name`.
      */
     flagSource: string;
-    /** Where the resolved value is injected on the wire. */
-    location: "header" | "query" | "body" | "path";
+    /**
+     * Where the resolved value is injected on the wire. A location this
+     * generator doesn't recognize is `"unknown"` rather than a guess, so
+     * callers deciding what is safe to touch can exclude it.
+     */
+    location: "header" | "query" | "body" | "path" | "unknown";
     /** Whether requests may omit the parameter when nothing resolves. */
     optional: boolean;
     /**
@@ -84,7 +88,7 @@ function locationOf(location: FernIr.GlobalParameterLocation): DetectedGlobalPar
         query: () => "query",
         body: () => "body",
         path: () => "path",
-        _other: () => "query"
+        _other: () => "unknown"
     });
 }
 
@@ -120,16 +124,19 @@ function optionString(value: string | undefined): string {
     return `Some("${escapeRustString(value)}".into())`;
 }
 
-function optionLiteralDefault(literal: FernIr.Literal | undefined): string {
+/**
+ * The value the generated `GlobalParameter.default` carries, or `undefined`
+ * when the CLI ends up with no baked-in default. Literal is a union with
+ * string and boolean variants; both are stored as a string in Rust.
+ */
+function literalDefault(literal: FernIr.Literal | undefined): string | undefined {
     if (literal == null) {
-        return "None";
+        return undefined;
     }
-    // Literal is a union with string and boolean variants.
-    // Both are stored as string in the Rust SDK's GlobalParameter.default.
-    return literal._visit<string>({
-        string: (s) => `Some("${escapeRustString(s)}".into())`,
-        boolean: (b) => `Some("${b}".into())`,
-        _other: () => "None"
+    return literal._visit<string | undefined>({
+        string: (s) => s,
+        boolean: (b) => `${b}`,
+        _other: () => undefined
     });
 }
 
@@ -210,14 +217,14 @@ function buildHeaderBinding(header: FernIr.HttpHeader): DetectedGlobalParam | un
         return undefined;
     }
 
-    const defaultRust = optionLiteralDefault(header.clientDefault ?? headerLiteralValue(header.valueType));
+    const headerDefault = literalDefault(header.clientDefault ?? headerLiteralValue(header.valueType));
     const rustCall = [
         `.global_parameter(GlobalParameter {`,
         `            name: "${escapeRustString(wireValue)}".into(),`,
         `            location: GlobalParameterLocation::Header,`,
         `            target: "${escapeRustString(wireValue)}".into(),`,
         `            env: ${optionString(header.env)},`,
-        `            default: ${defaultRust},`,
+        `            default: ${optionString(headerDefault)},`,
         `            optional: ${headerIsOptional(header.valueType) ? "true" : "false"},`,
         `            apply: GlobalParameterApplyMode::Auto,`,
         `            parameter_name: ${optionString(sdkName)},`,
@@ -230,7 +237,7 @@ function buildHeaderBinding(header: FernIr.HttpHeader): DetectedGlobalParam | un
         flagSource: sdkName ?? wireValue,
         location: "header",
         optional: headerIsOptional(header.valueType),
-        hasDefaultValue: defaultRust !== "None",
+        hasDefaultValue: headerDefault != null,
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: header.env ?? undefined
@@ -249,7 +256,7 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
     const locationRust = locationToRust(param.location);
     const applyRust = applyModeToRust(param.apply);
     const envRust = optionString(param.env);
-    const defaultRust = optionLiteralDefault(param.clientDefault);
+    const paramDefault = literalDefault(param.clientDefault);
     const optionalRust = param.optional === true ? "true" : "false";
     const paramNameRust = optionString(parameterName);
     const docsRust = optionString(param.docs);
@@ -263,7 +270,7 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
         `            location: ${locationRust},`,
         `            target: "${escapeRustString(target)}".into(),`,
         `            env: ${envRust},`,
-        `            default: ${defaultRust},`,
+        `            default: ${optionString(paramDefault)},`,
         `            optional: ${optionalRust},`,
         `            apply: ${applyRust},`,
         `            parameter_name: ${paramNameRust},`,
@@ -276,7 +283,7 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
         flagSource: sdkName ?? wireValue,
         location: locationOf(param.location),
         optional: param.optional === true,
-        hasDefaultValue: defaultRust !== "None",
+        hasDefaultValue: paramDefault != null,
         rustCall,
         imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
         envVar: param.env ?? undefined
