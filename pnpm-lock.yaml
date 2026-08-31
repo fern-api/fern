@@ -7385,6 +7385,9 @@ importers:
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../../workspace/lazy-fern-workspace
