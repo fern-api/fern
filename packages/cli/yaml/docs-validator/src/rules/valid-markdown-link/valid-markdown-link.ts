@@ -75,7 +75,8 @@ function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
 
 /**
  * Build the IR for an API section the same way the docs build does: prefer the OpenAPI
- * (v3) parser, and fall back to converting the workspace into a Fern definition.
+ * (v3) parser unless it is disabled, and fall back to converting the workspace into a
+ * Fern definition.
  *
  * Link checking is best-effort — when neither path produces an IR we skip the section
  * instead of failing validation, since the rules that own spec correctness
@@ -84,15 +85,19 @@ function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
 async function getIntermediateRepresentation({
     apiWorkspace,
     ossWorkspaces,
+    useOpenApiParserV3,
     audiences,
     logger
 }: {
     apiWorkspace: AbstractAPIWorkspace<unknown>;
     ossWorkspaces: OSSWorkspace[];
+    useOpenApiParserV3: boolean;
     audiences: Audiences;
     logger: Logger;
 }): Promise<IntermediateRepresentation | undefined> {
-    const ossWorkspace = ossWorkspaces.find((ossWorkspace) => ossWorkspace === apiWorkspace);
+    const ossWorkspace = useOpenApiParserV3
+        ? ossWorkspaces.find((ossWorkspace) => ossWorkspace === apiWorkspace)
+        : undefined;
     if (ossWorkspace != null) {
         try {
             return await ossWorkspace.getIntermediateRepresentation({
@@ -143,6 +148,8 @@ async function getIntermediateRepresentation({
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
     create: async ({ workspace, apiWorkspaces, ossWorkspaces, logger }) => {
+        // Mirror DocsDefinitionResolver: the v3 parser is used unless it is explicitly disabled.
+        const useOpenApiParserV3 = workspace.config.experimental?.openapiParserV3 !== false;
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
@@ -295,7 +302,13 @@ export const ValidMarkdownLinks: Rule = {
                       }
                     : { type: "all" };
 
-                const ir = await getIntermediateRepresentation({ apiWorkspace, ossWorkspaces, audiences, logger });
+                const ir = await getIntermediateRepresentation({
+                    apiWorkspace,
+                    ossWorkspaces,
+                    useOpenApiParserV3,
+                    audiences,
+                    logger
+                });
                 if (ir == null) {
                     return [];
                 }
