@@ -197,24 +197,26 @@ export async function resolveThemeFileUrls(
 
     // js — remote entries (url field) stay as-is; local entries (path field or plain string) get downloaded
     const rawJs = cfg.js;
-    const jsList: unknown[] = Array.isArray(rawJs) ? rawJs : rawJs != null ? [rawJs] : [];
-    cfg.js = await Promise.all(
-        jsList.map(async (entry) => {
-            if (entry == null || typeof entry !== "object") {
-                return entry;
-            }
-            const e = entry as Record<string, unknown>;
-            // { url: "..." } → remote, leave alone
-            if (typeof e.url === "string" && isRemoteUrl(e.url)) {
+    if (rawJs != null) {
+        const jsList: unknown[] = Array.isArray(rawJs) ? rawJs : [rawJs];
+        cfg.js = await Promise.all(
+            jsList.map(async (entry) => {
+                if (entry == null || typeof entry !== "object") {
+                    return entry;
+                }
+                const e = entry as Record<string, unknown>;
+                // { url: "..." } → remote, leave alone
+                if (typeof e.url === "string" && isRemoteUrl(e.url)) {
+                    return e;
+                }
+                // { path: "..." } → local file, may have been uploaded
+                if (typeof e.path === "string" && isPresignedUrl(e.path)) {
+                    return { ...e, path: await downloadToTemp(e.path, tmpDir, idx++) };
+                }
                 return e;
-            }
-            // { path: "..." } → local file, may have been uploaded
-            if (typeof e.path === "string" && isPresignedUrl(e.path)) {
-                return { ...e, path: await downloadToTemp(e.path, tmpDir, idx++) };
-            }
-            return e;
-        })
-    );
+            })
+        );
+    }
 
     // header / footer (compiled component files)
     cfg.header = await maybeDownload(cfg.header);

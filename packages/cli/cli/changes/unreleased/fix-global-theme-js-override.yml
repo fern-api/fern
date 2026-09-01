@@ -1,0 +1,5 @@
+- summary: |
+    Fix `global-theme` wiping a site's own `js` config. Sites declaring
+    `js:` in their docs.yml alongside `global-theme:` published with no
+    custom scripts unless the theme itself declared `js`.
+  type: fix

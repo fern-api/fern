@@ -321,6 +321,13 @@ describe("resolveThemeFileUrls (non-presigned)", () => {
         expect(result.js).toEqual([{ url: "https://cdn.example.com/script.js" }]);
     });
 
+    it("leaves js absent when the theme declares none", async () => {
+        const config = { logo: { dark: "https://example.com/logo-dark.svg" } };
+        const result = await resolveThemeFileUrls(config, "/tmp/test");
+        expect(result.js).toBeUndefined();
+        expect("js" in result).toBe(false);
+    });
+
     it("preserves regular https CSS string without downloading", async () => {
         const config = { css: "https://example.com/styles.css" };
         const result = await resolveThemeFileUrls(config, "/tmp/test");
@@ -477,6 +484,27 @@ describe("stitchGlobalTheme", () => {
             "right-text": "Docs",
             height: 28
         });
+    });
+
+    it("keeps the site's own js when the theme declares none", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(
+            makeFetchResponse({ config: { favicon: "https://example.com/favicon.ico" } })
+        );
+
+        const workspace = makeDocsWorkspace({
+            globalTheme: "my-theme",
+            js: "./assets/team-search.js"
+        });
+
+        const result = await stitchGlobalTheme({
+            docsWorkspace: workspace,
+            organization: "acme",
+            fdrOrigin: "https://fdr.example.com",
+            token: "tok",
+            taskContext
+        });
+
+        expect((result.config as unknown as Record<string, unknown>).js).toBe("./assets/team-search.js");
     });
 
     it("builds the correct FDR URL from org and theme name (percent-encodes special chars)", async () => {
