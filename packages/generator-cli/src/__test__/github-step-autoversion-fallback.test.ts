@@ -69,7 +69,8 @@ describe("resolvePrFields", () => {
             newVersion: "10.0.0",
             versionBump: "PATCH",
             hasBreakingChanges: false,
-            breakingChangesSummary: "manual summary"
+            breakingChangesSummary: "manual summary",
+            requiresHumanReview: false
         });
     });
 
@@ -152,5 +153,20 @@ describe("PR body composition with autoVersion fallback", () => {
                 { hasBreakingChanges: resolved.hasBreakingChanges }
             )
         ).toBe(true);
+    });
+
+    it("a failed AI analysis blocks automerge despite its non-MAJOR fallback bump", () => {
+        const failedAnalysis: AutoVersionStepResult = {
+            executed: true,
+            success: true,
+            version: "1.4.0",
+            previousVersion: "1.3.0",
+            versionBump: "MINOR",
+            requiresHumanReview: true
+        };
+        const resolved = resolvePrFields({ ...baseConfig, automationMode: true, autoMerge: true }, failedAnalysis);
+
+        expect(resolved.requiresHumanReview).toBe(true);
+        expect(shouldEnableAutomerge({ ...baseConfig, automationMode: true, autoMerge: true }, resolved)).toBe(false);
     });
 });

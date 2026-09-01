@@ -73,7 +73,7 @@ describe("retryWithJitter", () => {
         }
     });
 
-    it("honors a Retry-After hint over the exponential schedule", async () => {
+    it("never retries before a Retry-After hint elapses", async () => {
         const delays: number[] = [];
         let attempts = 0;
 

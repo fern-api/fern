@@ -475,6 +475,7 @@ export class AutoVersionStep extends BaseStep {
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
             versionBumpReason: analysis.versionBumpReason,
+            requiresHumanReview: analysis.requiresHumanReview,
             commitSha
         };
     }
@@ -552,7 +553,8 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
-            versionBumpReason: analysis.versionBumpReason
+            versionBumpReason: analysis.versionBumpReason,
+            requiresHumanReview: analysis.requiresHumanReview
         };
     }
 
@@ -1094,9 +1096,9 @@ export class AutoVersionStep extends BaseStep {
 
     /**
      * Terminal fallback when AI analysis fails: MINOR rather than PATCH, since a
-     * failed analysis cannot rule out new public API, plus a PR-body warning so the
-     * degraded version and missing changelog land in front of a human instead of
-     * shipping as a routine patch release.
+     * failed analysis cannot rule out new public API, plus a PR-body warning and
+     * `requiresHumanReview` (which blocks automerge) so the degraded version and
+     * missing changelog land in front of a human instead of shipping unattended.
      */
     private aiFailureAnalysis(error: unknown, label: string): FAIAnalysis {
         const detail = String(error);
@@ -1108,7 +1110,8 @@ export class AutoVersionStep extends BaseStep {
             versionBump: AI_FAILURE_BUMP,
             message: this.brandMessage(AI_FAILURE_MESSAGE),
             prDescription: aiFailurePrWarning(detail),
-            versionBumpReason: AI_FAILURE_REASON
+            versionBumpReason: AI_FAILURE_REASON,
+            requiresHumanReview: true
         };
     }
 
@@ -1164,6 +1167,8 @@ interface FAIAnalysis {
     changelogEntry?: string;
     prDescription?: string;
     versionBumpReason?: string;
+    /** Set only by the AI-failure fallback, never by a real analysis. */
+    requiresHumanReview?: boolean;
 }
 
 interface FaiAnalyzeResponse {

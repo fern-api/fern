@@ -290,6 +290,7 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         expect(result.prDescription).toContain("human review required");
         expect(result.prDescription).toContain("MINOR");
         expect(result.versionBumpReason).toContain("MAJOR");
+        expect(result.requiresHumanReview).toBe(true);
         expect(logger.errors.some((msg) => msg.includes("FAILED after retries"))).toBe(true);
 
         // 3 attempts total: the failure is only terminal once retries are exhausted.

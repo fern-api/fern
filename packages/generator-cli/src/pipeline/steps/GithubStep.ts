@@ -569,6 +569,8 @@ export interface ResolvedPrFields {
     versionBump: string | undefined;
     hasBreakingChanges: boolean;
     breakingChangesSummary: string | undefined;
+    /** True when autoversion degraded to a fallback bump because AI analysis failed. */
+    requiresHumanReview: boolean;
 }
 
 /**
@@ -603,7 +605,8 @@ export function resolvePrFields(
         newVersion: config.newVersion ?? autoVersion?.version,
         versionBump: config.versionBump ?? autoVersion?.versionBump,
         hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
-        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription
+        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription,
+        requiresHumanReview: autoVersion?.requiresHumanReview === true
     };
 }
 
@@ -645,13 +648,22 @@ export function enrichPrBodyForAutomation(
  * `breaking` carries the derived hasBreakingChanges that may come from either
  * explicit config or `AutoVersionStep`'s result. Callers outside the step pass
  * an empty object to preserve the config-only behavior.
+ *
+ * `requiresHumanReview` also disables automerge: when AI versioning failed, the
+ * bump is a conservative guess and the changelog is missing, so merging it
+ * unattended is exactly what the fallback is meant to prevent.
  */
 export function shouldEnableAutomerge(
     config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
-    breaking: { hasBreakingChanges?: boolean } = {}
+    breaking: { hasBreakingChanges?: boolean; requiresHumanReview?: boolean } = {}
 ): boolean {
     const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
-    return config.automationMode === true && config.autoMerge === true && hasBreakingChanges !== true;
+    return (
+        config.automationMode === true &&
+        config.autoMerge === true &&
+        hasBreakingChanges !== true &&
+        breaking.requiresHumanReview !== true
+    );
 }
 
 /**

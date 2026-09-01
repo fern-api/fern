@@ -78,7 +78,13 @@ function computeDelayMs({
     jitterFactor: number;
 }): number {
     const retryAfterMs = error instanceof RetryableError ? error.retryAfterMs : undefined;
-    const base = Math.min(retryAfterMs ?? initialDelayMs * 2 ** (attempt - 1), maxDelayMs);
+    if (retryAfterMs != null) {
+        // A server-specified delay is a floor, not a target: jitter it upwards only,
+        // otherwise the retry lands before the window and just earns another rejection.
+        const base = Math.min(retryAfterMs, maxDelayMs);
+        return Math.round(base + base * jitterFactor * Math.random());
+    }
+    const base = Math.min(initialDelayMs * 2 ** (attempt - 1), maxDelayMs);
     const jitter = base * jitterFactor * (Math.random() * 2 - 1);
     return Math.max(0, Math.round(base + jitter));
 }

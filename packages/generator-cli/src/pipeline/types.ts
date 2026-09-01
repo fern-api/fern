@@ -267,6 +267,11 @@ export interface AutoVersionStepResult extends StepResult {
     versionBumpReason?: string;
     /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
     commitSha?: string;
+    /**
+     * True when the version and changelog are a degraded fallback (AI analysis failed) rather
+     * than an analysis result. Blocks automerge so the PR waits for a human.
+     */
+    requiresHumanReview?: boolean;
 }
 
 export interface GithubStepResult extends StepResult {
