@@ -1,0 +1,9 @@
+- summary: |
+    `packageJson` overrides in `generators.yml` are now deep-merged into the generated `package.json`.
+    Previously, overriding a nested object such as `exports["."]` replaced the generated entry
+    wholesale, so adding a single custom export condition dropped the generated
+    `import`/`require`/`default` conditions and left the package unresolvable. Nested objects are
+    now merged key-by-key with user values winning, and custom conditions that do not already exist
+    are placed before the generated ones so Node resolves them first. Users who relied on
+    replacement to omit a generated condition will see it reappear; override it explicitly instead.
+  type: fix
