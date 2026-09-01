@@ -76,17 +76,23 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
             parameters.push({
-                name: this.case.snakeSafe(headerScheme.name),
+                name: this.context.getCredentialParameterName(headerScheme.name),
                 docs: "The header auth credential."
             });
         }
         const basicAuth = this.context.getBasicAuth();
         if (basicAuth != null) {
             if (basicAuth.usernameOmit !== true) {
-                parameters.push({ name: this.case.snakeSafe(basicAuth.username), docs: "The basic auth username." });
+                parameters.push({
+                    name: this.context.getCredentialParameterName(basicAuth.username),
+                    docs: "The basic auth username."
+                });
             }
             if (basicAuth.passwordOmit !== true) {
-                parameters.push({ name: this.case.snakeSafe(basicAuth.password), docs: "The basic auth password." });
+                parameters.push({
+                    name: this.context.getCredentialParameterName(basicAuth.password),
+                    docs: "The basic auth password."
+                });
             }
         }
         if (this.context.getOAuthAuth() != null) {
@@ -183,7 +189,7 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         }
 
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
-            const paramName = this.case.snakeSafe(headerScheme.name);
+            const paramName = this.context.getCredentialParameterName(headerScheme.name);
             const wireValue = getWireValue(headerScheme.name);
             let value: string;
             if (headerScheme.prefix != null) {
@@ -203,8 +209,8 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
             const usernameOmitted = basicAuth.usernameOmit === true;
             const passwordOmitted = basicAuth.passwordOmit === true;
             if (!(usernameOmitted && passwordOmitted)) {
-                const usernameName = this.case.snakeSafe(basicAuth.username);
-                const passwordName = this.case.snakeSafe(basicAuth.password);
+                const usernameName = this.context.getCredentialParameterName(basicAuth.username);
+                const passwordName = this.context.getCredentialParameterName(basicAuth.password);
                 let credentialStr: string;
                 if (usernameOmitted) {
                     credentialStr = `":#{@${passwordName}}"`;

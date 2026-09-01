@@ -3,5 +3,8 @@
 - summary: |
     The client's bearer credential keyword argument now follows the name configured on the
     bearer auth scheme (`token: { name: apiKey }` produces `api_key:` instead of `token:`),
-    matching the TypeScript and Python generators.
+    matching the TypeScript and Python generators. Credential and global header names that
+    would shadow a built-in client keyword (`base_url`, `environment`, `max_retries`,
+    `app_info`, `client`, `request_options`) are now de-collided instead of emitting a
+    duplicate keyword argument.
   type: fix

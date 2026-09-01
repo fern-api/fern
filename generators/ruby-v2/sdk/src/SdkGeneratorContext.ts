@@ -10,6 +10,7 @@ import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { credentialParameterName } from "./utils/credentialNames.js";
 import { hasUrlEncodedRequestBody } from "./utils/requestBody.js";
 
 const ROOT_TYPES_FOLDER = "types";
@@ -478,12 +479,21 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     /**
+     * The keyword argument name the client exposes for a credential, following the name
+     * configured on the auth scheme. Suffixed with `_auth` when the configured name would
+     * shadow one of the client's built-in keywords, which Ruby rejects as a duplicate.
+     */
+    public getCredentialParameterName(name: NameInput): string {
+        return credentialParameterName(this.caseConverter.snakeSafe(name));
+    }
+
+    /**
      * The keyword argument name the client exposes for the bearer token, following the
      * name configured on the auth scheme (`token` when the API declares no bearer auth).
      */
     public getBearerTokenParameterName(): string {
         const bearerAuth = this.getBearerAuth();
-        return bearerAuth != null ? this.caseConverter.snakeSafe(bearerAuth.token) : "token";
+        return bearerAuth != null ? this.getCredentialParameterName(bearerAuth.token) : "token";
     }
 
     public getBasicAuth(): FernIr.BasicAuthScheme | undefined {
