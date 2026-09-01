@@ -108,6 +108,17 @@ describe("mergeExtraConfigs", () => {
         expect(exports["./serialization"]).toEqual("./dist/cjs/serialization/index.js");
     });
 
+    it("treats keys that collide with Object.prototype names as regular keys", () => {
+        const result = mergeExtraConfigs(basePackageJson(), {
+            exports: { ".": { constructor: "./src/ctor.ts" } },
+            scripts: { toString: "echo hi" }
+        });
+
+        const exports = result.exports as Record<string, Record<string, unknown>>;
+        expect(exports["."]?.constructor).toEqual("./src/ctor.ts");
+        expect(result.scripts).toEqual({ toString: "echo hi" });
+    });
+
     it("unions arrays with user entries first and deduplicates", () => {
         const result = mergeExtraConfigs(basePackageJson(), { files: ["exampleFile", "dist"] });
         expect(result.files).toEqual(["exampleFile", "dist", "README.md"]);
