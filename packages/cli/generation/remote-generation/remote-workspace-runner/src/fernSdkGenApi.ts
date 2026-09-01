@@ -13,6 +13,8 @@ import path from "path";
 import { gunzipSync } from "zlib";
 import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
+    type GenerationConfigRoute,
+    type GenerationPayloadKind,
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
@@ -22,13 +24,15 @@ import {
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 60_000;
-const MAX_BUNDLES = 64;
+const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
 const MAX_SOURCE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
-const MAX_BUNDLE_COMPRESSED_BYTES = 5 * 1024 * 1024;
-const MAX_BUNDLE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
-const MAX_TOTAL_BUNDLE_COMPRESSED_BYTES = 25 * 1024 * 1024;
-const MAX_TOTAL_BUNDLE_DECOMPRESSED_BYTES = 100 * 1024 * 1024;
+const MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES = 5 * 1024 * 1024;
+const MAX_PAYLOAD_BYTES = 25 * 1024 * 1024;
+const MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES = 25 * 1024 * 1024;
+const MAX_TOTAL_PAYLOAD_BYTES = 100 * 1024 * 1024;
+const MAX_TOTAL_UPLOAD_FILE_BYTES = 50 * 1024 * 1024;
+const MAX_REQUEST_FIELD_BYTES = 1024 * 1024;
 const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
@@ -89,13 +93,14 @@ export interface FernSdkGenApiRequest {
     apiName: string;
     cliVersion?: string;
     idempotencyKey: string;
-    apiInputs: Array<{ id: string; specIndexes: "all" }>;
+    apiInputs: Array<{ id: string; specIndexes: "all" | number[] }>;
     targets: Array<{
         targetId: string;
         apiInputId: string;
         language: FernSdkGenApiLanguage;
-        sdk: { name: string; version: string };
+        sdk: { name: string; version: string; apiVersion?: string };
         fernGenerator: { id: string; version: string };
+        payloadKind: GenerationPayloadKind;
         package?: FernSdkGenApiPackageConfig;
         invocation: {
             customConfig: Record<string, unknown>;
@@ -141,6 +146,22 @@ export function getFernSdkGenApiOrigin(): string | undefined {
 
 export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLanguage | undefined {
     return getGeneratorLanguage(generatorName);
+}
+
+/** Validates a legacy Fern target and selects its compatible payload route without remote work. */
+export function selectFernSdkGenApiRoute(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): GenerationConfigRoute | undefined {
+    const language = getFernSdkGenApiLanguage(generatorInvocation.name);
+    if (language == null) {
+        return undefined;
+    }
+    return validateGeneratorConfigCompatibility({
+        generatorId: generatorInvocation.name,
+        language: generatorInvocation.language ?? language,
+        requestedVersion: generatorInvocation.version,
+        configKind: "legacy-fern"
+    });
 }
 
 interface FernSdkGenApiOutputMapping {
@@ -422,18 +443,26 @@ export function isEligibleForFernSdkGenApi(
     return language != null && hasConcreteVersion && specsTarGzBuffer != null && whitelabel == null;
 }
 
+export interface FernSdkGenApiPayload {
+    payloadKind: GenerationPayloadKind;
+    body: Buffer;
+    package?: FernSdkGenApiPackageConfig;
+}
+
 export interface FernSdkGenApiBuildParameters {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     sdkVersion: string;
+    apiVersion?: string;
     token: FernToken;
     specsTarGzBuffer: Buffer;
-    runtimeBundle: Buffer;
+    payload: FernSdkGenApiPayload;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
     targetIdSeed?: string;
+    sourceSpecIndexes?: number[];
     audiences?: string[];
     skipFernignore?: boolean;
 }
@@ -460,6 +489,7 @@ interface FernSdkGenApiBatchParticipant extends FernSdkGenApiBuildParameters {
 export class FernSdkGenApiBatch {
     private expectedTargets: number;
     private readonly participants: FernSdkGenApiBatchParticipant[] = [];
+    private readonly removedTargetIds = new Set<string>();
     private terminalError: unknown;
     private dispatched = false;
 
@@ -473,6 +503,9 @@ export class FernSdkGenApiBatch {
     public run(parameters: FernSdkGenApiBuildParameters): Promise<FernSdkGenApiBuildResponse> {
         if (this.terminalError != null) {
             return Promise.reject(this.terminalError);
+        }
+        if (parameters.targetIdSeed != null && this.removedTargetIds.has(parameters.targetIdSeed)) {
+            return Promise.reject(new Error(`Fern sdk-gen-api target ${parameters.targetIdSeed} was removed`));
         }
         if (this.dispatched) {
             return Promise.reject(new Error("The Fern sdk-gen-api batch was already dispatched"));
@@ -492,6 +525,25 @@ export class FernSdkGenApiBatch {
         this.dispatchIfReady();
     }
 
+    /** Removes one failed automation target while preserving undispatched siblings. */
+    public remove(targetIdSeed: string, error: unknown): boolean {
+        if (this.dispatched || this.terminalError != null) {
+            return false;
+        }
+        if (this.removedTargetIds.has(targetIdSeed)) {
+            return false;
+        }
+        this.removedTargetIds.add(targetIdSeed);
+        const participantIndex = this.participants.findIndex(
+            (participant) => participant.targetIdSeed === targetIdSeed
+        );
+        const [participant] = participantIndex >= 0 ? this.participants.splice(participantIndex, 1) : [];
+        participant?.reject(error);
+        this.expectedTargets -= 1;
+        this.dispatchIfReady();
+        return true;
+    }
+
     /** Prevents siblings waiting at the batch barrier from hanging if preparation of one fails. */
     public cancel(error: unknown): void {
         if (this.dispatched || this.terminalError != null) {
@@ -504,7 +556,12 @@ export class FernSdkGenApiBatch {
     }
 
     private dispatchIfReady(): void {
-        if (this.dispatched || this.terminalError != null || this.participants.length !== this.expectedTargets) {
+        if (
+            this.dispatched ||
+            this.terminalError != null ||
+            this.expectedTargets === 0 ||
+            this.participants.length !== this.expectedTargets
+        ) {
             return;
         }
         this.dispatched = true;
@@ -532,6 +589,79 @@ export class FernSdkGenApiBatch {
     }
 }
 
+/** Holds every selected target before remote mutations until local payload preparation settles. */
+export class FernSdkGenApiPreparationBatch {
+    private readonly expectedTargetIds: Set<string>;
+    private readonly settledTargetIds = new Set<string>();
+    private readonly waiters: Array<{ resolve: () => void; reject: (error: unknown) => void }> = [];
+    private readonly preflightParticipants: FernSdkGenApiBuildParameters[] = [];
+    private terminalError: unknown;
+    private didRunPreflight = false;
+
+    public constructor(targetIds: string[]) {
+        this.expectedTargetIds = new Set(targetIds);
+        if (this.expectedTargetIds.size !== targetIds.length) {
+            throw new Error("Fern sdk-gen-api preparation target IDs must be unique");
+        }
+    }
+
+    public ready(targetId: string, preflightParameters?: FernSdkGenApiBuildParameters): Promise<void> {
+        this.assertExpected(targetId);
+        if (this.settledTargetIds.has(targetId)) {
+            throw new Error(`Fern sdk-gen-api target ${targetId} prepared more than once`);
+        }
+        this.settledTargetIds.add(targetId);
+        if (preflightParameters != null) {
+            this.preflightParticipants.push(preflightParameters);
+        }
+        return new Promise((resolve, reject) => {
+            this.waiters.push({ resolve, reject });
+            this.finishIfSettled();
+        });
+    }
+
+    /** Returns true only when this call newly settles a target that failed before preparation. */
+    public fail(targetId: string, error: unknown, isolateFailure: boolean): boolean {
+        this.assertExpected(targetId);
+        if (this.settledTargetIds.has(targetId)) {
+            return false;
+        }
+        this.settledTargetIds.add(targetId);
+        if (!isolateFailure) {
+            this.terminalError = error;
+        }
+        this.finishIfSettled();
+        return true;
+    }
+
+    private assertExpected(targetId: string): void {
+        if (!this.expectedTargetIds.has(targetId)) {
+            throw new Error(`Unexpected Fern sdk-gen-api preparation target ${targetId}`);
+        }
+    }
+
+    private finishIfSettled(): void {
+        if (this.settledTargetIds.size !== this.expectedTargetIds.size) {
+            return;
+        }
+        if (!this.didRunPreflight && this.terminalError == null && this.preflightParticipants.length > 0) {
+            this.didRunPreflight = true;
+            try {
+                prepareFernSdkGenApiSubmission(this.preflightParticipants);
+            } catch (error) {
+                this.terminalError = error;
+            }
+        }
+        for (const waiter of this.waiters) {
+            if (this.terminalError != null) {
+                waiter.reject(this.terminalError);
+            } else {
+                waiter.resolve();
+            }
+        }
+    }
+}
+
 export async function runFernSdkGenApiBuild(
     parameters: FernSdkGenApiBuildParameters
 ): Promise<FernSdkGenApiBuildResponse> {
@@ -542,9 +672,25 @@ export async function runFernSdkGenApiBuild(
     throw result?.reason ?? new Error("sdk-gen-api did not return the requested target");
 }
 
-async function executeFernSdkGenApiBuild(
-    participants: FernSdkGenApiBuildParameters[]
-): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
+/** Runs every synchronous submission check and constructs multipart bytes without remote I/O. */
+export function preflightFernSdkGenApiBuild(parameters: FernSdkGenApiBuildParameters): void {
+    prepareFernSdkGenApiSubmission([parameters]);
+}
+
+export function validateFernSdkGenApiTargetCount(targetCount: number): void {
+    if (targetCount > MAX_PAYLOADS) {
+        throw new Error(
+            `sdk-gen-api supports at most ${MAX_PAYLOADS} target payloads per build; received ${targetCount}`
+        );
+    }
+}
+
+function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParameters[]): {
+    first: FernSdkGenApiBuildParameters;
+    origin: string;
+    request: FernSdkGenApiRequest;
+    form: FormData;
+} {
     const first = participants[0];
     if (first == null) {
         throw new Error("Cannot submit an empty Fern sdk-gen-api build");
@@ -580,14 +726,25 @@ async function executeFernSdkGenApiBuild(
         targets: participants.map((participant) => ({
             generatorInvocation: participant.generatorInvocation,
             sdkVersion: participant.sdkVersion,
+            apiVersion: participant.apiVersion,
             targetIdSeed: participant.targetIdSeed,
+            sourceSpecIndexes: participant.sourceSpecIndexes,
             audiences: participant.audiences,
-            runtimeBundle: participant.runtimeBundle
+            payload: participant.payload
         }))
     });
+    const serializedRequest = JSON.stringify(request);
+    const serializedRequestBytes = Buffer.byteLength(serializedRequest, "utf8");
+    if (serializedRequestBytes > MAX_REQUEST_FIELD_BYTES) {
+        return first.context.failAndThrow(
+            `sdk-gen-api serialized request field is ${formatMiB(serializedRequestBytes)}, exceeding the 1 MiB UTF-8 field limit; reduce generator customConfig, readme, settings, or API override metadata`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
 
     const form = new FormData();
-    form.append("request", JSON.stringify(request));
+    form.append("request", serializedRequest);
     form.append("sources", first.specsTarGzBuffer, {
         filename: "specs.tar.gz",
         contentType: "application/gzip"
@@ -595,22 +752,30 @@ async function executeFernSdkGenApiBuild(
     participants.forEach((participant, index) => {
         const target = request.targets[index];
         if (target == null) {
-            throw new Error(`Cannot pair sdk-gen-api runtime bundle at index ${index} with a target`);
+            throw new Error(`Cannot pair sdk-gen-api payload at index ${index} with a target`);
         }
-        // sdk-gen-api correlates bundles by this filename; ordering is only deterministic batching.
-        form.append("bundles", participant.runtimeBundle, {
-            filename: `${target.targetId}.json.gz`,
-            contentType: "application/gzip"
+        const isRuntimeBundle = participant.payload.payloadKind === "fern-runtime-bundle";
+        // sdk-gen-api correlates payloads by this filename; ordering is only deterministic batching.
+        form.append("payloads", participant.payload.body, {
+            filename: `${target.targetId}.json${isRuntimeBundle ? ".gz" : ""}`,
+            contentType: isRuntimeBundle ? "application/gzip" : "application/json"
         });
     });
     const multipartBodyLength = form.getLengthSync();
     if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
         return first.context.failAndThrow(
-            `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the 60 MiB limit; reduce source or target bundle size`,
+            `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the 60 MiB limit; reduce source or target payload size`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
     }
+    return { first, origin, request, form };
+}
+
+async function executeFernSdkGenApiBuild(
+    participants: FernSdkGenApiBuildParameters[]
+): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
+    const { first, origin, request, form } = prepareFernSdkGenApiSubmission(participants);
 
     let buildId: string;
     try {
@@ -716,7 +881,7 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
                 generatorId: generatorInvocation.name,
                 language,
                 requestedVersion: generatorInvocation.version,
-                configKind: "legacy-fern"
+                configKind: participant.payload.payloadKind === "fern-runtime-bundle" ? "legacy-fern" : "sdk-config-v1"
             });
         } catch (error) {
             if (!(error instanceof GeneratorConfigCompatibilityError)) {
@@ -729,7 +894,7 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
     }
 }
 
-function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCompatibilityError): string {
+export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCompatibilityError): string {
     const diagnostic = [
         error.code,
         `generator=${error.generatorId}`,
@@ -742,11 +907,11 @@ function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCompatibi
         `retryable=${error.retryable}`,
         `recommendedAction=${error.recommendedAction}`
     ].join("; ");
-    const remediation =
-        error.code === "SDK_CONFIG_V1_REQUIRED"
-            ? " Run `fern sdk-config migrate` to create SDK Config v1 for this target."
+    const migrationHint =
+        error.recommendedAction === "USE_SDK_CONFIG_V1"
+            ? " Run `fern sdk migrate --output <path>` to migrate this SDK configuration before using this generator version."
             : "";
-    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${remediation}`;
+    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
 }
 
 function compareFernSdkGenApiParticipants(
@@ -772,9 +937,9 @@ function validateProtocolInputs(
     participants: FernSdkGenApiBuildParameters[],
     first: FernSdkGenApiBuildParameters
 ): void {
-    if (participants.length > MAX_BUNDLES) {
+    if (participants.length > MAX_PAYLOADS) {
         first.context.failAndThrow(
-            `sdk-gen-api supports at most ${MAX_BUNDLES} runtime bundles per build; received ${participants.length}`,
+            `sdk-gen-api supports at most ${MAX_PAYLOADS} target payloads per build; received ${participants.length}`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -786,21 +951,44 @@ function validateProtocolInputs(
             { code: CliError.Code.ConfigError }
         );
     }
-    const oversizedBundleIndex = participants.findIndex(
-        (participant) => participant.runtimeBundle.length > MAX_BUNDLE_COMPRESSED_BYTES
+    const oversizedPayloadIndex = participants.findIndex(
+        (participant) =>
+            participant.payload.body.length >
+            (participant.payload.payloadKind === "fern-runtime-bundle"
+                ? MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES
+                : MAX_PAYLOAD_BYTES)
     );
-    if (oversizedBundleIndex >= 0) {
-        const participant = participants[oversizedBundleIndex];
+    if (oversizedPayloadIndex >= 0) {
+        const participant = participants[oversizedPayloadIndex];
+        const maxBytes =
+            participant?.payload.payloadKind === "fern-runtime-bundle"
+                ? MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES
+                : MAX_PAYLOAD_BYTES;
         first.context.failAndThrow(
-            `sdk-gen-api runtime bundle ${participant?.targetIdSeed ?? oversizedBundleIndex.toString()} is ${formatMiB(participant?.runtimeBundle.length ?? 0)}, exceeding the 5 MiB compressed limit`,
+            `sdk-gen-api ${payloadLabel(participant, oversizedPayloadIndex)} is ${formatMiB(participant?.payload.body.length ?? 0)}, exceeding the ${formatMiB(maxBytes)} upload limit`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
     }
-    const totalBundleBytes = participants.reduce((total, participant) => total + participant.runtimeBundle.length, 0);
-    if (totalBundleBytes > MAX_TOTAL_BUNDLE_COMPRESSED_BYTES) {
+    const totalUploadFileBytes = participants.reduce(
+        (total, participant) => total + participant.payload.body.length,
+        first.specsTarGzBuffer.length
+    );
+    if (totalUploadFileBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
         first.context.failAndThrow(
-            `sdk-gen-api runtime bundles total ${formatMiB(totalBundleBytes)}, exceeding the 25 MiB compressed limit; reduce the number or size of targets`,
+            `sdk-gen-api source archive and target payloads total ${formatMiB(totalUploadFileBytes)}, exceeding the 50 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const totalRuntimeBundleBytes = participants.reduce(
+        (total, participant) =>
+            participant.payload.payloadKind === "fern-runtime-bundle" ? total + participant.payload.body.length : total,
+        0
+    );
+    if (totalRuntimeBundleBytes > MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES) {
+        first.context.failAndThrow(
+            `sdk-gen-api runtime bundles total ${formatMiB(totalRuntimeBundleBytes)}, exceeding the 25 MiB compressed limit; reduce the number or size of targets`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -811,22 +999,30 @@ function validateProtocolInputs(
         label: "source archive",
         context: first.context
     });
-    let totalDecompressedBundleBytes = 0;
+    let totalPayloadBytes = 0;
     for (const [index, participant] of participants.entries()) {
-        totalDecompressedBundleBytes += getBoundedGzipSize({
-            buffer: participant.runtimeBundle,
-            maxBytes: MAX_BUNDLE_DECOMPRESSED_BYTES,
-            label: `runtime bundle ${participant.targetIdSeed ?? index.toString()}`,
-            context: first.context
-        });
-        if (totalDecompressedBundleBytes > MAX_TOTAL_BUNDLE_DECOMPRESSED_BYTES) {
+        totalPayloadBytes +=
+            participant.payload.payloadKind === "fern-runtime-bundle"
+                ? getBoundedGzipSize({
+                      buffer: participant.payload.body,
+                      maxBytes: MAX_PAYLOAD_BYTES,
+                      label: payloadLabel(participant, index),
+                      context: first.context
+                  })
+                : participant.payload.body.length;
+        if (totalPayloadBytes > MAX_TOTAL_PAYLOAD_BYTES) {
             first.context.failAndThrow(
-                `sdk-gen-api runtime bundles total ${formatMiB(totalDecompressedBundleBytes)} decompressed, exceeding the 100 MiB decompressed limit; reduce the number or size of targets`,
+                `sdk-gen-api target payloads total ${formatMiB(totalPayloadBytes)}, exceeding the 100 MiB decoded limit; reduce the number or size of targets`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
         }
     }
+}
+
+function payloadLabel(participant: FernSdkGenApiBuildParameters | undefined, index: number): string {
+    const kind = participant?.payload.payloadKind ?? "target payload";
+    return `${kind} ${participant?.targetIdSeed ?? index.toString()}`;
 }
 
 function getBoundedGzipSize({
@@ -960,23 +1156,25 @@ export function createFernSdkGenApiRequest({
     cliVersion,
     generatorInvocation,
     sdkVersion,
+    apiVersion,
     specsTarGzBuffer,
-    runtimeBundle
+    payload
 }: {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     sdkVersion: string;
+    apiVersion?: string;
     specsTarGzBuffer: Buffer;
-    runtimeBundle: Buffer;
+    payload: FernSdkGenApiPayload;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkVersion, runtimeBundle }]
+        targets: [{ generatorInvocation, sdkVersion, apiVersion, payload }]
     });
 }
 
@@ -994,64 +1192,83 @@ export function createFernSdkGenApiBatchRequest({
     targets: Array<{
         generatorInvocation: generatorsYml.GeneratorInvocation;
         sdkVersion: string;
+        apiVersion?: string;
         targetIdSeed?: string;
+        sourceSpecIndexes?: number[];
         audiences?: string[];
-        runtimeBundle: Buffer;
+        payload: FernSdkGenApiPayload;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
         throw new Error("Cannot create an empty Fern sdk-gen-api request");
     }
-    const requestTargets = targets.map(({ generatorInvocation, sdkVersion, targetIdSeed, audiences }, index) => {
-        const language = getFernSdkGenApiLanguage(generatorInvocation.name);
-        if (language == null) {
-            throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
+    const apiInputs: FernSdkGenApiRequest["apiInputs"] = [];
+    const apiInputIds = targets.map(({ targetIdSeed, sourceSpecIndexes }, index) => {
+        if (sourceSpecIndexes == null) {
+            if (!apiInputs.some((input) => input.id === "default")) {
+                apiInputs.push({ id: "default", specIndexes: "all" });
+            }
+            return "default";
         }
-        const output = mapFernSdkGenApiOutput(generatorInvocation);
-        const targetId = createHash("sha256")
-            .update(
-                `${apiName}:${generatorInvocation.name}:${generatorInvocation.version}:${targetIdSeed ?? index.toString()}`
-            )
-            .digest("hex")
-            .slice(0, 20);
-        return {
-            targetId,
-            apiInputId: "default",
-            language,
-            sdk: { name: apiName, version: sdkVersion },
-            fernGenerator: {
-                id: generatorInvocation.name,
-                version: generatorInvocation.version
-            },
-            ...(output.package != null ? { package: output.package } : {}),
-            invocation: {
-                customConfig: (stripCliConfigKeys(generatorInvocation.config) ?? {}) as Record<string, unknown>,
-                keywords: generatorInvocation.keywords ?? [],
-                smartCasing: generatorInvocation.smartCasing,
-                smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-                disableExamples: generatorInvocation.disableExamples,
-                ...(audiences != null ? { audiences } : {}),
-                ...(generatorInvocation.readme != null
-                    ? { readme: generatorInvocation.readme as Record<string, unknown> }
-                    : {}),
-                ...(generatorInvocation.settings != null
-                    ? {
-                          settings: generatorInvocation.settings as Record<string, unknown>
-                      }
-                    : {}),
-                ...(generatorInvocation.apiOverride != null
-                    ? {
-                          apiOverride: generatorInvocation.apiOverride as Record<string, unknown>
-                      }
-                    : {})
-            },
-            requestedOutput: output.requestedOutput
-        };
+        const id = `target-${targetIdSeed ?? index.toString()}`;
+        apiInputs.push({ id, specIndexes: sourceSpecIndexes });
+        return id;
     });
-    const apiInputs: FernSdkGenApiRequest["apiInputs"] = [{ id: "default", specIndexes: "all" }];
-    const runtimeBundleHashes = targets.map((target) =>
-        createHash("sha256").update(target.runtimeBundle).digest("hex")
+    const requestTargets = targets.map(
+        ({ generatorInvocation, sdkVersion, apiVersion, targetIdSeed, audiences, payload }, index) => {
+            const language = getFernSdkGenApiLanguage(generatorInvocation.name);
+            if (language == null) {
+                throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
+            }
+            const output = mapFernSdkGenApiOutput(generatorInvocation);
+            const packageConfig = payload.package ?? output.package;
+            const targetId = createHash("sha256")
+                .update(
+                    `${apiName}:${generatorInvocation.name}:${generatorInvocation.version}:${targetIdSeed ?? index.toString()}`
+                )
+                .digest("hex")
+                .slice(0, 20);
+            return {
+                targetId,
+                apiInputId: apiInputIds[index] ?? "default",
+                language,
+                sdk: {
+                    name: apiName,
+                    version: sdkVersion,
+                    ...(apiVersion != null ? { apiVersion } : {})
+                },
+                fernGenerator: {
+                    id: generatorInvocation.name,
+                    version: generatorInvocation.version
+                },
+                payloadKind: payload.payloadKind,
+                ...(packageConfig != null ? { package: packageConfig } : {}),
+                invocation: {
+                    customConfig: (stripCliConfigKeys(generatorInvocation.config) ?? {}) as Record<string, unknown>,
+                    keywords: generatorInvocation.keywords ?? [],
+                    smartCasing: generatorInvocation.smartCasing,
+                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                    disableExamples: generatorInvocation.disableExamples,
+                    ...(audiences != null ? { audiences } : {}),
+                    ...(generatorInvocation.readme != null
+                        ? { readme: generatorInvocation.readme as Record<string, unknown> }
+                        : {}),
+                    ...(generatorInvocation.settings != null
+                        ? {
+                              settings: generatorInvocation.settings as Record<string, unknown>
+                          }
+                        : {}),
+                    ...(generatorInvocation.apiOverride != null
+                        ? {
+                              apiOverride: generatorInvocation.apiOverride as Record<string, unknown>
+                          }
+                        : {})
+                },
+                requestedOutput: output.requestedOutput
+            };
+        }
     );
+    const payloadHashes = targets.map((target) => createHash("sha256").update(target.payload.body).digest("hex"));
     const idempotencyKey = createHash("sha256")
         .update(specsTarGzBuffer)
         .update(
@@ -1061,7 +1278,7 @@ export function createFernSdkGenApiBatchRequest({
                 apiName,
                 apiInputs,
                 targets: requestTargets,
-                runtimeBundleHashes
+                payloadHashes
             })
         )
         .digest("hex");

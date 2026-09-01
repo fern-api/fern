@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Select sdk-gen-api payload routes before generation work, preserve legacy Fern runtime bundles for pre-cutover targets, and require SDK Config v1 at or after each generator's cutover version. Reject incompatible legacy configuration with an actionable `fern sdk migrate` instruction before source preparation or remote mutations, while preparing deterministic, deduplicated source archives for compatible targets.
+  type: internal
