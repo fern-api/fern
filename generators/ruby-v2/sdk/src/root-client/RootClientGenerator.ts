@@ -10,8 +10,8 @@ import { OAuthProviderGenerator } from "../oauth/OAuthProviderGenerator.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
-import { globalHeaderParameterName } from "../utils/credentialNames.js";
 import { Comments } from "../utils/comments.js";
+import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
