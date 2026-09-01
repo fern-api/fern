@@ -23,6 +23,16 @@ export function createFernSourceArchiveResolver({
         const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
         const errors = new Map<number, unknown>();
         if (!(workspace instanceof OSSWorkspace)) {
+            for (const request of requests) {
+                if (requestRequiresSourceArchive(request)) {
+                    errors.set(
+                        request.generatorIndex,
+                        new Error(
+                            `Generator index ${request.generatorIndex} (${request.generatorInvocation.name}) requires a source archive, but workspace type ${workspace.type} does not expose source specs`
+                        )
+                    );
+                }
+            }
             return { sourceArchives, errors };
         }
 
@@ -91,16 +101,16 @@ export function createFernSourceArchiveResolver({
         }
 
         for (const request of requests) {
-            const requiresSourceArchive =
-                request.sdkGenApiRoute != null || generatorWantsSpecs(request.generatorInvocation.name);
-            if (!requiresSourceArchive) {
+            if (!requestRequiresSourceArchive(request)) {
                 continue;
             }
             const hasArchive = sourceArchives.has(request.generatorIndex);
             const hasError = errors.has(request.generatorIndex);
             if (hasArchive && hasError) {
-                sourceArchives.delete(request.generatorIndex);
-                continue;
+                throw new Error(
+                    `Generator index ${request.generatorIndex} produced both a source archive and a source preparation error`,
+                    { cause: errors.get(request.generatorIndex) }
+                );
             }
             if (!hasArchive && !hasError) {
                 errors.set(
@@ -113,4 +123,8 @@ export function createFernSourceArchiveResolver({
         }
         return { sourceArchives, errors };
     };
+}
+
+function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {
+    return request.sdkGenApiRoute != null || generatorWantsSpecs(request.generatorInvocation.name);
 }

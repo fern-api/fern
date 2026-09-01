@@ -595,6 +595,7 @@ export async function createGroupedSpecsTarGzArchive({
     audiences?: Audiences;
 }): Promise<GroupedSpecsTarGzArchive> {
     const settled = await createGroupedSpecsTarGzArchiveSettled({ generatorSelections, context, audiences });
+    // A shared materialization failure stores the same error object for every affected generator.
     const errors = [...new Set(settled.errorsByGeneratorIndex.values())];
     if (errors.length > 1) {
         throw new AggregateError(errors, "Grouped source archive preparation failed");

@@ -2,6 +2,10 @@ import { FernIr, type IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import type { ApiConfigInput, AuthScheme } from "@postman/sdk-config";
 
+/**
+ * Adapts Fern IR API metadata into SDK Config v1 for post-cutover targets routed through sdk-gen-api.
+ * Pre-cutover targets use Fern runtime bundles and do not invoke this mapper.
+ */
 export function mapFernIrToSdkConfigApi(ir: IntermediateRepresentation): ApiConfigInput {
     const environments = mapEnvironments(ir);
     const auth = mapAuth(ir);
