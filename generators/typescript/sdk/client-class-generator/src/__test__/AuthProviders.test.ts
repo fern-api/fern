@@ -5,7 +5,10 @@ import {
     createBasicAuthScheme,
     createBearerAuthScheme,
     createHeaderAuthScheme,
-    createMinimalIR
+    createHttpEndpoint,
+    createHttpService,
+    createMinimalIR,
+    createOAuthScheme
 } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
@@ -18,6 +21,7 @@ import { BearerAuthProviderInstance } from "../auth-provider/BearerAuthProviderI
 import { HeaderAuthProviderGenerator } from "../auth-provider/HeaderAuthProviderGenerator.js";
 import { HeaderAuthProviderInstance } from "../auth-provider/HeaderAuthProviderInstance.js";
 import { InferredAuthProviderInstance } from "../auth-provider/InferredAuthProviderInstance.js";
+import { OAuthAuthProviderGenerator } from "../auth-provider/OAuthAuthProviderGenerator.js";
 import { OAuthAuthProviderInstance } from "../auth-provider/OAuthAuthProviderInstance.js";
 import { RoutingAuthProviderInstance } from "../auth-provider/RoutingAuthProviderInstance.js";
 
@@ -88,7 +92,22 @@ function createMockGeneratorContext(project: Project, fileName: string) {
         },
         genericAPISdkError: {
             getReferenceToGenericAPISdkError: () => ({
-                getExpression: () => ts.factory.createIdentifier("errors.SeedApiError")
+                getExpression: () => ts.factory.createIdentifier("errors.SeedApiError"),
+                getEntityName: () => ts.factory.createIdentifier("errors.SeedApiError")
+            })
+        },
+        type: {
+            getReferenceToType: () => ({
+                typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                typeNodeWithoutUndefined: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            }),
+            resolveTypeReference: (typeReference: unknown) => typeReference,
+            isOptional: () => false,
+            generateGetterForResponsePropertyAsString: ({ variable }: { variable: string }) => `${variable}.accessToken`
+        },
+        sdkClientClass: {
+            getReferenceToClientClass: () => ({
+                getExpression: () => ts.factory.createIdentifier("SeedClient")
             })
         },
         case: caseConverter
@@ -932,10 +951,47 @@ describe("environment variable fallbacks guard against a missing process global"
         return context.sourceFile.getFullText();
     }
 
-    function unguardedProcessLines(output: string): string[] {
-        return output
-            .split("\n")
-            .filter((line) => line.includes("process.env") && !line.includes('typeof process !== "undefined"'));
+    function renderOAuth(): string {
+        const authScheme = createOAuthScheme({
+            clientIdEnvVar: "PLANT_CLIENT_ID",
+            clientSecretEnvVar: "PLANT_CLIENT_SECRET"
+        });
+        const service = createHttpService();
+        const ir = createMinimalIR({
+            authSchemes: [createAuthScheme("oauth", authScheme)],
+            services: { service_test: { ...service, endpoints: [createHttpEndpoint()] } }
+        });
+        return render(
+            new OAuthAuthProviderGenerator({
+                ir,
+                authScheme,
+                neverThrowErrors: false,
+                includeSerdeLayer: true,
+                shouldUseWrapper: false
+            }),
+            "OAuthAuthProvider.ts"
+        );
+    }
+
+    const GUARD = 'typeof process !== "undefined"';
+
+    function countOccurrences(haystack: string, needle: string): number {
+        return haystack.split(needle).length - 1;
+    }
+
+    /**
+     * Counts `process.env` reads in the generated output, and how many of them sit behind the
+     * `typeof process` guard. Whitespace is collapsed first so the counts survive line wrapping
+     * introduced by formatting (the guard and the read do not stay on one line once formatted).
+     */
+    function countProcessEnvReads(output: string): { total: number; guarded: number } {
+        const normalized = output.replace(/\s+/g, " ");
+        return {
+            total: countOccurrences(normalized, "process.env"),
+            guarded:
+                countOccurrences(normalized, `${GUARD} && process.env`) +
+                countOccurrences(normalized, `${GUARD} ? process.env`)
+        };
     }
 
     it("guards the bearer token env var", () => {
@@ -951,8 +1007,8 @@ describe("environment variable fallbacks guard against a missing process global"
             }),
             "BearerAuthProvider.ts"
         );
-        expect(output).toContain('typeof process !== "undefined"');
-        expect(unguardedProcessLines(output)).toEqual([]);
+        // one read in canCreate, one in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual({ total: 2, guarded: 2 });
     });
 
     it("guards the header auth env var", () => {
@@ -968,8 +1024,8 @@ describe("environment variable fallbacks guard against a missing process global"
             }),
             "HeaderAuthProvider.ts"
         );
-        expect(output).toContain('typeof process !== "undefined"');
-        expect(unguardedProcessLines(output)).toEqual([]);
+        // one read in canCreate, one in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual({ total: 2, guarded: 2 });
     });
 
     it("guards the basic auth username and password env vars", () => {
@@ -988,7 +1044,34 @@ describe("environment variable fallbacks guard against a missing process global"
             }),
             "BasicAuthProvider.ts"
         );
-        expect(output).toContain('typeof process !== "undefined"');
-        expect(unguardedProcessLines(output)).toEqual([]);
+        // username and password, each read in canCreate and again in the getAuthRequest fallback
+        expect(countProcessEnvReads(output)).toEqual({ total: 4, guarded: 4 });
+    });
+
+    it("guards the oauth client id and client secret env vars", () => {
+        const output = renderOAuth();
+        // client id and client secret, each read in canCreate and again in its supplier fallback
+        expect(countProcessEnvReads(output)).toEqual({ total: 4, guarded: 4 });
+    });
+
+    it("guards the oauth canCreate env var checks", () => {
+        const normalized = renderOAuth().replace(/\s+/g, " ");
+        expect(normalized).toContain(`|| (${GUARD} && process.env?.[ENV_CLIENT_ID] != null)`);
+        expect(normalized).toContain(`|| (${GUARD} && process.env?.[ENV_CLIENT_SECRET] != null)`);
+    });
+
+    it("guards the oauth client id and client secret supplier fallbacks", () => {
+        const normalized = renderOAuth().replace(/\s+/g, " ");
+        // the supplier fallbacks are only reached when no credential was supplied: each read is
+        // preceded by an early return on the supplier, so the guard protects the fallback path
+        expect(
+            countOccurrences(normalized, `const envClientId = ${GUARD} ? process.env?.[ENV_CLIENT_ID] : undefined`)
+        ).toBe(1);
+        expect(
+            countOccurrences(
+                normalized,
+                `const envClientSecret = ${GUARD} ? process.env?.[ENV_CLIENT_SECRET] : undefined`
+            )
+        ).toBe(1);
     });
 });
