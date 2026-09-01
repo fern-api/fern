@@ -96,6 +96,7 @@
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
     "preserveOneOfInAllOf": false,
+    "anyOfSiblingPropertiesAsObject": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
