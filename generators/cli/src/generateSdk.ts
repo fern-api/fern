@@ -212,7 +212,14 @@ impl ${sdkCrateSnake}::RequestExecutor for CliExecutorAdapter {
 pub fn client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
     let executor = ctx.build_sdk_executor();
     let adapter = Arc::new(CliExecutorAdapter(executor));
-    let config = ${sdkCrateSnake}::ClientConfig::default();
+    // Seed the base URL from the CLI's own resolution (--base-url / env >
+    // spec base_url > server root). \`ClientConfig::default()\` carries an
+    // empty \`base_url\` for any API that declares no environment, which made
+    // every custom command fail on a relative URL before the executor ran.
+    let config = ${sdkCrateSnake}::ClientConfig {
+        base_url: ctx.effective_base_url(),
+        ..Default::default()
+    };
     let http_client = ${sdkCrateSnake}::HttpClient::with_executor(
         adapter as Arc<dyn ${sdkCrateSnake}::RequestExecutor>,
         config.clone(),

@@ -3,6 +3,7 @@
   "tests/**",
   "src/bin/strip_schema.rs",
   ".gitignore",
+  "LICENSE",
   "README.md",
   "docs/**",
   "changes/**",

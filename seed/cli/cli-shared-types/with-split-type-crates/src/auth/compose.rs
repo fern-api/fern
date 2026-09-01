@@ -54,6 +54,13 @@ impl AuthProvider for AnyAuthProvider {
             .collect()
     }
 
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.providers
+            .iter()
+            .flat_map(|p| p.populated_credential_hints())
+            .collect()
+    }
+
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
         self.providers
             .iter()
@@ -128,6 +135,13 @@ impl AuthProvider for AllAuthProvider {
         self.providers
             .iter()
             .flat_map(|p| p.credential_hints())
+            .collect()
+    }
+
+    fn populated_credential_hints(&self) -> Vec<String> {
+        self.providers
+            .iter()
+            .flat_map(|p| p.populated_credential_hints())
             .collect()
     }
 
@@ -218,6 +232,13 @@ impl AuthProvider for LayeredAuthProvider {
         // not a misconfiguration and shouldn't be reported as a missing
         // credential.
         self.primary.credential_hints()
+    }
+
+    fn populated_credential_hints(&self) -> Vec<String> {
+        // Same primary-only rule; without this override the composite fell
+        // back to the trait default, which returns the *unfiltered* hints and
+        // silently undid the filtering for every CLI wrapped in a layer.
+        self.primary.populated_credential_hints()
     }
 
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
@@ -316,6 +337,25 @@ impl AuthProvider for RoutingAuthProvider {
             .collect();
         if let Some(d) = &self.default {
             hints.extend(d.credential_hints());
+        }
+        hints
+    }
+
+    /// Same walk as [`credential_hints`](Self::credential_hints), filtered.
+    ///
+    /// Missing this override made the populated-hints filtering inert on the
+    /// most common configuration there is: a `RoutingAuthProvider` is built
+    /// whenever any operation declares per-operation `security:`, which on a
+    /// real spec means nearly every operation. The trait default returns the
+    /// unfiltered hints, so a 401 still named every declared source.
+    fn populated_credential_hints(&self) -> Vec<String> {
+        let mut hints: Vec<String> = self
+            .schemes
+            .values()
+            .flat_map(|p| p.populated_credential_hints())
+            .collect();
+        if let Some(d) = &self.default {
+            hints.extend(d.populated_credential_hints());
         }
         hints
     }

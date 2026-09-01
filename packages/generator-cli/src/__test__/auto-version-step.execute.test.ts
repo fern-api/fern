@@ -30,6 +30,14 @@ import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep";
 import type { AutoVersionStepConfig, PipelineContext } from "../pipeline/types";
 import type { PreparedReplay } from "../replay/replay-run";
 
+// Every case here drives a real git repository: `init`, a handful of commits,
+// then the step's own `git` calls — a dozen-odd synchronous subprocesses whose
+// spawn cost, not the code under test, dominates the wall clock. That cost is a
+// property of the runner, and on a busy one it has overrun vitest's 5s default
+// (a case that takes ~150ms locally). Nothing here asserts on timing, so give
+// the subprocesses room rather than letting load masquerade as a failure.
+vi.setConfig({ testTimeout: 60_000 });
+
 function gitExec(args: string[], cwd: string): string {
     return execFileSync("git", args, { cwd, encoding: "utf-8", stdio: "pipe" }).trim();
 }

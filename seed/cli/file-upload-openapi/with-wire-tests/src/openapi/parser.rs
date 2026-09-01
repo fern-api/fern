@@ -451,6 +451,28 @@ struct OpenApiServer {
     /// doc-comment on `x_fern_server_name` for the precedence citation.
     #[serde(default, rename = "x-name")]
     x_name: Option<String>,
+    /// Fern's `x-fern-default-url` extension: the concrete URL to use when
+    /// the caller supplies no value for any of the server's template
+    /// variables. Without it, a templated server falls back to
+    /// substituting each variable's `default`.
+    #[serde(default, rename = "x-fern-default-url")]
+    x_fern_default_url: Option<String>,
+    /// OpenAPI `variables:` block. A `BTreeMap` so the lowered order is
+    /// deterministic (flag registration and `--help` rows are derived
+    /// from it).
+    #[serde(default)]
+    variables: std::collections::BTreeMap<String, OpenApiServerVariable>,
+}
+
+/// One entry of a server's OpenAPI `variables:` block.
+#[derive(Debug, Deserialize)]
+struct OpenApiServerVariable {
+    #[serde(default)]
+    default: Option<String>,
+    #[serde(default)]
+    description: Option<String>,
+    #[serde(default, rename = "enum")]
+    enum_values: Vec<String>,
 }
 
 impl OpenApiServer {
@@ -482,6 +504,17 @@ impl OpenApiServer {
             url: self.url.clone(),
             name: self.resolved_name(),
             description: self.description.clone(),
+            default_url: self.x_fern_default_url.clone(),
+            variables: self
+                .variables
+                .iter()
+                .map(|(name, var)| crate::openapi::discovery::ServerVariable {
+                    name: name.clone(),
+                    default: var.default.clone(),
+                    description: var.description.clone(),
+                    enum_values: var.enum_values.clone(),
+                })
+                .collect(),
         }
     }
 }
@@ -695,6 +728,25 @@ struct OpenApiParameter {
 
 #[derive(Debug, Deserialize, Default)]
 struct OpenApiParamSchema {
+    /// `$ref` to a component schema. A parameter is routinely declared as a
+    /// bare `$ref` (`schema: {$ref: '#/components/schemas/Labels'}`), and
+    /// without this field the whole schema deserialized to all-`None` — the
+    /// parameter lost its type, enum, format and bounds, and an array-typed
+    /// one silently became a single-value string flag.
+    #[serde(rename = "$ref", default)]
+    schema_ref: Option<String>,
+    /// Element schema for an inline `type: array` parameter. Consumed only to
+    /// resolve the element type for `--schema` / `--help`; a `$ref`'d or
+    /// `anyOf`-wrapped array resolves through `component_schemas` instead.
+    #[serde(default)]
+    items: Option<Box<OpenApiParamSchema>>,
+    /// `oneOf` / `anyOf` branches on the parameter's own schema. Needed for
+    /// pydantic's `Optional[list[T]]` spelling — see
+    /// [`resolve_param_nullable_branch`].
+    #[serde(rename = "oneOf", default)]
+    one_of: Vec<OpenApiSchemaObject>,
+    #[serde(rename = "anyOf", default)]
+    any_of: Vec<OpenApiSchemaObject>,
     #[serde(rename = "type", default, deserialize_with = "deserialize_type_field")]
     schema_type: Option<String>,
     #[serde(rename = "enum", default, deserialize_with = "deserialize_enum_values")]
@@ -1996,6 +2048,9 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         let name = strip_ref_prefix(ref_path);
         return JsonSchema {
             schema_ref: Some(name),
+            // Same reasoning as `convert_schema_property`: nullability is
+            // declared at the ref site and must survive the indirection.
+            nullable: obj.is_nullable(),
             ..Default::default()
         };
     }
@@ -2014,6 +2069,10 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         properties,
         schema_ref: None,
         items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
+        // `effective_enum_values` rather than `obj.enum_values` so a `const:`
+        // lowers to a single-member enum here exactly as it does everywhere
+        // else the parser reads an enum.
+        enum_values: effective_enum_values(obj),
         required: obj.required.clone(),
         one_of: convert_composition_branches(&obj.one_of),
         any_of: convert_composition_branches(&obj.any_of),
@@ -2030,6 +2089,15 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         let name = strip_ref_prefix(ref_path);
         return JsonSchemaProperty {
             schema_ref: Some(name),
+            // `nullable` lives at the ref *site*, not on the component — a
+            // component is shared, so it cannot be nullable for one referrer
+            // and not another. Dropping it here made `{$ref: X, nullable: true}`
+            // — the OpenAPI 3.0 spelling of a nullable object — lower to
+            // `nullable: false`, so the validator's null short-circuit could
+            // never fire for the one shape it exists to handle: it resolved the
+            // ref and rejected `null` with "Expected object". 121 body
+            // properties on one customer's 3.0.1 spec.
+            nullable: obj.is_nullable(),
             ..Default::default()
         };
     }
@@ -2283,21 +2351,186 @@ fn parse_sdk_variables(mapping: Option<&serde_yaml::Mapping>) -> Vec<SdkVariable
 // Parameter conversion
 // ---------------------------------------------------------------------------
 
+/// Resolve a parameter schema that is a bare `$ref` to its component
+/// schema, following a bounded chain. Returns `None` for an inline schema or
+/// an unresolvable / cyclic reference, in which case the caller uses the
+/// schema as written.
+fn resolve_param_schema_ref<'a>(
+    schema: &OpenApiParamSchema,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let ref_path = schema.schema_ref.as_ref()?;
+    let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+    resolve_ref_chain(resolved, component_schemas)
+}
+
+/// The single non-null branch of a `oneOf`/`anyOf` on a *parameter* schema,
+/// resolved through `$ref`.
+///
+/// The parameter counterpart to [`recognize_nullable_composite`], which
+/// operates on `OpenApiSchemaObject` and so only ever reached body properties.
+/// `anyOf: [{type: array, ...}, {type: 'null'}]` is what pydantic emits for
+/// `Optional[list[T]]`, and on real specs that spelling dominates the bare
+/// `type: array` one — 29 of 31 array query parameters on the spec this was
+/// tested against. Without it the parameter keeps `param_type: None`, so it is
+/// neither repeatable nor coerced, and a JSON array argument goes on the wire
+/// verbatim as `?x=["a","b"]`.
+///
+/// `None` for a true union (more than one non-null branch), which has no single
+/// type to promote, and for anything without exactly one null branch.
+fn resolve_param_nullable_branch<'a>(
+    schema: &'a OpenApiParamSchema,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let branches: &[OpenApiSchemaObject] = if !schema.one_of.is_empty() {
+        &schema.one_of
+    } else if !schema.any_of.is_empty() {
+        &schema.any_of
+    } else {
+        return None;
+    };
+
+    let mut null_count: usize = 0;
+    let mut non_null: Option<&OpenApiSchemaObject> = None;
+    for branch in branches {
+        if is_null_sentinel(branch) {
+            null_count += 1;
+            continue;
+        }
+        if non_null.is_some() {
+            return None;
+        }
+        non_null = Some(branch);
+    }
+    if null_count != 1 {
+        return None;
+    }
+    resolve_ref_chain(non_null?, component_schemas)
+}
+
+/// Resolved `type` of a parameter-shaped schema, following one `$ref` into
+/// `component_schemas`. `None` for an untyped or `string` schema — callers
+/// treat `None` as "string", which is what every lowering produced before
+/// element types were tracked at all.
+fn param_schema_type(
+    schema: &OpenApiParamSchema,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    if let Some(ref_path) = &schema.schema_ref {
+        let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+        let terminal = resolve_ref_chain(resolved, component_schemas)?;
+        return match terminal.schema_type() {
+            Some("string") | None => None,
+            Some(other) => Some(other.to_string()),
+        };
+    }
+    match schema.schema_type.as_deref() {
+        Some("string") | None => None,
+        Some(other) => Some(other.to_string()),
+    }
+}
+
 fn convert_parameter(
     param: &OpenApiParameter,
     ref_site_default: Option<&serde_yaml::Value>,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
 ) -> (String, MethodParameter) {
-    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) = match &param.schema {
-        Some(s) => (
-            s.schema_type.clone(),
-            s.enum_values.clone(),
-            s.default.as_ref(),
-            s.format.clone(),
-            convert_fern_enum(s.x_fern_enum.as_ref()),
-            s.minimum,
-            s.maximum,
-        ),
-        None => (None, None, None, None, None, None, None),
+    // A parameter declared as `schema: {$ref: ...}` carries none of its own
+    // keywords, so read them off the resolved component. Without this the
+    // parameter reached the CLI untyped: no enum constraint, no format, no
+    // bounds, and — worst — an array-typed filter registered as a
+    // single-value flag, so `--labels a --labels b` was rejected outright and
+    // `--labels '["a","b"]'` went on the wire as one literal string.
+    let resolved_ref = param.schema.as_ref().and_then(|s| {
+        resolve_param_schema_ref(s, component_schemas)
+            .or_else(|| resolve_param_nullable_branch(s, component_schemas))
+    });
+
+    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) =
+        match (&param.schema, resolved_ref) {
+            (Some(s), Some(r)) => (
+                r.schema_type().map(str::to_string),
+                effective_enum_values(r),
+                r.default.as_ref(),
+                r.format.clone(),
+                // `x-fern-enum` has no home on a component schema, so it can
+                // only come from the ref site — which is also the precedence
+                // the importer uses when both are present.
+                convert_fern_enum(s.x_fern_enum.as_ref()),
+                r.minimum,
+                r.maximum,
+            ),
+            (Some(s), None) => (
+                s.schema_type.clone(),
+                s.enum_values.clone(),
+                s.default.as_ref(),
+                s.format.clone(),
+                convert_fern_enum(s.x_fern_enum.as_ref()),
+                s.minimum,
+                s.maximum,
+            ),
+            (None, _) => (None, None, None, None, None, None, None),
+        };
+
+    // An `array`-typed parameter is repeatable: `--labels a --labels b`
+    // collects into a JSON array, which the style-aware query serializer then
+    // renders per `style`/`explode`. A single JSON-array argument still works
+    // (the repeated collector splices it), so both spellings now agree.
+    let repeated = param_type.as_deref() == Some("array");
+
+    // Element type of an array parameter, so `--schema` and `--help` describe
+    // what a value actually is. Without it both renderers fall back to
+    // `param_type` — which for a query array is the container type `"array"` —
+    // and advertise `items: {"type": "array"}` / `<JSON_ARRAY>`: an array of
+    // arrays. Body arrays were already correct because for them `param_type`
+    // *is* the element type; query, header and path arrays never were.
+    //
+    // Resolved eagerly to `Some(..)`, defaulting to `"string"`, rather than
+    // leaning on the body path's `None`-means-string convention: that
+    // convention only holds where `param_type` already carries the element
+    // type, so on this branch a `None` would fall straight back through to
+    // `"array"` and fix nothing. `array_item_type` is still what resolves the
+    // element schema, so `$ref` and `anyOf: [T, null]` spellings agree with
+    // the body path.
+    //
+    // Advertisement-only: the collector at `app.rs` branches on
+    // `item_type != "string"`, so an explicit `Some("string")` and `None`
+    // drive the wire identically.
+    let item_type = if repeated {
+        let resolved = match resolved_ref {
+            // `$ref`'d or `anyOf: [array, null]` — the resolved branch is an
+            // `OpenApiSchemaObject`, so the body path's resolver applies.
+            Some(schema) => array_item_type(schema, component_schemas),
+            // Inline `type: array` — the element schema is an
+            // `OpenApiParamSchema`, which has its own (possibly `$ref`'d) type.
+            None => param
+                .schema
+                .as_ref()
+                .and_then(|s| s.items.as_deref())
+                .and_then(|items| param_schema_type(items, component_schemas)),
+        };
+        Some(resolved.unwrap_or_else(|| "string".to_string()))
+    } else {
+        None
+    };
+
+    // Element enum, resolved from the same element schema as `item_type`. An
+    // array parameter's own `enum_values` is empty (the enum lives on the
+    // items), so without this the flag was unconstrained: `--event-types
+    // bogus` was accepted and sent, while the scalar `--direction bogus` was
+    // correctly rejected. Enforced in the executor rather than by a clap
+    // `value_parser` — see `MethodParameter::item_enum_values`.
+    let item_enum_values = if repeated {
+        match resolved_ref {
+            Some(schema) => array_item_enum_values(schema, component_schemas),
+            None => param
+                .schema
+                .as_ref()
+                .and_then(|s| s.items.as_deref())
+                .and_then(|items| param_item_enum_values(items, component_schemas)),
+        }
+    } else {
+        None
     };
 
     // `x-fern-default` is the only source of a client-side default —
@@ -2368,6 +2601,9 @@ fn convert_parameter(
         availability,
         fern_enum,
         variable_reference,
+        repeated,
+        item_type,
+        item_enum_values,
         ..Default::default()
     };
 
@@ -2854,7 +3090,7 @@ pub fn load_openapi_spec_from_value(
                         OpenApiParamOrRef::Ref { x_fern_default, .. } => x_fern_default.as_ref(),
                         OpenApiParamOrRef::Inline(_) => None,
                     };
-                    let (name, mut mp) = convert_parameter(p, ref_site_default);
+                    let (name, mut mp) = convert_parameter(p, ref_site_default, component_schemas);
                     mp.display_name = display_name;
                     params.insert(name, mp);
                 }
@@ -3734,6 +3970,58 @@ fn classify_multipart_property_at_depth(
     (false, None)
 }
 
+/// Element type of an array schema, resolved through `$ref` and through a
+/// nullable composition on the items. `None` for a non-array, an untyped
+/// element, or a plain string element — the caller treats `None` as "string",
+/// which is what every lowering produced before this existed.
+fn array_item_type(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    let items = schema.items.as_deref()?;
+    let resolved = resolve_ref_chain(items, component_schemas)
+        .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    match resolved.schema_type() {
+        // An `allOf` / property-bag element has no `type` of its own but is
+        // object-shaped — the inheritance idiom.
+        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => {
+            Some("object".to_string())
+        }
+        Some("string") | None => None,
+        Some(other) => Some(other.to_string()),
+    }
+}
+
+/// Enum members an element of an array schema may take — the `items.enum` of
+/// `type: array, items: {$ref: SomeEnum}`. Mirrors [`array_item_type`]'s
+/// resolution (`$ref` chain, then nullable composition) so the two always
+/// describe the same element schema.
+fn array_item_enum_values(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<Vec<String>> {
+    let items = schema.items.as_deref()?;
+    let resolved = resolve_ref_chain(items, component_schemas)
+        .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    effective_enum_values(resolved)
+}
+
+/// `array_item_enum_values` for an inline `items:` on a *parameter* schema,
+/// which is an [`OpenApiParamSchema`] rather than an [`OpenApiSchemaObject`].
+/// A parameter's inline items can still be a `$ref` to an enum component,
+/// which is the spelling that actually occurs in the wild.
+fn param_item_enum_values(
+    items: &OpenApiParamSchema,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<Vec<String>> {
+    if let Some(ref_path) = &items.schema_ref {
+        let resolved = component_schemas.get(&strip_ref_prefix(ref_path))?;
+        let terminal = resolve_ref_chain(resolved, component_schemas)?;
+        return effective_enum_values(terminal);
+    }
+    items.enum_values.clone()
+}
+
 /// True when a multipart property holds a list, so its flag must be
 /// repeatable. `type: array` counts whether it is declared inline, behind a
 /// `$ref`, or inside a nullable composition (`anyOf: [{type: array}, null]` —
@@ -4217,7 +4505,14 @@ fn flatten_body_params_prefix(
                             MethodParameter {
                                 param_type: Some("object".to_string()),
                                 location: Some("body".to_string()),
+                                // The shorthand flag stays optional — the
+                                // caller can satisfy this property with
+                                // dot-notation leaves instead — but the
+                                // property itself is required on the wire, and
+                                // `--schema` must say so or it disagrees with
+                                // the validator.
                                 required: false,
+                                required_by_spec: required.contains(name.as_str()),
                                 description: prop
                                     .description
                                     .clone()
@@ -4250,6 +4545,7 @@ fn flatten_body_params_prefix(
                             description: prop.description.clone().or_else(|| resolved.description.clone()),
                             location: Some("body".to_string()),
                             required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                             format: resolved.format.clone(),
                             default_value: const_default,
                             documentation_default_value: const_doc_default,
@@ -4293,7 +4589,14 @@ fn flatten_body_params_prefix(
                             MethodParameter {
                                 param_type: Some("object".to_string()),
                                 location: Some("body".to_string()),
+                                // The shorthand flag stays optional — the
+                                // caller can satisfy this property with
+                                // dot-notation leaves instead — but the
+                                // property itself is required on the wire, and
+                                // `--schema` must say so or it disagrees with
+                                // the validator.
                                 required: false,
+                                required_by_spec: required.contains(name.as_str()),
                                 description: prop
                                     .description
                                     .clone()
@@ -4328,11 +4631,22 @@ fn flatten_body_params_prefix(
                         // user to type it is ceremony), which also satisfies
                         // the required check.
                         required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                         format: effective.format.clone(),
                         enum_values: effective_enum_values(effective),
                         default_value: const_default,
                         documentation_default_value: const_doc_default,
                         repeated: is_array,
+                        item_type: if is_array {
+                            array_item_type(effective, component_schemas)
+                        } else {
+                            None
+                        },
+                        item_enum_values: if is_array {
+                            array_item_enum_values(effective, component_schemas)
+                        } else {
+                            None
+                        },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
                             || promoted_composite.is_some(),
@@ -4358,7 +4672,10 @@ fn flatten_body_params_prefix(
                     MethodParameter {
                         param_type: Some("object".to_string()),
                         location: Some("body".to_string()),
+                        // See the note on the `$ref` branch: clap-optional,
+                        // spec-required.
                         required: false,
+                        required_by_spec: required.contains(name.as_str()),
                         description: prop.description.clone(),
                         ..Default::default()
                     },
@@ -4386,6 +4703,7 @@ fn flatten_body_params_prefix(
                     description: prop.description.clone(),
                     location: Some("body".to_string()),
                     required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                     format: prop.format.clone(),
                     default_value: const_default,
                     documentation_default_value: const_doc_default,
@@ -4431,7 +4749,10 @@ fn flatten_body_params_prefix(
                     MethodParameter {
                         param_type: Some("object".to_string()),
                         location: Some("body".to_string()),
+                        // See the note on the `$ref` branch: clap-optional,
+                        // spec-required.
                         required: false,
+                        required_by_spec: required.contains(name.as_str()),
                         description: prop
                             .description
                             .clone()
@@ -4460,11 +4781,22 @@ fn flatten_body_params_prefix(
                 description: prop.description.clone(),
                 location: Some("body".to_string()),
                 required: spec_required && const_default.is_none(),
+                            required_by_spec: spec_required,
                 format: effective.format.clone(),
                 enum_values: effective_enum_values(effective),
                 default_value: const_default,
                 documentation_default_value: const_doc_default,
                 repeated: is_array,
+                item_type: if is_array {
+                    array_item_type(effective, component_schemas)
+                } else {
+                    None
+                },
+                item_enum_values: if is_array {
+                    array_item_enum_values(effective, component_schemas)
+                } else {
+                    None
+                },
                 nullable: is_scalar_nullable(prop)
                     || promoted_scalar.is_some()
                     || promoted_composite.is_some(),
@@ -4498,10 +4830,506 @@ mod tests {
                 maximum: 100
         "#;
         let p: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
-        let (name, mp) = convert_parameter(&p, None);
+        let (name, mp) = convert_parameter(&p, None, &HashMap::new());
         assert_eq!(name, "limit");
         assert_eq!(mp.minimum, Some(1.0), "minimum must lower from schema");
         assert_eq!(mp.maximum, Some(100.0), "maximum must lower from schema");
+    }
+
+    #[test]
+    fn test_ref_typed_parameter_resolves_through_component_schemas() {
+        // A parameter declared as a bare `$ref` carried none of its own
+        // keywords, so it reached the CLI with `param_type: None` — no type
+        // check, no enum constraint, no format, no bounds. On specs where most
+        // parameters are component refs that meant validation was effectively
+        // off for them.
+        let raw = r#"
+            name: status
+            in: query
+            schema:
+                $ref: '#/components/schemas/Status'
+        "#;
+        let param: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
+        let component: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            format: uuid
+            enum: [open, closed]
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("Status".to_string(), component);
+
+        let (name, mp) = convert_parameter(&param, None, &components);
+        assert_eq!(name, "status");
+        assert_eq!(mp.param_type.as_deref(), Some("string"));
+        assert_eq!(mp.format.as_deref(), Some("uuid"));
+        assert_eq!(
+            mp.enum_values.as_deref(),
+            Some(&["open".to_string(), "closed".to_string()][..]),
+        );
+        assert!(!mp.repeated, "a scalar parameter must not be repeatable");
+    }
+
+    #[test]
+    fn test_array_typed_parameter_is_repeatable() {
+        // `--labels a --labels b` was rejected outright ("cannot be used
+        // multiple times") and `--labels '["a","b"]'` went on the wire as one
+        // literal string, because `repeated` was only ever set for body
+        // properties and multipart fields — never for query/header params.
+        // Covers both the inline and `$ref` spellings.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: labels
+            in: query
+            schema:
+                type: array
+                items:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let (_, inline_mp) = convert_parameter(&inline, None, &HashMap::new());
+        assert_eq!(inline_mp.param_type.as_deref(), Some("array"));
+        assert!(inline_mp.repeated, "inline array param must be repeatable");
+
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: labels
+            in: query
+            schema:
+                $ref: '#/components/schemas/Labels'
+            "#,
+        )
+        .unwrap();
+        let labels: OpenApiSchemaObject = serde_yaml::from_str(
+            "type: array\nitems:\n  type: string\n",
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("Labels".to_string(), labels);
+        let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
+        assert!(ref_mp.repeated, "$ref'd array param must be repeatable");
+    }
+
+    #[test]
+    fn test_nullable_array_parameter_is_repeatable() {
+        // `anyOf: [{type: array}, {type: 'null'}]` — pydantic's
+        // `Optional[list[T]]`, and the dominant spelling for array query
+        // parameters on real specs (29 of 31 on the spec this was tested
+        // against, versus 2 using bare `type: array`). Covers the inline
+        // branch and the `$ref`'d branch.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: voice_ids
+            in: query
+            schema:
+                anyOf:
+                  - type: array
+                    items:
+                        type: string
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, inline_mp) = convert_parameter(&inline, None, &HashMap::new());
+        assert_eq!(inline_mp.param_type.as_deref(), Some("array"));
+        assert!(inline_mp.repeated, "nullable array param must be repeatable");
+
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: voice_ids
+            in: query
+            schema:
+                anyOf:
+                  - $ref: '#/components/schemas/VoiceIds'
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "VoiceIds".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>("type: array\nitems:\n  type: string\n").unwrap(),
+        );
+        let (_, ref_mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(ref_mp.param_type.as_deref(), Some("array"));
+        assert!(ref_mp.repeated);
+    }
+
+    #[test]
+    fn test_true_union_parameter_is_not_promoted() {
+        // Two non-null branches have no single type to promote to, so the
+        // parameter stays untyped exactly as before.
+        let param: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: filter
+            in: query
+            schema:
+                anyOf:
+                  - type: string
+                  - type: integer
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&param, None, &HashMap::new());
+        assert_eq!(mp.param_type, None, "a true union must stay opaque");
+        assert!(!mp.repeated);
+    }
+
+    #[test]
+    fn test_nullable_scalar_parameter_resolves_its_type() {
+        // The scalar case of the same spelling: the parameter should pick up
+        // its type (and enum) rather than arriving untyped.
+        let param: OpenApiParameter = serde_yaml::from_str(
+            r#"
+            name: sort_direction
+            in: query
+            schema:
+                anyOf:
+                  - type: string
+                    enum: [asc, desc]
+                  - type: 'null'
+            "#,
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&param, None, &HashMap::new());
+        assert_eq!(mp.param_type.as_deref(), Some("string"));
+        assert_eq!(
+            mp.enum_values.as_deref(),
+            Some(&["asc".to_string(), "desc".to_string()][..]),
+        );
+        assert!(!mp.repeated, "a scalar must not become repeatable");
+    }
+
+    #[test]
+    fn test_array_of_objects_records_its_element_type() {
+        // `--schema` rendered `items: {type: string}` for an array of objects
+        // because a repeated flag carries `param_type: "string"` (the flag
+        // surface). An agent read that, sent `["x"]`, and the validator — which
+        // was right — rejected it.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              inputs:
+                type: array
+                items:
+                    $ref: '#/components/schemas/DialogueInput'
+              tags:
+                type: array
+                items:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "DialogueInput".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nproperties:\n  text:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+
+        let inputs = &params["inputs"];
+        assert!(inputs.repeated);
+        assert_eq!(
+            inputs.item_type.as_deref(),
+            Some("object"),
+            "an array of objects must record its element type",
+        );
+        // A plain string array leaves it `None`, which downstream reads as
+        // "string" — byte-identical to every pre-existing lowering.
+        assert_eq!(params["tags"].item_type, None);
+    }
+
+    #[test]
+    fn test_recursed_object_property_keeps_the_spec_required_bit() {
+        // The shorthand flag must stay clap-optional (leaf flags can satisfy
+        // the property), but the property is still required on the wire.
+        // Dropping the bit made `--schema` disagree with the validator: every
+        // advertised field supplied, request still rejected for one that was
+        // never listed.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            required: [workflow]
+            properties:
+              workflow:
+                $ref: '#/components/schemas/Workflow'
+              optional_thing:
+                $ref: '#/components/schemas/Workflow'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "Workflow".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nproperties:\n  nodes:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+
+        let workflow = &params["workflow"];
+        assert!(
+            !workflow.required,
+            "the shorthand flag must stay optional so leaf flags can satisfy it",
+        );
+        assert!(
+            workflow.required_by_spec,
+            "but the contract must still advertise it as required",
+        );
+        assert!(!params["optional_thing"].required_by_spec);
+    }
+
+    #[test]
+    fn test_array_parameter_records_its_element_type() {
+        // `--schema` advertised `items: {"type": "array"}` for an array query
+        // parameter — an array of arrays. Only body arrays carried an element
+        // type, so `help.rs` fell back to `param_type`, which is `"array"` for
+        // these. All three spellings appear in real specs, so all three are
+        // covered here: inline, `$ref`'d, and `anyOf: [array, null]`.
+        let mut components = HashMap::new();
+        components.insert(
+            "Labels".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  type: integer\n",
+            )
+            .unwrap(),
+        );
+
+        // Inline, string elements -> `Some("string")`, spelled out rather than
+        // left implicit. `None` here would fall back through both renderers to
+        // `param_type`, which on a query array is the container type "array" —
+        // the exact no-op this assertion exists to catch.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(
+            mp.item_type.as_deref(),
+            Some("string"),
+            "string elements must be explicit, not left to the param_type fallback",
+        );
+
+        // No spelling of a string-element array parameter may leave the
+        // element type unresolved.
+        for spec in [
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: header\nschema:\n    type: array\n    items:\n        type: string\n",
+            "name: labels\nin: query\nschema:\n    type: array\n",
+        ] {
+            let p: OpenApiParameter = serde_yaml::from_str(spec).unwrap();
+            let (_, mp) = convert_parameter(&p, None, &components);
+            assert_eq!(
+                mp.item_type.as_deref(),
+                Some("string"),
+                "unresolved element type falls back to the container type: {spec}",
+            );
+        }
+
+        // Inline, non-string elements -> recorded.
+        let inline_int: OpenApiParameter = serde_yaml::from_str(
+            "name: ids\nin: query\nschema:\n    type: array\n    items:\n        type: integer\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline_int, None, &components);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // `$ref` to an array component.
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    $ref: '#/components/schemas/Labels'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&via_ref, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // `anyOf: [array, null]` — pydantic's `Optional[list[T]]`.
+        let nullable: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    anyOf:\n      - $ref: '#/components/schemas/Labels'\n      - type: 'null'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&nullable, None, &components);
+        assert!(mp.repeated);
+        assert_eq!(mp.item_type.as_deref(), Some("integer"));
+
+        // A scalar parameter records nothing.
+        let scalar: OpenApiParameter =
+            serde_yaml::from_str("name: limit\nin: query\nschema:\n    type: integer\n").unwrap();
+        let (_, mp) = convert_parameter(&scalar, None, &components);
+        assert!(!mp.repeated);
+        assert_eq!(mp.item_type, None);
+    }
+
+    #[test]
+    fn test_body_array_of_enum_resolves_its_element_enum() {
+        // The element-enum resolution was wired into `convert_parameter` only,
+        // so a body array of enums advertised no enum at all. On a real spec
+        // that meant `metrics query-events --event-types bogus` was rejected
+        // while `webhooks create --event-types bogus` — same 10-member enum,
+        // and required there — was not.
+        let mut components = HashMap::new();
+        components.insert(
+            "EventType".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: string\nenum:\n  - message.sent\n  - message.received\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "EventTypes".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  $ref: '#/components/schemas/EventType'\n",
+            )
+            .unwrap(),
+        );
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+type: object
+properties:
+  event_types:
+    $ref: '#/components/schemas/EventTypes'
+  inline_types:
+    type: array
+    items:
+      $ref: '#/components/schemas/EventType'
+  labels:
+    type: array
+    items:
+      type: string
+"#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &components, 0);
+        let expected = vec!["message.sent".to_string(), "message.received".to_string()];
+
+        for name in ["event_types", "inline_types"] {
+            let p = &params[name];
+            assert!(p.repeated, "{name} must be repeated");
+            assert_eq!(
+                p.item_enum_values.as_deref(),
+                Some(expected.as_slice()),
+                "{name} must resolve its element enum",
+            );
+        }
+        // A plain string array invents nothing.
+        assert_eq!(params["labels"].item_enum_values, None);
+    }
+
+    #[test]
+    fn test_ref_site_nullability_survives_the_ref_indirection() {
+        // This is the test that was missing, and its absence is why the
+        // executor-side null guard shipped as dead code. That guard had a unit
+        // test, but the test hand-built `JsonSchemaProperty { schema_ref,
+        // nullable: true }` — a state `convert_schema_property` could not
+        // produce, because its `$ref` early-return dropped every sibling
+        // keyword. The guard passed its test and never fired on a real spec.
+        //
+        // So this asserts the lowering from spec YAML, not a struct literal.
+        let nullable_ref: OpenApiSchemaObject = serde_yaml::from_str(
+            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
+        )
+        .unwrap();
+        let lowered = convert_schema_property(&nullable_ref);
+        assert_eq!(lowered.schema_ref.as_deref(), Some("Metadata"));
+        assert!(
+            lowered.nullable,
+            "nullability is declared at the ref site and must survive the indirection",
+        );
+
+        // A `$ref` without `nullable` stays non-nullable — the fix must not
+        // make every referenced property accept null.
+        let plain_ref: OpenApiSchemaObject =
+            serde_yaml::from_str("$ref: '#/components/schemas/Metadata'\n").unwrap();
+        assert!(!convert_schema_property(&plain_ref).nullable);
+
+        // The 3.1 spelling, for contrast: null-ness lives in the branch, which
+        // `has_null_branch` handles on the executor side.
+        let component: OpenApiSchemaObject = serde_yaml::from_str(
+            "$ref: '#/components/schemas/Metadata'\nnullable: true\n",
+        )
+        .unwrap();
+        assert!(convert_schema_object(&component).nullable);
+    }
+
+    #[test]
+    fn test_array_parameter_resolves_its_element_enum() {
+        // An array-of-enum parameter carries no enum of its own — it lives on
+        // `items` — so the flag was entirely unconstrained while its scalar
+        // twin was checked by a clap value_parser.
+        let mut components = HashMap::new();
+        components.insert(
+            "EventType".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: string\nenum:\n  - message.sent\n  - message.received\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "EventTypes".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: array\nitems:\n  $ref: '#/components/schemas/EventType'\n",
+            )
+            .unwrap(),
+        );
+        let expected = vec!["message.sent".to_string(), "message.received".to_string()];
+
+        // Inline `items: {$ref: Enum}` — the spelling that occurs in the wild.
+        let inline: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    type: array\n    items:\n        $ref: '#/components/schemas/EventType'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // Inline `items: {type: string, enum: [...]}`.
+        let inline_enum: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    type: array\n    items:\n        type: string\n        enum:\n          - message.sent\n          - message.received\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&inline_enum, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // `$ref` to an array component whose items are a `$ref` to the enum.
+        let via_ref: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    $ref: '#/components/schemas/EventTypes'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&via_ref, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // `anyOf: [array, null]` — pydantic's `Optional[list[Enum]]`.
+        let nullable: OpenApiParameter = serde_yaml::from_str(
+            "name: event_types\nin: query\nschema:\n    anyOf:\n      - $ref: '#/components/schemas/EventTypes'\n      - type: 'null'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&nullable, None, &components);
+        assert_eq!(mp.item_enum_values.as_deref(), Some(expected.as_slice()));
+
+        // A non-enum array records nothing, and neither does a scalar.
+        let plain: OpenApiParameter = serde_yaml::from_str(
+            "name: labels\nin: query\nschema:\n    type: array\n    items:\n        type: string\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&plain, None, &components);
+        assert_eq!(mp.item_enum_values, None);
+        let scalar: OpenApiParameter = serde_yaml::from_str(
+            "name: direction\nin: query\nschema:\n    $ref: '#/components/schemas/EventType'\n",
+        )
+        .unwrap();
+        let (_, mp) = convert_parameter(&scalar, None, &components);
+        assert_eq!(mp.item_enum_values, None, "a scalar enum belongs on enum_values");
+        assert!(mp.enum_values.is_some());
     }
 
     #[test]

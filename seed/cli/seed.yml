@@ -91,6 +91,34 @@ fixtures:
         registryUrl: https://registry.npmjs.org
         packageName: "@fern/query-parameters-openapi"
         token: "${NPM_TOKEN}"
+    # packageIdentity and a basic license reaching the *published artifacts*.
+    # Neither is observable in `local_files` mode: that mode emits no launcher
+    # package.json, and seed only threads `license` through a fixture entry —
+    # never the target project's generators.yml. So this is the only place the
+    # npm-identity and LICENSE paths get exercised.
+    #
+    # The description deliberately contains an apostrophe and a comma: the
+    # identity values are interpolated into a JSON heredoc, and a stray quote
+    # would emit a package.json npm cannot parse — a failure that would
+    # otherwise surface only at publish time.
+    - customConfig:
+        packageIdentity:
+          name: query-params-cli
+          description: "Query-parameter CLI, and it's comma-laden"
+          license: MIT
+          repository: https://github.com/acme/query-params-cli
+          homepage: https://acme.example
+          authors: ["Acme <dev@acme.example>", "Second <two@acme.example>"]
+          keywords: ["acme", "cli"]
+      outputFolder: github-npm-identity
+      outputMode: github
+      outputVersion: "1.0.0"
+      license: MIT
+      publishConfig:
+        type: npm
+        registryUrl: https://registry.npmjs.org
+        packageName: "@fern/query-parameters-openapi"
+        token: "${NPM_TOKEN}"
     # Github output mode WITHOUT npm publish info — verifies that the
     # generator emits a build+test-only `.github/workflows/ci.yml`
     # (check, compile, test jobs; no publish jobs).
@@ -148,6 +176,14 @@ fixtures:
   x-fern-global-parameters:
     - customConfig: null
       outputFolder: no-custom-config
+    # Required-global wire coverage. The spec declares `x-custom-header`
+    # (required, env-backed, no default) and `api-version` (required, nothing
+    # to fall back on): the CLI refuses to run either command without a value,
+    # so this fails at `cargo test` if the harness stops passing a required
+    # global as a flag. Defaulted and optional globals stay unflagged.
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).

@@ -502,6 +502,29 @@ pub struct Server {
     /// Optional human-readable description from the spec — surfaced in
     /// `--help` next to the server URL.
     pub description: Option<String>,
+    /// The URL to use when the caller supplies no value for any of this
+    /// server's template variables, from the `x-fern-default-url`
+    /// extension. Mirrors fern's OpenAPI importer, which treats it as the
+    /// concrete default environment URL for a templated server
+    /// (`packages/cli/api-importers/openapi/openapi-ir-parser/src/openapi/v3/converters/convertServer.ts`).
+    pub default_url: Option<String>,
+    /// The server's OpenAPI `variables:` block, in name order. Each entry
+    /// becomes a global `--<variable>` flag whose value is substituted
+    /// into [`Self::url`] before the request is sent.
+    pub variables: Vec<ServerVariable>,
+}
+
+/// One entry from an OpenAPI server's `variables:` block.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct ServerVariable {
+    /// Variable name as it appears in the `{placeholder}`.
+    pub name: String,
+    /// The spec's `default` — used when the caller supplies no value.
+    pub default: Option<String>,
+    /// The spec's `description`, surfaced as the flag's `--help` text.
+    pub description: Option<String>,
+    /// The spec's `enum`, surfaced as the flag's allowed values.
+    pub enum_values: Vec<String>,
 }
 
 impl RestDescription {
@@ -1013,6 +1036,20 @@ pub struct MethodParameter {
     pub location: Option<String>,
     #[serde(default)]
     pub required: bool,
+    /// Whether the *spec* requires this property, independent of whether the
+    /// CLI flag is clap-required.
+    ///
+    /// The two diverge for an object-valued body property the parser recurses
+    /// into: its shorthand flag must stay optional, because the caller can
+    /// satisfy the property with dot-notation leaf flags instead — but the
+    /// property itself is still required on the wire. Reporting `required`
+    /// there made `--schema` disagree with the validator: an agent supplied
+    /// every field the contract listed and the request was still rejected for
+    /// a property `--schema` never mentioned.
+    ///
+    /// `--schema`'s `input.required` uses this; clap uses [`required`].
+    #[serde(default)]
+    pub required_by_spec: bool,
     pub format: Option<String>,
     /// Client-side default sourced only from the Fern `x-fern-default`
     /// extension. When set, the generated CLI plumbs this into clap's
@@ -1049,6 +1086,34 @@ pub struct MethodParameter {
     pub enum_descriptions: Option<Vec<String>>,
     #[serde(default)]
     pub repeated: bool,
+    /// Element type of a `repeated` parameter, when the spec's `items` says
+    /// something other than a plain string.
+    ///
+    /// A repeated flag carries `param_type: "string"` because that is the
+    /// *flag* surface — clap collects strings. `--schema` was rendering that
+    /// as `items: {type: string}`, which is a lie for an array of objects: an
+    /// agent reads the contract, sends `["x"]`, and the validator rejects it.
+    /// The element type is preserved here so the advertised contract matches
+    /// the wire, and so the collector knows to JSON-decode each occurrence
+    /// rather than keep it a literal.
+    ///
+    /// `None` means "string" — the overwhelmingly common case, and the value
+    /// every pre-existing lowering produced.
+    pub item_type: Option<String>,
+    /// Enum members an *element* of an array parameter may take, i.e. the
+    /// `items.enum` of `type: array, items: {$ref: SomeEnum}`.
+    ///
+    /// Separate from [`MethodParameter::enum_values`] because that one is
+    /// enforced by a clap `value_parser`, which cannot work here: a repeated
+    /// flag also accepts a whole JSON array in one argument
+    /// (`--labels '["a","b"]'`), and clap would reject that literal as a
+    /// non-member. So element enums are enforced after collection, in the
+    /// executor, and advertised as `items.enum` by `--schema`.
+    ///
+    /// Without this an array-of-enum parameter was completely unconstrained
+    /// while its scalar twin was checked — `--event-types bogus` went to the
+    /// API, `--direction bogus` did not.
+    pub item_enum_values: Option<Vec<String>>,
     /// True for `oneOf/anyOf [string, array<string>]` unions where a single
     /// value should be sent as a scalar string, not wrapped in a length-1
     /// array. Pure `type: array` params leave this `false`.
@@ -1182,6 +1247,13 @@ pub struct JsonSchema {
     #[serde(rename = "$ref")]
     pub schema_ref: Option<String>,
     pub items: Option<Box<JsonSchemaProperty>>,
+    /// The component's own `enum`. A property that reaches its enum through a
+    /// `$ref` resolves to a component, so without this field the members were
+    /// unreachable from the validator and an invalid value was accepted and
+    /// sent — while the identical enum declared inline on the property was
+    /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
+    #[serde(rename = "enum")]
+    pub enum_values: Option<Vec<String>>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors

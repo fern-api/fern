@@ -41,6 +41,7 @@ import {
 } from "./fernSdkGenApi.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
+import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 
@@ -242,6 +243,8 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const venus = createVenusService({ token: token.value });
+    let generateOauthClients = false;
+    let generatePaginatedClients = false;
     if (!isAirGapped) {
         const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
 
@@ -253,6 +256,8 @@ export async function runRemoteGenerationForGenerator({
                 ir.readmeConfig.whiteLabel = true;
             }
             ir.selfHosted = orgResponse.body.selfHostedSdKs;
+            generateOauthClients = orgResponse.body.oauthClientEnabled ?? false;
+            generatePaginatedClients = orgResponse.body.paginationEnabled ?? false;
         }
     }
 
@@ -365,6 +370,20 @@ export async function runRemoteGenerationForGenerator({
         };
     }
 
+    const enrichedIntermediateRepresentation: IntermediateRepresentation = {
+        ...ir,
+        fdrApiDefinitionId,
+        publishConfig: getPublishConfig({
+            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            version: resolvedVersion,
+            userProvidedVersion: version,
+            packageName,
+            selfHosted: ir.selfHosted ?? false,
+            generateFullProject,
+            context: interactiveTaskContext
+        })
+    };
+
     let result: RemoteTaskHandler.Response | undefined;
     let usedSdkGenApi = false;
     const sdkGenApiEnabled = isFernSdkGenApiEnabled();
@@ -410,6 +429,17 @@ export async function runRemoteGenerationForGenerator({
         if (verify === true) {
             interactiveTaskContext.logger.warn("sdk-gen-api does not yet run Fern's post-generation verification step");
         }
+        const runtimeBundle = await prepareFernSdkGenApiRuntimeBundle({
+            apiName: getOriginalName(ir.apiName),
+            organization,
+            generatorInvocation: candidate.generatorInvocation,
+            sdkVersion: candidate.sdkVersion,
+            intermediateRepresentation: enrichedIntermediateRepresentation,
+            irVersionOverride,
+            generateOauthClients,
+            generatePaginatedClients,
+            context: interactiveTaskContext
+        });
         const parameters = {
             apiName: getOriginalName(ir.apiName),
             organization,
@@ -418,6 +448,7 @@ export async function runRemoteGenerationForGenerator({
             sdkVersion: candidate.sdkVersion,
             token,
             specsTarGzBuffer: candidate.specsTarGzBuffer,
+            runtimeBundle,
             absolutePathToPreview,
             context: interactiveTaskContext,
             targetIdSeed: sdkGenApiTargetIdSeed,
@@ -438,19 +469,7 @@ export async function runRemoteGenerationForGenerator({
             generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
             context: interactiveTaskContext,
             version: resolvedVersion,
-            intermediateRepresentation: {
-                ...ir,
-                fdrApiDefinitionId,
-                publishConfig: getPublishConfig({
-                    generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
-                    version: resolvedVersion,
-                    userProvidedVersion: version,
-                    packageName,
-                    selfHosted: ir.selfHosted ?? false,
-                    generateFullProject,
-                    context: interactiveTaskContext
-                })
-            },
+            intermediateRepresentation: enrichedIntermediateRepresentation,
             shouldLogS3Url,
             token,
             whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,

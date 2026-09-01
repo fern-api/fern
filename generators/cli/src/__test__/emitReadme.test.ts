@@ -484,6 +484,30 @@ describe("emitReadme", () => {
         const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";
         expect(authSection).toContain(".env");
     });
+
+    it("carries the Apache-2.0 notice for the vendored runtime", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo,
+            repoUrl: "https://github.com/fern-api/petstore-cli"
+        });
+
+        // The generated repo contains `fern-cli-sdk` copied verbatim under
+        // `src/`. That code is Apache-2.0 and redistributing it requires
+        // retaining the notice. The runtime's own LICENSE file is deliberately
+        // not shipped (it contradicted `packageIdentity.license`), so the
+        // notice lives here instead.
+        expect(readme).toContain("## Attribution");
+        expect(readme).toContain("fern-cli-sdk");
+        expect(readme).toContain("Apache License 2.0");
+        expect(readme).toContain("https://www.apache.org/licenses/LICENSE-2.0");
+        // It is a section like any other, so it reaches the table of contents.
+        const toc = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
+        expect(toc).toContain("[Attribution](#attribution)");
+    });
 });
 
 describe("emitReadme — distribution channels", () => {

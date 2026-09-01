@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { readSpecsManifest } from "../copySpecs.js";
 import type { DetectedAuthBinding } from "../detectAuth.js";
+import type { DetectedGlobalParam } from "../detectGlobalParams.js";
 import { readFullIr } from "../ir.js";
 import { renderWireTestHarness } from "./harness.js";
 import type { OAuthTokenEndpoint } from "./manifest.js";
@@ -36,8 +37,9 @@ export async function generateWireTests(args: {
     specsDir?: string;
     rootGroup?: string;
     authBindings: DetectedAuthBinding[];
+    globalParams: DetectedGlobalParam[];
 }): Promise<GenerateWireTestsResult> {
-    const { outputDir, binaryName, irFilepath, specsDir, rootGroup, authBindings } = args;
+    const { outputDir, binaryName, irFilepath, specsDir, rootGroup, authBindings, globalParams } = args;
 
     const specManifest = await readSpecsManifest(specsDir);
     const openapiSpecs = specManifest?.specs.filter((entry) => entry.type === "openapi") ?? [];
@@ -65,6 +67,7 @@ export async function generateWireTests(args: {
         rootGroup: rootGroup ?? null,
         specs,
         authEnvVars,
+        globalFlags: collectGlobalFlags(globalParams),
         oauthTokenEndpoint,
         loginFlowSchemes,
         requiredBodyContracts
@@ -97,6 +100,34 @@ const MOCK_UTILS_BASIC_PASSWORD = "test-password";
 
 /** Value the harness exports for any credential whose matcher is presence-only. */
 const PRESENCE_ONLY_CREDENTIAL = "test";
+
+/** Value the harness passes for a required global parameter. */
+const GLOBAL_PARAM_VALUE = "test";
+
+/**
+ * The global-parameter flags the harness must pass on every command, or the
+ * CLI rejects the invocation before it ever issues a request ("Required global
+ * parameter '<x>' has no value").
+ *
+ * Only parameters the caller genuinely has to supply are listed: an optional
+ * one is omitted from requests that don't resolve it, and a baked-in default
+ * resolves on its own. A declared env var does not count — the harness exports
+ * only auth credentials, so an env-backed global still has nothing to resolve
+ * from.
+ *
+ * Header and query locations only. Both are invisible to the case's mocks
+ * (matchers assert the request's own headers/query params, never the absence
+ * of extra ones), whereas a placeholder injected into the path or the body
+ * would change the very request the case asserts on.
+ */
+function collectGlobalFlags(globalParams: DetectedGlobalParam[]): Array<{ name: string; value: string }> {
+    return globalParams
+        .filter(
+            (param) =>
+                !param.optional && !param.hasDefaultValue && (param.location === "header" || param.location === "query")
+        )
+        .map((param) => ({ name: param.flagSource, value: GLOBAL_PARAM_VALUE }));
+}
 
 /**
  * Every credential env var the harness must export, paired with the value to

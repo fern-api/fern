@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.29.3
+  changelogEntry:
+    - summary: |
+        Cache Pydantic field alias metadata per model class instead of rebuilding the field name to alias maps on
+        every validation. The `mode="before"` validator now skips copying the input mapping when no key needs to be
+        rewritten, and `parse_obj_as` reuses the cached metadata instead of rescanning fields on each call. This
+        roughly halves the parsing cost of streaming responses, where the validator runs once per nested model per
+        event. As a result the validator can now hand the caller's own `dict` to Pydantic rather than a copy of it;
+        Pydantic does not mutate or retain that mapping, so parsed models are unaffected.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
 - version: 5.29.2
   changelogEntry:
     - summary: |
