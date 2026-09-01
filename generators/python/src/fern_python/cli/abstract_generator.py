@@ -148,6 +148,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
             import_paths = generator_config.custom_config.get("import_paths")
 
+        license_header = None
+        if generator_config.custom_config is not None and "license_header" in generator_config.custom_config:
+            license_header = generator_config.custom_config.get("license_header")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=self._get_relative_path_for_project(
@@ -161,6 +165,7 @@ class AbstractGenerator(ABC):
             flat_layout=self.is_flat_layout(generator_config=generator_config),
             output_directory=output_directory,
             whitelabel=generator_config.whitelabel,
+            license_header=license_header,
             python_version=python_version,
             pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
             github_output_mode=maybe_github_output_mode,

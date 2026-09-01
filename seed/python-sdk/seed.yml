@@ -325,6 +325,12 @@ fixtures:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
     - customConfig:
+        license_header: |
+          Copyright 2024 Acme, Inc.
+          Licensed under the Apache License, Version 2.0.
+        package_path: matryoshka/doll/structure
+      outputFolder: license-header
+    - customConfig:
         output_directory: project-root
       outputFolder: output-directory-project-root
     # source-root mode intentionally skips pyproject.toml/requirements.txt emission
