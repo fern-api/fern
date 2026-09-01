@@ -8085,6 +8085,9 @@ importers:
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
+      undici:
+        specifier: 'catalog:'
+        version: 6.27.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
