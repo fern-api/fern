@@ -178,6 +178,10 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     pyproject_toml: Optional[str] = None
 
+    # Text emitted as a comment at the top of every generated Python file, above the
+    # auto-generated notice. Lines that are not already comments are prefixed with `#`.
+    license_header: Optional[str] = None
+
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
     default_bytes_stream_chunk_size: Optional[int] = None
