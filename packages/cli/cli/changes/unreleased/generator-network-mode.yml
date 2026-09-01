@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      Local generation can now run the generator container with a specific network mode, set with the
+      FERN_GENERATOR_NETWORK environment variable. Setting it to `none` runs the generator with no
+      network access, which air-gapped environments require. Unset, container networking is unchanged.
+  type: internal
