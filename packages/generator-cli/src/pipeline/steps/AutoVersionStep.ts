@@ -25,9 +25,39 @@ import type { AutoVersionStepConfig, AutoVersionStepResult, PipelineContext } fr
 import { BaseStep } from "./BaseStep";
 
 const COMMIT_MARKER = "[fern-autoversion]";
+const GENERATION_MARKER = "[fern-generated]";
 const FERN_TRAILER = "\n\n🌿 Generated with Fern";
 
+/**
+ * Strips leading whitespace, quote markers, and a single list bullet so a squashed subject
+ * line is compared the same way a standalone subject is.
+ */
+const MESSAGE_LINE_PREFIX = /^[\s>]*(?:[*-]\s+)?/;
+
 type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
+
+/**
+ * True when a commit message identifies a generation commit.
+ *
+ * A generation commit normally carries the marker as its subject:
+ *
+ *     [fern-generated] Update SDK
+ *
+ * A squash merge rewrites that history into a single commit whose subject is the PR title and
+ * whose body lists the squashed subjects as bullets, so the marker survives only in the body:
+ *
+ *     feat: 1.3.0 alignExpr (#15)
+ *
+ *     * [fern-generated] Update SDK
+ *     * [fern-autoversion] SDK regeneration
+ *
+ * Matching per-line (after stripping bullets) rather than with a bare substring search keeps
+ * prose that merely mentions the marker — a revert description, a linked issue title — from
+ * being mistaken for a generation.
+ */
+export function isGenerationCommitMessage(message: string): boolean {
+    return message.split("\n").some((line) => line.replace(MESSAGE_LINE_PREFIX, "").startsWith(GENERATION_MARKER));
+}
 
 /**
  * Runs SDK autoversioning in one of two modes:
@@ -737,32 +767,96 @@ export class AutoVersionStep extends BaseStep {
     }
 
     /**
-     * Resolves a reachable base commit for the autoversion diff.
+     * Resolves the base commit for the autoversion diff.
      *
-     * `recordedSha` (the previous generation from replay.lock) is preferred when it exists
-     * in this clone. When it doesn't — e.g. the signed-commit push recreated the
-     * [fern-generated] commit under a new SHA, or the branch was squash-merged — we re-anchor
-     * on the most recent reachable [fern-generated] commit in history. Returns null when no
-     * generation baseline is reachable at all, in which case the caller resolves the previous
-     * version from metadata/git-tags and still rewrites the placeholder.
+     * `recordedSha` (the previous generation from replay.lock) is a hint on two axes, and both
+     * have to be checked:
+     *
+     *  - **Reachability.** The signed-commit push recreates every local commit under a new SHA,
+     *    so the recorded value can be absent from a later clone. Handled by re-anchoring on the
+     *    most recent generation commit in history (ADR 0002).
+     *  - **Freshness.** A reachable SHA is not necessarily the *latest* generation. When a
+     *    release PR is squash-merged, nothing advances `current_generation`, so it keeps
+     *    pointing at the commit that preceded the release — which stays on the default branch
+     *    forever and therefore passes any reachability probe. Diffing against it re-reports
+     *    every change the release already shipped as brand new.
+     *
+     * When history proves a strictly newer generation exists, that wins over the recorded SHA.
+     * Returns null when no generation baseline is reachable at all, in which case the caller
+     * resolves the previous version from metadata/git-tags and still rewrites the placeholder.
      */
     private resolveReachableGenerationBase(recordedSha: string, currentGenerationSha: string): string | null {
-        if (this.commitExists(recordedSha)) {
-            return recordedSha;
-        }
-        this.logger.warn(
-            `AutoVersionStep: recorded previous generation ${recordedSha.slice(0, 7)} is unreachable in this ` +
-                `clone; deriving the baseline from history.`
-        );
         const derived = this.findPreviousGenerationFromHistory(currentGenerationSha);
-        if (derived != null) {
-            this.logger.info(`AutoVersionStep: re-anchored autoversion baseline on ${derived.slice(0, 7)}.`);
+        const resolvedRecordedSha = this.resolveCommitSha(recordedSha);
+
+        if (resolvedRecordedSha == null) {
+            this.logger.warn(
+                `AutoVersionStep: recorded previous generation ${recordedSha.slice(0, 7)} is unreachable in this ` +
+                    `clone; deriving the baseline from history.`
+            );
+            if (derived != null) {
+                this.logger.info(`AutoVersionStep: re-anchored autoversion baseline on ${derived.slice(0, 7)}.`);
+                return derived;
+            }
+            this.logger.warn(
+                "AutoVersionStep: no reachable [fern-generated] baseline found; falling back to metadata/git-tags."
+            );
+            return null;
+        }
+
+        // Only override the recorded SHA when history proves the newer commit *descends* from
+        // it. An unrelated or older generation commit must never displace a reachable hint —
+        // that would walk the baseline backwards and reintroduce the cumulative diff this
+        // guard exists to prevent.
+        if (derived != null && derived !== resolvedRecordedSha && this.isStrictAncestor(resolvedRecordedSha, derived)) {
+            this.logger.warn(
+                `AutoVersionStep: recorded previous generation ${resolvedRecordedSha.slice(0, 7)} is stale — ` +
+                    `${derived.slice(0, 7)} is a newer generation in history; re-anchoring on it.`
+            );
             return derived;
         }
-        this.logger.warn(
-            "AutoVersionStep: no reachable [fern-generated] baseline found; falling back to metadata/git-tags."
-        );
-        return null;
+
+        return resolvedRecordedSha;
+    }
+
+    /**
+     * Resolves `sha` to a full commit SHA, or null when it is not a reachable commit.
+     * Resolving (rather than just probing existence) lets callers compare the recorded
+     * hint against derived SHAs without abbreviation length skewing the comparison.
+     */
+    private resolveCommitSha(sha: string): string | null {
+        if (!/^[0-9a-f]{7,40}$/.test(sha)) {
+            return null;
+        }
+        try {
+            return execFileSync("git", ["rev-parse", "--verify", `${sha}^{commit}`], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: "pipe"
+            }).trim();
+        } catch {
+            // Expected: `git rev-parse --verify` exits non-zero for a missing/unreachable object.
+            return null;
+        }
+    }
+
+    /**
+     * True when `ancestor` is a strict ancestor of `descendant`. `git merge-base --is-ancestor`
+     * treats an identical commit as an ancestor, so callers must exclude equality themselves
+     * (this method is only ever reached after a full-SHA inequality check).
+     */
+    private isStrictAncestor(ancestor: string, descendant: string): boolean {
+        try {
+            execFileSync("git", ["merge-base", "--is-ancestor", ancestor, descendant], {
+                cwd: this.outputDir,
+                stdio: "pipe"
+            });
+            return true;
+        } catch {
+            // Expected: exit 1 means "not an ancestor". Any other failure (bad object) also
+            // means we cannot prove descent, and the recorded SHA keeps precedence.
+            return false;
+        }
     }
 
     private commitExists(sha: string): boolean {
@@ -784,14 +878,18 @@ export class AutoVersionStep extends BaseStep {
 
     /**
      * Walks first-parent history from the current generation commit and returns the most
-     * recent prior [fern-generated] commit — the reachable equivalent of replay.lock's
-     * recorded baseline. Mirrors @fern-api/replay's `findPreviousGenerationFromHistory`.
+     * recent prior generation commit — the reachable equivalent of replay.lock's recorded
+     * baseline. Mirrors @fern-api/replay's `findPreviousGenerationFromHistory`.
+     *
+     * Matches on the full commit message (`%B`) rather than the subject alone, because a
+     * squash-merged release folds `[fern-generated] Update SDK` into the merge commit's body
+     * and replaces the subject with the PR title. See `isGenerationCommitMessage`.
      */
     private findPreviousGenerationFromHistory(currentGenerationSha: string): string | null {
         const start = this.commitExists(currentGenerationSha) ? currentGenerationSha : "HEAD";
         let log: string;
         try {
-            log = execFileSync("git", ["log", "--first-parent", "--format=%H%x00%s", start], {
+            log = execFileSync("git", ["log", "--first-parent", `--format=%H%x00%B%x1e`, start], {
                 cwd: this.outputDir,
                 encoding: "utf-8",
                 stdio: "pipe",
@@ -801,15 +899,23 @@ export class AutoVersionStep extends BaseStep {
             this.logger.debug(`AutoVersionStep: git log history walk failed (${String(error)}); no baseline derived.`);
             return null;
         }
-        for (const line of log.split("\n")) {
-            if (line.trim().length === 0) {
+        // `%x1e` (record separator) delimits commits; `%x00` separates the SHA from the message.
+        // A record separator is required because `%B` spans multiple lines.
+        for (const record of log.split("\x1e")) {
+            const trimmed = record.trim();
+            if (trimmed.length === 0) {
                 continue;
             }
-            const [sha, subject = ""] = line.split("\0");
-            if (sha == null || sha === currentGenerationSha) {
+            const separatorIndex = trimmed.indexOf("\0");
+            if (separatorIndex < 0) {
                 continue;
             }
-            if (subject.startsWith("[fern-generated]")) {
+            const sha = trimmed.slice(0, separatorIndex);
+            const message = trimmed.slice(separatorIndex + 1);
+            if (sha === currentGenerationSha) {
+                continue;
+            }
+            if (isGenerationCommitMessage(message)) {
                 return sha;
             }
         }

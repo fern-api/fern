@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Autoversioning no longer diffs against a stale generation baseline. `.fern/replay.lock`'s
+    `current_generation` is now checked for freshness as well as reachability: when history
+    contains a newer generation commit that descends from the recorded one, that commit becomes
+    the diff base. The history walk also recognises the `[fern-generated]` marker in
+    squash-merge commit bodies, not just in commit subjects.
+
+    Previously a squash-merged release left `current_generation` pointing at the commit before
+    the release. That commit stays on the default branch, so it passed the reachability probe
+    and every later regeneration re-reported changes the release had already shipped —
+    producing incorrect MAJOR bumps and duplicate changelog entries.
+  type: fix
