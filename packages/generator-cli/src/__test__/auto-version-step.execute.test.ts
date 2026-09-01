@@ -42,9 +42,10 @@ function gitExec(args: string[], cwd: string): string {
     return execFileSync("git", args, { cwd, encoding: "utf-8", stdio: "pipe" }).trim();
 }
 
-function makeLogger(): PipelineLogger & { warns: string[]; infos: string[] } {
+function makeLogger(): PipelineLogger & { warns: string[]; infos: string[]; errors: string[] } {
     const warns: string[] = [];
     const infos: string[] = [];
+    const errors: string[] = [];
     return {
         debug: () => undefined,
         info: (msg: string) => {
@@ -53,10 +54,18 @@ function makeLogger(): PipelineLogger & { warns: string[]; infos: string[] } {
         warn: (msg: string) => {
             warns.push(msg);
         },
-        error: () => undefined,
+        error: (msg: string) => {
+            errors.push(msg);
+        },
         warns,
-        infos
+        infos,
+        errors
     };
+}
+
+/** Keeps retry-exercising cases off the wall clock without changing the attempt count. */
+function fastRetryConfig(config: AutoVersionStepConfig): AutoVersionStepConfig {
+    return { ...config, aiRetry: { initialDelayMs: 1, maxDelayMs: 1 } };
 }
 
 /**
@@ -259,10 +268,11 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         expect(mockConsolidateChangelog).not.toHaveBeenCalled();
     });
 
-    it("falls back to PATCH with a neutral commit message when FAI throws", async () => {
+    it("falls back to MINOR with a human-review warning when the AI analysis keeps failing", async () => {
         mockAnalyzeSdkDiff.mockRejectedValue(new Error("FAI network timeout"));
 
-        const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
+        const logger = makeLogger();
+        const step = new AutoVersionStep(repo.repoPath, logger, fastRetryConfig(baseConfig));
         const prepared = fakePreparedReplay({
             outputDir: repo.repoPath,
             previousGenerationSha: repo.previousSha,
@@ -272,15 +282,47 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         const result = await step.execute(makeContext(prepared));
 
         expect(result.success).toBe(true);
-        expect(result.version).toBe("1.0.1");
-        expect(result.versionBump).toBe("PATCH");
-        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.commitMessage).toContain("needs human review");
         expect(result.commitMessage).toContain("🌿 Generated with Fern");
+        expect(result.changelogEntry).toBeUndefined();
+        expect(result.prDescription).toContain("human review required");
+        expect(result.prDescription).toContain("MINOR");
+        expect(result.versionBumpReason).toContain("MAJOR");
+        expect(logger.errors.some((msg) => msg.includes("FAILED after retries"))).toBe(true);
+
+        // 3 attempts total: the failure is only terminal once retries are exhausted.
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(3);
 
         const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
             version: string;
         };
-        expect(pkg.version).toBe("1.0.1");
+        expect(pkg.version).toBe("1.1.0");
+    });
+
+    it("retries a transient AI failure and uses the successful analysis", async () => {
+        mockAnalyzeSdkDiff.mockRejectedValueOnce(new Error("FAI network timeout")).mockResolvedValueOnce({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- `newFeature()` helper.",
+            version_bump_reason: "New public API surface added."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), fastRetryConfig(baseConfig));
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.version).toBe("1.1.0");
+        expect(result.changelogEntry).toContain("newFeature");
+        expect(result.prDescription).toBeUndefined();
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(2);
     });
 
     it("on NO_CHANGE, rewrites the placeholder to previousVersion and commits [fern-autoversion]", async () => {
@@ -1173,8 +1215,8 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         await repo.cleanup();
     });
 
-    function makeStepAndContext() {
-        const step = new AutoVersionStep(repo.repoPath, makeLogger(), faiConfig);
+    function makeStepAndContext(logger: PipelineLogger = makeLogger()) {
+        const step = new AutoVersionStep(repo.repoPath, logger, fastRetryConfig(faiConfig));
         const prepared = fakePreparedReplay({
             outputDir: repo.repoPath,
             previousGenerationSha: repo.previousSha,
@@ -1230,24 +1272,65 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.version).toBe("1.0.0");
     });
 
-    it("falls back to PATCH when the FAI service returns an error status", async () => {
+    it("retries a 5xx from the FAI service and applies the analysis from the successful attempt", async () => {
+        mockFetch
+            .mockResolvedValueOnce({
+                ok: false,
+                status: 503,
+                headers: new Headers(),
+                text: async () => "upstream unavailable"
+            })
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    message: "feat: add newFeature helper",
+                    version_bump: "MINOR",
+                    changelog_entry: "### Added\n- `newFeature()` helper."
+                })
+            });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.version).toBe("1.1.0");
+        expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it("retries network errors and falls back to MINOR with a human-review warning", async () => {
+        mockFetch.mockRejectedValue(new Error("ECONNRESET"));
+
+        const logger = makeLogger();
+        const { step, context } = makeStepAndContext(logger);
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.changelogEntry).toBeUndefined();
+        expect(result.prDescription).toContain("human review required");
+        expect(mockFetch).toHaveBeenCalledTimes(3);
+    });
+
+    it("does not retry a non-retryable status, and falls back to MINOR", async () => {
         mockFetch.mockResolvedValue({
             ok: false,
-            status: 500,
-            text: async () => "internal error"
+            status: 401,
+            headers: new Headers(),
+            text: async () => "unauthorized"
         });
 
         const { step, context } = makeStepAndContext();
         const result = await step.execute(context);
 
         expect(result.success).toBe(true);
-        expect(result.version).toBe("1.0.1");
-        expect(result.versionBump).toBe("PATCH");
-        expect(result.commitMessage).toContain("SDK regeneration");
-        expect(result.changelogEntry).toBeUndefined();
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.commitMessage).toContain("needs human review");
+        expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
-    it("falls back to PATCH when FAI returns malformed optional fields", async () => {
+    it("falls back to MINOR without retrying when FAI returns malformed optional fields", async () => {
         mockFetch.mockResolvedValue({
             ok: true,
             json: async () => ({
@@ -1261,9 +1344,10 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         const result = await step.execute(context);
 
         expect(result.success).toBe(true);
-        expect(result.version).toBe("1.0.1");
-        expect(result.versionBump).toBe("PATCH");
-        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.commitMessage).toContain("needs human review");
         expect(result.changelogEntry).toBeUndefined();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 });

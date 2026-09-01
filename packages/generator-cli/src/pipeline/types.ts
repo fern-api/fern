@@ -82,10 +82,18 @@ export interface AutoVersionStepConfig {
     fernToken?: string;
     /** Override for the FAI service base URL. Defaults to https://fai.buildwithfern.com. */
     faiBaseUrl?: string;
+    /** Retry/backoff tuning for the AI analysis calls. Defaults to 3 attempts starting at a 1s delay. */
+    aiRetry?: AutoVersionRetryConfig;
     /** Spec repository commit message included as additional AI context. */
     specCommitMessage?: string;
     /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
     isWhitelabel?: boolean;
+}
+
+export interface AutoVersionRetryConfig {
+    maxAttempts?: number;
+    initialDelayMs?: number;
+    maxDelayMs?: number;
 }
 
 /**

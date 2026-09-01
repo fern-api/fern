@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Autoversioning now retries the AI version/changelog analysis (3 attempts, exponential backoff with
+    ±20% jitter, honoring `Retry-After`) instead of giving up on the first transient error. When the
+    analysis still fails, the fallback is a MINOR bump — not a silent PATCH — logged at error level and
+    accompanied by a warning in the PR body that versioning and changelog creation failed and the
+    release needs human review.
+  type: fix

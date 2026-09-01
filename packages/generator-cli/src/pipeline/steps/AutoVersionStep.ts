@@ -21,11 +21,20 @@ import {
 } from "../../autoversion/index";
 import type { PreparedReplay } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
+import { parseRetryAfterMs, RetryableError, retryWithJitter } from "../retryWithJitter";
 import type { AutoVersionStepConfig, AutoVersionStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
 
 const COMMIT_MARKER = "[fern-autoversion]";
 const FERN_TRAILER = "\n\n🌿 Generated with Fern";
+
+/** HTTP statuses worth another attempt: request timeout, rate limit, and any server error. */
+const RETRYABLE_STATUSES = new Set([408, 429]);
+
+const AI_FAILURE_BUMP: VersionBumpLabel = "MINOR";
+const AI_FAILURE_MESSAGE = "SDK regeneration (AI versioning failed — needs human review)";
+const AI_FAILURE_REASON =
+    "AI versioning was unavailable, so the bump defaulted to MINOR. The real bump may be MAJOR — review the diff.";
 
 type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
 
@@ -49,9 +58,13 @@ type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
  *  - The prev-vs-current diff is empty (no generator output changed).
  *  - FAI returns NO_CHANGE.
  *
- * Falls back to a PATCH bump with a neutral commit message when:
- *  - The cleaned diff exceeds MAX_RAW_DIFF_BYTES.
- *  - The FAI call throws (network error, rate limit, malformed response, …).
+ * Falls back to a PATCH bump with a neutral commit message when the cleaned diff
+ * exceeds MAX_RAW_DIFF_BYTES (the analysis is deliberately skipped, not failed).
+ *
+ * When AI analysis itself fails after retries (network error, rate limit, malformed
+ * response, …) the fallback is a MINOR bump — a failed analysis cannot rule out new
+ * public API, and a too-small bump silently ships features as a patch — plus a
+ * warning in the PR body asking for human review of the version and changelog.
  */
 export class AutoVersionStep extends BaseStep {
     readonly name = "autoVersion";
@@ -244,8 +257,7 @@ export class AutoVersionStep extends BaseStep {
                         : await this.analyzeChunks(cappedChunks, language, previousVersion);
             }
         } catch (error) {
-            this.logger.warn(`AutoVersionStep: FAI analysis failed (${String(error)}); falling back to PATCH bump.`);
-            analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
+            analysis = this.aiFailureAnalysis(error, "AutoVersionStep");
         }
 
         if (analysis == null) {
@@ -355,10 +367,7 @@ export class AutoVersionStep extends BaseStep {
                         : await this.analyzeChunks(cappedChunks, language, previousVersion);
             }
         } catch (error) {
-            this.logger.warn(
-                `AutoVersionStep (non-replay): FAI analysis failed (${String(error)}); falling back to PATCH bump.`
-            );
-            analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
+            analysis = this.aiFailureAnalysis(error, "AutoVersionStep (non-replay)");
         }
 
         if (analysis == null) {
@@ -888,12 +897,16 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string
     ): Promise<FAIAnalysis | null> {
         const { client, VersionBump } = await this.loadBaml();
-        const result = await client.AnalyzeSdkDiff(
-            cleanedDiff,
-            language,
-            previousVersion,
-            this.config.priorChangelog ?? "",
-            this.config.specCommitMessage ?? ""
+        const result = await this.withRetries(
+            () =>
+                client.AnalyzeSdkDiff(
+                    cleanedDiff,
+                    language,
+                    previousVersion,
+                    this.config.priorChangelog ?? "",
+                    this.config.specCommitMessage ?? ""
+                ),
+            { label: "AnalyzeSdkDiff", isRetryable: () => true }
         );
         if (result.version_bump === VersionBump.NO_CHANGE) {
             return null;
@@ -923,12 +936,16 @@ export class AutoVersionStep extends BaseStep {
             if (!chunk) {
                 continue;
             }
-            const analysis = await client.AnalyzeSdkDiff(
-                chunk,
-                language,
-                previousVersion,
-                this.config.priorChangelog ?? "",
-                this.config.specCommitMessage ?? ""
+            const analysis = await this.withRetries(
+                () =>
+                    client.AnalyzeSdkDiff(
+                        chunk,
+                        language,
+                        previousVersion,
+                        this.config.priorChangelog ?? "",
+                        this.config.specCommitMessage ?? ""
+                    ),
+                { label: `AnalyzeSdkDiff (chunk ${i + 1}/${chunks.length})`, isRetryable: () => true }
             );
             if (analysis.version_bump === VersionBump.NO_CHANGE) {
                 continue;
@@ -988,8 +1005,10 @@ export class AutoVersionStep extends BaseStep {
     /**
      * Calls the hosted FAI service (`/sdks/analyze-commit-diff`) with the fern token.
      * Used when no BAML `ai` config is supplied (remote generation via fiddle). FAI
-     * handles chunking, parallelism, and retries server-side. Returns null on
-     * NO_CHANGE; throws on transport/HTTP errors so the caller's PATCH fallback applies.
+     * chunks and parallelizes internally but does not retry the model call, so
+     * transport errors, 408/429 and 5xx are retried here with backoff and jitter.
+     * Returns null on NO_CHANGE; throws once attempts are exhausted so the caller's
+     * MINOR fallback applies.
      */
     private async analyzeViaFaiService(
         cleanedDiff: string,
@@ -997,28 +1016,52 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string
     ): Promise<FAIAnalysis | null> {
         const baseUrl = this.config.faiBaseUrl ?? "https://fai.buildwithfern.com";
-        const response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${this.config.fernToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                diff: cleanedDiff,
-                language,
-                previous_version: previousVersion,
-                prior_changelog: this.config.priorChangelog ?? undefined,
-                spec_commit_message: this.config.specCommitMessage ?? undefined
-            })
+        const body = JSON.stringify({
+            diff: cleanedDiff,
+            language,
+            previous_version: previousVersion,
+            prior_changelog: this.config.priorChangelog ?? undefined,
+            spec_commit_message: this.config.specCommitMessage ?? undefined
         });
-        if (!response.ok) {
-            const body = await response.text().catch(() => "");
-            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
-        }
-        const parsed: unknown = await response.json();
-        if (!isFaiAnalyzeResponse(parsed)) {
-            throw new Error("FAI analyze-commit-diff returned an unexpected response shape");
-        }
+
+        const parsed = await this.withRetries(
+            async () => {
+                let response: Response;
+                try {
+                    response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${this.config.fernToken}`,
+                            "Content-Type": "application/json"
+                        },
+                        body
+                    });
+                } catch (error) {
+                    throw new RetryableError(`FAI analyze-commit-diff request failed: ${String(error)}`, {
+                        cause: error
+                    });
+                }
+
+                if (!response.ok) {
+                    const errorBody = await response.text().catch(() => "");
+                    const message = `FAI analyze-commit-diff failed with status ${response.status}: ${errorBody.slice(0, 500)}`;
+                    if (isRetryableStatus(response.status)) {
+                        throw new RetryableError(message, {
+                            retryAfterMs: parseRetryAfterMs(response.headers.get("retry-after"))
+                        });
+                    }
+                    throw new Error(message);
+                }
+
+                const payload: unknown = await response.json();
+                if (!isFaiAnalyzeResponse(payload)) {
+                    throw new Error("FAI analyze-commit-diff returned an unexpected response shape");
+                }
+                return payload;
+            },
+            { label: "FAI analyze-commit-diff" }
+        );
+
         if (parsed.version_bump === "NO_CHANGE") {
             return null;
         }
@@ -1028,6 +1071,44 @@ export class AutoVersionStep extends BaseStep {
             changelogEntry: nonEmpty(parsed.changelog_entry),
             prDescription: nonEmpty(parsed.pr_description),
             versionBumpReason: nonEmpty(parsed.version_bump_reason)
+        };
+    }
+
+    private async withRetries<T>(
+        operation: () => Promise<T>,
+        { label, isRetryable }: { label: string; isRetryable?: (error: unknown) => boolean }
+    ): Promise<T> {
+        return await retryWithJitter(operation, {
+            maxAttempts: this.config.aiRetry?.maxAttempts,
+            initialDelayMs: this.config.aiRetry?.initialDelayMs,
+            maxDelayMs: this.config.aiRetry?.maxDelayMs,
+            isRetryable,
+            onRetry: ({ attempt, maxAttempts, delayMs, error }) => {
+                this.logger.warn(
+                    `AutoVersionStep: ${label} attempt ${attempt}/${maxAttempts} failed (${String(error)}); ` +
+                        `retrying in ${delayMs}ms.`
+                );
+            }
+        });
+    }
+
+    /**
+     * Terminal fallback when AI analysis fails: MINOR rather than PATCH, since a
+     * failed analysis cannot rule out new public API, plus a PR-body warning so the
+     * degraded version and missing changelog land in front of a human instead of
+     * shipping as a routine patch release.
+     */
+    private aiFailureAnalysis(error: unknown, label: string): FAIAnalysis {
+        const detail = String(error);
+        this.logger.error(
+            `${label}: AI versioning and changelog generation FAILED after retries (${detail}). ` +
+                `Falling back to a ${AI_FAILURE_BUMP} bump with no changelog entry — this release needs human review.`
+        );
+        return {
+            versionBump: AI_FAILURE_BUMP,
+            message: this.brandMessage(AI_FAILURE_MESSAGE),
+            prDescription: aiFailurePrWarning(detail),
+            versionBumpReason: AI_FAILURE_REASON
         };
     }
 
@@ -1116,4 +1197,20 @@ function isStringOrAbsent(value: unknown): value is string | undefined {
 
 function nonEmpty(value: string | undefined): string | undefined {
     return value != null && value.trim().length > 0 ? value : undefined;
+}
+
+function isRetryableStatus(status: number): boolean {
+    return RETRYABLE_STATUSES.has(status) || status >= 500;
+}
+
+function aiFailurePrWarning(detail: string): string {
+    return [
+        "> [!WARNING]",
+        "> **AI versioning and changelog creation failed — human review required.**",
+        ">",
+        `> Fern could not analyze this diff (\`${detail.replace(/`/g, "'")}\`), so the version was bumped as a`,
+        `> **${AI_FAILURE_BUMP}** release by default and no changelog entry was generated.`,
+        ">",
+        "> Please review the diff and correct the version bump (it may be MAJOR) and the changelog before releasing."
+    ].join("\n");
 }
