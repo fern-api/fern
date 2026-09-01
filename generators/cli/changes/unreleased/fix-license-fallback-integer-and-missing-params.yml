@@ -1,0 +1,33 @@
+- summary: |
+    `config.packageIdentity.license: MIT` now emits a LICENSE. The generator
+    reads `GeneratorConfig.license`, which is fed by `publish-metadata.license`,
+    `metadata.license` or `github.license` — none of which is
+    `packageIdentity.license`. A project that set only the latter got "MIT" in
+    `Cargo.toml` and on the npm page while shipping no LICENSE text: a package
+    advertising a license it does not carry. Honored as a fallback only, so any
+    of the three standard keys still wins and existing output is unchanged.
+  type: fix
+
+- summary: |
+    An out-of-range integer supplied through `--params` is rejected instead of
+    silently mangled. Accepting a whole-valued float looked like it closed the
+    gap with the flag path past `u64::MAX`, but `serde_json` has already coerced
+    the literal to `f64` by then, so accepting meant re-serializing the double:
+    `--params '{"limit": 18446744073709551616}'` sent
+    `limit=1.8446744073709552e+19` and `1e3` sent `limit=1000.0`. The two paths
+    now deliberately differ beyond `u64::MAX` — the flag path carries the digits
+    verbatim, `--params` refuses a value it can no longer represent — which is
+    the safe direction, since the precision is gone before validation sees it.
+  type: fix
+
+- summary: |
+    Every missing required input is reported at once, in a stable order.
+    The check returned on the first miss while iterating a hash map, so an
+    operation missing four required inputs named one arbitrary parameter — and a
+    different one on each run. Fixing them meant re-running once per parameter,
+    in random order, with no indication of how many remained. A missing path
+    parameter also short-circuited the check and hid every missing body
+    parameter behind it. The list now follows the spec's own parameter order,
+    with anything absent from it appended alphabetically. A single missing input
+    keeps its original one-line wording.
+  type: fix

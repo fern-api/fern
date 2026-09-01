@@ -159,6 +159,55 @@ describe("runPipeline", () => {
         await expect(access(outputDir)).rejects.toThrow();
     });
 
+    it("emits a LICENSE from packageIdentity.license when no standard key is set", async () => {
+        // `GeneratorConfig.license` is fed by `publish-metadata.license`,
+        // `metadata.license` or `github.license` — none of which is
+        // `config.packageIdentity.license`. That key already renders in
+        // Cargo.toml and on the npm page, so a customer who set only it got a
+        // package advertising MIT while shipping no LICENSE text.
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Acme" } } }]);
+
+        const outcome = await runPipeline({
+            outputDir,
+            customConfig: {
+                binaryName: "acme",
+                packageIdentity: { license: "MIT", authors: ["Acme <dev@acme.example>"] }
+            },
+            ir: ir(),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir
+            // note: no `license` — the standard keys are unset, which is the case
+        });
+        expect(outcome).toEqual({ status: "generated", binaryName: "acme" });
+
+        const license = await readFile(path.join(outputDir, "LICENSE"), "utf-8");
+        expect(license).toContain("MIT License");
+        expect(license).toContain("Acme <dev@acme.example>");
+    });
+
+    it("lets a standard license key win over packageIdentity.license", async () => {
+        // The fallback must not override an explicitly configured license, or
+        // it would change output for everyone already using `github.license`.
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Acme" } } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme", packageIdentity: { license: "MIT", authors: ["A <a@b.c>"] } },
+            ir: ir(),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir,
+            // `custom` copies the mounted file; the template stages "Apache-2.0".
+            license: { type: "custom", filename: "LICENSE" }
+        });
+
+        // The mounted file survived — the MIT fallback did not fire.
+        expect(await readFile(path.join(outputDir, "LICENSE"), "utf-8")).toBe("Apache-2.0");
+    });
+
     it("runs copySdk → patchCargoToml → copySpecs in order; outputs are mutually consistent", async () => {
         await stageSdkTemplate();
         await stageSpecs([
