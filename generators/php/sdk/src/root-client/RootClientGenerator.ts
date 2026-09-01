@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
 import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
+import { getWithRawResponseMethod, RAW_CLIENT_FIELD_NAME } from "../raw-client/withRawResponse.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import {
@@ -296,6 +297,24 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     endpoint
                 });
                 class_.addMethods(methods);
+            }
+            if (service.endpoints.length > 0) {
+                const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+                class_.addField(
+                    php.field({
+                        name: `$${RAW_CLIENT_FIELD_NAME}`,
+                        access: "private",
+                        type: php.Type.optional(php.Type.reference(this.context.getRawRootClientClassReference())),
+                        initializer: php.codeblock("null")
+                    })
+                );
+                class_.addMethod(
+                    getWithRawResponseMethod({
+                        context: this.context,
+                        rawClassReference: this.context.getRawRootClientClassReference(),
+                        isMultiUrl
+                    })
+                );
             }
         }
 

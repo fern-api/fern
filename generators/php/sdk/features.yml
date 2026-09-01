@@ -42,6 +42,14 @@ features:
 
       Use the `maxRetries` request option to configure this behavior.
 
+  - id: ACCESS_RAW_RESPONSE_DATA
+    advanced: true
+    description: |
+      The SDK provides access to raw response data, including the status code and headers, through the `withRawResponse()` method.
+      The `withRawResponse()` method returns a raw client whose endpoints return the response metadata alongside
+      the deserialized body: `getStatusCode()`, `getHeaders()`, `getHeader()` and `getHeaderLine()` next to `getBody()`.
+      (A normal client's return value is identical to a raw client's `getBody()`.)
+
   - id: TIMEOUTS
     advanced: true
     description: |

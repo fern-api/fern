@@ -26,6 +26,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static ACCESS_RAW_RESPONSE_DATA_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
 
     private readonly context: SdkGeneratorContext;
     private readonly case: CaseConverter;
@@ -61,6 +62,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        snippets[ReadmeSnippetBuilder.ACCESS_RAW_RESPONSE_DATA_FEATURE_ID] = this.buildRawResponseSnippets();
         if (this.context.ir.environments != null) {
             snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         }
@@ -107,6 +109,21 @@ try {
     echo 'Response Body: ' . $e->getBody() . "\\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
+`)
+        );
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ACCESS_RAW_RESPONSE_DATA_FEATURE_ID
+        );
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(`
+$response = ${this.getRawMethodCall(rawResponseEndpoint)}(...);
+
+echo $response->getStatusCode() . "\\n";
+echo $response->getHeaderLine('X-Request-Id') . "\\n";
+$data = $response->getBody(); // the value the non-raw client returns
 `)
         );
     }
@@ -377,6 +394,13 @@ foreach ($items->getPages() as $page) {
         return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}->${this.context.getEndpointMethodName(
             endpoint.endpoint
         )}`;
+    }
+
+    /** The same call as `getMethodCall`, routed through the client's raw counterpart. */
+    private getRawMethodCall(endpoint: EndpointWithFilepath): string {
+        return `${this.context.getAccessFromRootClient(
+            endpoint.fernFilepath
+        )}->${this.context.getWithRawResponseMethodName()}()->${this.context.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
     private buildEnvironmentsSnippets(): string[] {

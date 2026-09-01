@@ -3,6 +3,7 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { getWithRawResponseSignature } from "../raw-client/withRawResponse.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -27,6 +28,14 @@ export class RootClientInterfaceGenerator extends FileGenerator<PhpFile, SdkCust
                     endpoint
                 });
                 interface_.addMethods(signatures);
+            }
+            if (service.endpoints.length > 0) {
+                interface_.addMethod(
+                    getWithRawResponseSignature({
+                        context: this.context,
+                        rawClassReference: this.context.getRawRootClientClassReference()
+                    })
+                );
             }
         }
 
