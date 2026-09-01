@@ -237,7 +237,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const envCheck = headerEnvVar != null ? " || process.env?.[ENV_HEADER_KEY] != null" : "";
+        const envCheck =
+            headerEnvVar != null ? ' || (typeof process !== "undefined" && process.env?.[ENV_HEADER_KEY] != null)' : "";
         return `return options?.${wrapperAccess}[PARAM_KEY] != null${envCheck};`;
     }
 
@@ -276,7 +277,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
         const envFallback =
             headerEnvVar != null
-                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
+                ? `\n            (${supplierGetCode}) ??\n            (typeof process !== "undefined" ? process.env?.[ENV_HEADER_KEY] : undefined)`
                 : supplierGetCode;
 
         const headerValueExpr = this.authScheme.prefix != null ? `\`\${HEADER_PREFIX}\${${headerVar}}\`` : headerVar;

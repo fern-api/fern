@@ -33,8 +33,10 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
     public static canCreate(options?: Partial<OAuthAuthProvider.ClientCredentials & BaseClientOptions>): boolean {
         return (
-            (options?.[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM] != null || process.env?.[ENV_CLIENT_ID] != null) &&
-            (options?.[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM] != null || process.env?.[ENV_CLIENT_SECRET] != null)
+            (options?.[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM] != null ||
+                (typeof process !== "undefined" && process.env?.[ENV_CLIENT_ID] != null)) &&
+            (options?.[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM] != null ||
+                (typeof process !== "undefined" && process.env?.[ENV_CLIENT_SECRET] != null))
         );
     }
 
@@ -47,7 +49,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientId = process.env?.[ENV_CLIENT_ID];
+        const envClientId = typeof process !== "undefined" ? process.env?.[ENV_CLIENT_ID] : undefined;
         if (envClientId != null) {
             return envClientId;
         }
@@ -65,7 +67,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientSecret = process.env?.[ENV_CLIENT_SECRET];
+        const envClientSecret = typeof process !== "undefined" ? process.env?.[ENV_CLIENT_SECRET] : undefined;
         if (envClientSecret != null) {
             return envClientSecret;
         }

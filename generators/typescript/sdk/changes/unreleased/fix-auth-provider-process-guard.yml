@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Guard environment variable reads in the generated auth providers with `typeof process !== "undefined"`.
+    Previously the generated header, bearer, basic and OAuth auth providers read `process.env?.[...]` directly,
+    which throws `ReferenceError: process is not defined` in runtimes without a Node `process` global
+    (browsers/Vite, Cloudflare Workers, Deno). Node behavior is unchanged.
+  type: fix

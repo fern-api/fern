@@ -913,3 +913,82 @@ describe("AuthProvidersGenerator optionalAuth", () => {
         expect(output).toContain("AUTH_CONFIG_ERROR_MESSAGE,");
     });
 });
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Env var reads must never touch a bare `process` global: optional chaining
+// (`process.env?.[KEY]`) still throws a ReferenceError when `process` itself is
+// undeclared, which is the case in browsers/Vite, Cloudflare Workers and Deno.
+// ──────────────────────────────────────────────────────────────────────────────
+describe("environment variable fallbacks guard against a missing process global", () => {
+    function render(
+        generator: {
+            writeToFile: (context: ReturnType<typeof createMockGeneratorContext>) => void;
+        },
+        fileName: string
+    ): string {
+        const project = new Project({ useInMemoryFileSystem: true });
+        const context = createMockGeneratorContext(project, fileName);
+        generator.writeToFile(context);
+        return context.sourceFile.getFullText();
+    }
+
+    function unguardedProcessLines(output: string): string[] {
+        return output
+            .split("\n")
+            .filter((line) => line.includes("process.env") && !line.includes('typeof process !== "undefined"'));
+    }
+
+    it("guards the bearer token env var", () => {
+        const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new BearerAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false
+            }),
+            "BearerAuthProvider.ts"
+        );
+        expect(output).toContain('typeof process !== "undefined"');
+        expect(unguardedProcessLines(output)).toEqual([]);
+    });
+
+    it("guards the header auth env var", () => {
+        const authScheme = createAuthScheme("header", createHeaderAuthScheme({ headerEnvVar: "PLANT_API_KEY" }));
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new HeaderAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false
+            }),
+            "HeaderAuthProvider.ts"
+        );
+        expect(output).toContain('typeof process !== "undefined"');
+        expect(unguardedProcessLines(output)).toEqual([]);
+    });
+
+    it("guards the basic auth username and password env vars", () => {
+        const authScheme = createAuthScheme(
+            "basic",
+            createBasicAuthScheme({ usernameEnvVar: "PLANT_USERNAME", passwordEnvVar: "PLANT_PASSWORD" })
+        );
+        const ir = createMinimalIR({ authSchemes: [authScheme] });
+        const output = render(
+            new BasicAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: true,
+                shouldUseWrapper: false
+            }),
+            "BasicAuthProvider.ts"
+        );
+        expect(output).toContain('typeof process !== "undefined"');
+        expect(unguardedProcessLines(output)).toEqual([]);
+    });
+});

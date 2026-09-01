@@ -265,8 +265,10 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameOmit = this.authScheme.usernameOmit === true;
         const passwordOmit = this.authScheme.passwordOmit === true;
 
-        const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
-        const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
+        const usernameEnvCheck =
+            usernameEnvVar != null ? ' || (typeof process !== "undefined" && process.env?.[ENV_USERNAME] != null)' : "";
+        const passwordEnvCheck =
+            passwordEnvVar != null ? ' || (typeof process !== "undefined" && process.env?.[ENV_PASSWORD] != null)' : "";
 
         // Per-field checks: omittable fields are always satisfied, required fields must be present
         const usernameCheck = usernameOmit
@@ -336,13 +338,13 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvFallback = usernameOmit
             ? '""'
             : usernameEnvVar != null
-              ? `\n            (${usernameSupplierGetCode}) ??\n            process.env?.[ENV_USERNAME]`
+              ? `\n            (${usernameSupplierGetCode}) ??\n            (typeof process !== "undefined" ? process.env?.[ENV_USERNAME] : undefined)`
               : usernameSupplierGetCode;
 
         const passwordEnvFallback = passwordOmit
             ? '""'
             : passwordEnvVar != null
-              ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
+              ? `\n            (${passwordSupplierGetCode}) ??\n            (typeof process !== "undefined" ? process.env?.[ENV_PASSWORD] : undefined)`
               : passwordSupplierGetCode;
 
         // Build per-field null checks based on individual omit flags.

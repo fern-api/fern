@@ -230,7 +230,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         const tokenEnvVar = this.authScheme.tokenEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const envCheck = tokenEnvVar != null ? " || process.env?.[ENV_TOKEN] != null" : "";
+        const envCheck =
+            tokenEnvVar != null ? ' || (typeof process !== "undefined" && process.env?.[ENV_TOKEN] != null)' : "";
         return `return options?.${wrapperAccess}[TOKEN_PARAM] != null${envCheck};`;
     }
 
@@ -269,7 +270,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
 
         const envFallback =
             tokenEnvVar != null
-                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_TOKEN]`
+                ? `\n            (${supplierGetCode}) ??\n            (typeof process !== "undefined" ? process.env?.[ENV_TOKEN] : undefined)`
                 : supplierGetCode;
 
         if (this.neverThrowErrors || this.optionalAuth) {

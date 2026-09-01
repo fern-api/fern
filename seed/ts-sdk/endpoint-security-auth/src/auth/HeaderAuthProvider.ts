@@ -16,7 +16,10 @@ export class HeaderAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
-        return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;
+        return (
+            options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null ||
+            (typeof process !== "undefined" && process.env?.[ENV_HEADER_KEY] != null)
+        );
     }
 
     public async getAuthRequest({
@@ -26,7 +29,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const headerValue =
             (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[PARAM_KEY], { endpointMetadata })) ??
-            process.env?.[ENV_HEADER_KEY];
+            (typeof process !== "undefined" ? process.env?.[ENV_HEADER_KEY] : undefined);
         if (headerValue == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,

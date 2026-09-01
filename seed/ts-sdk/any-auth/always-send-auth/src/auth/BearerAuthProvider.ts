@@ -15,7 +15,10 @@ export class BearerAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
-        return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
+        return (
+            options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null ||
+            (typeof process !== "undefined" && process.env?.[ENV_TOKEN] != null)
+        );
     }
 
     public async getAuthRequest({
@@ -24,7 +27,8 @@ export class BearerAuthProvider implements core.AuthProvider {
         endpointMetadata?: core.EndpointMetadata;
     } = {}): Promise<core.AuthRequest> {
         const token =
-            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ?? process.env?.[ENV_TOKEN];
+            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ??
+            (typeof process !== "undefined" ? process.env?.[ENV_TOKEN] : undefined);
         if (token == null) {
             throw new errors.SeedAnyAuthError({
                 message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,

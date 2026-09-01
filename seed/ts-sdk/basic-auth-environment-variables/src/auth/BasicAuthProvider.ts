@@ -17,8 +17,10 @@ export class BasicAuthProvider implements core.AuthProvider {
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
         return (
-            (options?.[USERNAME_PARAM] != null || process.env?.[ENV_USERNAME] != null) &&
-            (options?.[PASSWORD_PARAM] != null || process.env?.[ENV_PASSWORD] != null)
+            (options?.[USERNAME_PARAM] != null ||
+                (typeof process !== "undefined" && process.env?.[ENV_USERNAME] != null)) &&
+            (options?.[PASSWORD_PARAM] != null ||
+                (typeof process !== "undefined" && process.env?.[ENV_PASSWORD] != null))
         );
     }
 
@@ -27,13 +29,17 @@ export class BasicAuthProvider implements core.AuthProvider {
     }: {
         endpointMetadata?: core.EndpointMetadata;
     } = {}): Promise<core.AuthRequest> {
-        const username = (await core.Supplier.get(this.options[USERNAME_PARAM])) ?? process.env?.[ENV_USERNAME];
+        const username =
+            (await core.Supplier.get(this.options[USERNAME_PARAM])) ??
+            (typeof process !== "undefined" ? process.env?.[ENV_USERNAME] : undefined);
         if (username == null) {
             throw new errors.SeedBasicAuthEnvironmentVariablesError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
-        const accessToken = (await core.Supplier.get(this.options[PASSWORD_PARAM])) ?? process.env?.[ENV_PASSWORD];
+        const accessToken =
+            (await core.Supplier.get(this.options[PASSWORD_PARAM])) ??
+            (typeof process !== "undefined" ? process.env?.[ENV_PASSWORD] : undefined);
         if (accessToken == null) {
             throw new errors.SeedBasicAuthEnvironmentVariablesError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
