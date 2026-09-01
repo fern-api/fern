@@ -601,12 +601,20 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings,
         specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
+        // Before the `specsOverride` early return, not after: both generation
+        // paths pass `generatorInvocation.apiOverride?.specs` into this method
+        // (`runLocalGenerationForWorkspace.ts`, `runRemoteGenerationForAPIWorkspace.ts`),
+        // so warning after the return meant any generator declaring
+        // `apiOverride.specs` silently skipped it — the same class of
+        // unreachability this change set out to fix. Safe here: the override
+        // branch builds a temporary workspace and calls `getDefinition` on it,
+        // never `toFernWorkspace`, so this cannot double-warn through the copy.
+        this.warnOnOrphanedAuthSchemes(context);
+
         // If specs override is provided, create a temporary workspace with the override specs
         if (specsOverride != null) {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
-
-        this.warnOnOrphanedAuthSchemes(context);
 
         // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
         let effectiveSettings = settings;
