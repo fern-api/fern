@@ -234,17 +234,17 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${this.case.snakeSafe(scheme.token)}: "<token>"`);
+                    authParams.push(`${this.context.getBearerTokenParameterName(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${this.case.snakeSafe(scheme.name)}: "test-api-key"`);
+                    authParams.push(`${this.context.getCredentialParameterName(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
                     if (!scheme.usernameOmit) {
-                        authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
+                        authParams.push(`${this.context.getCredentialParameterName(scheme.username)}: "test-username"`);
                     }
                     if (!scheme.passwordOmit) {
-                        authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                        authParams.push(`${this.context.getCredentialParameterName(scheme.password)}: "test-password"`);
                     }
                     break;
                 case "oauth":
