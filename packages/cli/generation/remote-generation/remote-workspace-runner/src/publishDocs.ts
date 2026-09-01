@@ -479,16 +479,23 @@ export async function publishDocs({
 
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
 
+            const dynamicIRLanguages = dynamicIRsByLanguage != null ? Object.keys(dynamicIRsByLanguage) : undefined;
+            const registerApiDefinitionRequest = {
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(effectiveApiName),
+                definition: apiDefinition,
+                dynamicIRLanguages
+            };
+            context.logger.debug(
+                `registerApiDefinition request body for ${effectiveApiName}: ${Buffer.byteLength(
+                    JSON.stringify(registerApiDefinitionRequest)
+                )} bytes, ${dynamicIRLanguages?.length ?? 0} dynamic IR language(s) (IR bodies are uploaded separately)`
+            );
+
             let response;
             try {
                 response = await retryWithBackoff({
-                    fn: () =>
-                        fdr.api.register.registerApiDefinition({
-                            orgId: CjsFdrSdk.OrgId(organization),
-                            apiId: CjsFdrSdk.ApiId(effectiveApiName),
-                            definition: apiDefinition,
-                            dynamicIRs: dynamicIRsByLanguage
-                        }),
+                    fn: () => fdr.api.register.registerApiDefinition(registerApiDefinitionRequest),
                     maxRetries: REGISTER_MAX_RETRIES,
                     baseDelayMs: REGISTER_BASE_DELAY_MS,
                     jitterFactor: REGISTER_JITTER_FACTOR,
