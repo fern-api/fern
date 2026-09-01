@@ -15,7 +15,7 @@ class OutputDirectory(str, Enum):
 
 
 from .dependency_manager import DependencyManager
-from .file_header import get_file_header
+from .file_header import get_file_header, get_license_comment
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
@@ -273,13 +273,18 @@ class Project:
         """Add a file relative to the root output directory (for project-level files like .gitignore)."""
         file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
-        file.write_text(contents)
+        file.write_text(self._with_license_header(file, contents))
 
     def add_source_file(self, filepath: str, contents: str) -> None:
         """Add a file relative to the root output directory."""
         file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
-        file.write_text(contents)
+        file.write_text(self._with_license_header(file, contents))
+
+    def _with_license_header(self, file: Path, contents: str) -> str:
+        if self._license_header is None or file.suffix != ".py":
+            return contents
+        return get_license_comment(self._license_header) + contents.lstrip("\n")
 
     def finish(self) -> None:
         self._module_manager.write_modules(base_filepath=self._root_filepath, filepath=self._project_filepath)
@@ -361,7 +366,7 @@ class Project:
             next_part = package_path_parts[i] if i < len(package_path_parts) else None
 
             if next_part:
-                init_content = f'''{get_file_header(license_header=self._license_header)}from . import {next_part}
+                init_content = f'''{get_file_header(license_header=self._license_header, whitelabel=self._whitelabel)}from . import {next_part}
 
 __all__ = ["{next_part}"]
 '''

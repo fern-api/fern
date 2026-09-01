@@ -14,7 +14,12 @@ def get_file_header(*, license_header: Optional[str] = None, whitelabel: bool = 
     header = WHITELABEL_HEADER if whitelabel else FERN_HEADER
     if license_header is None:
         return f"{header}\n\n"
-    return f"{_as_comment(license_header)}\n\n{header}\n\n"
+    return f"{get_license_comment(license_header)}{header}\n\n"
+
+
+def get_license_comment(license_header: str) -> str:
+    """Build the standalone license comment block, for files without an auto-generated notice."""
+    return f"{_as_comment(license_header)}\n\n"
 
 
 def _as_comment(text: str) -> str:
