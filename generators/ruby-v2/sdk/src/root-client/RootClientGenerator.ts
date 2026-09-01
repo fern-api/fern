@@ -419,7 +419,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const bearerAuth = this.context.getBearerAuth();
         if (bearerAuth != null) {
-            const tokenName = this.context.getBearerTokenParameterName();
+            const tokenName = this.context.getBearerTokenParameterName(bearerAuth.token);
             keywordArguments.push(`${tokenName}: ${tokenName}`);
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
@@ -903,7 +903,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             switch (scheme.type) {
                 case "bearer": {
                     const param = ruby.parameters.keyword({
-                        name: this.context.getCredentialParameterName(scheme.token),
+                        name: this.context.getBearerTokenParameterName(scheme.token),
                         type: ruby.Type.string(),
                         initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
@@ -1101,7 +1101,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * header's name would collide with a credential keyword or a built-in client option.
      */
     private getGlobalHeaderOptionName(header: FernIr.HttpHeader): string {
-        return globalHeaderParameterName(this.case.snakeSafe(header.name), this.getCredentialParameterNames());
+        return globalHeaderParameterName(
+            this.case.snakeSafe(header.name),
+            this.getCredentialParameterNames(),
+            this.context.respectsAuthSchemeNames()
+        );
     }
 
     private getCredentialParameterNames(): Set<string> {
@@ -1262,7 +1266,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
                         value: ruby.TypeLiteral.interpolatedString(
-                            `Bearer #{${this.context.getCredentialParameterName(header.token)}}`
+                            `Bearer #{${this.context.getBearerTokenParameterName(header.token)}}`
                         )
                     });
                     break;
@@ -1411,11 +1415,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
-        const reservedNames = new Set([
-            ...RESERVED_OPTION_NAMES,
-            ...this.getCredentialParameterNames(),
-            ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
-        ]);
+        const reservedNames = this.context.respectsAuthSchemeNames()
+            ? new Set([
+                  ...RESERVED_OPTION_NAMES,
+                  ...this.getCredentialParameterNames(),
+                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
+              ])
+            : RESERVED_OPTION_NAMES;
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;

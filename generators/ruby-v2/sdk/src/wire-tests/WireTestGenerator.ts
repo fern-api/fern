@@ -234,7 +234,7 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${this.context.getCredentialParameterName(scheme.token)}: "<token>"`);
+                    authParams.push(`${this.context.getBearerTokenParameterName(scheme.token)}: "<token>"`);
                     break;
                 case "header":
                     authParams.push(`${this.context.getCredentialParameterName(scheme.name)}: "test-api-key"`);

@@ -10,7 +10,7 @@ import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
-import { credentialParameterName } from "./utils/credentialNames.js";
+import { bearerTokenParameterName, credentialParameterName } from "./utils/credentialNames.js";
 import { hasUrlEncodedRequestBody } from "./utils/requestBody.js";
 
 const ROOT_TYPES_FOLDER = "types";
@@ -479,21 +479,33 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     /**
-     * The keyword argument name the client exposes for a credential, following the name
-     * configured on the auth scheme. Suffixed with `_auth` when the configured name would
-     * shadow one of the client's built-in keywords, which Ruby rejects as a duplicate.
+     * Whether credential keywords follow the names configured on the auth schemes.
+     * Opt-in, since renaming a keyword breaks callers of an already published gem.
      */
-    public getCredentialParameterName(name: NameInput): string {
-        return credentialParameterName(this.caseConverter.snakeSafe(name));
+    public respectsAuthSchemeNames(): boolean {
+        return this.customConfig.respectAuthSchemeNames === true;
     }
 
     /**
-     * The keyword argument name the client exposes for the bearer token, following the
-     * name configured on the auth scheme (`token` when the API declares no bearer auth).
+     * The keyword argument name the client exposes for a credential. With
+     * `respectAuthSchemeNames` the configured name is suffixed with `_auth` when it would
+     * shadow one of the client's built-in keywords, which Ruby rejects as a duplicate.
      */
-    public getBearerTokenParameterName(): string {
-        const bearerAuth = this.getBearerAuth();
-        return bearerAuth != null ? this.getCredentialParameterName(bearerAuth.token) : "token";
+    public getCredentialParameterName(name: NameInput): string {
+        return credentialParameterName(this.caseConverter.snakeSafe(name), this.respectsAuthSchemeNames());
+    }
+
+    /**
+     * The keyword argument name the client exposes for a bearer token: the name configured
+     * on the auth scheme with `respectAuthSchemeNames`, and `token` otherwise.
+     * @param token The configured token name, defaulting to the API's bearer scheme.
+     */
+    public getBearerTokenParameterName(token?: NameInput): string {
+        const configuredName = token ?? this.getBearerAuth()?.token;
+        return bearerTokenParameterName(
+            configuredName != null ? this.caseConverter.snakeSafe(configuredName) : undefined,
+            this.respectsAuthSchemeNames()
+        );
     }
 
     public getBasicAuth(): FernIr.BasicAuthScheme | undefined {
