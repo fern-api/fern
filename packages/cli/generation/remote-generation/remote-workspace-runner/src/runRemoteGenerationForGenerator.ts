@@ -38,13 +38,11 @@ import {
     FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
-    preflightFernSdkGenApiBuild,
     runFernSdkGenApiBuild
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
-import { formatFernSdkConfigMappingError, prepareFernSdkConfigV1Payload } from "./prepareFernSdkConfigV1Payload.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
@@ -101,7 +99,7 @@ export async function runRemoteGenerationForGenerator({
     replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
-    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
+    /** Controls preview-only behavior such as skipping version checks. */
     isPreview?: boolean;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
     fiddlePreview?: boolean;
@@ -164,30 +162,28 @@ export async function runRemoteGenerationForGenerator({
             ? getPackageNameFromGeneratorConfig(generatorInvocation)
             : undefined);
 
-    /** Sugar to substitute templated env vars in a standard way */
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
-
-    const substituteEnvVars = <T>(stringOrObject: T) =>
-        replaceEnvVariables(
-            stringOrObject,
-            {
-                onError: (e) => {
-                    if (!isPreview && requireEnvVars) {
-                        interactiveTaskContext.failAndThrow(undefined, e, {
-                            code: CliError.Code.EnvironmentError
-                        });
-                    }
-                }
-            },
-            { substituteAsEmpty: isPreview }
-        );
-
-    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
+    const resolvedWhitelabel =
+        whitelabel == null
+            ? undefined
+            : replaceEnvVariables(
+                  whitelabel,
+                  {
+                      onError: (error) => {
+                          if (!isPreview && requireEnvVars) {
+                              interactiveTaskContext.failAndThrow(undefined, error, {
+                                  code: CliError.Code.EnvironmentError
+                              });
+                          }
+                      }
+                  },
+                  { substituteAsEmpty: isPreview }
+              );
 
     const dynamicGeneratorConfig = getDynamicGeneratorConfig({
         apiName: workspace.definition.rootApiFile.contents.name,
         organization,
-        generatorInvocation: generatorInvocationWithEnvVarSubstitutions
+        generatorInvocation
     });
 
     const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
@@ -260,9 +256,7 @@ export async function runRemoteGenerationForGenerator({
               specsTarGzBuffer: Buffer;
           }
         | undefined;
-    let sdkConfigV1Payload: ReturnType<typeof prepareFernSdkConfigV1Payload> | undefined;
-    let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
-    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocationWithEnvVarSubstitutions.name);
+    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
         if (replay?.enabled === true) {
             return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
@@ -277,7 +271,7 @@ export async function runRemoteGenerationForGenerator({
             );
         }
         const candidate = {
-            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            generatorInvocation,
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
             whitelabel
@@ -292,7 +286,7 @@ export async function runRemoteGenerationForGenerator({
                         ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
                         : specsTarGzBuffer == null
                           ? "the source archive is unavailable"
-                          : `generator language ${generatorInvocationWithEnvVarSubstitutions.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
+                          : `generator language ${generatorInvocation.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
             return interactiveTaskContext.failAndThrow(
                 `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
                 undefined,
@@ -303,45 +297,16 @@ export async function runRemoteGenerationForGenerator({
         }
         sdkGenApiCandidate = candidate;
         if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-            try {
-                sdkConfigV1Payload = prepareFernSdkConfigV1Payload({
-                    apiName: getOriginalName(ir.apiName),
-                    generatorInvocation: candidate.generatorInvocation,
-                    sdkVersion: candidate.sdkVersion,
-                    audiences,
-                    intermediateRepresentation: ir,
-                    route: sdkGenApiRoute
-                });
-            } catch (error) {
-                return interactiveTaskContext.failAndThrow(
-                    `Cannot prepare SDK Config v1 submission for ${candidate.generatorInvocation.name}: ${formatFernSdkConfigMappingError(error)}`,
-                    error,
-                    { code: CliError.Code.ConfigError }
-                );
-            }
-            sdkConfigBuildParameters = {
-                apiName: getOriginalName(ir.apiName),
-                organization,
-                cliVersion: workspace.cliVersion,
-                generatorInvocation: candidate.generatorInvocation,
-                sdkVersion: candidate.sdkVersion,
-                apiVersion: ir.specVersion,
-                token,
-                specsTarGzBuffer: candidate.specsTarGzBuffer,
-                payload: { payloadKind: sdkGenApiRoute.payloadKind, ...sdkConfigV1Payload },
-                absolutePathToPreview,
-                context: interactiveTaskContext,
-                targetIdSeed: sdkGenApiTargetIdSeed,
-                sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
-                audiences: audiences.type === "select" ? audiences.audiences : undefined,
-                skipFernignore
-            };
-            preflightFernSdkGenApiBuild(sdkConfigBuildParameters);
+            return interactiveTaskContext.failAndThrow(
+                `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} from legacy Fern configuration. Run \`fern sdk migrate --output <path>\` to create SDK Config v1 before using this generator version.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
         }
         if (sdkGenApiTargetIdSeed == null) {
             throw new Error("sdk-gen-api target is missing its preparation ID");
         }
-        await sdkGenApiPreparationBatch?.ready(sdkGenApiTargetIdSeed, sdkConfigBuildParameters);
+        await sdkGenApiPreparationBatch?.ready(sdkGenApiTargetIdSeed);
     }
 
     const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
@@ -477,7 +442,7 @@ export async function runRemoteGenerationForGenerator({
         ...ir,
         fdrApiDefinitionId,
         publishConfig: getPublishConfig({
-            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            generatorInvocation,
             version: resolvedVersion,
             userProvidedVersion: version,
             packageName,
@@ -492,55 +457,52 @@ export async function runRemoteGenerationForGenerator({
         if (sdkGenApiCandidate == null) {
             throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
-        const parameters =
-            sdkGenApiRoute.payloadKind === "sdk-config-v1"
-                ? sdkConfigBuildParameters
-                : {
-                      apiName: getOriginalName(ir.apiName),
-                      organization,
-                      cliVersion: workspace.cliVersion,
-                      generatorInvocation: sdkGenApiCandidate.generatorInvocation,
-                      sdkVersion: sdkGenApiCandidate.sdkVersion,
-                      apiVersion: ir.specVersion,
-                      token,
-                      specsTarGzBuffer: sdkGenApiCandidate.specsTarGzBuffer,
-                      payload: {
-                          payloadKind: sdkGenApiRoute.payloadKind,
-                          body: await prepareFernSdkGenApiRuntimeBundle({
-                              apiName: getOriginalName(ir.apiName),
-                              organization,
-                              generatorInvocation: sdkGenApiCandidate.generatorInvocation,
-                              sdkVersion: sdkGenApiCandidate.sdkVersion,
-                              intermediateRepresentation: enrichedIntermediateRepresentation,
-                              irVersionOverride,
-                              generateOauthClients,
-                              generatePaginatedClients,
-                              context: interactiveTaskContext
-                          })
-                      },
-                      absolutePathToPreview,
-                      context: interactiveTaskContext,
-                      targetIdSeed: sdkGenApiTargetIdSeed,
-                      sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
-                      audiences: audiences.type === "select" ? audiences.audiences : undefined,
-                      skipFernignore
-                  };
-        if (parameters == null) {
-            throw new Error("sdk-gen-api target passed preflight without build parameters");
+        if (sdkGenApiRoute.payloadKind !== "fern-runtime-bundle") {
+            throw new Error("Legacy Fern generation reached sdk-gen-api without a Fern runtime bundle route");
         }
+        const parameters: FernSdkGenApiBuildParameters = {
+            apiName: getOriginalName(ir.apiName),
+            organization,
+            cliVersion: workspace.cliVersion,
+            generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+            sdkVersion: sdkGenApiCandidate.sdkVersion,
+            apiVersion: ir.specVersion,
+            token,
+            specsTarGzBuffer: sdkGenApiCandidate.specsTarGzBuffer,
+            payload: {
+                payloadKind: sdkGenApiRoute.payloadKind,
+                body: await prepareFernSdkGenApiRuntimeBundle({
+                    apiName: getOriginalName(ir.apiName),
+                    organization,
+                    generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                    sdkVersion: sdkGenApiCandidate.sdkVersion,
+                    intermediateRepresentation: enrichedIntermediateRepresentation,
+                    irVersionOverride,
+                    generateOauthClients,
+                    generatePaginatedClients,
+                    context: interactiveTaskContext
+                })
+            },
+            absolutePathToPreview,
+            context: interactiveTaskContext,
+            targetIdSeed: sdkGenApiTargetIdSeed,
+            sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
+            audiences: audiences.type === "select" ? audiences.audiences : undefined,
+            skipFernignore
+        };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
     } else {
         const job = await createAndStartJob({
             projectConfig,
             workspace,
             organization,
-            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            generatorInvocation,
             context: interactiveTaskContext,
             version: resolvedVersion,
             intermediateRepresentation: enrichedIntermediateRepresentation,
             shouldLogS3Url,
             token,
-            whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
+            whitelabel: resolvedWhitelabel,
             replay,
             irVersionOverride,
             absolutePathToPreview,

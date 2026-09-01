@@ -1,7 +1,6 @@
 // cspell:ignore kotlin octocat unstub
 import { generatorsYml } from "@fern-api/configuration";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import axios from "axios";
 import FormData from "form-data";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -28,13 +27,13 @@ import {
     validateFernSdkGenApiSourceCompatibility
 } from "../fernSdkGenApiSourceArchive.js";
 import { getGithubPublishConfig } from "../getGeneratorConfig.js";
-import { prepareFernSdkConfigV1Payload } from "../prepareFernSdkConfigV1Payload.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "../prepareFernSdkGenApiRuntimeBundle.js";
 import {
     getFernSdkGenApiCandidateIndexes,
     preflightFernSdkGenApiSources,
     prepareFernSdkGenApiRoutes
 } from "../runRemoteGenerationForAPIWorkspace.js";
+import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -119,46 +118,17 @@ function sourceArchive(
     };
 }
 
-function sdkConfigIntermediateRepresentation(): never {
-    return {
-        specVersion: "2026-08-28",
-        environments: {
-            defaultEnvironment: "production",
-            environments: {
-                type: "singleBaseUrl",
-                environments: [
-                    {
-                        id: "production",
-                        name: "Production",
-                        url: "https://api.example.com",
-                        docs: "Production API"
-                    }
-                ]
-            }
-        },
-        auth: {
-            requirement: "ALL",
-            schemes: [
-                {
-                    type: "header",
-                    key: "apiKey",
-                    name: "X-API-Key",
-                    prefix: "Bearer",
-                    headerEnvVar: "ACME_API_KEY",
-                    docs: "API key"
-                }
-            ]
-        },
-        headers: [
-            {
-                name: "X-Client-Version",
-                clientDefault: { type: "string", string: "1" },
-                docs: "Client version",
-                env: undefined
-            }
-        ],
-        services: {}
-    } as never;
+function nativeSdkConfigRoute(generatorInvocation: generatorsYml.GeneratorInvocation): GenerationConfigRoute {
+    const language = getFernSdkGenApiLanguage(generatorInvocation.name);
+    if (language == null) {
+        throw new Error(`Unknown generator language for ${generatorInvocation.name}`);
+    }
+    return validateGeneratorConfigCompatibility({
+        generatorId: generatorInvocation.name,
+        language,
+        requestedVersion: generatorInvocation.version,
+        configKind: "sdk-config-v1"
+    });
 }
 
 function serializedRequestBytes(generatorInvocation: generatorsYml.GeneratorInvocation): number {
@@ -241,20 +211,74 @@ function createPreflightBatch({
 }
 
 describe("isEligibleForFernSdkGenApi", () => {
-    it("selects cutover-1, cutover, and cutover+1 routes before target work starts", () => {
+    it("routes cutover-1 and rejects legacy configuration at and after cutover", () => {
         const startTargetWork = vi.fn();
 
         expect(selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }))?.payloadKind).toBe("fern-runtime-bundle");
-        expect(selectFernSdkGenApiRoute(invocation({ version: "4.0.0" }))?.payloadKind).toBe("sdk-config-v1");
-        expect(selectFernSdkGenApiRoute(invocation({ version: "4.0.1" }))?.payloadKind).toBe("sdk-config-v1");
+        for (const version of ["4.0.0", "4.0.1"]) {
+            const [result] = prepareFernSdkGenApiRoutes({
+                generators: [invocation({ version })],
+                enabled: true,
+                requireEnvVars: true,
+                isPreview: false
+            });
+            expect(result?.error).toHaveProperty(
+                "message",
+                expect.stringContaining("fern sdk migrate --output <path>")
+            );
+        }
         expect(() => {
             selectFernSdkGenApiRoute(invocation({ version: "latest" }));
             startTargetWork();
-        }).toThrow("INVALID_GENERATOR_VERSION");
+        }).toThrow("exact semantic version");
         expect(startTargetWork).not.toHaveBeenCalled();
     });
 
-    it("resolves generator substitutions before exact-version route selection", () => {
+    it("rejects legacy configuration at cutover when sdk-gen-api routing is disabled", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toMatchObject({
+            code: "CONFIG_ERROR",
+            message: expect.stringContaining("fern sdk migrate --output <path>")
+        });
+    });
+
+    it("preserves non-exact legacy versions when sdk-gen-api routing is disabled", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "latest" })],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("unescapes literal environment placeholders only once", () => {
+        vi.stubEnv("FERN_LITERAL_TOKEN", "secret");
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    config: { literal: "\\$\\{FERN_LITERAL_TOKEN\\}" }
+                })
+            ],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.generatorInvocation.config).toMatchObject({ literal: "${FERN_LITERAL_TOKEN}" });
+    });
+
+    it("resolves generator substitutions before rejecting a legacy cutover target", () => {
         vi.stubEnv("FERN_TEST_GENERATOR_VERSION", "4.0.0");
 
         const [result] = prepareFernSdkGenApiRoutes({
@@ -264,12 +288,9 @@ describe("isEligibleForFernSdkGenApi", () => {
             isPreview: false
         });
 
-        expect(result?.error).toBeUndefined();
         expect(result?.generatorInvocation.version).toBe("4.0.0");
-        expect(result?.route).toMatchObject({
-            requestedVersion: "4.0.0",
-            payloadKind: "sdk-config-v1"
-        });
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate --output <path>"));
     });
 
     it("keeps pre-cutover GitHub delivery on Fiddle", () => {
@@ -333,18 +354,18 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeInstanceOf(Error);
-        expect(result?.error).toHaveProperty("message", expect.stringContaining("cannot fall back"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate --output <path>"));
     });
 
     it("settles route failures per target while retaining successful siblings", async () => {
         const results = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "4.0.0" }), invocation({ version: "not-semver" })],
+            generators: [invocation({ version: "3.999.999" }), invocation({ version: "not-semver" })],
             enabled: true,
             requireEnvVars: true,
             isPreview: false
         });
 
-        expect(results[0]?.route?.payloadKind).toBe("sdk-config-v1");
+        expect(results[0]?.route?.payloadKind).toBe("fern-runtime-bundle");
         expect(results[0]?.error).toBeUndefined();
         expect(results[1]?.route).toBeUndefined();
         expect(results[1]?.error).toBeInstanceOf(Error);
@@ -362,7 +383,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toEqual(new Set([0]));
     });
 
-    it("releases a prepared automation sibling after another target mapping fails", async () => {
+    it("releases a prepared automation sibling after another target preparation fails", async () => {
         const preparation = new FernSdkGenApiPreparationBatch(["0", "1"]);
         const validTarget = preparation.ready("0");
 
@@ -872,269 +893,9 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(gunzipSync(compressed).toString("utf8")).not.toContain("raw-publish-secret");
     });
 
-    it("maps a resolved cutover target to validated customer-facing SDK Config v1 JSON", () => {
-        const generatorInvocation = invocation({
-            version: "4.0.0",
-            config: {
-                packageJson: { name: "@acme/petstore-sdk" },
-                skipResponseValidation: true,
-                clientClassName: "PetstoreClient"
-            }
-        });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-
-        const prepared = prepareFernSdkConfigV1Payload({
-            apiName: "Petstore",
-            generatorInvocation,
-            sdkVersion: "1.2.3",
-            audiences: { type: "select", audiences: ["public"] },
-            intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-            route
-        });
-        const body = prepared.body;
-        const parsed = parseSdkConfigV1(JSON.parse(body.toString("utf8")));
-
-        expect(parsed).toMatchObject({
-            schemaVersion: "sdk-config/v1",
-            sdkName: "Petstore",
-            sdkVersion: "1.2.3",
-            apiVersion: "2026-08-28",
-            api: {
-                baseUrl: "https://api.example.com",
-                defaultEnvironment: "Production",
-                environments: [
-                    {
-                        name: "Production",
-                        urls: [{ name: "default", url: "https://api.example.com" }]
-                    }
-                ],
-                auth: {
-                    schemes: [
-                        {
-                            id: "apiKey",
-                            type: "api-key",
-                            location: "header",
-                            name: "X-API-Key",
-                            prefix: "Bearer",
-                            environmentVariable: "ACME_API_KEY"
-                        }
-                    ]
-                },
-                headers: [{ name: "X-Client-Version", value: "1" }],
-                audiences: ["public"]
-            },
-            client: { responseValidation: false },
-            output: { delivery: "zip" },
-            generation: {
-                naming: { clientName: "PetstoreClient" }
-            },
-            targets: [
-                {
-                    language: "typescript",
-                    generatorVersion: "4.0.0",
-                    sdkVersion: "1.2.3",
-                    package: { packageName: "@acme/petstore-sdk" },
-                    output: { delivery: "zip" }
-                }
-            ]
-        });
-        expect(parsed).not.toHaveProperty("source");
-        expect(parsed).not.toHaveProperty("target");
-        expect(parsed).not.toHaveProperty("compatibility");
-        expect(parsed).not.toHaveProperty("organization");
-        expect(parsed.output).not.toHaveProperty("credentialResolution");
-        expect(body.toString("utf8")).not.toContain("fern://");
-        expect(body.toString("utf8")).not.toContain("s3");
-        expect(body.subarray(0, 3)).not.toEqual(Buffer.from([0xef, 0xbb, 0xbf]));
-        expect(prepared.package).toEqual({ packageName: "@acme/petstore-sdk" });
-    });
-
-    it("uses one mapped package identity for request metadata and custom-config-only payload identity", () => {
-        const generatorInvocation = invocation({
-            version: "4.0.0",
-            config: { packageJson: { name: "@acme/custom-only-sdk" } }
-        });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-        const prepared = prepareFernSdkConfigV1Payload({
-            apiName: "Petstore",
-            generatorInvocation,
-            sdkVersion: "1.2.3",
-            audiences: { type: "all" },
-            intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-            route
-        });
-        const request = createFernSdkGenApiRequest({
-            apiName: "Petstore",
-            organization: "acme",
-            cliVersion: "0.0.0",
-            generatorInvocation,
-            sdkVersion: "1.2.3",
-            apiVersion: "2026-08-28",
-            specsTarGzBuffer: validSourceArchive,
-            payload: { payloadKind: "sdk-config-v1", ...prepared }
-        });
-        const sdkConfig = parseSdkConfigV1(JSON.parse(prepared.body.toString("utf8")));
-        const effectivePackage = { ...sdkConfig.package, ...sdkConfig.targets[0]?.package };
-
-        expect(prepared.package).toEqual({ packageName: "@acme/custom-only-sdk" });
-        expect(effectivePackage.packageName).toBe("@acme/custom-only-sdk");
-        expect(request.targets[0]?.package).toEqual(prepared.package);
-    });
-
-    it("keeps effective source indexes in request metadata instead of SDK Config v1", () => {
-        const generatorInvocation = invocation({ version: "4.0.0" });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-        const prepared = prepareFernSdkConfigV1Payload({
-            apiName: "Petstore",
-            generatorInvocation,
-            sdkVersion: "1.2.3",
-            audiences: { type: "all" },
-            intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-            route
-        });
-        const request = createFernSdkGenApiBatchRequest({
-            apiName: "Petstore",
-            organization: "acme",
-            cliVersion: "0.0.0",
-            specsTarGzBuffer: validSourceArchive,
-            targets: [
-                {
-                    generatorInvocation,
-                    sdkVersion: "1.2.3",
-                    payload: { payloadKind: "sdk-config-v1", ...prepared },
-                    targetIdSeed: "0",
-                    sourceSpecIndexes: [2, 0]
-                }
-            ]
-        });
-
-        expect(request.targets[0]?.payloadKind).toBe("sdk-config-v1");
-        expect(request.apiInputs).toEqual([{ id: "target-0", specIndexes: [2, 0] }]);
-        expect(request.targets[0]?.apiInputId).toBe("target-0");
-        expect(JSON.parse(prepared.body.toString("utf8"))).not.toHaveProperty("source");
-    });
-
-    it("fails only the target whose resolved Fern config cannot be mapped", () => {
-        const validInvocation = invocation({ version: "4.0.0" });
-        const invalidInvocation = invocation({
-            name: "fernapi/fern-mcp-server",
-            language: "mcp",
-            version: "0.1.0",
-            config: { toolsets: { default: { include: ["list-pets"] } } }
-        });
-        const validRoute = selectFernSdkGenApiRoute(validInvocation);
-        const invalidRoute = selectFernSdkGenApiRoute(invalidInvocation);
-        if (validRoute == null || invalidRoute == null) {
-            throw new Error("Expected known SDK generator routes");
-        }
-        expect(
-            prepareFernSdkConfigV1Payload({
-                apiName: "Petstore",
-                generatorInvocation: validInvocation,
-                sdkVersion: "1.2.3",
-                audiences: { type: "all" },
-                intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-                route: validRoute
-            })
-        ).toMatchObject({ body: expect.any(Buffer) });
-        expect(() =>
-            prepareFernSdkConfigV1Payload({
-                apiName: "Petstore",
-                generatorInvocation: invalidInvocation,
-                sdkVersion: "1.2.3",
-                audiences: { type: "all" },
-                intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-                route: invalidRoute
-            })
-        ).toThrow("MCP toolset name");
-    });
-
-    it("fails behavior-relevant custom config instead of submitting an omission diagnostic", () => {
-        const generatorInvocation = invocation({
-            version: "4.0.0",
-            config: { unrepresentedBehavior: true }
-        });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-
-        expect(() =>
-            prepareFernSdkConfigV1Payload({
-                apiName: "Petstore",
-                generatorInvocation,
-                sdkVersion: "1.2.3",
-                audiences: { type: "all" },
-                intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-                route
-            })
-        ).toThrow("FERN_CONFIG_FIELD_UNSUPPORTED");
-    });
-
-    it.each([
-        { disableExamples: true },
-        { idempotencyKeyGenerationConfig: { header: "Idempotency-Key" } },
-        { smartCasingDigitWordBoundary: true }
-    ])("fails behavior-relevant resolved field $field", (overrides) => {
-        const generatorInvocation = invocation({ version: "4.0.0", ...overrides });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-
-        expect(() =>
-            prepareFernSdkConfigV1Payload({
-                apiName: "Petstore",
-                generatorInvocation,
-                sdkVersion: "1.2.3",
-                audiences: { type: "all" },
-                intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-                route
-            })
-        ).toThrow("FERN_RESOLVED_FIELD_UNSUPPORTED");
-    });
-
-    it("allows an apiOverride diagnostic after the target-resolved Fern IR preserves its behavior", () => {
-        const generatorInvocation = invocation({
-            version: "4.0.0",
-            apiOverride: {
-                headers: { "X-Client-Version": { type: "literal", value: "1" } }
-            }
-        });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
-
-        const payload = prepareFernSdkConfigV1Payload({
-            apiName: "Petstore",
-            generatorInvocation,
-            sdkVersion: "1.2.3",
-            audiences: { type: "all" },
-            intermediateRepresentation: sdkConfigIntermediateRepresentation(),
-            route
-        });
-        const parsed = parseSdkConfigV1(JSON.parse(payload.body.toString("utf8")));
-
-        expect(parsed.api.headers).toEqual([expect.objectContaining({ name: "X-Client-Version", value: "1" })]);
-        expect(parsed).not.toHaveProperty("compatibility");
-    });
-
     it("rejects a source type that sdk-gen-api cannot represent downstream", () => {
         const generatorInvocation = invocation({ version: "4.0.0" });
-        const route = selectFernSdkGenApiRoute(generatorInvocation);
-        if (route == null) {
-            throw new Error("Expected a known SDK generator route");
-        }
+        const route = nativeSdkConfigRoute(generatorInvocation);
 
         expect(() =>
             validateFernSdkGenApiSourceCompatibility(
@@ -1156,8 +917,8 @@ describe("isEligibleForFernSdkGenApi", () => {
             }
         ]);
         const before = selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }));
-        const cutover = selectFernSdkGenApiRoute(invocation({ version: "4.0.0" }));
-        const after = selectFernSdkGenApiRoute(invocation({ version: "4.0.1" }));
+        const cutover = nativeSdkConfigRoute(invocation({ version: "4.0.0" }));
+        const after = nativeSdkConfigRoute(invocation({ version: "4.0.1" }));
         if (before == null || cutover == null || after == null) {
             throw new Error("Expected known SDK generator routes");
         }
@@ -1181,11 +942,8 @@ describe("isEligibleForFernSdkGenApi", () => {
             language: "python",
             version: "6.0.0"
         });
-        const validRoute = selectFernSdkGenApiRoute(validGenerator);
-        const invalidRoute = selectFernSdkGenApiRoute(invalidGenerator);
-        if (validRoute == null || invalidRoute == null) {
-            throw new Error("Expected known SDK generator routes");
-        }
+        const validRoute = nativeSdkConfigRoute(validGenerator);
+        const invalidRoute = nativeSdkConfigRoute(invalidGenerator);
         const validArchive = await sourceArchive();
         const invalidArchive = await sourceArchive([{ type: "protobuf", specPath: "/fern/specs/protobuf0" }]);
         const { sourceArchives, preflightErrors } = preflightFernSdkGenApiSources({

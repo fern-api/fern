@@ -18,7 +18,6 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
-    selectGeneratorConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 
@@ -149,7 +148,7 @@ export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLa
     return getGeneratorLanguage(generatorName);
 }
 
-/** Selects a known target's payload route without performing any remote work. */
+/** Validates a legacy Fern target and selects its compatible payload route without remote work. */
 export function selectFernSdkGenApiRoute(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): GenerationConfigRoute | undefined {
@@ -157,18 +156,12 @@ export function selectFernSdkGenApiRoute(
     if (language == null) {
         return undefined;
     }
-    try {
-        return selectGeneratorConfigRoute({
-            generatorId: generatorInvocation.name,
-            language: generatorInvocation.language ?? language,
-            requestedVersion: generatorInvocation.version
-        });
-    } catch (error) {
-        if (!(error instanceof GeneratorConfigCompatibilityError)) {
-            throw error;
-        }
-        throw new Error(formatGeneratorConfigCompatibilityError(error), { cause: error });
-    }
+    return validateGeneratorConfigCompatibility({
+        generatorId: generatorInvocation.name,
+        language: generatorInvocation.language ?? language,
+        requestedVersion: generatorInvocation.version,
+        configKind: "legacy-fern"
+    });
 }
 
 interface FernSdkGenApiOutputMapping {
@@ -914,7 +907,11 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
         `retryable=${error.retryable}`,
         `recommendedAction=${error.recommendedAction}`
     ].join("; ");
-    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].`;
+    const migrationHint =
+        error.recommendedAction === "USE_SDK_CONFIG_V1"
+            ? " Run `fern sdk migrate --output <path>` to migrate this SDK configuration before using this generator version."
+            : "";
+    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
 }
 
 function compareFernSdkGenApiParticipants(

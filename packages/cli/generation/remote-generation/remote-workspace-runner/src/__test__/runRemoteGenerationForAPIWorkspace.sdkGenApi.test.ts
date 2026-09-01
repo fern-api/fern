@@ -32,7 +32,7 @@ function invocation(
 }
 
 async function runMixedFailure(
-    failure: "mapping" | "route" | "archive" | "post-barrier",
+    failure: "route" | "archive" | "post-barrier",
     { automation = true, remoteMutation = vi.fn() }: { automation?: boolean; remoteMutation?: () => void } = {}
 ): Promise<{
     typescript: generatorsYml.GeneratorInvocation;
@@ -41,15 +41,12 @@ async function runMixedFailure(
     recordFailure: ReturnType<typeof vi.fn>;
     failWithoutThrowing: ReturnType<typeof vi.fn>;
 }> {
-    const typescript = invocation("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
-    const python = invocation("fernapi/fern-python-sdk", "python", failure === "route" ? "not-semver" : "6.0.0");
+    const typescript = invocation("fernapi/fern-typescript-sdk", "typescript", "3.999.999");
+    const python = invocation("fernapi/fern-python-sdk", "python", failure === "route" ? "not-semver" : "5.999.999");
     const recordSuccess = vi.fn();
     const recordFailure = vi.fn();
     const failWithoutThrowing = vi.fn();
     runGenerator.mockImplementation(async (parameters) => {
-        if (failure === "mapping" && parameters.generatorInvocation.name === python.name) {
-            throw new Error("FERN_CONFIG_FIELD_UNSUPPORTED at config.customBehavior");
-        }
         await parameters.sdkGenApiPreparationBatch.ready(parameters.sdkGenApiTargetIdSeed);
         if (failure === "post-barrier" && parameters.generatorInvocation.name === python.name) {
             throw new Error("post-barrier target failure");
@@ -140,13 +137,12 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
     });
 
     it.each([
-        "mapping",
         "route",
         "archive"
     ] as const)("records a target %s failure without canceling its valid automation sibling", async (failure) => {
         const result = await runMixedFailure(failure);
 
-        expect(runGenerator).toHaveBeenCalledTimes(failure === "mapping" ? 2 : 1);
+        expect(runGenerator).toHaveBeenCalledTimes(1);
         expect(result.recordSuccess).toHaveBeenCalledTimes(1);
         expect(result.recordSuccess).toHaveBeenCalledWith(
             expect.objectContaining({ generatorName: result.typescript.name })
@@ -158,13 +154,45 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(result.failWithoutThrowing).toHaveBeenCalledTimes(1);
     });
 
-    it("performs zero remote mutations when SDK Config mapping fails before the group barrier", async () => {
-        const registerApiDefinition = vi.fn();
+    it("fails a legacy cutover target before source preparation or target work", async () => {
+        const getSpecsTarGzBuffer = vi.fn();
+        const runInteractiveTask = vi.fn();
 
         await expect(
-            runMixedFailure("mapping", { automation: false, remoteMutation: registerApiDefinition })
-        ).rejects.toThrow("FERN_CONFIG_FIELD_UNSUPPORTED");
-        expect(registerApiDefinition).not.toHaveBeenCalled();
+            runRemoteGenerationForAPIWorkspace({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: {
+                    workspaceName: "petstore",
+                    generatorsConfiguration: undefined
+                } as never,
+                context: { logger: { warn: vi.fn() }, runInteractiveTask } as never,
+                generatorGroup: {
+                    groupName: "sdk",
+                    generators: [
+                        invocation("fernapi/fern-typescript-sdk", "typescript", "4.0.0"),
+                        invocation("fernapi/fern-python-sdk", "python", "5.999.999")
+                    ],
+                    audiences: { type: "all" }
+                } as never,
+                version: "1.2.3",
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                absolutePathToPreview: undefined,
+                mode: undefined,
+                fernignorePath: undefined,
+                skipFernignore: true,
+                dynamicIrOnly: false,
+                validateWorkspace: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                getSpecsTarGzBuffer
+            })
+        ).rejects.toThrow("fern sdk migrate --output <path>");
+        expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
+        expect(runInteractiveTask).not.toHaveBeenCalled();
     });
 
     it("removes a post-barrier automation failure without cancelling valid undispatched siblings", async () => {

@@ -5,7 +5,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { CliError, resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -18,6 +18,7 @@ import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import {
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
+    formatGeneratorConfigCompatibilityError,
     isFernSdkGenApiEnabled,
     selectFernSdkGenApiRoute,
     validateFernSdkGenApiTargetCount
@@ -30,7 +31,7 @@ import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
-import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
+import { type GenerationConfigRoute, GeneratorConfigCompatibilityError } from "./sdk-gen-client/index.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -179,24 +180,30 @@ export async function runRemoteGenerationForAPIWorkspace({
     });
     const sdkGenApiRoutes = routePreparation.map((result) => result.route);
     const resolvedGenerators = routePreparation.map((result) => result.generatorInvocation);
+    const routeErrors = routePreparation.map((result) => result.error);
+    if (automation == null) {
+        throwFirstPreflightError(routeErrors, generatorGroup.generators);
+    }
     const sourceRequests = resolvedGenerators.flatMap((generatorInvocation, generatorIndex) =>
         routePreparation[generatorIndex]?.error == null
             ? [{ generatorIndex, generatorInvocation, sdkGenApiRoute: sdkGenApiRoutes[generatorIndex] }]
             : []
     );
     let sourceResolution: FernSourceArchiveResolution = { sourceArchives: new Map(), errors: new Map() };
-    try {
-        sourceResolution = (await getSpecsTarGzBuffer?.(sourceRequests)) ?? sourceResolution;
-    } catch (error) {
-        sourceResolution = {
-            sourceArchives: new Map(),
-            errors: new Map(sourceRequests.map((request) => [request.generatorIndex, error]))
-        };
+    if (sourceRequests.length > 0) {
+        try {
+            sourceResolution = (await getSpecsTarGzBuffer?.(sourceRequests)) ?? sourceResolution;
+        } catch (error) {
+            sourceResolution = {
+                sourceArchives: new Map(),
+                errors: new Map(sourceRequests.map((request) => [request.generatorIndex, error]))
+            };
+        }
     }
     const sourcePreflight = preflightFernSdkGenApiSources({
         generators: resolvedGenerators,
         routes: sdkGenApiRoutes,
-        routeErrors: routePreparation.map((result) => result.error),
+        routeErrors,
         sourceResolution
     });
     const sourceArchives = sourcePreflight.sourceArchives;
@@ -204,15 +211,7 @@ export async function runRemoteGenerationForAPIWorkspace({
         (result, index) => result.error ?? sourcePreflight.preflightErrors[index]
     );
     if (automation == null) {
-        const failedIndex = preflightErrors.findIndex((error) => error != null);
-        if (failedIndex >= 0) {
-            const generator = generatorGroup.generators[failedIndex];
-            const error = preflightErrors[failedIndex];
-            throw new Error(
-                `Cannot prepare sdk-gen-api target ${generator?.name ?? failedIndex.toString()}: ${extractErrorMessage(error)}`,
-                { cause: error }
-            );
-        }
+        throwFirstPreflightError(preflightErrors, generatorGroup.generators);
     }
     const sdkGenApiCandidateIndexes = getFernSdkGenApiCandidateIndexes(sdkGenApiRoutes, preflightErrors);
     validateFernSdkGenApiTargetCount(sdkGenApiCandidateIndexes.size);
@@ -311,11 +310,9 @@ export function prepareFernSdkGenApiRoutes({
     error: unknown;
 }> {
     return generators.map((generatorInvocation) => {
-        if (!enabled) {
-            return { generatorInvocation, route: undefined, error: undefined };
-        }
+        let resolved = generatorInvocation;
         try {
-            const resolved = replaceEnvVariables(
+            resolved = replaceEnvVariables(
                 generatorInvocation,
                 {
                     onError: (error) => {
@@ -327,6 +324,9 @@ export function prepareFernSdkGenApiRoutes({
                 { substituteAsEmpty: isPreview }
             );
             const route = selectFernSdkGenApiRoute(resolved);
+            if (!enabled) {
+                return { generatorInvocation: resolved, route: undefined, error: undefined };
+            }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
                 verify,
@@ -347,7 +347,21 @@ export function prepareFernSdkGenApiRoutes({
                 error: undefined
             };
         } catch (error) {
-            return { generatorInvocation, route: undefined, error };
+            if (
+                !enabled &&
+                error instanceof GeneratorConfigCompatibilityError &&
+                error.code === "INVALID_GENERATOR_VERSION"
+            ) {
+                return { generatorInvocation: resolved, route: undefined, error: undefined };
+            }
+            const routeError =
+                error instanceof GeneratorConfigCompatibilityError
+                    ? new CliError({
+                          message: formatGeneratorConfigCompatibilityError(error),
+                          code: CliError.Code.ConfigError
+                      })
+                    : error;
+            return { generatorInvocation: resolved, route: undefined, error: routeError };
         }
     });
 }
@@ -728,6 +742,21 @@ async function generateOne({
             code: resolveErrorCode(error)
         });
     }
+}
+
+function throwFirstPreflightError(errors: unknown[], generators: generatorsYml.GeneratorInvocation[]): void {
+    const failedIndex = errors.findIndex((error) => error != null);
+    if (failedIndex < 0) {
+        return;
+    }
+    const error = errors[failedIndex];
+    if (error instanceof CliError) {
+        throw error;
+    }
+    throw new Error(
+        `Cannot prepare sdk-gen-api target ${generators[failedIndex]?.name ?? failedIndex.toString()}: ${extractErrorMessage(error)}`,
+        { cause: error }
+    );
 }
 
 interface GenerationAnnotationContext {
