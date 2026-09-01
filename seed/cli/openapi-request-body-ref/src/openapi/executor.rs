@@ -647,44 +647,82 @@ fn parse_and_validate_inputs(
     let global_param_targets: std::collections::HashSet<&str> =
         extra_global_params.iter().map(|gp| gp.target.as_str()).collect();
 
-    for param_name in &method.parameter_order {
-        if let Some(param_def) = method.parameters.get(param_name) {
-            if param_def.required
-                && param_def.location.as_deref() == Some("path")
-                && !params.contains_key(param_name)
-                && !global_param_targets.contains(param_name.as_str())
-            {
-                let hint = missing_param_hint(param_def, param_name);
-                return Err(CliError::Validation(format!(
-                    "Required path parameter '{param_name}' is missing. {hint}"
-                )));
-            }
+    // Every missing required parameter, not just the first one found.
+    //
+    // This used to `return` on the first miss while iterating
+    // `method.parameters` — a `HashMap` — so an operation missing four
+    // required inputs named one arbitrary parameter, and a *different* one on
+    // each run: measured 4-way splits across repeated identical invocations.
+    // The user then had to fix and re-run once per parameter, in random order,
+    // with no way to know how many were left. A missing path parameter also
+    // short-circuited the second loop entirely, hiding every missing body
+    // parameter behind it.
+    //
+    // Ordered by `parameter_order` (the spec's own order) with anything absent
+    // from it appended alphabetically, so the list is stable run to run.
+    let mut ordered_names: Vec<&String> = method.parameter_order.iter().collect();
+    let mut unordered: Vec<&String> = method
+        .parameters
+        .keys()
+        .filter(|name| !method.parameter_order.contains(*name))
+        .collect();
+    unordered.sort();
+    ordered_names.extend(unordered);
+
+    let mut missing: Vec<String> = Vec::new();
+    for param_name in ordered_names {
+        let Some(param_def) = method.parameters.get(param_name) else {
+            continue;
+        };
+        if !param_def.required
+            || params.contains_key(param_name)
+            || global_param_targets.contains(param_name.as_str())
+        {
+            continue;
         }
+        let is_body = param_def.location.as_deref() == Some("body");
+        // When --json is provided, body-located required params are satisfied
+        // by the JSON payload — skip their individual-flag validation.
+        if is_body && body_json.is_some() {
+            continue;
+        }
+        // When the user supplied an ancestor object-shorthand flag
+        // (e.g. `--name '{...}'`) the required-ness of nested leaves
+        // (`name.first`) is satisfied inside the JSON payload, not via
+        // a per-leaf flag — skip them here.
+        if is_body
+            && param_name.contains('.')
+            && ancestor_object_shorthand_supplied(param_name, &params, &method.parameters)
+        {
+            continue;
+        }
+        let hint = missing_param_hint(param_def, param_name);
+        let kind = if param_def.location.as_deref() == Some("path") {
+            "path parameter"
+        } else {
+            "parameter"
+        };
+        missing.push(format!("Required {kind} '{param_name}' is missing. {hint}"));
     }
 
-    for (param_name, param_def) in &method.parameters {
-        if param_def.required
-            && !params.contains_key(param_name)
-            && !global_param_targets.contains(param_name.as_str())
-        {
-            // When --json is provided, body-located required params are satisfied
-            // by the JSON payload — skip their individual-flag validation.
-            if param_def.location.as_deref() == Some("body") && body_json.is_some() {
-                continue;
-            }
-            // When the user supplied an ancestor object-shorthand flag
-            // (e.g. `--name '{...}'`) the required-ness of nested leaves
-            // (`name.first`) is satisfied inside the JSON payload, not via
-            // a per-leaf flag — skip them here.
-            if param_def.location.as_deref() == Some("body")
-                && param_name.contains('.')
-                && ancestor_object_shorthand_supplied(param_name, &params, &method.parameters)
-            {
-                continue;
-            }
-            let hint = missing_param_hint(param_def, param_name);
+    // One missing input keeps the original single-line wording; several are
+    // listed so the user can fix them in one pass.
+    match missing.len() {
+        0 => {}
+        1 => {
+            return Err(CliError::Validation(
+                missing.into_iter().next().unwrap_or_default(),
+            ));
+        }
+        _ => {
+            let listed = missing
+                .iter()
+                .map(|line| format!("  - {line}"))
+                .collect::<Vec<_>>()
+                .join("\n");
             return Err(CliError::Validation(format!(
-                "Required parameter '{param_name}' is missing. {hint}"
+                "{} required inputs are missing:\n{listed}",
+                missing.len()
             )));
         }
     }
@@ -4266,15 +4304,21 @@ fn check_param_value_type(
         // separate concern (`minimum`/`maximum`); this only asserts "is an
         // integer", and the spec need not declare a `maximum`.
         "integer" => match value {
-            // `is_i64() || is_u64()` alone left the same asymmetry one boundary
-            // further out: serde widens an integer literal beyond `u64::MAX` to
-            // `f64`, so `--params '{"limit": 18446744073709551616}'` was
-            // rejected while the identical value via the flag was accepted.
-            // A whole-valued float is an integer for this purpose; range is
-            // `minimum`/`maximum` business, checked separately.
-            Value::Number(n) => {
-                n.is_i64() || n.is_u64() || n.as_f64().is_some_and(|f| f.fract() == 0.0)
-            }
+            // Only an exactly-representable integer. Accepting a whole-valued
+            // `f64` here looked like it closed the flag-vs-`--params`
+            // asymmetry past `u64::MAX`, but serde has already lost the
+            // literal by then: accepting meant re-serializing the coerced
+            // double, so `--params '{"limit": 18446744073709551616}'` sent
+            // `limit=1.8446744073709552e+19` and `1e3` sent `limit=1000.0`.
+            // Turning a rejection into a silently different number on the wire
+            // is strictly worse than the asymmetry it was meant to fix.
+            //
+            // So the two paths deliberately disagree beyond `u64::MAX`: the
+            // flag path carries the digits verbatim and is sent as written,
+            // while `--params` rejects rather than mangle. That asymmetry is in
+            // the safe direction and is the honest one — the precision is gone
+            // before this function ever sees the value.
+            Value::Number(n) => n.is_i64() || n.is_u64(),
             Value::String(raw) => is_integer_literal(raw),
             _ => false,
         },
@@ -6727,6 +6771,75 @@ mod tests {
     }
 
     #[test]
+    fn test_all_missing_required_params_reported_in_a_stable_order() {
+        // The old loop iterated `method.parameters` (a HashMap) and returned on
+        // the first miss, so an operation missing four inputs named one
+        // arbitrary parameter — a different one per run. Measured 4-way splits
+        // across identical invocations. A missing path parameter also masked
+        // every missing body parameter behind it.
+        let required = |location: &str| MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some(location.to_string()),
+            required: true,
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/pods/{pod_id}/lists".to_string(),
+            // Deliberately not alphabetical, to prove the spec's order is used.
+            parameter_order: vec![
+                "pod_id".to_string(),
+                "url".to_string(),
+                "event_types".to_string(),
+            ],
+            parameters: HashMap::from([
+                ("pod_id".to_string(), required("path")),
+                ("url".to_string(), required("body")),
+                ("event_types".to_string(), required("body")),
+            ]),
+            ..Default::default()
+        };
+        let doc = RestDescription::default();
+
+        let message = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
+            .expect_err("all three are missing")
+            .to_string();
+
+        // Every missing input is named, not just one.
+        assert!(message.contains("3 required inputs are missing"), "got: {message}");
+        for name in ["pod_id", "url", "event_types"] {
+            assert!(message.contains(name), "{name} must be listed; got: {message}");
+        }
+        // The path parameter no longer hides the body ones, and is still
+        // identified as a path parameter.
+        assert!(message.contains("path parameter 'pod_id'"), "got: {message}");
+
+        // Stable across runs, and in `parameter_order`, not hash order.
+        for _ in 0..20 {
+            let again = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
+                .expect_err("still missing")
+                .to_string();
+            assert_eq!(again, message, "the message must not vary between runs");
+        }
+        let pod = message.find("pod_id").unwrap_or_default();
+        let url = message.find("'url'").unwrap_or_default();
+        let events = message.find("event_types").unwrap_or_default();
+        assert!(pod < url && url < events, "must follow parameter_order; got: {message}");
+
+        // A single missing input keeps the original one-line wording.
+        let one = RestMethod {
+            parameter_order: vec!["url".to_string()],
+            parameters: HashMap::from([("url".to_string(), required("body"))]),
+            ..RestMethod::default()
+        };
+        let single = parse_and_validate_inputs(&doc, &one, None, None, false, None, &[], &[])
+            .expect_err("one missing")
+            .to_string();
+        assert!(single.starts_with("Required parameter 'url' is missing."), "got: {single}");
+        assert!(!single.contains("required inputs are missing"), "got: {single}");
+    }
+
+    #[test]
     fn test_required_param_missing_uses_flag_name_override() {
         // When a parameter has `flag_name_override` set (e.g. synthetic
         // idempotency-key flags inject the wire name verbatim), the error
@@ -7446,19 +7559,28 @@ mod tests {
     }
 
     #[test]
-    fn test_whole_valued_json_number_counts_as_an_integer() {
-        // Recorded rather than incidental: the `Value::Number` arm accepts a
-        // whole-valued float so the flag and `--params` paths agree past
-        // `u64::MAX`, where serde widens the literal. `1.0` therefore passes
-        // and `1.5` does not.
+    fn test_json_float_is_not_an_integer_even_when_whole_valued() {
+        // `1.0` was briefly accepted so the `--params` path could take a
+        // literal past `u64::MAX` that serde had widened to `f64`. That also
+        // accepted `1e3` and re-serialized it as `limit=1000.0`, putting a
+        // value on the wire that is not what the user wrote. A float is not an
+        // integer, whatever its fractional part.
         let param = MethodParameter {
             param_type: Some("integer".to_string()),
             location: Some("query".to_string()),
             ..Default::default()
         };
-        validate_non_body_param_type("limit", &json!(1.0), Some(&param))
-            .expect("a whole-valued number is an integer here");
-        assert!(validate_non_body_param_type("limit", &json!(1.5), Some(&param)).is_err());
+        for bad in [json!(1.0), json!(1.5), json!(-2.25), json!(1e3), json!("1.5")] {
+            assert!(
+                validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
+                "{bad} is not an integer",
+            );
+        }
+        // Integers, of course, still pass.
+        for good in [json!(1), json!(-3), json!(0)] {
+            validate_non_body_param_type("limit", &good, Some(&param))
+                .unwrap_or_else(|e| panic!("{good} should be accepted: {e}"));
+        }
     }
 
     #[test]
@@ -7479,48 +7601,53 @@ mod tests {
     }
 
     #[test]
-    fn test_integer_param_agrees_across_the_flag_and_params_paths() {
-        // `n.is_u64()` accepted values above `i64::MAX` while
-        // `raw.parse::<i64>()` rejected them, so the same number was valid via
-        // `--params` and invalid via the flag. The spec need not declare a
-        // `maximum`, so magnitude is not ours to police.
+    fn test_integer_param_paths_agree_through_u64_then_reject_rather_than_mangle() {
+        // The flag path once used `parse::<i64>()` while `--params` used
+        // `is_u64()`, so a value between the two was valid one way and invalid
+        // the other. They now agree across the whole `u64` range.
+        //
+        // Past `u64::MAX` they deliberately do NOT agree, and that is the
+        // correct outcome: serde has already coerced the literal to `f64` by
+        // the time `--params` reaches here, so the digits are gone. Accepting
+        // it meant re-serializing the double and sending
+        // `limit=1.8446744073709552e+19` — a silently different number. The
+        // flag path keeps the digits as a string and sends them verbatim.
         let param = MethodParameter {
             param_type: Some("integer".to_string()),
             location: Some("query".to_string()),
             ..Default::default()
         };
-        let huge = "9223372036854775808"; // i64::MAX + 1
-        validate_non_body_param_type("limit", &json!(huge), Some(&param))
-            .expect("flag path must accept a large integer");
-        validate_non_body_param_type(
-            "limit",
-            &serde_json::from_str::<Value>(huge).unwrap(),
-            Some(&param),
-        )
-        .expect("--params path must agree with the flag path");
 
-        // And one boundary further out, where serde widens the literal to f64.
-        let past_u64 = "18446744073709551616"; // u64::MAX + 1
-        validate_non_body_param_type("limit", &json!(past_u64), Some(&param))
-            .expect("flag path must accept an integer past u64::MAX");
-        validate_non_body_param_type(
-            "limit",
-            &serde_json::from_str::<Value>(past_u64).unwrap(),
-            Some(&param),
-        )
-        .expect("--params path must agree past u64::MAX too");
-
-        // A genuine float is still not an integer, at any magnitude.
-        for bad in [json!(1.5), json!(-2.25), json!("1.5")] {
-            assert!(
-                validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
-                "{bad} is not an integer",
-            );
+        // Agreement across u64, including the old i64 boundary.
+        for raw in ["0", "5", "-3", "9223372036854775807", "9223372036854775808", "18446744073709551615"] {
+            validate_non_body_param_type("limit", &json!(raw), Some(&param))
+                .unwrap_or_else(|e| panic!("flag path must accept {raw}: {e}"));
+            validate_non_body_param_type(
+                "limit",
+                &serde_json::from_str::<Value>(raw).unwrap(),
+                Some(&param),
+            )
+            .unwrap_or_else(|e| panic!("--params path must accept {raw}: {e}"));
         }
 
-        // Shape is still enforced. (An empty string is deliberately accepted —
-        // see `test_typed_param_accepts_an_empty_string`.)
-        for bad in [json!("12a"), json!("-"), json!("+"), json!("1_0")] {
+        // Past u64::MAX: the flag path carries the digits, `--params` refuses
+        // to guess at a number it can no longer represent.
+        let past_u64 = "18446744073709551616";
+        validate_non_body_param_type("limit", &json!(past_u64), Some(&param))
+            .expect("the flag path sends the digits as written");
+        assert!(
+            validate_non_body_param_type(
+                "limit",
+                &serde_json::from_str::<Value>(past_u64).unwrap(),
+                Some(&param),
+            )
+            .is_err(),
+            "--params must reject rather than send a coerced double",
+        );
+
+        // Shape is still enforced on the flag path. (An empty string is
+        // deliberately accepted — see `test_typed_param_accepts_an_empty_string`.)
+        for bad in [json!("12a"), json!("-"), json!("+"), json!("1_0"), json!("+5")] {
             assert!(
                 validate_non_body_param_type("limit", &bad, Some(&param)).is_err(),
                 "{bad} should be rejected",
