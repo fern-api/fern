@@ -477,6 +477,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return undefined;
     }
 
+    /**
+     * The keyword argument name the client exposes for the bearer token, following the
+     * name configured on the auth scheme (`token` when the API declares no bearer auth).
+     */
+    public getBearerTokenParameterName(): string {
+        const bearerAuth = this.getBearerAuth();
+        return bearerAuth != null ? this.caseConverter.snakeSafe(bearerAuth.token) : "token";
+    }
+
     public getBasicAuth(): FernIr.BasicAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "basic") {

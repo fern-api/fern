@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The client's bearer credential keyword argument now follows the name configured on the
+    bearer auth scheme (`token: { name: apiKey }` produces `api_key:` instead of `token:`),
+    matching the TypeScript and Python generators.
+  type: fix

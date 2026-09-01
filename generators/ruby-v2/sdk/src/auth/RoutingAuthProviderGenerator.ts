@@ -7,7 +7,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-const TOKEN_PARAMETER_NAME = "token";
 const OAUTH_PROVIDER_PARAMETER_NAME = "oauth_provider";
 const INFERRED_AUTH_PROVIDER_PARAMETER_NAME = "inferred_auth_provider";
 const AVAILABLE_VARIABLE_NAME = "available_auth_headers";
@@ -73,7 +72,7 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         const parameters: RoutingParameter[] = [];
 
         if (this.context.getBearerAuth() != null) {
-            parameters.push({ name: TOKEN_PARAMETER_NAME, docs: "The bearer token." });
+            parameters.push({ name: this.context.getBearerTokenParameterName(), docs: "The bearer token." });
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
             parameters.push({
@@ -177,8 +176,9 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
 
         const bearerAuth = this.context.getBearerAuth();
         if (bearerAuth != null) {
+            const tokenName = this.context.getBearerTokenParameterName();
             writer.writeLine(
-                `${AVAILABLE_VARIABLE_NAME}[${JSON.stringify(bearerAuth.key)}] = { "Authorization" => "Bearer #{@${TOKEN_PARAMETER_NAME}}" } unless @${TOKEN_PARAMETER_NAME}.nil?`
+                `${AVAILABLE_VARIABLE_NAME}[${JSON.stringify(bearerAuth.key)}] = { "Authorization" => "Bearer #{@${tokenName}}" } unless @${tokenName}.nil?`
             );
         }
 

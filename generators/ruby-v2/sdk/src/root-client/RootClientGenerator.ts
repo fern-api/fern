@@ -12,8 +12,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-const TOKEN_PARAMETER_NAME = "token";
-
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
 
@@ -420,7 +418,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const bearerAuth = this.context.getBearerAuth();
         if (bearerAuth != null) {
-            keywordArguments.push(`${TOKEN_PARAMETER_NAME}: ${TOKEN_PARAMETER_NAME}`);
+            const tokenName = this.context.getBearerTokenParameterName();
+            keywordArguments.push(`${tokenName}: ${tokenName}`);
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
             const paramName = this.case.snakeSafe(headerScheme.name);
@@ -903,7 +902,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             switch (scheme.type) {
                 case "bearer": {
                     const param = ruby.parameters.keyword({
-                        name: TOKEN_PARAMETER_NAME,
+                        name: this.case.snakeSafe(scheme.token),
                         type: ruby.Type.string(),
                         initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
@@ -1249,7 +1248,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${this.case.snakeSafe(header.token)}}`)
                     });
                     break;
                 case "header": {
@@ -1397,9 +1396,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
+        const reservedNames = new Set(RESERVED_OPTION_NAMES).add(this.context.getBearerTokenParameterName());
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
-            const optionName = RESERVED_OPTION_NAMES.has(snake) ? `server_url_${snake}` : snake;
+            const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;
             return { variable, optionName, localName: `${optionName}_value` };
         });
     }
