@@ -29,12 +29,12 @@ function deepMerge(target: unknown, source: unknown): unknown {
     if (isRecord(target) && isRecord(source)) {
         const result: Record<string, unknown> = {};
         for (const key of Object.keys(source)) {
-            if (!hasOwn(target, key)) {
+            if (!Object.hasOwn(target, key)) {
                 result[key] = source[key];
             }
         }
         for (const key of Object.keys(target)) {
-            result[key] = hasOwn(source, key) ? deepMerge(target[key], source[key]) : target[key];
+            result[key] = Object.hasOwn(source, key) ? deepMerge(target[key], source[key]) : target[key];
         }
         return result;
     }
@@ -43,8 +43,4 @@ function deepMerge(target: unknown, source: unknown): unknown {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
     return isPlainObject(value);
-}
-
-function hasOwn(record: Record<string, unknown>, key: string): boolean {
-    return Object.prototype.hasOwnProperty.call(record, key);
 }
