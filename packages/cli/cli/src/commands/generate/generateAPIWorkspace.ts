@@ -2,19 +2,12 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import {
-    createSpecsTarGzBuffer,
-    generatorWantsSpecs,
-    runLocalGenerationForWorkspace
-} from "@fern-api/local-workspace-runner";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import {
     AutomationRunOptions,
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
-    getFernSdkGenApiLanguage,
     getOutputRepoUrl,
-    isFernSdkGenApiEnabled,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -22,7 +15,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
-import { createSpecsTarGzCache } from "./createSpecsTarGzCache.js";
+import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
@@ -195,29 +188,11 @@ export async function generateWorkspace({
                         disableTelemetry: isTelemetryDisabled()
                     });
                 } else if (token != null) {
-                    // Lazily build the specs tar.gz once per group, only if a generator needs it
-                    const ossWorkspace = workspace instanceof OSSWorkspace ? workspace : undefined;
-                    const getCachedSpecsTarGz =
-                        ossWorkspace == null
-                            ? undefined
-                            : createSpecsTarGzCache(() =>
-                                  createSpecsTarGzBuffer({
-                                      specs: ossWorkspace.allSpecs,
-                                      context: groupContext,
-                                      audiences: group.audiences
-                                  })
-                              );
-                    const getSpecsTarGz = async (generatorName: string): Promise<Buffer | undefined> => {
-                        const sdkGenApiNeedsSpecs =
-                            isFernSdkGenApiEnabled() && getFernSdkGenApiLanguage(generatorName) != null;
-                        if (
-                            getCachedSpecsTarGz == null ||
-                            (!generatorWantsSpecs(generatorName) && !sdkGenApiNeedsSpecs)
-                        ) {
-                            return undefined;
-                        }
-                        return getCachedSpecsTarGz();
-                    };
+                    const getSpecsTarGz = createFernSourceArchiveResolver({
+                        workspace,
+                        context: groupContext,
+                        group
+                    });
 
                     await runRemoteGenerationForAPIWorkspace({
                         projectConfig,

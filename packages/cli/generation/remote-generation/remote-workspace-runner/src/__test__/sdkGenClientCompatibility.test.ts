@@ -153,8 +153,8 @@ describe("validateGeneratorConfigCompatibility", () => {
             });
         });
 
-        it("routes cutover to SDK Config IR v1", () => {
-            expect(validate(boundary, boundary.cutover, "sdk-config-v1").payloadKind).toBe("sdk-config-ir-v1");
+        it("routes cutover to SDK Config v1", () => {
+            expect(validate(boundary, boundary.cutover, "sdk-config-v1").payloadKind).toBe("sdk-config-v1");
         });
 
         it("rejects legacy Fern configuration at cutover", () => {
@@ -173,8 +173,8 @@ describe("validateGeneratorConfigCompatibility", () => {
             });
         });
 
-        it("routes cutover+1 to SDK Config IR v1", () => {
-            expect(validate(boundary, boundary.above, "sdk-config-v1").payloadKind).toBe("sdk-config-ir-v1");
+        it("routes cutover+1 to SDK Config v1", () => {
+            expect(validate(boundary, boundary.above, "sdk-config-v1").payloadKind).toBe("sdk-config-v1");
         });
     });
 
@@ -187,7 +187,7 @@ describe("validateGeneratorConfigCompatibility", () => {
                 requestedVersion: cutoverVersion,
                 configKind: "sdk-config-v1"
             })
-        ).toMatchObject({ language, cutoverVersion, payloadKind: "sdk-config-ir-v1" });
+        ).toMatchObject({ language, cutoverVersion, payloadKind: "sdk-config-v1" });
     });
 
     it("does not expose a language for an unknown generator", () => {
