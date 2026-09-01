@@ -16,10 +16,11 @@ export function mergeExtraConfigs(
  * Recursively merges `source` into `target`. Values from `source` win at every level.
  *
  * - Arrays are unioned (source entries first) and deduplicated.
- * - Plain objects are merged key-by-key. Keys that only exist in `source` are emitted first,
- *   followed by `target`'s keys in their original order. This matters for `exports`, where Node
- *   picks the first matching condition: a user-supplied custom condition must precede the
- *   generated `import`/`require`/`default` conditions to ever be selected.
+ * - Plain objects are merged key-by-key. `source`'s keys are emitted first, in `source` order,
+ *   followed by any remaining `target` keys in their original order. This matters for `exports`,
+ *   where Node picks the first matching condition: a user-supplied custom condition precedes the
+ *   generated `import`/`require`/`default` conditions, and a user who spells out a full entry
+ *   keeps exactly the order they wrote. Keys not mentioned by `source` cannot be removed.
  * - Anything else is replaced by `source`.
  */
 function deepMerge(target: unknown, source: unknown): unknown {
@@ -29,12 +30,12 @@ function deepMerge(target: unknown, source: unknown): unknown {
     if (isRecord(target) && isRecord(source)) {
         const result: Record<string, unknown> = {};
         for (const key of Object.keys(source)) {
-            if (!Object.hasOwn(target, key)) {
-                result[key] = source[key];
-            }
+            result[key] = Object.hasOwn(target, key) ? deepMerge(target[key], source[key]) : source[key];
         }
         for (const key of Object.keys(target)) {
-            result[key] = Object.hasOwn(source, key) ? deepMerge(target[key], source[key]) : target[key];
+            if (!Object.hasOwn(source, key)) {
+                result[key] = target[key];
+            }
         }
         return result;
     }
