@@ -4018,6 +4018,9 @@
                       "preserveOneOfInAllOf": {
                         "type": "boolean"
                       },
+                      "anyOfSiblingPropertiesAsObject": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4608,6 +4611,9 @@
                           "type": "boolean"
                         },
                         "preserveOneOfInAllOf": {
+                          "type": "boolean"
+                        },
+                        "anyOfSiblingPropertiesAsObject": {
                           "type": "boolean"
                         },
                         "inlineAllOfSchemas": {

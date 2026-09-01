@@ -1,3 +1,4 @@
+import { anyOfIsPresenceConstraint } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     type Availability,
@@ -1197,6 +1198,29 @@ export function convertSchemaObject(
 
         // treat anyOf as undiscriminated unions
         if (schema.anyOf != null && schema.anyOf.length > 0) {
+            // An anyOf whose branches only re-declare sibling properties as required is
+            // an "at least one of" constraint, not a set of variants. Convert the schema
+            // as the object it declares so a body carrying several of those properties
+            // keeps all of them. See anyOfIsPresenceConstraint.
+            if (context.options.anyOfSiblingPropertiesAsObject && anyOfIsPresenceConstraint(schema)) {
+                context.logger.debug(
+                    `Treating the anyOf at ${breadcrumbs.join(".")} as an "at least one of" constraint over its ` +
+                        `sibling properties rather than a union, and converting the schema as an object.`
+                );
+                const { anyOf: _constraint, ...schemaWithoutAnyOf } = schema;
+                const convertedSchema = convertSchema(
+                    schemaWithoutAnyOf,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    source,
+                    namespace,
+                    referencedAsRequest
+                );
+                return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
+            }
+
             if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
                 const convertedSchema = convertSchema(
                     schema.anyOf[0],
