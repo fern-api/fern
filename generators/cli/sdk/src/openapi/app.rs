@@ -654,8 +654,9 @@ fn command_declares_long(cmd: &clap::Command, long: &str) -> bool {
 /// available on the operations that don't collide.
 ///
 /// The copies are not `global(true)`, so the root post-pass that files
-/// globals under [`crate::cli_args::HELP_HEADING_GLOBAL`] would miss them; the heading is
-/// set here so they still render alongside the other globals in `--help`.
+/// globals under [`crate::cli_args::HELP_HEADING_GLOBAL`] would miss them.
+/// The heading is stamped here instead — once, before the walk — so they
+/// still render alongside the other globals in `--help`.
 fn register_global_header_on_nonconflicting_leaves(
     cmd: clap::Command,
     arg: &clap::Arg,
@@ -664,7 +665,17 @@ fn register_global_header_on_nonconflicting_leaves(
     let arg = arg
         .clone()
         .help_heading(crate::cli_args::HELP_HEADING_GLOBAL);
-    let arg = &arg;
+    attach_global_arg_to_nonconflicting_leaves(cmd, &arg, long)
+}
+
+/// The recursive half of [`register_global_header_on_nonconflicting_leaves`],
+/// split out so the help heading is applied to the arg once rather than
+/// re-cloned and re-stamped at every level of the command tree.
+fn attach_global_arg_to_nonconflicting_leaves(
+    cmd: clap::Command,
+    arg: &clap::Arg,
+    long: &str,
+) -> clap::Command {
     let sub_names: Vec<String> = cmd
         .get_subcommands()
         .map(|c| c.get_name().to_string())
@@ -682,7 +693,7 @@ fn register_global_header_on_nonconflicting_leaves(
         let arg = arg.clone();
         let long = long.to_string();
         out = out.mut_subcommand(name, move |sub| {
-            register_global_header_on_nonconflicting_leaves(sub, &arg, &long)
+            attach_global_arg_to_nonconflicting_leaves(sub, &arg, &long)
         });
     }
     out

@@ -798,7 +798,42 @@ fn build_resource_command(
 /// required — the parent shorthand is an alternative form, not an extra
 /// obligation. This is the same rule `--schema` applies to `input.required`
 /// (see `openapi::help`), so the two surfaces agree.
+///
+/// Requiredness of a dotted leaf is also conditional on its ancestors:
+/// `flatten_body_params_prefix` reads each nested schema's own `required`
+/// list without gating on whether the parent property is required, so
+/// `settings.region` arrives `required: true` even when `settings` itself is
+/// optional. Such a leaf is only required *if* the caller opts into the
+/// parent, and listing it under `Required parameters` (or spelling it into
+/// the usage line) would demand a flag the operation runs fine without.
 fn is_required_parameter_flag(
+    param: &MethodParameter,
+    param_name: &str,
+    all_params: &HashMap<String, MethodParameter>,
+) -> bool {
+    if !unconditionally_required(param, param_name, all_params) {
+        return false;
+    }
+    // A required leaf supersedes its ancestor shorthand — but only a leaf that
+    // is itself unconditionally required. Testing bare `required` here would
+    // let a conditional grandchild (required within an *optional* intermediate
+    // object) demote a genuinely required parent, leaving the operation with
+    // nothing listed as required at all.
+    let child_prefix = format!("{param_name}.");
+    !all_params.iter().any(|(name, p)| {
+        name.starts_with(&child_prefix) && unconditionally_required(p, name, all_params)
+    })
+}
+
+/// The spec requires this parameter, no client-side `x-fern-default` fills it
+/// in when omitted, and every ancestor object on its dotted path is itself
+/// required — so the caller cannot avoid it by declining an optional parent.
+///
+/// An ancestor with no entry of its own does not disqualify: the parser emits
+/// the object shorthand alongside every recursion that produced leaves, so a
+/// gap means the ancestor is not a flag the caller chooses between, not that
+/// it is optional.
+fn unconditionally_required(
     param: &MethodParameter,
     param_name: &str,
     all_params: &HashMap<String, MethodParameter>,
@@ -808,12 +843,18 @@ fn is_required_parameter_flag(
     {
         return false;
     }
-    let child_prefix = format!("{param_name}.");
-    !all_params.iter().any(|(name, p)| {
-        name.starts_with(&child_prefix)
-            && (p.required || p.required_by_spec)
-            && default_value_for_clap(&p.default_value).is_none()
-    })
+    let mut rest = param_name;
+    while let Some((parent, _)) = rest.rsplit_once('.') {
+        if let Some(ancestor) = all_params.get(parent) {
+            if !(ancestor.required || ancestor.required_by_spec)
+                || default_value_for_clap(&ancestor.default_value).is_some()
+            {
+                return false;
+            }
+        }
+        rest = parent;
+    }
+    true
 }
 
 /// Builds the per-parameter flags for one operation — spec parameters
@@ -1457,6 +1498,11 @@ mod tests {
         );
         assert!(pos(HELP_HEADING_REQUIRED) < pos(HELP_HEADING_OPTIONAL));
         assert!(pos(HELP_HEADING_OPTIONAL) < pos(HELP_HEADING_REQUEST));
+        // Globals land last only because clap appends propagated `.global(true)`
+        // args after a subcommand's own args. Nothing in our code enforces it,
+        // so pin it here: a clap upgrade that reorders propagation should fail
+        // this assert rather than silently push `Global options` to the top.
+        assert!(pos(HELP_HEADING_REQUEST) < pos(HELP_HEADING_GLOBAL));
         let required_section = &help[pos(HELP_HEADING_REQUIRED)..pos(HELP_HEADING_OPTIONAL)];
         assert!(required_section.contains("--uuid"));
         assert!(!required_section.contains("--status"));
@@ -1490,6 +1536,87 @@ mod tests {
         assert_eq!(heading_of(&leaf, "settings.region").as_deref(), Some(HELP_HEADING_OPTIONAL));
         assert_eq!(heading_of(&leaf, "owner").as_deref(), Some(HELP_HEADING_REQUIRED));
         assert_eq!(heading_of(&leaf, "owner.nickname").as_deref(), Some(HELP_HEADING_OPTIONAL));
+    }
+
+    /// A leaf marked required inside an *optional* object is only required
+    /// once the caller opts into the parent, so it must not be advertised as
+    /// required. `flatten_body_params_prefix` reads each nested schema's own
+    /// `required` list without gating on the parent, so the leaf arrives here
+    /// `required: true` and the ancestor walk is what suppresses it — without
+    /// it the usage line read `[OPTIONS] --settings.region <STRING>` for an
+    /// operation that runs fine with no `--settings` at all.
+    #[test]
+    fn test_help_leaf_under_optional_parent_is_not_required() {
+        let body = |required: bool, required_by_spec: bool, param_type: &str| MethodParameter {
+            param_type: Some(param_type.to_string()),
+            location: Some("body".to_string()),
+            required,
+            required_by_spec,
+            ..Default::default()
+        };
+        let mut params = HashMap::new();
+        // `settings` is absent from the parent schema's `required` list;
+        // `region` is required *within* Settings.
+        params.insert("settings".to_string(), body(false, false, "object"));
+        params.insert("settings.region".to_string(), body(true, true, "string"));
+        // One optional link anywhere in the chain is enough: `owner` is
+        // required, `owner.address` is not, so `owner.address.city` is
+        // conditional even though it is required within Address.
+        params.insert("owner".to_string(), body(false, true, "object"));
+        params.insert("owner.address".to_string(), body(false, false, "object"));
+        params.insert("owner.address.city".to_string(), body(true, true, "string"));
+        // Control: a fully required chain still reports the leaf as required,
+        // at one level of nesting...
+        params.insert("plan".to_string(), body(false, true, "object"));
+        params.insert("plan.tier".to_string(), body(true, true, "string"));
+        // ...and at two, so an off-by-one in the ancestor walk (checking only
+        // the immediate parent, or stopping one link early) fails here rather
+        // than silently demoting a genuinely required deep leaf.
+        params.insert("billing".to_string(), body(false, true, "object"));
+        params.insert("billing.card".to_string(), body(false, true, "object"));
+        params.insert("billing.card.number".to_string(), body(true, true, "string"));
+
+        let leaf = leaf_with_params(params);
+
+        assert_eq!(heading_of(&leaf, "settings").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(
+            heading_of(&leaf, "settings.region").as_deref(),
+            Some(HELP_HEADING_OPTIONAL)
+        );
+        assert_eq!(heading_of(&leaf, "owner.address").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(
+            heading_of(&leaf, "owner.address.city").as_deref(),
+            Some(HELP_HEADING_OPTIONAL)
+        );
+        assert_eq!(heading_of(&leaf, "plan.tier").as_deref(), Some(HELP_HEADING_REQUIRED));
+        // ...and its shorthand steps aside for the leaf, as before.
+        assert_eq!(heading_of(&leaf, "plan").as_deref(), Some(HELP_HEADING_OPTIONAL));
+
+        // `owner` is spec-required and its only required descendant is itself
+        // conditional (inside optional `owner.address`), so nothing supersedes
+        // the shorthand and it stays the required form. Demoting it here would
+        // leave the operation advertising no required flag at all.
+        assert_eq!(heading_of(&leaf, "owner").as_deref(), Some(HELP_HEADING_REQUIRED));
+
+        // Nothing conditional leaks into the usage line (the flags still
+        // exist — they are listed under `Optional parameters`).
+        let help = leaf.clone().render_help().to_string();
+        let usage = help
+            .lines()
+            .find(|line| line.starts_with("Usage: "))
+            .unwrap_or_else(|| panic!("no usage line in:\n{help}"));
+        assert!(!usage.contains("--settings.region"), "{usage}");
+        assert!(!usage.contains("--owner.address.city"), "{usage}");
+        assert_eq!(
+            heading_of(&leaf, "billing.card.number").as_deref(),
+            Some(HELP_HEADING_REQUIRED)
+        );
+        assert_eq!(heading_of(&leaf, "billing").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "billing.card").as_deref(), Some(HELP_HEADING_OPTIONAL));
+
+        assert!(usage.contains("--plan.tier <STRING>"), "{usage}");
+        assert!(usage.contains("--owner <JSON_OBJECT>"), "{usage}");
+        assert!(usage.contains("--billing.card.number <STRING>"), "{usage}");
     }
 
     #[test]

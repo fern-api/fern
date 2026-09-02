@@ -35,6 +35,12 @@ pub fn apply_global_help_heading(mut cmd: clap::Command) -> clap::Command {
 fn apply_global_help_heading_built(cmd: clap::Command) -> clap::Command {
     let cmd = cmd.mut_args(|arg| {
         let is_global = arg.is_global_set() || matches!(arg.get_id().as_str(), "help" | "version");
+        // The `is_none()` guard is load-bearing, not just an optimization:
+        // the `help`/`version` id match is by name, and `version` is absent
+        // from `BUILTIN_FLAG_NAMES`, so a spec parameter literally named
+        // `version` keeps that id un-mangled. It reaches here already tagged
+        // `Required`/`Optional` by the protocol builder, and the guard is
+        // what stops it from being relabelled as a global flag.
         if is_global && arg.get_help_heading().is_none() {
             arg.help_heading(HELP_HEADING_GLOBAL)
         } else {
