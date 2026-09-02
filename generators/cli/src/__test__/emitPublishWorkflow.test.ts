@@ -110,10 +110,12 @@ describe("emitPublishWorkflow", () => {
 
     // ── Structural assertions ──────────────────────────────────────
 
-    it("contains the expected CI jobs (check, compile, test, publish, publish-launcher)", async () => {
+    it("contains the expected CI jobs (check, clippy, compile, test, publish, publish-launcher)", async () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("check:");
+        expect(yaml).toContain("clippy:");
+        expect(yaml).toContain("run: cargo clippy --all-targets");
         expect(yaml).toContain("compile:");
         expect(yaml).toContain("test:");
         expect(yaml).toContain("publish:");
@@ -176,7 +178,7 @@ describe("emitPublishWorkflow", () => {
 
         // The version job exists and publish depends on it.
         expect(yaml).toContain("version:");
-        expect(yaml).toContain("needs: [check, compile, test, version]");
+        expect(yaml).toContain("needs: [check, clippy, compile, test, version]");
         expect(yaml).toContain('TAG_VERSION="${GITHUB_REF_NAME#v}"');
         expect(yaml).toContain("cargo metadata --no-deps --format-version 1");
         expect(yaml).toContain('if [[ "${TAG_VERSION}" != "${CRATE_VERSION}" ]]; then');
@@ -447,13 +449,21 @@ describe("emitCiWorkflow", () => {
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
-    it("emits check, compile, and test jobs", async () => {
+    it("emits check, clippy, compile, and test jobs", async () => {
         const yaml = await emitAndRead();
 
         expect(yaml).toContain("name: ci");
         expect(yaml).toContain("check:");
+        expect(yaml).toContain("clippy:");
+        expect(yaml).toContain("run: cargo clippy --all-targets");
         expect(yaml).toContain("compile:");
         expect(yaml).toContain("test:");
+    });
+
+    it("does not suppress Rust warnings", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).not.toContain("-A warnings");
     });
 
     it("does not contain publish or npm references", async () => {

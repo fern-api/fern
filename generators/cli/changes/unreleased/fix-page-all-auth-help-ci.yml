@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--page-all` now applies the same result extraction as a plain list call
+    (`x-fern-pagination.results` / `x-fern-sdk-return-value`), so paginated
+    `--format csv|table|json|jsonl` output is a flat list of items instead of
+    page envelopes with cursor fields.
+  type: fix
+- summary: |
+    Operations that declare a required OpenAPI security requirement now fail
+    fast with a "credentials are missing" error (listing the env vars / flags
+    to set) before any request is sent, instead of issuing an unauthenticated
+    request. Public and optional-auth operations are unaffected.
+  type: fix
+- summary: |
+    Global `--format` / `--user-agent-suffix` help text interpolates the CLI's
+    env var prefix (e.g. `BENCHLING_OUTPUT`) instead of leaking the literal
+    `<NAME>_OUTPUT` / `<NAME>_USER_AGENT_SUFFIX` placeholders.
+  type: fix
+- summary: |
+    Generated README and reference docs list every supported `--format` value,
+    describe the real default (`table` on a TTY, `json` when piped), and only
+    document `-o, --output <PATH>` for binary-response operations.
+  type: fix
+- summary: |
+    Generated `ci.yml` no longer sets `RUSTFLAGS: "-A warnings"` and gains a
+    `clippy` job that the publish job depends on. A test literal that tripped
+    `clippy::approx_constant` under `--all-targets` was replaced.
+  type: fix

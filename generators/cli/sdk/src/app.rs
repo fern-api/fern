@@ -811,7 +811,7 @@ impl CliApp {
                 let mut wrapped = serde_json::Map::new();
                 wrapped.insert(
                     "globalFlags".into(),
-                    serde_json::Value::Array(global_flags()),
+                    serde_json::Value::Array(global_flags(&self.name)),
                 );
                 if any_sdk_vars {
                     wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
@@ -911,6 +911,7 @@ impl CliApp {
         }
 
         // 1. Build merged command tree from all bindings.
+        let env_prefix = crate::openapi::commands::env_var_prefix(&self.name);
         let mut cli = clap::Command::new(self.name.clone())
             .version(env!("CARGO_PKG_VERSION"))
             .arg_required_else_help(true)
@@ -926,7 +927,7 @@ impl CliApp {
             .arg(
                 clap::Arg::new("format")
                     .long("format")
-                    .help("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON); arrays are flattened. http emits the full HTTP response (status line + headers + body) like curl -i (OpenAPI only).")
+                    .help(format!("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with {env_prefix}_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON); arrays are flattened. http emits the full HTTP response (status line + headers + body) like curl -i (OpenAPI only)."))
                     .value_name("FORMAT")
                     .global(true),
             )
@@ -954,7 +955,7 @@ impl CliApp {
                 clap::Arg::new("user-agent-suffix")
                     .long(crate::user_agent::suffix_flag())
                     .help(format!(
-                        "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>{}.",
+                        "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over {env_prefix}{}.",
                         crate::user_agent::suffix_env_segment()
                     ))
                     .value_name("TOKEN")
@@ -1547,7 +1548,8 @@ fn deduplicate_after_help(sections: &[String]) -> String {
 /// `globalFlags` key per ADR-0006. Per-op flags (`--page-all`,
 /// `--output PATH`) are NOT in this list — those surface via per-op
 /// capability hints (`paginable`, `binaryResponse`).
-fn global_flags() -> Vec<serde_json::Value> {
+fn global_flags(binary_name: &str) -> Vec<serde_json::Value> {
+    let env_prefix = crate::openapi::commands::env_var_prefix(binary_name);
     vec![
         serde_json::json!({
             "flag": "--schema",
@@ -1571,7 +1573,7 @@ fn global_flags() -> Vec<serde_json::Value> {
             "flag": format!("--{}", crate::user_agent::suffix_flag()),
             "valueName": "TOKEN",
             "description": format!(
-                "Product token appended to the User-Agent (e.g. my-app/1.0). Takes precedence over <NAME>{}.",
+                "Product token appended to the User-Agent (e.g. my-app/1.0). Takes precedence over {env_prefix}{}.",
                 crate::user_agent::suffix_env_segment()
             ),
         }),
