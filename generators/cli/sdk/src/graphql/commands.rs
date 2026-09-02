@@ -164,6 +164,19 @@ fn build_resource_command(name: &str, resource: &RestResource) -> Option<Command
             // input: the whole-arg object shorthand (or `--json`) works too.
             // Say so, since clap never enforces the leaf and the executor
             // leaves validation to the server.
+            //
+            // Deliberately tests `param.default` (the spec's `defaultValue`)
+            // rather than the clap default that
+            // `openapi::commands::unconditionally_required` consults. The two
+            // `default` notions are not the same thing: `x-fern-default` is a
+            // client-side value the CLI materializes as a clap default, while
+            // a GraphQL input field's `defaultValue` is the *server's*
+            // fallback and is deliberately not promoted (see below). Both
+            // rules mean "the caller may omit it"; a shared helper would hide
+            // that they get there by different routes. `param.required`
+            // already accounts for ancestors — the parser computes
+            // `field_required = parent_required && is_non_null(...)` — so no
+            // ancestor walk is needed here.
             let is_required = param.required && param.default.is_none();
             if is_required {
                 if let Some(shorthand) = input_shorthand_flag(param, &method.parameters) {
