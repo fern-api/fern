@@ -56,6 +56,7 @@ export interface SdkCustomConfig {
     inlinePathParameters: boolean | undefined;
     enableInlineTypes: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
+    packageJsonMergeStrategy: "shallow" | "deep";
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;
     writeUnitTests: boolean | undefined;

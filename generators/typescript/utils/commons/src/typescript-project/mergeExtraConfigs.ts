@@ -1,15 +1,32 @@
 import { isArray, isPlainObject, mergeWith } from "lodash-es";
 import { IPackageJson } from "package-json-type";
 
+export type PackageJsonMergeStrategy = "shallow" | "deep";
+
 export function mergeExtraConfigs(
     packageJson: IPackageJson,
-    extraConfigs: Record<string, unknown> | undefined
+    extraConfigs: Record<string, unknown> | undefined,
+    strategy: PackageJsonMergeStrategy = "shallow"
 ): IPackageJson {
-    return mergeWith(
-        JSON.parse(JSON.stringify(packageJson)),
-        extraConfigs ?? {},
-        (objValue: unknown, srcValue: unknown) => deepMerge(objValue, srcValue)
-    );
+    const customizer = strategy === "deep" ? deepMerge : shallowMerge;
+    return mergeWith(JSON.parse(JSON.stringify(packageJson)), extraConfigs ?? {}, customizer);
+}
+
+/**
+ * Historical behavior: arrays are unioned, objects are spread one level deep (so an overridden
+ * nested object such as `exports["."]` replaces the generated one wholesale), scalars are replaced.
+ */
+function shallowMerge(objValue: unknown, srcValue: unknown): unknown {
+    if (isArray(objValue) && isArray(srcValue)) {
+        return [...new Set(srcValue.concat(objValue))];
+    } else if (typeof objValue === "object" && typeof srcValue === "object") {
+        return {
+            ...objValue,
+            ...srcValue
+        };
+    } else {
+        return srcValue;
+    }
 }
 
 /**

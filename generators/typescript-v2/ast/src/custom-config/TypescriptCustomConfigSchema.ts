@@ -46,6 +46,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     noOptionalProperties: z.optional(z.boolean()),
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
+    packageJsonMergeStrategy: z.optional(z.enum(["shallow", "deep"])),
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
