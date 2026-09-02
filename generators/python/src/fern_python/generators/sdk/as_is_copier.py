@@ -1,5 +1,5 @@
 import os
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional
 
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.project import Project
@@ -18,13 +18,31 @@ class AsIsFile(BaseModel):
     replacements: Optional[Dict[str, str]] = None
 
 
-def copy_to_project(*, project: Project) -> None:
+LEGACY_RETRYABLE_STATUS_CODES = [408, 409, 429, 500, 501, 502, 503, 504, 599]
+LEGACY_NON_RETRYABLE_STATUS_CODES = [200, 201, 301, 400, 401, 403, 404]
+RECOMMENDED_RETRYABLE_STATUS_CODES = [408, 409, 429, 502, 503, 504]
+RECOMMENDED_NON_RETRYABLE_STATUS_CODES = [200, 201, 301, 400, 401, 403, 404, 500, 501, 599]
+
+
+def copy_to_project(*, project: Project, retry_status_codes: Literal["legacy", "recommended"] = "legacy") -> None:
     # Add more files you need to copy as is
     # This file is really to simplify the process of copying, leaving core utilities for files
     # that need to be referenced within the project, and more complex cases.
 
     # Use the full module path including package_path for import replacements
     module_path = project.get_module_path_for_imports()
+
+    retryable_status_codes, non_retryable_status_codes = (
+        (RECOMMENDED_RETRYABLE_STATUS_CODES, RECOMMENDED_NON_RETRYABLE_STATUS_CODES)
+        if retry_status_codes == "recommended"
+        else (LEGACY_RETRYABLE_STATUS_CODES, LEGACY_NON_RETRYABLE_STATUS_CODES)
+    )
+    retryable_placeholder = (
+        f"RETRYABLE_STATUS_CODES = {LEGACY_RETRYABLE_STATUS_CODES}  # {{{{RETRYABLE_STATUS_CODES}}}}"
+    )
+    non_retryable_placeholder = (
+        f"NON_RETRYABLE_STATUS_CODES = {LEGACY_NON_RETRYABLE_STATUS_CODES}  # {{{{NON_RETRYABLE_STATUS_CODES}}}}"
+    )
 
     AS_IS_FILES = [
         AsIsFile(
@@ -44,6 +62,8 @@ def copy_to_project(*, project: Project) -> None:
             replacements={
                 "core_utilities.shared.request_options": f"{module_path}.core.request_options",
                 "core_utilities.shared.http_client": f"{module_path}.core.http_client",
+                retryable_placeholder: f"RETRYABLE_STATUS_CODES = {retryable_status_codes}",
+                non_retryable_placeholder: f"NON_RETRYABLE_STATUS_CODES = {non_retryable_status_codes}",
             },
         ),
         AsIsFile(
