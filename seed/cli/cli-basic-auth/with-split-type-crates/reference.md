@@ -31,7 +31,7 @@ List widgets
 
 ## Global flags
 
-These flags are available on every command:
+These flags are available on every command unless noted otherwise:
 
 | Flag | Description |
 |------|-------------|

@@ -470,7 +470,7 @@ function generateAdvanced(args: { binaryName: string; envPrefix: string }): Bloc
             "",
             "### Common flags",
             "",
-            "These flags are available on every operation:",
+            "These flags are available on every operation unless noted otherwise:",
             "",
             "| Flag | Description |",
             "|------|-------------|",

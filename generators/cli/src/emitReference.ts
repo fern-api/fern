@@ -411,7 +411,7 @@ function renderReference(args: {
     lines.push("");
     lines.push("## Global flags");
     lines.push("");
-    lines.push("These flags are available on every command:");
+    lines.push("These flags are available on every command unless noted otherwise:");
     lines.push("");
     lines.push("| Flag | Description |");
     lines.push("|------|-------------|");

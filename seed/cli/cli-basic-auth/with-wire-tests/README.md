@@ -86,7 +86,7 @@ See [reference.md](./reference.md) for the full command reference.
 
 ### Common flags
 
-These flags are available on every operation:
+These flags are available on every operation unless noted otherwise:
 
 | Flag | Description |
 |------|-------------|
