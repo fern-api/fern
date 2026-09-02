@@ -29,6 +29,11 @@ export declare namespace runContainer {
          * emulation on other hosts. Leave unset to use the host-native platform.
          */
         platform?: string;
+        /**
+         * Container network mode (`docker run --network <value>`). Pass `"none"` to run a generator
+         * with no network access at all. Leave unset for the runtime default.
+         */
+        network?: string;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
     }
@@ -50,6 +55,7 @@ export async function runContainer({
     runner,
     pull = false,
     platform,
+    network,
     signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
@@ -65,6 +71,7 @@ export async function runContainer({
             runner,
             pull,
             platform,
+            network,
             signal
         });
     try {
@@ -119,6 +126,7 @@ async function tryRunContainer({
     runner,
     pull = false,
     platform,
+    network,
     signal
 }: {
     logger: Logger;
@@ -132,6 +140,7 @@ async function tryRunContainer({
     runner?: ContainerRunner;
     pull?: boolean;
     platform?: string;
+    network?: string;
     signal?: AbortSignal;
 }): Promise<void> {
     const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
@@ -145,6 +154,7 @@ async function tryRunContainer({
         "root",
         ...(pull ? ["--pull", "always"] : []),
         ...(platform != null ? ["--platform", platform] : []),
+        ...(network != null ? ["--network", network] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
         ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),

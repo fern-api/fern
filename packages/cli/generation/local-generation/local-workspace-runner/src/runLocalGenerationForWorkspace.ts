@@ -401,6 +401,9 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
+                const wantsRawSpecs =
+                    workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name);
+
                 const {
                     shouldCommit,
                     autoVersioningCommitMessage,
@@ -441,10 +444,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
                     disableTelemetry,
-                    rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
-                            ? workspace.allSpecs
-                            : undefined
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

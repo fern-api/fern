@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      Local generation can now run the generator container with a specific network mode, set with the
+      FERN_GENERATOR_NETWORK environment variable. Setting it to `none` runs the generator with no
+      network access, which air-gapped environments require. Unset, container networking is unchanged.
+  type: internal
+
+- summary: |
+      A generator image can now be pinned by digest in generators.yml, for example
+      `name: fern-python-sdk@sha256:...`. The digest is passed through to the container runtime
+      unchanged so the exact pinned image runs, while the generator name used for IR version
+      resolution is unaffected. A malformed digest is rejected with an error naming generators.yml.
+      Tag-based references are unchanged.
+  type: internal
