@@ -531,9 +531,9 @@ paths:
           description: Paginated event list
 
   # --- audit: exercises offset-form `x-fern-pagination` with a
-  # `step: $request.limit` reference. The executor must advance the
-  # outgoing `offset` query param by the caller's `--limit` value, not
-  # by the number of results returned on the page.
+  # `step: $request.limit` reference (item-index semantics). The executor
+  # must advance the outgoing `offset` query param by the number of
+  # results returned on the page and stop on a short page.
   /audit:
     get:
       x-fern-sdk-group-name:
