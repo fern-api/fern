@@ -59,6 +59,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     preserveOneOfInAllOf: undefined,
+    anyOfSiblingPropertiesAsObject: undefined,
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
@@ -159,7 +160,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
     };
 }
 
-function parseOpenApiDefinitionSettingsSchema(
+export function parseOpenApiDefinitionSettingsSchema(
     settings: generatorsYml.OpenApiSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {
@@ -180,6 +181,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         preserveOneOfInAllOf: settings?.["preserve-one-of-in-all-of"],
+        anyOfSiblingPropertiesAsObject: settings?.["any-of-sibling-properties-as-object"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],

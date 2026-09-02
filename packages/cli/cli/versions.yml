@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.112.0
+  changelogEntry:
+    - summary: |
+        Supply resolved API source archives when `fern sdk preview` routes generation through sdk-gen-api,
+        and accept the empty default OpenAPI audience filter during SDK Config source validation.
+      type: fix
+    - summary: |
+        Select sdk-gen-api payload routes before generation work, preserve legacy Fern runtime bundles for pre-cutover targets, and require SDK Config v1 at or after each generator's cutover version. Reject incompatible legacy configuration with an actionable `fern sdk migrate` instruction before source preparation or remote mutations, while preparing deterministic, deduplicated source archives for compatible targets.
+      type: internal
+  createdAt: "2026-09-01"
+  irVersion: 67
+- version: 5.111.0
+  changelogEntry:
+    - summary: |
+        Add the `any-of-sibling-properties-as-object` OpenAPI setting. When enabled, a
+        schema that declares `properties` alongside an `anyOf` whose branches only
+        re-declare some of those same properties as required is converted as the object
+        it declares, rather than as an undiscriminated union. Per JSON Schema such an
+        `anyOf` is an "at least one of" constraint over sibling properties, not a set of
+        variants, so converting it to a union discards the declared `properties` and
+        makes the fields mutually exclusive -- a request body setting two of them
+        silently sent only one.
+
+        A branch that introduces a property, that narrows one to a different value, or
+        that is a reference, is a real variant and continues to produce a union even
+        with the setting enabled. The setting defaults to false, so conversion output is
+        unchanged unless you opt in.
+      type: feat
+  createdAt: "2026-09-01"
+  irVersion: 67
+- version: 5.110.1
+  changelogEntry:
+    - summary: |
+        The warning for `auth-schemes` declared without `api.auth` now fires on
+        `fern generate` and `fern check`, not only `fern check --from-openapi`. It
+        was emitted from `OSSWorkspace.getIntermediateRepresentation`, a branch
+        reached only when `--from-openapi` is passed; `fern generate` and plain
+        `fern check` go through `toFernWorkspace` and saw nothing. Since the whole
+        point is that this misconfiguration is otherwise silent — valid YAML, clean
+        check, successful generation, and a client reading an environment variable
+        the user never configured — the warning was unreachable on exactly the paths
+        where it was needed. Both entry points now emit it, at most once per
+        workspace.
+      type: fix
+  createdAt: "2026-09-01"
+  irVersion: 67
 - version: 5.110.0
   changelogEntry:
     - summary: |

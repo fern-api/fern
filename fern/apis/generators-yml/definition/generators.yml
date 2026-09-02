@@ -561,6 +561,18 @@ types:
           If false, the variants' properties are flattened into a single object and marked optional.
           Defaults to false.
         default: false
+      any-of-sibling-properties-as-object:
+        type: optional<boolean>
+        docs: |
+          Applies when a schema declares `properties` alongside an `anyOf` whose branches
+          only re-declare some of those same properties as required. Per JSON Schema such an
+          `anyOf` is an "at least one of" constraint rather than a set of variants.
+          If true, the schema is converted as an object carrying all of its declared
+          properties.
+          If false, the schema is converted to an undiscriminated union, which discards the
+          sibling `properties` and makes the branches mutually exclusive.
+          Defaults to false.
+        default: false
       inline-all-of-schemas:
         type: optional<boolean>
         docs: |

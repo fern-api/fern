@@ -61,7 +61,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: when the IR marks a referenced request body as optional, a caller that
     // passes no body properties sends neither a body nor a Content-Type header.
     // Disabled by default so existing output is byte-identical.
-    respectOptionalRequestBody: z.boolean().optional()
+    respectOptionalRequestBody: z.boolean().optional(),
+    // Opt-in: credential keywords on the client follow the names configured on the auth
+    // schemes (`token: { name: apiKey }` exposes `api_key:`). Disabled by default, since
+    // renaming a keyword breaks callers of an already published gem.
+    respectAuthSchemeNames: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

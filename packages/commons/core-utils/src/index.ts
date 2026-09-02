@@ -1,5 +1,10 @@
 // Force cache invalidation for CI - server URL templating feature
 export { addPrefixToString } from "./addPrefixToString.js";
+export {
+    type AnyOfConstraintSchemaLike,
+    anyOfIsPresenceConstraint,
+    isPresenceConstraintBranch
+} from "./anyOfPresenceConstraint.js";
 export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay.js";
 export {
     assert,

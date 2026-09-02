@@ -2634,6 +2634,17 @@
           ],
           "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
         },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
+        },
         "inline-all-of-schemas": {
           "oneOf": [
             {
@@ -3337,6 +3348,17 @@
             }
           ],
           "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
         },
         "inline-all-of-schemas": {
           "oneOf": [

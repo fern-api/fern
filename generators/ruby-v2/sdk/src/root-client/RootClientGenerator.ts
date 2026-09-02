@@ -11,8 +11,7 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
-
-const TOKEN_PARAMETER_NAME = "token";
+import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
@@ -289,8 +288,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         if (basicAuthScheme == null) {
                             continue;
                         }
-                        const usernameName = this.case.snakeSafe(basicAuthScheme.username);
-                        const passwordName = this.case.snakeSafe(basicAuthScheme.password);
+                        const usernameName = this.context.getCredentialParameterName(basicAuthScheme.username);
+                        const passwordName = this.context.getCredentialParameterName(basicAuthScheme.password);
                         const usernameOmitted = !!basicAuthScheme.usernameOmit;
                         const passwordOmitted = !!basicAuthScheme.passwordOmit;
                         // Build the credential string for Base64 encoding.
@@ -420,20 +419,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const bearerAuth = this.context.getBearerAuth();
         if (bearerAuth != null) {
-            keywordArguments.push(`${TOKEN_PARAMETER_NAME}: ${TOKEN_PARAMETER_NAME}`);
+            const tokenName = this.context.getBearerTokenParameterName(bearerAuth.token);
+            keywordArguments.push(`${tokenName}: ${tokenName}`);
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
-            const paramName = this.case.snakeSafe(headerScheme.name);
+            const paramName = this.context.getCredentialParameterName(headerScheme.name);
             keywordArguments.push(`${paramName}: ${paramName}`);
         }
         const basicAuth = this.context.getBasicAuth();
         if (basicAuth != null) {
             if (basicAuth.usernameOmit !== true) {
-                const usernameName = this.case.snakeSafe(basicAuth.username);
+                const usernameName = this.context.getCredentialParameterName(basicAuth.username);
                 keywordArguments.push(`${usernameName}: ${usernameName}`);
             }
             if (basicAuth.passwordOmit !== true) {
-                const passwordName = this.case.snakeSafe(basicAuth.password);
+                const passwordName = this.context.getCredentialParameterName(basicAuth.password);
                 keywordArguments.push(`${passwordName}: ${passwordName}`);
             }
         }
@@ -824,10 +824,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
         const names: string[] = [];
         if (!scheme.usernameOmit) {
-            names.push(this.case.snakeSafe(scheme.username));
+            names.push(this.context.getCredentialParameterName(scheme.username));
         }
         if (!scheme.passwordOmit) {
-            names.push(this.case.snakeSafe(scheme.password));
+            names.push(this.context.getCredentialParameterName(scheme.password));
         }
         return names;
     }
@@ -852,13 +852,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         if (basicScheme != null) {
             if (!basicScheme.usernameOmit && basicScheme.usernameEnvVar != null) {
                 envFallbacks.push({
-                    paramName: this.case.snakeSafe(basicScheme.username),
+                    paramName: this.context.getCredentialParameterName(basicScheme.username),
                     envVar: basicScheme.usernameEnvVar
                 });
             }
             if (!basicScheme.passwordOmit && basicScheme.passwordEnvVar != null) {
                 envFallbacks.push({
-                    paramName: this.case.snakeSafe(basicScheme.password),
+                    paramName: this.context.getCredentialParameterName(basicScheme.password),
                     envVar: basicScheme.passwordEnvVar
                 });
             }
@@ -903,7 +903,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             switch (scheme.type) {
                 case "bearer": {
                     const param = ruby.parameters.keyword({
-                        name: TOKEN_PARAMETER_NAME,
+                        name: this.context.getBearerTokenParameterName(scheme.token),
                         type: ruby.Type.string(),
                         initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
@@ -913,7 +913,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: this.case.snakeSafe(scheme.name),
+                        name: this.context.getCredentialParameterName(scheme.name),
                         type: ruby.Type.string(),
                         initializer: credentialInitializer(scheme.headerEnvVar),
                         docs: undefined
@@ -927,7 +927,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const passwordOmitted = !!scheme.passwordOmit;
                     if (!usernameOmitted) {
                         const usernameParam = ruby.parameters.keyword({
-                            name: this.case.snakeSafe(scheme.username),
+                            name: this.context.getCredentialParameterName(scheme.username),
                             type: ruby.Type.string(),
                             initializer: selectableCredentialInitializer(scheme.usernameEnvVar),
                             docs: undefined
@@ -936,7 +936,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     if (!passwordOmitted) {
                         const passwordParam = ruby.parameters.keyword({
-                            name: this.case.snakeSafe(scheme.password),
+                            name: this.context.getCredentialParameterName(scheme.password),
                             type: ruby.Type.string(),
                             initializer: selectableCredentialInitializer(scheme.passwordEnvVar),
                             docs: undefined
@@ -1070,7 +1070,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         for (const header of this.getNonLiteralGlobalHeaders()) {
             const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
 
-            const paramName = this.case.snakeSafe(header.name);
+            const paramName = this.getGlobalHeaderOptionName(header);
             let initializer: ruby.CodeBlock;
             if (header.env != null && clientDefault != null) {
                 // Precedence: caller > env var > clientDefault
@@ -1094,6 +1094,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return parameters;
+    }
+
+    /**
+     * The initializer keyword a global header is exposed under, prefixed when the
+     * header's name would collide with a credential keyword or a built-in client option.
+     */
+    private getGlobalHeaderOptionName(header: FernIr.HttpHeader): string {
+        return globalHeaderParameterName(
+            this.case.snakeSafe(header.name),
+            this.getCredentialParameterNames(),
+            this.context.respectsAuthSchemeNames()
+        );
+    }
+
+    private getCredentialParameterNames(): Set<string> {
+        return new Set(this.getAuthenticationParameters().map((parameter) => parameter.name));
     }
 
     private getNonLiteralGlobalHeaders(): FernIr.HttpHeader[] {
@@ -1120,7 +1136,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             if (defaultExtractor.extractClientDefault(header.clientDefault) != null) {
                 continue;
             }
-            const paramName = this.case.snakeSafe(header.name);
+            const paramName = this.getGlobalHeaderOptionName(header);
             const wireValue = getWireValue(header.name);
             statements.push(`headers["${wireValue}"] = ${paramName}.to_s unless ${paramName}.nil?`);
         }
@@ -1249,11 +1265,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.interpolatedString(
+                            `Bearer #{${this.context.getBearerTokenParameterName(header.token)}}`
+                        )
                     });
                     break;
                 case "header": {
-                    const headerParamName = this.case.snakeSafe(header.name);
+                    const headerParamName = this.context.getCredentialParameterName(header.name);
                     const headerName = getWireValue(header.name);
                     let headerValueNode: ruby.AstNode;
                     if (header.prefix != null) {
@@ -1298,7 +1316,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             if (clientDefault == null) {
                 continue;
             }
-            const paramName = this.case.snakeSafe(header.name);
+            const paramName = this.getGlobalHeaderOptionName(header);
             const wireValue = getWireValue(header.name);
             headers.push({
                 key: ruby.TypeLiteral.string(wireValue),
@@ -1397,9 +1415,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
+        const reservedNames = this.context.respectsAuthSchemeNames()
+            ? new Set([
+                  ...RESERVED_OPTION_NAMES,
+                  ...this.getCredentialParameterNames(),
+                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
+              ])
+            : RESERVED_OPTION_NAMES;
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
-            const optionName = RESERVED_OPTION_NAMES.has(snake) ? `server_url_${snake}` : snake;
+            const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;
             return { variable, optionName, localName: `${optionName}_value` };
         });
     }

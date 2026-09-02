@@ -8,6 +8,7 @@ export * from "./FernWorkspace.js";
 export * from "./getFilesystemPublishTarget.js";
 export { getOriginGitCommit, getOriginGitCommitIsDirty } from "./getOriginGitCommit.js";
 export * from "./openapi/index.js";
+export * from "./RawSpecs.js";
 export * from "./Source.js";
 export * from "./Spec.js";
 export * from "./utils/index.js";
