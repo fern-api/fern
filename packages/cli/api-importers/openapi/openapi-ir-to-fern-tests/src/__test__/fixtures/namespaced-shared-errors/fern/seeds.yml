@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: Seeds
+  version: "1.0"
+paths:
+  /seeds:
+    get:
+      operationId: listSeeds
+      responses:
+        "200":
+          description: OK
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TooManyRequests"
+components:
+  schemas:
+    TooManyRequests:
+      type: object
+      properties:
+        message:
+          type: string

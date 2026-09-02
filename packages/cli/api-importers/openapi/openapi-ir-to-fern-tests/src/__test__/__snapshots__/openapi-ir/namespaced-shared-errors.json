@@ -1,0 +1,335 @@
+{
+  "specVersion": "1.0",
+  "title": "Plants",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listPlants",
+      "tags": [
+        "plants"
+      ],
+      "namespace": "plants",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListPlantsRequest",
+      "errors": {
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "Error",
+            "namespace": "plants",
+            "source": {
+              "file": "plants.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "plants.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/plants",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "plants.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getPlant",
+      "tags": [
+        "plants"
+      ],
+      "namespace": "plants",
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetPlantRequestId",
+            "namespace": "plants",
+            "groupName": [
+              {
+                "type": "namespace",
+                "name": "plants"
+              }
+            ],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "plants.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPlantRequest",
+      "errors": {
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "Error",
+            "namespace": "plants",
+            "source": {
+              "file": "plants.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "plants.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/plants/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "plants.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listSeeds",
+      "tags": [
+        "seeds"
+      ],
+      "namespace": "seeds",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListSeedsRequest",
+      "errors": {
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "TooManyRequests",
+            "namespace": "seeds",
+            "source": {
+              "file": "seeds.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/seeds",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "seeds.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "plants": {
+        "Error": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "errorCode",
+              "key": "code",
+              "schema": {
+                "generatedName": "ErrorCode",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ErrorCode",
+                  "namespace": "plants",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "plants"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "plants",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "plants"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Error",
+          "namespace": "plants",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "plants"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "plants.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "seeds": {
+        "TooManyRequests": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "tooManyRequestsMessage",
+              "key": "message",
+              "schema": {
+                "generatedName": "TooManyRequestsMessage",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TooManyRequestsMessage",
+                  "namespace": "seeds",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "seeds"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "seeds",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "seeds"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "TooManyRequests",
+          "namespace": "seeds",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "seeds"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
