@@ -2790,6 +2790,10 @@ pub async fn execute_method(
     drop(pager_handle);
 
     if capture_output && !captured_values.is_empty() {
+        if pagination.page_all && pages_fetched > 0 {
+            let results_path = endpoint_pag.map(|p| p.results_path());
+            return Ok(Some(merge_captured_pages(captured_values, results_path)));
+        }
         if captured_values.len() == 1 {
             return Ok(Some(captured_values.pop().unwrap()));
         } else {
@@ -2798,6 +2802,75 @@ pub async fn execute_method(
     }
 
     Ok(None)
+}
+
+/// Collapse the per-page values captured under `--page-all` into the same
+/// shape a single page would have produced after item extraction: one flat
+/// array of items.
+///
+/// Items are located with the endpoint's declared `results` path when the
+/// operation has one, otherwise with the same "first non-empty array
+/// property" heuristic the table/CSV formatters use for a single page. Pages
+/// that are already arrays (e.g. after `x-fern-sdk-return-value` extraction)
+/// are concatenated. If any page does not fit the detected shape the pages
+/// are returned unchanged as an array so no data is dropped.
+fn merge_captured_pages(pages: Vec<Value>, results_path: Option<&str>) -> Value {
+    if pages.iter().all(Value::is_array) {
+        return Value::Array(
+            pages
+                .into_iter()
+                .flat_map(|p| match p {
+                    Value::Array(items) => items,
+                    _ => Vec::new(),
+                })
+                .collect(),
+        );
+    }
+
+    let items_path: Option<String> = match results_path {
+        Some(path) if !path.trim().is_empty() => Some(path.to_string()),
+        _ => pages
+            .iter()
+            .find_map(|p| crate::formatter::extract_items(p).map(|(key, _)| key.to_string()))
+            .or_else(|| sole_shared_array_key(&pages)),
+    };
+    let Some(items_path) = items_path else {
+        return Value::Array(pages);
+    };
+
+    let mut merged = Vec::new();
+    for page in &pages {
+        let Some(Value::Array(items)) = get_nested_value(page, &items_path) else {
+            return Value::Array(pages);
+        };
+        merged.extend(items.iter().cloned());
+    }
+    Value::Array(merged)
+}
+
+/// The one property that is an array on every page, if there is exactly one.
+/// Lets an all-empty result set (`{"items": [], "nextToken": ""}`) collapse
+/// to `[]` when no page has a non-empty array for the heuristic to latch on.
+fn sole_shared_array_key(pages: &[Value]) -> Option<String> {
+    let mut shared: Option<Vec<&String>> = None;
+    for page in pages {
+        let Value::Object(obj) = page else {
+            return None;
+        };
+        let keys: Vec<&String> = obj
+            .iter()
+            .filter(|(k, v)| v.is_array() && !k.starts_with('_'))
+            .map(|(k, _)| k)
+            .collect();
+        shared = Some(match shared {
+            None => keys,
+            Some(prev) => prev.into_iter().filter(|k| keys.contains(k)).collect(),
+        });
+    }
+    match shared.as_deref() {
+        Some([key]) => Some((*key).clone()),
+        _ => None,
+    }
 }
 
 /// Format an HTTP version enum as a string (e.g. `HTTP/1.1`).
@@ -12340,6 +12413,58 @@ mod tests {
             _ => panic!("expected Sse variant"),
         }
     }
+}
+
+#[test]
+fn test_merge_captured_pages_flattens_items() {
+    // Heuristic (no declared results path): first non-empty array property.
+    let pages = vec![
+        json!({"dnaSequences": [{"id": 1}, {"id": 2}], "nextToken": "p2"}),
+        json!({"dnaSequences": [{"id": 3}], "nextToken": ""}),
+        json!({"dnaSequences": [], "nextToken": ""}),
+    ];
+    assert_eq!(
+        merge_captured_pages(pages, None),
+        json!([{"id": 1}, {"id": 2}, {"id": 3}])
+    );
+
+    // Declared results path wins over the heuristic.
+    let pages = vec![
+        json!({"meta": [1], "data": {"items": [{"id": 1}]}}),
+        json!({"meta": [2], "data": {"items": [{"id": 2}]}}),
+    ];
+    assert_eq!(
+        merge_captured_pages(pages, Some("data.items")),
+        json!([{"id": 1}, {"id": 2}])
+    );
+
+    // Already-extracted array pages concatenate.
+    let pages = vec![json!([{"id": 1}]), json!([{"id": 2}])];
+    assert_eq!(
+        merge_captured_pages(pages, None),
+        json!([{"id": 1}, {"id": 2}])
+    );
+
+    // Every page empty: the sole array property still yields a flat `[]`.
+    let pages = vec![
+        json!({"items": [], "nextToken": ""}),
+        json!({"items": [], "nextToken": ""}),
+    ];
+    assert_eq!(merge_captured_pages(pages, None), json!([]));
+
+    // Ambiguous empty pages (two array properties): keep pages as-is.
+    let pages = vec![json!({"a": [], "b": []})];
+    assert_eq!(
+        merge_captured_pages(pages.clone(), None),
+        Value::Array(pages)
+    );
+
+    // Unrecognized shape: keep pages as-is rather than dropping data.
+    let pages = vec![json!({"a": 1}), json!({"a": 2})];
+    assert_eq!(
+        merge_captured_pages(pages.clone(), None),
+        Value::Array(pages)
+    );
 }
 
 #[tokio::test]
