@@ -192,6 +192,32 @@
               }
             }
           ]
+        },
+        "503": {
+          "generatedName": "ServiceUnavailableError",
+          "schema": {
+            "generatedName": "ServiceUnavailableErrorBody",
+            "schema": "Unavailable",
+            "namespace": "seeds",
+            "source": {
+              "file": "seeds.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Service unavailable",
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "servers": [],
@@ -201,6 +227,96 @@
       "examples": [
         {
           "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "seeds.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getSeed",
+      "tags": [
+        "seeds"
+      ],
+      "namespace": "seeds",
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetSeedRequestId",
+            "namespace": "seeds",
+            "groupName": [
+              {
+                "type": "namespace",
+                "name": "seeds"
+              }
+            ],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetSeedRequest",
+      "errors": {
+        "503": {
+          "generatedName": "ServiceUnavailableError",
+          "schema": {
+            "generatedName": "ServiceUnavailableErrorBody",
+            "schema": "UnavailableWithRetry",
+            "namespace": "seeds",
+            "source": {
+              "file": "seeds.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Service unavailable",
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/seeds/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "queryParameters": [],
           "headers": [],
           "codeSamples": [],
@@ -309,6 +425,139 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "TooManyRequests",
+          "namespace": "seeds",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "seeds"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "Unavailable": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "unavailableReason",
+              "key": "reason",
+              "schema": {
+                "generatedName": "UnavailableReason",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UnavailableReason",
+                  "namespace": "seeds",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "seeds"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "seeds",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "seeds"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Unavailable",
+          "namespace": "seeds",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "seeds"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "seeds.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "UnavailableWithRetry": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "unavailableWithRetryReason",
+              "key": "reason",
+              "schema": {
+                "generatedName": "UnavailableWithRetryReason",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UnavailableWithRetryReason",
+                  "namespace": "seeds",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "seeds"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "seeds",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "seeds"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "unavailableWithRetryRetryAfterSeconds",
+              "key": "retryAfterSeconds",
+              "schema": {
+                "generatedName": "UnavailableWithRetryRetryAfterSeconds",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "UnavailableWithRetryRetryAfterSeconds",
+                  "namespace": "seeds",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "seeds"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "seeds",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "seeds"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UnavailableWithRetry",
           "namespace": "seeds",
           "groupName": [
             {

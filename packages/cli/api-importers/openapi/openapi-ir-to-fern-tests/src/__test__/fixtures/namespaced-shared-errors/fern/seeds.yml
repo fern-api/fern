@@ -15,6 +15,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TooManyRequests"
+        "503":
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unavailable"
+  /seeds/{id}:
+    get:
+      operationId: getSeed
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "503":
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnavailableWithRetry"
 components:
   schemas:
     TooManyRequests:
@@ -22,3 +46,15 @@ components:
       properties:
         message:
           type: string
+    Unavailable:
+      type: object
+      properties:
+        reason:
+          type: string
+    UnavailableWithRetry:
+      type: object
+      properties:
+        reason:
+          type: string
+        retryAfterSeconds:
+          type: integer

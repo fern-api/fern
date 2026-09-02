@@ -137,6 +137,18 @@ types:
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
+          "ServiceUnavailableError": {
+            "docs": "Service unavailable",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 503,
+            "type": "unknown",
+          },
           "TooManyRequestsError": {
             "docs": "Too many requests",
             "examples": [
@@ -154,11 +166,38 @@ types:
           "auth": false,
           "base-path": "",
           "endpoints": {
+            "getSeed": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "ServiceUnavailableError",
+              ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/seeds/{id}",
+              "request": {
+                "name": "GetSeedRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "seeds.yml",
+              },
+            },
             "listSeeds": {
               "auth": undefined,
               "docs": undefined,
               "errors": [
                 "TooManyRequestsError",
+                "ServiceUnavailableError",
               ],
               "examples": [
                 {},
@@ -186,6 +225,27 @@ types:
               "openapi": "seeds.yml",
             },
           },
+          "Unavailable": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "reason": "optional<string>",
+            },
+            "source": {
+              "openapi": "seeds.yml",
+            },
+          },
+          "UnavailableWithRetry": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "reason": "optional<string>",
+              "retryAfterSeconds": "optional<integer>",
+            },
+            "source": {
+              "openapi": "seeds.yml",
+            },
+          },
         },
       },
       "rawContents": "errors:
@@ -193,6 +253,12 @@ types:
     status-code: 429
     type: TooManyRequests
     docs: Too many requests
+    examples:
+      - value: {}
+  ServiceUnavailableError:
+    status-code: 503
+    type: unknown
+    docs: Service unavailable
     examples:
       - value: {}
 service:
@@ -206,14 +272,40 @@ service:
         openapi: seeds.yml
       errors:
         - TooManyRequestsError
+        - ServiceUnavailableError
       examples:
         - {}
+    getSeed:
+      path: /seeds/{id}
+      method: GET
+      source:
+        openapi: seeds.yml
+      request:
+        name: GetSeedRequest
+        path-parameters:
+          id: string
+      errors:
+        - ServiceUnavailableError
+      examples:
+        - path-parameters:
+            id: id
   source:
     openapi: seeds.yml
 types:
   TooManyRequests:
     properties:
       message: optional<string>
+    source:
+      openapi: seeds.yml
+  Unavailable:
+    properties:
+      reason: optional<string>
+    source:
+      openapi: seeds.yml
+  UnavailableWithRetry:
+    properties:
+      reason: optional<string>
+      retryAfterSeconds: optional<integer>
     source:
       openapi: seeds.yml
 ",
