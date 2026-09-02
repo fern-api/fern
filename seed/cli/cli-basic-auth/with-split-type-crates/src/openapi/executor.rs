@@ -1357,8 +1357,101 @@ fn resolve_next_path(base_url: &str, next_path: &str) -> Result<String, String> 
     Ok(resolved.to_string())
 }
 
+/// Where the items of a `--page-all` page live. Decided on the first page
+/// and reused for every later page so a sibling array that happens to be
+/// non-empty on one page cannot change which property is treated as the
+/// result set.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+enum PageItemsPath {
+    /// Not yet decided (no page seen).
+    #[default]
+    Undecided,
+    /// The declared `x-fern-pagination.results` path, relative to the
+    /// full response body.
+    Body(String),
+    /// The page value (after `x-fern-sdk-return-value` extraction) is
+    /// itself the item array.
+    Value,
+    /// A top-level array property of the page value.
+    Property(String),
+    /// No single result array could be identified; pages pass through.
+    None,
+}
+
+impl PageItemsPath {
+    fn decide(body: &Value, output_val: &Value, results_path: Option<&str>) -> Self {
+        if let Some(path) = results_path.map(str::trim).filter(|p| !p.is_empty()) {
+            return match get_nested_value(body, path) {
+                Some(Value::Array(_)) | Some(Value::Null) | None => {
+                    PageItemsPath::Body(path.to_string())
+                }
+                Some(_) => PageItemsPath::None,
+            };
+        }
+        match output_val {
+            Value::Array(_) => PageItemsPath::Value,
+            Value::Object(obj) => {
+                let array_keys: Vec<&String> = obj
+                    .iter()
+                    .filter(|(k, v)| {
+                        v.is_array()
+                            && !k.starts_with('_')
+                            && k.as_str() != "nextPageToken"
+                            && k.as_str() != "kind"
+                    })
+                    .map(|(k, _)| k)
+                    .collect();
+                match array_keys.as_slice() {
+                    [key] => PageItemsPath::Property((*key).clone()),
+                    _ => PageItemsPath::None,
+                }
+            }
+            _ => PageItemsPath::None,
+        }
+    }
+
+    fn is_decided(&self) -> bool {
+        matches!(
+            self,
+            PageItemsPath::Body(_) | PageItemsPath::Value | PageItemsPath::Property(_)
+        )
+    }
+
+    /// The items of one page, or `None` when the page does not fit the
+    /// decided shape (the caller then emits the page unchanged). A missing
+    /// or `null` result property is an empty page, not a shape mismatch.
+    fn items(&self, body: &Value, output_val: &Value) -> Option<Vec<Value>> {
+        let located = match self {
+            PageItemsPath::Undecided | PageItemsPath::None => return None,
+            PageItemsPath::Body(path) => get_nested_value(body, path),
+            PageItemsPath::Value => Some(output_val),
+            PageItemsPath::Property(key) => output_val.get(key),
+        };
+        match located {
+            Some(Value::Array(items)) => Some(items.clone()),
+            Some(Value::Null) | None => Some(Vec::new()),
+            Some(_) => None,
+        }
+    }
+}
+
+/// Whether a `--page-all` response is actually paginated: the operation
+/// declares `x-fern-pagination`, or the body carries the heuristic
+/// next-page token property.
+fn is_paginated_response(
+    body: &Value,
+    pagination: &PaginationConfig,
+    endpoint_pag: Option<&EndpointPagination>,
+) -> bool {
+    endpoint_pag.is_some() || get_nested_value(body, &pagination.token_response_path).is_some()
+}
+
 /// Handle a JSON response: parse, output, and check pagination.
 /// Returns `Ok(true)` if the pagination loop should continue.
+///
+/// Under `--page-all` (and not `--no-extract`) each paginated page is
+/// reduced to its item array via `items_path`, so the streamed (TTY) and
+/// captured (piped) paths emit the same values.
 ///
 /// `return_path` is the operation's resolved `x-fern-sdk-return-value`
 /// extension (a dot-separated key path into the JSON body). When set and
@@ -1383,12 +1476,26 @@ async fn handle_json_response(
     no_extract: bool,
     method_descriptor: &str,
     pager: &mut Option<crate::pager::PagerHandle>,
+    items_path: &mut PageItemsPath,
 ) -> Result<bool, CliError> {
     if let Ok(json_val) = serde_json::from_str::<Value>(body_text) {
-        let output_val =
+        let mut output_val =
             extract_return_value(&json_val, return_path, no_extract, method_descriptor)?;
 
         *pages_fetched += 1;
+
+        if pagination.page_all
+            && !no_extract
+            && is_paginated_response(&json_val, pagination, endpoint_pag)
+        {
+            if *items_path == PageItemsPath::Undecided {
+                let results_path = endpoint_pag.map(|p| p.results_path());
+                *items_path = PageItemsPath::decide(&json_val, &output_val, results_path);
+            }
+            if let Some(items) = items_path.items(&json_val, &output_val) {
+                output_val = Value::Array(items);
+            }
+        }
 
         // The three branches below are mutually exclusive (one consumes
         // `output_val`), so the unconditional move into `captured.push`
@@ -2223,6 +2330,7 @@ pub async fn execute_method(
     let mut page_state: PageState = PageState::initial(endpoint_pag);
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
+    let mut items_path = PageItemsPath::default();
     let auth_metadata = endpoint_metadata_for(method, base_url_override);
 
     // Spawn an external pager when --page-all is active on a TTY.
@@ -2768,6 +2876,7 @@ pub async fn execute_method(
                 no_extract,
                 &method_descriptor,
                 &mut pager_handle,
+                &mut items_path,
             )
             .await?;
 
@@ -2803,9 +2912,8 @@ pub async fn execute_method(
     drop(pager_handle);
 
     if capture_output && !captured_values.is_empty() {
-        if pagination.page_all && pages_fetched > 0 {
-            let results_path = endpoint_pag.map(|p| p.results_path());
-            return Ok(Some(merge_captured_pages(captured_values, results_path)));
+        if pagination.page_all && items_path.is_decided() && !no_extract {
+            return Ok(Some(merge_captured_pages(captured_values)));
         }
         if captured_values.len() == 1 {
             return Ok(Some(captured_values.pop().unwrap()));
@@ -2817,73 +2925,24 @@ pub async fn execute_method(
     Ok(None)
 }
 
-/// Collapse the per-page values captured under `--page-all` into the same
-/// shape a single page would have produced after item extraction: one flat
-/// array of items.
-///
-/// Items are located with the endpoint's declared `results` path when the
-/// operation has one, otherwise with the same "first non-empty array
-/// property" heuristic the table/CSV formatters use for a single page. Pages
-/// that are already arrays (e.g. after `x-fern-sdk-return-value` extraction)
-/// are concatenated. If any page does not fit the detected shape the pages
-/// are returned unchanged as an array so no data is dropped.
-fn merge_captured_pages(pages: Vec<Value>, results_path: Option<&str>) -> Value {
-    if pages.iter().all(Value::is_array) {
-        return Value::Array(
-            pages
-                .into_iter()
-                .flat_map(|p| match p {
-                    Value::Array(items) => items,
-                    _ => Vec::new(),
-                })
-                .collect(),
-        );
-    }
-
-    let items_path: Option<String> = match results_path {
-        Some(path) if !path.trim().is_empty() => Some(path.to_string()),
-        _ => pages
-            .iter()
-            .find_map(|p| crate::formatter::extract_items(p).map(|(key, _)| key.to_string()))
-            .or_else(|| sole_shared_array_key(&pages)),
-    };
-    let Some(items_path) = items_path else {
+/// Concatenate the per-page item arrays captured under `--page-all` into one
+/// flat array. Pages are already reduced to their items by
+/// `handle_json_response`; if any page did not fit the decided shape it is
+/// still a full envelope, and then the pages are returned as-is so no data
+/// is dropped.
+fn merge_captured_pages(pages: Vec<Value>) -> Value {
+    if !pages.iter().all(Value::is_array) {
         return Value::Array(pages);
-    };
-
-    let mut merged = Vec::new();
-    for page in &pages {
-        let Some(Value::Array(items)) = get_nested_value(page, &items_path) else {
-            return Value::Array(pages);
-        };
-        merged.extend(items.iter().cloned());
     }
-    Value::Array(merged)
-}
-
-/// The one property that is an array on every page, if there is exactly one.
-/// Lets an all-empty result set (`{"items": [], "nextToken": ""}`) collapse
-/// to `[]` when no page has a non-empty array for the heuristic to latch on.
-fn sole_shared_array_key(pages: &[Value]) -> Option<String> {
-    let mut shared: Option<Vec<&String>> = None;
-    for page in pages {
-        let Value::Object(obj) = page else {
-            return None;
-        };
-        let keys: Vec<&String> = obj
-            .iter()
-            .filter(|(k, v)| v.is_array() && !k.starts_with('_'))
-            .map(|(k, _)| k)
-            .collect();
-        shared = Some(match shared {
-            None => keys,
-            Some(prev) => prev.into_iter().filter(|k| keys.contains(k)).collect(),
-        });
-    }
-    match shared.as_deref() {
-        Some([key]) => Some((*key).clone()),
-        _ => None,
-    }
+    Value::Array(
+        pages
+            .into_iter()
+            .flat_map(|p| match p {
+                Value::Array(items) => items,
+                _ => Vec::new(),
+            })
+            .collect(),
+    )
 }
 
 /// Format an HTTP version enum as a string (e.g. `HTTP/1.1`).
@@ -10689,6 +10748,7 @@ mod tests {
             false,
             "things.list",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10727,6 +10787,7 @@ mod tests {
             true, // no_extract
             "things.list",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10759,6 +10820,7 @@ mod tests {
             false,
             "things.list",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .expect_err("unresolved extract path must surface as a validation error");
@@ -10805,6 +10867,7 @@ mod tests {
             false,
             "things.list",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10846,6 +10909,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10879,6 +10943,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10916,6 +10981,7 @@ mod tests {
             false,
             "test-op",
             &mut pager,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -10961,6 +11027,7 @@ mod tests {
             false,
             "test-op",
             &mut pager,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11090,6 +11157,7 @@ mod tests {
             false,
             "test-op",
             &mut pager,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11140,6 +11208,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11180,6 +11249,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11217,6 +11287,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11258,6 +11329,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11301,6 +11373,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -11344,6 +11417,7 @@ mod tests {
             false,
             "test-op",
             &mut pager_none,
+            &mut PageItemsPath::default(),
         )
         .await
         .unwrap();
@@ -12426,190 +12500,316 @@ mod tests {
             _ => panic!("expected Sse variant"),
         }
     }
-}
 
-#[tokio::test]
-async fn test_execute_method_fails_fast_when_required_credentials_missing() {
-    // Base URL is unroutable: if the executor sent the request we'd get a
-    // network error, not the friendly missing-credentials error.
-    let doc = RestDescription {
-        root_url: "http://127.0.0.1:1/".to_string(),
-        service_path: "".to_string(),
-        ..Default::default()
-    };
-    let mut requirement = HashMap::new();
-    requirement.insert("ApiKey".to_string(), Vec::<String>::new());
-    let method = RestMethod {
-        http_method: "GET".to_string(),
-        id: Some("things.list".to_string()),
-        path: "things".to_string(),
-        security_requirements: Some(vec![requirement]),
-        ..Default::default()
-    };
-    let provider: crate::auth::DynAuthProvider =
-        std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
-            "ApiKey",
-            crate::auth::AuthCredentialSource::from_env("FERN_CLI_TEST_UNSET_TOKEN_VAR"),
-        ));
-    let http_config = crate::http::HttpConfig::new("test").unwrap();
-    let err = execute_method(
-        &doc,
-        &method,
-        None,
-        None,
-        &provider,
-        None,
-        None,
-        None,
-        None,
-        false,
-        &PaginationConfig::default(),
-        &crate::formatter::OutputPipeline::default(),
-        true,
-        None,
-        &http_config,
-        false,
-        true, // no_retry
-        false,
-        false,
-        &[],
-        &[],
-    )
-    .await
-    .expect_err("missing credentials must be an error");
-    match err {
-        CliError::Auth(msg) => {
-            assert!(msg.contains("credentials are missing"), "got: {msg}");
-            assert!(msg.contains("FERN_CLI_TEST_UNSET_TOKEN_VAR"), "got: {msg}");
-        }
-        other => panic!("expected CliError::Auth, got {other:?}"),
-    }
-}
-
-#[tokio::test]
-async fn test_execute_method_unreadable_credentials_not_reported_as_missing() {
-    // A provider whose credential store exists but cannot be read (denied
-    // keychain prompt) probes as "no credentials" yet errors in `apply`.
-    // The fail-fast guard must surface that error, not "credentials are
-    // missing".
-    #[derive(Debug)]
-    struct DeniedKeychain;
-    impl crate::auth::AuthProvider for DeniedKeychain {
-        fn name(&self) -> &str {
-            "ApiKey"
-        }
-        fn has_credentials(&self) -> bool {
-            false
-        }
-        fn apply(
-            &self,
-            _request: reqwest::RequestBuilder,
-            _endpoint: &crate::auth::EndpointAuthMetadata,
-        ) -> Result<reqwest::RequestBuilder, CliError> {
-            Err(CliError::Auth("keychain access denied".to_string()))
+    #[tokio::test]
+    async fn test_execute_method_fails_fast_when_required_credentials_missing() {
+        // Base URL is unroutable: if the executor sent the request we'd get a
+        // network error, not the friendly missing-credentials error.
+        let doc = RestDescription {
+            root_url: "http://127.0.0.1:1/".to_string(),
+            service_path: "".to_string(),
+            ..Default::default()
+        };
+        let mut requirement = HashMap::new();
+        requirement.insert("ApiKey".to_string(), Vec::<String>::new());
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            id: Some("things.list".to_string()),
+            path: "things".to_string(),
+            security_requirements: Some(vec![requirement]),
+            ..Default::default()
+        };
+        let provider: crate::auth::DynAuthProvider =
+            std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+                "ApiKey",
+                crate::auth::AuthCredentialSource::from_env("FERN_CLI_TEST_UNSET_TOKEN_VAR"),
+            ));
+        let http_config = crate::http::HttpConfig::new("test").unwrap();
+        let err = execute_method(
+            &doc,
+            &method,
+            None,
+            None,
+            &provider,
+            None,
+            None,
+            None,
+            None,
+            false,
+            &PaginationConfig::default(),
+            &crate::formatter::OutputPipeline::default(),
+            true,
+            None,
+            &http_config,
+            false,
+            true, // no_retry
+            false,
+            false,
+            &[],
+            &[],
+        )
+        .await
+        .expect_err("missing credentials must be an error");
+        match err {
+            CliError::Auth(msg) => {
+                assert!(msg.contains("credentials are missing"), "got: {msg}");
+                assert!(msg.contains("FERN_CLI_TEST_UNSET_TOKEN_VAR"), "got: {msg}");
+            }
+            other => panic!("expected CliError::Auth, got {other:?}"),
         }
     }
 
-    let doc = RestDescription {
-        root_url: "http://127.0.0.1:1/".to_string(),
-        service_path: "".to_string(),
-        ..Default::default()
-    };
-    let mut requirement = HashMap::new();
-    requirement.insert("ApiKey".to_string(), Vec::<String>::new());
-    let method = RestMethod {
-        http_method: "GET".to_string(),
-        id: Some("things.list".to_string()),
-        path: "things".to_string(),
-        security_requirements: Some(vec![requirement]),
-        ..Default::default()
-    };
-    let provider: crate::auth::DynAuthProvider = std::sync::Arc::new(DeniedKeychain);
-    let http_config = crate::http::HttpConfig::new("test").unwrap();
-    let err = execute_method(
-        &doc,
-        &method,
-        None,
-        None,
-        &provider,
-        None,
-        None,
-        None,
-        None,
-        false,
-        &PaginationConfig::default(),
-        &crate::formatter::OutputPipeline::default(),
-        true,
-        None,
-        &http_config,
-        false,
-        true, // no_retry
-        false,
-        false,
-        &[],
-        &[],
-    )
-    .await
-    .expect_err("unreadable credentials must be an error");
-    match err {
-        CliError::Auth(msg) => {
-            assert!(msg.contains("keychain access denied"), "got: {msg}");
-            assert!(!msg.contains("credentials are missing"), "got: {msg}");
+    #[tokio::test]
+    async fn test_execute_method_unreadable_credentials_not_reported_as_missing() {
+        // A provider whose credential store exists but cannot be read (denied
+        // keychain prompt) probes as "no credentials" yet errors in `apply`.
+        // The fail-fast guard must surface that error, not "credentials are
+        // missing".
+        #[derive(Debug)]
+        struct DeniedKeychain;
+        impl crate::auth::AuthProvider for DeniedKeychain {
+            fn name(&self) -> &str {
+                "ApiKey"
+            }
+            fn has_credentials(&self) -> bool {
+                false
+            }
+            fn apply(
+                &self,
+                _request: reqwest::RequestBuilder,
+                _endpoint: &crate::auth::EndpointAuthMetadata,
+            ) -> Result<reqwest::RequestBuilder, CliError> {
+                Err(CliError::Auth("keychain access denied".to_string()))
+            }
         }
-        other => panic!("expected CliError::Auth, got {other:?}"),
+
+        let doc = RestDescription {
+            root_url: "http://127.0.0.1:1/".to_string(),
+            service_path: "".to_string(),
+            ..Default::default()
+        };
+        let mut requirement = HashMap::new();
+        requirement.insert("ApiKey".to_string(), Vec::<String>::new());
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            id: Some("things.list".to_string()),
+            path: "things".to_string(),
+            security_requirements: Some(vec![requirement]),
+            ..Default::default()
+        };
+        let provider: crate::auth::DynAuthProvider = std::sync::Arc::new(DeniedKeychain);
+        let http_config = crate::http::HttpConfig::new("test").unwrap();
+        let err = execute_method(
+            &doc,
+            &method,
+            None,
+            None,
+            &provider,
+            None,
+            None,
+            None,
+            None,
+            false,
+            &PaginationConfig::default(),
+            &crate::formatter::OutputPipeline::default(),
+            true,
+            None,
+            &http_config,
+            false,
+            true, // no_retry
+            false,
+            false,
+            &[],
+            &[],
+        )
+        .await
+        .expect_err("unreadable credentials must be an error");
+        match err {
+            CliError::Auth(msg) => {
+                assert!(msg.contains("keychain access denied"), "got: {msg}");
+                assert!(!msg.contains("credentials are missing"), "got: {msg}");
+            }
+            other => panic!("expected CliError::Auth, got {other:?}"),
+        }
     }
-}
 
-#[test]
-fn test_merge_captured_pages_flattens_items() {
-    // Heuristic (no declared results path): first non-empty array property.
-    let pages = vec![
-        json!({"dnaSequences": [{"id": 1}, {"id": 2}], "nextToken": "p2"}),
-        json!({"dnaSequences": [{"id": 3}], "nextToken": ""}),
-        json!({"dnaSequences": [], "nextToken": ""}),
-    ];
-    assert_eq!(
-        merge_captured_pages(pages, None),
-        json!([{"id": 1}, {"id": 2}, {"id": 3}])
-    );
+    #[test]
+    fn test_merge_captured_pages_concatenates_item_arrays() {
+        let pages = vec![json!([{"id": 1}, {"id": 2}]), json!([{"id": 3}]), json!([])];
+        assert_eq!(
+            merge_captured_pages(pages),
+            json!([{"id": 1}, {"id": 2}, {"id": 3}])
+        );
 
-    // Declared results path wins over the heuristic.
-    let pages = vec![
-        json!({"meta": [1], "data": {"items": [{"id": 1}]}}),
-        json!({"meta": [2], "data": {"items": [{"id": 2}]}}),
-    ];
-    assert_eq!(
-        merge_captured_pages(pages, Some("data.items")),
-        json!([{"id": 1}, {"id": 2}])
-    );
+        // A page that did not fit the decided shape is still an envelope:
+        // keep every page as-is rather than dropping data.
+        let pages = vec![json!([{"id": 1}]), json!({"a": 1})];
+        assert_eq!(merge_captured_pages(pages.clone()), Value::Array(pages));
+    }
 
-    // Already-extracted array pages concatenate.
-    let pages = vec![json!([{"id": 1}]), json!([{"id": 2}])];
-    assert_eq!(
-        merge_captured_pages(pages, None),
-        json!([{"id": 1}, {"id": 2}])
-    );
+    #[test]
+    fn test_page_items_path_declared_results_is_body_relative() {
+        // `results` is declared against the full body even when
+        // `x-fern-sdk-return-value` has already narrowed the page value.
+        let body = json!({"data": {"items": [{"id": 1}], "nextToken": "p2"}});
+        let output_val = &body["data"];
+        let path = PageItemsPath::decide(&body, output_val, Some("data.items"));
+        assert_eq!(path, PageItemsPath::Body("data.items".to_string()));
+        assert_eq!(path.items(&body, output_val), Some(vec![json!({"id": 1})]));
 
-    // Every page empty: the sole array property still yields a flat `[]`.
-    let pages = vec![
-        json!({"items": [], "nextToken": ""}),
-        json!({"items": [], "nextToken": ""}),
-    ];
-    assert_eq!(merge_captured_pages(pages, None), json!([]));
+        // Absent / null result property on a later page is an empty page.
+        let last = json!({"data": {"nextToken": ""}});
+        assert_eq!(path.items(&last, &last["data"]), Some(Vec::new()));
+        let null_page = json!({"data": {"items": null}});
+        assert_eq!(path.items(&null_page, &null_page["data"]), Some(Vec::new()));
 
-    // Ambiguous empty pages (two array properties): keep pages as-is.
-    let pages = vec![json!({"a": [], "b": []})];
-    assert_eq!(
-        merge_captured_pages(pages.clone(), None),
-        Value::Array(pages)
-    );
+        // Non-array at the declared path: leave the page alone.
+        let odd = json!({"data": {"items": "nope"}});
+        assert_eq!(path.items(&odd, &odd["data"]), None);
+    }
 
-    // Unrecognized shape: keep pages as-is rather than dropping data.
-    let pages = vec![json!({"a": 1}), json!({"a": 2})];
-    assert_eq!(
-        merge_captured_pages(pages.clone(), None),
-        Value::Array(pages)
-    );
+    #[test]
+    fn test_page_items_path_heuristic_locks_key_on_first_page() {
+        // First page decides `dnaSequences`; a later page whose sibling array
+        // happens to be non-empty (and sorts first) must not switch keys.
+        let first = json!({"dnaSequences": [{"id": 1}], "nextToken": "p2"});
+        let path = PageItemsPath::decide(&first, &first, None);
+        assert_eq!(path, PageItemsPath::Property("dnaSequences".to_string()));
+
+        let second = json!({"dnaSequences": [{"id": 2}], "nextToken": ""});
+        assert_eq!(path.items(&second, &second), Some(vec![json!({"id": 2})]));
+
+        // All-empty result set still decides on the sole array property.
+        let empty = json!({"items": [], "nextToken": ""});
+        let path = PageItemsPath::decide(&empty, &empty, None);
+        assert_eq!(path, PageItemsPath::Property("items".to_string()));
+        assert_eq!(path.items(&empty, &empty), Some(Vec::new()));
+
+        // Two candidate arrays on the first page is ambiguous: no extraction,
+        // even if only one of them is non-empty.
+        let ambiguous = json!({"aliases": [1], "dnaSequences": [{"id": 1}]});
+        assert_eq!(
+            PageItemsPath::decide(&ambiguous, &ambiguous, None),
+            PageItemsPath::None
+        );
+
+        // Already-extracted array pages are the items.
+        let arr = json!([{"id": 1}]);
+        let path = PageItemsPath::decide(&arr, &arr, None);
+        assert_eq!(path, PageItemsPath::Value);
+        assert_eq!(path.items(&arr, &arr), Some(vec![json!({"id": 1})]));
+
+        // Unrecognized shape: passthrough.
+        assert_eq!(
+            PageItemsPath::decide(&json!({"a": 1}), &json!({"a": 1}), None),
+            PageItemsPath::None
+        );
+    }
+
+    /// Run `handle_json_response` over `bodies` under `--page-all`, capturing
+    /// output, and return the captured per-page values plus the decided path.
+    async fn capture_pages(
+        bodies: &[&str],
+        endpoint_pag: Option<&EndpointPagination>,
+        return_path: Option<&str>,
+        no_extract: bool,
+    ) -> (Vec<Value>, PageItemsPath) {
+        let pagination = PaginationConfig {
+            page_all: true,
+            page_limit: 10,
+            page_delay_ms: 0,
+            ..PaginationConfig::default()
+        };
+        let pipeline = crate::formatter::OutputPipeline::default();
+        let mut pages_fetched = 0u32;
+        let mut page_state = PageState::initial(endpoint_pag);
+        let mut captured = Vec::new();
+        let mut pager = None;
+        let mut items_path = PageItemsPath::default();
+        for body in bodies {
+            handle_json_response(
+                body,
+                &pagination,
+                endpoint_pag,
+                &pipeline,
+                &mut pages_fetched,
+                &mut page_state,
+                true,
+                &mut captured,
+                "http://example.com/test",
+                &[],
+                return_path,
+                no_extract,
+                "test-op",
+                &mut pager,
+                &mut items_path,
+            )
+            .await
+            .unwrap();
+        }
+        (captured, items_path)
+    }
+
+    #[tokio::test]
+    async fn test_page_all_reduces_pages_to_items_with_return_value_and_results() {
+        let pag = EndpointPagination::Cursor {
+            cursor: "$request.nextToken".to_string(),
+            next_cursor: "$response.data.nextToken".to_string(),
+            results: "data.items".to_string(),
+        };
+        let (captured, items_path) = capture_pages(
+            &[
+                r#"{"data":{"items":[{"id":1}],"nextToken":"p2"}}"#,
+                r#"{"data":{"items":[{"id":2}],"nextToken":""}}"#,
+            ],
+            Some(&pag),
+            Some("data"),
+            false,
+        )
+        .await;
+        assert!(items_path.is_decided());
+        assert_eq!(
+            merge_captured_pages(captured),
+            json!([{"id": 1}, {"id": 2}])
+        );
+    }
+
+    #[tokio::test]
+    async fn test_page_all_no_extract_keeps_page_envelopes() {
+        let pag = EndpointPagination::Cursor {
+            cursor: "$request.nextToken".to_string(),
+            next_cursor: "$response.nextToken".to_string(),
+            results: "items".to_string(),
+        };
+        let (captured, items_path) = capture_pages(
+            &[
+                r#"{"items":[{"id":1}],"nextToken":"p2"}"#,
+                r#"{"items":[{"id":2}],"nextToken":""}"#,
+            ],
+            Some(&pag),
+            None,
+            true,
+        )
+        .await;
+        assert_eq!(items_path, PageItemsPath::Undecided);
+        assert_eq!(
+            captured,
+            vec![
+                json!({"items":[{"id":1}],"nextToken":"p2"}),
+                json!({"items":[{"id":2}],"nextToken":""}),
+            ]
+        );
+    }
+
+    #[tokio::test]
+    async fn test_page_all_leaves_non_paginated_response_alone() {
+        // No `x-fern-pagination` and no heuristic token property: a single
+        // object response must not have its arrays extracted or be wrapped.
+        let (captured, items_path) =
+            capture_pages(&[r#"{"id":1,"tags":["a","b"]}"#], None, None, false).await;
+        assert_eq!(items_path, PageItemsPath::Undecided);
+        assert_eq!(captured, vec![json!({"id":1,"tags":["a","b"]})]);
+    }
 }
 
 #[tokio::test]
