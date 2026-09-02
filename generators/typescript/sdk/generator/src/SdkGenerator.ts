@@ -181,6 +181,7 @@ export declare namespace SdkGenerator {
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
+        guardProcessEnvAccess: boolean;
         generateReactQueryHooks: boolean;
     }
 }
@@ -1620,7 +1621,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;
@@ -1643,7 +1645,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1660,7 +1663,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             this.withSourceFile({
                 filepath: routingAuthProvidersGenerator.getFilePath(),

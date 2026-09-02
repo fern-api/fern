@@ -70,6 +70,58 @@ export function createHeaderAuthScheme(opts?: {
 }
 
 /**
+ * Creates an OAuthScheme IR object (client credentials grant) for use in tests.
+ * The token endpoint points at the endpoint created by {@link createHttpEndpoint}.
+ */
+export function createOAuthScheme(opts?: {
+    clientIdEnvVar?: string;
+    clientSecretEnvVar?: string;
+    tokenPrefix?: string;
+    tokenHeader?: string;
+    endpointId?: string;
+    docs?: string;
+}): FernIr.OAuthScheme {
+    const stringType = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
+    const bodyProperty = (name: string, valueType: FernIr.TypeReference): FernIr.RequestProperty => ({
+        propertyPath: undefined,
+        property: FernIr.RequestPropertyValue.body(createObjectProperty(name, valueType))
+    });
+    return {
+        docs: opts?.docs,
+        key: "OAuth",
+        configuration: FernIr.OAuthConfiguration.clientCredentials({
+            clientIdEnvVar: opts?.clientIdEnvVar,
+            clientSecretEnvVar: opts?.clientSecretEnvVar,
+            tokenPrefix: opts?.tokenPrefix,
+            tokenHeader: opts?.tokenHeader,
+            scopes: undefined,
+            refreshEndpoint: undefined,
+            tokenEndpoint: {
+                endpointReference: {
+                    endpointId: opts?.endpointId ?? "endpoint_test",
+                    serviceId: "service_test",
+                    subpackageId: undefined
+                },
+                requestProperties: {
+                    clientId: bodyProperty("clientId", stringType),
+                    clientSecret: bodyProperty("clientSecret", stringType),
+                    scopes: undefined,
+                    customProperties: undefined
+                },
+                responseProperties: {
+                    accessToken: {
+                        propertyPath: undefined,
+                        property: createObjectProperty("accessToken", stringType)
+                    },
+                    expiresIn: undefined,
+                    refreshToken: undefined
+                }
+            }
+        })
+    };
+}
+
+/**
  * Creates a minimal IR object with auth configuration for use in auth provider tests.
  * Only populates the fields that auth provider generators actually access.
  */
@@ -179,8 +231,8 @@ export function createQueryParameter(
  * to find their scheme in the IR's auth.schemes array.
  */
 export function createAuthScheme(
-    type: "bearer" | "basic" | "header",
-    scheme: FernIr.BearerAuthScheme | FernIr.BasicAuthScheme | FernIr.HeaderAuthScheme,
+    type: "bearer" | "basic" | "header" | "oauth",
+    scheme: FernIr.BearerAuthScheme | FernIr.BasicAuthScheme | FernIr.HeaderAuthScheme | FernIr.OAuthScheme,
     key?: string
 ): FernIr.AuthScheme {
     // We must create the union variant and then mutate the key onto the same object
@@ -196,9 +248,13 @@ export function createAuthScheme(
         case "header":
             authScheme = FernIr.AuthScheme.header(scheme as FernIr.HeaderAuthScheme);
             break;
+        case "oauth":
+            authScheme = FernIr.AuthScheme.oauth(scheme as FernIr.OAuthScheme);
+            break;
     }
+    const defaultKeys = { bearer: "Bearer", basic: "BasicAuth", header: "ApiKey", oauth: "OAuth" } as const;
     // biome-ignore lint/suspicious/noExplicitAny: AuthScheme union type doesn't include key in its type definition but IR objects have it at runtime
-    (authScheme as any).key = key ?? (type === "bearer" ? "Bearer" : type === "basic" ? "BasicAuth" : "ApiKey");
+    (authScheme as any).key = key ?? defaultKeys[type];
     return authScheme;
 }
 

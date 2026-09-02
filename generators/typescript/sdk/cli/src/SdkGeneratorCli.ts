@@ -110,6 +110,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             optionalAuth: parsed?.["optional-auth"] ?? false,
+            guardProcessEnvAccess: parsed?.guardProcessEnvAccess ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
             generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
@@ -281,6 +282,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 optionalAuth: customConfig.optionalAuth,
+                guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });
