@@ -306,6 +306,57 @@ config:
     jest: "29.0.7"
 ```
 
+#### ✨ `packageJson`
+
+**Type:** map\<string, unknown\>
+
+**Default:** `{}`
+
+Arbitrary overrides that are merged into the generated `package.json`. Values you specify win over
+generated ones; arrays (such as `files`) are unioned with your entries first. How nested objects are
+combined is controlled by `packageJsonMergeStrategy`.
+
+```yaml
+# generators.yml
+config:
+  packageJson:
+    license: "MIT"
+    engines:
+      node: ">=18"
+```
+
+#### ✨ `packageJsonMergeStrategy`
+
+**Type:** `"shallow" | "deep"`
+
+**Default:** `"shallow"`
+
+Controls how nested objects in `packageJson` are merged into the generated `package.json`.
+
+- `shallow` (default): nested objects one level below a top-level key are replaced wholesale. For
+  example, overriding `exports["."]` replaces the generated `import`/`require`/`default`
+  conditions with exactly what you wrote.
+- `deep`: nested objects are merged recursively. Your keys win at every level, keys you do not
+  mention are inherited from the generated output, and your keys are emitted first in the order you
+  wrote them (so a custom `exports` condition precedes the generated ones and Node matches it first).
+
+Use `deep` to add a custom export condition without redefining the whole subpath:
+
+```yaml
+# generators.yml
+config:
+  packageJsonMergeStrategy: deep
+  packageJson:
+    exports:
+      ".":
+        "my-dev-condition":
+          types: "./dist/cjs/index.d.ts"
+          default: "./src/index.ts"
+```
+
+Removing a generated key (for example dropping the `require` condition) is not expressible under
+either strategy.
+
 #### ✨ `treatUnknownAsAny`
 
 **Type:** boolean
