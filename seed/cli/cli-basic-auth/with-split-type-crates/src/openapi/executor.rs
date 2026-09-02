@@ -1089,6 +1089,15 @@ async fn build_http_request(
     // endpoint. RoutingAuthProvider already honors this internally; the
     // executor-side check makes it universal.
     if !auth_metadata.is_explicit_anonymous() {
+        // The spec says this operation needs credentials and none are
+        // configured: error before sending rather than issuing an
+        // unauthenticated request and interpreting the server's rejection.
+        if auth_metadata.requires_credentials() && !auth_provider.has_credentials_for(auth_metadata)
+        {
+            return Err(crate::auth::missing_credentials_error(
+                auth_provider.as_ref(),
+            ));
+        }
         request = auth_provider.apply(request, auth_metadata)?;
     }
 
@@ -2790,6 +2799,10 @@ pub async fn execute_method(
     drop(pager_handle);
 
     if capture_output && !captured_values.is_empty() {
+        if pagination.page_all && pages_fetched > 0 {
+            let results_path = endpoint_pag.map(|p| p.results_path());
+            return Ok(Some(merge_captured_pages(captured_values, results_path)));
+        }
         if captured_values.len() == 1 {
             return Ok(Some(captured_values.pop().unwrap()));
         } else {
@@ -2798,6 +2811,49 @@ pub async fn execute_method(
     }
 
     Ok(None)
+}
+
+/// Collapse the per-page values captured under `--page-all` into the same
+/// shape a single page would have produced after item extraction: one flat
+/// array of items.
+///
+/// Items are located with the endpoint's declared `results` path when the
+/// operation has one, otherwise with the same "first non-empty array
+/// property" heuristic the table/CSV formatters use for a single page. Pages
+/// that are already arrays (e.g. after `x-fern-sdk-return-value` extraction)
+/// are concatenated. If any page does not fit the detected shape the pages
+/// are returned unchanged as an array so no data is dropped.
+fn merge_captured_pages(pages: Vec<Value>, results_path: Option<&str>) -> Value {
+    if pages.iter().all(Value::is_array) {
+        return Value::Array(
+            pages
+                .into_iter()
+                .flat_map(|p| match p {
+                    Value::Array(items) => items,
+                    _ => Vec::new(),
+                })
+                .collect(),
+        );
+    }
+
+    let items_path: Option<String> = match results_path {
+        Some(path) if !path.trim().is_empty() => Some(path.to_string()),
+        _ => pages
+            .iter()
+            .find_map(|p| crate::formatter::extract_items(p).map(|(key, _)| key.to_string())),
+    };
+    let Some(items_path) = items_path else {
+        return Value::Array(pages);
+    };
+
+    let mut merged = Vec::new();
+    for page in &pages {
+        let Some(Value::Array(items)) = get_nested_value(page, &items_path) else {
+            return Value::Array(pages);
+        };
+        merged.extend(items.iter().cloned());
+    }
+    Value::Array(merged)
 }
 
 /// Format an HTTP version enum as a string (e.g. `HTTP/1.1`).
@@ -12340,6 +12396,102 @@ mod tests {
             _ => panic!("expected Sse variant"),
         }
     }
+}
+
+#[tokio::test]
+async fn test_execute_method_fails_fast_when_required_credentials_missing() {
+    // Base URL is unroutable: if the executor sent the request we'd get a
+    // network error, not the friendly missing-credentials error.
+    let doc = RestDescription {
+        root_url: "http://127.0.0.1:1/".to_string(),
+        service_path: "".to_string(),
+        ..Default::default()
+    };
+    let mut requirement = HashMap::new();
+    requirement.insert("ApiKey".to_string(), Vec::<String>::new());
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        security_requirements: Some(vec![requirement]),
+        ..Default::default()
+    };
+    let provider: crate::auth::DynAuthProvider =
+        std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+            "ApiKey",
+            crate::auth::AuthCredentialSource::from_env("FERN_CLI_TEST_UNSET_TOKEN_VAR"),
+        ));
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let err = execute_method(
+        &doc,
+        &method,
+        None,
+        None,
+        &provider,
+        None,
+        None,
+        None,
+        None,
+        false,
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true,
+        None,
+        &http_config,
+        false,
+        true, // no_retry
+        false,
+        false,
+        &[],
+        &[],
+    )
+    .await
+    .expect_err("missing credentials must be an error");
+    match err {
+        CliError::Auth(msg) => {
+            assert!(msg.contains("credentials are missing"), "got: {msg}");
+            assert!(msg.contains("FERN_CLI_TEST_UNSET_TOKEN_VAR"), "got: {msg}");
+        }
+        other => panic!("expected CliError::Auth, got {other:?}"),
+    }
+}
+
+#[test]
+fn test_merge_captured_pages_flattens_items() {
+    // Heuristic (no declared results path): first non-empty array property.
+    let pages = vec![
+        json!({"dnaSequences": [{"id": 1}, {"id": 2}], "nextToken": "p2"}),
+        json!({"dnaSequences": [{"id": 3}], "nextToken": ""}),
+        json!({"dnaSequences": [], "nextToken": ""}),
+    ];
+    assert_eq!(
+        merge_captured_pages(pages, None),
+        json!([{"id": 1}, {"id": 2}, {"id": 3}])
+    );
+
+    // Declared results path wins over the heuristic.
+    let pages = vec![
+        json!({"meta": [1], "data": {"items": [{"id": 1}]}}),
+        json!({"meta": [2], "data": {"items": [{"id": 2}]}}),
+    ];
+    assert_eq!(
+        merge_captured_pages(pages, Some("data.items")),
+        json!([{"id": 1}, {"id": 2}])
+    );
+
+    // Already-extracted array pages concatenate.
+    let pages = vec![json!([{"id": 1}]), json!([{"id": 2}])];
+    assert_eq!(
+        merge_captured_pages(pages, None),
+        json!([{"id": 1}, {"id": 2}])
+    );
+
+    // Unrecognized shape: keep pages as-is rather than dropping data.
+    let pages = vec![json!({"a": 1}), json!({"a": 2})];
+    assert_eq!(
+        merge_captured_pages(pages.clone(), None),
+        Value::Array(pages)
+    );
 }
 
 #[tokio::test]

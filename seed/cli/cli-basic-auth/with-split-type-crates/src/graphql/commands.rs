@@ -32,6 +32,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .title
         .clone()
         .unwrap_or_else(|| format!("{} CLI", doc.name));
+    let env_prefix = crate::openapi::commands::env_var_prefix(&doc.name);
     let mut root = Command::new(doc.name.clone())
         .about(about_text)
         .term_width(200)
@@ -47,7 +48,9 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .arg(
             clap::Arg::new("format")
                 .long("format")
-                .help("Output format: json, table, yaml, csv, raw, jsonl. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON).")
+                .help(format!(
+                    "Output format: json, table, yaml, csv, raw, jsonl. Default: table when stdout is a TTY, json when piped. Override default with {env_prefix}_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON)."
+                ))
                 .value_name("FORMAT")
                 .global(true),
         )

@@ -38,11 +38,11 @@ These flags are available on every command:
 | `--dry-run` | Print the HTTP request without sending it |
 | `--json <JSON\|->` | Supply the request body as JSON (or `-` for stdin) |
 | `--params <JSON>` | Merge extra parameters as JSON |
-| `--format <json\|table\|yaml\|csv>` | Output format (default: `json`) |
-| `--output <PATH>` | Write binary responses to a file |
+| `--format <json\|table\|yaml\|csv\|jsonl\|raw\|http>` | Output format (default: `table` in a terminal, `json` when piped) |
 | `--base-url <URL>` | Override the API base URL |
-| `--page-all` | Auto-paginate and stream all results |
+| `--page-all` | Auto-paginate and stream all results (paginated operations only) |
 | `--page-limit <N>` | Max pages to fetch (default: `10`) |
+| `-o, --output <PATH>` | Write a binary response to a file (binary-response operations only) |
 | `-q, --quiet` | Suppress stdout on success |
 | `-h, --help` | Print help |
 | `-V, --version` | Print version |
