@@ -14,6 +14,9 @@ describe("fern sdk migrate", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
         const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
         const originalGenerators = await readFile(generatorsPath, "utf-8");
+        const expectedSdkConfig = JSON.parse(
+            await readFile(join(directory, RelativeFilePath.of("sdk-config.json")), "utf-8")
+        );
 
         const result = await runFernCli(["sdk", "migrate", "--api", "default", "-o", "-", "--log-level", "debug"], {
             cwd: directory,
@@ -24,23 +27,7 @@ describe("fern sdk migrate", () => {
 
         expect(result.stdout.endsWith("\n")).toBe(true);
         const sdkConfig = JSON.parse(result.stdout);
-        expect(sdkConfig).toMatchObject({
-            schemaVersion: "sdk-config/v1",
-            source: { specs: [{ id: "openapi", type: "openapi", path: "./fern/openapi.yml" }] },
-            targets: [
-                { generatorVersion: "3.63.3", language: "typescript" },
-                { generatorVersion: "4.3.10", language: "python" }
-            ]
-        });
-        expect(sdkConfig).not.toHaveProperty("sdkVersion");
-        expect(sdkConfig).not.toHaveProperty("apiVersion");
-        expect(sdkConfig).not.toHaveProperty("output");
-        expect(sdkConfig.targets.map((target: { output: unknown }) => target.output)).toEqual([
-            { delivery: "files", path: "./generated/typescript" },
-            { delivery: "files", path: "./generated/python" }
-        ]);
-        expect(sdkConfig.client).toEqual({});
-        expect(sdkConfig.generation).toEqual({});
+        expect(sdkConfig).toEqual(expectedSdkConfig);
         expect(await readFile(generatorsPath, "utf-8")).toBe(originalGenerators);
         await temporaryDirectory.cleanup();
     });

@@ -1,4 +1,4 @@
-import type { AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
+import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -13,7 +13,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
-import { type ResolvedMigrationSourceSpec, serializeMigrationSource } from "../projectMigrationSource.js";
+import {
+    type ResolvedMigrationSourceSpec,
+    resolveMigrationSourceSpecs,
+    serializeMigrationSource
+} from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
 import { writeOutputFile } from "../writeOutputFile.js";
 
@@ -133,6 +137,39 @@ describe("SDK Config migration", () => {
         expect(source.specs[1]?.apiImportSettings).toEqual({ objectQueryParameters: true });
     });
 
+    it("matches API import settings to source specs by namespace and path", () => {
+        const firstPath = AbsoluteFilePath.of("/tmp/specs/first.yml");
+        const secondPath = AbsoluteFilePath.of("/tmp/specs/second.yml");
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [
+                createWorkspaceOpenApiSpec("Second", secondPath),
+                createWorkspaceOpenApiSpec("First", firstPath)
+            ],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: {
+                        First: [createConfiguredOpenApiDefinition("../specs/first.yml", true)],
+                        Second: [createConfiguredOpenApiDefinition("../specs/second.yml", false)]
+                    },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        const specs = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace: {} as FernWorkspace,
+            generator: createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")
+        });
+
+        expect(specs.map(({ namespace, apiImportSettings }) => ({ namespace, apiImportSettings }))).toEqual([
+            { namespace: "Second", apiImportSettings: { titleAsSchemaName: false } },
+            { namespace: "First", apiImportSettings: { titleAsSchemaName: true } }
+        ]);
+    });
+
     it("uses a common project root when source files live outside the Fern configuration directory", () => {
         const source = serializeMigrationSource({
             specs: [
@@ -161,7 +198,8 @@ describe("SDK Config migration", () => {
         expect(result.diagnostics).toEqual([
             expect.objectContaining({
                 code: "FERN_API_AUTH_REQUIRES_REVIEW",
-                path: ["api", "auth"]
+                path: ["api", "auth"],
+                reason: expect.stringContaining("oauth")
             })
         ]);
     });
@@ -477,6 +515,31 @@ function createResolvedSourceSpec(
         idHint: name,
         namespace: name,
         type: "openapi"
+    };
+}
+
+function createWorkspaceOpenApiSpec(namespace: string, absoluteFilepath: AbsoluteFilePath): Spec {
+    return {
+        type: "openapi",
+        absoluteFilepath,
+        absoluteFilepathToOverrides: undefined,
+        absoluteFilepathToOverlays: undefined,
+        namespace,
+        source: { type: "openapi", file: absoluteFilepath }
+    };
+}
+
+function createConfiguredOpenApiDefinition(
+    configuredPath: string,
+    shouldUseTitleAsName: boolean
+): generatorsYml.APIDefinitionLocation {
+    return {
+        schema: { type: "oss", path: configuredPath },
+        origin: undefined,
+        overrides: undefined,
+        overlays: undefined,
+        audiences: undefined,
+        settings: { shouldUseTitleAsName } as generatorsYml.APIDefinitionSettings
     };
 }
 

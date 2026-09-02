@@ -29,8 +29,12 @@ export function resolveMigrationSourceSpecs({
     }
     if (hasSpecs(workspace)) {
         const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
-        return workspace.allSpecs.map((spec, index) =>
-            resolveWorkspaceSpec(spec, configuredDefinitions[index]?.settings)
+        return workspace.allSpecs.map((spec) =>
+            resolveWorkspaceSpec(
+                spec,
+                findConfiguredDefinition(workspace.absoluteFilePath.toString(), spec, configuredDefinitions)?.location
+                    .settings
+            )
         );
     }
     if (fernWorkspace.sources.length > 0) {
@@ -176,14 +180,82 @@ function resolveWorkspaceSpec(
     }
 }
 
-function getConfiguredDefinitions(api: generatorsYml.APIDefinition | undefined): generatorsYml.APIDefinitionLocation[] {
+interface ConfiguredDefinition {
+    location: generatorsYml.APIDefinitionLocation;
+    namespace: string | undefined;
+}
+
+function getConfiguredDefinitions(api: generatorsYml.APIDefinition | undefined): ConfiguredDefinition[] {
     if (api == null || api.type === "conjure") {
         return [];
     }
     if (api.type === "singleNamespace") {
-        return api.definitions;
+        return api.definitions.map((location) => ({ location, namespace: undefined }));
     }
-    return [...Object.values(api.definitions).flat(), ...(api.rootDefinitions ?? [])];
+    return [
+        ...Object.entries(api.definitions).flatMap(([namespace, definitions]) =>
+            definitions.map((location) => ({ location, namespace }))
+        ),
+        ...(api.rootDefinitions ?? []).map((location) => ({ location, namespace: undefined }))
+    ];
+}
+
+function findConfiguredDefinition(
+    workspacePath: string,
+    spec: Spec,
+    definitions: ConfiguredDefinition[]
+): ConfiguredDefinition | undefined {
+    const matches = definitions.filter(
+        (definition) =>
+            definition.namespace === specNamespace(spec) &&
+            definitionMatchesSpecType(definition.location, spec) &&
+            definitionMatchesSpecPath(workspacePath, definition.location, spec)
+    );
+    return matches.length === 1 ? matches[0] : undefined;
+}
+
+function definitionMatchesSpecType(definition: generatorsYml.APIDefinitionLocation, spec: Spec): boolean {
+    switch (spec.type) {
+        case "openapi":
+            return definition.schema.type === "oss";
+        case "graphql":
+            return definition.schema.type === "graphql";
+        case "openrpc":
+            return definition.schema.type === "openrpc";
+        case "protobuf":
+            return definition.schema.type === "protobuf";
+    }
+}
+
+function definitionMatchesSpecPath(
+    workspacePath: string,
+    definition: generatorsYml.APIDefinitionLocation,
+    spec: Spec
+): boolean {
+    const specPath = absoluteSpecPath(spec);
+    const configuredPath = configuredDefinitionPath(definition);
+    if (definition.gitSource != null) {
+        const gitPath = path.normalize(definition.gitSource.path);
+        return specPath === gitPath || specPath.endsWith(`${path.sep}${gitPath}`);
+    }
+    const absoluteConfiguredPath = path.isAbsolute(configuredPath)
+        ? path.normalize(configuredPath)
+        : path.resolve(workspacePath, configuredPath);
+    return specPath === absoluteConfiguredPath;
+}
+
+function configuredDefinitionPath(definition: generatorsYml.APIDefinitionLocation): string {
+    return definition.schema.type === "protobuf" ? definition.schema.root : definition.schema.path;
+}
+
+function absoluteSpecPath(spec: Spec): string {
+    return path.normalize(
+        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufRoot.toString() : spec.absoluteFilepath.toString()
+    );
+}
+
+function specNamespace(spec: Spec): string | undefined {
+    return spec.type === "protobuf" ? undefined : spec.namespace;
 }
 
 function resolveIdentifiableSource(source: IdentifiableSource): ResolvedMigrationSourceSpec {

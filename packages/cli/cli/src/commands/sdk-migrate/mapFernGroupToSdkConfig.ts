@@ -123,14 +123,20 @@ function mapFernAuth(root: FernApiContents): {
         return { diagnostics: [] };
     }
 
-    const schemes = selection.references.map((reference) => mapFernAuthScheme(reference, declarations));
-    const mappedSchemes = schemes.filter((scheme): scheme is SdkConfigAuthScheme => scheme != null);
-    if (mappedSchemes.length !== schemes.length || mappedSchemes.length === 0) {
+    const schemes = selection.references.map((reference) => ({
+        id: authReferenceId(reference),
+        scheme: mapFernAuthScheme(reference, declarations)
+    }));
+    const unsupportedSchemeIds = [...new Set(schemes.filter(({ scheme }) => scheme == null).map(({ id }) => id))];
+    const mappedSchemes = schemes.flatMap(({ scheme }) => (scheme == null ? [] : [scheme]));
+    if (unsupportedSchemeIds.length > 0 || mappedSchemes.length === 0) {
         return {
-            diagnostics: [unsupportedAuthDiagnostic()]
+            diagnostics: [unsupportedAuthDiagnostic(unsupportedSchemeIds)]
         };
     }
 
+    // SDK Config declares each scheme once by id while requirements retain Fern's auth selection.
+    // When an id is repeated, the last reference supplies its optional reference-level docs.
     const uniqueSchemes = [...new Map(mappedSchemes.map((scheme) => [scheme.id, scheme])).values()];
     return {
         auth: {
@@ -204,12 +210,14 @@ function authReferenceId(reference: FernAuthReference): string {
     return typeof reference === "string" ? reference : reference.scheme;
 }
 
-function unsupportedAuthDiagnostic(): FernConfigMappingDiagnostic {
+function unsupportedAuthDiagnostic(schemeIds: readonly string[]): FernConfigMappingDiagnostic {
+    const schemeDetail =
+        schemeIds.length === 0 ? "" : ` Unsupported or unresolved scheme ids: ${schemeIds.join(", ")}.`;
     return {
         code: "FERN_API_AUTH_REQUIRES_REVIEW",
         severity: "warning",
         path: ["api", "auth"],
-        reason: "Fern API authentication includes a scheme that cannot be represented safely by this migration command",
+        reason: `Fern API authentication includes a scheme that cannot be represented safely by this migration command.${schemeDetail}`,
         sdkConfigPath: ["api", "auth"],
         suggestedAction: "Review the Fern auth schemes and configure api.auth manually in SDK Config v1."
     };
@@ -245,7 +253,7 @@ function normalizeResolvedOutput(value: unknown, fieldName?: string): unknown {
             .join(":");
     }
     if (Array.isArray(value)) {
-        return value.map((item) => normalizeResolvedOutput(item));
+        return value.map((item) => normalizeResolvedOutput(item, fieldName));
     }
     if (!isRecord(value)) {
         return value;
@@ -264,7 +272,11 @@ function normalizeResolvedOutput(value: unknown, fieldName?: string): unknown {
 }
 
 function isEmptyCredential(fieldName: string, value: unknown): boolean {
-    return value === "" && ["apiKey", "password", "token", "username"].includes(fieldName);
+    return (
+        ["apiKey", "password", "token", "username"].includes(fieldName) &&
+        typeof value === "string" &&
+        value.trim() === ""
+    );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

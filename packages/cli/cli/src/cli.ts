@@ -316,6 +316,9 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
+        // This must run in global middleware, before version/debug logging and project loading can
+        // write to stdout. At this point argv._ is yargs' resolved command path, and aliases have
+        // already populated argv.output.
         const isSdkMigrateStdout = argv._[0] === "sdk" && argv._[1] === "migrate" && argv.output === "-";
         if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout) {
             cliContext.enableJsonMode();

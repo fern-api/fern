@@ -6,6 +6,7 @@ import {
 } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { CliError } from "@fern-api/task-context";
+import { createHash, type Hash } from "crypto";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { type ResolvedMigrationSourceSpec, resolveMigrationSourceSpecs } from "./projectMigrationSource.js";
@@ -45,6 +46,8 @@ export async function loadCompatibleMigrationGroups({
             for (const generator of group.generators) {
                 const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generator);
                 const specs = generator.apiOverride?.specs;
+                // Both values are resolved from generators.yml schemas and contain JSON data only.
+                // Stable serialization therefore provides a deterministic cache identity.
                 const loadKey = stableJson({ settings, specs });
                 let workspaceLoad = workspaceLoads.get(loadKey);
                 if (workspaceLoad == null) {
@@ -86,6 +89,8 @@ export async function loadCompatibleMigrationGroups({
             groupName: groups.map((group) => group.groupName).join("+"),
             audiences: baseline.group.audiences,
             generators: groups.flatMap((group) => group.generators),
+            // The configuration loader has already merged root and group reviewers into each
+            // generator's resolved GitHub output, which is what the SDK Config mapper consumes.
             reviewers: undefined
         }
     };
@@ -102,7 +107,7 @@ export function apiSchemaFingerprint(
     definition: FernDefinition,
     audiences: generatorsYml.GeneratorGroup["audiences"]
 ): string {
-    return stableJson({
+    return stableHash({
         audiences:
             audiences.type === "all"
                 ? { type: "all" }
@@ -146,6 +151,43 @@ function sortedEntries<Value>(record: Record<string, Value>): Array<[string, Val
 
 function stableJson(value: unknown): string {
     return JSON.stringify(sortKeys(value));
+}
+
+function stableHash(value: unknown): string {
+    const hash = createHash("sha256");
+    updateStableHash(hash, value);
+    return hash.digest("hex");
+}
+
+function updateStableHash(hash: Hash, value: unknown): void {
+    if (Array.isArray(value)) {
+        hash.update("[");
+        value.forEach((child, index) => {
+            if (index > 0) {
+                hash.update(",");
+            }
+            updateStableHash(hash, child === undefined ? null : child);
+        });
+        hash.update("]");
+        return;
+    }
+    if (value == null || typeof value !== "object") {
+        hash.update(JSON.stringify(value) ?? "null");
+        return;
+    }
+    hash.update("{");
+    Object.entries(value)
+        .filter(([, child]) => child !== undefined)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .forEach(([key, child], index) => {
+            if (index > 0) {
+                hash.update(",");
+            }
+            hash.update(JSON.stringify(key));
+            hash.update(":");
+            updateStableHash(hash, child);
+        });
+    hash.update("}");
 }
 
 function sortKeys(value: unknown): unknown {
