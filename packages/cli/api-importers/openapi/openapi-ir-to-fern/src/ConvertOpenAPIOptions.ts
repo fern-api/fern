@@ -133,6 +133,19 @@ export interface ConvertOpenAPIOptions {
      * Defaults to true. When false, SDK users must explicitly provide a base URL.
      */
     inferDefaultEnvironment: boolean;
+
+    /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so that a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + `Sharing_ListFolderMembers` -> `listFolderMembers`).
+     * If false, only separator-delimited chunks are tokenized, so operation ids containing an
+     * underscore or a digit keep their tag prefix and lose their internal word boundaries
+     * (e.g. `listfoldermembers`).
+     *
+     * Changing this changes generated endpoint names, and therefore SDK method names and docs URLs,
+     * so it defaults to false.
+     */
+    respectOperationIdWordBoundaries: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -152,7 +165,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     groupEnvironmentsByHost: false,
     multiServerStrategy: generatorsYml.MultiServerStrategy.EnvironmentPerServer,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
-    inferDefaultEnvironment: true
+    inferDefaultEnvironment: true,
+    respectOperationIdWordBoundaries: false
 };
 
 function mergeOptions<T extends object>(params: {

@@ -189,6 +189,19 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     respectPerSpecBasePath: boolean;
+
+    /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so that a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + `Sharing_ListFolderMembers` -> `listFolderMembers`).
+     * If false, only separator-delimited chunks are tokenized, so operation ids containing an
+     * underscore or a digit keep their tag prefix and lose their internal word boundaries
+     * (e.g. `listfoldermembers`).
+     *
+     * Changing this changes generated endpoint names, and therefore SDK method names and docs URLs,
+     * so it defaults to false.
+     */
+    respectOperationIdWordBoundaries: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -234,7 +247,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disambiguateRequestNames: true,
     ignoreTags: false,
     respectParameterContent: false,
-    respectPerSpecBasePath: false
+    respectPerSpecBasePath: false,
+    respectOperationIdWordBoundaries: false
 };
 
 function mergeOptions<T extends object>(params: {

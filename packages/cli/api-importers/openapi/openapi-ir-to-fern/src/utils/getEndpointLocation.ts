@@ -1,14 +1,23 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { tokenizeOperationId } from "@fern-api/core-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
-import { camelCase, compact, isEqual } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
     endpointId: string;
     tag?: string;
+}
+
+export interface EndpointLocationOptions {
+    /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and
+     * digits) rather than only on separators. See {@link tokenizeOperationId}.
+     */
+    respectOperationIdWordBoundaries?: boolean;
 }
 
 function resolveEndpointLocationWithNamespaceOverride({
@@ -33,8 +42,9 @@ function sanitizeEndpointId(operationId: string): string {
     return operationId.includes(".") ? camelCase(operationId) : operationId;
 }
 
-function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
+function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions): EndpointLocation {
     const namespace = endpoint.namespace;
+    const { respectOperationIdWordBoundaries } = options;
 
     // Ignore the namespace tag as we'll apply that later, universally
     const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
@@ -75,8 +85,8 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag);
-    const operationIdTokens = tokenizeString(operationId);
+    const tagTokens = tokenizeOperationId(tag, respectOperationIdWordBoundaries);
+    const operationIdTokens = tokenizeOperationId(operationId, respectOperationIdWordBoundaries);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -120,14 +130,27 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
         });
     }
 
+    const remainingTokens = operationIdTokens.slice(fileParts.length);
+    const file = RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml");
+
+    // A leading digit is not a valid identifier in most target languages, so keep the whole
+    // operation id rather than stripping the prefix (e.g. tag `files` + `files2GetThumbnail`).
+    if (remainingTokens[0] != null && /^\d/.test(remainingTokens[0])) {
+        return {
+            file,
+            endpointId: sanitizeEndpointId(operationId),
+            tag
+        };
+    }
+
     return {
-        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
-        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
+        file,
+        endpointId: camelCase(remainingTokens.join("_")),
         tag
     };
 }
 
-export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
+export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions = {}): EndpointLocation {
     const tag = endpoint.tags[0];
     if (endpoint.sdkName != null) {
         const filenameWithoutExtension = convertEndpointSdkNameToFileWithoutExtension({
@@ -147,28 +170,8 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
 
     return resolveEndpointLocationWithNamespaceOverride({
         namespaceOverride: endpoint.namespace,
-        location: getUnresolvedEndpointLocation(endpoint)
+        location: getUnresolvedEndpointLocation(endpoint, options)
     });
-}
-
-export function tokenizeString(input: string): string[] {
-    let tokens: string[];
-
-    // Check if the string is in camel case or Pascal case
-    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
-        // Camel case or Pascal case: Split based on capital letters
-        tokens = input.split(/(?=[A-Z])/);
-    } else {
-        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
-        tokens = input.split(/[^a-zA-Z0-9]+/);
-    }
-
-    tokens = tokens.map((token) => token.toLowerCase());
-
-    // Filter out empty tokens
-    tokens = compact(tokens);
-
-    return tokens;
 }
 
 // When the url is /users/{userId}/sign-in we want the split to be ["users", "{userId}", "sign", "in"]

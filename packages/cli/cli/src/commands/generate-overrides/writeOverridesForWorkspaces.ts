@@ -57,13 +57,15 @@ export function generateOverridesContent({
     ir,
     existingOverrides,
     includeModels,
-    context
+    context,
+    respectOperationIdWordBoundaries = false
 }: {
     ir: OpenApiIntermediateRepresentation;
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     existingOverrides: any;
     includeModels: boolean;
     context: TaskContext;
+    respectOperationIdWordBoundaries?: boolean;
 }): { paths: Record<string, Record<string, unknown>>; components: Record<string, Record<string, unknown>> } {
     const hasExisting = existingOverrides != null && typeof existingOverrides === "object";
 
@@ -71,7 +73,7 @@ export function generateOverridesContent({
         ? (existingOverrides.paths as Record<string, Record<string, unknown>>)
         : {};
     for (const endpoint of ir.endpoints) {
-        const endpointLocation = getEndpointLocation(endpoint);
+        const endpointLocation = getEndpointLocation(endpoint, { respectOperationIdWordBoundaries });
         if (!(endpoint.path in paths)) {
             paths[endpoint.path] = {};
         }
@@ -125,6 +127,9 @@ async function writeDefinitionForOpenAPIWorkspace({
             documents: await loader.loadDocuments({ context, specs: [spec] })
         });
 
+        const respectOperationIdWordBoundaries =
+            spec.settings?.respectOperationIdWordBoundaries ?? workspace.respectOperationIdWordBoundaries ?? false;
+
         const overridesPaths = Array.isArray(spec.absoluteFilepathToOverrides)
             ? spec.absoluteFilepathToOverrides
             : spec.absoluteFilepathToOverrides != null
@@ -136,12 +141,24 @@ async function writeDefinitionForOpenAPIWorkspace({
             // method names, and write it back to its original location.
             for (const overridesPath of overridesPaths) {
                 const existingOverrides = await readExistingOverrides(overridesPath, context);
-                const content = generateOverridesContent({ ir, existingOverrides, includeModels, context });
+                const content = generateOverridesContent({
+                    ir,
+                    existingOverrides,
+                    includeModels,
+                    context,
+                    respectOperationIdWordBoundaries
+                });
                 await writeFile(overridesPath, yaml.dump(content));
             }
         } else {
             // No existing override files - generate a new one from scratch.
-            const content = generateOverridesContent({ ir, existingOverrides: {}, includeModels, context });
+            const content = generateOverridesContent({
+                ir,
+                existingOverrides: {},
+                includeModels,
+                context,
+                respectOperationIdWordBoundaries
+            });
 
             const specFilename = getFilename(spec.absoluteFilepath);
             let overridesFilename = "openapi-overrides.yml"; // fallback
