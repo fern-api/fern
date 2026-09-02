@@ -1,4 +1,4 @@
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { NOOP_LOGGER } from "@fern-api/logger";
 
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
@@ -21,7 +21,7 @@ describe("runContainer pull policy", () => {
 
     it("injects `--pull always` before the image when pull is true", async () => {
         await runContainer({
-            logger: CONSOLE_LOGGER,
+            logger: NOOP_LOGGER,
             imageName: "img:latest",
             binds: [],
             pull: true,
@@ -37,7 +37,7 @@ describe("runContainer pull policy", () => {
 
     it("does not pass `--pull` by default (pull-when-missing preserved)", async () => {
         await runContainer({
-            logger: CONSOLE_LOGGER,
+            logger: NOOP_LOGGER,
             imageName: "img:1.0.0",
             binds: [],
             writeLogsToFile: false
@@ -48,7 +48,7 @@ describe("runContainer pull policy", () => {
 
     it("injects `--platform <value>` before the image when platform is set", async () => {
         await runContainer({
-            logger: CONSOLE_LOGGER,
+            logger: NOOP_LOGGER,
             imageName: "img:latest",
             binds: [],
             platform: "linux/amd64",
@@ -62,7 +62,7 @@ describe("runContainer pull policy", () => {
 
     it("does not pass `--platform` by default (host-native platform)", async () => {
         await runContainer({
-            logger: CONSOLE_LOGGER,
+            logger: NOOP_LOGGER,
             imageName: "img:1.0.0",
             binds: [],
             writeLogsToFile: false

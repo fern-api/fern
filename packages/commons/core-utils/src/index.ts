@@ -54,6 +54,7 @@ export { type SetRequired } from "./setRequired.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
 export { titleCase } from "./titleCase.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";
+export { CONTAINER_RUNNERS } from "./types.js";
 export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema.js";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion.js";
 export type { WithoutQuestionMarks } from "./withoutQuestionMarks.js";
