@@ -5,6 +5,7 @@
 use clap::builder::PossibleValuesParser;
 use clap::{Arg, Command};
 
+use crate::cli_args::{HELP_HEADING_OPTIONAL, HELP_HEADING_REQUEST, HELP_HEADING_REQUIRED};
 use crate::graphql::discovery::{GraphQLSchema as RestDescription, GraphQLResource as RestResource};
 use crate::text::to_kebab_flag;
 
@@ -125,51 +126,13 @@ fn build_resource_command(name: &str, resource: &RestResource) -> Option<Command
             true,
         );
 
-        let mut method_cmd = Command::new(method_name.to_string())
-            .about(about)
-            .arg(
-                Arg::new("params")
-                    .long("params")
-                    .help("Additional parameters as JSON (overrides individual flags)")
-                    .value_name("JSON"),
-            )
-            .arg(
-                Arg::new("json")
-                    .long("json")
-                    .help("JSON string for the request body (use `-` to read from stdin)")
-                    .value_name("JSON|-"),
-            );
+        let mut method_cmd = Command::new(method_name.to_string()).about(about);
 
-        // Pagination flags
-        method_cmd = method_cmd
-            .arg(
-                Arg::new("page-all")
-                    .long("page-all")
-                    .help("Auto-paginate through all results (NDJSON)")
-                    .action(clap::ArgAction::SetTrue),
-            )
-            .arg(
-                Arg::new("page-limit")
-                    .long("page-limit")
-                    .help("Maximum number of pages to fetch (default: 10)")
-                    .value_name("N")
-                    .value_parser(clap::value_parser!(u32)),
-            )
-            .arg(
-                Arg::new("page-delay")
-                    .long("page-delay")
-                    .help("Delay in milliseconds between page fetches (default: 100)")
-                    .value_name("MS")
-                    .value_parser(clap::value_parser!(u64)),
-            )
-            .arg(
-                Arg::new("no-pager")
-                    .long("no-pager")
-                    .help("Disable pager even on interactive terminals")
-                    .action(clap::ArgAction::SetTrue),
-            );
+        // Parameters first, required before optional, so heading order in
+        // `--help` follows insertion order (see openapi::commands).
+        let mut required_args: Vec<Arg> = Vec::new();
+        let mut optional_args: Vec<Arg> = Vec::new();
 
-        // Generate individual flags from method parameters
         let mut param_names: Vec<_> = method.parameters.keys().collect();
         param_names.sort();
         for param_name in param_names {
@@ -217,8 +180,65 @@ fn build_resource_command(name: &str, resource: &RestResource) -> Option<Command
                 arg = arg.value_parser(PossibleValuesParser::new(enum_values.clone()));
             }
 
-            method_cmd = method_cmd.arg(arg);
+            if param.required && arg.get_default_values().is_empty() {
+                required_args.push(arg);
+            } else {
+                optional_args.push(arg);
+            }
         }
+
+        for arg in required_args {
+            method_cmd = method_cmd.arg(arg.help_heading(HELP_HEADING_REQUIRED));
+        }
+        for arg in optional_args {
+            method_cmd = method_cmd.arg(arg.help_heading(HELP_HEADING_OPTIONAL));
+        }
+
+        method_cmd = method_cmd
+            .arg(
+                Arg::new("params")
+                    .long("params")
+                    .help("Additional parameters as JSON (overrides individual flags)")
+                    .value_name("JSON")
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("json")
+                    .long("json")
+                    .help("JSON string for the request body (use `-` to read from stdin)")
+                    .value_name("JSON|-")
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("page-all")
+                    .long("page-all")
+                    .help("Auto-paginate through all results (NDJSON)")
+                    .action(clap::ArgAction::SetTrue)
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("page-limit")
+                    .long("page-limit")
+                    .help("Maximum number of pages to fetch (default: 10)")
+                    .value_name("N")
+                    .value_parser(clap::value_parser!(u32))
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("page-delay")
+                    .long("page-delay")
+                    .help("Delay in milliseconds between page fetches (default: 100)")
+                    .value_name("MS")
+                    .value_parser(clap::value_parser!(u64))
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("no-pager")
+                    .long("no-pager")
+                    .help("Disable pager even on interactive terminals")
+                    .action(clap::ArgAction::SetTrue)
+                    .help_heading(HELP_HEADING_REQUEST),
+            );
 
         cmd = cmd.subcommand(method_cmd);
     }
@@ -348,6 +368,17 @@ mod tests {
         assert!(args.contains(&"uuid".to_string()), "uuid flag missing");
         assert!(args.contains(&"status".to_string()), "status flag missing");
         assert!(args.contains(&"params".to_string()), "params flag missing");
+
+        let heading = |id: &str| {
+            get_user_cmd
+                .get_arguments()
+                .find(|a| a.get_id() == id)
+                .and_then(|a| a.get_help_heading())
+        };
+        assert_eq!(heading("uuid"), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading("status"), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading("params"), Some(HELP_HEADING_REQUEST));
+        assert_eq!(heading("page-all"), Some(HELP_HEADING_REQUEST));
     }
 
     #[test]

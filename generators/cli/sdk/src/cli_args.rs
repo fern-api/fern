@@ -7,6 +7,43 @@ use std::io::{IsTerminal, Read};
 
 use crate::error::CliError;
 
+/// `--help` section for spec parameters the operation cannot run without.
+pub const HELP_HEADING_REQUIRED: &str = "Required parameters";
+/// `--help` section for spec parameters the caller may omit.
+pub const HELP_HEADING_OPTIONAL: &str = "Optional parameters";
+/// `--help` section for per-operation request controls (`--json`,
+/// `--params`, pagination, retries, ...).
+pub const HELP_HEADING_REQUEST: &str = "Request options";
+/// `--help` section for flags every command accepts (output format,
+/// base URL, auth/env-backed variables, ...).
+pub const HELP_HEADING_GLOBAL: &str = "Global options";
+
+/// File every `.global(true)` flag that has no explicit help heading under
+/// [`HELP_HEADING_GLOBAL`], recursively through the whole command tree.
+///
+/// Global flags are registered in several places (root builder, protocol
+/// `build_cli`s, binding grafts, SDK variables) and then copied into every
+/// subcommand by clap, so tagging them here — once, on the finished tree —
+/// keeps them out of the per-operation sections in leaf `--help`. Clap's
+/// auto-generated `--help`/`--version` only exist after `build()`, so the
+/// tree is built first and those two are filed alongside the globals.
+pub fn apply_global_help_heading(mut cmd: clap::Command) -> clap::Command {
+    cmd.build();
+    apply_global_help_heading_built(cmd)
+}
+
+fn apply_global_help_heading_built(cmd: clap::Command) -> clap::Command {
+    cmd.mut_args(|arg| {
+        let is_global = arg.is_global_set() || matches!(arg.get_id().as_str(), "help" | "version");
+        if is_global && arg.get_help_heading().is_none() {
+            arg.help_heading(HELP_HEADING_GLOBAL)
+        } else {
+            arg
+        }
+    })
+    .mut_subcommands(apply_global_help_heading_built)
+}
+
 /// True for `--version`, `-V`, or the bare `version` subcommand.
 pub fn is_version_flag(arg: &str) -> bool {
     matches!(arg, "--version" | "-V" | "version")
