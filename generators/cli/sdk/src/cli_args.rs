@@ -33,15 +33,46 @@ pub fn apply_global_help_heading(mut cmd: clap::Command) -> clap::Command {
 }
 
 fn apply_global_help_heading_built(cmd: clap::Command) -> clap::Command {
-    cmd.mut_args(|arg| {
+    let cmd = cmd.mut_args(|arg| {
         let is_global = arg.is_global_set() || matches!(arg.get_id().as_str(), "help" | "version");
         if is_global && arg.get_help_heading().is_none() {
             arg.help_heading(HELP_HEADING_GLOBAL)
         } else {
             arg
         }
-    })
-    .mut_subcommands(apply_global_help_heading_built)
+    });
+    apply_required_usage(cmd).mut_subcommands(apply_global_help_heading_built)
+}
+
+/// Spell out the flags filed under [`HELP_HEADING_REQUIRED`] in the usage
+/// line — `cli pets create [OPTIONS] --name <NAME> --species <SPECIES>` —
+/// the way clap would if they were clap-required. They are deliberately
+/// not (the executor validates, since `--params`/`--json` can supply the
+/// same input), so the default usage would show only `[OPTIONS]`.
+fn apply_required_usage(mut cmd: clap::Command) -> clap::Command {
+    let mut required: Vec<String> = cmd
+        .get_arguments()
+        .filter(|arg| arg.get_help_heading() == Some(HELP_HEADING_REQUIRED))
+        .filter_map(|arg| {
+            let long = arg.get_long()?;
+            let value = arg
+                .get_value_names()
+                .and_then(|names| names.first())
+                .map(|name| format!(" <{name}>"))
+                .unwrap_or_default();
+            Some(format!("--{long}{value}"))
+        })
+        .collect();
+    if required.is_empty() {
+        return cmd;
+    }
+    required.sort();
+    let default_usage = cmd.render_usage().to_string();
+    let default_usage = default_usage
+        .strip_prefix("Usage: ")
+        .unwrap_or(&default_usage)
+        .trim_end();
+    cmd.override_usage(format!("{default_usage} {}", required.join(" ")))
 }
 
 /// True for `--version`, `-V`, or the bare `version` subcommand.

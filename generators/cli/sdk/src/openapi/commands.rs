@@ -1451,6 +1451,10 @@ mod tests {
         // global flags out of the per-operation groups.
         let help = leaf.clone().render_help().to_string();
         let pos = |needle: &str| help.find(needle).unwrap_or_else(|| panic!("{needle:?} missing"));
+        assert!(
+            help.contains("Usage: test-cli users get [OPTIONS] --uuid <STRING>"),
+            "{help}"
+        );
         assert!(pos(HELP_HEADING_REQUIRED) < pos(HELP_HEADING_OPTIONAL));
         assert!(pos(HELP_HEADING_OPTIONAL) < pos(HELP_HEADING_REQUEST));
         let required_section = &help[pos(HELP_HEADING_REQUIRED)..pos(HELP_HEADING_OPTIONAL)];
