@@ -418,11 +418,13 @@ function renderReference(args: {
     lines.push("| `--dry-run` | Print the HTTP request without sending it |");
     lines.push("| `--json <JSON\\|->` | Supply the request body as JSON (or `-` for stdin) |");
     lines.push("| `--params <JSON>` | Merge extra parameters as JSON |");
-    lines.push("| `--format <json\\|table\\|yaml\\|csv>` | Output format (default: `json`) |");
-    lines.push("| `--output <PATH>` | Write binary responses to a file |");
+    lines.push(
+        "| `--format <json\\|table\\|yaml\\|csv\\|jsonl\\|raw\\|http>` | Output format (default: `table` in a terminal, `json` when piped) |"
+    );
     lines.push("| `--base-url <URL>` | Override the API base URL |");
-    lines.push("| `--page-all` | Auto-paginate and stream all results |");
+    lines.push("| `--page-all` | Auto-paginate and stream all results (paginated operations only) |");
     lines.push("| `--page-limit <N>` | Max pages to fetch (default: `10`) |");
+    lines.push("| `-o, --output <PATH>` | Write a binary response to a file (binary-response operations only) |");
     lines.push("| `-q, --quiet` | Suppress stdout on success |");
     lines.push("| `-h, --help` | Print help |");
     lines.push("| `-V, --version` | Print version |");
