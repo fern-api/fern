@@ -3,5 +3,6 @@
     has no `step`, the offset param is treated as a page number and advanced by 1 per page; when `step` is
     present it is treated as an item index and advanced by the number of results returned. Page-number APIs
     (e.g. `?page=2&pageSize=50`) previously skipped pages. The pager also starts from the caller's own value
-    for the offset param and no longer sends it twice on subsequent pages.
+    for the offset param (defaulting to page 1 when none is given and `step` is absent) and no longer
+    sends it twice on subsequent pages.
   type: fix

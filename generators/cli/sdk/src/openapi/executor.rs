@@ -968,20 +968,24 @@ impl PageState {
     /// Pick the initial state from the resolved per-operation pagination
     /// config. Operations without explicit `x-fern-pagination` (or with
     /// cursor-style config) start with no token; offset-style starts at
-    /// the caller's own value for the offset param (e.g. `--page 1`) or
-    /// 0 when unset, so later pages continue from where the caller began;
-    /// uri/path/custom forms start in their respective first-page states.
+    /// the caller's own value for the offset param (e.g. `--page 2`) so
+    /// later pages continue from where the caller began. When the caller
+    /// gave none, page-index offsets (no `step`) start at page 1 and
+    /// item-index offsets (`step` set) start at 0, which is omitted from
+    /// the first request; uri/path/custom forms start in their respective
+    /// first-page states.
     fn initial(
         endpoint: Option<&EndpointPagination>,
         request_query_params: &[(String, String)],
     ) -> Self {
         match endpoint {
-            Some(EndpointPagination::Offset { offset, .. }) => {
+            Some(EndpointPagination::Offset { offset, step, .. }) => {
+                let default_start = if step.is_some() { 0 } else { 1 };
                 let start = request_query_params
                     .iter()
                     .find(|(k, _)| k == offset)
                     .and_then(|(_, v)| v.parse::<u64>().ok())
-                    .unwrap_or(0);
+                    .unwrap_or(default_start);
                 PageState::Offset(start)
             }
             Some(EndpointPagination::Uri { .. } | EndpointPagination::Path { .. }) => {
@@ -1471,7 +1475,12 @@ async fn handle_json_response(
                         // number returned); `step` absent means it counts
                         // pages (advance by 1).
                         let increment = if step.is_some() { page_size } else { 1 };
-                        *page_state = PageState::Offset(current + increment);
+                        let next = current.checked_add(increment).ok_or_else(|| {
+                            CliError::Validation(
+                                "Pagination offset exceeds the supported range".to_string(),
+                            )
+                        })?;
+                        *page_state = PageState::Offset(next);
                         true
                     } else {
                         false
@@ -12112,6 +12121,15 @@ mod tests {
                 offset: "o".into(),
                 results: "r".into(),
                 step: None,
+                has_next_page: None,
+            }), &[]),
+            PageState::Offset(1)
+        ));
+        assert!(matches!(
+            PageState::initial(Some(&EndpointPagination::Offset {
+                offset: "o".into(),
+                results: "r".into(),
+                step: Some("limit".into()),
                 has_next_page: None,
             }), &[]),
             PageState::Offset(0)
