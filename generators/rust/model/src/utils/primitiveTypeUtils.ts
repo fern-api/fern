@@ -217,6 +217,9 @@ export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGen
     if (typeRef.type === "named" && context) {
         return namedTypeSupportsDefault(typeRef.typeId, context, new Set());
     }
+    if (typeRef.type === "unknown") {
+        return true;
+    }
     return false;
 }
 
