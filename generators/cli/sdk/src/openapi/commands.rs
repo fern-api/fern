@@ -789,11 +789,31 @@ fn build_resource_command(
 }
 
 /// A parameter flag the operation cannot run without: the spec marks it
-/// required and no client-side `x-fern-default` fills it in when omitted.
-/// Mirrors the executor's missing-parameter check, which skips parameters
-/// whose default is injected before validation.
-pub(crate) fn is_required_parameter_flag(param: &MethodParameter) -> bool {
-    param.required && default_value_for_clap(&param.default_value).is_none()
+/// required (`required`, or `required_by_spec` for an object shorthand whose
+/// clap flag is deliberately optional) and no client-side `x-fern-default`
+/// fills it in when omitted.
+///
+/// A parent object flag and its dotted leaves are mutually exclusive on the
+/// command line, so when both are spec-required only the leaves are listed as
+/// required — the parent shorthand is an alternative form, not an extra
+/// obligation. This is the same rule `--schema` applies to `input.required`
+/// (see `openapi::help`), so the two surfaces agree.
+fn is_required_parameter_flag(
+    param: &MethodParameter,
+    param_name: &str,
+    all_params: &HashMap<String, MethodParameter>,
+) -> bool {
+    if !(param.required || param.required_by_spec)
+        || default_value_for_clap(&param.default_value).is_some()
+    {
+        return false;
+    }
+    let child_prefix = format!("{param_name}.");
+    !all_params.iter().any(|(name, p)| {
+        name.starts_with(&child_prefix)
+            && (p.required || p.required_by_spec)
+            && default_value_for_clap(&p.default_value).is_none()
+    })
 }
 
 /// Builds the per-parameter flags for one operation — spec parameters
@@ -968,7 +988,7 @@ fn build_parameter_args(method: &RestMethod) -> (Vec<Arg>, Vec<Arg>) {
             arg = arg.action(clap::ArgAction::Append);
         }
 
-        if is_required_parameter_flag(param) {
+        if is_required_parameter_flag(param, param_name, &method.parameters) {
             required_args.push(arg);
         } else {
             optional_args.push(arg);
@@ -1437,6 +1457,35 @@ mod tests {
         assert!(required_section.contains("--uuid"));
         assert!(!required_section.contains("--status"));
         assert!(!required_section.contains("--format"));
+    }
+
+    #[test]
+    fn test_help_required_object_shorthand_matches_schema_contract() {
+        let body = |required: bool, required_by_spec: bool, param_type: &str| MethodParameter {
+            param_type: Some(param_type.to_string()),
+            location: Some("body".to_string()),
+            required,
+            required_by_spec,
+            ..Default::default()
+        };
+        let mut params = HashMap::new();
+        // Required object with a required leaf: the leaf is the required
+        // form, the parent shorthand is the alternative.
+        params.insert("settings".to_string(), body(false, true, "object"));
+        params.insert("settings.auth_type".to_string(), body(true, true, "string"));
+        params.insert("settings.region".to_string(), body(false, false, "string"));
+        // Required object with no required leaves: the shorthand itself is
+        // the only thing that can satisfy the spec, so it is required.
+        params.insert("owner".to_string(), body(false, true, "object"));
+        params.insert("owner.nickname".to_string(), body(false, false, "string"));
+
+        let leaf = leaf_with_params(params);
+
+        assert_eq!(heading_of(&leaf, "settings").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "settings.auth_type").as_deref(), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading_of(&leaf, "settings.region").as_deref(), Some(HELP_HEADING_OPTIONAL));
+        assert_eq!(heading_of(&leaf, "owner").as_deref(), Some(HELP_HEADING_REQUIRED));
+        assert_eq!(heading_of(&leaf, "owner.nickname").as_deref(), Some(HELP_HEADING_OPTIONAL));
     }
 
     #[test]
