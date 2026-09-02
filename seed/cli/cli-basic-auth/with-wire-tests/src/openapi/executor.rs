@@ -2790,7 +2790,7 @@ pub async fn execute_method(
     drop(pager_handle);
 
     if capture_output && !captured_values.is_empty() {
-        if pagination.page_all && pages_fetched > 0 {
+        if pagination.page_all && pages_fetched > 0 && !no_extract {
             let results_path = endpoint_pag.map(|p| p.results_path());
             return Ok(Some(merge_captured_pages(captured_values, results_path)));
         }
