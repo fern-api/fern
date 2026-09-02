@@ -13,10 +13,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
-import {
-    type ResolvedMigrationSourceSpec,
-    serializeMigrationSource
-} from "../projectMigrationSource.js";
+import { type ResolvedMigrationSourceSpec, serializeMigrationSource } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
 import { writeOutputFile } from "../writeOutputFile.js";
 
@@ -104,10 +101,7 @@ describe("SDK Config migration", () => {
         };
 
         const source = serializeMigrationSource({
-            specs: [
-                createResolvedSourceSpec("accounting", settings),
-                createResolvedSourceSpec("ats", settings)
-            ],
+            specs: [createResolvedSourceSpec("accounting", settings), createResolvedSourceSpec("ats", settings)],
             workingDirectory: "/tmp"
         });
 
@@ -342,9 +336,7 @@ describe("SDK Config migration target selection", () => {
                 args: { api: "missing" }
             })
         ).rejects.toSatisfy(
-            (error) =>
-                error instanceof CliError &&
-                error.message === "API 'missing' not found. Available APIs: default"
+            (error) => error instanceof CliError && error.message === "API 'missing' not found. Available APIs: default"
         );
     });
 });
@@ -399,7 +391,11 @@ describe("SDK Config migration group consolidation", () => {
         typescript.groupName = "typescript";
         const python = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         python.groupName = "python";
-        python.generators[0]!.apiOverride = { specs: [] };
+        const pythonGenerator = python.generators[0];
+        if (pythonGenerator == null) {
+            throw new Error("Expected the Python group to contain a generator");
+        }
+        pythonGenerator.apiOverride = { specs: [] };
         const first = createDefinition();
         const second = createDefinition();
         second.rootApiFile.contents.name = "different-api";

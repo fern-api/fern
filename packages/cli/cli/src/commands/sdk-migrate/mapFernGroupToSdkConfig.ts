@@ -119,16 +119,19 @@ function mapFernAuth(root: FernApiContents): {
                       requirements: undefined
                   })
               });
-    if (selection == null) return { diagnostics: [] };
+    if (selection == null) {
+        return { diagnostics: [] };
+    }
 
     const schemes = selection.references.map((reference) => mapFernAuthScheme(reference, declarations));
-    if (schemes.some((scheme) => scheme == null) || schemes.length === 0) {
+    const mappedSchemes = schemes.filter((scheme): scheme is SdkConfigAuthScheme => scheme != null);
+    if (mappedSchemes.length !== schemes.length || mappedSchemes.length === 0) {
         return {
             diagnostics: [unsupportedAuthDiagnostic()]
         };
     }
 
-    const uniqueSchemes = [...new Map(schemes.map((scheme) => [scheme!.id, scheme!])).values()];
+    const uniqueSchemes = [...new Map(mappedSchemes.map((scheme) => [scheme.id, scheme])).values()];
     return {
         auth: {
             schemes: uniqueSchemes,
@@ -153,7 +156,9 @@ function mapFernAuthScheme(
     }
 
     const declaration = declarations[id];
-    if (declaration == null) return undefined;
+    if (declaration == null) {
+        return undefined;
+    }
     const description = referenceDocs ?? declaration.docs;
     return visitRawAuthSchemeDeclaration<SdkConfigAuthScheme | undefined>(declaration, {
         header: (header) => ({

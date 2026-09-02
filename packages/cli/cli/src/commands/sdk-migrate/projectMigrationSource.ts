@@ -64,16 +64,12 @@ export function serializeMigrationSource({
             ...(spec.absoluteOverlayPaths.length === 0
                 ? {}
                 : {
-                      overlays: spec.absoluteOverlayPaths.map((overlay) =>
-                          relativeSourcePath(sourceRoot, overlay)
-                      )
+                      overlays: spec.absoluteOverlayPaths.map((overlay) => relativeSourcePath(sourceRoot, overlay))
                   }),
             ...(spec.absoluteOverridePaths.length === 0
                 ? {}
                 : {
-                      overrides: spec.absoluteOverridePaths.map((override) =>
-                          relativeSourcePath(sourceRoot, override)
-                      )
+                      overrides: spec.absoluteOverridePaths.map((override) => relativeSourcePath(sourceRoot, override))
                   })
         };
     });
@@ -105,8 +101,7 @@ function commonAncestor(candidateRoot: string, candidatePath: string): string {
 function isWithin(root: string, candidate: string): boolean {
     const relative = path.relative(root, candidate);
     return (
-        relative === "" ||
-        (!path.isAbsolute(relative) && relative !== ".." && !relative.startsWith(`..${path.sep}`))
+        relative === "" || (!path.isAbsolute(relative) && relative !== ".." && !relative.startsWith(`..${path.sep}`))
     );
 }
 
@@ -182,8 +177,12 @@ function resolveWorkspaceSpec(
 }
 
 function getConfiguredDefinitions(api: generatorsYml.APIDefinition | undefined): generatorsYml.APIDefinitionLocation[] {
-    if (api == null || api.type === "conjure") return [];
-    if (api.type === "singleNamespace") return api.definitions;
+    if (api == null || api.type === "conjure") {
+        return [];
+    }
+    if (api.type === "singleNamespace") {
+        return api.definitions;
+    }
     return [...Object.values(api.definitions).flat(), ...(api.rootDefinitions ?? [])];
 }
 
@@ -230,7 +229,9 @@ function normalizePaths(value: string | string[] | undefined): string[] {
 }
 
 function normalizeRawPaths(value: generatorsYml.OverridesSchema | undefined): string[] {
-    if (value == null) return [];
+    if (value == null) {
+        return [];
+    }
     const paths = Array.isArray(value) ? value : [value];
     if (paths.some((entry) => typeof entry !== "string")) {
         throw unsupportedSourceType("git override");
@@ -241,7 +242,9 @@ function normalizeRawPaths(value: generatorsYml.OverridesSchema | undefined): st
 function projectFernApiImportSettings(
     settings: generatorsYml.APIDefinitionSettings | undefined
 ): SdkConfigV1SourceSpec["apiImportSettings"] | undefined {
-    if (settings == null) return undefined;
+    if (settings == null) {
+        return undefined;
+    }
     const projected = {
         respectNullableSchemas: settings.respectNullableSchemas,
         titleAsSchemaName: settings.shouldUseTitleAsName,
@@ -263,7 +266,9 @@ function projectFernApiImportSettings(
 function projectRawApiImportSettings(
     settings: generatorsYml.OpenApiSettingsSchema | undefined
 ): SdkConfigV1SourceSpec["apiImportSettings"] | undefined {
-    if (settings == null) return undefined;
+    if (settings == null) {
+        return undefined;
+    }
     return {
         ...(settings["respect-nullable-schemas"] == null
             ? {}
@@ -318,7 +323,9 @@ function uniqueSourceId(candidate: string, usedIds: Set<string>): string {
         return candidate;
     }
     let suffix = 2;
-    while (usedIds.has(`${candidate}-${suffix}`)) suffix += 1;
+    while (usedIds.has(`${candidate}-${suffix}`)) {
+        suffix += 1;
+    }
     const id = `${candidate}-${suffix}`;
     usedIds.add(id);
     return id;

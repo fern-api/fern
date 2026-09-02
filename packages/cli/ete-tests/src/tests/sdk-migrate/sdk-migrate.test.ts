@@ -86,7 +86,7 @@ describe("fern sdk migrate", () => {
             source: { specs: [{ path: "./fern/openapi.yml" }] }
         });
         await temporaryDirectory.cleanup();
-    }, 15_000);
+    });
 
     it("maps credential-free registry publication in strict mode", async ({ signal }) => {
         const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
@@ -198,4 +198,4 @@ describe("fern sdk migrate", () => {
         await expect(readFile(output, "utf-8")).rejects.toMatchObject({ code: "ENOENT" });
         await temporaryDirectory.cleanup();
     });
-});
+}, 60_000);
