@@ -193,13 +193,55 @@ export function isUnknownType(typeRef: FernIr.TypeReference): boolean {
     return typeRef.type === "unknown";
 }
 
+export interface DefaultImplOptions {
+    /**
+     * Whether `unknown` (`serde_json::Value`) counts as implementing Default.
+     *
+     * `Value` really does implement Default (it yields `Value::Null`), so this is
+     * true by default and derive analysis should leave it alone. The one caller
+     * that passes false is the `#[serde(default)]` decision: emitting that attribute
+     * for a required `unknown` field would drop serde's missing-field error and let
+     * an absent key deserialize to `Value::Null`, which also makes an untagged union
+     * member match objects it should have rejected.
+     */
+    unknownHasDefault?: boolean;
+}
+
 /**
  * Check if a type has a natural Default implementation in Rust.
  * Primitives (String, bool, i64, f64, etc.) and containers (Vec, HashMap, HashSet)
  * all implement Default. Named types (enums, structs) may not.
- * Used to add #[serde(default)] so missing fields get zero-values during deserialization.
+ *
+ * This is the single source of truth for Default analysis in the Rust model generator:
+ * it decides both which types can carry a `Default` derive and which fields get
+ * `#[serde(default)]` so missing values deserialize to zero-values.
  */
-export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGeneratorContext): boolean {
+export function hasDefaultImpl(
+    typeRef: FernIr.TypeReference,
+    context?: ModelGeneratorContext,
+    options: DefaultImplOptions = {}
+): boolean {
+    return typeSupportsDefault(typeRef, context, options, new Set());
+}
+
+/**
+ * Check if a named type supports Default by its type id, for callers that hold a
+ * `DeclaredTypeName` (e.g. an object's `extends`) rather than a `TypeReference`.
+ */
+export function namedTypeHasDefaultImpl(
+    typeId: string,
+    context: ModelGeneratorContext,
+    options: DefaultImplOptions = {}
+): boolean {
+    return namedTypeSupportsDefault(typeId, context, options, new Set());
+}
+
+function typeSupportsDefault(
+    typeRef: FernIr.TypeReference,
+    context: ModelGeneratorContext | undefined,
+    options: DefaultImplOptions,
+    visited: Set<string>
+): boolean {
     if (typeRef.type === "primitive") {
         return true;
     }
@@ -215,7 +257,10 @@ export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGen
         });
     }
     if (typeRef.type === "named" && context) {
-        return namedTypeSupportsDefault(typeRef.typeId, context, new Set());
+        return namedTypeSupportsDefault(typeRef.typeId, context, options, visited);
+    }
+    if (typeRef.type === "unknown") {
+        return options.unknownHasDefault ?? true;
     }
     return false;
 }
@@ -223,8 +268,17 @@ export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGen
 /**
  * Check if a named type (object) supports Default by checking if all its fields
  * have types that implement Default. Enums and unions don't derive Default.
+ *
+ * `visited` is threaded through the whole traversal rather than reset per hop, so a
+ * cycle between two named types (A holds a B, B holds an A) terminates instead of
+ * recursing forever.
  */
-function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext, visited: Set<string>): boolean {
+function namedTypeSupportsDefault(
+    typeId: string,
+    context: ModelGeneratorContext,
+    options: DefaultImplOptions,
+    visited: Set<string>
+): boolean {
     if (visited.has(typeId)) {
         return false;
     }
@@ -237,14 +291,14 @@ function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext
     let result = false;
     if (typeDecl.shape.type === "object") {
         const propsOk = typeDecl.shape.properties.every((prop) =>
-            hasDefaultImpl(prop.valueType, context)
+            typeSupportsDefault(prop.valueType, context, options, visited)
         );
         const extendsOk = typeDecl.shape.extends.every((parentType) =>
-            namedTypeSupportsDefault(parentType.typeId, context, visited)
+            namedTypeSupportsDefault(parentType.typeId, context, options, visited)
         );
         result = propsOk && extendsOk;
     } else if (typeDecl.shape.type === "alias") {
-        result = hasDefaultImpl(typeDecl.shape.aliasOf, context);
+        result = typeSupportsDefault(typeDecl.shape.aliasOf, context, options, visited);
     }
     visited.delete(typeId);
     return result;

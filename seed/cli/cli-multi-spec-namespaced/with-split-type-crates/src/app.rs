@@ -1036,10 +1036,14 @@ impl CliApp {
             }
         }
 
-        // 1e. Validate hook patterns against the command tree.
+        // 1e. Group every global flag under its own `--help` section so leaf
+        // help leads with the operation's own required/optional parameters.
+        cli = crate::cli_args::apply_global_help_heading(cli);
+
+        // 1f. Validate hook patterns against the command tree.
         self.hooks.validate_patterns(&cli)?;
 
-        // 1f. Intercept `completion` and `man` before clap parses.
+        // 1g. Intercept `completion` and `man` before clap parses.
         if crate::completions::wants_completion(&str_args) {
             let raw_shell_arg =
                 crate::early_intercept::nth_positional(&str_args, 1);

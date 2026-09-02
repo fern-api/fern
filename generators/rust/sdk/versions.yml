@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.46.6
+  changelogEntry:
+    - summary: |
+        List- and set-typed path parameters are now joined instead of being interpolated
+        directly, so a spec with an array path parameter produces an SDK that compiles.
+
+        Previously the parameter name was passed straight to `format!`, which does not
+        compile because `Vec<T>` has no `Display`:
+
+        ```rust
+        pub async fn path_array(&self, ids: &Vec<String>, ..) -> Result<Echo, ApiError> {
+            &format!("params/path-array/{}", ids),
+        ```
+
+        That is an E0277 in the generated crate, so the failure is not limited to the
+        endpoint declaring the parameter — the whole SDK fails to build and every other
+        endpoint in it becomes unusable.
+
+        The elements are now joined with a comma, which is OpenAPI's default `simple`
+        path style, using `to_string()` per element so that any `Display` element type
+        works and not only `String`. Optional, nullable and map containers keep their
+        previous behavior: an optional path parameter cannot be omitted from a path, and
+        a map has no defined path serialization.
+
+        The non-default `label` (`.a.b`) and `matrix` (`;ids=a,b`) path styles remain
+        unimplemented.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.46.5
+  changelogEntry:
+    - summary: |
+        Aliases of `unknown` (e.g. `AnyType` wrapping `serde_json::Value`) now derive
+        `Default`, so structs and aliases that contain them and derive `Default`
+        compile without manual patching. The struct generator's private copy of the
+        default analysis has been folded into the shared `hasDefaultImpl`, which is
+        now the single source of truth and no longer recurses forever on types that
+        reference each other. `#[serde(default)]` emission is unchanged: a required
+        `unknown` field still fails to deserialize when the key is missing.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
 - version: 0.46.4
   changelogEntry:
     - summary: |

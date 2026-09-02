@@ -284,7 +284,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
             draft["sideEffects"] = false;
         });
 
-        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
+        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs, this.extraConfigsMergeStrategy);
 
         await this.writeFileToVolume(
             RelativeFilePath.of(TypescriptProject.PACKAGE_JSON_FILENAME),
