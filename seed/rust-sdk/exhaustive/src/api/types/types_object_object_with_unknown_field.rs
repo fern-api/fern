@@ -4,7 +4,6 @@ pub use crate::prelude::*;
 /// are properly escaped in Go string literals.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct ObjectWithUnknownField {
-    #[serde(default)]
     pub unknown: serde_json::Value,
 }
 

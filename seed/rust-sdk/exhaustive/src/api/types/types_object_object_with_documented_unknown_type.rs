@@ -4,7 +4,6 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct ObjectWithDocumentedUnknownType {
     #[serde(rename = "documentedUnknownType")]
-    #[serde(default)]
     pub documented_unknown_type: DocumentedUnknownType,
 }
 

@@ -262,9 +262,6 @@ function typeSupportsDefault(
     if (typeRef.type === "unknown") {
         return options.unknownHasDefault ?? true;
     }
-    if (typeRef.type === "unknown") {
-        return true;
-    }
     return false;
 }
 
