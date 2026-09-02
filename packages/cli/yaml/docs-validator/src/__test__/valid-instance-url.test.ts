@@ -26,6 +26,27 @@ describe("validateInstanceUrl", () => {
             const subdomain = "a".repeat(62);
             expect(validateInstanceUrl(`${subdomain}.docs.buildwithfern.com`)).toBeNull();
         });
+
+        it("accepts subdomain of buildwithfern.dev", () => {
+            expect(validateInstanceUrl("adi-tests-new-pipeline.buildwithfern.dev")).toBeNull();
+            expect(validateInstanceUrl("https://mycompany.buildwithfern.dev")).toBeNull();
+        });
+
+        it("accepts subdomain of fernapi.dev", () => {
+            expect(validateInstanceUrl("mycompany.fernapi.dev")).toBeNull();
+        });
+
+        it("accepts subdomain of ferndocs.com", () => {
+            expect(validateInstanceUrl("mycompany.ferndocs.com")).toBeNull();
+        });
+
+        it("accepts subdomain of ferndocs.dev", () => {
+            expect(validateInstanceUrl("mycompany.ferndocs.dev")).toBeNull();
+        });
+
+        it("accepts subdomain of fernmcp.dev", () => {
+            expect(validateInstanceUrl("mycompany.fernmcp.dev")).toBeNull();
+        });
     });
 
     describe("invalid URLs - subdomain contains dot", () => {
@@ -95,14 +116,46 @@ describe("validateInstanceUrl", () => {
             expect(violation).not.toBeNull();
             expect(violation?.severity).toBe("fatal");
             expect(violation?.message).toContain(
-                "must end with one of: docs.buildwithfern.com, docs.dev.buildwithfern.com"
+                "must end with one of: docs.buildwithfern.com, docs.dev.buildwithfern.com, buildwithfern.dev, fernapi.dev, ferndocs.com, ferndocs.dev, fernmcp.dev"
             );
         });
 
+        it("rejects unrelated domains", () => {
+            for (const url of [
+                "mycompany.example.com",
+                "mycompany.buildwithfern.com",
+                "mycompany.fernmcp.com",
+                "mycompany.fernapi.com"
+            ]) {
+                expect(validateInstanceUrl(url)?.message).toContain("must end with one of");
+            }
+        });
+
+        it("rejects lookalike domains", () => {
+            for (const url of [
+                "mycompany.notbuildwithfern.dev",
+                "mycompany.buildwithfern.dev.evil.com",
+                "mycompany.ferndocs.com.evil.com",
+                "notferndocs.com",
+                "myferndocs.dev"
+            ]) {
+                expect(validateInstanceUrl(url)?.message).toContain("must end with one of");
+            }
+        });
+
         it("rejects URL without subdomain", () => {
-            const violation = validateInstanceUrl("docs.buildwithfern.com");
-            expect(violation).not.toBeNull();
-            expect(violation?.message).toContain("A subdomain is required");
+            for (const url of [
+                "docs.buildwithfern.com",
+                "buildwithfern.dev",
+                "fernapi.dev",
+                "ferndocs.com",
+                "ferndocs.dev",
+                "fernmcp.dev"
+            ]) {
+                const violation = validateInstanceUrl(url);
+                expect(violation).not.toBeNull();
+                expect(violation?.message).toContain("A subdomain is required");
+            }
         });
     });
 
