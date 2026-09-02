@@ -1,33 +1,39 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { randomUUID } from "crypto";
-import { mkdir, rename, unlink, writeFile } from "fs/promises";
+import { link, mkdir, rename, unlink, writeFile } from "fs/promises";
 import { basename, dirname, join } from "path";
 
 export async function writeOutputFile(outputPath: AbsoluteFilePath, data: string, force: boolean): Promise<void> {
     const output = outputPath.toString();
     await mkdir(dirname(output), { recursive: true });
-    if (!force) {
-        try {
-            await writeFile(output, data, { flag: "wx" });
-            return;
-        } catch (error) {
-            if (isErrorWithCode(error, "EEXIST")) {
-                throw new CliError({
-                    message: `Output file '${output}' already exists. Use --force to replace it.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
-            throw error;
-        }
-    }
-
     const temporary = join(dirname(output), `.${basename(output)}.${randomUUID()}.tmp`);
     try {
         await writeFile(temporary, data, { flag: "wx" });
-        await rename(temporary, output);
+        if (force) {
+            await rename(temporary, output);
+        } else {
+            await linkWithoutReplacing(temporary, output);
+            await unlink(temporary);
+        }
     } catch (error) {
         await removeTemporaryFile(temporary, error);
+        throw error;
+    }
+}
+
+async function linkWithoutReplacing(temporary: string, output: string): Promise<void> {
+    try {
+        // The temporary file and destination share a directory, so this publishes the complete
+        // document atomically while preserving the no-overwrite contract.
+        await link(temporary, output);
+    } catch (error) {
+        if (isErrorWithCode(error, "EEXIST")) {
+            throw new CliError({
+                message: `Output file '${output}' already exists. Use --force to replace it.`,
+                code: CliError.Code.ConfigError
+            });
+        }
         throw error;
     }
 }

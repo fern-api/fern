@@ -4,14 +4,16 @@ import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
+import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
+import { serializeMigrationSource } from "./projectMigrationSource.js";
 import { selectMigrationTarget } from "./selectMigrationTarget.js";
 import { writeOutputFile } from "./writeOutputFile.js";
 
 export interface SdkMigrateArgs {
     api?: string;
     force: boolean;
-    group?: string;
+    group?: string[];
     output: string;
     strict: boolean;
 }
@@ -25,12 +27,24 @@ export async function sdkMigrate({
     cliContext: CliContext;
     args: SdkMigrateArgs;
 }): Promise<void> {
-    const { workspace, group } = await selectMigrationTarget({ project, cliContext, args });
-    const fernWorkspace = await cliContext.runTask((context) => workspace.toFernWorkspace({ context }));
+    const { workspace, groups } = await selectMigrationTarget({
+        project,
+        cliContext,
+        args
+    });
+    const { fernWorkspace, group, sourceSpecs } = await loadCompatibleMigrationGroups({
+        workspace,
+        groups,
+        cliContext
+    });
 
     let mapped: MappingResult;
     try {
-        mapped = mapFernGroupToSdkConfig({ fernWorkspace, group });
+        mapped = mapFernGroupToSdkConfig({
+            fernWorkspace,
+            group,
+            source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: cwd().toString() })
+        });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
             printDiagnostics(cliContext, error.issues);
@@ -65,7 +79,7 @@ function printDiagnostics(cliContext: CliContext, diagnostics: readonly FernConf
         const destination =
             diagnostic.sdkConfigPath == null ? "" : `; SDK Config: ${diagnostic.sdkConfigPath.join(".")}`;
         cliContext.stderr.warn(
-            `[${diagnostic.code}] ${diagnostic.path.join(".")}: ${diagnostic.reason}${destination}; ${diagnostic.suggestedAction}`
+            `[${diagnostic.severity}] [${diagnostic.code}] ${diagnostic.path.join(".")}: ${diagnostic.reason}${destination}; ${diagnostic.suggestedAction}`
         );
     }
 }

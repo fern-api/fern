@@ -23,13 +23,24 @@ describe("fern sdk migrate", () => {
         });
 
         expect(result.stdout.endsWith("\n")).toBe(true);
-        expect(JSON.parse(result.stdout)).toMatchObject({
+        const sdkConfig = JSON.parse(result.stdout);
+        expect(sdkConfig).toMatchObject({
             schemaVersion: "sdk-config/v1",
+            source: { specs: [{ id: "openapi", type: "openapi", path: "./fern/openapi.yml" }] },
             targets: [
                 { generatorVersion: "3.63.3", language: "typescript" },
                 { generatorVersion: "4.3.10", language: "python" }
             ]
         });
+        expect(sdkConfig).not.toHaveProperty("sdkVersion");
+        expect(sdkConfig).not.toHaveProperty("apiVersion");
+        expect(sdkConfig).not.toHaveProperty("output");
+        expect(sdkConfig.targets.map((target: { output: unknown }) => target.output)).toEqual([
+            { delivery: "files", path: "./generated/typescript" },
+            { delivery: "files", path: "./generated/python" }
+        ]);
+        expect(sdkConfig.client).toEqual({});
+        expect(sdkConfig.generation).toEqual({});
         expect(await readFile(generatorsPath, "utf-8")).toBe(originalGenerators);
         await temporaryDirectory.cleanup();
     });
@@ -53,7 +64,10 @@ describe("fern sdk migrate", () => {
         expect(await readFile(output, "utf-8")).toBe(first);
 
         await runFernCli([...command, "--force"], options);
-        expect(JSON.parse(await readFile(output, "utf-8"))).toMatchObject({ schemaVersion: "sdk-config/v1" });
+        expect(JSON.parse(await readFile(output, "utf-8"))).toMatchObject({
+            schemaVersion: "sdk-config/v1",
+            source: { specs: [{ path: "./fern/openapi.yml" }] }
+        });
         await temporaryDirectory.cleanup();
     });
 
@@ -77,6 +91,48 @@ describe("fern sdk migrate", () => {
                 }
             ]
         });
+        await temporaryDirectory.cleanup();
+    });
+
+    it("consolidates repeated compatible groups into one SDK Config", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const result = await runFernCli(
+            ["sdk", "migrate", "--group", "typescript-only", "--group", "python-only", "--output", "-"],
+            {
+                cwd: directory,
+                env: { FERN_NO_VERSION_REDIRECTION: "true" },
+                signal
+            }
+        );
+
+        expect(JSON.parse(result.stdout).targets).toMatchObject([
+            { language: "typescript", generatorVersion: "3.63.3" },
+            { language: "python", generatorVersion: "4.3.10" }
+        ]);
+        await temporaryDirectory.cleanup();
+    });
+
+    it("rejects repeated groups with different audience schemas", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const result = await runFernCli(
+            ["sdk", "migrate", "--group", "typescript-only", "--group", "npm", "--output", "-"],
+            {
+                cwd: directory,
+                env: { FERN_NO_VERSION_REDIRECTION: "true" },
+                reject: false,
+                signal
+            }
+        );
+
+        expect(result.exitCode).not.toBe(0);
+        expect(result.stdout).toBe("");
+        expect(result.stderr).toContain("resolve to different API schemas");
         await temporaryDirectory.cleanup();
     });
 
@@ -121,6 +177,7 @@ describe("fern sdk migrate", () => {
         });
 
         expect(result.exitCode).not.toBe(0);
+        expect(result.stderr).toContain("[warning] [FERN_RESOLVED_FIELD_UNSUPPORTED]");
         await expect(readFile(output, "utf-8")).rejects.toMatchObject({ code: "ENOENT" });
         await temporaryDirectory.cleanup();
     });

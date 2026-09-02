@@ -9,7 +9,7 @@ import { resolveGroupAlias } from "../generate/resolveGroupAlias.js";
 import type { SdkMigrateArgs } from "./sdkMigrate.js";
 
 export interface MigrationTarget {
-    group: generatorsYml.GeneratorGroup;
+    groups: generatorsYml.GeneratorGroup[];
     workspace: AbstractAPIWorkspace<unknown>;
 }
 
@@ -32,7 +32,7 @@ export async function selectMigrationTarget({
     }
     return {
         workspace,
-        group: await selectGroup(configuration, cliContext, args.group)
+        groups: await selectGroups(configuration, cliContext, args.group)
     };
 }
 
@@ -43,16 +43,26 @@ async function selectWorkspace(
 ): Promise<AbstractAPIWorkspace<unknown>> {
     const workspaces = project.apiWorkspaces;
     if (workspaces.length === 0) {
-        throw new CliError({ message: "No APIs found", code: CliError.Code.ConfigError });
+        throw new CliError({
+            message: "No APIs found",
+            code: CliError.Code.ConfigError
+        });
     }
     if (requestedApi != null) {
-        const workspace = workspaces.find((candidate) => candidate.workspaceName === requestedApi);
+        const workspace = workspaces.find(
+            (candidate) =>
+                candidate.workspaceName === requestedApi ||
+                (candidate.workspaceName == null && requestedApi === "default")
+        );
         if (workspace != null) {
             return workspace;
         }
         const onlyWorkspace = workspaces[0];
         if (workspaces.length === 1 && onlyWorkspace != null && onlyWorkspace.workspaceName == null) {
-            return onlyWorkspace;
+            throw new CliError({
+                message: `This project contains one API; omit --api instead of using '${requestedApi}'.`,
+                code: CliError.Code.ConfigError
+            });
         }
         throw new CliError({
             message: `API '${requestedApi}' not found. Available APIs: ${workspaceNames(workspaces).join(", ")}`,
@@ -64,7 +74,10 @@ async function selectWorkspace(
         return onlyWorkspace;
     }
     const choices = workspaces
-        .map((workspace) => ({ name: workspace.workspaceName ?? "default", value: workspace }))
+        .map((workspace) => ({
+            name: workspace.workspaceName ?? "default",
+            value: workspace
+        }))
         .sort((left, right) => left.name.localeCompare(right.name));
     const names = choices.map((choice) => choice.name);
     return promptSelect({
@@ -76,58 +89,69 @@ async function selectWorkspace(
     });
 }
 
-async function selectGroup(
+async function selectGroups(
     configuration: generatorsYml.GeneratorsConfiguration,
     cliContext: CliContext,
-    requestedGroup: string | undefined
-): Promise<generatorsYml.GeneratorGroup> {
-    const groupName = requestedGroup ?? configuration.defaultGroup;
-    if (groupName == null) {
+    requestedGroups: string[] | undefined
+): Promise<generatorsYml.GeneratorGroup[]> {
+    const groupNames =
+        requestedGroups ?? (configuration.defaultGroup == null ? undefined : [configuration.defaultGroup]);
+    if (groupNames == null) {
         const onlyGroup = configuration.groups[0];
         if (configuration.groups.length === 1 && onlyGroup != null) {
-            return onlyGroup;
+            return [onlyGroup];
         }
         const names = configuration.groups.map((group) => group.groupName);
-        return promptSelect({
-            cliContext,
-            message: "Multiple SDK groups found. Select one:",
-            choices: configuration.groups.map((group) => ({ name: group.groupName, value: group })),
-            nonInteractiveError: `Multiple SDK groups found: ${names.join(", ")}. Use --group to select one.`,
-            flagHint: (group) => `--group ${group.groupName}`
-        });
+        return [
+            await promptSelect({
+                cliContext,
+                message: "Multiple SDK groups found. Select one:",
+                choices: configuration.groups.map((group) => ({
+                    name: group.groupName,
+                    value: group
+                })),
+                nonInteractiveError: `Multiple SDK groups found: ${names.join(", ")}. Use --group to select one.`,
+                flagHint: (group) => `--group ${group.groupName}`
+            })
+        ];
     }
 
-    const resolution = resolveGroupAlias({
-        name: groupName,
-        groupAliases: configuration.groupAliases,
-        availableGroupNames: configuration.groups.map((group) => group.groupName)
+    const availableGroupNames = configuration.groups.map((group) => group.groupName);
+    const resolvedNames = groupNames.flatMap((groupName) => {
+        const resolution = resolveGroupAlias({
+            name: groupName,
+            groupAliases: configuration.groupAliases,
+            availableGroupNames
+        });
+        if (resolution.type === "alias-references-missing-group") {
+            throw new CliError({
+                message: `Group alias '${resolution.alias}' references non-existent group '${resolution.missingGroupName}'. Available groups: ${resolution.availableGroupNames.join(", ")}`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        if (resolution.type === "unknown") {
+            const aliases =
+                resolution.availableAliasNames.length > 0
+                    ? `; aliases: ${resolution.availableAliasNames.join(", ")}`
+                    : "";
+            throw new CliError({
+                message: `SDK group '${resolution.name}' not found. Available groups: ${resolution.availableGroupNames.join(", ")}${aliases}`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return resolution.groupNames;
     });
-    if (resolution.type === "alias-references-missing-group") {
-        throw new CliError({
-            message: `Group alias '${resolution.alias}' references non-existent group '${resolution.missingGroupName}'. Available groups: ${resolution.availableGroupNames.join(", ")}`,
-            code: CliError.Code.ConfigError
-        });
-    }
-    if (resolution.type === "unknown") {
-        const aliases =
-            resolution.availableAliasNames.length > 0 ? `; aliases: ${resolution.availableAliasNames.join(", ")}` : "";
-        throw new CliError({
-            message: `SDK group '${resolution.name}' not found. Available groups: ${resolution.availableGroupNames.join(", ")}${aliases}`,
-            code: CliError.Code.ConfigError
-        });
-    }
-    if (resolution.groupNames.length !== 1) {
-        throw new CliError({
-            message: `SDK group alias '${groupName}' expands to multiple groups: ${resolution.groupNames.join(", ")}. Use --group to select one concrete group.`,
-            code: CliError.Code.ConfigError
-        });
-    }
-    const resolvedName = resolution.groupNames[0];
-    const group = configuration.groups.find((candidate) => candidate.groupName === resolvedName);
-    if (group == null) {
-        throw new CliError({ message: `SDK group '${resolvedName}' not found`, code: CliError.Code.ConfigError });
-    }
-    return group;
+    const uniqueNames = [...new Set(resolvedNames)];
+    return uniqueNames.map((resolvedName) => {
+        const group = configuration.groups.find((candidate) => candidate.groupName === resolvedName);
+        if (group == null) {
+            throw new CliError({
+                message: `SDK group '${resolvedName}' not found`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return group;
+    });
 }
 
 async function promptSelect<T>({
@@ -144,7 +168,10 @@ async function promptSelect<T>({
     flagHint: (value: T) => string;
 }): Promise<T> {
     if (!cliContext.isTTY) {
-        throw new CliError({ message: nonInteractiveError, code: CliError.Code.ConfigError });
+        throw new CliError({
+            message: nonInteractiveError,
+            code: CliError.Code.ConfigError
+        });
     }
     const longestName = Math.max(...choices.map((choice) => choice.name.length));
     return cliContext.selectPrompt({

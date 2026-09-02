@@ -4532,8 +4532,8 @@ importers:
         specifier: 'catalog:'
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.2.0
+        version: 0.2.0
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -10446,8 +10446,8 @@ packages:
   '@posthog/types@1.376.0':
     resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
 
-  '@postman/sdk-config@0.1.0':
-    resolution: {integrity: sha512-YneEmeCEKIYcxcXe5de0h6wUUfbgh9hZVrcU80E+6Vfxx9YNGcckIps/0hxnwQR/1WY/j0xEfyxQ4g//DYL/Bw==}
+  '@postman/sdk-config@0.2.0':
+    resolution: {integrity: sha512-Y5emjuF7vZbiL8ttysERQbi+hadA/1CSDEAK3IDgsnQgyAQGXgwDgMiJJBVWL3YDcVDIf2nN8w4h5GsuIL/r4g==}
     engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
@@ -17559,7 +17559,7 @@ snapshots:
 
   '@posthog/types@1.376.0': {}
 
-  '@postman/sdk-config@0.1.0':
+  '@postman/sdk-config@0.2.0':
     dependencies:
       semver: 7.8.4
       zod: 4.3.6
