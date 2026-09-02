@@ -1089,7 +1089,20 @@ async fn build_http_request(
     // endpoint. RoutingAuthProvider already honors this internally; the
     // executor-side check makes it universal.
     if !auth_metadata.is_explicit_anonymous() {
+        // The spec says this operation needs credentials and none are
+        // configured: error before sending rather than issuing an
+        // unauthenticated request and interpreting the server's rejection.
+        // `apply` runs first so a credential that exists but could not be
+        // read (denied keychain prompt, unreadable file) surfaces its own
+        // error instead of being reported as absent.
+        let missing = auth_metadata.requires_credentials()
+            && !auth_provider.has_credentials_for(auth_metadata);
         request = auth_provider.apply(request, auth_metadata)?;
+        if missing {
+            return Err(crate::auth::missing_credentials_error(
+                auth_provider.as_ref(),
+            ));
+        }
     }
 
     // Prefer JSON when the API supports content negotiation (some providers
@@ -12412,6 +12425,138 @@ mod tests {
             }
             _ => panic!("expected Sse variant"),
         }
+    }
+}
+
+#[tokio::test]
+async fn test_execute_method_fails_fast_when_required_credentials_missing() {
+    // Base URL is unroutable: if the executor sent the request we'd get a
+    // network error, not the friendly missing-credentials error.
+    let doc = RestDescription {
+        root_url: "http://127.0.0.1:1/".to_string(),
+        service_path: "".to_string(),
+        ..Default::default()
+    };
+    let mut requirement = HashMap::new();
+    requirement.insert("ApiKey".to_string(), Vec::<String>::new());
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        security_requirements: Some(vec![requirement]),
+        ..Default::default()
+    };
+    let provider: crate::auth::DynAuthProvider =
+        std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+            "ApiKey",
+            crate::auth::AuthCredentialSource::from_env("FERN_CLI_TEST_UNSET_TOKEN_VAR"),
+        ));
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let err = execute_method(
+        &doc,
+        &method,
+        None,
+        None,
+        &provider,
+        None,
+        None,
+        None,
+        None,
+        false,
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true,
+        None,
+        &http_config,
+        false,
+        true, // no_retry
+        false,
+        false,
+        &[],
+        &[],
+    )
+    .await
+    .expect_err("missing credentials must be an error");
+    match err {
+        CliError::Auth(msg) => {
+            assert!(msg.contains("credentials are missing"), "got: {msg}");
+            assert!(msg.contains("FERN_CLI_TEST_UNSET_TOKEN_VAR"), "got: {msg}");
+        }
+        other => panic!("expected CliError::Auth, got {other:?}"),
+    }
+}
+
+#[tokio::test]
+async fn test_execute_method_unreadable_credentials_not_reported_as_missing() {
+    // A provider whose credential store exists but cannot be read (denied
+    // keychain prompt) probes as "no credentials" yet errors in `apply`.
+    // The fail-fast guard must surface that error, not "credentials are
+    // missing".
+    #[derive(Debug)]
+    struct DeniedKeychain;
+    impl crate::auth::AuthProvider for DeniedKeychain {
+        fn name(&self) -> &str {
+            "ApiKey"
+        }
+        fn has_credentials(&self) -> bool {
+            false
+        }
+        fn apply(
+            &self,
+            _request: reqwest::RequestBuilder,
+            _endpoint: &crate::auth::EndpointAuthMetadata,
+        ) -> Result<reqwest::RequestBuilder, CliError> {
+            Err(CliError::Auth("keychain access denied".to_string()))
+        }
+    }
+
+    let doc = RestDescription {
+        root_url: "http://127.0.0.1:1/".to_string(),
+        service_path: "".to_string(),
+        ..Default::default()
+    };
+    let mut requirement = HashMap::new();
+    requirement.insert("ApiKey".to_string(), Vec::<String>::new());
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        security_requirements: Some(vec![requirement]),
+        ..Default::default()
+    };
+    let provider: crate::auth::DynAuthProvider = std::sync::Arc::new(DeniedKeychain);
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let err = execute_method(
+        &doc,
+        &method,
+        None,
+        None,
+        &provider,
+        None,
+        None,
+        None,
+        None,
+        false,
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true,
+        None,
+        &http_config,
+        false,
+        true, // no_retry
+        false,
+        false,
+        &[],
+        &[],
+    )
+    .await
+    .expect_err("unreadable credentials must be an error");
+    match err {
+        CliError::Auth(msg) => {
+            assert!(msg.contains("keychain access denied"), "got: {msg}");
+            assert!(!msg.contains("credentials are missing"), "got: {msg}");
+        }
+        other => panic!("expected CliError::Auth, got {other:?}"),
     }
 }
 
