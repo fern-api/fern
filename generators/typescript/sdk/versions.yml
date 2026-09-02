@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Add a `guardProcessEnvAccess` config option (boolean, defaults to `false`).
+        When enabled, the generated header, bearer, basic and OAuth auth providers read environment
+        variables through a `typeof process !== "undefined"` guard, so a missing credential surfaces the
+        normal error instead of `ReferenceError: process is not defined` in runtimes without a Node
+        `process` global (browsers/Vite, Cloudflare Workers, Deno). Defaults to `false`, so generated
+        output is unchanged unless the option is enabled.
+      type: feat
+  createdAt: "2026-09-02"
+  irVersion: 67
 - version: 3.88.3
   changelogEntry:
     - summary: |
