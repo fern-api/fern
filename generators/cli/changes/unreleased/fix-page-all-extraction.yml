@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--page-all` now applies the same result extraction as a plain list call
+    (`x-fern-pagination.results` / `x-fern-sdk-return-value`), so paginated
+    `--format csv|table|json|jsonl` output is a flat list of items instead of
+    page envelopes with cursor fields.
+  type: fix
