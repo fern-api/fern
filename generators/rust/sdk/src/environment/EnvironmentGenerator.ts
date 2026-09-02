@@ -21,9 +21,16 @@ import {
     UseStatement
 } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ServerVariableOption, getServerVariableOptions, urlTemplateToFormatExpression } from "./serverVariables.js";
 
 /** The default URL getter method name, used for single-URL environments or the primary URL */
 export const DEFAULT_URL_METHOD = "url";
+
+/** Resolves a single-URL environment's URL with server URL variables substituted in. */
+export const URL_WITH_VARIABLES_METHOD = "url_with_variables";
+
+/** Returns a multi-URL environment with server URL variables substituted into every URL. */
+export const WITH_URL_VARIABLES_METHOD = "with_url_variables";
 
 export declare namespace EnvironmentGenerator {
     interface Args {
@@ -88,10 +95,16 @@ export class EnvironmentGenerator {
         const environmentEnum = this.createEnvironmentEnum(config.environments);
         const implBlock = this.createEnvironmentImplBlock(config.environments);
         const defaultImplBlock = this.createDefaultImplBlock(config.environments);
+        const urlVariablesImplBlock = this.createSingleUrlVariablesImplBlock(config);
 
         const module = rust.module({
             useStatements,
-            rawDeclarations: [environmentEnum.toString(), implBlock.toString(), defaultImplBlock.toString()]
+            rawDeclarations: [
+                environmentEnum.toString(),
+                implBlock.toString(),
+                ...(urlVariablesImplBlock != null ? [urlVariablesImplBlock] : []),
+                defaultImplBlock.toString()
+            ]
         });
 
         return new RustFile({
@@ -124,12 +137,15 @@ export class EnvironmentGenerator {
         // Create Default impl block
         const defaultImplBlock = this.createMultiUrlDefaultImplBlock(config);
 
+        const urlVariablesImplBlock = this.createMultiUrlVariablesImplBlock(config);
+
         const module = rust.module({
             useStatements,
             rawDeclarations: [
                 ...urlStructs.map((struct) => struct.toString()),
                 environmentEnum.toString(),
                 implBlock.toString(),
+                ...(urlVariablesImplBlock != null ? [urlVariablesImplBlock] : []),
                 defaultImplBlock.toString()
             ]
         });
@@ -258,6 +274,100 @@ export class EnvironmentGenerator {
             targetType: Type.reference(new Reference({ name: environmentEnumName })),
             methods: [getUrlMethod, ...perUrlMethods]
         });
+    }
+
+    /**
+     * Returns the server URL variables that are actually referenced by the given URL templates.
+     * Filtering keeps the generated method free of unused parameters.
+     */
+    private getReferencedVariableOptions(templates: string[]): ServerVariableOption[] {
+        return getServerVariableOptions(this.context.ir, this.context.case).filter((option) =>
+            templates.some((template) => template.includes(`{${option.variable.id}}`))
+        );
+    }
+
+    private createVariableBindings(options: ServerVariableOption[]): string {
+        return options
+            .map(
+                (option) => `        let ${option.name} = ${option.name}.unwrap_or("${option.variable.default ?? ""}");`
+            )
+            .join("\n");
+    }
+
+    private createVariableParameters(options: ServerVariableOption[]): string {
+        return options.map((option) => `, ${option.name}: Option<&str>`).join("");
+    }
+
+    /**
+     * Generates `url_with_variables`, which resolves a single-URL environment's URL from its
+     * template. Returns null when no environment declares a URL template.
+     */
+    private createSingleUrlVariablesImplBlock(config: FernIr.SingleBaseUrlEnvironments): string | null {
+        const templates = config.environments
+            .map((env) => env.urlTemplate)
+            .filter((template): template is string => template != null);
+        const options = this.getReferencedVariableOptions(templates);
+        if (options.length === 0) {
+            return null;
+        }
+
+        const matchArms = config.environments.map((env) => {
+            const variant = `Self::${this.context.case.pascalSafe(env.name)}`;
+            const expression =
+                env.urlTemplate != null
+                    ? urlTemplateToFormatExpression(env.urlTemplate, options)
+                    : `"${env.url}".to_string()`;
+            return `            ${variant} => ${expression},`;
+        });
+
+        return `impl ${this.getEnvironmentEnumName()} {
+    /// Resolves this environment's URL, substituting the given server URL variables into its
+    /// URL template. Variables that are not provided fall back to their defaults.
+    pub fn ${URL_WITH_VARIABLES_METHOD}(&self${this.createVariableParameters(options)}) -> String {
+${this.createVariableBindings(options)}
+        match self {
+${matchArms.join("\n")}
+        }
+    }
+}`;
+    }
+
+    /**
+     * Generates `with_url_variables`, which rebuilds a multi-URL environment's URLs from their
+     * templates. Returns null when no environment declares URL templates.
+     */
+    private createMultiUrlVariablesImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): string | null {
+        const templates = config.environments.flatMap((env) => Object.values(env.urlTemplates ?? {}));
+        const options = this.getReferencedVariableOptions(templates);
+        if (options.length === 0) {
+            return null;
+        }
+
+        const matchArms = config.environments.map((env) => {
+            const variantName = this.context.case.pascalSafe(env.name);
+            const fields = config.baseUrls.map((baseUrl) => {
+                const fieldName = this.context.case.snakeSafe(baseUrl.name);
+                const template = env.urlTemplates?.[baseUrl.id];
+                const value =
+                    template != null ? urlTemplateToFormatExpression(template, options) : `urls.${fieldName}.clone()`;
+                return `                ${fieldName}: ${value},`;
+            });
+            const bindsUrls = config.baseUrls.some((baseUrl) => env.urlTemplates?.[baseUrl.id] == null);
+            return `            Self::${variantName}(${bindsUrls ? "urls" : "_"}) => Self::${variantName}(${variantName}Urls {
+${fields.join("\n")}
+            }),`;
+        });
+
+        return `impl ${this.getEnvironmentEnumName()} {
+    /// Returns this environment with the given server URL variables substituted into its URL
+    /// templates. Variables that are not provided fall back to their defaults.
+    pub fn ${WITH_URL_VARIABLES_METHOD}(&self${this.createVariableParameters(options)}) -> Self {
+${this.createVariableBindings(options)}
+        match self {
+${matchArms.join("\n")}
+        }
+    }
+}`;
     }
 
     /**

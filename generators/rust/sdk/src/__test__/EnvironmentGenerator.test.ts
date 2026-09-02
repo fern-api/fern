@@ -24,8 +24,27 @@ function createMockIR(environmentsConfig?: FernIr.EnvironmentsConfig): FernIr.In
     } as unknown as FernIr.IntermediateRepresentation;
 }
 
+// Mock function to create a server URL variable
+function createServerVariable(id: string, defaultValue: string): FernIr.ServerVariable {
+    return {
+        id,
+        name: {
+            originalName: id,
+            camelCase: { unsafeName: id, safeName: id },
+            snakeCase: { unsafeName: id, safeName: id },
+            screamingSnakeCase: { unsafeName: id.toUpperCase(), safeName: id.toUpperCase() },
+            pascalCase: { unsafeName: id, safeName: id }
+        },
+        default: defaultValue
+    } as unknown as FernIr.ServerVariable;
+}
+
 // Mock function to create single base URL environment
-function createSingleBaseUrlEnvironment(name: string, url: string): FernIr.SingleBaseUrlEnvironment {
+function createSingleBaseUrlEnvironment(
+    name: string,
+    url: string,
+    templating?: Pick<FernIr.SingleBaseUrlEnvironment, "urlTemplate" | "urlVariables">
+): FernIr.SingleBaseUrlEnvironment {
     return {
         id: `${name}Id`,
         name: {
@@ -46,7 +65,8 @@ function createSingleBaseUrlEnvironment(name: string, url: string): FernIr.Singl
         },
         displayName: name,
         url,
-        docs: undefined
+        docs: undefined,
+        ...templating
     } as unknown as FernIr.SingleBaseUrlEnvironment;
 }
 
@@ -78,7 +98,11 @@ function createMultipleBaseUrlsEnvironmentsUnion(
 }
 
 // Mock function to create multiple base URLs environment
-function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, string>): FernIr.MultipleBaseUrlsEnvironment {
+function createMultipleBaseUrlsEnvironment(
+    name: string,
+    urls: Record<string, string>,
+    templating?: Pick<FernIr.MultipleBaseUrlsEnvironment, "urlTemplates" | "urlVariables">
+): FernIr.MultipleBaseUrlsEnvironment {
     return {
         id: `${name}Id`,
         name: {
@@ -99,7 +123,8 @@ function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, st
         },
         displayName: name,
         urls,
-        docs: undefined
+        docs: undefined,
+        ...templating
     } as unknown as FernIr.MultipleBaseUrlsEnvironment;
 }
 
@@ -248,6 +273,100 @@ describe("EnvironmentGenerator", () => {
             const result = generator.generate();
             expect(result).not.toBeNull();
             await expect(result?.fileContents).toMatchFileSnapshot("snapshots/single-url-no-default.rs");
+        });
+    });
+
+    describe("server URL variables", () => {
+        it("should resolve a single URL environment's template from its variables", async () => {
+            const environments = [
+                createSingleBaseUrlEnvironment("Production", "https://api.us-east-1.example.com", {
+                    urlTemplate: "https://api.{region}.example.com",
+                    urlVariables: [createServerVariable("region", "us-east-1")]
+                }),
+                createSingleBaseUrlEnvironment("Local", "http://localhost:3000")
+            ];
+
+            const environmentsConfig = {
+                environments: createSingleBaseUrlEnvironmentsUnion(environments),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const result = generator.generate();
+            await expect(result?.fileContents).toMatchFileSnapshot("snapshots/single-url-templating.rs");
+        });
+
+        it("should resolve every templated URL of a multi URL environment from its variables", async () => {
+            const baseUrls = [createEnvironmentBaseUrl("api", "api"), createEnvironmentBaseUrl("auth", "auth")];
+            const urlVariables = [createServerVariable("region", "us-east-1")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment(
+                    "Production",
+                    {
+                        api: "https://api.us-east-1.example.com",
+                        auth: "https://auth.example.com"
+                    },
+                    {
+                        urlTemplates: { api: "https://api.{region}.example.com" },
+                        urlVariables: { api: urlVariables }
+                    }
+                )
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const result = generator.generate();
+            await expect(result?.fileContents).toMatchFileSnapshot("snapshots/multi-url-templating.rs");
+        });
+
+        it("should emit unrecognized placeholders literally", () => {
+            const environments = [
+                createSingleBaseUrlEnvironment("Production", "https://api.us-east-1.example.com", {
+                    urlTemplate: "https://api.{region}.example.com",
+                    urlVariables: [createServerVariable("region", "us-east-1")]
+                }),
+                createSingleBaseUrlEnvironment("Tenant", "https://tenant.example.com", {
+                    urlTemplate: "https://{tenant}.example.com",
+                    urlVariables: [createServerVariable("region", "us-east-1")]
+                })
+            ];
+
+            const environmentsConfig = {
+                environments: createSingleBaseUrlEnvironmentsUnion(environments),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const generator = new EnvironmentGenerator({
+                context: createMockContext(createMockIR(environmentsConfig))
+            });
+
+            expect(generator.generate()?.fileContents).toContain('"https://{tenant}.example.com".to_string()');
+        });
+
+        it("should omit the resolver when no environment declares a template", () => {
+            const environments = [createSingleBaseUrlEnvironment("Production", "https://api.example.com")];
+
+            const environmentsConfig = {
+                environments: createSingleBaseUrlEnvironmentsUnion(environments),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            expect(generator.generate()?.fileContents).not.toContain("url_with_variables");
         });
     });
 

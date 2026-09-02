@@ -1,0 +1,7 @@
+- summary: |
+    Support server URL variable templating. Environments declared with URL templates (e.g.
+    `https://api.{region}.example.com`) now generate a resolver on `Environment` plus a builder
+    setter per variable, so `ApiClientBuilder::default().region("us-west-2")` interpolates the
+    template. Variables that are not set fall back to their defaults, and an explicit base URL
+    still takes precedence. Works for both single and multiple base URL environments.
+  type: feat
