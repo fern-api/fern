@@ -41,6 +41,8 @@ exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > deserialize
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse - container type > deserializes container JSON response with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(response)"`;
 
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse - container type > deserializes the non-streaming response of a streamParameter response type 1`] = `"EndpointSchema.parseOrThrow(response)"`;
+
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes named streaming data with named type schema 1`] = `"namedTypeSchema.parseOrThrow(streamData)"`;
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes primitive streaming data with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(streamData)"`;

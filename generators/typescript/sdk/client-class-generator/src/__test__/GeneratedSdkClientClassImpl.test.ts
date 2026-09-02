@@ -126,6 +126,7 @@ function createClientClass(opts?: {
     parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     offsetSemantics?: "item-index" | "page-index";
     alwaysSendAuth?: boolean;
+    generateStreamConditionOverloads?: boolean;
 }): GeneratedSdkClientClassImpl {
     const ir = opts?.ir ?? createIR();
     return new GeneratedSdkClientClassImpl({
@@ -158,7 +159,8 @@ function createClientClass(opts?: {
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
         parameterNaming: opts?.parameterNaming ?? "default",
         offsetSemantics: opts?.offsetSemantics ?? "item-index",
-        alwaysSendAuth: opts?.alwaysSendAuth ?? false
+        alwaysSendAuth: opts?.alwaysSendAuth ?? false,
+        generateStreamConditionOverloads: opts?.generateStreamConditionOverloads ?? false
     });
 }
 

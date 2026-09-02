@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `generateStreamConditionOverloads` configuration option. When enabled, an endpoint
+    declared with `stream-condition` generates a single method with TypeScript overloads that
+    narrow on the condition property, mirroring the Python SDK:
+
+    ```ts
+    public generate(request: GenerateRequest & { stream: true }, requestOptions?: RequestOptions): HttpResponsePromise<core.Stream<StreamResponse>>;
+    public generate(request: GenerateRequest & { stream: false }, requestOptions?: RequestOptions): HttpResponsePromise<RegularResponse>;
+    ```
+
+    The option defaults to `false`, which keeps generating only the streaming variant.
+  type: feat
