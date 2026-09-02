@@ -241,6 +241,8 @@ export interface VersionedDocsNavigation {
 export interface ProductGroupDocsNavigation {
     type: "productgroup";
     products: ProductInfo[];
+    /** Site-level changelog shared by all products, slugged off the root rather than any product. */
+    changelog: DocsNavigationItem.Changelog | undefined;
 }
 
 export interface VersionInfo

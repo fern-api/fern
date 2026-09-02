@@ -106,6 +106,17 @@
         }
       ]
     },
+    "changelog": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.ChangelogConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A site-level changelog shared by every product. Only valid alongside `products`.\nIt is served at the root (e.g. `/changelog`) rather than under any product slug,\nand does not appear in the product switcher."
+    },
     "landing-page": {
       "oneOf": [
         {
@@ -1502,6 +1513,89 @@
         }
       ]
     },
+    "docs.ChangelogConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changelog": {
+          "$ref": "#/definitions/docs.ChangelogFolderRelativePath"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "changelog"
+      ],
+      "additionalProperties": false
+    },
     "docs.Availability": {
       "type": "string",
       "enum": [
@@ -2877,89 +2971,6 @@
       ],
       "additionalProperties": false,
       "description": "References a library defined in the `libraries` section.\nThe library's generated navigation will be injected at this point."
-    },
-    "docs.ChangelogConfiguration": {
-      "type": "object",
-      "properties": {
-        "viewers": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
-        },
-        "feature-flag": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "changelog": {
-          "$ref": "#/definitions/docs.ChangelogFolderRelativePath"
-        },
-        "title": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "icon": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "hidden": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "changelog"
-      ],
-      "additionalProperties": false
     },
     "docs.BlogConfiguration": {
       "type": "object",

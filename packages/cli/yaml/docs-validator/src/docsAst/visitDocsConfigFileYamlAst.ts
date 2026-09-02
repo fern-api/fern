@@ -322,6 +322,20 @@ export async function visitDocsConfigFileYamlAst({
                 `[docs-ast] Main navigation traversal complete in ${(performance.now() - navStart).toFixed(0)}ms`
             );
         },
+        changelog: async (changelog) => {
+            if (changelog == null) {
+                return;
+            }
+            await visitNavigationAst({
+                absolutePathToFernFolder,
+                navigation: [changelog],
+                visitor,
+                nodePath: ["changelog"],
+                absoluteFilepathToConfiguration,
+                apiWorkspaces,
+                context
+            });
+        },
         products: async (products) => {
             if (products == null) {
                 return;
