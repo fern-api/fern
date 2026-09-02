@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"math/big"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -629,6 +630,148 @@ func TestBackwardsCompatibility(t *testing.T) {
 
 		assert.JSONEq(t, `{"name":"test","code":null}`, string(bytes))
 	})
+}
+
+// testDatedStruct mirrors a generated type with date fields, whose MarshalJSON
+// wraps the embedded struct with shadow fields that override date serialization.
+type testDatedStruct struct {
+	StartDate *time.Time `json:"start_date,omitempty"`
+	EndDate   *time.Time `json:"end_date,omitempty"`
+	Count     *int       `json:"count,omitempty"`
+	Offset    *int       `json:"offset,omitempty"`
+
+	explicitFields *big.Int
+}
+
+var (
+	datedFieldStartDate = big.NewInt(1 << 0)
+	datedFieldEndDate   = big.NewInt(1 << 1)
+	datedFieldCount     = big.NewInt(1 << 2)
+	datedFieldOffset    = big.NewInt(1 << 3)
+)
+
+func (d *testDatedStruct) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *testDatedStruct) SetStartDate(startDate *time.Time) {
+	d.StartDate = startDate
+	d.require(datedFieldStartDate)
+}
+
+func (d *testDatedStruct) SetEndDate(endDate *time.Time) {
+	d.EndDate = endDate
+	d.require(datedFieldEndDate)
+}
+
+func (d *testDatedStruct) SetCount(count *int) {
+	d.Count = count
+	d.require(datedFieldCount)
+}
+
+func (d *testDatedStruct) SetOffset(offset *int) {
+	d.Offset = offset
+	d.require(datedFieldOffset)
+}
+
+func (d *testDatedStruct) MarshalJSON() ([]byte, error) {
+	type embed testDatedStruct
+	var marshaler = struct {
+		embed
+		StartDate *string `json:"start_date,omitempty"`
+		EndDate   *string `json:"end_date,omitempty"`
+	}{
+		embed:     embed(*d),
+		StartDate: formatDate(d.StartDate),
+		EndDate:   formatDate(d.EndDate),
+	}
+	return json.Marshal(HandleExplicitFields(marshaler, d.explicitFields))
+}
+
+func formatDate(t *time.Time) *string {
+	if t == nil {
+		return nil
+	}
+	return stringPtr(t.Format("2006-01-02"))
+}
+
+func TestHandleExplicitFieldsShadowedWrapper(t *testing.T) {
+	date := time.Date(2024, 1, 15, 0, 0, 0, 0, time.UTC)
+
+	tests := []struct {
+		desc      string
+		setupFunc func() *testDatedStruct
+		wantBytes []byte
+	}{
+		{
+			desc: "no explicit fields uses shadow serialization",
+			setupFunc: func() *testDatedStruct {
+				return &testDatedStruct{
+					StartDate: &date,
+					Count:     intPtr(7),
+				}
+			},
+			wantBytes: []byte(`{"start_date":"2024-01-15","count":7}`),
+		},
+		{
+			desc: "explicit non-shadowed field is preserved",
+			setupFunc: func() *testDatedStruct {
+				s := &testDatedStruct{}
+				s.SetCount(intPtr(7))
+				return s
+			},
+			wantBytes: []byte(`{"count":7}`),
+		},
+		{
+			desc: "explicit non-shadowed field with bit beyond wrapper field count",
+			setupFunc: func() *testDatedStruct {
+				s := &testDatedStruct{Count: intPtr(7)}
+				s.SetOffset(nil)
+				return s
+			},
+			wantBytes: []byte(`{"count":7,"offset":null}`),
+		},
+		{
+			desc: "explicit nil shadowed field emits null",
+			setupFunc: func() *testDatedStruct {
+				s := &testDatedStruct{Count: intPtr(7)}
+				s.SetStartDate(nil)
+				return s
+			},
+			wantBytes: []byte(`{"start_date":null,"count":7}`),
+		},
+		{
+			desc: "explicit non-nil shadowed field uses shadow serialization",
+			setupFunc: func() *testDatedStruct {
+				s := &testDatedStruct{}
+				s.SetEndDate(&date)
+				return s
+			},
+			wantBytes: []byte(`{"end_date":"2024-01-15"}`),
+		},
+		{
+			desc: "mixed explicit shadowed and non-shadowed fields",
+			setupFunc: func() *testDatedStruct {
+				s := &testDatedStruct{StartDate: &date}
+				s.SetEndDate(nil)
+				s.SetCount(nil)
+				s.SetOffset(intPtr(0))
+				return s
+			},
+			wantBytes: []byte(`{"start_date":"2024-01-15","end_date":null,"count":null,"offset":0}`),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			bytes, err := json.Marshal(tt.setupFunc())
+			require.NoError(t, err)
+			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
+		})
+	}
 }
 
 // Helper functions
