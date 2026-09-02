@@ -92,6 +92,7 @@ export interface SdkCustomConfig {
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
     optionalAuth: boolean;
+    guardProcessEnvAccess: boolean;
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
 }

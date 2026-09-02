@@ -18,10 +18,8 @@ export class BasicAuthProvider implements core.AuthProvider {
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
         return (
-            (options?.[WRAPPER_PROPERTY]?.[USERNAME_PARAM] != null ||
-                (typeof process !== "undefined" && process.env?.[ENV_USERNAME] != null)) &&
-            (options?.[WRAPPER_PROPERTY]?.[PASSWORD_PARAM] != null ||
-                (typeof process !== "undefined" && process.env?.[ENV_PASSWORD] != null))
+            (options?.[WRAPPER_PROPERTY]?.[USERNAME_PARAM] != null || process.env?.[ENV_USERNAME] != null) &&
+            (options?.[WRAPPER_PROPERTY]?.[PASSWORD_PARAM] != null || process.env?.[ENV_PASSWORD] != null)
         );
     }
 
@@ -32,7 +30,7 @@ export class BasicAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const username =
             (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM], { endpointMetadata })) ??
-            (typeof process !== "undefined" ? process.env?.[ENV_USERNAME] : undefined);
+            process.env?.[ENV_USERNAME];
         if (username == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
@@ -40,7 +38,7 @@ export class BasicAuthProvider implements core.AuthProvider {
         }
         const password =
             (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM], { endpointMetadata })) ??
-            (typeof process !== "undefined" ? process.env?.[ENV_PASSWORD] : undefined);
+            process.env?.[ENV_PASSWORD];
         if (password == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,

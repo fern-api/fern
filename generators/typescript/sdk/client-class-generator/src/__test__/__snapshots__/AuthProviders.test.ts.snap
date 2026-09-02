@@ -126,7 +126,7 @@ export class BasicAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
-        return (options?.[USERNAME_PARAM] != null || (typeof process !== "undefined" && process.env?.[ENV_USERNAME] != null)) && (options?.[PASSWORD_PARAM] != null || (typeof process !== "undefined" && process.env?.[ENV_PASSWORD] != null));
+        return (options?.[USERNAME_PARAM] != null || process.env?.[ENV_USERNAME] != null) && (options?.[PASSWORD_PARAM] != null || process.env?.[ENV_PASSWORD] != null);
     }
 
     public async getAuthRequest({ endpointMetadata }: {
@@ -135,11 +135,11 @@ export class BasicAuthProvider implements core.AuthProvider {
 
                 const username = 
                     (await core.Supplier.get(this.options[USERNAME_PARAM], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_USERNAME] : undefined);
+                    process.env?.[ENV_USERNAME];
                 if (username == null) { throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME }); }
                 const password = 
                     (await core.Supplier.get(this.options[PASSWORD_PARAM], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_PASSWORD] : undefined);
+                    process.env?.[ENV_PASSWORD];
                 if (password == null) { throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD }); }
 
                 const authHeader = core.BasicAuth.toAuthorizationHeader(username, password);
@@ -395,7 +395,7 @@ export class BearerAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
-        return options?.[TOKEN_PARAM] != null || (typeof process !== "undefined" && process.env?.[ENV_TOKEN] != null);
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
     public async getAuthRequest({ endpointMetadata }: {
@@ -404,7 +404,7 @@ export class BearerAuthProvider implements core.AuthProvider {
 
                 const token = 
                     (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_TOKEN] : undefined);
+                    process.env?.[ENV_TOKEN];
                 if (token == null) {
                     return { headers: {} };
                 }
@@ -441,7 +441,7 @@ export class BearerAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
-        return options?.[TOKEN_PARAM] != null || (typeof process !== "undefined" && process.env?.[ENV_TOKEN] != null);
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
     public async getAuthRequest({ endpointMetadata }: {
@@ -450,7 +450,7 @@ export class BearerAuthProvider implements core.AuthProvider {
 
                 const token = 
                     (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_TOKEN] : undefined);
+                    process.env?.[ENV_TOKEN];
                 if (token == null) {
                     return { headers: {} };
                 }
@@ -487,7 +487,7 @@ export class BearerAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
-        return options?.[TOKEN_PARAM] != null || (typeof process !== "undefined" && process.env?.[ENV_TOKEN] != null);
+        return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
     public async getAuthRequest({ endpointMetadata }: {
@@ -496,7 +496,7 @@ export class BearerAuthProvider implements core.AuthProvider {
 
                 const token = 
                     (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_TOKEN] : undefined);
+                    process.env?.[ENV_TOKEN];
                 if (token == null) {
                     throw new errors.SeedApiError({
                         message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
@@ -743,7 +743,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
-        return options?.[PARAM_KEY] != null || (typeof process !== "undefined" && process.env?.[ENV_HEADER_KEY] != null);
+        return options?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;
     }
 
     public async getAuthRequest({ endpointMetadata }: {
@@ -752,7 +752,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
 
                 const headerValue = 
                     (await core.Supplier.get(this.options[PARAM_KEY], { endpointMetadata })) ??
-                    (typeof process !== "undefined" ? process.env?.[ENV_HEADER_KEY] : undefined);
+                    process.env?.[ENV_HEADER_KEY];
                 if (headerValue == null) {
                     throw new errors.SeedApiError({
                         message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,

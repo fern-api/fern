@@ -934,11 +934,13 @@ describe("AuthProvidersGenerator optionalAuth", () => {
 });
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Env var reads must never touch a bare `process` global: optional chaining
-// (`process.env?.[KEY]`) still throws a ReferenceError when `process` itself is
-// undeclared, which is the case in browsers/Vite, Cloudflare Workers and Deno.
+// With `guardProcessEnvAccess` enabled, env var reads must never touch a bare
+// `process` global: optional chaining (`process.env?.[KEY]`) still throws a
+// ReferenceError when `process` itself is undeclared, which is the case in
+// browsers/Vite, Cloudflare Workers and Deno. With the flag off (the default),
+// the reads stay unguarded so existing generated SDKs do not change.
 // ──────────────────────────────────────────────────────────────────────────────
-describe("environment variable fallbacks guard against a missing process global", () => {
+describe.each([true, false])("environment variable fallbacks (guardProcessEnvAccess: %s)", (guarded) => {
     function render(
         generator: {
             writeToFile: (context: ReturnType<typeof createMockGeneratorContext>) => void;
@@ -967,7 +969,8 @@ describe("environment variable fallbacks guard against a missing process global"
                 authScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
             }),
             "OAuthAuthProvider.ts"
         );
@@ -994,7 +997,12 @@ describe("environment variable fallbacks guard against a missing process global"
         };
     }
 
-    it("guards the bearer token env var", () => {
+    /** Every read is guarded when the flag is on, and none of them when it is off. */
+    function expectedReads(total: number): { total: number; guarded: number } {
+        return { total, guarded: guarded ? total : 0 };
+    }
+
+    it("handles the bearer token env var", () => {
         const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
         const ir = createMinimalIR({ authSchemes: [authScheme] });
         const output = render(
@@ -1003,15 +1011,16 @@ describe("environment variable fallbacks guard against a missing process global"
                 authScheme: authScheme as AnyScheme,
                 neverThrowErrors: false,
                 isAuthMandatory: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
             }),
             "BearerAuthProvider.ts"
         );
         // one read in canCreate, one in the getAuthRequest fallback
-        expect(countProcessEnvReads(output)).toEqual({ total: 2, guarded: 2 });
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(2));
     });
 
-    it("guards the header auth env var", () => {
+    it("handles the header auth env var", () => {
         const authScheme = createAuthScheme("header", createHeaderAuthScheme({ headerEnvVar: "PLANT_API_KEY" }));
         const ir = createMinimalIR({ authSchemes: [authScheme] });
         const output = render(
@@ -1020,15 +1029,16 @@ describe("environment variable fallbacks guard against a missing process global"
                 authScheme: authScheme as AnyScheme,
                 neverThrowErrors: false,
                 isAuthMandatory: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
             }),
             "HeaderAuthProvider.ts"
         );
         // one read in canCreate, one in the getAuthRequest fallback
-        expect(countProcessEnvReads(output)).toEqual({ total: 2, guarded: 2 });
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(2));
     });
 
-    it("guards the basic auth username and password env vars", () => {
+    it("handles the basic auth username and password env vars", () => {
         const authScheme = createAuthScheme(
             "basic",
             createBasicAuthScheme({ usernameEnvVar: "PLANT_USERNAME", passwordEnvVar: "PLANT_PASSWORD" })
@@ -1040,38 +1050,43 @@ describe("environment variable fallbacks guard against a missing process global"
                 authScheme: authScheme as AnyScheme,
                 neverThrowErrors: false,
                 isAuthMandatory: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                guardProcessEnvAccess: guarded
             }),
             "BasicAuthProvider.ts"
         );
         // username and password, each read in canCreate and again in the getAuthRequest fallback
-        expect(countProcessEnvReads(output)).toEqual({ total: 4, guarded: 4 });
+        expect(countProcessEnvReads(output)).toEqual(expectedReads(4));
     });
 
-    it("guards the oauth client id and client secret env vars", () => {
-        const output = renderOAuth();
+    it("handles the oauth client id and client secret env vars", () => {
         // client id and client secret, each read in canCreate and again in its supplier fallback
-        expect(countProcessEnvReads(output)).toEqual({ total: 4, guarded: 4 });
+        expect(countProcessEnvReads(renderOAuth())).toEqual(expectedReads(4));
     });
 
-    it("guards the oauth canCreate env var checks", () => {
+    it("handles the oauth canCreate env var checks", () => {
         const normalized = renderOAuth().replace(/\s+/g, " ");
-        expect(normalized).toContain(`|| (${GUARD} && process.env?.[ENV_CLIENT_ID] != null)`);
-        expect(normalized).toContain(`|| (${GUARD} && process.env?.[ENV_CLIENT_SECRET] != null)`);
+        const clientId = guarded
+            ? `|| (${GUARD} && process.env?.[ENV_CLIENT_ID] != null)`
+            : "|| process.env?.[ENV_CLIENT_ID] != null";
+        const clientSecret = guarded
+            ? `|| (${GUARD} && process.env?.[ENV_CLIENT_SECRET] != null)`
+            : "|| process.env?.[ENV_CLIENT_SECRET] != null";
+        expect(normalized).toContain(clientId);
+        expect(normalized).toContain(clientSecret);
     });
 
-    it("guards the oauth client id and client secret supplier fallbacks", () => {
+    it("handles the oauth client id and client secret supplier fallbacks", () => {
         const normalized = renderOAuth().replace(/\s+/g, " ");
         // the supplier fallbacks are only reached when no credential was supplied: each read is
         // preceded by an early return on the supplier, so the guard protects the fallback path
-        expect(
-            countOccurrences(normalized, `const envClientId = ${GUARD} ? process.env?.[ENV_CLIENT_ID] : undefined`)
-        ).toBe(1);
-        expect(
-            countOccurrences(
-                normalized,
-                `const envClientSecret = ${GUARD} ? process.env?.[ENV_CLIENT_SECRET] : undefined`
-            )
-        ).toBe(1);
+        const clientId = guarded
+            ? `const envClientId = (${GUARD} ? process.env?.[ENV_CLIENT_ID] : undefined)`
+            : "const envClientId = process.env?.[ENV_CLIENT_ID]";
+        const clientSecret = guarded
+            ? `const envClientSecret = (${GUARD} ? process.env?.[ENV_CLIENT_SECRET] : undefined)`
+            : "const envClientSecret = process.env?.[ENV_CLIENT_SECRET]";
+        expect(countOccurrences(normalized, clientId)).toBe(1);
+        expect(countOccurrences(normalized, clientSecret)).toBe(1);
     });
 });

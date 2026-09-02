@@ -249,6 +249,27 @@ Fern Definition).
 If `skipResponseValidation` is enabled, the client will never throw if the response is misshapen. Rather, the client
 will log the issue using `console.warn` and return the data (casted to the expected response type).
 
+#### ✨ `guardProcessEnvAccess`
+
+**Type:** boolean
+
+**Default:** `false`
+
+By default, the generated auth providers read credentials from environment variables with
+`process.env?.[ENV_VAR]`, which throws `ReferenceError: process is not defined` in runtimes where
+`process` is an undeclared global (browsers/Vite, Cloudflare Workers, Deno).
+
+If `guardProcessEnvAccess` is enabled, those reads go through a `typeof process !== "undefined"`
+guard, so a caller who omits the credential in such a runtime gets the normal
+"please provide `<param>`, or set the `<ENV_VAR>` environment variable" error instead. Behavior on
+Node is unchanged.
+
+```yaml
+# generators.yml
+config:
+    guardProcessEnvAccess: true
+```
+
 #### ✨ `extraDependencies`
 
 **Type:** map\<string, string\>
