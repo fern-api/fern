@@ -1,8 +1,9 @@
+import { tokenizeOperationId } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
-import { camelCase, compact, isEqual } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
@@ -347,8 +348,9 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return { method: this.sanitizeMethodName(methodName) };
         }
 
-        const tagTokens = tokenizeString(tag);
-        const methodNameTokens = tokenizeString(methodName);
+        const respectWordBoundaries = this.context.settings.respectOperationIdWordBoundaries;
+        const tagTokens = tokenizeOperationId(tag, respectWordBoundaries);
+        const methodNameTokens = tokenizeOperationId(methodName, respectWordBoundaries);
 
         if (isEqual(tagTokens, methodNameTokens)) {
             return {
@@ -400,25 +402,6 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const { validExample } = exampleConverter.convert();
         return validExample;
     }
-}
-
-function tokenizeString(input: string): string[] {
-    let tokens = isCamelOrPascalCase(input) ? splitOnCapitalLetters(input) : splitOnNonAlphanumericCharacters(input);
-    tokens = tokens.map((token) => token.toLowerCase());
-    tokens = compact(tokens);
-    return tokens;
-}
-
-function isCamelOrPascalCase(input: string): boolean {
-    return /^[a-z]+(?:[A-Z][a-z]+)*$/.test(input);
-}
-
-function splitOnCapitalLetters(input: string): string[] {
-    return input.split(/(?=[A-Z])/);
-}
-
-function splitOnNonAlphanumericCharacters(input: string): string[] {
-    return input.split(/[^a-zA-Z0-9]+/);
 }
 
 function isHeaderAuthScheme(

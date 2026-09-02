@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, tokenizeOperationId } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
@@ -25,7 +25,6 @@ import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName.js";
-import { tokenizeString } from "./utils/getEndpointLocation.js";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
@@ -212,8 +211,8 @@ function getUnresolvedWebhookLocation({
 
     // if both tag and operation ids are defined
     const { respectOperationIdWordBoundaries } = context.options;
-    const tagTokens = tokenizeString(tag, respectOperationIdWordBoundaries);
-    const operationIdTokens = tokenizeString(operationId, respectOperationIdWordBoundaries);
+    const tagTokens = tokenizeOperationId(tag, respectOperationIdWordBoundaries);
+    const operationIdTokens = tokenizeOperationId(operationId, respectOperationIdWordBoundaries);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {

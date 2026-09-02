@@ -113,6 +113,7 @@
     "disambiguateRequestNames": true,
     "ignoreTags": false,
     "respectParameterContent": false,
-    "respectPerSpecBasePath": false
+    "respectPerSpecBasePath": false,
+    "respectOperationIdWordBoundaries": false
   }
 }

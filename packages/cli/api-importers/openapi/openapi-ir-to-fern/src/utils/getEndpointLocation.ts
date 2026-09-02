@@ -1,8 +1,9 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { tokenizeOperationId } from "@fern-api/core-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
-import { camelCase, compact, isEqual, words } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
@@ -14,7 +15,7 @@ export interface EndpointLocation {
 export interface EndpointLocationOptions {
     /**
      * If true, operation ids are tokenized on every word boundary (camelCase transitions and
-     * digits) rather than only on separators. See {@link tokenizeString}.
+     * digits) rather than only on separators. See {@link tokenizeOperationId}.
      */
     respectOperationIdWordBoundaries?: boolean;
 }
@@ -84,8 +85,8 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLoca
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeString(tag, respectOperationIdWordBoundaries);
-    const operationIdTokens = tokenizeString(operationId, respectOperationIdWordBoundaries);
+    const tagTokens = tokenizeOperationId(tag, respectOperationIdWordBoundaries);
+    const operationIdTokens = tokenizeOperationId(operationId, respectOperationIdWordBoundaries);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -171,36 +172,6 @@ export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocatio
         namespaceOverride: endpoint.namespace,
         location: getUnresolvedEndpointLocation(endpoint, options)
     });
-}
-
-/**
- * @param respectWordBoundaries when true, split on every word boundary (camelCase transitions and
- * digits) regardless of the shape of the input. The default only splits on camelCase when the input
- * is entirely alphabetic and camel/Pascal cased, so an id like `Sharing_ListFolderMembers` or
- * `filesGetThumbnailV2` collapses into a single token that can no longer be split.
- */
-export function tokenizeString(input: string, respectWordBoundaries = false): string[] {
-    if (respectWordBoundaries) {
-        return words(input).map((token) => token.toLowerCase());
-    }
-
-    let tokens: string[];
-
-    // Check if the string is in camel case or Pascal case
-    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
-        // Camel case or Pascal case: Split based on capital letters
-        tokens = input.split(/(?=[A-Z])/);
-    } else {
-        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
-        tokens = input.split(/[^a-zA-Z0-9]+/);
-    }
-
-    tokens = tokens.map((token) => token.toLowerCase());
-
-    // Filter out empty tokens
-    tokens = compact(tokens);
-
-    return tokens;
 }
 
 // When the url is /users/{userId}/sign-in we want the split to be ["users", "{userId}", "sign", "in"]
