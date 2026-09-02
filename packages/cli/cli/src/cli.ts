@@ -796,7 +796,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 })
                 .option("runner", {
-                    choices: ["docker", "podman"],
+                    choices: ["docker", "podman", "container"],
                     description: "Choose the container runtime to use for local generation.",
                     default: undefined
                 })
