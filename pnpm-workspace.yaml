@@ -218,7 +218,7 @@ catalog:
   prettier2: npm:prettier@^2.7.1
   pretty-ms: ^9.0.0
   puppeteer: ^24.40.0
-  qs: ^6.15.0
+  qs: ^6.16.0
   rehype-katex: ^7.0.0
   rehype-parse: ^9.0.0
   remark-gfm: ^4.0.0
