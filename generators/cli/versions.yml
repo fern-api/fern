@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.39.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.7 updates.
+      type: chore
+    - summary: |
+        Embedded types generation no longer fails on large APIs. The rust-model subprocess
+        timeout is raised from 2 to 15 minutes, and its stderr is now surfaced in the error
+        message when it does fail.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 0.39.0
   changelogEntry:
     - summary: |
