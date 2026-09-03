@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Plant API
   version: 0.1.0
@@ -37,6 +37,11 @@ paths:
           in: header
           schema:
             $ref: "#/components/schemas/TenantId"
+        - name: X-Workspace
+          in: header
+          schema:
+            $ref: "#/components/schemas/TenantId"
+            description: The workspace, described beside the reference.
       responses:
         "200":
           description: OK

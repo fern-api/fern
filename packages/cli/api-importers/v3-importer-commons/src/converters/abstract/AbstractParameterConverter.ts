@@ -138,8 +138,8 @@ export abstract class AbstractParameterConverter<
 
     /**
      * A parameter's description may be declared either on the parameter object or inside the
-     * parameter's inline schema; both are valid OpenAPI. A description on a referenced schema is
-     * left alone, since it belongs to the named type.
+     * parameter's schema; both are valid OpenAPI. For a `$ref` schema, only a sibling description on
+     * the reference itself counts; the referenced type's own description belongs to that type.
      */
     private getParameterDescription({
         schema
@@ -149,10 +149,10 @@ export abstract class AbstractParameterConverter<
         if (this.parameter.description != null) {
             return this.parameter.description;
         }
-        if (this.context.isReferenceObject(schema)) {
-            return undefined;
+        if ("description" in schema && typeof schema.description === "string") {
+            return schema.description;
         }
-        return schema.description;
+        return undefined;
     }
 
     private getParameterSchemaWithExampleOverride({

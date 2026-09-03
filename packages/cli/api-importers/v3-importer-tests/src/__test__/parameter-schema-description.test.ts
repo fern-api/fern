@@ -61,7 +61,21 @@ describe("parameter descriptions declared inside the schema", () => {
         const ir = await getIRForFixture("parameter-schema-description");
 
         const endpoint = Object.values(ir.services)[0]?.endpoints[0];
-        const tenant = endpoint?.headers.find((header) => getWireValue(header.name) === "X-Tenant");
+        const allHeaders = [...ir.headers, ...(endpoint?.headers ?? [])];
+        const tenant = allHeaders.find((header) => getWireValue(header.name) === "X-Tenant");
+        expect(tenant).toBeDefined();
         expect(tenant?.docs).toBeUndefined();
+        expect(Object.values(ir.types).find((type) => type.name.name === "TenantId")?.docs).toBe(
+            "The tenant identifier, described on the named type."
+        );
+    });
+
+    it("should use a description declared beside a $ref", async () => {
+        const ir = await getIRForFixture("parameter-schema-description");
+
+        const endpoint = Object.values(ir.services)[0]?.endpoints[0];
+        const allHeaders = [...ir.headers, ...(endpoint?.headers ?? [])];
+        const workspace = allHeaders.find((header) => getWireValue(header.name) === "X-Workspace");
+        expect(workspace?.docs).toBe("The workspace, described beside the reference.");
     });
 });
