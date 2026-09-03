@@ -1122,7 +1122,9 @@ export abstract class AbstractRustGeneratorContext<
         if (this.typeIdByDeclaration == null) {
             this.typeIdByDeclaration = new Map();
             for (const [typeId, type] of Object.entries(this.ir.types)) {
-                this.typeIdByDeclaration.set(type, typeId);
+                if (!this.typeIdByDeclaration.has(type)) {
+                    this.typeIdByDeclaration.set(type, typeId);
+                }
             }
         }
         return this.typeIdByDeclaration.get(typeDeclaration);
