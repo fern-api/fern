@@ -128,7 +128,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
 }
 
 function isNamespaceTag(tag: string, namespace: string | undefined): boolean {
-    return namespace != null && camelCase(tag) === camelCase(namespace);
+    return namespace != null && tag.toLowerCase() === namespace.toLowerCase();
 }
 
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
