@@ -1,0 +1,6 @@
+- summary: |
+    When an OpenAPI spec has `namespace` set, the direct-to-IR importer used for docs
+    now ignores an operation tag that matches the namespace (case-insensitively), so
+    `namespace: video` with tag `Video` renders a single `Video` group in the API
+    reference instead of a nested `Video > Video`. Matches the SDK importer behavior.
+  type: fix
