@@ -1,6 +1,7 @@
 - summary: |
-    When an OpenAPI spec has `namespace` set, the direct-to-IR importer used for docs
-    now ignores an operation tag that matches the namespace (case-insensitively), so
-    `namespace: video` with tag `Video` renders a single `Video` group in the API
-    reference instead of a nested `Video > Video`. Matches the SDK importer behavior.
+    Fix the direct OpenAPI-to-IR importer (used for docs) producing a nested `<namespace> > <namespace>`
+    group when a spec has `namespace` set. Two causes: an operation tag matching the namespace
+    (case-insensitively, e.g. tag `Video` with `namespace: video`) was treated as a sub-group, and
+    schema types were placed in a phantom `namespace/namespace` subpackage because the namespace was
+    prefixed twice. Endpoints and types now sit directly in the namespace package, matching the SDK importer.
   type: fix

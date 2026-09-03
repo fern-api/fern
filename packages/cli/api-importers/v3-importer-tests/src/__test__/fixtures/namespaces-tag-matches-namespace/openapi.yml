@@ -14,6 +14,10 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EgressStream"
     post:
       operationId: createEgressStream
       summary: Create egress stream
@@ -22,3 +26,10 @@ paths:
       responses:
         "200":
           description: OK
+components:
+  schemas:
+    EgressStream:
+      type: object
+      properties:
+        id:
+          type: string

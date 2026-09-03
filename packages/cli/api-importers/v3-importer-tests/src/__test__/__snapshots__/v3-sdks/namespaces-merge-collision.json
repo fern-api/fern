@@ -1327,25 +1327,6 @@
       },
       "hasEndpointsInTree": false,
       "service": "service_shared",
-      "subpackages": [
-        "subpackage_shared/shared"
-      ],
-      "errors": [],
-      "types": []
-    },
-    "subpackage_shared/shared": {
-      "name": "shared",
-      "fernFilepath": {
-        "allParts": [
-          "shared",
-          "shared"
-        ],
-        "packagePath": [
-          "shared"
-        ],
-        "file": "shared"
-      },
-      "hasEndpointsInTree": false,
       "subpackages": [],
       "errors": [],
       "types": [
@@ -1366,25 +1347,6 @@
         "file": "other"
       },
       "service": "service_other",
-      "types": [],
-      "errors": [],
-      "subpackages": [
-        "subpackage_other/other"
-      ],
-      "hasEndpointsInTree": false
-    },
-    "subpackage_other/other": {
-      "name": "other",
-      "fernFilepath": {
-        "allParts": [
-          "other",
-          "other"
-        ],
-        "packagePath": [
-          "other"
-        ],
-        "file": "other"
-      },
       "types": [
         "other:Comment"
       ],

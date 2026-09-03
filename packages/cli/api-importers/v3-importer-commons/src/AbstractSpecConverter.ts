@@ -491,11 +491,7 @@ export abstract class AbstractSpecConverter<
     }
 
     protected addTypeToPackage(typeId: FernIr.TypeId): void {
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-        const groupPackage = this.getOrCreatePackage({ group });
+        const groupPackage = this.getOrCreatePackage({ group: [] });
         groupPackage.types.push(typeId);
     }
 
