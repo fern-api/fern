@@ -988,8 +988,11 @@ export class AutoVersionStep extends BaseStep {
     /**
      * Calls the hosted FAI service (`/sdks/analyze-commit-diff`) with the fern token.
      * Used when no BAML `ai` config is supplied (remote generation via fiddle). FAI
-     * handles chunking, parallelism, and retries server-side. Returns null on
-     * NO_CHANGE; throws on transport/HTTP errors so the caller's PATCH fallback applies.
+     * handles chunking, parallelism, and retries server-side. Requests an NDJSON
+     * stream so FAI can emit heartbeats while a long analysis runs (keeps load
+     * balancer idle timeouts from killing the request); falls back to parsing a
+     * plain JSON body when FAI answers synchronously. Returns null on NO_CHANGE;
+     * throws on transport/HTTP/in-band errors so the caller's PATCH fallback applies.
      */
     private async analyzeViaFaiService(
         cleanedDiff: string,
@@ -1001,7 +1004,8 @@ export class AutoVersionStep extends BaseStep {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${this.config.fernToken}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Accept: FAI_NDJSON_MEDIA_TYPE
             },
             body: JSON.stringify({
                 diff: cleanedDiff,
@@ -1015,7 +1019,9 @@ export class AutoVersionStep extends BaseStep {
             const body = await response.text().catch(() => "");
             throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
         }
-        const parsed: unknown = await response.json();
+        const parsed: unknown = isNdjsonResponse(response)
+            ? await readFaiAnalyzeStream(response)
+            : await response.json();
         if (!isFaiAnalyzeResponse(parsed)) {
             throw new Error("FAI analyze-commit-diff returned an unexpected response shape");
         }
@@ -1094,6 +1100,66 @@ interface FaiAnalyzeResponse {
 }
 
 const FAI_VERSION_BUMPS = ["MAJOR", "MINOR", "PATCH", "NO_CHANGE"];
+const FAI_NDJSON_MEDIA_TYPE = "application/x-ndjson";
+
+function isNdjsonResponse(response: Response): boolean {
+    return (response.headers?.get("content-type") ?? "").includes(FAI_NDJSON_MEDIA_TYPE);
+}
+
+/**
+ * Consumes FAI's NDJSON stream: `{"type":"heartbeat"}` lines are ignored,
+ * `{"type":"result","result":{...}}` yields the analysis, and
+ * `{"type":"error",...}` throws (the HTTP status is already 200 by then).
+ */
+async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
+    if (response.body == null) {
+        throw new Error("FAI analyze-commit-diff returned an empty stream");
+    }
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffered = "";
+    const handleLine = (line: string): { done: true; result: unknown } | undefined => {
+        if (line.trim().length === 0) {
+            return undefined;
+        }
+        const event: unknown = JSON.parse(line);
+        if (typeof event !== "object" || event == null) {
+            throw new Error("FAI analyze-commit-diff stream returned a non-object event");
+        }
+        const { type, result, detail, status } = event as Record<string, unknown>;
+        switch (type) {
+            case "heartbeat":
+                return undefined;
+            case "result":
+                return { done: true, result };
+            case "error": {
+                const statusText = typeof status === "number" ? ` with status ${status}` : "";
+                throw new Error(`FAI analyze-commit-diff failed${statusText}: ${String(detail ?? "").slice(0, 500)}`);
+            }
+            default:
+                throw new Error(`FAI analyze-commit-diff stream returned unknown event type: ${String(type)}`);
+        }
+    };
+    try {
+        while (true) {
+            const { value, done } = await reader.read();
+            buffered += done ? decoder.decode() : decoder.decode(value, { stream: true });
+            const lines = buffered.split("\n");
+            buffered = done ? "" : (lines.pop() ?? "");
+            for (const line of lines) {
+                const outcome = handleLine(line);
+                if (outcome != null) {
+                    return outcome.result;
+                }
+            }
+            if (done) {
+                throw new Error("FAI analyze-commit-diff stream ended without a result");
+            }
+        }
+    } finally {
+        reader.cancel().catch(() => undefined);
+    }
+}
 
 function isFaiAnalyzeResponse(value: unknown): value is FaiAnalyzeResponse {
     if (typeof value !== "object" || value == null) {
