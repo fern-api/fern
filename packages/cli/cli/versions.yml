@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.113.2
+  changelogEntry:
+    - summary: |
+        Fall back to an OpenAPI parameter's inline schema description when the parameter itself has no
+        description, so query, header, and path parameter docs appear in generated API references.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 5.113.1
   changelogEntry:
     - summary: |
