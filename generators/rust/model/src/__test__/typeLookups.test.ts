@@ -18,7 +18,7 @@ function typeIdOf(context: Awaited<ReturnType<typeof createSampleGeneratorContex
 }
 
 describe("hasDefaultImpl with circular types", () => {
-    it("generates the same derives from a fresh context as from a warmed cache", async () => {
+    it("generates the same derives whether or not Default support was already computed", async () => {
         const fresh = generateModels({ context: await createSampleGeneratorContext("rust-circular-types") });
 
         const warmed = await createSampleGeneratorContext("rust-circular-types");
@@ -44,11 +44,13 @@ describe("hasDefaultImpl with circular types", () => {
             C: false,
             D: true,
             E: true,
+            Payload: true,
+            Wrapper: true,
             Node: true,
             Leaf: true
         };
 
-        // Analyze each type on a fresh context, so its cache is populated starting from that type.
+        // Ask about each type first on its own fresh context, so nothing else primed the answer.
         for (const startName of Object.keys(expected)) {
             const context = await createSampleGeneratorContext("rust-circular-types");
             namedTypeHasDefaultImpl(typeIdOf(context, startName), context);
@@ -61,11 +63,20 @@ describe("hasDefaultImpl with circular types", () => {
         }
     });
 
-    it("keeps unknownHasDefault results separate", async () => {
+    it("keeps unknownHasDefault results separate, including through named types", async () => {
         const context = await createSampleGeneratorContext("rust-circular-types");
-        const typeRef = FernIr.TypeReference.unknown();
-        expect(hasDefaultImpl(typeRef, context)).toBe(true);
-        expect(hasDefaultImpl(typeRef, context, { unknownHasDefault: false })).toBe(false);
+
+        const bareUnknown = FernIr.TypeReference.unknown();
+        expect(hasDefaultImpl(bareUnknown, context)).toBe(true);
+        expect(hasDefaultImpl(bareUnknown, context, { unknownHasDefault: false })).toBe(false);
+
+        // Wrapper holds a Payload, which holds the `unknown`, so the two readings have
+        // to stay distinct after a hop through a declared type as well.
+        for (const name of ["Payload", "Wrapper"]) {
+            const typeId = typeIdOf(context, name);
+            expect(namedTypeHasDefaultImpl(typeId, context), name).toBe(true);
+            expect(namedTypeHasDefaultImpl(typeId, context, { unknownHasDefault: false }), name).toBe(false);
+        }
     });
 });
 
