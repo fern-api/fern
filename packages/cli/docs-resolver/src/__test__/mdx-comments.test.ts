@@ -32,12 +32,16 @@ describe("MDX comments", () => {
         }
 
         expect(page.markdown).not.toContain("{/*");
-        expect(page.markdown).toContain("Some text  more text.");
+        expect(page.markdown.replace(/\s+/g, " ")).toContain("Some text more text.");
+        expect(page.markdown).toContain("<!-- html comment -->");
+        expect(page.markdown).toContain("More text <!-- inline html comment --> here.");
 
         const source = await readFile(resolve(fixtureDir, "welcome.mdx"), "utf-8");
         expect(page.rawMarkdown).toBe(source);
         expect(page.rawMarkdown).toContain("{/* top-level comment */}");
         expect(page.rawMarkdown).toContain("{/* nested comment */}");
         expect(page.rawMarkdown).toContain("Some text {/* inline comment */} more text.");
+        expect(page.rawMarkdown).toContain("<!-- html comment -->");
+        expect(page.rawMarkdown).toContain("More text <!-- inline html comment --> here.");
     });
 });

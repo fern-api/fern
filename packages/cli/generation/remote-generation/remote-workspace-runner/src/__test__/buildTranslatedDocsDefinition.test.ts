@@ -44,7 +44,8 @@ function createBaseDefinition(pageId: string): DocsV1Write.DocsDefinition {
 
 describe("buildTranslatedDocsDefinition", () => {
     it("strips MDX comments from markdown but keeps them in rawMarkdown", async () => {
-        const source = "---\ntitle: Bienvenue\n---\n\n{/* commentaire */}\n\nBonjour {/* inline */} monde.\n";
+        const source =
+            "---\ntitle: Bienvenue\n---\n\n{/* commentaire */}\n\nBonjour {/* inline */} monde.\n\n<!-- html comment -->\n";
 
         const result = await buildTranslatedDocsDefinition({
             docsDefinition: createBaseDefinition("welcome.mdx"),
@@ -58,7 +59,8 @@ describe("buildTranslatedDocsDefinition", () => {
         const page = result.pages[DocsV1Write.PageId("welcome.mdx")];
         expect(page).toBeDefined();
         expect(page?.markdown).not.toContain("{/*");
-        expect(page?.markdown).toContain("Bonjour  monde.");
+        expect(page?.markdown?.replace(/\s+/g, " ")).toContain("Bonjour monde.");
+        expect(page?.markdown).toContain("<!-- html comment -->");
         expect(page?.rawMarkdown).toBe(source);
     });
 });
