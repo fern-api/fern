@@ -957,4 +957,86 @@ public class CasingConfigurationTest {
         root.set("casingsConfig", casingsConfig);
         return CasingConfiguration.fromIrJson(root);
     }
+
+    // ===== keyword sanitization: all-underscore inputs =====
+
+    @Nested
+    class UnderscoreTests {
+
+        @Test
+        void computeName_singleUnderscore_isEscaped() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            CasingConfiguration.NameParts parts = config.computeName("_");
+            assertThat(parts.camelUnsafe).isEqualTo("_");
+            assertThat(parts.camelSafe).isEqualTo("__");
+        }
+
+        @Test
+        void computeName_doubleUnderscore_isAlreadyValid() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            CasingConfiguration.NameParts parts = config.computeName("__");
+            assertThat(parts.camelUnsafe).isEqualTo("__");
+            assertThat(parts.camelSafe).isEqualTo("__");
+        }
+
+        @Test
+        void computeName_tripleUnderscore_isAlreadyValid() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("___").camelSafe).isEqualTo("___");
+        }
+
+        @Test
+        void computeName_ordinaryUnderscoreSeparatedName_unaffected() {
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("user_id").camelSafe).isEqualTo("userId");
+        }
+    }
+
+    // ===== keyword sanitization: inputs with no letters/digits (wordless names) =====
+
+    @Nested
+    class WordlessNameTests {
+
+        @Test
+        void computeName_dash_encodesCodePoint() {
+            // No legal characters remain, so the code point (0x2d) is encoded instead of
+            // collapsing to a shared placeholder - see computeName_dashAndAt_dontCollide below.
+            CasingConfiguration.NameParts parts =
+                    buildConfig(true, "java", null).computeName("-");
+            assertThat(parts.camelSafe).isEqualTo("__2d");
+            assertThat(parts.pascalSafe).isEqualTo("__2d");
+            assertThat(parts.snakeSafe).isEqualTo("__2d");
+            assertThat(parts.screamingSnakeSafe).isEqualTo("__2D");
+        }
+
+        @Test
+        void computeName_at_encodesCodePoint() {
+            assertThat(buildConfig(true, "java", null).computeName("@").camelSafe)
+                    .isEqualTo("__40");
+        }
+
+        @Test
+        void computeName_dashAndAt_dontCollide() {
+            // Distinct wordless inputs must not fall back to the same identifier - that would
+            // silently generate two identically-named methods/classes for sibling discriminants.
+            CasingConfiguration config = buildConfig(true, "java", null);
+            assertThat(config.computeName("-").camelSafe).isNotEqualTo(config.computeName("@").camelSafe);
+        }
+
+        @Test
+        void computeName_dashUnderscoreDash_keepsLegalUnderscore() {
+            // "-_-" has its illegal '-' characters stripped, leaving "_", which is itself reserved.
+            assertThat(buildConfig(true, "java", null).computeName("-_-").camelSafe)
+                    .isEqualTo("__");
+        }
+
+        @Test
+        void computeName_dollarSign_isAlreadyValid() {
+            // '$' is a legal Java identifier character, so it's kept as-is (not a reserved word).
+            CasingConfiguration.NameParts parts =
+                    buildConfig(true, "java", null).computeName("$$");
+            assertThat(parts.camelUnsafe).isEqualTo("$$");
+            assertThat(parts.camelSafe).isEqualTo("$$");
+        }
+    }
 }

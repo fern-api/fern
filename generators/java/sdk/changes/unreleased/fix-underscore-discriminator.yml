@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generation failure when a discriminated union's discriminator value has no
+    letters or digits (e.g. `_`, `-`, `@`, `-_-`). Previously the compressed-name
+    casing logic (used to reconstruct Java identifiers from the IR) collapsed such
+    values to an empty string before it could reach the reserved-keyword check, so
+    JavaPoet rejected the resulting empty method name. These values now fall back
+    to their legal Java-identifier characters, or - if none remain - an encoding of
+    their code points (e.g. `-` becomes `__2d`, `@` becomes `__40`) so that distinct
+    values never collide on the same generated identifier, while the serialized
+    discriminator value is unchanged.
+  type: fix
