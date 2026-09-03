@@ -970,8 +970,12 @@ impl PageState {
     /// cursor-style config) start with no token; offset-style starts at
     /// the caller's own value for the offset param (e.g. `--page 2`) so
     /// later pages continue from where the caller began. When the caller
-    /// gave none, page-index offsets (no `step`) start at page 1 and
-    /// item-index offsets (`step` set) start at 0; uri/path/custom forms
+    /// gave none, the offset param's declared `default` (schema `default:`
+    /// or `x-fern-default`) is used — that is the page the server serves
+    /// when the param is omitted, so a 0-indexed API (`default: 0`)
+    /// continues at 1. Without a declared default, page-index offsets
+    /// (no `step`) start at page 1 and item-index offsets (`step` set)
+    /// start at 0, matching the SDK generators; uri/path/custom forms
     /// start in their respective first-page states.
     ///
     /// This value only ever addresses the *next* page — the first request
@@ -980,10 +984,17 @@ impl PageState {
     fn initial(
         endpoint: Option<&EndpointPagination>,
         request_query_params: &[(String, String)],
+        parameters: &HashMap<String, MethodParameter>,
     ) -> Self {
         match endpoint {
             Some(EndpointPagination::Offset { offset, step, .. }) => {
-                let default_start = if step.is_some() { 0 } else { 1 };
+                let spec_default = parameters.get(offset).and_then(|p| {
+                    p.default_value
+                        .as_ref()
+                        .or(p.documentation_default_value.as_ref())
+                        .and_then(json_value_as_u64)
+                });
+                let default_start = spec_default.unwrap_or(if step.is_some() { 0 } else { 1 });
                 let start = request_query_params
                     .iter()
                     .find(|(k, _)| k == offset)
@@ -1008,7 +1019,19 @@ impl PageState {
             _ => None,
         }
     }
+}
 
+/// Read a declared parameter default as an offset. Accepts JSON numbers
+/// and numeric strings (schema `default: "0"`); anything else is `None`.
+fn json_value_as_u64(value: &serde_json::Value) -> Option<u64> {
+    match value {
+        serde_json::Value::Number(n) => n.as_u64(),
+        serde_json::Value::String(s) => s.parse::<u64>().ok(),
+        _ => None,
+    }
+}
+
+impl PageState {
     /// Convert the state into the (query-param name, value) pair to inject
     /// on the next outgoing request, or `None` when the state represents
     /// "no extra param yet" or "URL is fully self-contained". The injected
@@ -2248,7 +2271,8 @@ pub async fn execute_method(
     }
 
     let endpoint_pag = method.pagination.as_ref();
-    let mut page_state: PageState = PageState::initial(endpoint_pag, &input.query_params);
+    let mut page_state: PageState =
+        PageState::initial(endpoint_pag, &input.query_params, &method.parameters);
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method, base_url_override);
@@ -6499,7 +6523,11 @@ mod tests {
             &input,
             &crate::auth::no_auth_provider(),
             &EndpointAuthMetadata::unspecified(),
-            &PageState::initial(method.pagination.as_ref(), &input.query_params),
+            &PageState::initial(
+                method.pagination.as_ref(),
+                &input.query_params,
+                &method.parameters,
+            ),
             0,
             &None,
             None,
@@ -6538,7 +6566,11 @@ mod tests {
             &input,
             &crate::auth::no_auth_provider(),
             &EndpointAuthMetadata::unspecified(),
-            &PageState::initial(method.pagination.as_ref(), &input.query_params),
+            &PageState::initial(
+                method.pagination.as_ref(),
+                &input.query_params,
+                &method.parameters,
+            ),
             0,
             &None,
             None,
@@ -11028,7 +11060,7 @@ mod tests {
         };
         let pipeline = crate::formatter::OutputPipeline::default();
         let mut pages_fetched = 0u32;
-        let mut page_state = PageState::initial(Some(endpoint_pag), &[]);
+        let mut page_state = PageState::initial(Some(endpoint_pag), &[], &HashMap::new());
         let mut captured = Vec::new();
         let mut pager = None;
         let cont = handle_json_response(
@@ -11326,7 +11358,7 @@ mod tests {
             ("page".to_string(), "2".to_string()),
             ("pageSize".to_string(), "50".to_string()),
         ];
-        let mut page_state = PageState::initial(Some(&endpoint), &query);
+        let mut page_state = PageState::initial(Some(&endpoint), &query, &HashMap::new());
         assert!(matches!(page_state, PageState::Offset(2)));
 
         let pipeline = crate::formatter::OutputPipeline::default();
@@ -11373,13 +11405,68 @@ mod tests {
         };
         let query = vec![("offset".to_string(), "100".to_string())];
         assert!(matches!(
-            PageState::initial(Some(&endpoint), &query),
+            PageState::initial(Some(&endpoint), &query, &HashMap::new()),
             PageState::Offset(100)
         ));
         let bad = vec![("offset".to_string(), "abc".to_string())];
         assert!(matches!(
-            PageState::initial(Some(&endpoint), &bad),
+            PageState::initial(Some(&endpoint), &bad, &HashMap::new()),
             PageState::Offset(0)
+        ));
+    }
+
+    #[test]
+    fn test_page_state_initial_offset_seeds_from_spec_default() {
+        // A 0-indexed page API (`page` with `default: 0`) is served page 0
+        // when the caller omits the param, so the next page must be 1.
+        let endpoint = EndpointPagination::Offset {
+            offset: "page".to_string(),
+            results: "r".to_string(),
+            step: None,
+            has_next_page: None,
+        };
+        let mut params = HashMap::new();
+        params.insert(
+            "page".to_string(),
+            MethodParameter {
+                documentation_default_value: Some(json!(0)),
+                ..Default::default()
+            },
+        );
+        assert!(matches!(
+            PageState::initial(Some(&endpoint), &[], &params),
+            PageState::Offset(0)
+        ));
+        // `x-fern-default` wins over the schema default, numeric strings count.
+        params.insert(
+            "page".to_string(),
+            MethodParameter {
+                default_value: Some(json!("5")),
+                documentation_default_value: Some(json!(0)),
+                ..Default::default()
+            },
+        );
+        assert!(matches!(
+            PageState::initial(Some(&endpoint), &[], &params),
+            PageState::Offset(5)
+        ));
+        // The caller's own value still beats any declared default.
+        let query = vec![("page".to_string(), "9".to_string())];
+        assert!(matches!(
+            PageState::initial(Some(&endpoint), &query, &params),
+            PageState::Offset(9)
+        ));
+        // A non-numeric default falls back to the page-index default of 1.
+        params.insert(
+            "page".to_string(),
+            MethodParameter {
+                documentation_default_value: Some(json!("first")),
+                ..Default::default()
+            },
+        );
+        assert!(matches!(
+            PageState::initial(Some(&endpoint), &[], &params),
+            PageState::Offset(1)
         ));
     }
 
@@ -12260,7 +12347,7 @@ mod tests {
                 cursor: "c".into(),
                 next_cursor: "n".into(),
                 results: "r".into(),
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::Cursor(None)
         ));
         assert!(matches!(
@@ -12269,7 +12356,7 @@ mod tests {
                 results: "r".into(),
                 step: None,
                 has_next_page: None,
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::Offset(1)
         ));
         assert!(matches!(
@@ -12278,30 +12365,30 @@ mod tests {
                 results: "r".into(),
                 step: Some("limit".into()),
                 has_next_page: None,
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::Offset(0)
         ));
         assert!(matches!(
             PageState::initial(Some(&EndpointPagination::Uri {
                 next_uri: "n".into(),
                 results: "r".into(),
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::NextUrl(None)
         ));
         assert!(matches!(
             PageState::initial(Some(&EndpointPagination::Path {
                 next_path: "n".into(),
                 results: "r".into(),
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::NextUrl(None)
         ));
         assert!(matches!(
             PageState::initial(Some(&EndpointPagination::Custom {
                 results: "r".into(),
-            }), &[]),
+            }), &[], &HashMap::new()),
             PageState::Custom
         ));
-        assert!(matches!(PageState::initial(None, &[]), PageState::Cursor(None)));
+        assert!(matches!(PageState::initial(None, &[], &HashMap::new()), PageState::Cursor(None)));
     }
 
     #[test]
