@@ -1097,7 +1097,7 @@ export async function publishDocs({
                                         path,
                                         {
                                             markdown: processedMarkdown,
-                                            rawMarkdown: processedMarkdown,
+                                            rawMarkdown,
                                             editThisPageUrl,
                                             editThisPageLaunch: basePage?.editThisPageLaunch
                                         }
