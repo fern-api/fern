@@ -17,7 +17,7 @@ import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
-import { type PageFile, getAllPageFiles, getVariantPages, loadAllPages } from "./getAllPages.js";
+import { getAllPageFiles, getVariantPages, loadAllPages, type PageFile } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
