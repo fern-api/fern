@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.113.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk migrate` to create Postman SDK Config v1 from existing Fern SDK groups, including the exact single- or multi-spec API source paths. Repeat `--group` to consolidate groups that resolve to the same API schema and source configuration into one multi-language configuration.
+      type: feat
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 5.112.1
   changelogEntry:
     - summary: |
