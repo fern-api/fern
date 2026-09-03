@@ -2,7 +2,10 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export interface PageConfiguration extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
+export interface PageConfiguration
+    extends FernDocsConfig.WithPermissions,
+        FernDocsConfig.WithFeatureFlags,
+        FernDocsConfig.WithVariant {
     page: string;
     path: string;
     slug?: string;

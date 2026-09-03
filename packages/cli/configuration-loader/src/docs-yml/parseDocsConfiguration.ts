@@ -9,7 +9,7 @@ import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
-import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { getAllPageFiles, getVariantPages, loadAllPages } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
@@ -116,10 +116,23 @@ export async function parseDocsConfiguration({
         buildRefVersions
     });
 
-    const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
+    const pageFilesPromise = convertedNavigationPromise.then((convertedNavigation) =>
+        getAllPageFiles({ navigation: convertedNavigation, landingPage })
+    );
+
+    const pagesPromise = pageFilesPromise.then((files) =>
         loadAllPages({
-            files: getAllPages({ navigation: convertedNavigation, landingPage }),
+            files,
             absolutePathToFernFolder
+        })
+    );
+
+    const variantPagesPromise = pageFilesPromise.then((files) =>
+        getVariantPages({
+            files,
+            variants: rawDocsConfiguration.variants,
+            absolutePathToFernFolder,
+            context
         })
     );
 
@@ -202,7 +215,8 @@ export async function parseDocsConfiguration({
         llmsFullTxtFile,
         robotsTxtFile,
         translationPages,
-        translationNavigationOverlays
+        translationNavigationOverlays,
+        variantPages
     ] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
@@ -216,7 +230,8 @@ export async function parseDocsConfiguration({
         llmsFullTxtFilePromise,
         robotsTxtFilePromise,
         translationPagesPromise,
-        translationNavigationOverlaysPromise
+        translationNavigationOverlaysPromise,
+        variantPagesPromise
     ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
@@ -236,6 +251,8 @@ export async function parseDocsConfiguration({
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
         roles: rawDocsConfiguration.roles,
+        variants: rawDocsConfiguration.variants,
+        variantPages,
 
         /* library documentation */
         libraries: parseLibrariesConfiguration(rawDocsConfiguration.libraries),
@@ -1421,20 +1438,23 @@ async function convertNavigationItem({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    inheritedVariant
 }: {
     rawConfig: docsYml.RawSchemas.NavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    inheritedVariant?: string;
 }): Promise<docsYml.DocsNavigationItem> {
     const rawConfig = normalizeNavigationItem(rawConfigInput);
 
     if (isRawPageConfig(rawConfig)) {
-        return parsePageConfig(rawConfig, absolutePathToConfig);
+        return parsePageConfig(rawConfig, absolutePathToConfig, inheritedVariant);
     }
     if (isRawSectionConfig(rawConfig)) {
+        const sectionVariant = rawConfig.variant ?? inheritedVariant;
         validateCollapsibleConfig({
             context,
             sectionTitle: rawConfig.section,
@@ -1453,7 +1473,8 @@ async function convertNavigationItem({
                         absolutePathToFernFolder,
                         absolutePathToConfig,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        inheritedVariant: sectionVariant
                     })
                 )
             ),
@@ -1553,23 +1574,30 @@ async function convertNavigationItem({
 
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    inheritedVariant?: string
 ): docsYml.DocsNavigationItem.Page;
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    inheritedVariant?: string
 ): docsYml.DocsNavigationItem.Page | undefined;
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    inheritedVariant?: string
 ): docsYml.DocsNavigationItem.Page | undefined {
     if (item == null) {
         return undefined;
     }
+    const sourceAbsolutePath = resolveFilepath(item.path, absolutePathToConfig);
+    const variantId = item.variant ?? inheritedVariant;
     return {
         type: "page",
         title: item.page,
-        absolutePath: resolveFilepath(item.path, absolutePathToConfig),
+        absolutePath:
+            variantId != null ? docsYml.getVariantPageFilepath(sourceAbsolutePath, variantId) : sourceAbsolutePath,
+        variant: variantId != null ? { id: variantId, sourceAbsolutePath } : undefined,
         slug: item.slug,
         icon: resolveIconPath(item.icon, absolutePathToConfig),
         hidden: item.hidden,

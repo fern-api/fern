@@ -1,13 +1,24 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { compact } from "lodash-es";
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 
+/**
+ * A page to load. `absolutePath` is the key the page is registered under; `sourceAbsolutePath`
+ * is the file read from disk. They only differ for pages rendered as a content variant.
+ */
+export interface PageFile {
+    absolutePath: AbsoluteFilePath;
+    sourceAbsolutePath: AbsoluteFilePath;
+    variant: string | undefined;
+}
+
 interface LoadPagesOptions {
-    files: AbsoluteFilePath[];
+    files: PageFile[];
     absolutePathToFernFolder: AbsoluteFilePath;
 }
 
@@ -17,8 +28,8 @@ async function loadBatch({
 }: LoadPagesOptions): Promise<Record<RelativeFilePath, string>> {
     const pairs = await Promise.all(
         files.map(async (file) => {
-            const content = await readFile(file, "utf-8");
-            return [relativize(absolutePathToFernFolder, file), content];
+            const content = await readFile(file.sourceAbsolutePath, "utf-8");
+            return [relativize(absolutePathToFernFolder, file.absolutePath), content];
         })
     );
     return Object.fromEntries(pairs);
@@ -28,7 +39,7 @@ export async function loadAllPages({
     files,
     absolutePathToFernFolder
 }: {
-    files: AbsoluteFilePath[];
+    files: PageFile[];
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<Record<RelativeFilePath, string>> {
     const result: Record<RelativeFilePath, string> = {};
@@ -45,6 +56,57 @@ export async function loadAllPages({
     return result;
 }
 
+function toPageFile(absolutePath: AbsoluteFilePath): PageFile {
+    return { absolutePath, sourceAbsolutePath: absolutePath, variant: undefined };
+}
+
+function pageToPageFile(page: docsYml.DocsNavigationItem.Page): PageFile {
+    return {
+        absolutePath: page.absolutePath,
+        sourceAbsolutePath: page.variant?.sourceAbsolutePath ?? page.absolutePath,
+        variant: page.variant?.id
+    };
+}
+
+/**
+ * Maps every variant page to its source file and variant, failing if a page references a
+ * variant that is not declared under `variants` in docs.yml.
+ */
+export function getVariantPages({
+    files,
+    variants,
+    absolutePathToFernFolder,
+    context
+}: {
+    files: PageFile[];
+    variants: Record<string, Record<string, string>> | undefined;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+}): Record<RelativeFilePath, docsYml.VariantPageSource> {
+    const result: Record<RelativeFilePath, docsYml.VariantPageSource> = {};
+    for (const file of files) {
+        if (file.variant == null) {
+            continue;
+        }
+        const sourceRelativeFilePath = relativize(absolutePathToFernFolder, file.sourceAbsolutePath);
+        if (variants == null || variants[file.variant] == null) {
+            context.failAndThrow(
+                `Page ${sourceRelativeFilePath} uses variant "${file.variant}", which is not declared under \`variants\` in docs.yml.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        result[relativize(absolutePathToFernFolder, file.absolutePath)] = {
+            variant: file.variant,
+            sourceRelativeFilePath
+        };
+    }
+    return result;
+}
+
+/**
+ * Returns every markdown file on disk referenced by the navigation (deduplicated).
+ */
 export function getAllPages({
     landingPage,
     navigation
@@ -52,10 +114,26 @@ export function getAllPages({
     landingPage: docsYml.DocsNavigationItem.Page | undefined;
     navigation: docsYml.DocsNavigationConfiguration;
 }): AbsoluteFilePath[] {
-    return compact([landingPage?.absolutePath, ...getAllPagesFromNavigationConfig(navigation)]);
+    return Array.from(new Set(getAllPageFiles({ landingPage, navigation }).map((file) => file.sourceAbsolutePath)));
 }
 
-function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfiguration): AbsoluteFilePath[] {
+/**
+ * Returns every page to register, including one entry per content variant of a shared markdown file.
+ */
+export function getAllPageFiles({
+    landingPage,
+    navigation
+}: {
+    landingPage: docsYml.DocsNavigationItem.Page | undefined;
+    navigation: docsYml.DocsNavigationConfiguration;
+}): PageFile[] {
+    return compact([
+        landingPage != null ? pageToPageFile(landingPage) : undefined,
+        ...getAllPagesFromNavigationConfig(navigation)
+    ]);
+}
+
+function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfiguration): PageFile[] {
     switch (navigation.type) {
         case "tabbed":
             return navigation.items.flatMap((tab) => {
@@ -74,7 +152,7 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                         })
                     );
                 } else if (tab.child.type === "changelog") {
-                    return tab.child.changelog;
+                    return tab.child.changelog.map(toPageFile);
                 }
                 return [];
             });
@@ -86,7 +164,7 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
             });
         case "versioned":
             return navigation.versions.flatMap((version) => {
-                return getAllPages({
+                return getAllPageFiles({
                     landingPage: version.landingPage,
                     navigation: version.navigation
                 });
@@ -97,7 +175,7 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                     return [];
                 }
 
-                return getAllPages({
+                return getAllPageFiles({
                     landingPage: product.landingPage,
                     navigation: product.navigation
                 });
@@ -107,11 +185,11 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
     }
 }
 
-export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavigationItem }): AbsoluteFilePath[] {
+export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavigationItem }): PageFile[] {
     switch (item.type) {
         case "apiSection":
             return compact([
-                item.overviewAbsolutePath,
+                item.overviewAbsolutePath != null ? toPageFile(item.overviewAbsolutePath) : undefined,
                 ...item.navigation.flatMap((apiNavigation) =>
                     getAllPagesFromApiReferenceLayoutItem({ item: apiNavigation })
                 )
@@ -119,16 +197,16 @@ export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavi
         case "link":
             return [];
         case "page":
-            return [item.absolutePath];
+            return [pageToPageFile(item)];
         case "section":
             return compact([
-                item.overviewAbsolutePath,
+                item.overviewAbsolutePath != null ? toPageFile(item.overviewAbsolutePath) : undefined,
                 ...item.contents.flatMap((subItem) => {
                     return getAllPagesFromNavigationItem({ item: subItem });
                 })
             ]);
         case "changelog":
-            return item.changelog;
+            return item.changelog.map(toPageFile);
         case "librarySection":
             // Library docs pages are generated locally, but referenced via _navigation.yml
             return [];
@@ -137,16 +215,12 @@ export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavi
     }
 }
 
-function getAllPagesFromApiReferenceLayoutItem({
-    item
-}: {
-    item: docsYml.ParsedApiReferenceLayoutItem;
-}): AbsoluteFilePath[] {
+function getAllPagesFromApiReferenceLayoutItem({ item }: { item: docsYml.ParsedApiReferenceLayoutItem }): PageFile[] {
     if (item.type === "page") {
-        return [item.absolutePath];
+        return [pageToPageFile(item)];
     } else if (item.type === "package" || item.type === "section") {
         return compact([
-            item.overviewAbsolutePath,
+            item.overviewAbsolutePath != null ? toPageFile(item.overviewAbsolutePath) : undefined,
             ...item.contents.flatMap((subItem) => {
                 return getAllPagesFromApiReferenceLayoutItem({ item: subItem });
             })

@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { Availability } from "./Availability.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
+import { WithVariant } from "./WithVariant.js";
 
 export const PageConfiguration: core.serialization.ObjectSchema<
     serializers.PageConfiguration.Raw,
@@ -21,10 +22,11 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         availability: Availability.optional(),
     })
     .extend(WithPermissions)
-    .extend(WithFeatureFlags);
+    .extend(WithFeatureFlags)
+    .extend(WithVariant);
 
 export declare namespace PageConfiguration {
-    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw, WithVariant.Raw {
         page: string;
         path: string;
         slug?: string | null;

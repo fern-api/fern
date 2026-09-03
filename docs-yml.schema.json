@@ -67,6 +67,20 @@
       ],
       "description": "Global list of roles that can be used to filter the navigation and content based on the user's session."
     },
+    "variants": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/docs.VariantValues"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Named sets of values for content variants. A single markdown file can be\nreferenced from multiple places in the navigation with a different `variant`\neach time; each reference becomes its own page. Inside the file, wrap\nvariant-specific content in `<Variant name=\"...\">...</Variant>` and reference\nvalues with `{{variant.<key>}}`.\n\nExample:\n```yaml\nvariants:\n  nginx:\n    server: NGINX\n    config-path: /etc/nginx/nginx.conf\n  apache:\n    server: Apache\n    config-path: /etc/apache2/httpd.conf\n```"
+    },
     "tabs": {
       "oneOf": [
         {
@@ -907,6 +921,13 @@
       "type": "string",
       "description": "ID of role which is used to filter the content shown in Fern Docs."
     },
+    "docs.VariantValues": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Values available to a page rendered with this variant via `{{variant.<key>}}`."
+    },
     "docs.Role": {
       "anyOf": [
         {
@@ -1502,6 +1523,10 @@
         }
       ]
     },
+    "docs.VariantId": {
+      "type": "string",
+      "description": "The name of a content variant declared under `variants`."
+    },
     "docs.Availability": {
       "type": "string",
       "enum": [
@@ -1549,6 +1574,17 @@
               "type": "null"
             }
           ]
+        },
+        "variant": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Renders the referenced markdown file as the given content variant. Only the matching\n`<Variant name=\"...\">` blocks are kept and `{{variant.<key>}}` placeholders are substituted.\nWhen set on a section, it applies to all pages within it that do not set their own `variant`."
         },
         "page": {
           "type": "string"
@@ -1662,6 +1698,17 @@
               "type": "null"
             }
           ]
+        },
+        "variant": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Renders the referenced markdown file as the given content variant. Only the matching\n`<Variant name=\"...\">` blocks are kept and `{{variant.<key>}}` placeholders are substituted.\nWhen set on a section, it applies to all pages within it that do not set their own `variant`."
         },
         "section": {
           "type": "string"

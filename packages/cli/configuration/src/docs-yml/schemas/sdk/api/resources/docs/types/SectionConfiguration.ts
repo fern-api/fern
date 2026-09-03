@@ -2,7 +2,10 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export interface SectionConfiguration extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
+export interface SectionConfiguration
+    extends FernDocsConfig.WithPermissions,
+        FernDocsConfig.WithFeatureFlags,
+        FernDocsConfig.WithVariant {
     section: string;
     /** The relative path to the markdown file that will be displayed when the section is clicked. */
     path?: string;

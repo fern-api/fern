@@ -738,3 +738,5 @@ zurg
 Zurg
 zurg's
 مرحبا
+apachectl
+nginx

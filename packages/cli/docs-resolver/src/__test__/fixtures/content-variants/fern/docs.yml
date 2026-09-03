@@ -1,0 +1,26 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+
+variants:
+  nginx:
+    server: NGINX
+    config-path: /etc/nginx/nginx.conf
+    reference-url: https://nginx.org/en/docs/
+  apache:
+    server: Apache
+    config-path: /etc/apache2/httpd.conf
+    reference-url: https://httpd.apache.org/docs/
+
+navigation:
+  - section: NGINX
+    variant: nginx
+    contents:
+      - page: Configuration
+        path: ./pages/shared/server-config.mdx
+  - section: Apache
+    contents:
+      - page: Configuration
+        path: ./pages/shared/server-config.mdx
+        variant: apache
+  - page: Plain
+    path: ./pages/plain.mdx

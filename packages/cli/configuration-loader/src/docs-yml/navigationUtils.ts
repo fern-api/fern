@@ -126,7 +126,8 @@ export async function buildNavigationForDirectory({
             viewers: undefined,
             orphaned: undefined,
             featureFlags: undefined,
-            availability: undefined
+            availability: undefined,
+            variant: undefined
         };
     });
 
