@@ -1,7 +1,15 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    listFiles,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -9,7 +17,7 @@ import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
-import { getAllPageFiles, getVariantPages, loadAllPages } from "./getAllPages.js";
+import { type PageFile, getAllPageFiles, getVariantPages, loadAllPages } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
@@ -185,11 +193,11 @@ export async function parseDocsConfiguration({
         (rawDocsConfiguration.translations?.[0] != null
             ? docsYml.DocsYmlSchemas.normalizeTranslationConfig(rawDocsConfiguration.translations[0]).lang
             : undefined);
-    const translationPagesPromise = pagesPromise.then((resolvedPages) =>
+    const translationPagesPromise = pageFilesPromise.then((files) =>
         loadTranslationPages({
             translations: rawDocsConfiguration.translations,
             defaultLocale,
-            pages: resolvedPages,
+            files,
             absolutePathToFernFolder,
             context
         })
@@ -1426,6 +1434,7 @@ async function expandFolderConfiguration({
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
         overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
+        overviewVariant: undefined,
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
         featureFlags: convertFeatureFlag(rawConfig.featureFlag),
@@ -1484,7 +1493,7 @@ async function convertNavigationItem({
             collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
-            overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
+            ...resolveVariantPagePath(rawConfig.path, absolutePathToConfig, sectionVariant),
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
             featureFlags: convertFeatureFlag(rawConfig.featureFlag),
@@ -1572,6 +1581,35 @@ async function convertNavigationItem({
     assertNever(rawConfig);
 }
 
+/**
+ * Resolves a markdown path for a page or section overview. When a variant is selected, the returned
+ * path is a virtual path unique to (file, variant) and the real file is kept in `sourceAbsolutePath`.
+ */
+function resolveVariantPagePath(
+    unresolvedPath: string,
+    absolutePathToConfig: AbsoluteFilePath,
+    variantId: string | undefined
+): { overviewAbsolutePath: AbsoluteFilePath; overviewVariant: docsYml.PageVariant | undefined };
+function resolveVariantPagePath(
+    unresolvedPath: string | undefined,
+    absolutePathToConfig: AbsoluteFilePath,
+    variantId: string | undefined
+): { overviewAbsolutePath: AbsoluteFilePath | undefined; overviewVariant: docsYml.PageVariant | undefined };
+function resolveVariantPagePath(
+    unresolvedPath: string | undefined,
+    absolutePathToConfig: AbsoluteFilePath,
+    variantId: string | undefined
+): { overviewAbsolutePath: AbsoluteFilePath | undefined; overviewVariant: docsYml.PageVariant | undefined } {
+    const sourceAbsolutePath = resolveFilepath(unresolvedPath, absolutePathToConfig);
+    if (sourceAbsolutePath == null || variantId == null) {
+        return { overviewAbsolutePath: sourceAbsolutePath, overviewVariant: undefined };
+    }
+    return {
+        overviewAbsolutePath: docsYml.getVariantPageFilepath(sourceAbsolutePath, variantId),
+        overviewVariant: { id: variantId, sourceAbsolutePath }
+    };
+}
+
 function parsePageConfig(
     item: docsYml.RawSchemas.PageConfiguration,
     absolutePathToConfig: AbsoluteFilePath,
@@ -1590,14 +1628,16 @@ function parsePageConfig(
     if (item == null) {
         return undefined;
     }
-    const sourceAbsolutePath = resolveFilepath(item.path, absolutePathToConfig);
-    const variantId = item.variant ?? inheritedVariant;
+    const { overviewAbsolutePath: absolutePath, overviewVariant: variant } = resolveVariantPagePath(
+        item.path,
+        absolutePathToConfig,
+        item.variant ?? inheritedVariant
+    );
     return {
         type: "page",
         title: item.page,
-        absolutePath:
-            variantId != null ? docsYml.getVariantPageFilepath(sourceAbsolutePath, variantId) : sourceAbsolutePath,
-        variant: variantId != null ? { id: variantId, sourceAbsolutePath } : undefined,
+        absolutePath,
+        variant,
         slug: item.slug,
         icon: resolveIconPath(item.icon, absolutePathToConfig),
         hidden: item.hidden,
@@ -2212,13 +2252,13 @@ function validateCollapsibleConfig({
 async function loadTranslationPages({
     translations,
     defaultLocale,
-    pages,
+    files,
     absolutePathToFernFolder,
     context
 }: {
     translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
     defaultLocale: string | undefined;
-    pages: Record<RelativeFilePath, string>;
+    files: PageFile[];
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<Record<string, Record<RelativeFilePath, string>> | undefined> {
@@ -2257,23 +2297,27 @@ async function loadTranslationPages({
             }
 
             const localePages: Record<RelativeFilePath, string> = {} as Record<RelativeFilePath, string>;
-            const missingFiles: RelativeFilePath[] = [];
+            const missingFiles = new Set<RelativeFilePath>();
 
             await Promise.all(
-                (Object.keys(pages) as RelativeFilePath[]).map(async (relativeFilePath) => {
-                    const translatedFilePath = path.join(langDir, relativeFilePath) as AbsoluteFilePath;
+                files.map(async (file) => {
+                    const relativeFilePath = relative(absolutePathToFernFolder, file.absolutePath);
+                    const sourceRelativeFilePath = relative(absolutePathToFernFolder, file.sourceAbsolutePath);
+                    const translatedFilePath = path.join(langDir, sourceRelativeFilePath) as AbsoluteFilePath;
                     if (await doesPathExist(translatedFilePath)) {
                         localePages[relativeFilePath] = await readFile(translatedFilePath, "utf-8");
                     } else {
-                        missingFiles.push(relativeFilePath);
+                        missingFiles.add(sourceRelativeFilePath);
                     }
                 })
             );
 
-            if (missingFiles.length > 0) {
+            if (missingFiles.size > 0) {
                 context.logger.warn(
-                    `Translation for locale "${lang}" is missing ${missingFiles.length} page(s):\n` +
-                        missingFiles.map((f) => `  - translations/${lang}/${f}`).join("\n") +
+                    `Translation for locale "${lang}" is missing ${missingFiles.size} page(s):\n` +
+                        Array.from(missingFiles)
+                            .map((f) => `  - translations/${lang}/${f}`)
+                            .join("\n") +
                         `\nThese pages will fall back to the default language content.`
                 );
             }

@@ -85,6 +85,53 @@ describe("applyContentVariant", () => {
         expect(result.hasVariantBlocks).toBe(true);
     });
 
+    it("treats <Variant> tags inside fenced and inline code as literal text", () => {
+        const markdown = [
+            'Wrap content in `<Variant name="a">` tags.',
+            "",
+            "```mdx",
+            '<Variant name="b">',
+            "literal example",
+            "</Variant>",
+            "```",
+            "",
+            '<Variant name="a">',
+            "```bash",
+            "echo {{variant.server}}",
+            "```",
+            "</Variant>",
+            '<Variant name="b">',
+            "hidden",
+            "</Variant>"
+        ].join("\n");
+        const result = applyContentVariant({ markdown, variantId: "a", values: { server: "NGINX" } });
+        expect(result.markdown).toBe(
+            [
+                'Wrap content in `<Variant name="a">` tags.',
+                "",
+                "```mdx",
+                '<Variant name="b">',
+                "literal example",
+                "</Variant>",
+                "```",
+                "",
+                "```bash",
+                "echo NGINX",
+                "```",
+                ""
+            ].join("\n")
+        );
+    });
+
+    it("substitutes values in frontmatter", () => {
+        const result = applyContentVariant({
+            markdown: "---\ntitle: Configure {{variant.server}}\n---\n\nBody",
+            variantId: "a",
+            values: { server: "Apache" }
+        });
+        expect(result.markdown).toBe("---\ntitle: Configure Apache\n---\n\nBody");
+    });
+
     it("leaves content without variant syntax untouched", () => {
         const markdown = "# Title\n\nPlain content with {{other}} placeholders.";
         expect(applyContentVariant({ markdown, variantId: "a" }).markdown).toBe(markdown);

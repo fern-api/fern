@@ -1,6 +1,11 @@
 instances:
   - url: https://example.docs.buildwithfern.com
 
+translations:
+  - lang: en
+    default: true
+  - fr
+
 variants:
   nginx:
     server: NGINX
@@ -14,10 +19,13 @@ variants:
 navigation:
   - section: NGINX
     variant: nginx
+    path: ./pages/shared/overview.mdx
     contents:
       - page: Configuration
         path: ./pages/shared/server-config.mdx
   - section: Apache
+    variant: apache
+    path: ./pages/shared/overview.mdx
     contents:
       - page: Configuration
         path: ./pages/shared/server-config.mdx

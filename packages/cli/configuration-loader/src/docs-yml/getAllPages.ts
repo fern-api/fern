@@ -56,16 +56,16 @@ export async function loadAllPages({
     return result;
 }
 
-function toPageFile(absolutePath: AbsoluteFilePath): PageFile {
-    return { absolutePath, sourceAbsolutePath: absolutePath, variant: undefined };
+function toPageFile(absolutePath: AbsoluteFilePath, variant?: docsYml.PageVariant): PageFile {
+    return {
+        absolutePath,
+        sourceAbsolutePath: variant?.sourceAbsolutePath ?? absolutePath,
+        variant: variant?.id
+    };
 }
 
 function pageToPageFile(page: docsYml.DocsNavigationItem.Page): PageFile {
-    return {
-        absolutePath: page.absolutePath,
-        sourceAbsolutePath: page.variant?.sourceAbsolutePath ?? page.absolutePath,
-        variant: page.variant?.id
-    };
+    return toPageFile(page.absolutePath, page.variant);
 }
 
 /**
@@ -152,7 +152,7 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                         })
                     );
                 } else if (tab.child.type === "changelog") {
-                    return tab.child.changelog.map(toPageFile);
+                    return tab.child.changelog.map((absolutePath) => toPageFile(absolutePath));
                 }
                 return [];
             });
@@ -200,13 +200,15 @@ export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavi
             return [pageToPageFile(item)];
         case "section":
             return compact([
-                item.overviewAbsolutePath != null ? toPageFile(item.overviewAbsolutePath) : undefined,
+                item.overviewAbsolutePath != null
+                    ? toPageFile(item.overviewAbsolutePath, item.overviewVariant)
+                    : undefined,
                 ...item.contents.flatMap((subItem) => {
                     return getAllPagesFromNavigationItem({ item: subItem });
                 })
             ]);
         case "changelog":
-            return item.changelog.map(toPageFile);
+            return item.changelog.map((absolutePath) => toPageFile(absolutePath));
         case "librarySection":
             // Library docs pages are generated locally, but referenced via _navigation.yml
             return [];

@@ -179,6 +179,7 @@ export async function buildNavigationForDirectory({
                     hidden: indexMetadata?.hidden,
                     skipUrlSlug: false,
                     overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
+                    overviewVariant: undefined,
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined,

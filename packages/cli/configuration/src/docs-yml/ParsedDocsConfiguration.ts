@@ -442,6 +442,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
+        overviewVariant: PageVariant | undefined;
         availability: Availability | undefined;
     }
 

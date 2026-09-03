@@ -1,0 +1,12 @@
+---
+title: Configurer {{variant.server}}
+---
+
+Modifiez `{{variant.config-path}}` sur votre serveur {{variant.server}}.
+
+<Variant name="nginx">
+Rechargez avec `nginx -s reload`.
+</Variant>
+<Variant name="apache">
+Rechargez avec `apachectl graceful`.
+</Variant>

@@ -346,7 +346,21 @@ export class DocsDefinitionResolver {
      * Must be called after `resolve()`.
      */
     public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
-        return this._parsedDocsConfig?.translationPages;
+        const translationPages = this._parsedDocsConfig?.translationPages;
+        if (translationPages == null) {
+            return undefined;
+        }
+        return Object.fromEntries(
+            Object.entries(translationPages).map(([locale, localePages]) => [
+                locale,
+                Object.fromEntries(
+                    Object.entries(localePages).map(([relativePath, markdown]) => [
+                        relativePath,
+                        this.applyPageVariant(RelativeFilePath.of(relativePath), markdown, { warn: false })
+                    ])
+                )
+            ])
+        );
     }
 
     /**
@@ -467,6 +481,18 @@ export class DocsDefinitionResolver {
         // Apply audience-based filtering to the navigation if target audiences are specified
         if (this.targetAudiences && this.targetAudiences.length > 0) {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
+        }
+
+        // Resolve content variants in page sources so frontmatter and raw markdown reflect the
+        // selected variant; included snippets are resolved again after `<Markdown src>` expansion.
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            if (this.parsedDocsConfig.variantPages[RelativeFilePath.of(relativePath)] != null) {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = this.applyPageVariant(
+                    RelativeFilePath.of(relativePath),
+                    markdown,
+                    { warn: false }
+                );
+            }
         }
 
         // Store raw markdown content, stripping MDX comments
