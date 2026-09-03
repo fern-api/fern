@@ -46,7 +46,16 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
+import {
+    Directory,
+    ModuleDeclaration,
+    Project,
+    SourceFile,
+    StatementStructures,
+    SyntaxKind,
+    ts,
+    WriterFunction
+} from "ts-morph";
 
 import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl.js";
 import { FileContextImpl } from "./contexts/FileContextImpl.js";
@@ -977,11 +986,21 @@ export class SdkGenerator {
                 filepath: JSON.parse(filepathKey),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateFileContext({ sourceFile, importsManager });
+                    // Each ts-morph manipulation re-parses the whole file, so collect every
+                    // type's statements and add them in a single pass.
+                    const statements: (string | WriterFunction | StatementStructures)[] = [];
                     for (const typeDeclaration of typeDeclarations) {
-                        const currentStatementCount = context.sourceFile.getStatements().length;
-                        context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                        context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
+                        statements.push((writer) => writer.newLine());
+                        const generated = context.type
+                            .getGeneratedType(typeDeclaration.name)
+                            .generateStatements(context);
+                        if (Array.isArray(generated)) {
+                            statements.push(...generated);
+                        } else {
+                            statements.push(generated);
+                        }
                     }
+                    context.sourceFile.addStatements(statements);
                 }
             });
         }
