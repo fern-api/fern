@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.112.1
+  changelogEntry:
+    - summary: |
+        When importing OpenAPI specs with `namespace` set, shared SDK errors are now
+        collapsed to `unknown` per namespace instead of across the whole API. A status
+        code that has a different body schema in one namespace no longer degrades the
+        typed error body in other namespaces.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 5.112.0
   changelogEntry:
     - summary: |
