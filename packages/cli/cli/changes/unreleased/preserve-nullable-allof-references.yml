@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve OpenAPI 3.1 nullability on component references that follow a documented `allOf` reference to the same schema.
+  type: fix
