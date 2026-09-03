@@ -1103,7 +1103,8 @@ const FAI_VERSION_BUMPS = ["MAJOR", "MINOR", "PATCH", "NO_CHANGE"];
 const FAI_NDJSON_MEDIA_TYPE = "application/x-ndjson";
 
 function isNdjsonResponse(response: Response): boolean {
-    return (response.headers?.get("content-type") ?? "").includes(FAI_NDJSON_MEDIA_TYPE);
+    const contentType = response.headers?.get("content-type") ?? "";
+    return contentType.split(";", 1)[0]?.trim().toLowerCase() === FAI_NDJSON_MEDIA_TYPE;
 }
 
 /**

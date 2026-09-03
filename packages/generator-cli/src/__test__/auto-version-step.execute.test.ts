@@ -1182,7 +1182,7 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         return {
             ok: true,
             status: 200,
-            headers: new Headers({ "content-type": "application/x-ndjson" }),
+            headers: new Headers({ "content-type": "Application/X-NDJSON; charset=utf-8" }),
             body: new ReadableStream<Uint8Array>({
                 start(controller) {
                     const encoder = new TextEncoder();
