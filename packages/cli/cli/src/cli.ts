@@ -98,6 +98,7 @@ import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.j
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
@@ -315,7 +316,11 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
-        if ((argv as Record<string, unknown>).json === true) {
+        // This must run in global middleware, before version/debug logging and project loading can
+        // write to stdout. At this point argv._ is yargs' resolved command path, and aliases have
+        // already populated argv.output.
+        const isSdkMigrateStdout = argv._[0] === "sdk" && argv._[1] === "migrate" && argv.output === "-";
+        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout) {
             cliContext.enableJsonMode();
         }
         cliContext.logFernVersionDebug();
@@ -2775,10 +2780,64 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 }
 
 function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("sdk", false, (yargs) => {
+    cli.command("sdk", "Configure and generate SDKs", (yargs) => {
+        addSdkMigrateCommand(yargs, cliContext);
         addSdkPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "migrate",
+        "Create a Postman SDK Config v1 file from one or more resolved Fern SDK groups",
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    array: true,
+                    description: "An SDK group to migrate; repeat to consolidate compatible groups"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "The API to migrate when the project contains multiple APIs"
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    demandOption: true,
+                    nargs: 1,
+                    description: 'Path to write SDK Config v1, or "-" for stdout'
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Replace an existing output file"
+                })
+                .option("strict", {
+                    type: "boolean",
+                    default: false,
+                    description: "Treat mapping diagnostics as errors"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk migrate" });
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            await sdkMigrate({
+                project,
+                cliContext,
+                args: {
+                    api: argv.api,
+                    force: argv.force,
+                    group: argv.group,
+                    output: argv.output,
+                    strict: argv.strict
+                }
+            });
+        }
+    );
 }
 
 function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
