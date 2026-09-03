@@ -15,7 +15,8 @@ const include = [
     "src/__test__/product-landing-page.test.ts",
     "src/__test__/versioned-root-landing-page.test.ts",
     "src/__test__/library-hardfail.test.ts",
-    "src/__test__/graphql-type-navigation.test.ts"
+    "src/__test__/graphql-type-navigation.test.ts",
+    "src/__test__/mdx-comments.test.ts"
 ];
 
 export default defineConfig({
