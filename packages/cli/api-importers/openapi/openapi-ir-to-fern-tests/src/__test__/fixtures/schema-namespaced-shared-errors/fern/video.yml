@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Video
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /egress:
+    get:
+      operationId: listEgressStreams
+      tags:
+        - Video
+      responses:
+        "200":
+          description: OK
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+    post:
+      operationId: createEgressStream
+      tags:
+        - Video
+      responses:
+        "200":
+          description: OK
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+components:
+  responses:
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TooManyRequestsBody"
+  schemas:
+    TooManyRequestsBody:
+      x-fern-sdk-namespace: video
+      type: object
+      properties:
+        message:
+          type: string
+        retryAfter:
+          type: integer

@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: video.yml
+    - openapi: entities.yml
+groups: {}
