@@ -19,7 +19,7 @@
               },
             ],
             "status-code": 400,
-            "type": "unknown",
+            "type": "BadRequestErrorBody",
           },
           "InternalServerError": {
             "docs": "Default Response",
@@ -939,7 +939,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
 errors:
   BadRequestError:
     status-code: 400
-    type: unknown
+    type: BadRequestErrorBody
     docs: Default Response
     examples:
       - value:
