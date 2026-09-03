@@ -1,0 +1,139 @@
+{
+  "specVersion": "1.0.0",
+  "title": "OAuth scope inline request",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createScope",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateScopeRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateScopeRequest",
+          "schema": "OAuthScope",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "OAuth2": [
+            "read"
+          ]
+        }
+      ],
+      "method": "POST",
+      "path": "/scope",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "value": {
+                "value": {
+                  "value": "value",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "OAuthScope": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "oAuthScopeValue",
+            "key": "value",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "OAuthScopeValue",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OAuthScope",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "OAuth2": {
+      "scopesEnum": {
+        "generatedName": "OauthScope",
+        "values": [
+          {
+            "generatedName": "read",
+            "value": "read",
+            "description": "Read access",
+            "casing": {}
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "type": "oauth"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

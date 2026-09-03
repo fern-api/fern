@@ -1,13 +1,15 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import type { FernDefinition } from "@fern-api/importer-commons";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { getHeaderName } from "./utils/getHeaderName.js";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
+const OAUTH_SCOPE_TYPE_NAME = "OauthScope";
+const OAUTH_SCOPE_FALLBACK_TYPE_NAME = "OauthAuthorizationScope";
 
-export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
+export function buildAuthSchemes(context: OpenApiIrConverterContext): RawSchemas.TypeDeclarationSchema | undefined {
     if (context.authOverrides != null) {
         for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
             context.builder.addAuthScheme({
@@ -18,11 +20,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
         if (context.authOverrides.auth != null) {
             context.builder.setAuth(context.authOverrides.auth);
         }
-        return;
+        return undefined;
     }
 
     let setAuth = false;
-
+    let oauthScopeType: RawSchemas.TypeDeclarationSchema | undefined;
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {
         if (securityScheme.type === "basic") {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
@@ -179,11 +181,43 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
-                context.builder.addType(RelativeFilePath.of("__package__.yml"), {
-                    name: "OauthScope",
-                    schema: buildEnumTypeDeclaration(securityScheme.scopesEnum, 0).schema
-                });
+                // Preserve the existing behavior for multiple OAuth schemes: the last non-empty scope enum wins.
+                oauthScopeType = buildEnumTypeDeclaration(securityScheme.scopesEnum, 0).schema;
             }
         }
     }
+    return oauthScopeType;
+}
+
+/**
+ * Adds the OAuth scope enum after all other types have been built, so its name can be deconflicted against the
+ * declarations that were actually emitted rather than a parallel approximation.
+ */
+export function addOauthScopeType(definition: FernDefinition, oauthScopeType: RawSchemas.TypeDeclarationSchema): void {
+    const existingTypes = definition.packageMarkerFile.types ?? {};
+    const oauthScopeTypeName = getOauthScopeTypeName(Object.keys(existingTypes));
+    const { types: _, ...packageMarkerFile } = definition.packageMarkerFile;
+    definition.packageMarkerFile = {
+        types: {
+            [oauthScopeTypeName]: oauthScopeType,
+            ...existingTypes
+        },
+        ...packageMarkerFile
+    };
+}
+
+function getOauthScopeTypeName(typeNames: Iterable<string>): string {
+    const occupiedTypeNames = new Set([...typeNames].map((name) => name.toLowerCase()));
+    if (!occupiedTypeNames.has(OAUTH_SCOPE_TYPE_NAME.toLowerCase())) {
+        return OAUTH_SCOPE_TYPE_NAME;
+    }
+    if (!occupiedTypeNames.has(OAUTH_SCOPE_FALLBACK_TYPE_NAME.toLowerCase())) {
+        return OAUTH_SCOPE_FALLBACK_TYPE_NAME;
+    }
+
+    let suffix = 2;
+    while (occupiedTypeNames.has(`${OAUTH_SCOPE_FALLBACK_TYPE_NAME}${suffix}`.toLowerCase())) {
+        suffix++;
+    }
+    return `${OAUTH_SCOPE_FALLBACK_TYPE_NAME}${suffix}`;
 }
