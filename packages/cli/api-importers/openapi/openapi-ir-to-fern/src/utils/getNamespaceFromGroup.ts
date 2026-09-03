@@ -16,18 +16,21 @@ export function getEndpointNamespace(
 }
 
 /**
- * The namespace an error is declared in and shared within. Defaults to the endpoint's namespace;
- * for un-namespaced endpoints, an error body schema carrying `x-fern-sdk-namespace` scopes the error instead.
+ * The namespace an error is declared in and shared within. Defaults to the endpoint's namespace.
+ * With `namespacedErrors` enabled, an error body schema carrying `x-fern-sdk-namespace` takes precedence,
+ * so errors can be scoped per namespace while the endpoint itself stays at the root.
  */
 export function getErrorNamespace({
     endpointNamespace,
-    schema
+    schema,
+    namespacedErrors
 }: {
     endpointNamespace: string | undefined;
     schema: Schema | undefined;
+    namespacedErrors: boolean;
 }): string | undefined {
-    if (endpointNamespace != null) {
-        return endpointNamespace;
+    if (namespacedErrors && schema?.type === "reference" && schema.namespace != null) {
+        return schema.namespace;
     }
-    return schema?.type === "reference" ? schema.namespace : undefined;
+    return endpointNamespace;
 }

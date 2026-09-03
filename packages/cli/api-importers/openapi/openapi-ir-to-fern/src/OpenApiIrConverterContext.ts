@@ -115,7 +115,11 @@ export class OpenApiIrConverterContext {
             for (const endpoint of ir.endpoints) {
                 const endpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
-                    const namespace = getErrorNamespace({ endpointNamespace, schema: error.schema });
+                    const namespace = getErrorNamespace({
+                        endpointNamespace,
+                        schema: error.schema,
+                        namespacedErrors: this.options.namespacedErrors
+                    });
                     const key = getErrorKey({ statusCode: parseInt(statusCodeString), namespace });
                     const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
