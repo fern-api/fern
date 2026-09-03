@@ -110,12 +110,18 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "user-agent-suffix",
 ];
 
+/// Uppercase, underscore-joined environment-variable prefix for a binary name
+/// (`my-cli` -> `MY_CLI`).
+pub fn env_var_prefix(binary_name: &str) -> String {
+    binary_name.to_uppercase().replace('-', "_")
+}
+
 /// The non-auth portion of the `--help` footer. Auth env vars are
 /// computed dynamically from bindings by `CliApp::run_async` and
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
 pub fn after_help_footer(binary_name: &str) -> String {
-    let prefix = binary_name.to_uppercase().replace('-', "_");
+    let prefix = env_var_prefix(binary_name);
     // The suffix flag/env names default to `--user-agent-suffix` /
     // `<NAME>_USER_AGENT_SUFFIX` but can be renamed at generation time.
     let ua_env = format!("{prefix}{}", crate::user_agent::suffix_env_segment());
@@ -139,6 +145,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .clone()
         .unwrap_or_else(|| format!("{} CLI", doc.name));
     let after_help = after_help_footer(&doc.name);
+    let env_prefix = env_var_prefix(&doc.name);
     let mut root = Command::new(doc.name.clone())
         .about(about_text)
         .after_help(after_help)
@@ -155,7 +162,9 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .arg(
             clap::Arg::new("format")
                 .long("format")
-                .help("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON). http emits the full HTTP response (status line + headers + body).")
+                .help(format!(
+                    "Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with {env_prefix}_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON). http emits the full HTTP response (status line + headers + body)."
+                ))
                 .value_name("FORMAT")
                 .global(true),
         )
@@ -170,7 +179,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
             clap::Arg::new("user-agent-suffix")
                 .long(crate::user_agent::suffix_flag())
                 .help(format!(
-                    "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>{}.",
+                    "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over {env_prefix}{}.",
                     crate::user_agent::suffix_env_segment()
                 ))
                 .value_name("TOKEN")
