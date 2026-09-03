@@ -1,0 +1,6 @@
+- summary: |
+    When an OpenAPI spec has `namespace` set, an operation tag that matches the
+    namespace case-insensitively (e.g. tag `Video` with `namespace: video`) is now
+    treated as the namespace itself instead of creating a nested `video.video`
+    sub-package.
+  type: fix
