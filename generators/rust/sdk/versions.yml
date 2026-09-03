@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.46.7
+  changelogEntry:
+    - summary: |
+        Solve `Default` support for every type in one pass over the IR instead of walking
+        the type graph again for each reference. Derives are unchanged, and the answer no
+        longer depends on which type is analyzed first.
+      type: chore
+    - summary: |
+        Index type declarations once instead of scanning every IR type on each lookup.
+        Generating models for APIs with thousands of types is now dramatically faster.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 0.46.6
   changelogEntry:
     - summary: |
