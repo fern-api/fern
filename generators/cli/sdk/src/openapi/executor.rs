@@ -971,9 +971,12 @@ impl PageState {
     /// the caller's own value for the offset param (e.g. `--page 2`) so
     /// later pages continue from where the caller began. When the caller
     /// gave none, page-index offsets (no `step`) start at page 1 and
-    /// item-index offsets (`step` set) start at 0, which is omitted from
-    /// the first request; uri/path/custom forms start in their respective
-    /// first-page states.
+    /// item-index offsets (`step` set) start at 0; uri/path/custom forms
+    /// start in their respective first-page states.
+    ///
+    /// This value only ever addresses the *next* page — the first request
+    /// is sent as the caller wrote it (see `build_http_request`), so a
+    /// synthesized default never reaches the wire.
     fn initial(
         endpoint: Option<&EndpointPagination>,
         request_query_params: &[(String, String)],
@@ -1008,9 +1011,13 @@ impl PageState {
 
     /// Convert the state into the (query-param name, value) pair to inject
     /// on the next outgoing request, or `None` when the state represents
-    /// "first page, no extra param yet" or "URL is fully self-contained".
-    /// The injected pair replaces any caller-supplied param of the same
-    /// name, so a `--page 1` start does not travel alongside `page=2`.
+    /// "no extra param yet" or "URL is fully self-contained". The injected
+    /// pair replaces any caller-supplied param of the same name, so a
+    /// `--page 1` start does not travel alongside `page=2`.
+    ///
+    /// Callers must only apply this from page 2 onward; `build_http_request`
+    /// owns that gate, because "is this the first request?" is a property of
+    /// the pagination loop, not of the state.
     fn injection(
         &self,
         endpoint: Option<&EndpointPagination>,
@@ -1070,9 +1077,19 @@ async fn build_http_request(
         base_target_url.to_string()
     } else {
         let mut all_query_params = input.query_params.clone();
-        if let Some((name, value)) =
+        // Inject the page param from page 2 onward only. The first request
+        // goes out exactly as the caller wrote it: their own value for the
+        // offset / cursor param is already in `input.query_params`, and when
+        // they gave none the server's default is the right answer.
+        // Synthesizing one here would send `page=1` to a 0-indexed API and
+        // silently skip its first page — and would rewrite a caller value
+        // that `PageState::initial` could not parse as a number.
+        let injection = if pages_fetched > 0 {
             page_state.injection(method.pagination.as_ref(), &pagination.token_query_param)
-        {
+        } else {
+            None
+        };
+        if let Some((name, value)) = injection {
             all_query_params.retain(|(k, _)| k != &name);
             all_query_params.push((name, value));
         }
@@ -6441,6 +6458,136 @@ mod tests {
             built.headers().get("Accept").map(|v| v.to_str().unwrap()),
             Some("application/xml"),
             "Explicit Accept in header params should not be overridden"
+        );
+    }
+
+    /// Build a GET method whose `x-fern-pagination` is offset-form with no
+    /// `step` — the page-index shape (`?page=2&pageSize=50`).
+    fn page_index_method() -> RestMethod {
+        RestMethod {
+            http_method: "GET".to_string(),
+            path: "datasets".to_string(),
+            pagination: Some(EndpointPagination::Offset {
+                offset: "page".to_string(),
+                results: "datasets".to_string(),
+                step: None,
+                has_next_page: None,
+            }),
+            ..Default::default()
+        }
+    }
+
+    #[tokio::test]
+    async fn test_first_request_does_not_synthesize_a_page_param() {
+        // Page-index pagination starts at page 1, but that default addresses
+        // the *next* page — it must not reach the wire. A 0-indexed API would
+        // silently skip its first page if the CLI sent `page=1` for a request
+        // the caller made no pagination choice about.
+        let client = reqwest::Client::new();
+        let method = page_index_method();
+        let input = ExecutionInput {
+            full_url: "https://example.com/datasets".to_string(),
+            body: None,
+            query_params: vec![("pageSize".to_string(), "50".to_string())],
+            header_params: Vec::new(),
+            is_upload: false,
+        };
+
+        let request = build_http_request(
+            &client,
+            &method,
+            &input,
+            &crate::auth::no_auth_provider(),
+            &EndpointAuthMetadata::unspecified(),
+            &PageState::initial(method.pagination.as_ref(), &input.query_params),
+            0,
+            &None,
+            None,
+            &None,
+            &PaginationConfig::default(),
+        )
+        .await
+        .unwrap();
+
+        let built = request.build().unwrap();
+        let query = built.url().query().unwrap_or_default();
+        assert_eq!(
+            query, "pageSize=50",
+            "first request must go out exactly as the caller wrote it"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_first_request_keeps_the_callers_own_page_param() {
+        // `--params '{"page": 7}'` on the first request is the caller's
+        // choice, not something the pager may rewrite — even though
+        // `PageState::initial` seeds from it so page 2 continues at 8.
+        let client = reqwest::Client::new();
+        let method = page_index_method();
+        let input = ExecutionInput {
+            full_url: "https://example.com/datasets".to_string(),
+            body: None,
+            query_params: vec![("page".to_string(), "7".to_string())],
+            header_params: Vec::new(),
+            is_upload: false,
+        };
+
+        let request = build_http_request(
+            &client,
+            &method,
+            &input,
+            &crate::auth::no_auth_provider(),
+            &EndpointAuthMetadata::unspecified(),
+            &PageState::initial(method.pagination.as_ref(), &input.query_params),
+            0,
+            &None,
+            None,
+            &None,
+            &PaginationConfig::default(),
+        )
+        .await
+        .unwrap();
+
+        assert_eq!(request.build().unwrap().url().query(), Some("page=7"));
+    }
+
+    #[tokio::test]
+    async fn test_subsequent_request_replaces_the_callers_page_param() {
+        // From page 2 onward the pager owns the param: the caller's original
+        // value is dropped rather than travelling alongside the new one, and
+        // every other param they set is preserved.
+        let client = reqwest::Client::new();
+        let method = page_index_method();
+        let input = ExecutionInput {
+            full_url: "https://example.com/datasets".to_string(),
+            body: None,
+            query_params: vec![
+                ("page".to_string(), "7".to_string()),
+                ("pageSize".to_string(), "50".to_string()),
+            ],
+            header_params: Vec::new(),
+            is_upload: false,
+        };
+
+        let request = build_http_request(
+            &client,
+            &method,
+            &input,
+            &crate::auth::no_auth_provider(),
+            &EndpointAuthMetadata::unspecified(),
+            &PageState::Offset(8),
+            1,
+            &None,
+            None,
+            &None,
+            &PaginationConfig::default(),
+        )
+        .await
+        .unwrap();
+
+        assert_eq!(
+            request.build().unwrap().url().query(),
+            Some("pageSize=50&page=8")
         );
     }
 
