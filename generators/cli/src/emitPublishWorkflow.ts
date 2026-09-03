@@ -62,7 +62,7 @@ export async function emitCiWorkflow(args: { outputDir: string; binaryName: stri
  * Emit `.github/workflows/ci.yml` into the generated CLI output.
  *
  * The workflow:
- *   - **check / compile / test** jobs run on every push (mirror the
+ *   - **check / clippy / compile / test** jobs run on every push (mirror the
  *     Rust SDK's emitted `ci.yml`).
  *   - **publish** job runs only on tag pushes, builds cross-platform
  *     binaries, packages each as an embedded-binary npm platform
@@ -98,7 +98,7 @@ export async function emitPublishWorkflow(args: {
 }
 
 /**
- * Build+test-only workflow YAML — the `check`, `compile`, and `test`
+ * Build+test-only workflow YAML — the `check`, `clippy`, `compile`, and `test`
  * jobs with no publish steps.
  */
 function constructBuildTestYaml(args: { binaryName: string }): string {
@@ -109,9 +109,6 @@ on: [push]
 concurrency:
   group: \${{ github.workflow }}-\${{ github.ref }}
   cancel-in-progress: false
-
-env:
-  RUSTFLAGS: "-A warnings"
 
 jobs:
   check:
@@ -125,6 +122,20 @@ jobs:
 
       - name: Check
         run: cargo check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy
+
+      - name: Clippy
+        run: cargo clippy --all-targets
 
   compile:
     runs-on: ubuntu-latest
@@ -232,9 +243,6 @@ concurrency:
   group: \${{ github.workflow }}-\${{ github.ref }}
   cancel-in-progress: false
 
-env:
-  RUSTFLAGS: "-A warnings"
-
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -247,6 +255,20 @@ jobs:
 
       - name: Check
         run: cargo check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy
+
+      - name: Clippy
+        run: cargo clippy --all-targets
 
   compile:
     runs-on: ubuntu-latest
@@ -311,7 +333,7 @@ jobs:
           echo "Tag and crate version agree: \${TAG_VERSION}"
 
   publish:
-    needs: [check, compile, test, version]
+    needs: [check, clippy, compile, test, version]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:

@@ -1170,12 +1170,12 @@ mod tests {
 
     #[test]
     fn test_format_yaml_null_bool_number() {
-        let val = json!({"n": null, "b": true, "i": 42, "f": 3.14});
+        let val = json!({"n": null, "b": true, "i": 42, "f": 2.5});
         let output = format_value(&val, &OutputFormat::Yaml);
         assert!(output.contains("n: null"), "null, got:\n{output}");
         assert!(output.contains("b: true"), "bool, got:\n{output}");
         assert!(output.contains("i: 42"), "int, got:\n{output}");
-        assert!(output.contains("f: 3.14"), "float, got:\n{output}");
+        assert!(output.contains("f: 2.5"), "float, got:\n{output}");
     }
 
     // --- Paginated format tests ---
