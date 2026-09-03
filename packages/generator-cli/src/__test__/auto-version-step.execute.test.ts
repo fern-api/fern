@@ -1174,7 +1174,7 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
     });
 
     function ndjsonResponse(events: unknown[], chunkSize = 7) {
-        const text = events.map((event) => `${JSON.stringify(event)}\n`).join("");
+        const text = events.map((event) => `${JSON.stringify(event)}\r\n`).join("");
         const chunks: string[] = [];
         for (let i = 0; i < text.length; i += chunkSize) {
             chunks.push(text.slice(i, i + chunkSize));
@@ -1242,10 +1242,11 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(body.previous_version).toBe("1.0.0");
     });
 
-    it("reads the NDJSON stream, skipping heartbeats, when FAI streams the response", async () => {
+    it("reads the NDJSON stream, skipping heartbeats and unknown events, when FAI streams the response", async () => {
         mockFetch.mockResolvedValue(
             ndjsonResponse([
                 { type: "heartbeat" },
+                { type: "progress", completed: 3, total: 12 },
                 { type: "heartbeat" },
                 {
                     type: "result",
@@ -1279,6 +1280,17 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.version).toBe("1.0.1");
         expect(result.versionBump).toBe("PATCH");
         expect(result.changelogEntry).toBeUndefined();
+    });
+
+    it("falls back to PATCH when the NDJSON result event has no payload", async () => {
+        mockFetch.mockResolvedValue(ndjsonResponse([{ type: "result" }]));
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.version).toBe("1.0.1");
     });
 
     it("falls back to PATCH when the NDJSON stream ends without a result", async () => {

@@ -1120,10 +1120,12 @@ async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
     const decoder = new TextDecoder();
     let buffered = "";
     const handleLine = (line: string): { done: true; result: unknown } | undefined => {
-        if (line.trim().length === 0) {
+        const trimmed = line.trim();
+        if (trimmed.length === 0) {
             return undefined;
         }
-        const event: unknown = JSON.parse(line);
+        // A malformed line throws here, which the caller turns into the PATCH fallback.
+        const event: unknown = JSON.parse(trimmed);
         if (typeof event !== "object" || event == null) {
             throw new Error("FAI analyze-commit-diff stream returned a non-object event");
         }
@@ -1132,13 +1134,17 @@ async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
             case "heartbeat":
                 return undefined;
             case "result":
+                if (result == null) {
+                    throw new Error("FAI analyze-commit-diff stream returned a result event without a result");
+                }
                 return { done: true, result };
             case "error": {
                 const statusText = typeof status === "number" ? ` with status ${status}` : "";
                 throw new Error(`FAI analyze-commit-diff failed${statusText}: ${String(detail ?? "").slice(0, 500)}`);
             }
             default:
-                throw new Error(`FAI analyze-commit-diff stream returned unknown event type: ${String(type)}`);
+                // Ignore unrecognized event types so newer FAI deployments stay compatible with older generators.
+                return undefined;
         }
     };
     try {
