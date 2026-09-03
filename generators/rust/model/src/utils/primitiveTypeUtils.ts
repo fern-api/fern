@@ -266,6 +266,24 @@ function typeSupportsDefault(
 }
 
 /**
+ * Memoized results of {@link namedTypeSupportsDefault}, keyed by context so the
+ * cache lives exactly as long as the IR it was computed from.
+ *
+ * A `false` produced by hitting a cycle is safe to cache: if a type reaches a
+ * cycle from within one traversal, it reaches the same cycle from any other.
+ */
+const namedTypeDefaultCache = new WeakMap<ModelGeneratorContext, Map<string, boolean>>();
+
+function getNamedTypeDefaultCache(context: ModelGeneratorContext): Map<string, boolean> {
+    let cache = namedTypeDefaultCache.get(context);
+    if (cache == null) {
+        cache = new Map();
+        namedTypeDefaultCache.set(context, cache);
+    }
+    return cache;
+}
+
+/**
  * Check if a named type (object) supports Default by checking if all its fields
  * have types that implement Default. Enums and unions don't derive Default.
  *
@@ -281,6 +299,12 @@ function namedTypeSupportsDefault(
 ): boolean {
     if (visited.has(typeId)) {
         return false;
+    }
+    const cache = getNamedTypeDefaultCache(context);
+    const cacheKey = `${options.unknownHasDefault ?? true}:${typeId}`;
+    const cached = cache.get(cacheKey);
+    if (cached != null) {
+        return cached;
     }
     visited.add(typeId);
     const typeDecl = context.ir.types[typeId];
@@ -301,6 +325,7 @@ function namedTypeSupportsDefault(
         result = typeSupportsDefault(typeDecl.shape.aliasOf, context, options, visited);
     }
     visited.delete(typeId);
+    cache.set(cacheKey, result);
     return result;
 }
 

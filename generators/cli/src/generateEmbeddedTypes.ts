@@ -99,12 +99,13 @@ export async function generateEmbeddedTypes(args: {
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
             cwd: typesOutputDir,
-            timeout: 120_000,
+            maxBuffer: 64 * 1024 * 1024,
             env: { ...process.env }
         });
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
-        throw new Error(`Embedded types generation failed: ${message}`);
+        const stderr = isExecError(err) ? err.stderr.trim().split("\n").slice(-20).join("\n") : "";
+        throw new Error(`Embedded types generation failed: ${message}${stderr ? `\n${stderr}` : ""}`);
     } finally {
         // Best-effort cleanup; file may already be absent if the subprocess moved it.
         await unlink(configPath).catch((_e: unknown) => undefined);
@@ -133,6 +134,10 @@ export async function generateEmbeddedTypes(args: {
         needsReqwest
     });
     return { typesCrateName, partitionCrates };
+}
+
+function isExecError(err: unknown): err is Error & { stderr: string } {
+    return err instanceof Error && "stderr" in err && typeof err.stderr === "string";
 }
 
 export interface EmbeddedTypesResult {
