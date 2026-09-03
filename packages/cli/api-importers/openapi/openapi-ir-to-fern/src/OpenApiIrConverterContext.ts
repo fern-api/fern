@@ -117,7 +117,7 @@ export class OpenApiIrConverterContext {
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
                     const namespace = getErrorNamespace({
                         endpointNamespace,
-                        schema: error.schema,
+                        error,
                         namespacedErrors: this.options.namespacedErrors
                     });
                     const key = getErrorKey({ statusCode: parseInt(statusCodeString), namespace });

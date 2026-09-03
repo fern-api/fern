@@ -1,4 +1,4 @@
-import { EndpointSdkName, Namespace, ReferencedSchema, Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import { EndpointSdkName, HttpError, Namespace, ReferencedSchema, Schema, SdkGroupName } from "@fern-api/openapi-ir";
 
 export function getNamespaceFromGroup(groupName: SdkGroupName): string | undefined {
     return groupName.find((group): group is Namespace => typeof group !== "string" && group.type === "namespace")?.name;
@@ -16,21 +16,24 @@ export function getEndpointNamespace(
 }
 
 /**
- * The namespace an error is declared in and shared within. Defaults to the endpoint's namespace.
- * With `namespacedErrors` enabled, an error body schema carrying `x-fern-sdk-namespace` takes precedence,
- * so errors can be scoped per namespace while the endpoint itself stays at the root.
+ * Namespace an error is declared in and shared within. With `namespacedErrors`, a namespace on the
+ * response object (`x-fern-sdk-namespace` on `components.responses[...]`) wins, then one on the
+ * (possibly nullable/optional) referenced body schema; otherwise the endpoint's namespace.
  */
 export function getErrorNamespace({
     endpointNamespace,
-    schema,
+    error,
     namespacedErrors
 }: {
     endpointNamespace: string | undefined;
-    schema: Schema | undefined;
+    error: HttpError;
     namespacedErrors: boolean;
 }): string | undefined {
     if (namespacedErrors) {
-        const referenced = unwrapReferencedSchema(schema);
+        if (error.namespace != null) {
+            return error.namespace;
+        }
+        const referenced = unwrapReferencedSchema(error.schema);
         if (referenced?.namespace != null) {
             return referenced.namespace;
         }

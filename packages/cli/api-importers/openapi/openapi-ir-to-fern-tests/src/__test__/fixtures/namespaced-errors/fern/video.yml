@@ -34,23 +34,21 @@ paths:
 components:
   responses:
     TooManyRequests:
+      x-fern-sdk-namespace: video
       description: Too many requests
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/TooManyRequestsBody"
+            type: object
+            properties:
+              message:
+                type: string
+              retryAfter:
+                type: integer
   schemas:
     ServiceUnavailableBody:
       x-fern-sdk-namespace: video
       type: object
       properties:
-        retryAfter:
-          type: integer
-    TooManyRequestsBody:
-      x-fern-sdk-namespace: video
-      type: object
-      properties:
-        message:
-          type: string
         retryAfter:
           type: integer

@@ -242,7 +242,7 @@ service:
               },
             ],
             "status-code": 429,
-            "type": "TooManyRequestsBody",
+            "type": "TooManyRequestsErrorBody",
           },
         },
         "types": {
@@ -256,7 +256,7 @@ service:
               "openapi": "video.yml",
             },
           },
-          "TooManyRequestsBody": {
+          "TooManyRequestsErrorBody": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -269,10 +269,22 @@ service:
           },
         },
       },
-      "rawContents": "errors:
+      "rawContents": "types:
+  TooManyRequestsErrorBody:
+    properties:
+      message: optional<string>
+      retryAfter: optional<integer>
+    source:
+      openapi: video.yml
+  ServiceUnavailableBody:
+    properties:
+      retryAfter: optional<integer>
+    source:
+      openapi: video.yml
+errors:
   TooManyRequestsError:
     status-code: 429
-    type: TooManyRequestsBody
+    type: TooManyRequestsErrorBody
     docs: Too many requests
     examples:
       - value: {}
@@ -282,18 +294,6 @@ service:
     docs: Service unavailable
     examples:
       - value: {}
-types:
-  ServiceUnavailableBody:
-    properties:
-      retryAfter: optional<integer>
-    source:
-      openapi: video.yml
-  TooManyRequestsBody:
-    properties:
-      message: optional<string>
-      retryAfter: optional<integer>
-    source:
-      openapi: video.yml
 ",
     },
   },

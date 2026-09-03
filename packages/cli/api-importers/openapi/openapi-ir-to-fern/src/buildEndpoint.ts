@@ -468,7 +468,7 @@ export function buildEndpoint({
 
         const errorNamespace = getErrorNamespace({
             endpointNamespace: maybeEndpointNamespace,
-            schema: httpError.schema,
+            error: httpError,
             namespacedErrors: context.options.namespacedErrors
         });
         const errorDeclarationFile = resolveLocationWithNamespace({

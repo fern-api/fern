@@ -29,14 +29,61 @@
         "429": {
           "generatedName": "TooManyRequestsError",
           "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyMessage",
+                "key": "message",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyMessage",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyMessage",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyRetryAfter",
+                "key": "retryAfter",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                  "value": {
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
             "generatedName": "TooManyRequestsErrorBody",
-            "schema": "TooManyRequestsBody",
             "namespace": "video",
+            "groupName": [],
+            "additionalProperties": false,
             "source": {
               "file": "video.yml",
               "type": "openapi"
             },
-            "type": "reference"
+            "type": "object"
           },
           "description": "Too many requests",
           "source": {
@@ -50,7 +97,8 @@
                 "type": "object"
               }
             }
-          ]
+          ],
+          "namespace": "video"
         }
       },
       "servers": [],
@@ -85,14 +133,61 @@
         "429": {
           "generatedName": "TooManyRequestsError",
           "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyMessage",
+                "key": "message",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyMessage",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyMessage",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "tooManyRequestsErrorBodyRetryAfter",
+                "key": "retryAfter",
+                "schema": {
+                  "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                  "value": {
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "TooManyRequestsErrorBodyRetryAfter",
+                    "namespace": "video",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
             "generatedName": "TooManyRequestsErrorBody",
-            "schema": "TooManyRequestsBody",
             "namespace": "video",
+            "groupName": [],
+            "additionalProperties": false,
             "source": {
               "file": "video.yml",
               "type": "openapi"
             },
-            "type": "reference"
+            "type": "object"
           },
           "description": "Too many requests",
           "source": {
@@ -106,7 +201,8 @@
                 "type": "object"
               }
             }
-          ]
+          ],
+          "namespace": "video"
         },
         "503": {
           "generatedName": "ServiceUnavailableError",
@@ -358,63 +454,6 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "ServiceUnavailableBody",
-          "namespace": "video",
-          "groupName": [],
-          "additionalProperties": false,
-          "source": {
-            "file": "video.yml",
-            "type": "openapi"
-          },
-          "type": "object"
-        },
-        "TooManyRequestsBody": {
-          "allOf": [],
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "tooManyRequestsBodyMessage",
-              "key": "message",
-              "schema": {
-                "generatedName": "TooManyRequestsBodyMessage",
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "TooManyRequestsBodyMessage",
-                  "namespace": "video",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "namespace": "video",
-                "groupName": [],
-                "type": "optional"
-              },
-              "audiences": []
-            },
-            {
-              "conflict": {},
-              "generatedName": "tooManyRequestsBodyRetryAfter",
-              "key": "retryAfter",
-              "schema": {
-                "generatedName": "TooManyRequestsBodyRetryAfter",
-                "value": {
-                  "schema": {
-                    "type": "int"
-                  },
-                  "generatedName": "TooManyRequestsBodyRetryAfter",
-                  "namespace": "video",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "namespace": "video",
-                "groupName": [],
-                "type": "optional"
-              },
-              "audiences": []
-            }
-          ],
-          "allOfPropertyConflicts": [],
-          "generatedName": "TooManyRequestsBody",
           "namespace": "video",
           "groupName": [],
           "additionalProperties": false,
