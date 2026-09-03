@@ -153,6 +153,7 @@ service:
               "docs": undefined,
               "errors": [
                 "videoRoot.TooManyRequestsError",
+                "videoRoot.ServiceUnavailableError",
               ],
               "examples": [
                 {},
@@ -208,6 +209,7 @@ service:
         openapi: video.yml
       errors:
         - videoRoot.TooManyRequestsError
+        - videoRoot.ServiceUnavailableError
       examples:
         - {}
   source:
@@ -218,6 +220,18 @@ service:
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
+          "ServiceUnavailableError": {
+            "docs": "Service unavailable",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 503,
+            "type": "ServiceUnavailableBody",
+          },
           "TooManyRequestsError": {
             "docs": "Too many requests",
             "examples": [
@@ -232,6 +246,16 @@ service:
           },
         },
         "types": {
+          "ServiceUnavailableBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "retryAfter": "optional<integer>",
+            },
+            "source": {
+              "openapi": "video.yml",
+            },
+          },
           "TooManyRequestsBody": {
             "docs": undefined,
             "inline": undefined,
@@ -252,7 +276,18 @@ service:
     docs: Too many requests
     examples:
       - value: {}
+  ServiceUnavailableError:
+    status-code: 503
+    type: ServiceUnavailableBody
+    docs: Service unavailable
+    examples:
+      - value: {}
 types:
+  ServiceUnavailableBody:
+    properties:
+      retryAfter: optional<integer>
+    source:
+      openapi: video.yml
   TooManyRequestsBody:
     properties:
       message: optional<string>

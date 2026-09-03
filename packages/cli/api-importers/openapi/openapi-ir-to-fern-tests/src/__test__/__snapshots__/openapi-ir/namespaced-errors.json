@@ -107,6 +107,32 @@
               }
             }
           ]
+        },
+        "503": {
+          "generatedName": "ServiceUnavailableError",
+          "schema": {
+            "generatedName": "ServiceUnavailableErrorBody",
+            "schema": "ServiceUnavailableBody",
+            "namespace": "video",
+            "source": {
+              "file": "video.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Service unavailable",
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
         }
       },
       "servers": [],
@@ -305,6 +331,42 @@
     },
     "namespacedSchemas": {
       "video": {
+        "ServiceUnavailableBody": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "serviceUnavailableBodyRetryAfter",
+              "key": "retryAfter",
+              "schema": {
+                "generatedName": "ServiceUnavailableBodyRetryAfter",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ServiceUnavailableBodyRetryAfter",
+                  "namespace": "video",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "namespace": "video",
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ServiceUnavailableBody",
+          "namespace": "video",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "video.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
         "TooManyRequestsBody": {
           "allOf": [],
           "properties": [

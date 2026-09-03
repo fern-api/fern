@@ -1,4 +1,4 @@
-import { EndpointSdkName, Namespace, Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import { EndpointSdkName, Namespace, ReferencedSchema, Schema, SdkGroupName } from "@fern-api/openapi-ir";
 
 export function getNamespaceFromGroup(groupName: SdkGroupName): string | undefined {
     return groupName.find((group): group is Namespace => typeof group !== "string" && group.type === "namespace")?.name;
@@ -29,8 +29,26 @@ export function getErrorNamespace({
     schema: Schema | undefined;
     namespacedErrors: boolean;
 }): string | undefined {
-    if (namespacedErrors && schema?.type === "reference" && schema.namespace != null) {
-        return schema.namespace;
+    if (namespacedErrors) {
+        const referenced = unwrapReferencedSchema(schema);
+        if (referenced?.namespace != null) {
+            return referenced.namespace;
+        }
     }
     return endpointNamespace;
+}
+
+function unwrapReferencedSchema(schema: Schema | undefined): ReferencedSchema | undefined {
+    if (schema == null) {
+        return undefined;
+    }
+    switch (schema.type) {
+        case "reference":
+            return schema;
+        case "nullable":
+        case "optional":
+            return unwrapReferencedSchema(schema.value);
+        default:
+            return undefined;
+    }
 }

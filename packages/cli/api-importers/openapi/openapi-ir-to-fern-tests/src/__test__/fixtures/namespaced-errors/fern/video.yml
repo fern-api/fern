@@ -24,6 +24,13 @@ paths:
           description: OK
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "503":
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceUnavailableBody"
+                nullable: true
 components:
   responses:
     TooManyRequests:
@@ -33,6 +40,12 @@ components:
           schema:
             $ref: "#/components/schemas/TooManyRequestsBody"
   schemas:
+    ServiceUnavailableBody:
+      x-fern-sdk-namespace: video
+      type: object
+      properties:
+        retryAfter:
+          type: integer
     TooManyRequestsBody:
       x-fern-sdk-namespace: video
       type: object
