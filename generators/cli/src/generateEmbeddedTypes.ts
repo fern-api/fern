@@ -99,6 +99,7 @@ export async function generateEmbeddedTypes(args: {
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
             cwd: typesOutputDir,
+            timeout: EMBEDDED_TYPES_TIMEOUT_MS,
             maxBuffer: 64 * 1024 * 1024,
             env: { ...process.env }
         });
@@ -135,6 +136,12 @@ export async function generateEmbeddedTypes(args: {
     });
     return { typesCrateName, partitionCrates };
 }
+
+/**
+ * Upper bound on the rust-model subprocess. Generous enough for very large APIs
+ * (thousands of types) while still reaping a child that has genuinely hung.
+ */
+const EMBEDDED_TYPES_TIMEOUT_MS = 15 * 60_000;
 
 function isExecError(err: unknown): err is Error & { stderr: string } {
     return err instanceof Error && "stderr" in err && typeof err.stderr === "string";

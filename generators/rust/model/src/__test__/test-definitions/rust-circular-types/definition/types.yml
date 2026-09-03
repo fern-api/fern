@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  # Enums never derive Default.
+  Kind:
+    enum:
+      - leaf
+      - branch
+  # A <-> B cycle (through a container), with A also holding a non-Default enum.
+  A:
+    properties:
+      kind: Kind
+      children: list<B>
+  B:
+    properties:
+      parent: A
+  # Root and C reach A on different paths.
+  Root:
+    properties:
+      a: A
+      c: C
+  C:
+    properties:
+      b: B
+  # D only holds the non-Default subgraph behind optional, so it can derive Default.
+  D:
+    properties:
+      a: optional<A>
+      name: string
+  # E is an alias of a defaultable type.
+  E: D
+  # Self-referential through a container.
+  Node:
+    properties:
+      children: list<Node>
+  Leaf:
+    properties:
+      value: string

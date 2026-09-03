@@ -303,7 +303,7 @@ function namedTypeSupportsDefault(
     const cache = getNamedTypeDefaultCache(context);
     const cacheKey = `${options.unknownHasDefault ?? true}:${typeId}`;
     const cached = cache.get(cacheKey);
-    if (cached != null) {
+    if (cached !== undefined) {
         return cached;
     }
     visited.add(typeId);
