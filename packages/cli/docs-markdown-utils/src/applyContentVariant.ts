@@ -4,10 +4,12 @@ export interface ApplyContentVariantResult {
     missingValues: string[];
     /** Whether the content contained any `<Variant>` blocks. */
     hasVariantBlocks: boolean;
+    /** Whether a `<Variant>` block contained another `<Variant>` tag (nesting is unsupported). */
+    hasNestedVariantBlocks: boolean;
 }
 
 const VARIANT_BLOCK_REGEX = /<Variant\b([^>]*)>\r?\n?([\s\S]*?)\r?\n?[ \t]*<\/Variant>/g;
-const NAME_ATTRIBUTE_REGEX = /\bname\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*["']([^"']*)["']\s*\})/;
+const NAME_ATTRIBUTE_REGEX = /(?:^|\s)name\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*["']([^"']*)["']\s*\})/;
 const VARIANT_VALUE_REGEX = /\{\{\s*variant\.([A-Za-z0-9_-]+)\s*\}\}/g;
 
 // Fenced code blocks (``` or ~~~) and inline code spans, matched so that `<Variant>` tags
@@ -60,11 +62,13 @@ export function applyContentVariant({
     values?: Record<string, string>;
 }): ApplyContentVariantResult {
     let hasVariantBlocks = false;
+    let hasNestedVariantBlocks = false;
     const protectedMarkdown = protectCode(markdown);
     const withoutBlocks = protectedMarkdown.markdown.replace(
         VARIANT_BLOCK_REGEX,
         (_match, attributes: string, body: string) => {
             hasVariantBlocks = true;
+            hasNestedVariantBlocks ||= body.includes("<Variant");
             if (variantId != null && parseVariantNames(attributes).includes(variantId)) {
                 return body;
             }
@@ -85,5 +89,5 @@ export function applyContentVariant({
         });
     }
 
-    return { markdown: result, missingValues: Array.from(missingValues), hasVariantBlocks };
+    return { markdown: result, missingValues: Array.from(missingValues), hasVariantBlocks, hasNestedVariantBlocks };
 }

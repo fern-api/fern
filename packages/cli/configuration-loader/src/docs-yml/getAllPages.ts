@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, relativize } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { compact } from "lodash-es";
@@ -72,7 +72,7 @@ function pageToPageFile(page: docsYml.DocsNavigationItem.Page): PageFile {
  * Maps every variant page to its source file and variant, failing if a page references a
  * variant that is not declared under `variants` in docs.yml.
  */
-export function getVariantPages({
+export async function getVariantPages({
     files,
     variants,
     absolutePathToFernFolder,
@@ -82,24 +82,32 @@ export function getVariantPages({
     variants: Record<string, Record<string, string>> | undefined;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
-}): Record<RelativeFilePath, docsYml.VariantPageSource> {
+}): Promise<Record<RelativeFilePath, docsYml.VariantPageSource>> {
     const result: Record<RelativeFilePath, docsYml.VariantPageSource> = {};
+    const errors: string[] = [];
     for (const file of files) {
         if (file.variant == null) {
             continue;
         }
         const sourceRelativeFilePath = relativize(absolutePathToFernFolder, file.sourceAbsolutePath);
+        const relativeFilePath = relativize(absolutePathToFernFolder, file.absolutePath);
         if (variants == null || variants[file.variant] == null) {
-            context.failAndThrow(
-                `Page ${sourceRelativeFilePath} uses variant "${file.variant}", which is not declared under \`variants\` in docs.yml.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
+            errors.push(
+                `Page ${sourceRelativeFilePath} uses variant "${file.variant}", which is not declared under \`variants\` in docs.yml.`
             );
         }
-        result[relativize(absolutePathToFernFolder, file.absolutePath)] = {
+        if (await doesPathExist(file.absolutePath)) {
+            errors.push(
+                `Page ${sourceRelativeFilePath} with variant "${file.variant}" is registered as ${relativeFilePath}, but a file already exists at that path. Rename the file or the variant.`
+            );
+        }
+        result[relativeFilePath] = {
             variant: file.variant,
             sourceRelativeFilePath
         };
+    }
+    if (errors.length > 0) {
+        context.failAndThrow(errors.join("\n"), undefined, { code: CliError.Code.ConfigError });
     }
     return result;
 }

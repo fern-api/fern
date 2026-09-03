@@ -498,9 +498,7 @@ export class DocsDefinitionResolver {
         // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(
-                this.applyPageVariant(RelativeFilePath.of(relativePath), markdown, { warn: false })
-            );
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(markdown);
         }
 
         // track all changelog markdown files in parsedDocsConfig.pages
@@ -876,6 +874,11 @@ export class DocsDefinitionResolver {
         if (variantId == null && result.hasVariantBlocks) {
             this.taskContext.logger.warn(
                 `${sourcePath} contains <Variant> blocks but is referenced without a \`variant\` in docs.yml; all variant content was removed.`
+            );
+        }
+        if (result.hasNestedVariantBlocks) {
+            this.taskContext.logger.warn(
+                `${sourcePath} nests <Variant> blocks inside each other, which is not supported; the output may be malformed.`
             );
         }
         if (result.missingValues.length > 0) {

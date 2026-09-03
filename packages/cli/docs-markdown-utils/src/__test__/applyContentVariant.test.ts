@@ -123,6 +123,21 @@ describe("applyContentVariant", () => {
         );
     });
 
+    it("reports nested variant blocks and ignores attributes merely ending in name", () => {
+        const nested = applyContentVariant({
+            markdown: '<Variant name="a">\n<Variant name="b">\nx\n</Variant>\n</Variant>',
+            variantId: "a"
+        });
+        expect(nested.hasNestedVariantBlocks).toBe(true);
+
+        const result = applyContentVariant({
+            markdown: '<Variant data-name="a" name="b">\nB\n</Variant>',
+            variantId: "a"
+        });
+        expect(result.markdown).toBe("");
+        expect(result.hasNestedVariantBlocks).toBe(false);
+    });
+
     it("substitutes values in frontmatter", () => {
         const result = applyContentVariant({
             markdown: "---\ntitle: Configure {{variant.server}}\n---\n\nBody",
