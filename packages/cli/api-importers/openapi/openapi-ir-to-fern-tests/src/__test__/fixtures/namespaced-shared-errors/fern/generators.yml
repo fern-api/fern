@@ -1,7 +1,0 @@
-api:
-  specs:
-    - openapi: plants.yml
-      namespace: plants
-    - openapi: seeds.yml
-      namespace: seeds
-groups: {}

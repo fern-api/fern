@@ -486,10 +486,7 @@ export function buildEndpoint({
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
-            schema: context.isErrorUnknownSchema({
-                statusCode: parseInt(statusCode),
-                namespace: maybeEndpointNamespace
-            })
+            schema: context.isErrorUnknownSchema(parseInt(statusCode))
                 ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration
         });
