@@ -107,6 +107,7 @@
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
     "@inquirer/prompts": "catalog:",
+    "@postman/sdk-config": "0.2.0",
     "@sentry/cli": "catalog:",
     "@sentry/node": "^10.45.0",
     "@types/js-yaml": "catalog:",

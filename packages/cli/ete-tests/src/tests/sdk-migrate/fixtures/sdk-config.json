@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "sdk-config/v1",
+  "sdkName": "api",
+  "source": {
+    "specs": [
+      {
+        "id": "openapi",
+        "type": "openapi",
+        "path": "./fern/openapi.yml"
+      }
+    ]
+  },
+  "api": {
+    "defaultEnvironment": "Default",
+    "environments": [
+      {
+        "name": "Default",
+        "urls": [
+          {
+            "name": "default",
+            "url": "https://api.example.com"
+          }
+        ]
+      }
+    ],
+    "audiences": []
+  },
+  "client": {},
+  "package": {},
+  "docs": {},
+  "generation": {},
+  "targets": [
+    {
+      "language": "typescript",
+      "output": {
+        "delivery": "files",
+        "path": "./generated/typescript"
+      },
+      "generatorVersion": "3.63.3"
+    },
+    {
+      "language": "python",
+      "output": {
+        "delivery": "files",
+        "path": "./generated/python"
+      },
+      "generatorVersion": "4.3.10"
+    }
+  ]
+}
