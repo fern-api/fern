@@ -899,6 +899,19 @@ pub enum PaginationConfig {
     },
 }
 
+impl PaginationConfig {
+    /// Dotted JSON path to the results array, shared by every variant.
+    pub fn results_path(&self) -> &str {
+        match self {
+            PaginationConfig::Cursor { results, .. }
+            | PaginationConfig::Offset { results, .. }
+            | PaginationConfig::Uri { results, .. }
+            | PaginationConfig::Path { results, .. }
+            | PaginationConfig::Custom { results } => results,
+        }
+    }
+}
+
 /// Per-operation streaming configuration, resolved from the
 /// [`x-fern-streaming`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/streaming)
 /// OpenAPI extension. Mirrors the upstream Fern OpenAPI importer's
