@@ -187,35 +187,48 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
+        const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
+        const websocketChannelId = this.package_.websocket ?? undefined;
 
-        if (service != null) {
-            const endpointMethodNames = new Set(
-                service.endpoints.map((endpoint) => this.case.camelUnsafe(endpoint.name))
-            );
-            for (const subpackageId of package_.subpackages) {
-                const subpackage = packageResolver.resolveSubpackage(subpackageId);
-                const hasWebSocketInTree =
-                    (subpackage as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? subpackage.websocket != null;
-                if (!subpackage.hasEndpointsInTree && (!this.generateWebSocketClients || !hasWebSocketInTree)) {
-                    continue;
-                }
-                const lastFernFilepathPart = subpackage.fernFilepath.allParts.at(-1);
-                if (lastFernFilepathPart == null) {
-                    continue;
-                }
-                const subpackageClientName = this.case.camelUnsafe(lastFernFilepathPart);
-                if (endpointMethodNames.has(subpackageClientName)) {
-                    throw new Error(
-                        `Cannot generate ${serviceClassName}: endpoint method "${subpackageClientName}" conflicts with the "${subpackageClientName}" subpackage client. Rename the endpoint method or subpackage.`
-                    );
-                }
+        const clientMembers = new Map<string, string>();
+        const addClientMember = (name: string, source: string): void => {
+            const existingSource = clientMembers.get(name);
+            if (existingSource != null) {
+                throw new Error(
+                    `Cannot generate ${serviceClassName}: ${existingSource} and ${source} both generate the client member "${name}". Rename one of them.`
+                );
             }
+            clientMembers.set(name, source);
+        };
+
+        addClientMember(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER, "the client options property");
+        for (const endpoint of service?.endpoints ?? []) {
+            const endpointMethodName = this.case.camelUnsafe(endpoint.name);
+            addClientMember(endpointMethodName, `endpoint method "${endpointMethodName}"`);
+            addClientMember(`__${endpointMethodName}`, `the internal method for endpoint "${endpointMethodName}"`);
+        }
+        if (websocketChannel != null && websocketChannelId != null && this.generateWebSocketClients) {
+            const connectMethodName = websocketChannel.connectMethodName ?? "connect";
+            addClientMember(connectMethodName, `websocket method "${connectMethodName}"`);
+        }
+        if (this.isRoot) {
+            addClientMember("fetch", 'the root client passthrough method "fetch"');
+        }
+        for (const subpackageId of package_.subpackages) {
+            const subpackage = packageResolver.resolveSubpackage(subpackageId);
+            if (!subpackage.hasEndpointsInTree && (!this.generateWebSocketClients || !subpackage.hasWebSocketInTree)) {
+                continue;
+            }
+            const lastFernFilepathPart = subpackage.fernFilepath.allParts.at(-1);
+            if (lastFernFilepathPart == null) {
+                continue;
+            }
+            const subpackageClientName = this.case.camelUnsafe(lastFernFilepathPart);
+            addClientMember(subpackageClientName, `subpackage client "${subpackageClientName}" (${subpackageId})`);
+            addClientMember(`_${subpackageClientName}`, `the cache for subpackage client "${subpackageClientName}"`);
         }
 
         this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
-
-        const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
-        const websocketChannelId = this.package_.websocket ?? undefined;
 
         if (service == null) {
             this.generatedEndpointImplementations = [];
