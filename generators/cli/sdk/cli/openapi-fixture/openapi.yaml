@@ -531,9 +531,9 @@ paths:
           description: Paginated event list
 
   # --- audit: exercises offset-form `x-fern-pagination` with a
-  # `step: $request.limit` reference. The executor must advance the
-  # outgoing `offset` query param by the caller's `--limit` value, not
-  # by the number of results returned on the page.
+  # `step: $request.limit` reference (item-index semantics). The executor
+  # must advance the outgoing `offset` query param by the number of
+  # results returned on the page and stop on a short page.
   /audit:
     get:
       x-fern-sdk-group-name:
@@ -557,6 +557,32 @@ paths:
       responses:
         "200":
           description: Paginated audit list
+
+  # --- datasets: offset-form `x-fern-pagination` WITHOUT `step`
+  # (page-index semantics). The executor must treat `page` as a page
+  # number: start at 1 (or the caller's `--page`) and advance by 1.
+  /datasets:
+    get:
+      x-fern-sdk-group-name:
+        - datasets
+      x-fern-sdk-method-name: list
+      operationId: datasets_list
+      summary: List datasets (page-number paginated)
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.datasets
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Paginated dataset list
 
   # --- idempotency ---
   # Both endpoints share a path and a group. The idempotent `create` op

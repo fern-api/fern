@@ -1,0 +1,11 @@
+- summary: |
+    `--page-all` now treats a step-less offset param as a page number, advancing by 1 per page, matching the
+    default in the TypeScript, Python, Ruby, PHP and C# SDKs. When `x-fern-pagination` does declare a `step`,
+    the param is treated as an item index and advanced by the number of results returned, as before.
+    Page-number APIs (e.g. `?page=2&pageSize=50`) previously skipped pages. Paging also continues from the
+    caller's own value for the offset param (`--params '{"page": 7}'` fetches 7, 8, 9, …) and no longer sends
+    that param twice on subsequent pages. The first request is still sent exactly as the caller wrote it —
+    the CLI never synthesizes a page param for it. When the caller omits the offset param, paging continues
+    from the param's declared default (`default: 0` / `x-fern-default`), so 0-indexed APIs fetch 1, 2, 3, …
+    after their implicit first page instead of skipping page 1.
+  type: fix
