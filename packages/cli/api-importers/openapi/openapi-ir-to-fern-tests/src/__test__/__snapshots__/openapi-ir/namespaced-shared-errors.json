@@ -12,8 +12,7 @@
       "audiences": [],
       "operationId": "listPlants",
       "tags": [
-        "plants",
-        "Plants"
+        "plants"
       ],
       "namespace": "plants",
       "pathParameters": [],
@@ -70,8 +69,7 @@
       "audiences": [],
       "operationId": "getPlant",
       "tags": [
-        "plants",
-        "Plants"
+        "plants"
       ],
       "namespace": "plants",
       "pathParameters": [

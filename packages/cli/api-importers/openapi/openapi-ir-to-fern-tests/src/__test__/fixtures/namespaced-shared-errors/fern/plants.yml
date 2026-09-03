@@ -6,8 +6,6 @@ paths:
   /plants:
     get:
       operationId: listPlants
-      tags:
-        - Plants
       responses:
         "200":
           description: OK
@@ -20,8 +18,6 @@ paths:
   /plants/{id}:
     get:
       operationId: getPlant
-      tags:
-        - Plants
       parameters:
         - name: id
           in: path
