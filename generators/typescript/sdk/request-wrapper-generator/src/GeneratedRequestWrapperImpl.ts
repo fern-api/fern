@@ -187,11 +187,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getRequestProperties(context: FileContext): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
-        // When resolveQueryParameterNameConflicts is enabled, pre-compute body property names
-        // so we can detect collisions between query param wire values and body property names.
-        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
-            ? this.getCollidingQueryParamWireValues(context)
-            : new Set<string>();
+        // Validate that query and body property names can be represented independently.
+        const collidingQueryParamWireValues = this.getResolvableQueryParamWireValues(context);
 
         // When an inlined path parameter shares its property name with a body property, emit only
         // the body property to avoid a duplicate interface member. The shared field is used for both
@@ -533,9 +530,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeys(context: FileContext): RequestWrapperNonBodyProperty[] {
-        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
-            ? this.getCollidingQueryParamWireValues(context)
-            : new Set<string>();
+        const collidingQueryParamWireValues = this.getResolvableQueryParamWireValues(context);
 
         // Path parameters that collide with a body property are not destructured out of the request,
         // so they remain part of the spread request body (and are referenced for the URL via the body).
@@ -569,9 +564,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeysWithData(context: FileContext): RequestWrapperNonBodyPropertyWithData[] {
-        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
-            ? this.getCollidingQueryParamWireValues(context)
-            : new Set<string>();
+        const collidingQueryParamWireValues = this.getResolvableQueryParamWireValues(context);
 
         // Path parameters that collide with a body property are not destructured out of the request,
         // so they remain part of the spread request body (and are referenced for the URL via the body).
@@ -1062,7 +1055,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
      * will use their SDK override names instead of wire values.
      */
     private getCollidingQueryParamWireValues(context: FileContext): Set<string> {
-        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+        const bodyPropertyNames = this.getBodyPropertyNames(context, { includeAllRequestBodyShapes: true });
 
         const collidingWireValues = new Set<string>();
         for (const queryParameter of this.getAllQueryParameters()) {
@@ -1074,31 +1067,66 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return collidingWireValues;
     }
 
+    private getResolvableQueryParamWireValues(context: FileContext): Set<string> {
+        const collidingWireValues = this.getCollidingQueryParamWireValues(context);
+        const bodyPropertyNames = this.getBodyPropertyNames(context, { includeAllRequestBodyShapes: true });
+        for (const queryParameter of this.getAllQueryParameters()) {
+            if (!collidingWireValues.has(getWireValue(queryParameter.name))) {
+                continue;
+            }
+            const propertyName = this.getPropertyNameOfQueryParameter(queryParameter).propertyName;
+            const overriddenPropertyName = this.getOverriddenPropertyNameOfQueryParameter(queryParameter).propertyName;
+            if (
+                !this.resolveQueryParameterNameConflicts ||
+                overriddenPropertyName === propertyName ||
+                bodyPropertyNames.has(overriddenPropertyName)
+            ) {
+                throw new Error(
+                    `Cannot generate ${this.wrapperName}: query parameter "${propertyName}" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.`
+                );
+            }
+        }
+        return collidingWireValues;
+    }
+
     /**
      * Computes the set of property names produced by the (inlined) request body. Used to detect
      * collisions between non-body parameters (path/query) and body property names.
      */
-    private getInlinedBodyPropertyNames(context: FileContext): Set<string> {
+    private getBodyPropertyNames(
+        context: FileContext,
+        { includeAllRequestBodyShapes }: { includeAllRequestBodyShapes: boolean }
+    ): Set<string> {
         const bodyPropertyNames = new Set<string>();
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
             FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const property of inlinedRequestBody.properties) {
+                    for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                        context,
+                        inlinedRequestBody
+                    })) {
                         const propKey = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
                         bodyPropertyNames.add(propKey.propertyName);
                     }
-                    for (const extension of inlinedRequestBody.extends) {
+                    for (let extension of inlinedRequestBody.extends) {
                         const typeDeclaration = context.type.getTypeDeclaration(extension);
-                        if (typeDeclaration?.shape.type === "object") {
-                            for (const property of typeDeclaration.shape.properties) {
-                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
-                                bodyPropertyNames.add(propName.propertyName);
-                            }
+                        if (typeDeclaration.shape.type === "alias" && typeDeclaration.shape.aliasOf.type === "named") {
+                            extension = typeDeclaration.shape.aliasOf;
+                        }
+                        const generatedType = context.type.getGeneratedType(extension);
+                        if (generatedType.type !== "object") {
+                            throw new Error("Inlined request extends a non-object");
+                        }
+                        for (const property of generatedType.getAllPropertiesIncludingExtensions(context)) {
+                            bodyPropertyNames.add(property.propertyKey);
                         }
                     }
                 },
                 reference: (referenceToRequestBody) => {
+                    if (!includeAllRequestBodyShapes) {
+                        return;
+                    }
                     // When flattenRequestParameters is enabled, a named object reference body is
                     // flattened into the request wrapper, so its properties contribute names that
                     // can collide with path/query parameters. This mirrors
@@ -1113,11 +1141,34 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
                                 bodyPropertyNames.add(propName.propertyName);
                             }
+                            return;
                         }
                     }
+                    bodyPropertyNames.add(this.getReferencedBodyPropertyName());
                 },
-                fileUpload: () => {
-                    // noop
+                fileUpload: (fileUploadRequest) => {
+                    if (!includeAllRequestBodyShapes) {
+                        return;
+                    }
+                    for (const property of fileUploadRequest.properties) {
+                        FernIr.FileUploadRequestProperty._visit(property, {
+                            file: (fileProperty) => {
+                                if (this.inlineFileProperties) {
+                                    bodyPropertyNames.add(
+                                        this.getPropertyNameOfFileParameterFromName(fileProperty.key).propertyName
+                                    );
+                                }
+                            },
+                            bodyProperty: (bodyProperty) => {
+                                bodyPropertyNames.add(
+                                    this.getInlinedRequestBodyPropertyKeyFromName(bodyProperty.name).propertyName
+                                );
+                            },
+                            _other: () => {
+                                throw new Error(`Unknown FileUploadRequestProperty: ${property.type}`);
+                            }
+                        });
+                    }
                 },
                 bytes: () => {
                     // noop
@@ -1144,7 +1195,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (pathParameters.length === 0) {
             return colliding;
         }
-        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+        const bodyPropertyNames = this.getBodyPropertyNames(context, { includeAllRequestBodyShapes: false });
         if (bodyPropertyNames.size === 0) {
             return colliding;
         }
