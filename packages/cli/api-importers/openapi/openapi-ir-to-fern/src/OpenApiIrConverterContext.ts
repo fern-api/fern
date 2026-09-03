@@ -15,6 +15,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
 import { SchemaReachability, SchemaVariantPlan } from "./computeSchemaReachability.js";
 import { State } from "./State.js";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -38,7 +39,7 @@ export class OpenApiIrConverterContext {
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
-    private unknownSchema: Set<number> = new Set();
+    private unknownSchema: Set<string> = new Set();
 
     /**
      * The set of referenced schema ids to include in the generated definition.
@@ -109,14 +110,15 @@ export class OpenApiIrConverterContext {
             this.builder.setDisplayName({ displayName: ir.title });
         }
 
-        const schemaByStatusCode: Record<number, Schema> = {};
+        const schemaByErrorKey: Record<string, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
             for (const endpoint of ir.endpoints) {
+                const namespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
-                    const statusCode = parseInt(statusCodeString);
-                    const existingSchema = schemaByStatusCode[statusCode];
+                    const key = getErrorKey({ statusCode: parseInt(statusCodeString), namespace });
+                    const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
-                        schemaByStatusCode[statusCode] = error.schema;
+                        schemaByErrorKey[key] = error.schema;
                     } else if (
                         existingSchema != null &&
                         error.schema != null &&
@@ -124,7 +126,7 @@ export class OpenApiIrConverterContext {
                     ) {
                         // pass
                     } else {
-                        this.unknownSchema.add(statusCode);
+                        this.unknownSchema.add(key);
                     }
                 }
             }
@@ -174,10 +176,17 @@ export class OpenApiIrConverterContext {
     }
 
     /**
-     * Is error an unknown schema
+     * Is error an unknown schema. Errors are shared per status code within a namespace,
+     * so a schema mismatch in one namespace does not affect errors in another.
      */
-    public isErrorUnknownSchema(statusCode: number): boolean {
-        return this.unknownSchema.has(statusCode);
+    public isErrorUnknownSchema({
+        statusCode,
+        namespace
+    }: {
+        statusCode: number;
+        namespace: string | undefined;
+    }): boolean {
+        return this.unknownSchema.has(getErrorKey({ statusCode, namespace }));
     }
 
     /**
@@ -396,4 +405,8 @@ export class OpenApiIrConverterContext {
         }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;
     }
+}
+
+function getErrorKey({ statusCode, namespace }: { statusCode: number; namespace: string | undefined }): string {
+    return namespace != null ? `${namespace}:${statusCode}` : `${statusCode}`;
 }
