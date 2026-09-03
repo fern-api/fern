@@ -188,6 +188,30 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const service = packageResolver.getServiceDeclaration(packageId);
 
+        if (service != null) {
+            const endpointMethodNames = new Set(
+                service.endpoints.map((endpoint) => this.case.camelUnsafe(endpoint.name))
+            );
+            for (const subpackageId of package_.subpackages) {
+                const subpackage = packageResolver.resolveSubpackage(subpackageId);
+                const hasWebSocketInTree =
+                    (subpackage as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? subpackage.websocket != null;
+                if (!subpackage.hasEndpointsInTree && (!this.generateWebSocketClients || !hasWebSocketInTree)) {
+                    continue;
+                }
+                const lastFernFilepathPart = subpackage.fernFilepath.allParts.at(-1);
+                if (lastFernFilepathPart == null) {
+                    continue;
+                }
+                const subpackageClientName = this.case.camelUnsafe(lastFernFilepathPart);
+                if (endpointMethodNames.has(subpackageClientName)) {
+                    throw new Error(
+                        `Cannot generate ${serviceClassName}: endpoint method "${subpackageClientName}" conflicts with the "${subpackageClientName}" subpackage client. Rename the endpoint method or subpackage.`
+                    );
+                }
+            }
+        }
+
         this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
 
         const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);

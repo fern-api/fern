@@ -288,6 +288,55 @@ describe("GeneratedSdkClientClassImpl", () => {
             expect(clientClass.getAuthProviderInstance()).toBeUndefined();
         });
 
+        it("rejects an endpoint method that conflicts with a subpackage client", () => {
+            const subpackageId = "subpackage_c";
+            const ir = createIR({
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [
+                        {
+                            ...createHttpEndpoint(),
+                            name: casingsGenerator.generateName("c")
+                        }
+                    ],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                },
+                subpackages: {
+                    [subpackageId]: {
+                        fernFilepath: {
+                            allParts: [casingsGenerator.generateName("c")],
+                            packagePath: [],
+                            file: casingsGenerator.generateName("c")
+                        },
+                        name: casingsGenerator.generateName("c"),
+                        displayName: undefined,
+                        service: undefined,
+                        types: [],
+                        errors: [],
+                        subpackages: [],
+                        hasEndpointsInTree: true,
+                        hasWebSocketInTree: false,
+                        websocket: undefined,
+                        webhooks: undefined,
+                        navigationConfig: undefined,
+                        docs: undefined
+                    }
+                },
+                rootPackage: { subpackages: [subpackageId] }
+            });
+
+            expect(() => createClientClass({ ir })).toThrow(
+                'Cannot generate TestClient: endpoint method "c" conflicts with the "c" subpackage client. Rename the endpoint method or subpackage.'
+            );
+        });
+
         it("creates client class with bearer auth", () => {
             const ir = createIR({
                 authSchemes: [

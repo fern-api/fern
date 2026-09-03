@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Reject endpoint methods that conflict with a nested subpackage client instead of generating invalid TypeScript.
+  type: fix
