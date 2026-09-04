@@ -2,13 +2,14 @@ import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { createPosthogClient } from "./createPosthogClient.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        this.posthog = createPosthogClient(posthogApiKey);
     }
 
     public async identify(): Promise<void> {
@@ -41,7 +42,11 @@ export class AccessTokenPosthogManager implements PosthogManager {
 
     public async flush(): Promise<void> {
         try {
-            await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
+            const flushPromise = this.posthog.flush().catch(() => {
+                // Swallow late failures so a timed-out flush doesn't surface as an
+                // unhandled rejection.
+            });
+            await Promise.race([flushPromise, new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }

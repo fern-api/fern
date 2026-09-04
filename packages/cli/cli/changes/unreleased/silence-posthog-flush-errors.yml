@@ -1,0 +1,5 @@
+- summary: |
+    Stop printing "Error while flushing PostHog" stack traces to the console when
+    anonymous telemetry cannot be sent (e.g. on network-restricted machines).
+    Telemetry failures are now always swallowed silently and never affect CLI output.
+  type: fix
