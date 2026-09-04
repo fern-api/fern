@@ -177,6 +177,25 @@ export abstract class AbstractParameterConverter<
         return schema;
     }
 
+    private resolveSchemaReferenceChain(
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): OpenAPIV3_1.SchemaObject | undefined {
+        const visited = new Set<string>();
+        let current: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined = schemaOrReference;
+        while (current != null && this.context.isReferenceObject(current)) {
+            if (visited.has(current.$ref)) {
+                return undefined;
+            }
+            visited.add(current.$ref);
+            current = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>({
+                schemaOrReference: current,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+        }
+        return current;
+    }
+
     protected convertParameterExamples({
         schema,
         originalSchema
@@ -216,11 +235,7 @@ export abstract class AbstractParameterConverter<
         }
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
             const schemaExamples = this.context.getExamplesFromSchema({
-                schema: this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                    schemaOrReference: originalSchema,
-                    breadcrumbs: this.breadcrumbs,
-                    skipErrorCollector: true
-                }),
+                schema: this.resolveSchemaReferenceChain(originalSchema),
                 breadcrumbs: this.breadcrumbs
             });
             for (const schemaExample of schemaExamples) {

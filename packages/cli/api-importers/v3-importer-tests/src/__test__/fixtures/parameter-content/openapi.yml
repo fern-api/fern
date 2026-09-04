@@ -33,6 +33,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AccountSettingsFilter"
+        - name: X-Plant-Id
+          in: header
+          required: true
+          schema:
+            $ref: "#/components/schemas/PlantIdAlias"
       responses:
         "200":
           description: ok
@@ -65,3 +70,8 @@ components:
       properties:
         include_deleted:
           type: boolean
+    PlantIdAlias:
+      $ref: "#/components/schemas/PlantId"
+    PlantId:
+      type: string
+      example: "plant_fern_42"
