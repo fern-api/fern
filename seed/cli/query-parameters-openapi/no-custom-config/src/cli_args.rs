@@ -97,9 +97,16 @@ pub fn is_version_flag(arg: &str) -> bool {
     matches!(arg, "--version" | "-V" | "version")
 }
 
-/// Resolve the API base URL override from the `--base-url` flag and the
-/// `{NAME}_BASE_URL` env var (flag wins). Validates the flag value for
-/// dangerous characters; the env var is treated as trusted.
+/// Resolve the API base URL override from the `--base-url` flag, the
+/// `{NAME}_BASE_URL` env var, and the active profile's `base_url`, in that
+/// order. Validates the flag value for dangerous characters; the env var is
+/// treated as trusted, and the profile's value was validated by
+/// `profiles create`.
+///
+/// The profile rung is last so a CI pipeline exporting `{NAME}_BASE_URL` is
+/// never silently redirected by a developer's stored profile. It exists for
+/// specs that declare no `servers[].variables` to template — region/edge →
+/// URL shaping is then an overlay concern rather than framework code.
 pub fn resolve_base_url_override(
     matches: &clap::ArgMatches,
     app_name: &str,
@@ -110,7 +117,9 @@ pub fn resolve_base_url_override(
     }
     let env_var_name = format!("{}_BASE_URL", app_name.to_uppercase().replace('-', "_"));
     let base_url_env_var = std::env::var(env_var_name).ok();
-    Ok(base_url_flag.or(base_url_env_var))
+    Ok(base_url_flag
+        .or(base_url_env_var)
+        .or_else(crate::profiles::base_url))
 }
 
 /// Resolve the consumer-supplied `User-Agent` suffix from the suffix

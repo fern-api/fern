@@ -143,7 +143,7 @@ fn apply_server_var_substitutions(
 /// flag order is stable across runs). First declaration wins on name
 /// collisions — a variable of a given name is one CLI flag, however many
 /// servers reference it.
-fn collect_spec_server_variables(
+pub(crate) fn collect_spec_server_variables(
     doc: &crate::openapi::discovery::RestDescription,
 ) -> Vec<crate::openapi::discovery::ServerVariable> {
     use crate::openapi::discovery::{RestResource, Server, ServerVariable};
@@ -2147,6 +2147,12 @@ impl CliApp {
         !self.server_vars.is_empty() || spec_declares_server_urls_to_resolve(doc)
     }
 
+    /// Names of the generator-registered server variables. Unioned with the
+    /// spec-declared ones to form the `profiles create` vocabulary.
+    pub(crate) fn server_var_names(&self) -> Vec<String> {
+        self.server_vars.iter().map(|v| v.name.clone()).collect()
+    }
+
     pub(crate) fn apply_server_vars(
         &self,
         doc: &mut RestDescription,
@@ -2168,10 +2174,28 @@ impl CliApp {
             // `try_get_one` rather than `get_one`: a variable whose flag was
             // skipped (built-in collision) is not a registered arg id, and
             // `get_one` panics on unknown ids.
-            if let Ok(Some(value)) = matches.try_get_one::<String>(name) {
-                if matches.value_source(name) != Some(clap::parser::ValueSource::DefaultValue) {
-                    caller_pinned_any = true;
-                }
+            let clap_value = matches.try_get_one::<String>(name).ok().flatten();
+            // `CommandLine` / `EnvVariable` mean the caller pinned this
+            // variable; `DefaultValue` means clap fell back to the spec's
+            // `default`, which the profile outranks.
+            let pinned_by_caller = clap_value.is_some()
+                && matches.value_source(name) != Some(clap::parser::ValueSource::DefaultValue);
+
+            if pinned_by_caller {
+                caller_pinned_any = true;
+                subs.insert(name.clone(), clap_value.expect("pinned implies present").clone());
+                continue;
+            }
+            // Profile sits above the spec default. It also counts as pinning:
+            // without that, `apply_default_server_urls` would prefer
+            // `x-fern-default-url` and quietly discard the region the profile
+            // just selected.
+            if let Some(value) = crate::profiles::server_variable(name) {
+                caller_pinned_any = true;
+                subs.insert(name.clone(), value);
+                continue;
+            }
+            if let Some(value) = clap_value {
                 subs.insert(name.clone(), value.clone());
             }
         }
@@ -3037,7 +3061,16 @@ pub(crate) fn collect_params_from_flags(
         {
             continue;
         }
-        let json_value = match (from_default, &param_def.default_value) {
+        // A profile-supplied default also arrives as clap `DefaultValue`, but
+        // it is a *string the user wrote*, not the spec's typed
+        // `x-fern-default`. Taking the typed branch for it would silently
+        // discard the profile's value and send the spec default instead —
+        // exactly the failure the profile exists to prevent. So the typed
+        // branch is reserved for the case where the spec default is really
+        // what clap surfaced.
+        let profile_supplied =
+            crate::openapi::commands::profile_parameter_default(param_def, param_name).is_some();
+        let json_value = match (from_default && !profile_supplied, &param_def.default_value) {
             (true, Some(typed)) => typed.clone(),
             _ => {
                 // Null sentinel, gated to user-supplied input so a

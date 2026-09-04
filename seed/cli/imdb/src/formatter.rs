@@ -85,7 +85,14 @@ impl OutputPipeline {
             None if flag("human") => OutputFormat::Table,
             None => {
                 let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
-                let env_value = std::env::var(env_var).ok();
+                // Profile below env, as everywhere else. `profiles create`
+                // validated the stored value, so an unparseable one here can
+                // only come from a hand-edited file — treated the same way a
+                // bad `<NAME>_OUTPUT` is, by falling through to the
+                // TTY-aware default rather than failing the command.
+                let env_value = std::env::var(env_var)
+                    .ok()
+                    .or_else(crate::profiles::format);
                 resolve_default_format(env_value.as_deref(), std::io::stdout().is_terminal())
             }
         };

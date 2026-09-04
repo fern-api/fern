@@ -1,0 +1,29 @@
+- summary: |
+    Add named profiles, off by default behind `config.profiles.enabled`. A profile is a named bundle of request
+    context — a credential slot, parameter defaults, server variables, an optional base URL and output format —
+    resolved once per invocation. Enabling it adds a `profiles create | list | use | remove | current` group and a
+    global `--profile` / `-p` flag.
+
+    Precedence per value is: explicit flag, then environment variable, then profile, then the spec's own
+    `x-fern-default`. Environment variables sit above profiles so a CI pipeline that exports them is never
+    silently overridden by a developer's stored profile. For credentials the profile adds no rung to ADR-0008's
+    chain — it only selects which keyring account the existing `Keyring` rung reads, so two tenants can hold
+    separate tokens for one auth scheme. `config.profiles.commandName` renames the group for an API that already
+    owns the `profiles` noun.
+
+    Secrets never reach `~/.config/<bin>/profiles.toml`: the file names a keyring account, and
+    `profiles create --with-token` / `--from-env` write the credential to the OS keychain under an account scoped
+    to that profile. The file is written through `toml_edit`, so a user's comments and any field written by a newer
+    binary survive a round-trip.
+
+    Also fixes a latent correctness bug in the OAuth token cache, which was keyed by `token_url` alone: two
+    profiles authenticating against the same client-credentials endpoint would have clobbered each other's access
+    and refresh tokens. The key is now `<token_url>#<credential>` when a profile is selected and byte-identical to
+    before when none is, so existing caches keep resolving and no one is logged out by the upgrade.
+
+    Built-in commands (`auth`, `profiles`, `completion`, `man`) now appear in `--schema` under a new
+    `builtinCommands` array. They were absent entirely, so an agent reading `--schema` could not discover that the
+    CLI had any way to authenticate or switch tenant.
+
+    A CLI generated without the `profiles` config block is byte-identical to one generated before this change.
+  type: feat

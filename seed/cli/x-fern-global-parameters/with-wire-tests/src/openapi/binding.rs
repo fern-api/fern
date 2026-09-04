@@ -400,6 +400,36 @@ impl Binding for OpenApiBinding {
         self.inner.builder_global_parameters = merged;
     }
 
+    fn parameter_specs(&self) -> Vec<crate::profiles::commands::ParameterSpec> {
+        // Best-effort: a spec that fails to prepare yields an empty
+        // vocabulary, which disables `--set` validation rather than making
+        // `profiles create` fail on an unrelated parse error.
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        let mut specs = Vec::new();
+        collect_parameter_specs(&prepared.doc.parameters, &mut specs);
+        collect_parameter_specs_from_resources(&prepared.doc.resources, &mut specs);
+        specs
+    }
+
+    fn server_variable_names(&self) -> Vec<String> {
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        let mut names: std::collections::BTreeSet<String> = self
+            .inner
+            .server_var_names()
+            .into_iter()
+            .collect();
+        names.extend(
+            crate::openapi::app::collect_spec_server_variables(&prepared.doc)
+                .into_iter()
+                .map(|variable| variable.name),
+        );
+        names.into_iter().collect()
+    }
+
     fn validate_auth(&self) -> Result<(), CliError> {
         // Only validate when root-level auth is being used (auth_bindings
         // is non-empty). If the binding has no auth bindings at all, it's
@@ -852,6 +882,60 @@ impl Binding for OpenApiBinding {
 /// `Command::new(namespace)` wrapper, returning a rebuilt command whose
 /// sole subcommand is the namespace node. Global args, about, and
 /// after_help are preserved on the outer command.
+/// Collect both spellings of every parameter: the **wire** name (the map
+/// key, which is what `--schema` reports) and the **flag** name the user
+/// actually reads in `--help`.
+///
+/// Both are needed because they can differ. `x-fern-parameter-name` renames
+/// `filter_term` to `--search-query`; a user setting a profile default has
+/// only ever seen the latter, so rejecting it would be wrong — and accepting
+/// it silently without listing it would make the "did you mean" useless.
+///
+/// `enum_values` rides along so `profiles create --set user_type=admin` is
+/// rejected at write time rather than breaking every command that takes
+/// `--user-type`. `item_enum_values` is deliberately *not* consulted: those
+/// constrain an array's *elements*, and a profile default is a single
+/// scalar clap value.
+fn collect_parameter_specs(
+    parameters: &std::collections::HashMap<String, crate::openapi::discovery::MethodParameter>,
+    out: &mut Vec<crate::profiles::commands::ParameterSpec>,
+) {
+    use crate::profiles::commands::ParameterSpec;
+    for (wire_name, parameter) in parameters {
+        let accepted = commands::enum_accepted_values(parameter);
+        let spec = |name: String| match &accepted {
+            Some(values) => ParameterSpec::with_values(name, values.clone()),
+            None => ParameterSpec::unconstrained(name),
+        };
+        out.push(spec(wire_name.clone()));
+        if let Some(flag) = commands::resolve_param_flag_name(parameter, wire_name) {
+            if &flag != wire_name {
+                out.push(spec(flag));
+            }
+        }
+    }
+}
+
+/// Walk the resource tree collecting every operation's parameters.
+fn collect_parameter_specs_from_resources(
+    resources: &std::collections::HashMap<String, crate::openapi::discovery::RestResource>,
+    out: &mut Vec<crate::profiles::commands::ParameterSpec>,
+) {
+    for resource in resources.values() {
+        for method in resource.methods.values() {
+            collect_parameter_specs(&method.parameters, out);
+            // Multipart fields are not in `parameters` but do surface as
+            // per-field flags, so a profile may reasonably default one.
+            for field in &method.multipart_fields {
+                out.push(crate::profiles::commands::ParameterSpec::unconstrained(
+                    field.wire_name.clone(),
+                ));
+            }
+        }
+        collect_parameter_specs_from_resources(&resource.resources, out);
+    }
+}
+
 fn wrap_subcommands_under_namespace(cmd: clap::Command, namespace: &str) -> clap::Command {
     let subs: Vec<clap::Command> = cmd.get_subcommands().cloned().collect();
 
