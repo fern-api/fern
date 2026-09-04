@@ -1,0 +1,13 @@
+- summary: |
+    Dynamic snippets can now generate the endpoint invocation on its own (without imports
+    or client instantiation), so that callers such as documentation code templates can
+    render a generated SDK call inside code they author themselves. The client variable the
+    endpoint is invoked on is configurable.
+
+    The invocation-only result is now a structured object exposing the bare call (`snippet`),
+    the import block the call requires (`imports`, empty when none), and the generated client
+    class name (`clientName`), so docs can regenerate the imports and client instantiation and
+    keep them in sync across SDK renames. Invocations that reference imported SDK types (e.g.
+    branded string aliases) now return those imports instead of falling back to the full
+    snippet.
+  type: feat
