@@ -60,20 +60,21 @@ func HandleExplicitFields(marshaler interface{}, explicitFields *big.Int) interf
 		}
 	}
 
-	shadowIndex := func(field reflect.StructField) int {
-		name := jsonFieldName(field)
-		for i, shadow := range shadowFields {
-			if jsonFieldName(shadow) == name {
-				return i
-			}
+	// Fields tagged json:"-" are never serialized, so they can't shadow anything.
+	shadowIndexByName := make(map[string]int, len(shadowFields))
+	for i, shadow := range shadowFields {
+		if name := jsonFieldName(shadow); name != "-" {
+			shadowIndexByName[name] = i
 		}
-		return -1
 	}
 
 	fields := make([]reflect.StructField, 0, sourceType.NumField()+len(shadowFields))
 	values := make([]reflect.Value, 0, sourceType.NumField()+len(shadowFields))
 	usedShadows := make([]bool, len(shadowFields))
 
+	// The generated bit constants are numbered over the exported fields in
+	// declaration order, so unexported fields don't consume a bit.
+	bitIndex := 0
 	for i := 0; i < sourceType.NumField(); i++ {
 		field := sourceType.Field(i)
 
@@ -86,18 +87,17 @@ func HandleExplicitFields(marshaler interface{}, explicitFields *big.Int) interf
 
 		// If a shadow field exists for this JSON name, it is the one that actually
 		// serializes, so use it (and its value) in place of the embedded field.
-		if j := shadowIndex(field); j >= 0 {
+		if j, ok := shadowIndexByName[jsonFieldName(field)]; ok {
 			field = shadowFields[j]
 			value = shadowValues[j]
 			usedShadows[j] = true
 		}
 
 		// Check if this field has been explicitly set
-		fieldBit := big.NewInt(1)
-		fieldBit.Lsh(fieldBit, uint(i))
-		if big.NewInt(0).And(explicitFields, fieldBit).Sign() != 0 {
+		if explicitFields.Bit(bitIndex) != 0 {
 			field.Tag = removeOmitEmpty(field.Tag)
 		}
+		bitIndex++
 
 		fields = append(fields, field)
 		values = append(values, value)

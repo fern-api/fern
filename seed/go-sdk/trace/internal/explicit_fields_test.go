@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"math/big"
+	"reflect"
 	"testing"
 	"time"
 
@@ -11,11 +12,11 @@ import (
 )
 
 type testExplicitFieldsStruct struct {
-	Name    *string  `json:"name,omitempty"`
-	Code    *string  `json:"code,omitempty"`
-	Count   *int     `json:"count,omitempty"`
-	Enabled *bool    `json:"enabled,omitempty"`
-	Tags    []string `json:"tags,omitempty"`
+	Name           *string  `json:"name,omitempty"`
+	Code           *string  `json:"code,omitempty"`
+	Count          *int     `json:"count,omitempty"`
+	Enabled        *bool    `json:"enabled,omitempty"`
+	Tags           []string `json:"tags,omitempty"`
 	unexported     string   `json:"-"` //nolint:unused
 	explicitFields *big.Int `json:"-"`
 }
@@ -772,6 +773,147 @@ func TestHandleExplicitFieldsShadowedWrapper(t *testing.T) {
 			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
 		})
 	}
+}
+
+// testInterleavedStruct has unexported fields declared before exported ones.
+// The bit constants are numbered over exported fields only, matching how the
+// generator numbers them.
+type testInterleavedStruct struct {
+	internalNote   string  `json:"-"` //nolint:unused
+	Name           *string `json:"name,omitempty"`
+	explicitFields *big.Int
+	Code           *string `json:"code,omitempty"`
+	other          int     //nolint:unused
+	Count          *int    `json:"count,omitempty"`
+}
+
+var (
+	interleavedFieldName  = big.NewInt(1 << 0)
+	interleavedFieldCode  = big.NewInt(1 << 1)
+	interleavedFieldCount = big.NewInt(1 << 2)
+)
+
+func (s *testInterleavedStruct) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *testInterleavedStruct) SetName(name *string) {
+	s.Name = name
+	s.require(interleavedFieldName)
+}
+
+func (s *testInterleavedStruct) SetCode(code *string) {
+	s.Code = code
+	s.require(interleavedFieldCode)
+}
+
+func (s *testInterleavedStruct) SetCount(count *int) {
+	s.Count = count
+	s.require(interleavedFieldCount)
+}
+
+func (s *testInterleavedStruct) MarshalJSON() ([]byte, error) {
+	type embed testInterleavedStruct
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	return json.Marshal(HandleExplicitFields(marshaler, s.explicitFields))
+}
+
+func TestHandleExplicitFieldsUnexportedFieldsBeforeExported(t *testing.T) {
+	tests := []struct {
+		desc      string
+		setupFunc func() *testInterleavedStruct
+		wantBytes []byte
+	}{
+		{
+			desc: "explicit nil first exported field",
+			setupFunc: func() *testInterleavedStruct {
+				s := &testInterleavedStruct{}
+				s.SetName(nil)
+				return s
+			},
+			wantBytes: []byte(`{"name":null}`),
+		},
+		{
+			desc: "explicit nil field after unexported field",
+			setupFunc: func() *testInterleavedStruct {
+				s := &testInterleavedStruct{}
+				s.SetCode(nil)
+				return s
+			},
+			wantBytes: []byte(`{"code":null}`),
+		},
+		{
+			desc: "explicit nil last field after two unexported fields",
+			setupFunc: func() *testInterleavedStruct {
+				s := &testInterleavedStruct{Name: stringPtr("n")}
+				s.SetCount(nil)
+				return s
+			},
+			wantBytes: []byte(`{"name":"n","count":null}`),
+		},
+		{
+			desc: "implicit nil fields stay omitted",
+			setupFunc: func() *testInterleavedStruct {
+				s := &testInterleavedStruct{}
+				s.SetName(stringPtr("n"))
+				return s
+			},
+			wantBytes: []byte(`{"name":"n"}`),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			bytes, err := json.Marshal(tt.setupFunc())
+			require.NoError(t, err)
+			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
+		})
+	}
+}
+
+func TestHandleExplicitFieldsIgnoredWrapperFieldDoesNotShadow(t *testing.T) {
+	type testIgnoredFieldStruct struct {
+		Name           *string `json:"name,omitempty"`
+		Secret         *string `json:"-"`
+		explicitFields *big.Int
+	}
+
+	s := &testIgnoredFieldStruct{
+		Name:           stringPtr("n"),
+		Secret:         stringPtr("embedded-secret"),
+		explicitFields: big.NewInt(1 << 1),
+	}
+
+	type embed testIgnoredFieldStruct
+	var marshaler = struct {
+		embed
+		Hidden *string `json:"-"`
+	}{
+		embed:  embed(*s),
+		Hidden: stringPtr("wrapper-hidden"),
+	}
+
+	bytes, err := json.Marshal(HandleExplicitFields(marshaler, s.explicitFields))
+	require.NoError(t, err)
+	// Neither json:"-" field is serialized, and the wrapper's field must not be
+	// mistaken for a shadow of the embedded one.
+	assert.JSONEq(t, `{"name":"n"}`, string(bytes))
+
+	result := reflect.ValueOf(HandleExplicitFields(marshaler, s.explicitFields))
+	secret, ok := result.Type().FieldByName("Secret")
+	require.True(t, ok)
+	assert.Equal(t, "-", secret.Tag.Get("json"))
+	assert.Equal(t, "embedded-secret", *result.FieldByName("Secret").Interface().(*string))
+	hidden, ok := result.Type().FieldByName("Hidden")
+	require.True(t, ok)
+	assert.Equal(t, "-", hidden.Tag.Get("json"))
 }
 
 // Helper functions
