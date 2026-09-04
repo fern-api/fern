@@ -1,0 +1,12 @@
+- summary: |
+    Add the `namespaced-errors` OpenAPI setting (default `false`). When enabled, an error whose
+    response object (`components.responses[...]`) or body schema carries `x-fern-sdk-namespace` is
+    declared in, and its shared-error conflict detection is scoped to, that namespace instead of the
+    endpoint's. This lets each namespace get its own typed `TooManyRequestsError` etc. while endpoints
+    and other types stay at the root.
+  type: feat
+- summary: |
+    Fix object schema equality in the OpenAPI importer: two structurally identical inline object
+    schemas were never considered equal, so a shared `components.responses` entry with an inline body
+    referenced by several endpoints collapsed the shared error to `unknown`.
+  type: fix

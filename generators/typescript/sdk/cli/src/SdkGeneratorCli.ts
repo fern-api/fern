@@ -75,6 +75,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             inlinePathParameters: parsed?.inlinePathParameters ?? true,
             enableInlineTypes: parsed?.enableInlineTypes ?? true,
             packageJson: parsed?.packageJson,
+            packageJsonMergeStrategy: parsed?.packageJsonMergeStrategy ?? "shallow",
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
             writeUnitTests: parsed?.writeUnitTests ?? true,
@@ -110,6 +111,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             optionalAuth: parsed?.["optional-auth"] ?? false,
+            guardProcessEnvAccess: parsed?.guardProcessEnvAccess ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
             generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
@@ -248,6 +250,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 generateWireTests: customConfig.generateWireTests ?? true,
                 executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
+                packageJsonMergeStrategy: customConfig.packageJsonMergeStrategy,
                 outputJsr: customConfig.publishToJsr ?? false,
                 omitUndefined: customConfig.omitUndefined ?? true,
                 useBigInt: customConfig.useBigInt ?? false,
@@ -281,6 +284,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 optionalAuth: customConfig.optionalAuth,
+                guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });

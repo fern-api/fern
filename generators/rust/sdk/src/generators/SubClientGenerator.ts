@@ -1690,7 +1690,27 @@ export class SubClientGenerator {
                 }
                 return paramName;
             },
-            container: () => paramName,
+            // A list- or set-typed path parameter cannot be interpolated directly: `Vec<T>` has no
+            // `Display`, so `format!("{}", ids)` does not compile (E0277) and the whole crate fails
+            // to build, not just that endpoint. OpenAPI's default path style is `simple`, which is
+            // comma-separated, so the elements are joined. `to_string()` per element rather than
+            // `Vec::join` because join is only available when the element is already a `String`;
+            // this form works for every `Display` element type, which is what a path parameter can be.
+            container: (containerType) =>
+                FernIr.ContainerType._visit(containerType, {
+                    list: () =>
+                        `${paramName}.iter().map(|element| element.to_string()).collect::<Vec<_>>().join(",")`,
+                    set: () =>
+                        `${paramName}.iter().map(|element| element.to_string()).collect::<Vec<_>>().join(",")`,
+                    // An optional or nullable path parameter is a contradiction — the path cannot be
+                    // built without it — and a map has no defined path serialization, so these keep
+                    // the previous behaviour rather than inventing one.
+                    optional: () => paramName,
+                    nullable: () => paramName,
+                    map: () => paramName,
+                    literal: () => paramName,
+                    _other: () => paramName
+                }),
             unknown: () => paramName,
             _other: () => paramName
         });

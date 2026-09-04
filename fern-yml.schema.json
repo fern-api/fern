@@ -4069,6 +4069,9 @@
                       },
                       "respect-per-spec-base-path": {
                         "type": "boolean"
+                      },
+                      "namespaced-errors": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4663,6 +4666,9 @@
                           "type": "boolean"
                         },
                         "respect-per-spec-base-path": {
+                          "type": "boolean"
+                        },
+                        "namespaced-errors": {
                           "type": "boolean"
                         }
                       },

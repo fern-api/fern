@@ -412,6 +412,9 @@ fixtures:
       customConfig:
         alwaysSendAuth: true
         optional-auth: true
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null

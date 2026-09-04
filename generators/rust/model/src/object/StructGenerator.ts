@@ -9,7 +9,12 @@ import {
     collectBuilderFieldsFromProperties,
     writeBuilderCode
 } from "../utils/builderUtils.js";
-import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import {
+    hasDefaultImpl,
+    namedTypeHasDefaultImpl,
+    namedTypeSupportsHashAndEq,
+    namedTypeSupportsPartialEq
+} from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -291,63 +296,12 @@ export class StructGenerator {
     private canDeriveDefault(): boolean {
         // Check if all properties support Default
         const propertiesSupport = this.objectTypeDeclaration.properties.every((property) => {
-            return this.typeSupportsDefault(property.valueType, new Set());
+            return hasDefaultImpl(property.valueType, this.context);
         });
         // Check if all inherited types support Default
         const extendsSupport = this.objectTypeDeclaration.extends.every((parentType) => {
-            return this.namedTypeSupportsDefault(parentType.typeId, new Set());
+            return namedTypeHasDefaultImpl(parentType.typeId, this.context);
         });
         return propertiesSupport && extendsSupport;
-    }
-
-    private typeSupportsDefault(typeRef: FernIr.TypeReference, visited: Set<string>): boolean {
-        if (typeRef.type === "primitive") {
-            return true; // All Rust primitives implement Default
-        }
-        if (typeRef.type === "container") {
-            return typeRef.container._visit({
-                list: () => true,
-                map: () => true,
-                set: () => true,
-                optional: () => true,
-                nullable: () => true,
-                literal: () => false,
-                _other: () => false
-            });
-        }
-        if (typeRef.type === "named") {
-            return this.namedTypeSupportsDefault(typeRef.typeId, visited);
-        }
-        if (typeRef.type === "unknown") {
-            return true; // serde_json::Value implements Default
-        }
-        return false;
-    }
-
-    private namedTypeSupportsDefault(typeId: string, visited: Set<string>): boolean {
-        if (visited.has(typeId)) {
-            return false; // Prevent infinite recursion, be conservative
-        }
-        visited.add(typeId);
-        const typeDecl = this.context.ir.types[typeId];
-        if (!typeDecl) {
-            visited.delete(typeId);
-            return false;
-        }
-        let result = false;
-        if (typeDecl.shape.type === "object") {
-            const propsOk = typeDecl.shape.properties.every((prop) =>
-                this.typeSupportsDefault(prop.valueType, visited)
-            );
-            const extendsOk = typeDecl.shape.extends.every((parentType) =>
-                this.namedTypeSupportsDefault(parentType.typeId, visited)
-            );
-            result = propsOk && extendsOk;
-        } else if (typeDecl.shape.type === "alias") {
-            result = this.typeSupportsDefault(typeDecl.shape.aliasOf, visited);
-        }
-        // Enums and unions don't derive Default, result stays false
-        visited.delete(typeId);
-        return result;
     }
 }

@@ -13,6 +13,7 @@ import {
 } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace HeaderAuthProviderGenerator {
     export interface Init {
@@ -22,6 +23,7 @@ export declare namespace HeaderAuthProviderGenerator {
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
         optionalAuth?: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -38,6 +40,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
     private readonly optionalAuth: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
@@ -47,6 +50,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
         this.optionalAuth = init.optionalAuth ?? false;
+        this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -237,7 +241,10 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const envCheck = headerEnvVar != null ? " || process.env?.[ENV_HEADER_KEY] != null" : "";
+        const envCheck =
+            headerEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_HEADER_KEY", guarded: this.guardProcessEnvAccess })}`
+                : "";
         return `return options?.${wrapperAccess}[PARAM_KEY] != null${envCheck};`;
     }
 
@@ -276,7 +283,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
         const envFallback =
             headerEnvVar != null
-                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
+                ? `\n            (${supplierGetCode}) ??\n            ${emitEnvVarValue({ envConstant: "ENV_HEADER_KEY", guarded: this.guardProcessEnvAccess })}`
                 : supplierGetCode;
 
         const headerValueExpr = this.authScheme.prefix != null ? `\`\${HEADER_PREFIX}\${${headerVar}}\`` : headerVar;

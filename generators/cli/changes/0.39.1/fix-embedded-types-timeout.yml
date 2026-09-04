@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Embedded types generation no longer fails on large APIs. The rust-model subprocess
+    timeout is raised from 2 to 15 minutes, and its stderr is now surfaced in the error
+    message when it does fail.
+  type: fix

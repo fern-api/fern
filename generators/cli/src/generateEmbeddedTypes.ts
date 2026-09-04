@@ -99,12 +99,14 @@ export async function generateEmbeddedTypes(args: {
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
             cwd: typesOutputDir,
-            timeout: 120_000,
+            timeout: EMBEDDED_TYPES_TIMEOUT_MS,
+            maxBuffer: 64 * 1024 * 1024,
             env: { ...process.env }
         });
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
-        throw new Error(`Embedded types generation failed: ${message}`);
+        const output = isExecError(err) ? lastLines(`${err.stdout}\n${err.stderr}`, 40) : "";
+        throw new Error(`Embedded types generation failed: ${message}${output ? `\n${output}` : ""}`);
     } finally {
         // Best-effort cleanup; file may already be absent if the subprocess moved it.
         await unlink(configPath).catch((_e: unknown) => undefined);
@@ -133,6 +135,31 @@ export async function generateEmbeddedTypes(args: {
         needsReqwest
     });
     return { typesCrateName, partitionCrates };
+}
+
+/**
+ * Upper bound on the rust-model subprocess. Generous enough for very large APIs
+ * (thousands of types) while still reaping a child that has genuinely hung.
+ */
+const EMBEDDED_TYPES_TIMEOUT_MS = 15 * 60_000;
+
+function isExecError(err: unknown): err is Error & { stdout: string; stderr: string } {
+    return (
+        err instanceof Error &&
+        "stdout" in err &&
+        typeof err.stdout === "string" &&
+        "stderr" in err &&
+        typeof err.stderr === "string"
+    );
+}
+
+function lastLines(text: string, count: number): string {
+    return text
+        .split("\n")
+        .map((line) => line.trimEnd())
+        .filter((line) => line.length > 0)
+        .slice(-count)
+        .join("\n");
 }
 
 export interface EmbeddedTypesResult {

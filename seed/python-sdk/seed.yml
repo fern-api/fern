@@ -208,6 +208,9 @@ fixtures:
         timeout_in_seconds: 5
       outputFolder: five-second-timeout
     - customConfig:
+        retry_status_codes: recommended
+      outputFolder: recommended-retry-status-codes
+    - customConfig:
         pydantic_config:
           include_union_utils: true
       outputFolder: union-utils

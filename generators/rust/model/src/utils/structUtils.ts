@@ -253,7 +253,12 @@ export function generateFieldAttributes(
     // For non-optional fields with types that implement Default (primitives, containers),
     // add #[serde(default)] so deserialization succeeds when the field is missing from JSON.
     // This handles cases like deferred responses that return partial objects.
-    if (!isOptional && hasDefaultImpl(property.valueType, context)) {
+    //
+    // `unknown` is deliberately excluded even though serde_json::Value implements Default:
+    // a required `unknown` field should still fail to deserialize when the key is absent,
+    // rather than silently becoming Value::Null and re-serializing as `null`. It also keeps
+    // untagged union members from matching every JSON object once all their fields default.
+    if (!isOptional && hasDefaultImpl(property.valueType, context, { unknownHasDefault: false })) {
         attributes.push(Attribute.serde.default());
     }
 

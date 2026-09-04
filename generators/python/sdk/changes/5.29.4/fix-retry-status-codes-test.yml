@@ -1,0 +1,5 @@
+- summary: |
+    Fix the generated `tests/utils/test_http_client.py` failing when `retry_status_codes: recommended`
+    is configured. The retry-status expectations in the test are now derived from the configured mode
+    instead of always asserting the legacy set (which includes 500, 501 and 599).
+  type: fix

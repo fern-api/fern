@@ -46,6 +46,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     noOptionalProperties: z.optional(z.boolean()),
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
+    packageJsonMergeStrategy: z.optional(z.enum(["shallow", "deep"])),
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
@@ -107,6 +108,12 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // get auth headers when credentials are supplied, and no endpoint gets them
     // when credentials are absent.
     "optional-auth": z.optional(z.boolean()),
+    // When true, the generated auth providers read environment variables through a
+    // `typeof process !== "undefined"` guard, so they fall back to the normal
+    // missing-credential error instead of throwing `ReferenceError: process is not
+    // defined` in runtimes without a Node `process` global (browsers, Cloudflare
+    // Workers, Deno). Node behavior is unchanged.
+    guardProcessEnvAccess: z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
 
     // beta (not in docs)

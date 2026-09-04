@@ -210,7 +210,8 @@ export class LegacyApiSpecAdapter {
             disambiguateRequestNames: settings["disambiguate-request-names"],
             ignoreTags: settings["ignore-tags"],
             respectParameterContent: settings["respect-parameter-content"],
-            respectPerSpecBasePath: settings["respect-per-spec-base-path"]
+            respectPerSpecBasePath: settings["respect-per-spec-base-path"],
+            namespacedErrors: settings["namespaced-errors"]
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);

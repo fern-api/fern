@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.0
+  changelogEntry:
+    - summary: |
+        Add the `packageJsonMergeStrategy` option (`shallow` | `deep`, default `shallow`) controlling how
+        `packageJson` overrides in `generators.yml` are merged into the generated `package.json`.
+
+        `shallow` is the existing behavior and remains the default: nested objects such as `exports["."]`
+        are replaced wholesale by the override, so adding a single custom export condition drops the
+        generated `import`/`require`/`default` conditions.
+
+        Opt into `deep` when you want to add to a nested object without redefining it, for example adding
+        a custom `exports` condition while keeping the generated ones. Under `deep`, user keys win at
+        every level, user key order is preserved (user-specified keys are emitted first, in the order
+        written, so a custom export condition precedes the generated ones and Node can match it), and
+        keys the user does not mention are inherited from the generated output. Arrays are unioned with
+        user entries first under both strategies.
+
+        Removing a generated key (for example dropping the `require` condition) is not expressible via
+        `packageJson` overrides under either strategy.
+
+        ```yaml
+        config:
+          packageJsonMergeStrategy: deep
+          packageJson:
+            exports:
+              ".":
+                "my-dev-condition":
+                  types: "./dist/cjs/index.d.ts"
+                  default: "./src/index.ts"
+        ```
+      type: feat
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Add a `guardProcessEnvAccess` config option (boolean, defaults to `false`).
+        When enabled, the generated header, bearer, basic and OAuth auth providers read environment
+        variables through a `typeof process !== "undefined"` guard, so a missing credential surfaces the
+        normal error instead of `ReferenceError: process is not defined` in runtimes without a Node
+        `process` global (browsers/Vite, Cloudflare Workers, Deno). Defaults to `false`, so generated
+        output is unchanged unless the option is enabled.
+      type: feat
+  createdAt: "2026-09-02"
+  irVersion: 67
 - version: 3.88.3
   changelogEntry:
     - summary: |

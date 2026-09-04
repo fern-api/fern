@@ -113,4 +113,11 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "respect-per-spec-base-path"?: boolean;
+    /**
+     * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+     * within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
+     * namespace while endpoints and other types stay at the root.
+     * Defaults to false.
+     */
+    "namespaced-errors"?: boolean;
 }

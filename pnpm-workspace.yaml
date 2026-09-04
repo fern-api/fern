@@ -30,6 +30,7 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "@postman/*"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -88,7 +89,7 @@ catalog:
   "@inquirer/prompts": ^7.1.0
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
-  "@postman/sdk-config": 0.0.3
+  "@postman/sdk-config": 0.3.0
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.1.3
   "@sentry/cli": ^2.42.2

@@ -862,9 +862,10 @@ pub enum PaginationConfig {
         /// Dotted JSON path in the response to the results array.
         results: String,
         /// Optional request parameter name holding the page-size step. When
-        /// present, the offset advances by the step value the caller
-        /// supplied (e.g. `--params '{"limit": 50}'`). When absent, the
-        /// offset advances by the response page's results length.
+        /// present, the offset counts items: it advances by the number of
+        /// results returned and a short page (fewer than the caller's
+        /// `limit`) ends pagination. When absent, the offset counts pages
+        /// and advances by 1.
         step: Option<String>,
         /// Optional dotted JSON path in the response to a boolean
         /// "more pages?" flag.
