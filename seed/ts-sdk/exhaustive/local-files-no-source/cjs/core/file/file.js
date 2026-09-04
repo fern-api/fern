@@ -44,6 +44,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toBinaryUploadRequest = toBinaryUploadRequest;
 exports.toMultipartDataPart = toMultipartDataPart;
+exports.toContentDisposition = toContentDisposition;
 function toBinaryUploadRequest(file) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data, filename, contentLength, contentType } = yield getFileWithMetadata(file);
@@ -52,7 +53,7 @@ function toBinaryUploadRequest(file) {
             headers: {},
         };
         if (filename) {
-            request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
+            request.headers["Content-Disposition"] = toContentDisposition(filename);
         }
         if (contentType) {
             request.headers["Content-Type"] = contentType;
@@ -74,6 +75,38 @@ function toMultipartDataPart(file) {
             contentType,
         };
     });
+}
+/**
+ * Builds an RFC 6266 Content-Disposition header. The `filename` parameter must be ISO-8859-1 safe
+ * (fetch's Headers rejects other code points), so non-ASCII names are downgraded to an ASCII fallback
+ * and carried verbatim in a percent-encoded `filename*` (RFC 5987) parameter.
+ */
+function toContentDisposition(filename) {
+    const normalized = replaceLoneSurrogates(filename).normalize("NFC");
+    const asciiFallback = normalized.replace(/[^\x20-\x7e]|["\\]/g, "_");
+    if (asciiFallback === normalized) {
+        return `attachment; filename="${asciiFallback}"`;
+    }
+    const encoded = encodeURIComponent(normalized).replace(/['()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+    return `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encoded}`;
+}
+function replaceLoneSurrogates(value) {
+    let result = "";
+    for (let i = 0; i < value.length; i++) {
+        const code = value.charCodeAt(i);
+        const isHigh = code >= 0xd800 && code <= 0xdbff;
+        const isLow = code >= 0xdc00 && code <= 0xdfff;
+        if (isHigh) {
+            const next = value.charCodeAt(i + 1);
+            if (next >= 0xdc00 && next <= 0xdfff) {
+                result += value[i] + value[i + 1];
+                i++;
+                continue;
+            }
+        }
+        result += isHigh || isLow ? "\ufffd" : value[i];
+    }
+    return result;
 }
 function getFileWithMetadata(file_1) {
     return __awaiter(this, arguments, void 0, function* (file, { noSniffFileSize } = {}) {

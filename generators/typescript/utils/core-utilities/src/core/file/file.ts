@@ -9,7 +9,7 @@ export async function toBinaryUploadRequest(
         headers: {} as Record<string, string>,
     };
     if (filename) {
-        request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
+        request.headers["Content-Disposition"] = toContentDisposition(filename);
     }
     if (contentType) {
         request.headers["Content-Type"] = contentType;
@@ -31,6 +31,43 @@ export async function toMultipartDataPart(
         filename,
         contentType,
     };
+}
+
+/**
+ * Builds an RFC 6266 Content-Disposition header. The `filename` parameter must be ISO-8859-1 safe
+ * (fetch's Headers rejects other code points), so non-ASCII names are downgraded to an ASCII fallback
+ * and carried verbatim in a percent-encoded `filename*` (RFC 5987) parameter.
+ */
+export function toContentDisposition(filename: string): string {
+    const normalized = replaceLoneSurrogates(filename).normalize("NFC");
+    const asciiFallback = normalized.replace(/[^\x20-\x7e]|["\\]/g, "_");
+    if (asciiFallback === normalized) {
+        return `attachment; filename="${asciiFallback}"`;
+    }
+    const encoded = encodeURIComponent(normalized).replace(
+        /['()*]/g,
+        (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+    );
+    return `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encoded}`;
+}
+
+function replaceLoneSurrogates(value: string): string {
+    let result = "";
+    for (let i = 0; i < value.length; i++) {
+        const code = value.charCodeAt(i);
+        const isHigh = code >= 0xd800 && code <= 0xdbff;
+        const isLow = code >= 0xdc00 && code <= 0xdfff;
+        if (isHigh) {
+            const next = value.charCodeAt(i + 1);
+            if (next >= 0xdc00 && next <= 0xdfff) {
+                result += value[i] + value[i + 1];
+                i++;
+                continue;
+            }
+        }
+        result += isHigh || isLow ? "\ufffd" : value[i];
+    }
+    return result;
 }
 
 async function getFileWithMetadata(
