@@ -37,12 +37,9 @@ def copy_to_project(*, project: Project, retry_status_codes: Literal["legacy", "
         if retry_status_codes == "recommended"
         else (LEGACY_RETRYABLE_STATUS_CODES, LEGACY_NON_RETRYABLE_STATUS_CODES)
     )
-    retryable_placeholder = (
-        f"RETRYABLE_STATUS_CODES = {LEGACY_RETRYABLE_STATUS_CODES}  # {{{{RETRYABLE_STATUS_CODES}}}}"
-    )
-    non_retryable_placeholder = (
-        f"NON_RETRYABLE_STATUS_CODES = {LEGACY_NON_RETRYABLE_STATUS_CODES}  # {{{{NON_RETRYABLE_STATUS_CODES}}}}"
-    )
+    http_client_test = "tests/utils/test_http_client.py"
+    retryable_placeholder = _find_marker_line(http_client_test, "RETRYABLE_STATUS_CODES")
+    non_retryable_placeholder = _find_marker_line(http_client_test, "NON_RETRYABLE_STATUS_CODES")
 
     AS_IS_FILES = [
         AsIsFile(
@@ -57,7 +54,7 @@ def copy_to_project(*, project: Project, retry_status_codes: Literal["legacy", "
             },
         ),
         AsIsFile(
-            from_="tests/utils/test_http_client.py",
+            from_=http_client_test,
             to="tests/utils/test_http_client",
             replacements={
                 "core_utilities.shared.request_options": f"{module_path}.core.request_options",
@@ -115,6 +112,27 @@ def copy_to_project(*, project: Project, retry_status_codes: Literal["legacy", "
         )
 
 
+def _assets_root() -> str:
+    return os.environ.get(
+        "FERN_ASSETS_PATH",
+        os.path.join(os.path.dirname(__file__), "../../../../../")
+        if "PYTEST_CURRENT_TEST" in os.environ
+        else "/assets",
+    )
+
+
+def _find_marker_line(relative_filepath_on_disk: str, marker: str) -> str:
+    """Return the single source line tagged with `# {{marker}}` so it can be used as a replacement key."""
+    tag = f"# {{{{{marker}}}}}"
+    with open(os.path.join(_assets_root(), relative_filepath_on_disk), "r") as f:
+        matches = [line for line in f.read().splitlines() if line.rstrip().endswith(tag)]
+    if len(matches) != 1:
+        raise RuntimeError(
+            f"Expected exactly one line tagged {tag} in {relative_filepath_on_disk}, found {len(matches)}"
+        )
+    return matches[0]
+
+
 def _copy_directory_to_project(
     *,
     project: Project,
@@ -122,12 +140,7 @@ def _copy_directory_to_project(
     path_in_project: str,
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
-    source = os.environ.get(
-        "FERN_ASSETS_PATH",
-        os.path.join(os.path.dirname(__file__), "../../../../../")
-        if "PYTEST_CURRENT_TEST" in os.environ
-        else "/assets",
-    )
+    source = _assets_root()
 
     for _, _, files in os.walk(os.path.join(source, relative_path_on_disk)):
         for f in files:
@@ -153,12 +166,7 @@ def _copy_file_to_project(
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
     # Project root source, so all from_ requests should be relative to that
-    source = os.environ.get(
-        "FERN_ASSETS_PATH",
-        os.path.join(os.path.dirname(__file__), "../../../../../")
-        if "PYTEST_CURRENT_TEST" in os.environ
-        else "/assets",
-    )
+    source = _assets_root()
     SourceFileFactory.add_source_file_from_disk(
         project=project,
         path_on_disk=os.path.join(source, relative_filepath_on_disk),
