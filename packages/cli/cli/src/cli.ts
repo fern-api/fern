@@ -85,6 +85,12 @@ import { installDependencies } from "./commands/install-dependencies/installDepe
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
+import { devMcp, generateMcp } from "./commands/mcp/prototype/generateMcp.js";
+import { initMcp } from "./commands/mcp/prototype/initMcp.js";
+import { listMcp } from "./commands/mcp/prototype/listMcp.js";
+import { DEFAULT_MCP_GROUP_NAME } from "./commands/mcp/prototype/mcpGeneratorsYml.js";
+import { BUILTIN_PRESET_KEYS } from "./commands/mcp/prototype/presets.js";
+import { toolsMcp } from "./commands/mcp/prototype/toolsMcp.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
@@ -1695,6 +1701,171 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                             context
                         });
                     });
+                }
+            )
+            .command(
+                "init",
+                "Create an MCP server from your API definition (prototype: backend is stubbed)",
+                (initYargs) =>
+                    initYargs
+                        .option("api", {
+                            type: "string",
+                            description: "The API to create an MCP server for (if the project has several)"
+                        })
+                        .option("name", {
+                            type: "string",
+                            description: "Server name (defaults to a slug derived from the API title)"
+                        })
+                        .option("preset", {
+                            type: "string",
+                            choices: BUILTIN_PRESET_KEYS,
+                            description: "Toolset preset to use noninteractively"
+                        })
+                        .option("intent", {
+                            type: "string",
+                            description: "Describe what agents should do — used by the AI-curated toolset"
+                        })
+                        .option("group", {
+                            type: "string",
+                            description: `Name of the generators.yml group to write (default: ${DEFAULT_MCP_GROUP_NAME})`
+                        })
+                        .option("yes", {
+                            alias: "y",
+                            boolean: true,
+                            default: false,
+                            description: "Accept defaults and skip prompts (read-only preset)"
+                        })
+                        .option("json", {
+                            boolean: true,
+                            default: false,
+                            description: "Output a machine-readable summary; verdicts become warnings"
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp init" });
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: undefined,
+                        defaultToAllApiWorkspaces: true
+                    });
+                    await initMcp({
+                        project,
+                        cliContext,
+                        api: argv.api,
+                        name: argv.name,
+                        preset: argv.preset,
+                        intent: argv.intent,
+                        group: argv.group,
+                        yes: argv.yes,
+                        json: argv.json
+                    });
+                }
+            )
+            .command(
+                "list",
+                "List the MCP servers configured in generators.yml (prototype)",
+                (listYargs) =>
+                    listYargs.option("json", {
+                        boolean: true,
+                        default: false,
+                        description: "Output as JSON"
+                    }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp list" });
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: undefined,
+                        defaultToAllApiWorkspaces: true
+                    });
+                    await listMcp({ project, cliContext, json: argv.json });
+                }
+            )
+            .command(
+                "tools",
+                "Print the resolved tool surface for an MCP group (prototype)",
+                (toolsYargs) =>
+                    toolsYargs
+                        .option("api", {
+                            type: "string",
+                            description: "The API to resolve tools against (if the project has several)"
+                        })
+                        .option("group", {
+                            type: "string",
+                            default: DEFAULT_MCP_GROUP_NAME,
+                            description: "The generators.yml group to inspect"
+                        })
+                        .option("preset", {
+                            type: "string",
+                            description: "Resolve a named preset from the group's tools.presets"
+                        })
+                        .option("json", {
+                            boolean: true,
+                            default: false,
+                            description: "Output as JSON"
+                        })
+                        .option("refine", {
+                            boolean: true,
+                            default: false,
+                            description: "Interactively trim the toolset and rewrite the config"
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp tools" });
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: undefined,
+                        defaultToAllApiWorkspaces: true
+                    });
+                    await toolsMcp({
+                        project,
+                        cliContext,
+                        api: argv.api,
+                        group: argv.group,
+                        preset: argv.preset,
+                        json: argv.json,
+                        refine: argv.refine
+                    });
+                }
+            )
+            .command(
+                "generate",
+                "Generate the MCP server for a group (prototype: prints a stub transcript and writes tools.lock)",
+                (generateYargs) =>
+                    generateYargs
+                        .option("api", {
+                            type: "string",
+                            description: "The API to generate for (if the project has several)"
+                        })
+                        .option("group", {
+                            type: "string",
+                            default: DEFAULT_MCP_GROUP_NAME,
+                            description: "The generators.yml group to generate"
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp generate" });
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: undefined,
+                        defaultToAllApiWorkspaces: true
+                    });
+                    await generateMcp({ project, cliContext, api: argv.api, group: argv.group });
+                }
+            )
+            .command(
+                "dev",
+                "Print local dev / inspector instructions for an MCP group (prototype)",
+                (devYargs) =>
+                    devYargs
+                        .option("api", {
+                            type: "string",
+                            description: "The API to use (if the project has several)"
+                        })
+                        .option("group", {
+                            type: "string",
+                            default: DEFAULT_MCP_GROUP_NAME,
+                            description: "The generators.yml group to use"
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp dev" });
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: undefined,
+                        defaultToAllApiWorkspaces: true
+                    });
+                    await devMcp({ project, cliContext, api: argv.api, group: argv.group });
                 }
             )
             .demandCommand(1, "Specify a subcommand, e.g. `fern mcp install`.");
