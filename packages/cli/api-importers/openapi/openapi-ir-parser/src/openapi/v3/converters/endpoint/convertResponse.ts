@@ -409,7 +409,9 @@ function markErrorSchemas({
             context.logger.warn(`No error name found for status code ${statusCode}`);
             continue;
         }
-        const responseNamespace = getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE);
+        const responseNamespace = context.options.namespacedErrors
+            ? getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE)
+            : undefined;
         errors[parsedStatusCode] = {
             statusCode: parsedStatusCode,
             nameOverride: undefined,

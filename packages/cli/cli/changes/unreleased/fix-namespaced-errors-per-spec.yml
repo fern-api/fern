@@ -1,0 +1,5 @@
+- summary: |
+    Scope the `namespaced-errors` OpenAPI setting to the spec that enables it, and only honor an explicit
+    `x-fern-sdk-namespace` on the response object. Previously enabling the setting on one spec applied it to
+    every spec in the API, and errors whose body schema lived in a namespace were moved into that namespace.
+  type: fix

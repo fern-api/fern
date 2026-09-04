@@ -6,6 +6,30 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
+          "NotFoundError": {
+            "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 404,
+            "type": "entityRoot.Error",
+          },
+          "ServiceUnavailableError": {
+            "docs": "Service unavailable",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 503,
+            "type": "videoRoot.ServiceUnavailableBody",
+          },
           "TooManyRequestsError": {
             "docs": "Too many requests",
             "examples": [
@@ -16,35 +40,36 @@
               },
             ],
             "status-code": 429,
-            "type": "Error",
+            "type": "entityRoot.Error",
           },
         },
-        "types": {
-          "Error": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "code": "optional<string>",
-            },
-            "source": {
-              "openapi": "entities.yml",
-            },
-          },
+        "imports": {
+          "entityRoot": "entity/__package__.yml",
+          "videoRoot": "video/__package__.yml",
         },
       },
-      "rawContents": "errors:
+      "rawContents": "imports:
+  videoRoot: video/__package__.yml
+  entityRoot: entity/__package__.yml
+errors:
+  ServiceUnavailableError:
+    status-code: 503
+    type: videoRoot.ServiceUnavailableBody
+    docs: Service unavailable
+    examples:
+      - value: {}
+  NotFoundError:
+    status-code: 404
+    type: entityRoot.Error
+    docs: Not found
+    examples:
+      - value: {}
   TooManyRequestsError:
     status-code: 429
-    type: Error
+    type: entityRoot.Error
     docs: Too many requests
     examples:
       - value: {}
-types:
-  Error:
-    properties:
-      code: optional<string>
-    source:
-      openapi: entities.yml
 ",
     },
     "entities.yml": {
@@ -61,6 +86,7 @@ types:
               "auth": undefined,
               "docs": undefined,
               "errors": [
+                "root.NotFoundError",
                 "root.TooManyRequestsError",
               ],
               "examples": [
@@ -87,6 +113,7 @@ types:
               "auth": undefined,
               "docs": undefined,
               "errors": [
+                "root.NotFoundError",
                 "root.TooManyRequestsError",
               ],
               "examples": [
@@ -117,6 +144,7 @@ service:
       source:
         openapi: entities.yml
       errors:
+        - root.NotFoundError
         - root.TooManyRequestsError
       examples:
         - {}
@@ -130,6 +158,7 @@ service:
         path-parameters:
           id: string
       errors:
+        - root.NotFoundError
         - root.TooManyRequestsError
       examples:
         - path-parameters:
@@ -138,10 +167,35 @@ service:
     openapi: entities.yml
 ",
     },
+    "entity/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Error": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "optional<string>",
+            },
+            "source": {
+              "openapi": "entities.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Error:
+    properties:
+      code: optional<string>
+    source:
+      openapi: entities.yml
+",
+    },
     "video.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "imports": {
+          "root": "__package__.yml",
           "videoRoot": "video/__package__.yml",
         },
         "service": {
@@ -153,7 +207,7 @@ service:
               "docs": undefined,
               "errors": [
                 "videoRoot.TooManyRequestsError",
-                "videoRoot.ServiceUnavailableError",
+                "root.ServiceUnavailableError",
               ],
               "examples": [
                 {},
@@ -189,6 +243,7 @@ service:
       },
       "rawContents": "imports:
   videoRoot: video/__package__.yml
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -209,7 +264,7 @@ service:
         openapi: video.yml
       errors:
         - videoRoot.TooManyRequestsError
-        - videoRoot.ServiceUnavailableError
+        - root.ServiceUnavailableError
       examples:
         - {}
   source:
@@ -220,18 +275,6 @@ service:
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "ServiceUnavailableError": {
-            "docs": "Service unavailable",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 503,
-            "type": "ServiceUnavailableBody",
-          },
           "TooManyRequestsError": {
             "docs": "Too many requests",
             "examples": [
@@ -286,12 +329,6 @@ errors:
     status-code: 429
     type: TooManyRequestsErrorBody
     docs: Too many requests
-    examples:
-      - value: {}
-  ServiceUnavailableError:
-    status-code: 503
-    type: ServiceUnavailableBody
-    docs: Service unavailable
     examples:
       - value: {}
 ",
