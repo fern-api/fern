@@ -29,11 +29,3 @@ export function getErrorNamespace({
 }): string | undefined {
     return error.namespace ?? endpointNamespace;
 }
-
-/**
- * Namespace that scopes shared-error conflict detection. Errors without an explicit response-object
- * namespace are compared API-wide by status code only.
- */
-export function getErrorConflictNamespace({ error }: { error: HttpError }): string | undefined {
-    return error.namespace;
-}
