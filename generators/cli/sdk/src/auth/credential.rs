@@ -394,6 +394,47 @@ fn home_dir() -> Option<PathBuf> {
         .filter(|p| !p.as_os_str().is_empty())
 }
 
+/// The credential sources a scheme reads, grouped for `auth status`.
+///
+/// [`required`](Self::required) slots are ANDed: each inner `Vec` is one
+/// slot (e.g. the client id) listing the sources tried for it in
+/// precedence order, and every slot must resolve for the scheme to
+/// authenticate. [`alternatives`](Self::alternatives) are ORed against
+/// the whole set — any one of them satisfies the scheme on its own. A
+/// cached OAuth access token is the motivating case: it authenticates
+/// without the client-id/secret pair that would mint it, but the pair
+/// still has to be reported so a user can see whether their env vars
+/// were picked up.
+#[derive(Clone, Debug, Default)]
+pub struct CredentialSlots {
+    /// Slots that must *all* resolve. Empty means "nothing declared".
+    pub required: Vec<Vec<AuthCredentialSource>>,
+    /// Sources that each independently satisfy the whole scheme.
+    pub alternatives: Vec<AuthCredentialSource>,
+}
+
+impl CredentialSlots {
+    /// Build from the required slots alone.
+    pub fn required(slots: impl IntoIterator<Item = Vec<AuthCredentialSource>>) -> Self {
+        Self {
+            required: slots.into_iter().collect(),
+            alternatives: Vec::new(),
+        }
+    }
+
+    /// Add a source that satisfies the scheme on its own.
+    pub fn with_alternative(mut self, source: AuthCredentialSource) -> Self {
+        self.alternatives.push(source);
+        self
+    }
+
+    /// `true` when the provider declared no sources at all — the status
+    /// surface reports such a scheme as opaque.
+    pub fn is_empty(&self) -> bool {
+        self.required.is_empty() && self.alternatives.is_empty()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

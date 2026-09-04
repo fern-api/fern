@@ -28,7 +28,7 @@ use std::sync::Arc;
 use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::auth::builder::SchemeBinding;
-use crate::auth::credential::AuthCredentialSource;
+use crate::auth::credential::{AuthCredentialSource, CredentialSlots};
 use crate::auth::keyring_store::active_store;
 use crate::error::CliError;
 
@@ -454,43 +454,27 @@ fn handle_status<W: Write>(
                 .unwrap_or_default()
         );
 
-        let sources = expand_sources(scheme_name, binding, login_flows, cli_name);
-        if sources.is_empty() {
+        let slots = expand_slots(scheme_name, binding, login_flows, cli_name);
+        if slots.is_empty() {
             let _ = writeln!(stderr, "    {}", dim("(no credential sources bound)"));
             let _ = writeln!(stderr);
             continue;
         }
 
-        // Mark the first source that resolves as ACTIVE (green); subsequent
-        // resolving sources are SHADOWED (dim) — the credential is there
-        // but a higher-precedence source is winning. Non-resolving sources
-        // are MISSING (also dim) — they're declared but unset.
-        let mut active_found = false;
-        for src in &sources {
-            let has_value = src.resolve().is_some();
-            let desc = describe_source(src);
-            let line = match (has_value, active_found) {
-                (true, false) => {
-                    active_found = true;
-                    green(&format!("✓ active    {desc}"))
-                }
-                (true, true) => dim(&format!("  shadowed  {desc}")),
-                (false, _) => dim(&format!("  missing   {desc}")),
+        let report = evaluate_slots(&slots);
+        for line in &report.lines {
+            let painted = match line.state {
+                "active" => green(&format!("✓ active    {}", line.description)),
+                "shadowed" => dim(&format!("  shadowed  {}", line.description)),
+                _ => dim(&format!("  missing   {}", line.description)),
             };
-            let _ = writeln!(stderr, "    {line}");
+            let _ = writeln!(stderr, "    {painted}");
         }
-        if !active_found {
-            let suffix = if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
-                String::new()
-            } else {
-                " --with-token".to_string()
-            };
+        if !report.satisfied {
             let _ = writeln!(
                 stderr,
                 "    {}",
-                yellow(&format!(
-                    "Not logged in. Run `{cli_name} auth login{suffix}` to authenticate."
-                ))
+                yellow(&remedy_line(cli_name, scheme_name, &report, login_flows))
             );
         }
         let _ = writeln!(stderr);
@@ -528,45 +512,171 @@ fn resolve_scheme(
     )))
 }
 
-/// Expand a binding's credential source(s) into a flat list of leaf
-/// sources (Chain flattened), for status reporting.
+/// Expand a binding into its credential slots, for status reporting. Each
+/// required slot is a flat list of leaf sources (Chain flattened) tried in
+/// precedence order; a scheme authenticates when every required slot
+/// resolves, or when one of the alternatives does (see
+/// [`CredentialSlots`]). Bearer/API-key bindings have one slot, basic has
+/// two (username, password).
 ///
-/// For `SchemeBinding::Custom` bindings whose scheme has a declared
-/// login flow (i.e. registered via `CliApp::login_flow`), we synthesize
-/// a `Keyring` source for the matching `(cli_name, scheme_name)` slot —
-/// the OAuth login flows store their token bundle there, and the status
-/// surface needs to see it. Without this, OAuth-logged-in users would
-/// see "Not logged in" in `auth status` even though the keyring entry
-/// is populated and apply() can read it on every request.
-fn expand_sources(
+/// `SchemeBinding::Custom` bindings report whatever the provider exposes
+/// via [`AuthProvider::credential_slots`](crate::auth::AuthProvider::credential_slots)
+/// — e.g. `OAuth2TokenProvider` lists its client-id / client-secret env
+/// vars, plus a cached access token as an alternative. When the scheme
+/// also has a declared login flow (i.e. registered via
+/// `CliApp::login_flow`), we synthesize a `Keyring` source for the
+/// matching `(cli_name, scheme_name)` slot — the OAuth login flows store
+/// their token bundle there, and the status surface needs to see it.
+/// Without this, OAuth-logged-in users would see "Not logged in" in
+/// `auth status` even though the keyring entry is populated and apply()
+/// can read it on every request.
+fn expand_slots(
     scheme_name: &str,
     binding: &SchemeBinding,
     login_flows: &[DynLoginFlow],
     cli_name: &str,
-) -> Vec<AuthCredentialSource> {
+) -> CredentialSlots {
     match binding {
-        SchemeBinding::Token(s) => flatten_chain(s.clone()),
-        SchemeBinding::Basic { username, password } => {
-            let mut out = flatten_chain(username.clone());
-            out.extend(flatten_chain(password.clone()));
-            out
-        }
-        SchemeBinding::Custom(_) => {
+        SchemeBinding::Token(s) => CredentialSlots::required([flatten_chain(s.clone())]),
+        SchemeBinding::Basic { username, password } => CredentialSlots::required([
+            flatten_chain(username.clone()),
+            flatten_chain(password.clone()),
+        ]),
+        SchemeBinding::Custom(provider) => {
+            let declared = provider.credential_slots();
+            let mut slots = CredentialSlots {
+                required: declared
+                    .required
+                    .into_iter()
+                    .map(|slot| slot.into_iter().flat_map(flatten_chain).collect())
+                    .filter(|slot: &Vec<AuthCredentialSource>| !slot.is_empty())
+                    .collect(),
+                alternatives: declared
+                    .alternatives
+                    .into_iter()
+                    .flat_map(flatten_chain)
+                    .collect(),
+            };
             if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
-                vec![AuthCredentialSource::keyring(cli_name, scheme_name)]
-            } else {
-                Vec::new()
+                slots
+                    .required
+                    .push(vec![AuthCredentialSource::keyring(cli_name, scheme_name)]);
             }
+            slots
         }
+    }
+}
+
+/// One credential source as `auth status` renders it: what it is, and
+/// whether it currently supplies a value.
+struct SourceState {
+    description: String,
+    state: &'static str,
+}
+
+/// The evaluated state of a scheme's credential slots — one line per
+/// source (alternatives first, since they win at request time), plus the
+/// facts the remedy line needs.
+struct CredentialReport {
+    lines: Vec<SourceState>,
+    /// Every required slot resolved, or an alternative did.
+    satisfied: bool,
+    /// Env vars belonging to required slots that failed to resolve, in
+    /// declaration order — what the user has to set.
+    missing_env_vars: Vec<String>,
+    /// A keyring source appears somewhere in the slots, i.e. `auth login
+    /// --with-token` would actually be read back at request time.
+    reads_keyring: bool,
+}
+
+/// Resolve every source once and classify it. Within a slot the first
+/// source that resolves is ACTIVE and later ones are SHADOWED — the
+/// credential is there but a higher-precedence source is winning.
+/// Non-resolving sources are MISSING: declared but unset. Slots don't
+/// shadow each other; multi-slot schemes (basic, OAuth client
+/// credentials) need every slot to resolve.
+fn evaluate_slots(slots: &CredentialSlots) -> CredentialReport {
+    let mut lines = Vec::new();
+    let mut missing_env_vars = Vec::new();
+    let mut reads_keyring = false;
+    let mut alternative_active = false;
+    let mut all_required_active = !slots.required.is_empty();
+
+    let mut classify = |source: &AuthCredentialSource, active_found: &mut bool| -> bool {
+        let has_value = source.resolve().is_some();
+        let state = match (has_value, *active_found) {
+            (true, false) => {
+                *active_found = true;
+                "active"
+            }
+            (true, true) => "shadowed",
+            (false, _) => "missing",
+        };
+        if matches!(source, AuthCredentialSource::Keyring { .. }) {
+            reads_keyring = true;
+        }
+        lines.push(SourceState {
+            description: describe_source(source),
+            state,
+        });
+        has_value
+    };
+
+    for source in &slots.alternatives {
+        classify(source, &mut alternative_active);
+    }
+    for slot in &slots.required {
+        let mut active_found = false;
+        for source in slot {
+            classify(source, &mut active_found);
+        }
+        if !active_found {
+            missing_env_vars.extend(slot.iter().filter_map(|source| match source {
+                AuthCredentialSource::Env(name) => Some(name.clone()),
+                _ => None,
+            }));
+        }
+        all_required_active &= active_found;
+    }
+
+    CredentialReport {
+        lines,
+        satisfied: alternative_active || all_required_active,
+        missing_env_vars,
+        reads_keyring,
+    }
+}
+
+/// What to tell a user whose scheme didn't resolve. The remedy has to
+/// match how the scheme actually reads credentials: `auth login
+/// --with-token` writes the keyring, so suggesting it for a scheme that
+/// never reads the keyring (OAuth client credentials, basic auth) sends
+/// the user down a path that silently does nothing.
+fn remedy_line(
+    cli_name: &str,
+    scheme_name: &str,
+    report: &CredentialReport,
+    login_flows: &[DynLoginFlow],
+) -> String {
+    if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
+        format!("Not logged in. Run `{cli_name} auth login` to authenticate.")
+    } else if report.reads_keyring {
+        format!("Not logged in. Run `{cli_name} auth login --with-token` to authenticate.")
+    } else if !report.missing_env_vars.is_empty() {
+        format!(
+            "Not logged in. Set {} to authenticate.",
+            report.missing_env_vars.join(", ")
+        )
+    } else {
+        "Not logged in.".to_string()
     }
 }
 
 fn flatten_chain(s: AuthCredentialSource) -> Vec<AuthCredentialSource> {
     match s {
-        AuthCredentialSource::Chain(children) => children
-            .into_iter()
-            .flat_map(flatten_chain)
-            .collect(),
+        AuthCredentialSource::Chain(children) => {
+            children.into_iter().flat_map(flatten_chain).collect()
+        }
         other => vec![other],
     }
 }
@@ -630,30 +740,22 @@ fn status_entry_for(
         .iter()
         .find(|f| f.scheme_name() == scheme_name)
         .map(|f| f.flow_type());
-    let sources = expand_sources(scheme_name, binding, login_flows, cli_name);
-    let mut active_found = false;
-    let entries: Vec<serde_json::Value> = sources
+    let slots = expand_slots(scheme_name, binding, login_flows, cli_name);
+    let report = evaluate_slots(&slots);
+    let entries: Vec<serde_json::Value> = report
+        .lines
         .iter()
-        .map(|s| {
-            let has_value = s.resolve().is_some();
-            let state = match (has_value, active_found) {
-                (true, false) => {
-                    active_found = true;
-                    "active"
-                }
-                (true, true) => "shadowed",
-                (false, _) => "missing",
-            };
+        .map(|line| {
             serde_json::json!({
-                "state": state,
-                "source": describe_source(s),
+                "state": line.state,
+                "source": line.description,
             })
         })
         .collect();
     serde_json::json!({
         "scheme": scheme_name,
         "login_flow": flow,
-        "logged_in": active_found,
+        "logged_in": report.satisfied,
         "sources": entries,
         "cli": cli_name,
     })
@@ -917,18 +1019,20 @@ mod tests {
     }
 
     #[test]
-    fn expand_sources_synthesises_keyring_for_oauth_custom_binding() {
+    fn expand_slots_synthesises_keyring_for_oauth_custom_binding() {
         use crate::auth::provider::NoAuthProvider;
-        // OAuth flows register their auth provider as Custom; expand_sources
+        // OAuth flows register their auth provider as Custom; expand_slots
         // must still surface the keyring slot for `auth status`.
         let binding = SchemeBinding::Custom(std::sync::Arc::new(NoAuthProvider));
         // Use a TokenPasteLoginFlow as a stand-in for any LoginFlow declared
-        // against scheme "OAuth2" — the only thing expand_sources reads is
+        // against scheme "OAuth2" — the only thing expand_slots reads is
         // scheme_name().
         let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new("OAuth2"));
-        let sources = expand_sources("OAuth2", &binding, &[flow], "my-cli");
-        assert_eq!(sources.len(), 1);
-        match &sources[0] {
+        let slots = expand_slots("OAuth2", &binding, &[flow], "my-cli");
+        assert!(slots.alternatives.is_empty());
+        assert_eq!(slots.required.len(), 1);
+        assert_eq!(slots.required[0].len(), 1);
+        match &slots.required[0][0] {
             AuthCredentialSource::Keyring { service, account } => {
                 assert_eq!(service, "my-cli");
                 assert_eq!(account, "OAuth2");
@@ -938,13 +1042,168 @@ mod tests {
     }
 
     #[test]
-    fn expand_sources_returns_empty_for_custom_with_no_login_flow() {
+    fn expand_slots_returns_empty_for_custom_with_no_login_flow() {
         use crate::auth::provider::NoAuthProvider;
-        // Custom bindings registered manually (no matching login_flow) stay
-        // opaque — status output shows "(no credential sources bound)".
+        // Custom bindings whose provider exposes no credential slots and
+        // have no matching login_flow stay opaque — status output shows
+        // "(no credential sources bound)".
         let binding = SchemeBinding::Custom(std::sync::Arc::new(NoAuthProvider));
-        let sources = expand_sources("OAuth2", &binding, &[], "my-cli");
-        assert!(sources.is_empty());
+        let slots = expand_slots("OAuth2", &binding, &[], "my-cli");
+        assert!(slots.is_empty());
+    }
+
+    #[test]
+    fn expand_slots_lists_oauth2_client_credentials_env_vars() {
+        use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
+        // A generated client-credentials scheme lowers to a Custom binding
+        // wrapping OAuth2TokenProvider. `auth status` must enumerate its
+        // client-id / client-secret env vars as two independent slots rather
+        // than reporting "(no credential sources bound)".
+        let (name, binding) = OAuth2Auth::new("oAuth2ClientCredentials")
+            .token_url("https://example.com/oauth/token")
+            .client_id_env("OAUTH_CLIENT_ID")
+            .client_secret_env("OAUTH_CLIENT_SECRET")
+            .into_binding();
+        let slots = expand_slots(&name, &binding, &[], "my-cli");
+        assert_eq!(slots.required.len(), 2);
+        assert!(
+            matches!(&slots.required[0][..], [AuthCredentialSource::Env(e)] if e == "OAUTH_CLIENT_ID")
+        );
+        assert!(
+            matches!(&slots.required[1][..], [AuthCredentialSource::Env(e)] if e == "OAUTH_CLIENT_SECRET")
+        );
+    }
+
+    #[test]
+    #[serial]
+    fn status_reports_oauth2_client_credentials_env_vars() {
+        use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
+        std::env::set_var("STATUS_TEST_OAUTH_CLIENT_ID", "id");
+        std::env::set_var("STATUS_TEST_OAUTH_CLIENT_SECRET", "secret");
+        let (name, binding) = OAuth2Auth::new("oAuth2ClientCredentials")
+            .token_url("https://example.com/oauth/token")
+            .client_id_env("STATUS_TEST_OAUTH_CLIENT_ID")
+            .client_secret_env("STATUS_TEST_OAUTH_CLIENT_SECRET")
+            .into_binding();
+
+        let entry = status_entry_for("my-cli", &name, &binding, &[]);
+        assert_eq!(entry["logged_in"], true);
+        let states: Vec<&str> = entry["sources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|s| s["state"].as_str().unwrap())
+            .collect();
+        assert_eq!(states, ["active", "active"]);
+
+        std::env::remove_var("STATUS_TEST_OAUTH_CLIENT_SECRET");
+        let entry = status_entry_for("my-cli", &name, &binding, &[]);
+        assert_eq!(entry["logged_in"], false);
+        std::env::remove_var("STATUS_TEST_OAUTH_CLIENT_ID");
+    }
+
+    #[test]
+    fn alternative_satisfies_scheme_without_hiding_required_env_vars() {
+        // A cached OAuth token authenticates on its own, but the env vars
+        // that mint it must still show up: the whole point of `auth status`
+        // for a client-credentials scheme is answering "did you read my
+        // OAUTH_CLIENT_ID?".
+        let slots = CredentialSlots {
+            required: vec![
+                vec![AuthCredentialSource::from_env("NO_SUCH_ALT_TEST_ID")],
+                vec![AuthCredentialSource::from_env("NO_SUCH_ALT_TEST_SECRET")],
+            ],
+            alternatives: vec![AuthCredentialSource::Closure(
+                std::sync::Arc::new(|| Some("cached-tok".to_string())),
+                Some("cached OAuth token (/tmp/credentials.json)".to_string()),
+            )],
+        };
+
+        let report = evaluate_slots(&slots);
+        assert!(report.satisfied);
+        let rendered: Vec<(&str, &str)> = report
+            .lines
+            .iter()
+            .map(|l| (l.state, l.description.as_str()))
+            .collect();
+        assert_eq!(
+            rendered,
+            vec![
+                ("active", "cached OAuth token (/tmp/credentials.json)"),
+                ("missing", "NO_SUCH_ALT_TEST_ID env var"),
+                ("missing", "NO_SUCH_ALT_TEST_SECRET env var"),
+            ]
+        );
+        assert_eq!(
+            report.missing_env_vars,
+            vec!["NO_SUCH_ALT_TEST_ID", "NO_SUCH_ALT_TEST_SECRET"]
+        );
+    }
+
+    #[test]
+    fn remedy_names_missing_env_vars_when_the_scheme_never_reads_the_keyring() {
+        // `auth login --with-token` writes the keyring; OAuth client
+        // credentials never read it, so suggesting it would send the user
+        // down a path that silently does nothing.
+        let slots = CredentialSlots::required([
+            vec![AuthCredentialSource::from_env("NO_SUCH_REMEDY_ID")],
+            vec![AuthCredentialSource::from_env("NO_SUCH_REMEDY_SECRET")],
+        ]);
+        let report = evaluate_slots(&slots);
+        assert!(!report.satisfied);
+        assert!(!report.reads_keyring);
+
+        let line = remedy_line("my-cli", "oAuth2ClientCredentials", &report, &[]);
+        assert_eq!(
+            line,
+            "Not logged in. Set NO_SUCH_REMEDY_ID, NO_SUCH_REMEDY_SECRET to authenticate."
+        );
+    }
+
+    #[test]
+    #[serial]
+    fn remedy_suggests_with_token_when_the_scheme_reads_the_keyring() {
+        // Token bindings get a keyring source injected, so `--with-token`
+        // really is the fix there.
+        set_active_store(Arc::new(MockKeyringStore::new()));
+        let slots = CredentialSlots::required([vec![
+            AuthCredentialSource::from_env("NO_SUCH_REMEDY_TOKEN"),
+            AuthCredentialSource::keyring("my-cli", "OAuth2"),
+        ]]);
+        let report = evaluate_slots(&slots);
+        assert!(!report.satisfied);
+        assert!(report.reads_keyring);
+        assert_eq!(
+            remedy_line("my-cli", "OAuth2", &report, &[]),
+            "Not logged in. Run `my-cli auth login --with-token` to authenticate."
+        );
+    }
+
+    #[test]
+    fn remedy_points_at_the_login_flow_when_one_is_declared() {
+        let slots = CredentialSlots::required([vec![AuthCredentialSource::from_env(
+            "NO_SUCH_REMEDY_FLOW",
+        )]]);
+        let report = evaluate_slots(&slots);
+        let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new("OAuth2"));
+        assert_eq!(
+            remedy_line("my-cli", "OAuth2", &report, &[flow]),
+            "Not logged in. Run `my-cli auth login` to authenticate."
+        );
+    }
+
+    #[test]
+    fn expand_slots_keeps_basic_halves_in_separate_slots() {
+        // Username and password are both required; the password must not be
+        // reported as "shadowed" by the username.
+        let binding = SchemeBinding::Basic {
+            username: AuthCredentialSource::from_env("USER"),
+            password: AuthCredentialSource::from_env("PASS"),
+        };
+        let slots = expand_slots("basic", &binding, &[], "my-cli");
+        assert_eq!(slots.required.len(), 2);
+        assert!(matches!(&slots.required[0][..], [AuthCredentialSource::Env(e)] if e == "USER"));
+        assert!(matches!(&slots.required[1][..], [AuthCredentialSource::Env(e)] if e == "PASS"));
     }
 
     #[test]
@@ -1008,12 +1267,9 @@ mod tests {
             AuthCredentialSource::from_env("MY_CLI_OAUTH2_TEST"),
             AuthCredentialSource::keyring("my-cli", "OAuth2"),
         ]);
-        let sources = expand_sources(
-            "OAuth2",
-            &SchemeBinding::Token(chain),
-            &[],
-            "my-cli",
-        );
+        let slots = expand_slots("OAuth2", &SchemeBinding::Token(chain), &[], "my-cli");
+        assert_eq!(slots.required.len(), 1);
+        let sources = &slots.required[0];
         assert_eq!(sources.len(), 2);
         let env_resolves = sources[0].resolve().is_some();
         let keyring_resolves = sources[1].resolve().is_some();

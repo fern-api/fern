@@ -20,12 +20,13 @@
 //! creates a multi-threaded tokio runtime.
 
 use std::path::PathBuf;
-use std::sync::{Mutex, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use secrecy::{ExposeSecret, SecretString};
 use serde::Serialize;
 use serde_json::{Map, Value};
 
+use crate::auth::credential::{AuthCredentialSource, CredentialSlots};
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
     atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
@@ -906,6 +907,58 @@ impl AuthProvider for OAuth2TokenProvider {
                 format!("{refresh_token_env} environment variable"),
             ],
         }
+    }
+
+    fn credential_slots(&self) -> CredentialSlots {
+        let mut env_vars: Vec<&str> = match &self.contract {
+            Some(contract) => {
+                let mut vars = vec![
+                    contract.client_id_env.as_str(),
+                    contract.client_secret_env.as_str(),
+                ];
+                vars.extend(contract.token_endpoint.required_env_vars());
+                vars
+            }
+            None => match &self.grant {
+                OAuth2Grant::ClientCredentials {
+                    client_id_env,
+                    client_secret_env,
+                    ..
+                } => vec![client_id_env.as_str(), client_secret_env.as_str()],
+                OAuth2Grant::RefreshToken {
+                    client_id_env,
+                    client_secret_env,
+                    refresh_token_env,
+                } => vec![
+                    client_id_env.as_str(),
+                    client_secret_env.as_str(),
+                    refresh_token_env.as_str(),
+                ],
+            },
+        };
+        let mut seen = std::collections::HashSet::new();
+        env_vars.retain(|var| seen.insert(*var));
+        let mut slots = CredentialSlots::required(
+            env_vars
+                .into_iter()
+                .map(|var| vec![AuthCredentialSource::from_env(var)]),
+        );
+        // A valid cached token authenticates on its own, without the
+        // acquisition env vars — but it doesn't replace them in the
+        // report: a user asking "is my OAUTH_CLIENT_ID picked up?" needs
+        // to see the env slots either way, and they're what mints the
+        // next token once this one expires.
+        if let Some(cache) = self.cache.get() {
+            if let Some(bundle) = cache.load(&self.token_url) {
+                let hint = format!("cached OAuth token ({})", cache.path.display());
+                let token = bundle.access_token;
+                slots = slots.with_alternative(AuthCredentialSource::Closure(
+                    Arc::new(move || Some(token.clone())),
+                    Some(hint),
+                ));
+            }
+        }
+        slots
     }
 
     fn apply(
@@ -1812,6 +1865,52 @@ mod tests {
 
         // has_credentials is true because of disk cache, even though env vars are unset
         assert!(provider.has_credentials());
+    }
+
+    #[test]
+    #[serial]
+    fn credential_slots_report_cached_token_when_env_unset() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+        cache
+            .store("https://example.com/token", "cached-tok", None, Some(3600))
+            .unwrap();
+        std::env::remove_var("NO_SUCH_ID_SLOTS_TEST");
+        std::env::remove_var("NO_SUCH_SECRET_SLOTS_TEST");
+
+        let grant = || OAuth2Grant::ClientCredentials {
+            client_id_env: "NO_SUCH_ID_SLOTS_TEST".to_string(),
+            client_secret_env: "NO_SUCH_SECRET_SLOTS_TEST".to_string(),
+            scope: None,
+        };
+
+        let cached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant())
+            .with_token_cache(cache);
+        let slots = cached.credential_slots();
+        // The cached token authenticates on its own, so it lands in
+        // `alternatives` — but the acquisition env vars stay in the report
+        // (unset here) so the user can still see whether they were read.
+        assert_eq!(slots.alternatives.len(), 1);
+        assert!(slots.alternatives[0].resolve().is_some());
+        assert_eq!(slots.required.len(), 2);
+        assert!(slots
+            .required
+            .iter()
+            .all(|slot| slot[0].resolve().is_none()));
+        assert_eq!(
+            slots.alternatives[0].resolve().is_some(),
+            cached.has_credentials()
+        );
+
+        let uncached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant());
+        let slots = uncached.credential_slots();
+        assert!(slots.alternatives.is_empty());
+        assert_eq!(slots.required.len(), 2);
+        assert!(slots
+            .required
+            .iter()
+            .all(|slot| slot[0].resolve().is_none()));
+        assert!(!uncached.has_credentials());
     }
 
     #[test]
