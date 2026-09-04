@@ -130,6 +130,34 @@ pub trait Binding: Send + Sync {
     ) {
     }
 
+    /// Every operation parameter this binding accepts — one entry per
+    /// spelling it answers to (wire name and, when they differ, the flag
+    /// name `--help` shows), each carrying the values an enum constrains it
+    /// to.
+    ///
+    /// Consumed by `profiles create --set <KEY>=<VALUE>`, which validates
+    /// both halves: a key no operation accepts is a silently-ignored
+    /// default, and a value no operation accepts makes every command
+    /// carrying that parameter fail on a flag the caller never passed.
+    ///
+    /// Default: empty, which disables that validation. A binding that
+    /// cannot enumerate its surface must not make `--set` unusable.
+    fn parameter_specs(&self) -> Vec<crate::profiles::commands::ParameterSpec> {
+        Vec::new()
+    }
+
+    /// Every server-URL template variable name this binding declares —
+    /// both generator-registered (`server_var(...)`) and spec-declared
+    /// (`servers[].variables`).
+    ///
+    /// Consumed by `profiles create`, which validates `--server-var` keys
+    /// against it and registers a convenience `--<name>` flag per entry.
+    ///
+    /// Default: empty.
+    fn server_variable_names(&self) -> Vec<String> {
+        Vec::new()
+    }
+
     /// Validate that all auth schemes referenced by the binding's spec
     /// have a corresponding entry in the auth bindings. Returns `Ok(())`
     /// if validation passes, or `Err(CliError::Validation(...))` listing

@@ -203,16 +203,20 @@ pub fn run_token_paste(
     let _ = err.flush();
 
     let token = read_token_from_stdin()?;
-    active_store().set(cli_name, scheme_name, &token)?;
+    let account = crate::profiles::keyring_account(scheme_name);
+    active_store().set(cli_name, &account, &token)?;
 
     let _ = writeln!(
         err,
         "{}",
         green(&format!(
-            "✓ Stored credential for {cli_name}:{scheme_name} in {}",
+            "✓ Stored credential for {cli_name}:{account} in {}",
             active_store().backend_label()
         ))
     );
+    if let Some(profile) = crate::profiles::active_name() {
+        let _ = writeln!(err, "  Scoped to profile `{profile}`.");
+    }
 
     warn_if_env_shadows(&mut err, cli_name, scheme_name);
     Ok(())
@@ -220,7 +224,7 @@ pub fn run_token_paste(
 
 /// Read a single line from stdin, trimmed. Returns `Auth("No token …")`
 /// if empty / EOF.
-fn read_token_from_stdin() -> Result<String, CliError> {
+pub(crate) fn read_token_from_stdin() -> Result<String, CliError> {
     use std::io::BufRead;
     let stdin = std::io::stdin();
     let mut line = String::new();
@@ -341,7 +345,7 @@ fn handle_login(
                 )
             })?
     } else {
-        resolve_scheme(matches.get_one::<String>("scheme"), auth_bindings, login_flows)?
+        resolve_scheme_for(matches.get_one::<String>("scheme"), auth_bindings, login_flows)?
     };
 
     if with_token {
@@ -379,13 +383,17 @@ fn handle_logout(
     cli_name: &str,
     auth_bindings: &[(String, SchemeBinding)],
 ) -> Result<(), CliError> {
-    let scheme = resolve_scheme(matches.get_one::<String>("scheme"), auth_bindings, &[])?;
-    active_store().delete(cli_name, &scheme)?;
+    let scheme = resolve_scheme_for(matches.get_one::<String>("scheme"), auth_bindings, &[])?;
+    // Logging out under a profile removes *that* profile's credential and
+    // leaves the others alone — otherwise `auth logout` while a profile is
+    // active would silently log the user out of every tenant.
+    let account = crate::profiles::keyring_account(&scheme);
+    active_store().delete(cli_name, &account)?;
     let _ = writeln!(
         std::io::stderr().lock(),
         "{}",
         green(&format!(
-            "✓ Removed credential for {cli_name}:{scheme} from {}.",
+            "✓ Removed credential for {cli_name}:{account} from {}.",
             active_store().backend_label()
         ))
     );
@@ -420,6 +428,10 @@ fn handle_status<W: Write>(
         let payload = serde_json::json!({
             "cli": cli_name,
             "backend": backend,
+            // Which tenant's tokens these are. `auth status` is the command an
+            // agent runs before anything else; without the profile it answers
+            // "am I logged in?" without saying *as whom*.
+            "profile": crate::profiles::active_name(),
             "schemes": entries,
         });
         writeln!(out, "{}", serde_json::to_string_pretty(&payload).unwrap())
@@ -433,6 +445,9 @@ fn handle_status<W: Write>(
         "{}: credential status (storage backend: {backend})",
         bold(cli_name)
     );
+    if let Some(profile) = crate::profiles::active_name() {
+        let _ = writeln!(stderr, "  {}", dim(&format!("profile: {profile}")));
+    }
     let _ = writeln!(stderr);
 
     if auth_bindings.is_empty() {
@@ -500,7 +515,7 @@ fn handle_status<W: Write>(
 
 /// Resolve which scheme name to operate on. With one binding, infer it;
 /// with multiple, require `--scheme`. Used by login + logout.
-fn resolve_scheme(
+pub(crate) fn resolve_scheme_for(
     explicit: Option<&String>,
     auth_bindings: &[(String, SchemeBinding)],
     login_flows: &[DynLoginFlow],
@@ -538,7 +553,7 @@ fn resolve_scheme(
 /// surface needs to see it. Without this, OAuth-logged-in users would
 /// see "Not logged in" in `auth status` even though the keyring entry
 /// is populated and apply() can read it on every request.
-fn expand_sources(
+pub(crate) fn expand_sources(
     scheme_name: &str,
     binding: &SchemeBinding,
     login_flows: &[DynLoginFlow],
@@ -553,7 +568,10 @@ fn expand_sources(
         }
         SchemeBinding::Custom(_) => {
             if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
-                vec![AuthCredentialSource::keyring(cli_name, scheme_name)]
+                vec![AuthCredentialSource::keyring(
+                    cli_name,
+                    crate::profiles::keyring_account(scheme_name),
+                )]
             } else {
                 Vec::new()
             }
@@ -656,6 +674,7 @@ fn status_entry_for(
         "logged_in": active_found,
         "sources": entries,
         "cli": cli_name,
+        "profile": crate::profiles::active_name(),
     })
 }
 
@@ -670,7 +689,15 @@ pub fn inject_keyring_sources(
     bindings: &mut [(String, SchemeBinding)],
 ) {
     for (scheme_name, binding) in bindings.iter_mut() {
-        let kr = AuthCredentialSource::keyring(cli_name, scheme_name.as_str());
+        // The account is profile-scoped: `<scheme>` with no profile
+        // selected (byte-identical to the pre-profiles key, so an existing
+        // keychain entry keeps resolving) and `<scheme>#<credential>` with
+        // one. The profile does not add a rung to the credential chain —
+        // it only chooses which account this rung reads.
+        let kr = AuthCredentialSource::keyring(
+            cli_name,
+            crate::profiles::keyring_account(scheme_name.as_str()),
+        );
         match binding {
             SchemeBinding::Token(src) => {
                 let existing = std::mem::replace(src, AuthCredentialSource::Missing);
@@ -734,6 +761,92 @@ mod tests {
         let f = TokenPasteLoginFlow::new("OAuth2")
             .token_paste_url("https://example.com/settings");
         assert_eq!(f.token_paste_url.as_deref(), Some("https://example.com/settings"));
+    }
+
+    /// Run `f` with `profile` installed process-wide, restoring afterwards.
+    /// Every caller must be `#[serial]` — the slot is process-global.
+    fn with_profile<R>(credential: Option<&str>, f: impl FnOnce() -> R) -> R {
+        crate::profiles::install_for_tests(credential.map(|credential| {
+            crate::profiles::ResolvedProfile {
+                name: credential.to_string(),
+                credential: Some(credential.to_string()),
+                ..Default::default()
+            }
+        }));
+        let result = f();
+        crate::profiles::install_for_tests(None);
+        result
+    }
+
+    #[test]
+    #[serial]
+    fn the_keyring_account_is_unchanged_without_a_profile() {
+        // The compatibility guarantee: an existing keychain entry keeps
+        // resolving after an upgrade, so nobody is logged out.
+        with_profile(None, || {
+            let mut bindings = vec![(
+                "OAuth2".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::from_env("MY_TOKEN")),
+            )];
+            inject_keyring_sources("my-cli", &mut bindings);
+            match &bindings[0].1 {
+                SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => assert!(
+                    matches!(
+                        sources[1],
+                        AuthCredentialSource::Keyring { ref account, .. } if account == "OAuth2"
+                    ),
+                    "{:?}",
+                    describe_source(&sources[1]),
+                ),
+                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+            }
+        });
+    }
+
+    #[test]
+    #[serial]
+    fn the_keyring_account_is_namespaced_under_a_profile() {
+        // Two tenants must hold separate credentials for one scheme.
+        with_profile(Some("acme"), || {
+            let mut bindings = vec![(
+                "OAuth2".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::from_env("MY_TOKEN")),
+            )];
+            inject_keyring_sources("my-cli", &mut bindings);
+            match &bindings[0].1 {
+                SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => assert!(
+                    matches!(
+                        sources[1],
+                        AuthCredentialSource::Keyring { ref account, .. }
+                            if account == "OAuth2#acme"
+                    ),
+                    "{:?}",
+                    describe_source(&sources[1]),
+                ),
+                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+            }
+        });
+    }
+
+    #[test]
+    #[serial]
+    fn the_profile_does_not_add_a_rung_to_the_credential_chain() {
+        // It only selects which account the existing keyring rung reads, so
+        // ADR-0008's precedence (CLI > env > keyring > file) is untouched.
+        with_profile(Some("acme"), || {
+            let mut bindings = vec![(
+                "OAuth2".to_string(),
+                SchemeBinding::Token(AuthCredentialSource::from_env("MY_TOKEN")),
+            )];
+            inject_keyring_sources("my-cli", &mut bindings);
+            match &bindings[0].1 {
+                SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
+                    assert_eq!(sources.len(), 2, "{sources:?}", sources = sources.len());
+                    assert!(matches!(sources[0], AuthCredentialSource::Env(_)));
+                }
+                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+            }
+        });
     }
 
     #[test]
@@ -800,7 +913,7 @@ mod tests {
             "only".to_string(),
             SchemeBinding::Token(AuthCredentialSource::Missing),
         )];
-        let s = resolve_scheme(None, &bindings, &[]).unwrap();
+        let s = resolve_scheme_for(None, &bindings, &[]).unwrap();
         assert_eq!(s, "only");
     }
 
@@ -810,7 +923,7 @@ mod tests {
             ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
             ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
         ];
-        let s = resolve_scheme(Some(&"b".to_string()), &bindings, &[]).unwrap();
+        let s = resolve_scheme_for(Some(&"b".to_string()), &bindings, &[]).unwrap();
         assert_eq!(s, "b");
     }
 
@@ -820,7 +933,7 @@ mod tests {
             ("a".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
             ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
         ];
-        let err = resolve_scheme(None, &bindings, &[]).unwrap_err();
+        let err = resolve_scheme_for(None, &bindings, &[]).unwrap_err();
         match err {
             CliError::Validation(m) => {
                 assert!(m.contains("--scheme"));
@@ -839,7 +952,7 @@ mod tests {
             ("b".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
         ];
         let flows: Vec<DynLoginFlow> = vec![Arc::new(TokenPasteLoginFlow::new("b"))];
-        let s = resolve_scheme(None, &bindings, &flows).unwrap();
+        let s = resolve_scheme_for(None, &bindings, &flows).unwrap();
         assert_eq!(s, "b");
     }
 

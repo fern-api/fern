@@ -23,6 +23,13 @@ export interface RawSpecsManifest {
 // biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
 const SAFE_RUST_STRING_LITERAL = /^[^"\\\x00-\x1f]+$/;
 
+/**
+ * The `profiles` group name the SDK's `ProfilesConfig::new()` already
+ * defaults to. Matching it lets `renderMainRs` skip the `.command_name(...)`
+ * builder call in the common case.
+ */
+export const DEFAULT_PROFILES_COMMAND_NAME = "profiles";
+
 /** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
@@ -84,6 +91,13 @@ export async function copySpecs(args: {
      * flag/env name instead of the default `user-agent-suffix`.
      */
     userAgentSuffixFlag?: string;
+    /**
+     * When set, emit `.profiles(ProfilesConfig::new()...)` on the CliApp
+     * chain so the generated CLI gets the `profiles` group, the global
+     * `--profile` / `-p` flag, and profile-sourced defaults. Absent →
+     * no call is emitted at all and the feature is entirely inert.
+     */
+    profilesCommandName?: string;
 }): Promise<void> {
     const {
         outputDir,
@@ -93,7 +107,8 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
-        userAgentSuffixFlag
+        userAgentSuffixFlag,
+        profilesCommandName
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -124,7 +139,8 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
-            userAgentSuffixFlag
+            userAgentSuffixFlag,
+            profilesCommandName
         })
     );
 
@@ -217,9 +233,18 @@ function renderMainRs(args: {
     customCommands: boolean;
     rootGroup?: string;
     userAgentSuffixFlag?: string;
+    profilesCommandName?: string;
 }): string {
-    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
-        args;
+    const {
+        binaryName,
+        entries,
+        authBindings,
+        globalParamBindings,
+        customCommands,
+        rootGroup,
+        userAgentSuffixFlag,
+        profilesCommandName
+    } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -227,6 +252,9 @@ function renderMainRs(args: {
 
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    if (profilesCommandName != null) {
+        imports.push("use fern_cli_sdk::profiles::ProfilesConfig;");
+    }
     const authTypeImports = new Set<string>();
     for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
         if (binding.authTypeImport != null) {
@@ -275,6 +303,26 @@ function renderMainRs(args: {
             );
         }
         lines.push(`        .user_agent_suffix_flag("${userAgentSuffixFlag}")`);
+    }
+
+    // Named profiles. Emitted only when the consumer opted in, so a
+    // generation without the config block is byte-identical to one from
+    // before the feature existed.
+    if (profilesCommandName != null) {
+        if (!SAFE_RUST_STRING_LITERAL.test(profilesCommandName)) {
+            throw new Error(
+                `Unsafe profiles.commandName "${profilesCommandName}": contains characters that cannot ` +
+                    "be interpolated into a Rust string literal."
+            );
+        }
+        // `ProfilesConfig::new()` already defaults to `profiles`, so only a
+        // rename produces the extra builder call — keeping the common case's
+        // emitted main.rs as short as it was.
+        const config =
+            profilesCommandName === DEFAULT_PROFILES_COMMAND_NAME
+                ? "ProfilesConfig::new()"
+                : `ProfilesConfig::new().command_name("${profilesCommandName}")`;
+        lines.push(`        .profiles(${config})`);
     }
 
     // Root-level auth bindings (typed builders)

@@ -117,6 +117,13 @@ pub struct CliApp {
     /// Optional base URL for per-status-code error documentation links.
     /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
     error_docs_base_url: Option<String>,
+    /// Profiles configuration, or `None` when the generator did not opt in.
+    ///
+    /// `None` is the default and means the feature is entirely absent: no
+    /// `profiles` subcommand, no `--profile` flag, and no profile resolution.
+    /// Adding a top-level subcommand to every existing generated CLI is a
+    /// surface change, so it ships opt-in (see `ProfilesConfig`).
+    profiles: Option<crate::profiles::ProfilesConfig>,
 }
 
 impl CliApp {
@@ -133,6 +140,7 @@ impl CliApp {
             login_flows: Vec::new(),
             global_parameters: Vec::new(),
             error_docs_base_url: None,
+            profiles: None,
         }
     }
 
@@ -168,6 +176,19 @@ impl CliApp {
     /// registration, help/schema text, and env-var lookup.
     pub fn user_agent_suffix_flag(self, name: &str) -> Self {
         crate::user_agent::set_suffix_flag(name);
+        self
+    }
+
+    /// Enable named profiles: a `profiles` subcommand group, a global
+    /// `--profile` / `-p` flag, and profile-sourced defaults for
+    /// credentials, parameters, server variables, base URL, and output
+    /// format. See [`crate::profiles`] for the resolution rules.
+    ///
+    /// Off unless called. A CLI that never calls this is byte-identical to
+    /// one built before profiles existed — same `--help`, same `auth
+    /// status`, same credential resolution.
+    pub fn profiles(mut self, config: crate::profiles::ProfilesConfig) -> Self {
+        self.profiles = Some(config);
         self
     }
 
@@ -595,13 +616,11 @@ impl CliApp {
         crate::init_logging(&self.name);
         crate::warn_ignored_dotenv_keys(&ignored_dotenv_keys);
 
-        self.propagate_root_auth();
-        self.propagate_root_global_parameters();
-
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
+        let prepare_error = self.prepare(&args);
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
-        let exit = rt.block_on(self.run_inner(args, &mut out));
+        let exit = rt.block_on(self.run_inner(args, prepare_error, &mut out));
         drop(out);
         std::process::exit(exit);
     }
@@ -614,12 +633,11 @@ impl CliApp {
         I: IntoIterator<Item = T>,
         T: Into<std::ffi::OsString>,
     {
-        self.propagate_root_auth();
-        self.propagate_root_global_parameters();
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
+        let prepare_error = self.prepare(&args);
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
-        rt.block_on(self.run_inner(args, &mut out))
+        rt.block_on(self.run_inner(args, prepare_error, &mut out))
     }
 
     /// Testable entry point that captures output into the provided
@@ -634,11 +652,100 @@ impl CliApp {
         T: Into<std::ffi::OsString>,
         W: std::io::Write,
     {
+        let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
+        let prepare_error = self.prepare(&args);
+        let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
+        rt.block_on(self.run_inner(args, prepare_error, &mut *out))
+    }
+
+    /// One-time setup every entry point performs before the pipeline runs:
+    /// resolve and publish the profile, then propagate root auth and global
+    /// parameters to the bindings.
+    ///
+    /// Returns the profile-resolution error, if any, instead of failing —
+    /// `dispatch_pipeline` re-raises it *after* the `--help` / `--schema` /
+    /// `profiles` intercepts, so a stale `active` profile does not make the
+    /// commands you need in order to fix it unreachable.
+    ///
+    /// Ordering matters: the profile has to be installed before
+    /// [`propagate_root_auth`](Self::propagate_root_auth), because that is
+    /// where the keyring account and the OAuth token-cache key are derived
+    /// from it.
+    fn prepare(&mut self, args: &[std::ffi::OsString]) -> Option<CliError> {
+        let error = self.resolve_and_install_profile(args);
         self.propagate_root_auth();
         self.propagate_root_global_parameters();
-        let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
-        let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
-        rt.block_on(self.run_inner(args, out))
+        error
+    }
+
+    /// Resolve the profile for this invocation and publish it process-wide.
+    ///
+    /// No-op (and no error) when the generator did not opt into profiles, so
+    /// an existing generated CLI does not read `profiles.toml` at all.
+    fn resolve_and_install_profile(&self, args: &[std::ffi::OsString]) -> Option<CliError> {
+        if self.profiles.is_none() {
+            return None;
+        }
+        let str_args: Vec<String> = args
+            .iter()
+            .filter_map(|a| a.to_str().map(String::from))
+            .collect();
+
+        // The `profiles` group itself runs unprofiled. Otherwise a stale
+        // `active` pointer, or a profile with a broken `parent`, would make
+        // `profiles list` / `use` / `remove` — the only way to repair it —
+        // fail with the very error the user is trying to clear.
+        if self.invocation_is_profiles_group(&str_args) {
+            crate::profiles::selection::install(None);
+            return None;
+        }
+
+        match crate::profiles::resolve_selection(&self.name, &str_args) {
+            Ok(selection) => {
+                crate::profiles::selection::install(
+                    selection.map(|selection| selection.profile),
+                );
+                None
+            }
+            Err(error) => {
+                // Leave the slot empty: every read-side helper then behaves
+                // as if unprofiled, which keeps `--help` and `--schema`
+                // working while the error is surfaced for real commands.
+                crate::profiles::selection::install(None);
+                Some(error)
+            }
+        }
+    }
+
+    /// The parameter and server-variable names `profiles create` will accept,
+    /// unioned across every registered binding.
+    ///
+    /// The framework cannot know that `AccountSid` is Twilio's tenant key —
+    /// a Stripe CLI's equivalent is `account`, a GitHub CLI's is `owner`. So
+    /// `parameters` is a free-form map, and this is what keeps a typo from
+    /// being a silent no-op: `--set AcountSid=…` is rejected at write time
+    /// with a near-miss suggestion instead of storing a default nothing
+    /// ever reads.
+    ///
+    /// Empty when no binding can enumerate its surface, which disables the
+    /// check rather than rejecting everything.
+    fn profiles_vocabulary(&self) -> crate::profiles::commands::Vocabulary {
+        let mut vocabulary = crate::profiles::commands::Vocabulary::default();
+        for binding in &self.bindings {
+            vocabulary.add_parameters(binding.parameter_specs());
+            vocabulary
+                .server_variables
+                .extend(binding.server_variable_names());
+        }
+        vocabulary
+    }
+
+    /// True when raw argv targets the `profiles` group.
+    fn invocation_is_profiles_group(&self, str_args: &[String]) -> bool {
+        let Some(config) = &self.profiles else {
+            return false;
+        };
+        crate::early_intercept::first_positional_is(str_args, &config.command_name)
     }
 
     /// Pass root-level auth bindings to each registered binding and
@@ -688,7 +795,12 @@ impl CliApp {
     ///
     /// **NO SINGLE-BINDING SHORTCUT.** Every execution path goes through
     /// the full dispatch pipeline regardless of binding count.
-    async fn run_inner<W: std::io::Write>(&self, args: Vec<std::ffi::OsString>, out: &mut W) -> i32 {
+    async fn run_inner<W: std::io::Write>(
+        &self,
+        args: Vec<std::ffi::OsString>,
+        profile_error: Option<CliError>,
+        out: &mut W,
+    ) -> i32 {
         let str_args: Vec<String> = args.iter()
             .filter_map(|a| a.to_str().map(String::from))
             .collect();
@@ -706,7 +818,7 @@ impl CliApp {
             // in whichever representation the caller already asked for.
             format: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name),
         };
-        match self.dispatch_pipeline(args, out).await {
+        match self.dispatch_pipeline(args, profile_error, out).await {
             Ok(PipelineOutcome::Success) => 0,
             Ok(PipelineOutcome::HelpShown) => 0,
             Err(err) => {
@@ -720,6 +832,7 @@ impl CliApp {
     async fn dispatch_pipeline<W: std::io::Write>(
         &self,
         args: Vec<std::ffi::OsString>,
+        profile_error: Option<CliError>,
         out: &mut W,
     ) -> Result<PipelineOutcome, CliError> {
         if self.bindings.is_empty() {
@@ -811,7 +924,19 @@ impl CliApp {
                 let mut wrapped = serde_json::Map::new();
                 wrapped.insert(
                     "globalFlags".into(),
-                    serde_json::Value::Array(global_flags()),
+                    serde_json::Value::Array(global_flags(self.profiles.as_ref())),
+                );
+                // Framework-owned commands (`auth`, `profiles`, `completion`,
+                // `man`). Listed separately from `operations` because they are
+                // not API calls: they have no HTTP method, path, or response
+                // schema, and an agent that treated them as operations would
+                // look for one.
+                wrapped.insert(
+                    "builtinCommands".into(),
+                    serde_json::Value::Array(builtin_commands(
+                        self.profiles.as_ref(),
+                        &self.profiles_vocabulary(),
+                    )),
                 );
                 if any_sdk_vars {
                     wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
@@ -987,6 +1112,30 @@ impl CliApp {
                     .global(true),
             );
 
+        // `--profile` / `-p`. Registered for discoverability and so clap
+        // accepts it on every subcommand; the value itself is read pre-clap
+        // (see `resolve_and_install_profile`), because the resolved profile
+        // supplies `default_value`s to the args in this very tree.
+        //
+        // `-p` is free: spec-derived parameter args are `.long()`-only, so
+        // there is no short-flag namespace for it to collide in.
+        if let Some(ref config) = self.profiles {
+            cli = cli.arg(
+                clap::Arg::new(crate::profiles::selection::PROFILE_FLAG)
+                    .long(crate::profiles::selection::PROFILE_FLAG)
+                    .short(crate::profiles::selection::PROFILE_SHORT)
+                    .value_name("NAME")
+                    .help(format!(
+                        "Run this command under a named profile (see `{} {}`). \
+                         Overrides {} and the active profile.",
+                        self.name,
+                        config.command_name,
+                        crate::profiles::selection::profile_env_var(&self.name),
+                    ))
+                    .global(true),
+            );
+        }
+
         // Deep-merge every binding's subtree into one placeholder
         // command and build the full leaf-path → binding-index map.
         // Errors surface (as `CliError::Validation`) if two bindings
@@ -999,6 +1148,15 @@ impl CliApp {
         // (see `graft_builtin_command`) and `auth <op>` operations owned
         // by the spec must reach their binding instead of `dispatch_auth`.
         let spec_owns_auth = merged_subtree.find_subcommand("auth").is_some();
+
+        // Same question for the `profiles` group. Computed here, alongside
+        // `spec_owns_auth`, because `merged_subtree` is consumed by the graft
+        // below.
+        let spec_owns_profiles = self
+            .profiles
+            .as_ref()
+            .is_some_and(|config| merged_subtree.find_subcommand(&config.command_name).is_some());
+        let profiles_vocabulary = self.profiles_vocabulary();
 
         // Graft the merged subtree's subcommands and binding-level
         // global args / about / after_help into the root cli, reusing
@@ -1018,6 +1176,19 @@ impl CliApp {
         cli = graft_builtin_command(cli, crate::completions::completion_command());
         cli = graft_builtin_command(cli, crate::man::man_command());
         cli = graft_builtin_command(cli, crate::auth::login::build_auth_command());
+
+        // `profiles`, when the generator opted in. Folded into a spec-owned
+        // group of the same name rather than colliding with it, exactly as
+        // `auth` is.
+        if let Some(ref config) = self.profiles {
+            cli = graft_builtin_command(
+                cli,
+                crate::profiles::commands::build_profiles_command(
+                    config,
+                    &profiles_vocabulary,
+                ),
+            );
+        }
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -1099,6 +1270,16 @@ impl CliApp {
             Err(e) => return Err(CliError::Validation(e.to_string())),
         };
 
+        // 3b. A profile that was named but could not be resolved is an error
+        // for a real command — never a silent fallthrough to env credentials,
+        // which would send the request against a tenant the caller did not
+        // choose. Raised here rather than in `prepare` so `--help`,
+        // `--version`, `--schema`, `completion`, `man`, and the whole
+        // `profiles` group stay reachable while the profile is broken.
+        if let Some(error) = profile_error {
+            return Err(error);
+        }
+
         // 4. Resolve which binding owns the matched subcommand.
         let (op_path, sub_matches) = resolve_op_path(&matches);
 
@@ -1123,6 +1304,33 @@ impl CliApp {
                     out,
                 )?;
                 return Ok(PipelineOutcome::Success);
+            }
+        }
+
+        // 3c. Intercept the `profiles` group, like `auth` above: it is
+        // framework-owned and runs synchronously without touching a binding.
+        // When the spec also declares a group of the same name, only the
+        // built-in leaves are intercepted and the rest falls through.
+        if let Some(ref config) = self.profiles {
+            if let Some((name, profile_matches)) = matches.subcommand() {
+                if name == config.command_name {
+                    let builtin_sub = profile_matches.subcommand_name().is_some_and(|sub| {
+                        crate::profiles::commands::BUILTIN_SUBCOMMANDS.contains(&sub)
+                    });
+                    if builtin_sub || !spec_owns_profiles {
+                        crate::profiles::commands::dispatch_profiles(
+                            profile_matches,
+                            &crate::profiles::commands::ProfilesContext {
+                                cli_name: &self.name,
+                                auth_bindings: &self.auth_bindings,
+                                login_flows: &self.login_flows,
+                                vocabulary: &profiles_vocabulary,
+                            },
+                            out,
+                        )?;
+                        return Ok(PipelineOutcome::Success);
+                    }
+                }
             }
         }
 
@@ -1551,8 +1759,8 @@ fn deduplicate_after_help(sections: &[String]) -> String {
 /// `globalFlags` key per ADR-0006. Per-op flags (`--page-all`,
 /// `--output PATH`) are NOT in this list — those surface via per-op
 /// capability hints (`paginable`, `binaryResponse`).
-fn global_flags() -> Vec<serde_json::Value> {
-    vec![
+fn global_flags(profiles: Option<&crate::profiles::ProfilesConfig>) -> Vec<serde_json::Value> {
+    let mut flags = vec![
         serde_json::json!({
             "flag": "--schema",
             "description": "Emit the machine-readable command surface as JSON (agent-facing counterpart to --help)",
@@ -1620,7 +1828,109 @@ fn global_flags() -> Vec<serde_json::Value> {
             "flag": "--help",
             "description": "Print help for this scope (human-readable counterpart to --schema)",
         }),
-    ]
+    ];
+    // Only advertised when the generator opted into profiles — an agent must
+    // not be told about a flag this binary will reject.
+    if let Some(config) = profiles {
+        flags.push(serde_json::json!({
+            "flag": "--profile",
+            "alias": "-p",
+            "valueName": "NAME",
+            "description": format!(
+                "Run this command under a named profile (see `{}`), overriding \
+                 the <NAME>_PROFILE env var and the active profile",
+                config.command_name,
+            ),
+        }));
+    }
+    flags
+}
+
+/// Describe the framework-owned built-in commands for `--schema`.
+///
+/// `auth`, `profiles`, `completion` and `man` are grafted onto the tree at
+/// dispatch time but are not API operations, so they were absent from
+/// `--schema` entirely — a hole an agent cannot see past. It reads
+/// `--schema`, concludes the CLI has no way to authenticate or to switch
+/// tenant, and cannot discover otherwise.
+///
+/// Derived by walking the same `clap::Command`s that are actually grafted,
+/// so the description can never drift from the surface.
+fn builtin_commands(
+    profiles: Option<&crate::profiles::ProfilesConfig>,
+    vocabulary: &crate::profiles::commands::Vocabulary,
+) -> Vec<serde_json::Value> {
+    let mut commands: Vec<clap::Command> = vec![
+        crate::auth::login::build_auth_command(),
+        crate::completions::completion_command(),
+        crate::man::man_command(),
+    ];
+    if let Some(config) = profiles {
+        commands.push(crate::profiles::commands::build_profiles_command(
+            config,
+            vocabulary,
+        ));
+    }
+
+    let mut out = Vec::new();
+    for command in &commands {
+        describe_builtin_leaves(command, &mut Vec::new(), &mut out);
+    }
+    out
+}
+
+/// Push one `--schema` entry per leaf of a built-in command's subtree.
+///
+/// A group with subcommands (`auth`) contributes its leaves (`auth login`,
+/// `auth logout`, …) rather than itself, matching how spec operations are
+/// listed: an agent needs the thing it can actually invoke.
+fn describe_builtin_leaves(
+    command: &clap::Command,
+    path: &mut Vec<String>,
+    out: &mut Vec<serde_json::Value>,
+) {
+    path.push(command.get_name().to_string());
+    let mut has_child = false;
+    for sub in command.get_subcommands() {
+        has_child = true;
+        describe_builtin_leaves(sub, path, out);
+    }
+    if !has_child {
+        let flags: Vec<serde_json::Value> = command
+            .get_arguments()
+            .filter(|arg| !matches!(arg.get_action(), clap::ArgAction::Help))
+            .map(|arg| {
+                let mut entry = serde_json::Map::new();
+                match arg.get_long() {
+                    Some(long) => entry.insert("flag".into(), format!("--{long}").into()),
+                    // A required positional (`completion <SHELL>`,
+                    // `profiles use <NAME>`) has no long form; name it by its
+                    // value placeholder so the invocation is still derivable.
+                    None => entry.insert(
+                        "argument".into(),
+                        arg.get_id().as_str().to_string().into(),
+                    ),
+                };
+                if let Some(help) = arg.get_help() {
+                    entry.insert("description".into(), help.to_string().into());
+                }
+                if arg.is_required_set() {
+                    entry.insert("required".into(), true.into());
+                }
+                serde_json::Value::Object(entry)
+            })
+            .collect();
+        let mut entry = serde_json::Map::new();
+        entry.insert("command".into(), path.join(" ").into());
+        if let Some(about) = command.get_about() {
+            entry.insert("description".into(), about.to_string().into());
+        }
+        if !flags.is_empty() {
+            entry.insert("flags".into(), serde_json::Value::Array(flags));
+        }
+        out.push(serde_json::Value::Object(entry));
+    }
+    path.pop();
 }
 
 // ── Tests ───────────────────────────────────────────────────────────

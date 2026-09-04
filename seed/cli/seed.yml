@@ -311,6 +311,18 @@ fixtures:
         binaryName: basic-auth-cli
         splitTypeCrates: true
       outputFolder: with-split-type-crates
+  # The one fixture that opts into named profiles, so the emitted `main.rs`
+  # (`.profiles(ProfilesConfig::new())` plus its import) and the emitted
+  # `--help` are snapshotted. Every other `cli-*` fixture omits the config
+  # block and is the negative control: profiles must be entirely absent from
+  # their output, which is the feature's default-off guarantee.
+  cli-profiles:
+    - customConfig:
+        binaryName: profiles-cli
+        profiles:
+          enabled: true
+      outputFolder: with-profiles
+
   # The split fixture that matters: a type shared between two subpackages, so
   # the emitted workspace is a core crate plus leaves that depend on it. See
   # this API's generators.yml for what each path in it covers.

@@ -529,6 +529,85 @@ describe("copySpecs", () => {
         expect(main).not.toContain(".user_agent_suffix_flag");
     });
 
+    /** Mount one trivial OpenAPI spec and return `{ specsDir, outputDir }`. */
+    async function scaffold(): Promise<{ specsDir: string; outputDir: string }> {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+        return { specsDir, outputDir };
+    }
+
+    it("omits .profiles(...) entirely by default", async () => {
+        // The breaking-changes guarantee: without the config block the
+        // emitted main.rs is byte-identical to one from before profiles
+        // existed — no subcommand group, no --profile flag, no import.
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".profiles(");
+        expect(main).not.toContain("ProfilesConfig");
+    });
+
+    it("emits .profiles(ProfilesConfig::new()) with the default group name", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain(".profiles(ProfilesConfig::new())");
+        expect(main).toContain("use fern_cli_sdk::profiles::ProfilesConfig;");
+        // The SDK already defaults to `profiles`, so no redundant builder call.
+        expect(main).not.toContain(".command_name(");
+    });
+
+    it("emits .command_name(...) only for a renamed group", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "tenants"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.profiles(ProfilesConfig::new().command_name("tenants"))');
+    });
+
+    it("rejects an unsafe profiles command name (injection attempt)", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await expect(
+            copySpecs({
+                outputDir,
+                binaryName: BIN,
+                authBindings: [],
+                globalParamBindings: [],
+                specsDir,
+                profilesCommandName: 'tenants"); panic!("'
+            })
+        ).rejects.toThrow(/Unsafe profiles.commandName/);
+    });
+
     it("rejects an unsafe userAgentSuffixFlag (injection attempt)", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
