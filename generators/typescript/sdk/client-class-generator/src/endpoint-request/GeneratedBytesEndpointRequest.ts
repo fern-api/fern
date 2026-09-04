@@ -4,6 +4,7 @@ import {
     ExportsManager,
     Fetcher,
     GetReferenceOpts,
+    getFullPathForEndpoint,
     getParameterNameForPositionalPathParameter,
     getTextOfTsNode,
     PackageId
@@ -295,7 +296,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                endpointLabel: `${this.endpoint.method} ${getFullPathForEndpoint(this.endpoint)}`
             });
         }
         return this.queryParams;

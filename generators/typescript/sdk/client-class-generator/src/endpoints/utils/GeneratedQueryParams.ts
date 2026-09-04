@@ -13,6 +13,8 @@ export declare namespace GeneratedQueryParams {
     export interface Init {
         queryParameters: FernIr.QueryParameter[] | undefined;
         referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+        /** Only used to make generation-time error messages actionable. */
+        endpointLabel?: string;
     }
 }
 
@@ -21,16 +23,20 @@ export class GeneratedQueryParams {
 
     private queryParameters: FernIr.QueryParameter[] | undefined;
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+    private endpointLabel: string | undefined;
 
-    constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
+    constructor({ queryParameters, referenceToQueryParameterProperty, endpointLabel }: GeneratedQueryParams.Init) {
         this.queryParameters = queryParameters;
         this.referenceToQueryParameterProperty = referenceToQueryParameterProperty;
+        this.endpointLabel = endpointLabel;
     }
 
     public getBuildStatements(context: FileContext): ts.Statement[] {
         if (this.queryParameters == null || this.queryParameters.length === 0) {
             return [];
         }
+
+        this.assertDeepObjectMapsAreEncodable(context);
 
         const properties: ts.ObjectLiteralElementLike[] = [];
 
@@ -633,6 +639,79 @@ export class GeneratedQueryParams {
                 return false;
             default:
                 assertNever(typeReference);
+        }
+    }
+
+    /**
+     * `deepObjectMapQueryParameters` explodes a map into `key[sub]=value` by handing the object to
+     * the query builder, which walks it with `Object.entries`. Typed values are safe: the serde
+     * layer normalizes them first, and without the serde layer the generated types are already
+     * JSON-compatible (a `datetime` property is typed `string`, not `Date`).
+     *
+     * `unknown` values are the exception. There is no schema to normalize them against, so a
+     * non-plain object -- a `Date`, a `Set`, a class instance -- contributes no enumerable keys and
+     * would be dropped from the query string with no error. Refuse to generate rather than emit an
+     * SDK that silently loses data.
+     */
+    private assertDeepObjectMapsAreEncodable(context: FileContext): void {
+        if (!context.deepObjectMapQueryParameters || this.queryParameters == null) {
+            return;
+        }
+        for (const queryParameter of this.queryParameters) {
+            if (!this.isDeepObjectMap(queryParameter.valueType, context, queryParameter.explode)) {
+                continue;
+            }
+            const mapType = this.getMapType(queryParameter.valueType, context);
+            if (mapType == null || !this.containsUnknown(mapType.valueType, context)) {
+                continue;
+            }
+            const wireValue = getWireValue(queryParameter.name);
+            const on = this.endpointLabel != null ? ` on ${this.endpointLabel}` : "";
+            throw new Error(
+                `Query parameter '${wireValue}'${on} is a map with \`unknown\` values, which ` +
+                    "`deepObjectMapQueryParameters` cannot safely encode: a non-plain object such as a Date " +
+                    "or a Set would be silently dropped from the query string.\n" +
+                    "Either give the map a concrete value type (so the serde layer can normalize it), or " +
+                    "disable `deepObjectMapQueryParameters`."
+            );
+        }
+    }
+
+    /** Whether `unknown` appears anywhere in a map's value type, through containers and aliases. */
+    private containsUnknown(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        switch (typeReference.type) {
+            case "unknown":
+                return true;
+            case "primitive":
+                return false;
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.containsUnknown(typeDeclaration.shape.aliasOf, context);
+                }
+                // Named objects/unions/enums are normalized by their own generated schema, so we
+                // do not recurse into their properties here.
+                return false;
+            }
+            case "container":
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.containsUnknown(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.containsUnknown(typeReference.container.nullable, context);
+                    case "list":
+                        return this.containsUnknown(typeReference.container.list, context);
+                    case "set":
+                        return this.containsUnknown(typeReference.container.set, context);
+                    case "map":
+                        return this.containsUnknown(typeReference.container.valueType, context);
+                    case "literal":
+                        return false;
+                    default:
+                        return assertNever(typeReference.container);
+                }
+            default:
+                return assertNever(typeReference);
         }
     }
 

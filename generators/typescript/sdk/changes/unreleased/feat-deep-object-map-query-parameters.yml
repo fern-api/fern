@@ -16,14 +16,22 @@
         deepObjectMapQueryParameters: true
     ```
 
-    Two behaviours to be aware of when enabling this, both inherent to deepObject encoding:
+    Maps with `unknown` values (an OpenAPI `additionalProperties: true` import) are rejected at
+    generation time. There is no schema to normalize such a value against, so a non-plain object like a
+    `Date` or a `Set` would contribute no enumerable keys and be dropped from the query string with no
+    error. Rather than emit an SDK that silently loses data, generation fails:
 
-    - An empty map is omitted from the query string entirely, where it previously serialized as
-      `?key=%7B%7D`. There are no keys to explode, so nothing is emitted.
-    - Values typed `unknown` (an OpenAPI `additionalProperties: true` import) are passed through as-is.
-      The query builder walks them with `Object.entries`, so a non-plain object such as a `Date` or `Set`
-      contributes no keys and is dropped. Typed map values are unaffected — they go through the serde
-      layer, which normalizes them first.
+    ```
+    Query parameter 'metadata' on GET /search is a map with `unknown` values, which
+    `deepObjectMapQueryParameters` cannot safely encode: a non-plain object such as a Date or a Set
+    would be silently dropped from the query string.
+    Either give the map a concrete value type (so the serde layer can normalize it), or disable
+    `deepObjectMapQueryParameters`.
+    ```
+
+    One other behaviour to be aware of, inherent to deepObject encoding: an empty map is omitted from the
+    query string entirely, where it previously serialized as `?key=%7B%7D`. There are no keys to explode,
+    so nothing is emitted.
 
     Query parameters explicitly declared `explode: false` keep their existing encoding; deepObject form is
     only applied where `explode` is true or unset.

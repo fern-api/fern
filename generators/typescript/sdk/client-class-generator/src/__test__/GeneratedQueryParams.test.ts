@@ -681,6 +681,90 @@ describe("GeneratedQueryParams", () => {
                 expect(text).toMatchSnapshot();
             });
 
+            describe("unknown-valued maps are rejected at generation time", () => {
+                const unknownType = FernIr.TypeReference.unknown();
+
+                function build(
+                    name: string,
+                    type: FernIr.TypeReference,
+                    opts?: { deepObjectMapQueryParameters?: boolean; endpointLabel?: string }
+                ) {
+                    const mockContext = createMockContext({
+                        includeSerdeLayer: true,
+                        deepObjectMapQueryParameters: opts?.deepObjectMapQueryParameters ?? true
+                    });
+                    mockContext.type.getTypeDeclaration = () => ({ shape: objectShape });
+                    mockContext.typeSchema.getSchemaOfTypeReference = () => ({
+                        jsonOrThrow: (expr: ts.Expression) => expr
+                    });
+                    const generator = new GeneratedQueryParams({
+                        queryParameters: [createQueryParameter(name, type)],
+                        referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty,
+                        endpointLabel: opts?.endpointLabel
+                    });
+                    return () => generator.getBuildStatements(mockContext);
+                }
+
+                it("throws for map<string, unknown>", () => {
+                    expect(build("metadata", mapOf(unknownType))).toThrow(
+                        /Query parameter 'metadata' is a map with `unknown` values/
+                    );
+                });
+
+                it("names the endpoint when one is available", () => {
+                    expect(
+                        build("metadata", mapOf(unknownType), { endpointLabel: "GET /search" })
+                    ).toThrow(/Query parameter 'metadata' on GET \/search is a map with `unknown` values/);
+                });
+
+                it("explains both ways out", () => {
+                    expect(build("metadata", mapOf(unknownType))).toThrow(
+                        /give the map a concrete value type.*or disable `deepObjectMapQueryParameters`/s
+                    );
+                });
+
+                it("throws for unknown nested under a list", () => {
+                    const listOfUnknown = FernIr.TypeReference.container(FernIr.ContainerType.list(unknownType));
+                    expect(build("metadata", mapOf(listOfUnknown))).toThrow(/`unknown` values/);
+                });
+
+                it("throws for unknown nested under an inner map", () => {
+                    expect(build("metadata", mapOf(mapOf(unknownType)))).toThrow(/`unknown` values/);
+                });
+
+                it("throws for optional<map<string, unknown>>", () => {
+                    const type = FernIr.TypeReference.container(FernIr.ContainerType.optional(mapOf(unknownType)));
+                    expect(build("metadata", type)).toThrow(/`unknown` values/);
+                });
+
+                it("does not throw when the flag is disabled", () => {
+                    expect(build("metadata", mapOf(unknownType), { deepObjectMapQueryParameters: false })).not.toThrow();
+                });
+
+                it("does not throw for a map declared explode: false", () => {
+                    const mockContext = createMockContext({
+                        includeSerdeLayer: true,
+                        deepObjectMapQueryParameters: true
+                    });
+                    const queryParameter = createQueryParameter("metadata", mapOf(unknownType));
+                    const generator = new GeneratedQueryParams({
+                        queryParameters: [{ ...queryParameter, explode: false }],
+                        referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                    });
+                    expect(() => generator.getBuildStatements(mockContext)).not.toThrow();
+                });
+
+                it("does not throw for typed map values, which serde normalizes", () => {
+                    expect(build("metadata", mapOf(myObjectType))).not.toThrow();
+                    expect(build("timestamps", mapOf(dateTimeType))).not.toThrow();
+                    expect(build("labels", mapOf(stringType))).not.toThrow();
+                });
+
+                it("does not throw for a bare unknown query parameter (not a map)", () => {
+                    expect(build("anything", unknownType)).not.toThrow();
+                });
+            });
+
             it("passes map<string, map<string, string>> through untouched (no serde needed)", () => {
                 const text = generate("nested", mapOf(mapOf(stringType)), { includeSerdeLayer: true });
                 expect(text).not.toContain("jsonOrThrow");
