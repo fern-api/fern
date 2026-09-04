@@ -620,6 +620,67 @@ describe("GeneratedQueryParams", () => {
                 expect(text).toMatchSnapshot();
             });
 
+            it("keeps both branches of an allowMultiple map<string, string> in deepObject form", () => {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: true
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter("m", mapOf(stringType), { allowMultiple: true })],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                // Neither branch may stringify: the scalar branch passes through, so the array
+                // branch must too, otherwise the same param encodes two different ways.
+                expect(text).not.toContain("toString");
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes both branches of an allowMultiple map<string, datetime> via serde", () => {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: true
+                });
+                mockContext.typeSchema.getSchemaOfTypeReference = () => ({
+                    jsonOrThrow: (expr: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier("serializers.record.jsonOrThrow"),
+                            undefined,
+                            [expr]
+                        )
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter("m", mapOf(dateTimeType), { allowMultiple: true })],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("does not deepObject-encode a map declared explode: false", () => {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: true
+                });
+                const queryParameter = createQueryParameter("filters", mapOf(stringType));
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [{ ...queryParameter, explode: false }],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                // `explode: false` asks for comma-joining, not `?filters[a]=1`, so the flag stays out of it.
+                expect(text).toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
             it("passes map<string, map<string, string>> through untouched (no serde needed)", () => {
                 const text = generate("nested", mapOf(mapOf(stringType)), { includeSerdeLayer: true });
                 expect(text).not.toContain("jsonOrThrow");

@@ -1,5 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > does not deepObject-encode a map declared explode: false 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filters: filters.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > keeps both branches of an allowMultiple map<string, string> in deepObject form 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    m
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes a named alias to map<string, string> through untouched 1`] = `
 "const _queryParams: Record<string, unknown> = {
     metadata
@@ -33,6 +45,12 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes nullable<map<string, boolean>> through untouched 1`] = `
 "const _queryParams: Record<string, unknown> = {
     flags
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes both branches of an allowMultiple map<string, datetime> via serde 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    m: Array.isArray(m) ? m.map(item => serializers.record.jsonOrThrow(item)) : serializers.record.jsonOrThrow(m)
 };"
 `;
 

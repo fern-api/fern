@@ -94,8 +94,12 @@ export class GeneratedQueryParams {
             queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
                 ? queryParameter.valueType.container.list
                 : queryParameter.valueType;
-        const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
-        const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
+        const scalarNeedsTransform = this.scalarValueNeedsTransform(
+            queryParameter.valueType,
+            context,
+            queryParameter.explode
+        );
+        const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context, queryParameter.explode);
         const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
 
         const scalarExpression = this.getScalarValueExpression({
@@ -238,7 +242,7 @@ export class GeneratedQueryParams {
             return referenceToQueryParameter;
         }
 
-        if (this.isDeepObjectMap(queryParameter.valueType, context)) {
+        if (this.isDeepObjectMap(queryParameter.valueType, context, queryParameter.explode)) {
             if (context.includeSerdeLayer && this.mapNeedsSerde(queryParameter.valueType, context)) {
                 const serializerCall = context.typeSchema
                     .getSchemaOfTypeReference(queryParameter.valueType)
@@ -285,7 +289,7 @@ export class GeneratedQueryParams {
         context: FileContext;
     }): ts.Expression {
         const objectType = this.getObjectType(listItemType, context);
-        const needsItemTransform = this.listItemNeedsTransform(listItemType, context);
+        const needsItemTransform = this.listItemNeedsTransform(listItemType, context, queryParameter.explode);
 
         if (!needsItemTransform) {
             return referenceToQueryParameter;
@@ -314,6 +318,24 @@ export class GeneratedQueryParams {
                     });
         } else if (objectType != null) {
             getItemExpression = (itemReference) => itemReference;
+        } else if (this.isDeepObjectMap(listItemType, context, queryParameter.explode)) {
+            // Reached only when the map's values need serde (see listItemNeedsTransform); the
+            // resulting plain object is then deep-object-encoded by the query builder, matching
+            // how the scalar branch treats the same type.
+            getItemExpression = (itemReference) =>
+                context.typeSchema.getSchemaOfTypeReference(listItemType).jsonOrThrow(itemReference, {
+                    allowUnrecognizedEnumValues: true,
+                    allowUnrecognizedUnionMembers: true,
+                    unrecognizedObjectKeys: "passthrough",
+                    skipValidation: false,
+                    breadcrumbsPrefix: [
+                        "request",
+                        context.retainOriginalCasing
+                            ? getOriginalName(queryParameter.name)
+                            : context.case.camelUnsafe(queryParameter.name)
+                    ],
+                    omitUndefined: context.omitUndefined
+                });
         } else {
             getItemExpression = (itemReference) =>
                 context.type.stringify(itemReference, listItemType, { includeNullCheckIfOptional: false });
@@ -519,8 +541,18 @@ export class GeneratedQueryParams {
      * query builder (after serde, if its values need it) so it serializes in deepObject form
      * (`key[sub]=value`, recursing into nested objects/maps) rather than as a JSON string.
      */
-    private isDeepObjectMap(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    private isDeepObjectMap(
+        typeReference: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
         if (!context.deepObjectMapQueryParameters) {
+            return false;
+        }
+        // deepObject encoding is what `explode: true` means. When the spec explicitly asks for
+        // `explode: false` (comma-joined), leave the parameter on its existing path rather than
+        // exploding it into `key[sub]=value`.
+        if (explode === false) {
             return false;
         }
         return this.getMapType(typeReference, context) != null;
@@ -627,10 +659,19 @@ export class GeneratedQueryParams {
         return false;
     }
 
-    private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: FileContext): boolean {
+    private listItemNeedsTransform(
+        listItemType: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
         const objectType = this.getObjectType(listItemType, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
+        }
+        // Keep `allowMultiple` map params consistent with their scalar counterpart: both branches of
+        // the `Array.isArray` ternary must agree on deepObject vs. stringified encoding.
+        if (this.isDeepObjectMap(listItemType, context, explode)) {
+            return context.includeSerdeLayer && this.mapNeedsSerde(listItemType, context);
         }
         const primitiveType = this.getPrimitiveType(listItemType, context);
         if (primitiveType != null) {
@@ -639,7 +680,11 @@ export class GeneratedQueryParams {
         return true;
     }
 
-    private scalarValueNeedsTransform(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    private scalarValueNeedsTransform(
+        typeReference: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
         const objectType = this.getObjectType(typeReference, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
@@ -648,7 +693,7 @@ export class GeneratedQueryParams {
         if (primitiveType != null) {
             return primitiveTypeNeedsStringify(primitiveType.primitive);
         }
-        if (this.isDeepObjectMap(typeReference, context)) {
+        if (this.isDeepObjectMap(typeReference, context, explode)) {
             return context.includeSerdeLayer && this.mapNeedsSerde(typeReference, context);
         }
         return true;

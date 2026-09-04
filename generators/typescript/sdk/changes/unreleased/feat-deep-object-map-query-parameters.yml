@@ -5,14 +5,26 @@
     as a map (e.g. `map<string, string>`, which is what an OpenAPI `type: object` + `additionalProperties`
     schema imports as) are handed to the query builder and serialized in deepObject form
     (`?metadata[env]=prod`) instead of being JSON-stringified (`?metadata=%7B%22env%22...`). Maps whose
-    values are objects, nested maps, lists, sets, or date-times are supported too: with the serde layer enabled
-    they are run through the generated schema first, so nested keys use wire names, sets become arrays, and dates are ISO strings
-    (`?metadata[env][created_at]=2026-09-04T00:00:00.000Z`). Defaults to `false`, so existing SDKs are
-    unaffected.
+    values are objects, nested maps, lists, sets, or date-times are supported too: with the serde layer
+    enabled they are run through the generated schema first, so nested keys use wire names, sets become
+    arrays, and dates are ISO strings (`?metadata[env][created_at]=2026-09-04T00:00:00.000Z`). Defaults to
+    `false`, so existing SDKs are unaffected.
 
     ```yaml
     - name: fernapi/fern-typescript-sdk
       config:
         deepObjectMapQueryParameters: true
     ```
+
+    Two behaviours to be aware of when enabling this, both inherent to deepObject encoding:
+
+    - An empty map is omitted from the query string entirely, where it previously serialized as
+      `?key=%7B%7D`. There are no keys to explode, so nothing is emitted.
+    - Values typed `unknown` (an OpenAPI `additionalProperties: true` import) are passed through as-is.
+      The query builder walks them with `Object.entries`, so a non-plain object such as a `Date` or `Set`
+      contributes no keys and is dropped. Typed map values are unaffected — they go through the serde
+      layer, which normalizes them first.
+
+    Query parameters explicitly declared `explode: false` keep their existing encoding; deepObject form is
+    only applied where `explode` is true or unset.
   type: feat
