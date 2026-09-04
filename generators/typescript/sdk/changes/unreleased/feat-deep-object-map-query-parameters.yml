@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `deepObjectMapQueryParameters` configuration option. When enabled, query parameters typed
+    as a map with primitive values (e.g. `map<string, string>`, which is what an OpenAPI `type: object` +
+    `additionalProperties` schema imports as) are passed through to the query builder and serialized in
+    deepObject form (`?metadata[env]=prod`) instead of being JSON-stringified (`?metadata=%7B%22env%22...`).
+    Defaults to `false`, so existing SDKs are unaffected.
+
+    ```yaml
+    - name: fernapi/fern-typescript-sdk
+      config:
+        deepObjectMapQueryParameters: true
+    ```
+  type: feat

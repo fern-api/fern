@@ -33,4 +33,5 @@ export interface SdkContext {
     neverThrowErrors: boolean;
     flattenRequestParameters: boolean;
     respectOptionalRequestBody: boolean;
+    deepObjectMapQueryParameters: boolean;
 }

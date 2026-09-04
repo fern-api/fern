@@ -15,11 +15,13 @@ function createMockContext(opts?: {
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
+    deepObjectMapQueryParameters?: boolean;
 }) {
     return {
         includeSerdeLayer: opts?.includeSerdeLayer ?? false,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
+        deepObjectMapQueryParameters: opts?.deepObjectMapQueryParameters ?? false,
         type: createMockTypeContext(),
         typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true }),
         case: caseConverter
@@ -404,6 +406,99 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).toContain("toString");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("stringifies map<string, string> by default", () => {
+            const mapType = FernIr.TypeReference.container(
+                FernIr.ContainerType.map({
+                    keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                    valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                })
+            );
+            const queryParams = [createQueryParameter("metadata", mapType)];
+
+            const generator = new GeneratedQueryParams({
+                queryParameters: queryParams,
+                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+            });
+
+            const statements = generator.getBuildStatements(createMockContext());
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).toContain("toString");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("passes map<string, string> through untouched when deepObjectMapQueryParameters is enabled", () => {
+            const mapType = FernIr.TypeReference.container(
+                FernIr.ContainerType.map({
+                    keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                    valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                })
+            );
+            const queryParams = [createQueryParameter("metadata", mapType)];
+
+            const generator = new GeneratedQueryParams({
+                queryParameters: queryParams,
+                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+            });
+
+            const statements = generator.getBuildStatements(createMockContext({ deepObjectMapQueryParameters: true }));
+            expect(statements).toHaveLength(1);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).not.toContain("toJson");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("passes optional<map<string, integer>> through untouched when deepObjectMapQueryParameters is enabled", () => {
+            const mapType = FernIr.TypeReference.container(
+                FernIr.ContainerType.optional(
+                    FernIr.TypeReference.container(
+                        FernIr.ContainerType.map({
+                            keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            valueType: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                        })
+                    )
+                )
+            );
+            const queryParams = [createQueryParameter("counts", mapType)];
+
+            const generator = new GeneratedQueryParams({
+                queryParameters: queryParams,
+                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+            });
+
+            const statements = generator.getBuildStatements(createMockContext({ deepObjectMapQueryParameters: true }));
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).not.toContain("toJson");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("still stringifies map<string, datetime> when deepObjectMapQueryParameters is enabled", () => {
+            const mapType = FernIr.TypeReference.container(
+                FernIr.ContainerType.map({
+                    keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                    valueType: FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined })
+                })
+            );
+            const queryParams = [createQueryParameter("timestamps", mapType)];
+
+            const generator = new GeneratedQueryParams({
+                queryParameters: queryParams,
+                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+            });
+
+            const statements = generator.getBuildStatements(createMockContext({ deepObjectMapQueryParameters: true }));
             const firstStmt = statements[0];
             assert(firstStmt != null, "expected at least one statement");
             const text = getTextOfTsNode(firstStmt);

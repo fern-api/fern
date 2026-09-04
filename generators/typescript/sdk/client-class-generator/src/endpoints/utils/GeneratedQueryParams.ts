@@ -237,6 +237,10 @@ export class GeneratedQueryParams {
             return referenceToQueryParameter;
         }
 
+        if (this.isDeepObjectMap(queryParameter.valueType, context)) {
+            return referenceToQueryParameter;
+        }
+
         return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
             includeNullCheckIfOptional: true
         });
@@ -483,6 +487,46 @@ export class GeneratedQueryParams {
         return undefined;
     }
 
+    /**
+     * With `deepObjectMapQueryParameters` enabled, a map whose values are plain primitives
+     * (e.g. `map<string, string>`) is passed to the query builder as-is so it serializes in
+     * deepObject form (`key[sub]=value`) rather than as a JSON string.
+     */
+    private isDeepObjectMap(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        if (!context.deepObjectMapQueryParameters) {
+            return false;
+        }
+        return this.isPrimitiveValuedMap(typeReference, context);
+    }
+
+    private isPrimitiveValuedMap(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isPrimitiveValuedMap(typeDeclaration.shape.aliasOf, context);
+                }
+                return false;
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isPrimitiveValuedMap(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.isPrimitiveValuedMap(typeReference.container.nullable, context);
+                    case "map": {
+                        const valueType = this.getPrimitiveType(typeReference.container.valueType, context);
+                        return valueType != null && !primitiveTypeNeedsStringify(valueType.primitive);
+                    }
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
+    }
+
     private isOptional(typeReference: FernIr.TypeReference): boolean {
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true;
@@ -510,6 +554,9 @@ export class GeneratedQueryParams {
         const primitiveType = this.getPrimitiveType(typeReference, context);
         if (primitiveType != null) {
             return primitiveTypeNeedsStringify(primitiveType.primitive);
+        }
+        if (this.isDeepObjectMap(typeReference, context)) {
+            return false;
         }
         return true;
     }

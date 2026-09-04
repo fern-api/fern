@@ -110,6 +110,30 @@ exports[`GeneratedQueryParams > getBuildStatements > handles special characters 
 };"
 `;
 
+exports[`GeneratedQueryParams > getBuildStatements > passes map<string, string> through untouched when deepObjectMapQueryParameters is enabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > passes optional<map<string, integer>> through untouched when deepObjectMapQueryParameters is enabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    counts
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > still stringifies map<string, datetime> when deepObjectMapQueryParameters is enabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    timestamps: timestamps.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > stringifies map<string, string> by default 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: metadata.toString()
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > uses originalName when retainOriginalCasing is true 1`] = `
 "const _queryParams: Record<string, unknown> = {
     filter_data: serializer.jsonOrThrow(filter_data)
