@@ -1,0 +1,659 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:WateringRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "WateringRequest",
+                    "camelCase": {
+                        "unsafeName": "wateringRequest",
+                        "safeName": "wateringRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "watering_request",
+                        "safeName": "watering_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WATERING_REQUEST",
+                        "safeName": "WATERING_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WateringRequest",
+                        "safeName": "WateringRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "milliliters",
+                        "name": {
+                            "originalName": "milliliters",
+                            "camelCase": {
+                                "unsafeName": "milliliters",
+                                "safeName": "milliliters"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "milliliters",
+                                "safeName": "milliliters"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MILLILITERS",
+                                "safeName": "MILLILITERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Milliliters",
+                                "safeName": "Milliliters"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:Watering": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Watering",
+                    "camelCase": {
+                        "unsafeName": "watering",
+                        "safeName": "watering"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "watering",
+                        "safeName": "watering"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WATERING",
+                        "safeName": "WATERING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Watering",
+                        "safeName": "Watering"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "milliliters",
+                        "name": {
+                            "originalName": "milliliters",
+                            "camelCase": {
+                                "unsafeName": "milliliters",
+                                "safeName": "milliliters"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "milliliters",
+                                "safeName": "milliliters"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MILLILITERS",
+                                "safeName": "MILLILITERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Milliliters",
+                                "safeName": "Milliliters"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.waterPlant": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "waterPlant",
+                    "camelCase": {
+                        "unsafeName": "waterPlant",
+                        "safeName": "waterPlant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "water_plant",
+                        "safeName": "water_plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WATER_PLANT",
+                        "safeName": "WATER_PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WaterPlant",
+                        "safeName": "WaterPlant"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants/{plantId}/water"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "WaterPlantRequest",
+                        "camelCase": {
+                            "unsafeName": "waterPlantRequest",
+                            "safeName": "waterPlantRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "water_plant_request",
+                            "safeName": "water_plant_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WATER_PLANT_REQUEST",
+                            "safeName": "WATER_PLANT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "WaterPlantRequest",
+                            "safeName": "WaterPlantRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "plantId",
+                                "camelCase": {
+                                    "unsafeName": "plantID",
+                                    "safeName": "plantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plant_id",
+                                    "safeName": "plant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANT_ID",
+                                    "safeName": "PLANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PlantID",
+                                    "safeName": "PlantID"
+                                }
+                            },
+                            "wireValue": "plantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:WateringRequest"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.waterAllPlants": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "waterAllPlants",
+                    "camelCase": {
+                        "unsafeName": "waterAllPlants",
+                        "safeName": "waterAllPlants"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "water_all_plants",
+                        "safeName": "water_all_plants"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WATER_ALL_PLANTS",
+                        "safeName": "WATER_ALL_PLANTS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WaterAllPlants",
+                        "safeName": "WaterAllPlants"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants/water"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:WateringRequest"
+                    }
+                },
+                "bodyRequired": false
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.prunePlant": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "prunePlant",
+                    "camelCase": {
+                        "unsafeName": "prunePlant",
+                        "safeName": "prunePlant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "prune_plant",
+                        "safeName": "prune_plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRUNE_PLANT",
+                        "safeName": "PRUNE_PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PrunePlant",
+                        "safeName": "PrunePlant"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants/{plantId}/prune"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "PrunePlantRequest",
+                        "camelCase": {
+                            "unsafeName": "prunePlantRequest",
+                            "safeName": "prunePlantRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "prune_plant_request",
+                            "safeName": "prune_plant_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRUNE_PLANT_REQUEST",
+                            "safeName": "PRUNE_PLANT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PrunePlantRequest",
+                            "safeName": "PrunePlantRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "plantId",
+                                "camelCase": {
+                                    "unsafeName": "plantID",
+                                    "safeName": "plantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plant_id",
+                                    "safeName": "plant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANT_ID",
+                                    "safeName": "PLANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PlantID",
+                                    "safeName": "PlantID"
+                                }
+                            },
+                            "wireValue": "plantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:WateringRequest"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.mistPlant": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "mistPlant",
+                    "camelCase": {
+                        "unsafeName": "mistPlant",
+                        "safeName": "mistPlant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "mist_plant",
+                        "safeName": "mist_plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MIST_PLANT",
+                        "safeName": "MIST_PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MistPlant",
+                        "safeName": "MistPlant"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants/{plantId}/mist"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "MistPlantRequest",
+                        "camelCase": {
+                            "unsafeName": "mistPlantRequest",
+                            "safeName": "mistPlantRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "mist_plant_request",
+                            "safeName": "mist_plant_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MIST_PLANT_REQUEST",
+                            "safeName": "MIST_PLANT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MistPlantRequest",
+                            "safeName": "MistPlantRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "plantId",
+                                "camelCase": {
+                                    "unsafeName": "plantID",
+                                    "safeName": "plantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plant_id",
+                                    "safeName": "plant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANT_ID",
+                                    "safeName": "PLANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PlantID",
+                                    "safeName": "PlantID"
+                                }
+                            },
+                            "wireValue": "plantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "wireValue": "X-Idempotency-Key",
+                            "name": {
+                                "originalName": "idempotencyKey",
+                                "camelCase": {
+                                    "unsafeName": "idempotencyKey",
+                                    "safeName": "idempotencyKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "idempotency_key",
+                                    "safeName": "idempotency_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "IDEMPOTENCY_KEY",
+                                    "safeName": "IDEMPOTENCY_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "IdempotencyKey",
+                                    "safeName": "IdempotencyKey"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:WateringRequest"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}
