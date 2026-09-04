@@ -1,0 +1,6 @@
+- summary: |
+    Add support for playground-specific auth documentation. Set `x-fern-playground-description` on an
+    OpenAPI security scheme (or `playground-docs` on a Fern definition auth scheme) to render text below
+    that scheme's input in the API playground, leaving the API reference's authorization description
+    (`description`/`docs`) untouched.
+  type: feat

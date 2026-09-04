@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Auth Playground Description Test API
+  version: 1.0.0
+
+servers:
+  - url: https://api.example.com
+
+paths:
+  /resource:
+    get:
+      operationId: getResource
+      summary: Get protected resource
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "resource data"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token issued to a specific user.
+      x-fern-playground-description: |
+        To mint a token, go to https://example.com/developers/apps

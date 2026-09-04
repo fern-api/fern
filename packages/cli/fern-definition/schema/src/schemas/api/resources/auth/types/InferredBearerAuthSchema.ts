@@ -2,7 +2,9 @@
 
 import type * as FernDefinition from "../../../index.js";
 
-export interface InferredBearerAuthSchema extends FernDefinition.WithDocsSchema {
+export interface InferredBearerAuthSchema
+    extends FernDefinition.WithDocsSchema,
+        FernDefinition.WithPlaygroundDocsSchema {
     scheme: "bearer";
     "get-token": FernDefinition.InferredGetTokenEndpointSchema;
 }

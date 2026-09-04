@@ -40,6 +40,11 @@ types:
         docs: |
           The unique key for this auth scheme. This will be used to reference the scheme in endpoint auth requirements.
           Defaults to the type of the auth scheme if not provided.
+      playgroundDocs:
+        type: optional<string>
+        docs: |
+          Documentation rendered below this scheme's input in the API playground, instead of `docs`.
+          Set from `x-fern-playground-description` in OpenAPI or `playground-docs` in a Fern definition.
 
   InferredAuthScheme:
     extends: BaseAuthScheme

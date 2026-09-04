@@ -2,7 +2,7 @@
 
 import type * as FernDefinition from "../../../index.js";
 
-export interface BasicAuthSchemeSchema extends FernDefinition.WithDocsSchema {
+export interface BasicAuthSchemeSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithPlaygroundDocsSchema {
     scheme: "basic";
     username?: FernDefinition.AuthVariable;
     password?: FernDefinition.AuthVariable;

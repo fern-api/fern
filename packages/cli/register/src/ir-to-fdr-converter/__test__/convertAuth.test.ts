@@ -15,6 +15,7 @@ function oauthScheme(configuration: Ir.auth.OAuthConfiguration): Ir.auth.AuthSch
     return Ir.auth.AuthScheme.oauth({
         key: "MyOAuth",
         docs: "Log in with OAuth",
+        playgroundDocs: undefined,
         configuration
     });
 }
