@@ -1,4 +1,5 @@
 import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -238,6 +239,32 @@ export class GeneratedQueryParams {
         }
 
         if (this.isDeepObjectMap(queryParameter.valueType, context)) {
+            if (context.includeSerdeLayer && this.mapNeedsSerde(queryParameter.valueType, context)) {
+                const serializerCall = context.typeSchema
+                    .getSchemaOfTypeReference(queryParameter.valueType)
+                    .jsonOrThrow(referenceToQueryParameter, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                        skipValidation: false,
+                        breadcrumbsPrefix: ["request", paramName],
+                        omitUndefined: context.omitUndefined
+                    });
+                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
+                    return ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            referenceToQueryParameter,
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        serializerCall,
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        referenceToQueryParameter
+                    );
+                }
+                return serializerCall;
+            }
             return referenceToQueryParameter;
         }
 
@@ -488,42 +515,85 @@ export class GeneratedQueryParams {
     }
 
     /**
-     * With `deepObjectMapQueryParameters` enabled, a map whose values are plain primitives
-     * (e.g. `map<string, string>`) is passed to the query builder as-is so it serializes in
-     * deepObject form (`key[sub]=value`) rather than as a JSON string.
+     * With `deepObjectMapQueryParameters` enabled, a map query parameter is handed to the
+     * query builder (after serde, if its values need it) so it serializes in deepObject form
+     * (`key[sub]=value`, recursing into nested objects/maps) rather than as a JSON string.
      */
     private isDeepObjectMap(typeReference: FernIr.TypeReference, context: FileContext): boolean {
         if (!context.deepObjectMapQueryParameters) {
             return false;
         }
-        return this.isPrimitiveValuedMap(typeReference, context);
+        return this.getMapType(typeReference, context) != null;
     }
 
-    private isPrimitiveValuedMap(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    private getMapType(typeReference: FernIr.TypeReference, context: FileContext): FernIr.MapType | undefined {
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = context.type.getTypeDeclaration(typeReference);
                 if (typeDeclaration.shape.type === "alias") {
-                    return this.isPrimitiveValuedMap(typeDeclaration.shape.aliasOf, context);
+                    return this.getMapType(typeDeclaration.shape.aliasOf, context);
                 }
-                return false;
+                return undefined;
             }
             case "container": {
                 switch (typeReference.container.type) {
                     case "optional":
-                        return this.isPrimitiveValuedMap(typeReference.container.optional, context);
+                        return this.getMapType(typeReference.container.optional, context);
                     case "nullable":
-                        return this.isPrimitiveValuedMap(typeReference.container.nullable, context);
-                    case "map": {
-                        const valueType = this.getPrimitiveType(typeReference.container.valueType, context);
-                        return valueType != null && !primitiveTypeNeedsStringify(valueType.primitive);
-                    }
+                        return this.getMapType(typeReference.container.nullable, context);
+                    case "map":
+                        return typeReference.container;
                     default:
-                        return false;
+                        return undefined;
                 }
             }
             default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Whether a map's values contain anything the serde layer must transform before the
+     * query builder can stringify them (wire-cased object keys, dates, enums, unions, ...).
+     */
+    private mapNeedsSerde(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        const mapType = this.getMapType(typeReference, context);
+        return mapType != null && this.typeNeedsSerde(mapType.valueType, context);
+    }
+
+    private typeNeedsSerde(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        switch (typeReference.type) {
+            case "primitive":
+                return primitiveTypeNeedsStringify(typeReference.primitive);
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.typeNeedsSerde(typeDeclaration.shape.aliasOf, context);
+                }
+                return true;
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.typeNeedsSerde(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.typeNeedsSerde(typeReference.container.nullable, context);
+                    case "list":
+                        return this.typeNeedsSerde(typeReference.container.list, context);
+                    case "set":
+                        return this.typeNeedsSerde(typeReference.container.set, context);
+                    case "map":
+                        return this.typeNeedsSerde(typeReference.container.valueType, context);
+                    case "literal":
+                        return false;
+                    default:
+                        return assertNever(typeReference.container);
+                }
+            }
+            case "unknown":
                 return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -556,7 +626,7 @@ export class GeneratedQueryParams {
             return primitiveTypeNeedsStringify(primitiveType.primitive);
         }
         if (this.isDeepObjectMap(typeReference, context)) {
-            return false;
+            return context.includeSerdeLayer && this.mapNeedsSerde(typeReference, context);
         }
         return true;
     }

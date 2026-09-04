@@ -484,26 +484,167 @@ describe("GeneratedQueryParams", () => {
             expect(text).toMatchSnapshot();
         });
 
-        it("still stringifies map<string, datetime> when deepObjectMapQueryParameters is enabled", () => {
-            const mapType = FernIr.TypeReference.container(
-                FernIr.ContainerType.map({
-                    keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                    valueType: FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined })
-                })
-            );
-            const queryParams = [createQueryParameter("timestamps", mapType)];
-
-            const generator = new GeneratedQueryParams({
-                queryParameters: queryParams,
-                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+        describe("deepObjectMapQueryParameters with non-primitive map values", () => {
+            const stringType = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
+            const dateTimeType = FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined });
+            const myObjectType = FernIr.TypeReference.named({
+                typeId: "type_MyObject",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
+                displayName: undefined,
+                default: undefined,
+                inline: undefined
+            });
+            const mapOf = (valueType: FernIr.TypeReference) =>
+                FernIr.TypeReference.container(FernIr.ContainerType.map({ keyType: stringType, valueType }));
+            const objectShape = FernIr.Type.object({
+                properties: [],
+                extends: [],
+                extraProperties: false,
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             });
 
-            const statements = generator.getBuildStatements(createMockContext({ deepObjectMapQueryParameters: true }));
-            const firstStmt = statements[0];
-            assert(firstStmt != null, "expected at least one statement");
-            const text = getTextOfTsNode(firstStmt);
-            expect(text).toContain("toString");
-            expect(text).toMatchSnapshot();
+            function generate(
+                name: string,
+                type: FernIr.TypeReference,
+                opts: { includeSerdeLayer: boolean; deepObjectMapQueryParameters?: boolean }
+            ): string {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: opts.includeSerdeLayer,
+                    deepObjectMapQueryParameters: opts.deepObjectMapQueryParameters ?? true
+                });
+                mockContext.type.getTypeDeclaration = () => ({ shape: objectShape });
+                mockContext.typeSchema.getSchemaOfTypeReference = () => ({
+                    jsonOrThrow: (expr: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier("serializers.record.jsonOrThrow"),
+                            undefined,
+                            [expr]
+                        )
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter(name, type)],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                return getTextOfTsNode(firstStmt);
+            }
+
+            it("still stringifies map<string, MyObject> when the flag is disabled", () => {
+                const text = generate("metadata", mapOf(myObjectType), {
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: false
+                });
+                expect(text).toContain("toString");
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes map<string, datetime> via the serde layer", () => {
+                const text = generate("timestamps", mapOf(dateTimeType), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(timestamps)");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes map<string, MyObject> via the serde layer", () => {
+                const text = generate("metadata", mapOf(myObjectType), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(metadata)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes optional<map<string, MyObject>> via the serde layer with a null guard", () => {
+                const type = FernIr.TypeReference.container(FernIr.ContainerType.optional(mapOf(myObjectType)));
+                const text = generate("metadata", type, { includeSerdeLayer: true });
+                expect(text).toContain("metadata != null ? serializers.record.jsonOrThrow(metadata) : metadata");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes nullable<map<string, MyObject>> via the serde layer (nullable schema handles null)", () => {
+                const type = FernIr.TypeReference.container(FernIr.ContainerType.nullable(mapOf(myObjectType)));
+                const text = generate("metadata", type, { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(metadata)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes nullable<map<string, boolean>> through untouched", () => {
+                const boolType = FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined });
+                const type = FernIr.TypeReference.container(FernIr.ContainerType.nullable(mapOf(boolType)));
+                const text = generate("flags", type, { includeSerdeLayer: true });
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes map<string, list<datetime>> via the serde layer", () => {
+                const listOfDates = FernIr.TypeReference.container(FernIr.ContainerType.list(dateTimeType));
+                const text = generate("windows", mapOf(listOfDates), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(windows)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes map<string, map<string, MyObject>> (nested map) via the serde layer", () => {
+                const text = generate("nested", mapOf(mapOf(myObjectType)), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(nested)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("serializes map<string, list<MyObject>> via the serde layer", () => {
+                const listOfObject = FernIr.TypeReference.container(FernIr.ContainerType.list(myObjectType));
+                const text = generate("grouped", mapOf(listOfObject), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(grouped)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes map<string, map<string, string>> through untouched (no serde needed)", () => {
+                const text = generate("nested", mapOf(mapOf(stringType)), { includeSerdeLayer: true });
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes a named alias to map<string, string> through untouched", () => {
+                const mockContext = createMockContext({ deepObjectMapQueryParameters: true });
+                mockContext.type.getTypeDeclaration = () => ({
+                    shape: FernIr.Type.alias({
+                        aliasOf: mapOf(stringType),
+                        resolvedType: FernIr.ResolvedTypeReference.container(
+                            FernIr.ContainerType.map({ keyType: stringType, valueType: stringType })
+                        )
+                    })
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter("metadata", myObjectType)],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes map<string, MyObject> through untouched when the serde layer is disabled", () => {
+                const text = generate("metadata", mapOf(myObjectType), { includeSerdeLayer: false });
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes map<string, datetime> through untouched when the serde layer is disabled", () => {
+                const text = generate("timestamps", mapOf(dateTimeType), { includeSerdeLayer: false });
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
         });
 
         it("uses originalName when retainOriginalCasing is true", () => {

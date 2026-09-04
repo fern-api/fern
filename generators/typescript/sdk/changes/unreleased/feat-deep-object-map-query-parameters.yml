@@ -2,10 +2,13 @@
 
 - summary: |
     Add the opt-in `deepObjectMapQueryParameters` configuration option. When enabled, query parameters typed
-    as a map with primitive values (e.g. `map<string, string>`, which is what an OpenAPI `type: object` +
-    `additionalProperties` schema imports as) are passed through to the query builder and serialized in
-    deepObject form (`?metadata[env]=prod`) instead of being JSON-stringified (`?metadata=%7B%22env%22...`).
-    Defaults to `false`, so existing SDKs are unaffected.
+    as a map (e.g. `map<string, string>`, which is what an OpenAPI `type: object` + `additionalProperties`
+    schema imports as) are handed to the query builder and serialized in deepObject form
+    (`?metadata[env]=prod`) instead of being JSON-stringified (`?metadata=%7B%22env%22...`). Maps whose
+    values are objects, nested maps, lists, or date-times are supported too: with the serde layer enabled
+    they are run through the generated schema first, so nested keys use wire names and dates are ISO strings
+    (`?metadata[env][created_at]=2026-09-04T00:00:00.000Z`). Defaults to `false`, so existing SDKs are
+    unaffected.
 
     ```yaml
     - name: fernapi/fern-typescript-sdk
