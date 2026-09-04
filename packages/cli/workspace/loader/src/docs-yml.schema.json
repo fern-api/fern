@@ -4551,6 +4551,17 @@
           ],
           "description": "Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.\nWhen set to `false`, the endpoint returns 404, the MCP server URL is omitted from\n`llms.txt` and agent prompts, and the \"Connect to Claude Code\" / \"Connect to Cursor\"\nbuttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents\ndiscovering the endpoint would cause confusion.\n\n@default: true"
         },
+        "mcp-auth": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Opts this docs site into the authenticated MCP endpoint (`/_mcp/authed/server`) and its\nOAuth metadata documents, letting MCP clients log in through the site's existing SSO or\npassword auth and receive results scoped to that user's roles. Only applies to docs sites\nthat have authentication configured; the public MCP endpoint is unaffected.\n\n@default: false"
+        },
         "vscode": {
           "oneOf": [
             {

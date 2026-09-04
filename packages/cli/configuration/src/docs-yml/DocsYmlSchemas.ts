@@ -380,6 +380,7 @@ export const PageActionOptions = z.object({
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
     mcp: z.boolean().optional(),
+    "mcp-auth": z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });
