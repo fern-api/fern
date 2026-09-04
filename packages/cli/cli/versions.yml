@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.113.3
+  changelogEntry:
+    - summary: |
+        Revert the namespace-scoped shared-error collapse (#17619) and the case-insensitive namespace/tag flattening
+        (#17643) in the OpenAPI importer. Shared errors are again compared API-wide by status code, and an operation tag
+        that only matches the spec `namespace` case-insensitively is again treated as a sub-group.
+      type: fix
+  createdAt: "2026-09-04"
+  irVersion: 67
 - version: 5.113.2
   changelogEntry:
     - summary: |
