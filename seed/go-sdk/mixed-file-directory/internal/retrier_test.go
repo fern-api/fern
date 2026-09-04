@@ -401,61 +401,62 @@ func newCountingRetryFunc(count *int, header http.Header, statusCodes ...int) Re
 	}
 }
 
-func TestRetrierRunAttemptsAndSleeps(t *testing.T) {
-	// noSleepThreshold is the maximum time a Run is allowed to take when it
-	// must not wait on any backoff; Retry-After: 1 would push it past this.
-	const noSleepThreshold = 500 * time.Millisecond
+// stubSleep replaces the retrier's sleep with one that records the requested
+// delays instead of waiting, so tests can assert on backoff deterministically.
+func stubSleep(retrier *Retrier) *[]time.Duration {
+	var sleeps []time.Duration
+	retrier.sleep = func(_ context.Context, delay time.Duration) error {
+		sleeps = append(sleeps, delay)
+		return nil
+	}
+	return &sleeps
+}
 
+func TestRetrierRunAttemptsAndSleeps(t *testing.T) {
 	retryAfterOne := http.Header{"Retry-After": []string{"1"}}
 
 	tests := []struct {
-		name           string
-		retrier        *Retrier
-		runOptions     []RetryOption
-		statusCodes    []int
-		wantRequests   int
-		wantResponse   bool
-		wantMinElapsed time.Duration
-		wantMaxElapsed time.Duration
+		name         string
+		retrier      *Retrier
+		runOptions   []RetryOption
+		statusCodes  []int
+		wantRequests int
+		wantSleeps   []time.Duration
+		wantResponse bool
 	}{
 		{
-			name:           "constructor-level WithDisableRetries issues exactly one request without sleeping",
-			retrier:        NewRetrier(WithDisableRetries()),
-			statusCodes:    []int{http.StatusTooManyRequests},
-			wantRequests:   1,
-			wantMaxElapsed: noSleepThreshold,
+			name:         "constructor-level WithDisableRetries issues exactly one request without sleeping",
+			retrier:      NewRetrier(WithDisableRetries()),
+			statusCodes:  []int{http.StatusTooManyRequests},
+			wantRequests: 1,
 		},
 		{
-			name:           "constructor-level WithMaxAttempts(1) issues exactly one request without sleeping",
-			retrier:        NewRetrier(WithMaxAttempts(1)),
-			statusCodes:    []int{http.StatusTooManyRequests},
-			wantRequests:   1,
-			wantMaxElapsed: noSleepThreshold,
+			name:         "constructor-level WithMaxAttempts(1) issues exactly one request without sleeping",
+			retrier:      NewRetrier(WithMaxAttempts(1)),
+			statusCodes:  []int{http.StatusTooManyRequests},
+			wantRequests: 1,
 		},
 		{
-			name:           "per-call WithDisableRetries overrides a retrying constructor without sleeping",
-			retrier:        NewRetrier(WithMaxAttempts(3)),
-			runOptions:     []RetryOption{WithDisableRetries()},
-			statusCodes:    []int{http.StatusTooManyRequests},
-			wantRequests:   1,
-			wantMaxElapsed: noSleepThreshold,
+			name:         "per-call WithDisableRetries overrides a retrying constructor without sleeping",
+			retrier:      NewRetrier(WithMaxAttempts(3)),
+			runOptions:   []RetryOption{WithDisableRetries()},
+			statusCodes:  []int{http.StatusTooManyRequests},
+			wantRequests: 1,
 		},
 		{
-			name:           "two-attempt retrier against a persistent 429 sleeps exactly once",
-			retrier:        NewRetrier(WithMaxAttempts(2)),
-			statusCodes:    []int{http.StatusTooManyRequests},
-			wantRequests:   2,
-			wantMinElapsed: 1 * time.Second,
-			wantMaxElapsed: 1*time.Second + noSleepThreshold,
+			name:         "two-attempt retrier against a persistent 429 sleeps exactly once",
+			retrier:      NewRetrier(WithMaxAttempts(2)),
+			statusCodes:  []int{http.StatusTooManyRequests},
+			wantRequests: 2,
+			wantSleeps:   []time.Duration{time.Second},
 		},
 		{
-			name:           "retrier that succeeds on the second attempt returns the response",
-			retrier:        NewRetrier(WithMaxAttempts(2)),
-			statusCodes:    []int{http.StatusTooManyRequests, http.StatusOK},
-			wantRequests:   2,
-			wantResponse:   true,
-			wantMinElapsed: 1 * time.Second,
-			wantMaxElapsed: 1*time.Second + noSleepThreshold,
+			name:         "retrier that succeeds on the second attempt returns the response",
+			retrier:      NewRetrier(WithMaxAttempts(2)),
+			statusCodes:  []int{http.StatusTooManyRequests, http.StatusOK},
+			wantRequests: 2,
+			wantSleeps:   []time.Duration{time.Second},
+			wantResponse: true,
 		},
 	}
 
@@ -469,12 +470,12 @@ func TestRetrierRunAttemptsAndSleeps(t *testing.T) {
 
 			var requestCount int
 			fn := newCountingRetryFunc(&requestCount, retryAfterOne, tt.statusCodes...)
+			sleeps := stubSleep(tt.retrier)
 
-			start := time.Now()
 			response, err := tt.retrier.Run(fn, request, nil, tt.runOptions...)
-			elapsed := time.Since(start)
 
 			assert.Equal(t, tt.wantRequests, requestCount, "unexpected number of requests")
+			assert.Equal(t, tt.wantSleeps, *sleeps, "unexpected backoff sleeps")
 			if tt.wantResponse {
 				require.NoError(t, err)
 				require.NotNil(t, response)
@@ -483,8 +484,6 @@ func TestRetrierRunAttemptsAndSleeps(t *testing.T) {
 				require.Error(t, err)
 				assert.Nil(t, response)
 			}
-			assert.GreaterOrEqual(t, elapsed, tt.wantMinElapsed, "Run returned too quickly (%v)", elapsed)
-			assert.Less(t, elapsed, tt.wantMaxElapsed, "Run slept for longer than expected (%v)", elapsed)
 		})
 	}
 }
@@ -519,8 +518,9 @@ func TestRetryDelayDoesNotPanicNearRateLimitReset(t *testing.T) {
 		for time.Until(resetTime) > -time.Millisecond {
 			delay, err := retrier.retryDelay(response, 0)
 			require.NoError(t, err)
-			assert.GreaterOrEqual(t, delay, minRetryDelay)
-			assert.LessOrEqual(t, delay, maxRetryDelay)
+			require.GreaterOrEqual(t, delay, minRetryDelay)
+			require.LessOrEqual(t, delay, maxRetryDelay)
+			time.Sleep(time.Millisecond)
 		}
 	})
 }

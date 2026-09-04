@@ -54,6 +54,9 @@ func buildRetryOptions(maxAttempts uint, disableRetries bool) []RetryOption {
 type Retrier struct {
 	attempts uint
 	disabled bool
+
+	// sleep waits between attempts; tests override it to avoid real delays.
+	sleep func(ctx context.Context, delay time.Duration) error
 }
 
 // NewRetrier constructs a new *Retrier with the given options, if any.
@@ -69,6 +72,7 @@ func NewRetrier(opts ...RetryOption) *Retrier {
 	return &Retrier{
 		attempts: attempts,
 		disabled: options.disabled,
+		sleep:    sleepWithContext,
 	}
 }
 
@@ -163,7 +167,7 @@ func (r *Retrier) run(
 			return nil, err
 		}
 
-		if err := sleepWithContext(request.Context(), delay); err != nil {
+		if err := r.sleep(request.Context(), delay); err != nil {
 			return nil, err
 		}
 
