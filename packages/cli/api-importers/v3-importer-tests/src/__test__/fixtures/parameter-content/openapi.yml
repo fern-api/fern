@@ -44,6 +44,11 @@ components:
   schemas:
     AccountPhotoGetArg:
       type: object
+      examples:
+        - circle_crop: false
+          dbx_account_id: "dbid:plant-fern-123"
+          expect_account_photo: true
+          size: 128x128
       required:
         - dbx_account_id
       properties:
