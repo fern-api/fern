@@ -468,8 +468,7 @@ export function buildEndpoint({
 
         const errorNamespace = getErrorNamespace({
             endpointNamespace: maybeEndpointNamespace,
-            error: httpError,
-            namespacedErrors: context.options.namespacedErrors
+            error: httpError
         });
         const errorDeclarationFile = resolveLocationWithNamespace({
             location: ERROR_DECLARATIONS_FILENAME,
@@ -493,11 +492,7 @@ export function buildEndpoint({
             name: errorName,
             schema: context.isErrorUnknownSchema({
                 statusCode: parseInt(statusCode),
-                namespace: getErrorConflictNamespace({
-                    endpointNamespace: maybeEndpointNamespace,
-                    error: httpError,
-                    namespacedErrors: context.options.namespacedErrors
-                })
+                namespace: getErrorConflictNamespace({ error: httpError })
             })
                 ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration

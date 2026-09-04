@@ -15,7 +15,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
 import { SchemaReachability, SchemaVariantPlan } from "./computeSchemaReachability.js";
 import { State } from "./State.js";
-import { getEndpointNamespace, getErrorConflictNamespace } from "./utils/getNamespaceFromGroup.js";
+import { getErrorConflictNamespace } from "./utils/getNamespaceFromGroup.js";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -113,14 +113,9 @@ export class OpenApiIrConverterContext {
         const schemaByErrorKey: Record<string, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
             for (const endpoint of ir.endpoints) {
-                const endpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
                     const statusCode = parseInt(statusCodeString);
-                    const namespace = getErrorConflictNamespace({
-                        endpointNamespace,
-                        error,
-                        namespacedErrors: this.options.namespacedErrors
-                    });
+                    const namespace = getErrorConflictNamespace({ error });
                     const key = getErrorKey({ statusCode, namespace });
                     const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
