@@ -604,6 +604,22 @@ describe("GeneratedQueryParams", () => {
                 expect(text).toMatchSnapshot();
             });
 
+            it("serializes map<string, set<string>> via the serde layer (a JS Set would vanish)", () => {
+                const setOfStrings = FernIr.TypeReference.container(FernIr.ContainerType.set(stringType));
+                const text = generate("tags", mapOf(setOfStrings), { includeSerdeLayer: true });
+                expect(text).toContain("serializers.record.jsonOrThrow(tags)");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("passes map<string, set<string>> through untouched when the serde layer is disabled", () => {
+                // Without serde, `set<string>` is generated as an array, which the query builder walks natively.
+                const setOfStrings = FernIr.TypeReference.container(FernIr.ContainerType.set(stringType));
+                const text = generate("tags", mapOf(setOfStrings), { includeSerdeLayer: false });
+                expect(text).not.toContain("jsonOrThrow");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
             it("passes map<string, map<string, string>> through untouched (no serde needed)", () => {
                 const text = generate("nested", mapOf(mapOf(stringType)), { includeSerdeLayer: true });
                 expect(text).not.toContain("jsonOrThrow");

@@ -581,6 +581,13 @@ export class GeneratedQueryParams {
                     case "list":
                         return this.typeNeedsSerde(typeReference.container.list, context);
                     case "set":
+                        // A set of primitives/enums is generated as a JS `Set`, which the query
+                        // builder can't walk (it enumerates values with `Object.entries`, which
+                        // yields nothing for a `Set`), so the parameter would silently vanish from
+                        // the URL. Route it through serde, which emits an array.
+                        if (this.isGeneratedAsJsSet(typeReference.container.set, context)) {
+                            return true;
+                        }
                         return this.typeNeedsSerde(typeReference.container.set, context);
                     case "map":
                         return this.typeNeedsSerde(typeReference.container.valueType, context);
@@ -595,6 +602,22 @@ export class GeneratedQueryParams {
             default:
                 assertNever(typeReference);
         }
+    }
+
+    /**
+     * Mirrors `TypeReferenceToParsedTypeNodeConverter.set`: with the serde layer enabled, a set of
+     * primitives (or enums) is generated as a JS `Set` rather than an array. Without the serde
+     * layer it falls back to a list, which the query builder handles natively.
+     */
+    private isGeneratedAsJsSet(itemType: FernIr.TypeReference, context: FileContext): boolean {
+        if (!context.includeSerdeLayer) {
+            return false;
+        }
+        const resolvedType = context.type.resolveTypeReference(itemType);
+        return (
+            resolvedType.type === "primitive" ||
+            (resolvedType.type === "named" && resolvedType.shape === FernIr.ShapeType.Enum)
+        );
     }
 
     private isOptional(typeReference: FernIr.TypeReference): boolean {

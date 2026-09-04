@@ -24,6 +24,12 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 };"
 `;
 
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes map<string, set<string>> through untouched when the serde layer is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes nullable<map<string, boolean>> through untouched 1`] = `
 "const _queryParams: Record<string, unknown> = {
     flags
@@ -57,6 +63,12 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, map<string, MyObject>> (nested map) via the serde layer 1`] = `
 "const _queryParams: Record<string, unknown> = {
     nested: serializers.record.jsonOrThrow(nested)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, set<string>> via the serde layer (a JS Set would vanish) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags: serializers.record.jsonOrThrow(tags)
 };"
 `;
 
