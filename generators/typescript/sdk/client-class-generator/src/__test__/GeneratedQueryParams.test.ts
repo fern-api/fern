@@ -712,9 +712,9 @@ describe("GeneratedQueryParams", () => {
                 });
 
                 it("names the endpoint when one is available", () => {
-                    expect(
-                        build("metadata", mapOf(unknownType), { endpointLabel: "GET /search" })
-                    ).toThrow(/Query parameter 'metadata' on GET \/search is a map with `unknown` values/);
+                    expect(build("metadata", mapOf(unknownType), { endpointLabel: "GET /search" })).toThrow(
+                        /Query parameter 'metadata' on GET \/search is a map with `unknown` values/
+                    );
                 });
 
                 it("explains both ways out", () => {
@@ -738,7 +738,9 @@ describe("GeneratedQueryParams", () => {
                 });
 
                 it("does not throw when the flag is disabled", () => {
-                    expect(build("metadata", mapOf(unknownType), { deepObjectMapQueryParameters: false })).not.toThrow();
+                    expect(
+                        build("metadata", mapOf(unknownType), { deepObjectMapQueryParameters: false })
+                    ).not.toThrow();
                 });
 
                 it("does not throw for a map declared explode: false", () => {
