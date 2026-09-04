@@ -1,0 +1,12 @@
+- summary: |
+    Fix `HandleExplicitFields` silently corrupting the JSON body of types that have
+    date/date-time fields. When any `SetXxx` setter was called on such a type, the
+    generated `MarshalJSON` wrapper (embedded struct plus date shadow fields) was not
+    recognized as the embed pattern, so the explicit-field bits were applied to the
+    wrapper's fields instead of the embedded type's fields and the embedded struct
+    itself was dropped from the output (e.g. `req.SetCount(&n)` produced
+    `{"end_date":null}` instead of `{"count":7}`). This also caused offset-based
+    auto-pagination to loop forever. Shadow fields are now preserved and
+    `omitempty` is stripped from the shadow field when the shadowed date field is
+    explicitly set, so `SetStartDate(nil)` emits `"start_date":null`.
+  type: fix
