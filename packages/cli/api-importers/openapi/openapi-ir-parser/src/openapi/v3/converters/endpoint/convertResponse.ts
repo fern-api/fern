@@ -409,6 +409,7 @@ function markErrorSchemas({
             context.logger.warn(`No error name found for status code ${statusCode}`);
             continue;
         }
+        const responseNamespace = getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE);
         errors[parsedStatusCode] = {
             statusCode: parsedStatusCode,
             nameOverride: undefined,
@@ -421,9 +422,10 @@ function markErrorSchemas({
                 context,
                 [errorName, "Body"],
                 source,
-                namespace
+                responseNamespace ?? namespace
             ),
             fullExamples: mediaObject?.examples,
+            namespace: responseNamespace,
             source
         };
     }

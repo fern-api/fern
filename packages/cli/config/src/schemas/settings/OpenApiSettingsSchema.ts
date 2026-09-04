@@ -142,7 +142,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.
      * Defaults to false.
      */
-    "respect-per-spec-base-path": z.boolean().optional()
+    "respect-per-spec-base-path": z.boolean().optional(),
+
+    /**
+     * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+     * within, that namespace instead of the endpoint's namespace.
+     * Defaults to false.
+     */
+    "namespaced-errors": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

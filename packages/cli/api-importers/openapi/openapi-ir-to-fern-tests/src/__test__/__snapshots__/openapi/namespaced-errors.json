@@ -1,0 +1,324 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "TooManyRequestsError": {
+            "docs": "Too many requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 429,
+            "type": "Error",
+          },
+        },
+        "types": {
+          "Error": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "optional<string>",
+            },
+            "source": {
+              "openapi": "entities.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  TooManyRequestsError:
+    status-code: 429
+    type: Error
+    docs: Too many requests
+    examples:
+      - value: {}
+types:
+  Error:
+    properties:
+      code: optional<string>
+    source:
+      openapi: entities.yml
+",
+    },
+    "entities.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getEntity": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "root.TooManyRequestsError",
+              ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/entities/{id}",
+              "request": {
+                "name": "GetEntityRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "entities.yml",
+              },
+            },
+            "listEntities": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "root.TooManyRequestsError",
+              ],
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/entities",
+              "source": {
+                "openapi": "entities.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "entities.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listEntities:
+      path: /entities
+      method: GET
+      source:
+        openapi: entities.yml
+      errors:
+        - root.TooManyRequestsError
+      examples:
+        - {}
+    getEntity:
+      path: /entities/{id}
+      method: GET
+      source:
+        openapi: entities.yml
+      request:
+        name: GetEntityRequest
+        path-parameters:
+          id: string
+      errors:
+        - root.TooManyRequestsError
+      examples:
+        - path-parameters:
+            id: id
+  source:
+    openapi: entities.yml
+",
+    },
+    "video.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "videoRoot": "video/__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createEgressStream": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "videoRoot.TooManyRequestsError",
+                "videoRoot.ServiceUnavailableError",
+              ],
+              "examples": [
+                {},
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/egress",
+              "source": {
+                "openapi": "video.yml",
+              },
+            },
+            "listEgressStreams": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "videoRoot.TooManyRequestsError",
+              ],
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/egress",
+              "source": {
+                "openapi": "video.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "video.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  videoRoot: video/__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listEgressStreams:
+      path: /egress
+      method: GET
+      source:
+        openapi: video.yml
+      errors:
+        - videoRoot.TooManyRequestsError
+      examples:
+        - {}
+    createEgressStream:
+      path: /egress
+      method: POST
+      source:
+        openapi: video.yml
+      errors:
+        - videoRoot.TooManyRequestsError
+        - videoRoot.ServiceUnavailableError
+      examples:
+        - {}
+  source:
+    openapi: video.yml
+",
+    },
+    "video/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "ServiceUnavailableError": {
+            "docs": "Service unavailable",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 503,
+            "type": "ServiceUnavailableBody",
+          },
+          "TooManyRequestsError": {
+            "docs": "Too many requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 429,
+            "type": "TooManyRequestsErrorBody",
+          },
+        },
+        "types": {
+          "ServiceUnavailableBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "retryAfter": "optional<integer>",
+            },
+            "source": {
+              "openapi": "video.yml",
+            },
+          },
+          "TooManyRequestsErrorBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": "optional<string>",
+              "retryAfter": "optional<integer>",
+            },
+            "source": {
+              "openapi": "video.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  TooManyRequestsErrorBody:
+    properties:
+      message: optional<string>
+      retryAfter: optional<integer>
+    source:
+      openapi: video.yml
+  ServiceUnavailableBody:
+    properties:
+      retryAfter: optional<integer>
+    source:
+      openapi: video.yml
+errors:
+  TooManyRequestsError:
+    status-code: 429
+    type: TooManyRequestsErrorBody
+    docs: Too many requests
+    examples:
+      - value: {}
+  ServiceUnavailableError:
+    status-code: 503
+    type: ServiceUnavailableBody
+    docs: Service unavailable
+    examples:
+      - value: {}
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "Video",
+      "environments": {
+        "Default": "https://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Video
+environments:
+  Default: https://api.example.com
+default-environment: Default
+",
+  },
+  "specVersion": "1.0",
+}

@@ -1,0 +1,7 @@
+api:
+  specs:
+    - openapi: video.yml
+      settings:
+        namespaced-errors: true
+    - openapi: entities.yml
+groups: {}

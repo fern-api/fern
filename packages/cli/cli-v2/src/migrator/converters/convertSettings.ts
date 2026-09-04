@@ -27,6 +27,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "prefer-undiscriminated-unions-with-literals": "preferUndiscriminatedUnionsWithLiterals",
     "object-query-parameters": "objectQueryParameters",
     "respect-readonly-schemas": "respectReadonlySchemas",
+    "namespaced-errors": "namespacedErrors",
     "use-read-variant-for-responses": "useReadVariantForResponses",
     "respect-forward-compatible-enums": "respectForwardCompatibleEnums",
     "respect-optional-request-body": "respectOptionalRequestBody",
