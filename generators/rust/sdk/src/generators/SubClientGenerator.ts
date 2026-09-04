@@ -1711,7 +1711,12 @@ export class SubClientGenerator {
                     literal: () => paramName,
                     _other: () => paramName
                 }),
-            unknown: () => paramName,
+            // An `unknown` path parameter is typed `serde_json::Value`, whose `Display` prints
+            // JSON: a string value keeps its quotes, so the path becomes `/users/"abc"`. Use the
+            // string content directly and fall back to the JSON encoding for the other variants
+            // (numbers and booleans print bare, which is what a path expects).
+            unknown: () =>
+                `${paramName}.as_str().map(ToString::to_string).unwrap_or_else(|| ${paramName}.to_string())`,
             _other: () => paramName
         });
     }
