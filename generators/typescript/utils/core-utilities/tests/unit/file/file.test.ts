@@ -28,6 +28,18 @@ describe("toContentDisposition", () => {
         }
     });
 
+    it("replaces lone surrogates instead of throwing", () => {
+        expect(toContentDisposition("bad\ud800.txt")).toBe(
+            "attachment; filename=\"bad_.txt\"; filename*=UTF-8''bad%EF%BF%BD.txt",
+        );
+        expect(toContentDisposition("\udc00bad.txt")).toBe(
+            "attachment; filename=\"_bad.txt\"; filename*=UTF-8''%EF%BF%BDbad.txt",
+        );
+        expect(toContentDisposition("ok\ud83d\ude00.txt")).toBe(
+            "attachment; filename=\"ok__.txt\"; filename*=UTF-8''ok%F0%9F%98%80.txt",
+        );
+    });
+
     it("escapes quotes and backslashes in the fallback filename", () => {
         expect(toContentDisposition('a"b\\c.txt')).toBe("attachment; filename=\"a_b_c.txt\"; filename*=UTF-8''a%22b%5Cc.txt");
     });
