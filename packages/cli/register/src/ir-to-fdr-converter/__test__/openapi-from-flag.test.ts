@@ -1007,6 +1007,65 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-user-docs-priority-ir.snap");
     });
 
+    it("should carry x-fern-playground-description alongside the auth description", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-playground-description")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-playground-description"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        const bearerScheme = intermediateRepresentation.auth.schemes.find((scheme) => scheme.key === "bearerAuth");
+        expect(bearerScheme?.docs).toBe("Bearer token issued to a specific user.");
+        expect(bearerScheme?.playgroundDocs).toBe("To mint a token, go to https://example.com/developers/apps\n");
+
+        expect(fdrApiDefinition.auth).toMatchObject({
+            type: "bearerAuth",
+            description: "Bearer token issued to a specific user.",
+            playgroundDescription: "To mint a token, go to https://example.com/developers/apps\n"
+        });
+    });
+
     it("should handle OpenAPI auth overrides combined with OpenAPI overrides file", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({

@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { AuthVariable } from "./AuthVariable.js";
+import { WithPlaygroundDocsSchema } from "./WithPlaygroundDocsSchema.js";
 
 export const TokenBearerAuthSchema: core.serialization.ObjectSchema<
     serializers.TokenBearerAuthSchema.Raw,
@@ -14,10 +15,11 @@ export const TokenBearerAuthSchema: core.serialization.ObjectSchema<
         scheme: core.serialization.stringLiteral("bearer"),
         token: AuthVariable.optional(),
     })
-    .extend(WithDocsSchema);
+    .extend(WithDocsSchema)
+    .extend(WithPlaygroundDocsSchema);
 
 export declare namespace TokenBearerAuthSchema {
-    export interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithPlaygroundDocsSchema.Raw {
         scheme: "bearer";
         token?: AuthVariable.Raw | null;
     }

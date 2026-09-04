@@ -17,6 +17,7 @@
         "passwordEnvVar": "PLANT_STORE_API_TOKEN",
         "passwordOmit": false,
         "passwordPlaceholder": undefined,
+        "playgroundDocs": undefined,
         "type": "basic",
         "username": "project_id",
         "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
