@@ -1369,7 +1369,10 @@ export class SubClientGenerator {
                         }
                         return this.getQueryBuilderMethodForType(innerType);
                     },
-                    map: () => "serialize",
+                    // A map query parameter is exploded: every entry becomes its own
+                    // parameter, keyed by the property name alone. serialize() would json
+                    // encode the whole map into a single parameter instead.
+                    map: () => "serialize_exploded",
                     set: () => "serialize",
                     list: () => "serialize",
                     literal: (literal) => {
@@ -1461,7 +1464,10 @@ export class SubClientGenerator {
                         }
                         return this.getQueryBuilderMethodForType(innerType);
                     },
-                    map: () => "serialize",
+                    // A map query parameter is exploded: every entry becomes its own
+                    // parameter, keyed by the property name alone. serialize() would json
+                    // encode the whole map into a single parameter instead.
+                    map: () => "serialize_exploded",
                     set: () => "serialize",
                     list: () => "serialize",
                     literal: (literal) => {
@@ -1545,7 +1551,7 @@ export class SubClientGenerator {
     // Check if parameter needs to be wrapped in Some() for serialize method
     private wrapParameterIfNeeded(paramName: string, method: string, queryParam: FernIr.QueryParameter): string {
         // Check if this is a serialize method and the type is not already optional
-        if (method === "serialize" && !this.isOptionalType(queryParam.valueType)) {
+        if ((method === "serialize" || method === "serialize_exploded") && !this.isOptionalType(queryParam.valueType)) {
             return `Some(${paramName})`;
         }
         return paramName;
