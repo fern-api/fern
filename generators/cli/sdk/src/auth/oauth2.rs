@@ -20,7 +20,7 @@
 //! creates a multi-threaded tokio runtime.
 
 use std::path::PathBuf;
-use std::sync::{Mutex, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use secrecy::{ExposeSecret, SecretString};
 use serde::Serialize;
@@ -910,6 +910,18 @@ impl AuthProvider for OAuth2TokenProvider {
     }
 
     fn credential_slots(&self) -> Vec<Vec<AuthCredentialSource>> {
+        // A valid cached token authenticates on its own, without the
+        // acquisition env vars, so it stands in for the whole set.
+        if let Some(cache) = self.cache.get() {
+            if let Some(bundle) = cache.load(&self.token_url) {
+                let hint = format!("cached OAuth token ({})", cache.path.display());
+                let token = bundle.access_token;
+                return vec![vec![AuthCredentialSource::Closure(
+                    Arc::new(move || Some(token.clone())),
+                    Some(hint),
+                )]];
+            }
+        }
         let mut env_vars: Vec<&str> = match &self.contract {
             Some(contract) => {
                 let mut vars = vec![
@@ -1848,6 +1860,37 @@ mod tests {
 
         // has_credentials is true because of disk cache, even though env vars are unset
         assert!(provider.has_credentials());
+    }
+
+    #[test]
+    fn credential_slots_report_cached_token_when_env_unset() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+        cache
+            .store("https://example.com/token", "cached-tok", None, Some(3600))
+            .unwrap();
+        std::env::remove_var("NO_SUCH_ID_SLOTS_TEST");
+        std::env::remove_var("NO_SUCH_SECRET_SLOTS_TEST");
+
+        let grant = || OAuth2Grant::ClientCredentials {
+            client_id_env: "NO_SUCH_ID_SLOTS_TEST".to_string(),
+            client_secret_env: "NO_SUCH_SECRET_SLOTS_TEST".to_string(),
+            scope: None,
+        };
+
+        let cached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant())
+            .with_token_cache(cache);
+        let slots = cached.credential_slots();
+        assert_eq!(slots.len(), 1);
+        assert_eq!(slots[0].len(), 1);
+        assert!(slots[0][0].resolve().is_some());
+        assert_eq!(slots[0][0].resolve().is_some(), cached.has_credentials());
+
+        let uncached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant());
+        let slots = uncached.credential_slots();
+        assert_eq!(slots.len(), 2);
+        assert!(slots.iter().all(|slot| slot[0].resolve().is_none()));
+        assert!(!uncached.has_credentials());
     }
 
     #[test]
