@@ -41,6 +41,25 @@ export function getErrorNamespace({
     return endpointNamespace;
 }
 
+/**
+ * Namespace that scopes shared-error conflict detection. Without `namespacedErrors`, errors are
+ * compared API-wide by status code only.
+ */
+export function getErrorConflictNamespace({
+    endpointNamespace,
+    error,
+    namespacedErrors
+}: {
+    endpointNamespace: string | undefined;
+    error: HttpError;
+    namespacedErrors: boolean;
+}): string | undefined {
+    if (!namespacedErrors) {
+        return undefined;
+    }
+    return getErrorNamespace({ endpointNamespace, error, namespacedErrors });
+}
+
 function unwrapReferencedSchema(schema: Schema | undefined): ReferencedSchema | undefined {
     if (schema == null) {
         return undefined;

@@ -37,7 +37,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const namespace = endpoint.namespace;
 
     // Ignore the namespace tag as we'll apply that later, universally
-    const tag = endpoint.tags.filter((tag) => !isNamespaceTag(tag, namespace))[0];
+    const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
@@ -125,10 +125,6 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     };
-}
-
-function isNamespaceTag(tag: string, namespace: string | undefined): boolean {
-    return namespace != null && tag.toLowerCase() === namespace.toLowerCase();
 }
 
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {

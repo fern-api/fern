@@ -15,7 +15,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
 import { SchemaReachability, SchemaVariantPlan } from "./computeSchemaReachability.js";
 import { State } from "./State.js";
-import { getEndpointNamespace, getErrorNamespace } from "./utils/getNamespaceFromGroup.js";
+import { getEndpointNamespace, getErrorConflictNamespace } from "./utils/getNamespaceFromGroup.js";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -115,12 +115,13 @@ export class OpenApiIrConverterContext {
             for (const endpoint of ir.endpoints) {
                 const endpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
                 for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
-                    const namespace = getErrorNamespace({
+                    const statusCode = parseInt(statusCodeString);
+                    const namespace = getErrorConflictNamespace({
                         endpointNamespace,
                         error,
                         namespacedErrors: this.options.namespacedErrors
                     });
-                    const key = getErrorKey({ statusCode: parseInt(statusCodeString), namespace });
+                    const key = getErrorKey({ statusCode, namespace });
                     const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
                         schemaByErrorKey[key] = error.schema;
@@ -181,8 +182,7 @@ export class OpenApiIrConverterContext {
     }
 
     /**
-     * Is error an unknown schema. Errors are shared per status code within a namespace,
-     * so a schema mismatch in one namespace does not affect errors in another.
+     * Is error an unknown schema
      */
     public isErrorUnknownSchema({
         statusCode,
