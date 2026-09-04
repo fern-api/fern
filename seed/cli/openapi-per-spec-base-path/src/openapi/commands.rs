@@ -992,6 +992,14 @@ fn build_parameter_args(method: &RestMethod) -> (Vec<Arg>, Vec<Arg>) {
         };
 
         let arg_id = param_clap_arg_id(param_name);
+        // Read before `kebab_name` is moved into `.long(...)`.
+        let profile_default = profile_parameter_default(param, param_name);
+        // clap resolves EnvVariable above DefaultValue, so a profile value
+        // installed as the default normally loses to the parameter's env var
+        // — which is the documented order. When the profile was named with
+        // `-p` it has to win instead, and the only way to express that in
+        // clap is to not register the env var at all for this arg.
+        let profile_outranks_env_var = profile_default.is_some() && crate::profiles::outranks_env();
         let mut arg = Arg::new(arg_id)
             .long(kebab_name)
             .value_name(value_name)
@@ -1006,7 +1014,20 @@ fn build_parameter_args(method: &RestMethod) -> (Vec<Arg>, Vec<Arg>) {
         // Only `x-fern-default` (lowered into `default_value`)
         // becomes a clap default. The standard `default:` keyword
         // is doc-only and handled above via the help-text suffix.
-        if let Some(default_str) = default_value_for_clap(&param.default_value) {
+        //
+        // A profile-supplied value takes that slot instead when the active
+        // profile names this parameter. That places the profile *above* the
+        // spec default and, because clap resolves `CommandLine` >
+        // `EnvVariable` > `DefaultValue`, *below* both the flag and the env
+        // var — which is exactly the documented precedence, with no new arg
+        // plumbing.
+        //
+        // This one line is what makes `--account-sid` stop being typed.
+        // With no profile selected `parameter_default` is `None` and the
+        // behaviour is byte-identical to before.
+        if let Some(value) = profile_default {
+            arg = arg.default_value(value);
+        } else if let Some(default_str) = default_value_for_clap(&param.default_value) {
             arg = arg.default_value(default_str);
         }
 
@@ -1018,7 +1039,9 @@ fn build_parameter_args(method: &RestMethod) -> (Vec<Arg>, Vec<Arg>) {
         // same priority order — flag → env → default — used for auth
         // sources.
         if let Some(ref env_var) = param.env_var {
-            arg = arg.env(env_var.clone());
+            if !profile_outranks_env_var {
+                arg = arg.env(env_var.clone());
+            }
         }
 
         if let Some(ref enum_values) = param.enum_values {
@@ -1064,7 +1087,13 @@ fn build_parameter_args(method: &RestMethod) -> (Vec<Arg>, Vec<Arg>) {
 /// This function is also called by `collect_params_from_flags` so the
 /// executor uses the same mangled ID that the command builder registered.
 pub(crate) fn param_clap_arg_id(wire_name: &str) -> String {
-    if BUILTIN_FLAG_NAMES.contains(&wire_name) {
+    // `is_reserved_flag_name` rather than `BUILTIN_FLAG_NAMES` alone, so the
+    // two config-dependent reservations (the user-agent suffix flag and
+    // `--profile`) mangle the *id* as well as the long name. Leaving the id
+    // un-mangled makes clap silently skip propagating the root's global into
+    // that leaf instead of erroring — the flag then means the spec parameter
+    // on that one command and the global everywhere else.
+    if flag_name_is_reserved(wire_name) {
         format!("{wire_name}-param")
     } else {
         wire_name.to_string()
@@ -1081,6 +1110,28 @@ pub(crate) fn param_clap_arg_id(wire_name: &str) -> String {
 /// Returns `None` only when `sanitize_flag_name` rejects the name
 /// (control characters, CJK, etc.). The caller should fall back to
 /// `--params` guidance in that case.
+/// The active profile's default for `param`, if it names one.
+///
+/// The single source of truth for "does the profile supply this parameter?".
+/// Two call sites need the answer and must agree: the command builder, which
+/// installs it as the clap `default_value`, and
+/// [`collect_params_from_flags`](crate::openapi::app::collect_params_from_flags),
+/// which has to know a `DefaultValue` came from the profile rather than from
+/// `x-fern-default` — those two are typed differently and only one of them
+/// is the caller's.
+///
+/// Falls back to the plain kebab-cased wire name when
+/// [`resolve_param_flag_name`] rejects it, so a parameter whose name cannot
+/// become a flag can still be matched by its wire name.
+pub(crate) fn profile_parameter_default(
+    param: &MethodParameter,
+    wire_name: &str,
+) -> Option<String> {
+    let flag_name = resolve_param_flag_name(param, wire_name)
+        .unwrap_or_else(|| crate::text::to_kebab_flag(wire_name));
+    crate::profiles::parameter_default(wire_name, &flag_name)
+}
+
 pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) -> Option<String> {
     let mut flag = if let Some(override_flag) = param.flag_name_override.as_deref() {
         override_flag.to_string()
@@ -1096,7 +1147,7 @@ pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) 
             }
         }
     };
-    if is_reserved_flag_name(&flag) {
+    if flag_name_is_reserved(&flag) {
         flag = format!("{flag}-param");
     }
     Some(flag)
@@ -1108,7 +1159,7 @@ pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) 
 /// exists and the field is reachable only through `--params`.
 pub(crate) fn resolve_multipart_field_flag_name(wire_name: &str) -> Option<String> {
     let kebab = to_kebab_flag(wire_name);
-    if is_reserved_flag_name(&kebab) {
+    if flag_name_is_reserved(&kebab) {
         None
     } else {
         Some(kebab)
@@ -1120,8 +1171,10 @@ pub(crate) fn resolve_multipart_field_flag_name(wire_name: &str) -> Option<Strin
 /// duplicate-flag panic. Covers the always-present built-in flags plus a
 /// customer-configured `userAgentSuffixFlag` name that would otherwise
 /// clash with the consumer suffix flag.
-fn is_reserved_flag_name(flag: &str) -> bool {
-    BUILTIN_FLAG_NAMES.contains(&flag) || crate::user_agent::collides_with_suffix_flag(flag)
+pub(crate) fn flag_name_is_reserved(flag: &str) -> bool {
+    BUILTIN_FLAG_NAMES.contains(&flag)
+        || crate::user_agent::collides_with_suffix_flag(flag)
+        || crate::profiles::collides_with_profile_flag(flag)
 }
 
 /// Build a `PossibleValuesParser` that respects an optional `x-fern-enum`
@@ -1134,6 +1187,12 @@ fn build_enum_value_parser(
     wire_values: &[String],
     param: &MethodParameter,
 ) -> PossibleValuesParser {
+    PossibleValuesParser::from(enum_possible_values(wire_values, param))
+}
+
+/// The `PossibleValue`s an enum parameter admits, with `x-fern-enum` display
+/// names and help text applied.
+fn enum_possible_values(wire_values: &[String], param: &MethodParameter) -> Vec<PossibleValue> {
     let mut possible: Vec<PossibleValue> = wire_values
         .iter()
         .map(|wire| {
@@ -1150,7 +1209,34 @@ fn build_enum_value_parser(
     if param.nullable {
         possible.push(PossibleValue::new("null").help("Send JSON null."));
     }
-    PossibleValuesParser::from(possible)
+    possible
+}
+
+/// Every string this parameter's flag accepts, or `None` when it is
+/// unconstrained.
+///
+/// Derived from the *same* `PossibleValue`s the clap `value_parser` is built
+/// from, so the two cannot drift. That matters because `profiles create
+/// --set` validates against this list: a stricter list would reject a value
+/// the command itself accepts (notably an `x-fern-enum` display name, which
+/// is only an alias of the wire value), and a looser one would let a profile
+/// store a default that fails every command carrying the parameter.
+pub(crate) fn enum_accepted_values(param: &MethodParameter) -> Option<Vec<String>> {
+    let wire_values = param.enum_values.as_ref()?;
+    if wire_values.is_empty() {
+        return None;
+    }
+    Some(
+        enum_possible_values(wire_values, param)
+            .iter()
+            .flat_map(|value| {
+                value
+                    .get_name_and_aliases()
+                    .map(str::to_string)
+                    .collect::<Vec<_>>()
+            })
+            .collect(),
+    )
 }
 
 /// Construct a single `PossibleValue` from a wire value and its optional
@@ -1270,6 +1356,42 @@ fn build_multipart_field_arg(field: &MultipartField) -> Arg {
     }
 
     arg
+}
+
+#[cfg(test)]
+mod profile_flag_reservation_tests {
+    use super::{flag_name_is_reserved, param_clap_arg_id};
+    use serial_test::serial;
+
+    /// The reservation must be **conditional**. Reserving `profile`
+    /// unconditionally would rename an existing CLI's spec parameter from
+    /// `--profile` to `--profile-param` the moment this code shipped — a
+    /// breaking change for a consumer who never asked for profiles.
+    #[test]
+    #[serial]
+    fn profile_is_only_reserved_when_profiles_are_enabled() {
+        crate::profiles::selection::release_profile_flag_for_tests();
+        assert!(!flag_name_is_reserved("profile"));
+        assert_eq!(param_clap_arg_id("profile"), "profile");
+
+        crate::profiles::reserve_profile_flag();
+        assert!(flag_name_is_reserved("profile"));
+        // Mangled to match how `format` / `json` / `output` are handled.
+        assert_eq!(param_clap_arg_id("profile"), "profile-param");
+
+        crate::profiles::selection::release_profile_flag_for_tests();
+    }
+
+    /// Unconditional reservations are unaffected either way.
+    #[test]
+    #[serial]
+    fn the_unconditional_builtins_are_reserved_regardless() {
+        crate::profiles::selection::release_profile_flag_for_tests();
+        for flag in ["format", "json", "output", "base-url"] {
+            assert!(flag_name_is_reserved(flag), "{flag}");
+        }
+        assert!(!flag_name_is_reserved("account-sid"));
+    }
 }
 
 #[cfg(test)]

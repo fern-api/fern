@@ -1,0 +1,86 @@
+- summary: |
+    Add named profiles, off by default behind `config.profiles.enabled`. A profile is a named bundle of request
+    context — a credential slot, parameter defaults, server variables, an optional base URL and output format —
+    resolved once per invocation. Enabling it adds a `profiles create | list | use | remove | current` group and a
+    global `--profile` / `-p` flag.
+
+    Precedence per value is: explicit flag, then environment variable, then profile, then the spec's own
+    `x-fern-default`. Environment variables sit above profiles so a CI pipeline that exports them is never
+    silently overridden by a developer's stored profile. For credentials the profile adds no rung to ADR-0008's
+    chain — it only selects which keyring account the existing `Keyring` rung reads, so two tenants can hold
+    separate tokens for one auth scheme. `config.profiles.commandName` renames the group for an API that already
+    owns the `profiles` noun.
+
+    Secrets never reach `~/.config/<bin>/profiles.toml`: the file names a keyring account, and
+    `profiles create --with-token` / `--from-env` write the credential to the OS keychain under an account scoped
+    to that profile. The file is written through `toml_edit`, so a user's comments and any field written by a newer
+    binary survive a round-trip.
+
+    Also fixes a latent correctness bug in the OAuth token cache, which was keyed by `token_url` alone: two
+    profiles authenticating against the same client-credentials endpoint would have clobbered each other's access
+    and refresh tokens. The key is now `<token_url>#<credential>` when a profile is selected and byte-identical to
+    before when none is, so existing caches keep resolving and no one is logged out by the upgrade.
+
+    HTTP basic auth gains a keyring rung it never had: both halves are stored in one entry as
+    `{"username":…,"password":…}` and read back field-by-field, so a per-profile SID+Token credential is
+    actually resolved. Previously `auth login` on a basic-auth CLI reported success, wrote an entry, and
+    nothing ever read it — the CLI still said "not logged in".
+
+    OAuth2 client credentials are now storable per profile. The provider reads its client id and secret
+    from the profile's keyring entry when the environment does not supply them, and `auth login
+    --with-token` collects both halves into one entry — previously the paste wrote a raw string nothing
+    ever read, so the credential appeared to store and the CLI still reported "not logged in". The client
+    secret has no plaintext rung; the client id may additionally come from `profiles.toml`, since a client
+    id is public by construction (RFC 6749 §2.2). `auth status` now lists every rung the resolvers
+    actually consult, so it no longer reports a scheme as unsatisfied where the profile does supply it.
+
+    A profile named explicitly with `--profile` / `-p` now outranks environment variables for credentials,
+    base URL, output format and server variables; a profile selected *ambiently* (the active profile, or
+    `<BIN>_PROFILE`) still loses to them. Explicit beats ambient, which is how every other flag here
+    already behaves, and it keeps a CI job's exported credentials authoritative against a stored default.
+    Matches the ordering Twilio's shipping CLI documents.
+
+    `profiles create` gains a `--<tenant-key>` flag for parameters the spec scopes most operations by —
+    derived from non-terminal path position, with no provider configuration — so the commonest profile
+    field is not stuck behind `--set`. `profiles list` renders a fixed `PROFILE … ACTIVE` column order,
+    with the middle columns being whatever the profiles carry. `profiles create` also accepts the name as
+    `--profile <NAME>`.
+
+    `profiles remove --revoke` calls a generator-named operation (`config.profiles.revokeOperation`)
+    before deleting the profile, on a new `Binding::invoke_operation` seam for framework-owned commands
+    that need to call the API without an `ArgMatches`. The flag is not registered at all when unconfigured.
+
+    Three changes deliberately apply to **every** generated CLI, not just those that enable profiles,
+    because each fixes something that was already broken:
+
+    - `auth login --with-token` on an HTTP-basic or OAuth2-client-credentials scheme now reads **two**
+      values from stdin rather than one. Previously it wrote a single opaque string that no resolver ever
+      read, so the paste reported success and did nothing; a script piping one token now exits non-zero
+      instead of silently no-op'ing. Bearer, API-key, PKCE and device-code paste are unchanged.
+    - `auth status` reports every credential rung the resolvers actually consult, so basic and
+      client-credentials schemes gain keyring rows, and the JSON payload gains a `profile` field
+      (`null` when unprofiled).
+    - `--schema` gains a `builtinCommands` array. Additive; `operations`, `globalFlags` and `sdkVariables`
+      are unchanged.
+
+    Everything else — the `profiles` group, the `--profile` / `-p` flag, reading `profiles.toml`, the
+    reserved-flag-name check, and every profile-sourced default — is inert unless `config.profiles.enabled`
+    is set. A CLI generated without the block emits byte-identical output.
+
+    `AuthCredentialSource` gains a `KeyringField` variant. The enum is not `#[non_exhaustive]`, so a
+    hand-authored `custom.rs` that matches it exhaustively will need a new arm; the generated scaffold
+    does not match on it.
+
+    Also fixes a credential-confusion bug that predates profiles. `AuthCredentialSource::Cli` resolves by
+    clap arg *id*, and a binding-contributed arg whose id the root already owns is dropped by the command
+    merge — so an auth scheme bound to `cli("format")` resolved to the user's `--format` value and sent
+    `json` as the credential. Such a binding is now rejected at startup, naming the reserved ids. The
+    generator emits `cli(...)` flags derived from scheme names (for APIs with several header schemes), so
+    this was reachable from generated output, not only hand-authored CLIs.
+
+    Built-in commands (`auth`, `profiles`, `completion`, `man`) now appear in `--schema` under a new
+    `builtinCommands` array. They were absent entirely, so an agent reading `--schema` could not discover that the
+    CLI had any way to authenticate or switch tenant.
+
+    A CLI generated without the `profiles` config block is byte-identical to one generated before this change.
+  type: feat

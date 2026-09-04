@@ -398,6 +398,75 @@ fn rfind_char_boundary(s: &str, target: char) -> Option<usize> {
     chars.iter().rposition(|&c| c == target)
 }
 
+/// Lowercase an identifier and drop every separator, so all the spellings of
+/// one name collapse to a single form: `AccountSid`, `account_sid`,
+/// `account-sid`, and `ACCOUNTSID` all become `accountsid`.
+///
+/// This is the equality a *user* means when they name a parameter in a
+/// profile. [`to_kebab_flag`] cannot serve here — it inserts a separator
+/// before every uppercase letter, so an all-caps name decomposes into
+/// `a-c-c-o-u-n-t-s-i-d` and stops matching its own PascalCase twin.
+pub fn normalize_identifier(s: &str) -> String {
+    s.chars()
+        .filter(|c| c.is_alphanumeric())
+        .flat_map(char::to_lowercase)
+        .collect()
+}
+
+/// The entry in `candidates` closest to `input`, or `None` when nothing is
+/// close enough to be worth suggesting.
+///
+/// Compared via [`normalize_identifier`], so every spelling of a name is
+/// distance 0 from every other — which is the point: a user setting a
+/// profile parameter should not have to guess which one the spec used.
+///
+/// The threshold scales with the input's length (a third of it, at least
+/// one), so a two-character typo in `account-sid` suggests, while an
+/// unrelated word does not produce a confusing "did you mean".
+pub fn nearest(input: &str, candidates: impl IntoIterator<Item = String>) -> Option<String> {
+    let normalized_input = normalize_identifier(input);
+    let threshold = (normalized_input.chars().count() / 3).max(1);
+    candidates
+        .into_iter()
+        .filter_map(|candidate| {
+            let distance = edit_distance(&normalized_input, &normalize_identifier(&candidate));
+            (distance <= threshold).then_some((distance, candidate))
+        })
+        // Ties broken by name so the suggestion is deterministic across runs
+        // — an error message that changes between invocations is untestable.
+        .min_by(|(a_dist, a_name), (b_dist, b_name)| {
+            a_dist.cmp(b_dist).then_with(|| a_name.cmp(b_name))
+        })
+        .map(|(_, candidate)| candidate)
+}
+
+/// Levenshtein distance, two-row implementation.
+///
+/// Rolled here rather than pulled from a crate: it is ten lines, it is only
+/// ever run against a handful of candidate names in an error path, and the
+/// alternative is a new dependency in the shipped `Cargo.lock` for every
+/// generated CLI.
+fn edit_distance(a: &str, b: &str) -> usize {
+    let a: Vec<char> = a.chars().collect();
+    let b: Vec<char> = b.chars().collect();
+    if a.is_empty() {
+        return b.len();
+    }
+    let mut previous: Vec<usize> = (0..=b.len()).collect();
+    let mut current = vec![0usize; b.len() + 1];
+    for (i, &a_char) in a.iter().enumerate() {
+        current[0] = i + 1;
+        for (j, &b_char) in b.iter().enumerate() {
+            let substitution = previous[j] + usize::from(a_char != b_char);
+            current[j + 1] = substitution
+                .min(previous[j + 1] + 1)
+                .min(current[j] + 1);
+        }
+        std::mem::swap(&mut previous, &mut current);
+    }
+    previous[b.len()]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -704,5 +773,66 @@ registered account in the workspace.";
         // so the adjacent letters merge).
         let result = sanitize_flag_name("foo\u{200B}bar").unwrap();
         assert_eq!(result, "foobar");
+    }
+}
+
+#[cfg(test)]
+mod nearest_tests {
+    use super::nearest;
+
+    fn candidates() -> Vec<String> {
+        ["AccountSid", "PageSize", "MessagingServiceSid"]
+            .iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    #[test]
+    fn matches_across_spellings_at_distance_zero() {
+        for spelling in ["AccountSid", "account_sid", "account-sid", "ACCOUNTSID"] {
+            assert_eq!(
+                nearest(spelling, candidates()).as_deref(),
+                Some("AccountSid"),
+                "failed for {spelling}",
+            );
+        }
+    }
+
+    #[test]
+    fn suggests_on_a_plausible_typo() {
+        assert_eq!(
+            nearest("account-sd", candidates()).as_deref(),
+            Some("AccountSid"),
+        );
+    }
+
+    #[test]
+    fn stays_silent_on_an_unrelated_word() {
+        // A confidently wrong "did you mean" is worse than none.
+        assert_eq!(nearest("region", candidates()), None);
+    }
+
+    #[test]
+    fn empty_candidate_set_yields_none() {
+        assert_eq!(nearest("anything", Vec::new()), None);
+    }
+
+    #[test]
+    fn ties_resolve_deterministically_by_name() {
+        // `ac` and `ax` are both distance 1 from `ab`; the alphabetically
+        // first wins so the error message is stable across runs.
+        let both = vec!["ax".to_string(), "ac".to_string()];
+        assert_eq!(nearest("ab", both.clone()).as_deref(), Some("ac"));
+        assert_eq!(nearest("ab", both).as_deref(), Some("ac"));
+    }
+
+    #[test]
+    fn separators_do_not_affect_distance() {
+        // `normalize_identifier` strips them, so a candidate is not penalised
+        // for the spec's naming convention.
+        assert_eq!(
+            nearest("accountsid", vec!["Account-Sid".to_string()]).as_deref(),
+            Some("Account-Sid"),
+        );
     }
 }

@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# The `profiles` opt-in fixture. The `config:` block lives in
+# `seed/cli/seed.yml` rather than here, because seed replaces this file's
+# `config:` wholesale with the `customConfig` it declares per fixture — a
+# block here would be silently dropped.
+#
+# What it snapshots: the emitted `main.rs` carries
+# `.profiles(ProfilesConfig::new())` and the `ProfilesConfig` import, and the
+# emitted `--help` carries the `profiles` group and the `--profile` flag. A
+# regression that silently drops the wiring surfaces here rather than in a
+# customer's CLI.
+#
+# Every other `cli-*` fixture omits the block and is the negative control:
+# profiles must be entirely absent from their output, which is the feature's
+# default-off guarantee.
+#
+# The spec is shaped for the feature: a tenant-scoped path parameter
+# (`AccountSid` — the flag a multi-tenant CLI's users would otherwise type on
+# every command), a templated server URL with a `region` variable, and a query
+# parameter carrying `x-fern-default` so the rung a profile must outrank is
+# pinned too.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

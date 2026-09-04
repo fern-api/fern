@@ -18,6 +18,7 @@
 | [0005](../../adr/0005-nullable-union-promotion-via-composition.md) | Nullable-union promotion via composition | Accepted (2026-05-28) | [`docs/adr/0005`](../../adr/0005-nullable-union-promotion-via-composition.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
 | [0007](../../adr/0007-login-flows-one-shot-per-binary.md) | Login flows are one-shot per binary | Accepted (2026-06-11) | [`docs/adr/0007`](../../adr/0007-login-flows-one-shot-per-binary.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
 | [0008](../../adr/0008-credential-precedence-and-storage-fallback.md) | Credential precedence chain and storage fallback | Accepted (2026-06-11), amended 2026-09-04 | [`docs/adr/0008`](../../adr/0008-credential-precedence-and-storage-fallback.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
+| [0011](../../adr/0011-profile-resolution-precedence.md) | Profile resolution precedence | Accepted (2026-09-04) | [`docs/adr/0011`](../../adr/0011-profile-resolution-precedence.md) | Named profiles for multi-tenant CLIs (extends 0008) |
 
 ## Implicit decisions — candidates for promotion
 

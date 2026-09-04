@@ -79,6 +79,22 @@ pub enum AuthCredentialSource {
         /// Account name within the service — typically the auth scheme name.
         account: String,
     },
+    /// Read one field out of a JSON object stored in a single keyring entry.
+    ///
+    /// Exists for HTTP basic, whose two halves must be stored together. One
+    /// entry rather than two (`…:username` / `…:password`) because the OS
+    /// keychain prompts per item: two entries means two prompts for one
+    /// logical credential, on every request that has to unlock them.
+    ///
+    /// A non-JSON value, or JSON missing the field, resolves to `None` —
+    /// the same as an absent entry. That keeps a hand-written or
+    /// pre-existing raw-string entry from surfacing as a username.
+    KeyringField {
+        service: String,
+        account: String,
+        /// Key to read out of the stored JSON object (`username` / `password`).
+        field: String,
+    },
     /// No source bound. The provider will report itself as unable to
     /// satisfy requests.
     Missing,
@@ -124,6 +140,20 @@ impl AuthCredentialSource {
         AuthCredentialSource::Keyring {
             service: service.into(),
             account: account.into(),
+        }
+    }
+
+    /// Bind to one field of a JSON object stored at `(service, account)`.
+    /// See [`AuthCredentialSource::KeyringField`].
+    pub fn keyring_field(
+        service: impl Into<String>,
+        account: impl Into<String>,
+        field: impl Into<String>,
+    ) -> Self {
+        AuthCredentialSource::KeyringField {
+            service: service.into(),
+            account: account.into(),
+            field: field.into(),
         }
     }
 
@@ -184,6 +214,16 @@ impl AuthCredentialSource {
                 .get(service, account)?
                 .filter(|v| !v.is_empty())
                 .map(SecretString::from),
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => active_store()
+                .get(service, account)?
+                .as_deref()
+                .and_then(read_json_field(field))
+                .filter(|v| !v.is_empty())
+                .map(SecretString::from),
             AuthCredentialSource::Missing => None,
         };
         Ok(value)
@@ -227,6 +267,14 @@ impl AuthCredentialSource {
                     "keyring entry {service}:{account} (populated by `{service} auth login`)"
                 )]
             }
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => vec![format!(
+                "{field} from keyring entry {service}:{account} \
+                 (populated by `{service} auth login`)"
+            )],
             AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, None)
             | AuthCredentialSource::Missing => Vec::new(),
@@ -294,6 +342,7 @@ impl AuthCredentialSource {
             | AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, _)
             | AuthCredentialSource::Keyring { .. }
+            | AuthCredentialSource::KeyringField { .. }
             | AuthCredentialSource::Missing => {}
         }
     }
@@ -344,6 +393,11 @@ impl std::fmt::Debug for AuthCredentialSource {
             AuthCredentialSource::Keyring { service, account } => {
                 write!(f, "Keyring({service}:{account})")
             }
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => write!(f, "KeyringField({service}:{account}.{field})"),
             AuthCredentialSource::Missing => write!(f, "Missing"),
         }
     }
@@ -352,6 +406,22 @@ impl std::fmt::Debug for AuthCredentialSource {
 /// Read a credential file: expand `~`, trim trailing whitespace, treat
 /// empty content / missing files as `None`. Result is wrapped in
 /// [`SecretString`] so the file contents can't leak through Debug.
+/// Extract `field` from a JSON object, as a closure so the caller can
+/// `and_then` it onto an `Option<&str>`.
+///
+/// Only string values are returned: a numeric or nested value is not a
+/// credential, and coercing one would produce a header the server rejects
+/// for reasons the user cannot see.
+fn read_json_field(field: &str) -> impl Fn(&str) -> Option<String> + '_ {
+    move |raw| {
+        serde_json::from_str::<serde_json::Value>(raw)
+            .ok()?
+            .get(field)?
+            .as_str()
+            .map(str::to_string)
+    }
+}
+
 fn read_credential_file(path: &Path) -> Option<SecretString> {
     let expanded = expand_home(path);
     let raw = std::fs::read_to_string(&expanded).ok()?;
@@ -392,6 +462,47 @@ fn home_dir() -> Option<PathBuf> {
         .or_else(|| std::env::var_os("USERPROFILE"))
         .map(PathBuf::from)
         .filter(|p| !p.as_os_str().is_empty())
+}
+
+/// The credential sources a scheme reads, grouped for `auth status`.
+///
+/// [`required`](Self::required) slots are ANDed: each inner `Vec` is one
+/// slot (e.g. the client id) listing the sources tried for it in
+/// precedence order, and every slot must resolve for the scheme to
+/// authenticate. [`alternatives`](Self::alternatives) are ORed against
+/// the whole set — any one of them satisfies the scheme on its own. A
+/// cached OAuth access token is the motivating case: it authenticates
+/// without the client-id/secret pair that would mint it, but the pair
+/// still has to be reported so a user can see whether their env vars
+/// were picked up.
+#[derive(Clone, Debug, Default)]
+pub struct CredentialSlots {
+    /// Slots that must *all* resolve. Empty means "nothing declared".
+    pub required: Vec<Vec<AuthCredentialSource>>,
+    /// Sources that each independently satisfy the whole scheme.
+    pub alternatives: Vec<AuthCredentialSource>,
+}
+
+impl CredentialSlots {
+    /// Build from the required slots alone.
+    pub fn required(slots: impl IntoIterator<Item = Vec<AuthCredentialSource>>) -> Self {
+        Self {
+            required: slots.into_iter().collect(),
+            alternatives: Vec::new(),
+        }
+    }
+
+    /// Add a source that satisfies the scheme on its own.
+    pub fn with_alternative(mut self, source: AuthCredentialSource) -> Self {
+        self.alternatives.push(source);
+        self
+    }
+
+    /// `true` when the provider declared no sources at all — the status
+    /// surface reports such a scheme as opaque.
+    pub fn is_empty(&self) -> bool {
+        self.required.is_empty() && self.alternatives.is_empty()
+    }
 }
 
 #[cfg(test)]

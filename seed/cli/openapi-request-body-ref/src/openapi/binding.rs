@@ -400,6 +400,103 @@ impl Binding for OpenApiBinding {
         self.inner.builder_global_parameters = merged;
     }
 
+    fn parameter_specs(&self) -> Vec<crate::profiles::commands::ParameterSpec> {
+        // Best-effort: a spec that fails to prepare yields an empty
+        // vocabulary, which disables `--set` validation rather than making
+        // `profiles create` fail on an unrelated parse error.
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        let mut specs = Vec::new();
+        collect_parameter_specs(&prepared.doc.parameters, &mut specs);
+        collect_parameter_specs_from_resources(&prepared.doc.resources, &mut specs);
+        specs
+    }
+
+    fn invoke_operation<'a>(
+        &'a self,
+        op_path: &'a [String],
+        params: &'a serde_json::Value,
+    ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
+        Box::pin(async move {
+            let prepared = self.ensure_prepared()?;
+            // Strip the namespace prefix the same way `dispatch` does, so a
+            // caller names the operation as it appears on the command line.
+            let effective: &[String] = match &self.command_namespace {
+                Some(ns) if op_path.first().map(String::as_str) == Some(ns.as_str()) => &op_path[1..],
+                Some(_) if !op_path.is_empty() => return Ok(None),
+                _ => op_path,
+            };
+            let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
+                // Not ours — the caller tries the next binding.
+                return Ok(None);
+            };
+
+            let params_json = serde_json::to_string(params)
+                .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
+            let params_json = params
+                .as_object()
+                .is_some_and(|o| !o.is_empty())
+                .then_some(params_json.as_str());
+
+            // Quiet: the caller decides what to print. Everything else is
+            // the default request shape — no pagination, no dry run, no
+            // output file.
+            let pipeline = crate::formatter::OutputPipeline {
+                quiet: true,
+                ..Default::default()
+            };
+            executor::execute_method(
+                &prepared.doc,
+                method,
+                params_json,
+                None,
+                &prepared.auth_provider,
+                None,
+                None,
+                None,
+                None,
+                false,
+                &executor::PaginationConfig::default(),
+                &pipeline,
+                true,
+                crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
+                &prepared.http_config,
+                false,
+                false,
+                true,
+                false,
+                &[],
+                &[],
+            )
+            .await
+        })
+    }
+
+    fn tenant_key_candidates(&self) -> Vec<String> {
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        tenant_key_candidates(&prepared.doc)
+    }
+
+    fn server_variable_names(&self) -> Vec<String> {
+        let Ok(prepared) = self.ensure_prepared() else {
+            return Vec::new();
+        };
+        let mut names: std::collections::BTreeSet<String> = self
+            .inner
+            .server_var_names()
+            .into_iter()
+            .collect();
+        names.extend(
+            crate::openapi::app::collect_spec_server_variables(&prepared.doc)
+                .into_iter()
+                .map(|variable| variable.name),
+        );
+        names.into_iter().collect()
+    }
+
     fn validate_auth(&self) -> Result<(), CliError> {
         // Only validate when root-level auth is being used (auth_bindings
         // is non-empty). If the binding has no auth bindings at all, it's
@@ -463,6 +560,10 @@ impl Binding for OpenApiBinding {
         // Register global --<name> flags for CLI-bound auth sources
         // so clap knows about them before parsing.
         let cli_auth_args = crate::auth::collect_binding_cli_args(&self.inner.auth_bindings);
+        // Reject before registering: an id the root already owns would be
+        // dropped by the merge and the credential would then resolve to the
+        // root flag's value. See `reject_reserved_auth_arg_ids`.
+        crate::app::reject_reserved_auth_arg_ids(&cli_auth_args)?;
         for arg_name in &cli_auth_args {
             let kebab = arg_name.replace('_', "-");
             cli = cli.arg(
@@ -852,6 +953,153 @@ impl Binding for OpenApiBinding {
 /// `Command::new(namespace)` wrapper, returning a rebuilt command whose
 /// sole subcommand is the namespace node. Global args, about, and
 /// after_help are preserved on the outer command.
+/// Walk `op_path` to the operation it names: every segment but the last is a
+/// resource, the last is the method.
+///
+/// The by-name counterpart to `resolve_method_from_matches`, which needs a
+/// parsed `ArgMatches` the direct-invocation path does not have.
+fn resolve_method_by_path<'a>(
+    doc: &'a crate::openapi::discovery::RestDescription,
+    op_path: &[String],
+) -> Option<&'a crate::openapi::discovery::RestMethod> {
+    let (method_name, resource_path) = op_path.split_last()?;
+    let mut resources = &doc.resources;
+    let mut current = None;
+    for segment in resource_path {
+        let resource = resources.get(segment)?;
+        resources = &resource.resources;
+        current = Some(resource);
+    }
+    current?.methods.get(method_name)
+}
+
+/// A path parameter has to appear in at least this share of operations, in a
+/// non-terminal position, to be offered as a profile field.
+///
+/// Two thirds rather than a bare majority: a tenant key is on *nearly* every
+/// path (Twilio's `AccountSid` is on ~87%), and the cost of a false positive
+/// — a flag on `profiles create` that nobody wants — is higher than the cost
+/// of a miss, which just leaves `--set` as the way in.
+const TENANT_KEY_MIN_SHARE: f64 = 0.66;
+
+/// Parameters that look like a tenant key, derived from the spec alone.
+///
+/// The signal is **non-terminal path position**, not raw frequency. A tenant
+/// key is structurally a prefix — `/Accounts/{AccountSid}/Messages` — with
+/// more path after it. Raw frequency alone misfires on the `{id}` of a plain
+/// REST API (`/users/{id}`, `/posts/{id}`): frequent, but always terminal,
+/// because it addresses the object rather than scoping it.
+///
+/// Known false positive: a templated API version (`/{version}/users`) is
+/// structurally identical to a tenant key and will be offered. That is
+/// tolerable only because the caller *proposes* these as flags rather than
+/// filling anything in — an unwanted flag costs nothing but its own help
+/// line, whereas silently populating a profile from a guess would not be
+/// recoverable.
+pub(crate) fn tenant_key_candidates(
+    doc: &crate::openapi::discovery::RestDescription,
+) -> Vec<String> {
+    let mut paths: Vec<&str> = Vec::new();
+    collect_method_paths(&doc.resources, &mut paths);
+    if paths.is_empty() {
+        return Vec::new();
+    }
+
+    let mut non_terminal: std::collections::BTreeMap<&str, usize> = Default::default();
+    for path in &paths {
+        let segments: Vec<&str> = path.split('/').filter(|s| !s.is_empty()).collect();
+        // A `{name}` segment with more path after it. Deduplicated per path so
+        // one operation cannot vote twice for the same parameter.
+        let mut seen: std::collections::BTreeSet<&str> = Default::default();
+        for (index, segment) in segments.iter().enumerate() {
+            if index + 1 >= segments.len() {
+                continue;
+            }
+            if let Some(name) = segment
+                .strip_prefix('{')
+                .and_then(|rest| rest.strip_suffix('}'))
+            {
+                if seen.insert(name) {
+                    *non_terminal.entry(name).or_default() += 1;
+                }
+            }
+        }
+    }
+
+    let threshold = (paths.len() as f64) * TENANT_KEY_MIN_SHARE;
+    non_terminal
+        .into_iter()
+        .filter(|(_, count)| (*count as f64) >= threshold)
+        .map(|(name, _)| name.to_string())
+        .collect()
+}
+
+fn collect_method_paths<'a>(
+    resources: &'a std::collections::HashMap<String, crate::openapi::discovery::RestResource>,
+    out: &mut Vec<&'a str>,
+) {
+    for resource in resources.values() {
+        for method in resource.methods.values() {
+            out.push(method.path.as_str());
+        }
+        collect_method_paths(&resource.resources, out);
+    }
+}
+
+/// Collect both spellings of every parameter: the **wire** name (the map
+/// key, which is what `--schema` reports) and the **flag** name the user
+/// actually reads in `--help`.
+///
+/// Both are needed because they can differ. `x-fern-parameter-name` renames
+/// `filter_term` to `--search-query`; a user setting a profile default has
+/// only ever seen the latter, so rejecting it would be wrong — and accepting
+/// it silently without listing it would make the "did you mean" useless.
+///
+/// `enum_values` rides along so `profiles create --set user_type=admin` is
+/// rejected at write time rather than breaking every command that takes
+/// `--user-type`. `item_enum_values` is deliberately *not* consulted: those
+/// constrain an array's *elements*, and a profile default is a single
+/// scalar clap value.
+fn collect_parameter_specs(
+    parameters: &std::collections::HashMap<String, crate::openapi::discovery::MethodParameter>,
+    out: &mut Vec<crate::profiles::commands::ParameterSpec>,
+) {
+    use crate::profiles::commands::ParameterSpec;
+    for (wire_name, parameter) in parameters {
+        let accepted = commands::enum_accepted_values(parameter);
+        let spec = |name: String| match &accepted {
+            Some(values) => ParameterSpec::with_values(name, values.clone()),
+            None => ParameterSpec::unconstrained(name),
+        };
+        out.push(spec(wire_name.clone()));
+        if let Some(flag) = commands::resolve_param_flag_name(parameter, wire_name) {
+            if &flag != wire_name {
+                out.push(spec(flag));
+            }
+        }
+    }
+}
+
+/// Walk the resource tree collecting every operation's parameters.
+fn collect_parameter_specs_from_resources(
+    resources: &std::collections::HashMap<String, crate::openapi::discovery::RestResource>,
+    out: &mut Vec<crate::profiles::commands::ParameterSpec>,
+) {
+    for resource in resources.values() {
+        for method in resource.methods.values() {
+            collect_parameter_specs(&method.parameters, out);
+            // Multipart fields are not in `parameters` but do surface as
+            // per-field flags, so a profile may reasonably default one.
+            for field in &method.multipart_fields {
+                out.push(crate::profiles::commands::ParameterSpec::unconstrained(
+                    field.wire_name.clone(),
+                ));
+            }
+        }
+        collect_parameter_specs_from_resources(&resource.resources, out);
+    }
+}
+
 fn wrap_subcommands_under_namespace(cmd: clap::Command, namespace: &str) -> clap::Command {
     let subs: Vec<clap::Command> = cmd.get_subcommands().cloned().collect();
 

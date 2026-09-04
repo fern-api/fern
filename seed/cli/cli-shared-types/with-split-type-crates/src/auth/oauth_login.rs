@@ -345,7 +345,11 @@ async fn run_device_code(
                 ok.refresh_token.as_deref(),
                 ok.expires_in,
             );
-            active_store().set(cli_name, scheme, &bundle.to_keyring_value()?)?;
+            active_store().set(
+                cli_name,
+                &crate::profiles::keyring_account(scheme),
+                &bundle.to_keyring_value()?,
+            )?;
             {
                 let mut err = std::io::stderr().lock();
                 let _ = writeln!(
@@ -845,7 +849,11 @@ async fn exchange_code_and_store(
         ok.refresh_token.as_deref(),
         ok.expires_in,
     );
-    active_store().set(&ctx.cli_name, &flow.scheme, &bundle.to_keyring_value()?)?;
+    active_store().set(
+        &ctx.cli_name,
+        &crate::profiles::keyring_account(&flow.scheme),
+        &bundle.to_keyring_value()?,
+    )?;
     Ok(())
 }
 
@@ -1331,7 +1339,8 @@ impl OAuth2KeyringProvider {
 
     async fn resolve_async(&self) -> Result<String, CliError> {
         let store = active_store();
-        let raw = store.get(&self.cli_name, &self.scheme_name)?.ok_or_else(|| {
+        let account = crate::profiles::keyring_account(&self.scheme_name);
+        let raw = store.get(&self.cli_name, &account)?.ok_or_else(|| {
             CliError::Auth(format!(
                 "Not logged in. Run `{} auth login` to authenticate.",
                 self.cli_name
@@ -1373,7 +1382,7 @@ impl OAuth2KeyringProvider {
         if !status.is_success() {
             // ADR-0008 § refresh-fails: wipe the keyring entry and tell
             // the user to log in again.
-            let _ = store.delete(&self.cli_name, &self.scheme_name);
+            let _ = store.delete(&self.cli_name, &account);
             let detail = parse_oauth_error_body(&body)
                 .and_then(|e| e.error_description.or(e.error))
                 .unwrap_or_else(|| truncate_body(&body));
@@ -1390,7 +1399,7 @@ impl OAuth2KeyringProvider {
             ok.refresh_token.as_deref().or(Some(refresh)),
             ok.expires_in,
         );
-        store.set(&self.cli_name, &self.scheme_name, &new_bundle.to_keyring_value()?)?;
+        store.set(&self.cli_name, &account, &new_bundle.to_keyring_value()?)?;
         Ok(new_bundle.access_token)
     }
 }
@@ -1402,7 +1411,10 @@ impl AuthProvider for OAuth2KeyringProvider {
 
     fn has_credentials(&self) -> bool {
         active_store()
-            .get(&self.cli_name, &self.scheme_name)
+            .get(
+                &self.cli_name,
+                &crate::profiles::keyring_account(&self.scheme_name),
+            )
             .ok()
             .flatten()
             .map(|v| !v.is_empty())
@@ -1412,7 +1424,9 @@ impl AuthProvider for OAuth2KeyringProvider {
     fn credential_hints(&self) -> Vec<String> {
         vec![format!(
             "keyring entry {}:{} (populated by `{} auth login`)",
-            self.cli_name, self.scheme_name, self.cli_name
+            self.cli_name,
+            crate::profiles::keyring_account(&self.scheme_name),
+            self.cli_name
         )]
     }
 
