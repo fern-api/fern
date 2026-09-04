@@ -1,7 +1,37 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
+import { toBinaryUploadRequest, toContentDisposition, type Uploadable } from "../../../src/core/file/index";
+
+describe("toContentDisposition", () => {
+    it("keeps plain ASCII filenames unchanged", () => {
+        expect(toContentDisposition("report.pdf")).toBe('attachment; filename="report.pdf"');
+    });
+
+    it("adds an RFC 5987 filename* parameter for non-ASCII filenames", () => {
+        expect(toContentDisposition("rapport-été.pdf")).toBe(
+            "attachment; filename=\"rapport-_t_.pdf\"; filename*=UTF-8''rapport-%C3%A9t%C3%A9.pdf",
+        );
+        expect(toContentDisposition("日本.pdf")).toBe("attachment; filename=\"__.pdf\"; filename*=UTF-8''%E6%97%A5%E6%9C%AC.pdf");
+    });
+
+    it("normalizes NFD-decomposed filenames to NFC", () => {
+        expect(toContentDisposition("rapport-été.pdf".normalize("NFD"))).toBe(
+            toContentDisposition("rapport-été.pdf"),
+        );
+    });
+
+    it("produces values accepted by the fetch Headers API", () => {
+        const headers = new Headers();
+        for (const name of ["日本.pdf", "rapport-été.pdf".normalize("NFD"), 'we"ird\\name.txt']) {
+            expect(() => headers.set("Content-Disposition", toContentDisposition(name))).not.toThrow();
+        }
+    });
+
+    it("escapes quotes and backslashes in the fallback filename", () => {
+        expect(toContentDisposition('a"b\\c.txt')).toBe("attachment; filename=\"a_b_c.txt\"; filename*=UTF-8''a%22b%5Cc.txt");
+    });
+});
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
