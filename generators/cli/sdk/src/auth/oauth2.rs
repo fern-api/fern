@@ -26,7 +26,7 @@ use secrecy::{ExposeSecret, SecretString};
 use serde::Serialize;
 use serde_json::{Map, Value};
 
-use crate::auth::credential::AuthCredentialSource;
+use crate::auth::credential::{AuthCredentialSource, CredentialSlots};
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
     atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
@@ -909,19 +909,7 @@ impl AuthProvider for OAuth2TokenProvider {
         }
     }
 
-    fn credential_slots(&self) -> Vec<Vec<AuthCredentialSource>> {
-        // A valid cached token authenticates on its own, without the
-        // acquisition env vars, so it stands in for the whole set.
-        if let Some(cache) = self.cache.get() {
-            if let Some(bundle) = cache.load(&self.token_url) {
-                let hint = format!("cached OAuth token ({})", cache.path.display());
-                let token = bundle.access_token;
-                return vec![vec![AuthCredentialSource::Closure(
-                    Arc::new(move || Some(token.clone())),
-                    Some(hint),
-                )]];
-            }
-        }
+    fn credential_slots(&self) -> CredentialSlots {
         let mut env_vars: Vec<&str> = match &self.contract {
             Some(contract) => {
                 let mut vars = vec![
@@ -950,10 +938,27 @@ impl AuthProvider for OAuth2TokenProvider {
         };
         let mut seen = std::collections::HashSet::new();
         env_vars.retain(|var| seen.insert(*var));
-        env_vars
-            .into_iter()
-            .map(|var| vec![AuthCredentialSource::from_env(var)])
-            .collect()
+        let mut slots = CredentialSlots::required(
+            env_vars
+                .into_iter()
+                .map(|var| vec![AuthCredentialSource::from_env(var)]),
+        );
+        // A valid cached token authenticates on its own, without the
+        // acquisition env vars — but it doesn't replace them in the
+        // report: a user asking "is my OAUTH_CLIENT_ID picked up?" needs
+        // to see the env slots either way, and they're what mints the
+        // next token once this one expires.
+        if let Some(cache) = self.cache.get() {
+            if let Some(bundle) = cache.load(&self.token_url) {
+                let hint = format!("cached OAuth token ({})", cache.path.display());
+                let token = bundle.access_token;
+                slots = slots.with_alternative(AuthCredentialSource::Closure(
+                    Arc::new(move || Some(token.clone())),
+                    Some(hint),
+                ));
+            }
+        }
+        slots
     }
 
     fn apply(
@@ -1863,6 +1868,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn credential_slots_report_cached_token_when_env_unset() {
         let dir = tempfile::tempdir().unwrap();
         let cache = TokenCache::at_path(dir.path().join("credentials.json"));
@@ -1881,15 +1887,29 @@ mod tests {
         let cached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant())
             .with_token_cache(cache);
         let slots = cached.credential_slots();
-        assert_eq!(slots.len(), 1);
-        assert_eq!(slots[0].len(), 1);
-        assert!(slots[0][0].resolve().is_some());
-        assert_eq!(slots[0][0].resolve().is_some(), cached.has_credentials());
+        // The cached token authenticates on its own, so it lands in
+        // `alternatives` — but the acquisition env vars stay in the report
+        // (unset here) so the user can still see whether they were read.
+        assert_eq!(slots.alternatives.len(), 1);
+        assert!(slots.alternatives[0].resolve().is_some());
+        assert_eq!(slots.required.len(), 2);
+        assert!(slots
+            .required
+            .iter()
+            .all(|slot| slot[0].resolve().is_none()));
+        assert_eq!(
+            slots.alternatives[0].resolve().is_some(),
+            cached.has_credentials()
+        );
 
         let uncached = OAuth2TokenProvider::new("oauth2", "https://example.com/token", grant());
         let slots = uncached.credential_slots();
-        assert_eq!(slots.len(), 2);
-        assert!(slots.iter().all(|slot| slot[0].resolve().is_none()));
+        assert!(slots.alternatives.is_empty());
+        assert_eq!(slots.required.len(), 2);
+        assert!(slots
+            .required
+            .iter()
+            .all(|slot| slot[0].resolve().is_none()));
         assert!(!uncached.has_credentials());
     }
 
