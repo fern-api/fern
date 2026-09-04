@@ -5,6 +5,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use crate::auth::credential::AuthCredentialSource;
 use crate::error::CliError;
 
 /// Per-request context the executor passes to providers. Maps directly to
@@ -132,6 +133,18 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
     /// [`AuthCredentialSource`](crate::auth::AuthCredentialSource) override it.
     fn populated_credential_hints(&self) -> Vec<String> {
         self.credential_hints()
+    }
+
+    /// The credential slots this provider reads, for `auth status`.
+    ///
+    /// Each inner `Vec` is one slot (e.g. `client_id`) listing the sources
+    /// tried for it in precedence order. Every slot must resolve for the
+    /// provider to authenticate. Providers registered as
+    /// [`SchemeBinding::Custom`](crate::auth::SchemeBinding::Custom) are
+    /// otherwise opaque to the status surface; overriding this lets it
+    /// enumerate their env vars like a builtin bearer/basic binding.
+    fn credential_slots(&self) -> Vec<Vec<AuthCredentialSource>> {
+        Vec::new()
     }
 
     /// Apply the scheme to `request`. Implementations should be a no-op if

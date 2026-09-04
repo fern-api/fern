@@ -26,6 +26,7 @@ use secrecy::{ExposeSecret, SecretString};
 use serde::Serialize;
 use serde_json::{Map, Value};
 
+use crate::auth::credential::AuthCredentialSource;
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
     atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
@@ -906,6 +907,41 @@ impl AuthProvider for OAuth2TokenProvider {
                 format!("{refresh_token_env} environment variable"),
             ],
         }
+    }
+
+    fn credential_slots(&self) -> Vec<Vec<AuthCredentialSource>> {
+        let mut env_vars: Vec<&str> = match &self.contract {
+            Some(contract) => {
+                let mut vars = vec![
+                    contract.client_id_env.as_str(),
+                    contract.client_secret_env.as_str(),
+                ];
+                vars.extend(contract.token_endpoint.required_env_vars());
+                vars
+            }
+            None => match &self.grant {
+                OAuth2Grant::ClientCredentials {
+                    client_id_env,
+                    client_secret_env,
+                    ..
+                } => vec![client_id_env.as_str(), client_secret_env.as_str()],
+                OAuth2Grant::RefreshToken {
+                    client_id_env,
+                    client_secret_env,
+                    refresh_token_env,
+                } => vec![
+                    client_id_env.as_str(),
+                    client_secret_env.as_str(),
+                    refresh_token_env.as_str(),
+                ],
+            },
+        };
+        let mut seen = std::collections::HashSet::new();
+        env_vars.retain(|var| seen.insert(*var));
+        env_vars
+            .into_iter()
+            .map(|var| vec![AuthCredentialSource::from_env(var)])
+            .collect()
     }
 
     fn apply(
