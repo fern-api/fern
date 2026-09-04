@@ -1075,6 +1075,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn status_reports_oauth2_client_credentials_env_vars() {
         use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
         std::env::set_var("STATUS_TEST_OAUTH_CLIENT_ID", "id");

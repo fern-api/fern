@@ -17,7 +17,7 @@
 | [0004](../../adr/0004-all-of-flattening-into-per-field-flags.md) | `allOf` flattening into per-field flags | Accepted (2026-05-28) | [`docs/adr/0004`](../../adr/0004-all-of-flattening-into-per-field-flags.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
 | [0005](../../adr/0005-nullable-union-promotion-via-composition.md) | Nullable-union promotion via composition | Accepted (2026-05-28) | [`docs/adr/0005`](../../adr/0005-nullable-union-promotion-via-composition.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
 | [0007](../../adr/0007-login-flows-one-shot-per-binary.md) | Login flows are one-shot per binary | Accepted (2026-06-11) | [`docs/adr/0007`](../../adr/0007-login-flows-one-shot-per-binary.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
-| [0008](../../adr/0008-credential-precedence-and-storage-fallback.md) | Credential precedence chain and storage fallback | Accepted (2026-06-11) | [`docs/adr/0008`](../../adr/0008-credential-precedence-and-storage-fallback.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
+| [0008](../../adr/0008-credential-precedence-and-storage-fallback.md) | Credential precedence chain and storage fallback | Accepted (2026-06-11), amended 2026-09-04 | [`docs/adr/0008`](../../adr/0008-credential-precedence-and-storage-fallback.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
 
 ## Implicit decisions — candidates for promotion
 
@@ -378,7 +378,9 @@ the listed risk materializes). Listed in rough priority order.
 - **Implementation:** Three flow types (PKCE, device-code, token-paste).
   One flow per binary, no flow-picker prompt. `auth` subcommand grafted on
   all CLIs. Keyring storage with file fallback. Credential precedence:
-  CLI > env > keyring > file. `auth status` discloses shadowing.
+  CLI > env > keyring > file, scoped per credential slot. `auth status`
+  discloses shadowing within a slot and lists multi-value schemes as
+  independent slots.
 - **Reversal note:** Supersedes the foundation-only `TokenStore` /
   `FileTokenStore` / `KeyringTokenStore` layer from FER-10692 — that
   plumbing is now wired end-to-end.
