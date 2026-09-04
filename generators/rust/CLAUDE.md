@@ -51,7 +51,7 @@ pnpm turbo run dist:cli --filter @fern-api/rust-model  # Build Docker CLI
 
 ### Configuration Options
 
-Configuration schema: `generators/rust/codegen/src/custom-config/RustSdkCustomConfigSchema.ts` and `RustModelCustomConfigSchema.ts`
+Configuration schema: `generators/rust/sdk/src/SdkCustomConfig.ts` (`SdkCustomConfigSchema`) and `generators/rust/model/src/ModelCustomConfig.ts` (`ModelCustomConfigSchema`), both extending `BaseRustCustomConfigSchema` from `@fern-api/rust-codegen`
 
 ## Testing
 

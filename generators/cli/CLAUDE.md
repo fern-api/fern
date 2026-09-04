@@ -565,10 +565,10 @@ Once the SDK can lower the scheme to a provider:
 
 The SDK lives at [`./sdk/`](./sdk/). It's a Rust workspace that builds
 on its own with `cargo build` — treat it like any normal Rust library.
-Template-author-only files (the `cli/openapi-fixture/` dev bin, the
-fixture-coupled tests under `tests/cli_integration.rs` and
-`tests/openapi_fixture_wire.rs`) are listed in `SDK_IGNORE` in
-[`build.mjs`](build.mjs) so they never ship to user output.
+Template-author-only files (the `cli/openapi-fixture/` dev bin and the
+vendored `tests/` tree) are listed in `sdk/.sdk-ignore.json` (the canonical
+home, merged into `SDK_IGNORE` in [`build.mjs`](build.mjs)) so they never
+ship to user output.
 
 If you change `sdk/Cargo.lock`, **rebuild the seed image**:
 
@@ -634,5 +634,5 @@ catches any mismatch at test time.
   or the raw specs anywhere else in the pipeline.
 - **Generated `main.rs` is regenerated each run**: never edit it
   manually; your changes will be wiped on the next `fern generate`.
-  Use the `customize/` extension surface (planned — see
-  [`sdk/docs/DESIGN.md`](sdk/docs/DESIGN.md)) for user-author code.
+  Use the `customize/` extension surface (see
+  [`sdk/docs/customize.md`](sdk/docs/customize.md)) for user-author code.
