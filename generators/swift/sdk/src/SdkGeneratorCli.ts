@@ -628,13 +628,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
                 enumName: environmentSymbol.name,
                 environments: context.ir.environments.environments,
+                serverUrlVariables: context.serverUrlVariables,
                 sdkGeneratorContext: context
             });
             const environmentEnum = environmentGenerator.generate();
+            const urlVariablesExtension = environmentGenerator.generateUrlVariablesExtension();
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: environmentEnum.name,
                 directory: RelativeFilePath.of(""),
-                contents: [environmentEnum]
+                contents:
+                    urlVariablesExtension != null
+                        ? [environmentEnum, swift.LineBreak.single(), swift.LineBreak.single(), urlVariablesExtension]
+                        : [environmentEnum]
             });
         } else {
             // TODO(kafkas): Handle multiple environments
