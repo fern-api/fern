@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Reject unresolved query parameter and request body property name collisions instead of generating invalid TypeScript.
+  type: fix
