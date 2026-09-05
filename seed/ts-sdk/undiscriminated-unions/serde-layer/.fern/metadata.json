@@ -1,0 +1,13 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "noSerdeLayer": false
+    },
+    "originGitCommit": "DUMMY",
+    "invokedBy": "ci",
+    "ciProvider": "github",
+    "requestedVersion": "0.0.1",
+    "sdkVersion": "0.0.1"
+}

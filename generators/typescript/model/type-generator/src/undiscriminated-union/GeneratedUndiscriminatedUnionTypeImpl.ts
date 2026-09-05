@@ -1,6 +1,8 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     GetReferenceOpts,
+    getPropertyKey,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure,
     TypeReferenceNode
@@ -42,14 +44,25 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
     } {
-        const typeReferenceNodes = this.shape.members.map((member) => this.getTypeReferenceNode(context, member));
+        const members = this.shape.members.map((member) => ({
+            member,
+            ref: this.getTypeReferenceNode(context, member)
+        }));
         return {
-            typeNode: ts.factory.createUnionTypeNode(typeReferenceNodes.map((ref) => ref.typeNode)),
+            typeNode: ts.factory.createUnionTypeNode(
+                members.map(({ member, ref }) =>
+                    this.intersectWithBaseProperties(context, member, ref.typeNode, "normal")
+                )
+            ),
             requestTypeNode: ts.factory.createUnionTypeNode(
-                typeReferenceNodes.map((ref) => ref.requestTypeNode ?? ref.typeNode)
+                members.map(({ member, ref }) =>
+                    this.intersectWithBaseProperties(context, member, ref.requestTypeNode ?? ref.typeNode, "request")
+                )
             ),
             responseTypeNode: ts.factory.createUnionTypeNode(
-                typeReferenceNodes.map((ref) => ref.responseTypeNode ?? ref.typeNode)
+                members.map(({ member, ref }) =>
+                    this.intersectWithBaseProperties(context, member, ref.responseTypeNode ?? ref.typeNode, "response")
+                )
             )
         };
     }
@@ -68,6 +81,97 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             statements: requestResponseStatements
         };
         return module;
+    }
+
+    public getBasePropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
+        const property = this.getBaseProperties().find((property) => getWireValue(property.name) === propertyWireKey);
+        if (property == null) {
+            throw new Error("Base property does not exist: " + propertyWireKey);
+        }
+        return this.getPropertyKeyFromProperty(property);
+    }
+
+    public appliesBasePropertiesToMember(context: Context, member: FernIr.UndiscriminatedUnionMember): boolean {
+        if (this.getBaseProperties().length === 0) {
+            return false;
+        }
+        const resolved = context.type.resolveTypeReference(member.type);
+        return resolved.type === "named" && resolved.shape === FernIr.ShapeType.Object;
+    }
+
+    private getBaseProperties(): FernIr.ObjectProperty[] {
+        return this.shape.baseProperties ?? [];
+    }
+
+    private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
+            return this.case.camelUnsafe(property.name);
+        }
+        return getWireValue(property.name);
+    }
+
+    private getBasePropertyNodes(context: Context): BasePropertyNode[] {
+        return this.getBaseProperties().map((property) => {
+            const type = context.type.getReferenceToType(property.valueType);
+            const shouldIncludeUndefined = type.isOptional && !this.includeSerdeLayer;
+            const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+            const toTypeNode = (node: ts.TypeNode, nodeWithoutUndefined: ts.TypeNode | undefined): ts.TypeNode =>
+                this.noOptionalProperties
+                    ? node
+                    : shouldIncludeUndefined
+                      ? ts.factory.createUnionTypeNode([nodeWithoutUndefined ?? node, undefinedKw])
+                      : (nodeWithoutUndefined ?? node);
+            return {
+                name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
+                hasQuestionToken: !this.noOptionalProperties && type.isOptional,
+                typeNode: toTypeNode(type.typeNode, type.typeNodeWithoutUndefined),
+                requestTypeNode:
+                    this.generateReadWriteOnlyTypes && type.requestTypeNode != null
+                        ? toTypeNode(type.requestTypeNode, type.requestTypeNodeWithoutUndefined)
+                        : undefined,
+                responseTypeNode:
+                    this.generateReadWriteOnlyTypes && type.responseTypeNode != null
+                        ? toTypeNode(type.responseTypeNode, type.responseTypeNodeWithoutUndefined)
+                        : undefined
+            };
+        });
+    }
+
+    private intersectWithBaseProperties(
+        context: Context,
+        member: FernIr.UndiscriminatedUnionMember,
+        memberNode: ts.TypeNode,
+        whatFor: "normal" | "request" | "response"
+    ): ts.TypeNode {
+        if (!this.appliesBasePropertiesToMember(context, member)) {
+            return memberNode;
+        }
+        const baseProperties = this.getBasePropertyNodes(context);
+        const selectTypeNode = (property: BasePropertyNode): ts.TypeNode => {
+            switch (whatFor) {
+                case "normal":
+                    return property.typeNode;
+                case "request":
+                    return property.requestTypeNode ?? property.typeNode;
+                case "response":
+                    return property.responseTypeNode ?? property.typeNode;
+            }
+        };
+        return ts.factory.createParenthesizedType(
+            ts.factory.createIntersectionTypeNode([
+                memberNode,
+                ts.factory.createTypeLiteralNode(
+                    baseProperties.map((property) =>
+                        ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createIdentifier(property.name),
+                            property.hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                            selectTypeNode(property)
+                        )
+                    )
+                )
+            ])
+        );
     }
 
     private generateRequestResponseModuleStatements(
@@ -97,7 +201,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                         const requestNode = value.typeReference.requestTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: this.applyIndexSignatureSubstitution(context, value.member, requestNode)
+                            node: this.intersectWithBaseProperties(
+                                context,
+                                value.member,
+                                this.applyIndexSignatureSubstitution(context, value.member, requestNode),
+                                "request"
+                            )
                         };
                     })
                 )
@@ -123,7 +232,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                         const responseNode = value.typeReference.responseTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: this.applyIndexSignatureSubstitution(context, value.member, responseNode)
+                            node: this.intersectWithBaseProperties(
+                                context,
+                                value.member,
+                                this.applyIndexSignatureSubstitution(context, value.member, responseNode),
+                                "response"
+                            )
                         };
                     })
                 )
@@ -152,7 +266,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 this.shape.members.map((value) => {
                     return {
                         docs: value.docs,
-                        node: this.getTypeNodeForMember(context, value)
+                        node: this.intersectWithBaseProperties(
+                            context,
+                            value,
+                            this.getTypeNodeForMember(context, value),
+                            "normal"
+                        )
                     };
                 })
             )
@@ -246,6 +365,14 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         return this.getTypeNode(context, member);
     }
+}
+
+interface BasePropertyNode {
+    name: string;
+    hasQuestionToken: boolean;
+    typeNode: ts.TypeNode;
+    requestTypeNode: ts.TypeNode | undefined;
+    responseTypeNode: ts.TypeNode | undefined;
 }
 
 function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {

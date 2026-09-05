@@ -213,7 +213,9 @@ function createMockGeneratedUnionType(baseProperties: FernIr.ObjectProperty[] = 
  */
 function createMockGeneratedUndiscriminatedUnionType(): GeneratedType<unknown> {
     return {
-        type: "undiscriminatedUnion"
+        type: "undiscriminatedUnion",
+        appliesBasePropertiesToMember: () => false,
+        getBasePropertyKey: ({ propertyWireKey }: { propertyWireKey: string }) => propertyWireKey
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal GeneratedType interface
     } as any;
 }
