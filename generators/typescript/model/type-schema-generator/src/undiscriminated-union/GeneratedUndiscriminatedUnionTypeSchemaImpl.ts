@@ -28,15 +28,26 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
                 if (resolved.type !== "named") {
                     throw new Error("Expected member to resolve to a named type: " + this.typeName);
                 }
-                const basePropertySchemas = (this.shape.baseProperties ?? []).map(
-                    (property): Zurg.Property => ({
-                        key: {
-                            raw: getWireValue(property.name),
-                            parsed: generatedType.getBasePropertyKey({ propertyWireKey: getWireValue(property.name) })
-                        },
-                        value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
-                    })
+                const generatedMemberType = context.type.getGeneratedType(resolved.name);
+                if (generatedMemberType.type !== "object") {
+                    throw new Error("Expected member to resolve to an object type: " + this.typeName);
+                }
+                const memberWireKeys = new Set(
+                    generatedMemberType.getAllPropertiesIncludingExtensions(context).map(({ wireKey }) => wireKey)
                 );
+                const basePropertySchemas = (this.shape.baseProperties ?? [])
+                    .filter((property) => !memberWireKeys.has(getWireValue(property.name)))
+                    .map(
+                        (property): Zurg.Property => ({
+                            key: {
+                                raw: getWireValue(property.name),
+                                parsed: generatedType.getBasePropertyKey({
+                                    propertyWireKey: getWireValue(property.name)
+                                })
+                            },
+                            value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
+                        })
+                    );
                 return (
                     this.noOptionalProperties
                         ? context.coreUtilities.zurg.objectWithoutOptionalProperties

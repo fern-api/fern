@@ -124,6 +124,8 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             return {
                 name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
                 hasQuestionToken: !this.noOptionalProperties && type.isOptional,
+                isReadonly: this.generateReadWriteOnlyTypes && property.propertyAccess === "READ_ONLY",
+                isWriteonly: this.generateReadWriteOnlyTypes && property.propertyAccess === "WRITE_ONLY",
                 typeNode: toTypeNode(type.typeNode, type.typeNodeWithoutUndefined),
                 requestTypeNode:
                     this.generateReadWriteOnlyTypes && type.requestTypeNode != null
@@ -146,7 +148,16 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         if (!this.appliesBasePropertiesToMember(context, member)) {
             return memberNode;
         }
-        const baseProperties = this.getBasePropertyNodes(context);
+        const baseProperties = this.getBasePropertyNodes(context).filter((property) => {
+            switch (whatFor) {
+                case "normal":
+                    return true;
+                case "request":
+                    return !property.isReadonly;
+                case "response":
+                    return !property.isWriteonly;
+            }
+        });
         const selectTypeNode = (property: BasePropertyNode): ts.TypeNode => {
             switch (whatFor) {
                 case "normal":
@@ -188,8 +199,13 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             member: member,
             typeReference: this.getTypeReferenceNode(context, member)
         }));
-        const anyRequestVariantsNeeded = typeNodeReferences.some((ref) => ref.typeReference.requestTypeNode != null);
-        const anyResponseVariantsNeeded = typeNodeReferences.some((ref) => ref.typeReference.responseTypeNode != null);
+        const basePropertyNodes = this.getBasePropertyNodes(context);
+        const anyRequestVariantsNeeded =
+            typeNodeReferences.some((ref) => ref.typeReference.requestTypeNode != null) ||
+            basePropertyNodes.some((property) => property.isReadonly || property.requestTypeNode != null);
+        const anyResponseVariantsNeeded =
+            typeNodeReferences.some((ref) => ref.typeReference.responseTypeNode != null) ||
+            basePropertyNodes.some((property) => property.isWriteonly || property.responseTypeNode != null);
 
         if (anyRequestVariantsNeeded) {
             const requestType: TypeAliasDeclarationStructure = {
@@ -370,6 +386,8 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 interface BasePropertyNode {
     name: string;
     hasQuestionToken: boolean;
+    isReadonly: boolean;
+    isWriteonly: boolean;
     typeNode: ts.TypeNode;
     requestTypeNode: ts.TypeNode | undefined;
     responseTypeNode: ts.TypeNode | undefined;
