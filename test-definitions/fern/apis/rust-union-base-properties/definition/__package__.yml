@@ -1,0 +1,39 @@
+# Exercises a discriminated union with base properties where some variants have no own
+# properties: one variant references an object with an empty property list (inlined into the
+# variant) and one variant is declared with no properties at all. The union's constructors and
+# discriminant-switching getters reference the base properties on every variant, so every
+# variant must still type them even when it has no properties of its own.
+service:
+  base-path: /errors
+  auth: false
+  endpoints:
+    get:
+      path: ""
+      method: GET
+      response: ErrorResponse
+
+types:
+  ProcessingError:
+    properties: {}
+
+  ValidationError:
+    properties:
+      field: string
+
+  ErrorResponse:
+    base-properties:
+      message: string
+    union:
+      processingError: ProcessingError
+      validationError: ValidationError
+      timeoutError: {}
+    examples:
+      - name: ProcessingErrorExample
+        value:
+          type: processingError
+          message: "processing failed"
+      - name: ValidationErrorExample
+        value:
+          type: validationError
+          message: "validation failed"
+          field: "name"

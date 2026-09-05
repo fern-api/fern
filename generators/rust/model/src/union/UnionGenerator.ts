@@ -304,9 +304,17 @@ export class UnionGenerator {
         // Generate variant based on its shape
         unionType.shape._visit({
             noProperties: () => {
-                // Use empty struct variant {} instead of unit variant for forward compatibility
-                // with #[non_exhaustive], fields can be added later without breaking changes
-                writer.writeLine(`    ${variantName} {},`);
+                if (this.unionTypeDeclaration.baseProperties.length > 0) {
+                    // Base properties are typed on every variant (getters and constructors
+                    // reference them), so they must be present even without own properties.
+                    writer.writeLine(`    ${variantName} {`);
+                    this.generateBaseProperties(writer);
+                    writer.writeLine(`    },`);
+                } else {
+                    // Use empty struct variant {} instead of unit variant for forward compatibility
+                    // with #[non_exhaustive], fields can be added later without breaking changes
+                    writer.writeLine(`    ${variantName} {},`);
+                }
             },
             singleProperty: (singleProperty) => {
                 // Check if this field creates a recursive reference
@@ -361,8 +369,17 @@ export class UnionGenerator {
                     if (referencedType?.shape.type === "object") {
                         const properties = referencedType.shape.properties;
                         if (properties.length === 0) {
-                            // Empty type: generate empty struct variant
-                            writer.writeLine(`    ${variantName} {},`);
+                            if (this.unionTypeDeclaration.baseProperties.length > 0) {
+                                // Base properties are typed on every variant (getters and
+                                // constructors reference them), so they must be present even
+                                // when the inlined type has no own properties.
+                                writer.writeLine(`    ${variantName} {`);
+                                this.generateBaseProperties(writer);
+                                writer.writeLine(`    },`);
+                            } else {
+                                // Empty type: generate empty struct variant
+                                writer.writeLine(`    ${variantName} {},`);
+                            }
                         } else {
                             // Inline fields directly into the variant
                             writer.writeLine(`    ${variantName} {`);
@@ -600,10 +617,20 @@ export class UnionGenerator {
 
         unionType.shape._visit({
             noProperties: () => {
-                // Empty constructor: pub fn variant_name() -> Self { Self::VariantName {} }
-                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
-                    writer.writeLine(`Self::${variantName} {}`);
-                });
+                const baseParams = this.getBasePropertyParams();
+                if (baseParams.length > 0) {
+                    // Base properties are typed on every variant, so the constructor
+                    // must accept them even without own properties.
+                    writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
+                        const baseFields = this.getBasePropertyFieldAssignments();
+                        writer.writeLine(`Self::${variantName} { ${baseFields.join(", ")} }`);
+                    });
+                } else {
+                    // Empty constructor: pub fn variant_name() -> Self { Self::VariantName {} }
+                    writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
+                        writer.writeLine(`Self::${variantName} {}`);
+                    });
+                }
             },
             singleProperty: (singleProperty) => {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
