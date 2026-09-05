@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Reject colliding client members instead of generating invalid TypeScript.
+  type: fix

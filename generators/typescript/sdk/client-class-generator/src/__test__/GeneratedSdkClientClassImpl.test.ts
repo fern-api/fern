@@ -76,6 +76,48 @@ function createIR(opts?: {
     return ir;
 }
 
+function createSubpackage(name: string): FernIr.Subpackage {
+    const generatedName = casingsGenerator.generateName(name);
+    return {
+        fernFilepath: {
+            allParts: [generatedName],
+            packagePath: [],
+            file: generatedName
+        },
+        name: generatedName,
+        displayName: undefined,
+        service: undefined,
+        types: [],
+        errors: [],
+        subpackages: [],
+        hasEndpointsInTree: true,
+        hasWebSocketInTree: false,
+        websocket: undefined,
+        webhooks: undefined,
+        navigationConfig: undefined,
+        docs: undefined
+    };
+}
+
+function createWebSocketChannel(connectMethodName: string): FernIr.WebSocketChannel {
+    return {
+        name: casingsGenerator.generateName("testChannel"),
+        displayName: undefined,
+        connectMethodName,
+        baseUrl: undefined,
+        path: { head: "/ws", parts: [] },
+        auth: false,
+        headers: [],
+        queryParameters: [],
+        pathParameters: [],
+        messages: [],
+        docs: undefined,
+        availability: undefined,
+        examples: [],
+        v2Examples: undefined
+    };
+}
+
 /**
  * Creates a mock ImportsManager.
  */
@@ -286,6 +328,68 @@ describe("GeneratedSdkClientClassImpl", () => {
             expect(clientClass.hasAuthProvider()).toBe(false);
             expect(clientClass.hasAnyEndpointsWithAuth()).toBe(false);
             expect(clientClass.getAuthProviderInstance()).toBeUndefined();
+        });
+
+        it("rejects an endpoint method that conflicts with a subpackage client", () => {
+            const subpackageId = "subpackage_c";
+            const ir = createIR({
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [
+                        {
+                            ...createHttpEndpoint(),
+                            name: casingsGenerator.generateName("c")
+                        }
+                    ],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                },
+                subpackages: {
+                    [subpackageId]: createSubpackage("c")
+                },
+                rootPackage: { subpackages: [subpackageId] }
+            });
+
+            expect(() => createClientClass({ ir })).toThrow(
+                'Cannot generate TestClient: endpoint method "c" and subpackage client "c" (subpackage_c) both generate the client member "c". Rename one of them.'
+            );
+        });
+
+        it("rejects subpackage clients whose names normalize to the same member", () => {
+            const firstSubpackageId = "subpackage_foo_bar";
+            const secondSubpackageId = "subpackage_fooBar";
+            const ir = createIR({
+                subpackages: {
+                    [firstSubpackageId]: createSubpackage("foo_bar"),
+                    [secondSubpackageId]: createSubpackage("fooBar")
+                },
+                rootPackage: { subpackages: [firstSubpackageId, secondSubpackageId] }
+            });
+
+            expect(() => createClientClass({ ir })).toThrow(
+                'Cannot generate TestClient: subpackage client "fooBar" (subpackage_foo_bar) and subpackage client "fooBar" (subpackage_fooBar) both generate the client member "fooBar". Rename one of them.'
+            );
+        });
+
+        it("rejects a websocket method that conflicts with a subpackage client", () => {
+            const subpackageId = "subpackage_connect";
+            const channelId = "channel_test";
+            const ir = createIR({
+                subpackages: { [subpackageId]: createSubpackage("connect") },
+                rootPackage: { subpackages: [subpackageId], websocket: channelId }
+            });
+            ir.websocketChannels = { [channelId]: createWebSocketChannel("connect") };
+
+            expect(() => createClientClass({ ir, generateWebSocketClients: true })).toThrow(
+                'Cannot generate TestClient: websocket method "connect" and subpackage client "connect" (subpackage_connect) both generate the client member "connect". Rename one of them.'
+            );
+            expect(() => createClientClass({ ir, generateWebSocketClients: false })).not.toThrow();
         });
 
         it("creates client class with bearer auth", () => {
