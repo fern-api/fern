@@ -62,6 +62,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
     respectOptionalRequestBody: z.optional(z.boolean()),
+    deepObjectMapQueryParameters: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     testFramework: z.optional(z.enum(["jest", "vitest"])),

@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Fetcher,
     GetReferenceOpts,
+    getFullPathForEndpoint,
     getParameterNameForPositionalPathParameter,
     getPropertyKey,
     getTextOfTsNode,
@@ -448,7 +449,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                endpointLabel: `${this.endpoint.method} ${getFullPathForEndpoint(this.endpoint)}`
             });
         }
         return this.queryParams;
