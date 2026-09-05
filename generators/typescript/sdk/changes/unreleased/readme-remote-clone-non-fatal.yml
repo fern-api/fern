@@ -1,0 +1,6 @@
+- summary: |
+    Don't attempt to read the existing README from GitHub when no credentials are available
+    (for example, `fern generate --preview`, where environment variables are substituted as
+    empty strings). Previously the unauthenticated clone failed and aborted the whole
+    generation, leaving only `.fernignore`-preserved files in the output.
+  type: fix
