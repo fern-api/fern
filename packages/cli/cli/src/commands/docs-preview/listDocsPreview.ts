@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
+import { toPreviewSiteUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -12,7 +13,7 @@ interface PreviewDeployment {
 }
 
 /** A single docs-url entry as returned by FDR's `listAllDocsUrls`. */
-type DocsUrlItem = Awaited<
+export type DocsUrlItem = Awaited<
     ReturnType<ReturnType<typeof createFdrService>["docs"]["v2"]["read"]["listAllDocsUrls"]>
 >["urls"][number];
 
@@ -26,7 +27,7 @@ type DocsUrlItem = Awaited<
  */
 export function toPreviewDeployments(urls: readonly DocsUrlItem[]): PreviewDeployment[] {
     return urls.map((item) => ({
-        url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+        url: toPreviewSiteUrl(item),
         organizationId: item.organizationId,
         updatedAt: item.updatedAt
     }));
