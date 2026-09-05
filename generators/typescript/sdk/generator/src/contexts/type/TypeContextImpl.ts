@@ -460,14 +460,25 @@ export class TypeContextImpl implements TypeContext {
             case "undiscriminatedUnion": {
                 let request = false;
                 let response = false;
-                for (const member of type.members) {
-                    const result = this.needsRequestResponseTypeVariant(member.type);
+                for (const prop of type.baseProperties ?? []) {
+                    if (prop.propertyAccess === "READ_ONLY") {
+                        request = true;
+                    }
+                    if (prop.propertyAccess === "WRITE_ONLY") {
+                        response = true;
+                    }
+                    const result = this.needsRequestResponseTypeVariant(prop.valueType);
                     request = request || result.request;
                     response = response || result.response;
+                }
+                for (const member of type.members) {
                     if (request && response) {
                         // no need to continue checking
                         break;
                     }
+                    const result = this.needsRequestResponseTypeVariant(member.type);
+                    request = request || result.request;
+                    response = response || result.response;
                 }
                 return { request, response };
             }
