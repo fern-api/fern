@@ -420,7 +420,8 @@ export async function visitDocsConfigFileYamlAst({
         translations: noop,
         theme: noop,
         globalTheme: noop,
-        libraries: noop
+        libraries: noop,
+        variants: noop
     });
 }
 

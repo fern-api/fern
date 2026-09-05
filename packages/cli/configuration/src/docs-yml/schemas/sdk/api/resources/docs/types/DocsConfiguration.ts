@@ -31,6 +31,25 @@ export interface DocsConfiguration {
     announcement?: FernDocsConfig.AnnouncementConfig;
     /** Global list of roles that can be used to filter the navigation and content based on the user's session. */
     roles?: FernDocsConfig.RoleId[];
+    /**
+     * Named sets of values for content variants. A single markdown file can be
+     * referenced from multiple places in the navigation with a different `variant`
+     * each time; each reference becomes its own page. Inside the file, wrap
+     * variant-specific content in `<Variant name="...">...</Variant>` and reference
+     * values with `{{variant.<key>}}`.
+     *
+     * Example:
+     * ```yaml
+     * variants:
+     *   nginx:
+     *     server: NGINX
+     *     config-path: /etc/nginx/nginx.conf
+     *   apache:
+     *     server: Apache
+     *     config-path: /etc/apache2/httpd.conf
+     * ```
+     */
+    variants?: Record<FernDocsConfig.VariantId, FernDocsConfig.VariantValues>;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     products?: FernDocsConfig.ProductConfig[];

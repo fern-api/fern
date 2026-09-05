@@ -72,6 +72,12 @@ export interface ParsedDocsConfiguration {
     /* RBAC declaration */
     roles: string[] | undefined;
 
+    /* content variants: variant id → { key → value } */
+    variants: Record<string, Record<string, string>> | undefined;
+
+    /* pages rendered as a content variant, keyed by their (virtual) filepath */
+    variantPages: Record<RelativeFilePath, VariantPageSource>;
+
     /* library documentation */
     libraries: Record<string, ParsedLibraryConfiguration> | undefined;
 
@@ -379,6 +385,34 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
+export interface VariantPageSource {
+    variant: string;
+    sourceRelativeFilePath: RelativeFilePath;
+}
+
+export interface PageVariant {
+    id: string;
+    /** The markdown file on disk; `absolutePath` is a virtual path unique to this page + variant. */
+    sourceAbsolutePath: AbsoluteFilePath;
+}
+
+const VARIANT_PAGE_SEPARATOR = "~";
+
+/**
+ * Returns the virtual filepath under which a markdown file rendered as a given variant is registered,
+ * e.g. `pages/config.mdx` + `nginx` → `pages/config~nginx.mdx`.
+ */
+export function getVariantPageFilepath(absolutePath: AbsoluteFilePath, variant: string): AbsoluteFilePath {
+    const dotIndex = absolutePath.lastIndexOf(".");
+    const slashIndex = absolutePath.lastIndexOf("/");
+    if (dotIndex <= slashIndex) {
+        return AbsoluteFilePath.of(`${absolutePath}${VARIANT_PAGE_SEPARATOR}${variant}`);
+    }
+    return AbsoluteFilePath.of(
+        `${absolutePath.slice(0, dotIndex)}${VARIANT_PAGE_SEPARATOR}${variant}${absolutePath.slice(dotIndex)}`
+    );
+}
+
 export declare namespace DocsNavigationItem {
     export interface Page
         extends CjsFdrSdk.navigation.v1.WithPermissions,
@@ -391,6 +425,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         noindex: boolean | undefined;
         availability: Availability | undefined;
+        variant: PageVariant | undefined;
     }
 
     export interface Section
@@ -407,6 +442,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
+        overviewVariant: PageVariant | undefined;
         availability: Availability | undefined;
     }
 

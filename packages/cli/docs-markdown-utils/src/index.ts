@@ -1,3 +1,4 @@
+export { type ApplyContentVariantResult, applyContentVariant } from "./applyContentVariant.js";
 export { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals.js";
 export { getMarkdownFormat } from "./getMarkdownFormat.js";
 export { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element.js";

@@ -256,6 +256,10 @@
       ],
       "additionalProperties": false
     },
+    "docs.VariantId": {
+      "type": "string",
+      "description": "The name of a content variant declared under `variants`."
+    },
     "docs.Availability": {
       "type": "string",
       "enum": [
@@ -303,6 +307,17 @@
               "type": "null"
             }
           ]
+        },
+        "variant": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Renders the referenced markdown file as the given content variant. Only the matching\n`<Variant name=\"...\">` blocks are kept and `{{variant.<key>}}` placeholders are substituted.\nWhen set on a section, it applies to all pages within it that do not set their own `variant`."
         },
         "page": {
           "type": "string"
@@ -416,6 +431,17 @@
               "type": "null"
             }
           ]
+        },
+        "variant": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Renders the referenced markdown file as the given content variant. Only the matching\n`<Variant name=\"...\">` blocks are kept and `{{variant.<key>}}` placeholders are substituted.\nWhen set on a section, it applies to all pages within it that do not set their own `variant`."
         },
         "section": {
           "type": "string"
