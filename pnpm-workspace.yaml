@@ -228,7 +228,7 @@ catalog:
   semver-diff: ^4.0.0
   simple-git: ^3.36.0
   sort-package-json: 3.6.1
-  stream-json: ^1.8.0
+  stream-json: ^3.5.0
   strip-ansi: ^7.2.0
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0

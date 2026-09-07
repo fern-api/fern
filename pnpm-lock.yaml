@@ -493,8 +493,8 @@ catalogs:
       specifier: 3.6.1
       version: 3.6.1
     stream-json:
-      specifier: ^1.8.0
-      version: 1.9.1
+      specifier: ^3.5.0
+      version: 3.6.0
     strip-ansi:
       specifier: ^7.2.0
       version: 7.2.0
@@ -7705,7 +7705,7 @@ importers:
         version: 3.1.6
       stream-json:
         specifier: 'catalog:'
-        version: 1.9.1
+        version: 3.6.0
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -12448,6 +12448,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -14744,11 +14745,12 @@ packages:
     resolution: {integrity: sha512-xhV7w8S+bUwlPTb4bAOUQhv8/cSS5offJuX8GQGq32ONF0ZtDWKfkdomM3HMRA+LhX6um/FZ0COqlwsjD53LeQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  stream-chain@2.2.5:
-    resolution: {integrity: sha512-1TJmBx6aSWqZ4tx7aTpBDXK0/e2hhcNSTV8+CbFJtDjbb+I1mZ8lHit0Grw9GRT+6JbIrrDd8esncgBi8aBXGA==}
+  stream-chain@4.2.5:
+    resolution: {integrity: sha512-Wtyq3bNE3ggLR0v2vftqvuhltym3WbZAkZpfIrkr5F/6vpeUmWmwTgXa16zD87gpahwJ/Qulq3zVfUlgIc0J2A==}
+    engines: {node: '>=22'}
 
-  stream-json@1.9.1:
-    resolution: {integrity: sha512-uWkjJ+2Nt/LO9Z/JyKZbMusL8Dkh97uUBTv3AJQ74y07lVahLY4eEFsPsE97pxYBwr8nnjMAIch5eqI0gPShyw==}
+  stream-json@3.6.0:
+    resolution: {integrity: sha512-NiJdqxKyau579z/E8vfqcjWfSDWxW/AT99javFXdPXF147Z5za85LRXSHEmSX9TKOakB7gaIccfD0fOIctb7KQ==}
 
   streamx@2.25.0:
     resolution: {integrity: sha512-0nQuG6jf1w+wddNEEXCF4nTg3LtufWINB5eFEN+5TNZW7KWJp6x87+JFL43vaAUPyCfH1wID+mNVyW6OHtFamg==}
@@ -22714,11 +22716,11 @@ snapshots:
     dependencies:
       bl: 5.1.0
 
-  stream-chain@2.2.5: {}
+  stream-chain@4.2.5: {}
 
-  stream-json@1.9.1:
+  stream-json@3.6.0:
     dependencies:
-      stream-chain: 2.2.5
+      stream-chain: 4.2.5
 
   streamx@2.25.0:
     dependencies:
