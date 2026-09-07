@@ -6,6 +6,12 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 };"
 `;
 
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > explodes map<string, MyObject> through the serde layer when the flag is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    ...serializers.record.jsonOrThrow(metadata)
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > keeps both branches of an allowMultiple map<string, string> in deepObject form 1`] = `
 "const _queryParams: Record<string, unknown> = {
     m
@@ -102,12 +108,6 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 };"
 `;
 
-exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > still stringifies map<string, MyObject> when the flag is disabled 1`] = `
-"const _queryParams: Record<string, unknown> = {
-    metadata: metadata.toString()
-};"
-`;
-
 exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for alias resolving to an undiscriminated union 1`] = `
 "const _queryParams: Record<string, unknown> = {
     eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
@@ -123,6 +123,12 @@ exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary
 exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for undiscriminated union with allowMultiple: false (no serde) 1`] = `
 "const _queryParams: Record<string, unknown> = {
     eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > explodes map<string, string> by default 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    ...metadata
 };"
 `;
 
@@ -227,12 +233,6 @@ exports[`GeneratedQueryParams > getBuildStatements > passes map<string, string> 
 exports[`GeneratedQueryParams > getBuildStatements > passes optional<map<string, integer>> through untouched when deepObjectMapQueryParameters is enabled 1`] = `
 "const _queryParams: Record<string, unknown> = {
     counts
-};"
-`;
-
-exports[`GeneratedQueryParams > getBuildStatements > stringifies map<string, string> by default 1`] = `
-"const _queryParams: Record<string, unknown> = {
-    metadata: metadata.toString()
 };"
 `;
 
