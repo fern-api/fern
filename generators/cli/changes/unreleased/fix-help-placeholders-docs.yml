@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Global `--format` / `--user-agent-suffix` help text interpolates the CLI's
+    env var prefix (e.g. `BENCHLING_OUTPUT`) instead of leaking the literal
+    `<NAME>_OUTPUT` / `<NAME>_USER_AGENT_SUFFIX` placeholders.
+  type: fix
+- summary: |
+    Generated README and reference docs list every supported `--format` value,
+    describe the real default (`table` on a TTY, `json` when piped), and only
+    document `-o, --output <PATH>` for binary-response operations.
+  type: fix
