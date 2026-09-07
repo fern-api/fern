@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Binary file uploads no longer throw `String contains non ISO-8859-1 code point` when the filename
+    contains non-Latin-1 characters (or NFD-decomposed accents, as produced by macOS filesystems).
+    The `Content-Disposition` header now NFC-normalizes the filename and, when it is not plain ASCII,
+    emits an ASCII `filename=` fallback plus an RFC 5987 `filename*=UTF-8''...` parameter.
+  type: fix
