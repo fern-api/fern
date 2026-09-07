@@ -420,7 +420,7 @@ fn format_jsonl_array(arr: &[Value]) -> String {
 /// Extract a "data array" from a typical API list response.
 /// APIs often return lists as `{ "collection": [...], "pagination": {...} }`
 /// where the array key varies by resource type.
-fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
+pub(crate) fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
     if let Value::Object(obj) = value {
         for (key, val) in obj {
             if key == "nextPageToken" || key == "kind" || key.starts_with('_') {

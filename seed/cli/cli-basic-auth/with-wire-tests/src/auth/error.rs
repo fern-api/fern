@@ -34,20 +34,7 @@ pub fn handle_error_response<T>(
 ) -> Result<T, CliError> {
     if status.as_u16() == 401 || status.as_u16() == 403 {
         if !provider.has_credentials_for(endpoint) {
-            let hints = provider.credential_hints();
-            let message = if hints.is_empty() {
-                "Access denied. Authentication credentials are missing. \
-                 Check that the configured auth source for this CLI \
-                 (environment variable, --flag, or credential file) has a value set."
-                    .to_string()
-            } else {
-                let joined = dedup_preserve_order(hints).join(", ");
-                format!(
-                    "Access denied. Authentication credentials are missing. \
-                     Set {joined}.",
-                )
-            };
-            return Err(CliError::Auth(message));
+            return Err(missing_credentials_error(provider));
         }
         // Credentials were sent but the server rejected them.
         // Surface which source supplied the credential so the user can
@@ -84,6 +71,25 @@ pub fn handle_error_response<T>(
         return Err(base);
     }
     Err(parse_api_error(status, error_body))
+}
+
+/// The friendly "no credentials" error, naming every declared credential
+/// source so the user knows which env var / flag / file to set.
+pub fn missing_credentials_error(provider: &dyn AuthProvider) -> CliError {
+    let hints = provider.credential_hints();
+    let message = if hints.is_empty() {
+        "Access denied. Authentication credentials are missing. \
+         Check that the configured auth source for this CLI \
+         (environment variable, --flag, or credential file) has a value set."
+            .to_string()
+    } else {
+        let joined = dedup_preserve_order(hints).join(", ");
+        format!(
+            "Access denied. Authentication credentials are missing. \
+             Set {joined}.",
+        )
+    };
+    CliError::Auth(message)
 }
 
 /// Advice for a request that went out with no credentials at all, or `None`

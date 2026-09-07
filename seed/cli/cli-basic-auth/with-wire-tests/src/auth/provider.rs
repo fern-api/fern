@@ -56,6 +56,18 @@ impl EndpointAuthMetadata {
     pub fn is_explicit_anonymous(&self) -> bool {
         matches!(&self.security_requirements, Some(reqs) if reqs.is_empty())
     }
+
+    /// True when the spec declares that this operation cannot be called
+    /// without credentials: at least one security requirement is listed and
+    /// none of them is the empty `{}` alternative (which makes auth optional).
+    /// Operations with no declared policy return `false` — the server is the
+    /// authority there.
+    pub fn requires_credentials(&self) -> bool {
+        match &self.security_requirements {
+            Some(reqs) => !reqs.is_empty() && reqs.iter().all(|req| !req.is_empty()),
+            None => false,
+        }
+    }
 }
 
 /// A pluggable authentication scheme.
@@ -196,6 +208,29 @@ mod tests {
         assert_eq!(auth_header(r), None);
         assert!(!p.has_credentials());
         assert_eq!(p.name(), "none");
+    }
+
+    #[test]
+    fn requires_credentials_follows_declared_policy() {
+        let req = |name: &str| {
+            let mut m = HashMap::new();
+            m.insert(name.to_string(), Vec::<String>::new());
+            m
+        };
+        // No declared policy: the server decides.
+        assert!(!EndpointAuthMetadata::unspecified().requires_credentials());
+        // `security: []` opts out.
+        assert!(!EndpointAuthMetadata::explicit_anonymous().requires_credentials());
+        // OR of two schemes, both requiring something.
+        assert!(
+            EndpointAuthMetadata::with_requirements(vec![req("OAuth"), req("ApiKey")])
+                .requires_credentials()
+        );
+        // An empty `{}` alternative makes auth optional.
+        assert!(
+            !EndpointAuthMetadata::with_requirements(vec![req("OAuth"), HashMap::new()])
+                .requires_credentials()
+        );
     }
 
     #[test]
