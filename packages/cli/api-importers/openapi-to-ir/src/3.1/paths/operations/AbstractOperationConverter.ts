@@ -339,8 +339,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return methodName.includes(".") ? camelCase(methodName) : methodName;
     }
 
+    private isNamespaceTag(tag: string): boolean {
+        return this.context.namespace != null && tag.toLowerCase() === this.context.namespace.toLowerCase();
+    }
+
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
-        const tag = this.operation.tags?.[0];
+        // The namespace is applied to every endpoint in the spec, so a tag that
+        // merely restates it must not become an additional sub-group.
+        const tag = this.operation.tags?.find((tag) => !this.isNamespaceTag(tag));
         const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {

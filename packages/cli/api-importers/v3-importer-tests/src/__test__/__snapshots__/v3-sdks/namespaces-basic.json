@@ -1612,25 +1612,6 @@
         "file": "petsV1"
       },
       "service": "service_petsV1",
-      "types": [],
-      "errors": [],
-      "subpackages": [
-        "subpackage_petsV1/petsV1"
-      ],
-      "hasEndpointsInTree": false
-    },
-    "subpackage_petsV1/petsV1": {
-      "name": "petsV1",
-      "fernFilepath": {
-        "allParts": [
-          "petsV1",
-          "petsV1"
-        ],
-        "packagePath": [
-          "petsV1"
-        ],
-        "file": "petsV1"
-      },
       "types": [
         "petsV1:Pet"
       ],
@@ -1651,25 +1632,6 @@
         "file": "petsV2"
       },
       "service": "service_petsV2",
-      "types": [],
-      "errors": [],
-      "subpackages": [
-        "subpackage_petsV2/petsV2"
-      ],
-      "hasEndpointsInTree": false
-    },
-    "subpackage_petsV2/petsV2": {
-      "name": "petsV2",
-      "fernFilepath": {
-        "allParts": [
-          "petsV2",
-          "petsV2"
-        ],
-        "packagePath": [
-          "petsV2"
-        ],
-        "file": "petsV2"
-      },
       "types": [
         "petsV2:Pet"
       ],
