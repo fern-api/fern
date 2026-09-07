@@ -260,6 +260,26 @@ types:
         docs: Global list of roles that can be used to filter the navigation and content based on the user's session.
         type: optional<list<RoleId>>
 
+      variants:
+        type: optional<map<VariantId, VariantValues>>
+        docs: |
+          Named sets of values for content variants. A single markdown file can be
+          referenced from multiple places in the navigation with a different `variant`
+          each time; each reference becomes its own page. Inside the file, wrap
+          variant-specific content in `<Variant name="...">...</Variant>` and reference
+          values with `{{variant.<key>}}`.
+
+          Example:
+          ```yaml
+          variants:
+            nginx:
+              server: NGINX
+              config-path: /etc/nginx/nginx.conf
+            apache:
+              server: Apache
+              config-path: /etc/apache2/httpd.conf
+          ```
+
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
@@ -1408,8 +1428,25 @@ types:
         docs: |
           @default: `normal`.
 
+  VariantId:
+    type: string
+    docs: The name of a content variant declared under `variants`.
+
+  VariantValues:
+    type: map<string, string>
+    docs: Values available to a page rendered with this variant via `{{variant.<key>}}`.
+
+  WithVariant:
+    properties:
+      variant:
+        type: optional<VariantId>
+        docs: |
+          Renders the referenced markdown file as the given content variant. Only the matching
+          `<Variant name="...">` blocks are kept and `{{variant.<key>}}` placeholders are substituted.
+          When set on a section, it applies to all pages within it that do not set their own `variant`.
+
   PageConfiguration:
-    extends: [WithPermissions, WithFeatureFlags]
+    extends: [WithPermissions, WithFeatureFlags, WithVariant]
     properties:
       page: string
       path: string
@@ -1440,7 +1477,7 @@ types:
       # skip-slug: optional<boolean> # skip-slug is not needed for blog
 
   SectionConfiguration:
-    extends: [WithPermissions, WithFeatureFlags]
+    extends: [WithPermissions, WithFeatureFlags, WithVariant]
     properties:
       section: string
       path:

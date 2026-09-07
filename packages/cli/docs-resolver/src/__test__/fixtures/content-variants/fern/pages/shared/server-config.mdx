@@ -1,0 +1,22 @@
+---
+title: Configure {{variant.server}}
+sidebar-title: Configure {{variant.server}}
+---
+
+Edit `{{variant.config-path}}` on your {{variant.server}} server. See the [{{variant.server}} reference]({{variant.reference-url}}).
+
+<Variant name="nginx">
+```nginx
+server {
+  listen 80;
+}
+```
+</Variant>
+
+<Variant name="apache">
+```apache
+Listen 80
+```
+</Variant>
+
+<Markdown src="../../snippets/restart.mdx" />

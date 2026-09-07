@@ -36,6 +36,8 @@ import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
 import { ThemeConfig } from "./ThemeConfig.js";
 import { TranslationConfig } from "./TranslationConfig.js";
+import { VariantId } from "./VariantId.js";
+import { VariantValues } from "./VariantValues.js";
 import { VersionConfig } from "./VersionConfig.js";
 
 export const DocsConfiguration: core.serialization.ObjectSchema<
@@ -48,6 +50,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     analytics: AnalyticsConfig.optional(),
     announcement: AnnouncementConfig.optional(),
     roles: core.serialization.list(RoleId).optional(),
+    variants: core.serialization.record(VariantId, VariantValues).optional(),
     tabs: core.serialization.record(TabId, TabConfig).optional(),
     versions: core.serialization.list(VersionConfig).optional(),
     products: core.serialization.list(ProductConfig).optional(),
@@ -91,6 +94,7 @@ export declare namespace DocsConfiguration {
         analytics?: AnalyticsConfig.Raw | null;
         announcement?: AnnouncementConfig.Raw | null;
         roles?: RoleId.Raw[] | null;
+        variants?: Record<VariantId.Raw, VariantValues.Raw> | null;
         tabs?: Record<TabId.Raw, TabConfig.Raw> | null;
         versions?: VersionConfig.Raw[] | null;
         products?: ProductConfig.Raw[] | null;

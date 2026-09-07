@@ -1,0 +1,7 @@
+- summary: |
+    Add content variants for docs. Declare named value sets under a top-level `variants` key in
+    `docs.yml`, then reference the same markdown file from multiple navigation entries with a
+    different `variant` (settable on a page or inherited from a section). Each reference becomes
+    its own page. Inside the markdown (including `<Markdown src>` snippets), wrap variant-specific
+    content in `<Variant name="nginx">...</Variant>` and substitute values with `{{variant.<key>}}`.
+  type: feat

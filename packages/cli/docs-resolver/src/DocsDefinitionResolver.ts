@@ -9,6 +9,7 @@ import {
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
+    applyContentVariant,
     collectCodeSrcUrls,
     isValidRelativeSlug,
     parseImagePaths,
@@ -345,7 +346,21 @@ export class DocsDefinitionResolver {
      * Must be called after `resolve()`.
      */
     public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
-        return this._parsedDocsConfig?.translationPages;
+        const translationPages = this._parsedDocsConfig?.translationPages;
+        if (translationPages == null) {
+            return undefined;
+        }
+        return Object.fromEntries(
+            Object.entries(translationPages).map(([locale, localePages]) => [
+                locale,
+                Object.fromEntries(
+                    Object.entries(localePages).map(([relativePath, markdown]) => [
+                        relativePath,
+                        this.applyPageVariant(RelativeFilePath.of(relativePath), markdown, { warn: false })
+                    ])
+                )
+            ])
+        );
     }
 
     /**
@@ -468,6 +483,18 @@ export class DocsDefinitionResolver {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
         }
 
+        // Resolve content variants in page sources so frontmatter and raw markdown reflect the
+        // selected variant; included snippets are resolved again after `<Markdown src>` expansion.
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            if (this.parsedDocsConfig.variantPages[RelativeFilePath.of(relativePath)] != null) {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = this.applyPageVariant(
+                    RelativeFilePath.of(relativePath),
+                    markdown,
+                    { warn: false }
+                );
+            }
+        }
+
         // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -558,7 +585,7 @@ export class DocsDefinitionResolver {
                 }
             }
             const codeReplacedMarkdown = await replaceReferencedCode({
-                markdown: result.markdown,
+                markdown: this.applyPageVariant(RelativeFilePath.of(relativePath), result.markdown, { warn: true }),
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext,
@@ -751,7 +778,8 @@ export class DocsDefinitionResolver {
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
             const { url: editThisPageUrl, launch: editThisPageLaunch } = createEditThisPageUrl(
                 this.editThisPage,
-                relativePageFilepath
+                this.parsedDocsConfig.variantPages[RelativeFilePath.of(relativePageFilepath)]?.sourceRelativeFilePath ??
+                    relativePageFilepath
             );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
@@ -825,6 +853,40 @@ export class DocsDefinitionResolver {
         );
 
         return { config, pages, jsFiles };
+    }
+
+    /**
+     * Resolves `<Variant>` blocks and `{{variant.<key>}}` placeholders for the variant the page is
+     * registered under (if any). Pages without a variant have every `<Variant>` block removed.
+     */
+    private applyPageVariant(relativePath: RelativeFilePath, markdown: string, { warn }: { warn: boolean }): string {
+        const variantPage = this.parsedDocsConfig.variantPages[relativePath];
+        const variantId = variantPage?.variant;
+        const result = applyContentVariant({
+            markdown,
+            variantId,
+            values: variantId != null ? this.parsedDocsConfig.variants?.[variantId] : undefined
+        });
+        if (!warn) {
+            return result.markdown;
+        }
+        const sourcePath = variantPage?.sourceRelativeFilePath ?? relativePath;
+        if (variantId == null && result.hasVariantBlocks) {
+            this.taskContext.logger.warn(
+                `${sourcePath} contains <Variant> blocks but is referenced without a \`variant\` in docs.yml; all variant content was removed.`
+            );
+        }
+        if (result.hasNestedVariantBlocks) {
+            this.taskContext.logger.warn(
+                `${sourcePath} nests <Variant> blocks inside each other, which is not supported; the output may be malformed.`
+            );
+        }
+        if (result.missingValues.length > 0) {
+            this.taskContext.logger.warn(
+                `${sourcePath} (variant "${variantId}") references undefined variant value(s): ${result.missingValues.map((key) => `{{variant.${key}}}`).join(", ")}`
+            );
+        }
+        return result.markdown;
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;

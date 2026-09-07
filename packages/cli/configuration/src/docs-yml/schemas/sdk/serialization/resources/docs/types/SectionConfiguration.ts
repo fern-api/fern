@@ -7,6 +7,7 @@ import { Availability } from "./Availability.js";
 import { CollapsedValue } from "./CollapsedValue.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
+import { WithVariant } from "./WithVariant.js";
 
 export const SectionConfiguration: core.serialization.ObjectSchema<
     serializers.SectionConfiguration.Raw,
@@ -29,10 +30,11 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         availability: Availability.optional(),
     })
     .extend(WithPermissions)
-    .extend(WithFeatureFlags);
+    .extend(WithFeatureFlags)
+    .extend(WithVariant);
 
 export declare namespace SectionConfiguration {
-    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw, WithVariant.Raw {
         section: string;
         path?: string | null;
         contents: serializers.NavigationItem.Raw[];
