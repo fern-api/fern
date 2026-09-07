@@ -1,4 +1,4 @@
-import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -13,7 +13,7 @@ type ResponseProperty = FernIr.ResponseProperty;
 
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
+import { getClientCredentialsOrThrow, isGrantTypeProperty } from "./getClientCredentials.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -424,13 +424,4 @@ function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
     return typeReference.type === "container" && typeReference.container.type === "literal";
 }
 
-const GRANT_TYPE_WIRE_VALUE = "grant_type";
 const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
-
-/**
- * The client-credentials grant type is synthesized in the token request
- * rather than surfaced as a constructor parameter.
- */
-function isGrantTypeProperty(requestProperty: FernIr.RequestProperty): boolean {
-    return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
-}

@@ -1,4 +1,4 @@
-import { GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
@@ -12,4 +12,14 @@ export function getClientCredentialsOrThrow(scheme: FernIr.OAuthScheme): FernIr.
         );
     }
     return scheme.configuration;
+}
+
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+
+/**
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a constructor parameter.
+ */
+export function isGrantTypeProperty(requestProperty: FernIr.RequestProperty): boolean {
+    return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
 }
