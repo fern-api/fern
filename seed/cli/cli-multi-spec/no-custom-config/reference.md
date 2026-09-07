@@ -61,9 +61,14 @@ These flags are available on every command:
 | `--format <json\|table\|yaml\|csv>` | Output format (default: `json`) |
 | `--output <PATH>` | Write binary responses to a file |
 | `--base-url <URL>` | Override the API base URL |
-| `--page-all` | Auto-paginate and stream all results |
-| `--page-limit <N>` | Max pages to fetch (default: `10`) |
 | `-q, --quiet` | Suppress stdout on success |
 | `-h, --help` | Print help |
 | `-V, --version` | Print version |
+
+Paginated operations (those the spec marks with `x-fern-pagination`) also accept:
+
+| Flag | Description |
+|------|-------------|
+| `--page-all` | Auto-paginate and stream all results |
+| `--page-limit <N>` | Max pages to fetch (default: `10`) |
 

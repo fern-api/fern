@@ -421,11 +421,16 @@ function renderReference(args: {
     lines.push("| `--format <json\\|table\\|yaml\\|csv>` | Output format (default: `json`) |");
     lines.push("| `--output <PATH>` | Write binary responses to a file |");
     lines.push("| `--base-url <URL>` | Override the API base URL |");
-    lines.push("| `--page-all` | Auto-paginate and stream all results |");
-    lines.push("| `--page-limit <N>` | Max pages to fetch (default: `10`) |");
     lines.push("| `-q, --quiet` | Suppress stdout on success |");
     lines.push("| `-h, --help` | Print help |");
     lines.push("| `-V, --version` | Print version |");
+    lines.push("");
+    lines.push("Paginated operations (those the spec marks with `x-fern-pagination`) also accept:");
+    lines.push("");
+    lines.push("| Flag | Description |");
+    lines.push("|------|-------------|");
+    lines.push("| `--page-all` | Auto-paginate and stream all results |");
+    lines.push("| `--page-limit <N>` | Max pages to fetch (default: `10`) |");
     lines.push("");
 
     return lines.join("\n") + "\n";

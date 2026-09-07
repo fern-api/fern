@@ -96,9 +96,14 @@ These flags are available on every operation:
 | `--format <json\|table\|yaml\|csv>` | Output format (default `json`) |
 | `--output <PATH>` | Write binary responses to a file |
 | `--base-url <URL>` | Override the API base URL |
+| `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |
+
+Paginated operations (those the spec marks with `x-fern-pagination`) also accept:
+
+| Flag | Description |
+|------|-------------|
 | `--page-all` | Auto-paginate and stream results as NDJSON |
 | `--page-limit <N>` | Max pages to fetch when auto-paginating (default `10`) |
-| `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |
 
 ### Environment variables
 
