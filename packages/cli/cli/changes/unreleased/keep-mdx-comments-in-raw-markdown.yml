@@ -1,0 +1,4 @@
+- summary: |
+    Keep MDX comments (`{/* ... */}`) in the `rawMarkdown` uploaded to FDR so the visual editor
+    preserves them when editing a page. Comments are still stripped from the rendered markdown.
+  type: fix

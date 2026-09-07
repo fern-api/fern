@@ -24,7 +24,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
  *  1. Locale-aware snippet resolution (prefers translated snippets)
  *  2. `<Code src="..."/>` reference resolution
  *  3. `@/` import transforms
- *  4. MDX comment stripping
+ *  4. MDX comment stripping (rendered `markdown` only; `rawMarkdown` keeps the source)
  *  5. Image path rewrites (using base page location)
  *  6. `editThisPageUrl` rewriting to point to the translated file
  *  7. Nav tree overlay (translated sidebar titles from frontmatter + docs.yml)
@@ -125,7 +125,7 @@ export async function buildTranslatedDocsDefinition({
                     path,
                     {
                         markdown: processedMarkdown,
-                        rawMarkdown: processedMarkdown,
+                        rawMarkdown,
                         editThisPageUrl,
                         editThisPageLaunch: basePage?.editThisPageLaunch
                     }

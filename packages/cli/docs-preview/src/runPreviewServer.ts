@@ -262,7 +262,7 @@ export async function runPreviewServer({
 
                         translatedPages[pagePath] = {
                             markdown: processedMarkdown,
-                            rawMarkdown: processedMarkdown,
+                            rawMarkdown,
                             editThisPageUrl: basePage?.editThisPageUrl,
                             editThisPageLaunch: basePage?.editThisPageLaunch
                         };

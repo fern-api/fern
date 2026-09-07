@@ -320,7 +320,7 @@ export async function getPreviewDocsDefinition({
                 markdown: stripMdxComments(finalMarkdown),
                 editThisPageUrl: previousValue?.editThisPageUrl,
                 editThisPageLaunch: previousValue?.editThisPageLaunch,
-                rawMarkdown: stripMdxComments(markdown)
+                rawMarkdown: markdown
             };
         }
 
