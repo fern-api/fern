@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated `ci.yml` no longer sets `RUSTFLAGS: "-A warnings"` and gains a
+    `clippy` job that the publish job depends on. A test literal that tripped
+    `clippy::approx_constant` under `--all-targets` was replaced.
+  type: fix
