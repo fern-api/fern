@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.6
+  changelogEntry:
+    - summary: |
+        An array query parameter declared `style: form` with `explode: false` is now sent as
+        one comma-joined value instead of a repeated key. The IR has always carried `explode`
+        and the Rust generator read it nowhere, so every array went out exploded regardless of
+        what the endpoint declared. An empty array still produces no parameter.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 0.47.5
   changelogEntry:
     - summary: |
