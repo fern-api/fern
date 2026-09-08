@@ -18,14 +18,16 @@ export function renderFileUploadStatement({
     property: FernIr.FileProperty;
     paramName: string;
 }): string {
-    const wireName = getWireValue(property.key);
+    const wireName = ruby.TypeLiteral.string(getWireValue(property.key)).toString();
     const contentTypeArg =
-        property.contentType != null ? `, content_type: ${JSON.stringify(property.contentType)}` : "";
+        property.contentType != null
+            ? `, content_type: ${ruby.TypeLiteral.string(property.contentType).toString()}`
+            : "";
     switch (property.type) {
         case "file":
-            return `body.add_file(name: "${wireName}", file: params[:${paramName}]${contentTypeArg}) if params[:${paramName}]`;
+            return `body.add_file(name: ${wireName}, file: params[:${paramName}]${contentTypeArg}) if params[:${paramName}]`;
         case "fileArray":
-            return `params[:${paramName}]&.each { |file| body.add_file(name: "${wireName}", file: file${contentTypeArg}) }`;
+            return `params[:${paramName}]&.each { |file| body.add_file(name: ${wireName}, file: file${contentTypeArg}) }`;
         default:
             assertNever(property);
     }

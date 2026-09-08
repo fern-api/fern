@@ -70,4 +70,17 @@ describe("renderFileUploadStatement", () => {
             })
         ).toBe('params[:files]&.each { |file| body.add_file(name: "files", file: file, content_type: "image/png") }');
     });
+    it("escapes wire names so schema-controlled strings cannot interpolate into generated Ruby", () => {
+        expect(
+            renderFileUploadStatement({
+                property: FernIr.FileProperty.file({
+                    key: key('a"b#{`id`}'),
+                    isOptional: false,
+                    contentType: undefined,
+                    docs: undefined
+                }),
+                paramName: "file"
+            })
+        ).toBe('body.add_file(name: "a\\"b\\#{`id`}", file: params[:file]) if params[:file]');
+    });
 });
