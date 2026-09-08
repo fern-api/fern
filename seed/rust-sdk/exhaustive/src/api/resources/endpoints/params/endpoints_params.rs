@@ -452,6 +452,7 @@ impl ParamsClient {
                 &format!("/params/path/{}", param),
                 Some(request.to_vec()),
                 None,
+                "application/octet-stream",
                 options,
             )
             .await
@@ -535,6 +536,7 @@ impl ParamsClient {
                 QueryBuilder::new()
                     .string("_fields", request.fields.clone())
                     .build(),
+                "application/octet-stream",
                 options,
             )
             .await

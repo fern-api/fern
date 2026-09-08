@@ -341,13 +341,15 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         if (this.context.hasBytesEndpoints()) {
             content = content.replace(
                 /\{\{BYTES_METHOD\}\}/g,
-                `    /// Execute a request with a raw bytes body (application/octet-stream).
+                `    /// Execute a request with a raw bytes body, sent under the content type the
+    /// endpoint declares.
     pub async fn execute_bytes_request<T>(
         &self,
         method: Method,
         path: &str,
         body: Option<Vec<u8>>,
         query_params: Option<Vec<(String, String)>>,
+        content_type: &str,
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
     where
@@ -367,9 +369,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         if let Some(body) = body {
-            request = request
-                .header("Content-Type", "application/octet-stream")
-                .body(body);
+            request = request.header("Content-Type", content_type).body(body);
         }
 
         let req = request.build().map_err(|e| ApiError::Network(e))?;

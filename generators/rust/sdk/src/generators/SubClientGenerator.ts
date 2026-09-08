@@ -938,11 +938,19 @@ export class SubClientGenerator {
             const bytesBody = endpoint.queryParameters.length > 0
                 ? "Some(request.body.to_vec())"
                 : "Some(request.to_vec())";
+            // The declared media type, which the IR carries on the bytes body. The
+            // `application/octet-stream` fallback is load-bearing rather than defensive: an
+            // endpoint that declares no content-type has always sent that, and must keep sending it.
+            const bytesContentType =
+                endpoint.requestBody?.type === "bytes"
+                    ? (endpoint.requestBody.contentType ?? "application/octet-stream")
+                    : "application/octet-stream";
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
+            ${JSON.stringify(bytesContentType)},
             options,`;
         } else {
             executeArgs = `
