@@ -70,7 +70,7 @@ describe("responseBodyLoader", () => {
 
     it("parses and coerces top-level list responses", () => {
         expect(render(FernIr.TypeReference.container(FernIr.ContainerType.list(namedType())))).toBe(
-            "Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Users::Types::User], JSON.parse(response.body, symbolize_names: true))"
+            "Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Users::Types::User], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))"
         );
     });
 
@@ -85,12 +85,16 @@ describe("responseBodyLoader", () => {
                 )
             )
         ).toBe(
-            "Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Integer], JSON.parse(response.body, symbolize_names: true))"
+            "Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Integer], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))"
         );
     });
 
     it("parses primitive and unknown bodies directly", () => {
-        expect(render(stringType())).toBe("JSON.parse(response.body, symbolize_names: true)");
-        expect(render(FernIr.TypeReference.unknown())).toBe("JSON.parse(response.body, symbolize_names: true)");
+        expect(render(stringType())).toBe(
+            "(response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))"
+        );
+        expect(render(FernIr.TypeReference.unknown())).toBe(
+            "(response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))"
+        );
     });
 });

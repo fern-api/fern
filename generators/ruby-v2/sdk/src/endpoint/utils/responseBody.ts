@@ -23,7 +23,7 @@ export function responseBodyLoader({
     getReferenceToTypeId,
     getRubyType
 }: ResponseBodyLoaderArgs): ruby.AstNode {
-    const parseExpression = `JSON.parse(${responseVariableName}.body, symbolize_names: true)`;
+    const parseExpression = `(${responseVariableName}.body.to_s.empty? ? nil : JSON.parse(${responseVariableName}.body, symbolize_names: true))`;
     return ruby.codeblock((writer) => {
         switch (typeReference.type) {
             case "named":
