@@ -2210,7 +2210,7 @@ export class SubClientGenerator {
                     // Use page_token as offset/page number (start from 0 if None)
                     let current_page = page_token.unwrap_or_else(|| "0".to_string());
                     query_params.push(("${pageParamName}".to_string(), current_page.clone()));
-                    
+                    ${this.generatePageSizeCapture(offset)}
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
@@ -2415,10 +2415,16 @@ export class SubClientGenerator {
         const resultsPath = this.buildResponseFieldPath(offset.results);
         const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
 
-        // For hasNextPage path, it's already properly formatted with and_then chains
+        // A full page means there may be more; a SHORT page is the last one. Terminating only on an
+        // EMPTY page costs one wasted request at best, and never terminates at all against a server
+        // that keeps answering - which is what `!items.is_empty()` alone did.
+        const moreToCome =
+            offset.step != null
+                ? "match page_size { Some(size) => items.len() as i64 >= size, None => !items.is_empty() }"
+                : "!items.is_empty()";
         const hasNextPageCheck = hasNextPath
-            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(!items.is_empty())`
-            : "!items.is_empty()";
+            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(${moreToCome})`
+            : moreToCome;
 
         if (isInPaginationLoop) {
             return `// Generic field extraction for offset pagination
@@ -2517,6 +2523,26 @@ export class SubClientGenerator {
             body: (body) => getWireValue(body.name),
             _other: () => "cursor"
         });
+    }
+
+    /**
+     * The page size the caller asked for, read out of the query string the loader is about to send.
+     * Only emitted when `step` is declared, since that is the only case the termination test uses it.
+     */
+    private generatePageSizeCapture(offset: FernIr.OffsetPagination): string {
+        if (offset.step == null) {
+            return "";
+        }
+        const stepParamName = offset.step.property._visit({
+            query: (query) => getWireValue(query.name),
+            body: (body) => getWireValue(body.name),
+            _other: () => "limit"
+        });
+        return `let page_size: Option<i64> = query_params
+                        .iter()
+                        .find(|(name, _)| name == "${stepParamName}")
+                        .and_then(|(_, value)| value.parse::<i64>().ok());
+                    `;
     }
 
     /**
