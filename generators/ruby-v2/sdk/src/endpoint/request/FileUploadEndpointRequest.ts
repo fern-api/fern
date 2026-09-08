@@ -52,15 +52,19 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                 thenBody: [
                                     ruby.codeblock((writer) => {
                                         const wireName = getWireValue(property.value.key);
+                                        const contentTypeArg =
+                                            property.value.contentType != null
+                                                ? `, content_type: ${JSON.stringify(property.value.contentType)}`
+                                                : "";
                                         switch (property.value.type) {
                                             case "file":
                                                 writer.writeLine(
-                                                    `body.add_file(name: "${wireName}", file: params[:${snakeCaseName}])`
+                                                    `body.add_file(name: "${wireName}", file: params[:${snakeCaseName}]${contentTypeArg})`
                                                 );
                                                 break;
                                             case "fileArray":
                                                 writer.writeLine(
-                                                    `params[:${snakeCaseName}].each { |file| body.add_file(name: "${wireName}", file: file) }`
+                                                    `params[:${snakeCaseName}].each { |file| body.add_file(name: "${wireName}", file: file${contentTypeArg}) }`
                                                 );
                                                 break;
                                             default:

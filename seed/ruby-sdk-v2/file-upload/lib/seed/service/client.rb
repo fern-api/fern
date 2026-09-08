@@ -238,7 +238,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        body.add_file(name: "file", file: params[:file], content_type: "application/octet-stream") if params[:file]
         if params[:foo]
           body.add(
             name: "foo",
@@ -292,7 +292,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        body.add_file(name: "file", file: params[:file], content_type: "application/octet-stream") if params[:file]
         if params[:foo]
           body.add(
             name: "foo",
@@ -450,7 +450,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "image_file", file: params[:image_file]) if params[:image_file]
+        body.add_file(name: "image_file", file: params[:image_file], content_type: "image/jpeg") if params[:image_file]
         if params[:request]
           body.add(
             name: "request",
@@ -580,7 +580,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "image_file", file: params[:image_file]) if params[:image_file]
+        body.add_file(name: "image_file", file: params[:image_file], content_type: "image/jpeg") if params[:image_file]
         if params[:request]
           body.add(
             name: "request",
