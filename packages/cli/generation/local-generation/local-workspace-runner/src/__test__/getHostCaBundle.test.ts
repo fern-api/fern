@@ -2,58 +2,58 @@ import { mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import path from "path";
 import { afterAll, describe, expect, it } from "vitest";
-import { CONTAINER_CA_BUNDLE_PATH, getContainerCaBundleEnvVars, getHostCaBundle } from "../getHostCaBundle.js";
+import {
+    CONTAINER_CA_BUNDLE_DIRECTORY,
+    getCaBundleBinds,
+    getCaBundleEnvVars,
+    getHostCaBundles
+} from "../getHostCaBundle.js";
 
 const dir = mkdtempSync(path.join(tmpdir(), "fern-ca-bundle-"));
-const bundlePath = path.join(dir, "ca.pem");
-writeFileSync(bundlePath, "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n");
+const extraOnly = path.join(dir, "corp-ca.pem");
+const fullBundle = path.join(dir, "ca-certificates.crt");
+writeFileSync(extraOnly, "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n");
+writeFileSync(fullBundle, "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n");
+
+const container0 = path.join(CONTAINER_CA_BUNDLE_DIRECTORY, "0.crt");
+const container1 = path.join(CONTAINER_CA_BUNDLE_DIRECTORY, "1.crt");
 
 afterAll(() => {
     rmSync(dir, { recursive: true, force: true });
 });
 
-describe("getHostCaBundle", () => {
-    it("returns undefined when no CA env var is set", () => {
-        expect(getHostCaBundle({})).toBeUndefined();
+describe("getHostCaBundles", () => {
+    it("returns nothing when no CA env var is set", () => {
+        expect(getHostCaBundles({})).toEqual([]);
     });
 
-    it("returns undefined when the referenced file does not exist", () => {
-        expect(getHostCaBundle({ NODE_EXTRA_CA_CERTS: path.join(dir, "missing.pem") })).toBeUndefined();
-    });
-
-    it("ignores empty values", () => {
-        expect(getHostCaBundle({ NODE_EXTRA_CA_CERTS: "  ", SSL_CERT_FILE: bundlePath })).toEqual({
-            hostPath: bundlePath,
-            sourceEnvVar: "SSL_CERT_FILE"
-        });
-    });
-
-    it("prefers NODE_EXTRA_CA_CERTS over SSL_CERT_FILE and GIT_SSL_CAINFO", () => {
+    it("skips missing files and empty values", () => {
         expect(
-            getHostCaBundle({
-                GIT_SSL_CAINFO: bundlePath,
-                SSL_CERT_FILE: bundlePath,
-                NODE_EXTRA_CA_CERTS: bundlePath
-            })
-        ).toEqual({ hostPath: bundlePath, sourceEnvVar: "NODE_EXTRA_CA_CERTS" });
-    });
-
-    it("falls through to the next env var when an earlier one points at a missing file", () => {
-        expect(
-            getHostCaBundle({
+            getHostCaBundles({
                 NODE_EXTRA_CA_CERTS: path.join(dir, "missing.pem"),
-                GIT_SSL_CAINFO: bundlePath
+                SSL_CERT_FILE: "  ",
+                GIT_SSL_CAINFO: fullBundle
             })
-        ).toEqual({ hostPath: bundlePath, sourceEnvVar: "GIT_SSL_CAINFO" });
+        ).toEqual([{ envVar: "GIT_SSL_CAINFO", hostPath: fullBundle, containerPath: container0 }]);
     });
-});
 
-describe("getContainerCaBundleEnvVars", () => {
-    it("points every CA env var at the mounted bundle", () => {
-        expect(getContainerCaBundleEnvVars()).toEqual({
-            NODE_EXTRA_CA_CERTS: CONTAINER_CA_BUNDLE_PATH,
-            SSL_CERT_FILE: CONTAINER_CA_BUNDLE_PATH,
-            GIT_SSL_CAINFO: CONTAINER_CA_BUNDLE_PATH
+    it("only forwards the variables that are set on the host", () => {
+        const bundles = getHostCaBundles({ NODE_EXTRA_CA_CERTS: extraOnly });
+        expect(getCaBundleEnvVars(bundles)).toEqual({ NODE_EXTRA_CA_CERTS: container0 });
+        expect(getCaBundleBinds(bundles)).toEqual([`${extraOnly}:${container0}:ro`]);
+    });
+
+    it("mounts an extra-only bundle and a full bundle separately, preserving each variable's target", () => {
+        const bundles = getHostCaBundles({
+            NODE_EXTRA_CA_CERTS: extraOnly,
+            SSL_CERT_FILE: fullBundle,
+            GIT_SSL_CAINFO: fullBundle
+        });
+        expect(getCaBundleBinds(bundles)).toEqual([`${extraOnly}:${container0}:ro`, `${fullBundle}:${container1}:ro`]);
+        expect(getCaBundleEnvVars(bundles)).toEqual({
+            NODE_EXTRA_CA_CERTS: container0,
+            SSL_CERT_FILE: container1,
+            GIT_SSL_CAINFO: container1
         });
     });
 });

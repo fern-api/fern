@@ -205,35 +205,35 @@ export class GithubStep extends BaseStep {
             this.logger.info(
                 `Preview mode: changes committed locally on branch ${prBranch} at ${this.outputDir}; skipping push and pull request. Re-run without --preview to publish.`
             );
-        } else {
-            // Create a signed commit via the GitHub API. Using the App installation token causes
-            // GitHub to sign the commit with the App's key. `force=true` when updating an existing
-            // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
-            await pushSignedCommit({
-                repository,
-                octokit,
-                owner,
-                repo,
-                branch: prBranch,
-                force: isUpdatingExistingPR,
-                author: resolveCommitAuthor(this.config.token, this.config.author),
-                logger: this.logger
-            });
-            const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
-            this.logger.info(`Pushed branch: ${result.branchUrl}`);
+            return result;
+        }
+        // Create a signed commit via the GitHub API. Using the App installation token causes
+        // GitHub to sign the commit with the App's key. `force=true` when updating an existing
+        // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
+        await pushSignedCommit({
+            repository,
+            octokit,
+            owner,
+            repo,
+            branch: prBranch,
+            force: isUpdatingExistingPR,
+            author: resolveCommitAuthor(this.config.token, this.config.author),
+            logger: this.logger
+        });
+        const pushedBranch = await repository.getCurrentBranch();
+        result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
+        this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
-            if (generationBaseSha != null) {
-                try {
-                    const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
-                    const tagName =
-                        sanitizedName != null ? `fern-generation-base--${sanitizedName}` : "fern-generation-base";
-                    await repository.createAndPushTag(tagName, generationBaseSha);
-                    this.logger.debug(`Pushed ${tagName} tag for generation tracking`);
-                    result.generationBaseTagSha = generationBaseSha;
-                } catch (error) {
-                    this.logger.debug(`Could not push generation tag: ${extractErrorMessage(error)}`);
-                }
+        if (generationBaseSha != null) {
+            try {
+                const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
+                const tagName =
+                    sanitizedName != null ? `fern-generation-base--${sanitizedName}` : "fern-generation-base";
+                await repository.createAndPushTag(tagName, generationBaseSha);
+                this.logger.debug(`Pushed ${tagName} tag for generation tracking`);
+                result.generationBaseTagSha = generationBaseSha;
+            } catch (error) {
+                this.logger.debug(`Could not push generation tag: ${extractErrorMessage(error)}`);
             }
         }
 

@@ -12,7 +12,7 @@ import {
     TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
-import { CONTAINER_CA_BUNDLE_PATH, getContainerCaBundleEnvVars, getHostCaBundle } from "./getHostCaBundle.js";
+import { getCaBundleBinds, getCaBundleEnvVars, getHostCaBundles } from "./getHostCaBundle.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
@@ -97,14 +97,14 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             envVars["FERN_DISABLE_TELEMETRY"] = "true";
         }
 
-        const caBundle = getHostCaBundle();
-        if (caBundle != null) {
+        const caBundles = getHostCaBundles();
+        for (const caBundle of caBundles) {
             context.logger.debug(
-                `Mounting CA bundle from ${caBundle.sourceEnvVar} (${caBundle.hostPath}) into the generator container`
+                `Forwarding ${caBundle.envVar} (${caBundle.hostPath}) into the generator container at ${caBundle.containerPath}`
             );
-            binds.push(`${caBundle.hostPath}:${CONTAINER_CA_BUNDLE_PATH}:ro`);
-            Object.assign(envVars, getContainerCaBundleEnvVars());
         }
+        binds.push(...getCaBundleBinds(caBundles));
+        Object.assign(envVars, getCaBundleEnvVars(caBundles));
 
         try {
             await runContainer({

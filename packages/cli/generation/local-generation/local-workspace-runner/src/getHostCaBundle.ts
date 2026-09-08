@@ -3,44 +3,63 @@ import path from "path";
 import { CONTAINER_FERN_DIRECTORY } from "./constants.js";
 
 /**
- * Environment variables, in priority order, that point at a PEM bundle of extra
- * CA certificates on the host. Corporate networks that intercept TLS (e.g. Okta,
- * Zscaler) typically require one of these so that Node, git and OpenSSL-based
- * tools trust the interception CA.
+ * Environment variables that point at a PEM bundle of CA certificates on the host.
+ * Corporate networks that intercept TLS (e.g. Okta, Zscaler) typically require one
+ * or more of these so that Node, git and OpenSSL-based tools trust the interception CA.
+ *
+ * Note that NODE_EXTRA_CA_CERTS *extends* Node's default trust store, whereas
+ * SSL_CERT_FILE and GIT_SSL_CAINFO *replace* their consumers' trust stores. Each
+ * variable is therefore forwarded independently: a variable is only set inside the
+ * container if it is set on the host, pointing at that same file.
  */
 export const CA_BUNDLE_ENV_VARS = ["NODE_EXTRA_CA_CERTS", "SSL_CERT_FILE", "GIT_SSL_CAINFO"] as const;
 
-export const CONTAINER_CA_BUNDLE_PATH = path.join(CONTAINER_FERN_DIRECTORY, "ca-certificates.crt");
+export type CaBundleEnvVar = (typeof CA_BUNDLE_ENV_VARS)[number];
+
+export const CONTAINER_CA_BUNDLE_DIRECTORY = path.join(CONTAINER_FERN_DIRECTORY, "ca-certificates");
 
 export interface HostCaBundle {
+    /** The environment variable the bundle was discovered from. */
+    envVar: CaBundleEnvVar;
     /** Absolute path to the PEM bundle on the host. */
     hostPath: string;
-    /** The environment variable the bundle was discovered from. */
-    sourceEnvVar: (typeof CA_BUNDLE_ENV_VARS)[number];
+    /** Path at which the bundle is mounted inside the container. */
+    containerPath: string;
 }
 
 /**
- * Returns the first CA bundle referenced by {@link CA_BUNDLE_ENV_VARS} that
- * exists on the host, or undefined if none is configured.
+ * Returns every CA bundle referenced by {@link CA_BUNDLE_ENV_VARS} that exists on
+ * the host. Variables pointing at the same file share a single container path.
  */
-export function getHostCaBundle(env: NodeJS.ProcessEnv = process.env): HostCaBundle | undefined {
+export function getHostCaBundles(env: NodeJS.ProcessEnv = process.env): HostCaBundle[] {
+    const containerPathByHostPath = new Map<string, string>();
+    const bundles: HostCaBundle[] = [];
     for (const envVar of CA_BUNDLE_ENV_VARS) {
         const value = env[envVar];
         if (value == null || value.trim() === "") {
             continue;
         }
         const hostPath = path.resolve(value);
-        if (existsSync(hostPath) && statSync(hostPath).isFile()) {
-            return { hostPath, sourceEnvVar: envVar };
+        if (!existsSync(hostPath) || !statSync(hostPath).isFile()) {
+            continue;
         }
+        let containerPath = containerPathByHostPath.get(hostPath);
+        if (containerPath == null) {
+            containerPath = path.join(CONTAINER_CA_BUNDLE_DIRECTORY, `${containerPathByHostPath.size}.crt`);
+            containerPathByHostPath.set(hostPath, containerPath);
+        }
+        bundles.push({ envVar, hostPath, containerPath });
     }
-    return undefined;
+    return bundles;
 }
 
-/**
- * Environment variables to set inside the generator container so that Node,
- * git and OpenSSL-based tools all trust the mounted CA bundle.
- */
-export function getContainerCaBundleEnvVars(): Record<string, string> {
-    return Object.fromEntries(CA_BUNDLE_ENV_VARS.map((envVar) => [envVar, CONTAINER_CA_BUNDLE_PATH]));
+/** Read-only bind mounts (`host:container:ro`), one per distinct host file. */
+export function getCaBundleBinds(bundles: HostCaBundle[]): string[] {
+    const binds = new Set(bundles.map((bundle) => `${bundle.hostPath}:${bundle.containerPath}:ro`));
+    return [...binds];
+}
+
+/** Environment variables to set inside the container, mirroring the host's. */
+export function getCaBundleEnvVars(bundles: HostCaBundle[]): Record<string, string> {
+    return Object.fromEntries(bundles.map((bundle) => [bundle.envVar, bundle.containerPath]));
 }
