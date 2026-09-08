@@ -337,6 +337,58 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{MULTIPART_METHOD\}\}/g, "");
         }
 
+        // Conditionally include the non-default-JSON-content-type request method. Emitted only
+        // when an endpoint declares one, so the 130-odd SDKs that never need it are unchanged.
+        if (this.context.hasNonDefaultJsonContentTypeEndpoints()) {
+            content = content.replace(
+                /\{\{CONTENT_TYPE_METHOD\}\}/g,
+                `    /// Execute a request whose JSON body is sent under a media type OTHER than
+    /// \`application/json\` -- a vendor type like \`application/vnd.foo+json\`, or
+    /// \`application/merge-patch+json\`. The body is serialized exactly as \`execute_request\` does;
+    /// only the declared header differs, which is the whole difference those media types express.
+    pub async fn execute_request_with_content_type<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        content_type: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            // \`.json()\` would stamp \`application/json\` over the declared type, so the body is
+            // serialized by hand and the header set explicitly.
+            let encoded = serde_json::to_vec(&body).map_err(ApiError::Serialization)?;
+            request = request.header("Content-Type", content_type).body(encoded);
+        }
+
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        let response = self.send_request(req, &options).await?;
+        self.parse_response(response).await
+    }
+`
+            );
+        } else {
+            content = content.replace(/\{\{CONTENT_TYPE_METHOD\}\}/g, "");
+        }
+
         // Conditionally include bytes request method in http_client
         if (this.context.hasBytesEndpoints()) {
             content = content.replace(
