@@ -113,8 +113,8 @@ export class GithubStep extends BaseStep {
         let generationBaseSha: string | undefined;
         let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
 
-        if (this.config.previewMode) {
-            this.logger.debug("Preview mode: skipping lookup of existing PRs");
+        if (this.config.previewMode && this.config.token === "") {
+            this.logger.debug("Preview mode without a GitHub token: skipping lookup of existing PRs");
         } else if (!this.config.automationMode) {
             existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
         }

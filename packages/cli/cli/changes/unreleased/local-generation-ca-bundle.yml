@@ -1,8 +1,13 @@
 - summary: |
-    `fern generate --local` now forwards the host's CA bundle configuration into the generator container.
-    If `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE`, or `GIT_SSL_CAINFO` points at a PEM file on the host, that file
-    is mounted read-only into the container and the same variable is set inside it, so git and Node inside the
-    generator trust corporate TLS interception CAs (e.g. when cloning a self-hosted SDK repo to merge its README).
-    Each variable is forwarded independently, preserving its semantics (`NODE_EXTRA_CA_CERTS` extends the default
-    trust store; `SSL_CERT_FILE`/`GIT_SSL_CAINFO` replace it and should point at a complete bundle).
+    `fern generate --local` now supports `FERN_CA_BUNDLE`: set it to a PEM CA bundle on the host and the file is
+    mounted read-only into the generator container with `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE` and `GIT_SSL_CAINFO`
+    pointing at it, so git, Node and OpenSSL-based tooling inside the generator trust corporate TLS-interception CAs
+    (e.g. when cloning a self-hosted SDK repo to merge its README). The file must be a complete bundle (public roots
+    plus the corporate CA) since `SSL_CERT_FILE`/`GIT_SSL_CAINFO` replace the default trust store; the CLI warns if
+    it only contains one certificate and fails fast if the path is unreadable. The JVM ignores these variables, so
+    Java generation on such networks should also set `FERN_JAVA_SKIP_FORMATTING=true`.
   type: feat
+- summary: |
+    Environment variables passed to local generator containers are no longer wrapped in literal quote characters
+    (`-e KEY="value"`), which previously leaked the quotes into the value seen by the generator.
+  type: fix
