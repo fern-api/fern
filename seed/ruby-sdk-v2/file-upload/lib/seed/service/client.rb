@@ -23,71 +23,91 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params[:maybe_string]
+        if params.key?(:maybe_string)
           body.add(
             name: "maybe_string",
             value: params[:maybe_string]
           )
         end
-        if params[:integer]
+        if params.key?(:integer)
           body.add(
             name: "integer",
             value: params[:integer]
           )
         end
-        body.add_file(name: "file", file: params[:file]) if params[:file]
-        params[:file_list]&.each { |file| body.add_file(name: "file_list", file: file) }
-        body.add_file(name: "maybe_file", file: params[:maybe_file]) if params[:maybe_file]
-        params[:maybe_file_list]&.each { |file| body.add_file(name: "maybe_file_list", file: file) }
-        if params[:maybe_integer]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        params[:file_list]&.each do |file|
+          body.add_file(
+            name: "file_list",
+            file: file
+          )
+        end
+        if params[:maybe_file]
+          body.add_file(
+            name: "maybe_file",
+            file: params[:maybe_file]
+          )
+        end
+        params[:maybe_file_list]&.each do |file|
+          body.add_file(
+            name: "maybe_file_list",
+            file: file
+          )
+        end
+        if params.key?(:maybe_integer)
           body.add(
             name: "maybe_integer",
             value: params[:maybe_integer]
           )
         end
-        if params[:optional_list_of_strings]
+        if params.key?(:optional_list_of_strings)
           body.add(
             name: "optional_list_of_strings",
             value: params[:optional_list_of_strings]
           )
         end
-        if params[:list_of_objects]
+        if params.key?(:list_of_objects)
           body.add(
             name: "list_of_objects",
             value: params[:list_of_objects]
           )
         end
-        if params[:optional_metadata]
+        if params.key?(:optional_metadata)
           body.add(
             name: "optional_metadata",
             value: params[:optional_metadata]
           )
         end
-        if params[:optional_object_type]
+        if params.key?(:optional_object_type)
           body.add(
             name: "optional_object_type",
             value: params[:optional_object_type]
           )
         end
-        if params[:optional_id]
+        if params.key?(:optional_id)
           body.add(
             name: "optional_id",
             value: params[:optional_id]
           )
         end
-        if params[:alias_object]
+        if params.key?(:alias_object)
           body.add(
             name: "alias_object",
             value: params[:alias_object]
           )
         end
-        if params[:list_of_alias_object]
+        if params.key?(:list_of_alias_object)
           body.add(
             name: "list_of_alias_object",
             value: params[:list_of_alias_object]
           )
         end
-        if params[:alias_list_of_object]
+        if params.key?(:alias_list_of_object)
           body.add(
             name: "alias_list_of_object",
             value: params[:alias_list_of_object]
@@ -129,7 +149,12 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -168,7 +193,12 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -204,7 +234,12 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -238,21 +273,27 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file], content_type: "application/octet-stream") if params[:file]
-        if params[:foo]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file],
+            content_type: "application/octet-stream"
+          )
+        end
+        if params.key?(:foo)
           body.add(
             name: "foo",
             value: params[:foo]
           )
         end
-        if params[:bar]
+        if params.key?(:bar)
           body.add(
             name: "bar",
             value: JSON.generate(Seed::Service::Types::MyObject.new(params[:bar]).to_h),
             content_type: "application/json"
           )
         end
-        if params[:foo_bar]
+        if params.key?(:foo_bar)
           body.add(
             name: "foo_bar",
             value: JSON.generate(params[:foo_bar]),
@@ -292,14 +333,20 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file], content_type: "application/octet-stream") if params[:file]
-        if params[:foo]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file],
+            content_type: "application/octet-stream"
+          )
+        end
+        if params.key?(:foo)
           body.add(
             name: "foo",
             value: params[:foo]
           )
         end
-        if params[:bar]
+        if params.key?(:bar)
           body.add(
             name: "bar",
             value: params[:bar]
@@ -338,77 +385,97 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params[:maybe_string]
+        if params.key?(:maybe_string)
           body.add(
             name: "maybe_string",
             value: params[:maybe_string]
           )
         end
-        if params[:integer]
+        if params.key?(:integer)
           body.add(
             name: "integer",
             value: params[:integer]
           )
         end
-        body.add_file(name: "file", file: params[:file]) if params[:file]
-        params[:file_list]&.each { |file| body.add_file(name: "file_list", file: file) }
-        body.add_file(name: "maybe_file", file: params[:maybe_file]) if params[:maybe_file]
-        params[:maybe_file_list]&.each { |file| body.add_file(name: "maybe_file_list", file: file) }
-        if params[:maybe_integer]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        params[:file_list]&.each do |file|
+          body.add_file(
+            name: "file_list",
+            file: file
+          )
+        end
+        if params[:maybe_file]
+          body.add_file(
+            name: "maybe_file",
+            file: params[:maybe_file]
+          )
+        end
+        params[:maybe_file_list]&.each do |file|
+          body.add_file(
+            name: "maybe_file_list",
+            file: file
+          )
+        end
+        if params.key?(:maybe_integer)
           body.add(
             name: "maybe_integer",
             value: params[:maybe_integer]
           )
         end
-        if params[:optional_list_of_strings]
+        if params.key?(:optional_list_of_strings)
           body.add(
             name: "optional_list_of_strings",
             value: params[:optional_list_of_strings]
           )
         end
-        if params[:list_of_objects]
+        if params.key?(:list_of_objects)
           body.add(
             name: "list_of_objects",
             value: params[:list_of_objects]
           )
         end
-        if params[:optional_metadata]
+        if params.key?(:optional_metadata)
           body.add(
             name: "optional_metadata",
             value: params[:optional_metadata]
           )
         end
-        if params[:optional_object_type]
+        if params.key?(:optional_object_type)
           body.add(
             name: "optional_object_type",
             value: params[:optional_object_type]
           )
         end
-        if params[:optional_id]
+        if params.key?(:optional_id)
           body.add(
             name: "optional_id",
             value: params[:optional_id]
           )
         end
-        if params[:list_of_objects_with_optionals]
+        if params.key?(:list_of_objects_with_optionals)
           body.add(
             name: "list_of_objects_with_optionals",
             value: params[:list_of_objects_with_optionals]
           )
         end
-        if params[:alias_object]
+        if params.key?(:alias_object)
           body.add(
             name: "alias_object",
             value: params[:alias_object]
           )
         end
-        if params[:list_of_alias_object]
+        if params.key?(:list_of_alias_object)
           body.add(
             name: "list_of_alias_object",
             value: params[:list_of_alias_object]
           )
         end
-        if params[:alias_list_of_object]
+        if params.key?(:alias_list_of_object)
           body.add(
             name: "alias_list_of_object",
             value: params[:alias_list_of_object]
@@ -450,8 +517,14 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "image_file", file: params[:image_file], content_type: "image/jpeg") if params[:image_file]
-        if params[:request]
+        if params[:image_file]
+          body.add_file(
+            name: "image_file",
+            file: params[:image_file],
+            content_type: "image/jpeg"
+          )
+        end
+        if params.key?(:request)
           body.add(
             name: "request",
             value: JSON.generate(params[:request]),
@@ -491,8 +564,13 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
-        if params[:request]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        if params.key?(:request)
           body.add(
             name: "request",
             value: params[:request]
@@ -531,8 +609,13 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
-        if params[:json]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        if params.key?(:json)
           body.add(
             name: "json",
             value: params[:json]
@@ -574,8 +657,14 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "image_file", file: params[:image_file], content_type: "image/jpeg") if params[:image_file]
-        if params[:request]
+        if params[:image_file]
+          body.add_file(
+            name: "image_file",
+            file: params[:image_file],
+            content_type: "image/jpeg"
+          )
+        end
+        if params.key?(:request)
           body.add(
             name: "request",
             value: JSON.generate(Seed::Service::Types::MyObject.new(params[:request]).to_h),
@@ -646,20 +735,25 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_file(name: "file", file: params[:file]) if params[:file]
-        if params[:model_type]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        if params.key?(:model_type)
           body.add(
             name: "model_type",
             value: params[:model_type]
           )
         end
-        if params[:open_enum]
+        if params.key?(:open_enum)
           body.add(
             name: "open_enum",
             value: params[:open_enum]
           )
         end
-        if params[:maybe_name]
+        if params.key?(:maybe_name)
           body.add(
             name: "maybe_name",
             value: params[:maybe_name]

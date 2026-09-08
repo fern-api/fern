@@ -28,13 +28,18 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params[:name]
+        if params.key?(:name)
           body.add(
             name: "name",
             value: params[:name]
           )
         end
-        body.add_file(name: "file", file: params[:file]) if params[:file]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],

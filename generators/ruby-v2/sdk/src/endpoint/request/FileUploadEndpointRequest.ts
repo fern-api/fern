@@ -11,23 +11,52 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
 
-export function renderFileUploadStatement({
+function addFileInvocation({ property, file }: { property: FernIr.FileProperty; file: string }): ruby.MethodInvocation {
+    const keywordArguments = [
+        ruby.keywordArgument({
+            name: "name",
+            value: ruby.TypeLiteral.string(getWireValue(property.key))
+        }),
+        ruby.keywordArgument({ name: "file", value: ruby.codeblock(file) })
+    ];
+    if (property.contentType != null) {
+        keywordArguments.push(
+            ruby.keywordArgument({
+                name: "content_type",
+                value: ruby.TypeLiteral.string(property.contentType)
+            })
+        );
+    }
+    return ruby.invokeMethod({
+        method: "add_file",
+        on: ruby.codeblock("body"),
+        arguments_: [],
+        keywordArguments
+    });
+}
+
+export function buildFileUploadStatement({
     property,
     paramName
 }: {
     property: FernIr.FileProperty;
     paramName: string;
-}): string {
-    const wireName = ruby.TypeLiteral.string(getWireValue(property.key)).toString();
-    const contentTypeArg =
-        property.contentType != null
-            ? `, content_type: ${ruby.TypeLiteral.string(property.contentType).toString()}`
-            : "";
+}): ruby.AstNode {
+    const param = `params[:${paramName}]`;
+    const condition = ruby.codeblock(param);
     switch (property.type) {
         case "file":
-            return `body.add_file(name: ${wireName}, file: params[:${paramName}]${contentTypeArg}) if params[:${paramName}]`;
+            return ruby.ifElse({
+                if: { condition, thenBody: [addFileInvocation({ property, file: param })] }
+            });
         case "fileArray":
-            return `params[:${paramName}]&.each { |file| body.add_file(name: ${wireName}, file: file${contentTypeArg}) }`;
+            return ruby.invokeMethod({
+                method: "each",
+                on: condition,
+                arguments_: [],
+                safeNavigation: true,
+                block: [["file"], [addFileInvocation({ property, file: "file" })]]
+            });
         default:
             assertNever(property);
     }
@@ -64,8 +93,8 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.newLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    writer.writeLine(
-                        renderFileUploadStatement({
+                    writer.writeNodeStatement(
+                        buildFileUploadStatement({
                             property: property.value,
                             paramName: this.case.snakeSafe(property.value.key)
                         })
@@ -76,7 +105,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         ruby.ifElse({
                             if: {
                                 condition: ruby.codeblock((writer) => {
-                                    writer.write(`params[:${snakeCaseName}]`);
+                                    writer.write(`params.key?(:${snakeCaseName})`);
                                 }),
                                 thenBody: [
                                     ruby.codeblock((writer) => {
