@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+      Configure Postman's on-prem SDK generators from `sdk-config.yml` on local generation. A generator at or above its language's cutover version reads the migrated configuration written by `fern sdk migrate`, and an unmigrated workspace is told how to migrate rather than generated from `generators.yml`. Generators below the cutover continue to run from `generators.yml` unchanged.
+  type: feat

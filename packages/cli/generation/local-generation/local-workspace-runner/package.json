@@ -70,6 +70,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generator-exec-sdk": "catalog:",
+    "@postman/sdk-config": "catalog:",
     "chalk": "catalog:",
     "decompress": "catalog:",
     "semver": "^7.6.3",

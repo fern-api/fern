@@ -79,7 +79,7 @@ export function createFernSourceArchiveResolver({
         const rootRequests = requests.filter(
             (request) =>
                 request.sdkGenApiRoute == null &&
-                generatorWantsSpecs(request.generatorInvocation.name) &&
+                generatorWantsSpecs(request.generatorInvocation.name, request.generatorInvocation.version) &&
                 !errors.has(request.generatorIndex)
         );
         if (rootRequests.length > 0) {
@@ -126,5 +126,8 @@ export function createFernSourceArchiveResolver({
 }
 
 function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {
-    return request.sdkGenApiRoute != null || generatorWantsSpecs(request.generatorInvocation.name);
+    return (
+        request.sdkGenApiRoute != null ||
+        generatorWantsSpecs(request.generatorInvocation.name, request.generatorInvocation.version)
+    );
 }
