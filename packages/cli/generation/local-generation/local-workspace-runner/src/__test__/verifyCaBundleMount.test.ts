@@ -108,6 +108,18 @@ describe("verifyCaBundleMount", () => {
         await expect(verify()).rejects.toThrow(/could not be mounted into the generator container/);
     });
 
+    it("warns rather than blaming the mount when the runtime is unreachable", async () => {
+        // The CLI exits 1 for a connection failure, the same code the container's command
+        // uses, so this has to be separated by message. Observed against an unreachable
+        // DOCKER_HOST during e2e, where it was misreported as an invisible bundle.
+        loggingExecaMock.mockResolvedValue({
+            stdout: "",
+            stderr: "Cannot connect to the Docker daemon at tcp://127.0.0.1:2375. Is the docker daemon running?",
+            exitCode: 1
+        });
+        await expect(verify()).resolves.toBeUndefined();
+    });
+
     it("does not block generation when the runner binary is missing", async () => {
         loggingExecaMock.mockResolvedValue({ stdout: "", stderr: "", exitCode: null });
         await expect(verify()).resolves.toBeUndefined();

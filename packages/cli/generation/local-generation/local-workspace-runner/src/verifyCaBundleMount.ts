@@ -13,8 +13,16 @@ const PROBE_CONTAINER_PATH = "/probe";
 const MOUNT_ERROR_PATTERN = /mounts denied|invalid mount config|bind source path does not exist/i;
 
 /**
+ * The runtime could not be reached at all, so nothing can be concluded about the mount.
+ * This has to be matched on the message: the CLI exits 1 for a connection failure, the same
+ * code the container's own command uses, so the exit code alone cannot separate the two.
+ */
+const RUNTIME_UNREACHABLE_PATTERN =
+    /cannot connect to the docker daemon|error during connect|is the docker daemon running|cannot connect to podman|unable to connect to podman/i;
+
+/**
  * Docker and podman reserve 125-127 for their own failures (daemon error, entrypoint not
- * executable, entrypoint not found). Exit 1 therefore means our shell really ran and
+ * executable, entrypoint not found). Exit 1 otherwise means our shell really ran and
  * `test -f` failed — the bundle is not there. Keying off the exit code rather than the
  * message keeps this robust when stderr also carries unrelated noise, such as the
  * "Unable to find image ... locally" notice printed during a pull.
@@ -91,7 +99,8 @@ export async function verifyCaBundleMount({
     // else (missing runner binary, image that cannot start, daemon hiccup) is a problem with
     // the probe, and `runContainer` will report it a moment later far more accurately.
     const refusedByRuntime = MOUNT_ERROR_PATTERN.test(stderr);
-    if (!refusedByRuntime && exitCode !== CONTAINER_COMMAND_FAILED) {
+    const ranButFoundNothing = exitCode === CONTAINER_COMMAND_FAILED && !RUNTIME_UNREACHABLE_PATTERN.test(stderr);
+    if (!refusedByRuntime && !ranButFoundNothing) {
         logger.warn(
             `Could not verify that ${FERN_CA_BUNDLE_ENV_VAR} (${hostPath}) is visible inside the generator container; continuing anyway.`
         );
