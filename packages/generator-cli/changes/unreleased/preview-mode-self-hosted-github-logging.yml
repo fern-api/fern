@@ -1,0 +1,5 @@
+- summary: |
+    Self-hosted GitHub pull-request mode now logs an INFO message when running in preview mode
+    explaining that changes were committed locally and push/PR creation was skipped, and no
+    longer queries the GitHub API for existing PRs (which is unauthenticated in preview mode).
+  type: fix

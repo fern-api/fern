@@ -12,6 +12,7 @@ import {
     TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { CONTAINER_CA_BUNDLE_PATH, getContainerCaBundleEnvVars, getHostCaBundle } from "./getHostCaBundle.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
@@ -94,6 +95,15 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         }
         if (this.disableTelemetry) {
             envVars["FERN_DISABLE_TELEMETRY"] = "true";
+        }
+
+        const caBundle = getHostCaBundle();
+        if (caBundle != null) {
+            context.logger.debug(
+                `Mounting CA bundle from ${caBundle.sourceEnvVar} (${caBundle.hostPath}) into the generator container`
+            );
+            binds.push(`${caBundle.hostPath}:${CONTAINER_CA_BUNDLE_PATH}:ro`);
+            Object.assign(envVars, getContainerCaBundleEnvVars());
         }
 
         try {

@@ -1,0 +1,7 @@
+- summary: |
+    `fern generate --local` now forwards the host's extra CA bundle into the generator container.
+    If `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE`, or `GIT_SSL_CAINFO` points at a PEM bundle on the host,
+    it is mounted read-only into the container and those variables are set inside it, so git and Node
+    inside the generator trust corporate TLS interception CAs (e.g. when cloning a self-hosted SDK repo
+    to merge its README). The bundle should be a complete CA bundle that includes the corporate CA.
+  type: feat

@@ -113,7 +113,9 @@ export class GithubStep extends BaseStep {
         let generationBaseSha: string | undefined;
         let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
 
-        if (!this.config.automationMode) {
+        if (this.config.previewMode) {
+            this.logger.debug("Preview mode: skipping lookup of existing PRs");
+        } else if (!this.config.automationMode) {
             existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
         }
 
@@ -199,7 +201,11 @@ export class GithubStep extends BaseStep {
             updatedExistingPr: isUpdatingExistingPR
         };
 
-        if (!this.config.previewMode) {
+        if (this.config.previewMode) {
+            this.logger.info(
+                `Preview mode: changes committed locally on branch ${prBranch} at ${this.outputDir}; skipping push and pull request. Re-run without --preview to publish.`
+            );
+        } else {
             // Create a signed commit via the GitHub API. Using the App installation token causes
             // GitHub to sign the commit with the App's key. `force=true` when updating an existing
             // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
