@@ -13,7 +13,7 @@ import {
 } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
-import { isOptionalType } from "../utils/primitiveTypeUtils.js";
+import { getInnerTypeFromOptional, isOptionalType, isStringType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
@@ -198,12 +198,27 @@ export class FileUploadRequestGenerator {
             const fieldName = this.getFieldName(propName);
             const isOptional = isOptionalType(bodyProp.valueType);
 
+            // A STRING part is written verbatim. `serde_json::to_string` would wrap it in quotes,
+            // and those quotes reach the server as part of the field's value - a 13-character
+            // caption arrives as 15. Structured parts (objects, arrays, maps) still go as JSON,
+            // which is the only way to put them in a form field at all. Numbers and booleans are
+            // unaffected either way: `to_string(&42)` is already `42`.
+            const isString = isStringType(
+                isOptional ? getInnerTypeFromOptional(bodyProp.valueType) : bodyProp.valueType
+            );
+
             if (isOptional) {
                 statements.push(`if let Some(ref value) = self.${fieldName} {`);
-                statements.push(`    if let Ok(json_str) = serde_json::to_string(value) {`);
-                statements.push(`        form = form.text("${propName}", json_str);`);
-                statements.push(`    }`);
+                if (isString) {
+                    statements.push(`    form = form.text("${propName}", value.clone());`);
+                } else {
+                    statements.push(`    if let Ok(json_str) = serde_json::to_string(value) {`);
+                    statements.push(`        form = form.text("${propName}", json_str);`);
+                    statements.push(`    }`);
+                }
                 statements.push(`}`);
+            } else if (isString) {
+                statements.push(`form = form.text("${propName}", self.${fieldName}.clone());`);
             } else {
                 statements.push(`if let Ok(json_str) = serde_json::to_string(&self.${fieldName}) {`);
                 statements.push(`    form = form.text("${propName}", json_str);`);

@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.4
+  changelogEntry:
+    - summary: |
+        A string field sent alongside a file in a multipart body is now written verbatim
+        instead of being JSON-serialized first. `serde_json::to_string` wrapped it in quotes
+        and those quotes reached the server as part of the value, so a 13-character caption
+        arrived as 15. Structured parts (objects, arrays, maps) still go as JSON; numbers and
+        booleans were never affected.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 0.47.3
   changelogEntry:
     - summary: |
