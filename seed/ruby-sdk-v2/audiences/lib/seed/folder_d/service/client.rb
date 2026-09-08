@@ -37,7 +37,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::FolderD::Service::Types::Response.load(response.body)
+            (response.body.to_s.empty? ? nil : Seed::FolderD::Service::Types::Response.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

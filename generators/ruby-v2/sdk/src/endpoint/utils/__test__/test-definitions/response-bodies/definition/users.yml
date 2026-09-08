@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  User:
+    properties:
+      id: string
+      blocked: boolean
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    get:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      response: User
+    list:
+      method: GET
+      path: ""
+      response: list<User>
+    byIndex:
+      method: GET
+      path: /by-index
+      response: map<integer, User>
+    tags:
+      method: GET
+      path: /tags
+      response: set<string>
+    count:
+      method: GET
+      path: /count
+      response: integer
+    raw:
+      method: GET
+      path: /raw
+      response: unknown

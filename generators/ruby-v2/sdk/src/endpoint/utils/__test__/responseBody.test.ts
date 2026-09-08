@@ -1,100 +1,63 @@
-import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
+import { resolve } from "path";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
+import { SdkGeneratorContext } from "../../../SdkGeneratorContext.js";
+import { createSampleGeneratorContext } from "../../../test-utils/createSampleGeneratorContext.js";
 import { responseBodyLoader } from "../responseBody.js";
 
-const writerConfig = { customConfig: BaseRubyCustomConfigSchema.parse({ clientClassName: "Example" }) };
-
-const USER_TYPE_ID = "type_users:User";
-
-function namedType(): FernIr.TypeReference {
-    return FernIr.TypeReference.named({
-        typeId: USER_TYPE_ID,
-        fernFilepath: { allParts: [], packagePath: [], file: undefined },
-        name: {
-            originalName: "User",
-            camelCase: { unsafeName: "user", safeName: "user" },
-            snakeCase: { unsafeName: "user", safeName: "user" },
-            screamingSnakeCase: { unsafeName: "USER", safeName: "USER" },
-            pascalCase: { unsafeName: "User", safeName: "User" }
-        },
-        default: undefined,
-        inline: undefined,
-        displayName: undefined
-    });
-}
-
-function stringType(): FernIr.TypeReference {
-    return FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
-}
-
-function render(typeReference: FernIr.TypeReference): string {
-    return responseBodyLoader({
-        typeReference,
-        responseVariableName: "response",
-        rootModuleName: "Seed",
-        getReferenceToTypeId: (typeId) =>
-            ruby.classReference({
-                name: typeId === USER_TYPE_ID ? "User" : typeId,
-                modules: ["Seed", "Users", "Types"]
-            }),
-        getRubyType: (reference) => {
-            switch (reference.type) {
-                case "container":
-                    switch (reference.container.type) {
-                        case "list":
-                            return ruby.Type.array(ruby.Type.class_({ name: "Seed::Users::Types::User" }));
-                        case "map":
-                            return ruby.Type.hash(ruby.Type.string(), ruby.Type.integer());
-                        case "set":
-                        case "optional":
-                        case "nullable":
-                        case "literal":
-                            throw new Error(`unexpected container ${reference.container.type}`);
-                    }
-                    break;
-                case "named":
-                case "primitive":
-                case "unknown":
-                    throw new Error(`unexpected type ${reference.type}`);
-            }
-        }
-    }).toString(writerConfig);
-}
+const EMPTY_GUARD = "response.body.to_s.empty? ? nil";
+const PARSE = "JSON.parse(response.body, symbolize_names: true)";
 
 describe("responseBodyLoader", () => {
-    it("loads named types through .load", () => {
-        expect(render(namedType())).toBe("Seed::Users::Types::User.load(response.body)");
+    let context: SdkGeneratorContext;
+
+    beforeAll(async () => {
+        context = await createSampleGeneratorContext(resolve(__dirname, "test-definitions", "response-bodies"));
+    });
+
+    function responseType(endpointName: string): FernIr.TypeReference {
+        const endpoint = Object.values(context.ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((candidate) => candidate.id === `endpoint_users.${endpointName}`);
+        if (endpoint?.response?.body?.type !== "json") {
+            throw new Error(`expected endpoint ${endpointName} to have a json response`);
+        }
+        return endpoint.response.body.value.responseBodyType;
+    }
+
+    function render(endpointName: string): string {
+        return responseBodyLoader({
+            context,
+            typeReference: responseType(endpointName),
+            responseVariableName: "response"
+        }).toString({ customConfig: context.customConfig });
+    }
+
+    it("loads named types through .load and returns nil for an empty body", () => {
+        expect(render("get")).toBe(`(${EMPTY_GUARD} : Test::Users::Types::User.load(response.body))`);
     });
 
     it("parses and coerces top-level list responses", () => {
-        expect(render(FernIr.TypeReference.container(FernIr.ContainerType.list(namedType())))).toBe(
-            "Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Users::Types::User], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))"
+        expect(render("list")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Array[Test::Users::Types::User], (${EMPTY_GUARD} : ${PARSE}))`
         );
     });
 
-    it("parses and coerces top-level map responses", () => {
-        expect(
-            render(
-                FernIr.TypeReference.container(
-                    FernIr.ContainerType.map({
-                        keyType: stringType(),
-                        valueType: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
-                    })
-                )
-            )
-        ).toBe(
-            "Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Integer], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))"
+    it("parses map responses with string keys so non-string key types can be coerced", () => {
+        expect(render("byIndex")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Hash[Integer, Test::Users::Types::User], (${EMPTY_GUARD} : JSON.parse(response.body)))`
+        );
+    });
+
+    it("parses and coerces set responses", () => {
+        expect(render("tags")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Array[String], (${EMPTY_GUARD} : ${PARSE}))`
         );
     });
 
     it("parses primitive and unknown bodies directly", () => {
-        expect(render(stringType())).toBe(
-            "(response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))"
-        );
-        expect(render(FernIr.TypeReference.unknown())).toBe(
-            "(response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))"
-        );
+        expect(render("count")).toBe(`(${EMPTY_GUARD} : ${PARSE})`);
+        expect(render("raw")).toBe(`(${EMPTY_GUARD} : ${PARSE})`);
     });
 });

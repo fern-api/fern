@@ -592,11 +592,9 @@ export class HttpEndpointGenerator {
         }
         writer.writeNode(
             responseBodyLoader({
+                context: this.context,
                 typeReference,
-                responseVariableName: HTTP_RESPONSE_VN,
-                rootModuleName: this.context.getRootModuleName(),
-                getReferenceToTypeId: (typeId) => this.context.getReferenceToTypeId(typeId),
-                getRubyType: (reference) => this.context.typeMapper.convert({ reference, unboxOptionals: true })
+                responseVariableName: HTTP_RESPONSE_VN
             })
         );
         writer.newLine();
