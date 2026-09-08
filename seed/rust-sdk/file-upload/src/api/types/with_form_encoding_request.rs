@@ -22,9 +22,7 @@ impl WithFormEncodingRequest {
                 .unwrap(),
         );
 
-        if let Ok(json_str) = serde_json::to_string(&self.foo) {
-            form = form.text("foo", json_str);
-        }
+        form = form.text("foo", self.foo.clone());
 
         if let Ok(json_str) = serde_json::to_string(&self.bar) {
             form = form.text("bar", json_str);
