@@ -12,7 +12,7 @@ import {
     TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
-import { getCaBundleMount } from "./getCaBundleMount.js";
+import { getCaBundleMount, getJvmCaBundleWarning } from "./getCaBundleMount.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
@@ -102,6 +102,10 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             context.logger.info(`Mounting CA bundle ${caBundle.hostPath} into the generator container`);
             if (caBundle.warning != null) {
                 context.logger.warn(caBundle.warning);
+            }
+            const jvmWarning = getJvmCaBundleWarning(generatorName);
+            if (jvmWarning != null) {
+                context.logger.warn(jvmWarning);
             }
             binds.push(caBundle.bind);
             Object.assign(envVars, caBundle.envVars);

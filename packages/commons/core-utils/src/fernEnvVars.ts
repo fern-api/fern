@@ -16,8 +16,10 @@ export const FERN_JAVA_SKIP_FORMATTING_ENV_VAR = "FERN_JAVA_SKIP_FORMATTING";
 /**
  * Host path to a PEM CA bundle that `fern generate --local` mounts read-only into the
  * generator container and exposes via NODE_EXTRA_CA_CERTS, SSL_CERT_FILE and
- * GIT_SSL_CAINFO, so git, Node and OpenSSL-based tooling inside the container trust a
- * corporate TLS-interception CA. Because SSL_CERT_FILE / GIT_SSL_CAINFO replace (rather
+ * GIT_SSL_CAINFO, so network calls inside the container (pnpm install, go mod tidy, dotnet
+ * restore, README-merge git clone) trust a corporate TLS-interception CA. The JVM ignores
+ * these variables. The host path must be visible to the Docker daemon (local daemon only,
+ * not a remote DOCKER_HOST or DinD sidecar). Because SSL_CERT_FILE / GIT_SSL_CAINFO replace (rather
  * than extend) the default trust store, the file must be a complete bundle that includes
  * the public roots as well as the corporate CA.
  */
