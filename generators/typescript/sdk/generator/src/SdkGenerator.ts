@@ -169,6 +169,7 @@ export declare namespace SdkGenerator {
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         respectOptionalRequestBody: boolean;
+        deepObjectMapQueryParameters: boolean;
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
         consolidateTypeFiles: boolean;
@@ -2190,6 +2191,7 @@ export class SdkGenerator {
                 generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
                 flattenRequestParameters: this.config.flattenRequestParameters,
                 respectOptionalRequestBody: this.config.respectOptionalRequestBody,
+                deepObjectMapQueryParameters: this.config.deepObjectMapQueryParameters,
                 parameterNaming: this.config.parameterNaming,
                 resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
             } satisfies Omit<FileContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;

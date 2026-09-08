@@ -182,6 +182,22 @@ fixtures:
   union-query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+  query-parameters-openapi-as-objects:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-query-parameters
+      customConfig:
+        deepObjectMapQueryParameters: true
+  ts-deep-object-map-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-no-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+    - outputFolder: deep-object-map-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+        noSerdeLayer: false
   file-download:
     - outputFolder: no-custom-config
       customConfig: null

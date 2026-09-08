@@ -1,5 +1,113 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > does not deepObject-encode a map declared explode: false 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filters: filters.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > keeps both branches of an allowMultiple map<string, string> in deepObject form 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    m
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes a named alias to map<string, string> through untouched 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes map<string, MyObject> through untouched when the serde layer is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes map<string, datetime> through untouched when the serde layer is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    timestamps
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes map<string, map<string, string>> through untouched (no serde needed) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    nested
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes map<string, set<string>> through untouched when the serde layer is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > passes nullable<map<string, boolean>> through untouched 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    flags
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes both branches of an allowMultiple map<string, datetime> via serde 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    m: Array.isArray(m) ? m.map(item => serializers.record.jsonOrThrow(item)) : serializers.record.jsonOrThrow(m)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, MyObject> via the serde layer 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: serializers.record.jsonOrThrow(metadata)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, datetime> via the serde layer 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    timestamps: serializers.record.jsonOrThrow(timestamps)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, list<MyObject>> via the serde layer 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    grouped: serializers.record.jsonOrThrow(grouped)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, list<datetime>> via the serde layer 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    windows: serializers.record.jsonOrThrow(windows)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, map<string, MyObject>> (nested map) via the serde layer 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    nested: serializers.record.jsonOrThrow(nested)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes map<string, set<string>> via the serde layer (a JS Set would vanish) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags: serializers.record.jsonOrThrow(tags)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes nullable<map<string, MyObject>> via the serde layer (nullable schema handles null) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: serializers.record.jsonOrThrow(metadata)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > serializes optional<map<string, MyObject>> via the serde layer with a null guard 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: metadata != null ? serializers.record.jsonOrThrow(metadata) : metadata
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > still stringifies map<string, MyObject> when the flag is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: metadata.toString()
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for alias resolving to an undiscriminated union 1`] = `
 "const _queryParams: Record<string, unknown> = {
     eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
@@ -107,6 +215,24 @@ exports[`GeneratedQueryParams > getBuildStatements > generates query params with
 exports[`GeneratedQueryParams > getBuildStatements > handles special characters in wire values 1`] = `
 "const _queryParams: Record<string, unknown> = {
     "filter.date": request.filterDate
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > passes map<string, string> through untouched when deepObjectMapQueryParameters is enabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > passes optional<map<string, integer>> through untouched when deepObjectMapQueryParameters is enabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    counts
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > stringifies map<string, string> by default 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    metadata: metadata.toString()
 };"
 `;
 
