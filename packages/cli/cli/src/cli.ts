@@ -2805,9 +2805,9 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 .option("output", {
                     type: "string",
                     alias: "o",
-                    demandOption: true,
                     nargs: 1,
-                    description: 'Path to write SDK Config v1, or "-" for stdout'
+                    description:
+                        'Path to write SDK Config v1 YAML; defaults to sdk-config.yml beside generators.yml, or use "-" for stdout'
                 })
                 .option("force", {
                     type: "boolean",

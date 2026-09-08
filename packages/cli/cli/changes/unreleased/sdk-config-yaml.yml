@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Write `fern sdk migrate` output as sparse YAML and default to `sdk-config.yml` beside the selected `generators.yml` when `--output` is omitted, without modifying the existing Fern project files. Source-derived environments and authentication remain in the referenced API specifications instead of being duplicated in SDK Config, empty global configuration blocks are omitted, and explicit Fern overrides are preserved.
+  type: feat
