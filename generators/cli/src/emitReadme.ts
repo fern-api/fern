@@ -482,7 +482,7 @@ function generateAdvanced(args: { binaryName: string; envPrefix: string }): Bloc
             "| `--base-url <URL>` | Override the API base URL |",
             "| `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |",
             "",
-            "Paginated operations (those the spec marks with `x-fern-pagination`) also accept:",
+            "Operations the spec describes how to page (via `x-fern-pagination` or a root `page_token` parameter) also accept:",
             "",
             "| Flag | Description |",
             "|------|-------------|",

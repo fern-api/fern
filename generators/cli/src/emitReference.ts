@@ -425,13 +425,14 @@ function renderReference(args: {
     lines.push("| `-h, --help` | Print help |");
     lines.push("| `-V, --version` | Print version |");
     lines.push("");
-    lines.push("Paginated operations (those the spec marks with `x-fern-pagination`) also accept:");
+    lines.push(
+        "Operations the spec describes how to page (via `x-fern-pagination` or a root `page_token` parameter) also accept:"
+    );
     lines.push("");
     lines.push("| Flag | Description |");
     lines.push("|------|-------------|");
     lines.push("| `--page-all` | Auto-paginate and stream all results |");
     lines.push("| `--page-limit <N>` | Max pages to fetch (default: `10`) |");
-    lines.push("");
 
     return lines.join("\n") + "\n";
 }

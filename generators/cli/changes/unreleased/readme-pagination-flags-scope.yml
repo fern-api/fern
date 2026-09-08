@@ -1,6 +1,6 @@
 - summary: |
     The generated README and `reference.md` no longer list `--page-all` / `--page-limit` under the flags
     "available on every operation". Since 0.38.6 those flags are only registered on operations the spec
-    describes how to page (`x-fern-pagination`), so the docs now call them out in a separate
+    describes how to page (`x-fern-pagination`, or a root `page_token` parameter), so the docs now call them out in a separate
     "Paginated operations also accept" table instead of promising them everywhere.
   type: fix

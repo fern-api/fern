@@ -37,10 +37,9 @@ These flags are available on every command:
 | `-h, --help` | Print help |
 | `-V, --version` | Print version |
 
-Paginated operations (those the spec marks with `x-fern-pagination`) also accept:
+Operations the spec describes how to page (via `x-fern-pagination` or a root `page_token` parameter) also accept:
 
 | Flag | Description |
 |------|-------------|
 | `--page-all` | Auto-paginate and stream all results |
 | `--page-limit <N>` | Max pages to fetch (default: `10`) |
-
