@@ -1,6 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
+import { stripGeneratedWorkflows } from "./github/stripGeneratedWorkflows";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
@@ -117,6 +118,11 @@ export class PostGenerationPipeline {
                 execFileSync("git", ["config", "user.email", FERN_BOT_EMAIL], { cwd: this.config.outputDir });
             } catch {
                 // pass
+            }
+
+            // Must run before any step commits (GenerationCommitStep commits via `git add -A`).
+            if (this.config.github.workflows === false) {
+                stripGeneratedWorkflows(this.config.outputDir, this.logger);
             }
         }
 

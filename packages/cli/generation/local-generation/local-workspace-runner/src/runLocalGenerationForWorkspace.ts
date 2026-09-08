@@ -487,6 +487,7 @@ export async function runLocalGenerationForWorkspace({
                                           newVersion: autoVersioningNewVersion ?? version,
                                           versionBump: autoVersioningVersionBump,
                                           previewMode: selfhostedGithubConfig.previewMode,
+                                          workflows: selfhostedGithubConfig.workflows ?? true,
                                           generatorName: generatorInvocation.name,
                                           automationMode,
                                           autoMerge,
