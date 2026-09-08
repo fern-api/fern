@@ -525,11 +525,12 @@ fn resolve_scheme(
 /// vars, plus a cached access token as an alternative. When the scheme
 /// also has a declared login flow (i.e. registered via
 /// `CliApp::login_flow`), we synthesize a `Keyring` source for the
-/// matching `(cli_name, scheme_name)` slot — the OAuth login flows store
+/// matching `(cli_name, scheme_name)` entry — the OAuth login flows store
 /// their token bundle there, and the status surface needs to see it.
 /// Without this, OAuth-logged-in users would see "Not logged in" in
 /// `auth status` even though the keyring entry is populated and apply()
-/// can read it on every request.
+/// can read it on every request. It lands in `alternatives` because a
+/// stored token authenticates by itself.
 fn expand_slots(
     scheme_name: &str,
     binding: &SchemeBinding,
@@ -558,9 +559,16 @@ fn expand_slots(
                     .collect(),
             };
             if login_flows.iter().any(|f| f.scheme_name() == scheme_name) {
+                // An alternative, not a required slot: a stored token
+                // authenticates on its own, so ANDing it with the
+                // provider's acquisition env vars would report a
+                // logged-in user as not-logged-in. For a provider that
+                // exposes no slots of its own (the generated PKCE /
+                // device-code case) this is the only entry, and OR over a
+                // single alternative is the same verdict as before.
                 slots
-                    .required
-                    .push(vec![AuthCredentialSource::keyring(cli_name, scheme_name)]);
+                    .alternatives
+                    .push(AuthCredentialSource::keyring(cli_name, scheme_name));
             }
             slots
         }
@@ -1029,10 +1037,11 @@ mod tests {
         // scheme_name().
         let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new("OAuth2"));
         let slots = expand_slots("OAuth2", &binding, &[flow], "my-cli");
-        assert!(slots.alternatives.is_empty());
-        assert_eq!(slots.required.len(), 1);
-        assert_eq!(slots.required[0].len(), 1);
-        match &slots.required[0][0] {
+        // The stored token authenticates on its own, so it is an
+        // alternative rather than a required slot.
+        assert!(slots.required.is_empty());
+        assert_eq!(slots.alternatives.len(), 1);
+        match &slots.alternatives[0] {
             AuthCredentialSource::Keyring { service, account } => {
                 assert_eq!(service, "my-cli");
                 assert_eq!(account, "OAuth2");
@@ -1189,6 +1198,86 @@ mod tests {
         assert_eq!(
             remedy_line("my-cli", "OAuth2", &report, &[flow]),
             "Not logged in. Run `my-cli auth login` to authenticate."
+        );
+    }
+
+    #[test]
+    fn keyring_alternative_does_not_and_with_provider_env_slots() {
+        // A scheme wiring both `.auth(OAuth2Auth…)` and a paste login flow
+        // ends up with provider env slots *and* a keyring entry. ANDing
+        // them would report a user who pasted a token as not-logged-in
+        // just because the client-id env var is unset.
+        use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
+        let (name, binding) = OAuth2Auth::new("OAuth2")
+            .token_url("https://example.com/oauth/token")
+            .client_id_env("NO_SUCH_KEYRING_ALT_ID")
+            .client_secret_env("NO_SUCH_KEYRING_ALT_SECRET")
+            .into_binding();
+        let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new(&name));
+        let slots = expand_slots(&name, &binding, &[flow], "my-cli");
+
+        assert_eq!(slots.required.len(), 2);
+        assert_eq!(slots.alternatives.len(), 1);
+        assert!(matches!(
+            slots.alternatives[0],
+            AuthCredentialSource::Keyring { .. }
+        ));
+    }
+
+    #[test]
+    #[serial]
+    fn keyring_alternative_alone_satisfies_the_scheme() {
+        use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("my-cli", "OAuth2", "pasted-token").unwrap();
+        set_active_store(mock);
+        let (name, binding) = OAuth2Auth::new("OAuth2")
+            .token_url("https://example.com/oauth/token")
+            .client_id_env("NO_SUCH_KEYRING_SAT_ID")
+            .client_secret_env("NO_SUCH_KEYRING_SAT_SECRET")
+            .into_binding();
+        let flow: DynLoginFlow = std::sync::Arc::new(TokenPasteLoginFlow::new(&name));
+
+        let report = evaluate_slots(&expand_slots(&name, &binding, &[flow], "my-cli"));
+        assert!(report.satisfied, "keyring token alone must authenticate");
+        assert!(report.reads_keyring);
+        // Env slots stay visible even though the token satisfies the scheme.
+        assert_eq!(
+            report.lines.iter().filter(|l| l.state == "missing").count(),
+            2
+        );
+    }
+
+    #[test]
+    fn blank_env_var_name_reports_unbound_not_an_empty_env_var() {
+        // `client-id-env: ""` reaches the generated builder verbatim. The
+        // slot must survive (so `logged_in` stays false, matching
+        // `has_credentials`) without rendering `missing    env var` or a
+        // remedy reading `Set , OTHER_VAR`.
+        use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
+        let (name, binding) = OAuth2Auth::new("OAuth2")
+            .token_url("https://example.com/oauth/token")
+            .client_id_env("")
+            .client_secret_env("NO_SUCH_BLANK_TEST_SECRET")
+            .into_binding();
+        let slots = expand_slots(&name, &binding, &[], "my-cli");
+        assert_eq!(slots.required.len(), 2, "the unbound slot must not vanish");
+        assert!(matches!(
+            &slots.required[0][..],
+            [AuthCredentialSource::Missing]
+        ));
+
+        let report = evaluate_slots(&slots);
+        assert!(!report.satisfied);
+        assert_eq!(report.lines[0].description, "(unbound)");
+        assert_eq!(
+            report.missing_env_vars,
+            vec!["NO_SUCH_BLANK_TEST_SECRET"],
+            "a blank name must not become an empty item in the remedy"
+        );
+        assert_eq!(
+            remedy_line("my-cli", &name, &report, &[]),
+            "Not logged in. Set NO_SUCH_BLANK_TEST_SECRET to authenticate."
         );
     }
 

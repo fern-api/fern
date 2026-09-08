@@ -910,7 +910,7 @@ impl AuthProvider for OAuth2TokenProvider {
     }
 
     fn credential_slots(&self) -> CredentialSlots {
-        let mut env_vars: Vec<&str> = match &self.contract {
+        let env_vars: Vec<&str> = match &self.contract {
             Some(contract) => {
                 let mut vars = vec![
                     contract.client_id_env.as_str(),
@@ -937,11 +937,28 @@ impl AuthProvider for OAuth2TokenProvider {
             },
         };
         let mut seen = std::collections::HashSet::new();
-        env_vars.retain(|var| seen.insert(*var));
         let mut slots = CredentialSlots::required(
             env_vars
                 .into_iter()
-                .map(|var| vec![AuthCredentialSource::from_env(var)]),
+                // Blank names are all distinct misconfigurations, so they
+                // can't be deduped by name the way real ones are — that
+                // would silently collapse two unconfigured slots into one.
+                .filter(|var| var.trim().is_empty() || seen.insert(*var))
+                .map(|var| {
+                    if var.trim().is_empty() {
+                        // An empty `client-id-env: ""` reaches us verbatim
+                        // (the generator's `??` default only catches a
+                        // missing key). It is a scheme with nothing bound to
+                        // that slot, not an env var named "" — reporting it
+                        // as `(unbound)` beats rendering `missing    env var`
+                        // and `Set , OTHER_VAR`. It still never resolves, so
+                        // the slot keeps `logged_in` false in agreement with
+                        // `has_credentials`, which fails the same check.
+                        vec![AuthCredentialSource::Missing]
+                    } else {
+                        vec![AuthCredentialSource::from_env(var)]
+                    }
+                }),
         );
         // A valid cached token authenticates on its own, without the
         // acquisition env vars — but it doesn't replace them in the
