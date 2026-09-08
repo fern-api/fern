@@ -78,6 +78,20 @@ describe("stripGeneratedWorkflows", () => {
         expect(git(repo, "status", "--porcelain")).toBe("");
     });
 
+    it("unstages newly added workflows that were already in the index", () => {
+        write(repo, "README.md", "hi");
+        git(repo, "add", "-A");
+        git(repo, "commit", "-q", "-m", "init");
+        write(repo, ".github/workflows/ci.yml", "on: push");
+        write(repo, "src/client.ts", "export {}");
+        git(repo, "add", "-A");
+
+        stripGeneratedWorkflows(repo, logger);
+
+        expect(existsSync(join(repo, ".github/workflows"))).toBe(false);
+        expect(git(repo, "status", "--porcelain")).toBe("A  src/client.ts");
+    });
+
     it("is a no-op safe on an empty repository without HEAD", () => {
         write(repo, ".github/workflows/ci.yml", "on: push");
         write(repo, "src/client.ts", "export {}");

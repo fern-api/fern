@@ -13,6 +13,11 @@ export const GITHUB_WORKFLOWS_DIR = ".github/workflows";
  */
 export function stripGeneratedWorkflows(outputDir: string, logger: PipelineLogger): void {
     rmSync(join(outputDir, GITHUB_WORKFLOWS_DIR), { recursive: true, force: true });
+    // Drop any already-staged workflow entries so the index matches HEAD too.
+    execFileSync("git", ["rm", "-r", "-q", "--cached", "--ignore-unmatch", "--", GITHUB_WORKFLOWS_DIR], {
+        cwd: outputDir,
+        stdio: "pipe"
+    });
 
     if (!hasTrackedWorkflows(outputDir)) {
         logger.debug(`Removed generated ${GITHUB_WORKFLOWS_DIR} (workflows disabled)`);
