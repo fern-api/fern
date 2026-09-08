@@ -43,38 +43,25 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
                     const snakeCaseName = this.case.snakeSafe(property.value.key);
-                    writer.writeNode(
-                        ruby.ifElse({
-                            if: {
-                                condition: ruby.codeblock((writer) => {
-                                    writer.write(`params[:${snakeCaseName}]`);
-                                }),
-                                thenBody: [
-                                    ruby.codeblock((writer) => {
-                                        const wireName = getWireValue(property.value.key);
-                                        const contentTypeArg =
-                                            property.value.contentType != null
-                                                ? `, content_type: ${JSON.stringify(property.value.contentType)}`
-                                                : "";
-                                        switch (property.value.type) {
-                                            case "file":
-                                                writer.writeLine(
-                                                    `body.add_file(name: "${wireName}", file: params[:${snakeCaseName}]${contentTypeArg})`
-                                                );
-                                                break;
-                                            case "fileArray":
-                                                writer.writeLine(
-                                                    `params[:${snakeCaseName}].each { |file| body.add_file(name: "${wireName}", file: file${contentTypeArg}) }`
-                                                );
-                                                break;
-                                            default:
-                                                assertNever(property.value);
-                                        }
-                                    })
-                                ]
-                            }
-                        })
-                    );
+                    const wireName = getWireValue(property.value.key);
+                    const contentTypeArg =
+                        property.value.contentType != null
+                            ? `, content_type: ${JSON.stringify(property.value.contentType)}`
+                            : "";
+                    switch (property.value.type) {
+                        case "file":
+                            writer.writeLine(
+                                `body.add_file(name: "${wireName}", file: params[:${snakeCaseName}]${contentTypeArg}) if params[:${snakeCaseName}]`
+                            );
+                            break;
+                        case "fileArray":
+                            writer.writeLine(
+                                `params[:${snakeCaseName}]&.each { |file| body.add_file(name: "${wireName}", file: file${contentTypeArg}) }`
+                            );
+                            break;
+                        default:
+                            assertNever(property.value);
+                    }
                 } else {
                     const snakeCaseName = this.case.snakeSafe(property.name);
                     writer.writeNode(

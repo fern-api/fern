@@ -36,9 +36,9 @@ module Seed
           )
         end
         body.add_file(name: "file", file: params[:file]) if params[:file]
-        params[:file_list].each { |file| body.add_file(name: "file_list", file: file) } if params[:file_list]
+        params[:file_list]&.each { |file| body.add_file(name: "file_list", file: file) }
         body.add_file(name: "maybe_file", file: params[:maybe_file]) if params[:maybe_file]
-        params[:maybe_file_list].each { |file| body.add_file(name: "maybe_file_list", file: file) } if params[:maybe_file_list]
+        params[:maybe_file_list]&.each { |file| body.add_file(name: "maybe_file_list", file: file) }
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
@@ -351,9 +351,9 @@ module Seed
           )
         end
         body.add_file(name: "file", file: params[:file]) if params[:file]
-        params[:file_list].each { |file| body.add_file(name: "file_list", file: file) } if params[:file_list]
+        params[:file_list]&.each { |file| body.add_file(name: "file_list", file: file) }
         body.add_file(name: "maybe_file", file: params[:maybe_file]) if params[:maybe_file]
-        params[:maybe_file_list].each { |file| body.add_file(name: "maybe_file_list", file: file) } if params[:maybe_file_list]
+        params[:maybe_file_list]&.each { |file| body.add_file(name: "maybe_file_list", file: file) }
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
