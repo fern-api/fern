@@ -15,6 +15,7 @@
                 "tokenEnvVar": "SQUARE_TOKEN",
                 "tokenPlaceholder": null,
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

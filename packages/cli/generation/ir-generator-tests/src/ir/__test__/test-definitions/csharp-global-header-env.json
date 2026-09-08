@@ -20,6 +20,7 @@
                 "passwordOmit": null,
                 "passwordPlaceholder": null,
                 "key": "Basic",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -28,6 +29,7 @@
                 "tokenEnvVar": "MY_TOKEN",
                 "tokenPlaceholder": null,
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

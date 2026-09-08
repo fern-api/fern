@@ -20,6 +20,7 @@
                 "passwordOmit": null,
                 "passwordPlaceholder": "YOUR_PASSWORD",
                 "key": "Basic",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
