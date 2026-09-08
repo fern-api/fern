@@ -189,9 +189,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{SERDE_ERROR_IMPORT\}\}/g, "");
         }
 
-        // Conditionally include base64 import in http_client (base64 method, or basic
-        // auth encoding in per-endpoint auth routing).
-        if (this.context.usesBase64() || (this.context.isEndpointSecurity() && this.context.hasBasicAuthScheme())) {
+        // Conditionally include base64 import in http_client (base64 method, or basic auth
+        // encoding - which BOTH auth paths do, per-endpoint routing and the flat application).
+        if (this.context.usesBase64() || this.context.hasBasicAuthScheme()) {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "use base64::Engine;\n");
         } else {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "");
@@ -758,6 +758,35 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     }
 
     /**
+     * `Authorization: Basic <base64(user:pass)>` for the flat auth path.
+     *
+     * Without this, an API whose only scheme is basic auth sent NO credential at all: the flat
+     * path applied an API key and a bearer token, `username`/`password` sat unread on the config,
+     * and the one `Authorization` header in the generated client was gated on `config.token`,
+     * which such an API never sets. `seed/rust-sdk/basic-auth` shipped in exactly that state.
+     */
+    private generateFlatBasicAuthApplication(): string {
+        if (!this.context.hasBasicAuthScheme()) {
+            return "";
+        }
+        return `
+        // Basic auth resolves to \`Authorization: Basic <base64(user:pass)>\`. Applied before the
+        // bearer branch below, which overwrites the same header when a token is also configured.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded =
+                base64::engine::general_purpose::STANDARD.encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            headers.insert(
+                "Authorization",
+                basic_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+        }
+`;
+    }
+
+    /**
      * The body of `HttpClient::apply_auth_headers`. In the default (ALL/ANY) case this is
      * the flat auth application (API key + bearer/OAuth token) that applies all configured
      * credentials to every request. In endpoint-security mode auth is resolved per-endpoint
@@ -773,7 +802,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         Ok(())`;
         }
         return `        let headers = request.headers_mut();
-
+${this.generateFlatBasicAuthApplication()}
         // Apply API key (request options override config)
         let api_key = options
             .as_ref()
