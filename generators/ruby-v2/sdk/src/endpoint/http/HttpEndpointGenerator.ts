@@ -444,9 +444,7 @@ export class HttpEndpointGenerator {
         statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
 
         const jsonResponseBody =
-            endpoint.response?.body != null &&
-            endpoint.response.body.type === "json" &&
-            endpoint.response.body.value.responseBodyType.type === "named"
+            endpoint.response?.body != null && endpoint.response.body.type === "json"
                 ? endpoint.response.body.value
                 : undefined;
 
@@ -469,9 +467,6 @@ export class HttpEndpointGenerator {
                         thenBody: [
                             ruby.codeblock((writer) => {
                                 if (wrapWithHttpResponse) {
-                                    if (jsonResponseBody.responseBodyType.type !== "named") {
-                                        writer.writeLine(`parsed_response = nil`);
-                                    }
                                     this.loadResponseBodyFromJson({
                                         writer,
                                         typeReference: jsonResponseBody.responseBodyType,
@@ -591,18 +586,38 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
+        if (storeInVariable) {
+            writer.write("parsed_response = ");
+        }
+        this.writeLoadResponseBodyExpression({ writer, typeReference });
+        writer.newLine();
+    }
+
+    private writeLoadResponseBodyExpression({
+        writer,
+        typeReference
+    }: {
+        writer: ruby.Writer;
+        typeReference: FernIr.TypeReference;
+    }): void {
+        const parseExpression = `JSON.parse(${HTTP_RESPONSE_VN}.body, symbolize_names: true)`;
         switch (typeReference.type) {
-            case "named": {
-                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
-                if (storeInVariable) {
-                    writer.writeLine(`parsed_response = ${loadExpression}`);
-                } else {
-                    writer.writeLine(loadExpression);
-                }
-                break;
-            }
+            case "named":
+                writer.write(
+                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
+                );
+                return;
+            case "container":
+                writer.write(`${this.context.getRootModuleName()}::Internal::Types::Utils.coerce(`);
+                writer.writeNode(this.context.typeMapper.convert({ reference: typeReference, unboxOptionals: true }));
+                writer.write(`, ${parseExpression})`);
+                return;
+            case "primitive":
+            case "unknown":
+                writer.write(parseExpression);
+                return;
             default:
-                break;
+                assertNever(typeReference);
         }
     }
 

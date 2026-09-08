@@ -1,4 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -50,9 +51,21 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                 }),
                                 thenBody: [
                                     ruby.codeblock((writer) => {
-                                        writer.writeLine(
-                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${getWireValue(property.value.key)}"))`
-                                        );
+                                        const wireName = getWireValue(property.value.key);
+                                        switch (property.value.type) {
+                                            case "file":
+                                                writer.writeLine(
+                                                    `body.add_file(name: "${wireName}", file: params[:${snakeCaseName}])`
+                                                );
+                                                break;
+                                            case "fileArray":
+                                                writer.writeLine(
+                                                    `params[:${snakeCaseName}].each { |file| body.add_file(name: "${wireName}", file: file) }`
+                                                );
+                                                break;
+                                            default:
+                                                assertNever(property.value);
+                                        }
                                     })
                                 ]
                             }

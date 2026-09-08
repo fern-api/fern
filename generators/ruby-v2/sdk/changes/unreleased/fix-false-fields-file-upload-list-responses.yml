@@ -1,0 +1,15 @@
+- summary: |
+    Preserve `false` values in model fields. Previously `Model#initialize` used `||` to
+    coalesce values, so any boolean field set to `false` was dropped and never serialized
+    (e.g. `users.update(blocked: false)` sent an empty body).
+  type: fix
+- summary: |
+    Fix file upload endpoints crashing with `NoMethodError`. Generated multipart code now
+    calls `FormData#add_file` instead of the non-existent `to_form_data_part`, and file
+    arrays add one part per file.
+  type: fix
+- summary: |
+    Deserialize JSON responses whose body is a list, map, or primitive instead of returning `nil`.
+    Previously only named types were parsed; endpoints returning a top-level array silently
+    returned `nil`.
+  type: fix
