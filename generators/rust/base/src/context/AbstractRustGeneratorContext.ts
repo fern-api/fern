@@ -146,9 +146,10 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 when base64 types are used, or when per-endpoint
-        // auth routing needs it to encode basic auth credentials.
-        if (this.usesBase64() || (this.isEndpointSecurity() && this.hasBasicAuthScheme())) {
+        // Conditionally include base64 when base64 types are used, or when a basic auth scheme
+        // has to be encoded. Both auth paths need it: per-endpoint routing and the flat
+        // client-wide application.
+        if (this.usesBase64() || this.hasBasicAuthScheme()) {
             this.dependencyManager.add("base64", "0.22");
         }
 

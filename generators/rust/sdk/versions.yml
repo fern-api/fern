@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.5
+  changelogEntry:
+    - summary: |
+        Basic auth credentials are now sent. An API whose only security scheme is basic auth
+        generated a client that applied NO credential at all: the client-wide auth path
+        applied an API key and a bearer token but had no basic branch, `username` and
+        `password` sat unread on the config, and the one `Authorization` header in the
+        generated client was gated on `config.token`, which such an API never sets. Only
+        per-endpoint auth routing handled basic auth.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 0.47.4
   changelogEntry:
     - summary: |
