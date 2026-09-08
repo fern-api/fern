@@ -141,8 +141,13 @@ module <%= gem_namespace %>
           values = Utils.symbolize_keys(values.dup)
 
           self.class.fields.each do |field_name, field|
-            key = [field.api_name.to_sym, field.api_name, field_name].find { |k| values.key?(k) }
-            value = key.nil? ? nil : values.delete(key)
+            value = nil
+            [field.api_name.to_sym, field_name].uniq.each do |key|
+              next unless values.key?(key)
+
+              candidate = values.delete(key)
+              value = candidate if value.nil?
+            end
 
             field_value = if !value.nil?
                             value

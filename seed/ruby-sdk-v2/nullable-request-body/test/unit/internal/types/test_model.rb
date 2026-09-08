@@ -125,6 +125,18 @@ describe Seed::Internal::Types::Model do
       refute loaded.archived
     end
 
+    it "prefers the first non-nil value when both api_name and field name are given" do
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: 2014 })
+
+      assert_equal 2014, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2014 }, example.to_h)
+
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: 2010, year: 2014 })
+
+      assert_equal 2010, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2010 }, example.to_h)
+    end
+
     it "applies a default of false" do
       example = ExampleWithFalseDefault.new
 
