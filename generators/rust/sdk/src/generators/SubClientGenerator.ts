@@ -1539,6 +1539,17 @@ export class SubClientGenerator {
     private buildQueryParameterStatements(queryParams: FernIr.QueryParameter[], endpoint?: FernIr.HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
             const wireValue = getWireValue(queryParam.name);
+
+            // `style: form` with `explode: false` is ONE comma-joined value, not a repeated key.
+            // The IR carries `explode` and the generator read it nowhere, so every array went out
+            // exploded regardless of what the endpoint declared. Joined HERE rather than by a new
+            // `QueryBuilder` method: that file is emitted verbatim into every SDK, so a method
+            // would land in 130 crates to change behaviour in the few that declare `explode:
+            // false`.
+            if (queryParam.allowMultiple && queryParam.explode === false) {
+                return `.string("${wireValue}", ${this.buildJoinedArrayExpression(queryParam, endpoint)})`;
+            }
+
             const method = this.getQueryBuilderMethod(queryParam);
 
             // Determine parameter source based on endpoint type
@@ -1552,6 +1563,30 @@ export class SubClientGenerator {
 
         return `QueryBuilder::new()${builderChain.join("")}
             .build()`;
+    }
+
+    /**
+     * `Option<String>` holding the array's elements joined with commas, or `None` when the array
+     * is absent or empty - an empty array must produce no parameter, since `key=` would claim the
+     * caller sent one empty element.
+     */
+    private buildJoinedArrayExpression(
+        queryParam: FernIr.QueryParameter,
+        endpoint?: FernIr.HttpEndpoint
+    ): string {
+        // `allowMultiple` makes the field a `Vec<Option<T>>`, not an `Option<Vec<T>>`, so the
+        // elements are flattened out of their `Option`s and the EMPTINESS test is on the joined
+        // string rather than on the vector.
+        const source = this.getQueryParameterSource(queryParam, endpoint).replace(/\.clone\(\)$/, "");
+        return `{
+                let joined = ${source}
+                    .iter()
+                    .flatten()
+                    .map(|value| value.to_string())
+                    .collect::<Vec<_>>()
+                    .join(",");
+                if joined.is_empty() { None } else { Some(joined) }
+            }`;
     }
 
     // Smart parameter source detection
