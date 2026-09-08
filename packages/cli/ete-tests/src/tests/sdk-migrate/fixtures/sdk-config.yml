@@ -1,0 +1,20 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./fern/openapi.yml
+api:
+  audiences: []
+targets:
+  - language: typescript
+    output:
+      delivery: files
+      path: ./generated/typescript
+    generatorVersion: 3.63.3
+  - language: python
+    output:
+      delivery: files
+      path: ./generated/python
+    generatorVersion: 4.3.10

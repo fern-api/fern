@@ -175,8 +175,13 @@ export class CliContext {
      * Temporarily restores the real stdout, writes, then re-redirects.
      */
     public writeJsonToStdout(value: unknown): void {
+        this.writeTextToStdout(JSON.stringify(value, null, 2) + "\n");
+    }
+
+    /** Write machine-readable text to stdout while keeping status and diagnostics on stderr. */
+    public writeTextToStdout(value: string): void {
         this.stdoutRedirector.restore();
-        process.stdout.write(JSON.stringify(value, null, 2) + "\n");
+        process.stdout.write(value);
         if (this.jsonMode) {
             this.stdoutRedirector.redirect();
         }

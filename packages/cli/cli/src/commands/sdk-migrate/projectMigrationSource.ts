@@ -1,4 +1,10 @@
-import type { AbstractAPIWorkspace, FernWorkspace, IdentifiableSource, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type IdentifiableSource,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
@@ -9,10 +15,45 @@ export interface ResolvedMigrationSourceSpec {
     absoluteOverlayPaths: string[];
     absoluteOverridePaths: string[];
     apiImportSettings?: SdkConfigV1SourceSpec["apiImportSettings"];
+    clientPathParameterStyle?: "inline" | "wrapped";
+    clientPathParameterStyleExplicit?: boolean;
     idHint?: string;
     name?: string;
     namespace?: string;
     type: SdkConfigV1SourceSpec["type"];
+}
+
+export interface SourceDerivedApiFields {
+    auth: boolean;
+    environments: boolean;
+}
+
+export function identifySourceDerivedApiFields({
+    workspace,
+    groups
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+    groups: generatorsYml.GeneratorGroup[];
+}): SourceDerivedApiFields {
+    if (workspace.type !== "oss") {
+        return { auth: false, environments: false };
+    }
+
+    const api = workspace.generatorsConfiguration?.api;
+    const hasConfiguredAuth =
+        api?.auth != null ||
+        api?.["auth-schemes"] != null ||
+        groups.some((group) =>
+            group.generators.some(
+                (generator) => generator.apiOverride?.auth != null || generator.apiOverride?.["auth-schemes"] != null
+            )
+        );
+    const hasConfiguredEnvironments = api?.environments != null || api?.["default-environment"] != null;
+
+    return {
+        auth: !hasConfiguredAuth,
+        environments: !hasConfiguredEnvironments
+    };
 }
 
 export function resolveMigrationSourceSpecs({
@@ -79,6 +120,28 @@ export function serializeMigrationSource({
     });
     return hoistSharedApiImportSettings(serializedSpecs);
 }
+
+export function resolveMigrationPathParameterStyle(
+    specs: ResolvedMigrationSourceSpec[]
+): "inline" | "wrapped" | undefined {
+    const openApiSpecs = specs.filter((spec) => spec.type === "openapi");
+    if (!openApiSpecs.some((spec) => spec.clientPathParameterStyleExplicit === true)) {
+        return undefined;
+    }
+    const configuredStyles = new Set(
+        openApiSpecs.map((spec) => spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE)
+    );
+    if (configuredStyles.size > 1) {
+        throw new CliError({
+            message:
+                "SDK Config v1 cannot represent conflicting inline-path-parameters settings across API specifications.",
+            code: CliError.Code.ConfigError
+        });
+    }
+    return configuredStyles.values().next().value;
+}
+
+const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
 
 function migrationSourceRoot(workingDirectory: string, specs: ResolvedMigrationSourceSpec[]): string {
     return specs
@@ -161,6 +224,17 @@ function resolveWorkspaceSpec(
                 absoluteOverlayPaths: spec.absoluteFilepathToOverlays == null ? [] : [spec.absoluteFilepathToOverlays],
                 absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
                 apiImportSettings: projectFernApiImportSettings(settings),
+                ...(spec.source.type !== "openapi"
+                    ? {}
+                    : {
+                          clientPathParameterStyle:
+                              settings?.inlinePathParameters == null
+                                  ? DEFAULT_PATH_PARAMETER_STYLE
+                                  : settings.inlinePathParameters
+                                    ? "inline"
+                                    : "wrapped",
+                          clientPathParameterStyleExplicit: settings?.inlinePathParameters != null
+                      }),
                 idHint: spec.namespace,
                 namespace: spec.namespace,
                 type: spec.source.type
@@ -289,6 +363,13 @@ function resolveGeneratorSpecOverrides(
                 path.resolve(workspacePath, override)
             ),
             apiImportSettings: projectRawApiImportSettings(spec.settings),
+            clientPathParameterStyle:
+                spec.settings?.["inline-path-parameters"] == null
+                    ? DEFAULT_PATH_PARAMETER_STYLE
+                    : spec.settings["inline-path-parameters"]
+                      ? "inline"
+                      : "wrapped",
+            clientPathParameterStyleExplicit: spec.settings?.["inline-path-parameters"] != null,
             idHint: spec.namespace,
             namespace: spec.namespace,
             type: "openapi"

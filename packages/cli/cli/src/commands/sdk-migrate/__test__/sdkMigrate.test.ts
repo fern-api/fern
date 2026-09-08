@@ -14,7 +14,9 @@ import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
 import {
+    identifySourceDerivedApiFields,
     type ResolvedMigrationSourceSpec,
+    resolveMigrationPathParameterStyle,
     resolveMigrationSourceSpecs,
     serializeMigrationSource
 } from "../projectMigrationSource.js";
@@ -63,8 +65,21 @@ describe("SDK Config migration", () => {
         });
         expect(result.sdkConfig.sdkVersion).toBeUndefined();
         expect(result.sdkConfig.apiVersion).toBeUndefined();
-        expect(result.sdkConfig.client).toEqual({});
-        expect(result.sdkConfig.generation).toEqual({});
+        expect(result.sdkConfig.client).toBeUndefined();
+        expect(result.sdkConfig.package).toBeUndefined();
+        expect(result.sdkConfig.docs).toBeUndefined();
+        expect(result.sdkConfig.generation).toBeUndefined();
+    });
+
+    it("preserves API-level path parameter behavior in the customer SDK Config", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            clientPathParameterStyle: "wrapped"
+        });
+
+        expect(result.sdkConfig.client?.pathParameterStyle).toBe("wrapped");
     });
 
     it("maps endpoint-specific header authentication", () => {
@@ -95,6 +110,77 @@ describe("SDK Config migration", () => {
                 }
             ]
         });
+    });
+
+    it("omits environments and auth that are already represented by the source specification", () => {
+        const definition = createDefinition();
+        definition.rootApiFile.contents.auth = "ApiKeyAuth";
+        definition.rootApiFile.contents["auth-schemes"] = {
+            ApiKeyAuth: { header: "x-api-key" }
+        };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            sourceDerivedApiFields: { auth: true, environments: true }
+        });
+
+        expect(result.sdkConfig.api).toEqual({
+            audiences: [],
+            headers: [{ name: "apiVersion", environmentVariable: "API_VERSION" }]
+        });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("only identifies API fields as source-derived for OSS workspaces without Fern overrides", () => {
+        const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]);
+        const sourceOnly = createWorkspace("payments", [group]);
+        Object.assign(sourceOnly, { type: "oss" });
+
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+            auth: true,
+            environments: true
+        });
+
+        const generatorsConfiguration = sourceOnly.generatorsConfiguration;
+        if (generatorsConfiguration == null) {
+            throw new Error("Expected generators configuration");
+        }
+        sourceOnly.generatorsConfiguration = {
+            ...generatorsConfiguration,
+            api: {
+                type: "singleNamespace",
+                definitions: [],
+                auth: "ApiKeyAuth",
+                "auth-schemes": { ApiKeyAuth: { header: "x-api-key" } },
+                environments: { Production: "https://api.example.com" },
+                "default-environment": "Production"
+            }
+        };
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+            auth: false,
+            environments: false
+        });
+
+        Object.assign(sourceOnly, { type: "fern" });
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+            auth: false,
+            environments: false
+        });
+    });
+
+    it("keeps generator-level authentication overrides in SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
+        generator.apiOverride = {
+            auth: "ApiKeyAuth",
+            "auth-schemes": { ApiKeyAuth: { header: "x-api-key" } }
+        };
+        const group = createGroup([generator]);
+        const workspace = createWorkspace("payments", [group]);
+        Object.assign(workspace, { type: "oss" });
+
+        expect(identifySourceDerivedApiFields({ workspace, groups: [group] }).auth).toBe(false);
     });
 
     it("hoists API import settings shared by every source spec", () => {
@@ -150,8 +236,8 @@ describe("SDK Config migration", () => {
                 api: {
                     type: "multiNamespace",
                     definitions: {
-                        First: [createConfiguredOpenApiDefinition("../specs/first.yml", true)],
-                        Second: [createConfiguredOpenApiDefinition("../specs/second.yml", false)]
+                        First: [createConfiguredOpenApiDefinition("../specs/first.yml", true, false)],
+                        Second: [createConfiguredOpenApiDefinition("../specs/second.yml", false, false)]
                     },
                     rootDefinitions: undefined
                 }
@@ -168,6 +254,24 @@ describe("SDK Config migration", () => {
             { namespace: "Second", apiImportSettings: { titleAsSchemaName: false } },
             { namespace: "First", apiImportSettings: { titleAsSchemaName: true } }
         ]);
+        expect(resolveMigrationPathParameterStyle(specs)).toBe("wrapped");
+    });
+
+    it("rejects conflicting API-level path parameter behavior across source specs", () => {
+        const inline = {
+            ...createResolvedSourceSpec("inline", undefined),
+            clientPathParameterStyle: "inline" as const,
+            clientPathParameterStyleExplicit: true
+        };
+        const wrapped = {
+            ...createResolvedSourceSpec("wrapped", undefined),
+            clientPathParameterStyle: "wrapped" as const,
+            clientPathParameterStyleExplicit: true
+        };
+
+        expect(() => resolveMigrationPathParameterStyle([inline, wrapped])).toThrow(
+            "conflicting inline-path-parameters settings"
+        );
     });
 
     it("uses a common project root when source files live outside the Fern configuration directory", () => {
@@ -249,7 +353,7 @@ describe("SDK Config migration", () => {
     });
 
     it("creates parent directories and protects existing output unless forced", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "nested", "sdk-config.json"));
+        const output = AbsoluteFilePath.of(join(temporaryDirectory, "nested", "sdk-config.yml"));
         await writeOutputFile(output, "first\n", false);
         expect(await readFile(output, "utf-8")).toBe("first\n");
 
@@ -263,7 +367,7 @@ describe("SDK Config migration", () => {
     });
 
     it("does not replace an existing file when creating a new output fails", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "sdk-config.json"));
+        const output = AbsoluteFilePath.of(join(temporaryDirectory, "sdk-config.yml"));
         await writeFile(output, "existing\n");
 
         await expect(writeOutputFile(output, "replacement\n", false)).rejects.toBeInstanceOf(CliError);
@@ -531,7 +635,8 @@ function createWorkspaceOpenApiSpec(namespace: string, absoluteFilepath: Absolut
 
 function createConfiguredOpenApiDefinition(
     configuredPath: string,
-    shouldUseTitleAsName: boolean
+    shouldUseTitleAsName: boolean,
+    inlinePathParameters?: boolean
 ): generatorsYml.APIDefinitionLocation {
     return {
         schema: { type: "oss", path: configuredPath },
@@ -539,7 +644,7 @@ function createConfiguredOpenApiDefinition(
         overrides: undefined,
         overlays: undefined,
         audiences: undefined,
-        settings: { shouldUseTitleAsName } as generatorsYml.APIDefinitionSettings
+        settings: { shouldUseTitleAsName, inlinePathParameters } as generatorsYml.APIDefinitionSettings
     };
 }
 
