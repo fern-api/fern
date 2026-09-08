@@ -442,7 +442,8 @@ export async function runLocalGenerationForWorkspace({
                     skipFernignore,
                     disableTelemetry,
                     rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
+                        workspace instanceof OSSWorkspace &&
+                        generatorWantsSpecs(generatorInvocation.name, generatorInvocation.version)
                             ? workspace.allSpecs
                             : undefined
                 });

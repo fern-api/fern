@@ -39,7 +39,7 @@ import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { buildSdkConfigIr } from "./postman/buildSdkConfigIr.js";
+import { resolveSdkConfigIr } from "./postman/resolveSdkConfigIr.js";
 import { collectRawSpecs, type RawSpecsManifest } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
@@ -300,17 +300,19 @@ export async function writeFilesToDiskAndRunGenerator({
     // The Postman adapter reads SDK Config IR, not a Fern generator config. Overwriting the same file
     // keeps the container contract unchanged -- the path is still handed over as the sole container
     // argument -- so only the document at that path differs.
-    if (generatorWantsSdkConfigIr(generatorInvocation.name)) {
-        const built = buildSdkConfigIr({
+    if (generatorWantsSdkConfigIr(generatorInvocation.name, generatorInvocation.version)) {
+        const built = await resolveSdkConfigIr({
             generatorInvocation,
+            absolutePathToFernConfig,
             organization,
-            workspaceName: workspace.definition.rootApiFile.contents.name,
-            version: mappedOutputVersionOverride ?? version,
             outputPath: paths.outputDirectory,
             rawSpecsManifest
         });
         if (!built.success) {
             throw new CliError({ message: built.message, code: CliError.Code.ConfigError });
+        }
+        for (const warning of built.warnings) {
+            context.logger.warn(warning);
         }
         await writeFile(absolutePathToWriteConfigJson, JSON.stringify(built.sdkConfigIr, undefined, 4));
         context.logger.debug(`Wrote SDK Config IR for ${generatorInvocation.name} to ${absolutePathToWriteConfigJson}`);

@@ -52,31 +52,98 @@ export const TYPE_RELOCATIONS_FILENAME = ".fern-type-relocations.json";
 export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH";
 
 /**
- * The Postman SDK adapter. It consumes SDK Config IR rather than a Fern generator config, and
- * generates from the raw API spec rather than the Fern IR, so it appears in both the spec allowlist
- * below and the config-format check.
+ * The version at which each Fern generator name becomes the Postman on-prem adapter.
+ *
+ * The adapter is published under the Fern generator names it replaces, at the version its language
+ * carries in Postman's cutover matrix, so a customer keeps their `generators.yml` entry and changes
+ * only the version. The name is therefore identical whether the image is Fern's or Postman's, and
+ * the version is the only thing that distinguishes them — a name allowlist cannot express this.
+ *
+ * One language maps to several names (TypeScript has two), which is why this is keyed on name.
+ * `kotlin` and `cli` have cutover versions but no Fern generator the adapter is a drop-in for, so
+ * they are absent by design.
  */
-export const POSTMAN_SDK_GENERATOR_NAME = "postman/sdk-generator";
+const ONPREM_ADAPTER_CUTOVER: ReadonlyMap<string, string> = new Map([
+    ["fernapi/fern-typescript-sdk", "4.0.0"],
+    ["fernapi/fern-typescript-node-sdk", "4.0.0"],
+    ["fernapi/fern-python-sdk", "6.0.0"],
+    ["fernapi/fern-java-sdk", "5.0.0"],
+    ["fernapi/fern-go-sdk", "2.0.0"],
+    ["fernapi/fern-csharp-sdk", "3.0.0"],
+    ["fernapi/fern-php-sdk", "3.0.0"],
+    ["fernapi/fern-ruby-sdk", "2.0.0"],
+    ["fernapi/fern-rust-sdk", "1.0.0"],
+    ["fernapi/fern-swift-sdk", "1.0.0"]
+]);
+
+/**
+ * The language the adapter generates, derived from the generator name.
+ *
+ * The adapter bakes one language into each image, and under the cutover naming the generator name
+ * already identifies it — so nothing has to be declared in `generators.yml`.
+ */
+const ONPREM_ADAPTER_LANGUAGE: ReadonlyMap<string, string> = new Map([
+    ["fernapi/fern-typescript-sdk", "typescript"],
+    ["fernapi/fern-typescript-node-sdk", "typescript"],
+    ["fernapi/fern-python-sdk", "python"],
+    ["fernapi/fern-java-sdk", "java"],
+    ["fernapi/fern-go-sdk", "go"],
+    ["fernapi/fern-csharp-sdk", "csharp"],
+    ["fernapi/fern-php-sdk", "php"],
+    ["fernapi/fern-ruby-sdk", "ruby"],
+    ["fernapi/fern-rust-sdk", "rust"],
+    ["fernapi/fern-swift-sdk", "swift"]
+]);
+
+/** Numeric comparison of dot-separated leading integers. Falls back to 0 for a non-numeric part. */
+function compareVersions(left: string, right: string): number {
+    const leftParts = left.split(".");
+    const rightParts = right.split(".");
+    for (let index = 0; index < Math.max(leftParts.length, rightParts.length); index++) {
+        const l = Number.parseInt(leftParts[index] ?? "0", 10) || 0;
+        const r = Number.parseInt(rightParts[index] ?? "0", 10) || 0;
+        if (l !== r) {
+            return l < r ? -1 : 1;
+        }
+    }
+    return 0;
+}
+
+/**
+ * Whether this generator invocation resolves to the Postman on-prem adapter rather than Fern's own
+ * generator of the same name.
+ *
+ * A prerelease is treated as its release version, so `4.0.0-rc1` is on the adapter side of the
+ * cutover — an rc of the adapter is still the adapter.
+ */
+export function isOnPremAdapter(generatorName: string, version: string): boolean {
+    const cutover = ONPREM_ADAPTER_CUTOVER.get(generatorName);
+    if (cutover == null) {
+        return false;
+    }
+    const release = version.split("-")[0] ?? version;
+    return compareVersions(release, cutover) >= 0;
+}
+
+export function onPremAdapterLanguage(generatorName: string): string | undefined {
+    return ONPREM_ADAPTER_LANGUAGE.get(generatorName);
+}
 
 /**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  */
-const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set([
-    "fernapi/fern-cli-generator",
-    POSTMAN_SDK_GENERATOR_NAME
-]);
+const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
 
-export function generatorWantsSpecs(generatorName: string): boolean {
-    return GENERATORS_WANTING_SPECS.has(generatorName);
+export function generatorWantsSpecs(generatorName: string, version?: string): boolean {
+    if (GENERATORS_WANTING_SPECS.has(generatorName)) {
+        return true;
+    }
+    // The adapter generates from the spec rather than the Fern IR, so it needs the same mount.
+    return version != null && isOnPremAdapter(generatorName, version);
 }
 
-/**
- * Generators handed SDK Config IR at the container config path in place of Fern's own
- * `GeneratorConfig`. Kept as a set so the check stays a single call site if more adapters adopt it.
- */
-const GENERATORS_WANTING_SDK_CONFIG_IR: ReadonlySet<string> = new Set([POSTMAN_SDK_GENERATOR_NAME]);
-
-export function generatorWantsSdkConfigIr(generatorName: string): boolean {
-    return GENERATORS_WANTING_SDK_CONFIG_IR.has(generatorName);
+/** Generators handed SDK Config IR at the container config path in place of Fern's `GeneratorConfig`. */
+export function generatorWantsSdkConfigIr(generatorName: string, version: string): boolean {
+    return isOnPremAdapter(generatorName, version);
 }
