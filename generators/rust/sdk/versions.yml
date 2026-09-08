@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.7
+  changelogEntry:
+    - summary: |
+        A JSON request body declared under a media type other than `application/json` - a
+        vendor type, or `application/merge-patch+json` - is now sent under that type instead
+        of `application/json`. `execute_request` calls reqwest's `.json()`, which stamps
+        `application/json` over whatever the endpoint declared, so those endpoints now take a
+        variant that sets the header and serializes the body identically. Emitted only when an
+        endpoint declares such a type, so an SDK that never does is unchanged.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 0.47.6
   changelogEntry:
     - summary: |

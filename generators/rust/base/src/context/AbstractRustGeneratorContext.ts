@@ -604,6 +604,32 @@ export abstract class AbstractRustGeneratorContext<
         );
     }
 
+    /**
+     * Whether any endpoint declares a JSON request media type OTHER than `application/json` --
+     * a vendor type, or `application/merge-patch+json`. Those endpoints cannot go through
+     * `execute_request`, whose `.json()` call stamps `application/json` over the declared type.
+     */
+    public hasNonDefaultJsonContentTypeEndpoints(): boolean {
+        return this.cachedFeature("hasNonDefaultJsonContentTypeEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
+                    const contentType = endpoint.requestBody?._visit<string | undefined>({
+                        inlinedRequestBody: (body) => body.contentType,
+                        reference: (body) => body.contentType,
+                        fileUpload: () => undefined,
+                        bytes: () => undefined,
+                        _other: () => undefined
+                    });
+                    return (
+                        contentType != null &&
+                        contentType !== "application/json" &&
+                        contentType.includes("json")
+                    );
+                })
+            )
+        );
+    }
+
     public hasWebSocketChannels(): boolean {
         return this.cachedFeature("hasWebSocketChannels", () => {
             const websocketsEnabled = this.customConfig.enableWebsockets || this.customConfig.generateWebSocketClients === true;

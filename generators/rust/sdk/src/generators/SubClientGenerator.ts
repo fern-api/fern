@@ -953,11 +953,22 @@ export class SubClientGenerator {
             ${JSON.stringify(bytesContentType)},
             options,`;
         } else {
+            // A JSON body whose DECLARED media type is not `application/json` -- a vendor type, or
+            // `application/merge-patch+json`. `execute_request` calls `.json()`, which stamps
+            // `application/json` over it, so those endpoints take the variant that sets the header.
+            const declaredJsonContentType = this.getNonDefaultJsonContentType(endpoint);
+            if (declaredJsonContentType != null) {
+                executeMethod = "execute_request_with_content_type";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
-            ${this.buildQueryParameters(endpoint)},
+            ${this.buildQueryParameters(endpoint)},${
+                declaredJsonContentType != null
+                    ? `\n            ${JSON.stringify(declaredJsonContentType)},`
+                    : ""
+            }
             options,`;
 
             if (responseType === "binary") {
@@ -1957,6 +1968,28 @@ export class SubClientGenerator {
             streamParameter: () => "none",
             _other: () => "none"
         });
+    }
+
+    /**
+     * The endpoint's declared request media type, when it is a JSON one OTHER than
+     * `application/json` -- `application/vnd.foo+json`, `application/merge-patch+json`. Returns
+     * undefined for `application/json` itself and for anything that is not JSON, so only the
+     * endpoints that need the header override are routed away from `execute_request`.
+     *
+     * The IR has always carried this on the request body; the Rust generator read it nowhere.
+     */
+    private getNonDefaultJsonContentType(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const contentType = endpoint.requestBody?._visit<string | undefined>({
+            inlinedRequestBody: (body) => body.contentType,
+            reference: (body) => body.contentType,
+            fileUpload: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+        if (contentType == null || contentType === "application/json") {
+            return undefined;
+        }
+        return contentType.endsWith("+json") || contentType.includes("json") ? contentType : undefined;
     }
 
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {
