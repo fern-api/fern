@@ -1,0 +1,5 @@
+- summary: |
+    Deserialize non-object JSON response bodies. Endpoints whose response is a top-level
+    list, map, set, primitive, or unknown JSON value previously returned `nil`; they now
+    parse the body and coerce it to the declared type.
+  type: fix

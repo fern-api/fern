@@ -659,7 +659,8 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            [nil, response]
+            parsed_response = Seed::Internal::Types::Utils.coerce(Seed::Types::UsernameCursor, JSON.parse(response.body, symbolize_names: true))
+            [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
