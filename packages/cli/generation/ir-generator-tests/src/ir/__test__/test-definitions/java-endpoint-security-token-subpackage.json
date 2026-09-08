@@ -258,6 +258,7 @@
                     "refreshEndpoint": null
                 },
                 "key": "OAuth",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -281,6 +282,7 @@
                 "headerEnvVar": "MY_API_KEY",
                 "headerPlaceholder": null,
                 "key": "ApiKey",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

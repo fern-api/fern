@@ -110,11 +110,13 @@ function convertSchemeReference({
         if (declaration == null) {
             throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
+        const playgroundDocs = typeof declaration === "object" ? declaration["playground-docs"] : undefined;
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
                     key: reference,
                     docs,
+                    playgroundDocs,
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
                         wireValue: rawHeader.header
@@ -129,6 +131,7 @@ function convertSchemeReference({
                     key: reference,
                     file,
                     docs,
+                    playgroundDocs,
                     rawScheme
                 }),
             tokenBearer: (rawScheme) =>
@@ -136,6 +139,7 @@ function convertSchemeReference({
                     key: reference,
                     file,
                     docs,
+                    playgroundDocs,
                     rawScheme
                 }),
             inferredBearer: (rawScheme) =>
@@ -143,6 +147,7 @@ function convertSchemeReference({
                     key: reference,
                     file,
                     docs,
+                    playgroundDocs,
                     rawScheme,
                     propertyResolver,
                     endpointResolver
@@ -152,6 +157,7 @@ function convertSchemeReference({
                     key: reference,
                     file,
                     docs,
+                    playgroundDocs,
                     rawScheme,
                     propertyResolver,
                     endpointResolver,
@@ -168,6 +174,7 @@ function convertSchemeReference({
                 key: scheme,
                 file,
                 docs: undefined,
+                playgroundDocs: undefined,
                 rawScheme: undefined
             });
         case "basic":
@@ -175,6 +182,7 @@ function convertSchemeReference({
                 key: scheme,
                 file,
                 docs: undefined,
+                playgroundDocs: undefined,
                 rawScheme: undefined
             });
         case "oauth":
@@ -182,6 +190,7 @@ function convertSchemeReference({
                 key: scheme,
                 file,
                 docs: undefined,
+                playgroundDocs: undefined,
                 rawScheme: undefined,
                 propertyResolver,
                 endpointResolver,
@@ -196,16 +205,19 @@ function generateBearerAuth({
     key,
     file,
     docs,
+    playgroundDocs,
     rawScheme
 }: {
     key: string;
     file: FernFileContext;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         key,
         docs,
+        playgroundDocs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env,
         tokenPlaceholder: rawScheme?.token?.placeholder
@@ -216,16 +228,19 @@ function generateBasicAuth({
     key,
     file,
     docs,
+    playgroundDocs,
     rawScheme
 }: {
     key: string;
     file: FernFileContext;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         key,
         docs,
+        playgroundDocs,
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         usernameOmit: rawScheme?.username?.omit,
@@ -241,6 +256,7 @@ function generateOAuth({
     key,
     file,
     docs,
+    playgroundDocs,
     rawScheme,
     propertyResolver,
     endpointResolver,
@@ -249,6 +265,7 @@ function generateOAuth({
     key: string;
     file: FernFileContext;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
@@ -259,6 +276,7 @@ function generateOAuth({
             return AuthScheme.oauth({
                 key,
                 docs,
+                playgroundDocs,
                 configuration: OAuthConfiguration.clientCredentials(
                     convertOAuthClientCredentials({
                         propertyResolver,
@@ -275,6 +293,7 @@ function generateOAuth({
             return AuthScheme.oauth({
                 key,
                 docs,
+                playgroundDocs,
                 configuration: OAuthConfiguration.authorizationCode({
                     clientId: getPublicClientId(rawScheme),
                     authorizationUrl: requireOAuthField(rawScheme, "authorization-url"),
@@ -297,6 +316,7 @@ function generateOAuth({
             return AuthScheme.oauth({
                 key,
                 docs,
+                playgroundDocs,
                 configuration: OAuthConfiguration.deviceCode({
                     clientId: getPublicClientId(rawScheme),
                     deviceAuthorizationUrl: requireOAuthField(rawScheme, "device-authorization-url"),
@@ -370,6 +390,7 @@ function generateInferredAuth({
     key,
     file,
     docs,
+    playgroundDocs,
     rawScheme,
     propertyResolver,
     endpointResolver
@@ -377,6 +398,7 @@ function generateInferredAuth({
     key: string;
     file: FernFileContext;
     docs: string | undefined;
+    playgroundDocs: string | undefined;
     rawScheme: RawSchemas.InferredBearerAuthSchema;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
@@ -384,6 +406,7 @@ function generateInferredAuth({
     return AuthScheme.inferred({
         key,
         docs,
+        playgroundDocs,
         tokenEndpoint: getInferredTokenEndpoint({
             file,
             rawScheme,

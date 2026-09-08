@@ -29,3 +29,4 @@ export * from "./RedirectUriWithBackupPortsSchema.js";
 export * from "./TokenBearerAuthSchema.js";
 export * from "./WithAuthSchema.js";
 export * from "./WithEnvironmentVariable.js";
+export * from "./WithPlaygroundDocsSchema.js";

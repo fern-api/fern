@@ -481,6 +481,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "oauth"
         },
@@ -760,6 +771,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "header": {
           "type": "string"
         },
@@ -862,6 +884,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "basic"
         },
@@ -903,6 +936,17 @@
               "type": "null"
             }
           ]
+        },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
         },
         "scheme": {
           "const": "bearer"
@@ -1013,6 +1057,17 @@
               "type": "null"
             }
           ]
+        },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
         },
         "scheme": {
           "const": "bearer"

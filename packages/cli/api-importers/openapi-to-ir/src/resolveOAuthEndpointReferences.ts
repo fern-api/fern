@@ -114,6 +114,7 @@ function resolveOAuthScheme({
     return AuthScheme.oauth({
         key,
         docs: oauthScheme.docs,
+        playgroundDocs: oauthScheme["playground-docs"],
         configuration: OAuthConfiguration.clientCredentials({
             clientIdEnvVar: oauthScheme["client-id-env"],
             clientSecretEnvVar: oauthScheme["client-secret-env"],

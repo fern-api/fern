@@ -227,7 +227,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         token: this.context.casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
-                        docs: securityScheme.description
+                        docs: securityScheme.description,
+                        playgroundDocs: undefined
                     });
                 }
                 if (securityScheme.scheme?.toLowerCase() === "basic") {
@@ -241,7 +242,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         passwordOmit: false,
                         usernamePlaceholder: undefined,
                         passwordPlaceholder: undefined,
-                        docs: securityScheme.description
+                        docs: securityScheme.description,
+                        playgroundDocs: undefined
                     });
                 }
                 break;
@@ -258,7 +260,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                         prefix: undefined,
                         headerEnvVar: undefined,
                         headerPlaceholder: undefined,
-                        docs: securityScheme.description
+                        docs: securityScheme.description,
+                        playgroundDocs: undefined
                     });
                 }
                 break;
@@ -269,7 +272,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
                     tokenPlaceholder: undefined,
-                    docs: securityScheme.description
+                    docs: securityScheme.description,
+                    playgroundDocs: undefined
                 });
             }
         }

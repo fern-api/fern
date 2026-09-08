@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { WithName } from "../../commons/types/WithName.js";
 import { WithEnvironmentVariable } from "./WithEnvironmentVariable.js";
+import { WithPlaygroundDocsSchema } from "./WithPlaygroundDocsSchema.js";
 
 export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.HeaderAuthSchemeSchema.Raw,
@@ -19,10 +20,15 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
     })
     .extend(WithEnvironmentVariable)
     .extend(WithName)
-    .extend(WithDocsSchema);
+    .extend(WithDocsSchema)
+    .extend(WithPlaygroundDocsSchema);
 
 export declare namespace HeaderAuthSchemeSchema {
-    export interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw
+        extends WithEnvironmentVariable.Raw,
+            WithName.Raw,
+            WithDocsSchema.Raw,
+            WithPlaygroundDocsSchema.Raw {
         header: string;
         type?: string | null;
         prefix?: string | null;

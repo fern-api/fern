@@ -59,6 +59,16 @@ types:
     properties:
       env: optional<string>
 
+  WithPlaygroundDocsSchema:
+    properties:
+      playground-docs:
+        type: optional<string>
+        docs: |-
+          Documentation rendered below this scheme's input in the API playground, instead of `docs`.
+          Supports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,
+          `inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)
+          is rendered as plain text.
+
   AuthVariable:
     extends:
       - WithEnvironmentVariable
@@ -76,6 +86,7 @@ types:
       - WithEnvironmentVariable
       - commons.WithName
       - commons.WithDocsSchema
+      - WithPlaygroundDocsSchema
     properties:
       header: string
       type:
@@ -89,6 +100,7 @@ types:
   BasicAuthSchemeSchema:
     extends:
       - commons.WithDocsSchema
+      - WithPlaygroundDocsSchema
     properties:
       scheme: literal<"basic">
       username: optional<AuthVariable>
@@ -103,6 +115,7 @@ types:
   TokenBearerAuthSchema:
     extends:
       - commons.WithDocsSchema
+      - WithPlaygroundDocsSchema
     properties:
       scheme: literal<"bearer">
       token: optional<AuthVariable>
@@ -110,6 +123,7 @@ types:
   InferredBearerAuthSchema:
     extends:
       - commons.WithDocsSchema
+      - WithPlaygroundDocsSchema
     properties:
       scheme: literal<"bearer">
       get-token: InferredGetTokenEndpointSchema
@@ -166,6 +180,7 @@ types:
   OAuthSchemeSchema:
     extends:
       - commons.WithDocsSchema
+      - WithPlaygroundDocsSchema
     properties:
       scheme: literal<"oauth">
       type:
