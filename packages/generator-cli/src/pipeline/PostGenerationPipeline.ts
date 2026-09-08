@@ -119,17 +119,24 @@ export class PostGenerationPipeline {
             } catch {
                 // pass
             }
-
-            // Must run before any step commits (GenerationCommitStep commits via `git add -A`).
-            if (this.config.github.workflows === false) {
-                stripGeneratedWorkflows(this.config.outputDir, this.logger);
-            }
         }
 
         const result: PipelineResult = {
             success: true,
             steps: {}
         };
+
+        // Must run before any step commits (GenerationCommitStep commits via `git add -A`).
+        // A partial strip must never reach a commit, so a failure here aborts the pipeline.
+        if (this.config.github?.enabled && this.config.github.workflows === false) {
+            try {
+                stripGeneratedWorkflows(this.config.outputDir, this.logger);
+            } catch (error) {
+                result.success = false;
+                result.errors = [`failed to strip generated workflows: ${extractErrorMessage(error)}`];
+                return result;
+            }
+        }
 
         const pipelineContext: PipelineContext = {
             previousStepResults: {}
