@@ -991,8 +991,10 @@ export class AutoVersionStep extends BaseStep {
      * handles chunking, parallelism, and retries server-side. Requests an NDJSON
      * stream so FAI can emit heartbeats while a long analysis runs (keeps load
      * balancer idle timeouts from killing the request); falls back to parsing a
-     * plain JSON body when FAI answers synchronously. Returns null on NO_CHANGE;
-     * throws on transport/HTTP/in-band errors so the caller's PATCH fallback applies.
+     * plain JSON body when FAI answers synchronously. The whole exchange is bounded
+     * by `FAI_ANALYZE_DEADLINE_MS`, since heartbeats alone would otherwise keep a
+     * stalled analysis open indefinitely. Returns null on NO_CHANGE; throws on
+     * transport/HTTP/in-band/deadline errors so the caller's PATCH fallback applies.
      */
     private async analyzeViaFaiService(
         cleanedDiff: string,
@@ -1000,28 +1002,41 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string
     ): Promise<FAIAnalysis | null> {
         const baseUrl = this.config.faiBaseUrl ?? "https://fai.buildwithfern.com";
-        const response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${this.config.fernToken}`,
-                "Content-Type": "application/json",
-                Accept: FAI_NDJSON_MEDIA_TYPE
-            },
-            body: JSON.stringify({
-                diff: cleanedDiff,
-                language,
-                previous_version: previousVersion,
-                prior_changelog: this.config.priorChangelog ?? undefined,
-                spec_commit_message: this.config.specCommitMessage ?? undefined
-            })
-        });
-        if (!response.ok) {
-            const body = await response.text().catch(() => "");
-            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
+        const deadline = new AbortController();
+        const deadlineTimer = setTimeout(() => deadline.abort(), FAI_ANALYZE_DEADLINE_MS);
+        let parsed: unknown;
+        try {
+            const response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${this.config.fernToken}`,
+                    "Content-Type": "application/json",
+                    Accept: FAI_NDJSON_MEDIA_TYPE
+                },
+                body: JSON.stringify({
+                    diff: cleanedDiff,
+                    language,
+                    previous_version: previousVersion,
+                    prior_changelog: this.config.priorChangelog ?? undefined,
+                    spec_commit_message: this.config.specCommitMessage ?? undefined
+                }),
+                signal: deadline.signal
+            });
+            if (!response.ok) {
+                const body = await response.text().catch(() => "");
+                throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
+            }
+            parsed = isNdjsonResponse(response)
+                ? await readFaiAnalyzeStream(response, deadline.signal)
+                : await response.json();
+        } catch (error) {
+            if (deadline.signal.aborted) {
+                throw new Error(`FAI analyze-commit-diff exceeded the ${FAI_ANALYZE_DEADLINE_MS}ms deadline`);
+            }
+            throw error;
+        } finally {
+            clearTimeout(deadlineTimer);
         }
-        const parsed: unknown = isNdjsonResponse(response)
-            ? await readFaiAnalyzeStream(response)
-            : await response.json();
         if (!isFaiAnalyzeResponse(parsed)) {
             throw new Error("FAI analyze-commit-diff returned an unexpected response shape");
         }
@@ -1101,6 +1116,8 @@ interface FaiAnalyzeResponse {
 
 const FAI_VERSION_BUMPS = ["MAJOR", "MINOR", "PATCH", "NO_CHANGE"];
 const FAI_NDJSON_MEDIA_TYPE = "application/x-ndjson";
+// Upper bound on one FAI analysis, covering both the request and the streamed body.
+const FAI_ANALYZE_DEADLINE_MS = 15 * 60_000;
 
 function isNdjsonResponse(response: Response): boolean {
     const contentType = response.headers?.get("content-type") ?? "";
@@ -1111,12 +1128,20 @@ function isNdjsonResponse(response: Response): boolean {
  * Consumes FAI's NDJSON stream: `{"type":"heartbeat"}` lines are ignored,
  * `{"type":"result","result":{...}}` yields the analysis, and
  * `{"type":"error",...}` throws (the HTTP status is already 200 by then).
+ * Aborting `signal` cancels the read and rejects.
  */
-async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
+async function readFaiAnalyzeStream(response: Response, signal: AbortSignal): Promise<unknown> {
     if (response.body == null) {
         throw new Error("FAI analyze-commit-diff returned an empty stream");
     }
     const reader = response.body.getReader();
+    const onAbort = () => {
+        reader.cancel(signal.reason).catch(() => undefined);
+    };
+    signal.addEventListener("abort", onAbort, { once: true });
+    if (signal.aborted) {
+        onAbort();
+    }
     const decoder = new TextDecoder();
     let buffered = "";
     const handleLine = (line: string): { done: true; result: unknown } | undefined => {
@@ -1140,7 +1165,7 @@ async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
                 return { done: true, result };
             case "error": {
                 const statusText = typeof status === "number" ? ` with status ${status}` : "";
-                throw new Error(`FAI analyze-commit-diff failed${statusText}: ${String(detail ?? "").slice(0, 500)}`);
+                throw new Error(`FAI analyze-commit-diff failed${statusText}: ${formatErrorDetail(detail)}`);
             }
             default:
                 // Ignore unrecognized event types so newer FAI deployments stay compatible with older generators.
@@ -1150,6 +1175,9 @@ async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
     try {
         while (true) {
             const { value, done } = await reader.read();
+            if (signal.aborted) {
+                throw new Error("FAI analyze-commit-diff stream aborted");
+            }
             buffered += done ? decoder.decode() : decoder.decode(value, { stream: true });
             const lines = buffered.split("\n");
             buffered = done ? "" : (lines.pop() ?? "");
@@ -1164,8 +1192,15 @@ async function readFaiAnalyzeStream(response: Response): Promise<unknown> {
             }
         }
     } finally {
+        signal.removeEventListener("abort", onAbort);
         reader.cancel().catch(() => undefined);
     }
+}
+
+// FAI serializes `HTTPException.detail` as-is, so it may be a string, list, or object.
+function formatErrorDetail(detail: unknown): string {
+    const text = typeof detail === "string" ? detail : detail == null ? "" : JSON.stringify(detail);
+    return text.slice(0, 500);
 }
 
 function isFaiAnalyzeResponse(value: unknown): value is FaiAnalyzeResponse {

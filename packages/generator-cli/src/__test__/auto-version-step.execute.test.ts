@@ -1169,11 +1169,12 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
     });
 
     afterEach(async () => {
+        vi.useRealTimers();
         vi.unstubAllGlobals();
         await repo.cleanup();
     });
 
-    function ndjsonResponse(events: unknown[], chunkSize = 7) {
+    function ndjsonResponse(events: unknown[], chunkSize = 7, { close = true } = {}) {
         const text = events.map((event) => `${JSON.stringify(event)}\r\n`).join("");
         const chunks: string[] = [];
         for (let i = 0; i < text.length; i += chunkSize) {
@@ -1189,7 +1190,9 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
                     for (const chunk of chunks) {
                         controller.enqueue(encoder.encode(chunk));
                     }
-                    controller.close();
+                    if (close) {
+                        controller.close();
+                    }
                 }
             }),
             json: async () => {
@@ -1280,6 +1283,44 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.version).toBe("1.0.1");
         expect(result.versionBump).toBe("PATCH");
         expect(result.changelogEntry).toBeUndefined();
+    });
+
+    it("reports structured in-band error details instead of [object Object]", async () => {
+        const logger = makeLogger();
+        mockFetch.mockResolvedValue(
+            ndjsonResponse([{ type: "error", status: 422, detail: [{ loc: ["body", "diff"], msg: "field required" }] }])
+        );
+
+        const step = new AutoVersionStep(repo.repoPath, logger, faiConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.versionBump).toBe("PATCH");
+        const warning = logger.warns.find((msg) => msg.includes("status 422"));
+        expect(warning).toContain('"field required"');
+        expect(warning).not.toContain("[object Object]");
+    });
+
+    it("passes an abort signal to fetch and falls back to PATCH when the deadline elapses mid-stream", async () => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+        mockFetch.mockImplementation((_url: string, init: RequestInit) => {
+            expect(init.signal).toBeInstanceOf(AbortSignal);
+            // Heartbeats keep arriving but the analysis never finishes: only the deadline can end this.
+            vi.advanceTimersByTime(15 * 60_000);
+            return Promise.resolve(ndjsonResponse([{ type: "heartbeat" }, { type: "heartbeat" }], 7, { close: false }));
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
     });
 
     it("falls back to PATCH when the NDJSON result event has no payload", async () => {
