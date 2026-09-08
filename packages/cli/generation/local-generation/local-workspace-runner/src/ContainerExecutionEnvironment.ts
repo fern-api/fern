@@ -13,6 +13,7 @@ import {
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getCaBundleMount, getJvmCaBundleWarning } from "./getCaBundleMount.js";
+import { verifyCaBundleMount } from "./verifyCaBundleMount.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
@@ -100,13 +101,18 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         const caBundle = getCaBundleMount();
         if (caBundle != null) {
             context.logger.info(`Mounting CA bundle ${caBundle.hostPath} into the generator container`);
-            if (caBundle.warning != null) {
-                context.logger.warn(caBundle.warning);
-            }
             const jvmWarning = getJvmCaBundleWarning(generatorName);
             if (jvmWarning != null) {
                 context.logger.warn(jvmWarning);
             }
+            // Fail before generation rather than after: an unmountable bundle otherwise
+            // surfaces as an unrelated-looking TLS error deep inside the generator.
+            await verifyCaBundleMount({
+                hostPath: caBundle.hostPath,
+                imageName: this.containerImage,
+                runner: this.runner ?? runner ?? "docker",
+                logger: context.logger
+            });
             binds.push(caBundle.bind);
             Object.assign(envVars, caBundle.envVars);
         }

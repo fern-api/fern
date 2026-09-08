@@ -2,15 +2,24 @@
     `fern generate --local` now supports `FERN_CA_BUNDLE`: set it to a PEM CA bundle on the host and the file is
     mounted read-only into the generator container with `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE` and `GIT_SSL_CAINFO`
     pointing at it. This lets network calls made *inside* the generator container succeed behind a corporate
-    TLS-interception proxy: `pnpm install` (TypeScript), `go mod tidy` (Go), `dotnet format`'s implicit NuGet
-    restore (C#), and the `git clone` of a self-hosted SDK repo used to merge the existing README.
-    The file must be a complete bundle (system CA certificates plus the corporate CA) since
-    `SSL_CERT_FILE`/`GIT_SSL_CAINFO` replace the default trust store; the CLI warns when the file holds only a
-    handful of certificates and fails fast if the path is unreadable. The JVM ignores these variables, so the CLI
-    also warns for Java generators, whose Gradle steps need `FERN_JAVA_SKIP_FORMATTING=true` on such networks.
-    The path is a bind mount, so it must be visible to the Docker daemon running the generator: this works with a
-    local daemon (Docker Desktop, a runner with Docker installed) but not with a remote `DOCKER_HOST` or a
-    Docker-in-Docker sidecar that cannot see the host filesystem.
+    TLS-interception proxy: `pnpm install` (TypeScript), `go mod tidy` (Go), and `dotnet format`'s implicit NuGet
+    restore (C#).
+
+    `SSL_CERT_FILE`/`GIT_SSL_CAINFO` replace rather than extend the trust store, so the file must be a complete
+    bundle — the public roots plus your corporate CA. On Linux the system maintains one at
+    `/etc/ssl/certs/ca-certificates.crt`; elsewhere you can build one from the roots Node already ships:
+
+        node -e 'console.log(require("tls").rootCertificates.join("\n"))' > ~/certs/fern-ca-bundle.crt
+        cat corp-root.pem >> ~/certs/fern-ca-bundle.crt
+
+    The path is a bind-mount source resolved by the container runtime rather than by the CLI, so it has to be
+    visible to that runtime. Before generating, the CLI now starts a short-lived probe container to confirm the
+    bundle is really visible inside it, and fails with guidance for your platform when it is not — this catches
+    Colima, podman machine and Docker-in-Docker, where an unresolvable bind source is silently replaced with an
+    empty directory instead of raising an error.
+
+    The JVM ignores these variables, so the CLI warns for Java generators, whose Gradle steps need
+    `FERN_JAVA_SKIP_FORMATTING=true` on such networks.
   type: feat
 - summary: |
     Environment variables passed to local generator containers are no longer wrapped in literal quote characters

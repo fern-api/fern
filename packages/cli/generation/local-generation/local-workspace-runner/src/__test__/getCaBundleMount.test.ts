@@ -55,14 +55,16 @@ describe("getCaBundleMount", () => {
                 NODE_EXTRA_CA_CERTS: CONTAINER_CA_BUNDLE_PATH,
                 SSL_CERT_FILE: CONTAINER_CA_BUNDLE_PATH,
                 GIT_SSL_CAINFO: CONTAINER_CA_BUNDLE_PATH
-            },
-            warning: undefined
+            }
         });
     });
 
-    it("warns when the bundle looks like a corporate-CA-only file", () => {
-        expect(getCaBundleMount({ FERN_CA_BUNDLE: singleCert })?.warning).toMatch(/only 1 certificate/);
-        expect(getCaBundleMount({ FERN_CA_BUNDLE: rootAndIntermediate })?.warning).toMatch(/only 2 certificate/);
+    it("does not judge bundle completeness — a corporate-CA-only file is accepted as-is", () => {
+        // Whether an incomplete bundle breaks public TLS depends on the generator image
+        // (images with a populated /etc/ssl/certs fall back to it, bundle-only images do
+        // not), so the CLI documents the requirement instead of guessing from a count.
+        expect(getCaBundleMount({ FERN_CA_BUNDLE: singleCert })).toBeDefined();
+        expect(getCaBundleMount({ FERN_CA_BUNDLE: rootAndIntermediate })).toBeDefined();
     });
 
     it("warns for JVM-based generators only", () => {

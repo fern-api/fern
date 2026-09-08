@@ -7,12 +7,6 @@ import { CONTAINER_FERN_DIRECTORY } from "./constants.js";
 export const CONTAINER_CA_BUNDLE_PATH = path.posix.join(CONTAINER_FERN_DIRECTORY, "ca-bundle.crt");
 
 const PEM_CERTIFICATE_HEADER = "-----BEGIN CERTIFICATE-----";
-/**
- * Public root stores ship well over a hundred certificates; anything far below that is
- * almost certainly a corporate-CA-only file (root, or root + intermediate) rather than a
- * complete bundle.
- */
-const MIN_CERTIFICATES_FOR_COMPLETE_BUNDLE = 50;
 
 export interface CaBundleMount {
     hostPath: string;
@@ -28,12 +22,6 @@ export interface CaBundleMount {
         SSL_CERT_FILE: string;
         GIT_SSL_CAINFO: string;
     };
-    /**
-     * Set when the bundle looks like a corporate-CA-only file rather than a complete
-     * bundle. SSL_CERT_FILE and GIT_SSL_CAINFO replace the container's trust store, so
-     * such a file would make git and OpenSSL reject every publicly-signed host.
-     */
-    warning?: string;
 }
 
 /**
@@ -63,11 +51,7 @@ export function getCaBundleMount(env: NodeJS.ProcessEnv = process.env): CaBundle
             NODE_EXTRA_CA_CERTS: CONTAINER_CA_BUNDLE_PATH,
             SSL_CERT_FILE: CONTAINER_CA_BUNDLE_PATH,
             GIT_SSL_CAINFO: CONTAINER_CA_BUNDLE_PATH
-        },
-        warning:
-            certificateCount < MIN_CERTIFICATES_FOR_COMPLETE_BUNDLE
-                ? `${FERN_CA_BUNDLE_ENV_VAR} (${hostPath}) contains only ${certificateCount} certificate(s). It replaces the trust store for git and OpenSSL inside the generator container, so it should be a complete bundle (system CA certificates plus your corporate CA) or TLS to public hosts will fail.`
-                : undefined
+        }
     };
 }
 
