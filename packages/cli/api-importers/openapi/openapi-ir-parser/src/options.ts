@@ -189,6 +189,13 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     respectPerSpecBasePath: boolean;
+
+    /**
+     * If true, an error whose response object (`components.responses[...]`) carries `x-fern-sdk-namespace`
+     * is declared in, and shared within, that namespace instead of the endpoint's namespace. Errors without
+     * the extension are unaffected. Defaults to false.
+     */
+    namespacedErrors: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -234,7 +241,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disambiguateRequestNames: true,
     ignoreTags: false,
     respectParameterContent: false,
-    respectPerSpecBasePath: false
+    respectPerSpecBasePath: false,
+    namespacedErrors: false
 };
 
 function mergeOptions<T extends object>(params: {

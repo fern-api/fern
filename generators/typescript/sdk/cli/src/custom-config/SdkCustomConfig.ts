@@ -78,6 +78,7 @@ export interface SdkCustomConfig {
     generateReadWriteOnlyTypes: boolean;
     flattenRequestParameters: boolean | undefined;
     respectOptionalRequestBody: boolean | undefined;
+    deepObjectMapQueryParameters: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;

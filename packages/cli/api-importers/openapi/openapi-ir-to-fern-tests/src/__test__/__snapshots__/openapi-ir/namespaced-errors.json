@@ -260,11 +260,38 @@
       "headers": [],
       "generatedRequestName": "ListEntitiesRequest",
       "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        },
         "429": {
           "generatedName": "TooManyRequestsError",
           "schema": {
             "generatedName": "TooManyRequestsErrorBody",
             "schema": "Error",
+            "namespace": "entity",
             "source": {
               "file": "entities.yml",
               "type": "openapi"
@@ -331,11 +358,38 @@
       "headers": [],
       "generatedRequestName": "GetEntityRequest",
       "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "schema": "Error",
+            "namespace": "entity",
+            "source": {
+              "file": "entities.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "entities.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        },
         "429": {
           "generatedName": "TooManyRequestsError",
           "schema": {
             "generatedName": "TooManyRequestsErrorBody",
             "schema": "Error",
+            "namespace": "entity",
             "source": {
               "file": "entities.yml",
               "type": "openapi"
@@ -390,41 +444,7 @@
   "webhooks": [],
   "channels": {},
   "groupedSchemas": {
-    "rootSchemas": {
-      "Error": {
-        "allOf": [],
-        "properties": [
-          {
-            "conflict": {},
-            "generatedName": "errorCode",
-            "key": "code",
-            "schema": {
-              "generatedName": "ErrorCode",
-              "value": {
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "ErrorCode",
-                "groupName": [],
-                "type": "primitive"
-              },
-              "groupName": [],
-              "type": "optional"
-            },
-            "audiences": []
-          }
-        ],
-        "allOfPropertyConflicts": [],
-        "generatedName": "Error",
-        "groupName": [],
-        "additionalProperties": false,
-        "source": {
-          "file": "entities.yml",
-          "type": "openapi"
-        },
-        "type": "object"
-      }
-    },
+    "rootSchemas": {},
     "namespacedSchemas": {
       "video": {
         "ServiceUnavailableBody": {
@@ -459,6 +479,44 @@
           "additionalProperties": false,
           "source": {
             "file": "video.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "entity": {
+        "Error": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "errorCode",
+              "key": "code",
+              "schema": {
+                "generatedName": "ErrorCode",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ErrorCode",
+                  "namespace": "entity",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "namespace": "entity",
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Error",
+          "namespace": "entity",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "entities.yml",
             "type": "openapi"
           },
           "type": "object"

@@ -19,6 +19,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /entities/{id}:
     get:
       operationId: getEntity
@@ -39,9 +41,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
+  responses:
+    NotFound:
+      x-fern-sdk-namespace: entity
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
     Error:
+      x-fern-sdk-namespace: entity
       type: object
       properties:
         code:

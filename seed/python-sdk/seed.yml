@@ -208,6 +208,9 @@ fixtures:
         timeout_in_seconds: 5
       outputFolder: five-second-timeout
     - customConfig:
+        retry_status_codes: recommended
+      outputFolder: recommended-retry-status-codes
+    - customConfig:
         pydantic_config:
           include_union_utils: true
       outputFolder: union-utils
@@ -324,6 +327,12 @@ fixtures:
     - customConfig:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
+    - customConfig:
+        license_header: |
+          Copyright 2024 Acme, Inc.
+          Licensed under the Apache License, Version 2.0.
+        package_path: matryoshka/doll/structure
+      outputFolder: license-header
     - customConfig:
         output_directory: project-root
       outputFolder: output-directory-project-root

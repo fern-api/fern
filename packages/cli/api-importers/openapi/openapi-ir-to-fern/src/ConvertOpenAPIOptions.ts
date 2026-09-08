@@ -133,14 +133,6 @@ export interface ConvertOpenAPIOptions {
      * Defaults to true. When false, SDK users must explicitly provide a base URL.
      */
     inferDefaultEnvironment: boolean;
-
-    /**
-     * If true, an error whose response object or body schema carries `x-fern-sdk-namespace` is declared in, and shared
-     * within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
-     * namespace while endpoints and other types stay at the root.
-     * Defaults to false.
-     */
-    namespacedErrors: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -160,8 +152,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     groupEnvironmentsByHost: false,
     multiServerStrategy: generatorsYml.MultiServerStrategy.EnvironmentPerServer,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
-    inferDefaultEnvironment: true,
-    namespacedErrors: false
+    inferDefaultEnvironment: true
 };
 
 function mergeOptions<T extends object>(params: {

@@ -19,7 +19,7 @@ import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils
 import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
-import { getEndpointNamespace, getErrorConflictNamespace, getErrorNamespace } from "./utils/getNamespaceFromGroup.js";
+import { getEndpointNamespace, getErrorNamespace } from "./utils/getNamespaceFromGroup.js";
 import {
     getDocsFromTypeReference,
     getTypeFromTypeReference,
@@ -468,8 +468,7 @@ export function buildEndpoint({
 
         const errorNamespace = getErrorNamespace({
             endpointNamespace: maybeEndpointNamespace,
-            error: httpError,
-            namespacedErrors: context.options.namespacedErrors
+            error: httpError
         });
         const errorDeclarationFile = resolveLocationWithNamespace({
             location: ERROR_DECLARATIONS_FILENAME,
@@ -493,11 +492,7 @@ export function buildEndpoint({
             name: errorName,
             schema: context.isErrorUnknownSchema({
                 statusCode: parseInt(statusCode),
-                namespace: getErrorConflictNamespace({
-                    endpointNamespace: maybeEndpointNamespace,
-                    error: httpError,
-                    namespacedErrors: context.options.namespacedErrors
-                })
+                namespace: httpError.namespace
             })
                 ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration

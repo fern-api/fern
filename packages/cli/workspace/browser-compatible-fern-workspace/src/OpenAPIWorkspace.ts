@@ -65,8 +65,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
             pathParameterOrder: spec.settings?.pathParameterOrder,
-            coerceConstsTo: spec.settings?.coerceConstsTo,
-            namespacedErrors: spec.settings?.namespacedErrors
+            coerceConstsTo: spec.settings?.coerceConstsTo
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

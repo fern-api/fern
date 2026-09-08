@@ -28,6 +28,10 @@ interface ImportAnalysis {
 }
 
 export class SubClientGenerator {
+    // Appended to a paginated endpoint's method name so the pager sits ALONGSIDE the single-page
+    // method instead of replacing it.
+    private static readonly PAGINATED_METHOD_SUFFIX = "_paginated";
+
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: FernIr.Subpackage;
     private readonly service?: FernIr.HttpService;
@@ -317,6 +321,16 @@ export class SubClientGenerator {
                 new UseStatement({
                     path: "crate::api",
                     items: ["*"]
+                })
+            );
+        }
+
+        // Add pagination imports if there are paginated endpoints
+        if (this.hasPaginatedEndpoints()) {
+            imports.push(
+                new UseStatement({
+                    path: "crate",
+                    items: ["AsyncPaginator", "PaginationResult"]
                 })
             );
         }
@@ -852,7 +866,13 @@ export class SubClientGenerator {
         const methods: rust.Client.SimpleMethod[] = [];
 
         for (const endpoint of endpoints) {
+            // The single-page method is generated for every endpoint, paginated or not: it is the
+            // one that carries the endpoint's own response type, and a caller who wants one page
+            // should not have to go through a paginator to get it.
             methods.push(this.generateHttpMethod(endpoint));
+            if (endpoint.pagination) {
+                methods.push(...this.generatePaginatedMethods(endpoint));
+            }
         }
 
         return methods;
@@ -918,11 +938,19 @@ export class SubClientGenerator {
             const bytesBody = endpoint.queryParameters.length > 0
                 ? "Some(request.body.to_vec())"
                 : "Some(request.to_vec())";
+            // The declared media type, which the IR carries on the bytes body. The
+            // `application/octet-stream` fallback is load-bearing rather than defensive: an
+            // endpoint that declares no content-type has always sent that, and must keep sending it.
+            const bytesContentType =
+                endpoint.requestBody?.type === "bytes"
+                    ? (endpoint.requestBody.contentType ?? "application/octet-stream")
+                    : "application/octet-stream";
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
+            ${JSON.stringify(bytesContentType)},
             options,`;
         } else {
             executeArgs = `
@@ -1601,19 +1629,9 @@ export class SubClientGenerator {
                             /* no-op */
                         }
                     });
-                    if (offset.step) {
-                        offset.step.property._visit({
-                            query: (query) => {
-                                paginationParamNames.add(getWireValue(query.name));
-                            },
-                            body: (body) => {
-                                paginationParamNames.add(getWireValue(body.name));
-                            },
-                            _other: () => {
-                                /* no-op */
-                            }
-                        });
-                    }
+                    // `offset.step` is deliberately NOT excluded. It is the page size, which is
+                    // the same on every page, so every page request has to carry it - only the
+                    // offset itself is rewritten per page.
                 },
                 custom: () => {
                     /* no-op */
@@ -2031,7 +2049,7 @@ export class SubClientGenerator {
 
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
-        const baseName = this.context.case.snakeSafe(endpoint.name);
+        const baseName = `${this.context.case.snakeSafe(endpoint.name)}${SubClientGenerator.PAGINATED_METHOD_SUFFIX}`;
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -2055,11 +2073,31 @@ export class SubClientGenerator {
 
         return {
             name: baseName,
-            parameters,
+            parameters: this.underscoreParametersUnusedByPagination(parameters, params, paginationLogic),
             returnType: returnType.toString(),
             isAsync: true,
             body: paginationLogic
         };
+    }
+
+    /**
+     * An endpoint whose every query parameter IS a pagination parameter has nothing left to put in
+     * the base query string, so the paginated method never reads its request. The parameter stays
+     * in the signature - the paginated and single-page methods should be called the same way - and
+     * gets an underscore so the generated crate compiles warning-free.
+     */
+    private underscoreParametersUnusedByPagination(
+        parameters: string[],
+        params: EndpointParameter[],
+        body: string
+    ): string[] {
+        const unused = new Set(
+            params.filter((param) => !new RegExp(`\\b${param.name}\\b`).test(body)).map((param) => param.name)
+        );
+        return parameters.map((parameter) => {
+            const name = parameter.split(":")[0]?.trim();
+            return name != null && unused.has(name) ? `_${parameter}` : parameter;
+        });
     }
 
     private generatePaginationLogic(
@@ -2096,11 +2134,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParametersWithoutPagination(endpoint, FernIr.Pagination.cursor(cursor));
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         // Extract the cursor parameter name from the pagination configuration
         const cursorParamName = this.getCursorParamName(cursor);
@@ -2121,13 +2158,13 @@ export class SubClientGenerator {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -2160,11 +2197,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParametersWithoutPagination(endpoint, FernIr.Pagination.offset(offset));
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         const pageProperty = offset.page?.property?.name;
         const pageParamName = pageProperty != null ? getWireValue(pageProperty) : "page";
@@ -2182,17 +2218,17 @@ export class SubClientGenerator {
                     // Use page_token as offset/page number (start from 0 if None)
                     let current_page = page_token.unwrap_or_else(|| "0".to_string());
                     query_params.push(("${pageParamName}".to_string(), current_page.clone()));
-                    
+                    ${this.generatePageSizeCapture(offset)}
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             Some(query_params),
                             options_for_request,
                         ).await?;
@@ -2225,11 +2261,10 @@ export class SubClientGenerator {
         const queryParams = this.buildQueryParameters(endpoint);
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate cloning statements for reference parameters to avoid lifetime issues
-        const cloningStatements = params
-            .filter((param) => param.isRef)
-            .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
-            .join("\n            ");
+        const asyncPath = this.buildPathExpressionForAsyncMove(pathExpression, params);
+        const asyncBody = this.buildRequestBodyForAsyncMove(requestBody, params);
+        const captured = params.filter((param) => this.isCapturedInAsyncMove(param, asyncPath, asyncBody));
+        const cloningStatements = this.generateCapturedVariableOwnership(captured);
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -2238,19 +2273,19 @@ export class SubClientGenerator {
             
             AsyncPaginator::new(
                 http_client,
-                move |client, cursor_value| {
+                move |client, _cursor_value| {
                     let query_params = base_query_params.clone();
                     let options_for_request = options_clone.clone();
                     // Custom pagination logic would go here
                     
                     // Clone captured variables to move into the async block
-                    ${this.generateCapturedVariableCloningForAsyncMove(params)}
+                    ${this.generateCapturedVariableCloningForAsyncMove(captured)}
                     
                     Box::pin(async move {
                         let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
-                            ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
-                            ${this.buildRequestBodyForAsyncMove(requestBody, params)},
+                            ${asyncPath},
+                            ${asyncBody},
                             query_params,
                             options_for_request,
                         ).await?;
@@ -2277,6 +2312,35 @@ export class SubClientGenerator {
     // PAGINATION UTILITIES
     // =============================================================================
 
+    /**
+     * A query-only endpoint serializes nothing into the paginated request, so its `request`
+     * parameter would be captured and never read. Only capture what the rewritten path or body
+     * actually names.
+     */
+    private isCapturedInAsyncMove(param: EndpointParameter, asyncPath: string, asyncBody: string): boolean {
+        if (!param.isRef) {
+            return false;
+        }
+        return `${asyncPath} ${asyncBody}`.includes(`${param.name}_for_async`);
+    }
+
+    /**
+     * The paginator's page loader is an `Fn` closure that outlives the method call, so every
+     * reference parameter has to be captured as an OWNED value. `.clone()` on a `&str` clones the
+     * reference and leaves the borrow escaping, which is why a string reference takes
+     * `to_string()` instead.
+     */
+    private generateCapturedVariableOwnership(params: EndpointParameter[]): string {
+        return params
+            .filter((param) => param.isRef)
+            .map((param) => {
+                const isStringSlice = ["String", "&String", "&str", "str"].includes(param.type.toString());
+                const takeOwnership = isStringSlice ? "to_string()" : "clone()";
+                return `let ${param.name}_clone = ${param.name}.${takeOwnership};`;
+            })
+            .join("\n            ");
+    }
+
     private generateCapturedVariableCloningForAsyncMove(params: EndpointParameter[]): string {
         // Generate cloning statements for each captured variable inside the closure
         const cloningStatements = params
@@ -2296,7 +2360,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
             });
 
         return result;
@@ -2311,7 +2375,7 @@ export class SubClientGenerator {
             .forEach((param) => {
                 const originalRef = param.name;
                 const asyncRef = `${param.name}_for_async`;
-                result = result.replace(new RegExp(`\\\\b${originalRef}\\\\b`, "g"), asyncRef);
+                result = result.replace(new RegExp(`\\b${originalRef}\\b`, "g"), asyncRef);
             });
 
         return result;
@@ -2358,12 +2422,17 @@ export class SubClientGenerator {
     private generateGenericOffsetExtraction(offset: FernIr.OffsetPagination, isInPaginationLoop: boolean = false): string {
         const resultsPath = this.buildResponseFieldPath(offset.results);
         const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
-        const stepParamName = this.getStepParamName(offset);
 
-        // For hasNextPage path, it's already properly formatted with and_then chains
+        // A full page means there may be more; a SHORT page is the last one. Terminating only on an
+        // EMPTY page costs one wasted request at best, and never terminates at all against a server
+        // that keeps answering - which is what `!items.is_empty()` alone did.
+        const moreToCome =
+            offset.step != null
+                ? "match page_size { Some(size) => items.len() as i64 >= size, None => !items.is_empty() }"
+                : "!items.is_empty()";
         const hasNextPageCheck = hasNextPath
-            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(!items.is_empty())`
-            : "!items.is_empty()";
+            ? `response${hasNextPath}.and_then(|v| v.as_bool()).unwrap_or(${moreToCome})`
+            : moreToCome;
 
         if (isInPaginationLoop) {
             return `// Generic field extraction for offset pagination
@@ -2374,15 +2443,9 @@ export class SubClientGenerator {
                             .unwrap_or_default();
                         
                         let has_next_page = ${hasNextPageCheck};
-                        // Calculate next page number for offset pagination
                         let next_cursor: Option<String> = if has_next_page {
-                            let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                            let step_size = if let Some(step) = response.get("${stepParamName}") {
-                                step.as_u64().unwrap_or(1)
-                            } else {
-                                1 // Default step size
-                            };
-                            Some((current_page_num + step_size).to_string())
+                            let current_offset: i64 = current_page.parse().unwrap_or(0);
+                            Some((current_offset + ${this.getOffsetAdvance(offset)}).to_string())
                         } else {
                             None
                         };`;
@@ -2470,16 +2533,35 @@ export class SubClientGenerator {
         });
     }
 
-    private getStepParamName(offset: FernIr.OffsetPagination): string {
-        // Extract step parameter name from pagination configuration
-        if (offset.step) {
-            return offset.step.property._visit({
-                query: (query) => getWireValue(query.name),
-                body: (body) => getWireValue(body.name),
-                _other: () => "step"
-            });
+    /**
+     * The page size the caller asked for, read out of the query string the loader is about to send.
+     * Only emitted when `step` is declared, since that is the only case the termination test uses it.
+     */
+    private generatePageSizeCapture(offset: FernIr.OffsetPagination): string {
+        if (offset.step == null) {
+            return "";
         }
-        return "per_page"; // Default fallback
+        const stepParamName = offset.step.property._visit({
+            query: (query) => getWireValue(query.name),
+            body: (body) => getWireValue(body.name),
+            _other: () => "limit"
+        });
+        return `let page_size: Option<i64> = query_params
+                        .iter()
+                        .find(|(name, _)| name == "${stepParamName}")
+                        .and_then(|(_, value)| value.parse::<i64>().ok());
+                    `;
+    }
+
+    /**
+     * How much an offset advances between pages. With `step` declared and the default
+     * `offsetSemantics: "item-index"` the offset addresses ITEMS, so it moves by however many the
+     * page returned; under `"page-index"`, or with no `step` at all, it is a page number and moves
+     * by one. This matches the TypeScript and Python generators.
+     */
+    private getOffsetAdvance(offset: FernIr.OffsetPagination): string {
+        const isItemIndex = this.context.customConfig.offsetSemantics !== "page-index";
+        return offset.step != null && isItemIndex ? "items.len() as i64" : "1";
     }
 
     // Helper methods for documentation generation
