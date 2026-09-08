@@ -799,7 +799,10 @@ const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set(Object.keys(SDK_CONFIG_IMPORT_SET
 const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
 
 /** Rejects effective Fern import behavior that the downstream SDK Config contract cannot carry. */
-export function validateSdkConfigImportSettings(specs: Spec[]): void {
+export function validateSdkConfigImportSettings(
+    specs: Spec[],
+    sdkConfig: { clientPathParameterStyle?: "inline" | "wrapped" | "language-default" } = {}
+): void {
     for (const spec of specs) {
         if (spec.type !== "openapi") {
             continue;
@@ -810,6 +813,8 @@ export function validateSdkConfigImportSettings(specs: Spec[]): void {
             // Mapper membership means the setting's full value domain is preserved downstream.
             if (
                 SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
+                (key === "inlinePathParameters" &&
+                    sdkConfig.clientPathParameterStyle === (value === true ? "inline" : "wrapped")) ||
                 (key === "audiences" && Array.isArray(value) && value.length === 0) ||
                 isDeepStrictEqual(value, Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))
             ) {

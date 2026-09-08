@@ -16,9 +16,11 @@ import { appendFile } from "fs/promises";
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import {
+    type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
     formatGeneratorConfigCompatibilityError,
+    getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     selectFernSdkGenApiRoute,
     validateFernSdkGenApiTargetCount
@@ -80,6 +82,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     occurrenceTracker,
     loginCommand,
     getSpecsTarGzBuffer,
+    sdkConfigV1,
     generateFullProject
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -144,6 +147,8 @@ export async function runRemoteGenerationForAPIWorkspace({
      */
     loginCommand?: string;
     getSpecsTarGzBuffer?: (requests: FernSourceArchiveRequest[]) => Promise<FernSourceArchiveResolution>;
+    /** Validated SDK Config v1 supplied explicitly by the CLI for this API generation. */
+    sdkConfigV1?: FernSdkConfigV1Payload;
     /**
      * When true, filesystem (local-file-system / download) outputs are generated as full,
      * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
@@ -172,6 +177,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     const routePreparation = prepareFernSdkGenApiRoutes({
         generators: generatorGroup.generators,
         enabled: isFernSdkGenApiEnabled(),
+        sdkConfigV1,
         requireEnvVars,
         isPreview: isPreview ?? absolutePathToPreview != null,
         verify,
@@ -264,6 +270,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     specsTarGzArchive: sourceArchives[generatorIndex],
                     sdkGenApiPreflightError: preflightErrors[generatorIndex],
                     sdkGenApiRoute: sdkGenApiRoutes[generatorIndex],
+                    sdkConfigV1,
                     sdkGenApiPreparationBatch: sdkGenApiCandidateIndexes.has(generatorIndex)
                         ? sdkGenApiPreparationBatch
                         : undefined,
@@ -291,6 +298,7 @@ export async function runRemoteGenerationForAPIWorkspace({
 export function prepareFernSdkGenApiRoutes({
     generators,
     enabled,
+    sdkConfigV1,
     requireEnvVars,
     isPreview,
     verify,
@@ -299,6 +307,7 @@ export function prepareFernSdkGenApiRoutes({
 }: {
     generators: generatorsYml.GeneratorInvocation[];
     enabled: boolean;
+    sdkConfigV1?: FernSdkConfigV1Payload;
     requireEnvVars: boolean;
     isPreview: boolean;
     verify?: boolean;
@@ -323,10 +332,24 @@ export function prepareFernSdkGenApiRoutes({
                 },
                 { substituteAsEmpty: isPreview }
             );
-            const route = selectFernSdkGenApiRoute(resolved);
+            const configuredLanguage = getFernSdkGenApiLanguage(resolved.name);
+            const configuredTarget =
+                configuredLanguage == null
+                    ? undefined
+                    : sdkConfigV1?.targets.find((target) => target.language === configuredLanguage);
+            if (sdkConfigV1 != null && configuredTarget == null) {
+                throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage ?? resolved.name}`);
+            }
+            if (configuredTarget?.generatorVersion != null) {
+                resolved = { ...resolved, version: configuredTarget.generatorVersion };
+            }
             if (!enabled) {
+                if (sdkConfigV1 != null) {
+                    throw new Error("SDK Config v1 generation requires the sdk-gen-api generation backend");
+                }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
+            const route = selectFernSdkGenApiRoute(resolved, sdkConfigV1 == null ? "legacy-fern" : "sdk-config-v1");
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
                 verify,
@@ -347,13 +370,6 @@ export function prepareFernSdkGenApiRoutes({
                 error: undefined
             };
         } catch (error) {
-            if (
-                !enabled &&
-                error instanceof GeneratorConfigCompatibilityError &&
-                error.code === "INVALID_GENERATOR_VERSION"
-            ) {
-                return { generatorInvocation: resolved, route: undefined, error: undefined };
-            }
             const routeError =
                 error instanceof GeneratorConfigCompatibilityError
                     ? new CliError({
@@ -487,6 +503,7 @@ async function generateOne({
     specsTarGzArchive,
     sdkGenApiPreflightError,
     sdkGenApiRoute,
+    sdkConfigV1,
     sdkGenApiPreparationBatch,
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
@@ -530,6 +547,7 @@ async function generateOne({
     specsTarGzArchive: FernSdkGenApiSourceArchive | undefined;
     sdkGenApiPreflightError: unknown;
     sdkGenApiRoute: GenerationConfigRoute | undefined;
+    sdkConfigV1: FernSdkConfigV1Payload | undefined;
     sdkGenApiPreparationBatch: FernSdkGenApiPreparationBatch | undefined;
     sdkGenApiBatch: FernSdkGenApiBatch | undefined;
     sdkGenApiTargetIdSeed: string;
@@ -598,7 +616,12 @@ async function generateOne({
                 })
             },
             version,
-            audiences: generatorGroup.audiences,
+            audiences:
+                sdkConfigV1 == null
+                    ? generatorGroup.audiences
+                    : sdkConfigV1.audiences == null
+                      ? { type: "all" }
+                      : { type: "select", audiences: sdkConfigV1.audiences },
             shouldLogS3Url,
             token,
             whitelabel,
@@ -624,6 +647,7 @@ async function generateOne({
             specsTarGzBuffer: specsTarGzArchive?.buffer,
             sdkGenApiSourceArchive: specsTarGzArchive,
             sdkGenApiRoute,
+            sdkConfigV1,
             sdkGenApiPreparationBatch,
             sdkGenApiBatch,
             sdkGenApiTargetIdSeed,

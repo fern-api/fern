@@ -1,4 +1,5 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
+export type { FernSdkConfigV1Payload } from "./fernSdkGenApi.js";
 export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,

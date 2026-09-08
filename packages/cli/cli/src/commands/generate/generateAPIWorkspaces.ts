@@ -3,7 +3,11 @@ import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import type { AutomationRunOptions } from "@fern-api/remote-workspace-runner";
+import {
+    type AutomationRunOptions,
+    type FernSdkConfigV1Payload,
+    getFernSdkGenApiLanguage
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -12,6 +16,7 @@ import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
+import { loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
@@ -39,6 +44,7 @@ export async function generateAPIWorkspaces({
     runner,
     inspect,
     lfsOverride,
+    sdkConfigPath,
     fernignorePath,
     skipFernignore,
     dynamicIrOnly,
@@ -73,6 +79,7 @@ export async function generateAPIWorkspaces({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    sdkConfigPath?: string;
     fernignorePath: string | undefined;
     skipFernignore: boolean;
     dynamicIrOnly: boolean;
@@ -97,6 +104,24 @@ export async function generateAPIWorkspaces({
     packOnly?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
+    let sdkConfigV1: FernSdkConfigV1Payload | undefined;
+
+    if (sdkConfigPath != null) {
+        if (useLocalDocker) {
+            return cliContext.failAndThrow(
+                "SDK Config v1 generation is only supported with remote sdk-gen-api generation",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        try {
+            const loaded = await loadSdkConfigV1(sdkConfigPath);
+            sdkConfigV1 = loaded.payload;
+            cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
+        } catch (error) {
+            return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
+        }
+    }
 
     if (!useLocalDocker) {
         const currentToken = await cliContext.runTask(async (context) => {
@@ -146,9 +171,22 @@ export async function generateAPIWorkspaces({
     const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
         project,
         groupNames,
+        sdkConfigV1,
         automation,
         cliContext
     });
+    if (sdkConfigV1 != null) {
+        const selectedWorkspaces = [...resolvedGroupNamesByWorkspace.entries()].filter(
+            ([, resolvedGroups]) => resolvedGroups.length > 0
+        );
+        if (selectedWorkspaces.length !== 1) {
+            return cliContext.failAndThrow(
+                `SDK Config v1 must resolve to exactly one API workspace; resolved ${selectedWorkspaces.length}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+    }
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -185,6 +223,7 @@ export async function generateAPIWorkspaces({
                     runner,
                     inspect,
                     lfsOverride,
+                    sdkConfigV1,
                     fernignorePath,
                     skipFernignore,
                     dynamicIrOnly,
@@ -218,11 +257,13 @@ export async function generateAPIWorkspaces({
 async function resolveGroupsForAllWorkspaces({
     project,
     groupNames,
+    sdkConfigV1,
     automation,
     cliContext
 }: {
     project: Project;
     groupNames: string[] | undefined;
+    sdkConfigV1: FernSdkConfigV1Payload | undefined;
     automation: AutomationRunOptions | undefined;
     cliContext: CliContext;
 }): Promise<Map<AbstractAPIWorkspace<unknown>, string[]>> {
@@ -230,6 +271,11 @@ async function resolveGroupsForAllWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (sdkConfigV1 != null && (groupNames == null || groupNames.length === 0)) {
+                    const resolved = resolveGroupsForSdkConfig({ workspace, sdkConfigV1, context });
+                    resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                    return;
+                }
                 const resolved = resolveGroupsForWorkspace({
                     workspace,
                     groupNames,
@@ -243,6 +289,88 @@ async function resolveGroupsForAllWorkspaces({
         })
     );
     return resolvedGroupNamesByWorkspace;
+}
+
+export function resolveGroupsForSdkConfig({
+    workspace,
+    sdkConfigV1,
+    context
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+    sdkConfigV1: FernSdkConfigV1Payload;
+    context: Parameters<typeof resolveGroupsForWorkspace>[0]["context"];
+}): string[] {
+    const generatorsConfiguration = workspace.generatorsConfiguration;
+    if (generatorsConfiguration == null) {
+        return context.failAndThrow(
+            "SDK Config v1 generation requires generators.yml to load the Fern API workspace",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+
+    const requestedTargets = new Map(sdkConfigV1.targets.map((target) => [target.language, target]));
+    const requestedLanguages = new Set(requestedTargets.keys());
+    const candidates = generatorsConfiguration.groups.flatMap((group) => {
+        const languages = group.generators.flatMap((generator) => {
+            const language = getFernSdkGenApiLanguage(generator.name);
+            if (language == null) {
+                return [];
+            }
+            const target = requestedTargets.get(language);
+            if (target == null || (target.generatorVersion != null && target.generatorVersion !== generator.version)) {
+                return [];
+            }
+            return [language];
+        });
+        if (
+            languages.length === 0 ||
+            languages.length !== group.generators.length ||
+            languages.some((language) => !requestedLanguages.has(language))
+        ) {
+            return [];
+        }
+        return [{ groupName: group.groupName, languages: new Set(languages) }];
+    });
+    const uncovered = new Set(requestedLanguages);
+    const selected: string[] = [];
+
+    while (uncovered.size > 0) {
+        const candidate = candidates
+            .filter(({ groupName, languages }) => {
+                return (
+                    !selected.includes(groupName) &&
+                    [...languages].every((language) => uncovered.has(language)) &&
+                    [...languages].some((language) => uncovered.has(language))
+                );
+            })
+            .sort((left, right) => {
+                const coverage = right.languages.size - left.languages.size;
+                if (coverage !== 0) {
+                    return coverage;
+                }
+                if (left.groupName === generatorsConfiguration.defaultGroup) {
+                    return -1;
+                }
+                if (right.groupName === generatorsConfiguration.defaultGroup) {
+                    return 1;
+                }
+                return 0;
+            })[0];
+        if (candidate == null) {
+            return context.failAndThrow(
+                `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        selected.push(candidate.groupName);
+        for (const language of candidate.languages) {
+            uncovered.delete(language);
+        }
+    }
+
+    return selected;
 }
 
 /**
