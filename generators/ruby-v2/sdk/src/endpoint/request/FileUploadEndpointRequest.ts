@@ -1,4 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -9,6 +10,26 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+
+export function renderFileUploadStatement({
+    property,
+    paramName
+}: {
+    property: FernIr.FileProperty;
+    paramName: string;
+}): string {
+    const wireName = getWireValue(property.key);
+    const contentTypeArg =
+        property.contentType != null ? `, content_type: ${JSON.stringify(property.contentType)}` : "";
+    switch (property.type) {
+        case "file":
+            return `body.add_file(name: "${wireName}", file: params[:${paramName}]${contentTypeArg}) if params[:${paramName}]`;
+        case "fileArray":
+            return `params[:${paramName}]&.each { |file| body.add_file(name: "${wireName}", file: file${contentTypeArg}) }`;
+        default:
+            assertNever(property);
+    }
+}
 
 export class FileUploadEndpointRequest extends EndpointRequest {
     private fileUploadRequest: FernIr.FileUploadRequest;
@@ -41,21 +62,10 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.newLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    const snakeCaseName = this.case.snakeSafe(property.value.key);
-                    writer.writeNode(
-                        ruby.ifElse({
-                            if: {
-                                condition: ruby.codeblock((writer) => {
-                                    writer.write(`params[:${snakeCaseName}]`);
-                                }),
-                                thenBody: [
-                                    ruby.codeblock((writer) => {
-                                        writer.writeLine(
-                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${getWireValue(property.value.key)}"))`
-                                        );
-                                    })
-                                ]
-                            }
+                    writer.writeLine(
+                        renderFileUploadStatement({
+                            property: property.value,
+                            paramName: this.case.snakeSafe(property.value.key)
                         })
                     );
                 } else {

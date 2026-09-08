@@ -1,0 +1,5 @@
+- summary: |
+    Fix file upload endpoints crashing with `NoMethodError`. Generated multipart code now
+    calls `FormData#add_file` instead of the non-existent `to_form_data_part`, file arrays
+    add one part per file, and declared MIME types are forwarded as `content_type:`.
+  type: fix

@@ -32,7 +32,7 @@ module Seed
             value: params[:request]
           )
         end
-        body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
+        body.add_file(name: "image_file", file: params[:image_file]) if params[:image_file]
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
