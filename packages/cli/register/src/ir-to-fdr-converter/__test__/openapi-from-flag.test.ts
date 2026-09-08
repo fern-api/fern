@@ -1057,12 +1057,12 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         const bearerScheme = intermediateRepresentation.auth.schemes.find((scheme) => scheme.key === "bearerAuth");
         expect(bearerScheme?.docs).toBe("Bearer token issued to a specific user.");
-        expect(bearerScheme?.playgroundDocs).toBe("To mint a token, go to https://example.com/developers/apps\n");
+        expect(bearerScheme?.playgroundDocs).toBe("To mint a token, go to https://example.com/developers/apps");
 
         expect(fdrApiDefinition.auth).toMatchObject({
             type: "bearerAuth",
             description: "Bearer token issued to a specific user.",
-            playgroundDescription: "To mint a token, go to https://example.com/developers/apps\n"
+            playgroundDescription: "To mint a token, go to https://example.com/developers/apps"
         });
     });
 

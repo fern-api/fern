@@ -28,5 +28,5 @@ components:
       type: http
       scheme: bearer
       description: Bearer token issued to a specific user.
-      x-fern-playground-description: |
+      x-fern-playground-description: |-
         To mint a token, go to https://example.com/developers/apps
