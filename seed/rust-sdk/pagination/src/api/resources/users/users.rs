@@ -868,6 +868,10 @@ impl UsersClient {
                 // Use page_token as offset/page number (start from 0 if None)
                 let current_page = page_token.unwrap_or_else(|| "0".to_string());
                 query_params.push(("page".to_string(), current_page.clone()));
+                let page_size: Option<i64> = query_params
+                    .iter()
+                    .find(|(name, _)| name == "limit")
+                    .and_then(|(_, value)| value.parse::<i64>().ok());
 
                 let options_for_request = options_clone.clone();
 
@@ -893,7 +897,10 @@ impl UsersClient {
                         .map(|arr| arr.clone())
                         .unwrap_or_default();
 
-                    let has_next_page = !items.is_empty();
+                    let has_next_page = match page_size {
+                        Some(size) => items.len() as i64 >= size,
+                        None => !items.is_empty(),
+                    };
                     let next_cursor: Option<String> = if has_next_page {
                         let current_offset: i64 = current_page.parse().unwrap_or(0);
                         Some((current_offset + items.len() as i64).to_string())
@@ -982,6 +989,10 @@ impl UsersClient {
                 // Use page_token as offset/page number (start from 0 if None)
                 let current_page = page_token.unwrap_or_else(|| "0".to_string());
                 query_params.push(("page".to_string(), current_page.clone()));
+                let page_size: Option<i64> = query_params
+                    .iter()
+                    .find(|(name, _)| name == "limit")
+                    .and_then(|(_, value)| value.parse::<i64>().ok());
 
                 let options_for_request = options_clone.clone();
 
@@ -1010,7 +1021,10 @@ impl UsersClient {
                     let has_next_page = response
                         .get("hasNextPage")
                         .and_then(|v| v.as_bool())
-                        .unwrap_or(!items.is_empty());
+                        .unwrap_or(match page_size {
+                            Some(size) => items.len() as i64 >= size,
+                            None => !items.is_empty(),
+                        });
                     let next_cursor: Option<String> = if has_next_page {
                         let current_offset: i64 = current_page.parse().unwrap_or(0);
                         Some((current_offset + items.len() as i64).to_string())
