@@ -830,6 +830,46 @@ mod tests {
     use super::*;
     use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use serial_test::serial;
+
+    /// Sets env vars for the duration of a test and restores their prior
+    /// values on drop — including when an assertion panics part-way, which
+    /// trailing `remove_var` calls do not. Mirrors `TempFileGuard` in
+    /// `oauth_common.rs`. Pair with `#[serial]`: this restores state, it
+    /// does not serialize access to it.
+    struct EnvVarGuard {
+        saved: Vec<(String, Option<std::ffi::OsString>)>,
+    }
+
+    impl EnvVarGuard {
+        fn set<'a>(vars: impl IntoIterator<Item = (&'a str, &'a str)>) -> Self {
+            let saved = vars
+                .into_iter()
+                .map(|(key, value)| {
+                    let prior = std::env::var_os(key);
+                    std::env::set_var(key, value);
+                    (key.to_string(), prior)
+                })
+                .collect();
+            Self { saved }
+        }
+
+        /// Unset one of the guarded vars mid-test. The prior value is still
+        /// restored on drop.
+        fn unset(&self, key: &str) {
+            std::env::remove_var(key);
+        }
+    }
+
+    impl Drop for EnvVarGuard {
+        fn drop(&mut self) {
+            for (key, prior) in &self.saved {
+                match prior {
+                    Some(value) => std::env::set_var(key, value),
+                    None => std::env::remove_var(key),
+                }
+            }
+        }
+    }
     use std::sync::Arc;
 
     #[test]
@@ -1083,12 +1123,15 @@ mod tests {
         );
     }
 
+
     #[test]
     #[serial]
     fn status_reports_oauth2_client_credentials_env_vars() {
         use crate::auth::root_builder::{AuthSchemeBuilder, OAuth2Auth};
-        std::env::set_var("STATUS_TEST_OAUTH_CLIENT_ID", "id");
-        std::env::set_var("STATUS_TEST_OAUTH_CLIENT_SECRET", "secret");
+        let env = EnvVarGuard::set([
+            ("STATUS_TEST_OAUTH_CLIENT_ID", "id"),
+            ("STATUS_TEST_OAUTH_CLIENT_SECRET", "secret"),
+        ]);
         let (name, binding) = OAuth2Auth::new("oAuth2ClientCredentials")
             .token_url("https://example.com/oauth/token")
             .client_id_env("STATUS_TEST_OAUTH_CLIENT_ID")
@@ -1105,10 +1148,10 @@ mod tests {
             .collect();
         assert_eq!(states, ["active", "active"]);
 
-        std::env::remove_var("STATUS_TEST_OAUTH_CLIENT_SECRET");
+        env.unset("STATUS_TEST_OAUTH_CLIENT_SECRET");
         let entry = status_entry_for("my-cli", &name, &binding, &[]);
         assert_eq!(entry["logged_in"], false);
-        std::env::remove_var("STATUS_TEST_OAUTH_CLIENT_ID");
+        // `env` restores both vars on drop, panic or not.
     }
 
     #[test]
