@@ -1621,19 +1621,9 @@ export class SubClientGenerator {
                             /* no-op */
                         }
                     });
-                    if (offset.step) {
-                        offset.step.property._visit({
-                            query: (query) => {
-                                paginationParamNames.add(getWireValue(query.name));
-                            },
-                            body: (body) => {
-                                paginationParamNames.add(getWireValue(body.name));
-                            },
-                            _other: () => {
-                                /* no-op */
-                            }
-                        });
-                    }
+                    // `offset.step` is deliberately NOT excluded. It is the page size, which is
+                    // the same on every page, so every page request has to carry it - only the
+                    // offset itself is rewritten per page.
                 },
                 custom: () => {
                     /* no-op */
@@ -2424,7 +2414,6 @@ export class SubClientGenerator {
     private generateGenericOffsetExtraction(offset: FernIr.OffsetPagination, isInPaginationLoop: boolean = false): string {
         const resultsPath = this.buildResponseFieldPath(offset.results);
         const hasNextPath = offset.hasNextPage ? this.buildResponseFieldPath(offset.hasNextPage) : null;
-        const stepParamName = this.getStepParamName(offset);
 
         // For hasNextPage path, it's already properly formatted with and_then chains
         const hasNextPageCheck = hasNextPath
@@ -2440,15 +2429,9 @@ export class SubClientGenerator {
                             .unwrap_or_default();
                         
                         let has_next_page = ${hasNextPageCheck};
-                        // Calculate next page number for offset pagination
                         let next_cursor: Option<String> = if has_next_page {
-                            let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                            let step_size = if let Some(step) = response.get("${stepParamName}") {
-                                step.as_u64().unwrap_or(1)
-                            } else {
-                                1 // Default step size
-                            };
-                            Some((current_page_num + step_size).to_string())
+                            let current_offset: i64 = current_page.parse().unwrap_or(0);
+                            Some((current_offset + ${this.getOffsetAdvance(offset)}).to_string())
                         } else {
                             None
                         };`;
@@ -2536,16 +2519,15 @@ export class SubClientGenerator {
         });
     }
 
-    private getStepParamName(offset: FernIr.OffsetPagination): string {
-        // Extract step parameter name from pagination configuration
-        if (offset.step) {
-            return offset.step.property._visit({
-                query: (query) => getWireValue(query.name),
-                body: (body) => getWireValue(body.name),
-                _other: () => "step"
-            });
-        }
-        return "per_page"; // Default fallback
+    /**
+     * How much an offset advances between pages. With `step` declared and the default
+     * `offsetSemantics: "item-index"` the offset addresses ITEMS, so it moves by however many the
+     * page returned; under `"page-index"`, or with no `step` at all, it is a page number and moves
+     * by one. This matches the TypeScript and Python generators.
+     */
+    private getOffsetAdvance(offset: FernIr.OffsetPagination): string {
+        const isItemIndex = this.context.customConfig.offsetSemantics !== "page-index";
+        return offset.step != null && isItemIndex ? "items.len() as i64" : "1";
     }
 
     // Helper methods for documentation generation

@@ -554,15 +554,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("per_page") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + 1).to_string())
                     } else {
                         None
                     };
@@ -677,15 +671,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("per_page") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + 1).to_string())
                     } else {
                         None
                     };
@@ -792,15 +780,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("per_page") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + 1).to_string())
                     } else {
                         None
                     };
@@ -872,6 +854,7 @@ impl UsersClient {
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
         let base_query_params = QueryBuilder::new()
+            .int("limit", request.limit.clone())
             .serialize("order", request.order.clone())
             .build();
         let options_clone = options.clone();
@@ -911,15 +894,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("limit") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + items.len() as i64).to_string())
                     } else {
                         None
                     };
@@ -991,6 +968,7 @@ impl UsersClient {
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
         let base_query_params = QueryBuilder::new()
+            .int("limit", request.limit.clone())
             .serialize("order", request.order.clone())
             .build();
         let options_clone = options.clone();
@@ -1033,15 +1011,9 @@ impl UsersClient {
                         .get("hasNextPage")
                         .and_then(|v| v.as_bool())
                         .unwrap_or(!items.is_empty());
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("limit") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + items.len() as i64).to_string())
                     } else {
                         None
                     };
@@ -1564,15 +1536,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("per_page") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + 1).to_string())
                     } else {
                         None
                     };
@@ -1677,15 +1643,9 @@ impl UsersClient {
                         .unwrap_or_default();
 
                     let has_next_page = !items.is_empty();
-                    // Calculate next page number for offset pagination
                     let next_cursor: Option<String> = if has_next_page {
-                        let current_page_num: u64 = current_page.parse().unwrap_or(0);
-                        let step_size = if let Some(step) = response.get("per_page") {
-                            step.as_u64().unwrap_or(1)
-                        } else {
-                            1 // Default step size
-                        };
-                        Some((current_page_num + step_size).to_string())
+                        let current_offset: i64 = current_page.parse().unwrap_or(0);
+                        Some((current_offset + 1).to_string())
                     } else {
                         None
                     };
