@@ -906,6 +906,7 @@ async function convertOutputMode({
                       githubLicense: licenseSchema
                   })
                 : undefined;
+        const workflows = generator.github.workflows ?? true;
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
@@ -919,7 +920,8 @@ async function convertOutputMode({
                     branch: releaseConfig.branch,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
@@ -940,7 +942,8 @@ async function convertOutputMode({
                     publishInfo,
                     downloadSnippets,
                     reviewers,
-                    branch: pullRequestConfig.branch
+                    branch: pullRequestConfig.branch,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
@@ -952,7 +955,8 @@ async function convertOutputMode({
                     branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
             }

@@ -134,6 +134,12 @@ export interface GithubStepConfig {
     versionBump?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
+    /**
+     * Whether generated `.github/workflows/*` files are delivered. Defaults to true. When false,
+     * newly generated workflow files are dropped and tracked ones are restored from HEAD before
+     * any commit, so the delivery never touches workflow files (no `workflows` permission needed).
+     */
+    workflows?: boolean;
     /** Generator name for namespaced fern-generation-base tag */
     generatorName?: string;
     /** Explicit override: whether replay already created commits (derived from replay context if omitted) */
