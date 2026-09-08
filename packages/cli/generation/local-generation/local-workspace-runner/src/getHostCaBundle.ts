@@ -1,4 +1,4 @@
-import { existsSync, statSync } from "fs";
+import { statSync } from "fs";
 import path from "path";
 import { CONTAINER_FERN_DIRECTORY } from "./constants.js";
 
@@ -40,7 +40,7 @@ export function getHostCaBundles(env: NodeJS.ProcessEnv = process.env): HostCaBu
             continue;
         }
         const hostPath = path.resolve(value);
-        if (!existsSync(hostPath) || !statSync(hostPath).isFile()) {
+        if (!isReadableFile(hostPath)) {
             continue;
         }
         let containerPath = containerPathByHostPath.get(hostPath);
@@ -51,6 +51,14 @@ export function getHostCaBundles(env: NodeJS.ProcessEnv = process.env): HostCaBu
         bundles.push({ envVar, hostPath, containerPath });
     }
     return bundles;
+}
+
+function isReadableFile(filePath: string): boolean {
+    try {
+        return statSync(filePath).isFile();
+    } catch {
+        return false;
+    }
 }
 
 /** Read-only bind mounts (`host:container:ro`), one per distinct host file. */
