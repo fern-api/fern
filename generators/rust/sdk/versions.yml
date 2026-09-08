@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.0
+  changelogEntry:
+    - summary: |
+        Paginated endpoints once again generate an auto-paging method. It is now emitted
+        ALONGSIDE the single-page method as `<endpoint>_paginated` rather than replacing it,
+        so the endpoint keeps its typed response and callers who want one page do not have
+        to go through a paginator.
+      type: feat
+    - summary: |
+        Fix the borrow that made the paginated method fail to compile. The page loader
+        outlives the method call, so path and body parameters are now captured as owned
+        values, and the rewrite that points the loader at those captures no longer fails to
+        match every name.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
 - version: 0.46.7
   changelogEntry:
     - summary: |
