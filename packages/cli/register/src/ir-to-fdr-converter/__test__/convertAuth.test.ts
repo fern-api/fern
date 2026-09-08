@@ -11,14 +11,69 @@ function apiAuthWithScheme(scheme: Ir.auth.AuthScheme): Ir.auth.ApiAuth {
     };
 }
 
-function oauthScheme(configuration: Ir.auth.OAuthConfiguration): Ir.auth.AuthScheme {
+function oauthScheme(configuration: Ir.auth.OAuthConfiguration, playgroundDocs?: string): Ir.auth.AuthScheme {
     return Ir.auth.AuthScheme.oauth({
         key: "MyOAuth",
         docs: "Log in with OAuth",
-        playgroundDocs: undefined,
+        playgroundDocs,
         configuration
     });
 }
+
+const STRING_TYPE = Ir.types.TypeReference.primitive({ v1: Ir.types.PrimitiveTypeV1.String, v2: undefined });
+
+function bodyProperty(wireValue: string): Ir.http.RequestProperty {
+    return {
+        propertyPath: undefined,
+        property: Ir.http.RequestPropertyValue.body({
+            name: { wireValue, name: wireValue },
+            valueType: STRING_TYPE,
+            propertyAccess: undefined,
+            defaultValue: undefined,
+            v2Examples: undefined,
+            docs: undefined,
+            availability: undefined
+        })
+    };
+}
+
+const CLIENT_CREDENTIALS_CONFIG = Ir.auth.OAuthConfiguration.clientCredentials({
+    clientIdEnvVar: undefined,
+    clientSecretEnvVar: undefined,
+    tokenPrefix: "Bearer",
+    tokenHeader: "Authorization",
+    scopes: undefined,
+    tokenEndpoint: {
+        endpointReference: {
+            endpointId: "endpoint_auth.getToken",
+            serviceId: "service_auth",
+            subpackageId: undefined
+        },
+        requestProperties: {
+            clientId: bodyProperty("client_id"),
+            clientSecret: bodyProperty("client_secret"),
+            scopes: undefined,
+            customProperties: undefined
+        },
+        responseProperties: {
+            accessToken: {
+                propertyPath: undefined,
+                property: {
+                    name: { wireValue: "access_token", name: "access_token" },
+                    valueType: STRING_TYPE,
+                    propertyAccess: undefined,
+                    defaultValue: undefined,
+                    v2Examples: undefined,
+                    docs: undefined,
+                    availability: undefined
+                }
+            },
+            expiresIn: undefined,
+            refreshToken: undefined
+        }
+    },
+    refreshEndpoint: undefined
+});
 
 const AUTHORIZATION_CODE_CONFIG = Ir.auth.OAuthConfiguration.authorizationCode({
     clientId: Ir.auth.OAuthPublicClientId.literal("public-client-id"),
@@ -88,6 +143,41 @@ describe("convertAuth", () => {
             type: "bearerAuth",
             tokenName: "token",
             description: "Log in with OAuth"
+        });
+    });
+
+    it("keeps docs and playgroundDocs separate for the client-credentials OAuth playground", () => {
+        const auth = apiAuthWithScheme(oauthScheme(CLIENT_CREDENTIALS_CONFIG, "Create credentials in the console"));
+
+        const result = convertAuth({ auth, playgroundConfig: { oauth: true }, context: createMockTaskContext() });
+
+        expect(result).toEqual({
+            type: "oAuth",
+            value: {
+                type: "clientCredentials",
+                value: {
+                    type: "referencedEndpoint",
+                    endpointId: "endpoint_auth.getToken",
+                    accessTokenLocator: "$.body.access_token",
+                    headerName: "Authorization",
+                    tokenPrefix: "Bearer",
+                    description: "Log in with OAuth",
+                    playgroundDescription: "Create credentials in the console"
+                }
+            }
+        });
+    });
+
+    it("falls back to a bearer scheme with playgroundDocs when the OAuth playground is disabled", () => {
+        const auth = apiAuthWithScheme(oauthScheme(CLIENT_CREDENTIALS_CONFIG, "Create credentials in the console"));
+
+        const result = convertAuth({ auth, context: createMockTaskContext() });
+
+        expect(result).toEqual({
+            type: "bearerAuth",
+            tokenName: "token",
+            description: "Log in with OAuth",
+            playgroundDescription: "Create credentials in the console"
         });
     });
 });

@@ -92,7 +92,8 @@ function convertAuthScheme({
                               accessTokenLocator: tokenPath,
                               headerName: configuration.tokenHeader,
                               tokenPrefix: configuration.tokenPrefix,
-                              description: scheme.docs
+                              description: scheme.docs,
+                              playgroundDescription: scheme.playgroundDocs
                           }
                       }
                   }

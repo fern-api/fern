@@ -63,8 +63,11 @@ types:
     properties:
       playground-docs:
         type: optional<string>
-        docs: >-
+        docs: |-
           Documentation rendered below this scheme's input in the API playground, instead of `docs`.
+          Supports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,
+          `inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)
+          is rendered as plain text.
 
   AuthVariable:
     extends:
