@@ -1,5 +1,5 @@
-import { resolve } from "path";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { resolve } from "path";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { SdkGeneratorContext } from "../../../SdkGeneratorContext.js";
