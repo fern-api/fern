@@ -10,6 +10,8 @@ import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 import path from "path";
 
+const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
+
 export interface ResolvedMigrationSourceSpec {
     absolutePath: string;
     absoluteOverlayPaths: string[];
@@ -124,24 +126,29 @@ export function serializeMigrationSource({
 export function resolveMigrationPathParameterStyle(
     specs: ResolvedMigrationSourceSpec[]
 ): "inline" | "wrapped" | undefined {
-    const openApiSpecs = specs.filter((spec) => spec.type === "openapi");
-    if (!openApiSpecs.some((spec) => spec.clientPathParameterStyleExplicit === true)) {
+    const explicitlyConfiguredSpecs = specs.filter(
+        (spec) => spec.type === "openapi" && spec.clientPathParameterStyleExplicit === true
+    );
+    if (explicitlyConfiguredSpecs.length === 0) {
         return undefined;
     }
     const configuredStyles = new Set(
-        openApiSpecs.map((spec) => spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE)
+        explicitlyConfiguredSpecs.map((spec) => spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE)
     );
     if (configuredStyles.size > 1) {
+        const conflictingSpecs = explicitlyConfiguredSpecs
+            .map(
+                (spec) =>
+                    `${spec.idHint ?? spec.namespace ?? spec.name ?? spec.absolutePath}=${spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE}`
+            )
+            .join(", ");
         throw new CliError({
-            message:
-                "SDK Config v1 cannot represent conflicting inline-path-parameters settings across API specifications.",
+            message: `SDK Config v1 cannot represent conflicting inline-path-parameters settings across API specifications: ${conflictingSpecs}. Align these settings or migrate the configurations separately.`,
             code: CliError.Code.ConfigError
         });
     }
     return configuredStyles.values().next().value;
 }
-
-const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
 
 function migrationSourceRoot(workingDirectory: string, specs: ResolvedMigrationSourceSpec[]): string {
     return specs

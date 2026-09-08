@@ -270,8 +270,19 @@ describe("SDK Config migration", () => {
         };
 
         expect(() => resolveMigrationPathParameterStyle([inline, wrapped])).toThrow(
-            "conflicting inline-path-parameters settings"
+            "conflicting inline-path-parameters settings across API specifications: inline=inline, wrapped=wrapped"
         );
+    });
+
+    it("treats omitted path parameter behavior as neutral", () => {
+        const inline = {
+            ...createResolvedSourceSpec("inline", undefined),
+            clientPathParameterStyle: "inline" as const,
+            clientPathParameterStyleExplicit: true
+        };
+        const omitted = createResolvedSourceSpec("omitted", undefined);
+
+        expect(resolveMigrationPathParameterStyle([inline, omitted])).toBe("inline");
     });
 
     it("uses a common project root when source files live outside the Fern configuration directory", () => {

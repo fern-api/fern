@@ -75,7 +75,8 @@ export async function sdkMigrate({
         });
     }
 
-    const yaml = YAML.stringify(mapped.sdkConfig, { lineWidth: 0 });
+    const serialized = YAML.stringify(mapped.sdkConfig, { lineWidth: 0 });
+    const yaml = serialized.endsWith("\n") ? serialized : `${serialized}\n`;
     if (outputPath == null) {
         cliContext.writeTextToStdout(yaml);
         return;
