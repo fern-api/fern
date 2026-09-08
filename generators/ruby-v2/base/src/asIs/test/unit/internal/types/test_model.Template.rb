@@ -116,19 +116,19 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     it "preserves false values instead of treating them as absent" do
       example = ExampleWithBooleans.new(enabled: false)
 
-      assert_equal false, example.enabled
+      refute example.enabled
       assert_equal({ "enabled" => false, "archived" => true }, example.to_h)
 
       loaded = ExampleWithBooleans.load({ enabled: false, archived: false }.to_json)
 
-      assert_equal false, loaded.enabled
-      assert_equal false, loaded.archived
+      refute loaded.enabled
+      refute loaded.archived
     end
 
     it "applies a default of false" do
       example = ExampleWithFalseDefault.new
 
-      assert_equal false, example.archived
+      refute example.archived
       assert_equal({ "archived" => false }, example.to_h)
     end
 
