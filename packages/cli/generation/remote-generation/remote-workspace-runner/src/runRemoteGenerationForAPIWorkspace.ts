@@ -337,8 +337,13 @@ export function prepareFernSdkGenApiRoutes({
                 configuredLanguage == null
                     ? undefined
                     : sdkConfigV1?.targets.find((target) => target.language === configuredLanguage);
+            if (sdkConfigV1 != null && configuredLanguage == null) {
+                throw new Error(
+                    `SDK Config v1 generation only supports Fern SDK generators routed through sdk-gen-api; the selected group contains ${resolved.name}`
+                );
+            }
             if (sdkConfigV1 != null && configuredTarget == null) {
-                throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage ?? resolved.name}`);
+                throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage}`);
             }
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };

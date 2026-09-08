@@ -260,6 +260,22 @@ describe("isEligibleForFernSdkGenApi", () => {
         );
     });
 
+    it("rejects non-SDK generators instead of falling back to Fiddle", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-postman" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("selected group contains fernapi/fern-postman")
+        );
+    });
+
     it("rejects explicit SDK Config generation when the backend is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],

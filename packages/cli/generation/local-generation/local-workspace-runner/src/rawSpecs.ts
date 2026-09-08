@@ -810,11 +810,17 @@ export function validateSdkConfigImportSettings(
         const settings = getOpenAPISettings({ overrides: spec.settings });
         for (const key of Object.getOwnPropertyNames(settings)) {
             const value = Reflect.get(settings, key);
+            // language-default delegates to the SDK generator, so it cannot preserve a non-default
+            // Fern importer override that shaped the API before generation.
+            const preservesPathParameterStyle =
+                key === "inlinePathParameters" &&
+                typeof value === "boolean" &&
+                sdkConfig.clientPathParameterStyle !== "language-default" &&
+                sdkConfig.clientPathParameterStyle === (value ? "inline" : "wrapped");
             // Mapper membership means the setting's full value domain is preserved downstream.
             if (
                 SDK_CONFIG_IMPORT_SETTING_KEYS.has(key) ||
-                (key === "inlinePathParameters" &&
-                    sdkConfig.clientPathParameterStyle === (value === true ? "inline" : "wrapped")) ||
+                preservesPathParameterStyle ||
                 (key === "audiences" && Array.isArray(value) && value.length === 0) ||
                 isDeepStrictEqual(value, Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))
             ) {

@@ -19,7 +19,7 @@ describe("resolveGroupsForSdkConfig", () => {
                 sdkConfigV1: createSdkConfig(["typescript", "python"]),
                 context: createMockTaskContext()
             })
-        ).toEqual(["typescript", "python"]);
+        ).toEqual(["python", "typescript"]);
     });
 
     it("prefers one multi-language group over separate groups", () => {
@@ -40,12 +40,53 @@ describe("resolveGroupsForSdkConfig", () => {
             })
         ).toEqual(["production"]);
     });
+
+    it("uses the default group to disambiguate equivalent target coverage", () => {
+        const workspace = createWorkspace(
+            [
+                { name: "typescript-preview", generators: ["fernapi/fern-typescript-sdk"] },
+                { name: "typescript-production", generators: ["fernapi/fern-typescript-sdk"] }
+            ],
+            "typescript-production"
+        );
+
+        expect(
+            resolveGroupsForSdkConfig({
+                workspace,
+                sdkConfigV1: createSdkConfig(["typescript"]),
+                context: createMockTaskContext()
+            })
+        ).toEqual(["typescript-production"]);
+    });
+
+    it("requires an explicit group when equivalent candidates are ambiguous", () => {
+        const workspace = createWorkspace([
+            { name: "typescript-preview", generators: ["fernapi/fern-typescript-sdk"] },
+            { name: "typescript-production", generators: ["fernapi/fern-typescript-sdk"] }
+        ]);
+
+        expect(() =>
+            resolveGroupsForSdkConfig({
+                workspace,
+                sdkConfigV1: createSdkConfig(["typescript"]),
+                context: {
+                    failAndThrow: (message: string) => {
+                        throw new Error(message);
+                    }
+                } as never
+            })
+        ).toThrow("match multiple generator groups: typescript-preview, typescript-production");
+    });
 });
 
-function createWorkspace(groups: Array<{ name: string; generators: string[] }>): AbstractAPIWorkspace<unknown> {
+function createWorkspace(
+    groups: Array<{ name: string; generators: string[] }>,
+    defaultGroup?: string
+): AbstractAPIWorkspace<unknown> {
     return {
         generatorsConfiguration: {
             absolutePathToConfiguration: "/tmp/generators.yml",
+            defaultGroup,
             groups: groups.map((group) => ({
                 groupName: group.name,
                 generators: group.generators.map((name) => ({ name }))

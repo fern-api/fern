@@ -336,7 +336,7 @@ export function resolveGroupsForSdkConfig({
     const selected: string[] = [];
 
     while (uncovered.size > 0) {
-        const candidate = candidates
+        const eligibleCandidates = candidates
             .filter(({ groupName, languages }) => {
                 return (
                     !selected.includes(groupName) &&
@@ -344,19 +344,14 @@ export function resolveGroupsForSdkConfig({
                     [...languages].some((language) => uncovered.has(language))
                 );
             })
-            .sort((left, right) => {
-                const coverage = right.languages.size - left.languages.size;
-                if (coverage !== 0) {
-                    return coverage;
-                }
-                if (left.groupName === generatorsConfiguration.defaultGroup) {
-                    return -1;
-                }
-                if (right.groupName === generatorsConfiguration.defaultGroup) {
-                    return 1;
-                }
-                return 0;
-            })[0];
+            .sort(
+                (left, right) =>
+                    right.languages.size - left.languages.size ||
+                    Number(right.groupName === generatorsConfiguration.defaultGroup) -
+                        Number(left.groupName === generatorsConfiguration.defaultGroup) ||
+                    left.groupName.localeCompare(right.groupName)
+            );
+        let candidate = eligibleCandidates[0];
         if (candidate == null) {
             return context.failAndThrow(
                 `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
@@ -364,6 +359,23 @@ export function resolveGroupsForSdkConfig({
                 { code: CliError.Code.ConfigError }
             );
         }
+        const candidateLanguages = candidate.languages;
+        const equivalentCandidates = eligibleCandidates.filter(
+            ({ languages }) =>
+                languages.size === candidateLanguages.size &&
+                [...languages].every((language) => candidateLanguages.has(language))
+        );
+        const defaultCandidate = equivalentCandidates.find(
+            ({ groupName }) => groupName === generatorsConfiguration.defaultGroup
+        );
+        if (equivalentCandidates.length > 1 && defaultCandidate == null) {
+            return context.failAndThrow(
+                `SDK Config v1 targets (${[...candidate.languages].join(", ")}) match multiple generator groups: ${equivalentCandidates.map(({ groupName }) => groupName).join(", ")}. Pass --group explicitly.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        candidate = defaultCandidate ?? candidate;
         selected.push(candidate.groupName);
         for (const language of candidate.languages) {
             uncovered.delete(language);
