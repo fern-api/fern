@@ -89,6 +89,8 @@ These flags are available on every operation:
 | `--format <json\|table\|yaml\|csv>` | Output format (default `json`) |
 | `--output <PATH>` | Write binary responses to a file |
 | `--base-url <URL>` | Override the API base URL |
+| `--no-extract` | Print the full response body instead of the `x-fern-sdk-return-value` extraction |
+| `--no-retry` | Disable retries declared by `x-fern-retries`, including network errors |
 | `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |
 
 Operations the spec describes how to page (via `x-fern-pagination` or a root `page_token` parameter) also accept:
@@ -97,6 +99,14 @@ Operations the spec describes how to page (via `x-fern-pagination` or a root `pa
 |------|-------------|
 | `--page-all` | Auto-paginate and stream results as NDJSON |
 | `--page-limit <N>` | Max pages to fetch when auto-paginating (default `10`) |
+| `--page-delay <MS>` | Delay between page fetches in milliseconds (default `100`) |
+| `--no-pager` | Disable the pager even on interactive terminals |
+
+Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
+
+| Flag | Description |
+|------|-------------|
+| `--no-stream` | Buffer the streaming response and print it as a single value once complete |
 
 ### Environment variables
 

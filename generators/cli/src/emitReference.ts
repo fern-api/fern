@@ -421,6 +421,8 @@ function renderReference(args: {
     lines.push("| `--format <json\\|table\\|yaml\\|csv>` | Output format (default: `json`) |");
     lines.push("| `--output <PATH>` | Write binary responses to a file |");
     lines.push("| `--base-url <URL>` | Override the API base URL |");
+    lines.push("| `--no-extract` | Print the full response body instead of the `x-fern-sdk-return-value` extraction |");
+    lines.push("| `--no-retry` | Disable retries declared by `x-fern-retries`, including network errors |");
     lines.push("| `-q, --quiet` | Suppress stdout on success |");
     lines.push("| `-h, --help` | Print help |");
     lines.push("| `-V, --version` | Print version |");
@@ -433,6 +435,14 @@ function renderReference(args: {
     lines.push("|------|-------------|");
     lines.push("| `--page-all` | Auto-paginate and stream all results |");
     lines.push("| `--page-limit <N>` | Max pages to fetch (default: `10`) |");
+    lines.push("| `--page-delay <MS>` | Delay between page fetches in milliseconds (default: `100`) |");
+    lines.push("| `--no-pager` | Disable the pager even on interactive terminals |");
+    lines.push("");
+    lines.push("Operations the spec marks as streaming (via `x-fern-streaming`) also accept:");
+    lines.push("");
+    lines.push("| Flag | Description |");
+    lines.push("|------|-------------|");
+    lines.push("| `--no-stream` | Buffer the streaming response and print it as a single value once complete |");
 
     return lines.join("\n") + "\n";
 }
