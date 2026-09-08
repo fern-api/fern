@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.117.0
+  changelogEntry:
+    - summary: |
+        Add support for playground-specific auth documentation. Set `x-fern-playground-description` on an
+        OpenAPI security scheme (or `playground-docs` on a Fern definition auth scheme) to render text below
+        that scheme's input in the API playground, leaving the API reference's authorization description
+        (`description`/`docs`) untouched. Applies to bearer, basic, header, and OAuth client-credentials
+        schemes. Supports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,
+        `inline code`, and blank-line-separated paragraphs.
+      type: feat
+    - summary: |
+        Write `fern sdk migrate` output as sparse YAML and default to `sdk-config.yml` beside the selected `generators.yml` when `--output` is omitted, without modifying the existing Fern project files. Source-derived environments and authentication remain in the referenced API specifications instead of being duplicated in SDK Config, empty global configuration blocks are omitted, and explicit Fern overrides are preserved.
+      type: feat
+  createdAt: "2026-09-08"
+  irVersion: 67
 - version: 5.116.0
   changelogEntry:
     - summary: |
