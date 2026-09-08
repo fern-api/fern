@@ -683,6 +683,10 @@ function convertLayoutConfig(
         // by the fern-platform companion PR. Part of the `as unknown as` cast
         // below until the published FDR SDK adds `apiReferenceLayout`.
         apiReferenceLayout: layout.apiReferenceLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR): when
+        // true the first level of nested API reference fields renders expanded.
+        // Part of the `as unknown as` cast below until the published FDR SDK adds the field.
+        apiReferenceExpandProperties: layout.apiReferenceExpandProperties,
         // Opt-in (default off, resolved by the fern-platform companion PR):
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.

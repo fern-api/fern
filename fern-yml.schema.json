@@ -2920,6 +2920,9 @@
                 "cards"
               ]
             },
+            "api-reference-expand-properties": {
+              "type": "boolean"
+            },
             "show-nav-availability-badges": {
               "type": "boolean"
             }
