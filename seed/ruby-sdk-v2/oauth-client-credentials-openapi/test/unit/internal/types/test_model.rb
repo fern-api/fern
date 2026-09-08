@@ -24,6 +24,15 @@ describe Seed::Internal::Types::Model do
     field :type, String, default: "example"
   end
 
+  class ExampleWithBooleans < Seed::Internal::Types::Model
+    field :enabled, Seed::Internal::Types::Boolean
+    field :archived, Seed::Internal::Types::Boolean, default: true
+  end
+
+  class ExampleWithFalseDefault < Seed::Internal::Types::Model
+    field :archived, Seed::Internal::Types::Boolean, default: false
+  end
+
   class ExampleChild < Seed::Internal::Types::Model
     field :value, String
   end
@@ -102,6 +111,25 @@ describe Seed::Internal::Types::Model do
       parent = ExampleParent.new(child: { value: "foobar" })
 
       assert_kind_of ExampleChild, parent.child
+    end
+
+    it "preserves false values instead of treating them as absent" do
+      example = ExampleWithBooleans.new(enabled: false)
+
+      assert_equal false, example.enabled
+      assert_equal({ "enabled" => false, "archived" => true }, example.to_h)
+
+      loaded = ExampleWithBooleans.load({ enabled: false, archived: false }.to_json)
+
+      assert_equal false, loaded.enabled
+      assert_equal false, loaded.archived
+    end
+
+    it "applies a default of false" do
+      example = ExampleWithFalseDefault.new
+
+      assert_equal false, example.archived
+      assert_equal({ "archived" => false }, example.to_h)
     end
 
     it "uses the api_name to pull the value" do
