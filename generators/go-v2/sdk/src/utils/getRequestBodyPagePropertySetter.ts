@@ -9,7 +9,9 @@ export interface RequestBodyPagePathItem {
 /**
  * Sets the page property on a copy of the caller's request. Every pointer along the property path is
  * replaced with a pointer to a copy of its value (or to a zero value when the caller left it nil), so
- * that neither the caller's request nor any of its nested objects are mutated.
+ * that neither the caller's request nor any of its nested objects are mutated. The copies are shallow:
+ * pointer, slice and map fields inside them still alias the caller's values, which is fine because the
+ * only field ever written is the page property.
  */
 export function getRequestBodyPagePropertySetter({
     requestReference,
