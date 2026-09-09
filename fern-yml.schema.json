@@ -1867,6 +1867,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -1916,6 +1919,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
