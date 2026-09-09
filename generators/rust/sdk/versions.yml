@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.47.8
+  changelogEntry:
+    - summary: |
+        A request body declared `application/x-www-form-urlencoded` is now form-encoded
+        instead of being sent as a JSON document under an `application/json` header. Those
+        endpoints went through `execute_request`, whose `.json()` both serializes to JSON and
+        stamps the header, so neither the bytes nor the content type matched the declaration.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 0.47.7
   changelogEntry:
     - summary: |

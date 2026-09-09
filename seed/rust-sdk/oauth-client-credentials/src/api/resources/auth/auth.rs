@@ -45,7 +45,7 @@ impl AuthClient {
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_form_request(
                 Method::POST,
                 "/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -88,7 +88,7 @@ impl AuthClient {
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_form_request(
                 Method::POST,
                 "/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

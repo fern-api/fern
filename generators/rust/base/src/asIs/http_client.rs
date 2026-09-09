@@ -379,7 +379,7 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
-{{MULTIPART_METHOD}}{{BYTES_METHOD}}{{CONTENT_TYPE_METHOD}}    /// Applies auth/headers and executes the request, choosing between
+{{MULTIPART_METHOD}}{{BYTES_METHOD}}{{CONTENT_TYPE_METHOD}}{{FORM_METHOD}}    /// Applies auth/headers and executes the request, choosing between
     /// the injected executor path (custom headers only, no SDK-level
     /// auth/retries) and the default path (full SDK behavior).
     async fn send_request(

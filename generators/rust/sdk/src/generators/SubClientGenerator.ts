@@ -960,6 +960,11 @@ export class SubClientGenerator {
             if (declaredJsonContentType != null) {
                 executeMethod = "execute_request_with_content_type";
             }
+            // `application/x-www-form-urlencoded` needs the body FORM-encoded, not JSON under a
+            // form label, so it takes a variant of its own rather than the header override above.
+            if (this.isFormUrlEncodedEndpoint(endpoint)) {
+                executeMethod = "execute_form_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
@@ -1990,6 +1995,11 @@ export class SubClientGenerator {
             return undefined;
         }
         return contentType.endsWith("+json") || contentType.includes("json") ? contentType : undefined;
+    }
+
+    /** Whether the endpoint declares an `application/x-www-form-urlencoded` request body. */
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded");
     }
 
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {

@@ -605,6 +605,21 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Whether any endpoint declares an `application/x-www-form-urlencoded` request body. Those
+     * cannot go through `execute_request`, whose `.json()` sends a JSON document and stamps
+     * `application/json` over the declared media type.
+     */
+    public hasFormUrlEncodedEndpoints(): boolean {
+        return this.cachedFeature("hasFormUrlEncodedEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) =>
+                    (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded")
+                )
+            )
+        );
+    }
+
+    /**
      * Whether any endpoint declares a JSON request media type OTHER than `application/json` --
      * a vendor type, or `application/merge-patch+json`. Those endpoints cannot go through
      * `execute_request`, whose `.json()` call stamps `application/json` over the declared type.

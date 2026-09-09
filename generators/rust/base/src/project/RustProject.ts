@@ -337,6 +337,57 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{MULTIPART_METHOD\}\}/g, "");
         }
 
+        // Conditionally include the form-urlencoded request method. Emitted only when an
+        // endpoint declares that media type, so an SDK that never does is unchanged.
+        if (this.context.hasFormUrlEncodedEndpoints()) {
+            content = content.replace(
+                /\{\{FORM_METHOD\}\}/g,
+                `    /// Execute a request whose body is \`application/x-www-form-urlencoded\`.
+    ///
+    /// The body is FORM-encoded, not JSON under a form label: \`.form()\` both serializes the
+    /// pairs and sets the header, where \`.json()\` would send a JSON document and stamp
+    /// \`application/json\` over the declared type. That is why this needs its own method rather
+    /// than the header override \`execute_request_with_content_type\` provides.
+    pub async fn execute_form_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.form(&body);
+        }
+
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        let response = self.send_request(req, &options).await?;
+        self.parse_response(response).await
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{FORM_METHOD\}\}/g, "");
+        }
+
         // Conditionally include the non-default-JSON-content-type request method. Emitted only
         // when an endpoint declares one, so the 130-odd SDKs that never need it are unchanged.
         if (this.context.hasNonDefaultJsonContentTypeEndpoints()) {
