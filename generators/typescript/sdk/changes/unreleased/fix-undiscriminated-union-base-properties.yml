@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Undiscriminated unions with `base-properties` (e.g. an OpenAPI `oneOf` with sibling
+    `properties`/`required`) now include the shared properties on every object variant
+    of the generated type, raw type and serde schema. Previously they were silently dropped.
+  type: fix

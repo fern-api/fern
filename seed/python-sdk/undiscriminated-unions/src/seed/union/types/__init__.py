@@ -32,7 +32,7 @@ if typing.TYPE_CHECKING:
     from .request import Request
     from .tokenize_card import TokenizeCard
     from .type_with_optional_union import TypeWithOptionalUnion
-    from .union_with_base_properties import UnionWithBaseProperties
+    from .union_with_base_properties import UnionWithBaseProperties, UnionWithBasePropertiesNamedMetadata
     from .union_with_duplicate_types import UnionWithDuplicateTypes
     from .union_with_identical_primitives import UnionWithIdenticalPrimitives
     from .union_with_identical_strings import UnionWithIdenticalStrings
@@ -68,6 +68,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenizeCard": ".tokenize_card",
     "TypeWithOptionalUnion": ".type_with_optional_union",
     "UnionWithBaseProperties": ".union_with_base_properties",
+    "UnionWithBasePropertiesNamedMetadata": ".union_with_base_properties",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithIdenticalPrimitives": ".union_with_identical_primitives",
     "UnionWithIdenticalStrings": ".union_with_identical_strings",
@@ -127,6 +128,7 @@ __all__ = [
     "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithBaseProperties",
+    "UnionWithBasePropertiesNamedMetadata",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",

@@ -176,6 +176,9 @@ fixtures:
   undiscriminated-unions:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
     - outputFolder: skip-response-validation
       customConfig:
         skipResponseValidation: true

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Undiscriminated unions with `base-properties` (e.g. an OpenAPI `oneOf` with sibling
+    `properties`/`required`) now include the shared properties on every object variant.
+    Each such variant is emitted as a `<Union><Member>` Pydantic model / `<Union>Params<Member>`
+    TypedDict that combines the base properties with the member's own properties.
+    Previously the shared properties were silently dropped.
+  type: fix
