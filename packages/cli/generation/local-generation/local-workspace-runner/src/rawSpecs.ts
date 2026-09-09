@@ -192,7 +192,8 @@ const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
     groupMultiApiEnvironments: (settings) => ({
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments
     }),
-    defaultIntegerFormat: (settings) => ({ defaultIntegerFormat: settings.defaultIntegerFormat })
+    defaultIntegerFormat: (settings) => ({ defaultIntegerFormat: settings.defaultIntegerFormat }),
+    ignoreTags: (settings) => ({ ignoreTags: settings.ignoreTags })
 } satisfies Partial<Record<keyof OpenAPISettings, ApiImportSettingMapper>>;
 
 function mapApiImportSettings(settings: OpenAPISettings): RawSpecImportSettings {

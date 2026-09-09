@@ -247,6 +247,19 @@ fixtures:
     - customConfig:
         generateWireTests: true
       outputFolder: with-wire-tests
+  # `settings.ignore-tags` + parent-noun elision. The `knowledge` spec sets
+  # `ignore-tags: true`, so main.rs must emit `.ignore_tags()` right after its
+  # `.spec_under(...)` and the binary flattens tag groups into the namespace;
+  # the `messages` spec keeps tag grouping. The second variant turns on
+  # `stripParentNoun`, emitting `.strip_parent_noun()` on the binding.
+  cli-ignore-tags:
+    - customConfig:
+        binaryName: acme
+      outputFolder: no-custom-config
+    - customConfig:
+        binaryName: acme
+        stripParentNoun: true
+      outputFolder: with-strip-parent-noun
   # Multipart/form-data wire coverage. The `POST /upload-file` operation has an
   # optional `file` field typed `anyOf: [{string, binary}, {type: null}]` — the
   # canonical shape the harness must drive with a real fixture file (not the

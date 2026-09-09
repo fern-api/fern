@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Include the effective `ignore-tags` setting in each entry's `apiImportSettings`
+    in the raw specs manifest passed to spec-consuming generators (e.g. the CLI
+    generator), so they can honor it.
+  type: internal

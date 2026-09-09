@@ -83,6 +83,15 @@ describe("validateCustomConfig", () => {
         expect(() => validateCustomConfig({ rootGroup: "" })).toThrow(/contains invalid characters/);
     });
 
+    it("accepts a boolean stripParentNoun", () => {
+        expect(validateCustomConfig({ stripParentNoun: true })).toEqual({ stripParentNoun: true });
+        expect(validateCustomConfig({ stripParentNoun: false })).toEqual({ stripParentNoun: false });
+    });
+
+    it("throws on non-boolean stripParentNoun", () => {
+        expect(() => validateCustomConfig({ stripParentNoun: "yes" })).toThrow(/expected a boolean, got string/);
+    });
+
     it("accepts a valid userAgentSuffixFlag", () => {
         expect(validateCustomConfig({ userAgentSuffixFlag: "via" })).toEqual({ userAgentSuffixFlag: "via" });
     });

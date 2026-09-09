@@ -30,7 +30,14 @@ describe("emitReference", () => {
         return specPath;
     }
 
-    async function writeManifest(specs: Array<{ type: string; specPath: string; namespace?: string }>): Promise<void> {
+    async function writeManifest(
+        specs: Array<{
+            type: string;
+            specPath: string;
+            namespace?: string;
+            apiImportSettings?: { ignoreTags?: boolean };
+        }>
+    ): Promise<void> {
         await writeFile(path.join(specsDir, SPECS_MANIFEST_FILENAME), JSON.stringify({ specs }));
     }
 
@@ -320,6 +327,134 @@ describe("emitReference", () => {
         });
 
         expect(reference).toContain("`my-api store items`");
+    });
+
+    it("flattens tag groups into the namespace when the spec sets ignoreTags", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/v1/Knowledge": {
+                    post: {
+                        operationId: "CreateKnowledge",
+                        tags: ["Knowledge"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                },
+                "/v1/Knowledge/Bases": {
+                    get: {
+                        operationId: "ListKnowledgeBases",
+                        tags: ["KnowledgeBases"],
+                        responses: { "200": { description: "ok" } }
+                    },
+                    patch: {
+                        operationId: "PatchKnowledgeBase",
+                        tags: ["KnowledgeBases"],
+                        "x-fern-sdk-group-name": "admin",
+                        "x-fern-sdk-method-name": "patchBase",
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([
+            { type: "openapi", specPath, namespace: "knowledge", apiImportSettings: { ignoreTags: true } }
+        ]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [],
+            specsDir
+        });
+
+        // Tag-derived groups collapse into the namespace; the operationId is kept verbatim.
+        expect(reference).toContain("#### `acme knowledge create-knowledge`");
+        expect(reference).toContain("#### `acme knowledge list-knowledge-bases`");
+        expect(reference).not.toContain("knowledge knowledge-bases");
+        // Explicit x-fern-sdk-* metadata still wins.
+        expect(reference).toContain("#### `acme knowledge admin patch-base`");
+    });
+
+    it("strips the parent noun from operationId-derived leaves when stripParentNoun is set", async () => {
+        const knowledge = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/v1/Knowledge": {
+                    post: {
+                        operationId: "CreateKnowledge",
+                        tags: ["Knowledge"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                },
+                "/v1/Knowledge/Bases": {
+                    get: {
+                        operationId: "ListKnowledgeBases",
+                        tags: ["KnowledgeBases"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                },
+                "/v1/Operations/{id}": {
+                    get: {
+                        operationId: "FetchOperation",
+                        tags: ["KnowledgeBases"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            }
+        };
+        const messages = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/v1/Messages": {
+                    post: {
+                        operationId: "CreateMessage",
+                        tags: ["Messages"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                },
+                "/v1/Messages/{id}/MediaV2": {
+                    get: {
+                        operationId: "ListMediaV2",
+                        tags: ["Messages"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            }
+        };
+        const knowledgePath = await writeSpec("openapi0.json", knowledge);
+        const messagesPath = await writeSpec("openapi1.json", messages);
+        await writeManifest([
+            {
+                type: "openapi",
+                specPath: knowledgePath,
+                namespace: "knowledge",
+                apiImportSettings: { ignoreTags: true }
+            },
+            { type: "openapi", specPath: messagesPath, namespace: "messages" }
+        ]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [],
+            specsDir,
+            stripParentNoun: true
+        });
+
+        // Namespace is the parent under ignore-tags (singular/plural-insensitive).
+        expect(reference).toContain("#### `acme knowledge create`");
+        expect(reference).toContain("#### `acme knowledge list-bases`");
+        expect(reference).toContain("#### `acme knowledge fetch-operation`");
+        // Tag is the parent when tags are kept.
+        expect(reference).toContain("#### `acme messages messages create`");
+        // Version-like tokens are never stripped.
+        expect(reference).toContain("#### `acme messages messages list-media-v2`");
     });
 
     // ── $ref parameter resolution ───────────────────────────────────

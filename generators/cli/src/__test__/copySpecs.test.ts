@@ -236,6 +236,76 @@ describe("copySpecs", () => {
         expect(main).toContain('.spec_under("admin", include_str!("openapi1.json"))');
     });
 
+    it("emits .ignore_tags() right after .spec_under() only for specs with ignoreTags set", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"knowledge"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"messages"}}');
+        await writeFile(path.join(specsDir, "openapi2.json"), '{"openapi":"3.0.0","info":{"title":"root"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    {
+                        type: "openapi",
+                        specPath: path.join(specsDir, "openapi0.json"),
+                        namespace: "knowledge",
+                        apiImportSettings: { ignoreTags: true }
+                    },
+                    {
+                        type: "openapi",
+                        specPath: path.join(specsDir, "openapi1.json"),
+                        namespace: "messages",
+                        apiImportSettings: { ignoreTags: false }
+                    },
+                    {
+                        type: "openapi",
+                        specPath: path.join(specsDir, "openapi2.json"),
+                        apiImportSettings: { ignoreTags: true }
+                    }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain(
+            '.spec_under("knowledge", include_str!("openapi0.json"))\n                .ignore_tags()\n'
+        );
+        expect(main).toContain('.spec_under("messages", include_str!("openapi1.json"))\n                .spec(');
+        expect(main.match(/\.ignore_tags\(\)/g)).toHaveLength(1);
+        expect(main).not.toContain(".strip_parent_noun()");
+    });
+
+    it("emits .strip_parent_noun() on the binding chain when requested", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            stripParentNoun: true
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec(include_str!("openapi0.json"))\n                .strip_parent_noun()\n');
+    });
+
     it("threads root auth bindings above binding and binding-level auth into OpenApiBinding", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });

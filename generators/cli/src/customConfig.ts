@@ -59,6 +59,23 @@ export interface FernCliCustomConfig {
     userAgentSuffixFlag?: string;
 
     /**
+     * When true, operationId-derived command names drop the noun of their
+     * parent group (the tag, or the spec `namespace:` when that spec sets
+     * `settings.ignore-tags: true`), matched singular/plural-insensitively
+     * anywhere in the operationId:
+     *
+     *   tag `Messages`,  operationId `CreateMessage`      → `create`
+     *   namespace `knowledge`, operationId `ListKnowledgeBases` → `list-bases`
+     *
+     * Names set via `x-fern-sdk-method-name` are never touched, and an
+     * operationId is kept verbatim when stripping would leave nothing.
+     *
+     * Defaults to `false`: enabling it renames commands, so it is an
+     * explicit opt-in per generated CLI.
+     */
+    stripParentNoun?: boolean;
+
+    /**
      * When true, the generator emits an automated wire-test suite alongside
      * the CLI: `wiremock/wire-test-cases.json` (one case per endpoint
      * example) and `tests/wire_test.rs` (a generic harness that stands up an
@@ -365,6 +382,14 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
+    }
+    if ("stripParentNoun" in obj && obj.stripParentNoun !== undefined) {
+        if (typeof obj.stripParentNoun !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.stripParentNoun: expected a boolean, got ${typeof obj.stripParentNoun}.`
+            );
+        }
+        result.stripParentNoun = obj.stripParentNoun;
     }
     if ("generateWireTests" in obj && obj.generateWireTests !== undefined) {
         if (typeof obj.generateWireTests !== "boolean") {
