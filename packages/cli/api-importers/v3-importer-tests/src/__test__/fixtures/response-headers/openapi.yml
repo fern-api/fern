@@ -31,6 +31,7 @@ paths:
               example: true
             X-Rate-Limit-Policy:
               description: Rate limit policy applied to the request
+              deprecated: true
               schema:
                 $ref: "#/components/schemas/RateLimitPolicy"
             X-Account-Info:

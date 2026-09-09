@@ -1,5 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
-import { Availability, HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter } from "../AbstractConverter.js";
@@ -52,7 +52,13 @@ export function convertResponseHeaders({
         const headerSchema = getHeaderSchema({ context, header: resolvedHeader });
         let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
         let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-        let availability: Availability | undefined;
+        // Availability comes from the Header Object itself (`deprecated` /
+        // `x-fern-availability`), matching how request-header parameters read it from the
+        // Parameter Object — the value schema's availability belongs to that schema.
+        const availability = context.getAvailability({
+            node: resolvedHeader,
+            breadcrumbs: [...headerBreadcrumbs, "headers", headerName]
+        });
 
         if (headerSchema != null) {
             resolvedSchema = context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
@@ -83,7 +89,6 @@ export function convertResponseHeaders({
                 }).convert();
                 if (convertedHeaderSchema != null) {
                     valueType = convertedHeaderSchema.type;
-                    availability = convertedHeaderSchema.availability;
                     for (const [typeId, inlinedType] of Object.entries(convertedHeaderSchema.inlinedTypes)) {
                         inlinedTypes[typeId] = inlinedType;
                     }

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TypeReference } from "@fern-api/ir-sdk";
+import { AvailabilityStatus, TypeReference } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -61,6 +61,9 @@ describe("response header schemas", () => {
         if (rateLimitPolicy?.type === "named") {
             expect(ir.types[rateLimitPolicy.typeId]?.shape.type).toBe("enum");
         }
+
+        // Header-level `deprecated` propagates to the header's availability.
+        expect(headers.get("X-Rate-Limit-Policy")?.availability?.status).toBe(AvailabilityStatus.Deprecated);
 
         // A JSON `content` schema produces an optional named reference to the object type.
         const accountInfo = unwrapOptional(headers.get("X-Account-Info")?.valueType);
