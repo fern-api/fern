@@ -8,6 +8,7 @@ import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
+    applyExactOptionalPropertyTypes,
     convertJestImportsToVitest,
     fixImportsForEsm,
     NpmPackage,
@@ -76,6 +77,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             enableInlineTypes: parsed?.enableInlineTypes ?? true,
             packageJson: parsed?.packageJson,
             packageJsonMergeStrategy: parsed?.packageJsonMergeStrategy ?? "shallow",
+            exactOptionalPropertyTypes: parsed?.exactOptionalPropertyTypes ?? false,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
             writeUnitTests: parsed?.writeUnitTests ?? true,
@@ -368,6 +370,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 persistedTypescriptProject.getRootDirectory(),
                 persistedTypescriptProject.getTestDirectory()
             );
+        }
+        if (customConfig.exactOptionalPropertyTypes) {
+            await applyExactOptionalPropertyTypes(persistedTypescriptProject.getRootDirectory());
         }
     }
 

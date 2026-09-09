@@ -357,6 +357,29 @@ config:
 Removing a generated key (for example dropping the `require` condition) is not expressible under
 either strategy.
 
+#### ✨ `exactOptionalPropertyTypes`
+
+**Type:** boolean
+
+**Default:** `false`
+
+Makes the generated SDK compile cleanly under TypeScript's `exactOptionalPropertyTypes`
+compiler option. When enabled, every optional property — model types, inlined request
+wrappers, client options, errors, and the `core/` utilities — is emitted as
+`prop?: T | undefined`, so consumers who enable `strict` + `exactOptionalPropertyTypes`
+can assign `undefined` explicitly (e.g. `client.list({ limit: possiblyUndefined })`).
+
+The generated `tsconfig` files also enable `exactOptionalPropertyTypes: true` so the
+package verifies itself under the stricter mode.
+
+```yaml
+# generators.yml
+config:
+  exactOptionalPropertyTypes: true
+```
+
+With the flag off (default), generated output is unchanged.
+
 #### ✨ `treatUnknownAsAny`
 
 **Type:** boolean

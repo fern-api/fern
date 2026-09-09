@@ -90,6 +90,13 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: exact-optional-property-types
+      customConfig:
+        exactOptionalPropertyTypes: true
+    - outputFolder: exact-optional-property-types-serde-layer
+      customConfig:
+        noSerdeLayer: false
+        exactOptionalPropertyTypes: true
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
