@@ -74,6 +74,94 @@ describe("response header schemas", () => {
         }
     });
 
+    it("keeps primitive fast-paths and schema defaults for scalar response headers", async () => {
+        const ir = await getIRForFixture("response-headers");
+
+        const endpoint = Object.values(ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
+        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
+
+        // `number` headers take the primitive fast-path just like `integer`/`boolean`.
+        const score = headers.get("X-Score")?.valueType;
+        expect(score?.type).toBe("primitive");
+
+        // Schema-level `default` propagates to the header's defaultValue.
+        const quota = headers.get("X-Quota");
+        expect(quota?.valueType.type).toBe("primitive");
+        expect(quota?.defaultValue).toBe(100);
+
+        // A header declared with only a description still falls back to optional<string>.
+        const noSchema = headers.get("X-No-Schema")?.valueType;
+        expect(noSchema?.type).toBe("container");
+        expect(unwrapOptional(noSchema)?.type).toBe("primitive");
+    });
+
+    it("converts array, inline-object, and $ref'd Header Object response headers", async () => {
+        const ir = await getIRForFixture("response-headers");
+
+        const endpoint = Object.values(ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
+        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
+
+        // Array schemas wrap as optional<list<...>> instead of optional<string>.
+        const tags = unwrapOptional(headers.get("X-Tags")?.valueType);
+        expect(tags?.type).toBe("container");
+        if (tags?.type === "container") {
+            expect(tags.container.type).toBe("list");
+        }
+
+        // An inline (non-$ref) object schema registers a real object type.
+        const inlineInfo = unwrapOptional(headers.get("X-Inline-Info")?.valueType);
+        expect(inlineInfo?.type).toBe("named");
+        if (inlineInfo?.type === "named") {
+            expect(ir.types[inlineInfo.typeId]?.shape.type).toBe("object");
+        }
+
+        // A header that is itself a $ref into components/headers resolves first.
+        const trace = unwrapOptional(headers.get("X-Trace")?.valueType);
+        expect(trace?.type).toBe("named");
+        if (trace?.type === "named") {
+            expect(ir.types[trace.typeId]?.shape.type).toBe("object");
+        }
+    });
+
+    it("honors header-level availability extensions and ignores non-JSON content", async () => {
+        const ir = await getIRForFixture("response-headers");
+
+        const endpoint = Object.values(ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
+        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
+
+        // `x-fern-availability` on the Header Object propagates to the header.
+        expect(headers.get("X-Beta-Feature")?.availability?.status).toBe(AvailabilityStatus.Beta);
+
+        // A `content` map without a JSON media type falls back to optional<string>.
+        const plainOnly = unwrapOptional(headers.get("X-Plain-Only")?.valueType);
+        expect(plainOnly?.type).toBe("primitive");
+
+        // With multiple content media types, the JSON entry's schema is used.
+        const mixedContent = unwrapOptional(headers.get("X-Mixed-Content")?.valueType);
+        expect(mixedContent?.type).toBe("named");
+        if (mixedContent?.type === "named") {
+            expect(ir.types[mixedContent.typeId]?.shape.type).toBe("object");
+        }
+    });
+
+    it("leaves content-based headers as optional<string> without respect-parameter-content", async () => {
+        const ir = await getIRForFixture("response-headers-no-respect-content");
+
+        const endpoint = Object.values(ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
+        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
+
+        const accountInfo = unwrapOptional(headers.get("X-Account-Info")?.valueType);
+        expect(accountInfo?.type).toBe("primitive");
+    });
+
     it("converts error response header schemas to named type references", async () => {
         const ir = await getIRForFixture("response-headers");
 
