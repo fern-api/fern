@@ -41,6 +41,28 @@ describe("resolveGroupsForSdkConfig", () => {
         ).toEqual(["production"]);
     });
 
+    it("finds a valid exact cover instead of committing to a larger dead end", () => {
+        const workspace = createWorkspace([
+            {
+                name: "typescript-python-dead-end",
+                generators: ["fernapi/fern-typescript-sdk", "fernapi/fern-python-sdk"]
+            },
+            { name: "typescript", generators: ["fernapi/fern-typescript-sdk"] },
+            {
+                name: "python-java",
+                generators: ["fernapi/fern-python-sdk", "fernapi/fern-java-sdk"]
+            }
+        ]);
+
+        expect(
+            resolveGroupsForSdkConfig({
+                workspace,
+                sdkConfigV1: createSdkConfig(["typescript", "python", "java"]),
+                context: createMockTaskContext()
+            })
+        ).toEqual(["python-java", "typescript"]);
+    });
+
     it("uses the default group to disambiguate equivalent target coverage", () => {
         const workspace = createWorkspace(
             [
@@ -75,7 +97,7 @@ describe("resolveGroupsForSdkConfig", () => {
                     }
                 } as never
             })
-        ).toThrow("match multiple generator groups: typescript-preview, typescript-production");
+        ).toThrow("match multiple generator group combinations: typescript-preview; typescript-production");
     });
 });
 

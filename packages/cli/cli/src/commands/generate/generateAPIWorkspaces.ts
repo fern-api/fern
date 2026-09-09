@@ -144,24 +144,6 @@ export async function generateAPIWorkspaces({
         token = await getToken();
     }
 
-    await confirmOutputDirectoriesForEligibleGenerators({
-        project,
-        groupNames,
-        generatorName,
-        generatorIndex,
-        automation,
-        cliContext,
-        force
-    });
-
-    cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: resolvePosthogCommandLabel(automation),
-        properties: {
-            workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
-        }
-    });
-
     // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
     // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
     // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
@@ -187,6 +169,24 @@ export async function generateAPIWorkspaces({
             );
         }
     }
+
+    await confirmOutputDirectoriesForEligibleGenerators({
+        project,
+        resolvedGroupNamesByWorkspace,
+        generatorName,
+        generatorIndex,
+        automation,
+        cliContext,
+        force
+    });
+
+    cliContext.instrumentPostHogEvent({
+        orgId: project.config.organization,
+        command: resolvePosthogCommandLabel(automation),
+        properties: {
+            workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
+        }
+    });
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -332,57 +332,84 @@ export function resolveGroupsForSdkConfig({
         }
         return [{ groupName: group.groupName, languages: new Set(languages) }];
     });
-    const uncovered = new Set(requestedLanguages);
-    const selected: string[] = [];
-
-    while (uncovered.size > 0) {
-        const eligibleCandidates = candidates
-            .filter(({ groupName, languages }) => {
-                return (
-                    !selected.includes(groupName) &&
-                    [...languages].every((language) => uncovered.has(language)) &&
-                    [...languages].some((language) => uncovered.has(language))
-                );
-            })
-            .sort(
-                (left, right) =>
-                    right.languages.size - left.languages.size ||
-                    Number(right.groupName === generatorsConfiguration.defaultGroup) -
-                        Number(left.groupName === generatorsConfiguration.defaultGroup) ||
-                    left.groupName.localeCompare(right.groupName)
-            );
-        let candidate = eligibleCandidates[0];
-        if (candidate == null) {
-            return context.failAndThrow(
-                `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
-        const candidateLanguages = candidate.languages;
-        const equivalentCandidates = eligibleCandidates.filter(
-            ({ languages }) =>
-                languages.size === candidateLanguages.size &&
-                [...languages].every((language) => candidateLanguages.has(language))
+    const exactCovers = findMinimalExactGroupCovers(candidates, requestedLanguages);
+    if (exactCovers.length === 0) {
+        return context.failAndThrow(
+            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
-        const defaultCandidate = equivalentCandidates.find(
-            ({ groupName }) => groupName === generatorsConfiguration.defaultGroup
-        );
-        if (equivalentCandidates.length > 1 && defaultCandidate == null) {
-            return context.failAndThrow(
-                `SDK Config v1 targets (${[...candidate.languages].join(", ")}) match multiple generator groups: ${equivalentCandidates.map(({ groupName }) => groupName).join(", ")}. Pass --group explicitly.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
-        candidate = defaultCandidate ?? candidate;
-        selected.push(candidate.groupName);
-        for (const language of candidate.languages) {
-            uncovered.delete(language);
-        }
     }
+    const coversWithDefault = exactCovers.filter((cover) =>
+        cover.some(({ groupName }) => groupName === generatorsConfiguration.defaultGroup)
+    );
+    const preferredCovers = coversWithDefault.length > 0 ? coversWithDefault : exactCovers;
+    if (preferredCovers.length > 1) {
+        const descriptions = preferredCovers
+            .map((cover) =>
+                cover
+                    .map(({ groupName }) => groupName)
+                    .sort()
+                    .join(" + ")
+            )
+            .sort()
+            .join("; ");
+        return context.failAndThrow(
+            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) match multiple generator group combinations: ${descriptions}. Pass --group explicitly.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return (preferredCovers[0] ?? []).map(({ groupName }) => groupName).sort();
+}
 
-    return selected;
+interface SdkConfigGroupCandidate {
+    groupName: string;
+    languages: Set<string>;
+}
+
+function findMinimalExactGroupCovers(
+    candidates: SdkConfigGroupCandidate[],
+    requestedLanguages: Set<string>
+): SdkConfigGroupCandidate[][] {
+    const sortedCandidates = [...candidates].sort((left, right) => left.groupName.localeCompare(right.groupName));
+    let minimumGroupCount = Number.POSITIVE_INFINITY;
+    let covers: SdkConfigGroupCandidate[][] = [];
+
+    const visit = (uncovered: Set<string>, selected: SdkConfigGroupCandidate[]): void => {
+        if (uncovered.size === 0) {
+            if (selected.length < minimumGroupCount) {
+                minimumGroupCount = selected.length;
+                covers = [[...selected]];
+            } else if (selected.length === minimumGroupCount) {
+                covers.push([...selected]);
+            }
+            return;
+        }
+        if (selected.length >= minimumGroupCount) {
+            return;
+        }
+        const nextLanguage = [...uncovered].sort()[0];
+        if (nextLanguage == null) {
+            return;
+        }
+        for (const candidate of sortedCandidates) {
+            if (
+                !candidate.languages.has(nextLanguage) ||
+                [...candidate.languages].some((language) => !uncovered.has(language))
+            ) {
+                continue;
+            }
+            const remaining = new Set(uncovered);
+            for (const language of candidate.languages) {
+                remaining.delete(language);
+            }
+            visit(remaining, [...selected, candidate]);
+        }
+    };
+
+    visit(new Set(requestedLanguages), []);
+    return covers;
 }
 
 /**
@@ -394,7 +421,7 @@ export function resolveGroupsForSdkConfig({
  */
 async function confirmOutputDirectoriesForEligibleGenerators({
     project,
-    groupNames,
+    resolvedGroupNamesByWorkspace,
     generatorName,
     generatorIndex,
     automation,
@@ -402,7 +429,7 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force
 }: {
     project: Project;
-    groupNames: string[] | undefined;
+    resolvedGroupNamesByWorkspace: Map<AbstractAPIWorkspace<unknown>, string[]>;
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     automation: AutomationRunOptions | undefined;
@@ -410,12 +437,14 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force: boolean;
 }): Promise<void> {
     for (const workspace of project.apiWorkspaces) {
-        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
+        const resolvedGroupNames = resolvedGroupNamesByWorkspace.get(workspace);
         const rootAutorelease = workspace.generatorsConfiguration?.rawConfiguration.autorelease;
         const groupsInScope =
-            workspace.generatorsConfiguration?.groups.filter(
-                (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
-            ) ?? [];
+            resolvedGroupNames == null
+                ? []
+                : (workspace.generatorsConfiguration?.groups.filter((group) =>
+                      resolvedGroupNames.includes(group.groupName)
+                  ) ?? []);
         for (const group of groupsInScope) {
             const filterResult = filterGenerators({
                 generators: group.generators,

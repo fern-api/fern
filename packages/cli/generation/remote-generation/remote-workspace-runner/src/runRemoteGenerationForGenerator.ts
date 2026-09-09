@@ -321,6 +321,7 @@ export async function runRemoteGenerationForGenerator({
                 generatorInvocation: candidate.generatorInvocation,
                 sdkName: sdkConfigTarget.sdkName ?? sdkConfigV1.sdkName,
                 sdkVersion: candidate.sdkVersion,
+                apiVersion: sdkConfigV1.apiVersion,
                 token,
                 specsTarGzBuffer: candidate.specsTarGzBuffer,
                 payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.body },
