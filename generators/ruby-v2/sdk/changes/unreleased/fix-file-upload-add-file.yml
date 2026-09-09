@@ -4,6 +4,7 @@
     add one part per file, and declared MIME types are forwarded as `content_type:`.
     `FormData#add_file` also accepts a file path `String` (matching the generated method
     signatures), reading the file contents and deriving the filename from the path.
-    Non-file multipart properties are now added when the key is present (`params.key?`),
-    so `false` and `0` values are no longer silently dropped.
+    Non-file multipart properties are now added unless the value is `nil`, so `false` and
+    `0` are no longer silently dropped while an explicitly-passed `nil` is still omitted
+    rather than sent as an empty part.
   type: fix

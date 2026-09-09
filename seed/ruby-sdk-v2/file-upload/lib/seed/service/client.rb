@@ -23,13 +23,13 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params.key?(:maybe_string)
+        unless params[:maybe_string].nil?
           body.add(
             name: "maybe_string",
             value: params[:maybe_string]
           )
         end
-        if params.key?(:integer)
+        unless params[:integer].nil?
           body.add(
             name: "integer",
             value: params[:integer]
@@ -59,55 +59,55 @@ module Seed
             file: file
           )
         end
-        if params.key?(:maybe_integer)
+        unless params[:maybe_integer].nil?
           body.add(
             name: "maybe_integer",
             value: params[:maybe_integer]
           )
         end
-        if params.key?(:optional_list_of_strings)
+        unless params[:optional_list_of_strings].nil?
           body.add(
             name: "optional_list_of_strings",
             value: params[:optional_list_of_strings]
           )
         end
-        if params.key?(:list_of_objects)
+        unless params[:list_of_objects].nil?
           body.add(
             name: "list_of_objects",
             value: params[:list_of_objects]
           )
         end
-        if params.key?(:optional_metadata)
+        unless params[:optional_metadata].nil?
           body.add(
             name: "optional_metadata",
             value: params[:optional_metadata]
           )
         end
-        if params.key?(:optional_object_type)
+        unless params[:optional_object_type].nil?
           body.add(
             name: "optional_object_type",
             value: params[:optional_object_type]
           )
         end
-        if params.key?(:optional_id)
+        unless params[:optional_id].nil?
           body.add(
             name: "optional_id",
             value: params[:optional_id]
           )
         end
-        if params.key?(:alias_object)
+        unless params[:alias_object].nil?
           body.add(
             name: "alias_object",
             value: params[:alias_object]
           )
         end
-        if params.key?(:list_of_alias_object)
+        unless params[:list_of_alias_object].nil?
           body.add(
             name: "list_of_alias_object",
             value: params[:list_of_alias_object]
           )
         end
-        if params.key?(:alias_list_of_object)
+        unless params[:alias_list_of_object].nil?
           body.add(
             name: "alias_list_of_object",
             value: params[:alias_list_of_object]
@@ -280,20 +280,20 @@ module Seed
             content_type: "application/octet-stream"
           )
         end
-        if params.key?(:foo)
+        unless params[:foo].nil?
           body.add(
             name: "foo",
             value: params[:foo]
           )
         end
-        if params.key?(:bar)
+        unless params[:bar].nil?
           body.add(
             name: "bar",
             value: JSON.generate(Seed::Service::Types::MyObject.new(params[:bar]).to_h),
             content_type: "application/json"
           )
         end
-        if params.key?(:foo_bar)
+        unless params[:foo_bar].nil?
           body.add(
             name: "foo_bar",
             value: JSON.generate(params[:foo_bar]),
@@ -340,13 +340,13 @@ module Seed
             content_type: "application/octet-stream"
           )
         end
-        if params.key?(:foo)
+        unless params[:foo].nil?
           body.add(
             name: "foo",
             value: params[:foo]
           )
         end
-        if params.key?(:bar)
+        unless params[:bar].nil?
           body.add(
             name: "bar",
             value: params[:bar]
@@ -385,13 +385,13 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params.key?(:maybe_string)
+        unless params[:maybe_string].nil?
           body.add(
             name: "maybe_string",
             value: params[:maybe_string]
           )
         end
-        if params.key?(:integer)
+        unless params[:integer].nil?
           body.add(
             name: "integer",
             value: params[:integer]
@@ -421,61 +421,61 @@ module Seed
             file: file
           )
         end
-        if params.key?(:maybe_integer)
+        unless params[:maybe_integer].nil?
           body.add(
             name: "maybe_integer",
             value: params[:maybe_integer]
           )
         end
-        if params.key?(:optional_list_of_strings)
+        unless params[:optional_list_of_strings].nil?
           body.add(
             name: "optional_list_of_strings",
             value: params[:optional_list_of_strings]
           )
         end
-        if params.key?(:list_of_objects)
+        unless params[:list_of_objects].nil?
           body.add(
             name: "list_of_objects",
             value: params[:list_of_objects]
           )
         end
-        if params.key?(:optional_metadata)
+        unless params[:optional_metadata].nil?
           body.add(
             name: "optional_metadata",
             value: params[:optional_metadata]
           )
         end
-        if params.key?(:optional_object_type)
+        unless params[:optional_object_type].nil?
           body.add(
             name: "optional_object_type",
             value: params[:optional_object_type]
           )
         end
-        if params.key?(:optional_id)
+        unless params[:optional_id].nil?
           body.add(
             name: "optional_id",
             value: params[:optional_id]
           )
         end
-        if params.key?(:list_of_objects_with_optionals)
+        unless params[:list_of_objects_with_optionals].nil?
           body.add(
             name: "list_of_objects_with_optionals",
             value: params[:list_of_objects_with_optionals]
           )
         end
-        if params.key?(:alias_object)
+        unless params[:alias_object].nil?
           body.add(
             name: "alias_object",
             value: params[:alias_object]
           )
         end
-        if params.key?(:list_of_alias_object)
+        unless params[:list_of_alias_object].nil?
           body.add(
             name: "list_of_alias_object",
             value: params[:list_of_alias_object]
           )
         end
-        if params.key?(:alias_list_of_object)
+        unless params[:alias_list_of_object].nil?
           body.add(
             name: "alias_list_of_object",
             value: params[:alias_list_of_object]
@@ -524,7 +524,7 @@ module Seed
             content_type: "image/jpeg"
           )
         end
-        if params.key?(:request)
+        unless params[:request].nil?
           body.add(
             name: "request",
             value: JSON.generate(params[:request]),
@@ -570,7 +570,7 @@ module Seed
             file: params[:file]
           )
         end
-        if params.key?(:request)
+        unless params[:request].nil?
           body.add(
             name: "request",
             value: params[:request]
@@ -615,7 +615,7 @@ module Seed
             file: params[:file]
           )
         end
-        if params.key?(:json)
+        unless params[:json].nil?
           body.add(
             name: "json",
             value: params[:json]
@@ -664,7 +664,7 @@ module Seed
             content_type: "image/jpeg"
           )
         end
-        if params.key?(:request)
+        unless params[:request].nil?
           body.add(
             name: "request",
             value: JSON.generate(Seed::Service::Types::MyObject.new(params[:request]).to_h),
@@ -741,19 +741,19 @@ module Seed
             file: params[:file]
           )
         end
-        if params.key?(:model_type)
+        unless params[:model_type].nil?
           body.add(
             name: "model_type",
             value: params[:model_type]
           )
         end
-        if params.key?(:open_enum)
+        unless params[:open_enum].nil?
           body.add(
             name: "open_enum",
             value: params[:open_enum]
           )
         end
-        if params.key?(:maybe_name)
+        unless params[:maybe_name].nil?
           body.add(
             name: "maybe_name",
             value: params[:maybe_name]

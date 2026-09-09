@@ -103,9 +103,14 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                     const snakeCaseName = this.case.snakeSafe(property.name);
                     writer.writeNode(
                         ruby.ifElse({
+                            // Guard on `.nil?` rather than truthiness (which would drop a
+                            // legitimate `false`/`0`) or `params.key?` (which would emit an
+                            // empty part for an explicitly-passed `nil`, since multipart has
+                            // no null representation and `nil.to_s` encodes as "").
+                            negated: true,
                             if: {
                                 condition: ruby.codeblock((writer) => {
-                                    writer.write(`params.key?(:${snakeCaseName})`);
+                                    writer.write(`params[:${snakeCaseName}].nil?`);
                                 }),
                                 thenBody: [
                                     ruby.codeblock((writer) => {

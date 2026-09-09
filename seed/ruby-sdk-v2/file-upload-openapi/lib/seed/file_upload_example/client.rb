@@ -28,7 +28,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params.key?(:name)
+        unless params[:name].nil?
           body.add(
             name: "name",
             value: params[:name]
