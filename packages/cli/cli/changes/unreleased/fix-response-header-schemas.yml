@@ -3,7 +3,7 @@
 - summary: |
     Convert OpenAPI response header schemas (including header `content` schemas when
     `respect-parameter-content` is enabled) into typed references instead of collapsing
-    them to optional<string>. Object, enum, array, and $ref'd response headers now carry
+    them to `optional<string>`. Object, enum, array, and `$ref` response headers now carry
     their schema into IR, so docs render expandable schema properties on response headers
     just like request headers.
   type: fix

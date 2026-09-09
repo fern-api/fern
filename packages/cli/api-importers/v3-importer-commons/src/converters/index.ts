@@ -1,6 +1,6 @@
 export * as AbstractConverters from "./abstract/index.js";
 export { ExampleConverter } from "./ExampleConverter.js";
-export { convertResponseHeaders } from "./ResponseHeaderConverter.js";
 export type { ResponseHeaderConverter } from "./ResponseHeaderConverter.js";
+export { convertResponseHeaders } from "./ResponseHeaderConverter.js";
 export * as SchemaConverters from "./schema/index.js";
 export { ServersConverter } from "./servers/ServersConverter.js";
