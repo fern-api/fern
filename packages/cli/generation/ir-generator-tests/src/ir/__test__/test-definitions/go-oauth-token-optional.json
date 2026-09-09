@@ -182,6 +182,7 @@
                     "refreshEndpoint": null
                 },
                 "key": "OAuthScheme",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

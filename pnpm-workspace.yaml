@@ -30,6 +30,7 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "@postman/*"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -61,13 +62,13 @@ catalog:
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 1.2.102-07ddc01b9b
+  "@fern-api/fdr-sdk": 1.2.122-10cd6e7ad7
   "@fern-api/generator-cli": 0.9.53
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 5.0.0
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 1.1.0
+  "@fern-fern/fiddle-sdk": 1.2.0
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -263,7 +264,7 @@ overrides:
   minimatch: ">=10.2.3"
   qs: 6.15.2
   url-join: ^4.0.1
-  "@fern-api/fdr-sdk": 1.2.102-07ddc01b9b
+  "@fern-api/fdr-sdk": 1.2.122-10cd6e7ad7
   form-data: ^4.0.6
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.5

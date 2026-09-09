@@ -645,7 +645,16 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.ParameterObject;
         breadcrumbs: string[];
     }): Availability | undefined {
+        const visitedReferences = new Set<string>();
         while (this.isReferenceObject(node)) {
+            const declared = this.getDeclaredAvailability({ node, breadcrumbs });
+            if (declared != null) {
+                return declared;
+            }
+            if (visitedReferences.has(node.$ref)) {
+                return undefined;
+            }
+            visitedReferences.add(node.$ref);
             const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: node });
             if (!resolved.resolved) {
                 return undefined;
@@ -653,6 +662,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
             node = resolved.value;
         }
 
+        return this.getDeclaredAvailability({ node, breadcrumbs });
+    }
+
+    /**
+     * Reads the availability declared directly on a node, without resolving references.
+     * Annotations written alongside a `$ref` describe that particular usage, so callers
+     * consult them before falling back to the referenced schema.
+     */
+    private getDeclaredAvailability({
+        node,
+        breadcrumbs
+    }: {
+        node: object;
+        breadcrumbs: string[];
+    }): Availability | undefined {
         const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
             breadcrumbs,
@@ -666,7 +690,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             };
         }
 
-        if (node.deprecated === true) {
+        if (isMarkedDeprecated(node)) {
             return {
                 status: AvailabilityStatus.Deprecated,
                 message: undefined
@@ -910,4 +934,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
         return schema.type === "object" || schema.properties != null;
     }
+}
+
+function isMarkedDeprecated(node: object): boolean {
+    return "deprecated" in node && node.deprecated === true;
 }

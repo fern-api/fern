@@ -1,0 +1,14 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "license_header": "Copyright 2024 Acme, Inc.\nLicensed under the Apache License, Version 2.0.\n",
+    "package_path": "matryoshka/doll/structure"
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

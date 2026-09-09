@@ -37,9 +37,7 @@ impl WithLiteralAndEnumTypesRequest {
         }
 
         if let Some(ref value) = self.maybe_name {
-            if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("maybe_name", json_str);
-            }
+            form = form.text("maybe_name", value.clone());
         }
 
         form

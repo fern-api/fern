@@ -74,7 +74,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (response.ok) {
                 return {
                     type: this.wrapTypeReference(response.reference),
-                    inlinedTypes: response.inlinedTypes ?? {}
+                    inlinedTypes: response.inlinedTypes ?? {},
+                    availability: this.context.getAvailability({
+                        node: schemaOrReference,
+                        breadcrumbs: this.breadcrumbs
+                    })
                 };
             }
         }
@@ -97,7 +101,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(allOfReference)
                     };
                 }
             }
@@ -108,7 +113,9 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         // remaining elements are inline primitive constraints (no properties, no enum,
         // no composition keywords, no additional validation rules), reference the $ref
         // type directly instead of creating a synthetic merged copy.
-        const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
+        const refElements = this.schemaOrReference.allOf.filter((s): s is OpenAPIV3_1.ReferenceObject =>
+            this.context.isReferenceObject(s)
+        );
         const inlineElements = this.schemaOrReference.allOf.filter(
             (s): s is OpenAPIV3_1.SchemaObject =>
                 typeof s === "object" && s !== null && !this.context.isReferenceObject(s)
@@ -130,19 +137,49 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 !resolved.format
             ) {
                 const response = this.context.convertReferenceToTypeReference({
-                    reference: singleRef as OpenAPIV3_1.ReferenceObject,
+                    reference: singleRef,
                     breadcrumbs: this.breadcrumbs
                 });
                 if (response.ok) {
                     return {
                         type: this.wrapTypeReference(response.reference),
-                        inlinedTypes: response.inlinedTypes ?? {}
+                        inlinedTypes: response.inlinedTypes ?? {},
+                        availability: this.getAvailabilityOfSelfOrReference(singleRef)
                     };
                 }
             }
         }
 
         return undefined;
+    }
+
+    /**
+     * Availability declared alongside the `allOf` takes precedence over the availability
+     * of the referenced schema, since the outer schema is the more specific declaration.
+     * Inline `allOf` siblings are consulted next: when the sibling carries nothing but
+     * metadata we short-circuit to the `$ref`, so a `deprecated` written there would
+     * otherwise be dropped.
+     */
+    private getAvailabilityOfSelfOrReference(reference: OpenAPIV3_1.ReferenceObject): Availability | undefined {
+        for (const node of [...this.getSelfAndInlineAllOfElements(), reference]) {
+            const availability = this.context.getAvailability({ node, breadcrumbs: this.breadcrumbs });
+            if (availability != null) {
+                return availability;
+            }
+        }
+        return undefined;
+    }
+
+    private getSelfAndInlineAllOfElements(): (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] {
+        if (this.context.isReferenceObject(this.schemaOrReference) || this.schemaOrReference.allOf == null) {
+            return [this.schemaOrReference];
+        }
+        return [
+            this.schemaOrReference,
+            ...this.schemaOrReference.allOf.filter(
+                (element): element is OpenAPIV3_1.SchemaObject => !this.context.isReferenceObject(element)
+            )
+        ];
     }
 
     private convertSchemaObject({

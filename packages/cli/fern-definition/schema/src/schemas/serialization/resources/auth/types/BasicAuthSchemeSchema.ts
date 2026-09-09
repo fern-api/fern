@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { AuthVariable } from "./AuthVariable.js";
+import { WithPlaygroundDocsSchema } from "./WithPlaygroundDocsSchema.js";
 
 export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.BasicAuthSchemeSchema.Raw,
@@ -15,10 +16,11 @@ export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
         username: AuthVariable.optional(),
         password: AuthVariable.optional(),
     })
-    .extend(WithDocsSchema);
+    .extend(WithDocsSchema)
+    .extend(WithPlaygroundDocsSchema);
 
 export declare namespace BasicAuthSchemeSchema {
-    export interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithPlaygroundDocsSchema.Raw {
         scheme: "basic";
         username?: AuthVariable.Raw | null;
         password?: AuthVariable.Raw | null;

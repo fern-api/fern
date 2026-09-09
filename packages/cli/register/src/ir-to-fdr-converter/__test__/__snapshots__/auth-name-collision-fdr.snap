@@ -2,12 +2,14 @@
   "apiName": "Auth Name Collision Test API",
   "auth": {
     "description": "OpenAPI version of bearerAuth (should be different from generators.yml version)",
+    "playgroundDescription": undefined,
     "tokenName": "customToken",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "bearerAuth": {
       "description": "OpenAPI version of bearerAuth (should be different from generators.yml version)",
+      "playgroundDescription": undefined,
       "tokenName": "customToken",
       "type": "bearerAuth",
     },

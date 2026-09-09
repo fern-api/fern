@@ -86,6 +86,7 @@ export interface APIDefinitionSettings {
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
     preserveOneOfInAllOf: boolean | undefined;
+    anyOfSiblingPropertiesAsObject: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
@@ -106,6 +107,7 @@ export interface APIDefinitionSettings {
     respectParameterContent: boolean | undefined;
     respectPerSpecBasePath: boolean | undefined;
     respectOperationIdWordBoundaries: boolean | undefined;
+    namespacedErrors: boolean | undefined;
 }
 
 export interface GitSource {

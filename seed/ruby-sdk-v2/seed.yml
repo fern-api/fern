@@ -72,6 +72,12 @@ fixtures:
     - outputFolder: prefer-explicit-auth
       customConfig:
         preferExplicitAuth: true
+  bearer-token-environment-variable:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: respect-auth-scheme-names
+      customConfig:
+        respectAuthSchemeNames: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:

@@ -353,13 +353,20 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 }
 
 // WriteRequireMethod writes the require helper method for explicit field tracking.
+//
+// The bitmask is replaced rather than mutated in place. Because explicitFields is a
+// pointer, a value copy of the enclosing struct aliases the same big.Int, and an
+// in-place Or would make a setter on one copy visible in every other copy. Allocating
+// a new value gives each copy its own mask on first write.
 func (f *fileWriter) WriteRequireMethod(typeName string) {
 	receiver := typeNameToReceiver(typeName)
 	f.P("func (", receiver, " *", typeName, ") require(field *big.Int) {")
-	f.P("\tif ", receiver, ".explicitFields == nil {")
-	f.P("\t\t", receiver, ".explicitFields = big.NewInt(0)")
+	f.P("\tnext := new(big.Int)")
+	f.P("\tif ", receiver, ".explicitFields != nil {")
+	f.P("\t\tnext.Set(", receiver, ".explicitFields)")
 	f.P("\t}")
-	f.P("\t", receiver, ".explicitFields.Or(", receiver, ".explicitFields, field)")
+	f.P("\tnext.Or(next, field)")
+	f.P("\t", receiver, ".explicitFields = next")
 	f.P("}")
 	f.P()
 }

@@ -54,6 +54,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     typeDatesAsStrings: "typeDatesAsStrings",
     preserveSingleSchemaOneOf: "preserveSingleSchemaOneOf",
     preserveOneOfInAllOf: "preserveOneOfInAllOf",
+    anyOfSiblingPropertiesAsObject: "anyOfSiblingPropertiesAsObject",
     inlineAllOfSchemas: "inlineAllOfSchemas",
     resolveAliases: "resolveAliases",
     groupMultiApiEnvironments: "groupMultiApiEnvironments",
@@ -73,7 +74,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     ignoreTags: "ignoreTags",
     respectParameterContent: "respectParameterContent",
     respectPerSpecBasePath: "respectPerSpecBasePath",
-    respectOperationIdWordBoundaries: "respectOperationIdWordBoundaries"
+    respectOperationIdWordBoundaries: "respectOperationIdWordBoundaries",
+    namespacedErrors: "namespacedErrors"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

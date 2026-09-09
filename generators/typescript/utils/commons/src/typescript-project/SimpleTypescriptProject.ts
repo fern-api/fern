@@ -338,7 +338,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             draft["sideEffects"] = false;
         });
 
-        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
+        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs, this.extraConfigsMergeStrategy);
 
         await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }

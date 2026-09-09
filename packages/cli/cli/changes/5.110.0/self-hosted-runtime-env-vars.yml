@@ -1,0 +1,7 @@
+- summary: |
+    Add `FERN_RUNTIME_ENV_VARS`, which defers the listed environment variables past
+    generation for self-hosted docs. Instead of being substituted with their build-time
+    value, `${APP_SERVER}` is rewritten to a `FERN_SELF_HOSTED_ENV_APP_SERVER` placeholder
+    that the self-hosted container resolves on every request, so a single generated image
+    can serve deployments that differ only in those values.
+  type: feat

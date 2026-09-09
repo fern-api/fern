@@ -2,12 +2,14 @@
   "apiName": "Auth with Overrides Test API",
   "auth": {
     "description": undefined,
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "customAuth": {
       "description": undefined,
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },

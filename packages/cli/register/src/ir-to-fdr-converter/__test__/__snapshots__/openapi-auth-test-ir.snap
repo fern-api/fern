@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": "JWT Bearer token authentication",
         "key": "bearerAuth",
+        "playgroundDocs": undefined,
         "token": "token",
         "tokenEnvVar": undefined,
         "tokenPlaceholder": undefined,

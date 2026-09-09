@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.24.0
+  changelogEntry:
+    - summary: |
+        Added the `respectAuthSchemeNames` configuration option. With it enabled, credential
+        keyword arguments on the client follow the names configured on the auth schemes
+        (`token: { name: apiKey }` produces `api_key:` instead of `token:`), matching the
+        TypeScript and Python generators. Names that would shadow a built-in client keyword
+        (`base_url`, `environment`, `max_retries`, `app_info`, `client`, `request_options`) are
+        suffixed with `_auth`, and global headers that collide with a credential or built-in
+        keyword are prefixed with `header_`. The option defaults to `false`, since renaming a
+        keyword argument breaks callers of an already published gem; the default is expected to
+        flip in the next major version.
+      type: feat
+  createdAt: "2026-09-01"
+  irVersion: 67
 - version: 1.23.2
   changelogEntry:
     - summary: |

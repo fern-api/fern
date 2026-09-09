@@ -4,6 +4,7 @@ import inspect
 import json
 import logging
 import warnings
+import weakref
 from collections import defaultdict
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
@@ -212,6 +213,56 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
         return parse_obj_as(type_, sse_event)
 
 
+_field_alias_cache: "weakref.WeakKeyDictionary[type, Tuple[Dict[str, str], Tuple[str, ...]]]" = (
+    weakref.WeakKeyDictionary()
+)
+
+
+def _get_field_aliases(model: type) -> Tuple[Dict[str, str], Tuple[str, ...]]:
+    """
+    Map of field name to Pydantic alias for the fields whose alias differs from their name, together with the
+    keys that are ambiguous (an alias of one field and the name of another). Computed once per model class.
+    """
+    cached = _field_alias_cache.get(model)
+    if cached is None:
+        fields: Mapping[str, Any] = getattr(model, "__fields__", {})
+        name_to_alias: Dict[str, str] = {}
+        for name, field in fields.items():
+            alias = getattr(field, "alias", None)
+            if alias is not None and alias != name:
+                name_to_alias[name] = alias
+        cached = (name_to_alias, tuple(alias for alias in name_to_alias.values() if alias in fields))
+        _field_alias_cache[model] = cached
+    return cached
+
+
+def _coerce_keys_to_aliases(model: type, data: Any) -> Any:
+    """
+    Accept Python field names in input by rewriting them to their Pydantic aliases,
+    while avoiding silent collisions when a key could refer to multiple fields.
+    """
+    if not isinstance(data, Mapping):
+        return data
+
+    name_to_alias, ambiguous_keys = _get_field_aliases(model)
+    for key in ambiguous_keys:
+        if key in data and name_to_alias.get(key, key) not in data:
+            raise ValueError(
+                f"Ambiguous input key '{key}': it is both a field name and an alias. "
+                "Provide the explicit alias key to disambiguate."
+            )
+
+    if not name_to_alias or not any(name in data for name in name_to_alias):
+        return data if isinstance(data, dict) else dict(data)
+
+    rewritten: Dict[str, Any] = dict(data)
+    for name, alias in name_to_alias.items():
+        if name in data and alias not in rewritten:
+            rewritten[alias] = rewritten.pop(name)
+
+    return rewritten
+
+
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
     # convert_and_respect_annotation_metadata is required for TypedDict aliasing.
     #
@@ -220,13 +271,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
     # - If the model uses real Pydantic aliases (Field(alias=...)), pass wire keys through unchanged.
     # - If the model encodes aliasing only via FieldMetadata, pre-dealias before validation.
     if inspect.isclass(type_) and issubclass(type_, _PYDANTIC_V1_BASE_MODEL):
-        has_pydantic_aliases = False
-        for field in getattr(type_, "__fields__", {}).values():
-            alias = getattr(field, "alias", None)
-            name = getattr(field, "name", None)
-            if alias is not None and name is not None and alias != name:
-                has_pydantic_aliases = True
-                break
+        has_pydantic_aliases = bool(_get_field_aliases(type_)[0])
 
         dealiased_object = (
             object_
@@ -249,38 +294,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
 
     @pydantic.v1.root_validator(pre=True)
     def _coerce_field_names_to_aliases(cls, values: Any) -> Any:  # type: ignore[misc]
-        """
-        Accept Python field names in input by rewriting them to their Pydantic aliases,
-        while avoiding silent collisions when a key could refer to multiple fields.
-        """
-        if not isinstance(values, Mapping):
-            return values
-
-        fields = getattr(cls, "__fields__", {})
-        name_to_alias: Dict[str, str] = {}
-        alias_to_name: Dict[str, str] = {}
-
-        for name, field in fields.items():
-            alias = getattr(field, "alias", None) or name
-            name_to_alias[name] = alias
-            if alias != name:
-                alias_to_name[alias] = name
-
-        ambiguous_keys = set(alias_to_name.keys()).intersection(set(name_to_alias.keys()))
-        for key in ambiguous_keys:
-            if key in values and name_to_alias[key] not in values:
-                raise ValueError(
-                    f"Ambiguous input key '{key}': it is both a field name and an alias. "
-                    "Provide the explicit alias key to disambiguate."
-                )
-
-        original_keys = set(values.keys())
-        rewritten: Dict[str, Any] = dict(values)
-        for name, alias in name_to_alias.items():
-            if alias != name and name in original_keys and alias not in rewritten:
-                rewritten[alias] = rewritten.pop(name)
-
-        return rewritten
+        return _coerce_keys_to_aliases(cls, values)  # type: ignore[arg-type]
 
     @classmethod
     def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":  # type: ignore[misc]

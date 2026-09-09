@@ -132,6 +132,9 @@ types:
     properties:
       schema: optional<Schema>
       examples: optional<list<ErrorExample>>
+      namespace:
+        type: optional<string>
+        docs: Namespace declared via `x-fern-sdk-namespace` on the response object itself.
 
   Webhook:
     extends:

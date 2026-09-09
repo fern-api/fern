@@ -398,7 +398,8 @@ export function generateIr({
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
-                    examples
+                    examples,
+                    namespace: error.namespace
                 };
             }),
             retries: endpointWithExample.retries,

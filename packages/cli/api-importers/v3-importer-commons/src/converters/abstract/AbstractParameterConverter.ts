@@ -70,6 +70,8 @@ export abstract class AbstractParameterConverter<
 
         const parameterDefaultValue = resolvedParameterSchema?.default;
 
+        const docs = this.getParameterDescription({ schema });
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -79,7 +81,7 @@ export abstract class AbstractParameterConverter<
                             name: this.parameter.name,
                             wireValue: this.parameter.name
                         }),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
                         clientDefault: undefined,
@@ -100,7 +102,7 @@ export abstract class AbstractParameterConverter<
                             name: this.parameter.name,
                             wireValue: this.parameter.name
                         }),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
                         clientDefault: undefined,
@@ -117,7 +119,7 @@ export abstract class AbstractParameterConverter<
                     type: "path",
                     parameter: {
                         name: this.context.casingsGenerator.generateName(this.parameter.name),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
@@ -132,6 +134,25 @@ export abstract class AbstractParameterConverter<
             default:
                 return undefined;
         }
+    }
+
+    /**
+     * A parameter's description may be declared either on the parameter object or inside the
+     * parameter's schema; both are valid OpenAPI. For a `$ref` schema, only a sibling description on
+     * the reference itself counts; the referenced type's own description belongs to that type.
+     */
+    private getParameterDescription({
+        schema
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    }): string | undefined {
+        if (this.parameter.description != null) {
+            return this.parameter.description;
+        }
+        if ("description" in schema && typeof schema.description === "string") {
+            return schema.description;
+        }
+        return undefined;
     }
 
     private getParameterSchemaWithExampleOverride({

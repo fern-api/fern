@@ -63,4 +63,60 @@ describe("writeLicense", () => {
         await rm(LICENSE_MOUNT_PATH, { force: true });
         await expect(writeLicense({ outputDir, license: { type: "custom" } })).resolves.toBeUndefined();
     });
+
+    it("writes MIT text for a basic license", async () => {
+        // `license: MIT` in generators.yml mounts no file, so a repo publishing
+        // to npm as MIT shipped no LICENSE at all. Only the two SPDX ids Fern
+        // enumerates are possible, so carrying the text is bounded.
+        const written = await writeLicense({
+            outputDir,
+            license: { type: "basic", id: "MIT" },
+            copyrightHolder: "Acme <dev@acme.example>",
+            year: 2026
+        });
+        expect(written).toBe("LICENSE");
+        const text = await readFile(path.join(outputDir, "LICENSE"), "utf-8");
+        expect(text).toContain("MIT License");
+        expect(text).toContain("Copyright (c) 2026 Acme <dev@acme.example>");
+        expect(text).toContain('THE SOFTWARE IS PROVIDED "AS IS"');
+    });
+
+    it("does not let a $ in the holder be read as a capture reference", async () => {
+        // `String.prototype.replace` treats `$&`, `$\'` and `` $` `` in the
+        // *replacement* as references to the match. A string replacement
+        // therefore expanded `Acme $& Co` into `Acme {{HOLDER}} Co` — the
+        // placeholder leaking into the copyright line of a shipped LICENSE.
+        const written = await writeLicense({
+            outputDir,
+            license: { type: "basic", id: "MIT" },
+            copyrightHolder: "Acme $& Co and $` and $'",
+            year: 2026
+        });
+        expect(written).toBe("LICENSE");
+        const text = await readFile(path.join(outputDir, "LICENSE"), "utf-8");
+        expect(text).toContain("Copyright (c) 2026 Acme $& Co and $` and $'");
+        expect(text).not.toContain("{{HOLDER}}");
+    });
+
+    it("writes nothing for a basic license with no known copyright holder", async () => {
+        // A copyright line naming nobody is worse than no LICENSE.
+        await expect(
+            writeLicense({ outputDir, license: { type: "basic", id: "MIT" }, year: 2026 })
+        ).resolves.toBeUndefined();
+        await expect(readFile(path.join(outputDir, "LICENSE"), "utf-8")).rejects.toThrow();
+    });
+
+    it("leaves Apache-2.0 to an explicit custom license", async () => {
+        // ~11 KB of unmodified boilerplate, and the vendored runtime already
+        // ships a copy — emitting a second under the customer's name would
+        // misattribute it.
+        await expect(
+            writeLicense({
+                outputDir,
+                license: { type: "basic", id: "Apache-2.0" },
+                copyrightHolder: "Acme",
+                year: 2026
+            })
+        ).resolves.toBeUndefined();
+    });
 });

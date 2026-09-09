@@ -15,6 +15,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { createFernSourceArchiveResolver } from "../generate/createFernSourceArchiveResolver.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
 import {
@@ -312,7 +313,12 @@ export async function sdkPreview({
                             absolutePathToPreview: absolutePathToOutput,
                             isPreview: true,
                             fiddlePreview: false,
-                            pushPreviewBranch: false
+                            pushPreviewBranch: false,
+                            getSpecsTarGzBuffer: createFernSourceArchiveResolver({
+                                workspace,
+                                context,
+                                group: publishGroup
+                            })
                         });
                     });
 
@@ -333,7 +339,12 @@ export async function sdkPreview({
                                     absolutePathToPreview: undefined,
                                     isPreview: true,
                                     fiddlePreview: true,
-                                    pushPreviewBranch: true
+                                    pushPreviewBranch: true,
+                                    getSpecsTarGzBuffer: createFernSourceArchiveResolver({
+                                        workspace,
+                                        context,
+                                        group: diffGroup
+                                    })
                                 });
                             });
                         }

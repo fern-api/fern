@@ -19,6 +19,7 @@
           "name": "apiKey",
           "wireValue": "x-coinflow-auth-wallet",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -53,6 +54,7 @@
           "name": "apiKey",
           "wireValue": "x-coinflow-auth-blockchain",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -87,6 +89,7 @@
           "name": "apiKey",
           "wireValue": "x-coinflow-auth-user-id",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -121,6 +124,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -155,6 +159,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {

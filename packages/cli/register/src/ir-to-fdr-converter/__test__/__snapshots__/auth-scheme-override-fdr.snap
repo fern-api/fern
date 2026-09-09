@@ -2,12 +2,14 @@
   "apiName": "Auth Scheme Override Test API",
   "auth": {
     "description": undefined,
+    "playgroundDescription": undefined,
     "tokenName": "apiKey",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "bearerAuth": {
       "description": undefined,
+      "playgroundDescription": undefined,
       "tokenName": "apiKey",
       "type": "bearerAuth",
     },

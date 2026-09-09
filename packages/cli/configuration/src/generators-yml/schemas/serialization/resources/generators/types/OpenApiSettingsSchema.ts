@@ -31,6 +31,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "type-dates-as-strings": core.serialization.boolean().optional(),
         "preserve-single-schema-oneof": core.serialization.boolean().optional(),
         "preserve-one-of-in-all-of": core.serialization.boolean().optional(),
+        "any-of-sibling-properties-as-object": core.serialization.boolean().optional(),
         "inline-all-of-schemas": core.serialization.boolean().optional(),
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
@@ -41,6 +42,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "respect-parameter-content": core.serialization.boolean().optional(),
         "respect-per-spec-base-path": core.serialization.boolean().optional(),
         "respect-operation-id-word-boundaries": core.serialization.boolean().optional(),
+        "namespaced-errors": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -62,6 +64,7 @@ export declare namespace OpenApiSettingsSchema {
         "type-dates-as-strings"?: boolean | null;
         "preserve-single-schema-oneof"?: boolean | null;
         "preserve-one-of-in-all-of"?: boolean | null;
+        "any-of-sibling-properties-as-object"?: boolean | null;
         "inline-all-of-schemas"?: boolean | null;
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
@@ -72,5 +75,6 @@ export declare namespace OpenApiSettingsSchema {
         "respect-parameter-content"?: boolean | null;
         "respect-per-spec-base-path"?: boolean | null;
         "respect-operation-id-word-boundaries"?: boolean | null;
+        "namespaced-errors"?: boolean | null;
     }
 }

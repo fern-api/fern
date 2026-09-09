@@ -5,4 +5,6 @@ import type * as FernOpenapiIr from "../../../index.js";
 export interface HttpError extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithName, FernOpenapiIr.WithSource {
     schema: FernOpenapiIr.Schema | undefined;
     examples: FernOpenapiIr.ErrorExample[] | undefined;
+    /** Namespace declared via `x-fern-sdk-namespace` on the response object itself. */
+    namespace: string | undefined;
 }

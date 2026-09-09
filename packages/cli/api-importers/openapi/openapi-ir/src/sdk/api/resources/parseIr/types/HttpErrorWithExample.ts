@@ -9,4 +9,6 @@ export interface HttpErrorWithExample
     statusCode: FernOpenapiIr.StatusCode;
     schema: FernOpenapiIr.SchemaWithExample;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
+    /** Namespace declared via `x-fern-sdk-namespace` on the response object itself. */
+    namespace: string | undefined;
 }

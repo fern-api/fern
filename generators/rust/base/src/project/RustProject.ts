@@ -189,9 +189,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{SERDE_ERROR_IMPORT\}\}/g, "");
         }
 
-        // Conditionally include base64 import in http_client (base64 method, or basic
-        // auth encoding in per-endpoint auth routing).
-        if (this.context.usesBase64() || (this.context.isEndpointSecurity() && this.context.hasBasicAuthScheme())) {
+        // Conditionally include base64 import in http_client (base64 method, or basic auth
+        // encoding - which BOTH auth paths do, per-endpoint routing and the flat application).
+        if (this.context.usesBase64() || this.context.hasBasicAuthScheme()) {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "use base64::Engine;\n");
         } else {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "");
@@ -337,16 +337,22 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{MULTIPART_METHOD\}\}/g, "");
         }
 
-        // Conditionally include bytes request method in http_client
-        if (this.context.hasBytesEndpoints()) {
+        // Conditionally include the form-urlencoded request method. Emitted only when an
+        // endpoint declares that media type, so an SDK that never does is unchanged.
+        if (this.context.hasFormUrlEncodedEndpoints()) {
             content = content.replace(
-                /\{\{BYTES_METHOD\}\}/g,
-                `    /// Execute a request with a raw bytes body (application/octet-stream).
-    pub async fn execute_bytes_request<T>(
+                /\{\{FORM_METHOD\}\}/g,
+                `    /// Execute a request whose body is \`application/x-www-form-urlencoded\`.
+    ///
+    /// The body is FORM-encoded, not JSON under a form label: \`.form()\` both serializes the
+    /// pairs and sets the header, where \`.json()\` would send a JSON document and stamp
+    /// \`application/json\` over the declared type. That is why this needs its own method rather
+    /// than the header override \`execute_request_with_content_type\` provides.
+    pub async fn execute_form_request<T>(
         &self,
         method: Method,
         path: &str,
-        body: Option<Vec<u8>>,
+        body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
@@ -367,9 +373,106 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         if let Some(body) = body {
-            request = request
-                .header("Content-Type", "application/octet-stream")
-                .body(body);
+            request = request.form(&body);
+        }
+
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        let response = self.send_request(req, &options).await?;
+        self.parse_response(response).await
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{FORM_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include the non-default-JSON-content-type request method. Emitted only
+        // when an endpoint declares one, so the 130-odd SDKs that never need it are unchanged.
+        if (this.context.hasNonDefaultJsonContentTypeEndpoints()) {
+            content = content.replace(
+                /\{\{CONTENT_TYPE_METHOD\}\}/g,
+                `    /// Execute a request whose JSON body is sent under a media type OTHER than
+    /// \`application/json\` -- a vendor type like \`application/vnd.foo+json\`, or
+    /// \`application/merge-patch+json\`. The body is serialized exactly as \`execute_request\` does;
+    /// only the declared header differs, which is the whole difference those media types express.
+    pub async fn execute_request_with_content_type<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        content_type: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            // \`.json()\` would stamp \`application/json\` over the declared type, so the body is
+            // serialized by hand and the header set explicitly.
+            let encoded = serde_json::to_vec(&body).map_err(ApiError::Serialization)?;
+            request = request.header("Content-Type", content_type).body(encoded);
+        }
+
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        let response = self.send_request(req, &options).await?;
+        self.parse_response(response).await
+    }
+`
+            );
+        } else {
+            content = content.replace(/\{\{CONTENT_TYPE_METHOD\}\}/g, "");
+        }
+
+        // Conditionally include bytes request method in http_client
+        if (this.context.hasBytesEndpoints()) {
+            content = content.replace(
+                /\{\{BYTES_METHOD\}\}/g,
+                `    /// Execute a request with a raw bytes body, sent under the content type the
+    /// endpoint declares.
+    pub async fn execute_bytes_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<Vec<u8>>,
+        query_params: Option<Vec<(String, String)>>,
+        content_type: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.header("Content-Type", content_type).body(body);
         }
 
         let req = request.build().map_err(|e| ApiError::Network(e))?;
@@ -758,6 +861,35 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     }
 
     /**
+     * `Authorization: Basic <base64(user:pass)>` for the flat auth path.
+     *
+     * Without this, an API whose only scheme is basic auth sent NO credential at all: the flat
+     * path applied an API key and a bearer token, `username`/`password` sat unread on the config,
+     * and the one `Authorization` header in the generated client was gated on `config.token`,
+     * which such an API never sets. `seed/rust-sdk/basic-auth` shipped in exactly that state.
+     */
+    private generateFlatBasicAuthApplication(): string {
+        if (!this.context.hasBasicAuthScheme()) {
+            return "";
+        }
+        return `
+        // Basic auth resolves to \`Authorization: Basic <base64(user:pass)>\`. Applied before the
+        // bearer branch below, which overwrites the same header when a token is also configured.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded =
+                base64::engine::general_purpose::STANDARD.encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            headers.insert(
+                "Authorization",
+                basic_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+        }
+`;
+    }
+
+    /**
      * The body of `HttpClient::apply_auth_headers`. In the default (ALL/ANY) case this is
      * the flat auth application (API key + bearer/OAuth token) that applies all configured
      * credentials to every request. In endpoint-security mode auth is resolved per-endpoint
@@ -773,7 +905,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         Ok(())`;
         }
         return `        let headers = request.headers_mut();
-
+${this.generateFlatBasicAuthApplication()}
         // Apply API key (request options override config)
         let api_key = options
             .as_ref()

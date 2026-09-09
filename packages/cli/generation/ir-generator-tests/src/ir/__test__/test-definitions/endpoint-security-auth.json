@@ -15,6 +15,7 @@
                 "tokenEnvVar": "MY_TOKEN",
                 "tokenPlaceholder": null,
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -38,6 +39,7 @@
                 "headerEnvVar": "MY_API_KEY",
                 "headerPlaceholder": null,
                 "key": "ApiKey",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -219,6 +221,7 @@
                     "refreshEndpoint": null
                 },
                 "key": "OAuth",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -232,6 +235,7 @@
                 "passwordOmit": null,
                 "passwordPlaceholder": null,
                 "key": "Basic",
+                "playgroundDocs": null,
                 "docs": null
             },
             {
@@ -300,6 +304,7 @@
                     ]
                 },
                 "key": "InferredAuth",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

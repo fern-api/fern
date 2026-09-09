@@ -9,6 +9,7 @@ import tmp from "tmp-promise";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
 import { JSR } from "./JSR.js";
+import { PackageJsonMergeStrategy } from "./mergeExtraConfigs.js";
 import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
 export declare namespace TypescriptProject {
@@ -24,6 +25,7 @@ export declare namespace TypescriptProject {
         npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
         extraConfigs: Record<string, unknown> | undefined;
+        extraConfigsMergeStrategy?: PackageJsonMergeStrategy;
         outputJsr: boolean;
         exportSerde: boolean;
         packagePath?: string;
@@ -105,6 +107,7 @@ export abstract class TypescriptProject {
     protected readonly npmPackage: NpmPackage | undefined;
     protected readonly dependencies: PackageDependencies;
     protected readonly extraConfigs: Record<string, unknown> | undefined;
+    protected readonly extraConfigsMergeStrategy: PackageJsonMergeStrategy;
     protected readonly outputJsr: boolean;
     protected readonly volume = new Volume();
     public readonly tsMorphProject: Project;
@@ -139,6 +142,7 @@ export abstract class TypescriptProject {
         outputJsr,
         exportSerde,
         extraConfigs,
+        extraConfigsMergeStrategy,
         packagePath,
         testPath,
         packageManager,
@@ -161,6 +165,7 @@ export abstract class TypescriptProject {
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
         this.extraConfigs = extraConfigs;
+        this.extraConfigsMergeStrategy = extraConfigsMergeStrategy ?? "shallow";
         this.packagePath = packagePath ?? TypescriptProject.DEFAULT_SRC_DIRECTORY;
         this.testPath = testPath;
         this.packageManager = packageManager;

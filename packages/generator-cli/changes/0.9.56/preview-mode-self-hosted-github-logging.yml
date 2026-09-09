@@ -1,0 +1,7 @@
+- summary: |
+    Self-hosted GitHub pull-request mode in preview mode now stops after the local commit with an INFO
+    message explaining that changes were committed locally and push/PR creation were skipped. The
+    existing-PR lookup is skipped only when preview mode has no GitHub token (where it was unauthenticated
+    and surfaced as rate-limit errors), so an authenticated preview still mirrors the branch a real run
+    would use.
+  type: fix

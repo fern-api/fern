@@ -14,6 +14,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { mergeSettings, parseOpenApiDefinitionSettingsSchema } from "@fern-api/configuration-loader";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
@@ -118,6 +119,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // This avoids running buf generate twice when both toFernWorkspace() and
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+    /** Guards the orphaned-`auth-schemes` warning so one command warns once. */
+    private hasWarnedOrphanedAuthSchemes = false;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
@@ -333,6 +336,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
+
+        // This gate reads `auth`, not `auth-schemes` — see
+        // `getOrphanedAuthSchemeWarning` for what that silently discards.
+        this.warnOnOrphanedAuthSchemes(context);
 
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
@@ -572,11 +579,43 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return results;
     }
 
+    /**
+     * Emit the orphaned-`auth-schemes` warning, at most once per workspace.
+     *
+     * Called from BOTH `toFernWorkspace` and `getIntermediateRepresentation`,
+     * because they are different entry points: `fern generate` and plain
+     * `fern check` go through the former, and only `fern check --from-openapi`
+     * reaches the latter (see `validateWorkspaces.ts`, where that branch is
+     * gated on `directFromOpenapi`). Warning from only one of them meant the
+     * customer who hits this bug — silently, on `fern generate` — saw nothing,
+     * which is the entire failure mode.
+     */
+    private warnOnOrphanedAuthSchemes(context: TaskContext): void {
+        if (this.hasWarnedOrphanedAuthSchemes) {
+            return;
+        }
+        const warning = getOrphanedAuthSchemeWarning(this.generatorsConfiguration?.api);
+        if (warning != null) {
+            this.hasWarnedOrphanedAuthSchemes = true;
+            context.logger.warn(warning);
+        }
+    }
+
     public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings,
         specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
+        // Before the `specsOverride` early return, not after: both generation
+        // paths pass `generatorInvocation.apiOverride?.specs` into this method
+        // (`runLocalGenerationForWorkspace.ts`, `runRemoteGenerationForAPIWorkspace.ts`),
+        // so warning after the return meant any generator declaring
+        // `apiOverride.specs` silently skipped it — the same class of
+        // unreachability this change set out to fix. Safe here: the override
+        // branch builds a temporary workspace and calls `getDefinition` on it,
+        // never `toFernWorkspace`, so this cannot double-warn through the copy.
+        this.warnOnOrphanedAuthSchemes(context);
+
         // If specs override is provided, create a temporary workspace with the override specs
         if (specsOverride != null) {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
@@ -611,6 +650,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cliVersion: this.cliVersion,
             sources: this.sources
         });
+    }
+
+    public async getAllSpecsForGenerator(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
+    ): Promise<Spec[]> {
+        if (specsOverride == null) {
+            return this.allSpecs;
+        }
+        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride);
+        return overrideSpecs.filter((spec) => spec.type !== "protobuf" || !spec.fromOpenAPI);
     }
 
     private async createWorkspaceWithSpecsOverride(
@@ -709,8 +758,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
                     absoluteFilepathToOverlays,
-                    // Use default settings from existing specs for compatibility
-                    settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
+                    settings: getOpenAPISettings({
+                        options: mergeSettings(
+                            this.generatorsConfiguration?.api?.settings ??
+                                parseOpenApiDefinitionSettingsSchema(undefined),
+                            parseOpenApiDefinitionSettingsSchema(spec.settings)
+                        )
+                    }),
                     source: {
                         type: "openapi",
                         file: absoluteFilepath
@@ -883,4 +937,47 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
         }
     }
     return undefined;
+}
+
+/**
+ * Warning text for an `auth-schemes` block that no `api.auth` selects, or
+ * `undefined` when the configuration is fine.
+ *
+ * `getIntermediateRepresentation` only reads the `auth-schemes` block when
+ * `api.auth` is set, so declaring schemes without selecting them discards the
+ * whole block — `env:` overrides included — before the importer sees it. The
+ * importer then re-derives auth from `components.securitySchemes`, which
+ * carries no environment variable, and each generator applies its own default
+ * name (the CLI generator `<BINARY>_TOKEN`). The result is a client reading an
+ * environment variable the user never configured.
+ *
+ * Nothing about the config is invalid, so `fern check` stays clean and
+ * generation succeeds — the bug is invisible by construction, which makes this
+ * warning the only thing between the user and that outcome. Hence it is pulled
+ * out here: the condition and the guidance are testable without standing up a
+ * workspace.
+ *
+ * Warning rather than widening the gate is deliberate. `buildAuthSchemes`
+ * returns early on the override path without selecting a scheme when `auth` is
+ * absent, so admitting this config there would trade a wrong environment
+ * variable for no auth at all; making it work needs the selection logic
+ * settled, which changes behavior for every generator.
+ */
+export function getOrphanedAuthSchemeWarning(api: generatorsYml.APIDefinition | undefined): string | undefined {
+    if (api?.auth != null) {
+        return undefined;
+    }
+    const names = Object.keys(api?.["auth-schemes"] ?? {});
+    const first = names[0];
+    if (first == null) {
+        return undefined;
+    }
+    return (
+        `generators.yml declares auth-schemes (${names.join(", ")}) but no \`api.auth\`, ` +
+        "so the entire auth-schemes block is ignored — including any `env:` overrides. " +
+        `Add \`auth: ${first}\` under \`api\`` +
+        (names.length > 1 ? ", or list them all under an `auth.any` key" : "") +
+        ". Without it, auth is re-derived from the spec's securitySchemes and each " +
+        "generator falls back to its own default environment variable name."
+    );
 }

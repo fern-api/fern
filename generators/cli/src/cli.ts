@@ -64,7 +64,8 @@ async function generate(configPath: string): Promise<void> {
                 outputConfig,
                 specsDir: process.env.FERN_SPECS_DIR,
                 sdkTemplateDir: process.env.FERN_SDK_TEMPLATE_DIR,
-                license: config.license
+                license: config.license,
+                organization: config.organization
             });
 
             if (outcome.status === "skipped") {

@@ -200,6 +200,7 @@ export class LegacyApiSpecAdapter {
             typeDatesAsStrings: settings.typeDatesAsStrings,
             preserveSingleSchemaOneOf: settings.preserveSingleSchemaOneof,
             preserveOneOfInAllOf: settings.preserveOneOfInAllOf,
+            anyOfSiblingPropertiesAsObject: settings.anyOfSiblingPropertiesAsObject,
             inlineAllOfSchemas: settings.inlineAllOfSchemas,
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
@@ -210,7 +211,8 @@ export class LegacyApiSpecAdapter {
             ignoreTags: settings["ignore-tags"],
             respectParameterContent: settings["respect-parameter-content"],
             respectPerSpecBasePath: settings["respect-per-spec-base-path"],
-            respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"]
+            respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
+            namespacedErrors: settings["namespaced-errors"]
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);

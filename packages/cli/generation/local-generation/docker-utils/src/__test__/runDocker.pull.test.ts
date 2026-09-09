@@ -60,6 +60,19 @@ describe("runContainer pull policy", () => {
         expect(args.indexOf("--platform")).toBeLessThan(args.indexOf("img:latest"));
     });
 
+    it("passes env vars verbatim, without wrapping values in quotes", async () => {
+        await runContainer({
+            logger: CONSOLE_LOGGER,
+            imageName: "img:1.0.0",
+            binds: [],
+            envVars: { GIT_SSL_CAINFO: "/fern/ca-bundle.crt" },
+            writeLogsToFile: false
+        });
+
+        const args = lastContainerArgs();
+        expect(args[args.indexOf("-e") + 1]).toBe("GIT_SSL_CAINFO=/fern/ca-bundle.crt");
+    });
+
     it("does not pass `--platform` by default (host-native platform)", async () => {
         await runContainer({
             logger: CONSOLE_LOGGER,

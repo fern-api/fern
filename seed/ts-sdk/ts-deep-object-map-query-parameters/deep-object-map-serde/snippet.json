@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/search",
+                "method": "GET",
+                "identifier_override": "endpoint_search.search"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsDeepObjectMapQueryParametersClient } from \"@fern/ts-deep-object-map-query-parameters\";\n\nconst client = new SeedTsDeepObjectMapQueryParametersClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.search.search({\n    labels: {\n        \"labels\": \"labels\"\n    },\n    metadata: {\n        \"metadata\": {\n            displayName: \"displayName\",\n            createdAt: new Date(\"2024-01-15T09:30:00.000Z\")\n        }\n    },\n    optionalMetadata: {\n        \"optionalMetadata\": {\n            displayName: \"displayName\",\n            createdAt: new Date(\"2024-01-15T09:30:00.000Z\")\n        }\n    },\n    timestamps: {\n        \"timestamps\": new Date(\"2024-01-15T09:30:00.000Z\")\n    },\n    nested: {\n        \"nested\": {\n            \"nested\": {\n                displayName: \"displayName\",\n                createdAt: new Date(\"2024-01-15T09:30:00.000Z\")\n            }\n        }\n    },\n    grouped: {\n        \"grouped\": [{\n                displayName: \"displayName\",\n                createdAt: new Date(\"2024-01-15T09:30:00.000Z\")\n            }, {\n                displayName: \"displayName\",\n                createdAt: new Date(\"2024-01-15T09:30:00.000Z\")\n            }]\n    },\n    setValues: {\n        \"setValues\": new Set([\"setValues\"])\n    },\n    colors: {\n        \"colors\": \"red\"\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

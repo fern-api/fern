@@ -56,6 +56,8 @@ paths:
         - name: keyValue
           in: query
           required: false
+          style: deepObject
+          explode: true
           schema:
             type: object
             additionalProperties:

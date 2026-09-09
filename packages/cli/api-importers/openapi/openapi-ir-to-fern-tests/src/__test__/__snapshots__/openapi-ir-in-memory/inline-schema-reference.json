@@ -108,6 +108,7 @@
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
     "preserveOneOfInAllOf": false,
+    "anyOfSiblingPropertiesAsObject": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
@@ -126,6 +127,7 @@
     "ignoreTags": false,
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
-    "respectOperationIdWordBoundaries": false
+    "respectOperationIdWordBoundaries": false,
+    "namespacedErrors": false
   }
 }

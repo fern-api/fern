@@ -49,6 +49,17 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      */
     "preserve-one-of-in-all-of"?: boolean;
     /**
+     * Applies when a schema declares `properties` alongside an `anyOf` whose branches
+     * only re-declare some of those same properties as required. Per JSON Schema such an
+     * `anyOf` is an "at least one of" constraint rather than a set of variants.
+     * If true, the schema is converted as an object carrying all of its declared
+     * properties.
+     * If false, the schema is converted to an undiscriminated union, which discards the
+     * sibling `properties` and makes the branches mutually exclusive.
+     * Defaults to false.
+     */
+    "any-of-sibling-properties-as-object"?: boolean;
+    /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
      */
@@ -111,4 +122,12 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "respect-operation-id-word-boundaries"?: boolean;
+
+    /**
+     * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
+     * within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
+     * namespace while endpoints and other types stay at the root.
+     * Defaults to false.
+     */
+    "namespaced-errors"?: boolean;
 }

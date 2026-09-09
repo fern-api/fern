@@ -76,6 +76,17 @@ export interface ParseOpenAPIOptions {
     preserveOneOfInAllOf: boolean;
 
     /**
+     * A schema may declare `properties` alongside an `anyOf` whose branches only
+     * re-declare those same properties as required. The `anyOf` is then a
+     * validation constraint ("at least one of these"), not a set of variants.
+     *
+     * If true, such a schema is converted as an object from its own `properties`.
+     * If false, it is converted to a union, which discards the sibling
+     * `properties`. Defaults to false.
+     */
+    anyOfSiblingPropertiesAsObject: boolean;
+
+    /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
@@ -191,6 +202,13 @@ export interface ParseOpenAPIOptions {
      * so it defaults to false.
      */
     respectOperationIdWordBoundaries: boolean;
+
+    /**
+     * If true, an error whose response object (`components.responses[...]`) carries `x-fern-sdk-namespace`
+     * is declared in, and shared within, that namespace instead of the endpoint's namespace. Errors without
+     * the extension are unaffected. Defaults to false.
+     */
+    namespacedErrors: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -218,6 +236,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
     preserveOneOfInAllOf: false,
+    anyOfSiblingPropertiesAsObject: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
@@ -236,7 +255,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     ignoreTags: false,
     respectParameterContent: false,
     respectPerSpecBasePath: false,
-    respectOperationIdWordBoundaries: false
+    respectOperationIdWordBoundaries: false,
+    namespacedErrors: false
 };
 
 function mergeOptions<T extends object>(params: {

@@ -1,4 +1,302 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.39.4
+  changelogEntry:
+    - summary: |
+        The generated README and `reference.md` no longer list `--page-all` / `--page-limit` under the flags
+        "available on every operation". Since 0.38.6 those flags are only registered on operations the spec
+        describes how to page (`x-fern-pagination`, or a root `page_token` parameter), so the docs now list them
+        in a separate table introduced by "Operations the spec describes how to page ... also accept:" instead of
+        promising them everywhere. The previously undocumented `--page-delay` / `--no-pager` (paginated
+        operations), `--no-stream` (streaming operations) and `--no-extract` / `--no-retry` (every operation) are
+        now documented alongside them.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.39.3
+  changelogEntry:
+    - summary: |
+        `auth status` now lists the env vars an OAuth2 client-credentials scheme reads (e.g. `OAUTH_CLIENT_ID`,
+        `OAUTH_CLIENT_SECRET`, plus any required custom token-endpoint properties) with their active/missing state,
+        instead of reporting `(no credential sources bound)`. A valid cached access token is reported alongside
+        those env vars — it satisfies the scheme on its own, but the env vars stay visible so you can still tell
+        whether they were picked up. Multi-value schemes (OAuth2 client credentials, basic auth) are now modelled
+        as independent credential slots: each slot resolves on its own, so a username and password that are both
+        set are both shown as active rather than one shadowing the other, and `logged_in` in `--output json` is
+        true only when every slot resolves (or a standalone alternative does).
+      type: fix
+    - summary: |
+        `auth status` no longer suggests `auth login --with-token` for schemes that never read the keyring
+        (OAuth2 client credentials, basic auth) — a token pasted there would have been silently ignored at
+        request time. It now names the env vars to set instead.
+      type: fix
+    - summary: |
+        `auth status` no longer reports a scheme as unauthenticated just because the env vars that would mint its
+        token are unset when a stored login token is present — a keyring entry written by `auth login` satisfies the
+        scheme on its own. An auth scheme configured with an empty env-var name (e.g. `client-id-env: ""`) is now
+        reported as `(unbound)` instead of rendering a nameless `missing    env var` row and a remedy with an empty
+        entry.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 0.39.2
+  changelogEntry:
+    - summary: |
+        `--page-all` now treats a step-less offset param as a page number, advancing by 1 per page, matching the
+        default in the TypeScript, Python, Ruby, PHP and C# SDKs. When `x-fern-pagination` does declare a `step`,
+        the param is treated as an item index and advanced by the number of results returned, as before.
+        Page-number APIs (e.g. `?page=2&pageSize=50`) previously skipped pages. Paging also continues from the
+        caller's own value for the offset param (`--params '{"page": 7}'` fetches 7, 8, 9, …) and no longer sends
+        that param twice on subsequent pages. The first request is still sent exactly as the caller wrote it —
+        the CLI never synthesizes a page param for it. When the caller omits the offset param, paging continues
+        from the param's declared default (`default: 0` / `x-fern-default`), so 0-indexed APIs fetch 1, 2, 3, …
+        after their implicit first page instead of skipping page 1.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 0.39.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.7 updates.
+      type: chore
+    - summary: |
+        Embedded types generation no longer fails on large APIs. The rust-model subprocess
+        timeout is raised from 2 to 15 minutes, and its stderr is now surfaced in the error
+        message when it does fail.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 0.39.0
+  changelogEntry:
+    - summary: |
+        Generated `--help` output now groups flags into `Required parameters`,
+        `Optional parameters`, `Request options` (`--json`, `--params`, pagination,
+        retries, ...) and `Global options` (output format, base URL, env-backed
+        variables, `--help`/`--version`) instead of one flat `Options:` list, so
+        users and agents can see at a glance which flags an operation needs.
+        Runtime validation is unchanged: required parameters may still be supplied
+        via `--params`/`--json`. Two cases are deliberately listed as optional
+        because the operation runs without them: a required parameter with an
+        `x-fern-default`, and a required property of an object that is itself
+        optional (`--settings.region` where `--settings` may be omitted).
+      type: feat
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.13
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.6 updates.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.12
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.46.5 updates.
+      type: fix
+  createdAt: "2026-09-02"
+  irVersion: 67
+- version: 0.38.11
+  changelogEntry:
+    - summary: |
+        `config.packageIdentity.license: MIT` now emits a LICENSE. The generator
+        reads `GeneratorConfig.license`, which is fed by `publish-metadata.license`,
+        `metadata.license` or `github.license` — none of which is
+        `packageIdentity.license`. A project that set only the latter got "MIT" in
+        `Cargo.toml` and on the npm page while shipping no LICENSE text: a package
+        advertising a license it does not carry. Honored as a fallback only, so any
+        of the three standard keys still wins and existing output is unchanged.
+      type: fix
+    - summary: |
+        An out-of-range integer supplied through `--params` is rejected instead of
+        silently mangled. Accepting a whole-valued float looked like it closed the
+        gap with the flag path past `u64::MAX`, but `serde_json` has already coerced
+        the literal to `f64` by then, so accepting meant re-serializing the double:
+        `--params '{"limit": 18446744073709551616}'` sent
+        `limit=1.8446744073709552e+19` and `1e3` sent `limit=1000.0`. The two paths
+        now deliberately differ beyond `u64::MAX` — the flag path carries the digits
+        verbatim, `--params` refuses a value it can no longer represent — which is
+        the safe direction, since the precision is gone before validation sees it.
+      type: fix
+    - summary: |
+        Every missing required input is reported at once, in a stable order.
+        The check returned on the first miss while iterating a hash map, so an
+        operation missing four required inputs named one arbitrary parameter — and a
+        different one on each run. Fixing them meant re-running once per parameter,
+        in random order, with no indication of how many remained. A missing path
+        parameter also short-circuited the check and hid every missing body
+        parameter behind it. The list now follows the spec's own parameter order,
+        with anything absent from it appended alphabetically. A single missing input
+        keeps its original one-line wording.
+      type: fix
+  createdAt: "2026-09-01"
+  irVersion: 67
+- version: 0.38.10
+  changelogEntry:
+    - summary: |
+        `packageIdentity` now reaches the published npm package. The launcher's
+        `package.json` carried only name/version/bin/optionalDependencies plus a
+        hardcoded description, so npm rendered the CLI as "License: none" with no
+        keywords, homepage or author — while the same config already populated
+        `Cargo.toml`. The license is the part that matters: dependency scanners and
+        corporate policy gates reject unlicensed packages. `authors[0]` becomes npm's
+        single `author` and the rest `contributors`.
+      type: fix
+    - summary: |
+        A `license: MIT` entry in `generators.yml` now emits a matching LICENSE.
+        Fern's `LicenseConfig.Basic` mounts no file, so no generator honored it and
+        a repo publishing to npm as MIT shipped no LICENSE at all. The copyright
+        holder comes from `packageIdentity.authors[0]`, falling back to the
+        organization; when neither is known nothing is written, since a copyright
+        line naming nobody is worse than no file. `Apache-2.0` is left to
+        `license: { type: custom }`.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
+- version: 0.38.9
+  changelogEntry:
+    - summary: |
+        Query- and path-parameter values are type-checked locally. `--limit nope`
+        used to serialize as `?limit=nope` and fail at the API; it now fails
+        immediately naming the flag and the expected type. Only numeric and boolean
+        types are enforced — `string` accepts anything (it is what the wire carries)
+        and arrays/objects are left to the style-aware serializer — so the check
+        catches typos without rejecting requests a server would accept.
+      type: fix
+    - summary: |
+        `--schema` advertises `httpMethod` and `path` again, per ADR-0006's
+        2026-08-28 amendment. They were dropped as HTTP-execution detail, but they
+        are how an agent tells a read from a write *before* running a command, which
+        is a safety property rather than plumbing. Additive — the `{globalFlags,
+        operations}` shape, the `parameters` to `input` rename and the capability
+        hints are unchanged.
+      type: fix
+    - summary: |
+        `--schema` and `--help` report the real element type of an array-typed
+        query, header or path parameter. Only body arrays carried one, so both
+        renderers fell back to the container type: `--schema` advertised
+        `items: {"type": "array"}` — an array of arrays — and `--help` showed
+        `<JSON_ARRAY>` where a single element belongs. All three spellings now
+        resolve: inline `type: array`, a `$ref` to an array component, and
+        `anyOf: [array, null]`; anything that still doesn't resolve reports
+        `string` rather than the container type. Advertisement-only: the value
+        collector branches on the element type being something other than
+        `string`, so no request changes on the wire — verified against two
+        customer specs (56 array parameters, 4 input forms each).
+      type: fix
+    - summary: |
+        Array-of-enum parameters are now constrained. `type: array, items:
+        {$ref: SomeEnum}` carries no enum of its own — it lives on `items` — so
+        the flag was completely unchecked while its scalar twin was enforced by a
+        clap `value_parser`: `--event-types bogus` reached the API, `--direction
+        bogus` did not. `--schema` now advertises `items.enum` and the executor
+        rejects a non-member before any request is sent, naming the flag and
+        listing the valid options. Enforced after value collection rather than by
+        a `value_parser`, because a repeated flag also accepts a whole JSON array
+        in one argument (`--event-types '["a","b"]'`) and clap would reject that
+        literal as a non-member; all four input forms (repeated, single, JSON
+        array, `--params`) are verified to serialize exactly as before.
+        Note this can newly reject a request that previously went out: that is the
+        point, but a spec whose enum is stale will now block values the API still
+        accepts.
+      type: fix
+    - summary: |
+        Body properties spelled `anyOf: [T, null]` are type-checked. Such a
+        property carries no `type:` of its own — the type is in the branch — and
+        every check downstream keyed off it, so `--json '{"name": 123}'` on a
+        `name` declared `anyOf: [{type: string}, {type: null}]` was forwarded to
+        the wire unvalidated, while the same property spelled `type: string` was
+        correctly rejected. Non-null values are now validated against the sole
+        non-null branch, at both the property level and for a `$ref`'d component
+        that is itself a nullable union. A genuine multi-branch union
+        (`oneOf: [string, array]`) is deliberately left permissive: asserting one
+        branch would reject values the other allows.
+      type: fix
+    - summary: |
+        The two mutual-exclusion errors name flags that exist. Both interpolated
+        the raw wire key, so combining `--json` with a body flag reported
+        `--event_types` where `--event-types` is registered, and an object
+        shorthand against its own leaf reported `--permissions.inbox_read` where
+        `--permissions.inbox-read` is registered — clap rejects the spelling the
+        error suggests, and `--schema` discloses the resolved name, so the
+        message contradicted the contract beside it. Both now route through
+        `resolve_param_flag_name`, the shared resolver the command builder and
+        the missing-parameter hint already use.
+      type: fix
+    - summary: |
+        Non-body parameter type-checking no longer rejects values the CLI used to
+        send. The boolean check accepted only `true|false|1|0`, case-sensitively,
+        so `--flag True`, `TRUE`, `False`, `yes`, `no`, `on` and `off` became hard
+        local failures — spellings that were forwarded before the check existed and
+        that the frameworks generating these specs accept. It now matches
+        case-insensitively over `true/false/1/0/yes/no/on/off/t/f/y/n`, and accepts
+        a JSON `1`/`0` (previously the string `"1"` passed while
+        `--params '{"flag": 1}'` failed). An empty string on a typed parameter is
+        accepted again, since a shell turns an unset variable into one and the
+        request previously went out. The integer check reads digit shape rather
+        than parsing as `i64`, so the flag path and the `--params` path agree on
+        values above `i64::MAX` and an integer with no declared `maximum` is not
+        rejected for its magnitude. Measured across two customer specs: 41 boolean
+        query parameters on one and 8 on the other were affected.
+      type: fix
+    - summary: |
+        Body arrays of enums advertise `items.enum` in `--schema`. The element-enum
+        resolution reached parameters only, so on a spec where the same enum array
+        appears both as a query parameter and as a body property, `--schema`
+        disclosed the members for one and not the other — including on operations
+        where the body property is required.
+      type: fix
+    - summary: |
+        The integer check for a non-body parameter agrees between the flag path and
+        `--params` past `u64::MAX`. `serde_json` widens an integer literal beyond
+        that to a float, so `--params '{"limit": 18446744073709551616}'` was
+        rejected while the identical value supplied as a flag was accepted. A
+        whole-valued number is an integer for this purpose; range remains a
+        `minimum`/`maximum` concern, checked separately.
+      type: fix
+    - summary: |
+        A body property spelled `{$ref: X, nullable: true}` accepts `null`.
+        Nullability is declared at the `$ref` *site* — a component is shared, so it
+        cannot be nullable for one referrer and not another — but the parser's
+        `$ref` early-return dropped every sibling keyword, lowering the property to
+        `nullable: false`. The validator's null short-circuit therefore never fired
+        for the one shape it exists to handle, and resolving the ref rejected `null`
+        with "Expected object". On one customer's OpenAPI 3.0.1 spec that blocked
+        `null` on 121 body properties the spec explicitly permits.
+        A `$ref` property that is not nullable still rejects `null`, and non-null
+        values are still validated against the referenced schema.
+      type: fix
+    - summary: |
+        Enum members are enforced when supplied through `--params`. A scalar enum
+        was gated only by clap's value parser, which `--params` bypasses entirely,
+        so `--params '{"direction":"bogus"}'` reached the wire — and for a path
+        parameter landed in the URL. Array element enums had the same hole for
+        non-string values: `--params '{"event_types":[5]}'` sent `?event_types=5`
+        because the check only inspected strings. The accepted set deliberately
+        mirrors clap's rather than just the declared wire values, so an
+        `x-fern-enum` display name and the `null` sentinel on a nullable parameter
+        are still accepted.
+      type: fix
+    - summary: |
+        A `$ref` to an enum component is enforced inside a request body. The
+        validator's component model carried no `enum` field at all, so a property
+        that reached its enum through a `$ref` had its members advertised in
+        `--schema` and never checked — `webhooks create --event-types bogus` was
+        accepted and sent, while the identical enum declared inline on the property,
+        or used as a query parameter, was rejected. Covers array elements too, and
+        a `const:` lowers to a single-member enum as it does elsewhere. Exact
+        matching is safe because the flag layer canonicalizes an `x-fern-enum`
+        display name to its wire value before validation.
+      type: fix
+    - summary: |
+        A repeatable flag's `--help` now says it is repeatable. The value name can
+        only show one form, and once it correctly reports the element type
+        (`<STRING>` rather than `<JSON_ARRAY>`) nothing on the surface indicated
+        that the flag can be passed more than once or handed a whole JSON array —
+        both of which work. The long help now discloses both forms; the one-line
+        form is unchanged, since it is width-limited and truncated.
+      type: fix
+  createdAt: "2026-08-31"
+  irVersion: 67
 - version: 0.38.8
   changelogEntry:
     - summary: |

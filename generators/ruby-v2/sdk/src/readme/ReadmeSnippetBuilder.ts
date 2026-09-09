@@ -205,11 +205,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
         const placeholder = this.getAuthPlaceholder();
+        const tokenName = this.context.getBearerTokenParameterName();
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
-                token: "${placeholder}",
+                ${tokenName}: "${placeholder}",
                 http_client: HTTP::Client.new(
                     timeout: 5
                 )
@@ -218,7 +219,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             # Specify options for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                token: "${placeholder}"
+                ${tokenName}: "${placeholder}"
             )
         `);
     }

@@ -2,7 +2,7 @@
 
 import type * as FernDefinition from "../../../index.js";
 
-export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
+export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithPlaygroundDocsSchema {
     scheme: "oauth";
     /** The OAuth flow. Defaults to 'client-credentials'. */
     type: FernDefinition.OAuthFlowTypeSchema;

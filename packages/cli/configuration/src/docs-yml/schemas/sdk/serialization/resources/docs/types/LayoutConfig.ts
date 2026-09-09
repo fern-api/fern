@@ -28,6 +28,10 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         mobileToc: core.serialization.property("mobile-toc", core.serialization.boolean().optional()),
         changelogLayout: core.serialization.property("changelog-layout", ChangelogLayout.optional()),
         apiReferenceLayout: core.serialization.property("api-reference-layout", ApiReferenceLayout.optional()),
+        apiReferenceExpandProperties: core.serialization.property(
+            "api-reference-expand-properties",
+            core.serialization.boolean().optional(),
+        ),
         showNavAvailabilityBadges: core.serialization.property(
             "show-nav-availability-badges",
             core.serialization.boolean().optional(),
@@ -51,6 +55,7 @@ export declare namespace LayoutConfig {
         "mobile-toc"?: boolean | null;
         "changelog-layout"?: ChangelogLayout.Raw | null;
         "api-reference-layout"?: ApiReferenceLayout.Raw | null;
+        "api-reference-expand-properties"?: boolean | null;
         "show-nav-availability-badges"?: boolean | null;
     }
 }

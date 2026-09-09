@@ -19,6 +19,7 @@
           "name": "apiKey",
           "wireValue": "x-user-token",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -53,6 +54,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -87,6 +89,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {

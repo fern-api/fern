@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Supply resolved API source archives when `fern sdk preview` routes generation through sdk-gen-api,
+    and accept the empty default OpenAPI audience filter during SDK Config source validation.
+  type: fix

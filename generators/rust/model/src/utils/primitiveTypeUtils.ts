@@ -193,61 +193,228 @@ export function isUnknownType(typeRef: FernIr.TypeReference): boolean {
     return typeRef.type === "unknown";
 }
 
+export interface DefaultImplOptions {
+    /**
+     * Whether `unknown` (`serde_json::Value`) counts as implementing Default.
+     *
+     * `Value` really does implement Default (it yields `Value::Null`), so this is
+     * true by default and derive analysis should leave it alone. The one caller
+     * that passes false is the `#[serde(default)]` decision: emitting that attribute
+     * for a required `unknown` field would drop serde's missing-field error and let
+     * an absent key deserialize to `Value::Null`, which also makes an untagged union
+     * member match objects it should have rejected.
+     */
+    unknownHasDefault?: boolean;
+}
+
+/**
+ * Whether a type supports `Default`, tracked once for each interpretation of
+ * `unknown` so a single pass over the IR can answer both callers.
+ */
+export interface DefaultSupport {
+    readonly withUnknown: boolean;
+    readonly withoutUnknown: boolean;
+}
+
+const SUPPORTS_DEFAULT: DefaultSupport = { withUnknown: true, withoutUnknown: true };
+const NO_DEFAULT: DefaultSupport = { withUnknown: false, withoutUnknown: false };
+/** `serde_json::Value` implements Default, but see {@link DefaultImplOptions.unknownHasDefault}. */
+const DEFAULT_ONLY_IF_UNKNOWN_COUNTS: DefaultSupport = { withUnknown: true, withoutUnknown: false };
+
+function bothSupport(a: DefaultSupport, b: DefaultSupport): DefaultSupport {
+    return {
+        withUnknown: a.withUnknown && b.withUnknown,
+        withoutUnknown: a.withoutUnknown && b.withoutUnknown
+    };
+}
+
+function isMaximal(support: DefaultSupport): boolean {
+    return support.withUnknown && support.withoutUnknown;
+}
+
+function sameSupport(a: DefaultSupport, b: DefaultSupport): boolean {
+    return a.withUnknown === b.withUnknown && a.withoutUnknown === b.withoutUnknown;
+}
+
+function readSupport(support: DefaultSupport, options: DefaultImplOptions): boolean {
+    return (options.unknownHasDefault ?? true) ? support.withUnknown : support.withoutUnknown;
+}
+
 /**
  * Check if a type has a natural Default implementation in Rust.
  * Primitives (String, bool, i64, f64, etc.) and containers (Vec, HashMap, HashSet)
  * all implement Default. Named types (enums, structs) may not.
- * Used to add #[serde(default)] so missing fields get zero-values during deserialization.
+ *
+ * This is the single source of truth for Default analysis in the Rust model generator:
+ * it decides both which types can carry a `Default` derive and which fields get
+ * `#[serde(default)]` so missing values deserialize to zero-values.
  */
-export function hasDefaultImpl(typeRef: FernIr.TypeReference, context?: ModelGeneratorContext): boolean {
-    if (typeRef.type === "primitive") {
-        return true;
-    }
-    if (typeRef.type === "container") {
-        return typeRef.container._visit({
-            list: () => true,
-            map: () => true,
-            set: () => true,
-            optional: () => true,
-            nullable: () => true,
-            literal: () => false,
-            _other: () => false
-        });
-    }
-    if (typeRef.type === "named" && context) {
-        return namedTypeSupportsDefault(typeRef.typeId, context, new Set());
-    }
-    return false;
+export function hasDefaultImpl(
+    typeRef: FernIr.TypeReference,
+    context?: ModelGeneratorContext,
+    options: DefaultImplOptions = {}
+): boolean {
+    return readSupport(typeReferenceSupport(typeRef, context), options);
 }
 
 /**
- * Check if a named type (object) supports Default by checking if all its fields
- * have types that implement Default. Enums and unions don't derive Default.
+ * Check if a named type supports Default by its type id, for callers that hold a
+ * `DeclaredTypeName` (e.g. an object's `extends`) rather than a `TypeReference`.
  */
-function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext, visited: Set<string>): boolean {
-    if (visited.has(typeId)) {
-        return false;
+export function namedTypeHasDefaultImpl(
+    typeId: string,
+    context: ModelGeneratorContext,
+    options: DefaultImplOptions = {}
+): boolean {
+    return readSupport(getDefaultSupportTable(context).get(typeId) ?? NO_DEFAULT, options);
+}
+
+function typeReferenceSupport(
+    typeRef: FernIr.TypeReference,
+    context: ModelGeneratorContext | undefined
+): DefaultSupport {
+    if (typeRef.type === "named") {
+        if (context == null) {
+            return NO_DEFAULT;
+        }
+        return getDefaultSupportTable(context).get(typeRef.typeId) ?? NO_DEFAULT;
     }
-    visited.add(typeId);
-    const typeDecl = context.ir.types[typeId];
-    if (!typeDecl) {
-        visited.delete(typeId);
-        return false;
+    return unnamedTypeSupport(typeRef);
+}
+
+/**
+ * Support for everything that doesn't point at a declared type, i.e. the part of a
+ * property's contribution that can be decided without consulting the rest of the IR.
+ */
+function unnamedTypeSupport(typeRef: FernIr.TypeReference): DefaultSupport {
+    if (typeRef.type === "primitive") {
+        return SUPPORTS_DEFAULT;
     }
-    let result = false;
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            list: () => SUPPORTS_DEFAULT,
+            map: () => SUPPORTS_DEFAULT,
+            set: () => SUPPORTS_DEFAULT,
+            optional: () => SUPPORTS_DEFAULT,
+            nullable: () => SUPPORTS_DEFAULT,
+            literal: () => NO_DEFAULT,
+            _other: () => NO_DEFAULT
+        });
+    }
+    if (typeRef.type === "unknown") {
+        return DEFAULT_ONLY_IF_UNKNOWN_COUNTS;
+    }
+    return NO_DEFAULT;
+}
+
+/**
+ * Whether a declared type supports Default, expressed as everything decidable from
+ * the declaration alone plus the declared types it defers to.
+ */
+interface DefaultSupportRule {
+    local: DefaultSupport;
+    readonly dependsOn: string[];
+}
+
+function ruleForDeclaration(typeDecl: FernIr.TypeDeclaration): DefaultSupportRule {
+    // Containers stop the walk -- Vec<T>/Option<T> implement Default whatever T is --
+    // so the only dependencies are directly named properties, alias targets, and extends.
     if (typeDecl.shape.type === "object") {
-        const propsOk = typeDecl.shape.properties.every((prop) =>
-            hasDefaultImpl(prop.valueType, context)
-        );
-        const extendsOk = typeDecl.shape.extends.every((parentType) =>
-            namedTypeSupportsDefault(parentType.typeId, context, visited)
-        );
-        result = propsOk && extendsOk;
-    } else if (typeDecl.shape.type === "alias") {
-        result = hasDefaultImpl(typeDecl.shape.aliasOf, context);
+        const rule: DefaultSupportRule = { local: SUPPORTS_DEFAULT, dependsOn: [] };
+        for (const property of typeDecl.shape.properties) {
+            addTypeReferenceToRule(rule, property.valueType);
+        }
+        for (const parentType of typeDecl.shape.extends) {
+            rule.dependsOn.push(parentType.typeId);
+        }
+        return rule;
     }
-    visited.delete(typeId);
-    return result;
+    if (typeDecl.shape.type === "alias") {
+        const rule: DefaultSupportRule = { local: SUPPORTS_DEFAULT, dependsOn: [] };
+        addTypeReferenceToRule(rule, typeDecl.shape.aliasOf);
+        return rule;
+    }
+    // Enums and unions never derive Default.
+    return { local: NO_DEFAULT, dependsOn: [] };
+}
+
+function addTypeReferenceToRule(rule: DefaultSupportRule, typeRef: FernIr.TypeReference): void {
+    if (typeRef.type === "named") {
+        rule.dependsOn.push(typeRef.typeId);
+        return;
+    }
+    rule.local = bothSupport(rule.local, unnamedTypeSupport(typeRef));
+}
+
+/**
+ * Default support for every declared type in an IR, solved in one pass.
+ *
+ * Each rule is a conjunction, so this is a least fixed point: every type starts at
+ * "no Default" and is raised only once all of its dependencies already support
+ * Default. Types on a dependency cycle are therefore never raised, matching the
+ * conservative `false` the previous depth-first walk returned on revisiting a type --
+ * but without a per-query `visited` set, so the answer no longer depends on which
+ * type a caller happened to ask about first.
+ */
+export function computeDefaultSupport(types: Record<string, FernIr.TypeDeclaration>): Map<string, DefaultSupport> {
+    const rules = new Map<string, DefaultSupportRule>();
+    const dependents = new Map<string, string[]>();
+    const support = new Map<string, DefaultSupport>();
+
+    for (const [typeId, typeDecl] of Object.entries(types)) {
+        rules.set(typeId, ruleForDeclaration(typeDecl));
+        support.set(typeId, NO_DEFAULT);
+    }
+    for (const [typeId, rule] of rules) {
+        for (const dependency of rule.dependsOn) {
+            const existing = dependents.get(dependency);
+            if (existing == null) {
+                dependents.set(dependency, [typeId]);
+            } else {
+                existing.push(typeId);
+            }
+        }
+    }
+
+    // Support only ever increases, and each type can increase at most twice, so
+    // revisiting dependents on every change stays linear in the size of the graph.
+    const pending = [...rules.keys()];
+    while (pending.length > 0) {
+        const typeId = pending.pop() as string;
+        const rule = rules.get(typeId);
+        const previous = support.get(typeId) ?? NO_DEFAULT;
+        if (rule == null || isMaximal(previous)) {
+            continue;
+        }
+        let next = rule.local;
+        for (const dependency of rule.dependsOn) {
+            next = bothSupport(next, support.get(dependency) ?? NO_DEFAULT);
+        }
+        if (sameSupport(next, previous)) {
+            continue;
+        }
+        support.set(typeId, next);
+        for (const dependent of dependents.get(typeId) ?? []) {
+            pending.push(dependent);
+        }
+    }
+
+    return support;
+}
+
+/**
+ * Default support tables keyed by context, so a table lives exactly as long as the
+ * IR it was computed from and is built at most once per generator run.
+ */
+const defaultSupportTables = new WeakMap<ModelGeneratorContext, Map<string, DefaultSupport>>();
+
+function getDefaultSupportTable(context: ModelGeneratorContext): Map<string, DefaultSupport> {
+    let table = defaultSupportTables.get(context);
+    if (table == null) {
+        table = computeDefaultSupport(context.ir.types);
+        defaultSupportTables.set(context, table);
+    }
+    return table;
 }
 
 export function isOptionalType(typeReference: FernIr.TypeReference): boolean {

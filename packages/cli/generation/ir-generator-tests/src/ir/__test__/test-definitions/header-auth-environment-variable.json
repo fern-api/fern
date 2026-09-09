@@ -30,6 +30,7 @@
                 "headerEnvVar": "HEADER_TOKEN_ENV_VAR",
                 "headerPlaceholder": "YOUR_HEADER_VALUE",
                 "key": "Header",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

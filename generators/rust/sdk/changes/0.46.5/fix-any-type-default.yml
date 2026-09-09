@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Aliases of `unknown` (e.g. `AnyType` wrapping `serde_json::Value`) now derive
+    `Default`, so structs and aliases that contain them and derive `Default`
+    compile without manual patching. The struct generator's private copy of the
+    default analysis has been folded into the shared `hasDefaultImpl`, which is
+    now the single source of truth and no longer recurses forever on types that
+    reference each other. `#[serde(default)]` emission is unchanged: a required
+    `unknown` field still fails to deserialize when the key is missing.
+  type: fix

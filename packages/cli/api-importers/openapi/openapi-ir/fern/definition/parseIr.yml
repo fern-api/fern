@@ -129,6 +129,9 @@ types:
       statusCode: commons.StatusCode
       schema: SchemaWithExample
       fullExamples: optional<list<NamedFullExample>>
+      namespace:
+        type: optional<string>
+        docs: Namespace declared via `x-fern-sdk-namespace` on the response object itself.
 
   RequestWithExample:
     union:

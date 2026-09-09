@@ -7,7 +7,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-const TOKEN_PARAMETER_NAME = "token";
 const OAUTH_PROVIDER_PARAMETER_NAME = "oauth_provider";
 const INFERRED_AUTH_PROVIDER_PARAMETER_NAME = "inferred_auth_provider";
 const AVAILABLE_VARIABLE_NAME = "available_auth_headers";
@@ -73,21 +72,27 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         const parameters: RoutingParameter[] = [];
 
         if (this.context.getBearerAuth() != null) {
-            parameters.push({ name: TOKEN_PARAMETER_NAME, docs: "The bearer token." });
+            parameters.push({ name: this.context.getBearerTokenParameterName(), docs: "The bearer token." });
         }
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
             parameters.push({
-                name: this.case.snakeSafe(headerScheme.name),
+                name: this.context.getCredentialParameterName(headerScheme.name),
                 docs: "The header auth credential."
             });
         }
         const basicAuth = this.context.getBasicAuth();
         if (basicAuth != null) {
             if (basicAuth.usernameOmit !== true) {
-                parameters.push({ name: this.case.snakeSafe(basicAuth.username), docs: "The basic auth username." });
+                parameters.push({
+                    name: this.context.getCredentialParameterName(basicAuth.username),
+                    docs: "The basic auth username."
+                });
             }
             if (basicAuth.passwordOmit !== true) {
-                parameters.push({ name: this.case.snakeSafe(basicAuth.password), docs: "The basic auth password." });
+                parameters.push({
+                    name: this.context.getCredentialParameterName(basicAuth.password),
+                    docs: "The basic auth password."
+                });
             }
         }
         if (this.context.getOAuthAuth() != null) {
@@ -177,13 +182,14 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
 
         const bearerAuth = this.context.getBearerAuth();
         if (bearerAuth != null) {
+            const tokenName = this.context.getBearerTokenParameterName();
             writer.writeLine(
-                `${AVAILABLE_VARIABLE_NAME}[${JSON.stringify(bearerAuth.key)}] = { "Authorization" => "Bearer #{@${TOKEN_PARAMETER_NAME}}" } unless @${TOKEN_PARAMETER_NAME}.nil?`
+                `${AVAILABLE_VARIABLE_NAME}[${JSON.stringify(bearerAuth.key)}] = { "Authorization" => "Bearer #{@${tokenName}}" } unless @${tokenName}.nil?`
             );
         }
 
         for (const headerScheme of this.context.getHeaderAuthSchemes()) {
-            const paramName = this.case.snakeSafe(headerScheme.name);
+            const paramName = this.context.getCredentialParameterName(headerScheme.name);
             const wireValue = getWireValue(headerScheme.name);
             let value: string;
             if (headerScheme.prefix != null) {
@@ -203,8 +209,8 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
             const usernameOmitted = basicAuth.usernameOmit === true;
             const passwordOmitted = basicAuth.passwordOmit === true;
             if (!(usernameOmitted && passwordOmitted)) {
-                const usernameName = this.case.snakeSafe(basicAuth.username);
-                const passwordName = this.case.snakeSafe(basicAuth.password);
+                const usernameName = this.context.getCredentialParameterName(basicAuth.username);
+                const passwordName = this.context.getCredentialParameterName(basicAuth.password);
                 let credentialStr: string;
                 if (usernameOmitted) {
                     credentialStr = `":#{@${passwordName}}"`;

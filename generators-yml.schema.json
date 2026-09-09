@@ -481,6 +481,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "oauth"
         },
@@ -760,6 +771,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "header": {
           "type": "string"
         },
@@ -862,6 +884,17 @@
             }
           ]
         },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
+        },
         "scheme": {
           "const": "basic"
         },
@@ -903,6 +936,17 @@
               "type": "null"
             }
           ]
+        },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
         },
         "scheme": {
           "const": "bearer"
@@ -1013,6 +1057,17 @@
               "type": "null"
             }
           ]
+        },
+        "playground-docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Documentation rendered below this scheme's input in the API playground, instead of `docs`.\nSupports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,\n`inline code`, and blank-line-separated paragraphs. Other markdown (bold, lists, headings)\nis rendered as plain text."
         },
         "scheme": {
           "const": "bearer"
@@ -2634,6 +2689,17 @@
           ],
           "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
         },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
+        },
         "inline-all-of-schemas": {
           "oneOf": [
             {
@@ -2743,6 +2809,17 @@
             }
           ],
           "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
+        },
+        "namespaced-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3349,6 +3426,17 @@
           ],
           "description": "If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each\nvariant is the union member merged with the remaining allOf members.\nIf false, the variants' properties are flattened into a single object and marked optional.\nDefaults to false."
         },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Applies when a schema declares `properties` alongside an `anyOf` whose branches\nonly re-declare some of those same properties as required. Per JSON Schema such an\n`anyOf` is an \"at least one of\" constraint rather than a set of variants.\nIf true, the schema is converted as an object carrying all of its declared\nproperties.\nIf false, the schema is converted to an undiscriminated union, which discards the\nsibling `properties` and makes the branches mutually exclusive.\nDefaults to false."
+        },
         "inline-all-of-schemas": {
           "oneOf": [
             {
@@ -3458,6 +3546,17 @@
             }
           ],
           "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
+        },
+        "namespaced-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [
@@ -4504,6 +4603,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4555,6 +4665,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4644,6 +4765,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [
@@ -4680,6 +4812,17 @@
               "type": "null"
             }
           ]
+        },
+        "workflows": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
         }
       },
       "required": [

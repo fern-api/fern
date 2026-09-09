@@ -5,10 +5,12 @@ export type {
     GeneratorConfigCompatibilityErrorCode,
     GeneratorConfigCompatibilityRecommendedAction,
     GeneratorLanguage,
+    SelectGeneratorConfigRouteInput,
     ValidateGeneratorConfigCompatibilityInput
 } from "./generatorConfigCompatibility.js";
 export {
     GeneratorConfigCompatibilityError,
     getGeneratorLanguage,
+    selectGeneratorConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./generatorConfigCompatibility.js";

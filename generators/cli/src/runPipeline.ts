@@ -63,8 +63,15 @@ export async function runPipeline(args: {
      * every other Fern generator. See `writeLicense.ts`.
      */
     license?: LicenseConfigLike;
+    /**
+     * `GeneratorConfig.organization`. Only used as the copyright-holder
+     * fallback for a `license: MIT` LICENSE when `packageIdentity.authors` is
+     * unset.
+     */
+    organization?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir, license } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir, license, organization } =
+        args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -120,7 +127,21 @@ export async function runPipeline(args: {
     // Right after copySdk so the LICENSE lands in the same pass that lays down
     // the rest of the repo, and before patchCargoToml — which is where a
     // `license-file` pointer would have to agree with what actually exists.
-    await writeLicense({ outputDir, license });
+    await writeLicense({
+        outputDir,
+        // `GeneratorConfig.license` is fed by `publish-metadata.license`,
+        // `metadata.license` or `github.license` — none of which is
+        // `config.packageIdentity.license`. That one already renders in
+        // `Cargo.toml` and on the npm page, so a customer who set only it got a
+        // package advertising MIT with no LICENSE file: worse than either
+        // saying nothing or shipping the text. Honored as a fallback, so any
+        // of the three standard keys still wins and existing output is
+        // unchanged.
+        license: license ?? licenseFromPackageIdentity(customConfig.packageIdentity?.license),
+        // `license: MIT` needs a copyright holder; the first declared author is
+        // the closest thing the config has, falling back to the Fern org.
+        copyrightHolder: customConfig.packageIdentity?.authors?.[0] ?? organization
+    });
     await patchCargoToml({
         outputDir,
         binaryName,
@@ -269,7 +290,8 @@ export async function runPipeline(args: {
                 outputDir,
                 binaryName,
                 npmPublishInfo: outputConfig.npmPublishInfo,
-                repoUrl: outputConfig.repoUrl
+                repoUrl: outputConfig.repoUrl,
+                packageIdentity: customConfig.packageIdentity
             });
         } else {
             await emitCiWorkflow({ outputDir, binaryName });
@@ -331,4 +353,16 @@ async function writeFernignore(outputDir: string, binaryName: string): Promise<v
         ""
     ].join("\n");
     await writeFile(path.join(outputDir, ".fernignore"), content);
+}
+
+/**
+ * Lower `config.packageIdentity.license` into the shape `writeLicense` reads.
+ *
+ * Only SPDX ids the generator can actually emit text for produce a license;
+ * anything else yields `undefined` so nothing is invented. `Apache-2.0` is
+ * deliberately excluded — it stays with an explicitly mounted license file,
+ * matching `writeLicense`'s own handling.
+ */
+function licenseFromPackageIdentity(id: string | undefined): LicenseConfigLike | undefined {
+    return id === "MIT" ? { type: "basic", id: "MIT" } : undefined;
 }

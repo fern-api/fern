@@ -1,0 +1,279 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "PostVariants": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/variants",
+              "request": {
+                "body": {
+                  "properties": {
+                    "addsProperty": "optional<AnyOfBranchAddsProperty>",
+                    "narrowsProperty": "optional<AnyOfBranchNarrowsProperty>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostVariantsRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "UpdateDomain": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "PATCH",
+              "pagination": undefined,
+              "path": "/domain",
+              "request": {
+                "body": {
+                  "properties": {
+                    "autorenewEnabled": "optional<boolean>",
+                    "locked": "optional<boolean>",
+                    "privacyEnabled": "optional<boolean>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "UpdateDomainRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AnyOfBranchAddsProperty": {
+            "base-properties": {
+              "a": "optional<boolean>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "AnyOfBranchAddsPropertyA",
+              "AnyOfBranchAddsPropertyB",
+            ],
+          },
+          "AnyOfBranchAddsPropertyA": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "a": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchAddsPropertyB": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "b": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsProperty": {
+            "base-properties": {
+              "kind": "optional<string>",
+              "value": "optional<string>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "AnyOfBranchNarrowsPropertyZero",
+              "AnyOfBranchNarrowsPropertyOne",
+            ],
+          },
+          "AnyOfBranchNarrowsPropertyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "AnyOfBranchNarrowsPropertyOneKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyOneKind": {
+            "enum": [
+              "b",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "AnyOfBranchNarrowsPropertyZeroKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AnyOfBranchNarrowsPropertyZeroKind": {
+            "enum": [
+              "a",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    UpdateDomain:
+      path: /domain
+      method: PATCH
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: UpdateDomainRequest
+        body:
+          properties:
+            autorenewEnabled: optional<boolean>
+            privacyEnabled: optional<boolean>
+            locked: optional<boolean>
+        content-type: application/json
+      examples:
+        - request: {}
+    PostVariants:
+      path: /variants
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PostVariantsRequest
+        body:
+          properties:
+            addsProperty: optional<AnyOfBranchAddsProperty>
+            narrowsProperty: optional<AnyOfBranchNarrowsProperty>
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  AnyOfBranchAddsPropertyA:
+    properties:
+      a: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchAddsPropertyB:
+    properties:
+      b: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchAddsProperty:
+    discriminated: false
+    base-properties:
+      a: optional<boolean>
+    union:
+      - AnyOfBranchAddsPropertyA
+      - AnyOfBranchAddsPropertyB
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyZeroKind:
+    enum:
+      - a
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyZero:
+    properties:
+      kind: AnyOfBranchNarrowsPropertyZeroKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchNarrowsPropertyOneKind:
+    enum:
+      - b
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  AnyOfBranchNarrowsPropertyOne:
+    properties:
+      kind: AnyOfBranchNarrowsPropertyOneKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AnyOfBranchNarrowsProperty:
+    discriminated: false
+    base-properties:
+      kind: optional<string>
+      value: optional<string>
+    union:
+      - AnyOfBranchNarrowsPropertyZero
+      - AnyOfBranchNarrowsPropertyOne
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test spec for the any-of-sibling-properties-as-object setting.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test spec for the any-of-sibling-properties-as-object setting.
+",
+  },
+  "specVersion": "1.0.0",
+}

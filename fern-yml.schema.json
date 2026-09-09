@@ -2920,6 +2920,9 @@
                 "cards"
               ]
             },
+            "api-reference-expand-properties": {
+              "type": "boolean"
+            },
             "show-nav-availability-badges": {
               "type": "boolean"
             }
@@ -4018,6 +4021,9 @@
                       "preserveOneOfInAllOf": {
                         "type": "boolean"
                       },
+                      "anyOfSiblingPropertiesAsObject": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4068,6 +4074,9 @@
                         "type": "boolean"
                       },
                       "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
+                      "namespaced-errors": {
                         "type": "boolean"
                       }
                     },
@@ -4613,6 +4622,9 @@
                         "preserveOneOfInAllOf": {
                           "type": "boolean"
                         },
+                        "anyOfSiblingPropertiesAsObject": {
+                          "type": "boolean"
+                        },
                         "inlineAllOfSchemas": {
                           "type": "boolean"
                         },
@@ -4663,6 +4675,9 @@
                           "type": "boolean"
                         },
                         "respect-operation-id-word-boundaries": {
+                          "type": "boolean"
+                        },
+                        "namespaced-errors": {
                           "type": "boolean"
                         }
                       },

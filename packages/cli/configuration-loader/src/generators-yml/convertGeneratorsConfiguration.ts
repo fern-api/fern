@@ -59,6 +59,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     preserveOneOfInAllOf: undefined,
+    anyOfSiblingPropertiesAsObject: undefined,
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
@@ -78,7 +79,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     ignoreTags: undefined,
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
-    respectOperationIdWordBoundaries: undefined
+    respectOperationIdWordBoundaries: undefined,
+    namespacedErrors: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -160,7 +162,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
     };
 }
 
-function parseOpenApiDefinitionSettingsSchema(
+export function parseOpenApiDefinitionSettingsSchema(
     settings: generatorsYml.OpenApiSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {
@@ -181,6 +183,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         preserveOneOfInAllOf: settings?.["preserve-one-of-in-all-of"],
+        anyOfSiblingPropertiesAsObject: settings?.["any-of-sibling-properties-as-object"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
@@ -193,7 +196,8 @@ function parseOpenApiDefinitionSettingsSchema(
         ignoreTags: settings?.["ignore-tags"],
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
-        respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"]
+        respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
+        namespacedErrors: settings?.["namespaced-errors"]
     };
 }
 
@@ -904,6 +908,7 @@ async function convertOutputMode({
                       githubLicense: licenseSchema
                   })
                 : undefined;
+        const workflows = generator.github.workflows ?? true;
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
@@ -917,7 +922,8 @@ async function convertOutputMode({
                     branch: releaseConfig.branch,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
@@ -938,7 +944,8 @@ async function convertOutputMode({
                     publishInfo,
                     downloadSnippets,
                     reviewers,
-                    branch: pullRequestConfig.branch
+                    branch: pullRequestConfig.branch,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
@@ -950,7 +957,8 @@ async function convertOutputMode({
                     branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
             }

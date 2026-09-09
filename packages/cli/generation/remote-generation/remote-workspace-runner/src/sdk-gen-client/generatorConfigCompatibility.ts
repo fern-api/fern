@@ -18,7 +18,7 @@ export type GeneratorLanguage =
 
 export type GenerationConfigKind = "legacy-fern" | "sdk-config-v1";
 
-export type GenerationPayloadKind = "fern-runtime-bundle" | "sdk-config-ir-v1";
+export type GenerationPayloadKind = "fern-runtime-bundle" | "sdk-config-v1";
 
 /** Inputs used to select the configuration payload route for a generator invocation. */
 export interface ValidateGeneratorConfigCompatibilityInput {
@@ -27,6 +27,8 @@ export interface ValidateGeneratorConfigCompatibilityInput {
     requestedVersion: string;
     configKind: GenerationConfigKind;
 }
+
+export type SelectGeneratorConfigRouteInput = Omit<ValidateGeneratorConfigCompatibilityInput, "configKind">;
 
 /** Validated route and payload kind that the caller should submit for generation. */
 export interface GenerationConfigRoute {
@@ -104,6 +106,34 @@ export function getGeneratorLanguage(generatorId: string): GeneratorLanguage | u
 export function validateGeneratorConfigCompatibility(
     input: ValidateGeneratorConfigCompatibilityInput
 ): GenerationConfigRoute {
+    const route = selectGeneratorConfigRoute(input);
+    const receivedConfigKind: unknown = input.configKind;
+    if (!isGenerationConfigKind(receivedConfigKind)) {
+        throw compatibilityError(
+            input,
+            {
+                code: "INVALID_CONFIG_KIND",
+                message: "Configuration kind must be legacy-fern or sdk-config-v1",
+                cutoverVersion: route.cutoverVersion,
+                expectedLanguage: route.language,
+                expectedConfigKind: route.configKind,
+                recommendedAction: "USE_SUPPORTED_CONFIG_KIND"
+            },
+            receivedConfigKind
+        );
+    }
+    if (receivedConfigKind !== route.configKind) {
+        const policy = getGeneratorPolicy(input.generatorId);
+        if (policy === undefined) {
+            throw new Error(`Missing validated generator policy for ${input.generatorId}`);
+        }
+        throw configKindError(input, policy, route.configKind, receivedConfigKind);
+    }
+    return route;
+}
+
+/** Selects the only compatible config and payload route for an exact generator version. */
+export function selectGeneratorConfigRoute(input: SelectGeneratorConfigRouteInput): GenerationConfigRoute {
     const policy = getGeneratorPolicy(input.generatorId);
     if (policy === undefined) {
         throw compatibilityError(input, {
@@ -141,37 +171,19 @@ export function validateGeneratorConfigCompatibility(
 
     const isBeforeCutover = compareSemver(requestedVersion, policy.parsedCutoverVersion) < 0;
     const expectedConfigKind = isBeforeCutover ? "legacy-fern" : "sdk-config-v1";
-    const receivedConfigKind: unknown = input.configKind;
-    if (!isGenerationConfigKind(receivedConfigKind)) {
-        throw compatibilityError(
-            input,
-            {
-                code: "INVALID_CONFIG_KIND",
-                message: "Configuration kind must be legacy-fern or sdk-config-v1",
-                cutoverVersion: policy.cutoverVersion,
-                expectedLanguage: policy.language,
-                expectedConfigKind,
-                recommendedAction: "USE_SUPPORTED_CONFIG_KIND"
-            },
-            receivedConfigKind
-        );
-    }
-    if (receivedConfigKind !== expectedConfigKind) {
-        throw configKindError(input, policy, expectedConfigKind, receivedConfigKind);
-    }
 
     return {
         generatorId: input.generatorId,
         language: policy.language,
         requestedVersion: input.requestedVersion,
         cutoverVersion: policy.cutoverVersion,
-        configKind: receivedConfigKind,
-        payloadKind: isBeforeCutover ? "fern-runtime-bundle" : "sdk-config-ir-v1"
+        configKind: expectedConfigKind,
+        payloadKind: isBeforeCutover ? "fern-runtime-bundle" : "sdk-config-v1"
     };
 }
 
 function compatibilityError(
-    input: ValidateGeneratorConfigCompatibilityInput,
+    input: SelectGeneratorConfigRouteInput & { configKind?: unknown },
     details: Omit<
         GeneratorConfigCompatibilityErrorInput,
         "generatorId" | "language" | "requestedVersion" | "receivedConfigKind"

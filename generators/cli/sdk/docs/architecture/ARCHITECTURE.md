@@ -671,6 +671,16 @@ is `(service=<cli_name>, account=<scheme_name>)`.
 `auth status` lists all sources and marks shadowing explicitly. `auth login`
 warns when an env var would shadow the keyring entry.
 
+Precedence — and therefore shadowing — is scoped to a **credential slot**,
+not to a scheme. Multi-value schemes (basic auth's username + password,
+OAuth client credentials' client id + secret) are one slot per value, ANDed:
+the scheme resolves only when every slot does, and slots never shadow each
+other. Sources that satisfy a scheme on their own instead of filling a slot
+— a cached OAuth access token — are ORed against the slot set as
+*alternatives* and are listed alongside the slots rather than replacing
+them. Providers behind `SchemeBinding::Custom` are opaque to the status
+surface unless they implement `AuthProvider::credential_slots`.
+
 ### 8.22 TTY-aware default output
 
 Default output format resolves with a three-tier precedence chain

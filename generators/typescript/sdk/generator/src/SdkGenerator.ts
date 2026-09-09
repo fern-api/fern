@@ -20,6 +20,7 @@ import {
     ImportsManager,
     NpmPackage,
     PackageId,
+    PackageJsonMergeStrategy,
     PublicExportsManager,
     SimpleTypescriptProject,
     TypescriptProject
@@ -151,6 +152,7 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        packageJsonMergeStrategy: PackageJsonMergeStrategy;
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
@@ -167,6 +169,7 @@ export declare namespace SdkGenerator {
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         respectOptionalRequestBody: boolean;
+        deepObjectMapQueryParameters: boolean;
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
         consolidateTypeFiles: boolean;
@@ -181,6 +184,7 @@ export declare namespace SdkGenerator {
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
+        guardProcessEnvAccess: boolean;
         generateReactQueryHooks: boolean;
     }
 }
@@ -814,6 +818,7 @@ export class SdkGenerator {
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
+                  extraConfigsMergeStrategy: this.config.packageJsonMergeStrategy,
                   outputJsr: this.config.outputJsr,
                   runScripts: this.config.runScripts,
                   exportSerde,
@@ -843,6 +848,7 @@ export class SdkGenerator {
                   extraScripts: this.extraScripts,
                   resolutions: {},
                   extraConfigs: this.config.packageJson,
+                  extraConfigsMergeStrategy: this.config.packageJsonMergeStrategy,
                   runScripts: this.config.runScripts,
                   exportSerde,
                   useLegacyExports: this.config.useLegacyExports,
@@ -1620,7 +1626,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;
@@ -1643,7 +1650,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1660,7 +1668,8 @@ export class SdkGenerator {
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
                 shouldUseWrapper,
-                optionalAuth: this.config.optionalAuth
+                optionalAuth: this.config.optionalAuth,
+                guardProcessEnvAccess: this.config.guardProcessEnvAccess
             });
             this.withSourceFile({
                 filepath: routingAuthProvidersGenerator.getFilePath(),
@@ -2182,6 +2191,7 @@ export class SdkGenerator {
                 generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
                 flattenRequestParameters: this.config.flattenRequestParameters,
                 respectOptionalRequestBody: this.config.respectOptionalRequestBody,
+                deepObjectMapQueryParameters: this.config.deepObjectMapQueryParameters,
                 parameterNaming: this.config.parameterNaming,
                 resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
             } satisfies Omit<FileContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;

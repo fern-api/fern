@@ -2149,14 +2149,14 @@ errors:
     examples:
       - value: {}
     status-code: 400
-    type: unknown
+    type: BadRequestErrorBody
   ClientClosedRequestError:
     docs: |
       This error is returned when a request is cancelled by the user.
     examples:
       - value: {}
     status-code: 499
-    type: unknown
+    type: ClientClosedRequestErrorBody
   ForbiddenError:
     docs: >
       This error indicates that the operation attempted to be performed is not
@@ -2166,7 +2166,7 @@ errors:
     examples:
       - value: {}
     status-code: 403
-    type: unknown
+    type: ForbiddenErrorBody
   GatewayTimeoutError:
     docs: >
       This error is returned when a request to the server times out. This could
@@ -2175,14 +2175,14 @@ errors:
     examples:
       - value: {}
     status-code: 504
-    type: unknown
+    type: GatewayTimeoutErrorBody
   InternalServerError:
     docs: |
       This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
-    type: unknown
+    type: InternalServerErrorBody
   InvalidTokenError:
     docs: >
       This error is returned when a request or response contains a deny-listed
@@ -2190,7 +2190,7 @@ errors:
     examples:
       - value: {}
     status-code: 498
-    type: unknown
+    type: InvalidTokenErrorBody
   NotFoundError:
     docs: >
       This error is returned when a resource is not found. This could be
@@ -2200,14 +2200,14 @@ errors:
     examples:
       - value: {}
     status-code: 404
-    type: unknown
+    type: NotFoundErrorBody
   NotImplementedError:
     docs: |
       This error is returned when the requested feature is not implemented.
     examples:
       - value: {}
     status-code: 501
-    type: unknown
+    type: NotImplementedErrorBody
   ServiceUnavailableError:
     docs: >
       This error is returned when the service is unavailable. This could be due
@@ -2216,13 +2216,13 @@ errors:
     examples:
       - value: {}
     status-code: 503
-    type: unknown
+    type: ServiceUnavailableErrorBody
   TooManyRequestsError:
     docs: Too many requests
     examples:
       - value: {}
     status-code: 429
-    type: unknown
+    type: TooManyRequestsErrorBody
   UnauthorizedError:
     docs: >
       This error indicates that the operation attempted to be performed is not
@@ -2232,7 +2232,7 @@ errors:
     examples:
       - value: {}
     status-code: 401
-    type: unknown
+    type: UnauthorizedErrorBody
   UnprocessableEntityError:
     docs: >
       This error is returned when the request is not well formed. This could be
@@ -2243,7 +2243,7 @@ errors:
     examples:
       - value: {}
     status-code: 422
-    type: unknown
+    type: UnprocessableEntityErrorBody
 service:
   auth: true
   base-path: ''
@@ -2549,14 +2549,14 @@ errors:
     examples:
       - value: {}
     status-code: 400
-    type: unknown
+    type: BadRequestErrorBody
   ClientClosedRequestError:
     docs: |
       This error is returned when a request is cancelled by the user.
     examples:
       - value: {}
     status-code: 499
-    type: unknown
+    type: ClientClosedRequestErrorBody
   ForbiddenError:
     docs: >
       This error indicates that the operation attempted to be performed is not
@@ -2566,7 +2566,7 @@ errors:
     examples:
       - value: {}
     status-code: 403
-    type: unknown
+    type: ForbiddenErrorBody
   GatewayTimeoutError:
     docs: >
       This error is returned when a request to the server times out. This could
@@ -2575,14 +2575,14 @@ errors:
     examples:
       - value: {}
     status-code: 504
-    type: unknown
+    type: GatewayTimeoutErrorBody
   InternalServerError:
     docs: |
       This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
-    type: unknown
+    type: InternalServerErrorBody
   InvalidTokenError:
     docs: >
       This error is returned when a request or response contains a deny-listed
@@ -2590,7 +2590,7 @@ errors:
     examples:
       - value: {}
     status-code: 498
-    type: unknown
+    type: InvalidTokenErrorBody
   NotFoundError:
     docs: >
       This error is returned when a resource is not found. This could be
@@ -2600,14 +2600,14 @@ errors:
     examples:
       - value: {}
     status-code: 404
-    type: unknown
+    type: NotFoundErrorBody
   NotImplementedError:
     docs: |
       This error is returned when the requested feature is not implemented.
     examples:
       - value: {}
     status-code: 501
-    type: unknown
+    type: NotImplementedErrorBody
   ServiceUnavailableError:
     docs: >
       This error is returned when the service is unavailable. This could be due
@@ -2616,13 +2616,13 @@ errors:
     examples:
       - value: {}
     status-code: 503
-    type: unknown
+    type: ServiceUnavailableErrorBody
   TooManyRequestsError:
     docs: Too many requests
     examples:
       - value: {}
     status-code: 429
-    type: unknown
+    type: TooManyRequestsErrorBody
   UnauthorizedError:
     docs: >
       This error indicates that the operation attempted to be performed is not
@@ -2632,7 +2632,7 @@ errors:
     examples:
       - value: {}
     status-code: 401
-    type: unknown
+    type: UnauthorizedErrorBody
   UnprocessableEntityError:
     docs: >
       This error is returned when the request is not well formed. This could be
@@ -2643,7 +2643,7 @@ errors:
     examples:
       - value: {}
     status-code: 422
-    type: unknown
+    type: UnprocessableEntityErrorBody
 ",
         "name": "__package__.yml",
         "type": "file",

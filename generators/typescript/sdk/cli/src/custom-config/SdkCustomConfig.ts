@@ -56,6 +56,7 @@ export interface SdkCustomConfig {
     inlinePathParameters: boolean | undefined;
     enableInlineTypes: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
+    packageJsonMergeStrategy: "shallow" | "deep";
     publishToJsr: boolean | undefined;
     omitUndefined: boolean | undefined;
     writeUnitTests: boolean | undefined;
@@ -77,6 +78,7 @@ export interface SdkCustomConfig {
     generateReadWriteOnlyTypes: boolean;
     flattenRequestParameters: boolean | undefined;
     respectOptionalRequestBody: boolean | undefined;
+    deepObjectMapQueryParameters: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;
@@ -92,6 +94,7 @@ export interface SdkCustomConfig {
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
     optionalAuth: boolean;
+    guardProcessEnvAccess: boolean;
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
 }

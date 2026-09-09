@@ -33,6 +33,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
                 "headerEnvVar": null,
                 "headerPlaceholder": null,
                 "key": "ApiKey",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
@@ -135,6 +136,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                 "tokenEnvVar": null,
                 "tokenPlaceholder": null,
                 "key": "bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
@@ -16342,6 +16344,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 "passwordOmit": null,
                 "passwordPlaceholder": null,
                 "key": "MyBasicAuth",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
