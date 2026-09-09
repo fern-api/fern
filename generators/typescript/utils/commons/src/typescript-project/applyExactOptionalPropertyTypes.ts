@@ -8,10 +8,10 @@ import {
     SourceFile,
     SpreadAssignment,
     SyntaxKind,
-    ts,
     Type,
     TypeNode,
-    TypeReferenceNode
+    TypeReferenceNode,
+    ts
 } from "ts-morph";
 
 // Properties with these type keywords already admit `undefined` assignments, so
