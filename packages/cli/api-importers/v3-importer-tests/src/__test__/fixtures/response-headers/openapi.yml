@@ -29,6 +29,70 @@ paths:
               schema:
                 type: boolean
               example: true
+            X-Rate-Limit-Policy:
+              description: Rate limit policy applied to the request
+              deprecated: true
+              schema:
+                $ref: "#/components/schemas/RateLimitPolicy"
+            X-Account-Info:
+              description: JSON-encoded account metadata
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/AccountInfo"
+            X-Score:
+              description: Request score
+              schema:
+                type: number
+            X-Quota:
+              description: Quota with a schema-level default
+              schema:
+                type: integer
+                default: 100
+            X-Tags:
+              description: Comma-independent list of tags
+              schema:
+                type: array
+                items:
+                  type: string
+            X-Inline-Info:
+              description: Inline object schema header
+              schema:
+                type: object
+                required:
+                  - reason
+                properties:
+                  reason:
+                    type: string
+                  source:
+                    type: string
+            X-Trace:
+              $ref: "#/components/headers/TraceHeader"
+            X-Beta-Feature:
+              description: Beta feature flag header
+              x-fern-availability: beta
+              schema:
+                type: string
+            X-Plain-Only:
+              description: Non-JSON content is not treated as a schema
+              content:
+                text/plain:
+                  schema:
+                    type: object
+                    properties:
+                      note:
+                        type: string
+            X-Mixed-Content:
+              description: JSON entry wins when content has multiple media types
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ErrorInfo"
+            X-No-Schema:
+              description: Header with no schema or content
           content:
             application/json:
               schema:
@@ -69,11 +133,22 @@ paths:
               description: Unique request identifier
               schema:
                 type: string
+            X-Error-Info:
+              description: JSON-encoded error metadata
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ErrorInfo"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
 components:
+  headers:
+    TraceHeader:
+      description: Shared trace header resolved via components/headers
+      schema:
+        $ref: "#/components/schemas/TraceInfo"
   schemas:
     User:
       type: object
@@ -96,3 +171,39 @@ components:
           type: string
         code:
           type: integer
+    RateLimitPolicy:
+      type: string
+      enum:
+        - burst
+        - steady
+        - adaptive
+    AccountInfo:
+      type: object
+      required:
+        - accountId
+      properties:
+        accountId:
+          type: string
+        displayName:
+          type: string
+        tier:
+          type: string
+          nullable: true
+    ErrorInfo:
+      type: object
+      required:
+        - traceId
+      properties:
+        traceId:
+          type: string
+        retryAfterSeconds:
+          type: integer
+    TraceInfo:
+      type: object
+      required:
+        - traceId
+      properties:
+        traceId:
+          type: string
+        spanId:
+          type: string
