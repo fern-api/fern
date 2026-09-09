@@ -722,3 +722,71 @@ client.Users.ListWithNestedBodyOffsetPagination(
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListWithAliasedNestedBodyOffsetPagination(request) -> *fern.ListUsersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with an offset field nested in a required alias to an object. Go
+generates the alias as a pointer, so the pager must still nil-check and copy it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersAliasedNestedBodyOffsetPaginationRequest{
+    Options: &fern.WithOffset{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
+    },
+}
+client.Users.ListWithAliasedNestedBodyOffsetPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**options:** `fern.WithOffsetAlias` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

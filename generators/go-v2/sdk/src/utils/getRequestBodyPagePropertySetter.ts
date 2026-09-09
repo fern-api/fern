@@ -3,7 +3,13 @@ import { go } from "@fern-api/go-ast";
 export interface RequestBodyPagePathItem {
     /** The Go field name of the intermediate object, e.g. Options */
     fieldName: string;
-    type: go.Type;
+    /**
+     * The value type behind each pointer the field generates with, outermost first. Empty for fields
+     * that generate as values. A `*WithOffset` field has one entry, WithOffset; an optional alias to
+     * an object generates as a double pointer `*WithOffsetAlias` (= `**WithOffset`) and has two
+     * entries, WithOffsetAlias and WithOffset.
+     */
+    pointerValueTypes: go.Type[];
 }
 
 /**
@@ -36,22 +42,24 @@ export function getRequestBodyPagePropertySetter({
         let container = pagedRequestVariableName;
         let copyVariableName = pagedRequestVariableName;
         for (const item of propertyPath) {
-            const reference = `${container}.${item.fieldName}`;
+            let reference = `${container}.${item.fieldName}`;
             copyVariableName += item.fieldName;
-            if (!item.type.isOptional()) {
-                container = reference;
-                continue;
+            for (const [index, valueType] of item.pointerValueTypes.entries()) {
+                if (index > 0) {
+                    copyVariableName += "Value";
+                }
+                writer.write(`var ${copyVariableName} `);
+                writer.writeNode(valueType);
+                writer.newLine();
+                writer.writeLine(`if ${reference} != nil {`);
+                writer.indent();
+                writer.writeLine(`${copyVariableName} = *${reference}`);
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine(`${reference} = &${copyVariableName}`);
+                reference = copyVariableName;
             }
-            writer.write(`var ${copyVariableName} `);
-            writer.writeNode(item.type.underlying());
-            writer.newLine();
-            writer.writeLine(`if ${reference} != nil {`);
-            writer.indent();
-            writer.writeLine(`${copyVariableName} = *${reference}`);
-            writer.dedent();
-            writer.writeLine("}");
-            writer.writeLine(`${reference} = &${copyVariableName}`);
-            container = copyVariableName;
+            container = reference;
         }
         writer.writeLine(`${container}.${fieldName} = ${value}`);
     });

@@ -1,7 +1,7 @@
 import { go } from "@fern-api/go-ast";
 import { describe, expect, it } from "vitest";
 
-import { getRequestBodyPagePropertySetter } from "../getRequestBodyPagePropertySetter.js";
+import { getRequestBodyPagePropertySetter, RequestBodyPagePathItem } from "../getRequestBodyPagePropertySetter.js";
 
 const ROOT_IMPORT_PATH = "github.com/acme/acme-go";
 
@@ -14,11 +14,19 @@ function render(node: go.AstNode): string {
     });
 }
 
-function object(name: string): go.Type {
-    return go.Type.pointer(go.Type.reference(go.typeReference({ name, importPath: ROOT_IMPORT_PATH })));
+function reference(name: string): go.Type {
+    return go.Type.reference(go.typeReference({ name, importPath: ROOT_IMPORT_PATH }));
 }
 
-function setter(propertyPath: { fieldName: string; type: go.Type }[]): string {
+function object(name: string): Pick<RequestBodyPagePathItem, "pointerValueTypes"> {
+    return { pointerValueTypes: [reference(name)] };
+}
+
+function value(): Pick<RequestBodyPagePathItem, "pointerValueTypes"> {
+    return { pointerValueTypes: [] };
+}
+
+function setter(propertyPath: RequestBodyPagePathItem[]): string {
     return render(
         getRequestBodyPagePropertySetter({
             requestReference: "request",
@@ -38,7 +46,7 @@ describe("getRequestBodyPagePropertySetter", () => {
     });
 
     it("allocates a nil pointer intermediate before setting the page property", () => {
-        expect(setter([{ fieldName: "Options", type: object("Options") }])).toContain(
+        expect(setter([{ fieldName: "Options", ...object("Options") }])).toContain(
             [
                 "nextRequest := *request",
                 "var nextRequestOptions Options",
@@ -55,8 +63,8 @@ describe("getRequestBodyPagePropertySetter", () => {
     it("allocates every pointer intermediate along a multi-level path", () => {
         expect(
             setter([
-                { fieldName: "Options", type: object("Options") },
-                { fieldName: "Pagination", type: object("Pagination") }
+                { fieldName: "Options", ...object("Options") },
+                { fieldName: "Pagination", ...object("Pagination") }
             ])
         ).toContain(
             [
@@ -80,11 +88,8 @@ describe("getRequestBodyPagePropertySetter", () => {
     it("assigns through non-pointer intermediates without allocating", () => {
         expect(
             setter([
-                {
-                    fieldName: "Options",
-                    type: go.Type.reference(go.typeReference({ name: "Options", importPath: ROOT_IMPORT_PATH }))
-                },
-                { fieldName: "Pagination", type: object("Pagination") }
+                { fieldName: "Options", ...value() },
+                { fieldName: "Pagination", ...object("Pagination") }
             ])
         ).toContain(
             [
@@ -95,6 +100,28 @@ describe("getRequestBodyPagePropertySetter", () => {
                 "}",
                 "nextRequest.Options.Pagination = &nextRequestOptionsPagination",
                 "nextRequestOptionsPagination.Offset = pageRequest.Cursor",
+                ""
+            ].join("\n")
+        );
+    });
+
+    it("copies every pointer level of a double-pointer intermediate", () => {
+        expect(
+            setter([{ fieldName: "Options", pointerValueTypes: [reference("OptionsAlias"), reference("Options")] }])
+        ).toContain(
+            [
+                "nextRequest := *request",
+                "var nextRequestOptions OptionsAlias",
+                "if nextRequest.Options != nil {",
+                "    nextRequestOptions = *nextRequest.Options",
+                "}",
+                "nextRequest.Options = &nextRequestOptions",
+                "var nextRequestOptionsValue Options",
+                "if nextRequestOptions != nil {",
+                "    nextRequestOptionsValue = *nextRequestOptions",
+                "}",
+                "nextRequestOptions = &nextRequestOptionsValue",
+                "nextRequestOptionsValue.Offset = pageRequest.Cursor",
                 ""
             ].join("\n")
         );

@@ -59,6 +59,54 @@ func (l *ListUsersAliasBodyCursorPaginationRequest) MarshalJSON() ([]byte, error
 }
 
 var (
+	listUsersAliasedNestedBodyOffsetPaginationRequestFieldOptions = big.NewInt(1 << 0)
+)
+
+type ListUsersAliasedNestedBodyOffsetPaginationRequest struct {
+	Options WithOffsetAlias `json:"options" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersAliasedNestedBodyOffsetPaginationRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedNestedBodyOffsetPaginationRequest) SetOptions(options WithOffsetAlias) {
+	l.Options = options
+	l.require(listUsersAliasedNestedBodyOffsetPaginationRequestFieldOptions)
+}
+
+func (l *ListUsersAliasedNestedBodyOffsetPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersAliasedNestedBodyOffsetPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersAliasedNestedBodyOffsetPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersAliasedNestedBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersAliasedNestedBodyOffsetPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
 	listUsersBodyCursorPaginationRequestFieldFilter = big.NewInt(1 << 1)
 )
@@ -1467,6 +1515,9 @@ func (w *WithOffset) String() string {
 	}
 	return fmt.Sprintf("%#v", w)
 }
+
+// An alias to an object, which Go generates as a pointer alias (`type WithOffsetAlias = *WithOffset`).
+type WithOffsetAlias = *WithOffset
 
 var (
 	withPaginationFieldPagination = big.NewInt(1 << 0)

@@ -60,6 +60,10 @@ types:
       offset: optional<integer>
       count: optional<integer>
 
+  WithOffsetAlias:
+    docs: An alias to an object, which Go generates as a pointer alias (`type WithOffsetAlias = *WithOffset`).
+    type: WithOffset
+
   WithPagination:
     properties:
       pagination: optional<WithCursor>
@@ -250,4 +254,21 @@ service:
         body:
           properties:
             options: optional<WithOffset>
+      response: ListUsersResponse
+
+    listWithAliasedNestedBodyOffsetPagination:
+      docs: |
+        Pagination endpoint with an offset field nested in a required alias to an object. Go
+        generates the alias as a pointer, so the pager must still nil-check and copy it.
+      pagination:
+        offset: $request.options.offset
+        step: $request.options.count
+        results: $response.data
+      method: POST
+      path: /aliased-nested-offset
+      request:
+        name: ListUsersAliasedNestedBodyOffsetPaginationRequest
+        body:
+          properties:
+            options: WithOffsetAlias
       response: ListUsersResponse

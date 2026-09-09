@@ -1,13 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.57.14
+- version: 1.58.0
   changelogEntry:
     - summary: |
         Request-body pagination (`enableRequestBodyPagination`) now supports page properties that
         live inside nested request objects, e.g. `offset: $request.options.offset`. Previously such
         endpoints were silently generated without a pager. The generated pager advances the page on
         a copy of the request and allocates any optional intermediate object the caller left nil
-        (`Options: nil` and `Options: &Options{Count: &n}` both work), across any nesting depth,
-        without mutating the caller's request. Top-level page properties generate unchanged code.
+        (`Options: nil` and `Options: &Options{Count: &n}` both work), across any nesting depth
+        and through aliases to objects, without mutating the caller's request. Top-level page
+        properties generate unchanged code.
       type: feat
   createdAt: "2026-09-09"
   irVersion: 67

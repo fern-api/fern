@@ -817,3 +817,82 @@ func (c *Client) ListWithNestedBodyOffsetPagination(
 	)
 	return pager.GetPage(ctx, &next)
 }
+
+// Pagination endpoint with an offset field nested in a required alias to an object. Go
+// generates the alias as a pointer, so the pager must still nil-check and copy it.
+//
+// Example:
+//
+//	request := &fern.ListUsersAliasedNestedBodyOffsetPaginationRequest{
+//	    Options: &fern.WithOffset{
+//	        Offset: fern.Int(
+//	            1,
+//	        ),
+//	        Count: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithAliasedNestedBodyOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithAliasedNestedBodyOffsetPagination(
+	ctx context.Context,
+	request *fern.ListUsersAliasedNestedBodyOffsetPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*int, *fern.User, *fern.ListUsersResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/aliased-nested-offset"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestOptions fern.WithOffset
+		if nextRequest.Options != nil {
+			nextRequestOptions = *nextRequest.Options
+		}
+		nextRequest.Options = &nextRequestOptions
+		nextRequestOptions.Offset = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	next := 1
+	if request.Options != nil && request.Options.Offset != nil {
+		next = *request.Options.Offset
+	}
+
+	readPageResponse := func(response *fern.ListUsersResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersResponse] {
+		next += 1
+		results := response.GetData()
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
+}

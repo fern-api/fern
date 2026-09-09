@@ -1093,16 +1093,19 @@ function getRequestBodyPageProperty({
             }
             const requestParameterName = signature.request.getRequestParameterName();
             const fieldName = context.getFieldName(pagination.page.property.name);
-            const propertyPath = (pagination.page.propertyPath ?? []).map((item) => ({
-                fieldName: context.getFieldName(item.name),
-                type: context.goTypeMapper.convert({ reference: item.type })
-            }));
+            const propertyPath = (pagination.page.propertyPath ?? []).map((item) =>
+                getRequestBodyPagePathItem({ context, item })
+            );
             const requestNilChecks: string[] = [];
             let container = requestParameterName;
             for (const item of propertyPath) {
                 container = `${container}.${item.fieldName}`;
-                if (item.type.isOptional()) {
-                    requestNilChecks.push(`${container} != nil`);
+                for (let depth = 0; depth < item.pointerValueTypes.length; depth++) {
+                    requestNilChecks.push(`${"*".repeat(depth)}${container} != nil`);
+                }
+                // Go dereferences a single pointer implicitly on field access; deeper pointers are explicit.
+                if (item.pointerValueTypes.length > 1) {
+                    container = `(${"*".repeat(item.pointerValueTypes.length - 1)}${container})`;
                 }
             }
             return {
@@ -1120,6 +1123,63 @@ function getRequestBodyPageProperty({
         default:
             assertNever(pagination);
     }
+}
+
+/**
+ * Resolves the pointers an intermediate object on the page property path generates with. The mapped
+ * Go type alone cannot tell, because named aliases generate as the type they alias: an alias to an
+ * object is a pointer alias (`type Options = *WithOffset`) that maps to a plain reference, and an
+ * optional alias to an object generates as a double pointer (`*Options`).
+ */
+function getRequestBodyPagePathItem({
+    context,
+    item
+}: {
+    context: SdkGeneratorContext;
+    item: FernIr.PropertyPathItem;
+}): RequestBodyPagePathItem {
+    const pointerValueTypes: go.Type[] = [];
+    const seen = new Set<FernIr.TypeId>();
+    let reference = item.type;
+    while (true) {
+        if (
+            reference.type === "container" &&
+            (reference.container.type === "optional" || reference.container.type === "nullable")
+        ) {
+            const inner =
+                reference.container.type === "optional" ? reference.container.optional : reference.container.nullable;
+            const innerType = context.goTypeMapper.convert({ reference: inner });
+            if (innerType.isOptional()) {
+                // optional<Object> collapses to a single pointer, resolved below.
+                reference = inner;
+                continue;
+            }
+            const type = context.goTypeMapper.convert({ reference });
+            if (type.isOptional()) {
+                // optional<Alias> where the alias is not itself optional, e.g. an alias to an object.
+                pointerValueTypes.push(innerType);
+            }
+            reference = inner;
+            continue;
+        }
+        if (reference.type === "named" && !seen.has(reference.typeId)) {
+            seen.add(reference.typeId);
+            const shape = context.getTypeDeclarationOrThrow(reference.typeId).shape;
+            if (shape.type === "alias") {
+                reference = shape.aliasOf;
+                continue;
+            }
+        }
+        break;
+    }
+    const type = context.goTypeMapper.convert({ reference });
+    if (type.isOptional()) {
+        pointerValueTypes.push(type.underlying());
+    }
+    return {
+        fieldName: context.getFieldName(item.name),
+        pointerValueTypes
+    };
 }
 
 function getRequestVariableName({ signature }: { signature: EndpointSignatureInfo }): string {
