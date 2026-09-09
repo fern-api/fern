@@ -22,10 +22,12 @@ type ListUsersAliasBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersAliasBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -70,10 +72,12 @@ type ListUsersBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -125,10 +129,12 @@ type ListUsersBodyOffsetPaginationRequest struct {
 }
 
 func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -167,6 +173,54 @@ func (l *ListUsersBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	listUsersDeeplyNestedBodyCursorPaginationRequestFieldOptions = big.NewInt(1 << 0)
+)
+
+type ListUsersDeeplyNestedBodyCursorPaginationRequest struct {
+	Options *WithPagination `json:"options,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersDeeplyNestedBodyCursorPaginationRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersDeeplyNestedBodyCursorPaginationRequest) SetOptions(options *WithPagination) {
+	l.Options = options
+	l.require(listUsersDeeplyNestedBodyCursorPaginationRequestFieldOptions)
+}
+
+func (l *ListUsersDeeplyNestedBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersDeeplyNestedBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersDeeplyNestedBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersDeeplyNestedBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersDeeplyNestedBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersNestedBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
 
@@ -178,10 +232,12 @@ type ListUsersNestedBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersNestedBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPagination sets the Pagination field and marks it as non-optional;
@@ -213,6 +269,102 @@ func (l *ListUsersNestedBodyCursorPaginationRequest) MarshalJSON() ([]byte, erro
 }
 
 var (
+	listUsersNestedBodyOffsetPaginationRequestFieldOptions = big.NewInt(1 << 0)
+)
+
+type ListUsersNestedBodyOffsetPaginationRequest struct {
+	Options *WithOffset `json:"options,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersNestedBodyOffsetPaginationRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersNestedBodyOffsetPaginationRequest) SetOptions(options *WithOffset) {
+	l.Options = options
+	l.require(listUsersNestedBodyOffsetPaginationRequestFieldOptions)
+}
+
+func (l *ListUsersNestedBodyOffsetPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersNestedBodyOffsetPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersNestedBodyOffsetPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersNestedBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersNestedBodyOffsetPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	listUsersNestedRequiredBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
+)
+
+type ListUsersNestedRequiredBodyCursorPaginationRequest struct {
+	Pagination *WithRequiredCursor `json:"pagination" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersNestedRequiredBodyCursorPaginationRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersNestedRequiredBodyCursorPaginationRequest) SetPagination(pagination *WithRequiredCursor) {
+	l.Pagination = pagination
+	l.require(listUsersNestedRequiredBodyCursorPaginationRequestFieldPagination)
+}
+
+func (l *ListUsersNestedRequiredBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersNestedRequiredBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersNestedRequiredBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersNestedRequiredBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersNestedRequiredBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	listUsersNullableAliasBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
 )
 
@@ -224,10 +376,12 @@ type ListUsersNullableAliasBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersNullableAliasBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -270,10 +424,12 @@ type ListUsersRequiredAliasBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersRequiredAliasBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -316,10 +472,12 @@ type ListUsersRequiredBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersRequiredBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -362,10 +520,12 @@ type ListUsersUUIDBodyCursorPaginationRequest struct {
 }
 
 func (l *ListUsersUUIDBodyCursorPaginationRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -437,10 +597,12 @@ func (l *ListUsersAliasCursorResponse) GetExtraProperties() map[string]interface
 }
 
 func (l *ListUsersAliasCursorResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -537,10 +699,12 @@ func (l *ListUsersNullableAliasCursorResponse) GetExtraProperties() map[string]i
 }
 
 func (l *ListUsersNullableAliasCursorResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -637,10 +801,12 @@ func (l *ListUsersRequiredAliasCursorResponse) GetExtraProperties() map[string]i
 }
 
 func (l *ListUsersRequiredAliasCursorResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -737,10 +903,12 @@ func (l *ListUsersRequiredCursorResponse) GetExtraProperties() map[string]interf
 }
 
 func (l *ListUsersRequiredCursorResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -837,10 +1005,12 @@ func (l *ListUsersResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *ListUsersResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -937,10 +1107,12 @@ func (l *ListUsersUUIDCursorResponse) GetExtraProperties() map[string]interface{
 }
 
 func (l *ListUsersUUIDCursorResponse) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNextCursor sets the NextCursor field and marks it as non-optional;
@@ -1043,10 +1215,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1134,10 +1308,12 @@ func (w *WithCursor) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithCursor) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -1175,6 +1351,281 @@ func (w *WithCursor) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithCursor) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+// Mirrors an options object that carries both the offset and the page size.
+var (
+	withOffsetFieldOffset = big.NewInt(1 << 0)
+	withOffsetFieldCount  = big.NewInt(1 << 1)
+)
+
+type WithOffset struct {
+	Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
+	Count  *int `json:"count,omitempty" url:"count,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithOffset) GetOffset() *int {
+	if w == nil {
+		return nil
+	}
+	return w.Offset
+}
+
+func (w *WithOffset) GetCount() *int {
+	if w == nil {
+		return nil
+	}
+	return w.Count
+}
+
+func (w *WithOffset) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithOffset) require(field *big.Int) {
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
+	}
+	next.Or(next, field)
+	w.explicitFields = next
+}
+
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithOffset) SetOffset(offset *int) {
+	w.Offset = offset
+	w.require(withOffsetFieldOffset)
+}
+
+// SetCount sets the Count field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithOffset) SetCount(count *int) {
+	w.Count = count
+	w.require(withOffsetFieldCount)
+}
+
+func (w *WithOffset) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithOffset
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithOffset(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithOffset) MarshalJSON() ([]byte, error) {
+	type embed WithOffset
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (w *WithOffset) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+var (
+	withPaginationFieldPagination = big.NewInt(1 << 0)
+)
+
+type WithPagination struct {
+	Pagination *WithCursor `json:"pagination,omitempty" url:"pagination,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithPagination) GetPagination() *WithCursor {
+	if w == nil {
+		return nil
+	}
+	return w.Pagination
+}
+
+func (w *WithPagination) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithPagination) require(field *big.Int) {
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
+	}
+	next.Or(next, field)
+	w.explicitFields = next
+}
+
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithPagination) SetPagination(pagination *WithCursor) {
+	w.Pagination = pagination
+	w.require(withPaginationFieldPagination)
+}
+
+func (w *WithPagination) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithPagination
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithPagination(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithPagination) MarshalJSON() ([]byte, error) {
+	type embed WithPagination
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (w *WithPagination) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+var (
+	withRequiredCursorFieldCursor = big.NewInt(1 << 0)
+)
+
+type WithRequiredCursor struct {
+	Cursor string `json:"cursor" url:"cursor"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithRequiredCursor) GetCursor() string {
+	if w == nil {
+		return ""
+	}
+	return w.Cursor
+}
+
+func (w *WithRequiredCursor) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithRequiredCursor) require(field *big.Int) {
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
+	}
+	next.Or(next, field)
+	w.explicitFields = next
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithRequiredCursor) SetCursor(cursor string) {
+	w.Cursor = cursor
+	w.require(withRequiredCursorFieldCursor)
+}
+
+func (w *WithRequiredCursor) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithRequiredCursor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithRequiredCursor(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithRequiredCursor) MarshalJSON() ([]byte, error) {
+	type embed WithRequiredCursor
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (w *WithRequiredCursor) String() string {
 	if w == nil {
 		return "<nil>"
 	}

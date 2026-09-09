@@ -24,6 +24,17 @@
         },
         {
             "id": {
+                "path": "/users/deeply-nested-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithDeeplyNestedBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithDeeplyNestedBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersDeeplyNestedBodyCursorPaginationRequest{\n\t\tOptions: \u0026fern.WithPagination{\n\t\t\tPagination: \u0026fern.WithCursor{\n\t\t\t\tCursor: fern.String(\n\t\t\t\t\t\"cursor\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users/nested-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithNestedBodyCursorPagination"
@@ -31,6 +42,28 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithNestedBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersNestedBodyCursorPaginationRequest{\n\t\tPagination: \u0026fern.WithCursor{\n\t\t\tCursor: fern.String(\n\t\t\t\t\"cursor\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/nested-offset",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNestedBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithNestedBodyOffsetPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersNestedBodyOffsetPaginationRequest{\n\t\tOptions: \u0026fern.WithOffset{\n\t\t\tOffset: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tCount: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/nested-required-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNestedRequiredBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-request-body-pagination/fern\"\n\tfernclient \"github.com/go-request-body-pagination/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.ListWithNestedRequiredBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersNestedRequiredBodyCursorPaginationRequest{\n\t\tPagination: \u0026fern.WithRequiredCursor{\n\t\t\tCursor: \"cursor\",\n\t\t},\n\t},\n)\n"
             }
         },
         {

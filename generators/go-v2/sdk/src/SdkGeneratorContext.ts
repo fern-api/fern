@@ -633,32 +633,12 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
      * enabling them by default would change the return type of endpoints that already ship without a
      * pager. These endpoints opt in with the enableRequestBodyPagination configuration option, and
      * otherwise generate a delegating endpoint.
-     *
-     * Nested page properties remain unsupported; advancing the page would require allocating the
-     * intermediate objects that the caller may have left unset.
      */
     public isUnsupportedRequestBodyPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         if (!this.isPaginationWithRequestBodyEndpoint(endpoint)) {
             return false;
         }
-        if (this.customConfig.enableRequestBodyPagination !== true) {
-            return true;
-        }
-        const pagination = this.getPagination(endpoint);
-        if (pagination == null) {
-            return false;
-        }
-        switch (pagination.type) {
-            case "cursor":
-            case "offset":
-                return (pagination.page.propertyPath ?? []).length > 0;
-            case "custom":
-            case "uri":
-            case "path":
-                return false;
-            default:
-                assertNever(pagination);
-        }
+        return this.customConfig.enableRequestBodyPagination !== true;
     }
 
     public isPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {

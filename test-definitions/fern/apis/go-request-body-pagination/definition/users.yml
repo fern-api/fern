@@ -50,6 +50,20 @@ types:
     properties:
       cursor: optional<string>
 
+  WithRequiredCursor:
+    properties:
+      cursor: string
+
+  WithOffset:
+    docs: Mirrors an options object that carries both the offset and the page size.
+    properties:
+      offset: optional<integer>
+      count: optional<integer>
+
+  WithPagination:
+    properties:
+      pagination: optional<WithCursor>
+
 service:
   auth: false
   base-path: /users
@@ -172,8 +186,8 @@ service:
 
     listWithNestedBodyCursorPagination:
       docs: |
-        Pagination endpoint with a nested cursor field in the request body. Nested page properties are
-        not supported, so this endpoint is generated without a pager.
+        Pagination endpoint with a cursor field nested in an optional object in the request body. The
+        pager allocates the object when the caller left it unset.
       pagination:
         cursor: $request.pagination.cursor
         next_cursor: $response.next_cursor
@@ -185,4 +199,55 @@ service:
         body:
           properties:
             pagination: optional<WithCursor>
+      response: ListUsersResponse
+
+    listWithNestedRequiredBodyCursorPagination:
+      docs: |
+        Pagination endpoint with a required cursor field nested in a required object in the request
+        body. Objects are always pointers in Go, so the pager still allocates the object when nil.
+      pagination:
+        cursor: $request.pagination.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /nested-required-cursor
+      request:
+        name: ListUsersNestedRequiredBodyCursorPaginationRequest
+        body:
+          properties:
+            pagination: WithRequiredCursor
+      response: ListUsersRequiredCursorResponse
+
+    listWithDeeplyNestedBodyCursorPagination:
+      docs: |
+        Pagination endpoint with a cursor field nested two levels deep in optional objects in the
+        request body. The pager allocates every intermediate object that the caller left unset.
+      pagination:
+        cursor: $request.options.pagination.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /deeply-nested-cursor
+      request:
+        name: ListUsersDeeplyNestedBodyCursorPaginationRequest
+        body:
+          properties:
+            options: optional<WithPagination>
+      response: ListUsersResponse
+
+    listWithNestedBodyOffsetPagination:
+      docs: |
+        Pagination endpoint with an offset field nested in an optional object in the request body,
+        alongside the page size. The pager allocates the object when the caller left it unset.
+      pagination:
+        offset: $request.options.offset
+        step: $request.options.count
+        results: $response.data
+      method: POST
+      path: /nested-offset
+      request:
+        name: ListUsersNestedBodyOffsetPaginationRequest
+        body:
+          properties:
+            options: optional<WithOffset>
       response: ListUsersResponse

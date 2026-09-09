@@ -471,8 +471,8 @@ client.Users.ListWithBodyOffsetPagination(
 <dl>
 <dd>
 
-Pagination endpoint with a nested cursor field in the request body. Nested page properties are
-not supported, so this endpoint is generated without a pager.
+Pagination endpoint with a cursor field nested in an optional object in the request body. The
+pager allocates the object when the caller left it unset.
 </dd>
 </dl>
 </dd>
@@ -513,6 +513,204 @@ client.Users.ListWithNestedBodyCursorPagination(
 <dd>
 
 **pagination:** `*fern.WithCursor` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithNestedRequiredBodyCursorPagination(request) -> *fern.ListUsersRequiredCursorResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a required cursor field nested in a required object in the request
+body. Objects are always pointers in Go, so the pager still allocates the object when nil.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersNestedRequiredBodyCursorPaginationRequest{
+    Pagination: &fern.WithRequiredCursor{
+        Cursor: "cursor",
+    },
+}
+client.Users.ListWithNestedRequiredBodyCursorPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `*fern.WithRequiredCursor` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithDeeplyNestedBodyCursorPagination(request) -> *fern.ListUsersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a cursor field nested two levels deep in optional objects in the
+request body. The pager allocates every intermediate object that the caller left unset.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersDeeplyNestedBodyCursorPaginationRequest{
+    Options: &fern.WithPagination{
+        Pagination: &fern.WithCursor{
+            Cursor: fern.String(
+                "cursor",
+            ),
+        },
+    },
+}
+client.Users.ListWithDeeplyNestedBodyCursorPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**options:** `*fern.WithPagination` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithNestedBodyOffsetPagination(request) -> *fern.ListUsersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with an offset field nested in an optional object in the request body,
+alongside the page size. The pager allocates the object when the caller left it unset.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersNestedBodyOffsetPaginationRequest{
+    Options: &fern.WithOffset{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
+    },
+}
+client.Users.ListWithNestedBodyOffsetPagination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**options:** `*fern.WithOffset` 
     
 </dd>
 </dl>
