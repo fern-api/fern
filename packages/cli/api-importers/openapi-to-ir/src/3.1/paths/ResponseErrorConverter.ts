@@ -1,4 +1,6 @@
+import { MediaType } from "@fern-api/core-utils";
 import {
+    Availability,
     FernFilepath,
     HttpHeader,
     PrimitiveTypeV2,
@@ -10,7 +12,8 @@ import {
     AbstractConverter,
     Converters,
     ERROR_NAMES_BY_STATUS_CODE,
-    ExampleConverter
+    ExampleConverter,
+    SchemaOrReferenceConverter
 } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -84,9 +87,9 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 displayName: errorName,
                 statusCode: this.statusCode,
                 isWildcardStatusCode: this.isWildcardStatusCode,
-                inlinedTypes: {},
+                inlinedTypes: this.convertResponseHeaders().inlinedTypes,
                 examples: {},
-                headers: this.convertResponseHeaders()
+                headers: this.convertResponseHeaders().headers
             };
         }
 
@@ -157,9 +160,12 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             displayName: errorName,
             statusCode: this.statusCode,
             isWildcardStatusCode: this.isWildcardStatusCode,
-            inlinedTypes: convertedSchema.inlinedTypes,
+            inlinedTypes: {
+                ...convertedSchema.inlinedTypes,
+                ...this.convertResponseHeaders().inlinedTypes
+            },
             examples: this.convertErrorExamples({ mediaTypeObject }),
-            headers: this.convertResponseHeaders()
+            headers: this.convertResponseHeaders().headers
         };
     }
 
@@ -245,12 +251,31 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             : errorName;
     }
 
-    private convertResponseHeaders(): HttpHeader[] {
+    private convertedResponseHeaders:
+        | {
+              headers: HttpHeader[];
+              inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+          }
+        | undefined;
+
+    private convertResponseHeaders(): {
+        headers: HttpHeader[];
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+    } {
+        this.convertedResponseHeaders ??= this.doConvertResponseHeaders();
+        return this.convertedResponseHeaders;
+    }
+
+    private doConvertResponseHeaders(): {
+        headers: HttpHeader[];
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+    } {
         const headers: HttpHeader[] = [];
+        const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
         const responseHeaders = this.responseError.headers;
 
         if (responseHeaders == null) {
-            return headers;
+            return { headers, inlinedTypes };
         }
 
         for (const [headerName, headerOrRef] of Object.entries(responseHeaders)) {
@@ -263,9 +288,10 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 continue;
             }
 
-            const headerSchema = resolvedHeader.schema;
+            const headerSchema = this.getHeaderSchema(resolvedHeader);
             let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
             let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
+            let availability: Availability | undefined;
 
             if (headerSchema != null) {
                 resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
@@ -273,20 +299,40 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                     breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"]
                 });
 
-                if (resolvedSchema != null) {
-                    if (resolvedSchema.type === "number" || resolvedSchema.type === "integer") {
-                        valueType = TypeReference.primitive({
-                            v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
-                            v2:
-                                resolvedSchema.type === "integer"
-                                    ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
-                                    : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
-                        });
-                    } else if (resolvedSchema.type === "boolean") {
-                        valueType = TypeReference.primitive({
-                            v1: "BOOLEAN",
-                            v2: PrimitiveTypeV2.boolean({ default: undefined })
-                        });
+                if (resolvedSchema?.type === "number" || resolvedSchema?.type === "integer") {
+                    valueType = TypeReference.primitive({
+                        v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
+                        v2:
+                            resolvedSchema.type === "integer"
+                                ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
+                                : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
+                    });
+                } else if (resolvedSchema?.type === "boolean") {
+                    valueType = TypeReference.primitive({
+                        v1: "BOOLEAN",
+                        v2: PrimitiveTypeV2.boolean({ default: undefined })
+                    });
+                } else {
+                    // Convert the header's schema like a request-header parameter's schema so
+                    // object/enum/array/$ref response headers keep their shape (expandable
+                    // properties in docs) instead of collapsing to optional<string>.
+                    const convertedHeaderSchema = new SchemaOrReferenceConverter({
+                        context: this.context,
+                        breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"],
+                        schemaOrReference: headerSchema,
+                        wrapAsOptional: true,
+                        schemaIdOverride: this.context.convertBreadcrumbsToName([
+                            ...this.breadcrumbs,
+                            "headers",
+                            headerName
+                        ])
+                    }).convert();
+                    if (convertedHeaderSchema != null) {
+                        valueType = convertedHeaderSchema.type;
+                        availability = convertedHeaderSchema.availability;
+                        for (const [typeId, inlinedType] of Object.entries(convertedHeaderSchema.inlinedTypes)) {
+                            inlinedTypes[typeId] = inlinedType;
+                        }
                     }
                 }
             }
@@ -306,13 +352,36 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 valueType,
                 env: undefined,
                 v2Examples,
-                availability: undefined,
+                availability,
                 clientDefault: undefined,
                 defaultValue: resolvedSchema?.default
             });
         }
 
-        return headers;
+        return { headers, inlinedTypes };
+    }
+
+    /**
+     * Resolves the schema describing the response header's value. Headers normally declare
+     * `schema` directly, but the OpenAPI spec also allows a `content` map for values serialized
+     * in a media type — most commonly a JSON-encoded object. Mirrors the request-header
+     * handling in `ParameterConverter`.
+     */
+    private getHeaderSchema(
+        header: OpenAPIV3_1.HeaderObject
+    ): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
+        if (header.schema != null) {
+            return header.schema;
+        }
+        if (!this.context.settings.respectParameterContent || header.content == null) {
+            return undefined;
+        }
+        for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
+            if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
+                return mediaTypeObject.schema;
+            }
+        }
+        return undefined;
     }
 
     private convertHeaderExamples({

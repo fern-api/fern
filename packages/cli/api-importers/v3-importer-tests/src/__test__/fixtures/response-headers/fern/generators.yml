@@ -2,3 +2,5 @@
 api:
   specs:
     - openapi: ../openapi.yml
+      settings:
+        respect-parameter-content: true

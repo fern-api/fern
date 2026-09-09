@@ -29,6 +29,16 @@ paths:
               schema:
                 type: boolean
               example: true
+            X-Rate-Limit-Policy:
+              description: Rate limit policy applied to the request
+              schema:
+                $ref: "#/components/schemas/RateLimitPolicy"
+            X-Account-Info:
+              description: JSON-encoded account metadata
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/AccountInfo"
           content:
             application/json:
               schema:
@@ -69,6 +79,12 @@ paths:
               description: Unique request identifier
               schema:
                 type: string
+            X-Error-Info:
+              description: JSON-encoded error metadata
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ErrorInfo"
           content:
             application/json:
               schema:
@@ -95,4 +111,31 @@ components:
         message:
           type: string
         code:
+          type: integer
+    RateLimitPolicy:
+      type: string
+      enum:
+        - burst
+        - steady
+        - adaptive
+    AccountInfo:
+      type: object
+      required:
+        - accountId
+      properties:
+        accountId:
+          type: string
+        displayName:
+          type: string
+        tier:
+          type: string
+          nullable: true
+    ErrorInfo:
+      type: object
+      required:
+        - traceId
+      properties:
+        traceId:
+          type: string
+        retryAfterSeconds:
           type: integer
