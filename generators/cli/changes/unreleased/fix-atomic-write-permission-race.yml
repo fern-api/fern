@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The file-based token cache fallback now creates its credential file with
+    owner-only permissions (0600) at open time instead of tightening them
+    after the write, closing the window in which the token was briefly
+    world-readable under a permissive umask.
+  type: fix

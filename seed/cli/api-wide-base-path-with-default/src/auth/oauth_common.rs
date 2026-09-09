@@ -257,8 +257,13 @@ impl Drop for TempFileGuard {
     }
 }
 
-/// Write `data` to `path` atomically: sibling temp file → owner-only
-/// permissions (0600 on Unix) → rename into place.
+/// Process-local counter that makes temp names unique across writers within
+/// one process; see [`atomic_write`].
+static TMP_SEQ: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// Write `data` to `path` atomically: sibling temp file created owner-only
+/// (0600 on Unix, applied at `open` so no wider-permission window ever
+/// exists) → rename into place.
 ///
 /// The temp file name is unique per writer — pid plus a process-local
 /// counter. Deriving it from the target alone meant every concurrent writer
@@ -282,18 +287,62 @@ impl Drop for TempFileGuard {
 /// can still clobber one another's *entries*; making that safe needs file
 /// locking, which is a larger change.
 pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
-    static TMP_SEQ: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
-    let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-    let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
-    let mut guard = TempFileGuard::new(tmp.clone());
-    std::fs::write(&tmp, data)
-        .map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
+    const MAX_TMP_ATTEMPTS: usize = 64;
+
+    let mut options = std::fs::OpenOptions::new();
+    options.write(true).create_new(true);
     #[cfg(unix)]
     {
-        use std::os::unix::fs::PermissionsExt;
-        let perms = std::fs::Permissions::from_mode(0o600);
-        let _ = std::fs::set_permissions(&tmp, perms);
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
     }
+
+    // `create_new` refuses to reuse a temp file leaked by a killed process
+    // (same pid after reuse, same counter value), so skip to the next name
+    // instead of failing the write.
+    let (tmp, mut file) = {
+        let mut attempt = 0;
+        loop {
+            let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
+            match options.open(&tmp) {
+                Ok(file) => break (tmp, file),
+                Err(e)
+                    if e.kind() == std::io::ErrorKind::AlreadyExists
+                        && attempt < MAX_TMP_ATTEMPTS =>
+                {
+                    attempt += 1;
+                }
+                Err(e) => {
+                    return Err(CliError::Auth(format!(
+                        "Failed to create {}: {e}",
+                        tmp.display()
+                    )));
+                }
+            }
+        }
+    };
+    let mut guard = TempFileGuard::new(tmp.clone());
+
+    let written = {
+        use std::io::Write;
+        file.write_all(data).and_then(|()| file.sync_all())
+    };
+    written.map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
+    #[cfg(unix)]
+    {
+        // `mode` is filtered through the umask; a restrictive one could strip
+        // the owner bits, so pin them while the file is still unpublished.
+        use std::os::unix::fs::PermissionsExt;
+        file.set_permissions(std::fs::Permissions::from_mode(0o600))
+            .map_err(|e| {
+                CliError::Auth(format!(
+                    "Failed to set permissions on {}: {e}",
+                    tmp.display()
+                ))
+            })?;
+    }
+    drop(file);
     std::fs::rename(&tmp, path)
         .map_err(|e| CliError::Auth(format!("Failed to rename {}: {e}", tmp.display())))?;
     guard.disarm();
@@ -379,6 +428,59 @@ mod tests {
             .filter(|n| n.contains(".tmp"))
             .collect();
         assert!(leftovers.is_empty(), "temp file leaked after a failed write: {leftovers:?}");
+    }
+
+    /// The credential file must be owner-only from the moment it exists, so
+    /// the mode is applied at `open` rather than by a later `set_permissions`
+    /// (which would leave a window in which the umask default is readable).
+    #[cfg(unix)]
+    #[test]
+    fn atomic_write_creates_owner_only_file() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("auth-keyring.json");
+
+        atomic_write(&target, br#"{"writer":0}"#).unwrap();
+        let mode = std::fs::metadata(&target).unwrap().permissions().mode() & 0o777;
+        assert_eq!(mode, 0o600, "expected 0600, got {mode:o}");
+
+        // Overwriting an existing file must not widen its permissions either.
+        std::fs::set_permissions(&target, std::fs::Permissions::from_mode(0o644)).unwrap();
+        atomic_write(&target, br#"{"writer":1}"#).unwrap();
+        let mode = std::fs::metadata(&target).unwrap().permissions().mode() & 0o777;
+        assert_eq!(mode, 0o600, "expected 0600 after overwrite, got {mode:o}");
+    }
+
+    /// A temp file leaked by a killed process whose pid was later reused must
+    /// not block the write: `create_new` should skip past it, and the stale
+    /// file must be left alone (it is not ours to unlink).
+    #[test]
+    fn atomic_write_skips_stale_temp_files() {
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("auth-keyring.json");
+
+        // Plant stale files at the next few names this process will pick.
+        // Other tests may consume some of these sequence numbers concurrently;
+        // they simply skip past the planted files too.
+        let pid = std::process::id();
+        let next = TMP_SEQ.load(std::sync::atomic::Ordering::Relaxed);
+        let planted: Vec<PathBuf> = (next..next + 3)
+            .map(|seq| dir.path().join(format!("auth-keyring.tmp.{pid}.{seq}")))
+            .collect();
+        for p in &planted {
+            std::fs::write(p, b"stale").unwrap();
+        }
+
+        atomic_write(&target, br#"{"writer":1}"#).unwrap();
+        assert_eq!(std::fs::read_to_string(&target).unwrap(), r#"{"writer":1}"#);
+        for p in &planted {
+            assert_eq!(
+                std::fs::read(p).unwrap(),
+                b"stale",
+                "stale file was touched: {}",
+                p.display()
+            );
+        }
     }
 
     /// Pins [`TempFileGuard`]: armed drops unlink, disarmed drops don't. Drop
