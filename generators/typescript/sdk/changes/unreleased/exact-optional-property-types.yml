@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a new `exactOptionalPropertyTypes` config option (default `false`) that makes the
+    generated SDK compile cleanly under TypeScript's `exactOptionalPropertyTypes`
+    compiler option. When enabled, every optional property is emitted as
+    `prop?: T | undefined` across model types, inlined request wrappers, client
+    options, errors, and the `core/` utilities, and the generated `tsconfig`
+    files enable `exactOptionalPropertyTypes` so the generated package typechecks
+    itself under the stricter mode. Previously this behavior was partially
+    available only with `noSerdeLayer: true`; the new flag applies it uniformly,
+    including when the serde layer is enabled.
+  type: feat

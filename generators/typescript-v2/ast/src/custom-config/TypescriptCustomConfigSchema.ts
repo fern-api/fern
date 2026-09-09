@@ -47,6 +47,11 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
     packageJsonMergeStrategy: z.optional(z.enum(["shallow", "deep"])),
+    // When true, the generated SDK compiles cleanly under TypeScript's
+    // `exactOptionalPropertyTypes` compiler option: every optional property is
+    // emitted as `prop?: T | undefined`, and `exactOptionalPropertyTypes: true`
+    // is enabled in the generated tsconfig files.
+    exactOptionalPropertyTypes: z.optional(z.boolean()),
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
