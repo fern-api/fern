@@ -1018,6 +1018,14 @@ types:
           - `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.
           - `cards` renders each nested level as a bordered card.
 
+      api-reference-expand-properties:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `api-reference-expand-properties` is set to true, the first level of nested object
+          and union fields in the API reference is expanded on page load instead of hidden behind
+          a "Show N properties" button. Deeper levels stay collapsed. Defaults to false.
+
       show-nav-availability-badges:
         type: optional<boolean>
         availability: in-development

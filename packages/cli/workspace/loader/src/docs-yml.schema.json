@@ -6279,6 +6279,17 @@
           ],
           "description": "Sets how nested object fields are rendered in the API reference.\n\n@default: `indented`\n\n- `indented` renders each nested level as an indented branch with a connector line and a color-coded path breadcrumb.\n- `cards` renders each nested level as a bordered card."
         },
+        "api-reference-expand-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `api-reference-expand-properties` is set to true, the first level of nested object\nand union fields in the API reference is expanded on page load instead of hidden behind\na \"Show N properties\" button. Deeper levels stay collapsed. Defaults to false."
+        },
         "show-nav-availability-badges": {
           "oneOf": [
             {
