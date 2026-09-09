@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated `ci.yml` publish job now sets the GitHub Environment URL to
+    `https://pypi.org/p/<package-name>` using the configured PyPI `package-name`
+    instead of the GitHub repository name.
+  type: fix
