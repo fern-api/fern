@@ -386,6 +386,16 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         const methodTokens = methodNameTokens.slice(tagTokens.length);
+
+        // A leading digit is not a valid identifier, so keep the whole method name rather than
+        // stripping the tag prefix (e.g. tag `files` + `files2GetThumbnail`).
+        if (methodTokens[0] != null && /^\d/.test(methodTokens[0])) {
+            return {
+                group: [tag],
+                method: this.sanitizeMethodName(methodName)
+            };
+        }
+
         return {
             group: [tag],
             method: camelCase(methodTokens.join("_"))

@@ -198,8 +198,8 @@ export interface ParseOpenAPIOptions {
      * underscore or a digit keep their tag prefix and lose their internal word boundaries
      * (e.g. `listfoldermembers`).
      *
-     * Changing this changes generated endpoint names, and therefore SDK method names and docs URLs,
-     * so it defaults to false.
+     * Only the v3 OpenAPI parser reads this, so it changes generated API reference URLs. Changing it
+     * renames already published pages, so it defaults to false.
      */
     respectOperationIdWordBoundaries: boolean;
 

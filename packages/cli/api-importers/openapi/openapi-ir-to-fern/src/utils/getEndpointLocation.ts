@@ -12,14 +12,6 @@ export interface EndpointLocation {
     tag?: string;
 }
 
-export interface EndpointLocationOptions {
-    /**
-     * If true, operation ids are tokenized on every word boundary (camelCase transitions and
-     * digits) rather than only on separators. See {@link tokenizeOperationId}.
-     */
-    respectOperationIdWordBoundaries?: boolean;
-}
-
 function resolveEndpointLocationWithNamespaceOverride({
     location,
     namespaceOverride
@@ -42,9 +34,8 @@ function sanitizeEndpointId(operationId: string): string {
     return operationId.includes(".") ? camelCase(operationId) : operationId;
 }
 
-function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions): EndpointLocation {
+function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const namespace = endpoint.namespace;
-    const { respectOperationIdWordBoundaries } = options;
 
     // Ignore the namespace tag as we'll apply that later, universally
     const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
@@ -85,8 +76,8 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLoca
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tokenizeOperationId(tag, respectOperationIdWordBoundaries);
-    const operationIdTokens = tokenizeOperationId(operationId, respectOperationIdWordBoundaries);
+    const tagTokens = tokenizeOperationId(tag);
+    const operationIdTokens = tokenizeOperationId(operationId);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -130,27 +121,14 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint, options: EndpointLoca
         });
     }
 
-    const remainingTokens = operationIdTokens.slice(fileParts.length);
-    const file = RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml");
-
-    // A leading digit is not a valid identifier in most target languages, so keep the whole
-    // operation id rather than stripping the prefix (e.g. tag `files` + `files2GetThumbnail`).
-    if (remainingTokens[0] != null && /^\d/.test(remainingTokens[0])) {
-        return {
-            file,
-            endpointId: sanitizeEndpointId(operationId),
-            tag
-        };
-    }
-
     return {
-        file,
-        endpointId: camelCase(remainingTokens.join("_")),
+        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
+        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     };
 }
 
-export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocationOptions = {}): EndpointLocation {
+export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const tag = endpoint.tags[0];
     if (endpoint.sdkName != null) {
         const filenameWithoutExtension = convertEndpointSdkNameToFileWithoutExtension({
@@ -170,7 +148,7 @@ export function getEndpointLocation(endpoint: Endpoint, options: EndpointLocatio
 
     return resolveEndpointLocationWithNamespaceOverride({
         namespaceOverride: endpoint.namespace,
-        location: getUnresolvedEndpointLocation(endpoint, options)
+        location: getUnresolvedEndpointLocation(endpoint)
     });
 }
 

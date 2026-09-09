@@ -2808,7 +2808,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
         },
         "namespaced-errors": {
           "oneOf": [
@@ -3545,7 +3545,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis changes endpoint names, and therefore SDK method names and docs URLs.\nDefaults to false."
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
         },
         "namespaced-errors": {
           "oneOf": [

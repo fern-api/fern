@@ -642,7 +642,8 @@ types:
           when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
           are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
           `listFolderMembers` rather than `listfoldermembers`).
-          This changes endpoint names, and therefore SDK method names and docs URLs.
+          This applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names
+          from the legacy importer are unaffected. Changing it changes existing API reference URLs.
           Defaults to false.
         default: false
       namespaced-errors:

@@ -6,6 +6,6 @@
     so a redundant tag prefix is stripped and the remaining words are preserved: with tag `sharing`,
     `Sharing_ListFolderMembers` becomes `listFolderMembers` instead of `listfoldermembers`, and with
     tag `files`, `filesGetThumbnailV2` becomes `getThumbnailV2` instead of keeping the tag prefix.
-    Defaults to false, since enabling it changes endpoint names and therefore SDK method names and
-    docs URLs.
+    This applies to the v3 OpenAPI parser, so it affects generated API reference URLs. Defaults to
+    false, since enabling it changes the URLs of already published pages.
   type: feat

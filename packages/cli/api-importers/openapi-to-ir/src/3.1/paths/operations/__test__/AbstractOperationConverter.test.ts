@@ -1,7 +1,9 @@
+import { getParseOptions } from "@fern-api/openapi-ir-parser";
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it } from "vitest";
 
 import { GroupNameAndLocation } from "../../../../types/GroupNameAndLocation.js";
+import { OpenAPIConverterContext3_1 } from "../../../OpenAPIConverterContext3_1.js";
 import { AbstractOperationConverter } from "../AbstractOperationConverter.js";
 
 class TestOperationConverter extends AbstractOperationConverter {
@@ -23,10 +25,12 @@ function computeGroupName({
     tag: string;
     respectOperationIdWordBoundaries: boolean;
 }): GroupNameAndLocation {
+    // Only `settings` is read by the grouping logic, so a stub context is enough.
+    const context = {
+        settings: getParseOptions({ overrides: { respectOperationIdWordBoundaries } })
+    } as unknown as OpenAPIConverterContext3_1;
     const converter = new TestOperationConverter({
-        // Only `settings` is read by the grouping logic; cast a minimal stub.
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-        context: { settings: { respectOperationIdWordBoundaries } } as any,
+        context,
         breadcrumbs: [],
         operation: { operationId, tags: [tag] },
         method: OpenAPIV3.HttpMethods.GET,
@@ -107,6 +111,16 @@ describe("computeGroupNameFromTagAndOperationId", () => {
                     respectOperationIdWordBoundaries: true
                 })
             ).toEqual({ group: ["file_properties"], method: "templatesGetForUser" });
+        });
+
+        it("keeps the operation id when stripping the tag prefix would leave a leading digit", () => {
+            expect(
+                computeGroupName({
+                    operationId: "files2GetThumbnail",
+                    tag: "files",
+                    respectOperationIdWordBoundaries: true
+                })
+            ).toEqual({ group: ["files"], method: "files2GetThumbnail" });
         });
 
         it("keeps the operation id when the tag is not a prefix of it", () => {
