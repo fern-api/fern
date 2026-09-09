@@ -18,17 +18,15 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 value: raw,
                 isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
-                    keySchema.parse(
-                        key,
-                        Object.assign({}, opts, {
-                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
-                        }),
-                    ),
+                    keySchema.parse(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
                 transformValue: (value, key) =>
-                    valueSchema.parse(
-                        value,
-                        Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`] }),
-                    ),
+                    valueSchema.parse(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
@@ -37,17 +35,15 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 value: parsed,
                 isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
-                    keySchema.json(
-                        key,
-                        Object.assign({}, opts, {
-                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
-                        }),
-                    ),
+                    keySchema.json(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
                 transformValue: (value, key) =>
-                    valueSchema.json(
-                        value,
-                        Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`] }),
-                    ),
+                    valueSchema.json(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
@@ -70,17 +66,15 @@ export function partialRecord<RawKey extends string | number, RawValue, ParsedVa
                 value: raw,
                 isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
-                    keySchema.parse(
-                        key,
-                        Object.assign({}, opts, {
-                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
-                        }),
-                    ),
+                    keySchema.parse(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
                 transformValue: (value, key) =>
-                    valueSchema.parse(
-                        value,
-                        Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`] }),
-                    ),
+                    valueSchema.parse(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
@@ -89,17 +83,15 @@ export function partialRecord<RawKey extends string | number, RawValue, ParsedVa
                 value: parsed,
                 isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
-                    keySchema.json(
-                        key,
-                        Object.assign({}, opts, {
-                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
-                        }),
-                    ),
+                    keySchema.json(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
                 transformValue: (value, key) =>
-                    valueSchema.json(
-                        value,
-                        Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`] }),
-                    ),
+                    valueSchema.json(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },

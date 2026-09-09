@@ -5,7 +5,11 @@ interface QueryStringOptions {
     encode?: boolean | undefined;
 }
 
-const defaultQsOptions: { [K in keyof QueryStringOptions]-?: Exclude<QueryStringOptions[K], undefined> } = {
+const defaultQsOptions: {
+    [K in keyof QueryStringOptions]-?: {} extends Pick<QueryStringOptions, K>
+        ? Exclude<QueryStringOptions[K], undefined>
+        : QueryStringOptions[K];
+} = {
     arrayFormat: "indices",
     encode: true,
 } as const;
@@ -24,7 +28,11 @@ function encodeValue(value: unknown, shouldEncode: boolean): string {
 function stringifyObject(
     obj: Record<string, unknown>,
     prefix = "",
-    options: { [K in keyof QueryStringOptions]-?: Exclude<QueryStringOptions[K], undefined> },
+    options: {
+        [K in keyof QueryStringOptions]-?: {} extends Pick<QueryStringOptions, K>
+            ? Exclude<QueryStringOptions[K], undefined>
+            : QueryStringOptions[K];
+    },
 ): string[] {
     const parts: string[] = [];
 

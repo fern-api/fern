@@ -133,10 +133,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         transformedKey: property.parsedKey,
                         transform: (propertyValue) => {
                             const childBreadcrumbs = [...breadcrumbsPrefix, rawKey];
-                            return property.valueSchema.parse(
-                                propertyValue,
-                                Object.assign({}, opts, { breadcrumbsPrefix: childBreadcrumbs }),
-                            );
+                            return property.valueSchema.parse(propertyValue, {
+                                ...opts,
+                                breadcrumbsPrefix: childBreadcrumbs,
+                            });
                         },
                     };
                 },
@@ -168,10 +168,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                             transformedKey: property.rawKey,
                             transform: (propertyValue) => {
                                 const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
-                                return property.valueSchema.json(
-                                    propertyValue,
-                                    Object.assign({}, opts, { breadcrumbsPrefix: childBreadcrumbs }),
-                                );
+                                return property.valueSchema.json(propertyValue, {
+                                    ...opts,
+                                    breadcrumbsPrefix: childBreadcrumbs,
+                                });
                             },
                         };
                     } else {
@@ -179,10 +179,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                             transformedKey: parsedKey,
                             transform: (propertyValue) => {
                                 const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
-                                return property.json(
-                                    propertyValue,
-                                    Object.assign({}, opts, { breadcrumbsPrefix: childBreadcrumbs }),
-                                );
+                                return property.json(propertyValue, {
+                                    ...opts,
+                                    breadcrumbsPrefix: childBreadcrumbs,
+                                });
                             },
                         };
                     }
@@ -345,10 +345,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                     _getParsedProperties: () => schema._getParsedProperties(),
                     _getRawProperties: () => schema._getRawProperties(),
                     parse: (raw, opts) => {
-                        const transformed = schema.parse(
-                            raw,
-                            Object.assign({}, opts, { unrecognizedObjectKeys: "passthrough" }),
-                        );
+                        const transformed = schema.parse(raw, { ...opts, unrecognizedObjectKeys: "passthrough" });
                         if (!transformed.ok) {
                             return transformed;
                         }
@@ -369,10 +366,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         };
                     },
                     json: (parsed, opts) => {
-                        const transformed = schema.json(
-                            parsed,
-                            Object.assign({}, opts, { unrecognizedObjectKeys: "passthrough" }),
-                        );
+                        const transformed = schema.json(parsed, { ...opts, unrecognizedObjectKeys: "passthrough" });
                         if (!transformed.ok) {
                             return transformed;
                         }

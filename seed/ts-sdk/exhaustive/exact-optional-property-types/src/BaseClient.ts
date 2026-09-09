@@ -72,10 +72,11 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         options?.headers,
     );
 
-    return Object.assign({}, options, {
+    return {
+        ...options,
         logging: core.logging.createLogger(options?.logging),
         headers,
-    }) as NormalizedClientOptions<T>;
+    } as NormalizedClientOptions<T>;
 }
 
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
@@ -107,5 +108,8 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
-    return Object.assign({}, options, { authProvider: new core.NoOpAuthProvider() });
+    return {
+        ...options,
+        authProvider: new core.NoOpAuthProvider(),
+    };
 }

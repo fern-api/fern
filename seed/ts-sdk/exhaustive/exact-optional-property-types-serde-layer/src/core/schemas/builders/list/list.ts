@@ -7,17 +7,17 @@ export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Pa
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {
         parse: (raw, opts) =>
             validateAndTransformArray(raw, (item, index) =>
-                schema.parse(
-                    item,
-                    Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`] }),
-                ),
+                schema.parse(item, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
+                }),
             ),
         json: (parsed, opts) =>
             validateAndTransformArray(parsed, (item, index) =>
-                schema.json(
-                    item,
-                    Object.assign({}, opts, { breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`] }),
-                ),
+                schema.json(item, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
+                }),
             ),
         getType: () => SchemaType.LIST,
     };

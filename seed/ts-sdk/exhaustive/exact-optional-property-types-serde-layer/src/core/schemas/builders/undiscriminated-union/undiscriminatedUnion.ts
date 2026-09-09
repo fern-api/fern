@@ -47,7 +47,7 @@ function validateAndTransformUndiscriminatedUnion<Transformed>(
 ): MaybeValid<Transformed> {
     const errors: ValidationError[] = [];
     for (const [index, schema] of schemas.entries()) {
-        const transformed = transform(schema, Object.assign({}, opts, { skipValidation: false }));
+        const transformed = transform(schema, { ...opts, skipValidation: false });
         if (transformed.ok) {
             return transformed;
         } else {

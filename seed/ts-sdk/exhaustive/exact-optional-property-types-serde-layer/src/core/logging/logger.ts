@@ -90,7 +90,11 @@ export class Logger {
      * Creates a new logger instance.
      * @param config - Logger configuration
      */
-    constructor(config: { [K in keyof LogConfig]-?: Exclude<LogConfig[K], undefined> }) {
+    constructor(
+        config: {
+            [K in keyof LogConfig]-?: {} extends Pick<LogConfig, K> ? Exclude<LogConfig[K], undefined> : LogConfig[K];
+        },
+    ) {
         this.level = logLevelMap[config.level];
         this.logger = config.logger;
         this.silent = config.silent;
@@ -193,7 +197,11 @@ export function createLogger(config?: LogConfig | Logger): Logger {
     config.level ??= LogLevel.Info;
     config.logger ??= new ConsoleLogger();
     config.silent ??= true;
-    return new Logger(config as { [K in keyof LogConfig]-?: Exclude<LogConfig[K], undefined> });
+    return new Logger(
+        config as {
+            [K in keyof LogConfig]-?: {} extends Pick<LogConfig, K> ? Exclude<LogConfig[K], undefined> : LogConfig[K];
+        },
+    );
 }
 
 const defaultLogger: Logger = new Logger({
