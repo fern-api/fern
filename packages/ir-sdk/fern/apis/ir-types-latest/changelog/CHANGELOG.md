@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.25.0] - 2026-09-09
+
+- Add `EnvironmentsConfig.baseUrlEnvVar` (optional `string`): the name of an environment
+  variable that generated SDKs read at client construction to override the base URL. Populated
+  from `base-url-env` in `api.yml` (or the `api.environments` override in `generators.yml`) and
+  from the root-level `x-fern-base-url-env` extension in OpenAPI specs. Explicitly passed base
+  URLs still take precedence; when the variable is unset, SDKs fall back to the default environment.
+
 ## [v67.24.0] - 2026-09-04
 
 - Add `BaseAuthScheme.playgroundDocs` (optional `string`), rendered below the auth scheme's input in

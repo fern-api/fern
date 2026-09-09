@@ -1,0 +1,94 @@
+{
+  "specVersion": "1.0",
+  "baseUrlEnv": "ACME_BASE_URL",
+  "title": "Acme API",
+  "servers": [
+    {
+      "url": "https://api.acme.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listWidgets",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListWidgetsRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "value": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListWidgetsResponseItem",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "ListWidgetsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/widgets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "value": {
+                    "value": "string",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

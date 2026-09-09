@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: Acme API
+  version: "1.0"
+servers:
+  - url: https://api.acme.com
+x-fern-base-url-env: ACME_BASE_URL
+paths:
+  /widgets:
+    get:
+      operationId: listWidgets
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

@@ -1174,6 +1174,7 @@
     },
     "environments": {
         "defaultEnvironment": "Regional API server",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [

@@ -11,6 +11,7 @@ import {
 } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
+import { FernBaseUrlEnvExtension } from "../extensions/x-fern-base-url-env.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
 import { FernGlobalParametersExtension } from "../extensions/x-fern-global-parameters.js";
 import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
@@ -281,11 +282,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             };
         }
 
+        const baseUrlEnvExtension = new FernBaseUrlEnvExtension({
+            breadcrumbs: ["x-fern-base-url-env"],
+            document: this.context.spec,
+            context: this.context
+        });
         const serversConverter = new ServersConverter({
             context: this.context,
             breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
-            endpointLevelServers
+            endpointLevelServers,
+            baseUrlEnvVar: baseUrlEnvExtension.convert()
         });
         const convertedServers = serversConverter.convert();
         this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });

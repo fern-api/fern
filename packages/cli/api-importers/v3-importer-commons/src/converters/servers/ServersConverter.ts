@@ -18,6 +18,7 @@ export declare namespace ServersConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         servers?: OpenAPIV3_1.ServerObject[];
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
+        baseUrlEnvVar?: string;
     }
 
     export interface Output {
@@ -32,11 +33,13 @@ export class ServersConverter extends AbstractConverter<
 > {
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly endpointLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly baseUrlEnvVar?: string;
 
-    constructor({ breadcrumbs, context, servers, endpointLevelServers }: ServersConverter.Args) {
+    constructor({ breadcrumbs, context, servers, endpointLevelServers, baseUrlEnvVar }: ServersConverter.Args) {
         super({ breadcrumbs, context });
         this.servers = servers;
         this.endpointLevelServers = endpointLevelServers;
+        this.baseUrlEnvVar = baseUrlEnvVar;
     }
 
     public convert(): ServersConverter.Output | undefined {
@@ -103,6 +106,7 @@ export class ServersConverter extends AbstractConverter<
             return {
                 value: {
                     defaultEnvironment: environments[0]?.id,
+                    baseUrlEnvVar: this.baseUrlEnvVar,
                     environments: Environments.multipleBaseUrls({
                         baseUrls,
                         environments
@@ -151,6 +155,7 @@ export class ServersConverter extends AbstractConverter<
         return {
             value: {
                 defaultEnvironment: environments[0]?.id,
+                baseUrlEnvVar: this.baseUrlEnvVar,
                 environments: Environments.singleBaseUrl({
                     environments
                 })
