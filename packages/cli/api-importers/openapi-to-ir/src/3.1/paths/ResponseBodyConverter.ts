@@ -1,18 +1,9 @@
 import { MediaType } from "@fern-api/core-utils";
+import { HttpHeader, HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
 import {
-    Availability,
-    HttpHeader,
-    HttpResponseBody,
-    JsonResponse,
-    PrimitiveTypeV2,
-    StreamingResponse,
-    TypeReference,
-    V2SchemaExamples
-} from "@fern-api/ir-sdk";
-import {
-    AbstractConverter,
     Converters,
-    ExampleConverter,
+    convertResponseHeaders,
+    ResponseHeaderConverter,
     SchemaOrReferenceConverter
 } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -37,6 +28,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private readonly responseBody: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
+    private convertedResponseHeaders: ResponseHeaderConverter.Output | undefined;
 
     constructor({
         context,
@@ -473,217 +465,12 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         return MediaType.parse(contentType)?.isText() ?? false;
     }
 
-    private convertedResponseHeaders:
-        | {
-              headers: HttpHeader[];
-              inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
-          }
-        | undefined;
-
-    public convertResponseHeaders(): {
-        headers: HttpHeader[];
-        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
-    } {
-        this.convertedResponseHeaders ??= this.doConvertResponseHeaders();
-        return this.convertedResponseHeaders;
-    }
-
-    private doConvertResponseHeaders(): {
-        headers: HttpHeader[];
-        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
-    } {
-        const headers: HttpHeader[] = [];
-        const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
-        const responseHeaders = this.responseBody.headers;
-
-        if (responseHeaders == null) {
-            return { headers, inlinedTypes };
-        }
-
-        for (const [headerName, headerOrRef] of Object.entries(responseHeaders)) {
-            const resolvedHeader = this.context.resolveMaybeReference<OpenAPIV3_1.HeaderObject>({
-                schemaOrReference: headerOrRef,
-                breadcrumbs: [...this.breadcrumbs, "headers", headerName]
-            });
-
-            if (resolvedHeader == null) {
-                continue;
-            }
-
-            const headerSchema = this.getHeaderSchema(resolvedHeader);
-            let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
-            let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-            let availability: Availability | undefined;
-
-            if (headerSchema != null) {
-                resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                    schemaOrReference: headerSchema,
-                    breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"]
-                });
-
-                if (resolvedSchema?.type === "number" || resolvedSchema?.type === "integer") {
-                    valueType = TypeReference.primitive({
-                        v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
-                        v2:
-                            resolvedSchema.type === "integer"
-                                ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
-                                : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
-                    });
-                } else if (resolvedSchema?.type === "boolean") {
-                    valueType = TypeReference.primitive({
-                        v1: "BOOLEAN",
-                        v2: PrimitiveTypeV2.boolean({ default: undefined })
-                    });
-                } else {
-                    // Convert the header's schema like a request-header parameter's schema so
-                    // object/enum/array/$ref response headers keep their shape (expandable
-                    // properties in docs) instead of collapsing to optional<string>.
-                    const convertedHeaderSchema = new SchemaOrReferenceConverter({
-                        context: this.context,
-                        breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"],
-                        schemaOrReference: headerSchema,
-                        wrapAsOptional: true,
-                        schemaIdOverride: this.context.convertBreadcrumbsToName([
-                            ...this.breadcrumbs,
-                            "headers",
-                            headerName
-                        ])
-                    }).convert();
-                    if (convertedHeaderSchema != null) {
-                        valueType = convertedHeaderSchema.type;
-                        availability = convertedHeaderSchema.availability;
-                        for (const [typeId, inlinedType] of Object.entries(convertedHeaderSchema.inlinedTypes)) {
-                            inlinedTypes[typeId] = inlinedType;
-                        }
-                    }
-                }
-            }
-
-            const v2Examples = this.convertHeaderExamples({
-                header: resolvedHeader,
-                headerName,
-                schema: headerSchema
-            });
-
-            headers.push({
-                name: this.context.casingsGenerator.generateNameAndWireValue({
-                    name: headerName,
-                    wireValue: headerName
-                }),
-                docs: resolvedHeader.description,
-                valueType,
-                env: undefined,
-                v2Examples,
-                availability,
-                clientDefault: undefined,
-                defaultValue: resolvedSchema?.default
-            });
-        }
-
-        return { headers, inlinedTypes };
-    }
-
-    /**
-     * Resolves the schema describing the response header's value. Headers normally declare
-     * `schema` directly, but the OpenAPI spec also allows a `content` map for values serialized
-     * in a media type — most commonly a JSON-encoded object. Mirrors the request-header
-     * handling in `ParameterConverter`.
-     */
-    private getHeaderSchema(
-        header: OpenAPIV3_1.HeaderObject
-    ): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
-        if (header.schema != null) {
-            return header.schema;
-        }
-        if (!this.context.settings.respectParameterContent || header.content == null) {
-            return undefined;
-        }
-        for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
-            if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
-                return mediaTypeObject.schema;
-            }
-        }
-        return undefined;
-    }
-
-    private convertHeaderExamples({
-        header,
-        headerName,
-        schema
-    }: {
-        header: OpenAPIV3_1.HeaderObject;
-        headerName: string;
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
-    }): V2SchemaExamples {
-        const v2Examples: V2SchemaExamples = {
-            userSpecifiedExamples: {},
-            autogeneratedExamples: {}
-        };
-
-        const headerExample = header.example;
-        const headerExamples = header.examples;
-
-        for (const [key, example] of Object.entries(headerExamples ?? {})) {
-            const resolvedExample = this.context.resolveExampleWithValue(example);
-            if (resolvedExample != null) {
-                v2Examples.userSpecifiedExamples[key] = this.generateHeaderExample({
-                    schema,
-                    example: resolvedExample
-                });
-            }
-        }
-
-        if (headerExample != null) {
-            const exampleName = this.context.generateUniqueName({
-                prefix: `${headerName}_example`,
-                existingNames: Object.keys(v2Examples.userSpecifiedExamples)
-            });
-            v2Examples.userSpecifiedExamples[exampleName] = this.generateHeaderExample({
-                schema,
-                example: headerExample
-            });
-        }
-
-        if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
-            const exampleName = `${headerName}_example`;
-            v2Examples.autogeneratedExamples[exampleName] = this.generateHeaderExample({
-                schema,
-                example: undefined,
-                ignoreErrors: true
-            });
-        }
-
-        return v2Examples;
-    }
-
-    private generateHeaderExample({
-        schema,
-        example,
-        ignoreErrors
-    }: {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
-        example: unknown;
-        ignoreErrors?: boolean;
-    }): unknown {
-        if (schema == null) {
-            return example;
-        }
-
-        const exampleConverter = new ExampleConverter({
-            breadcrumbs: this.breadcrumbs,
+    public convertResponseHeaders(): ResponseHeaderConverter.Output {
+        this.convertedResponseHeaders ??= convertResponseHeaders({
             context: this.context,
-            schema,
-            example
+            breadcrumbs: this.breadcrumbs,
+            headers: this.responseBody.headers
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            errors.forEach((error) => {
-                this.context.errorCollector.collect({
-                    message: error.message,
-                    path: error.path
-                });
-            });
-        }
-        return convertedExample;
+        return this.convertedResponseHeaders;
     }
 }
