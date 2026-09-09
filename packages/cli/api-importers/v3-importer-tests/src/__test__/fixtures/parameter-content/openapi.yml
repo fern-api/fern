@@ -33,6 +33,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AccountSettingsFilter"
+        - name: region
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/RegionAlias"
       responses:
         "200":
           description: ok
@@ -65,3 +70,8 @@ components:
       properties:
         include_deleted:
           type: boolean
+    RegionAlias:
+      $ref: "#/components/schemas/Region"
+    Region:
+      type: string
+      example: eu-west-1
