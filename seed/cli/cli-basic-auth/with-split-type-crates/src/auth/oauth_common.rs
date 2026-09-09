@@ -257,8 +257,9 @@ impl Drop for TempFileGuard {
     }
 }
 
-/// Write `data` to `path` atomically: sibling temp file → owner-only
-/// permissions (0600 on Unix) → rename into place.
+/// Write `data` to `path` atomically: sibling temp file created owner-only
+/// (0600 on Unix, applied at `open` so no wider-permission window ever
+/// exists) → rename into place.
 ///
 /// The temp file name is unique per writer — pid plus a process-local
 /// counter. Deriving it from the target alone meant every concurrent writer
@@ -286,14 +287,21 @@ pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
     let seq = TMP_SEQ.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
     let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), seq));
     let mut guard = TempFileGuard::new(tmp.clone());
-    std::fs::write(&tmp, data)
-        .map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
+    let mut options = std::fs::OpenOptions::new();
+    options.write(true).create_new(true);
     #[cfg(unix)]
     {
-        use std::os::unix::fs::PermissionsExt;
-        let perms = std::fs::Permissions::from_mode(0o600);
-        let _ = std::fs::set_permissions(&tmp, perms);
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
     }
+    let write_result = options
+        .open(&tmp)
+        .and_then(|mut file| {
+            use std::io::Write;
+            file.write_all(data)?;
+            file.sync_all()
+        });
+    write_result.map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
     std::fs::rename(&tmp, path)
         .map_err(|e| CliError::Auth(format!("Failed to rename {}: {e}", tmp.display())))?;
     guard.disarm();
@@ -379,6 +387,27 @@ mod tests {
             .filter(|n| n.contains(".tmp"))
             .collect();
         assert!(leftovers.is_empty(), "temp file leaked after a failed write: {leftovers:?}");
+    }
+
+    /// The credential file must be owner-only from the moment it exists, so
+    /// the mode is applied at `open` rather than by a later `set_permissions`
+    /// (which would leave a window in which the umask default is readable).
+    #[cfg(unix)]
+    #[test]
+    fn atomic_write_creates_owner_only_file() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = tempfile::tempdir().unwrap();
+        let target = dir.path().join("auth-keyring.json");
+
+        atomic_write(&target, br#"{"writer":0}"#).unwrap();
+        let mode = std::fs::metadata(&target).unwrap().permissions().mode() & 0o777;
+        assert_eq!(mode, 0o600, "expected 0600, got {mode:o}");
+
+        // Overwriting an existing file must not widen its permissions either.
+        std::fs::set_permissions(&target, std::fs::Permissions::from_mode(0o644)).unwrap();
+        atomic_write(&target, br#"{"writer":1}"#).unwrap();
+        let mode = std::fs::metadata(&target).unwrap().permissions().mode() & 0o777;
+        assert_eq!(mode, 0o600, "expected 0600 after overwrite, got {mode:o}");
     }
 
     /// Pins [`TempFileGuard`]: armed drops unlink, disarmed drops don't. Drop
