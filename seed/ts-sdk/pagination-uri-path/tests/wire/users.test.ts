@@ -44,8 +44,8 @@ describe("UsersClient", () => {
             ],
             next: "",
         };
-        const mockResponseBody = { ...rawResponseBody, next: `${server.baseUrl}/users/uri` };
-        server.mockEndpoint().get("/users/uri").respondWith().statusCode(200).jsonBody(mockResponseBody).build();
+
+        server.mockEndpoint().get("/users/uri").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = rawResponseBody;
         const page = await client.users.listWithUriPagination();
@@ -93,8 +93,8 @@ describe("UsersClient", () => {
             ],
             next: "",
         };
-        const mockResponseBody = { ...rawResponseBody, next: "/users/path" };
-        server.mockEndpoint().get("/users/path").respondWith().statusCode(200).jsonBody(mockResponseBody).build();
+
+        server.mockEndpoint().get("/users/path").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = rawResponseBody;
         const page = await client.users.listWithPathPagination();
