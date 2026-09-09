@@ -294,14 +294,14 @@ pub(crate) fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
         use std::os::unix::fs::OpenOptionsExt;
         options.mode(0o600);
     }
-    let write_result = options
+    options
         .open(&tmp)
         .and_then(|mut file| {
             use std::io::Write;
             file.write_all(data)?;
             file.sync_all()
-        });
-    write_result.map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
+        })
+        .map_err(|e| CliError::Auth(format!("Failed to write {}: {e}", tmp.display())))?;
     std::fs::rename(&tmp, path)
         .map_err(|e| CliError::Auth(format!("Failed to rename {}: {e}", tmp.display())))?;
     guard.disarm();
