@@ -1,17 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.57.13
-  changelogEntry:
-    - summary: |
-        Calling a `SetXxx` setter on a value copy of a request or model type no longer
-        changes the JSON of the value it was copied from. The private `explicitFields`
-        bitmask is reached through a pointer, so a plain struct assignment aliased it and
-        `require` mutated it in place, making every explicit-field bit set on one copy
-        visible in all of them (e.g. `copied.SetOptions(...)` added `"options":null` to
-        the original's body). The bitmask is now replaced rather than mutated, so each
-        copy gets its own on first write.
-      type: fix
-  createdAt: "2026-09-08"
-  irVersion: 67
 - version: 1.57.12
   changelogEntry:
     - summary: |

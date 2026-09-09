@@ -67,7 +67,7 @@ func TestWriteRequireMethodDoesNotMutateSharedBitmask(t *testing.T) {
 	}
 }
 
-// requireCopyOnWrite mirrors the code emitted by WriteRequireMethod. It guards the
+// explicitFieldsCarrier mirrors the code emitted by WriteRequireMethod. It guards the
 // semantics the emitted method relies on: each value copy gets its own bitmask on
 // first write, in either direction.
 type explicitFieldsCarrier struct {
