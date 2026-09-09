@@ -190,7 +190,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                 requireEnvVars: true,
                 getSpecsTarGzBuffer
             })
-        ).rejects.toThrow("fern sdk migrate --output <path>");
+        ).rejects.toThrow("fern generate --sdk-config <path>");
         expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
         expect(runInteractiveTask).not.toHaveBeenCalled();
     });

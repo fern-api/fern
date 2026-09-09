@@ -471,6 +471,21 @@ describe("collectRawSpecs", () => {
         expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
     });
 
+    it("accepts inline path parameter behavior represented by SDK Config client settings", () => {
+        const spec = {
+            ...openApiSpec(path.join(sourceDir, "api", "wrapped-path-parameters.yaml")),
+            settings: getOpenAPISettings({ overrides: { inlinePathParameters: false } })
+        };
+
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "wrapped" })).not.toThrow();
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "inline" })).toThrow(
+            "cannot preserve effective OpenAPI import setting inlinePathParameters=false"
+        );
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "language-default" })).toThrow(
+            "cannot preserve effective OpenAPI import setting inlinePathParameters=false"
+        );
+    });
+
     it("merges overrides into the resolved OpenAPI spec", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");

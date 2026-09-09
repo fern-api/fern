@@ -5,6 +5,7 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import {
     AutomationRunOptions,
+    type FernSdkConfigV1Payload,
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
     getOutputRepoUrl,
@@ -40,6 +41,7 @@ export async function generateWorkspace({
     runner,
     inspect,
     lfsOverride,
+    sdkConfigV1,
     fernignorePath,
     skipFernignore,
     dynamicIrOnly,
@@ -77,6 +79,7 @@ export async function generateWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    sdkConfigV1?: FernSdkConfigV1Payload;
     fernignorePath: string | undefined;
     skipFernignore: boolean;
     dynamicIrOnly: boolean;
@@ -191,7 +194,8 @@ export async function generateWorkspace({
                     const getSpecsTarGz = createFernSourceArchiveResolver({
                         workspace,
                         context: groupContext,
-                        group
+                        group,
+                        sdkConfigV1
                     });
 
                     await runRemoteGenerationForAPIWorkspace({
@@ -222,6 +226,7 @@ export async function generateWorkspace({
                         verify,
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
+                        sdkConfigV1,
                         generateFullProject: pack
                     });
                 }

@@ -6,20 +6,32 @@ import {
     generatorWantsSpecs,
     validateSdkConfigImportSettings
 } from "@fern-api/local-workspace-runner";
-import { type FernSourceArchiveRequest, type FernSourceArchiveResolution } from "@fern-api/remote-workspace-runner";
+import {
+    type FernSdkConfigV1Payload,
+    type FernSourceArchiveRequest,
+    type FernSourceArchiveResolution
+} from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 export function createFernSourceArchiveResolver({
     workspace,
     context,
-    group
+    group,
+    sdkConfigV1
 }: {
     workspace: AbstractAPIWorkspace<unknown>;
     context: TaskContext;
     group: generatorsYml.GeneratorGroup;
+    sdkConfigV1?: FernSdkConfigV1Payload;
 }): (requests: FernSourceArchiveRequest[]) => Promise<FernSourceArchiveResolution> {
     return async (requests) => {
+        const audiences =
+            sdkConfigV1 == null
+                ? group.audiences
+                : sdkConfigV1.audiences == null
+                  ? ({ type: "all" } as const)
+                  : ({ type: "select", audiences: sdkConfigV1.audiences } as const);
         const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
         const errors = new Map<number, unknown>();
         if (!(workspace instanceof OSSWorkspace)) {
@@ -43,7 +55,13 @@ export function createFernSourceArchiveResolver({
                 }
                 const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                    validateSdkConfigImportSettings(specs);
+                    const configTarget = sdkConfigV1?.targets.find(
+                        (target) => target.language === request.sdkGenApiRoute?.language
+                    );
+                    validateSdkConfigImportSettings(specs, {
+                        clientPathParameterStyle:
+                            configTarget?.clientPathParameterStyle ?? sdkConfigV1?.clientPathParameterStyle
+                    });
                 }
                 return specs;
             })
@@ -63,7 +81,7 @@ export function createFernSourceArchiveResolver({
             const settledArchive = await createGroupedSpecsTarGzArchiveSettled({
                 generatorSelections,
                 context,
-                audiences: group.audiences
+                audiences
             });
             for (const [generatorIndex, error] of settledArchive.errorsByGeneratorIndex) {
                 errors.set(generatorIndex, error);
@@ -87,7 +105,7 @@ export function createFernSourceArchiveResolver({
                 const archive = await createSpecsTarGzArchive({
                     specs: workspace.allSpecs,
                     context,
-                    audiences: group.audiences
+                    audiences
                 });
                 const specIndexes = archive.manifest.specs.map((_, index) => index);
                 for (const request of rootRequests) {

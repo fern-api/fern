@@ -119,9 +119,25 @@ describe("createFernSourceArchiveResolver", () => {
             errorsByGeneratorIndex: new Map([[3, preparationError]])
         });
 
-        await expect(createFernSourceArchiveResolver({ workspace, context, group })([request])).rejects.toMatchObject({
+        await expect(
+            createFernSourceArchiveResolver({
+                workspace,
+                context,
+                group,
+                sdkConfigV1: {
+                    body: Buffer.from("{}"),
+                    sdkName: "api",
+                    sdkVersion: "1.0.0",
+                    audiences: [],
+                    targets: [{ language: "typescript" }]
+                }
+            })([request])
+        ).rejects.toMatchObject({
             message: "Generator index 3 produced both a source archive and a source preparation error",
             cause: preparationError
         });
+        expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
+            expect.objectContaining({ audiences: { type: "select", audiences: [] } })
+        );
     });
 });

@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Allow `fern generate --sdk-config <path>` to validate an SDK Config v1 YAML or JSON document and submit it to sdk-gen-api for multi-target expansion. Generation without the flag continues through the existing legacy Fern configuration and IR flow.
+  type: feat
