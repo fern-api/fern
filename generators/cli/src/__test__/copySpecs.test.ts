@@ -303,7 +303,9 @@ describe("copySpecs", () => {
         });
 
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
-        expect(main).toContain('.spec(include_str!("openapi0.json"))\n                .strip_parent_noun()\n');
+        expect(main).toContain(
+            'OpenApiBinding::new()\n                .strip_parent_noun()\n                .spec(include_str!("openapi0.json"))\n'
+        );
     });
 
     it("threads root auth bindings above binding and binding-level auth into OpenApiBinding", async () => {

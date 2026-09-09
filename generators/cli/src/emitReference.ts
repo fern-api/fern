@@ -147,6 +147,24 @@ function collectResources(doc: OpenApiDocument, resources: Map<string, ResourceE
     const paths = doc.paths ?? {};
     const componentParams = doc.components?.parameters ?? {};
 
+    // Mirrors the runtime: with stripParentNoun, a stripped leaf claimed by
+    // more than one operation in the same group falls back to the unstripped
+    // name so no command is overwritten.
+    const strippedLeafCounts = new Map<string, number>();
+    if (naming.stripParentNoun) {
+        for (const [pathStr, pathItem] of Object.entries(paths)) {
+            for (const method of HTTP_METHODS) {
+                const operation = pathItem[method] as OpenApiOperation | undefined;
+                if (operation == null || operation["x-fern-ignore"] === true) {
+                    continue;
+                }
+                const key = `${resolveGroupName(operation, pathStr, naming)} ${resolveMethodName(operation, method, pathStr, naming)}`;
+                strippedLeafCounts.set(key, (strippedLeafCounts.get(key) ?? 0) + 1);
+            }
+        }
+    }
+    const unstrippedNaming: NamingOptions = { ...naming, stripParentNoun: false };
+
     for (const [pathStr, pathItem] of Object.entries(paths)) {
         // Collect path-level parameters (inherited by all operations)
         const pathParams: OpenApiParameter[] = resolveParamRefs(
@@ -165,7 +183,10 @@ function collectResources(doc: OpenApiDocument, resources: Map<string, ResourceE
             }
 
             const groupName = resolveGroupName(operation, pathStr, naming);
-            const methodName = resolveMethodName(operation, method, pathStr, naming);
+            let methodName = resolveMethodName(operation, method, pathStr, naming);
+            if (naming.stripParentNoun && (strippedLeafCounts.get(`${groupName} ${methodName}`) ?? 0) > 1) {
+                methodName = resolveMethodName(operation, method, pathStr, unstrippedNaming);
+            }
             const availability = resolveAvailability(operation);
 
             // Merge path-level + operation-level params (operation wins on conflict).

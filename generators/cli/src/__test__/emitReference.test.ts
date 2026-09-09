@@ -457,6 +457,43 @@ describe("emitReference", () => {
         expect(reference).toContain("#### `acme messages messages list-media-v2`");
     });
 
+    it("keeps unstripped names when stripParentNoun would make two leaves collide", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/users/groups": {
+                    get: { operationId: "ListGroups", tags: ["Users"], responses: { "200": { description: "ok" } } }
+                },
+                "/users/user-groups": {
+                    get: {
+                        operationId: "ListUserGroups",
+                        tags: ["Users"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                },
+                "/users": {
+                    get: { operationId: "ListUsers", tags: ["Users"], responses: { "200": { description: "ok" } } }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [],
+            specsDir,
+            stripParentNoun: true
+        });
+
+        expect(reference).toContain("#### `acme users list-groups`");
+        expect(reference).toContain("#### `acme users list-user-groups`");
+        expect(reference).toContain("#### `acme users list`");
+    });
+
     // ── $ref parameter resolution ───────────────────────────────────
 
     it("resolves $ref parameters from components.parameters", async () => {

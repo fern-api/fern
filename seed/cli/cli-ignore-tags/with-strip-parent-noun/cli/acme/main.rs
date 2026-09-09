@@ -13,10 +13,10 @@ fn main() {
         .auth(BearerAuth::new("bearerAuth").env("ACME_TOKEN"))
         .binding(
             OpenApiBinding::new()
+                .strip_parent_noun()
                 .spec_under("knowledge", include_str!("openapi0.json"))
                 .ignore_tags()
                 .spec_under("messages", include_str!("openapi1.json"))
-                .strip_parent_noun()
         );
 
     let app = custom::register(app);

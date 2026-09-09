@@ -323,6 +323,9 @@ function renderMainRs(args: {
     // OpenApiBinding with specs and binding-level auth
     lines.push("        .binding(");
     lines.push("            OpenApiBinding::new()");
+    if (stripParentNoun) {
+        lines.push("                .strip_parent_noun()");
+    }
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
         if (entry.namespace != null && entry.namespace !== "") {
@@ -342,9 +345,6 @@ function renderMainRs(args: {
         } else {
             lines.push(`                .spec(${include})`);
         }
-    }
-    if (stripParentNoun) {
-        lines.push("                .strip_parent_noun()");
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);

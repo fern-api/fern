@@ -3095,6 +3095,35 @@ pub fn load_openapi_spec_from_value_with_naming(
         ("DELETE", |p: &OpenApiPathItem| &p.delete),
     ];
 
+    // Pre-pass for `strip_parent_noun`: count how many operations per group
+    // would resolve to each leaf, so collisions can be detected before any
+    // method is inserted.
+    let unstripped_naming = SpecNamingOptions {
+        flatten_into: naming.flatten_into.clone(),
+        strip_parent_noun: false,
+    };
+    let mut stripped_leaf_counts: HashMap<Vec<String>, HashMap<String, usize>> = HashMap::new();
+    if naming.strip_parent_noun {
+        for (path, path_item) in &spec.paths {
+            for &(http_method, accessor) in http_methods {
+                let Some(operation) = accessor(path_item) else { continue };
+                if operation.x_fern_ignore.unwrap_or(false) {
+                    continue;
+                }
+                let ResolvedGroup {
+                    kebab_groups,
+                    flattened,
+                } = resolve_group(operation, path, naming);
+                let leaf = resolve_method_name(operation, http_method, path, flattened, naming);
+                *stripped_leaf_counts
+                    .entry(kebab_groups)
+                    .or_default()
+                    .entry(leaf)
+                    .or_insert(0) += 1;
+            }
+        }
+    }
+
     for (path, path_item) in &spec.paths {
         for &(http_method, accessor) in http_methods {
             let operation = match accessor(path_item) {
@@ -3116,78 +3145,33 @@ pub fn load_openapi_spec_from_value_with_naming(
                 continue;
             }
 
-            // Resolve group name: prefer x-fern-sdk-group-name, then the
-            // flatten target when tags are ignored, then the first tag.
-            let fern_group;
-            let tag_group;
-            let explicit_group =
-                matches!(&operation.x_fern_sdk_group_name, Some(g) if !g.is_empty());
-            let flattened = !explicit_group && naming.flatten_into.is_some();
-            let group_name: &Vec<String> = match &operation.x_fern_sdk_group_name {
-                Some(g) if !g.is_empty() => g,
-                _ => match (
-                    &naming.flatten_into,
-                    operation.tags.as_ref().and_then(|t| t.first()),
-                ) {
-                    (Some(flat), _) => {
-                        fern_group = vec![flat.clone()];
-                        &fern_group
-                    }
-                    (None, Some(tag)) => {
-                        tag_group = vec![tag.clone()];
-                        &tag_group
-                    }
-                    (None, None) => {
-                        // Fall back to first path segment as group
-                        let segment = path
-                            .trim_start_matches('/')
-                            .split('/')
-                            .next()
-                            .unwrap_or("default")
-                            .to_string();
-                        fern_group = vec![segment];
-                        &fern_group
-                    }
-                },
-            };
+            let ResolvedGroup {
+                kebab_groups,
+                flattened,
+            } = resolve_group(operation, path, naming);
 
-            // Resolve method name: prefer x-fern-sdk-method-name, fall back to operationId or http+path.
-            // When the group came from a tag (no x-fern-sdk-group-name), strip
-            // tag tokens that prefix the operationId so e.g. `Customers` tag
-            // + `customersList` operation → method `list` rather than
-            // `customers-list`. Mirrors Fern's OpenAPI importer. With
-            // `strip_parent_noun` the parent's tokens (namespace when tags
-            // are ignored, tag otherwise) are removed from anywhere in the
-            // operationId instead.
-            let method_name = match &operation.x_fern_sdk_method_name {
-                Some(m) => m.clone(),
-                None => match &operation.operation_id {
-                    Some(id) => {
-                        let parent = if operation.x_fern_sdk_group_name.is_some() {
-                            None
-                        } else if flattened {
-                            naming.flatten_into.as_deref()
-                        } else {
-                            operation
-                                .tags
-                                .as_ref()
-                                .and_then(|t| t.first())
-                                .map(String::as_str)
-                        };
-                        let stripped = match parent {
-                            Some(p) if naming.strip_parent_noun => strip_parent_noun(id, p),
-                            Some(p) if !flattened => strip_tag_prefix(id, p),
-                            _ => id.clone(),
-                        };
-                        camel_to_kebab(&stripped)
-                    }
-                    None => format!(
-                        "{}-{}",
-                        http_method.to_lowercase(),
-                        path.trim_start_matches('/').replace('/', "-")
-                    ),
-                },
-            };
+            // Resolve the leaf. With `strip_parent_noun`, fall back to the
+            // unstripped name when another operation in the same group would
+            // claim the same stripped leaf, so no command is silently
+            // overwritten and the result never depends on iteration order.
+            let mut method_name =
+                resolve_method_name(operation, http_method, path, flattened, naming);
+            if naming.strip_parent_noun
+                && stripped_leaf_counts
+                    .get(&kebab_groups)
+                    .and_then(|m| m.get(&method_name))
+                    .is_some_and(|n| *n > 1)
+            {
+                let unstripped =
+                    resolve_method_name(operation, http_method, path, flattened, &unstripped_naming);
+                tracing::warn!(
+                    "strip_parent_noun: `{}` collides under `{}`; keeping `{}`",
+                    method_name,
+                    kebab_groups.join(" "),
+                    unstripped
+                );
+                method_name = unstripped;
+            }
 
             // Collect parameters (path-level + operation-level). Parameters
             // marked `x-fern-ignore: true` are dropped — they don't surface
@@ -3432,14 +3416,6 @@ pub fn load_openapi_spec_from_value_with_naming(
                 ..Default::default()
             };
 
-            // Walk group_name to create/find nested resources. The flatten
-            // target is kept verbatim so it matches the namespace key the
-            // spec is mounted under and gets hoisted into it.
-            let kebab_groups: Vec<String> = if flattened {
-                group_name.clone()
-            } else {
-                group_name.iter().map(|g| camel_to_kebab(g)).collect()
-            };
             let operation_tags = operation.tags.as_deref().unwrap_or(&[]);
             if let Some(top_level_group) = kebab_groups.first() {
                 *doc.group_operation_counts
@@ -3497,6 +3473,92 @@ fn prune_empty_resources(resources: &mut HashMap<String, RestResource>) {
         prune_empty_resources(&mut resource.resources);
         !resource.methods.is_empty() || !resource.resources.is_empty()
     });
+}
+
+struct ResolvedGroup {
+    /// Group path for the command tree. The flatten target is kept verbatim
+    /// so it matches the namespace key the spec is mounted under and gets
+    /// hoisted into it; everything else is kebab-cased.
+    kebab_groups: Vec<String>,
+    /// True when tag grouping was replaced by the namespace (`ignore-tags`).
+    flattened: bool,
+}
+
+/// Resolve the group path: `x-fern-sdk-group-name`, then the flatten target
+/// when tags are ignored, then the first tag, then the first path segment.
+fn resolve_group(
+    operation: &OpenApiOperation,
+    path: &str,
+    naming: &SpecNamingOptions,
+) -> ResolvedGroup {
+    if let Some(g) = operation.x_fern_sdk_group_name.as_ref().filter(|g| !g.is_empty()) {
+        return ResolvedGroup {
+            kebab_groups: g.iter().map(|g| camel_to_kebab(g)).collect(),
+            flattened: false,
+        };
+    }
+    if let Some(flat) = &naming.flatten_into {
+        return ResolvedGroup {
+            kebab_groups: vec![flat.clone()],
+            flattened: true,
+        };
+    }
+    let group = match operation.tags.as_ref().and_then(|t| t.first()) {
+        Some(tag) => tag.clone(),
+        None => path
+            .trim_start_matches('/')
+            .split('/')
+            .next()
+            .unwrap_or("default")
+            .to_string(),
+    };
+    ResolvedGroup {
+        kebab_groups: vec![camel_to_kebab(&group)],
+        flattened: false,
+    }
+}
+
+/// Resolve the leaf name: `x-fern-sdk-method-name`, then operationId, then
+/// http method + path. When the group came from a tag (no
+/// `x-fern-sdk-group-name`), tag tokens that prefix the operationId are
+/// stripped so `Customers` + `customersList` → `list` (mirrors Fern's OpenAPI
+/// importer). With `strip_parent_noun` the parent's tokens (namespace when
+/// tags are ignored, tag otherwise) are removed from anywhere in the
+/// operationId instead.
+fn resolve_method_name(
+    operation: &OpenApiOperation,
+    http_method: &str,
+    path: &str,
+    flattened: bool,
+    naming: &SpecNamingOptions,
+) -> String {
+    if let Some(m) = &operation.x_fern_sdk_method_name {
+        return m.clone();
+    }
+    let Some(id) = &operation.operation_id else {
+        return format!(
+            "{}-{}",
+            http_method.to_lowercase(),
+            path.trim_start_matches('/').replace('/', "-")
+        );
+    };
+    let parent = if operation.x_fern_sdk_group_name.is_some() {
+        None
+    } else if flattened {
+        naming.flatten_into.as_deref()
+    } else {
+        operation
+            .tags
+            .as_ref()
+            .and_then(|t| t.first())
+            .map(String::as_str)
+    };
+    let stripped = match parent {
+        Some(p) if naming.strip_parent_noun => strip_parent_noun(id, p),
+        Some(p) if !flattened => strip_tag_prefix(id, p),
+        _ => id.clone(),
+    };
+    camel_to_kebab(&stripped)
 }
 
 /// Walk the group name list to find or create nested resources and insert the method.
@@ -5740,6 +5802,50 @@ paths:
         assert!(doc.resources["admin"]
             .methods
             .contains_key("list-knowledge-explicit"));
+    }
+
+    #[test]
+    fn test_strip_parent_noun_collision_keeps_unstripped_names() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /users/groups:
+    get:
+      operationId: ListGroups
+      tags: [Users]
+      responses: { "200": { description: ok } }
+  /users/user-groups:
+    get:
+      operationId: ListUserGroups
+      tags: [Users]
+      responses: { "200": { description: ok } }
+  /users:
+    get:
+      operationId: ListUsers
+      tags: [Users]
+      responses: { "200": { description: ok } }
+"#;
+        let value: serde_yaml::Value = serde_yaml::from_str(yaml).unwrap();
+        let doc = load_openapi_spec_from_value_with_naming(
+            value,
+            "t",
+            &SpecNamingOptions {
+                flatten_into: None,
+                strip_parent_noun: true,
+            },
+        )
+        .unwrap();
+        let users = &doc.resources["users"];
+        // Both `ListGroups` and `ListUserGroups` would strip to `list-groups`:
+        // neither is stripped, so no command is overwritten.
+        assert!(users.methods.contains_key("list-groups"));
+        assert!(users.methods.contains_key("list-user-groups"));
+        assert_eq!(users.methods["list-groups"].id.as_deref(), Some("ListGroups"));
+        // Unambiguous leaves are still stripped.
+        assert!(users.methods.contains_key("list"));
+        assert_eq!(users.methods.len(), 3);
     }
 
     #[test]

@@ -12,5 +12,6 @@
     anywhere in the operationId): tag `Messages` + `CreateMessage` -> `create`,
     namespace `knowledge` + `ListKnowledgeBases` -> `list-bases`. Explicit
     `x-fern-sdk-method-name` values are never modified, version tokens are kept,
-    and an operationId is left verbatim if stripping would empty it. Off by default.
+    and an operationId is left verbatim if stripping would empty it or if two
+    operations in the same group would collide on the stripped name. Off by default.
   type: feat
