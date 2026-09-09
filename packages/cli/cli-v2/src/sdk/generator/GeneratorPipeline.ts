@@ -4,6 +4,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { SdkConfigInputLocator } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 
 import type { AiConfig } from "../../ai/config/AiConfig.js";
@@ -84,6 +85,9 @@ export namespace GeneratorPipeline {
 
         /** Require all referenced environment variables to be defined */
         requireEnvVars?: boolean;
+
+        /** Explicit and project-root SDK Config lookup locations for remote generation. */
+        sdkConfigInput?: SdkConfigInputLocator;
     }
 
     export interface Result {
@@ -197,7 +201,8 @@ export class GeneratorPipeline {
             outputPath: args.outputPath,
             fernignorePath: args.fernignorePath,
             skipFernignore: args.skipFernignore,
-            requireEnvVars: args.requireEnvVars
+            requireEnvVars: args.requireEnvVars,
+            sdkConfigInput: args.sdkConfigInput
         });
         if (!result.success) {
             return {

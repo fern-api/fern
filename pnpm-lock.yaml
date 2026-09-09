@@ -6420,6 +6420,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
+      '@postman/sdk-config':
+        specifier: 0.3.1
+        version: 0.3.1
       axios:
         specifier: 'catalog:'
         version: 1.16.0

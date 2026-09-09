@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import {
     AutomationRunOptions,
@@ -30,6 +30,7 @@ export async function generateWorkspace({
     resolvedGroupNames,
     generatorName,
     generatorIndex,
+    sdkConfigPath,
     version,
     shouldLogS3Url,
     token,
@@ -68,6 +69,7 @@ export async function generateWorkspace({
     resolvedGroupNames: string[];
     generatorName: string | undefined;
     generatorIndex: number | undefined;
+    sdkConfigPath?: string;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -222,7 +224,12 @@ export async function generateWorkspace({
                         verify,
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
-                        generateFullProject: pack
+                        generateFullProject: pack,
+                        sdkConfigInput: {
+                            explicitPath: sdkConfigPath,
+                            invocationCwd: cwd(),
+                            projectRoot: dirname(projectConfig._absolutePath)
+                        }
                     });
                 }
                 if (pack) {

@@ -19,3 +19,11 @@ export type {
 export type { FernSourceArchiveRequest, FernSourceArchiveResolution } from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForAPIWorkspace } from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";
+export type { LoadedSdkConfig, SdkConfigInputLocator } from "./sdkConfigInput.js";
+export {
+    assertSdkConfigRemoteGeneration,
+    getSdkConfigPackage,
+    getSdkConfigVersion,
+    hasSdkConfigTarget,
+    loadSdkConfigInput
+} from "./sdkConfigInput.js";

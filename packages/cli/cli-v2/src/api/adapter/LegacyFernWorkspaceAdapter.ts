@@ -2,8 +2,9 @@ import type { FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, relativize } from "@fern-api/fs-utils";
-import { ConjureWorkspace, LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
+import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError } from "@fern-api/task-context";
+import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
@@ -52,6 +53,10 @@ export class LegacyFernWorkspaceAdapter {
      * Note: Spec combination validation is performed earlier in ApiDefinitionConverter.
      */
     async adapt(definition: ApiDefinition): Promise<FernWorkspace> {
+        return this.adaptForGeneration(definition).toFernWorkspace({ context: this.taskContext });
+    }
+
+    public adaptForGeneration(definition: ApiDefinition): AbstractAPIWorkspace<unknown> {
         const fernSpec = definition.specs.find(isFernSpec);
         if (fernSpec != null) {
             return this.adaptFernSpec(fernSpec);
@@ -63,7 +68,7 @@ export class LegacyFernWorkspaceAdapter {
         return this.adaptOssSpecs(definition);
     }
 
-    private async adaptFernSpec(spec: FernSpec): Promise<FernWorkspace> {
+    private adaptFernSpec(spec: FernSpec): LazyFernWorkspace {
         // LazyFernWorkspace expects the workspace root directory (parent of the definition directory).
         //
         // The configured FernSpec path points to the definition directory itself (where api.yml lives),
@@ -77,10 +82,10 @@ export class LegacyFernWorkspaceAdapter {
             workspaceName: undefined,
             changelog: undefined
         });
-        return lazyWorkspace.toFernWorkspace({ context: this.taskContext });
+        return lazyWorkspace;
     }
 
-    private async adaptConjureSpec(spec: ConjureSpec): Promise<FernWorkspace> {
+    private adaptConjureSpec(spec: ConjureSpec): ConjureWorkspace {
         const conjureWorkspace = new ConjureWorkspace({
             absoluteFilePath: this.context.cwd,
             relativePathToConjureDirectory: relativize(this.context.cwd, spec.conjure),
@@ -90,10 +95,10 @@ export class LegacyFernWorkspaceAdapter {
             workspaceName: undefined,
             changelog: undefined
         });
-        return conjureWorkspace.toFernWorkspace({ context: this.taskContext });
+        return conjureWorkspace;
     }
 
-    private async adaptOssSpecs(definition: ApiDefinition): Promise<FernWorkspace> {
+    private adaptOssSpecs(definition: ApiDefinition): OSSWorkspace {
         const apiConfig = this.buildApiConfiguration(definition);
         const ossAdapter = new LegacyOSSWorkspaceAdapter({ context: this.context });
         const ossWorkspace = ossAdapter.build({
@@ -110,7 +115,7 @@ export class LegacyFernWorkspaceAdapter {
             });
         }
 
-        return ossWorkspace.toFernWorkspace({ context: this.taskContext });
+        return ossWorkspace;
     }
 
     private buildApiConfiguration(definition: ApiDefinition): generatorsYml.SingleNamespaceAPIDefinition | undefined {

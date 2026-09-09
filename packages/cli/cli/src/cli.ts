@@ -44,6 +44,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import { assertSdkConfigRemoteGeneration } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -774,6 +775,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Run the generator(s) locally, using Docker"
                 })
+                .option("sdk-config", {
+                    type: "string",
+                    description:
+                        "Path to an SDK Config v1 file for remote generation (resolved relative to the current working directory)"
+                })
                 .option("keepDocker", {
                     boolean: true,
                     default: false,
@@ -902,9 +908,23 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
                 }),
         async (argv) => {
+            try {
+                assertSdkConfigRemoteGeneration(argv.sdkConfig, argv.local || argv.runner != null);
+            } catch (error) {
+                return cliContext.failWithoutThrowing(extractErrorMessage(error), error, {
+                    code: CliError.Code.ConfigError
+                });
+            }
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --api and --docs. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.sdkConfig != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --sdk-config flag can only be used for API generation, not docs generation.",
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -1016,6 +1036,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     groupNames: argv.group,
                     generatorName,
                     generatorIndex,
+                    sdkConfigPath: argv.sdkConfig,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -1082,6 +1103,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 groupNames: argv.group,
                 generatorName,
                 generatorIndex,
+                sdkConfigPath: argv.sdkConfig,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,

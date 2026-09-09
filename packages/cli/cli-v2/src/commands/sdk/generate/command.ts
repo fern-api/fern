@@ -2,7 +2,8 @@ import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { assertSdkConfigRemoteGeneration } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
@@ -79,6 +80,9 @@ export declare namespace GenerateCommand {
 
         /** Require all referenced environment variables to be defined */
         "require-env-vars": boolean;
+
+        /** Path to an SDK Config v1 file */
+        "sdk-config"?: string;
     }
 }
 
@@ -206,6 +210,11 @@ export class GenerateCommand {
         if (workspace.sdks == null) {
             throw new CliError({ message: "No SDKs configured", code: CliError.Code.InternalError });
         }
+
+        const usesLocalTarget = targets.some(
+            (target) => target.output.git != null && schemas.isGitOutputSelfHosted(target.output.git)
+        );
+        assertSdkConfigRemoteGeneration(args["sdk-config"], forceLocal || args.local || usesLocalTarget);
 
         // Check that the APIs referenced by each target are valid.
         const apisToCheck = [...new Set(targets.map((t) => t.api))];
@@ -350,7 +359,13 @@ export class GenerateCommand {
                     version: args["output-version"],
                     fernignorePath: args.fernignore,
                     skipFernignore: args["skip-fernignore"],
-                    requireEnvVars: args["require-env-vars"]
+                    requireEnvVars: args["require-env-vars"],
+                    sdkConfigInput: {
+                        explicitPath: args["sdk-config"],
+                        invocationCwd: context.cwd,
+                        projectRoot:
+                            workspace.absoluteFilePath == null ? context.cwd : dirname(workspace.absoluteFilePath)
+                    }
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -809,6 +824,11 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     default: true,
                     description:
                         "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
+                .option("sdk-config", {
+                    type: "string",
+                    description:
+                        "Path to an SDK Config v1 file for remote generation (resolved relative to the current working directory)"
                 })
     );
 }

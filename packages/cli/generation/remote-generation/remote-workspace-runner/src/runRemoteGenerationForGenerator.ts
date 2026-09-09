@@ -35,6 +35,7 @@ import { createAndStartJob } from "./createAndStartJob.js";
 import {
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
@@ -47,6 +48,7 @@ import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntime
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
+import { getSdkConfigPackage, getSdkConfigVersion, type LoadedSdkConfig } from "./sdkConfigInput.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -81,6 +83,7 @@ export async function runRemoteGenerationForGenerator({
     specsTarGzBuffer,
     sdkGenApiSourceArchive,
     sdkGenApiRoute,
+    sdkConfig,
     sdkGenApiPreparationBatch,
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
@@ -136,6 +139,7 @@ export async function runRemoteGenerationForGenerator({
     specsTarGzBuffer?: Buffer;
     sdkGenApiSourceArchive?: FernSdkGenApiSourceArchive;
     sdkGenApiRoute: GenerationConfigRoute | undefined;
+    sdkConfig?: LoadedSdkConfig;
     sdkGenApiPreparationBatch?: FernSdkGenApiPreparationBatch;
     sdkGenApiBatch?: FernSdkGenApiBatch;
     sdkGenApiTargetIdSeed?: string;
@@ -146,10 +150,14 @@ export async function runRemoteGenerationForGenerator({
      */
     generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
-    const fdr = createFdrService({ token: token.value });
-
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
+    const requiresFdr = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
+    const fdr = requiresFdr ? createFdrService({ token: token.value }) : undefined;
+    const isAirGapped = requiresFdr
+        ? await detectAirGappedMode(
+              `${process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"}/health`,
+              interactiveTaskContext.logger
+          )
+        : true;
 
     // For local-file-system output, `generatorsYml.getPackageName` always returns
     // undefined, so fall back to the generator `config` (e.g. `package_name`,
@@ -186,7 +194,12 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation
     });
 
-    const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+    const sdkConfigVersion =
+        sdkGenApiRoute?.payloadKind === "sdk-config-v1"
+            ? getSdkConfigVersion(requireSdkConfig(sdkConfig, sdkGenApiRoute), sdkGenApiRoute.language)
+            : undefined;
+    const resolvedVersion =
+        version ?? sdkConfigVersion ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
     // Fail fast if the target version already exists on the package registry.
     // Only check when the user explicitly provided a version (not auto-computed).
@@ -296,23 +309,15 @@ export async function runRemoteGenerationForGenerator({
             );
         }
         sdkGenApiCandidate = candidate;
-        if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-            return interactiveTaskContext.failAndThrow(
-                `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} from legacy Fern configuration. Run \`fern sdk migrate --output <path>\` to create SDK Config v1 before using this generator version.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
         if (sdkGenApiTargetIdSeed == null) {
             throw new Error("sdk-gen-api target is missing its preparation ID");
         }
         await sdkGenApiPreparationBatch?.ready(sdkGenApiTargetIdSeed);
     }
 
-    const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     let generateOauthClients = false;
     let generatePaginatedClients = false;
-    if (!isAirGapped && requiresFdrRegistration) {
+    if (!isAirGapped && fdr != null) {
         const venus = createVenusService({ token: token.value });
         const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
 
@@ -330,7 +335,7 @@ export async function runRemoteGenerationForGenerator({
     }
 
     let fdrApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
-    if (requiresFdrRegistration) {
+    if (fdr != null) {
         const sources = workspace.getSources();
         let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
         const apiDefinition = convertIrToFdrApi({
@@ -384,6 +389,14 @@ export async function runRemoteGenerationForGenerator({
         interactiveTaskContext.logger.info(
             "Dynamic IR only mode: skipping SDK generation and uploading dynamic IR only"
         );
+
+        if (fdr == null) {
+            return interactiveTaskContext.failAndThrow(
+                "Dynamic IR-only generation is not supported with SDK Config routes.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
 
         if (version == null) {
             interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode", undefined, {
@@ -457,19 +470,16 @@ export async function runRemoteGenerationForGenerator({
         if (sdkGenApiCandidate == null) {
             throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
-        if (sdkGenApiRoute.payloadKind !== "fern-runtime-bundle") {
-            throw new Error("Legacy Fern generation reached sdk-gen-api without a Fern runtime bundle route");
-        }
-        const parameters: FernSdkGenApiBuildParameters = {
-            apiName: getOriginalName(ir.apiName),
-            organization,
-            cliVersion: workspace.cliVersion,
-            generatorInvocation: sdkGenApiCandidate.generatorInvocation,
-            sdkVersion: sdkGenApiCandidate.sdkVersion,
-            apiVersion: ir.specVersion,
-            token,
-            specsTarGzBuffer: sdkGenApiCandidate.specsTarGzBuffer,
-            payload: {
+        let payload: FernSdkGenApiPayload;
+        if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
+            const loadedSdkConfig = requireSdkConfig(sdkConfig, sdkGenApiRoute);
+            payload = {
+                payloadKind: sdkGenApiRoute.payloadKind,
+                body: loadedSdkConfig.body,
+                package: getSdkConfigPackage(loadedSdkConfig, sdkGenApiRoute.language)
+            };
+        } else {
+            payload = {
                 payloadKind: sdkGenApiRoute.payloadKind,
                 body: await prepareFernSdkGenApiRuntimeBundle({
                     apiName: getOriginalName(ir.apiName),
@@ -482,7 +492,18 @@ export async function runRemoteGenerationForGenerator({
                     generatePaginatedClients,
                     context: interactiveTaskContext
                 })
-            },
+            };
+        }
+        const parameters: FernSdkGenApiBuildParameters = {
+            apiName: getOriginalName(ir.apiName),
+            organization,
+            cliVersion: workspace.cliVersion,
+            generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+            sdkVersion: sdkGenApiCandidate.sdkVersion,
+            apiVersion: ir.specVersion,
+            token,
+            specsTarGzBuffer: sdkGenApiCandidate.specsTarGzBuffer,
+            payload,
             absolutePathToPreview,
             context: interactiveTaskContext,
             targetIdSeed: sdkGenApiTargetIdSeed,
@@ -576,6 +597,7 @@ export async function runRemoteGenerationForGenerator({
         actualVersionForUpload != null &&
         generatorInvocation.language != null &&
         packageName != null &&
+        fdr != null &&
         !isPreview
     ) {
         try {
@@ -599,6 +621,16 @@ export async function runRemoteGenerationForGenerator({
     }
 
     return result;
+}
+
+function requireSdkConfig(sdkConfig: LoadedSdkConfig | undefined, route: GenerationConfigRoute): LoadedSdkConfig {
+    if (sdkConfig == null) {
+        throw new CliError({
+            message: `SDK Config payload is unavailable for ${route.generatorId} ${route.requestedVersion}`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    return sdkConfig;
 }
 
 export function getPublishConfig({

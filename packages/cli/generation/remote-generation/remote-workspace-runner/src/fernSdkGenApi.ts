@@ -13,6 +13,7 @@ import path from "path";
 import { gunzipSync } from "zlib";
 import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
+    type GenerationConfigKind,
     type GenerationConfigRoute,
     type GenerationPayloadKind,
     GeneratorConfigCompatibilityError,
@@ -148,9 +149,10 @@ export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLa
     return getGeneratorLanguage(generatorName);
 }
 
-/** Validates a legacy Fern target and selects its compatible payload route without remote work. */
+/** Validates a target and selects its compatible payload route without remote work. */
 export function selectFernSdkGenApiRoute(
-    generatorInvocation: generatorsYml.GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    configKind: GenerationConfigKind = "legacy-fern"
 ): GenerationConfigRoute | undefined {
     const language = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (language == null) {
@@ -160,7 +162,7 @@ export function selectFernSdkGenApiRoute(
         generatorId: generatorInvocation.name,
         language: generatorInvocation.language ?? language,
         requestedVersion: generatorInvocation.version,
-        configKind: "legacy-fern"
+        configKind
     });
 }
 
@@ -909,7 +911,7 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
     ].join("; ");
     const migrationHint =
         error.recommendedAction === "USE_SDK_CONFIG_V1"
-            ? " Run `fern sdk migrate --output <path>` to migrate this SDK configuration before using this generator version."
+            ? ` Use an exact generator version below ${error.cutoverVersion ?? "the cutover"}, or run \`fern sdk migrate --output <path>\` and generate with \`--sdk-config <path>\`.`
             : "";
     return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
 }

@@ -3,9 +3,17 @@ import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, basename, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { createSpecsTarGzArchive, validateSdkConfigImportSettings } from "@fern-api/local-workspace-runner";
 import { LogLevel } from "@fern-api/logger";
-import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { TaskResult } from "@fern-api/task-context";
+import {
+    type FernSourceArchiveRequest,
+    type FernSourceArchiveResolution,
+    runRemoteGenerationForAPIWorkspace,
+    type SdkConfigInputLocator
+} from "@fern-api/remote-workspace-runner";
+import { type TaskContext, TaskResult } from "@fern-api/task-context";
+import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { cp, mkdtemp, rm } from "fs/promises";
 import { tmpdir } from "os";
 import type { AiConfig } from "../../ai/config/AiConfig.js";
@@ -70,6 +78,9 @@ export namespace LegacyRemoteGenerationRunner {
 
         /** Version override for the generated SDK */
         version?: string;
+
+        /** Explicit and project-root SDK Config lookup locations. */
+        sdkConfigInput?: SdkConfigInputLocator;
     }
 
     export interface Result {
@@ -115,7 +126,7 @@ export class LegacyRemoteGenerationRunner {
                 cliVersion: this.cliVersion,
                 task: args.task
             });
-            const fernWorkspace = await workspaceAdapter.adapt(args.apiDefinition);
+            const fernWorkspace = workspaceAdapter.adaptForGeneration(args.apiDefinition);
 
             const absolutePathToPreview = await this.getAbsolutePathToPreview(args);
             await runRemoteGenerationForAPIWorkspace({
@@ -138,7 +149,15 @@ export class LegacyRemoteGenerationRunner {
                 retryRateLimited: false,
                 requireEnvVars: args.requireEnvVars ?? true,
                 verify: false,
-                disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
+                disableTelemetry: !this.context.telemetry.isTelemetryEnabled(),
+                sdkConfigInput: args.sdkConfigInput,
+                getSpecsTarGzBuffer: (requests) =>
+                    createCliV2SourceArchives({
+                        workspace: fernWorkspace,
+                        context: taskContext,
+                        audiences: args.audiences ?? { type: "all" },
+                        requests
+                    })
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {
@@ -242,4 +261,48 @@ export class LegacyRemoteGenerationRunner {
     private isLocalGitCombo(args: LegacyRemoteGenerationRunner.RunArgs): boolean {
         return args.target.output.path != null && args.target.output.git != null && !args.preview;
     }
+}
+
+/** Prepares CLI-v2 source archives while preserving per-target source and audience selection. */
+export async function createCliV2SourceArchives({
+    workspace,
+    context,
+    audiences,
+    requests
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+    context: TaskContext;
+    audiences: Audiences;
+    requests: FernSourceArchiveRequest[];
+}): Promise<FernSourceArchiveResolution> {
+    const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
+    const errors = new Map<number, unknown>();
+    for (const request of requests) {
+        if (request.sdkGenApiRoute == null) {
+            continue;
+        }
+        if (!(workspace instanceof OSSWorkspace)) {
+            errors.set(
+                request.generatorIndex,
+                new Error(
+                    `Generator ${request.generatorInvocation.name} requires a source archive, but this workspace does not expose source specs`
+                )
+            );
+            continue;
+        }
+        try {
+            const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
+            if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
+                validateSdkConfigImportSettings(specs);
+            }
+            const archive = await createSpecsTarGzArchive({ specs, context, audiences });
+            sourceArchives.set(request.generatorIndex, {
+                ...archive,
+                specIndexes: archive.manifest.specs.map((_, index) => index)
+            });
+        } catch (error) {
+            errors.set(request.generatorIndex, error);
+        }
+    }
+    return { sourceArchives, errors };
 }

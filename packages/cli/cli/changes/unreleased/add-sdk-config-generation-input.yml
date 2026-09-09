@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support explicit and project-root SDK Config v1 inputs for remote SDK generation at generator cutovers.
+  type: feat

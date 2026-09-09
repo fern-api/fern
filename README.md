@@ -75,6 +75,17 @@ Finally, to invoke the generator, run:
 fern generate
 ```
 
+Generator versions at or above their SDK Config cutover use SDK Config v1 when generation is remote
+through the SDK Generation API. Create the file with `fern sdk migrate`; legacy `fern generate`
+automatically finds `sdk-config.yml` beside `fern.config.json`, while CLI-v2 finds it beside
+`fern.yml`. You can select another file with
+`fern generate --sdk-config <path>` or `fern sdk generate --sdk-config <path>`. Explicit paths are
+resolved from the current working directory and take precedence over automatic discovery. If no
+valid matching SDK Config target is available, use an exact generator version below the reported
+cutover or migrate and pass the generated file.
+SDK Config is not auto-discovered when the SDK Generation API is disabled or generation is local,
+and `--sdk-config` cannot be combined with local generation.
+
 🎉 Once the command completes, you'll see your SDK in `/generated/sdks/typescript`.
 
 ## 🌿 API Documentation

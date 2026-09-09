@@ -30,6 +30,7 @@ export async function generateAPIWorkspaces({
     groupNames,
     generatorName,
     generatorIndex,
+    sdkConfigPath,
     shouldLogS3Url,
     keepDocker,
     useLocalDocker,
@@ -64,6 +65,7 @@ export async function generateAPIWorkspaces({
     generatorName: string | undefined;
     /** Index-based generator targeting (0-based). Used by `fern automations generate --generator 0`. */
     generatorIndex: number | undefined;
+    sdkConfigPath?: string;
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
@@ -176,6 +178,7 @@ export async function generateAPIWorkspaces({
                     resolvedGroupNames: resolvedGroupNames ?? [],
                     generatorName,
                     generatorIndex,
+                    sdkConfigPath,
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
