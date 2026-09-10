@@ -164,9 +164,7 @@ async function tryRunContainer({
     const logs = stdout + stderr;
 
     if (writeLogsToFile) {
-        const tmpFile = await tmp.file();
-        await writeFile(tmpFile.path, logs);
-        logger.info(`Generator logs here: ${tmpFile.path}`);
+        await writeLogFile({ logger, logs });
     }
 
     if (exitCode == null) {
@@ -181,6 +179,19 @@ async function tryRunContainer({
     if (exitCode !== 0) {
         throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
     }
+}
+
+/**
+ * Writes container output to a temp file and prints its path.
+ *
+ * `keep: true` opts the file out of tmp's process-exit garbage collector: other
+ * modules call `tmp.setGracefulCleanup()`, which is global to the `tmp` module and
+ * would otherwise delete this file before the user can read the path we printed.
+ */
+async function writeLogFile({ logger, logs }: { logger: Logger; logs: string }): Promise<void> {
+    const tmpFile = await tmp.file({ keep: true, prefix: "fern-generator-logs-", postfix: ".log" });
+    await writeFile(tmpFile.path, logs);
+    logger.info(`Generator logs here: ${tmpFile.path}`);
 }
 
 /**
@@ -310,9 +321,7 @@ export async function execInContainer({
     const logs = stdout + stderr;
 
     if (writeLogsToFile) {
-        const tmpFile = await tmp.file();
-        await writeFile(tmpFile.path, logs);
-        logger.info(`Generator logs here: ${tmpFile.path}`);
+        await writeLogFile({ logger, logs });
     }
 
     const resolvedExitCode = exitCode ?? 1;
