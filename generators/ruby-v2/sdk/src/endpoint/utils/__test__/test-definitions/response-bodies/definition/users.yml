@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
+  UserIndex: integer
   User:
     properties:
       id: string
@@ -24,6 +25,14 @@ service:
       method: GET
       path: /by-index
       response: map<integer, User>
+    metadata:
+      method: GET
+      path: /metadata
+      response: map<string, unknown>
+    byAlias:
+      method: GET
+      path: /by-alias
+      response: map<UserIndex, User>
     tags:
       method: GET
       path: /tags

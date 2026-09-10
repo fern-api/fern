@@ -9,9 +9,11 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
  * `.load`; containers (lists, maps, sets) are parsed and coerced element-wise;
  * primitives and unknown bodies are parsed as-is.
  *
- * Map bodies are parsed with string keys so that `map<integer, T>` (and other
- * non-string key types) can be coerced from the JSON object keys; everything else is
- * parsed with `symbolize_names: true` to match `Model.load`.
+ * Bodies are parsed with `symbolize_names: true` to match `Model.load`, so that an
+ * `unknown` value reaches the caller symbol-keyed wherever it appears. The one exception
+ * is a map whose keys coerce to `Integer`: JSON object keys are always strings, and
+ * `Utils.coerce(Integer, :"1")` cannot convert a Symbol, so those bodies are parsed with
+ * string keys instead. `String`/`Symbol`/enum keys round-trip from either form.
  */
 export function responseBodyLoader({
     context,
@@ -36,7 +38,7 @@ export function responseBodyLoader({
                 return;
             case "container": {
                 const rubyType = context.typeMapper.convert({ reference: typeReference, unboxOptionals: true });
-                const symbolizeNames = typeReference.container.type !== "map";
+                const symbolizeNames = !mapKeysMustStayStrings({ context, container: typeReference.container });
                 writer.write(`${context.getRootModuleName()}::Internal::Types::Utils.coerce(`);
                 writer.writeNode(rubyType);
                 writer.write(`, ${guard(parseExpression(symbolizeNames))})`);
@@ -50,4 +52,28 @@ export function responseBodyLoader({
                 assertNever(typeReference);
         }
     });
+}
+
+/**
+ * True when a map's JSON object keys have to reach `Utils.coerce` as `String`s.
+ *
+ * The decision is made on the *resolved* Ruby key type rather than the IR primitive so
+ * that aliases (`map<MyIntAlias, T>`) follow the same rule as the primitive they resolve
+ * to, and so it stays in lockstep with what `Internal::Types::Hash#coerce` receives.
+ * `Utils.coerce` converts a `String` key to `Symbol`/`String`/`Integer` alike, but has no
+ * `Symbol -> Integer` path, so `Integer` keys are the only ones that cannot round-trip
+ * from `symbolize_names: true`.
+ */
+function mapKeysMustStayStrings({
+    context,
+    container
+}: {
+    context: SdkGeneratorContext;
+    container: FernIr.ContainerType;
+}): boolean {
+    if (container.type !== "map") {
+        return false;
+    }
+    const keyType = context.typeMapper.convert({ reference: container.keyType });
+    return keyType.internalType?.type === "integer";
 }

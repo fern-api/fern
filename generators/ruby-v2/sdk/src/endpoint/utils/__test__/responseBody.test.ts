@@ -44,9 +44,21 @@ describe("responseBodyLoader", () => {
         );
     });
 
-    it("parses map responses with string keys so non-string key types can be coerced", () => {
+    it("parses integer-keyed map responses with string keys, which Utils.coerce can convert", () => {
         expect(render("byIndex")).toBe(
             `Test::Internal::Types::Utils.coerce(Internal::Types::Hash[Integer, Test::Users::Types::User], (${EMPTY_GUARD} : JSON.parse(response.body)))`
+        );
+    });
+
+    it("keeps string keys for a map whose key type is an alias of integer", () => {
+        expect(render("byAlias")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Hash[Integer, Test::Users::Types::User], (${EMPTY_GUARD} : JSON.parse(response.body)))`
+        );
+    });
+
+    it("symbolizes string-keyed maps so unknown values match Model.load", () => {
+        expect(render("metadata")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Object], (${EMPTY_GUARD} : ${PARSE}))`
         );
     });
 
