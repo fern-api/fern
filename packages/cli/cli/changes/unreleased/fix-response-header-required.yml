@@ -1,0 +1,5 @@
+- summary: |
+    Honor `required` on OpenAPI response headers: header value types are only wrapped in
+    `optional` when the Header Object does not declare `required: true`, matching the
+    request-parameter behavior.
+  type: fix

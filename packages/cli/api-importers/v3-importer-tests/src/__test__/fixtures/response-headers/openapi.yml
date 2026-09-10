@@ -101,15 +101,6 @@ paths:
                 application/json:
                   schema:
                     $ref: "#/components/schemas/ErrorInfo"
-                  example:
-                    traceId: t-123
-                    retryAfterSeconds: 30
-            X-Content-Example:
-              description: JSON content header with an example but no schema
-              content:
-                application/json:
-                  example:
-                    status: ok
             X-No-Schema:
               description: Header with no schema or content
           content:
@@ -199,10 +190,6 @@ components:
         - adaptive
     AccountInfo:
       type: object
-      examples:
-        - accountId: acct-1
-          displayName: Fern
-          tier: gold
       required:
         - accountId
       properties:

@@ -484,40 +484,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     /**
-     * Follows a `$ref` chain until a concrete SchemaObject is reached, guarding against
-     * reference cycles. Returns undefined when a link in the chain cannot be resolved.
-     * Resolution failures are not collected since the chain may be probed opportunistically
-     * (e.g. when looking up schema-level examples); call sites that need diagnostics should
-     * resolve the reference themselves.
-     */
-    public resolveSchemaReferenceChain({
-        schemaOrReference,
-        breadcrumbs
-    }: {
-        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        breadcrumbs: string[];
-    }): OpenAPIV3_1.SchemaObject | undefined {
-        const visited = new Set<string>();
-        let current: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = schemaOrReference;
-        while (this.isReferenceObject(current)) {
-            if (visited.has(current.$ref)) {
-                return undefined;
-            }
-            visited.add(current.$ref);
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>({
-                reference: current,
-                breadcrumbs,
-                skipErrorCollector: true
-            });
-            if (!resolved.resolved) {
-                return undefined;
-            }
-            current = resolved.value;
-        }
-        return current;
-    }
-
-    /**
      * Resolves an example reference recursively until we get a non-reference object.
      * This handles cases where an example in components/examples itself references another example.
      * @param example The example object or reference to resolve

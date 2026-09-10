@@ -133,29 +133,6 @@ describe("response header schemas", () => {
         }
     });
 
-    it("surfaces declared examples for complex response header types", async () => {
-        const ir = await getIRForFixture("response-headers");
-
-        const endpoint = Object.values(ir.services)
-            .flatMap((service) => service.endpoints)
-            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
-        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
-
-        // `examples` on a schema reached through a `content` map + `$ref` produce header examples.
-        const accountInfoExamples = headers.get("X-Account-Info")?.v2Examples?.userSpecifiedExamples;
-        expect(Object.keys(accountInfoExamples ?? {}).length).toBeGreaterThan(0);
-
-        // `example` on a `content` Media Type Object produces a header example.
-        const mixedContentExamples = headers.get("X-Mixed-Content")?.v2Examples?.userSpecifiedExamples;
-        expect(Object.keys(mixedContentExamples ?? {}).length).toBeGreaterThan(0);
-
-        // A schema-less JSON `content` entry still surfaces its declared media example while
-        // its value type falls back to `optional<string>`.
-        const contentOnlyHeader = headers.get("X-Content-Example");
-        expect(Object.keys(contentOnlyHeader?.v2Examples?.userSpecifiedExamples ?? {}).length).toBeGreaterThan(0);
-        expect(unwrapOptional(contentOnlyHeader?.valueType)?.type).toBe("primitive");
-    });
-
     it("honors header-level availability extensions and ignores non-JSON content", async () => {
         const ir = await getIRForFixture("response-headers");
 

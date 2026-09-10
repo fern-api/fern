@@ -49,9 +49,7 @@ export function convertResponseHeaders({
             continue;
         }
 
-        const headerMediaTypeObject =
-            resolvedHeader.schema == null ? getHeaderMediaTypeObject({ context, header: resolvedHeader }) : undefined;
-        const headerSchema = resolvedHeader.schema ?? headerMediaTypeObject?.schema;
+        const headerSchema = getHeaderSchema({ context, header: resolvedHeader });
         const isHeaderRequired = resolvedHeader.required === true;
         // The Header Object's `required` defaults to false, so non-required header value
         // types are optional-wrapped — matching `parameter.required` on the request side.
@@ -112,8 +110,7 @@ export function convertResponseHeaders({
             breadcrumbs: headerBreadcrumbs,
             header: resolvedHeader,
             headerName,
-            schema: headerSchema,
-            mediaTypeObject: headerMediaTypeObject
+            schema: headerSchema
         });
 
         headers.push({
@@ -135,34 +132,30 @@ export function convertResponseHeaders({
 }
 
 /**
- * Resolves the JSON Media Type Object describing a `content`-based response header's value.
- * Headers normally declare `schema` directly, but the OpenAPI spec also allows a `content`
- * map for values serialized in a media type — most commonly a JSON-encoded object. Mirrors
- * the request-header handling in `ParameterConverter`.
+ * Resolves the schema describing the response header's value. Headers normally declare
+ * `schema` directly, but the OpenAPI spec also allows a `content` map for values serialized
+ * in a media type — most commonly a JSON-encoded object. Mirrors the request-header
+ * handling in `ParameterConverter`.
  */
-function getHeaderMediaTypeObject({
+function getHeaderSchema({
     context,
     header
 }: {
     context: AbstractConverterContext<object>;
     header: OpenAPIV3_1.HeaderObject;
-}): OpenAPIV3_1.MediaTypeObject | undefined {
+}): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
+    if (header.schema != null) {
+        return header.schema;
+    }
     if (!context.settings.respectParameterContent || header.content == null) {
         return undefined;
     }
-    // Prefer a JSON media entry that declares a schema; fall back to the first JSON entry
-    // so schema-less media objects still surface their declared `example`/`examples`.
-    let schemalessJsonMedia: OpenAPIV3_1.MediaTypeObject | undefined;
     for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
-        if (!MediaType.parse(contentType)?.isJSON()) {
-            continue;
+        if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
+            return mediaTypeObject.schema;
         }
-        if (mediaTypeObject.schema != null) {
-            return mediaTypeObject;
-        }
-        schemalessJsonMedia ??= mediaTypeObject;
     }
-    return schemalessJsonMedia;
+    return undefined;
 }
 
 function convertHeaderExamples({
@@ -170,15 +163,13 @@ function convertHeaderExamples({
     breadcrumbs,
     header,
     headerName,
-    schema,
-    mediaTypeObject
+    schema
 }: {
     context: AbstractConverterContext<object>;
     breadcrumbs: string[];
     header: OpenAPIV3_1.HeaderObject;
     headerName: string;
     schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
-    mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
 }): V2SchemaExamples {
     const v2Examples: V2SchemaExamples = {
         userSpecifiedExamples: {},
@@ -211,46 +202,6 @@ function convertHeaderExamples({
             schema,
             example: headerExample
         });
-    }
-
-    // A `content`-based header may declare `example`/`examples` on the Media Type Object.
-    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && mediaTypeObject != null) {
-        for (const [key, example] of context.getNamedExamplesFromMediaTypeObject({
-            mediaTypeObject,
-            breadcrumbs,
-            defaultExampleName: `${headerName}_example`
-        })) {
-            const resolvedExample = context.resolveExampleWithValue(example);
-            if (resolvedExample !== undefined) {
-                v2Examples.userSpecifiedExamples[key] = generateHeaderExample({
-                    context,
-                    breadcrumbs,
-                    schema,
-                    example: resolvedExample
-                });
-            }
-        }
-    }
-
-    // `example`/`examples` declared on the header's schema — including a schema reached
-    // through `$ref` — apply to the header, matching the request-parameter path.
-    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
-        const schemaExamples = context.getExamplesFromSchema({
-            schema: context.resolveSchemaReferenceChain({ schemaOrReference: schema, breadcrumbs }),
-            breadcrumbs
-        });
-        for (const schemaExample of schemaExamples) {
-            const exampleName = context.generateUniqueName({
-                prefix: `${headerName}_example`,
-                existingNames: Object.keys(v2Examples.userSpecifiedExamples)
-            });
-            v2Examples.userSpecifiedExamples[exampleName] = generateHeaderExample({
-                context,
-                breadcrumbs,
-                schema,
-                example: context.resolveExample(schemaExample)
-            });
-        }
     }
 
     if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
