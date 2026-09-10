@@ -207,13 +207,21 @@ async function writeLogFile({ logger, logs }: { logger: Logger; logs: string }):
 async function pruneOldLogs({ logger, logDir }: { logger: Logger; logDir: string }): Promise<void> {
     try {
         const now = Date.now();
-        for (const entry of await readdir(logDir)) {
-            const entryPath = path.join(logDir, entry);
-            const { mtimeMs } = await stat(entryPath);
-            if (now - mtimeMs > LOG_RETENTION_MS) {
-                await rm(entryPath, { force: true });
-            }
-        }
+        // A concurrent run may delete an entry between the readdir and the stat, so
+        // every entry is pruned independently.
+        await Promise.all(
+            (await readdir(logDir)).map(async (entry) => {
+                const entryPath = path.join(logDir, entry);
+                try {
+                    const { mtimeMs } = await stat(entryPath);
+                    if (now - mtimeMs > LOG_RETENTION_MS) {
+                        await rm(entryPath, { force: true });
+                    }
+                } catch (e) {
+                    logger.debug(`Failed to prune ${entryPath}: ${e instanceof Error ? e.message : e}`);
+                }
+            })
+        );
     } catch (e) {
         logger.debug(`Failed to prune old generator logs in ${logDir}: ${e instanceof Error ? e.message : e}`);
     }
