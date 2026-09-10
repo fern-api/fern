@@ -216,7 +216,10 @@ export abstract class AbstractParameterConverter<
         }
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
             const schemaExamples = this.context.getExamplesFromSchema({
-                schema: this.resolveSchemaChain(originalSchema),
+                schema: this.context.resolveSchemaReferenceChain({
+                    schemaOrReference: originalSchema,
+                    breadcrumbs: this.breadcrumbs
+                }),
                 breadcrumbs: this.breadcrumbs
             });
             for (const schemaExample of schemaExamples) {
@@ -242,29 +245,6 @@ export abstract class AbstractParameterConverter<
             });
         }
         return v2Examples;
-    }
-
-    private resolveSchemaChain(
-        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    ): OpenAPIV3_1.SchemaObject | undefined {
-        const visited = new Set<string>();
-        let current = schemaOrReference;
-        while (this.context.isReferenceObject(current)) {
-            if (visited.has(current.$ref)) {
-                return undefined;
-            }
-            visited.add(current.$ref);
-            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>({
-                reference: current,
-                breadcrumbs: this.breadcrumbs,
-                skipErrorCollector: true
-            });
-            if (!resolved.resolved) {
-                return undefined;
-            }
-            current = resolved.value;
-        }
-        return current;
     }
 
     private generateOrValidateExample({

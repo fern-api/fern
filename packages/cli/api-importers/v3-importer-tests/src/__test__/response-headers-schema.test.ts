@@ -50,10 +50,15 @@ describe("response header schemas", () => {
 
         const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
 
-        // Primitive response headers keep their previous scalar typing.
+        // Non-required primitive response headers are optional<primitive>.
         expect(headers.get("X-Request-Id")?.valueType.type).toBe("container");
-        expect(headers.get("X-Rate-Limit-Remaining")?.valueType.type).toBe("primitive");
-        expect(headers.get("X-Is-Cached")?.valueType.type).toBe("primitive");
+        expect(unwrapOptional(headers.get("X-Rate-Limit-Remaining")?.valueType)?.type).toBe("primitive");
+        expect(unwrapOptional(headers.get("X-Is-Cached")?.valueType)?.type).toBe("primitive");
+
+        // `required: true` on the Header Object suppresses the optional wrapper for both
+        // named and primitive value types, matching request-parameter `required`.
+        expect(headers.get("X-Required-Policy")?.valueType.type).toBe("named");
+        expect(headers.get("X-Required-Count")?.valueType.type).toBe("primitive");
 
         // An enum schema $ref produces an optional named reference instead of optional<string>.
         const rateLimitPolicy = unwrapOptional(headers.get("X-Rate-Limit-Policy")?.valueType);
@@ -83,12 +88,12 @@ describe("response header schemas", () => {
         const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
 
         // `number` headers take the primitive fast-path just like `integer`/`boolean`.
-        const score = headers.get("X-Score")?.valueType;
+        const score = unwrapOptional(headers.get("X-Score")?.valueType);
         expect(score?.type).toBe("primitive");
 
         // Schema-level `default` propagates to the header's defaultValue.
         const quota = headers.get("X-Quota");
-        expect(quota?.valueType.type).toBe("primitive");
+        expect(unwrapOptional(quota?.valueType)?.type).toBe("primitive");
         expect(quota?.defaultValue).toBe(100);
 
         // A header declared with only a description still falls back to optional<string>.
@@ -119,12 +124,30 @@ describe("response header schemas", () => {
             expect(ir.types[inlineInfo.typeId]?.shape.type).toBe("object");
         }
 
-        // A header that is itself a $ref into components/headers resolves first.
-        const trace = unwrapOptional(headers.get("X-Trace")?.valueType);
+        // A header that is itself a $ref into components/headers resolves first; its
+        // `required: true` applies too, so the value type is not optional-wrapped.
+        const trace = headers.get("X-Trace")?.valueType;
         expect(trace?.type).toBe("named");
         if (trace?.type === "named") {
             expect(ir.types[trace.typeId]?.shape.type).toBe("object");
         }
+    });
+
+    it("surfaces declared examples for complex response header types", async () => {
+        const ir = await getIRForFixture("response-headers");
+
+        const endpoint = Object.values(ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => getOriginalName(endpoint.name) === "listUsers");
+        const headers = new Map((endpoint?.responseHeaders ?? []).map((header) => [getWireValue(header.name), header]));
+
+        // `examples` on a schema reached through a `content` map + `$ref` produce header examples.
+        const accountInfoExamples = headers.get("X-Account-Info")?.v2Examples.userSpecifiedExamples;
+        expect(Object.keys(accountInfoExamples ?? {}).length).toBeGreaterThan(0);
+
+        // `example` on a `content` Media Type Object produces a header example.
+        const mixedContentExamples = headers.get("X-Mixed-Content")?.v2Examples.userSpecifiedExamples;
+        expect(Object.keys(mixedContentExamples ?? {}).length).toBeGreaterThan(0);
     });
 
     it("honors header-level availability extensions and ignores non-JSON content", async () => {

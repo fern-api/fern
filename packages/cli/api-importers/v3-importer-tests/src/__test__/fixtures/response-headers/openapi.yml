@@ -34,6 +34,16 @@ paths:
               deprecated: true
               schema:
                 $ref: "#/components/schemas/RateLimitPolicy"
+            X-Required-Policy:
+              description: Mandatory rate limit policy header
+              required: true
+              schema:
+                $ref: "#/components/schemas/RateLimitPolicy"
+            X-Required-Count:
+              description: Mandatory primitive header
+              required: true
+              schema:
+                type: integer
             X-Account-Info:
               description: JSON-encoded account metadata
               content:
@@ -91,6 +101,9 @@ paths:
                 application/json:
                   schema:
                     $ref: "#/components/schemas/ErrorInfo"
+                  example:
+                    traceId: t-123
+                    retryAfterSeconds: 30
             X-No-Schema:
               description: Header with no schema or content
           content:
@@ -147,6 +160,7 @@ components:
   headers:
     TraceHeader:
       description: Shared trace header resolved via components/headers
+      required: true
       schema:
         $ref: "#/components/schemas/TraceInfo"
   schemas:
@@ -179,6 +193,10 @@ components:
         - adaptive
     AccountInfo:
       type: object
+      examples:
+        - accountId: acct-1
+          displayName: Fern
+          tier: gold
       required:
         - accountId
       properties:

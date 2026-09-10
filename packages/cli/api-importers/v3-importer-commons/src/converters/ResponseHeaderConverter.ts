@@ -1,5 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
-import { HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { ContainerType, HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter } from "../AbstractConverter.js";
@@ -49,8 +49,15 @@ export function convertResponseHeaders({
             continue;
         }
 
-        const headerSchema = getHeaderSchema({ context, header: resolvedHeader });
-        let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
+        const headerMediaTypeObject =
+            resolvedHeader.schema == null ? getHeaderMediaTypeObject({ context, header: resolvedHeader }) : undefined;
+        const headerSchema = resolvedHeader.schema ?? headerMediaTypeObject?.schema;
+        const isHeaderRequired = resolvedHeader.required === true;
+        // The Header Object's `required` defaults to false, so non-required header value
+        // types are optional-wrapped — matching `parameter.required` on the request side.
+        const maybeWrapOptional = (typeReference: TypeReference): TypeReference =>
+            isHeaderRequired ? typeReference : TypeReference.container(ContainerType.optional(typeReference));
+        let valueType: TypeReference = maybeWrapOptional(AbstractConverter.STRING);
         let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
         // Availability comes from the Header Object itself (`deprecated` /
         // `x-fern-availability`), matching how request-header parameters read it from the
@@ -67,24 +74,28 @@ export function convertResponseHeaders({
             });
 
             if (resolvedSchema?.type === "number" || resolvedSchema?.type === "integer") {
-                valueType = TypeReference.primitive({
-                    v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
-                    v2:
-                        resolvedSchema.type === "integer"
-                            ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
-                            : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
-                });
+                valueType = maybeWrapOptional(
+                    TypeReference.primitive({
+                        v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
+                        v2:
+                            resolvedSchema.type === "integer"
+                                ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
+                                : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
+                    })
+                );
             } else if (resolvedSchema?.type === "boolean") {
-                valueType = TypeReference.primitive({
-                    v1: "BOOLEAN",
-                    v2: PrimitiveTypeV2.boolean({ default: undefined })
-                });
+                valueType = maybeWrapOptional(
+                    TypeReference.primitive({
+                        v1: "BOOLEAN",
+                        v2: PrimitiveTypeV2.boolean({ default: undefined })
+                    })
+                );
             } else {
                 const convertedHeaderSchema = new SchemaOrReferenceConverter({
                     context,
                     breadcrumbs: [...headerBreadcrumbs, "headers", headerName, "schema"],
                     schemaOrReference: headerSchema,
-                    wrapAsOptional: true,
+                    wrapAsOptional: !isHeaderRequired,
                     schemaIdOverride: context.convertBreadcrumbsToName([...headerBreadcrumbs, "headers", headerName])
                 }).convert();
                 if (convertedHeaderSchema != null) {
@@ -101,7 +112,8 @@ export function convertResponseHeaders({
             breadcrumbs: headerBreadcrumbs,
             header: resolvedHeader,
             headerName,
-            schema: headerSchema
+            schema: headerSchema,
+            mediaTypeObject: headerMediaTypeObject
         });
 
         headers.push({
@@ -123,27 +135,24 @@ export function convertResponseHeaders({
 }
 
 /**
- * Resolves the schema describing the response header's value. Headers normally declare
- * `schema` directly, but the OpenAPI spec also allows a `content` map for values serialized
- * in a media type — most commonly a JSON-encoded object. Mirrors the request-header
- * handling in `ParameterConverter`.
+ * Resolves the JSON Media Type Object describing a `content`-based response header's value.
+ * Headers normally declare `schema` directly, but the OpenAPI spec also allows a `content`
+ * map for values serialized in a media type — most commonly a JSON-encoded object. Mirrors
+ * the request-header handling in `ParameterConverter`.
  */
-function getHeaderSchema({
+function getHeaderMediaTypeObject({
     context,
     header
 }: {
     context: AbstractConverterContext<object>;
     header: OpenAPIV3_1.HeaderObject;
-}): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
-    if (header.schema != null) {
-        return header.schema;
-    }
+}): OpenAPIV3_1.MediaTypeObject | undefined {
     if (!context.settings.respectParameterContent || header.content == null) {
         return undefined;
     }
     for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
         if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
-            return mediaTypeObject.schema;
+            return mediaTypeObject;
         }
     }
     return undefined;
@@ -154,13 +163,15 @@ function convertHeaderExamples({
     breadcrumbs,
     header,
     headerName,
-    schema
+    schema,
+    mediaTypeObject
 }: {
     context: AbstractConverterContext<object>;
     breadcrumbs: string[];
     header: OpenAPIV3_1.HeaderObject;
     headerName: string;
     schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+    mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
 }): V2SchemaExamples {
     const v2Examples: V2SchemaExamples = {
         userSpecifiedExamples: {},
@@ -193,6 +204,46 @@ function convertHeaderExamples({
             schema,
             example: headerExample
         });
+    }
+
+    // A `content`-based header may declare `example`/`examples` on the Media Type Object.
+    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && mediaTypeObject != null) {
+        for (const [key, example] of context.getNamedExamplesFromMediaTypeObject({
+            mediaTypeObject,
+            breadcrumbs,
+            defaultExampleName: `${headerName}_example`
+        })) {
+            const resolvedExample = context.resolveExampleWithValue(example);
+            if (resolvedExample != null) {
+                v2Examples.userSpecifiedExamples[key] = generateHeaderExample({
+                    context,
+                    breadcrumbs,
+                    schema,
+                    example: resolvedExample
+                });
+            }
+        }
+    }
+
+    // `example`/`examples` declared on the header's schema — including a schema reached
+    // through `$ref` — apply to the header, matching the request-parameter path.
+    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
+        const schemaExamples = context.getExamplesFromSchema({
+            schema: context.resolveSchemaReferenceChain({ schemaOrReference: schema, breadcrumbs }),
+            breadcrumbs
+        });
+        for (const schemaExample of schemaExamples) {
+            const exampleName = context.generateUniqueName({
+                prefix: `${headerName}_example`,
+                existingNames: Object.keys(v2Examples.userSpecifiedExamples)
+            });
+            v2Examples.userSpecifiedExamples[exampleName] = generateHeaderExample({
+                context,
+                breadcrumbs,
+                schema,
+                example: context.resolveExample(schemaExample)
+            });
+        }
     }
 
     if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
