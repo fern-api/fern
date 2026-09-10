@@ -742,7 +742,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
         expect(result).toContain("= 0");
     });
 
-    it("package_with_content: renders submodules and Package Contents", () => {
+    it("package_with_content: renders contents but no links to undocumented subpackages", () => {
         // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["package_with_content"]!;
         const result = renderModulePage(mod, emptyCtx());
@@ -750,14 +750,15 @@ describe("renderModulePage (NeMo fixtures)", () => {
         expect(result).toContain("slug: reference/python/nemo_rl");
         expect(result).toContain("title: nemo_rl");
 
-        // Submodules have children, but those children document nothing, so the
-        // subpackages are listed as leaves rather than as Subpackages
-        expect(result).toContain("## Submodules");
-        expect(result).toContain("`nemo_rl.algorithms`");
-        expect(result).toContain("`nemo_rl.data`");
+        // Nothing below these subpackages documents anything, so none of them
+        // gets a page and none of them is linked
+        expect(result).not.toContain("## Subpackages");
+        expect(result).not.toContain("## Submodules");
+        expect(result).not.toContain("`nemo_rl.algorithms`");
+        expect(result).not.toContain("`nemo_rl.data`");
 
-        // Has direct content -> Package Contents
-        expect(result).toContain("## Package Contents");
+        // Has direct content, and no linkable submodules -> Module Contents
+        expect(result).toContain("## Module Contents");
 
         // Functions summary
         expect(result).toContain("### Functions");
@@ -804,7 +805,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
 });
 
 describe("renderAllModulePages (NeMo fixtures)", () => {
-    it("package_with_content: generates pages for root and all stub submodules", () => {
+    it("package_with_content: generates a page for the root only, since the stub submodules document nothing", () => {
         // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const root = NEMO_MODULES["package_with_content"]!;
         const pages = renderAllModulePages(root, emptyCtx());
@@ -812,8 +813,8 @@ describe("renderAllModulePages (NeMo fixtures)", () => {
         // Root page
         expect(Object.keys(pages)).toContain("reference/python/nemo_rl.mdx");
 
-        // Submodule pages (each has submodules so should get a page)
-        expect(Object.keys(pages)).toContain("reference/python/nemo_rl/algorithms.mdx");
-        expect(Object.keys(pages)).toContain("reference/python/nemo_rl/data.mdx");
+        // Stub submodules document nothing anywhere below them -> no pages
+        expect(Object.keys(pages)).not.toContain("reference/python/nemo_rl/algorithms.mdx");
+        expect(Object.keys(pages)).not.toContain("reference/python/nemo_rl/data.mdx");
     });
 });

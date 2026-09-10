@@ -13,7 +13,7 @@ export function hasPage(module: FdrAPI.libraryDocs.PythonModuleIr): boolean {
         module.functions.length > 0 ||
         module.attributes.length > 0 ||
         module.docstring != null ||
-        module.submodules.length > 0
+        module.submodules.some(hasPage)
     );
 }
 

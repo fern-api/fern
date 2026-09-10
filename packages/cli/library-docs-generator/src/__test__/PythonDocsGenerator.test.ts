@@ -450,4 +450,27 @@ describe("generate()", () => {
         expect(JSON.stringify(result.navigation)).not.toContain("floorplan_editor_signals");
         expect(JSON.stringify(result.navigation)).toContain("ref/prismo/floorplan_editor");
     });
+
+    it("does not link a subpackage whose descendants all document nothing", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "prismo",
+                path: "prismo",
+                functions: [makeFunction({ name: "run", path: "prismo.run" })],
+                submodules: [
+                    makeModule({
+                        name: "signals",
+                        path: "prismo.signals",
+                        submodules: [makeModule({ name: "internal", path: "prismo.signals.internal" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Prismo" });
+
+        expect(readFileSync(join(tmpDir, "ref/prismo.mdx"), "utf-8")).not.toContain("prismo.signals");
+        expect(result.writtenFiles.filter((f) => f.endsWith(".mdx"))).toEqual([join(tmpDir, "ref/prismo.mdx")]);
+        expect(result.navigation).toEqual([]);
+    });
 });
