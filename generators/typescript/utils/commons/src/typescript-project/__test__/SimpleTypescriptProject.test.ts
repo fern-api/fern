@@ -116,6 +116,7 @@ describe("SimpleTypescriptProject", () => {
         });
         const scripts = packageJson.scripts as Record<string, string>;
         expect(scripts["build:cjs"]).toBe("tsc --project ./tsconfig.cjs.json");
+        expect(scripts["build:esm"]).toContain("node scripts/rename-to-esm-files.cjs");
         expect(scripts.build).toBe("pnpm build:cjs && pnpm build:esm");
         expect(hasCjsTsConfig).toBe(true);
         expect(rootTsConfig.extends).toBe("./tsconfig.cjs.json");

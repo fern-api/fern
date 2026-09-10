@@ -31,7 +31,7 @@ export namespace AsIsManager {
         linter: "biome" | "oxlint" | "none";
         autoGenerateIdempotencyKey: boolean;
         idempotencyKeyHeaderName: string;
-        esmOnly: boolean;
+        esModulePackage: boolean;
     }
 }
 
@@ -45,7 +45,7 @@ export class AsIsManager {
     private readonly linter: "biome" | "oxlint" | "none";
     private readonly autoGenerateIdempotencyKey: boolean;
     private readonly idempotencyKeyHeaderName: string;
-    private readonly esmOnly: boolean;
+    private readonly esModulePackage: boolean;
 
     constructor({
         useBigInt,
@@ -57,7 +57,7 @@ export class AsIsManager {
         linter,
         autoGenerateIdempotencyKey,
         idempotencyKeyHeaderName,
-        esmOnly
+        esModulePackage
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
@@ -68,7 +68,7 @@ export class AsIsManager {
         this.linter = linter;
         this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
         this.idempotencyKeyHeaderName = idempotencyKeyHeaderName;
-        this.esmOnly = esmOnly;
+        this.esModulePackage = esModulePackage;
     }
 
     /**
@@ -95,9 +95,9 @@ export class AsIsManager {
             },
             scripts: {
                 renameToEsmFiles: {
-                    // in an ESM-only package (`type: "module"`), a `.js` file would be interpreted
+                    // in a `type: "module"` package, a `.js` file would be interpreted
                     // as ESM, so the CommonJS script must be emitted with a `.cjs` extension
-                    "scripts/rename-to-esm-files.js": this.esmOnly
+                    "scripts/rename-to-esm-files.js": this.esModulePackage
                         ? "scripts/rename-to-esm-files.cjs"
                         : "scripts/rename-to-esm-files.js"
                 }

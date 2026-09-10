@@ -514,6 +514,9 @@ fixtures:
     - outputFolder: esm-only
       customConfig:
         esmOnly: true
+    - outputFolder: output-esm
+      customConfig:
+        outputEsm: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm

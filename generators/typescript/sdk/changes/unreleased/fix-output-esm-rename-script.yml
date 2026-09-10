@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the `build:esm` script in packages generated with `outputEsm: true`. These packages
+    are marked `type: "module"`, so Node interpreted the CommonJS helper
+    `scripts/rename-to-esm-files.js` as ESM and the build failed with
+    `ReferenceError: require is not defined in ES module scope`. The helper is now emitted
+    as `scripts/rename-to-esm-files.cjs` whenever the package is `type: "module"`.
+  type: fix

@@ -298,9 +298,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
                           }),
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
-                        // in an ESM-only package (`type: "module"`), the CommonJS script is emitted
+                        // in a `type: "module"` package, the CommonJS script is emitted
                         // with a `.cjs` extension so Node does not interpret it as ESM
-                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.${this.esmOnly ? "cjs" : "js"} ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
+                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.${this.esmOnly || this.outputEsm ? "cjs" : "js"} ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
                     ].join(" && "),
                     ...packageJson.scripts,
                     ...this.extraScripts
