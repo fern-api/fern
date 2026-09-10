@@ -48,6 +48,12 @@ service:
       request: map<string, unions.MixedType>
       response: map<string, unions.MixedType>
 
+    getAndReturnMapOfIntegerToObject:
+      path: /map-integer-to-object
+      method: POST
+      request: map<integer, objects.ObjectWithRequiredField>
+      response: map<integer, objects.ObjectWithRequiredField>
+
     getAndReturnOptional:
       path: /opt-objects
       method: POST

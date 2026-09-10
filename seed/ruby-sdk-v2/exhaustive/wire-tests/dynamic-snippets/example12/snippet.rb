@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.http_methods.test_post(string: "string")
+client.endpoints.http_methods.test_get(id: "id")
