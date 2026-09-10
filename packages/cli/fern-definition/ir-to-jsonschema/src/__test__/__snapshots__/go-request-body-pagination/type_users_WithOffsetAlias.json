@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/users.WithOffset",
+  "description": "An alias to an object, which Go generates as a pointer alias (`type WithOffsetAlias = *WithOffset`).",
+  "definitions": {
+    "users.WithOffset": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "count": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Mirrors an options object that carries both the offset and the page size."
+    }
+  }
+}
