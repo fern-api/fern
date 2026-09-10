@@ -4,6 +4,7 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { getWithRawResponseMethod, RAW_CLIENT_FIELD_NAME } from "../raw-client/withRawResponse.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -93,6 +94,25 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                     endpoint
                 });
                 class_.addMethods(methods);
+            }
+            if (this.service.endpoints.length > 0) {
+                class_.addField(
+                    php.field({
+                        name: `$${RAW_CLIENT_FIELD_NAME}`,
+                        access: "private",
+                        type: php.Type.optional(
+                            php.Type.reference(this.context.getRawSubpackageClassReference(this.subpackage))
+                        ),
+                        initializer: php.codeblock("null")
+                    })
+                );
+                class_.addMethod(
+                    getWithRawResponseMethod({
+                        context: this.context,
+                        rawClassReference: this.context.getRawSubpackageClassReference(this.subpackage),
+                        isMultiUrl
+                    })
+                );
             }
         }
 
