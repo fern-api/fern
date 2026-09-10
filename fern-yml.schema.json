@@ -1676,9 +1676,6 @@
                 "ask-ai": {
                   "type": "boolean"
                 },
-                "ask-ai-button": {
-                  "type": "boolean"
-                },
                 "chatgpt": {
                   "type": "boolean"
                 },
@@ -1828,6 +1825,9 @@
         "ai-chat": {
           "type": "object",
           "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
             "model": {
               "type": "string",
               "enum": [
@@ -1877,6 +1877,9 @@
         "ai-search": {
           "type": "object",
           "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
             "model": {
               "type": "string",
               "enum": [
