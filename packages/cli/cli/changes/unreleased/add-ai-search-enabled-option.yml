@@ -1,0 +1,6 @@
+- summary: |
+    Add `ai-search.enabled` to `docs.yml`. When set to `false`, every Ask AI entry point on the
+    docs site (the "Ask AI" button, keyboard shortcut, code-snippet buttons, and page action) is
+    hidden while Ask AI itself, the MCP server endpoint, and the "Connect to Cursor" /
+    "Connect to Claude Code" buttons stay enabled.
+  type: feat

@@ -1676,6 +1676,9 @@
                 "ask-ai": {
                   "type": "boolean"
                 },
+                "ask-ai-button": {
+                  "type": "boolean"
+                },
                 "chatgpt": {
                   "type": "boolean"
                 },

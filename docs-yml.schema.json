@@ -4849,6 +4849,17 @@
     "docs.AIChatConfig": {
       "type": "object",
       "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Set to `false` to hide every Ask AI entry point on the docs site (the \"Ask AI\" button,\nkeyboard shortcut, code-snippet buttons, and the Ask AI page action). Ask AI itself stays\nenabled, so the MCP server endpoint and the \"Connect to Cursor\" / \"Connect to Claude Code\"\nbuttons keep working.\n\n@default: true"
+        },
         "model": {
           "oneOf": [
             {
