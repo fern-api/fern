@@ -1,4 +1,6 @@
 import { existsSync } from "fs";
+import { readFile, utimes, writeFile } from "fs/promises";
+import path from "path";
 
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
@@ -11,7 +13,22 @@ import tmp from "tmp-promise";
 
 import { runContainer } from "../runDocker.js";
 
-function loggedLogPath(messages: string[]): string {
+const messages: string[] = [];
+
+const LOGGER = {
+    trace: () => undefined,
+    debug: () => undefined,
+    info: (...args: string[]) => messages.push(args.join(" ")),
+    warn: () => undefined,
+    error: () => undefined,
+    log: () => undefined,
+    disable: () => undefined,
+    enable: () => undefined
+};
+
+async function runAndGetLogPath(): Promise<string> {
+    messages.length = 0;
+    await runContainer({ logger: LOGGER, imageName: "img:1.0.0", binds: [] });
     const message = messages.find((m) => m.startsWith("Generator logs here: "));
     if (message == null) {
         throw new Error(`No log path was printed. Messages: ${messages.join(", ")}`);
@@ -26,30 +43,26 @@ describe("runContainer log file", () => {
     });
 
     it("survives tmp's graceful cleanup on process exit", async () => {
-        const messages: string[] = [];
         // Other modules in the CLI bundle call this, and it applies globally to `tmp`.
         tmp.setGracefulCleanup();
 
-        await runContainer({
-            logger: {
-                trace: () => undefined,
-                debug: () => undefined,
-                info: (...args: string[]) => messages.push(args.join(" ")),
-                warn: () => undefined,
-                error: () => undefined,
-                log: () => undefined,
-                disable: () => undefined,
-                enable: () => undefined
-            },
-            imageName: "img:1.0.0",
-            binds: []
-        });
-
-        const logPath = loggedLogPath(messages);
-        expect(existsSync(logPath)).toBe(true);
+        const logPath = await runAndGetLogPath();
+        expect(await readFile(logPath, "utf-8")).toBe("container stdout");
 
         process.emit("exit", 0);
 
         expect(existsSync(logPath)).toBe(true);
+    });
+
+    it("prunes logs older than the retention period", async () => {
+        const staleLog = path.join(path.dirname(await runAndGetLogPath()), "stale.log");
+        await writeFile(staleLog, "old logs");
+        const eightDaysAgo = new Date(Date.now() - 8 * 24 * 60 * 60 * 1000);
+        await utimes(staleLog, eightDaysAgo, eightDaysAgo);
+
+        const freshLog = await runAndGetLogPath();
+
+        expect(existsSync(staleLog)).toBe(false);
+        expect(existsSync(freshLog)).toBe(true);
     });
 });

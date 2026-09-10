@@ -1,8 +1,10 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { writeFile } from "fs/promises";
-import tmp from "tmp-promise";
+import { randomUUID } from "crypto";
+import { mkdir, readdir, rm, stat, writeFile } from "fs/promises";
+import { tmpdir } from "os";
+import path from "path";
 
 import { buildContainerEnvVars, FORWARDED_ENV_VARS } from "./buildContainerEnvVars.js";
 
@@ -181,18 +183,40 @@ async function tryRunContainer({
     }
 }
 
+const LOG_DIR_NAME = "fern-generator-logs";
+const LOG_RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
+
 /**
- * Writes container output to a temp file and prints its path.
+ * Writes container output to a file and prints its path.
  *
- * `keep: true` opts the file out of tmp's process-exit garbage collector: other
- * modules call `tmp.setGracefulCleanup()`, which is global to the `tmp` module and
- * would otherwise delete this file before the user can read the path we printed. Reaping
- * these logs is left to the OS's temp directory cleanup.
+ * The file deliberately lives outside `tmp`'s bookkeeping: `tmp.setGracefulCleanup()` is
+ * global to the `tmp` module and is called by other modules, so a `tmp.file()` here would
+ * be deleted on process exit, before the user can open the path we just printed. Disk usage
+ * is instead bounded by pruning logs older than {@link LOG_RETENTION_MS}.
  */
 async function writeLogFile({ logger, logs }: { logger: Logger; logs: string }): Promise<void> {
-    const tmpFile = await tmp.file({ keep: true, prefix: "fern-generator-logs-", postfix: ".log" });
-    await writeFile(tmpFile.path, logs);
-    logger.info(`Generator logs here: ${tmpFile.path}`);
+    const logDir = path.join(tmpdir(), LOG_DIR_NAME);
+    await mkdir(logDir, { recursive: true });
+    await pruneOldLogs({ logger, logDir });
+
+    const logPath = path.join(logDir, `${new Date().toISOString().replaceAll(":", "-")}-${randomUUID()}.log`);
+    await writeFile(logPath, logs);
+    logger.info(`Generator logs here: ${logPath}`);
+}
+
+async function pruneOldLogs({ logger, logDir }: { logger: Logger; logDir: string }): Promise<void> {
+    try {
+        const now = Date.now();
+        for (const entry of await readdir(logDir)) {
+            const entryPath = path.join(logDir, entry);
+            const { mtimeMs } = await stat(entryPath);
+            if (now - mtimeMs > LOG_RETENTION_MS) {
+                await rm(entryPath, { force: true });
+            }
+        }
+    } catch (e) {
+        logger.debug(`Failed to prune old generator logs in ${logDir}: ${e instanceof Error ? e.message : e}`);
+    }
 }
 
 /**
