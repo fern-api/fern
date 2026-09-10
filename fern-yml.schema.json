@@ -4073,6 +4073,9 @@
                       "respect-per-spec-base-path": {
                         "type": "boolean"
                       },
+                      "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
                       "namespaced-errors": {
                         "type": "boolean"
                       }
@@ -4669,6 +4672,9 @@
                           "type": "boolean"
                         },
                         "respect-per-spec-base-path": {
+                          "type": "boolean"
+                        },
+                        "respect-operation-id-word-boundaries": {
                           "type": "boolean"
                         },
                         "namespaced-errors": {

@@ -145,6 +145,16 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     "respect-per-spec-base-path": z.boolean().optional(),
 
     /**
+     * If true, operation ids are split on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+     * `listFolderMembers` rather than `listfoldermembers`).
+     * This changes endpoint names, and therefore SDK method names and docs URLs.
+     * Defaults to false.
+     */
+    "respect-operation-id-word-boundaries": z.boolean().optional(),
+
+    /**
      * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
      * within, that namespace instead of the endpoint's namespace.
      * Defaults to false.
