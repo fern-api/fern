@@ -153,20 +153,63 @@ export function generatorWantsSdkConfigIr(generatorName: string, version: string
 }
 
 /**
+ * Runs the adapter's current pre-release instead of the version a workspace asks for.
+ *
+ * For following the adapter internally before its release versions exist. Postman publishes one
+ * moving `rc` tag per language, so this needs no version: whatever `rc` points at is the newest
+ * pre-release of that language.
+ *
+ * An environment variable rather than a generators.yml key or a flag, because it is a property of
+ * who is running rather than of the workspace — the same configuration has to work for a customer on
+ * a release version and for us on a pre-release, without the file differing.
+ */
+export const USE_FERN_RC_ENV_VAR = "USE_FERN_RC";
+
+export function usesOnPremAdapterPrerelease(env: NodeJS.ProcessEnv = process.env): boolean {
+    const value = env[USE_FERN_RC_ENV_VAR]?.trim().toLowerCase();
+    return value === "true" || value === "1";
+}
+
+/** Namespace Postman publishes the on-prem adapter under. */
+const ONPREM_ADAPTER_NAMESPACE = "fernenterprise";
+
+/** The moving tag the adapter's publish workflow points at each language's newest pre-release. */
+const ONPREM_ADAPTER_PRERELEASE_TAG = "rc";
+
+/**
  * The image reference a generator invocation resolves to. Structurally typed so every caller agrees
  * on exactly which image is run.
+ *
+ * `ContainerExecutionEnvironment` logs what it is given, so a reference substituted here is the
+ * reference reported in the run's output rather than the one the workspace asked for.
  */
-export function resolveGeneratorImage(generatorInvocation: {
-    containerImage: string | undefined;
-    name: string;
-    version: string;
-}): string {
+export function resolveGeneratorImage(
+    generatorInvocation: {
+        containerImage: string | undefined;
+        name: string;
+        version: string;
+    },
+    env: NodeJS.ProcessEnv = process.env
+): string {
     const repository = generatorInvocation.containerImage ?? generatorInvocation.name;
     // A digest already identifies an exact image, and `repo@sha256:...:1.2.3` is not a valid
     // reference. Appending the version would also defeat the point of pinning.
     if (repository.includes("@sha256:")) {
         return repository;
     }
+
+    // Only the adapter has pre-releases to run, and only when this invocation already resolves to it:
+    // a generator below the cutover is Fern's own, and Fern publishes no `rc` tag. A digest pin above
+    // wins, because pinning an exact artifact is a deliberate act that this should not quietly undo.
+    const language = onPremAdapterLanguage(generatorInvocation.name);
+    if (
+        language != null &&
+        isOnPremAdapter(generatorInvocation.name, generatorInvocation.version) &&
+        usesOnPremAdapterPrerelease(env)
+    ) {
+        return `${ONPREM_ADAPTER_NAMESPACE}/fern-${language}-sdk:${ONPREM_ADAPTER_PRERELEASE_TAG}`;
+    }
+
     return `${repository}:${generatorInvocation.version}`;
 }
 
