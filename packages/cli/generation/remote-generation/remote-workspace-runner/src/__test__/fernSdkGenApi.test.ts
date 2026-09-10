@@ -1492,11 +1492,21 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a bundle larger than 25 MiB decompressed before submission", async () => {
+    it("accepts a bundle exactly 100 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1)))]
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024)))]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("fern-runtime-bundle 0 is 25.00 MiB decompressed");
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects a bundle one byte over 100 MiB decompressed before submission", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024 + 1)))]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "fern-runtime-bundle 0 is 100.00 MiB decompressed, exceeding the 100.00 MiB decompressed limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 
