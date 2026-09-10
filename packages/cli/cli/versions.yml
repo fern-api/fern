@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in OpenAPI setting `respect-operation-id-word-boundaries`. When enabled, operation ids
+        are split on every word boundary (camelCase transitions and digits) when deriving endpoint names,
+        so a redundant tag prefix is stripped and the remaining words are preserved: with tag `sharing`,
+        `Sharing_ListFolderMembers` becomes `listFolderMembers` instead of `listfoldermembers`, and with
+        tag `files`, `filesGetThumbnailV2` becomes `getThumbnailV2` instead of keeping the tag prefix.
+        This applies to the v3 OpenAPI parser, so it affects generated API reference URLs. Defaults to
+        false, since enabling it changes the URLs of already published pages.
+      type: feat
+  createdAt: "2026-09-10"
+  irVersion: 67
 - version: 5.119.2
   changelogEntry:
     - summary: |
