@@ -186,7 +186,8 @@ async function tryRunContainer({
  *
  * `keep: true` opts the file out of tmp's process-exit garbage collector: other
  * modules call `tmp.setGracefulCleanup()`, which is global to the `tmp` module and
- * would otherwise delete this file before the user can read the path we printed.
+ * would otherwise delete this file before the user can read the path we printed. Reaping
+ * these logs is left to the OS's temp directory cleanup.
  */
 async function writeLogFile({ logger, logs }: { logger: Logger; logs: string }): Promise<void> {
     const tmpFile = await tmp.file({ keep: true, prefix: "fern-generator-logs-", postfix: ".log" });
