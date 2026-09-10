@@ -150,12 +150,19 @@ function getHeaderMediaTypeObject({
     if (!context.settings.respectParameterContent || header.content == null) {
         return undefined;
     }
+    // Prefer a JSON media entry that declares a schema; fall back to the first JSON entry
+    // so schema-less media objects still surface their declared `example`/`examples`.
+    let schemalessJsonMedia: OpenAPIV3_1.MediaTypeObject | undefined;
     for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
-        if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
+        if (!MediaType.parse(contentType)?.isJSON()) {
+            continue;
+        }
+        if (mediaTypeObject.schema != null) {
             return mediaTypeObject;
         }
+        schemalessJsonMedia ??= mediaTypeObject;
     }
-    return undefined;
+    return schemalessJsonMedia;
 }
 
 function convertHeaderExamples({
@@ -214,7 +221,7 @@ function convertHeaderExamples({
             defaultExampleName: `${headerName}_example`
         })) {
             const resolvedExample = context.resolveExampleWithValue(example);
-            if (resolvedExample != null) {
+            if (resolvedExample !== undefined) {
                 v2Examples.userSpecifiedExamples[key] = generateHeaderExample({
                     context,
                     breadcrumbs,
