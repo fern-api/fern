@@ -1007,6 +1007,23 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toThrow("does not support Fern source type protobuf");
     });
 
+    it("allows an empty source archive for a runtime-bundle target", () => {
+        const route = selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }));
+        if (route == null) {
+            throw new Error("Expected a known runtime-bundle route");
+        }
+
+        expect(() => validateFernSdkGenApiSourceCompatibility(route, sourceArchive([]))).not.toThrow();
+    });
+
+    it("keeps SDK Config targets dependent on at least one source spec", () => {
+        const route = nativeSdkConfigRoute(invocation({ version: "4.0.0" }));
+
+        expect(() => validateFernSdkGenApiSourceCompatibility(route, sourceArchive([]))).toThrow(
+            "SDK Config v1 requires at least one effective Fern source spec"
+        );
+    });
+
     it.each([
         "protobuf",
         "openrpc"
