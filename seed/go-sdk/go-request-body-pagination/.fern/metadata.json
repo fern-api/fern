@@ -4,7 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "enableRequestBodyPagination": true
+    "enableRequestBodyPagination": true,
+    "enableNestedRequestBodyPagination": true
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "manual",

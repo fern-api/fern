@@ -331,6 +331,7 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableRequestBodyPagination: true
+        enableNestedRequestBodyPagination: true
   go-pagination-offset-item-index:
     - outputFolder: .
       customConfig:
