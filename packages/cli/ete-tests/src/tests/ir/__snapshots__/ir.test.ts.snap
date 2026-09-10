@@ -15665,6 +15665,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     },
     "environments": {
         "defaultEnvironment": "Production",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "multipleBaseUrls",
             "baseUrls": [

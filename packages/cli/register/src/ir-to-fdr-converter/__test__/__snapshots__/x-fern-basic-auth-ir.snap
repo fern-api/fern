@@ -33,6 +33,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "https://api.plantstore.example.com/v1",
     "environments": {
       "_visit": [Function],
