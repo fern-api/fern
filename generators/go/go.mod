@@ -1,6 +1,6 @@
 module github.com/fern-api/fern-go
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/fern-api/generator-exec-go v1.0.42
@@ -8,7 +8,7 @@ require (
 	github.com/hmdsefi/gograph v0.7.1
 	github.com/stretchr/testify v1.12.1
 	go.uber.org/multierr v1.11.0
-	golang.org/x/mod v0.40.0
+	golang.org/x/mod v0.41.0
 	golang.org/x/tools v0.49.0
 )
 
