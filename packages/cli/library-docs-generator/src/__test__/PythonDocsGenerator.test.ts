@@ -422,4 +422,32 @@ describe("generate()", () => {
         expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(false);
         expect(existsSync(join(tmpDir, "ref/pkg/adapters.mdx"))).toBe(false);
     });
+
+    it("does not link submodules that document nothing", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "prismo",
+                path: "prismo",
+                functions: [makeFunction({ name: "run", path: "prismo.run" })],
+                submodules: [
+                    makeModule({ name: "floorplan_editor_signals", path: "prismo.floorplan_editor_signals" }),
+                    makeModule({
+                        name: "floorplan_editor",
+                        path: "prismo.floorplan_editor",
+                        functions: [makeFunction({ name: "open", path: "prismo.floorplan_editor.open" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Prismo" });
+
+        const rootPage = readFileSync(join(tmpDir, "ref/prismo/index.mdx"), "utf-8");
+        expect(rootPage).toContain("/ref/prismo/floorplan_editor");
+        expect(rootPage).not.toContain("prismo.floorplan_editor_signals");
+
+        expect(existsSync(join(tmpDir, "ref/prismo/floorplan_editor_signals.mdx"))).toBe(false);
+        expect(JSON.stringify(result.navigation)).not.toContain("floorplan_editor_signals");
+        expect(JSON.stringify(result.navigation)).toContain("ref/prismo/floorplan_editor");
+    });
 });

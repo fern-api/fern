@@ -14,6 +14,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
+import { getPagedSubmodules } from "../utils/modulePages.js";
 
 /** A navigation node — either a page or a section. */
 export type NavNode = NavPageNode | NavSectionNode;
@@ -71,16 +72,16 @@ function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath
         module.docstring != null;
 
     const isRoot = parentPath === "";
-    const hasSubmodules = module.submodules.length > 0;
+    const pagedSubmodules = getPagedSubmodules(module);
 
     // Leaf module with content → page node
     // Skip root (it becomes the section overview) and modules with submodules (they become sections)
-    if (hasContent && !isRoot && !hasSubmodules) {
+    if (hasContent && !isRoot && pagedSubmodules.length === 0) {
         items.push({ type: "page", title: module.name, slug, pageId });
     }
 
-    // Process submodules
-    for (const submodule of module.submodules) {
+    // Process submodules that get pages of their own
+    for (const submodule of pagedSubmodules) {
         const subItems = generateModuleNav(submodule, modulePath, baseSlug);
         if (subItems.length === 0) {
             continue;
