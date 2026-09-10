@@ -190,6 +190,7 @@
                   "redirect_url": "string",
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 200,
             },
           ],

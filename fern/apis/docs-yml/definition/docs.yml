@@ -1132,6 +1132,13 @@ types:
           - `grouped`: Messages are shown as a single parent entry with nested variants.
 
           @default: flat
+      show-headers-in-examples:
+        type: optional<boolean>
+        docs: |
+          If set to true, response examples in the API Reference include a raw HTTP block
+          showing the response status line and response headers alongside the body.
+
+          @default: false
 
   SearchSettingsConfig:
     properties:
