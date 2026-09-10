@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.1
+  changelogEntry:
+    - summary: |
+        Support sdk-gen-api generation for Fern Definition workspaces with no source specs.
+      type: fix
+    - summary: |
+        Allow sdk-gen-api runtime bundles up to the existing 100 MiB decoded payload budget.
+      type: fix
+  createdAt: "2026-09-10"
+  irVersion: 67
 - version: 5.120.0
   changelogEntry:
     - summary: |
