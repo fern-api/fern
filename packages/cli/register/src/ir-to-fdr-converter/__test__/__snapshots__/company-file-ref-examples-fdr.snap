@@ -52,6 +52,7 @@
                 "name": "Acme Inc.",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 201,
           },
         ],

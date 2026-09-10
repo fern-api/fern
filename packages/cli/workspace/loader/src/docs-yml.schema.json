@@ -6532,6 +6532,17 @@
             }
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
+        },
+        "show-headers-in-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
         }
       },
       "additionalProperties": false

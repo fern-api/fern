@@ -86,6 +86,7 @@
                   },
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 201,
             },
             {
@@ -136,6 +137,7 @@
                   },
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 201,
             },
           ],

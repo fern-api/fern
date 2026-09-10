@@ -11,6 +11,12 @@ paths:
       responses:
         "200":
           description: Success response
+          headers:
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+                example: 99
           content:
             application/json:
               schema:

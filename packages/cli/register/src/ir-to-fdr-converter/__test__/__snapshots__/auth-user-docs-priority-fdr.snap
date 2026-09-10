@@ -55,6 +55,7 @@
               "type": "json",
               "value": "resource data",
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],
