@@ -9,6 +9,7 @@ import { AiChatModel } from "./AiChatModel.js";
 
 export const AiChatConfig: core.serialization.ObjectSchema<serializers.AiChatConfig.Raw, FernDocsConfig.AiChatConfig> =
     core.serialization.object({
+        enabled: core.serialization.boolean().optional(),
         model: AiChatModel.optional(),
         systemPrompt: core.serialization.property("system-prompt", core.serialization.string().optional()),
         location: core.serialization.list(AiChatLocation).optional(),
@@ -18,6 +19,7 @@ export const AiChatConfig: core.serialization.ObjectSchema<serializers.AiChatCon
 
 export declare namespace AiChatConfig {
     export interface Raw {
+        enabled?: boolean | null;
         model?: AiChatModel.Raw | null;
         "system-prompt"?: string | null;
         location?: AiChatLocation.Raw[] | null;

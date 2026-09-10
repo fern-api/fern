@@ -245,6 +245,7 @@ export const AgentsConfig = z.object({
 });
 
 export const AIChatConfig = z.object({
+    enabled: z.boolean().optional(),
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),

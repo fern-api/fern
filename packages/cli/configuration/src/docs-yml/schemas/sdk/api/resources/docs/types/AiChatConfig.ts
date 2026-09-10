@@ -3,6 +3,15 @@
 import type * as FernDocsConfig from "../../../index.js";
 
 export interface AiChatConfig {
+    /**
+     * Set to `false` to hide every Ask AI entry point on the docs site (the "Ask AI" button,
+     * keyboard shortcut, code-snippet buttons, and the Ask AI page action). Ask AI itself stays
+     * enabled, so the MCP server endpoint and the "Connect to Cursor" / "Connect to Claude Code"
+     * buttons keep working.
+     *
+     * @default: true
+     */
+    enabled?: boolean;
     model?: FernDocsConfig.AiChatModel;
     /**
      * By default, Ask Fern uses system prompts to finetune AI search results. Add a custom prompt here to override it.

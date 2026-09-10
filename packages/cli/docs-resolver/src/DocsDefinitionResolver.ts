@@ -69,8 +69,9 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.AIChatConfig includes the maskPii field.
-type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+// DocsV1Write.AIChatConfig includes the enabled and maskPii fields.
+type AIChatConfigWithUiAndPiiFields = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+    enabled?: boolean;
     maskPii?: boolean;
 };
 
@@ -981,6 +982,7 @@ export class DocsDefinitionResolver {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
                     ? ({
+                          enabled: this.parsedDocsConfig.aiChatConfig.enabled,
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
                           // Filter out 'discord' which is no longer supported by fdr-sdk
@@ -992,7 +994,7 @@ export class DocsDefinitionResolver {
                               title: ds.title
                           })),
                           maskPii: this.parsedDocsConfig.aiChatConfig.maskPii
-                      } as AIChatConfigWithMaskPii as DocsV1Write.DocsConfig["aiChatConfig"])
+                      } as AIChatConfigWithUiAndPiiFields as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,

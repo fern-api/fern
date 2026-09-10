@@ -59,3 +59,32 @@ describe("parseDocsConfiguration — ai-search.mask-pii", () => {
         expect(parsed.aiChatConfig?.maskPii).toBe(true);
     });
 });
+
+describe("parseDocsConfiguration — ai-search.enabled", () => {
+    it("is undefined (Ask AI UI shown) when enabled is omitted", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "ai-search": {}
+        });
+        expect(parsed.aiChatConfig?.enabled).toBeUndefined();
+    });
+
+    it("maps enabled: false through to the parsed config", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "ai-search": { enabled: false }
+        });
+        expect(parsed.aiChatConfig?.enabled).toBe(false);
+    });
+
+    it("also honors enabled under the deprecated ai-chat key", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "ai-chat": { enabled: false }
+        });
+        expect(parsed.aiChatConfig?.enabled).toBe(false);
+    });
+});
