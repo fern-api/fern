@@ -484,6 +484,85 @@ describe("copySpecs", () => {
         expect(main).not.toContain("AuthCredentialSource");
     });
 
+    it("emits .auth_strategy(...) on the OpenApiBinding chain after the specs, importing AuthStrategy", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [
+                {
+                    schemeName: "BasicAuth",
+                    rustCall: '.auth(BasicAuth::new("BasicAuth").username_env("ACME_SID").password_env("ACME_TOKEN"))',
+                    placement: "root",
+                    authTypeImport: "BasicAuth",
+                    envVars: ["ACME_SID", "ACME_TOKEN"],
+                    kind: "basic",
+                    basicHalf: "both"
+                },
+                {
+                    schemeName: "Bearer",
+                    rustCall: '.auth(BearerAuth::new("Bearer").env("ACME_BEARER"))',
+                    placement: "root",
+                    authTypeImport: "BearerAuth",
+                    envVars: ["ACME_BEARER"],
+                    kind: "bearer"
+                }
+            ],
+            globalParamBindings: [],
+            specsDir,
+            authStrategy: "Any"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::auth::{AuthStrategy, BasicAuth, BearerAuth};");
+        expect(main).toContain("                .auth_strategy(AuthStrategy::Any)");
+
+        const specIdx = main.indexOf('.spec(include_str!("openapi0.json"))');
+        const strategyIdx = main.indexOf(".auth_strategy(");
+        const closeIdx = main.indexOf("        );");
+        expect(strategyIdx).toBeGreaterThan(specIdx);
+        expect(closeIdx).toBeGreaterThan(strategyIdx);
+    });
+
+    it("omits .auth_strategy(...) and its import when there are no auth bindings", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            authStrategy: "Any"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain("auth_strategy");
+        expect(main).not.toContain("AuthStrategy");
+        expect(main).not.toContain("use fern_cli_sdk::auth::");
+    });
+
     it("emits .user_agent_suffix_flag(...) when configured", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });

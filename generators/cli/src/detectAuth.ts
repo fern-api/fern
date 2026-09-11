@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
@@ -52,6 +52,40 @@ export interface DetectedAuthBinding {
         /** Dotted path to the expiry, or null when the token endpoint omits it. */
         expiresInPath: string[] | null;
     };
+}
+
+/**
+ * Variant of the runtime's `fern_cli_sdk::auth::AuthStrategy` enum to emit
+ * via `.auth_strategy(...)`, or `undefined` to leave the runtime on `Auto`.
+ */
+export type AuthStrategyVariant = "Any" | "Routing";
+
+/**
+ * Map the IR's `auth.requirement` to the runtime `AuthStrategy` the
+ * generated CLI should pin, mirroring what the SDK generators do:
+ *
+ *   - `ANY` (`api.auth: any: [...]`) → `Any`: first bound scheme with
+ *     credentials wins, in `generators.yml` order. Under the runtime's
+ *     `Auto` default the CLI instead routes on each operation's `security`,
+ *     so a scheme declared only in `generators.yml` (e.g. OAuth
+ *     client-credentials added alongside a spec's Basic scheme) is never
+ *     selected and requests go out unauthenticated.
+ *   - `ENDPOINT_SECURITY` → `Routing`: per-operation dispatch, explicitly.
+ *   - `ALL` → `undefined`. The IR only produces `ALL` for zero or one scheme,
+ *     where `Auto` is already equivalent, so single-scheme CLIs keep a
+ *     byte-identical `main.rs`.
+ */
+export function authStrategyVariant(requirement: FernIr.AuthSchemesRequirement): AuthStrategyVariant | undefined {
+    switch (requirement) {
+        case "ANY":
+            return "Any";
+        case "ENDPOINT_SECURITY":
+            return "Routing";
+        case "ALL":
+            return undefined;
+        default:
+            assertNever(requirement);
+    }
 }
 
 /**

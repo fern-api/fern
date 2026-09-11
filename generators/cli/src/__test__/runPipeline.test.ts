@@ -108,7 +108,7 @@ describe("runPipeline", () => {
 
     const ir = (overrides: Partial<IrSummary> = {}): IrSummary => ({
         apiDisplayName: overrides.apiDisplayName,
-        auth: overrides.auth ?? { schemes: [] },
+        auth: overrides.auth ?? { requirement: FernIr.AuthSchemesRequirement.All, schemes: [] },
         globalParameters: overrides.globalParameters ?? [],
         headers: overrides.headers ?? [],
         services: overrides.services ?? {},
@@ -271,6 +271,7 @@ describe("runPipeline", () => {
             ir: ir({
                 apiDisplayName: "Close API",
                 auth: {
+                    requirement: FernIr.AuthSchemesRequirement.All,
                     schemes: [
                         FernIr.AuthScheme.basic({
                             key: "ApiKeyAuth",
@@ -306,6 +307,55 @@ describe("runPipeline", () => {
         );
         expect(main).toContain('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
         expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BasicAuthProvider, BearerAuth};");
+        expect(main).not.toContain(".auth_strategy(");
+    });
+
+    it("IR auth.requirement ANY pins AuthStrategy::Any so a generators.yml-only scheme is honored", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        const outcome = await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "twilio" },
+            ir: ir({
+                apiDisplayName: "Twilio",
+                auth: {
+                    requirement: FernIr.AuthSchemesRequirement.Any,
+                    schemes: [
+                        FernIr.AuthScheme.basic({
+                            key: "BasicAuth",
+                            username: "username",
+                            usernameEnvVar: "TWILIO_ACCOUNT_SID",
+                            usernameOmit: undefined,
+                            usernamePlaceholder: undefined,
+                            password: "password",
+                            passwordEnvVar: "TWILIO_AUTH_TOKEN",
+                            passwordOmit: undefined,
+                            passwordPlaceholder: undefined,
+                            docs: undefined
+                        }),
+                        FernIr.AuthScheme.bearer({
+                            key: "OAuth2",
+                            token: "token",
+                            tokenEnvVar: "TWILIO_TOKEN",
+                            tokenPlaceholder: undefined,
+                            docs: undefined
+                        })
+                    ]
+                }
+            }),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        expect(outcome).toEqual({ status: "generated", binaryName: "twilio" });
+        const main = await readFile(path.join(outputDir, "cli", "twilio", "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::auth::{AuthStrategy, BasicAuth, BearerAuth};");
+        expect(main).toContain(".auth_strategy(AuthStrategy::Any)");
+        const strategyIdx = main.indexOf(".auth_strategy(");
+        expect(strategyIdx).toBeGreaterThan(main.indexOf('.spec(include_str!("openapi0.json"))'));
+        expect(main.indexOf("        );")).toBeGreaterThan(strategyIdx);
     });
 
     it("no customConfig.binaryName + no IR apiDisplayName surfaces a clear error before any disk write", async () => {

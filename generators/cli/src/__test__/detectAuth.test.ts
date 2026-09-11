@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import {
+    authStrategyVariant,
     detectAuthBindings,
     joinUrl,
     renderFullPath,
@@ -271,6 +272,20 @@ describe("detectAuthBindings", () => {
 // ---------------------------------------------------------------------------
 // OAuth descriptor rendering and endpoint resolution helpers
 // ---------------------------------------------------------------------------
+
+describe("authStrategyVariant", () => {
+    it("maps ANY → Any so a generators.yml-only scheme (e.g. OAuth) is honored", () => {
+        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.Any)).toBe("Any");
+    });
+
+    it("maps ENDPOINT_SECURITY → Routing", () => {
+        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.EndpointSecurity)).toBe("Routing");
+    });
+
+    it("leaves ALL on the runtime's Auto default so single-scheme CLIs are unchanged", () => {
+        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.All)).toBeUndefined();
+    });
+});
 
 describe("renderRequestProperty", () => {
     it("renders nested body request paths", () => {

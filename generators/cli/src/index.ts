@@ -20,7 +20,12 @@ export {
     type ResolvedChannelAuth,
     resolveChannelAuth
 } from "./customConfig.js";
-export { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
+export {
+    type AuthStrategyVariant,
+    authStrategyVariant,
+    type DetectedAuthBinding,
+    detectAuthBindings
+} from "./detectAuth.js";
 export { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";

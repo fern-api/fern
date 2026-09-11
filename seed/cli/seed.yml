@@ -218,6 +218,14 @@ fixtures:
         binaryName: oauth-test
         customCommands: false
       outputFolder: client-credentials
+  # `api.auth: any: [BasicAuth, OAuth2]` where the spec only routes to
+  # BasicAuth. Locks the `.auth_strategy(AuthStrategy::Any)` emission in
+  # `main.rs`; see this API's generators.yml.
+  cli-any-auth:
+    - customConfig:
+        binaryName: any-auth-cli
+        customCommands: false
+      outputFolder: basic-or-oauth
   # OAuth client-credentials wire tests. Exercises the token-endpoint mock
   # end-to-end: the harness stubs `POST /identity/token` on every mock server
   # so the client-credentials exchange succeeds before each authenticated
