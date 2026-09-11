@@ -529,7 +529,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (mergedIr === undefined) {
             // GraphQL specs are converted directly to FDR (see `processGraphQLSpecs`) and never
             // contribute to the IR, so a GraphQL-only workspace legitimately yields an empty IR.
-            if (this.allSpecs.some((spec) => spec.type === "graphql")) {
+            // Any other spec type reaching here failed to load, and must still surface as an error
+            // rather than silently dropping its endpoints.
+            if (this.allSpecs.length > 0 && this.allSpecs.every((spec) => spec.type === "graphql")) {
                 mergedIr = await this.generateEmptyIntermediateRepresentation({ context, audiences });
             } else {
                 throw new CliError({
