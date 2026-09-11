@@ -76,8 +76,6 @@ pub const PROFILE_SHORT: char = 'p';
 pub fn extract_profile_flag(args: &[String]) -> Option<String> {
     let long = format!("--{PROFILE_FLAG}");
     let long_eq = format!("{long}=");
-    let short = format!("-{PROFILE_SHORT}");
-    let short_eq = format!("{short}=");
 
     let mut iter = args.iter().skip(1);
     while let Some(arg) = iter.next() {
@@ -87,22 +85,60 @@ pub fn extract_profile_flag(args: &[String]) -> Option<String> {
         if let Some(value) = arg.strip_prefix(&long_eq) {
             return non_empty(value);
         }
-        if let Some(value) = arg.strip_prefix(&short_eq) {
-            return non_empty(value);
-        }
-        if arg == &long || arg == &short {
+        if arg == &long {
             return iter.next().and_then(|v| non_empty(v));
         }
-        // `-pprod` — clap's attached-value form for a short flag. Guarded on
-        // an exact two-char prefix so `-page` (were such a flag to exist)
-        // and the `-p=` form handled above do not fall in here.
-        if let Some(rest) = arg.strip_prefix(&short) {
-            if !rest.is_empty() && !rest.starts_with('-') && !rest.starts_with('=') {
-                return non_empty(rest);
-            }
+        // Short forms, including bundles. Clap combines short flags, so `-qp
+        // acme` is `-q` plus `-p acme` — and missing that spelling did not
+        // fail, it silently ran the command against the *active* profile
+        // while clap happily bound `profile=acme`. Sending a request to the
+        // wrong tenant with exit 0 is the worst outcome this feature has, so
+        // the scanner has to accept every cluster clap does.
+        if let Some(value) = short_flag_value(arg, &mut iter) {
+            return value;
         }
     }
     None
+}
+
+/// Pull `-p`'s value out of a short-flag token, which may be a bundle.
+///
+/// Handles `-p v`, `-p=v`, `-pv`, `-qp v`, `-qpv`. Returns `None` when the
+/// token is not a short cluster containing `p` — a long flag, a bare `--`, or
+/// a negative number (`--limit -5`) — so the caller keeps scanning.
+///
+/// `Some(None)` means the cluster named `p` but no usable value followed;
+/// that is still a match, and falling through to a later `-p` would be wrong.
+fn short_flag_value<'a>(
+    arg: &str,
+    iter: &mut impl Iterator<Item = &'a String>,
+) -> Option<Option<String>> {
+    let cluster = arg.strip_prefix('-')?;
+    if cluster.is_empty() || cluster.starts_with('-') {
+        return None;
+    }
+    let index = cluster.find(PROFILE_SHORT)?;
+    // Everything before `p` has to look like short flags, or this is a value
+    // that merely contains the letter (`-5p`, `-x=p`) rather than a cluster.
+    if !cluster[..index].chars().all(|c| c.is_ascii_alphanumeric()) {
+        return None;
+    }
+    let rest = &cluster[index + PROFILE_SHORT.len_utf8()..];
+    if rest.is_empty() {
+        // `-p` / `-qp` — the value is the next argv entry.
+        return Some(iter.next().and_then(|v| non_empty(v)));
+    }
+    if let Some(value) = rest.strip_prefix('=') {
+        // `-p=acme` / `-qp=acme`.
+        return Some(non_empty(value));
+    }
+    if rest.starts_with('-') {
+        // `-p-x` is a cluster naming another flag, not `--profile -x`.
+        // Preserved from the original scanner; keep scanning.
+        return None;
+    }
+    // `-pacme` / `-qpacme`.
+    Some(non_empty(rest))
 }
 
 fn non_empty(s: &str) -> Option<String> {
@@ -356,6 +392,43 @@ mod tests {
             extract_profile_flag(&args(&["cli", "run", "--", "-p", "prod"])),
             None,
         );
+    }
+
+    #[test]
+    fn reads_the_profile_out_of_a_short_flag_bundle() {
+        // Clap combines short flags, so `-qp acme` is `-q` plus `-p acme`.
+        // The scanner used to miss this: `"-qp".strip_prefix("-p")` is None.
+        // It did not fail — the command ran against whatever profile was
+        // already active, exit 0, wrong tenant, no warning. Verified against
+        // a real generated CLI before the fix.
+        for spelling in [
+            &["cli", "-qp", "acme", "users", "list"][..],
+            &["cli", "-qpacme", "users", "list"][..],
+            &["cli", "-qp=acme", "users", "list"][..],
+            &["cli", "users", "list", "-qp", "acme"][..],
+        ] {
+            assert_eq!(
+                extract_profile_flag(&args(spelling)).as_deref(),
+                Some("acme"),
+                "failed for {spelling:?}",
+            );
+        }
+    }
+
+    #[test]
+    fn a_value_that_merely_contains_p_is_not_a_bundle() {
+        // Everything before `p` has to look like short flags, or a negative
+        // number / operator-ish value would be read as a profile selection.
+        for spelling in [
+            &["cli", "--limit", "-5", "users", "list"][..],
+            &["cli", "-x=p", "users", "list"][..],
+        ] {
+            assert_eq!(
+                extract_profile_flag(&args(spelling)),
+                None,
+                "false positive for {spelling:?}",
+            );
+        }
     }
 
     #[test]

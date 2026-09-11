@@ -692,9 +692,14 @@ impl CliApp {
         if self.profiles.is_none() {
             return Ok(());
         }
+        // `to_string_lossy`, not `filter_map(to_str)`: dropping a non-UTF-8
+        // argument would shift every later position, so the pre-clap scanner
+        // could read the value of a preceding option as if it were a flag.
+        // Lossy replacement keeps the vector positionally faithful to argv,
+        // and U+FFFD cannot alias a flag we match on.
         let str_args: Vec<String> = args
             .iter()
-            .filter_map(|a| a.to_str().map(String::from))
+            .map(|a| a.to_string_lossy().into_owned())
             .collect();
 
         // The `profiles` group itself runs unprofiled. Otherwise a stale
@@ -929,7 +934,7 @@ impl CliApp {
                 let mut wrapped = serde_json::Map::new();
                 wrapped.insert(
                     "globalFlags".into(),
-                    serde_json::Value::Array(global_flags(self.profiles.as_ref())),
+                    serde_json::Value::Array(global_flags(&self.name, self.profiles.as_ref())),
                 );
                 // Framework-owned commands (`auth`, `profiles`, `completion`,
                 // `man`). Listed separately from `operations` because they are
@@ -1283,6 +1288,38 @@ impl CliApp {
         // `profiles` group stay reachable while the profile is broken.
         if let Some(error) = profile_error {
             return Err(error);
+        }
+
+        // 3c. The pre-clap scanner and clap must agree on which profile was
+        // named. They parse the same argv independently, and a spelling the
+        // scanner misses but clap accepts does not fail — it silently runs
+        // against whatever profile *was* installed, exit 0, against a tenant
+        // the caller did not choose. That is how `-qp acme` (clap's short-flag
+        // bundling) slipped through. Cheap assertion, whole class closed.
+        // Skipped for the `profiles` group itself: it runs unprofiled by
+        // design, and `profiles create --profile <name>` overloads the flag to
+        // mean the name being created, so a mismatch there is expected.
+        let invocation_is_profiles_group = self.profiles.as_ref().is_some_and(|config| {
+            matches.subcommand_name() == Some(config.command_name.as_str())
+        });
+        if self.profiles.is_some() && !invocation_is_profiles_group {
+            let from_clap = matches
+                .try_get_one::<String>(crate::profiles::selection::PROFILE_FLAG)
+                .ok()
+                .flatten()
+                .map(String::as_str);
+            let installed = crate::profiles::active_name();
+            if let Some(named) = from_clap {
+                if installed.as_deref() != Some(named) {
+                    return Err(CliError::Validation(format!(
+                        "internal: `--{}` named `{named}` but `{}` was resolved. \
+                         This is a bug in the profile flag scanner — please report \
+                         the exact command line.",
+                        crate::profiles::selection::PROFILE_FLAG,
+                        installed.as_deref().unwrap_or("no profile"),
+                    )));
+                }
+            }
         }
 
         // 4. Resolve which binding owns the matched subcommand.
@@ -1835,7 +1872,10 @@ fn deduplicate_after_help(sections: &[String]) -> String {
 /// `globalFlags` key per ADR-0006. Per-op flags (`--page-all`,
 /// `--output PATH`) are NOT in this list — those surface via per-op
 /// capability hints (`paginable`, `binaryResponse`).
-fn global_flags(profiles: Option<&crate::profiles::ProfilesConfig>) -> Vec<serde_json::Value> {
+fn global_flags(
+    cli_name: &str,
+    profiles: Option<&crate::profiles::ProfilesConfig>,
+) -> Vec<serde_json::Value> {
     let mut flags = vec![
         serde_json::json!({
             "flag": "--schema",
@@ -1912,10 +1952,13 @@ fn global_flags(profiles: Option<&crate::profiles::ProfilesConfig>) -> Vec<serde
             "flag": "--profile",
             "alias": "-p",
             "valueName": "NAME",
+            // The real env var, not `<NAME>_PROFILE`: an agent reading
+            // `--schema` has to be able to act on what it finds here.
             "description": format!(
                 "Run this command under a named profile (see `{}`), overriding \
-                 the <NAME>_PROFILE env var and the active profile",
+                 the {} env var and the active profile",
                 config.command_name,
+                crate::profiles::selection::profile_env_var(cli_name),
             ),
         }));
     }
@@ -1984,7 +2027,11 @@ fn describe_builtin_leaves(
                     // value placeholder so the invocation is still derivable.
                     None => entry.insert(
                         "argument".into(),
-                        arg.get_id().as_str().to_string().into(),
+                        arg.get_value_names()
+                            .and_then(|names| names.first())
+                            .map(|name| name.to_string())
+                            .unwrap_or_else(|| arg.get_id().as_str().to_string())
+                            .into(),
                     ),
                 };
                 if let Some(help) = arg.get_help() {
