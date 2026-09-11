@@ -1,6 +1,8 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import {
+    authStrategyVariant,
+    customRequestPropertyBinding,
     detectAuthBindings,
     joinUrl,
     renderFullPath,
@@ -272,6 +274,29 @@ describe("detectAuthBindings", () => {
 // OAuth descriptor rendering and endpoint resolution helpers
 // ---------------------------------------------------------------------------
 
+describe("authStrategyVariant", () => {
+    it("maps ANY → Any so a generators.yml-only scheme (e.g. OAuth) is honored", () => {
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.Any, schemes: [{}, {}] })).toBe("Any");
+    });
+
+    it("maps ENDPOINT_SECURITY → Routing", () => {
+        expect(
+            authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.EndpointSecurity, schemes: [{}, {}] })
+        ).toBe("Routing");
+    });
+
+    it("leaves ALL on the runtime's Auto default so single-scheme CLIs are unchanged", () => {
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [] })).toBeUndefined();
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}] })).toBeUndefined();
+    });
+
+    it("throws on ALL over several schemes instead of silently falling back to routing", () => {
+        expect(() =>
+            authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}, {}] })
+        ).toThrow(/ALL over 2 schemes/);
+    });
+});
+
 describe("renderRequestProperty", () => {
     it("renders nested body request paths", () => {
         expect(
@@ -292,6 +317,56 @@ describe("renderRequestProperty", () => {
                 allowMultiple: true
             })
         ).toBe('OAuth2RequestProperty::query_multiple("audience", OAuth2RequestValue::ScopesList)');
+    });
+});
+
+describe("customRequestPropertyBinding", () => {
+    const bodyProp = (wireValue: string, optional: boolean): FernIr.RequestProperty => {
+        const string = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
+        return {
+            propertyPath: undefined,
+            property: FernIr.RequestPropertyValue.body({
+                name: wireValue,
+                valueType: optional ? FernIr.TypeReference.container(FernIr.ContainerType.optional(string)) : string,
+                propertyAccess: undefined,
+                availability: undefined,
+                docs: undefined,
+                defaultValue: undefined,
+                v2Examples: undefined
+            })
+        };
+    };
+
+    it("pins an unconstrained grant_type to the flow's RFC 6749 value instead of an env var", () => {
+        const token = customRequestPropertyBinding({
+            property: bodyProp("grant_type", true),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "TOKEN"
+        });
+        expect(token.value).toBe('OAuth2RequestValue::literal(serde_json::json!("client_credentials"))');
+        expect(token.envVar).toBeUndefined();
+
+        const refresh = customRequestPropertyBinding({
+            property: bodyProp("grant_type", false),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "REFRESH"
+        });
+        expect(refresh.value).toBe('OAuth2RequestValue::literal(serde_json::json!("refresh_token"))');
+        expect(refresh.envVar).toBeUndefined();
+    });
+
+    it("still derives env vars for other unconstrained properties", () => {
+        const binding = customRequestPropertyBinding({
+            property: bodyProp("audience", true),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "TOKEN"
+        });
+        expect(binding.value).toBe('OAuth2RequestValue::optional_env("ACME_OAUTH2_TOKEN_AUDIENCE", false)');
+        expect(binding.envVar).toBe("ACME_OAUTH2_TOKEN_AUDIENCE");
+        expect(binding.optional).toBe(true);
     });
 });
 

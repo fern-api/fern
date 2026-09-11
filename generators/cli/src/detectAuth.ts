@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
@@ -52,6 +52,50 @@ export interface DetectedAuthBinding {
         /** Dotted path to the expiry, or null when the token endpoint omits it. */
         expiresInPath: string[] | null;
     };
+}
+
+/**
+ * Variant of the runtime's `fern_cli_sdk::auth::AuthStrategy` enum to emit
+ * via `.auth_strategy(...)`, or `undefined` to leave the runtime on `Auto`.
+ */
+export type AuthStrategyVariant = "Any" | "Routing";
+
+/**
+ * Map the IR's `auth.requirement` to the runtime `AuthStrategy` the
+ * generated CLI should pin, mirroring what the SDK generators do:
+ *
+ *   - `ANY` (`api.auth: any: [...]`) → `Any`: first bound scheme with
+ *     credentials wins, in `generators.yml` order. Under the runtime's
+ *     `Auto` default the CLI instead routes on each operation's `security`,
+ *     so a scheme declared only in `generators.yml` (e.g. OAuth
+ *     client-credentials added alongside a spec's Basic scheme) is never
+ *     selected and requests go out unauthenticated.
+ *   - `ENDPOINT_SECURITY` → `Routing`: per-operation dispatch, explicitly.
+ *   - `ALL` → `undefined`. The IR only produces `ALL` for zero or one scheme,
+ *     where `Auto` is already equivalent, so single-scheme CLIs keep a
+ *     byte-identical `main.rs`. `ALL` over several schemes has no `Auto`
+ *     equivalent (it would silently fall back to routing), so it throws.
+ */
+export function authStrategyVariant(auth: {
+    requirement: FernIr.AuthSchemesRequirement;
+    schemes: readonly unknown[];
+}): AuthStrategyVariant | undefined {
+    const { requirement, schemes } = auth;
+    switch (requirement) {
+        case "ANY":
+            return "Any";
+        case "ENDPOINT_SECURITY":
+            return "Routing";
+        case "ALL":
+            if (schemes.length > 1) {
+                throw new Error(
+                    `Unsupported auth requirement ALL over ${schemes.length} schemes; the CLI runtime has no equivalent strategy.`
+                );
+            }
+            return undefined;
+        default:
+            assertNever(requirement);
+    }
 }
 
 /**
@@ -653,7 +697,7 @@ function requestPropertyBinding(
     };
 }
 
-function customRequestPropertyBinding(args: {
+export function customRequestPropertyBinding(args: {
     property: FernIr.RequestProperty;
     envPrefix: string;
     schemeName: string;
@@ -679,6 +723,13 @@ function customRequestPropertyBinding(args: {
             value: `OAuth2RequestValue::literal(serde_json::json!(${rustJsonValue(
                 literal !== undefined ? literal : defaultValue
             )}))`
+        };
+    }
+    const grantType = impliedGrantType(base.path, endpointKind);
+    if (grantType != null) {
+        return {
+            ...base,
+            value: `OAuth2RequestValue::literal(serde_json::json!(${rustJsonValue(grantType)}))`
         };
     }
     const envVar = [envPrefix, envSegment(schemeName), endpointKind, ...base.path.map(envSegment)].join("_");
@@ -756,6 +807,19 @@ function responsePropertyPath(property: FernIr.ResponseProperty): string[] {
 
 function wireValue(name: FernIr.NameAndWireValueOrString): string {
     return typeof name === "string" ? name : name.wireValue;
+}
+
+/**
+ * RFC 6749 fixes `grant_type` per flow: `client_credentials` on the token
+ * endpoint and `refresh_token` on the refresh endpoint. When the spec leaves
+ * the property unpinned (no literal or default), bake in the flow's value
+ * instead of asking the user to supply it through an env var.
+ */
+function impliedGrantType(path: string[], endpointKind: "TOKEN" | "REFRESH"): string | undefined {
+    if (path.length !== 1 || path[0] !== "grant_type") {
+        return undefined;
+    }
+    return endpointKind === "TOKEN" ? "client_credentials" : "refresh_token";
 }
 
 function nameValue(name: FernIr.NameOrString): string {

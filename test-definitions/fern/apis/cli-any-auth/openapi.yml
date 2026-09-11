@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: Any Auth CLI
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  # Anonymous by construction: the OAuth client-credentials scheme in
+  # generators.yml points here, so it must not itself require auth.
+  /token:
+    post:
+      operationId: auth_getToken
+      x-fern-sdk-group-name: auth
+      x-fern-sdk-method-name: getToken
+      summary: Exchange client credentials for an access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+              required:
+                - client_id
+                - client_secret
+      responses:
+        "200":
+          description: Token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  # Only names the spec's own Basic scheme. The OAuth2 scheme exists solely in
+  # generators.yml, so per-operation routing would never pick it.
+  /widgets:
+    get:
+      operationId: widgets_list
+      x-fern-sdk-group-name: widgets
+      x-fern-sdk-method-name: list
+      summary: List widgets
+      security:
+        - BasicAuth: []
+      responses:
+        "200":
+          description: Widgets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /health:
+    get:
+      operationId: system_health
+      x-fern-sdk-group-name: system
+      x-fern-sdk-method-name: health
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Healthy
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+      required:
+        - access_token
+        - expires_in
