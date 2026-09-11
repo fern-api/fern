@@ -145,7 +145,8 @@ export function resolveCompoundRef(text: string, refid: string): string {
  *
  * Returns `undefined` when the target has no page or is the current page.
  */
-function resolveMemberRefLink(text: string, refid: string): string | undefined {
+function resolveMemberRefLink(rawText: string, refid: string): string | undefined {
+    const text = rawText.replace(/\(\)$/, "");
     const shortName = text.split("::").pop() ?? text;
     const decodedPath = decodeDoxygenRefid(refid);
     let linkPath: string | undefined;
@@ -156,7 +157,7 @@ function resolveMemberRefLink(text: string, refid: string): string | undefined {
                 : decodedPath + "::" + shortName;
         linkPath = buildLinkPath(qualifiedName);
     }
-    linkPath ??= buildLinkPath(text.replace(/\(\)$/, ""));
+    linkPath ??= buildLinkPath(text);
     return linkPath === "." ? undefined : linkPath;
 }
 
