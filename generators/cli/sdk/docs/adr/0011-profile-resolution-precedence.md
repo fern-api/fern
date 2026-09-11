@@ -104,6 +104,26 @@ A profile with no explicit `credential` anywhere in its chain keys its keyring s
 
 `profiles list` shows a synthetic `[env]` row when environment variables currently supply a credential, because those outrank every profile. A listing that omitted them would answer "which account am I about to hit?" wrongly whenever one is exported. It is a rendering of what `auth status` already detects, not new detection.
 
+### Server-variable env vars
+
+The `flag → env → profile → spec default` chain above needs an env rung to exist at each
+resolution point. Server variables had none — `--region` was flag-or-spec-default only — so a
+profile could set a region but a shell session could not, and the chain had a hole in the middle.
+Each spec server variable now also reads `<PREFIX>_<VARIABLE>`, where `<PREFIX>` is the binary
+name uppercased with `-` → `_` (`twilio` + `region` → `TWILIO_REGION`).
+
+Prefixed, unlike `x-fern-sdk-variables`, which read the bare screaming-snake name (`gardenId` →
+`GARDEN_ID`). The asymmetry is deliberate: SDK variables are named for domain entities and are
+naturally specific, while server variables are overwhelmingly generic — `region`, `edge`, `env`,
+`stage` — and a bare `REGION` would collide with unrelated environment settings on almost any
+machine. Honoring the bare name *in addition* stays available as an additive change later;
+narrowing from it would not. The existing SDK-variable spelling is left alone because changing
+it would break anyone relying on it.
+
+clap resolves `CommandLine > EnvVariable > DefaultValue`, and `apply_server_vars` treats any
+source but `DefaultValue` as caller-pinned — so the rung slots in without touching the resolution
+logic. Under `-p`, `outranks_env()` demotes env so the explicitly named profile still wins.
+
 ### Shipping posture
 
 Off unless `CliApp::profiles(...)` is called, wired from `config.profiles.enabled` in `generators.yml`. Adding a top-level subcommand to every existing generated CLI is a surface change and must not arrive unannounced. Flipping the default is a **separate, later** decision that requires a generator major bump plus a migration under `packages/generator-migrations/src/generators/cli/migrations/` pinning `enabled: false` for anyone who had not opted in — per the repo's breaking-changes policy. No such migration exists yet, because the default has not been flipped.

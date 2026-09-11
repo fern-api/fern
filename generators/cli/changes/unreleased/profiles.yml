@@ -50,6 +50,12 @@
     before deleting the profile, on a new `Binding::invoke_operation` seam for framework-owned commands
     that need to call the API without an `ArgMatches`. The flag is not registered at all when unconfigured.
 
+    Spec server variables now also read `<PREFIX>_<VARIABLE>` (`twilio` + `region` → `TWILIO_REGION`,
+    prefix = binary name uppercased, `-` → `_`). They were flag-or-spec-default only, so the
+    documented `flag > env > profile > spec default` order had no env rung for them and a region
+    could not be pinned for a shell session. Additive — an unset variable resolves exactly as
+    before. `x-fern-sdk-variables` keep their existing unprefixed spelling.
+
     Three changes deliberately apply to **every** generated CLI, not just those that enable profiles,
     because each fixes something that was already broken:
 

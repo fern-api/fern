@@ -222,3 +222,113 @@ fn an_unknown_server_variable_is_rejected() {
         assert!(output.contains("Did you mean `region`?"), "{output}");
     });
 }
+
+/// Set `REGIONAL_REGION` for the duration of `f`, then restore it.
+fn with_env<R>(value: &str, f: impl FnOnce() -> R) -> R {
+    let previous = std::env::var_os("REGIONAL_REGION");
+    std::env::set_var("REGIONAL_REGION", value);
+    let result = f();
+    match previous {
+        Some(v) => std::env::set_var("REGIONAL_REGION", v),
+        None => std::env::remove_var("REGIONAL_REGION"),
+    }
+    result
+}
+
+#[test]
+#[serial]
+fn a_server_variable_reads_its_prefixed_env_var() {
+    // The rung that was missing: `--region` was flag-or-spec-default only, so
+    // a user pinning a region for a shell session repeated the flag on every
+    // command. Prefixed with the binary name because `REGION` on its own
+    // collides with unrelated environment settings.
+    with_temp_home(|| {
+        with_env("au1", || {
+            let (code, output) = run(&[
+                "regional", "messages", "list", "--dry-run", "--format", "json",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://au1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn the_flag_beats_the_env_var() {
+    with_temp_home(|| {
+        with_env("au1", || {
+            let (code, output) = run(&[
+                "regional", "messages", "list", "--dry-run", "--format", "json",
+                "--region", "us1",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://us1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn the_env_var_beats_an_activated_profile() {
+    // `flag > env > profile > spec default`. The profile here was activated
+    // with `profiles use`, which does *not* outrank env.
+    with_temp_home(|| {
+        create_region_profile("au1");
+        with_env("us1", || {
+            let (code, output) = run(&[
+                "regional", "messages", "list", "--dry-run", "--format", "json",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(
+                output.contains("https://us1.api.example.com"),
+                "env must outrank an activated profile: {output}",
+            );
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn an_explicitly_named_profile_beats_the_env_var() {
+    // The one inversion: naming a profile with `-p` is a deliberate per-call
+    // act, so it outranks ambient env. Mirrors `outranks_env`.
+    with_temp_home(|| {
+        create_region_profile("au1");
+        with_env("us1", || {
+            let (code, output) = run(&[
+                "regional", "-p", "au", "messages", "list", "--dry-run", "--format", "json",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(
+                output.contains("https://au1.api.example.com"),
+                "an explicitly named profile must outrank env: {output}",
+            );
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn the_env_var_beats_the_spec_default() {
+    with_temp_home(|| {
+        with_env("au1", || {
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            assert!(!output.contains("us1"), "the spec default leaked: {output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn an_off_enum_env_value_is_rejected_like_a_flag_value() {
+    // The env rung goes through the same `PossibleValuesParser`, so a typo in
+    // the env var fails loudly rather than reaching the URL.
+    with_temp_home(|| {
+        with_env("nope1", || {
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            assert_ne!(code, 0, "an off-enum env value must be rejected: {output}");
+        });
+    });
+}

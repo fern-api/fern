@@ -551,13 +551,6 @@ fn read_client_id(var: &str) -> Result<String, CliError> {
     })
 }
 
-/// Whether a `client_id` is obtainable at all — env var or active profile.
-/// Mirrors [`read_client_id`]'s rungs so the `has_credentials` probe and the
-/// actual token request cannot disagree.
-fn client_id_available(var: &str) -> bool {
-    env_is_set(var) || crate::profiles::oauth_client_id().is_some()
-}
-
 #[derive(Debug, Clone)]
 struct OAuth2ClientCredentialsContract {
     client_id_env: String,

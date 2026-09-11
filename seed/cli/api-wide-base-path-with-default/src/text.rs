@@ -142,6 +142,16 @@ pub fn to_screaming_snake(s: &str) -> String {
     to_kebab_flag(s).to_ascii_uppercase().replace('-', "_")
 }
 
+/// Env-var prefix derived from the binary name: uppercase, `-` → `_`.
+/// `twilio` → `TWILIO`, `my-cli` → `MY_CLI`.
+///
+/// Mirrors the transform `logging::env_prefix` and `HttpConfig::env_prefix`
+/// already use, so every scoped env var a CLI reads (`<PREFIX>_LOG`,
+/// `<PREFIX>_USER_AGENT_SUFFIX`, `<PREFIX>_<SERVER_VAR>`) shares one spelling.
+pub fn env_var_prefix(cli_name: &str) -> String {
+    cli_name.to_ascii_uppercase().replace('-', "_")
+}
+
 /// Sanitize an OpenAPI parameter wire name into a valid CLI flag name.
 ///
 /// Pipeline (applied in order):

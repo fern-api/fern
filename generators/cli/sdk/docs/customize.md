@@ -171,6 +171,20 @@ declares), an explicit `--base-url`, and a default output format
 `--format`). Nothing else —
 profiles are not a config file for arbitrary settings.
 
+**Server variables also read an env var.** Each `{variable}` your spec declares in
+a server URL is settable three ways — `--region au1`, the profile, or
+`<PREFIX>_<VARIABLE>` where `<PREFIX>` is your binary name uppercased with `-`
+replaced by `_`:
+
+```bash
+export TWILIO_REGION=au1      # pins it for the shell session
+twilio messages list          # no --region needed
+twilio messages list --region us1   # the flag still wins
+```
+
+(`x-fern-sdk-variables` use the bare name — `gardenId` reads `GARDEN_ID`, not
+`<PREFIX>_GARDEN_ID`.)
+
 **Where it lives:** `~/.config/<bin>/profiles.toml`, beside the credential
 store. Secrets are never written there; the file names a keychain account. See
 [ADR-0011](adr/0011-profile-resolution-precedence.md) for the full resolution

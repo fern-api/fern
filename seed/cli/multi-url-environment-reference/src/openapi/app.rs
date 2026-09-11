@@ -1887,13 +1887,35 @@ impl CliApp {
                 );
                 continue;
             }
+            let screaming = crate::text::to_screaming_snake(&var.name);
             let mut arg = clap::Arg::new(var.name.clone())
                 .long(kebab)
                 .global(true)
-                .value_name(crate::text::to_screaming_snake(&var.name))
+                .value_name(screaming.clone())
                 .help(var.description.clone().unwrap_or_else(|| {
                     format!("Value for the {{{}}} URL template variable", var.name)
                 }));
+            // Env rung, so the documented `flag > env > profile > spec default`
+            // order holds for server variables too. Without it `--region` was
+            // flag-or-default only, and a user pinning a region for a shell
+            // session had to repeat the flag on every command.
+            //
+            // Prefixed with the binary name, unlike the `x-fern-sdk-variables`
+            // loop below which uses the bare screaming-snake name: server
+            // variables are overwhelmingly generic (`region`, `edge`, `env`,
+            // `stage`), so a bare `REGION` would collide with unrelated
+            // environment settings. Honoring the bare name too would be
+            // additive later; narrowing from it would not.
+            //
+            // clap resolves CommandLine > EnvVariable > DefaultValue, and
+            // `apply_server_vars` treats anything but `DefaultValue` as
+            // caller-pinned — except under `-p`, where `outranks_env` demotes
+            // env so the explicitly named profile wins.
+            arg = arg.env(format!(
+                "{}_{}",
+                crate::text::env_var_prefix(&self.name),
+                screaming
+            ));
             if let Some(default) = &var.default {
                 arg = arg.default_value(default.clone());
             }

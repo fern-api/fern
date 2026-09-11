@@ -32,7 +32,14 @@ use crate::auth::keyring_store::active_store;
 type CredentialClosure = Arc<dyn Fn() -> Option<String> + Send + Sync>;
 
 /// How an auth credential's value is resolved at request time.
+///
+/// `#[non_exhaustive]`: new rungs get added as the credential chain grows
+/// (`KeyringField` was the most recent), and a hand-authored `custom.rs`
+/// matching every variant would otherwise fail to compile on each addition.
+/// Downstream matches need a `_` arm; construction goes through the
+/// constructors below rather than struct literals.
 #[derive(Clone)]
+#[non_exhaustive]
 pub enum AuthCredentialSource {
     /// Read from a process environment variable. Surrounding whitespace is
     /// trimmed; returns `None` if unset, empty, or whitespace-only —
