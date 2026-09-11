@@ -311,6 +311,148 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(sourceFile.getText()).toMatchSnapshot();
         });
 
+        it("rejects an unresolved query and body property name collision", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("status", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("status", STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(() => wrapper.getRequestProperties(context)).toThrow(
+                'Cannot generate TestRequest: query parameter "status" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.'
+            );
+        });
+
+        it("requires a distinct query parameter override when conflict resolution is enabled", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("status", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("status", STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                }),
+                resolveQueryParameterNameConflicts: true
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(() => wrapper.getRequestProperties(context)).toThrow(
+                'Cannot generate TestRequest: query parameter "status" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.'
+            );
+        });
+
+        it("resolves a query and body property collision with a distinct parameter override", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("status", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("queryStatus", STRING_TYPE, { wireValue: "status" })],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                }),
+                resolveQueryParameterNameConflicts: true
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(wrapper.getRequestProperties(context).map((property) => property.name)).toEqual([
+                "queryStatus",
+                "status"
+            ]);
+        });
+
+        it("rejects a query parameter override that conflicts with another body property", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("status", STRING_TYPE),
+                    createInlinedRequestBodyProperty("queryStatus", STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("queryStatus", STRING_TYPE, { wireValue: "status" })],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                }),
+                resolveQueryParameterNameConflicts: true
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(() => wrapper.getRequestProperties(context)).toThrow(
+                'Cannot generate TestRequest: query parameter "queryStatus" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.'
+            );
+        });
+
+        it("allows a query parameter with the same name as an omitted literal body property", () => {
+            const literalType = FernIr.TypeReference.container(
+                FernIr.ContainerType.literal(FernIr.Literal.string("fixed"))
+            );
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("status", literalType)]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("status", STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(wrapper.getRequestProperties(context).map((property) => property.name)).toEqual(["status"]);
+        });
+
+        it("rejects a query parameter that conflicts with a referenced body property", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("body", STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        required: undefined,
+                        requestBodyType: STRING_TYPE,
+                        docs: undefined,
+                        contentType: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(() => wrapper.getRequestProperties(context)).toThrow(
+                'Cannot generate TestRequest: query parameter "body" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.'
+            );
+        });
+
+        it("rejects a query parameter that conflicts with an inline file property", () => {
+            const init = createDefaultInit({
+                inlineFileProperties: true,
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("document", STRING_TYPE)],
+                    requestBody: createFileUploadRequestBody({ properties: [createFileProperty("document")] }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+
+            expect(() => wrapper.getRequestProperties(context)).toThrow(
+                'Cannot generate TestRequest: query parameter "document" conflicts with a request body property. Set a distinct x-fern-parameter-name and enable resolveQueryParameterNameConflicts.'
+            );
+        });
+
         it("generates an optional body property when the referenced body is not required", () => {
             const init = createDefaultInit({
                 endpoint: createHttpEndpoint({
