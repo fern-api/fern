@@ -12,25 +12,24 @@ export interface GenerateLibraryDocsOptions {
     cliContext: CliContext;
     /** If specified, only generate docs for this library */
     library: string | undefined;
-    /** Run the parser(s) locally in Docker instead of using Fern's servers. */
-    local: boolean;
+    /** Escape hatch: generate on Fern's servers instead of running the parser Docker images locally. */
+    remote: boolean;
 }
 
 /**
  * Generate library documentation from source code.
  *
  * Loads the docs workspace and delegates to the shared orchestrator in
- * `@fern-api/library-docs-generator`. By default it authenticates with FDR,
- * starts server-side parsing, polls for completion, downloads the resulting IR
- * from S3, and runs the local MDX generator. With `local`, it skips
- * authentication and runs the parser Docker images directly on the user's
- * machine.
+ * `@fern-api/library-docs-generator`, which by default runs the parser Docker
+ * images on the user's machine — no authentication or network calls are
+ * required. With `remote`, it authenticates with FDR and generates on Fern's
+ * servers instead (escape hatch for environments without Docker).
  */
 export async function generateLibraryDocs({
     project,
     cliContext,
     library,
-    local
+    remote
 }: GenerateLibraryDocsOptions): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
 
@@ -62,7 +61,7 @@ export async function generateLibraryDocs({
     }
 
     let tokenValue: string | undefined;
-    if (!local) {
+    if (remote) {
         const token: FernToken | null = await cliContext.runTask(async (context) => {
             return askToLogin(context);
         });
@@ -81,10 +80,10 @@ export async function generateLibraryDocs({
             libraries,
             library,
             docsDirectoryPath: docsWorkspace.absoluteFilePath,
-            orgId: project.config.organization,
-            tokenValue,
             context,
-            local
+            remote,
+            orgId: remote ? project.config.organization : undefined,
+            tokenValue
         });
 
         if (successful > 0) {

@@ -560,8 +560,8 @@ export type ParsedApiReferenceLayoutItem =
 
 /**
  * Parsed configuration for the source location of a library documentation source.
- * A `git` input can be generated remotely or resolved locally with `--local`;
- * a `path` input points at a local checkout and requires `--local`.
+ * A `git` input is cloned and resolved locally; a `path` input points at a
+ * local checkout.
  */
 export type ParsedLibraryInputConfiguration =
     | {
