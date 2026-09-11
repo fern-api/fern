@@ -101,6 +101,11 @@ secrecy = "0.10"
 serde_qs = "1.1.1"
 sha2 = "0.10"
 thiserror = "2"
+# Format-preserving TOML for `profiles.toml`. `toml_edit` rather than `toml`
+# because an older binary must round-trip a file written by a newer one
+# without dropping the fields (or the user's comments) it does not
+# understand — see `profiles::store`.
+toml_edit = "0.22"
 webbrowser = "1"
 rand = "0.8"
 tokio = { version = "1", features = ["full"] }
