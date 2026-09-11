@@ -65,7 +65,7 @@ export async function installMcpServer({
     const targets = clients ?? detectInstalledClients();
     if (targets.length === 0) {
         context.failAndThrow(
-            `Could not find Claude Code, Cursor, or Codex on this machine. Install one, or pass --client to configure it anyway (e.g. \`fern mcp install --client claude\`).`,
+            `Could not find Claude Code, Cursor, or Codex on this machine. Install one, or pass --client to configure it anyway (e.g. \`fern agent install --client claude\`).`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -82,7 +82,7 @@ export async function installMcpServer({
     context.logger.info(`\nMCP server URL: ${url}`);
     context.logger.info(
         chalk.dim(
-            "Your Fern login token is written into these configs and expires eventually. Re-run `fern login && fern mcp install` if the server starts returning 401s."
+            "Your Fern login token is written into these configs and expires eventually. Re-run `fern login && fern agent install` if the server starts returning 401s."
         )
     );
 }
