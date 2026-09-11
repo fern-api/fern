@@ -117,7 +117,8 @@ describe("collectRawSpecs", () => {
                             respectNullableSchemas: false,
                             useTitlesAsName: true,
                             pathParameterOrder: "spec-order",
-                            defaultIntegerFormat: "int64"
+                            defaultIntegerFormat: "int64",
+                            ignoreTags: true
                         }
                     })
                 }
@@ -135,7 +136,8 @@ describe("collectRawSpecs", () => {
             respectNullableSchemas: false,
             titleAsSchemaName: true,
             pathParameterOrder: "spec-order",
-            defaultIntegerFormat: "int64"
+            defaultIntegerFormat: "int64",
+            ignoreTags: true
         });
 
         const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Two namespaced specs whose operations are tagged with a noun that repeats
+# the namespace (`knowledge` / `KnowledgeBases`, `messages` / `Messages`) and
+# whose operationIds carry that noun after the verb (`CreateMessage`). The
+# `knowledge` spec sets `ignore-tags: true`, so the CLI must flatten its tag
+# groups into the namespace (`<bin> knowledge list-knowledge-bases`) exactly
+# like the SDKs do, while the `messages` spec keeps its tag grouping
+# (`<bin> messages messages create-message`). The `stripParentNoun` seed
+# variant additionally drops the parent noun from operationId-derived leaves.
+api:
+  specs:
+    - openapi: ./knowledge.yml
+      namespace: knowledge
+      settings:
+        ignore-tags: true
+    - openapi: ./messages.yml
+      namespace: messages
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

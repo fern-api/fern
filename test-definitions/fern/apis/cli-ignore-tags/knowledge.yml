@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Knowledge API
+  version: "1.0.0"
+servers:
+  - url: https://knowledge.example.com
+paths:
+  /v1/Knowledge:
+    post:
+      tags:
+        - Knowledge
+      operationId: CreateKnowledge
+      summary: Create a knowledge resource
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Knowledge"
+  /v1/KnowledgeBases:
+    get:
+      tags:
+        - KnowledgeBases
+      operationId: ListKnowledgeBases
+      summary: List knowledge bases
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KnowledgeBase"
+  /v1/KnowledgeBases/{id}:
+    get:
+      tags:
+        - KnowledgeBases
+      operationId: FetchKnowledgeBase
+      summary: Fetch a knowledge base
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KnowledgeBase"
+    patch:
+      tags:
+        - KnowledgeBases
+      operationId: UpdateKnowledgeBase
+      summary: Update a knowledge base
+      x-fern-sdk-method-name: patch-base
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KnowledgeBase"
+  /v1/Operations/{id}:
+    get:
+      tags:
+        - KnowledgeBases
+      operationId: FetchOperation
+      summary: Fetch an async operation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Operation"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Knowledge:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    KnowledgeBase:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Operation:
+      type: object
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+        status:
+          type: string

@@ -1,0 +1,17 @@
+- summary: |
+    Honor `settings.ignore-tags: true` for namespaced specs. The generated CLI now
+    flattens tag-derived groups into the spec's `namespace:` so commands match the
+    SDK shape (`<cli> <namespace> <operation>`), e.g. `twilio knowledge
+    list-knowledge-bases` instead of `twilio knowledge knowledge-bases
+    list-knowledge-bases`. Explicit `x-fern-sdk-group-name` / `x-fern-sdk-method-name`
+    still win. Specs without `ignore-tags` (the default) are unchanged.
+  type: fix
+- summary: |
+    Add opt-in `config.stripParentNoun`. When enabled, operationId-derived command
+    names drop their parent group's noun (singular/plural-insensitive, matched
+    anywhere in the operationId): tag `Messages` + `CreateMessage` -> `create`,
+    namespace `knowledge` + `ListKnowledgeBases` -> `list-bases`. Explicit
+    `x-fern-sdk-method-name` values are never modified, version tokens are kept,
+    and an operationId is left verbatim if stripping would empty it or if two
+    operations in the same group would collide on the stripped name. Off by default.
+  type: feat

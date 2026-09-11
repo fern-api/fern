@@ -163,7 +163,8 @@ export async function runPipeline(args: {
         specsDir,
         customCommands,
         rootGroup: customConfig.rootGroup,
-        userAgentSuffixFlag: customConfig.userAgentSuffixFlag
+        userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
+        stripParentNoun: customConfig.stripParentNoun
     });
     await writeGitignore(outputDir);
 
@@ -199,7 +200,8 @@ export async function runPipeline(args: {
         binaryName,
         apiDisplayName: ir.apiDisplayName,
         authBindings,
-        specsDir
+        specsDir,
+        stripParentNoun: customConfig.stripParentNoun
     });
 
     // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).

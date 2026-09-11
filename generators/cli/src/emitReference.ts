@@ -12,8 +12,10 @@ import type { DetectedAuthBinding } from "./detectAuth.js";
  * documents every subcommand, its HTTP mapping, and available flags.
  *
  * The command-tree derivation mirrors the Rust parser's logic:
- *   - Group = `x-fern-sdk-group-name` || first tag || first path segment
- *   - Method = `x-fern-sdk-method-name` || operationId (tag-prefix-stripped, kebab-cased)
+ *   - Group = `x-fern-sdk-group-name` || (namespace, when the spec's
+ *     `ignore-tags` is set) || first tag || first path segment
+ *   - Method = `x-fern-sdk-method-name` || operationId (tag-prefix-stripped, or
+ *     parent-noun-stripped with `stripParentNoun`; kebab-cased)
  *   - Parameters from path-level + operation-level `parameters` arrays
  */
 export async function emitReference(args: {
@@ -22,8 +24,9 @@ export async function emitReference(args: {
     apiDisplayName: string | undefined;
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
+    stripParentNoun?: boolean;
 }): Promise<void> {
-    const { outputDir, binaryName, apiDisplayName, specsDir } = args;
+    const { outputDir, binaryName, apiDisplayName, specsDir, stripParentNoun = false } = args;
 
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -41,7 +44,11 @@ export async function emitReference(args: {
     for (const spec of openapiSpecs) {
         const raw = await readFile(spec.specPath, "utf-8");
         const doc = JSON.parse(raw) as OpenApiDocument;
-        collectResources(doc, resources, spec.namespace);
+        collectResources(doc, resources, {
+            namespace: spec.namespace,
+            ignoreTags: spec.apiImportSettings?.ignoreTags === true,
+            stripParentNoun
+        });
     }
 
     const displayName = apiDisplayName ?? binaryName;
@@ -130,13 +137,33 @@ interface ParameterEntry {
 
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete", "head", "options"] as const;
 
-function collectResources(
-    doc: OpenApiDocument,
-    resources: Map<string, ResourceEntry>,
-    namespace: string | undefined
-): void {
+interface NamingOptions {
+    namespace: string | undefined;
+    ignoreTags: boolean;
+    stripParentNoun: boolean;
+}
+
+function collectResources(doc: OpenApiDocument, resources: Map<string, ResourceEntry>, naming: NamingOptions): void {
     const paths = doc.paths ?? {};
     const componentParams = doc.components?.parameters ?? {};
+
+    // Mirrors the runtime: with stripParentNoun, a stripped leaf claimed by
+    // more than one operation in the same group falls back to the unstripped
+    // name so no command is overwritten.
+    const strippedLeafCounts = new Map<string, number>();
+    if (naming.stripParentNoun) {
+        for (const [pathStr, pathItem] of Object.entries(paths)) {
+            for (const method of HTTP_METHODS) {
+                const operation = pathItem[method] as OpenApiOperation | undefined;
+                if (operation == null || operation["x-fern-ignore"] === true) {
+                    continue;
+                }
+                const key = `${resolveGroupName(operation, pathStr, naming)} ${resolveMethodName(operation, method, pathStr, naming)}`;
+                strippedLeafCounts.set(key, (strippedLeafCounts.get(key) ?? 0) + 1);
+            }
+        }
+    }
+    const unstrippedNaming: NamingOptions = { ...naming, stripParentNoun: false };
 
     for (const [pathStr, pathItem] of Object.entries(paths)) {
         // Collect path-level parameters (inherited by all operations)
@@ -155,8 +182,11 @@ function collectResources(
                 continue;
             }
 
-            const groupName = resolveGroupName(operation, pathStr, namespace);
-            const methodName = resolveMethodName(operation, method, pathStr);
+            const groupName = resolveGroupName(operation, pathStr, naming);
+            let methodName = resolveMethodName(operation, method, pathStr, naming);
+            if (naming.stripParentNoun && (strippedLeafCounts.get(`${groupName} ${methodName}`) ?? 0) > 1) {
+                methodName = resolveMethodName(operation, method, pathStr, unstrippedNaming);
+            }
             const availability = resolveAvailability(operation);
 
             // Merge path-level + operation-level params (operation wins on conflict).
@@ -212,12 +242,24 @@ function camelToKebab(input: string): string {
         .replace(/-{2,}/g, "-");
 }
 
-function resolveGroupName(op: OpenApiOperation, pathStr: string, namespace: string | undefined): string {
+/**
+ * True when the operation's group collapses into the spec namespace: no
+ * explicit `x-fern-sdk-group-name`, and the spec is mounted under a namespace
+ * with `ignore-tags` set. Mirrors the Rust runtime's `flatten_into`.
+ */
+function isFlattened(op: OpenApiOperation, naming: NamingOptions): boolean {
+    return op["x-fern-sdk-group-name"] == null && naming.ignoreTags && naming.namespace != null;
+}
+
+function resolveGroupName(op: OpenApiOperation, pathStr: string, naming: NamingOptions): string {
+    const { namespace } = naming;
     const fernGroup = op["x-fern-sdk-group-name"];
     let groupParts: string[];
 
     if (fernGroup != null) {
         groupParts = Array.isArray(fernGroup) ? fernGroup : [fernGroup];
+    } else if (isFlattened(op, naming) && namespace != null) {
+        return camelToKebab(namespace);
     } else if (op.tags != null && op.tags.length > 0 && op.tags[0] != null) {
         groupParts = [op.tags[0]];
     } else {
@@ -232,16 +274,28 @@ function resolveGroupName(op: OpenApiOperation, pathStr: string, namespace: stri
     return kebab;
 }
 
-function resolveMethodName(op: OpenApiOperation, httpMethod: string, pathStr: string): string {
+function resolveMethodName(op: OpenApiOperation, httpMethod: string, pathStr: string, naming: NamingOptions): string {
     if (op["x-fern-sdk-method-name"] != null) {
         return camelToKebab(op["x-fern-sdk-method-name"]);
     }
     if (op.operationId != null) {
-        const fernGroup = op["x-fern-sdk-group-name"];
-        // When group comes from tag (no x-fern-sdk-group-name), strip tag prefix
-        if (fernGroup == null && op.tags != null && op.tags.length > 0 && op.tags[0] != null) {
-            const stripped = stripTagPrefix(op.operationId, op.tags[0]);
-            return camelToKebab(stripped);
+        const flattened = isFlattened(op, naming);
+        // The parent whose tokens may be removed from the operationId: the
+        // namespace when tags are ignored, the first tag otherwise, nothing
+        // when the group is explicit.
+        const parent =
+            op["x-fern-sdk-group-name"] != null
+                ? undefined
+                : flattened
+                  ? naming.namespace
+                  : op.tags != null && op.tags.length > 0
+                    ? op.tags[0]
+                    : undefined;
+        if (parent != null && naming.stripParentNoun) {
+            return camelToKebab(stripParentNoun(op.operationId, parent));
+        }
+        if (parent != null && !flattened) {
+            return camelToKebab(stripTagPrefix(op.operationId, parent));
         }
         return camelToKebab(op.operationId);
     }
@@ -268,6 +322,37 @@ function stripTagPrefix(operationId: string, tag: string): string {
     }
 
     return opTokens.slice(tagTokens.length).join("-");
+}
+
+/**
+ * Remove every token of `parent` from anywhere in the operationId,
+ * singular/plural-insensitive. Keeps the original when nothing would be
+ * left. Mirrors the Rust runtime's `strip_parent_noun`.
+ * `parent="Messages", operationId="CreateMessage"` → `create`.
+ */
+function stripParentNoun(operationId: string, parent: string): string {
+    const parentKeys = new Set(tokenize(parent).map(singularKey));
+    if (parentKeys.size === 0) {
+        return operationId;
+    }
+    const opTokens = tokenize(operationId);
+    const opKeys = new Set(opTokens.map(singularKey));
+    if (![...parentKeys].every((k) => opKeys.has(k))) {
+        return operationId;
+    }
+    const kept = opTokens.filter((t) => !parentKeys.has(singularKey(t)));
+    return kept.length === 0 ? operationId : kept.join("-");
+}
+
+/** Crude singular used only for equality; mirrors the Rust `singular_key`. */
+function singularKey(token: string): string {
+    if (token.endsWith("ies")) {
+        return `${token.slice(0, -3)}y`;
+    }
+    if (token.endsWith("ss") || token.length <= 1) {
+        return token;
+    }
+    return token.endsWith("s") ? token.slice(0, -1) : token;
 }
 
 /**

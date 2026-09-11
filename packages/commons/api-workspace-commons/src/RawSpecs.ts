@@ -13,6 +13,7 @@ export interface RawSpecImportSettings {
     typeDatesAsStrings?: boolean;
     groupMultiApiEnvironments?: boolean;
     defaultIntegerFormat?: "int32" | "int64" | "uint32" | "uint64";
+    ignoreTags?: boolean;
 }
 
 export interface RawSpecsManifestEntry {

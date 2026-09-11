@@ -9,6 +9,14 @@ export interface RawSpecsManifestEntry {
     overridePaths?: string[];
     /** Namespace the user declared in `generators.yml` for this spec, if any. */
     namespace?: string;
+    /**
+     * Effective `settings:` for this spec, as resolved by the Fern CLI
+     * (spec-level over top-level `api.settings`). Only the keys the CLI
+     * generator consumes are modelled here.
+     */
+    apiImportSettings?: {
+        ignoreTags?: boolean;
+    };
 }
 
 export interface RawSpecsManifest {
@@ -84,6 +92,11 @@ export async function copySpecs(args: {
      * flag/env name instead of the default `user-agent-suffix`.
      */
     userAgentSuffixFlag?: string;
+    /**
+     * When true, emit `.strip_parent_noun()` on the OpenApiBinding chain so
+     * operationId-derived leaves drop their parent group's noun.
+     */
+    stripParentNoun?: boolean;
 }): Promise<void> {
     const {
         outputDir,
@@ -93,7 +106,8 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
-        userAgentSuffixFlag
+        userAgentSuffixFlag,
+        stripParentNoun
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -112,7 +126,11 @@ export async function copySpecs(args: {
     for (const spec of openapiSpecs) {
         const destFilename = path.basename(spec.specPath);
         await cp(spec.specPath, path.join(binDir, destFilename), { force: true });
-        entries.push({ destFilename, namespace: spec.namespace });
+        entries.push({
+            destFilename,
+            namespace: spec.namespace,
+            ignoreTags: spec.apiImportSettings?.ignoreTags === true
+        });
     }
 
     await writeFile(
@@ -124,7 +142,8 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
-            userAgentSuffixFlag
+            userAgentSuffixFlag,
+            stripParentNoun: stripParentNoun ?? false
         })
     );
 
@@ -137,6 +156,8 @@ export async function copySpecs(args: {
 interface SpecEntry {
     destFilename: string;
     namespace: string | undefined;
+    /** `settings.ignore-tags` resolved for this spec; flattens tag groups into the namespace. */
+    ignoreTags: boolean;
 }
 
 /**
@@ -217,9 +238,18 @@ function renderMainRs(args: {
     customCommands: boolean;
     rootGroup?: string;
     userAgentSuffixFlag?: string;
+    stripParentNoun: boolean;
 }): string {
-    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
-        args;
+    const {
+        binaryName,
+        entries,
+        authBindings,
+        globalParamBindings,
+        customCommands,
+        rootGroup,
+        userAgentSuffixFlag,
+        stripParentNoun
+    } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -293,6 +323,9 @@ function renderMainRs(args: {
     // OpenApiBinding with specs and binding-level auth
     lines.push("        .binding(");
     lines.push("            OpenApiBinding::new()");
+    if (stripParentNoun) {
+        lines.push("                .strip_parent_noun()");
+    }
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
         if (entry.namespace != null && entry.namespace !== "") {
@@ -303,6 +336,12 @@ function renderMainRs(args: {
                 );
             }
             lines.push(`                .spec_under("${entry.namespace}", ${include})`);
+            // `.ignore_tags()` applies to the most recently added spec, so it
+            // must directly follow its `.spec_under(...)`. Bare `.spec(...)`
+            // has no namespace to flatten into, so the runtime would ignore it.
+            if (entry.ignoreTags) {
+                lines.push("                .ignore_tags()");
+            }
         } else {
             lines.push(`                .spec(${include})`);
         }
