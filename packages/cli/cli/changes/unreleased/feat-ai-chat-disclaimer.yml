@@ -1,0 +1,5 @@
+- summary: |
+    Add an optional `disclaimer` field to the `ai-search`/`ai-chat` docs.yml config.
+    It overrides the disclaimer shown in the Ask Fern chat (default:
+    "Responses are generated using AI and may contain mistakes.").
+  type: feat
