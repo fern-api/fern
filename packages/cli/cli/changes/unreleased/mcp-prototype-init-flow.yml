@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a stub-mode prototype of the MCP creation flow: `fern mcp init` (toolset
+    wizard that writes an mcp group to generators.yml), `fern mcp list`,
+    `fern mcp tools` (with --refine), `fern mcp generate` (stub transcript +
+    tools.lock), and `fern mcp dev` (local inspector guidance). All backend
+    functionality (costing, AI curation, generation, MCP runtime) is stubbed
+    locally — this is a UX prototype.
+  type: feat
