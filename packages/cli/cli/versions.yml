@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.121.0
+  changelogEntry:
+    - summary: |
+        Add an optional `disclaimer` field to the `ai-search`/`ai-chat` docs.yml config.
+        It overrides the disclaimer shown in the Ask Fern chat (default:
+        "Responses are generated using AI and may contain mistakes.").
+      type: feat
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 5.120.5
   changelogEntry:
     - summary: |
