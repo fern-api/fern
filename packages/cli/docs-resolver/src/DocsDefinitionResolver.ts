@@ -3040,8 +3040,8 @@ export function convertThemeTabs(
     }
     return {
         style: tabs.style,
-        alignment: tabs.alignment === "center" ? "CENTER" : tabs.alignment === "left" ? "LEFT" : undefined,
-        placement: tabs.placement === "header" ? "HEADER" : tabs.placement === "sidebar" ? "SIDEBAR" : undefined
+        alignment: tabs.alignment?.toUpperCase() as DocsV1Write.TabsAlignment | undefined,
+        placement: tabs.placement?.toUpperCase() as DocsV1Write.TabsPlacement | undefined
     };
 }
 
