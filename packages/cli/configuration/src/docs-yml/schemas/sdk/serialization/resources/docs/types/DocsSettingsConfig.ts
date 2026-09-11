@@ -23,6 +23,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     search: SearchSettingsConfig.optional(),
     httpSnippets: core.serialization.property("http-snippets", HttpSnippetsConfig.optional()),
     hide404Page: core.serialization.property("hide-404-page", core.serialization.boolean().optional()),
+    showPermissionDeniedPage: core.serialization.property(
+        "show-permission-denied-page",
+        core.serialization.boolean().optional(),
+    ),
     useJavascriptAsTypescript: core.serialization.property(
         "use-javascript-as-typescript",
         core.serialization.boolean().optional(),
@@ -51,6 +55,7 @@ export declare namespace DocsSettingsConfig {
         search?: SearchSettingsConfig.Raw | null;
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;
+        "show-permission-denied-page"?: boolean | null;
         "use-javascript-as-typescript"?: boolean | null;
         "disable-explorer-proxy"?: boolean | null;
         "disable-environment-editing"?: boolean | null;

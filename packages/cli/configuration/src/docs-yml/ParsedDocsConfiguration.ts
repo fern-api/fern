@@ -46,6 +46,7 @@ export interface ParsedPageActionsConfig {
 interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
+    showPermissionDeniedPage: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
     search:
         | {

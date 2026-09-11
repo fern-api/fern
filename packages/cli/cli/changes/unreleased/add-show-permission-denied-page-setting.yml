@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `settings.show-permission-denied-page` docs setting. When enabled, an authenticated
+    user who navigates to a page they do not have permission to view sees a "You don't have permission
+    to view this page" screen (with a login button) instead of the default 404 page.
+  type: feat
