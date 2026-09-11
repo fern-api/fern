@@ -58,7 +58,7 @@ let page = await client.users.listWithCustomPager({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -120,7 +120,7 @@ let page = await client.users.listWithCustomPager({
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response

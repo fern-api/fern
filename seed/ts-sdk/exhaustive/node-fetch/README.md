@@ -148,7 +148,7 @@ let page = await client.endpoints.pagination.listItems({
     limit: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
