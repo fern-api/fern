@@ -1,0 +1,6 @@
+- summary: |
+    Fix `PAYLOAD_TOO_LARGE` failures when publishing docs for large APIs with dynamic snippets. The
+    dynamic IRs were sent inline in the `registerApiDefinition` request once per SDK language, even
+    though the registry only needs the language names to issue upload URLs. The request now carries
+    `dynamicIRLanguages` and the IRs themselves are still uploaded to S3 separately.
+  type: fix
