@@ -612,12 +612,12 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "ff75e6fb",
+                "id": "e4176e33",
                 "name": null,
                 "queryParameters": [],
                 "request": {
                   "jsonExample": {
-                    "email": undefined,
+                    "email": null,
                     "name": "name",
                   },
                   "properties": [
@@ -683,7 +683,7 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                       },
                       "originalTypeDeclaration": null,
                       "value": {
-                        "jsonExample": undefined,
+                        "jsonExample": null,
                         "shape": {
                           "container": {
                             "optional": null,

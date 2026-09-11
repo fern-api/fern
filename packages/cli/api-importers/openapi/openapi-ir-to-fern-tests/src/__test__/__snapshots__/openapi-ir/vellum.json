@@ -2737,6 +2737,9 @@
                     },
                     "type": "primitive"
                   },
+                  "stop": {
+                    "type": "null"
+                  },
                   "top_p": {
                     "value": {
                       "value": 1.1,

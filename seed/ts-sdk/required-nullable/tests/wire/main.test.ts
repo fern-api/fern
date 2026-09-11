@@ -31,6 +31,7 @@ describe("SeedApiClient", () => {
             nullable_text: "nullable_text",
             nullable_number: 1.1,
             non_nullable_text: "non_nullable_text",
+            required_nullable_text: "required_nullable_text",
         };
         const rawResponseBody = {
             bar: "bar",
@@ -54,6 +55,7 @@ describe("SeedApiClient", () => {
             nullable_text: "nullable_text",
             nullable_number: 1.1,
             non_nullable_text: "non_nullable_text",
+            required_nullable_text: "required_nullable_text",
         });
         expect(response).toEqual(rawResponseBody);
     });

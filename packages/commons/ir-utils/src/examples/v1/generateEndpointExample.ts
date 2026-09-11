@@ -7,6 +7,7 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
@@ -22,6 +23,7 @@ import { hashJSON } from "../../hashJSON.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { getOriginalName, getWireValue } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
+import { generateEmptyContainerExample } from "./generateContainerExample.js";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
@@ -216,11 +218,27 @@ export function generateEndpointExample({
                 break;
             }
             case "reference": {
+                const requestBodyType = endpoint.requestBody.requestBodyType;
+                // A whole nullable request body is omitted rather than sent as a literal null.
+                if (
+                    skipOptionalRequestProperties &&
+                    requestBodyType.type === "container" &&
+                    requestBodyType.container.type === "nullable"
+                ) {
+                    const { example: emptyExample } = generateEmptyContainerExample({
+                        containerType: requestBodyType.container
+                    });
+                    result.request = ExampleRequestBody.reference({
+                        jsonExample: undefined,
+                        shape: ExampleTypeReferenceShape.container(emptyExample)
+                    });
+                    break;
+                }
                 const generatedExample = generateTypeReferenceExample({
                     currentDepth: 0,
                     maxDepth: 10,
                     typeDeclarations,
-                    typeReference: endpoint.requestBody.requestBodyType,
+                    typeReference: requestBodyType,
                     skipOptionalProperties: skipOptionalRequestProperties
                 });
                 if (generatedExample.type === "failure") {
