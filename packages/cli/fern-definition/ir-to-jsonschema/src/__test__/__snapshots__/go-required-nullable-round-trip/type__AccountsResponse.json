@@ -1,0 +1,174 @@
+{
+  "type": "object",
+  "properties": {
+    "accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Account"
+      }
+    },
+    "request_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "accounts",
+    "request_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AccountBalance": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "number"
+        },
+        "current": {
+          "type": "number"
+        },
+        "limit": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "iso_currency_code": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unofficial_currency_code": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_updated_datetime": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "available",
+        "current",
+        "limit",
+        "iso_currency_code",
+        "unofficial_currency_code"
+      ],
+      "additionalProperties": false,
+      "description": "Balance information with required-nullable scalars. A required-nullable\nfield that arrives as null must be re-encoded as null; a field that is\nabsent must stay absent."
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ],
+      "additionalProperties": false
+    },
+    "Account": {
+      "type": "object",
+      "properties": {
+        "account_id": {
+          "type": "string"
+        },
+        "balances": {
+          "$ref": "#/definitions/AccountBalance"
+        },
+        "mask": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "official_name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "subtype": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "type": "string"
+        },
+        "owner": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Owner"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "account_id",
+        "balances",
+        "mask",
+        "name",
+        "official_name",
+        "subtype",
+        "type",
+        "owner"
+      ],
+      "additionalProperties": false,
+      "description": "An account with a nested model that also has required-nullable fields."
+    }
+  }
+}
