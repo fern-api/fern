@@ -173,6 +173,31 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
+  def test_endpoints_container_get_and_return_map_of_integer_to_object_with_wiremock
+    test_id = "endpoints.container.get_and_return_map_of_integer_to_object.0"
+
+    @client.endpoints.container.get_and_return_map_of_integer_to_object(
+      request: {
+        1 => {
+          string: "string"
+        }
+      },
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.container.get_and_return_map_of_integer_to_object.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/map-integer-to-object",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
   def test_endpoints_container_get_and_return_optional_with_wiremock
     test_id = "endpoints.container.get_and_return_optional.0"
 
