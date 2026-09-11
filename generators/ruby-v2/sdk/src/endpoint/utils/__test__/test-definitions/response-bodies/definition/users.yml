@@ -6,6 +6,11 @@ types:
     properties:
       id: string
       blocked: boolean
+  SearchResult:
+    discriminated: false
+    union:
+      - list<User>
+      - User
 
 service:
   auth: false
@@ -45,3 +50,19 @@ service:
       method: GET
       path: /raw
       response: unknown
+    search:
+      method: GET
+      path: /search
+      response: optional<SearchResult>
+    maybeUser:
+      method: GET
+      path: /maybe-user
+      response: nullable<User>
+    maybeList:
+      method: GET
+      path: /maybe-list
+      response: optional<list<User>>
+    maybeCount:
+      method: GET
+      path: /maybe-count
+      response: optional<integer>

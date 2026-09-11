@@ -6,8 +6,9 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 /**
  * Builds the Ruby expression that turns a successful JSON response body into the
  * endpoint's return value. An empty body yields `nil`. Named types deserialize via
- * `.load`; containers (lists, maps, sets) are parsed and coerced element-wise;
- * primitives and unknown bodies are parsed as-is.
+ * `.load`, including through `optional`/`nullable` wrappers; containers (lists, maps,
+ * sets) are parsed and coerced element-wise; primitives and unknown bodies are parsed
+ * as-is.
  *
  * Bodies are parsed with `symbolize_names: true` to match `Model.load`, so that an
  * `unknown` value reaches the caller symbol-keyed wherever it appears. The one exception
@@ -28,17 +29,18 @@ export function responseBodyLoader({
     const guard = (expression: string): string => `(${body}.to_s.empty? ? nil : ${expression})`;
     const parseExpression = (symbolizeNames: boolean): string =>
         symbolizeNames ? `JSON.parse(${body}, symbolize_names: true)` : `JSON.parse(${body})`;
+    const reference = unwrapOptionalNamed(typeReference);
 
     return ruby.codeblock((writer) => {
-        switch (typeReference.type) {
+        switch (reference.type) {
             case "named":
                 writer.write(`(${body}.to_s.empty? ? nil : `);
-                writer.writeNode(context.getReferenceToTypeId(typeReference.typeId));
+                writer.writeNode(context.getReferenceToTypeId(reference.typeId));
                 writer.write(`.load(${body}))`);
                 return;
             case "container": {
-                const rubyType = context.typeMapper.convert({ reference: typeReference, unboxOptionals: true });
-                const symbolizeNames = !mapKeysMustStayStrings({ context, container: typeReference.container });
+                const rubyType = context.typeMapper.convert({ reference, unboxOptionals: true });
+                const symbolizeNames = !mapKeysMustStayStrings({ context, container: reference.container });
                 writer.write(`${context.getRootModuleName()}::Internal::Types::Utils.coerce(`);
                 writer.writeNode(rubyType);
                 writer.write(`, ${guard(parseExpression(symbolizeNames))})`);
@@ -49,9 +51,38 @@ export function responseBodyLoader({
                 writer.write(guard(parseExpression(true)));
                 return;
             default:
-                assertNever(typeReference);
+                assertNever(reference);
         }
     });
+}
+
+/**
+ * Unwraps `optional`/`nullable` wrappers when they bottom out at a named type, so that
+ * `optional<MyUnion>` deserializes the same way a bare `MyUnion` does.
+ *
+ * The container branch would otherwise hand the named type to `Utils.coerce`, which
+ * cannot resolve a union member for a `Model` subclass that extends `Union`: the
+ * `t <= Model` pattern matches first and returns any non-`Hash` body untouched, so a
+ * `list<Foo>` union member arrives as raw parsed JSON instead of `Foo` instances.
+ *
+ * Wrappers around anything else (`optional<list<T>>`, `optional<string>`) keep falling
+ * through to the existing branches, which already unbox optionals themselves.
+ */
+function unwrapOptionalNamed(reference: FernIr.TypeReference): FernIr.TypeReference {
+    if (reference.type !== "container") {
+        return reference;
+    }
+    const inner =
+        reference.container.type === "optional"
+            ? reference.container.optional
+            : reference.container.type === "nullable"
+              ? reference.container.nullable
+              : undefined;
+    if (inner == null) {
+        return reference;
+    }
+    const unwrapped = unwrapOptionalNamed(inner);
+    return unwrapped.type === "named" ? unwrapped : reference;
 }
 
 /**

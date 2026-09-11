@@ -72,4 +72,19 @@ describe("responseBodyLoader", () => {
         expect(render("count")).toBe(`(${EMPTY_GUARD} : ${PARSE})`);
         expect(render("raw")).toBe(`(${EMPTY_GUARD} : ${PARSE})`);
     });
+
+    it("loads an optional named type through .load, so union members still resolve", () => {
+        expect(render("search")).toBe(`(${EMPTY_GUARD} : Test::Users::Types::SearchResult.load(response.body))`);
+    });
+
+    it("loads a nullable named type through .load", () => {
+        expect(render("maybeUser")).toBe(`(${EMPTY_GUARD} : Test::Users::Types::User.load(response.body))`);
+    });
+
+    it("leaves optionals that do not wrap a named type on the container path", () => {
+        expect(render("maybeList")).toBe(
+            `Test::Internal::Types::Utils.coerce(Internal::Types::Array[Test::Users::Types::User], (${EMPTY_GUARD} : ${PARSE}))`
+        );
+        expect(render("maybeCount")).toBe(`Test::Internal::Types::Utils.coerce(Integer, (${EMPTY_GUARD} : ${PARSE}))`);
+    });
 });

@@ -546,7 +546,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Internal::Types::Utils.coerce(Seed::NullableOptional::Types::NotificationMethod, (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          (response.body.to_s.empty? ? nil : Seed::NullableOptional::Types::NotificationMethod.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
