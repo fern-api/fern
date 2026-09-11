@@ -276,7 +276,7 @@ export const ValidChangelogSlugRule: Rule = {
                 // Mirrors `setProductSlug(product.slug ?? kebabCase(product.displayName))`
                 // in the docs resolver: the product prefixes every URL beneath it.
                 const productSegments = ancestorSlugSegments({
-                    slug: "slug" in product ? product.slug : undefined,
+                    slug: product.slug,
                     displayName: product.displayName
                 });
                 const locations: ChangelogLocation[] = [
