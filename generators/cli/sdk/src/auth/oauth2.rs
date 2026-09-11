@@ -29,8 +29,9 @@ use serde_json::{Map, Value};
 use crate::auth::credential::{AuthCredentialSource, CredentialSlots};
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
-    atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
-    token_http_client, truncate_body, TokenBundle, TokenSuccessBody, EXPIRY_BUFFER_SECS,
+    atomic_write, client_fingerprint, config_dir, now_epoch, parse_oauth_error_message,
+    read_oauth_env, token_http_client, truncate_body, TokenBundle, TokenSuccessBody,
+    EXPIRY_BUFFER_SECS,
 };
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
@@ -104,8 +105,18 @@ impl TokenCache {
 
     /// Load a non-expired cached token for the given token_url.
     fn load(&self, token_url: &str) -> Option<TokenBundle> {
+        self.load_for_client(token_url, None)
+    }
+
+    /// Load a non-expired cached token for the given token_url, provided it
+    /// was minted for the client identified by `fingerprint` (see
+    /// [`TokenBundle::matches_client`]).
+    fn load_for_client(&self, token_url: &str, fingerprint: Option<&str>) -> Option<TokenBundle> {
         let map = self.read_map();
         let entry = map.get(token_url)?;
+        if !entry.matches_client(fingerprint) {
+            return None;
+        }
         if let Some(expires_at) = entry.expires_at {
             if now_epoch() >= expires_at {
                 return None;
@@ -114,7 +125,8 @@ impl TokenCache {
         Some(entry.clone())
     }
 
-    /// Persist a token response to disk.
+    /// Persist a token response to disk without tying it to a client.
+    #[cfg(test)]
     fn store(
         &self,
         token_url: &str,
@@ -122,19 +134,35 @@ impl TokenCache {
         refresh_token: Option<&str>,
         expires_in: Option<u64>,
     ) -> Result<(), CliError> {
+        self.store_for_client(token_url, access_token, refresh_token, expires_in, None)
+    }
+
+    fn store_for_client(
+        &self,
+        token_url: &str,
+        access_token: &str,
+        refresh_token: Option<&str>,
+        expires_in: Option<u64>,
+        client_fingerprint: Option<&str>,
+    ) -> Result<(), CliError> {
         let mut map = self.read_map();
         let expires_at = expires_in.map(|ei| {
             let buffered = ei.saturating_sub(EXPIRY_BUFFER_SECS);
             now_epoch() + buffered
         });
-        // Preserve existing refresh_token if the new response didn't include one
-        let prev_refresh = map.get(token_url).and_then(|e| e.refresh_token.clone());
+        // Preserve existing refresh_token if the new response didn't include
+        // one — but only when it belongs to the same client.
+        let prev_refresh = map
+            .get(token_url)
+            .filter(|e| e.matches_client(client_fingerprint))
+            .and_then(|e| e.refresh_token.clone());
         map.insert(
             token_url.to_string(),
             TokenBundle {
                 access_token: access_token.to_string(),
                 refresh_token: refresh_token.map(|s| s.to_string()).or(prev_refresh),
                 expires_at,
+                client_fingerprint: client_fingerprint.map(str::to_string),
             },
         );
         self.write_map(&map)
@@ -646,40 +674,64 @@ impl OAuth2TokenProvider {
         endpoint: &EndpointAuthMetadata,
     ) -> Result<String, CliError> {
         let token_url = self.resolved_token_url(endpoint);
-        if let Some(cached) = self.load_in_process(&token_url) {
+        let fingerprint = self.configured_client_fingerprint();
+        if let Some(cached) = self.load_in_process(&token_url, fingerprint.as_deref()) {
             return Ok(cached.access_token);
         }
-        if let Some(token) = self.try_in_process_refresh(endpoint, &token_url).await {
+        if let Some(token) = self
+            .try_in_process_refresh(endpoint, &token_url, fingerprint.as_deref())
+            .await
+        {
             return Ok(token);
         }
 
         if let Some(cache) = self.cache.get() {
-            if let Some(cached) = cache.load(&token_url) {
+            if let Some(cached) = cache.load_for_client(&token_url, fingerprint.as_deref()) {
                 tracing::debug!("Using cached OAuth2 access token for {}", token_url);
                 self.store_in_process(&token_url, cached.clone());
                 return Ok(cached.access_token);
             }
 
-            if let Some(token_resp) = self.try_cached_refresh(cache, endpoint, &token_url).await {
+            if let Some(token_resp) = self
+                .try_cached_refresh(cache, endpoint, &token_url, fingerprint.as_deref())
+                .await
+            {
                 return Ok(token_resp);
             }
         }
 
         let resp = self.fetch_configured_token(endpoint, &token_url).await?;
-        self.persist_response(&token_url, &resp);
+        self.persist_response(&token_url, &resp, fingerprint.as_deref());
         Ok(resp.access_token)
+    }
+
+    /// Fingerprint of the client credentials currently in the environment,
+    /// or `None` when they aren't (fully) configured.
+    fn configured_client_fingerprint(&self) -> Option<String> {
+        let (client_id_env, client_secret_env) = match &self.contract {
+            Some(contract) => (
+                contract.client_id_env.as_str(),
+                contract.client_secret_env.as_str(),
+            ),
+            None => grant_credential_envs(&self.grant),
+        };
+        let client_id = read_env(client_id_env, "client_id").ok()?;
+        let client_secret = read_env(client_secret_env, "client_secret").ok()?;
+        Some(client_fingerprint(&client_id, &client_secret))
     }
 
     async fn try_in_process_refresh(
         &self,
         endpoint: &EndpointAuthMetadata,
         token_url: &str,
+        fingerprint: Option<&str>,
     ) -> Option<String> {
         let refresh_token = self
             .cached_tokens
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner())
             .get(token_url)
+            .filter(|entry| entry.matches_client(fingerprint))
             .and_then(|entry| entry.refresh_token.clone())?;
         let contract = self.contract.as_ref()?;
         let refresh_endpoint = contract.refresh_endpoint.as_ref()?;
@@ -696,7 +748,7 @@ impl OAuth2TokenProvider {
         .await
         {
             Ok(resp) => {
-                self.persist_response(token_url, &resp);
+                self.persist_response(token_url, &resp, fingerprint);
                 Some(resp.access_token)
             }
             Err(error) => {
@@ -715,9 +767,13 @@ impl OAuth2TokenProvider {
         cache: &TokenCache,
         endpoint: &EndpointAuthMetadata,
         token_url: &str,
+        fingerprint: Option<&str>,
     ) -> Option<String> {
         let map = cache.read_map();
         let entry = map.get(token_url)?;
+        if !entry.matches_client(fingerprint) {
+            return None;
+        }
         let refresh_token = entry.refresh_token.as_deref()?;
 
         let result = if let Some(contract) = &self.contract {
@@ -742,7 +798,7 @@ impl OAuth2TokenProvider {
 
         match result {
             Ok(resp) => {
-                self.persist_response(token_url, &resp);
+                self.persist_response(token_url, &resp, fingerprint);
                 Some(resp.access_token)
             }
             Err(e) => {
@@ -790,12 +846,15 @@ impl OAuth2TokenProvider {
             .unwrap_or_else(|| self.token_url.clone())
     }
 
-    fn load_in_process(&self, token_url: &str) -> Option<TokenBundle> {
+    fn load_in_process(&self, token_url: &str, fingerprint: Option<&str>) -> Option<TokenBundle> {
         let map = self
             .cached_tokens
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner());
         let entry = map.get(token_url)?;
+        if !entry.matches_client(fingerprint) {
+            return None;
+        }
         if entry
             .expires_at
             .is_some_and(|expires_at| now_epoch() >= expires_at)
@@ -812,7 +871,7 @@ impl OAuth2TokenProvider {
             .insert(token_url.to_string(), bundle);
     }
 
-    fn persist_response(&self, token_url: &str, resp: &TokenResponse) {
+    fn persist_response(&self, token_url: &str, resp: &TokenResponse, fingerprint: Option<&str>) {
         let expires_at = resp
             .expires_in
             .map(|expires_in| now_epoch() + expires_in.saturating_sub(EXPIRY_BUFFER_SECS));
@@ -821,6 +880,7 @@ impl OAuth2TokenProvider {
             .lock()
             .unwrap_or_else(|poisoned| poisoned.into_inner())
             .get(token_url)
+            .filter(|entry| entry.matches_client(fingerprint))
             .and_then(|entry| entry.refresh_token.clone());
         self.store_in_process(
             token_url,
@@ -828,14 +888,16 @@ impl OAuth2TokenProvider {
                 access_token: resp.access_token.clone(),
                 refresh_token: resp.refresh_token.clone().or(previous_refresh),
                 expires_at,
+                client_fingerprint: fingerprint.map(str::to_string),
             },
         );
         if let Some(cache) = self.cache.get() {
-            if let Err(e) = cache.store(
+            if let Err(e) = cache.store_for_client(
                 token_url,
                 &resp.access_token,
                 resp.refresh_token.as_deref(),
                 resp.expires_in,
+                fingerprint,
             ) {
                 tracing::warn!("Failed to persist OAuth2 token to cache: {e}");
             }
@@ -1012,16 +1074,24 @@ impl AuthProvider for OAuth2TokenProvider {
 
 impl OAuth2TokenProvider {
     fn has_credentials_for_url(&self, token_url: &str) -> bool {
-        if self.load_in_process(token_url).is_some() {
+        let fingerprint = self.configured_client_fingerprint();
+        if self
+            .load_in_process(token_url, fingerprint.as_deref())
+            .is_some()
+        {
             return true;
         }
         if let Some(cache) = self.cache.get() {
-            if cache.load(token_url).is_some() {
+            if cache
+                .load_for_client(token_url, fingerprint.as_deref())
+                .is_some()
+            {
                 return true;
             }
             let map = cache.read_map();
             if let Some(entry) = map.get(token_url) {
-                if entry.refresh_token.is_some()
+                if entry.matches_client(fingerprint.as_deref())
+                    && entry.refresh_token.is_some()
                     && self
                         .contract
                         .as_ref()
@@ -1715,6 +1785,85 @@ mod tests {
 
     #[tokio::test(flavor = "multi_thread")]
     #[serial]
+    async fn provider_ignores_disk_cache_minted_for_other_client() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+
+        let server = MockServer::start().await;
+        let token_url = format!("{}/token", server.uri());
+
+        Mock::given(method("POST"))
+            .and(path("/token"))
+            .and(wiremock::matchers::body_string_contains("client_id=second"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "access_token": "second-token",
+                "expires_in": 3600
+            })))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let grant = || OAuth2Grant::ClientCredentials {
+            client_id_env: "TEST_ROTATE_ID".to_string(),
+            client_secret_env: "TEST_ROTATE_SECRET".to_string(),
+            scope: None,
+        };
+
+        // A token minted for the first client is on disk (with a fingerprint)...
+        std::env::set_var("TEST_ROTATE_ID", "first");
+        std::env::set_var("TEST_ROTATE_SECRET", "first-secret");
+        cache
+            .store_for_client(
+                &token_url,
+                "first-token",
+                None,
+                Some(3600),
+                Some(&client_fingerprint("first", "first-secret")),
+            )
+            .unwrap();
+        let first =
+            OAuth2TokenProvider::new("oauth2", &token_url, grant()).with_token_cache(cache.clone());
+        let r = first
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Bearer first-token"));
+
+        // ...so switching the env vars to a different client must not reuse it.
+        std::env::set_var("TEST_ROTATE_ID", "second");
+        std::env::set_var("TEST_ROTATE_SECRET", "second-secret");
+        let second =
+            OAuth2TokenProvider::new("oauth2", &token_url, grant()).with_token_cache(cache.clone());
+        let r = second
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Bearer second-token"));
+
+        let stored = cache.read_map().remove(&token_url).unwrap();
+        assert_eq!(stored.access_token, "second-token");
+        assert_eq!(
+            stored.client_fingerprint.as_deref(),
+            Some(client_fingerprint("second", "second-secret").as_str())
+        );
+
+        std::env::remove_var("TEST_ROTATE_ID");
+        std::env::remove_var("TEST_ROTATE_SECRET");
+    }
+
+    #[test]
+    fn legacy_cache_entry_without_fingerprint_is_honoured() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+        cache
+            .store("https://example.com/token", "legacy", None, Some(3600))
+            .unwrap();
+        let fingerprint = client_fingerprint("id", "secret");
+        assert!(cache
+            .load_for_client("https://example.com/token", Some(&fingerprint))
+            .is_some());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
     async fn provider_uses_cached_refresh_token() {
         let dir = tempfile::tempdir().unwrap();
         let cache = TokenCache::at_path(dir.path().join("credentials.json"));
@@ -1731,6 +1880,7 @@ mod tests {
                     access_token: "expired".to_string(),
                     refresh_token: Some("cached-refresh".to_string()),
                     expires_at: Some(0), // already expired
+                    client_fingerprint: None,
                 },
             );
             let json = serde_json::to_string_pretty(&map).unwrap();
@@ -1797,6 +1947,7 @@ mod tests {
                     access_token: "expired".to_string(),
                     refresh_token: Some("stale-refresh".to_string()),
                     expires_at: Some(0),
+                    client_fingerprint: None,
                 },
             );
             let json = serde_json::to_string_pretty(&map).unwrap();
