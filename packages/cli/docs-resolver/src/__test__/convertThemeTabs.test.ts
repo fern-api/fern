@@ -1,15 +1,14 @@
-import { describe, expect, it } from "vitest";
-
 import { docsYml } from "@fern-api/configuration";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { describe, expect, it } from "vitest";
 
 import { convertThemeTabs } from "../DocsDefinitionResolver.js";
 
 const { TabsThemeStyle, TabsAlignment, TabsPlacement } = docsYml.RawSchemas;
 
-function optionalValues<T extends Record<string, string>>(record: T): (T[keyof T] | undefined)[] {
-    return [undefined, ...Object.values(record)];
-}
+const tabsStyles = [undefined, ...Object.values(TabsThemeStyle)];
+const tabsAlignments = [undefined, ...Object.values(TabsAlignment)];
+const tabsPlacements = [undefined, ...Object.values(TabsPlacement)];
 
 describe("convertThemeTabs against the FDR write schema", () => {
     it("accepts every docs.yml tabs value (shorthand and object form)", () => {
@@ -17,9 +16,9 @@ describe("convertThemeTabs against the FDR write schema", () => {
             const result = DocsV1Write.DocsThemeConfigSchema.safeParse({ tabs: convertThemeTabs(style) });
             expect(result.success, `tabs: ${style}`).toBe(true);
         }
-        for (const style of optionalValues(TabsThemeStyle)) {
-            for (const alignment of optionalValues(TabsAlignment)) {
-                for (const placement of optionalValues(TabsPlacement)) {
+        for (const style of tabsStyles) {
+            for (const alignment of tabsAlignments) {
+                for (const placement of tabsPlacements) {
                     const tabs = { style, alignment, placement };
                     const result = DocsV1Write.DocsThemeConfigSchema.safeParse({ tabs: convertThemeTabs(tabs) });
                     expect(result.success, JSON.stringify(tabs)).toBe(true);
