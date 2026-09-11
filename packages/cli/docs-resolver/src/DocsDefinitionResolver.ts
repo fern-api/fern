@@ -1107,7 +1107,7 @@ export class DocsDefinitionResolver {
                     ? {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs as DocsV1Write.DocsThemeConfig["tabs"],
+                          tabs: convertThemeTabs(this.parsedDocsConfig.theme.tabs),
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
@@ -3030,6 +3030,19 @@ function createEditThisPageUrl(
     const url = `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 
     return { url, launch };
+}
+
+export function convertThemeTabs(
+    tabs: docsYml.RawSchemas.TabsThemeConfig | undefined
+): DocsV1Write.DocsThemeConfig["tabs"] | undefined {
+    if (tabs == null || typeof tabs === "string") {
+        return tabs;
+    }
+    return {
+        style: tabs.style,
+        alignment: tabs.alignment === "center" ? "CENTER" : tabs.alignment === "left" ? "LEFT" : undefined,
+        placement: tabs.placement === "header" ? "HEADER" : tabs.placement === "sidebar" ? "SIDEBAR" : undefined
+    };
 }
 
 function convertAvailability(

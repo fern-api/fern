@@ -1,0 +1,5 @@
+- summary: |
+    Fix `theme.tabs.placement` / `theme.tabs.alignment` being sent to the docs publishing API in lowercase,
+    which caused `fern generate --docs` to fail with `config.theme.tabs: Invalid input` even though
+    `fern check` passed.
+  type: fix
