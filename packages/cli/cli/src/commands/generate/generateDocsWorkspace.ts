@@ -1,6 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
+import { buildPreviewDomain } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -14,55 +15,6 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
-
-const DOMAIN_SUFFIX = "docs.buildwithfern.com";
-const SUBDOMAIN_LIMIT = 62;
-
-/**
- * Sanitizes a preview ID to be valid in a DNS subdomain label.
- * Replaces invalid characters with hyphens, collapses consecutive hyphens,
- * strips leading/trailing hyphens, and lowercases.
- *
- * This MUST match the server-side sanitizePreviewId in FDR so the CLI
- * can accurately predict the preview URL.
- */
-function sanitizePreviewId(id: string): string {
-    const sanitized = id
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, "-")
-        .replace(/-{2,}/g, "-")
-        .replace(/^-+|-+$/g, "");
-    if (sanitized.length === 0) {
-        return "default";
-    }
-    return sanitized;
-}
-
-/**
- * Replicates the server-side truncateDomainName logic so the CLI can predict
- * the preview URL for a given previewId before calling the FDR API.
- */
-function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: string }): string {
-    const sanitizedId = sanitizePreviewId(previewId);
-    const fullDomain = `${orgId}-preview-${sanitizedId}.${DOMAIN_SUFFIX}`;
-    if (fullDomain.length <= SUBDOMAIN_LIMIT) {
-        return fullDomain;
-    }
-
-    const prefix = `${orgId}-preview-`;
-    const availableSpace = SUBDOMAIN_LIMIT - prefix.length;
-
-    const minIdLength = 8;
-    if (availableSpace < minIdLength) {
-        throw new CliError({
-            message: `Organization name "${orgId}" is too long to generate a valid preview URL`,
-            code: CliError.Code.InternalError
-        });
-    }
-
-    const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");
-    return `${prefix}${truncatedId}.${DOMAIN_SUFFIX}`;
-}
 
 export async function generateDocsWorkspace({
     project,

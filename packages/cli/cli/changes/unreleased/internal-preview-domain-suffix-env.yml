@@ -1,0 +1,7 @@
+- summary: |
+    The docs domain suffix used to build and validate preview URLs is now read from the
+    `DOCS_DOMAIN_SUFFIX` environment variable, defaulting to `docs.buildwithfern.com`. FDR derives
+    preview hosts from its own `DOMAIN_SUFFIX`, so a CLI pointed at a non-production registry was
+    constructing production hosts for previews published under a different suffix and could not
+    resolve them. Also removes a duplicated copy of the preview-domain logic from `fern generate`.
+  type: internal
