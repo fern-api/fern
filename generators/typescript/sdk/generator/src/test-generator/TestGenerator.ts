@@ -1212,10 +1212,12 @@ describe("${serviceName}", () => {
             const pagination = endpoint.pagination;
             if (pagination.type === "uri" || pagination.type === "path") {
                 const nextProperty = pagination.type === "uri" ? pagination.nextUri : pagination.nextPath;
-                // Only override if the next property is top-level; nested paths would require
-                // deep-merging the response body which is not worth the complexity.
-                // If nested, isCursorMissing is forced to true below to skip getNextPage().
-                if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
+                // Only override non-terminal top-level next properties; nested paths would require
+                // deep-merging the response body. If nested, isCursorMissing is forced to true below.
+                if (
+                    !isPaginationCursorMissingInExample({ example, endpoint }) &&
+                    (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0)
+                ) {
                     const wireKey = getWireValue(nextProperty.property.name);
                     const paginationMockUrl = example.url;
                     const nextValueCode =
@@ -2517,8 +2519,8 @@ function isPaginationCursorMissingInExample({
 
     const cursor = getJsonValueAtPath({ json: responseJson, segments: getResponsePropertySegments(cursorProperty) });
 
-    // If the leaf is absent, explicitly undefined, or null, treat it as "missing"
-    return cursor == null;
+    // The generated pager also treats an empty string cursor as the end of pagination.
+    return cursor == null || cursor === "";
 }
 
 /**

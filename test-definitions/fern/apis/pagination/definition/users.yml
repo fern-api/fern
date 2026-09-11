@@ -210,6 +210,18 @@ service:
                   id: 1
                 - name: "Bob"
                   id: 2
+        - name: WithoutNextPage
+          request:
+            cursor: "initial_cursor"
+            filter: "active"
+          response:
+            body:
+              next_cursor: ""
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
 
     listWithOffsetPagination:
       pagination:
