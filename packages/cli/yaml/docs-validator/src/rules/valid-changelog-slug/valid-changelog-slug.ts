@@ -247,37 +247,46 @@ export const ValidChangelogSlugRule: Rule = {
                 ];
                 return violationsForLocations(locations);
             },
-            versionFile: async ({ path, content }) => {
+            versionFile: async ({ path, content, version }) => {
                 const parseResult = await validateVersionConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
                 }
                 const versionConfig = parseResult.contents;
+                // Mirrors `setVersionSlug(version.slug ?? kebabCase(version.displayName))`
+                // in the docs resolver: the version prefixes every URL beneath it.
+                const versionSegments = ancestorSlugSegments({ slug: version.slug, displayName: version.displayName });
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(
                         versionConfig.navigation,
                         versionConfig.tabs,
                         `version "${path}" navigation`,
-                        []
+                        versionSegments
                     ),
-                    ...collectFromTabs(versionConfig.tabs, `version "${path}" tabs`, [])
+                    ...collectFromTabs(versionConfig.tabs, `version "${path}" tabs`, versionSegments)
                 ];
                 return violationsForLocations(locations);
             },
-            productFile: async ({ path, content }) => {
+            productFile: async ({ path, content, product }) => {
                 const parseResult = await validateProductConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
                 }
                 const productConfig = parseResult.contents;
+                // Mirrors `setProductSlug(product.slug ?? kebabCase(product.displayName))`
+                // in the docs resolver: the product prefixes every URL beneath it.
+                const productSegments = ancestorSlugSegments({
+                    slug: product.slug,
+                    displayName: product.displayName
+                });
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(
                         productConfig.navigation,
                         productConfig.tabs,
                         `product "${path}" navigation`,
-                        []
+                        productSegments
                     ),
-                    ...collectFromTabs(productConfig.tabs, `product "${path}" tabs`, [])
+                    ...collectFromTabs(productConfig.tabs, `product "${path}" tabs`, productSegments)
                 ];
                 return violationsForLocations(locations);
             }
