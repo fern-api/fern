@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/accounts/get",
+                "method": "POST",
+                "identifier_override": "endpoint_.getAccounts"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-required-nullable-round-trip/fern\"\n\tfernclient \"github.com/go-required-nullable-round-trip/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetAccounts(\n\tcontext.TODO(),\n\t\u0026fern.GetAccountsRequest{\n\t\tAccessToken: \"access_token\",\n\t\tAccountIDs: []string{\n\t\t\t\"account_ids\",\n\t\t\t\"account_ids\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

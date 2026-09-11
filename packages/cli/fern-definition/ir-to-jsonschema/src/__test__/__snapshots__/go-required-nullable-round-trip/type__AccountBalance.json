@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "available": {
+      "type": "number"
+    },
+    "current": {
+      "type": "number"
+    },
+    "limit": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "iso_currency_code": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unofficial_currency_code": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "last_updated_datetime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "available",
+    "current",
+    "limit",
+    "iso_currency_code",
+    "unofficial_currency_code"
+  ],
+  "additionalProperties": false,
+  "description": "Balance information with required-nullable scalars. A required-nullable\nfield that arrives as null must be re-encoded as null; a field that is\nabsent must stay absent.",
+  "definitions": {}
+}
