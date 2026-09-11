@@ -20,6 +20,7 @@ import {
     prependChangelogBlock
 } from "../../autoversion/index";
 import type { PreparedReplay } from "../../replay/replay-run";
+import { faiFetch } from "../../utils/faiFetch";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { AutoVersionStepConfig, AutoVersionStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -990,6 +991,9 @@ export class AutoVersionStep extends BaseStep {
      * Used when no BAML `ai` config is supplied (remote generation via fiddle). FAI
      * handles chunking, parallelism, and retries server-side. Returns null on
      * NO_CHANGE; throws on transport/HTTP errors so the caller's PATCH fallback applies.
+     *
+     * Goes through `faiFetch` rather than global `fetch`: chunked analysis of a large diff
+     * runs for minutes, which outlasts undici's default 300s headers timeout.
      */
     private async analyzeViaFaiService(
         cleanedDiff: string,
@@ -997,7 +1001,7 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string
     ): Promise<FAIAnalysis | null> {
         const baseUrl = this.config.faiBaseUrl ?? "https://fai.buildwithfern.com";
-        const response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
+        const response = await faiFetch(`${baseUrl}/sdks/analyze-commit-diff`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${this.config.fernToken}`,

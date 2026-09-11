@@ -52,7 +52,8 @@
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",
     "semver": "^7.6.3",
-    "tmp-promise": "catalog:"
+    "tmp-promise": "catalog:",
+    "undici": "catalog:"
   },
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
