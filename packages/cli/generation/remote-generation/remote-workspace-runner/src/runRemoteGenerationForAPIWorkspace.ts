@@ -24,6 +24,7 @@ import {
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
     selectFernSdkGenApiRoute,
+    synthesizesSdkConfig,
     validateFernSdkGenApiTargetCount
 } from "./fernSdkGenApi.js";
 import {
@@ -34,7 +35,12 @@ import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
-import { type GenerationConfigRoute, GeneratorConfigCompatibilityError } from "./sdk-gen-client/index.js";
+import {
+    type GenerationConfigKind,
+    type GenerationConfigRoute,
+    GeneratorConfigCompatibilityError,
+    selectGeneratorConfigRoute
+} from "./sdk-gen-client/index.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -296,6 +302,35 @@ export async function runRemoteGenerationForAPIWorkspace({
     };
 }
 
+/**
+ * The configuration kind the caller can supply for a generator. An explicit `--sdk-config`
+ * document is SDK Config v1. A generator that synthesizes its SDK Config from generators.yml
+ * (hosted MCP servers; see synthesizesSdkConfig) can supply whichever kind its version
+ * expects, so it is never asked to run `fern sdk migrate`. Everything else is legacy Fern
+ * configuration, which a version at or past its cutover refuses with the migration hint.
+ */
+function resolveSuppliedConfigKind({
+    resolved,
+    sdkConfigV1,
+    language
+}: {
+    resolved: generatorsYml.GeneratorInvocation;
+    sdkConfigV1: FernSdkConfigV1Payload | undefined;
+    language: ReturnType<typeof getFernSdkGenApiLanguage>;
+}): GenerationConfigKind {
+    if (sdkConfigV1 != null) {
+        return "sdk-config-v1";
+    }
+    if (language != null && synthesizesSdkConfig(resolved.name)) {
+        return selectGeneratorConfigRoute({
+            generatorId: resolved.name,
+            language: resolved.language ?? language,
+            requestedVersion: resolved.version
+        }).configKind;
+    }
+    return "legacy-fern";
+}
+
 export function prepareFernSdkGenApiRoutes({
     generators,
     enabled,
@@ -363,7 +398,10 @@ export function prepareFernSdkGenApiRoutes({
                 }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
-            const route = selectFernSdkGenApiRoute(resolved, sdkConfigV1 == null ? "legacy-fern" : "sdk-config-v1");
+            const route = selectFernSdkGenApiRoute(
+                resolved,
+                resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
+            );
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
                 verify,

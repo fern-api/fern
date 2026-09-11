@@ -17,7 +17,6 @@ import {
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
-    isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
     runFernSdkGenApiBuild,
@@ -314,6 +313,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(startTargetWork).not.toHaveBeenCalled();
     });
 
+    it("routes sdk-gen-api-only generators to SDK Config v1 at cutover without a document", () => {
+        // Hosted MCP servers are configured in generators.yml and have no legacy route, so the
+        // CLI synthesizes their SDK Config instead of asking for `fern sdk migrate`.
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.1.0", language: "mcp" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toMatchObject({ configKind: "sdk-config-v1", payloadKind: "sdk-config-v1" });
+    });
+
     it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
@@ -337,21 +350,6 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeUndefined();
-    });
-
-    it("fails fast for sdk-gen-api-only generators when sdk-gen-api routing is disabled", () => {
-        const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.0.1", language: undefined })],
-            enabled: false,
-            requireEnvVars: true,
-            isPreview: false
-        });
-
-        expect(result?.route).toBeUndefined();
-        expect(result?.error).toMatchObject({
-            code: "CONFIG_ERROR",
-            message: "fernapi/fern-mcp-server requires the environment variable FERN_USE_SDK_GEN_API=true."
-        });
     });
 
     it("unescapes literal environment placeholders only once", () => {
@@ -1808,22 +1806,5 @@ describe("fernapi/fern-mcp-server target", () => {
             type: "publish",
             publish: { registry: "npm" }
         });
-    });
-});
-
-describe("isSdkGenApiOnly", () => {
-    it("returns true for generators that have no Fiddle fallback", () => {
-        expect(isSdkGenApiOnly("fernapi/fern-mcp-server")).toBe(true);
-    });
-
-    it("returns false for generators that support both routes", () => {
-        expect(isSdkGenApiOnly("fernapi/fern-typescript-sdk")).toBe(false);
-        expect(isSdkGenApiOnly("fernapi/fern-python-sdk")).toBe(false);
-        expect(isSdkGenApiOnly("fernapi/fern-go-sdk")).toBe(false);
-    });
-
-    it("returns false for unknown generators", () => {
-        expect(isSdkGenApiOnly("fernapi/fern-typescript-express")).toBe(false);
-        expect(isSdkGenApiOnly("some-custom/generator")).toBe(false);
     });
 });

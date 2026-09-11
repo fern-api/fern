@@ -135,6 +135,18 @@ export function isSdkGenApiOnly(generatorName: string): boolean {
     return SDK_GEN_API_ONLY_GENERATORS.has(generatorName);
 }
 
+/**
+ * Whether `fern generate` builds this generator's SDK Config v1 payload from generators.yml
+ * in memory when no `--sdk-config` document is given. Deliberately limited to sdk-gen-api-only
+ * generators: they have no legacy route and generators.yml is their configuration surface, so
+ * demanding a migrated document would be a step with nothing to migrate. Every other generator
+ * keeps the explicit `fern sdk migrate` → `--sdk-config` flow. Widening this to all generators
+ * at or past their cutover is a one-line change here, and a product decision.
+ */
+export function synthesizesSdkConfig(generatorName: string): boolean {
+    return isSdkGenApiOnly(generatorName);
+}
+
 export function getFernSdkGenApiOrigin(): string | undefined {
     const configured = process.env.FERN_SDK_GEN_API_ORIGIN ?? process.env.DEFAULT_SDK_GEN_API_ORIGIN;
     if (configured == null) {
@@ -170,6 +182,10 @@ export function selectFernSdkGenApiRoute(
     if (language == null) {
         return undefined;
     }
+    // `configKind` is what the caller can supply for this generator: "sdk-config-v1" when a
+    // `--sdk-config` document was given or the generator synthesizes one from generators.yml
+    // (see synthesizesSdkConfig), else "legacy-fern". A mismatch with the version's expected
+    // kind is the "run `fern sdk migrate`" error.
     return validateGeneratorConfigCompatibility({
         generatorId: generatorInvocation.name,
         language: generatorInvocation.language ?? language,
