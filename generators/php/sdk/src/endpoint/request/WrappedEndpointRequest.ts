@@ -74,7 +74,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${QUERY_PARAMETER_BAG_NAME}['${getWireValue(query.name)}'] = ${queryParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} !== null`));
                         this.writeQueryParameter(writer, query);
                         writer.endControlFlow();
                     }
@@ -117,7 +117,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${headerParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} !== null`));
                         this.writeHeader(writer, header);
                         writer.endControlFlow();
                     }
@@ -134,6 +134,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
+        if (
+            this.context.isEquivalentToPrimitive({
+                typeReference: header.valueType,
+                primitive: FernIr.PrimitiveTypeV1.Boolean
+            })
+        ) {
+            // a boolean header must be spelled out: the transport casts the raw value,
+            // and php's string cast turns true into "1" and false into ""
+            const parameter = this.context.accessRequestProperty({
+                requestParameterName: this.requestParameterName,
+                propertyName: header.name
+            });
+            writer.writeTextStatement(`${parameter} ? 'true' : 'false'`);
+            return;
+        }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
     }
 
@@ -155,7 +170,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isOptional = this.context.isOptional(propType);
 
         if (isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             propType = this.context.dereferenceOptional(propType);
         }
 
@@ -422,7 +437,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             propertyName: file.key
         });
         if (file.isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             this.writeMultipartPart({ writer, paramRef, property: FernIr.FileProperty.file(file) });
             writer.endControlFlow();
         } else {
@@ -436,7 +451,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 requestParameterName: this.sdkRequest.requestParameterName,
                 propertyName: fileArray.key
             });
-            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            writer.controlFlow("if", php.codeblock(`${ref} !== null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });
             writer.endControlFlow();
         } else {

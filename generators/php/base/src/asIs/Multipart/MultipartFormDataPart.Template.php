@@ -40,6 +40,11 @@ class MultipartFormDataPart
         ?array $headers = null
     ) {
         $this->name = $name;
+        if (is_bool($value)) {
+            // php's string cast spells true as "1" and false as "", neither of which
+            // is the wire form of a boolean
+            $value = $value ? 'true' : 'false';
+        }
         $this->contents = $value instanceof StreamInterface ? $value : (string)$value;
         $this->filename = $filename;
         $this->headers = $headers;
