@@ -9,8 +9,8 @@ export class TypeScriptFile extends Writer {
         super({ customConfig, formatter });
     }
 
-    public async toStringAsync(): Promise<string> {
-        const content = this.getContent();
+    public async toStringAsync({ omitImports }: { omitImports?: boolean } = {}): Promise<string> {
+        const content = this.getContent({ omitImports });
         if (this.formatter != null) {
             try {
                 return this.formatter.format(content);
@@ -21,8 +21,8 @@ export class TypeScriptFile extends Writer {
         return content;
     }
 
-    public toString(): string {
-        const content = this.getContent();
+    public toString({ omitImports }: { omitImports?: boolean } = {}): string {
+        const content = this.getContent({ omitImports });
         if (this.formatter != null) {
             try {
                 return this.formatter.formatSync(content);
@@ -33,12 +33,31 @@ export class TypeScriptFile extends Writer {
         return content;
     }
 
-    public getContent(): string {
+    public getContent({ omitImports }: { omitImports?: boolean } = {}): string {
+        if (omitImports) {
+            return this.buffer;
+        }
         const imports = this.stringifyImports();
         if (imports.length > 0) {
             return imports + "\n" + this.buffer;
         }
         return this.buffer;
+    }
+
+    /**
+     * Whether anything written to this file references an import.
+     */
+    public hasImports(): boolean {
+        return this.stringifyImports().length > 0;
+    }
+
+    /**
+     * The rendered import block for everything written to this file, or an empty string when
+     * nothing references an import. Does not include the trailing blank line the full file
+     * output places between the imports and the body.
+     */
+    public getImports(): string {
+        return this.stringifyImports().trimEnd();
     }
 
     private stringifyImports(): string {

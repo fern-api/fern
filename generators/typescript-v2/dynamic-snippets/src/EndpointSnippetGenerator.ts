@@ -1,4 +1,4 @@
-import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { InvocationSnippetResponse, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AstNode, ts } from "@fern-api/typescript-ast";
@@ -52,6 +52,51 @@ export class EndpointSnippetGenerator {
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
+    public generateInvocationSnippetSync({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): InvocationSnippetResponse {
+        const invocation = this.callMethod({
+            endpoint,
+            snippet: request,
+            clientVariableName: options?.clientVariableName,
+            await_: false
+        });
+        // The caller supplies the client and terminates the statement themselves, so the
+        // invocation is emitted as a bare expression. When the call references SDK types
+        // (e.g. branded aliases), the imports it needs are surfaced separately so the caller
+        // can render them rather than falling back to the complete snippet.
+        const { code, imports } = invocation.toStringWithoutImports({
+            customConfig: this.context.customConfig
+        });
+        // Surface the client's own import separately so docs can render the client
+        // instantiation without hand-authoring `import { AcmeClient } from "acme"`.
+        // Rendering a bare reference to the root client yields exactly that import.
+        const clientReference = ts.codeblock((writer) => {
+            writer.writeNode(
+                ts.reference({
+                    name: this.context.getRootClientName(),
+                    importFrom: this.context.getModuleImport()
+                })
+            );
+        });
+        const { imports: clientImport } = clientReference.toStringWithoutImports({
+            customConfig: this.context.customConfig
+        });
+        return {
+            snippet: code.trim().replace(/;$/, ""),
+            imports,
+            clientName: this.context.getRootClientName(),
+            clientImport,
+            errors: this.context.errors.empty() ? undefined : this.context.errors.toDynamicSnippetErrors()
+        };
+    }
+
     private buildCodeBlock({
         endpoint,
         snippet
@@ -67,7 +112,7 @@ export class EndpointSnippetGenerator {
                     parameters: [],
                     body: ts.codeblock((writer) => {
                         writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
-                        writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
+                        writer.writeNodeStatement(this.callMethod({ endpoint, snippet, await_: true }));
                     })
                 })
             );
@@ -381,15 +426,19 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        clientVariableName,
+        await_
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        clientVariableName?: string;
+        await_: boolean;
     }): ts.AstNode {
         return ts.invokeMethod({
-            on: ts.reference({ name: CLIENT_VAR_NAME }),
+            on: ts.reference({ name: clientVariableName ?? CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
-            async: true,
+            async: await_,
             arguments_: this.getMethodArgs({ endpoint, snippet })
         });
     }
