@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.3
+  changelogEntry:
+    - summary: |
+        `fern check` now validates changelogs inside a product's nested `versions` against
+        their full `/product/version/...` URL, so a changelog made servable by either the
+        product or version slug (e.g. `/platform/release-notes/updates`) is no longer
+        rejected by the `valid-changelog-slug` rule. Previously the docs validator never
+        traversed `product.versions` files.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 5.120.2
   changelogEntry:
     - summary: |
