@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--page-all` now applies the same result extraction as a plain list call
+    (`x-fern-pagination.results` / `x-fern-sdk-return-value`), so paginated
+    `--format csv|table|json|jsonl` output is a flat list of items instead of
+    page envelopes with cursor fields. The results key is decided once on the
+    first page (declared `results` is resolved against the full response body,
+    before `x-fern-sdk-return-value`), reused on every later page, and pages
+    where it is absent or `null` contribute no items. Responses that are not
+    paginated are left untouched, and the same extraction runs on both the
+    piped and terminal/pager paths.
+  type: fix
