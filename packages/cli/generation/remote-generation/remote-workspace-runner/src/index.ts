@@ -4,7 +4,12 @@ export type {
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled, isSdkGenApiOnly } from "./fernSdkGenApi.js";
+export {
+    getFernSdkGenApiLanguage,
+    isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
+    synthesizesSdkConfig
+} from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,
@@ -14,6 +19,13 @@ export type {
 } from "./fernSdkGenApiSourceArchive.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+export {
+    type MappingResult,
+    mapFernDefinitionToSdkConfigApi,
+    mapFernGroupToSdkConfig,
+    type SourceDerivedApiFields
+} from "./mapFernGroupToSdkConfig.js";
+export { prepareFernSdkGenApiSdkConfigPayload } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";
 export type {
