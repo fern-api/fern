@@ -18,6 +18,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { createFrontmatter, escapeTableCell, generateAnchorId } from "../utils/mdx.js";
+import { getPagedSubmodules, hasPage } from "../utils/modulePages.js";
 import {
     extractLinksFromTypes,
     getTypeDisplay,
@@ -39,8 +40,8 @@ function renderSubmodulesSection(
 ): string {
     const lines: string[] = [];
 
-    const packages = submodules.filter((sub) => sub.submodules.length > 0);
-    const modules = submodules.filter((sub) => sub.submodules.length === 0);
+    const packages = submodules.filter((sub) => getPagedSubmodules(sub).length > 0);
+    const modules = submodules.filter((sub) => getPagedSubmodules(sub).length === 0);
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
         const link = `/${baseSlug}/${modulePath}/${sub.name}`;
@@ -128,8 +129,9 @@ export function renderModulePage(
     }
 
     // Submodules section (before Module Contents)
-    if (module.submodules.length > 0) {
-        lines.push(renderSubmodulesSection(module.submodules, ctx.baseSlug, modulePath));
+    const pagedSubmodules = getPagedSubmodules(module);
+    if (pagedSubmodules.length > 0) {
+        lines.push(renderSubmodulesSection(pagedSubmodules, ctx.baseSlug, modulePath));
     }
 
     // Content sections
@@ -139,7 +141,7 @@ export function renderModulePage(
     const hasContent = hasClasses || hasFunctions || hasAttributes;
 
     if (hasContent) {
-        const contentsHeader = module.submodules.length > 0 ? "Package Contents" : "Module Contents";
+        const contentsHeader = pagedSubmodules.length > 0 ? "Package Contents" : "Module Contents";
         lines.push(`## ${contentsHeader}`, "");
 
         // Classes summary table
@@ -205,16 +207,8 @@ export function renderAllModulePages(
     function renderModule(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath: string = ""): void {
         const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 
-        const hasDirectContent =
-            module.classes.length > 0 ||
-            module.functions.length > 0 ||
-            module.attributes.length > 0 ||
-            module.docstring != null;
-
-        const hasSubmodules = module.submodules.length > 0;
-
         // Generate page if module has any documentable content
-        if (hasDirectContent || hasSubmodules) {
+        if (hasPage(module)) {
             const pageKey = `${ctx.baseSlug}/${modulePath}.mdx`;
             pages[pageKey] = renderModulePage(module, ctx, parentPath);
         }
