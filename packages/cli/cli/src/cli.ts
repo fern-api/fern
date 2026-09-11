@@ -24,6 +24,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { getFiddleOrigin } from "@fern-api/core";
 import {
+    CONTAINER_RUNNERS,
     ContainerRunner,
     extractErrorMessage,
     haveSameNullishness,
@@ -801,7 +802,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 })
                 .option("runner", {
-                    choices: ["docker", "podman"],
+                    choices: CONTAINER_RUNNERS,
                     description: "Choose the container runtime to use for local generation.",
                     default: undefined
                 })

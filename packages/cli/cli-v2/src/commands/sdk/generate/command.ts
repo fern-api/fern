@@ -1,7 +1,7 @@
 import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, CONTAINER_RUNNERS } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
@@ -743,7 +743,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     description: "Filter the target API(s) with the given audience(s)"
                 })
                 .option("container-engine", {
-                    choices: ["docker", "podman"],
+                    choices: CONTAINER_RUNNERS,
                     description: "Choose the container engine to use for local generation"
                 })
                 .option("force", {
