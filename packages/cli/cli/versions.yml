@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.4
+  changelogEntry:
+    - summary: |
+        Honor `required` on OpenAPI response headers: header value types are only wrapped in
+        `optional` when the Header Object does not declare `required: true`, matching the
+        request-parameter behavior.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 5.120.3
   changelogEntry:
     - summary: |

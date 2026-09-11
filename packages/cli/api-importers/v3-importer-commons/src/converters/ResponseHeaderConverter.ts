@@ -1,5 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
-import { HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { ContainerType, HttpHeader, PrimitiveTypeV2, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter } from "../AbstractConverter.js";
@@ -50,7 +50,12 @@ export function convertResponseHeaders({
         }
 
         const headerSchema = getHeaderSchema({ context, header: resolvedHeader });
-        let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
+        const isHeaderRequired = resolvedHeader.required === true;
+        // The Header Object's `required` defaults to false, so non-required header value
+        // types are optional-wrapped — matching `parameter.required` on the request side.
+        const maybeWrapOptional = (typeReference: TypeReference): TypeReference =>
+            isHeaderRequired ? typeReference : TypeReference.container(ContainerType.optional(typeReference));
+        let valueType: TypeReference = maybeWrapOptional(AbstractConverter.STRING);
         let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
         // Availability comes from the Header Object itself (`deprecated` /
         // `x-fern-availability`), matching how request-header parameters read it from the
@@ -67,24 +72,28 @@ export function convertResponseHeaders({
             });
 
             if (resolvedSchema?.type === "number" || resolvedSchema?.type === "integer") {
-                valueType = TypeReference.primitive({
-                    v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
-                    v2:
-                        resolvedSchema.type === "integer"
-                            ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
-                            : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
-                });
+                valueType = maybeWrapOptional(
+                    TypeReference.primitive({
+                        v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
+                        v2:
+                            resolvedSchema.type === "integer"
+                                ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
+                                : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
+                    })
+                );
             } else if (resolvedSchema?.type === "boolean") {
-                valueType = TypeReference.primitive({
-                    v1: "BOOLEAN",
-                    v2: PrimitiveTypeV2.boolean({ default: undefined })
-                });
+                valueType = maybeWrapOptional(
+                    TypeReference.primitive({
+                        v1: "BOOLEAN",
+                        v2: PrimitiveTypeV2.boolean({ default: undefined })
+                    })
+                );
             } else {
                 const convertedHeaderSchema = new SchemaOrReferenceConverter({
                     context,
                     breadcrumbs: [...headerBreadcrumbs, "headers", headerName, "schema"],
                     schemaOrReference: headerSchema,
-                    wrapAsOptional: true,
+                    wrapAsOptional: !isHeaderRequired,
                     schemaIdOverride: context.convertBreadcrumbsToName([...headerBreadcrumbs, "headers", headerName])
                 }).convert();
                 if (convertedHeaderSchema != null) {
