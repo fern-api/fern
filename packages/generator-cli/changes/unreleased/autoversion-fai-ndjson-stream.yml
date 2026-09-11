@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    AutoVersionStep now requests an NDJSON stream from FAI's `analyze-commit-diff` endpoint
+    and ignores heartbeat lines, so long-running analyses of large SDK diffs no longer hit
+    load balancer idle timeouts. Plain JSON responses from older FAI deployments are still accepted.
+  type: fix

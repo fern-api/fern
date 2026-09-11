@@ -1169,9 +1169,37 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
     });
 
     afterEach(async () => {
+        vi.useRealTimers();
         vi.unstubAllGlobals();
         await repo.cleanup();
     });
+
+    function ndjsonResponse(events: unknown[], chunkSize = 7, { close = true } = {}) {
+        const text = events.map((event) => `${JSON.stringify(event)}\r\n`).join("");
+        const chunks: string[] = [];
+        for (let i = 0; i < text.length; i += chunkSize) {
+            chunks.push(text.slice(i, i + chunkSize));
+        }
+        return {
+            ok: true,
+            status: 200,
+            headers: new Headers({ "content-type": "Application/X-NDJSON; charset=utf-8" }),
+            body: new ReadableStream<Uint8Array>({
+                start(controller) {
+                    const encoder = new TextEncoder();
+                    for (const chunk of chunks) {
+                        controller.enqueue(encoder.encode(chunk));
+                    }
+                    if (close) {
+                        controller.close();
+                    }
+                }
+            }),
+            json: async () => {
+                throw new Error("json() should not be called on an NDJSON response");
+            }
+        };
+    }
 
     function makeStepAndContext() {
         const step = new AutoVersionStep(repo.repoPath, makeLogger(), faiConfig);
@@ -1210,10 +1238,111 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
         expect(url).toBe("https://fai.buildwithfern.com/sdks/analyze-commit-diff");
         expect((init.headers as Record<string, string>).Authorization).toBe("Bearer fern-token-123");
+        expect((init.headers as Record<string, string>).Accept).toBe("application/x-ndjson");
         const body = JSON.parse(init.body as string) as Record<string, unknown>;
         expect(typeof body.diff).toBe("string");
         expect(body.language).toBe("typescript");
         expect(body.previous_version).toBe("1.0.0");
+    });
+
+    it("reads the NDJSON stream, skipping heartbeats and unknown events, when FAI streams the response", async () => {
+        mockFetch.mockResolvedValue(
+            ndjsonResponse([
+                { type: "heartbeat" },
+                { type: "progress", completed: 3, total: 12 },
+                { type: "heartbeat" },
+                {
+                    type: "result",
+                    result: {
+                        message: "feat: add newFeature helper",
+                        version_bump: "MINOR",
+                        changelog_entry: "### Added\n- `newFeature()` helper."
+                    }
+                }
+            ])
+        );
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.changelogEntry).toContain("newFeature");
+    });
+
+    it("falls back to PATCH when the NDJSON stream reports an in-band error", async () => {
+        mockFetch.mockResolvedValue(
+            ndjsonResponse([{ type: "heartbeat" }, { type: "error", status: 413, detail: "Diff too large" }])
+        );
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.changelogEntry).toBeUndefined();
+    });
+
+    it("reports structured in-band error details instead of [object Object]", async () => {
+        const logger = makeLogger();
+        mockFetch.mockResolvedValue(
+            ndjsonResponse([{ type: "error", status: 422, detail: [{ loc: ["body", "diff"], msg: "field required" }] }])
+        );
+
+        const step = new AutoVersionStep(repo.repoPath, logger, faiConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.versionBump).toBe("PATCH");
+        const warning = logger.warns.find((msg) => msg.includes("status 422"));
+        expect(warning).toContain('"field required"');
+        expect(warning).not.toContain("[object Object]");
+    });
+
+    it("passes an abort signal to fetch and falls back to PATCH when the deadline elapses mid-stream", async () => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+        mockFetch.mockImplementation((_url: string, init: RequestInit) => {
+            expect(init.signal).toBeInstanceOf(AbortSignal);
+            // Heartbeats keep arriving but the analysis never finishes: only the deadline can end this.
+            vi.advanceTimersByTime(15 * 60_000);
+            return Promise.resolve(ndjsonResponse([{ type: "heartbeat" }, { type: "heartbeat" }], 7, { close: false }));
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
+    });
+
+    it("falls back to PATCH when the NDJSON result event has no payload", async () => {
+        mockFetch.mockResolvedValue(ndjsonResponse([{ type: "result" }]));
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.version).toBe("1.0.1");
+    });
+
+    it("falls back to PATCH when the NDJSON stream ends without a result", async () => {
+        mockFetch.mockResolvedValue(ndjsonResponse([{ type: "heartbeat" }]));
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
     });
 
     it("treats NO_CHANGE from FAI as a no-bump rewrite to previousVersion", async () => {
