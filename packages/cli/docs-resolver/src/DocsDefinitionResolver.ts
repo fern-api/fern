@@ -3040,8 +3040,8 @@ export function convertThemeTabs(
     }
     return {
         style: tabs.style,
-        alignment: tabs.alignment?.toUpperCase() as DocsV1Write.TabsAlignment | undefined,
-        placement: tabs.placement?.toUpperCase() as DocsV1Write.TabsPlacement | undefined
+        alignment: tabs.alignment?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["alignment"],
+        placement: tabs.placement?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["placement"]
     };
 }
 
