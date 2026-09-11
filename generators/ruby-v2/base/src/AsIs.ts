@@ -79,6 +79,9 @@ export const AsIsFiles = {
     // HTTP tests
     TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
 
+    // Multipart tests
+    TestMultipartFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
+
     // Webhook tests
     TestWebhookBodyHash: "test/unit/internal/test_webhook_body_hash.Template.rb"
 } as const;
