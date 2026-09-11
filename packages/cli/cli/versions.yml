@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.5
+  changelogEntry:
+    - summary: |
+        Fix `theme.tabs.placement` / `theme.tabs.alignment` being sent to the docs publishing API in lowercase,
+        which caused `fern generate --docs` to fail with `config.theme.tabs: Invalid input` even though
+        `fern check` passed.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 5.120.4
   changelogEntry:
     - summary: |
