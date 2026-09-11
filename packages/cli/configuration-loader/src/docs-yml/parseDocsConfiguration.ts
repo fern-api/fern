@@ -672,6 +672,10 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
+        // Opt-in (default off, resolved by the fern-platform companion PR): hides
+        // the code-block feedback button. Part of the `as unknown as` cast below
+        // until the published FDR SDK adds the field.
+        hideCodeblockFeedback: layout.hideCodeblockFeedback,
         mobileToc: layout.mobileToc ?? false,
         // Passed through as-is (no default): omitted renders the searchable
         // timeline, "classic" renders the legacy stacked layout. Resolved by the

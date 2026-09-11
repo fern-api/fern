@@ -49,6 +49,14 @@ describe("DocsYmlSchemas", () => {
         expect(parse({ "api-reference-expand-properties": "yes" }).success).toBe(false);
     });
 
+    it("layout.hide-codeblock-feedback is an optional boolean", () => {
+        const parse = (layout: unknown) => DocsConfiguration.safeParse({ instances: [], layout });
+        expect(parse({}).success).toBe(true);
+        expect(parse({ "hide-codeblock-feedback": true }).success).toBe(true);
+        expect(parse({ "hide-codeblock-feedback": false }).success).toBe(true);
+        expect(parse({ "hide-codeblock-feedback": "yes" }).success).toBe(false);
+    });
+
     it("AIChatConfig defaults mask-pii to undefined (masking off by default)", () => {
         const parsed = AIChatConfig.parse({});
         expect(parsed["mask-pii"]).toBeUndefined();

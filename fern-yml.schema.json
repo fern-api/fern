@@ -2909,6 +2909,9 @@
             "hide-feedback": {
               "type": "boolean"
             },
+            "hide-codeblock-feedback": {
+              "type": "boolean"
+            },
             "mobile-toc": {
               "type": "boolean"
             },

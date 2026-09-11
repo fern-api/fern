@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `layout.hide-codeblock-feedback` to docs.yml to hide the "report incorrect code" button on code blocks. Individual `CodeBlock` / `CodeGroup` components can override it with a `showFeedback` prop.
+  type: feat
