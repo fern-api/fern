@@ -28,13 +28,18 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        if params[:name]
+        unless params[:name].nil?
           body.add(
             name: "name",
             value: params[:name]
           )
         end
-        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -50,7 +55,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::FileID.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::FileID.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

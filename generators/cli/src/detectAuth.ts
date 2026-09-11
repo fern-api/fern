@@ -697,7 +697,7 @@ function requestPropertyBinding(
     };
 }
 
-function customRequestPropertyBinding(args: {
+export function customRequestPropertyBinding(args: {
     property: FernIr.RequestProperty;
     envPrefix: string;
     schemeName: string;
@@ -723,6 +723,13 @@ function customRequestPropertyBinding(args: {
             value: `OAuth2RequestValue::literal(serde_json::json!(${rustJsonValue(
                 literal !== undefined ? literal : defaultValue
             )}))`
+        };
+    }
+    const grantType = impliedGrantType(base.path, endpointKind);
+    if (grantType != null) {
+        return {
+            ...base,
+            value: `OAuth2RequestValue::literal(serde_json::json!(${rustJsonValue(grantType)}))`
         };
     }
     const envVar = [envPrefix, envSegment(schemeName), endpointKind, ...base.path.map(envSegment)].join("_");
@@ -800,6 +807,19 @@ function responsePropertyPath(property: FernIr.ResponseProperty): string[] {
 
 function wireValue(name: FernIr.NameAndWireValueOrString): string {
     return typeof name === "string" ? name : name.wireValue;
+}
+
+/**
+ * RFC 6749 fixes `grant_type` per flow: `client_credentials` on the token
+ * endpoint and `refresh_token` on the refresh endpoint. When the spec leaves
+ * the property unpinned (no literal or default), bake in the flow's value
+ * instead of asking the user to supply it through an env var.
+ */
+function impliedGrantType(path: string[], endpointKind: "TOKEN" | "REFRESH"): string | undefined {
+    if (path.length !== 1 || path[0] !== "grant_type") {
+        return undefined;
+    }
+    return endpointKind === "TOKEN" ? "client_credentials" : "refresh_token";
 }
 
 function nameValue(name: FernIr.NameOrString): string {

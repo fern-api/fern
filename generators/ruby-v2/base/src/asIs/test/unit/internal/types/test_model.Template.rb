@@ -24,6 +24,15 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     field :type, String, default: "example"
   end
 
+  class ExampleWithBooleans < <%= gem_namespace %>::Internal::Types::Model
+    field :enabled, <%= gem_namespace %>::Internal::Types::Boolean
+    field :archived, <%= gem_namespace %>::Internal::Types::Boolean, default: true
+  end
+
+  class ExampleWithFalseDefault < <%= gem_namespace %>::Internal::Types::Model
+    field :archived, <%= gem_namespace %>::Internal::Types::Boolean, default: false
+  end
+
   class ExampleChild < <%= gem_namespace %>::Internal::Types::Model
     field :value, String
   end
@@ -102,6 +111,37 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       parent = ExampleParent.new(child: { value: "foobar" })
 
       assert_kind_of ExampleChild, parent.child
+    end
+
+    it "preserves false values instead of treating them as absent" do
+      example = ExampleWithBooleans.new(enabled: false)
+
+      refute example.enabled
+      assert_equal({ "enabled" => false, "archived" => true }, example.to_h)
+
+      loaded = ExampleWithBooleans.load({ enabled: false, archived: false }.to_json)
+
+      refute loaded.enabled
+      refute loaded.archived
+    end
+
+    it "prefers the first non-nil value when both api_name and field name are given" do
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: 2014 })
+
+      assert_equal 2014, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2014 }, example.to_h)
+
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: 2010, year: 2014 })
+
+      assert_equal 2010, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2010 }, example.to_h)
+    end
+
+    it "applies a default of false" do
+      example = ExampleWithFalseDefault.new
+
+      refute example.archived
+      assert_equal({ "archived" => false }, example.to_h)
     end
 
     it "uses the api_name to pull the value" do

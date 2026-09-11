@@ -15,6 +15,8 @@ export declare namespace MethodInvocation {
         keywordArguments?: KeywordArgument[];
         /** If the method is being passed a block, the list of args and the code contained in the block */
         block?: [string[], AstNode[]];
+        /** Use the safe navigation operator (`&.`) so the call is skipped when the receiver is nil */
+        safeNavigation?: boolean;
     }
 }
 
@@ -26,19 +28,21 @@ export class MethodInvocation extends AstNode {
     private arguments_: AstNode[];
     private keywordArguments?: KeywordArgument[];
     private block?: [string[], AstNode[]];
+    private safeNavigation: boolean;
 
-    constructor({ on, method, arguments_, keywordArguments, block }: MethodInvocation.Args) {
+    constructor({ on, method, arguments_, keywordArguments, block, safeNavigation }: MethodInvocation.Args) {
         super();
         this.on = on;
         this.method = method;
         this.arguments_ = arguments_;
         this.keywordArguments = keywordArguments;
         this.block = block;
+        this.safeNavigation = safeNavigation ?? false;
     }
 
     public write(writer: Writer): void {
         this.on.write(writer);
-        writer.write(".");
+        writer.write(this.safeNavigation ? "&." : ".");
         writer.write(this.method);
 
         const allArguments: PositionalOrKeywordArgument[] = [];
@@ -49,36 +53,34 @@ export class MethodInvocation extends AstNode {
             allArguments.push({ kind: "keyword", arg });
         }
 
-        // In Ruby, omit parentheses on method calls with no arguments and no block.
-        if (allArguments.length === 0 && this.block == null) {
-            return;
+        // In Ruby, omit parentheses on method calls with no arguments.
+        if (allArguments.length > 0) {
+            // If there is more than one argument, write each argument on its own line,
+            // separated by commas, for better readability in the generated Ruby code.
+            // Otherwise, write the arguments inline (on the same line).
+            writer.write("(");
+            if (allArguments.length > 1) {
+                writer.indent();
+                writer.newLine();
+                allArguments.forEach((argument, index) => {
+                    if (index > 0) {
+                        writer.write(",");
+                        writer.newLine();
+                    }
+                    writeArgument(writer, argument);
+                });
+                writer.newLine();
+                writer.dedent();
+            } else {
+                allArguments.forEach((argument, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    writeArgument(writer, argument);
+                });
+            }
+            writer.write(")");
         }
-
-        // If there is more than one argument, write each argument on its own line,
-        // separated by commas, for better readability in the generated Ruby code.
-        // Otherwise, write the arguments inline (on the same line).
-        writer.write("(");
-        if (allArguments.length > 1) {
-            writer.indent();
-            writer.newLine();
-            allArguments.forEach((argument, index) => {
-                if (index > 0) {
-                    writer.write(",");
-                    writer.newLine();
-                }
-                writeArgument(writer, argument);
-            });
-            writer.newLine();
-            writer.dedent();
-        } else {
-            allArguments.forEach((argument, index) => {
-                if (index > 0) {
-                    writer.write(", ");
-                }
-                writeArgument(writer, argument);
-            });
-        }
-        writer.write(")");
         if (this.block) {
             const [args, codelines] = this.block;
             writer.write(" do");
