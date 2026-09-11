@@ -271,7 +271,7 @@ describe("runPipeline", () => {
             ir: ir({
                 apiDisplayName: "Close API",
                 auth: {
-                    requirement: FernIr.AuthSchemesRequirement.All,
+                    requirement: FernIr.AuthSchemesRequirement.EndpointSecurity,
                     schemes: [
                         FernIr.AuthScheme.basic({
                             key: "ApiKeyAuth",
@@ -306,8 +306,10 @@ describe("runPipeline", () => {
             '.auth_provider("ApiKeyAuth", BasicAuthProvider::username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY")))'
         );
         expect(main).toContain('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
-        expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BasicAuthProvider, BearerAuth};");
-        expect(main).not.toContain(".auth_strategy(");
+        expect(main).toContain(
+            "use fern_cli_sdk::auth::{AuthCredentialSource, AuthStrategy, BasicAuthProvider, BearerAuth};"
+        );
+        expect(main).toContain(".auth_strategy(AuthStrategy::Routing)");
     });
 
     it("IR auth.requirement ANY pins AuthStrategy::Any so a generators.yml-only scheme is honored", async () => {

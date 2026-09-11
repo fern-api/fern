@@ -4,4 +4,12 @@
     security) from the IR's `auth.requirement`, so an OAuth client-credentials
     scheme declared only in `generators.yml` is applied to every authenticated
     command instead of being skipped by per-operation `security` routing.
+
+    Behavior change for multi-scheme `any` CLIs: the first scheme in
+    `generators.yml` order that has credentials is used for every operation,
+    regardless of which scheme the operation's `security` names. One `auth login`
+    now covers all operations, but if your schemes map to different accounts,
+    reorder them so the preferred credential is declared first. A selected scheme
+    whose credentials fail (e.g. a rejected OAuth token exchange) now fails the
+    command instead of silently sending the request unauthenticated.
   type: fix

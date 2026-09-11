@@ -275,15 +275,24 @@ describe("detectAuthBindings", () => {
 
 describe("authStrategyVariant", () => {
     it("maps ANY → Any so a generators.yml-only scheme (e.g. OAuth) is honored", () => {
-        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.Any)).toBe("Any");
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.Any, schemes: [{}, {}] })).toBe("Any");
     });
 
     it("maps ENDPOINT_SECURITY → Routing", () => {
-        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.EndpointSecurity)).toBe("Routing");
+        expect(
+            authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.EndpointSecurity, schemes: [{}, {}] })
+        ).toBe("Routing");
     });
 
     it("leaves ALL on the runtime's Auto default so single-scheme CLIs are unchanged", () => {
-        expect(authStrategyVariant(FernIr.AuthSchemesRequirement.All)).toBeUndefined();
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [] })).toBeUndefined();
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}] })).toBeUndefined();
+    });
+
+    it("throws on ALL over several schemes instead of silently falling back to routing", () => {
+        expect(() =>
+            authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}, {}] })
+        ).toThrow(/ALL over 2 schemes/);
     });
 });
 

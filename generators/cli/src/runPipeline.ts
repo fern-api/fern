@@ -164,7 +164,7 @@ export async function runPipeline(args: {
         customCommands,
         rootGroup: customConfig.rootGroup,
         userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
-        authStrategy: authStrategyVariant(ir.auth.requirement)
+        authStrategy: authStrategyVariant(ir.auth)
     });
     await writeGitignore(outputDir);
 

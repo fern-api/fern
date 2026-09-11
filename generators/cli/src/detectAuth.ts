@@ -73,15 +73,25 @@ export type AuthStrategyVariant = "Any" | "Routing";
  *   - `ENDPOINT_SECURITY` → `Routing`: per-operation dispatch, explicitly.
  *   - `ALL` → `undefined`. The IR only produces `ALL` for zero or one scheme,
  *     where `Auto` is already equivalent, so single-scheme CLIs keep a
- *     byte-identical `main.rs`.
+ *     byte-identical `main.rs`. `ALL` over several schemes has no `Auto`
+ *     equivalent (it would silently fall back to routing), so it throws.
  */
-export function authStrategyVariant(requirement: FernIr.AuthSchemesRequirement): AuthStrategyVariant | undefined {
+export function authStrategyVariant(auth: {
+    requirement: FernIr.AuthSchemesRequirement;
+    schemes: readonly unknown[];
+}): AuthStrategyVariant | undefined {
+    const { requirement, schemes } = auth;
     switch (requirement) {
         case "ANY":
             return "Any";
         case "ENDPOINT_SECURITY":
             return "Routing";
         case "ALL":
+            if (schemes.length > 1) {
+                throw new Error(
+                    `Unsupported auth requirement ALL over ${schemes.length} schemes; the CLI runtime has no equivalent strategy.`
+                );
+            }
             return undefined;
         default:
             assertNever(requirement);
