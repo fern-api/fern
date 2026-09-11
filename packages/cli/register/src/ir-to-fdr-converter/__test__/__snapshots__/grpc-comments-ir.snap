@@ -28,6 +28,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "Production",
     "environments": {
       "_visit": [Function],

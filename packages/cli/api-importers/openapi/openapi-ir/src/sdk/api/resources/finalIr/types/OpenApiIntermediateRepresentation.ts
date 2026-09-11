@@ -16,6 +16,11 @@ export interface OpenApiIntermediateRepresentation {
     specVersion: string | undefined;
     title: string | undefined;
     description: string | undefined;
+    /**
+     * Environment variable name populated via `x-fern-base-url-env` that
+     * generated SDKs read to override the base URL.
+     */
+    baseUrlEnv: string | undefined;
     basePath: string | undefined;
     /**
      * Root-level path parameters declared by the structured form of

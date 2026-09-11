@@ -114295,6 +114295,7 @@
     },
     "environments": {
         "defaultEnvironment": "Prod",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [

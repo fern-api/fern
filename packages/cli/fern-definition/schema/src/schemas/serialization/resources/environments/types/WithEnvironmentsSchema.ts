@@ -11,6 +11,7 @@ export const WithEnvironmentsSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     "default-url": core.serialization.string().optional(),
     "default-environment": core.serialization.string().optional(),
+    "base-url-env": core.serialization.string().optional(),
     environments: core.serialization.record(core.serialization.string(), EnvironmentSchema).optional(),
 });
 
@@ -18,6 +19,7 @@ export declare namespace WithEnvironmentsSchema {
     export interface Raw {
         "default-url"?: string | null;
         "default-environment"?: string | null;
+        "base-url-env"?: string | null;
         environments?: Record<string, EnvironmentSchema.Raw> | null;
     }
 }

@@ -975,6 +975,7 @@
     },
     "environments": {
         "defaultEnvironment": "Production",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "multipleBaseUrls",
             "baseUrls": [

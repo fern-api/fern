@@ -405,6 +405,7 @@
     },
     "environments": {
         "defaultEnvironment": null,
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "multipleBaseUrls",
             "baseUrls": [

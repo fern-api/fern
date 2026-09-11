@@ -1,0 +1,90 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listWidgets": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      "string",
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/widgets",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "list<string>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listWidgets:
+      path: /widgets
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: OK
+        type: list<string>
+        status-code: 200
+      examples:
+        - response:
+            body:
+              - string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "base-url-env": "FROM_SPEC",
+      "default-environment": "Production",
+      "display-name": "Acme API",
+      "environments": {
+        "Production": "https://production.acme.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Acme API
+base-url-env: FROM_SPEC
+environments:
+  Production: https://production.acme.com
+default-environment: Production
+",
+  },
+  "specVersion": "1.0",
+}

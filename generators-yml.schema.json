@@ -3791,6 +3791,17 @@
             }
           ]
         },
+        "base-url-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs\nread to override the base URL. When the variable is set, it takes precedence over\nthe default environment; an explicitly provided base URL still wins."
+        },
         "environments": {
           "oneOf": [
             {

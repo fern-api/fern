@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../openapi.yml
+  base-url-env: FROM_GENERATORS_YML
+  environments:
+    Production: https://production.acme.com
+  default-environment: Production

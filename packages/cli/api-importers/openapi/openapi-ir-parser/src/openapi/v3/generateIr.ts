@@ -418,6 +418,7 @@ export function generateIr({
             document: openApi
         }),
         specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
+        baseUrlEnv: getExtension<string>(openApi, FernOpenAPIExtension.BASE_URL_ENV),
         basePath:
             fernBasePathParsed != null &&
             (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)
