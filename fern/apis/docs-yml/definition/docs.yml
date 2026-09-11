@@ -995,6 +995,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      hide-codeblock-feedback:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-codeblock-feedback` is set to true, the "report incorrect code" button will not be rendered on code blocks. A `CodeBlock` or `CodeGroup` can override this with its `showFeedback` prop.
+
       mobile-toc:
         type: optional<boolean>
         availability: in-development

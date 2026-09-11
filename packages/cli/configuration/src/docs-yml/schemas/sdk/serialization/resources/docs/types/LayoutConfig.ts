@@ -25,6 +25,10 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
         hideNavLinks: core.serialization.property("hide-nav-links", core.serialization.boolean().optional()),
         hideFeedback: core.serialization.property("hide-feedback", core.serialization.boolean().optional()),
+        hideCodeblockFeedback: core.serialization.property(
+            "hide-codeblock-feedback",
+            core.serialization.boolean().optional(),
+        ),
         mobileToc: core.serialization.property("mobile-toc", core.serialization.boolean().optional()),
         changelogLayout: core.serialization.property("changelog-layout", ChangelogLayout.optional()),
         apiReferenceLayout: core.serialization.property("api-reference-layout", ApiReferenceLayout.optional()),
@@ -52,6 +56,7 @@ export declare namespace LayoutConfig {
         "disable-header"?: boolean | null;
         "hide-nav-links"?: boolean | null;
         "hide-feedback"?: boolean | null;
+        "hide-codeblock-feedback"?: boolean | null;
         "mobile-toc"?: boolean | null;
         "changelog-layout"?: ChangelogLayout.Raw | null;
         "api-reference-layout"?: ApiReferenceLayout.Raw | null;

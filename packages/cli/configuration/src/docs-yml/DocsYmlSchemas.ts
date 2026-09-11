@@ -309,6 +309,7 @@ export const LayoutConfig = z.object({
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
+    "hide-codeblock-feedback": z.boolean().optional(),
     "mobile-toc": z.boolean().optional(),
     "changelog-layout": ChangelogLayout.optional(),
     "api-reference-layout": ApiReferenceLayout.optional(),
