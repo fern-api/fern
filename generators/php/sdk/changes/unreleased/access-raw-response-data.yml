@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `withRawResponse()` to every generated client that has endpoints, bringing php in line
+    with the c#, go, java, python and typescript sdks. It returns a raw counterpart of the
+    client whose endpoints return `HttpResponse<T>` - `getBody()` is exactly what the plain
+    client returns, alongside `getHeaders()`, `getHeader()` and `getHeaderLine()`. Until now a
+    php caller could not read a response header at all: the endpoint methods read the response
+    and returned only the deserialized body, so a header like `X-Request-Id` was unreachable
+    without decorating the psr-18 client.
+  type: feat
