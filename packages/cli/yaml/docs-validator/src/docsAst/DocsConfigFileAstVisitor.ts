@@ -17,8 +17,8 @@ export interface DocsConfigFileAstNodeTypes {
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
     version: { version: docsYml.RawSchemas.VersionConfig };
-    versionFile: { path: string; content: unknown };
-    productFile: { path: string; content: unknown };
+    versionFile: { path: string; content: unknown; version: docsYml.RawSchemas.VersionConfig };
+    productFile: { path: string; content: unknown; product: docsYml.RawSchemas.ProductConfig };
     apiSection: {
         config: docsYml.RawSchemas.ApiReferenceConfiguration;
         workspace: AbstractAPIWorkspace<unknown>;

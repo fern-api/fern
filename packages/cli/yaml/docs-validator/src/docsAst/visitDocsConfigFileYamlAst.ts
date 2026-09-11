@@ -293,7 +293,8 @@ export async function visitDocsConfigFileYamlAst({
                             await visitor.productFile?.(
                                 {
                                     path: product.path,
-                                    content
+                                    content,
+                                    product
                                 },
                                 [product.path]
                             );
@@ -392,7 +393,8 @@ export async function visitDocsConfigFileYamlAst({
                         await visitor.versionFile?.(
                             {
                                 path: version.path,
-                                content
+                                content,
+                                version
                             },
                             [version.path]
                         );
