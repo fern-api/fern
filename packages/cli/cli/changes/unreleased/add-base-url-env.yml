@@ -4,6 +4,8 @@
     Add `base-url-env` to the `api.yml` environments configuration and the root-level
     `x-fern-base-url-env` OpenAPI extension. The value is the name of an environment variable
     (e.g. `MY_API_BASE_URL`) that generated SDKs read to override the base URL, mirroring how
-    auth credentials can already be sourced from environment variables. The setting is carried
-    through to the IR as `environments.baseUrlEnvVar`; SDK generators must be updated to honor it.
+    auth credentials can already be sourced from environment variables. When both are present,
+    `base-url-env` in `generators.yml` wins over the spec's `x-fern-base-url-env`; overriding
+    `api.environments` alone does not discard the spec's value. The setting is carried through to
+    the IR as `environments.baseUrlEnvVar`; SDK generators must be updated to honor it.
   type: feat

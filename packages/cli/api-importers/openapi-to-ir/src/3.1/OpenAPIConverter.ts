@@ -266,6 +266,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
         defaultUrl: string | undefined;
     } {
+        const baseUrlEnvExtension = new FernBaseUrlEnvExtension({
+            breadcrumbs: ["x-fern-base-url-env"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const specBaseUrlEnvVar = baseUrlEnvExtension.convert();
+
         if (this.context.environmentOverrides) {
             const convertedEnvironments = convertEnvironments({
                 rawApiFileSchema: this.context.environmentOverrides,
@@ -273,7 +280,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             if (convertedEnvironments != null) {
                 this.addEnvironmentsToIr({
-                    environmentConfig: convertedEnvironments.environmentsConfig,
+                    environmentConfig: {
+                        ...convertedEnvironments.environmentsConfig,
+                        // `base-url-env` in generators.yml wins, but an environments override
+                        // shouldn't silently discard the spec's `x-fern-base-url-env`.
+                        baseUrlEnvVar: convertedEnvironments.environmentsConfig.baseUrlEnvVar ?? specBaseUrlEnvVar
+                    },
                     audiences: convertedEnvironments.audiences
                 });
             }
@@ -282,17 +294,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             };
         }
 
-        const baseUrlEnvExtension = new FernBaseUrlEnvExtension({
-            breadcrumbs: ["x-fern-base-url-env"],
-            document: this.context.spec,
-            context: this.context
-        });
         const serversConverter = new ServersConverter({
             context: this.context,
             breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
             endpointLevelServers,
-            baseUrlEnvVar: baseUrlEnvExtension.convert()
+            baseUrlEnvVar: specBaseUrlEnvVar
         });
         const convertedServers = serversConverter.convert();
         this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });

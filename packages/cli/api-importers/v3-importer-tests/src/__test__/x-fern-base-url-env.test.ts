@@ -41,4 +41,22 @@ describe("x-fern-base-url-env", () => {
         const ir = await getIRForFixture("no-content-response-preserves-status-code");
         expect(ir.environments?.baseUrlEnvVar).toBeUndefined();
     }, 90_000);
+
+    it("carries baseUrlEnvVar onto multi-base-url environments", async () => {
+        const ir = await getIRForFixture("base-url-env-multi-url");
+        expect(ir.environments?.baseUrlEnvVar).toBe("ACME_BASE_URL");
+        expect(ir.environments?.environments.type).toBe("multipleBaseUrls");
+    }, 90_000);
+
+    it("prefers base-url-env from generators.yml over the spec extension", async () => {
+        const ir = await getIRForFixture("base-url-env-generators-override");
+        expect(ir.environments?.baseUrlEnvVar).toBe("FROM_GENERATORS_YML");
+    }, 90_000);
+
+    it("keeps the spec extension when generators.yml overrides environments without base-url-env", async () => {
+        const ir = await getIRForFixture("base-url-env-environments-override");
+        expect(ir.environments?.baseUrlEnvVar).toBe("FROM_SPEC");
+        // The environments themselves still come from the override.
+        expect(ir.environments?.defaultEnvironment).toBe("Production");
+    }, 90_000);
 });
