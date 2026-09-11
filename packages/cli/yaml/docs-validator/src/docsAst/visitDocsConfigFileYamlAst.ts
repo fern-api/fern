@@ -48,6 +48,58 @@ export async function visitDocsConfigFileYamlAst({
         },
         []
     );
+
+    const visitVersion = async ({
+        version,
+        product,
+        nodePath
+    }: {
+        version: docsYml.RawSchemas.VersionConfig;
+        product?: docsYml.RawSchemas.InternalProduct;
+        nodePath: NodePath;
+    }): Promise<void> => {
+        await visitor.version?.({ version }, nodePath);
+        if (version.path == null) {
+            // Git-ref-backed versions have their content validated at build time
+            // against the materialized ref, not the current working tree.
+            return;
+        }
+        const versionPath = version.path;
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: versionPath,
+            visitor,
+            nodePath,
+            willBeUploaded: false
+        });
+        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), versionPath);
+        if (!(await doesPathExist(absoluteFilepath))) {
+            return;
+        }
+        const content = yaml.load((await readFile(absoluteFilepath)).toString());
+        await visitor.versionFile?.(
+            {
+                path: versionPath,
+                content,
+                version,
+                product
+            },
+            [versionPath]
+        );
+        const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
+        if (parsedVersionFile.type === "success") {
+            await visitNavigationAst({
+                absolutePathToFernFolder,
+                navigation: parsedVersionFile.contents.navigation,
+                visitor,
+                nodePath: ["navigation"],
+                absoluteFilepathToConfiguration: absoluteFilepath,
+                apiWorkspaces,
+                context
+            });
+        }
+    };
+
     await visitObjectAsync(contents, {
         instances: noop,
         analytics: noop,
@@ -299,6 +351,18 @@ export async function visitDocsConfigFileYamlAst({
                                 [product.path]
                             );
                         }
+                        if (product.versions != null && product.versions.length > 0) {
+                            await Promise.all(
+                                product.versions.map((version, versionIdx) =>
+                                    visitVersion({
+                                        version,
+                                        product,
+                                        nodePath: ["products", `${idx}`, "versions", `${versionIdx}`]
+                                    })
+                                )
+                            );
+                            return;
+                        }
                         const parsedProductFile = await validateProductConfigFileSchema({ value: content });
                         if (parsedProductFile.type === "success") {
                             await visitNavigationAst({
@@ -372,46 +436,7 @@ export async function visitDocsConfigFileYamlAst({
             const versionsStart = performance.now();
             context.logger.debug(`[docs-ast] Processing ${versions.length} versions...`);
             await Promise.all(
-                versions.map(async (version, idx) => {
-                    await visitor.version?.({ version }, ["versions", `${idx}`]);
-                    if (version.path == null) {
-                        // Git-ref-backed versions have their content validated at build time
-                        // against the materialized ref, not the current working tree.
-                        return;
-                    }
-                    const versionPath = version.path;
-                    await visitFilepath({
-                        absoluteFilepathToConfiguration,
-                        rawUnresolvedFilepath: versionPath,
-                        visitor,
-                        nodePath: ["versions", `${idx}`],
-                        willBeUploaded: false
-                    });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), versionPath);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
-                    if (await doesPathExist(absoluteFilepath)) {
-                        await visitor.versionFile?.(
-                            {
-                                path: version.path,
-                                content,
-                                version
-                            },
-                            [version.path]
-                        );
-                    }
-                    const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
-                    if (parsedVersionFile.type === "success") {
-                        await visitNavigationAst({
-                            absolutePathToFernFolder,
-                            navigation: parsedVersionFile.contents.navigation,
-                            visitor,
-                            nodePath: ["navigation"],
-                            absoluteFilepathToConfiguration: absoluteFilepath,
-                            apiWorkspaces,
-                            context
-                        });
-                    }
-                })
+                versions.map((version, idx) => visitVersion({ version, nodePath: ["versions", `${idx}`] }))
             );
             context.logger.debug(
                 `[docs-ast] Versions processing complete in ${(performance.now() - versionsStart).toFixed(0)}ms`

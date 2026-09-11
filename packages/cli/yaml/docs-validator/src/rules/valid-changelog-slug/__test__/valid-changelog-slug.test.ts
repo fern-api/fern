@@ -31,13 +31,17 @@ async function productViolationsFor(product: docsYml.RawSchemas.InternalProduct,
     return violations.map((violation) => violation.message);
 }
 
-async function versionViolationsFor(version: docsYml.RawSchemas.VersionConfig, content: unknown): Promise<string[]> {
+async function versionViolationsFor(
+    version: docsYml.RawSchemas.VersionConfig,
+    content: unknown,
+    product?: docsYml.RawSchemas.InternalProduct
+): Promise<string[]> {
     const visitor = await ValidChangelogSlugRule.create({} as RuleContext);
     const versionFileVisitor = visitor.versionFile;
     if (versionFileVisitor == null) {
         throw new Error("Expected the rule to define a `versionFile` visitor");
     }
-    const violations = await versionFileVisitor({ path: version.path ?? "", content, version });
+    const violations = await versionFileVisitor({ path: version.path ?? "", content, version, product });
     return violations.map((violation) => violation.message);
 }
 
@@ -340,5 +344,56 @@ describe("product and version ancestors", () => {
         );
         expect(messages).toHaveLength(1);
         expect(messages[0]).toContain('resolves to URL path "/legacy/updates"');
+    });
+});
+
+describe("versions nested under a product", () => {
+    const releaseNotesVersion: docsYml.RawSchemas.VersionConfig = {
+        displayName: "Release Notes",
+        path: "./products/platform/versions/release-notes.yml"
+    };
+    const platformProduct: docsYml.RawSchemas.InternalProduct = {
+        displayName: "Platform",
+        path: "./products/platform/platform.yml",
+        versions: [releaseNotesVersion]
+    };
+    const updatesTabContent = {
+        tabs: { updates: { "display-name": "Updates", changelog: "../../changelog/release-notes" } },
+        navigation: [{ tab: "updates" }]
+    };
+
+    it("allows a changelog when the nested version slug is allowlisted but the product slug is not", async () => {
+        expect(await versionViolationsFor(releaseNotesVersion, updatesTabContent, platformProduct)).toEqual([]);
+    });
+
+    it("allows a changelog when the product slug is allowlisted but the nested version slug is not", async () => {
+        const version: docsYml.RawSchemas.VersionConfig = { displayName: "v1", path: "./versions/v1.yml" };
+        expect(
+            await versionViolationsFor(version, updatesTabContent, {
+                displayName: "Changelog",
+                path: "./products/changelog/changelog.yml",
+                versions: [version]
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a changelog when neither product, version nor tab is allowlisted, reporting /product/version/tab", async () => {
+        const version: docsYml.RawSchemas.VersionConfig = { displayName: "Legacy", path: "./versions/legacy.yml" };
+        const messages = await versionViolationsFor(version, updatesTabContent, {
+            displayName: "Platform",
+            path: "./products/platform/platform.yml",
+            versions: [version]
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/platform/legacy/updates"');
+    });
+
+    it("does not validate the product file's own navigation when the product declares versions", async () => {
+        expect(
+            await productViolationsFor(
+                { displayName: "Platform", path: "./products/platform/platform.yml", versions: [releaseNotesVersion] },
+                updatesTabContent
+            )
+        ).toEqual([]);
     });
 });

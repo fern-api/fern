@@ -247,15 +247,20 @@ export const ValidChangelogSlugRule: Rule = {
                 ];
                 return violationsForLocations(locations);
             },
-            versionFile: async ({ path, content, version }) => {
+            versionFile: async ({ path, content, version, product }) => {
                 const parseResult = await validateVersionConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
                 }
                 const versionConfig = parseResult.contents;
-                // Mirrors `setVersionSlug(version.slug ?? kebabCase(version.displayName))`
-                // in the docs resolver: the version prefixes every URL beneath it.
-                const versionSegments = ancestorSlugSegments({ slug: version.slug, displayName: version.displayName });
+                // Mirrors `setProductSlug(...)` followed by `setVersionSlug(version.slug ?? kebabCase(version.displayName))`
+                // in the docs resolver: the (optional) product and the version prefix every URL beneath them.
+                const versionSegments = [
+                    ...(product != null
+                        ? ancestorSlugSegments({ slug: product.slug, displayName: product.displayName })
+                        : []),
+                    ...ancestorSlugSegments({ slug: version.slug, displayName: version.displayName })
+                ];
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(
                         versionConfig.navigation,
@@ -268,6 +273,11 @@ export const ValidChangelogSlugRule: Rule = {
                 return violationsForLocations(locations);
             },
             productFile: async ({ path, content, product }) => {
+                if (product.versions != null && product.versions.length > 0) {
+                    // The loader ignores the product file's own navigation when versions are
+                    // declared; each version file is validated via `versionFile` instead.
+                    return [];
+                }
                 const parseResult = await validateProductConfigFileSchema({ value: content });
                 if (parseResult.type !== "success") {
                     return [];
