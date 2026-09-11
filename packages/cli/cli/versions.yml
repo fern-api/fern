@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.120.2
+  changelogEntry:
+    - summary: |
+        `fern check` no longer rejects a changelog whose feed URL is made servable by its
+        parent product or version slug (e.g. a "Release Notes" product with an "Updates"
+        changelog tab at `/release-notes/updates`). The `valid-changelog-slug` rule now
+        includes the product/version URL segment when checking for an allowlisted segment
+        and reports the full resolved path.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 5.120.1
   changelogEntry:
     - summary: |
