@@ -143,6 +143,8 @@ export class GraphQLConverter {
         return ["String", "Int", "Float", "Boolean", "ID"].includes(typeName);
     }
 
+    // The namespace only disambiguates ids across specs; it is never part of a type's rendered
+    // name, which stays the name declared in the SDL.
     private getNamespacedTypeId(originalName: string): FdrAPI.TypeId {
         const namespacedName = this.namespace ? `${this.namespace}_${originalName}` : originalName;
         return FdrAPI.TypeId(namespacedName);
@@ -151,10 +153,6 @@ export class GraphQLConverter {
     private getNamespacedOperationId(originalName: string): FdrAPI.GraphQlOperationId {
         const namespacedName = this.namespace ? `${this.namespace}_${originalName}` : originalName;
         return FdrAPI.GraphQlOperationId(namespacedName);
-    }
-
-    private getNamespacedTypeName(originalName: string): string {
-        return this.namespace ? `${this.namespace}_${originalName}` : originalName;
     }
 
     private isActualSubscriptionRootType(type: GraphQLObjectType): boolean {
@@ -317,7 +315,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertEnumTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -330,7 +328,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertInterfaceTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -343,7 +341,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertObjectTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -356,7 +354,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertInputObjectTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -369,7 +367,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertUnionTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -384,7 +382,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: this.getNamespacedTypeName(typeName),
+                        name: typeName,
                         shape: this.convertScalarTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
