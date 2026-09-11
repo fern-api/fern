@@ -952,6 +952,14 @@ func TestExplicitFieldsFromJSON(t *testing.T) {
 		assert.Equal(t, uint(1), result.Bit(1))
 	})
 
+	t.Run("alternate-case keys match like encoding/json", func(t *testing.T) {
+		result, err := ExplicitFieldsFromJSON([]byte(`{"NAME": null}`), fields)
+		require.NoError(t, err)
+		require.NotNil(t, result)
+		assert.Equal(t, uint(1), result.Bit(0))
+		assert.Equal(t, uint(0), result.Bit(1))
+	})
+
 	t.Run("no mapped keys present", func(t *testing.T) {
 		result, err := ExplicitFieldsFromJSON([]byte(`{"count": 1}`), fields)
 		require.NoError(t, err)
