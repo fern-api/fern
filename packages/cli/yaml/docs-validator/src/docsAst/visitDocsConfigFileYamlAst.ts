@@ -73,18 +73,19 @@ export async function visitDocsConfigFileYamlAst({
             willBeUploaded: false
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), versionPath);
-        const content = yaml.load((await readFile(absoluteFilepath)).toString());
-        if (await doesPathExist(absoluteFilepath)) {
-            await visitor.versionFile?.(
-                {
-                    path: versionPath,
-                    content,
-                    version,
-                    product
-                },
-                [versionPath]
-            );
+        if (!(await doesPathExist(absoluteFilepath))) {
+            return;
         }
+        const content = yaml.load((await readFile(absoluteFilepath)).toString());
+        await visitor.versionFile?.(
+            {
+                path: versionPath,
+                content,
+                version,
+                product
+            },
+            [versionPath]
+        );
         const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
         if (parsedVersionFile.type === "success") {
             await visitNavigationAst({
