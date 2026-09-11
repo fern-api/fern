@@ -1,0 +1,6 @@
+- summary: |
+    Fix `--dry-run` hiding most of the request in `--format table` (the default)
+    when the request carries headers or query parameters: the list-response
+    heuristic treated the `headers` array as the collection to tabulate, so only
+    the header pairs were printed and `url`/`method`/`body` were dropped.
+  type: fix
