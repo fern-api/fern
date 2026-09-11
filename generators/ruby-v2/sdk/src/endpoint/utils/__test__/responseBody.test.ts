@@ -87,4 +87,13 @@ describe("responseBodyLoader", () => {
         );
         expect(render("maybeCount")).toBe(`Test::Internal::Types::Utils.coerce(Integer, (${EMPTY_GUARD} : ${PARSE}))`);
     });
+
+    it("leaves an optional alias on the container path, which resolves it to the aliased type", () => {
+        // An alias module's `.load` is a bare `JSON.parse`, so unwrapping onto the named branch
+        // would lose the coercion the container branch gets from resolving the alias.
+        expect(render("maybeAlias")).toBe(
+            `Test::Internal::Types::Utils.coerce(Test::Users::Types::User, (${EMPTY_GUARD} : ${PARSE}))`
+        );
+        expect(render("aliasUser")).toBe(`(${EMPTY_GUARD} : Test::Users::Types::UserAlias.load(response.body))`);
+    });
 });

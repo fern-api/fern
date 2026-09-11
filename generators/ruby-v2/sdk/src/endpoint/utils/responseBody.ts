@@ -29,7 +29,7 @@ export function responseBodyLoader({
     const guard = (expression: string): string => `(${body}.to_s.empty? ? nil : ${expression})`;
     const parseExpression = (symbolizeNames: boolean): string =>
         symbolizeNames ? `JSON.parse(${body}, symbolize_names: true)` : `JSON.parse(${body})`;
-    const reference = unwrapOptionalNamed(typeReference);
+    const reference = unwrapOptionalNamed({ context, reference: typeReference });
 
     return ruby.codeblock((writer) => {
         switch (reference.type) {
@@ -67,8 +67,18 @@ export function responseBodyLoader({
  *
  * Wrappers around anything else (`optional<list<T>>`, `optional<string>`) keep falling
  * through to the existing branches, which already unbox optionals themselves.
+ *
+ * Aliases are excluded: an alias generates a module whose `.load` is a bare `JSON.parse`,
+ * so unwrapping `optional<MyAlias>` onto the named branch would drop the coercion the
+ * container branch gets for free by resolving the alias to its underlying type.
  */
-function unwrapOptionalNamed(reference: FernIr.TypeReference): FernIr.TypeReference {
+function unwrapOptionalNamed({
+    context,
+    reference
+}: {
+    context: SdkGeneratorContext;
+    reference: FernIr.TypeReference;
+}): FernIr.TypeReference {
     if (reference.type !== "container") {
         return reference;
     }
@@ -81,8 +91,11 @@ function unwrapOptionalNamed(reference: FernIr.TypeReference): FernIr.TypeRefere
     if (inner == null) {
         return reference;
     }
-    const unwrapped = unwrapOptionalNamed(inner);
-    return unwrapped.type === "named" ? unwrapped : reference;
+    const unwrapped = unwrapOptionalNamed({ context, reference: inner });
+    if (unwrapped.type !== "named") {
+        return reference;
+    }
+    return context.getTypeDeclarationOrThrow(unwrapped.typeId).shape.type === "alias" ? reference : unwrapped;
 }
 
 /**
