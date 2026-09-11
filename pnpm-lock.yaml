@@ -7145,6 +7145,9 @@ importers:
       '@fern-api/graphql-to-fdr':
         specifier: workspace:*
         version: link:../../api-importers/graphql
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -7172,6 +7175,9 @@ importers:
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils
+      '@fern-api/source-resolver':
+        specifier: workspace:*
+        version: link:../../generation/source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context

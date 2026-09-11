@@ -77,7 +77,7 @@ export class OpenAPILoader {
                         };
                     }
                 } catch (error) {
-                    context.logger.debug(
+                    context.logger.warn(
                         `Failed to parse OpenAPI document at ${spec.absoluteFilepath}: ${error}. Skipping...`
                     );
                     return undefined;
