@@ -103,9 +103,18 @@ impl TokenCache {
         atomic_write(&self.path, json.as_bytes())
     }
 
-    /// Load a non-expired cached token for the given token_url.
+    /// Load a non-expired cached token for the given token_url, regardless of
+    /// which client it was minted for.
+    #[cfg(test)]
     fn load(&self, token_url: &str) -> Option<TokenBundle> {
-        self.load_for_client(token_url, None)
+        let map = self.read_map();
+        let entry = map.get(token_url)?;
+        if let Some(expires_at) = entry.expires_at {
+            if now_epoch() >= expires_at {
+                return None;
+            }
+        }
+        Some(entry.clone())
     }
 
     /// Load a non-expired cached token for the given token_url, provided it
@@ -705,19 +714,29 @@ impl OAuth2TokenProvider {
         Ok(resp.access_token)
     }
 
-    /// Fingerprint of the client credentials currently in the environment,
-    /// or `None` when they aren't (fully) configured.
+    /// Fingerprint of the credential inputs currently in the environment
+    /// (client ID, client secret and — for the refresh-token grant — the
+    /// refresh token), or `None` when they aren't (fully) configured.
     fn configured_client_fingerprint(&self) -> Option<String> {
-        let (client_id_env, client_secret_env) = match &self.contract {
+        let (client_id_env, client_secret_env, refresh_token_env) = match &self.contract {
             Some(contract) => (
                 contract.client_id_env.as_str(),
                 contract.client_secret_env.as_str(),
+                None,
             ),
             None => grant_credential_envs(&self.grant),
         };
         let client_id = read_env(client_id_env, "client_id").ok()?;
         let client_secret = read_env(client_secret_env, "client_secret").ok()?;
-        Some(client_fingerprint(&client_id, &client_secret))
+        let refresh_token = match refresh_token_env {
+            Some(env) => Some(read_env(env, "refresh_token").ok()?),
+            None => None,
+        };
+        Some(client_fingerprint(
+            &client_id,
+            &client_secret,
+            refresh_token.as_deref(),
+        ))
     }
 
     async fn try_in_process_refresh(
@@ -790,7 +809,7 @@ impl OAuth2TokenProvider {
             )
             .await
         } else {
-            let (client_id_env, client_secret_env) = grant_credential_envs(&self.grant);
+            let (client_id_env, client_secret_env, _) = grant_credential_envs(&self.grant);
             let client_id = read_env(client_id_env, "client_id").ok()?;
             let client_secret = read_env(client_secret_env, "client_secret").ok()?;
             refresh_cached_token(token_url, &client_id, &client_secret, refresh_token).await
@@ -905,18 +924,18 @@ impl OAuth2TokenProvider {
     }
 }
 
-fn grant_credential_envs(grant: &OAuth2Grant) -> (&str, &str) {
+fn grant_credential_envs(grant: &OAuth2Grant) -> (&str, &str, Option<&str>) {
     match grant {
         OAuth2Grant::ClientCredentials {
             client_id_env,
             client_secret_env,
             ..
-        }
-        | OAuth2Grant::RefreshToken {
+        } => (client_id_env, client_secret_env, None),
+        OAuth2Grant::RefreshToken {
             client_id_env,
             client_secret_env,
-            ..
-        } => (client_id_env, client_secret_env),
+            refresh_token_env,
+        } => (client_id_env, client_secret_env, Some(refresh_token_env)),
     }
 }
 
@@ -1028,7 +1047,8 @@ impl AuthProvider for OAuth2TokenProvider {
         // to see the env slots either way, and they're what mints the
         // next token once this one expires.
         if let Some(cache) = self.cache.get() {
-            if let Some(bundle) = cache.load(&self.token_url) {
+            let fingerprint = self.configured_client_fingerprint();
+            if let Some(bundle) = cache.load_for_client(&self.token_url, fingerprint.as_deref()) {
                 let hint = format!("cached OAuth token ({})", cache.path.display());
                 let token = bundle.access_token;
                 slots = slots.with_alternative(AuthCredentialSource::Closure(
@@ -1818,7 +1838,7 @@ mod tests {
                 "first-token",
                 None,
                 Some(3600),
-                Some(&client_fingerprint("first", "first-secret")),
+                Some(&client_fingerprint("first", "first-secret", None)),
             )
             .unwrap();
         let first =
@@ -1842,7 +1862,7 @@ mod tests {
         assert_eq!(stored.access_token, "second-token");
         assert_eq!(
             stored.client_fingerprint.as_deref(),
-            Some(client_fingerprint("second", "second-secret").as_str())
+            Some(client_fingerprint("second", "second-secret", None).as_str())
         );
 
         std::env::remove_var("TEST_ROTATE_ID");
@@ -1856,10 +1876,91 @@ mod tests {
         cache
             .store("https://example.com/token", "legacy", None, Some(3600))
             .unwrap();
-        let fingerprint = client_fingerprint("id", "secret");
+        let fingerprint = client_fingerprint("id", "secret", None);
         assert!(cache
             .load_for_client("https://example.com/token", Some(&fingerprint))
             .is_some());
+    }
+
+    #[test]
+    fn tagged_cache_entry_requires_matching_client() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+        let url = "https://example.com/token";
+        let minted_for = client_fingerprint("id", "secret", None);
+        cache
+            .store_for_client(url, "tok", None, Some(3600), Some(&minted_for))
+            .unwrap();
+        assert!(cache.load_for_client(url, Some(&minted_for)).is_some());
+        assert!(cache
+            .load_for_client(url, Some(&client_fingerprint("id", "other", None)))
+            .is_none());
+        // Partially/un-configured credentials must not fall back to it either.
+        assert!(cache.load_for_client(url, None).is_none());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn provider_ignores_cache_when_only_refresh_token_changes() {
+        let dir = tempfile::tempdir().unwrap();
+        let cache = TokenCache::at_path(dir.path().join("credentials.json"));
+
+        let server = MockServer::start().await;
+        let token_url = format!("{}/token", server.uri());
+
+        Mock::given(method("POST"))
+            .and(path("/token"))
+            .and(wiremock::matchers::body_string_contains(
+                "refresh_token=bob",
+            ))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "access_token": "bob-token",
+                "expires_in": 3600
+            })))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let grant = || OAuth2Grant::RefreshToken {
+            client_id_env: "TEST_RT_ID".to_string(),
+            client_secret_env: "TEST_RT_SECRET".to_string(),
+            refresh_token_env: "TEST_RT_REFRESH".to_string(),
+        };
+
+        std::env::set_var("TEST_RT_ID", "app");
+        std::env::set_var("TEST_RT_SECRET", "secret");
+        std::env::set_var("TEST_RT_REFRESH", "alice");
+        cache
+            .store_for_client(
+                &token_url,
+                "alice-token",
+                Some("alice-rotated"),
+                Some(3600),
+                Some(&client_fingerprint("app", "secret", Some("alice"))),
+            )
+            .unwrap();
+        let alice =
+            OAuth2TokenProvider::new("oauth2", &token_url, grant()).with_token_cache(cache.clone());
+        let r = alice
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Bearer alice-token"));
+
+        std::env::set_var("TEST_RT_REFRESH", "bob");
+        let bob =
+            OAuth2TokenProvider::new("oauth2", &token_url, grant()).with_token_cache(cache.clone());
+        let r = bob
+            .apply(req(), &EndpointAuthMetadata::unspecified())
+            .unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Bearer bob-token"));
+
+        let stored = cache.read_map().remove(&token_url).unwrap();
+        assert_eq!(stored.access_token, "bob-token");
+        assert_eq!(stored.refresh_token, None);
+
+        std::env::remove_var("TEST_RT_ID");
+        std::env::remove_var("TEST_RT_SECRET");
+        std::env::remove_var("TEST_RT_REFRESH");
     }
 
     #[tokio::test(flavor = "multi_thread")]

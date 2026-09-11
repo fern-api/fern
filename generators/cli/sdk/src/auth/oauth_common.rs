@@ -150,15 +150,24 @@ pub struct TokenBundle {
     pub client_fingerprint: Option<String>,
 }
 
-/// Truncated SHA-256 over `client_id` and `client_secret`. Stored next to a
+/// Truncated SHA-256 over the configured credential inputs (`client_id`,
+/// `client_secret` and, for the refresh-token grant, the refresh token). Stored next to a
 /// cached token so a token minted for one client is never served once the
 /// configured credentials change; the secret itself never reaches disk.
-pub fn client_fingerprint(client_id: &str, client_secret: &str) -> String {
+pub fn client_fingerprint(
+    client_id: &str,
+    client_secret: &str,
+    refresh_token: Option<&str>,
+) -> String {
     use sha2::Digest;
     let mut hasher = sha2::Sha256::new();
     hasher.update(client_id.as_bytes());
     hasher.update([0u8]);
     hasher.update(client_secret.as_bytes());
+    if let Some(refresh_token) = refresh_token {
+        hasher.update([0u8]);
+        hasher.update(refresh_token.as_bytes());
+    }
     hasher
         .finalize()
         .iter()
@@ -184,11 +193,13 @@ impl TokenBundle {
 
     /// Whether this bundle may be served to a caller configured with the
     /// given client fingerprint. Untagged bundles (login flows, legacy cache
-    /// files) and callers without configured credentials always match.
+    /// files) always match; a tagged bundle is only served to the client it
+    /// was minted for, so partially configured credentials never fall back
+    /// to a stale token.
     pub fn matches_client(&self, fingerprint: Option<&str>) -> bool {
-        match (&self.client_fingerprint, fingerprint) {
-            (Some(cached), Some(current)) => cached == current,
-            _ => true,
+        match &self.client_fingerprint {
+            Some(cached) => fingerprint == Some(cached.as_str()),
+            None => true,
         }
     }
 
