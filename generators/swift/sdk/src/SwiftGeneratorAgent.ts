@@ -36,14 +36,18 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
     }: {
         context: SdkGeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-    }): Promise<string> {
-        const readmeConfig = this.getReadmeConfig({
-            context,
-            remote: this.getRemote(context),
-            featureConfig: await this.readFeatureConfig(),
-            endpointSnippets
-        });
-        return await generateReadme({ readmeConfig });
+    }): Promise<string | undefined> {
+        try {
+            const readmeConfig = this.getReadmeConfig({
+                context,
+                remote: this.getRemote(context),
+                featureConfig: await this.readFeatureConfig(),
+                endpointSnippets
+            });
+            return await generateReadme({ readmeConfig });
+        } catch (error) {
+            return this.skipReadmeOrThrow(error);
+        }
     }
 
     public getReadmeConfig(
@@ -57,9 +61,13 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         });
     }
 
-    public override async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
-        const referenceConfig = builder.build(this.getLanguage());
-        return await generateReference({ referenceConfig });
+    public override async generateReference(builder: ReferenceConfigBuilder): Promise<string | undefined> {
+        try {
+            const referenceConfig = builder.build(this.getLanguage());
+            return await generateReference({ referenceConfig });
+        } catch (error) {
+            return this.skipReferenceOrThrow(error);
+        }
     }
 
     public async pushToGitHubProgrammatic({ context }: { context: SdkGeneratorContext }): Promise<void> {

@@ -39,6 +39,7 @@ import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConf
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
 import { collectRawSpecs } from "./rawSpecs.js";
+import { withReferenceOptional } from "./withReferenceOptional.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -81,6 +82,7 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
+    referenceOptional,
     includeOptionalRequestPropertyExamples,
     inspect,
     executionEnvironment,
@@ -112,6 +114,11 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests: boolean;
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
+    /**
+     * When true, README.md / reference.md generation failures are tolerated: the generator warns and
+     * skips the artifact instead of failing generation. Set by `fern generate --reference-optional`.
+     */
+    referenceOptional?: boolean;
     includeOptionalRequestPropertyExamples: boolean;
     inspect: boolean;
     executionEnvironment?: ExecutionEnvironment;
@@ -248,10 +255,8 @@ export async function writeFilesToDiskAndRunGenerator({
         paths
     });
 
-    await writeFile(
-        absolutePathToWriteConfigJson,
-        JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
-    );
+    const serializedConfig = withReferenceOptional(await GeneratorConfig.jsonOrThrow(config), referenceOptional);
+    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(serializedConfig, undefined, 4));
 
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);

@@ -172,6 +172,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        if (content == null) {
+            return;
+        }
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
         );
@@ -199,6 +202,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }): Promise<void> {
         const builder = buildReference({ context, endpointSnippets });
         const content = await context.generatorAgent.generateReference(builder);
+        if (content == null) {
+            return;
+        }
 
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)

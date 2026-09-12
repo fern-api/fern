@@ -875,6 +875,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 context,
                 endpointSnippets
             });
+            if (readmeContent == null) {
+                return;
+            }
 
             context.logger.debug(
                 `Generated README.md (${readmeContent.length} characters, ${readmeContent.split("\n").length} lines)`
@@ -951,6 +954,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
             const content = await context.generatorAgent.generateReference(builder);
+            if (content == null) {
+                return;
+            }
 
             context.logger.debug(
                 `Generated reference.md (${content.length} characters, ${content.split("\n").length} lines)`

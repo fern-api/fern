@@ -451,6 +451,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             context,
             endpointSnippets
         });
+        if (content == null) {
+            return;
+        }
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of(otherPath), content)
@@ -464,6 +467,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             return;
         }
         const content = await context.generatorAgent.generateReference(builder);
+        if (content == null) {
+            return;
+        }
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)

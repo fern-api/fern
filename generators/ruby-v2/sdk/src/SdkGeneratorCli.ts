@@ -233,6 +233,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         context.logger.debug("Has snippets length: ", endpointSnippets.length.toString());
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        if (content == null) {
+            return;
+        }
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
         );
@@ -276,6 +279,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
+        if (content == null) {
+            return;
+        }
 
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
