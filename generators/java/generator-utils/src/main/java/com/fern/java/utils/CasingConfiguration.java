@@ -36,12 +36,16 @@ public final class CasingConfiguration {
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^[0-9]");
 
+    // Characters legal in a Java identifier (the ASCII subset the rest of this class deals in).
+    private static final Pattern ILLEGAL_IDENTIFIER_CHARS = Pattern.compile("[^A-Za-z0-9_$]");
+
     // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
     private static final Pattern SPLIT_WORDS_PATTERN =
             Pattern.compile("[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+");
 
     // Java reserved keywords for keyword sanitization
     private static final Set<String> JAVA_RESERVED_KEYWORDS = Set.of(
+            "_", // reserved since Java 9 (unused lambda param), a compile error since Java 21 (JEP 456)
             "abstract",
             "assert",
             "boolean",
@@ -188,6 +192,18 @@ public final class CasingConfiguration {
             }
         }
 
+        // splitWords() only recognizes letter/digit runs, so an input made entirely of
+        // separators/symbols (e.g. "_", "-", "@", "-_-") produces zero words and every casing
+        // variant above collapses to "". Recover a usable identifier instead of losing the name
+        // entirely.
+        if (camelCaseName.isEmpty() && !name.isEmpty()) {
+            String fallback = wordlessFallback(name);
+            camelCaseName = fallback;
+            pascalCaseName = fallback;
+            snakeCaseName = fallback;
+            screamingSnakeCaseName = fallback.toUpperCase();
+        }
+
         return new NameParts(
                 inputName,
                 camelCaseName,
@@ -202,6 +218,23 @@ public final class CasingConfiguration {
 
     private String preprocessName(String name) {
         return name.replace("[]", "Array");
+    }
+
+    /**
+     * Fallback identifier for names that produce zero words via splitWords() (e.g. "_", "-", "@", "-_-"). Strips
+     * characters that aren't legal in a Java identifier and keeps whatever's left (e.g. "$$" stays "$$", "-_-" becomes
+     * "_"). If nothing legal remains, encodes each stripped character's code point instead of collapsing to a single
+     * shared placeholder - otherwise distinct inputs like "-" and "@" would both fall back to the same identifier and
+     * silently collide (two identically-named methods/classes) if used as sibling discriminants in the same union.
+     */
+    private static String wordlessFallback(String name) {
+        String legal = ILLEGAL_IDENTIFIER_CHARS.matcher(name).replaceAll("");
+        if (!legal.isEmpty()) {
+            return legal;
+        }
+        StringBuilder encoded = new StringBuilder("_");
+        name.codePoints().forEach(cp -> encoded.append('_').append(Integer.toHexString(cp)));
+        return encoded.toString();
     }
 
     private String sanitizeName(String name) {
