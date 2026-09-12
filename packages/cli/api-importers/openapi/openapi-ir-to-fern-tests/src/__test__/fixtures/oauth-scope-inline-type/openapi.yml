@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: OAuth scope inline type
+  version: 1.0.0
+
+paths:
+  /scope:
+    post:
+      operationId: createScope
+      security:
+        - OAuth2:
+            - read
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - scope
+              properties:
+                scope:
+                  type: string
+                  enum:
+                    - account
+                  x-fern-type-name: OAuthScope
+      responses:
+        "204":
+          description: Success
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access

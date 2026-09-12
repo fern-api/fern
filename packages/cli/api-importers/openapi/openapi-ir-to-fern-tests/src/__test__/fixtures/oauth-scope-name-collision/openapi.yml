@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: OAuth scope name collision
+  version: 1.0.0
+
+paths:
+  /scope:
+    get:
+      operationId: getScope
+      security:
+        - OAuth2:
+            - read
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OAuthScope"
+  /grouped:
+    get:
+      operationId: getGroupedScope
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OauthAuthorizationScope2"
+
+components:
+  schemas:
+    OAuthScope:
+      type: string
+    OauthAuthorizationScope:
+      type: string
+    OauthAuthorizationScope2:
+      type: string
+      x-fern-sdk-group-name: grouped
+
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access

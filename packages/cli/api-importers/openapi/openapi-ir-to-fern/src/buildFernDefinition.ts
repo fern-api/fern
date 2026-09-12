@@ -3,7 +3,7 @@ import { isRawAliasDefinition, RawSchemas } from "@fern-api/fern-definition-sche
 import { FernDefinition } from "@fern-api/importer-commons";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildAuthSchemes } from "./buildAuthSchemes.js";
+import { addOauthScopeType, buildAuthSchemes } from "./buildAuthSchemes.js";
 import { buildChannel } from "./buildChannel.js";
 import { buildEnvironments } from "./buildEnvironments.js";
 import { buildGlobalHeaders } from "./buildGlobalHeaders.js";
@@ -145,7 +145,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     buildGlobalHeaders(context);
     buildGlobalParameters(context);
     buildIdempotencyHeaders(context);
-    buildAuthSchemes(context);
+    const oauthScopeType = buildAuthSchemes(context);
     buildVariables(context);
     if (context.ir.basePath != null) {
         context.builder.setBasePath(context.ir.basePath);
@@ -227,7 +227,11 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     context.builder.optimizeServiceAuth();
 
-    return context.builder.build();
+    const definition = context.builder.build();
+    if (oauthScopeType != null) {
+        addOauthScopeType(definition, oauthScopeType);
+    }
+    return definition;
 }
 
 function getSchemaIdsToExclude({

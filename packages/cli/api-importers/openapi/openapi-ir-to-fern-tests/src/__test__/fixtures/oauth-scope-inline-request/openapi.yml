@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: OAuth scope inline request
+  version: 1.0.0
+
+paths:
+  /scope:
+    post:
+      operationId: createScope
+      security:
+        - OAuth2:
+            - read
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OAuthScope"
+      responses:
+        "204":
+          description: Success
+
+components:
+  schemas:
+    OAuthScope:
+      type: object
+      required:
+        - value
+      properties:
+        value:
+          type: string
+
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access

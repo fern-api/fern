@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Avoid collisions between emitted OpenAPI type names and the generated OAuth scope enum.
+  type: fix

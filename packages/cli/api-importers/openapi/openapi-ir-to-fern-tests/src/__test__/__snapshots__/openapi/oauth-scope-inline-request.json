@@ -1,0 +1,127 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createScope": {
+              "auth": [
+                {
+                  "OAuth2": [
+                    "read",
+                  ],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "value": "value",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/scope",
+              "request": {
+                "body": {
+                  "properties": {
+                    "value": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "OAuthScope",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "OauthScope": {
+            "enum": [
+              {
+                "docs": "Read access",
+                "value": "read",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  OauthScope:
+    enum:
+      - value: read
+        docs: Read access
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createScope:
+      path: /scope
+      method: POST
+      auth:
+        - OAuth2:
+            - read
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: OAuthScope
+        body:
+          properties:
+            value: string
+        content-type: application/json
+      examples:
+        - request:
+            value: value
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "OAuth2",
+      "auth-schemes": {
+        "OAuth2": {
+          "scheme": "bearer",
+        },
+      },
+      "display-name": "OAuth scope inline request",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: OAuth scope inline request
+auth-schemes:
+  OAuth2:
+    scheme: bearer
+auth: OAuth2
+",
+  },
+  "specVersion": "1.0.0",
+}

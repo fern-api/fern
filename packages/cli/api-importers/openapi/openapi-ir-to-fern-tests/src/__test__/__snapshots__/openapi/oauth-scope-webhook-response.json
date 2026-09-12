@@ -1,0 +1,111 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "OAuthScope": "string",
+          "OauthAuthorizationScope": {
+            "enum": [
+              {
+                "docs": "Read access",
+                "value": "read",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateStatusPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "status": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+        "webhooks": {
+          "updateStatus": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {},
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "UpdateStatusPayload",
+            "response": {
+              "docs": "Success",
+              "status-code": 200,
+              "type": "OAuthScope",
+            },
+            "signature": undefined,
+          },
+        },
+      },
+      "rawContents": "types:
+  OauthAuthorizationScope:
+    enum:
+      - value: read
+        docs: Read access
+    source:
+      openapi: ../openapi.yml
+  UpdateStatusPayload:
+    properties:
+      status: optional<string>
+    source:
+      openapi: ../openapi.yml
+  OAuthScope: string
+webhooks:
+  updateStatus:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: UpdateStatusPayload
+    examples:
+      - payload: {}
+    response:
+      docs: Success
+      type: OAuthScope
+      status-code: 200
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "OAuth2",
+      "auth-schemes": {
+        "OAuth2": {
+          "scheme": "bearer",
+        },
+      },
+      "display-name": "OAuth scope webhook response",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: OAuth scope webhook response
+auth-schemes:
+  OAuth2:
+    scheme: bearer
+auth: OAuth2
+",
+  },
+  "specVersion": "1.0.0",
+}

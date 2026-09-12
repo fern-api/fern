@@ -1,0 +1,170 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "grouped": "grouped.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getGroupedScope": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/grouped",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "grouped.OauthAuthorizationScope2",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getScope": {
+              "auth": [
+                {
+                  "OAuth2": [
+                    "read",
+                  ],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/scope",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "OAuthScope",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "OAuthScope": "string",
+          "OauthAuthorizationScope": {
+            "enum": [
+              {
+                "docs": "Read access",
+                "value": "read",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  OauthAuthorizationScope:
+    enum:
+      - value: read
+        docs: Read access
+    source:
+      openapi: ../openapi.yml
+  OAuthScope: string
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getScope:
+      path: /scope
+      method: GET
+      auth:
+        - OAuth2:
+            - read
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: OAuthScope
+        status-code: 200
+      examples:
+        - response:
+            body: string
+    getGroupedScope:
+      path: /grouped
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: grouped.OauthAuthorizationScope2
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+imports:
+  grouped: grouped.yml
+",
+    },
+    "grouped.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "OauthAuthorizationScope2": "string",
+        },
+      },
+      "rawContents": "types:
+  OauthAuthorizationScope2: string
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "OAuth2",
+      "auth-schemes": {
+        "OAuth2": {
+          "scheme": "bearer",
+        },
+      },
+      "display-name": "OAuth scope name collision",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: OAuth scope name collision
+auth-schemes:
+  OAuth2:
+    scheme: bearer
+auth: OAuth2
+",
+  },
+  "specVersion": "1.0.0",
+}
