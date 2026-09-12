@@ -413,7 +413,7 @@ describe("GeneratedQueryParams", () => {
             expect(text).toMatchSnapshot();
         });
 
-        it("stringifies map<string, string> by default", () => {
+        it("explodes map<string, string> by default", () => {
             const mapType = FernIr.TypeReference.container(
                 FernIr.ContainerType.map({
                     keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -431,7 +431,8 @@ describe("GeneratedQueryParams", () => {
             const firstStmt = statements[0];
             assert(firstStmt != null, "expected at least one statement");
             const text = getTextOfTsNode(firstStmt);
-            expect(text).toContain("toString");
+            expect(text).toContain("...metadata");
+            expect(text).not.toContain("toString");
             expect(text).toMatchSnapshot();
         });
 
@@ -538,13 +539,13 @@ describe("GeneratedQueryParams", () => {
                 return getTextOfTsNode(firstStmt);
             }
 
-            it("still stringifies map<string, MyObject> when the flag is disabled", () => {
+            it("explodes map<string, MyObject> through the serde layer when the flag is disabled", () => {
                 const text = generate("metadata", mapOf(myObjectType), {
                     includeSerdeLayer: true,
                     deepObjectMapQueryParameters: false
                 });
-                expect(text).toContain("toString");
-                expect(text).not.toContain("jsonOrThrow");
+                expect(text).toContain("...serializers.record.jsonOrThrow(metadata)");
+                expect(text).not.toContain("toString");
                 expect(text).toMatchSnapshot();
             });
 

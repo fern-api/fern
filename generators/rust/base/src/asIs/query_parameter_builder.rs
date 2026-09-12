@@ -125,6 +125,26 @@ impl QueryBuilder {
         self
     }
 
+    /// Add an exploded object parameter: every entry of the map becomes its own query
+    /// parameter, keyed by the property name alone, and only nested objects stay in
+    /// bracket notation. This is what `style: form, explode: true` - the OpenAPI
+    /// defaults - mean for an object typed query parameter.
+    pub fn serialize_exploded<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
+        if let Some(v) = value {
+            match serde_json::to_value(&v) {
+                Ok(serde_json::Value::Object(entries)) => {
+                    push_exploded_entries(&mut self.params, None, entries);
+                }
+                Ok(_) => {
+                    // Not an object after all - keep the single-parameter behavior.
+                    return self.serialize(key, Some(v));
+                }
+                Err(_) => {}
+            }
+        }
+        self
+    }
+
     /// Add multiple serializable parameters with the same key (for allow-multiple query params with enums)
     /// Accepts both Vec<T> and Vec<Option<T>>, adding each non-None value as a separate query parameter
     pub fn serialize_array<T: Serialize>(
@@ -174,6 +194,29 @@ impl QueryBuilder {
             None
         } else {
             Some(self.params)
+        }
+    }
+}
+
+/// Flatten a JSON object into query parameters: top level entries are keyed by their own
+/// name, nested objects get bracket notation, and null entries are skipped.
+fn push_exploded_entries(
+    params: &mut Vec<(String, String)>,
+    scope: Option<&str>,
+    entries: serde_json::Map<String, serde_json::Value>,
+) {
+    for (key, value) in entries {
+        let name = match scope {
+            Some(scope) => format!("{}[{}]", scope, key),
+            None => key,
+        };
+        match value {
+            serde_json::Value::Null => {}
+            serde_json::Value::Object(nested) => {
+                push_exploded_entries(params, Some(&name), nested)
+            }
+            serde_json::Value::String(string) => params.push((name, string)),
+            other => params.push((name, other.to_string())),
         }
     }
 }
@@ -410,6 +453,65 @@ mod tests {
         assert_eq!(
             result,
             Some(vec![("count".to_string(), "42".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_serialize_exploded_map_becomes_bare_parameters() {
+        let mut filter = std::collections::BTreeMap::new();
+        filter.insert("tld".to_string(), "com".to_string());
+        filter.insert("createdDate:gte".to_string(), "2023-01-01".to_string());
+        let result = QueryBuilder::new()
+            .serialize_exploded("filter", Some(&filter))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("createdDate:gte".to_string(), "2023-01-01".to_string()),
+                ("tld".to_string(), "com".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_serialize_exploded_nested_object_keeps_brackets() {
+        let value = serde_json::json!({
+            "tld": "com",
+            "count": 25,
+            "flag": true,
+            "nested": { "a": "b" },
+            "gone": null
+        });
+        let result = QueryBuilder::new()
+            .serialize_exploded("filter", Some(&value))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("count".to_string(), "25".to_string()),
+                ("flag".to_string(), "true".to_string()),
+                ("nested[a]".to_string(), "b".to_string()),
+                ("tld".to_string(), "com".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_serialize_exploded_none_skipped() {
+        let result = QueryBuilder::new()
+            .serialize_exploded::<String>("filter", None)
+            .build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_serialize_exploded_non_object_falls_back() {
+        let result = QueryBuilder::new()
+            .serialize_exploded("status", Some("active"))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("status".to_string(), "active".to_string())])
         );
     }
 

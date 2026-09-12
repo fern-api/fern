@@ -1,13 +1,23 @@
 from core_utilities.shared.query_encoder import encode_query
 
 
-def test_query_encoding_deep_objects() -> None:
+def test_query_encoding_explodes_objects() -> None:
     assert encode_query({"hello world": "hello world"}) == [("hello world", "hello world")]
-    assert encode_query({"hello_world": {"hello": "world"}}) == [("hello_world[hello]", "world")]
+    # an object query parameter is exploded: the parameter's own name does not reach the wire
+    assert encode_query({"hello_world": {"hello": "world"}}) == [("hello", "world")]
+    # only the levels below the first stay bracketed
     assert encode_query({"hello_world": {"hello": {"world": "today"}, "test": "this"}, "hi": "there"}) == [
-        ("hello_world[hello][world]", "today"),
-        ("hello_world[test]", "this"),
+        ("hello[world]", "today"),
+        ("test", "this"),
         ("hi", "there"),
+    ]
+
+
+def test_query_encoding_explodes_operator_keys() -> None:
+    # the case the format exists for: keys carrying both the field and the operator
+    assert encode_query({"filter": {"category": "books", "createdDate:gte": "2023-01-01"}}) == [
+        ("category", "books"),
+        ("createdDate:gte", "2023-01-01"),
     ]
 
 
