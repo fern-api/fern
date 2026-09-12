@@ -138,7 +138,7 @@
         "head": "",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": "anyOf Examples",
       "encoding": undefined,
       "endpoints": [
         {
@@ -390,7 +390,7 @@
   "specVersion": undefined,
   "subpackages": {
     "subpackage_anyOfExamples": {
-      "displayName": undefined,
+      "displayName": "anyOf Examples",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {

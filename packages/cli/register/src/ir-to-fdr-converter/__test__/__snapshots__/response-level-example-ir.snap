@@ -1444,7 +1444,7 @@
   "specVersion": undefined,
   "subpackages": {
     "subpackage_plant": {
-      "displayName": undefined,
+      "displayName": "plant",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
