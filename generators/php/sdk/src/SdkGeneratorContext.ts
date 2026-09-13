@@ -86,6 +86,45 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    /**
+     * The raw counterpart of a subpackage's client: the same endpoints, each returning the
+     * response metadata alongside the deserialized body.
+     */
+    public getRawSubpackageClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
+        return php.classReference({
+            name: `Raw${this.case.pascalUnsafe(subpackage.name)}Client`,
+            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+        });
+    }
+
+    public getRawRootClientClassName(): string {
+        return `Raw${this.getRootClientClassName()}`;
+    }
+
+    public getRawRootClientClassReference(): php.ClassReference {
+        return php.classReference({
+            name: this.getRawRootClientClassName(),
+            namespace: this.getRootNamespace()
+        });
+    }
+
+    /**
+     * `HttpResponse<T>`, the wrapper a raw client's endpoint methods return. Called without a
+     * body type for the docblock-free positions where the generic is not written out.
+     */
+    public getHttpResponseClassReference(bodyType?: php.Type): php.ClassReference {
+        return php.classReference({
+            name: "HttpResponse",
+            namespace: this.getCoreClientNamespace(),
+            generics: bodyType != null ? [bodyType] : undefined
+        });
+    }
+
+    /** The method that hands a caller the raw counterpart of this client. */
+    public getWithRawResponseMethodName(): string {
+        return "withRawResponse";
+    }
+
     public getRootClientInterfaceClassName(): string {
         return `${this.getRootClientClassName()}Interface`;
     }
@@ -636,6 +675,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.JsonApiRequest,
             AsIsFiles.UrlEncodedApiRequest,
             AsIsFiles.RawClient,
+            AsIsFiles.HttpResponse,
             AsIsFiles.RetryDecoratingClient,
             AsIsFiles.HttpClientBuilder,
             AsIsFiles.MockHttpClient,

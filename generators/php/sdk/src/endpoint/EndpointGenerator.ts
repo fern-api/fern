@@ -16,16 +16,20 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
     public generate({
         serviceId,
         service,
-        endpoint
+        endpoint,
+        raw
     }: {
         serviceId: FernIr.ServiceId;
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
+        /** Emit the raw client's variant of this endpoint, returning `HttpResponse<T>`. */
+        raw?: boolean;
     }): php.Method[] {
         return this.http.generate({
             serviceId,
             service,
-            endpoint
+            endpoint,
+            raw
         });
     }
 

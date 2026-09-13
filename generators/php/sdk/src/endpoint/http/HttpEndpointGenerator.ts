@@ -19,6 +19,13 @@ import { getRetriesDisabledStatement } from "../utils/retriesDisabled.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
 
+interface DecodedJsonResponse {
+    /** The statement that assigns or returns the deserialized body. */
+    code: php.CodeBlock;
+    /** Whether that statement already suppresses a type mismatch phpstan would report. */
+    carriesPhpstanIgnore: boolean;
+}
+
 export declare namespace EndpointGenerator {
     export interface Args {
         /** the reference to the client */
@@ -34,6 +41,10 @@ const JSON_VARIABLE_NAME = "$json";
 const RESPONSE_VARIABLE_NAME = "$response";
 const STATUS_CODE_VARIABLE_NAME = "$statusCode";
 const HEADER_BAG_NAME = "$headers";
+// Not `$body`: a multipart or file-upload endpoint already has a local `$body` for the
+// request body it is sending.
+const BODY_VARIABLE_NAME = "$responseBody";
+const HTTP_RESPONSE_FACTORY_METHOD_NAME = "from";
 
 export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
@@ -43,12 +54,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public generate({
         serviceId,
         service,
-        endpoint
+        endpoint,
+        raw = false
     }: {
         serviceId: FernIr.ServiceId;
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
+        /** Emit the raw client's variant of this endpoint, returning `HttpResponse<T>`. */
+        raw?: boolean;
     }): php.Method[] {
+        // A raw client has one method per endpoint, whatever the endpoint's pagination: a pager
+        // hands out pages, not responses, so there is nothing for it to wrap. The unpaged call
+        // underneath is exactly the one that has a response, and it keeps the endpoint's own name.
+        if (raw) {
+            return [this.generateUnpagedEndpointMethod({ serviceId, service, endpoint, raw: true })];
+        }
         if (this.isUnsupportedPaginationType(endpoint)) {
             this.context.logger.warn(
                 `Pagination type '${endpoint.pagination?.type}' is not supported for PHP, falling back to unpaged endpoint for ${getOriginalName(endpoint.name)}`
@@ -123,11 +143,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public generateUnpagedEndpointMethod({
         serviceId,
         service,
-        endpoint
+        endpoint,
+        raw = false
     }: {
         serviceId: FernIr.ServiceId;
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
+        raw?: boolean;
     }): php.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
@@ -137,8 +159,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 type: php.Type.optional(this.context.getRequestOptionsType({ endpoint }))
             })
         );
-        const return_ = getEndpointReturnType({ context: this.context, endpoint });
-        const hasPagination = this.hasPagination(endpoint);
+        const bodyType = getEndpointReturnType({ context: this.context, endpoint });
+        // The raw variant returns the same value the plain one does, wrapped. An endpoint with no
+        // response body still has headers, so it wraps `null` rather than returning nothing.
+        const return_ = raw
+            ? php.Type.reference(this.context.getHttpResponseClassReference(bodyType ?? php.Type.null()))
+            : bodyType;
+        const hasPagination = !raw && this.hasPagination(endpoint);
         return php.method({
             name: hasPagination
                 ? this.context.getUnpagedEndpointMethodName(endpoint)
@@ -146,7 +173,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             access: hasPagination ? "private" : "public",
             parameters,
             docs: endpoint.docs,
-            codeExample: hasPagination ? undefined : this.getEndpointCodeExample(endpoint),
+            codeExample: hasPagination || raw ? undefined : this.getEndpointCodeExample(endpoint),
             return_,
             throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
@@ -209,7 +236,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
-                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint, return_ });
+                const successResponseStatements = this.getEndpointSuccessResponseStatements({
+                    endpoint,
+                    return_: bodyType,
+                    raw
+                });
                 if (successResponseStatements != null) {
                     writer.writeNode(successResponseStatements);
                 }
@@ -851,12 +882,54 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
+    /**
+     * Writes the success return of an endpoint method.
+     *
+     * `value` is what the plain client returns; `undefined` is its bodyless `return;`. A raw
+     * client returns the same value wrapped together with the response it came from, so that
+     * the status and the headers an endpoint method otherwise reads and discards survive.
+     */
+    private writeSuccessReturn({
+        writer,
+        raw,
+        value,
+        phpstanIgnore = false
+    }: {
+        writer: php.Writer;
+        raw: boolean;
+        value?: php.AstNode;
+        /** Suppress the raw return's type mismatch, where the plain return already suppresses it. */
+        phpstanIgnore?: boolean;
+    }): void {
+        if (!raw) {
+            if (value == null) {
+                writer.writeLine("return;");
+                return;
+            }
+            writer.write("return ");
+            writer.writeNodeStatement(value);
+            return;
+        }
+        writer.write("return ");
+        writer.writeNode(
+            php.invokeMethod({
+                on: this.context.getHttpResponseClassReference(),
+                method: HTTP_RESPONSE_FACTORY_METHOD_NAME,
+                arguments_: [value ?? php.codeblock("null"), php.codeblock(RESPONSE_VARIABLE_NAME)],
+                static_: true
+            })
+        );
+        writer.writeLine(phpstanIgnore ? "; // @phpstan-ignore-line" : ";");
+    }
+
     private getEndpointSuccessResponseStatements({
         endpoint,
-        return_
+        return_,
+        raw = false
     }: {
         endpoint: FernIr.HttpEndpoint;
         return_: php.Type | undefined;
+        raw?: boolean;
     }): php.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return php.codeblock((writer) => {
@@ -864,7 +937,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     "if",
                     php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                 );
-                writer.writeLine("return;");
+                this.writeSuccessReturn({ writer, raw });
                 writer.endControlFlow();
             });
         }
@@ -876,7 +949,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
-                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    this.writeSuccessReturn({ writer, raw, value: this.getResponseBodyString() });
                     writer.endControlFlow();
                 },
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
@@ -885,7 +958,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
-                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    this.writeSuccessReturn({ writer, raw, value: this.getResponseBodyString() });
                     writer.endControlFlow();
                 },
                 json: (_reference) => {
@@ -894,16 +967,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
                     if (return_ == null) {
-                        writer.write("return;");
+                        this.writeSuccessReturn({ writer, raw });
                         writer.endControlFlow();
                         return;
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent());
                     writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
-                    writer.writeTextStatement("return null");
+                    this.writeSuccessReturn({ writer, raw, value: php.codeblock("null") });
                     writer.endControlFlow();
-                    writer.write("return ");
-                    writer.writeNode(this.decodeJsonResponse(return_));
+                    this.writeDecodedJsonReturn({ writer, raw, return_ });
                     writer.endControlFlow();
                     writer.write("} catch (");
                     writer.writeNode(this.context.getJsonExceptionClassReference());
@@ -924,7 +996,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                 writer,
                                 streamClassReference: this.context.getSseStreamClassReference(payloadType),
                                 payloadType,
-                                terminator: sseChunk.terminator
+                                terminator: sseChunk.terminator,
+                                raw
                             });
                         },
                         json: (jsonChunk) => {
@@ -933,7 +1006,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                 writer,
                                 streamClassReference: this.context.getJsonStreamClassReference(payloadType),
                                 payloadType,
-                                terminator: jsonChunk.terminator
+                                terminator: jsonChunk.terminator,
+                                raw
                             });
                         },
                         text: () => {
@@ -943,9 +1017,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                     `${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`
                                 )
                             );
-                            writer.write("return ");
-                            writer.writeNodeStatement(
-                                php.instantiateClass({
+                            this.writeSuccessReturn({
+                                writer,
+                                raw,
+                                value: php.instantiateClass({
                                     classReference: this.context.getTextStreamClassReference(),
                                     arguments_: [
                                         {
@@ -954,7 +1029,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                         }
                                     ]
                                 })
-                            );
+                            });
                             writer.endControlFlow();
                         },
                         _other: () => undefined
@@ -965,7 +1040,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
-                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    this.writeSuccessReturn({ writer, raw, value: this.getResponseBodyString() });
                     writer.endControlFlow();
                 },
                 _other: () => undefined
@@ -977,12 +1052,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer,
         streamClassReference,
         payloadType,
-        terminator
+        terminator,
+        raw
     }: {
         writer: php.Writer;
         streamClassReference: php.ClassReference;
         payloadType: php.Type;
         terminator: string | undefined;
+        raw: boolean;
     }): void {
         writer.controlFlow(
             "if",
@@ -994,9 +1071,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             variableName: deserializerVarName
         });
         const terminatorLiteral = terminator != null ? `'${terminator.replace(/'/g, "\\'")}'` : "null";
-        writer.write("return ");
-        writer.writeNodeStatement(
-            php.instantiateClass({
+        this.writeSuccessReturn({
+            writer,
+            raw,
+            value: php.instantiateClass({
                 classReference: streamClassReference,
                 arguments_: [
                     {
@@ -1016,7 +1094,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }
                 ]
             })
-        );
+        });
         writer.endControlFlow();
     }
 
@@ -1082,24 +1160,35 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private decodeJsonResponse(return_: php.Type | undefined): php.CodeBlock {
+    /**
+     * The statement that deserializes a json response, and whether it carries a phpstan ignore
+     * because the helper it routes to answers a type looser than the declared one. Both come out
+     * of the one switch, so a new loosely typed helper cannot be added to half of it.
+     */
+    private decodeJsonResponse(return_: php.Type | undefined): DecodedJsonResponse {
         if (return_ == null) {
-            return php.codeblock("");
+            return { code: php.codeblock(""), carriesPhpstanIgnore: false };
         }
         const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIABLE_NAME)];
         const internalType = return_.underlyingType().internalType;
         switch (internalType.type) {
             case "reference":
-                return this.decodeJsonResponseForClassReference({
-                    arguments_,
-                    classReference: internalType.value
-                });
+                return {
+                    code: this.decodeJsonResponseForClassReference({
+                        arguments_,
+                        classReference: internalType.value
+                    }),
+                    carriesPhpstanIgnore: false
+                };
             case "array":
             case "map":
-                return this.decodeJsonResponseForArray({
-                    arguments_,
-                    type: return_.underlyingType()
-                });
+                return {
+                    code: this.decodeJsonResponseForArray({
+                        arguments_,
+                        type: return_.underlyingType()
+                    }),
+                    carriesPhpstanIgnore: true
+                };
             case "int":
             case "float":
             case "string":
@@ -1108,14 +1197,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case "dateTime":
             case "mixed":
             case "literal":
-                return this.decodeJsonResponseForPrimitive({
-                    arguments_,
-                    methodSuffix: upperFirst(internalType.type)
-                });
+                return {
+                    code: this.decodeJsonResponseForPrimitive({
+                        arguments_,
+                        methodSuffix: upperFirst(internalType.type)
+                    }),
+                    carriesPhpstanIgnore: false
+                };
             case "enumString":
-                return this.decodeJsonResponseForEnumString({
-                    arguments_
-                });
+                return {
+                    code: this.decodeJsonResponseForEnumString({
+                        arguments_
+                    }),
+                    carriesPhpstanIgnore: true
+                };
             case "union":
                 return this.decodeJsonResponseForUnion({
                     arguments_,
@@ -1216,13 +1311,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         arguments_: UnnamedArgument[];
         types: php.Type[];
-    }): php.CodeBlock {
+    }): DecodedJsonResponse {
         const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types });
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
+        // - including whether that type's own decoder suppresses anything
         if (unionTypeParameters.length === 1) {
             return this.decodeJsonResponse(types[0]);
         }
-        return php.codeblock((writer) => {
+        const code = php.codeblock((writer) => {
             writer.writeNode(
                 php.invokeMethod({
                     on: this.context.getJsonDecoderClassReference(),
@@ -1235,6 +1331,44 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 })
             );
             writer.writeLine("; // @phpstan-ignore-line");
+        });
+        return { code, carriesPhpstanIgnore: true };
+    }
+
+    private getResponseBodyString(): php.CodeBlock {
+        return php.codeblock(`${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+    }
+
+    /**
+     * Writes the return of a json endpoint. The raw variant names the deserialized body first,
+     * because the deserializer helpers emit a whole statement rather than an expression.
+     */
+    private writeDecodedJsonReturn({
+        writer,
+        raw,
+        return_
+    }: {
+        writer: php.Writer;
+        raw: boolean;
+        return_: php.Type;
+    }): void {
+        const decoded = this.decodeJsonResponse(return_);
+        if (!raw) {
+            writer.write("return ");
+            writer.writeNode(decoded.code);
+            return;
+        }
+        writer.write(`${BODY_VARIABLE_NAME} = `);
+        writer.writeNode(decoded.code);
+        this.writeSuccessReturn({
+            writer,
+            raw,
+            value: php.codeblock(BODY_VARIABLE_NAME),
+            // Some deserializer helpers are loosely typed - `JsonDecoder::decodeArray` answers
+            // `array`, an enum answers `string` - which is why the plain client's return carries an
+            // ignore. Wrapping moves that same mismatch onto the raw client's return, so the ignore
+            // moves with it.
+            phpstanIgnore: decoded.carriesPhpstanIgnore
         });
     }
 
@@ -1289,6 +1423,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         {
                             name: "body",
                             assignment: body
+                        },
+                        {
+                            name: "headers",
+                            assignment: php.codeblock(`${RESPONSE_VARIABLE_NAME}->getHeaders()`)
                         }
                     ],
                     multiline: true
