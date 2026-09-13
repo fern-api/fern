@@ -696,6 +696,29 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 }
             });
 
+            it("extracts default value for long/int64 primitive type", () => {
+                const LONG_WITH_DEFAULT = FernIr.TypeReference.primitive({
+                    v1: FernIr.PrimitiveType.Long,
+                    v2: FernIr.PrimitiveTypeV2.long({ default: 0 })
+                });
+                const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
+                    page: createRequestProperty("offset", LONG_WITH_DEFAULT),
+                    results: createResponseProperty("items", LIST_STRING_TYPE),
+                    step: undefined,
+                    hasNextPage: undefined
+                });
+                const instance = createInstance({ pagination: offsetPagination });
+                const context = createMockContext();
+                const info = instance.getPaginationInfo(context);
+                expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                    const initText = serializeStatements([info!.initializeOffset]);
+                    expect(initText).toContain("0");
+                }
+            });
+
             it("falls back to 1 when no default is defined", () => {
                 const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
                     page: createRequestProperty("page", INTEGER_TYPE),

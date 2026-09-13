@@ -669,13 +669,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 if (maybeV2Scheme != null) {
                     defaultValue = FernIr.PrimitiveTypeV2._visit(maybeV2Scheme, {
                         integer: (it) => (it.default != null ? String(it.default) : undefined),
-                        double: () => undefined,
+                        double: (it) => (it.default != null ? String(it.default) : undefined),
                         string: () => undefined,
                         boolean: () => undefined,
-                        long: () => undefined,
-                        bigInteger: () => undefined,
-                        uint: () => undefined,
-                        uint64: () => undefined,
+                        long: (it) => (it.default != null ? String(it.default) : undefined),
+                        bigInteger: (it) => (it.default != null ? String(it.default) : undefined),
+                        uint: (it) => (it.default != null ? String(it.default) : undefined),
+                        uint64: (it) => (it.default != null ? String(it.default) : undefined),
                         date: () => undefined,
                         dateTime: () => undefined,
                         dateTimeRfc2822: () => undefined,
