@@ -13,3 +13,10 @@
       resolution is unaffected. A malformed digest is rejected with an error naming generators.yml.
       Tag-based references are unchanged.
   type: internal
+
+- summary: |
+      Setting the USE_FERN_RC environment variable runs the on-prem adapter's current pre-release
+      instead of the version the workspace asks for, for following the adapter internally before its
+      release versions exist. It applies only to an invocation that already resolves to the adapter,
+      and a digest-pinned image still wins. Unset, the version in generators.yml is what runs.
+  type: internal
