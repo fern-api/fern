@@ -8,7 +8,7 @@ use fern_cli_sdk::auth::{AuthStrategy, BasicAuth, OAuth2Auth, OAuth2Endpoint, OA
 fn main() {
     let app = CliApp::new("any-auth-cli")
         .auth(BasicAuth::new("BasicAuth").username_env("ACME_ACCOUNT_SID").password_env("ACME_AUTH_TOKEN"))
-        .auth(OAuth2Auth::new("OAuth2").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").token_header("Authorization").token_prefix("Bearer").token_endpoint(OAuth2Endpoint::new("https://api.example.com/token", "/token").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["client_id"], OAuth2RequestValue::ClientId)).request_property(OAuth2RequestProperty::body(["client_secret"], OAuth2RequestValue::ClientSecret)).access_token_path(["access_token"]).expires_in_path(["expires_in"])))
+        .auth(OAuth2Auth::new("OAuth2").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").token_header("Authorization").token_prefix("Bearer").token_endpoint(OAuth2Endpoint::new("https://api.example.com/token", "/token").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["client_id"], OAuth2RequestValue::ClientId)).request_property(OAuth2RequestProperty::body(["client_secret"], OAuth2RequestValue::ClientSecret)).request_property(OAuth2RequestProperty::body(["grant_type"], OAuth2RequestValue::literal(serde_json::json!("client_credentials")))).access_token_path(["access_token"]).expires_in_path(["expires_in"])))
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

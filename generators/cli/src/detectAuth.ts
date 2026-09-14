@@ -71,10 +71,19 @@ export type AuthStrategyVariant = "Any" | "Routing";
  *     client-credentials added alongside a spec's Basic scheme) is never
  *     selected and requests go out unauthenticated.
  *   - `ENDPOINT_SECURITY` → `Routing`: per-operation dispatch, explicitly.
- *   - `ALL` → `undefined`. The IR only produces `ALL` for zero or one scheme,
- *     where `Auto` is already equivalent, so single-scheme CLIs keep a
- *     byte-identical `main.rs`. `ALL` over several schemes has no `Auto`
- *     equivalent (it would silently fall back to routing), so it throws.
+ *   - `ALL` → `undefined`, leaving the runtime on `Auto`. A single scheme is
+ *     already equivalent under `Auto`, so those CLIs keep a byte-identical
+ *     `main.rs`.
+ *
+ * `ALL` over several schemes has no exact `Auto` equivalent, but it is
+ * reachable without the user asking for it: `mergeIntermediateRepresentation`
+ * takes `requirement` from the first spec and `schemes` from whichever spec
+ * declares more, so a multi-spec workspace whose first spec has one scheme
+ * (`ALL`) and whose second has two (`ANY`) merges to `ALL` over two schemes.
+ * Failing generation there would break workspaces that build today, and the
+ * SDK generators quietly use the first scheme in the same situation
+ * (`GeneratedSdkClientClassImpl`'s `case "ALL"`). Warn and fall back to
+ * `Auto` rather than throw.
  */
 export function authStrategyVariant(auth: {
     requirement: FernIr.AuthSchemesRequirement;
@@ -88,8 +97,10 @@ export function authStrategyVariant(auth: {
             return "Routing";
         case "ALL":
             if (schemes.length > 1) {
-                throw new Error(
-                    `Unsupported auth requirement ALL over ${schemes.length} schemes; the CLI runtime has no equivalent strategy.`
+                console.warn(
+                    `Auth requirement ALL over ${schemes.length} schemes has no equivalent CLI strategy; ` +
+                        "falling back to the runtime's Auto default (per-endpoint routing when the spec " +
+                        "declares it, otherwise first scheme with credentials)."
                 );
             }
             return undefined;
@@ -888,7 +899,12 @@ export function resolveDefaultBaseUrl(args: {
             const chosen =
                 single.environments.find((environment) => environment.id === defaultEnvironmentId) ??
                 single.environments[0];
-            return chosen?.url;
+            // `defaultUrl` (`x-fern-default-url`) is the concrete host to use
+            // when no server variables are supplied; `url` is the template
+            // resolved with each variable's default. The CLI has no way to
+            // supply variables, so the untemplated form is always the right
+            // one. Matches the SDK generators (Python's `_get_preferred_url`).
+            return chosen?.defaultUrl ?? chosen?.url;
         },
         multipleBaseUrls: (multiple) => {
             const chosen =
@@ -898,11 +914,14 @@ export function resolveDefaultBaseUrl(args: {
                 return undefined;
             }
             // Prefer the base URL the endpoint is pinned to; otherwise take
-            // the first declared one.
-            if (baseUrlId != null && chosen.urls[baseUrlId] != null) {
-                return chosen.urls[baseUrlId];
+            // the first declared one. Either way `defaultUrls` wins over the
+            // variable-substituted `urls`, for the reason above.
+            const resolvedBaseUrlId =
+                baseUrlId != null && chosen.urls[baseUrlId] != null ? baseUrlId : Object.keys(chosen.urls)[0];
+            if (resolvedBaseUrlId == null) {
+                return undefined;
             }
-            return Object.values(chosen.urls)[0];
+            return chosen.defaultUrls?.[resolvedBaseUrlId] ?? chosen.urls[resolvedBaseUrlId];
         },
         _other: () => undefined
     });

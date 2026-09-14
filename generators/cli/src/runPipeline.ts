@@ -164,7 +164,10 @@ export async function runPipeline(args: {
         customCommands,
         rootGroup: customConfig.rootGroup,
         userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
-        authStrategy: authStrategyVariant(ir.auth)
+        // A strategy only composes bound schemes, so skip deriving one when
+        // there are none — `copySpecs` would drop it anyway, and this keeps
+        // unauthenticated CLIs off the mapping entirely.
+        authStrategy: authBindings.length > 0 ? authStrategyVariant(ir.auth) : undefined
     });
     await writeGitignore(outputDir);
 
