@@ -61,7 +61,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -112,7 +113,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -166,7 +168,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -200,7 +203,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
@@ -779,4 +783,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2437894`;
+exports[`dependencies > file dependencies 1`] = `2445305`;
