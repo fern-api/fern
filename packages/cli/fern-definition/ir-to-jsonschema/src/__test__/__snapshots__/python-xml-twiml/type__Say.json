@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "voice": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "loop": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "children": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Break"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "BreakStrength": {
+      "type": "string",
+      "enum": [
+        "none",
+        "x-weak",
+        "weak",
+        "medium",
+        "strong",
+        "x-strong"
+      ]
+    },
+    "Break": {
+      "type": "object",
+      "properties": {
+        "strength": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BreakStrength"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "time": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
