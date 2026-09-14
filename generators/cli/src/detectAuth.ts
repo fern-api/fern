@@ -97,6 +97,7 @@ export function authStrategyVariant(auth: {
             return "Routing";
         case "ALL":
             if (schemes.length > 1) {
+                // biome-ignore lint/suspicious/noConsole: generator CLI output
                 console.warn(
                     `Auth requirement ALL over ${schemes.length} schemes has no equivalent CLI strategy; ` +
                         "falling back to the runtime's Auto default (per-endpoint routing when the spec " +
