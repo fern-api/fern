@@ -105,6 +105,33 @@ function makeNullableStringSchema(): SchemaWithExample {
     });
 }
 
+function makeOptionalSchema(value: SchemaWithExample): SchemaWithExample {
+    return SchemaWithExample.optional({
+        value,
+        description: undefined,
+        availability: undefined,
+        generatedName: "TestOptional",
+        nameOverride: undefined,
+        groupName: undefined,
+        namespace: undefined,
+        title: undefined,
+        inline: undefined
+    });
+}
+
+function makeStringSchema(): SchemaWithExample {
+    return makePrimitiveSchema(
+        PrimitiveSchemaValueWithExample.string({
+            default: undefined,
+            pattern: undefined,
+            format: undefined,
+            minLength: undefined,
+            maxLength: undefined,
+            example: undefined
+        })
+    );
+}
+
 function makeObjectSchema({
     properties,
     additionalProperties
@@ -508,6 +535,82 @@ describe("ExampleTypeFactory", () => {
                 // placeholder map and not dropped from the example altogether.
                 expect(result.properties.logo).toMatchObject({ type: "null" });
                 expect(result.properties.id).toMatchObject({ type: "primitive" });
+            }
+        });
+    });
+
+    describe("required nullable properties", () => {
+        const REQUEST_OPTIONS: ExampleTypeFactory.Options = { ignoreOptionals: true, isParameter: false };
+        const RESPONSE_OPTIONS: ExampleTypeFactory.Options = {
+            ignoreOptionals: false,
+            isParameter: false,
+            maxDepth: 3
+        };
+
+        it("should emit an explicit null for a required nullable property in a request example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    processor_token: makeStringSchema(),
+                    webhook: makeNullableStringSchema()
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: REQUEST_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(result.properties.processor_token).toMatchObject({ type: "primitive" });
+                expect(result.properties.webhook).toMatchObject({ type: "null" });
+            }
+        });
+
+        it("should omit an optional nullable property from a request example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    processor_token: makeStringSchema(),
+                    webhook: makeOptionalSchema(makeNullableStringSchema())
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: REQUEST_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(Object.keys(result.properties)).toEqual(["processor_token"]);
+            }
+        });
+
+        it("should include a required nullable property in a response example", () => {
+            const schema = makeObjectSchema({
+                properties: {
+                    request_id: makeStringSchema(),
+                    webhook: makeNullableStringSchema()
+                },
+                additionalProperties: false
+            });
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: RESPONSE_OPTIONS
+            });
+
+            expect(result?.type).toBe("object");
+            if (result?.type === "object") {
+                expect(Object.keys(result.properties).sort()).toEqual(["request_id", "webhook"]);
             }
         });
     });
