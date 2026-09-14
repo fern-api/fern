@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.93.1
+  changelogEntry:
+    - summary: |
+        The generated README now always includes a Pagination section (and pagination usage snippets)
+        when the API has paginated endpoints, matching the client which always returns `core.Page`.
+        Previously the section was dropped when the CLI ran without org information (e.g. `fern generate --local` without a `FERN_TOKEN`).
+      type: fix
+  createdAt: "2026-09-14"
+  irVersion: 67
 - version: 3.93.0
   changelogEntry:
     - summary: |
