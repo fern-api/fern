@@ -62,10 +62,39 @@
         "types": {
           "Category": {
             "docs": "A category for a pet",
+            "encoding": {
+              "xml": {
+                "name": "Category",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
             "inline": undefined,
             "properties": {
-              "id": "optional<long>",
-              "name": "optional<string>",
+              "id": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<long>",
+              },
+              "name": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -84,17 +113,88 @@
           },
           "Pet": {
             "docs": "A pet for sale in the pet store",
+            "encoding": {
+              "xml": {
+                "name": "Pet",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
             "inline": undefined,
             "properties": {
-              "category": "optional<Category>",
-              "id": "optional<long>",
-              "name": "string",
-              "photoUrls": "list<string>",
+              "category": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": "Category",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<Category>",
+              },
+              "id": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<long>",
+              },
+              "name": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "string",
+              },
+              "photoUrls": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": "photoUrl",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": true,
+                  },
+                },
+                "type": "list<string>",
+              },
               "status": {
                 "docs": "pet status in the store",
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
                 "type": "optional<PetStatus>",
               },
-              "tags": "optional<list<Tag>>",
+              "tags": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": "tag",
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": true,
+                  },
+                },
+                "type": "optional<list<Tag>>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -114,10 +214,39 @@
           },
           "Tag": {
             "docs": "A tag for a pet",
+            "encoding": {
+              "xml": {
+                "name": "Tag",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
             "inline": undefined,
             "properties": {
-              "id": "optional<long>",
-              "name": "optional<string>",
+              "id": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<long>",
+              },
+              "name": {
+                "encoding": {
+                  "xml": {
+                    "attribute": undefined,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -168,17 +297,35 @@ types:
   Category:
     docs: A category for a pet
     properties:
-      id: optional<long>
-      name: optional<string>
+      id:
+        type: optional<long>
+        encoding:
+          xml: {}
+      name:
+        type: optional<string>
+        encoding:
+          xml: {}
     source:
       openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Category
   Tag:
     docs: A tag for a pet
     properties:
-      id: optional<long>
-      name: optional<string>
+      id:
+        type: optional<long>
+        encoding:
+          xml: {}
+      name:
+        type: optional<string>
+        encoding:
+          xml: {}
     source:
       openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Tag
   PetStatus:
     enum:
       - available
@@ -191,16 +338,41 @@ types:
   Pet:
     docs: A pet for sale in the pet store
     properties:
-      id: optional<long>
-      category: optional<Category>
-      name: string
-      photoUrls: list<string>
-      tags: optional<list<Tag>>
+      id:
+        type: optional<long>
+        encoding:
+          xml: {}
+      category:
+        type: optional<Category>
+        encoding:
+          xml:
+            name: Category
+      name:
+        type: string
+        encoding:
+          xml: {}
+      photoUrls:
+        type: list<string>
+        encoding:
+          xml:
+            name: photoUrl
+            wrapped: true
+      tags:
+        type: optional<list<Tag>>
+        encoding:
+          xml:
+            name: tag
+            wrapped: true
       status:
         type: optional<PetStatus>
         docs: pet status in the store
+        encoding:
+          xml: {}
     source:
       openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Pet
 ",
     },
   },

@@ -225,6 +225,7 @@
             "conflict": {},
             "generatedName": "categoryId",
             "key": "id",
+            "xml": {},
             "schema": {
               "generatedName": "CategoryId",
               "value": {
@@ -244,6 +245,7 @@
             "conflict": {},
             "generatedName": "categoryName",
             "key": "name",
+            "xml": {},
             "schema": {
               "generatedName": "CategoryName",
               "value": {
@@ -266,6 +268,10 @@
         "title": "Pet category",
         "groupName": [],
         "additionalProperties": false,
+        "encoding": {
+          "name": "Category",
+          "type": "xml"
+        },
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -279,6 +285,7 @@
             "conflict": {},
             "generatedName": "tagId",
             "key": "id",
+            "xml": {},
             "schema": {
               "generatedName": "TagId",
               "value": {
@@ -298,6 +305,7 @@
             "conflict": {},
             "generatedName": "tagName",
             "key": "name",
+            "xml": {},
             "schema": {
               "generatedName": "TagName",
               "value": {
@@ -320,6 +328,10 @@
         "title": "Pet Tag",
         "groupName": [],
         "additionalProperties": false,
+        "encoding": {
+          "name": "Tag",
+          "type": "xml"
+        },
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -333,6 +345,7 @@
             "conflict": {},
             "generatedName": "petId",
             "key": "id",
+            "xml": {},
             "schema": {
               "generatedName": "PetId",
               "value": {
@@ -352,6 +365,9 @@
             "conflict": {},
             "generatedName": "petCategory",
             "key": "category",
+            "xml": {
+              "name": "Category"
+            },
             "schema": {
               "generatedName": "PetCategory",
               "value": {
@@ -371,6 +387,7 @@
             "conflict": {},
             "generatedName": "petName",
             "key": "name",
+            "xml": {},
             "schema": {
               "schema": {
                 "example": "doggie",
@@ -386,6 +403,10 @@
             "conflict": {},
             "generatedName": "petPhotoUrls",
             "key": "photoUrls",
+            "xml": {
+              "name": "photoUrl",
+              "wrapped": true
+            },
             "schema": {
               "value": {
                 "schema": {
@@ -405,6 +426,10 @@
             "conflict": {},
             "generatedName": "petTags",
             "key": "tags",
+            "xml": {
+              "name": "tag",
+              "wrapped": true
+            },
             "schema": {
               "generatedName": "PetTags",
               "value": {
@@ -430,6 +455,7 @@
             "conflict": {},
             "generatedName": "petStatus",
             "key": "status",
+            "xml": {},
             "schema": {
               "generatedName": "PetStatus",
               "description": "pet status in the store",
@@ -472,6 +498,10 @@
         "title": "a Pet",
         "groupName": [],
         "additionalProperties": false,
+        "encoding": {
+          "name": "Pet",
+          "type": "xml"
+        },
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
