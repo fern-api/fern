@@ -28,7 +28,13 @@ function isFileDownloadEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
  * `client.<Path>.WithRawResponse.<Method>(`, which exposes the response headers.
  */
 function toRawClientCall(clientCall: string): string {
-    return clientCall.replace(/^(\s*client(?:\.\w+)*)\.(\w+)\(/, "$1.WithRawResponse.$2(");
+    const rawClientCall = clientCall.replace(/^(\s*client(?:\.\w+)*)\.(\w+)\(/, "$1.WithRawResponse.$2(");
+    if (rawClientCall === clientCall) {
+        throw GeneratorError.internalError(
+            `Failed to rewrite client call to raw client call for file download wire test: ${clientCall}`
+        );
+    }
+    return rawClientCall;
 }
 
 export class WireTestGenerator {
