@@ -97,6 +97,7 @@ export interface SdkCustomConfig {
     alwaysSendAuth: boolean;
     optionalAuth: boolean;
     guardProcessEnvAccess: boolean;
+    websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
 }
