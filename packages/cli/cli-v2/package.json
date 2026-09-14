@@ -29,6 +29,7 @@
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist:bin": "node build.compile.mjs",
     "dist:bin:local": "node build.compile.mjs --target=local",
+    "dist:cli:beta": "node build.beta.mjs",
     "dist:cli:dev": "node build.dev.mjs",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
