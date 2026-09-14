@@ -158,6 +158,34 @@
               "openapi": "../openapi.yml",
             },
           },
+          "Pause": {
+            "docs": "XML element without an explicit xml.name; falls back to the schema name.",
+            "encoding": {
+              "xml": {
+                "name": "Pause",
+                "namespace": undefined,
+                "prefix": undefined,
+              },
+            },
+            "inline": undefined,
+            "properties": {
+              "length": {
+                "encoding": {
+                  "xml": {
+                    "attribute": true,
+                    "name": undefined,
+                    "separator": undefined,
+                    "text": undefined,
+                    "wrapped": undefined,
+                  },
+                },
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "PlainObject": {
             "docs": "Not XML-encoded; properties must not carry xml metadata.",
             "inline": undefined,
@@ -370,6 +398,19 @@
     encoding:
       xml:
         name: Number
+  Pause:
+    docs: XML element without an explicit xml.name; falls back to the schema name.
+    properties:
+      length:
+        type: optional<integer>
+        encoding:
+          xml:
+            attribute: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      xml:
+        name: Pause
   PlainObject:
     docs: Not XML-encoded; properties must not carry xml metadata.
     properties:

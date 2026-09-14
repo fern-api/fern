@@ -9,29 +9,32 @@ export const X_FERN_XML_LIST_SEPARATOR = "x-fern-xml-list-separator";
 export declare namespace XmlSchemaExtension {
     export interface Args extends AbstractExtension.Args {
         schema: OpenAPIV3_1.SchemaObject;
+        fallbackName: string;
     }
 }
 
 /**
  * Reads the OpenAPI `xml` object on an object schema and produces the type-level `XmlEncoding`.
- * Only schemas that name their element (`xml.name`) are treated as XML elements.
+ * The element name defaults to the schema name when `xml.name` is omitted.
  */
 export class XmlSchemaExtension extends AbstractExtension<XmlEncoding> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly fallbackName: string;
     public readonly key = "xml";
 
-    constructor({ breadcrumbs, schema, context }: XmlSchemaExtension.Args) {
+    constructor({ breadcrumbs, schema, fallbackName, context }: XmlSchemaExtension.Args) {
         super({ breadcrumbs, context });
         this.schema = schema;
+        this.fallbackName = fallbackName;
     }
 
     public convert(): XmlEncoding | undefined {
         const xml = this.getExtensionValue(this.schema);
-        if (!isXmlObject(xml) || typeof xml.name !== "string") {
+        if (!isXmlObject(xml)) {
             return undefined;
         }
         return {
-            name: xml.name,
+            name: typeof xml.name === "string" ? xml.name : this.fallbackName,
             namespace: typeof xml.namespace === "string" ? xml.namespace : undefined,
             prefix: typeof xml.prefix === "string" ? xml.prefix : undefined
         };

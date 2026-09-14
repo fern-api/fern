@@ -10,6 +10,7 @@ import { SchemaConverter } from "./SchemaConverter.js";
 export declare namespace ObjectSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject;
+        id: string;
     }
 
     export interface Output {
@@ -28,10 +29,15 @@ export class ObjectSchemaConverter extends AbstractConverter<
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly xmlEncoding: XmlEncoding | undefined;
 
-    constructor({ context, breadcrumbs, schema }: ObjectSchemaConverter.Args) {
+    constructor({ context, breadcrumbs, schema, id }: ObjectSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
-        this.xmlEncoding = new XmlSchemaExtension({ breadcrumbs: this.breadcrumbs, schema, context }).convert();
+        this.xmlEncoding = new XmlSchemaExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema,
+            fallbackName: id,
+            context
+        }).convert();
     }
 
     public convert(): ObjectSchemaConverter.Output {

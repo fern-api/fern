@@ -701,7 +701,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const objectConverter = new ObjectSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema
+                schema: this.schema,
+                id: this.id
             });
             const convertedObject = objectConverter.convert();
             if (convertedObject != null) {
