@@ -69,9 +69,10 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.AIChatConfig includes the maskPii field.
-type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+// DocsV1Write.AIChatConfig includes the maskPii and disclaimer fields.
+type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
     maskPii?: boolean;
+    disclaimer?: string;
 };
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
@@ -991,8 +992,9 @@ export class DocsDefinitionResolver {
                               url: ds.url,
                               title: ds.title
                           })),
-                          maskPii: this.parsedDocsConfig.aiChatConfig.maskPii
-                      } as AIChatConfigWithMaskPii as DocsV1Write.DocsConfig["aiChatConfig"])
+                          maskPii: this.parsedDocsConfig.aiChatConfig.maskPii,
+                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer
+                      } as AIChatConfigWithUnpublishedFields as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -1107,7 +1109,7 @@ export class DocsDefinitionResolver {
                     ? {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs as DocsV1Write.DocsThemeConfig["tabs"],
+                          tabs: convertThemeTabs(this.parsedDocsConfig.theme.tabs),
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
@@ -3030,6 +3032,19 @@ function createEditThisPageUrl(
     const url = `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 
     return { url, launch };
+}
+
+export function convertThemeTabs(
+    tabs: docsYml.RawSchemas.TabsThemeConfig | undefined
+): DocsV1Write.DocsThemeConfig["tabs"] | undefined {
+    if (tabs == null || typeof tabs === "string") {
+        return tabs;
+    }
+    return {
+        style: tabs.style,
+        alignment: tabs.alignment?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["alignment"],
+        placement: tabs.placement?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["placement"]
+    };
 }
 
 function convertAvailability(

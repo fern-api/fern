@@ -34,6 +34,16 @@ paths:
               deprecated: true
               schema:
                 $ref: "#/components/schemas/RateLimitPolicy"
+            X-Required-Policy:
+              description: Mandatory rate limit policy header
+              required: true
+              schema:
+                $ref: "#/components/schemas/RateLimitPolicy"
+            X-Required-Count:
+              description: Mandatory primitive header
+              required: true
+              schema:
+                type: integer
             X-Account-Info:
               description: JSON-encoded account metadata
               content:
@@ -147,6 +157,7 @@ components:
   headers:
     TraceHeader:
       description: Shared trace header resolved via components/headers
+      required: true
       schema:
         $ref: "#/components/schemas/TraceInfo"
   schemas:

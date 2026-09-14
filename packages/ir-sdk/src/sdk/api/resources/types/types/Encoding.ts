@@ -5,4 +5,5 @@ import type * as FernIr from "../../../index.js";
 export interface Encoding {
     json: FernIr.JsonEncoding | undefined;
     proto: FernIr.ProtoEncoding | undefined;
+    xml: FernIr.XmlEncoding | undefined;
 }

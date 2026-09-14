@@ -1608,6 +1608,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1639,6 +1640,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1666,6 +1668,7 @@
               "type": "named",
               "typeId": "GardenSize",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1716,6 +1719,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1756,6 +1760,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1880,6 +1885,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1911,6 +1917,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1938,6 +1945,7 @@
               "type": "named",
               "typeId": "PlantStatus",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1985,6 +1993,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -2032,6 +2041,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

@@ -32,7 +32,8 @@ function bodyProperty(wireValue: string): Ir.http.RequestProperty {
             defaultValue: undefined,
             v2Examples: undefined,
             docs: undefined,
-            availability: undefined
+            availability: undefined,
+            xml: undefined
         })
     };
 }
@@ -65,7 +66,8 @@ const CLIENT_CREDENTIALS_CONFIG = Ir.auth.OAuthConfiguration.clientCredentials({
                     defaultValue: undefined,
                     v2Examples: undefined,
                     docs: undefined,
-                    availability: undefined
+                    availability: undefined,
+                    xml: undefined
                 }
             },
             expiresIn: undefined,

@@ -45,7 +45,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     },
     dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: () => {
-        return { patterns: "src/core/websocket/**" };
+        return { patterns: ["src/core/websocket/**", "tests/unit/websocket/**"] };
     }
 };
 export class WebsocketImpl extends CoreUtility implements Websocket {

@@ -14,4 +14,6 @@ export interface ObjectPropertyWithExample extends FernOpenapiIr.WithAvailabilit
     nameOverride: string | undefined;
     /** A unique name for the property. */
     generatedName: string;
+    /** Present only when the enclosing object schema is an XML element. */
+    xml: FernOpenapiIr.XmlPropertyEncoding | undefined;
 }

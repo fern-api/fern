@@ -2,11 +2,15 @@
 
 import * as FernOpenapiIr from "../../../index.js";
 
-export type Encoding = FernOpenapiIr.Encoding.Protobuf;
+export type Encoding = FernOpenapiIr.Encoding.Protobuf | FernOpenapiIr.Encoding.Xml;
 
 export namespace Encoding {
     export interface Protobuf extends FernOpenapiIr.ProtobufEncoding, _Utils {
         type: "protobuf";
+    }
+
+    export interface Xml extends FernOpenapiIr.XmlEncoding, _Utils {
+        type: "xml";
     }
 
     export interface _Utils {
@@ -15,6 +19,7 @@ export namespace Encoding {
 
     export interface _Visitor<_Result> {
         protobuf: (value: FernOpenapiIr.ProtobufEncoding) => _Result;
+        xml: (value: FernOpenapiIr.XmlEncoding) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -33,10 +38,25 @@ export const Encoding = {
         };
     },
 
+    xml: (value: FernOpenapiIr.XmlEncoding): FernOpenapiIr.Encoding.Xml => {
+        return {
+            ...value,
+            type: "xml",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Encoding.Xml,
+                visitor: FernOpenapiIr.Encoding._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Encoding._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernOpenapiIr.Encoding, visitor: FernOpenapiIr.Encoding._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "protobuf":
                 return visitor.protobuf(value);
+            case "xml":
+                return visitor.xml(value);
             default:
                 return visitor._other(value);
         }

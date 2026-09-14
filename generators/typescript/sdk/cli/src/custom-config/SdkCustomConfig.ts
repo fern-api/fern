@@ -21,6 +21,7 @@ export interface SdkCustomConfig {
     namespaceExport: string | undefined;
     naming: NamingConfig | undefined;
     outputEsm: boolean;
+    esmOnly: boolean;
     outputSourceFiles: boolean;
     outputSrcOnly: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
@@ -96,6 +97,7 @@ export interface SdkCustomConfig {
     alwaysSendAuth: boolean;
     optionalAuth: boolean;
     guardProcessEnvAccess: boolean;
+    websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
 }

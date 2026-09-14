@@ -418,6 +418,9 @@ types:
         type: string
         docs: |
           A unique name for the property.
+      xml:
+        type: optional<commons.XmlPropertyEncoding>
+        docs: Present only when the enclosing object schema is an XML element.
 
   OneOfSchemaWithExample:
     union:
