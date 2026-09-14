@@ -15,6 +15,17 @@ from pydantic import BaseModel
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
 
 
+def sanitize_field_name(name: str) -> str:
+    """Python attribute name pydantic will expose for a field with the given generated name."""
+    if name in BASE_MODEL_PROPERTIES:
+        name = f"{name}_"
+    # Public fields must not start with an underscore (pydantic v2 disallows it), but Fern prefixes
+    # names that start with a digit with one, so those get a `f_` prefix instead.
+    if name.startswith("_"):
+        name = "f_" + name.lstrip("_")
+    return name
+
+
 class PydanticModel:
     VALIDATOR_FIELD_VALUE_PARAMETER_NAME = "v"
     VALIDATOR_VALUES_PARAMETER_NAME = "values"
@@ -89,26 +100,7 @@ class PydanticModel:
         return self._local_class_reference
 
     def add_field(self, unsanitized_field: PydanticField) -> None:
-        field = (
-            dataclasses.replace(unsanitized_field, name=f"{unsanitized_field.name}_")
-            if unsanitized_field.name in BASE_MODEL_PROPERTIES
-            else unsanitized_field
-        )
-
-        # These are public fields so they should not start with an underscore
-        # Fern will automatically add the underscore in the beginning for fields
-        # that start with a number so we actually expect some public fields to
-        # start with an underscore that we need to strip
-        # This isn't just nice to have, Pydantic V2 also disallows underscore prefixes
-        # Python also does not allow fields to start with a number, so we need a new prefix
-        if field.name.startswith("_"):
-            sanitized_name = "f_" + field.name.lstrip("_")
-            prev_fields = field.__dict__
-            del prev_fields["name"]
-            field = PydanticField(
-                **(field.__dict__),
-                name=sanitized_name,
-            )
+        field = dataclasses.replace(unsanitized_field, name=sanitize_field_name(unsanitized_field.name))
 
         is_aliased = field.json_field_name != field.name
         self._has_aliases |= is_aliased

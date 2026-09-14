@@ -2,8 +2,9 @@
 
 import datetime as dt
 import enum
+import uuid
 from dataclasses import dataclass
-from typing import Iterable, List, Optional, Protocol, Sequence, Union, runtime_checkable
+from typing import Iterable, List, Optional, Protocol, Sequence, Union
 from xml.sax.saxutils import escape, quoteattr
 
 import pydantic
@@ -12,12 +13,12 @@ from .pydantic_utilities import IS_PYDANTIC_V2
 XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
 
-@runtime_checkable
 class XmlSerializable(Protocol):
     def to_xml(self, *, xml_declaration: bool = False) -> str: ...
 
 
-XmlScalar = Union[str, int, float, bool, enum.Enum, dt.datetime, dt.date]
+XmlScalar = Union[str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID]
+_SCALAR_TYPES = (str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID)
 XmlAttributeValue = Optional[Union[XmlScalar, Sequence[XmlScalar]]]
 XmlChildValue = Optional[Union[XmlScalar, XmlSerializable, Sequence[Union[XmlScalar, XmlSerializable]]]]
 
@@ -43,7 +44,8 @@ def serialize_xml_element(
     *,
     name: str,
     attributes: Sequence[XmlAttribute] = (),
-    text: Optional[XmlScalar] = None,
+    text: Optional[Union[XmlScalar, Sequence[XmlScalar]]] = None,
+    text_separator: Optional[str] = None,
     children: Sequence[XmlChild] = (),
     namespace: Optional[str] = None,
     prefix: Optional[str] = None,
@@ -54,13 +56,14 @@ def serialize_xml_element(
     if namespace is not None:
         parts.append(f" {'xmlns:' + prefix if prefix else 'xmlns'}={quoteattr(namespace)}")
     for attribute in attributes:
-        rendered = _render_attribute_value(attribute)
+        rendered = _join_scalars(attribute.value, attribute.separator)
         if rendered is not None:
             parts.append(f" {attribute.name}={quoteattr(rendered)}")
 
     body: List[str] = []
-    if text is not None:
-        body.append(escape(_scalar_to_string(text)))
+    rendered_text = _join_scalars(text, text_separator)
+    if rendered_text is not None:
+        body.append(escape(rendered_text))
     for child in children:
         body.extend(_render_child(child))
 
@@ -99,16 +102,15 @@ def extra_xml_attributes(model: pydantic.BaseModel) -> List[XmlAttribute]:
     return [XmlAttribute(name=key, value=value) for key, value in extras.items() if value is not None]
 
 
-def _render_attribute_value(attribute: XmlAttribute) -> Optional[str]:
-    value = attribute.value
+def _join_scalars(value: XmlAttributeValue, separator: Optional[str]) -> Optional[str]:
     if value is None:
         return None
-    if isinstance(value, (str, int, float, bool, enum.Enum, dt.datetime, dt.date)):
+    if isinstance(value, _SCALAR_TYPES):
         return _scalar_to_string(value)
     items = [_scalar_to_string(item) for item in value if item is not None]
     if not items:
         return None
-    return (attribute.separator or " ").join(items)
+    return (separator or " ").join(items)
 
 
 def _render_child(child: XmlChild) -> Iterable[str]:
@@ -116,10 +118,13 @@ def _render_child(child: XmlChild) -> Iterable[str]:
     if value is None:
         return []
     items: Sequence[Union[XmlScalar, XmlSerializable]]
-    if isinstance(value, (str, int, float, bool, enum.Enum, dt.datetime, dt.date, XmlSerializable)):
+    # Scalars are checked first so `str` is not treated as a sequence.
+    if isinstance(value, _SCALAR_TYPES):
         items = [value]
-    else:
+    elif isinstance(value, Sequence):
         items = value
+    else:
+        items = [value]
     rendered = [_render_child_item(child.name, item) for item in items if item is not None]
     if child.wrapped:
         return [f"<{child.name}>{''.join(rendered)}</{child.name}>"] if rendered else [f"<{child.name} />"]
@@ -127,9 +132,14 @@ def _render_child(child: XmlChild) -> Iterable[str]:
 
 
 def _render_child_item(name: str, item: Union[XmlScalar, XmlSerializable]) -> str:
-    if isinstance(item, XmlSerializable):
-        return item.to_xml()
-    return f"<{name}>{escape(_scalar_to_string(item))}</{name}>"
+    if isinstance(item, _SCALAR_TYPES):
+        return f"<{name}>{escape(_scalar_to_string(item))}</{name}>"
+    if not hasattr(item, "to_xml"):
+        raise TypeError(
+            f"Cannot serialize <{name}> child of type {type(item).__name__} to XML: "
+            "only scalars and xml-encoded models (with a to_xml() method) are supported"
+        )
+    return item.to_xml()
 
 
 def _scalar_to_string(value: XmlScalar) -> str:

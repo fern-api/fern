@@ -10,6 +10,7 @@ from ..object_generator import (
     ObjectProperty,
 )
 from fern_python.codegen import AST, SourceFile
+from fern_python.pydantic_codegen.pydantic_model import sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
@@ -149,6 +150,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 for property in properties:
                     if _is_xml_text(property):
                         writer.write_line(f"text=self.{_field_name(property)},")
+                        separator = property.xml.list_separator if property.xml is not None else None
+                        if separator is not None:
+                            writer.write_line(f"text_separator={_quote(separator)},")
                         break
                 writer.write_line("children=[")
                 with writer.indent():
@@ -270,7 +274,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         if len(list_properties) == 0:
             return
 
-        reserved_names: Set[str] = {_field_name(property) for property in properties} | {"to_xml", "append"}
+        reserved_names: Set[str] = {_field_name(property) for property in properties} | _RESERVED_METHOD_NAMES
         for property, item_type in list_properties:
             field_name = _field_name(property)
             if len(list_properties) == 1:
@@ -334,7 +338,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         for type_id, name in candidates.items():
             if tag_counts[name] > 1:
                 name = _snake_name(self._context.get_class_name_for_type_id(type_id, as_request=False))
-            if name in taken:
+            while name in taken:
                 name = f"add_{name}"
             taken.add(name)
             result[type_id] = name
@@ -407,7 +411,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             writer.write("(")
             # Child lists are passed explicitly so `**extra_attributes: str` can't be mistaken for them.
             arguments = [f"{_field_name(p)}={_field_name(p)}" for p in forwarded_properties] + [
-                f"{_field_name(p)}=None" for p in child_properties if p not in forwarded_properties
+                f"{_field_name(p)}={'None' if _is_optional(p.value_type) else '[]'}"
+                for p in child_properties
+                if p not in forwarded_properties
             ]
             writer.write_line(", ".join([*arguments, f"**{_EXTRA_ATTRIBUTES}"]) + ")")
             writer.write_reference(core_utilities.get_xml_utility("append_xml_child"))
@@ -437,6 +443,37 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
 _EXTRA_ATTRIBUTES = "extra_attributes"
 
+# Builder method names that would shadow generated or pydantic model API.
+_RESERVED_METHOD_NAMES = {
+    "to_xml",
+    "append",
+    "copy",
+    "dict",
+    "json",
+    "schema",
+    "schema_json",
+    "construct",
+    "validate",
+    "parse_obj",
+    "parse_raw",
+    "parse_file",
+    "from_orm",
+    "update_forward_refs",
+    "model_dump",
+    "model_dump_json",
+    "model_validate",
+    "model_validate_json",
+    "model_construct",
+    "model_copy",
+    "model_json_schema",
+    "model_fields",
+    "model_config",
+    "model_extra",
+    "model_fields_set",
+    "model_post_init",
+    "model_rebuild",
+}
+
 
 def _is_xml_attribute(property: ObjectProperty) -> bool:
     if property.xml is None:
@@ -464,7 +501,7 @@ def _xml_name(property: ObjectProperty) -> str:
 
 
 def _field_name(property: ObjectProperty) -> str:
-    return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
+    return sanitize_field_name(resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name)
 
 
 def _snake_name(name: str) -> str:
@@ -489,6 +526,22 @@ def _unwrap_list_item_type(type_reference: ir_types.TypeReference) -> Optional[i
         named=lambda _: None,
         primitive=lambda _: None,
         unknown=lambda: None,
+    )
+
+
+def _is_optional(type_reference: ir_types.TypeReference) -> bool:
+    return type_reference.visit(
+        container=lambda container: container.visit(
+            optional=lambda _: True,
+            nullable=lambda _: True,
+            list_=lambda _: False,
+            map_=lambda _: False,
+            set_=lambda _: False,
+            literal=lambda _: False,
+        ),
+        named=lambda _: False,
+        primitive=lambda _: False,
+        unknown=lambda: False,
     )
 
 

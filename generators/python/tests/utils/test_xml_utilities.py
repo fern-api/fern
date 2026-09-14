@@ -1,8 +1,10 @@
 import datetime as dt
 import enum
+import uuid
 from typing import List, Optional
 
 import pydantic
+import pytest
 
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
@@ -118,3 +120,30 @@ def test_extra_xml_attributes_renders_undeclared_fields_escaped() -> None:
         text=say.message,
     )
     assert xml == '<Say foo="a&lt;b&amp;c">hi</Say>'
+
+
+def test_uuid_values_render_as_scalars() -> None:
+    value = uuid.UUID("123e4567-e89b-12d3-a456-426614174000")
+    assert (
+        serialize_xml_element(
+            name="Item",
+            attributes=[XmlAttribute(name="id", value=value)],
+            children=[XmlChild(name="Ref", value=value)],
+        )
+        == f'<Item id="{value}"><Ref>{value}</Ref></Item>'
+    )
+
+
+def test_text_lists_join_with_separator() -> None:
+    assert (
+        serialize_xml_element(name="Gather", text=["speech", "dtmf"], text_separator=" ")
+        == "<Gather>speech dtmf</Gather>"
+    )
+
+
+def test_non_serializable_child_raises() -> None:
+    class Plain(pydantic.BaseModel):
+        name: str
+
+    with pytest.raises(TypeError, match="<customer> child of type Plain"):
+        serialize_xml_element(name="Envelope", children=[XmlChild(name="customer", value=Plain(name="Ada"))])  # type: ignore[arg-type]
