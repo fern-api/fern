@@ -81,7 +81,7 @@ export class ChatSocket {
      */
     public off<T extends keyof ChatSocket.EventHandlers>(event: T, callback: NonNullable<ChatSocket.EventHandlers[T]>): void {
         const handlers = this.eventHandlers[event] as Array<NonNullable<ChatSocket.EventHandlers[T]>>;
-        const index = handlers.indexOf(callback);
+        const index = handlers.lastIndexOf(callback);
         if (index !== -1) {
             handlers.splice(index, 1);
         }
@@ -231,7 +231,7 @@ export class ChatSocket {
      */
     public off<T extends keyof ChatSocket.EventHandlers>(event: T, callback: NonNullable<ChatSocket.EventHandlers[T]>): void {
         const handlers = this.eventHandlers[event] as Array<NonNullable<ChatSocket.EventHandlers[T]>>;
-        const index = handlers.indexOf(callback);
+        const index = handlers.lastIndexOf(callback);
         if (index !== -1) {
             handlers.splice(index, 1);
         }

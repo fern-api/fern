@@ -626,6 +626,20 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
 
                 expect(calls).toEqual(["a", "b", "b"]);
             });
+
+            it("off() removes the most recent registration of a duplicated handler", () => {
+                const { socket, emit } = instantiateGeneratedSocket(mode);
+                const calls: string[] = [];
+                const a = () => calls.push("a");
+                const b = () => calls.push("b");
+                socket.on("open", a);
+                socket.on("open", b);
+                socket.on("open", a);
+                socket.off("open", a);
+                emit("open");
+
+                expect(calls).toEqual(["a", "b"]);
+            });
         }
     });
 

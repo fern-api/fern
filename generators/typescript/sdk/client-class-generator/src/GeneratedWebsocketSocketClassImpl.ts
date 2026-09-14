@@ -392,7 +392,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: this.accumulateHandlers
                 ? [
                       this.getAccumulatedHandlersStatement(),
-                      `const index = handlers.indexOf(${callback});`,
+                      `const index = handlers.lastIndexOf(${callback});`,
                       "if (index !== -1) {",
                       "    handlers.splice(index, 1);",
                       "}"

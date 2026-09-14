@@ -94,7 +94,7 @@ export class EmptyRealtimeSocket {
         callback: NonNullable<EmptyRealtimeSocket.EventHandlers[T]>,
     ): void {
         const handlers = this.eventHandlers[event] as Array<NonNullable<EmptyRealtimeSocket.EventHandlers[T]>>;
-        const index = handlers.indexOf(callback);
+        const index = handlers.lastIndexOf(callback);
         if (index !== -1) {
             handlers.splice(index, 1);
         }

@@ -102,7 +102,7 @@ export class RealtimeSocket {
         callback: NonNullable<RealtimeSocket.EventHandlers[T]>,
     ): void {
         const handlers = this.eventHandlers[event] as Array<NonNullable<RealtimeSocket.EventHandlers[T]>>;
-        const index = handlers.indexOf(callback);
+        const index = handlers.lastIndexOf(callback);
         if (index !== -1) {
             handlers.splice(index, 1);
         }
