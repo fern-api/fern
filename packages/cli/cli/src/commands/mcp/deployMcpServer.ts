@@ -4,6 +4,8 @@ import { createHash } from "crypto";
 import { readdir, readFile } from "fs/promises";
 import path from "path";
 
+import { CISource, DeployerAuthor } from "../../utils/environment.js";
+import { GitInfo } from "../../utils/gitInfo.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
 /** Server-side constraints on orgId and slug, mirrored here for a friendly pre-flight message. */
@@ -17,12 +19,19 @@ const DEFAULT_SLUG = "mcp";
 /** The line shown under every deploy failure: a failed deploy never disturbs a serving one. */
 const STILL_SERVING_LINE = "If this server was deployed before, that deployment is still serving — nothing changed.";
 
-interface BundleModule {
+/** A content-addressed file in the bundle: uploaded to the registry's content store and referenced by hash. */
+interface BundleFile {
     name: string;
     content: Buffer;
     contentType: string;
     hash: string;
 }
+
+/** A Worker module the deployed server runs. */
+type BundleModule = BundleFile;
+
+/** A provenance input (spec archive, SDK config, build request) the server was generated from; stored, never run. */
+type BundleInput = BundleFile;
 
 interface Bundle {
     metadata: unknown;
@@ -30,6 +39,7 @@ interface Bundle {
     compatibilityDate: string;
     compatibilityFlags: string[];
     modules: BundleModule[];
+    inputs: BundleInput[];
 }
 
 interface DeployResponse {
@@ -50,7 +60,12 @@ export interface HostedMcpDeployResult {
  * `fern generate` pipeline for invocations with `output.location: fern-hosted`.
  *
  * The bundle directory is the generator's output: `metadata.json`, `wrangler.jsonc`,
- * and the server's module files.
+ * the server's module files, and optionally an `inputs/` directory holding the
+ * spec archive, SDK config, and build request the server was generated from.
+ *
+ * Provenance (`config`, `git`, `ciSource`, `deployerAuthor`, the inputs) is
+ * recorded with the deployment so it can be explained later; every part of it
+ * is optional and never blocks the deploy.
  */
 export async function deployHostedMcpServer({
     bundleDir,
@@ -60,6 +75,10 @@ export async function deployHostedMcpServer({
     generatorName,
     generatorVersion,
     cliVersion,
+    config,
+    git,
+    ciSource,
+    deployerAuthor,
     context
 }: {
     bundleDir: string;
@@ -69,6 +88,11 @@ export async function deployHostedMcpServer({
     generatorName: string;
     generatorVersion: string;
     cliVersion: string | undefined;
+    /** The raw `config:` block of this generator's generators.yml entry. */
+    config: unknown;
+    git: GitInfo | undefined;
+    ciSource: CISource | undefined;
+    deployerAuthor: DeployerAuthor | undefined;
     context: TaskContext;
 }): Promise<HostedMcpDeployResult> {
     const bundle = await readBundle(bundleDir, context);
@@ -78,8 +102,8 @@ export async function deployHostedMcpServer({
     context.logger.info(`Deploying MCP server "${resolvedSlug}" to org "${organization}"...`);
     context.logger.debug(`Registry origin: ${FDR_ORIGIN}`);
 
-    for (const module of bundle.modules) {
-        await uploadModule({ module, orgId: organization, slug: resolvedSlug, token, context });
+    for (const file of [...bundle.modules, ...bundle.inputs]) {
+        await uploadContent({ file, orgId: organization, token, context });
     }
 
     const result = await postDeploy({
@@ -90,6 +114,10 @@ export async function deployHostedMcpServer({
         generatorName,
         generatorVersion,
         cliVersion,
+        config,
+        git,
+        ciSource,
+        deployerAuthor,
         context
     });
 
@@ -122,6 +150,18 @@ const NON_MODULE_FILES = new Set(["metadata.json", "wrangler.jsonc", "catalog.js
 export function isDeployableModuleFile(fileName: string): boolean {
     return !NON_MODULE_FILES.has(fileName) && !fileName.startsWith(".") && !fileName.toLowerCase().endsWith(".md");
 }
+
+/**
+ * The generator's build writes what the server was generated from under
+ * `inputs/`. Only these three files are deployed as provenance; anything else
+ * in the directory is ignored so a newer generator cannot break an older CLI.
+ */
+const INPUTS_DIRECTORY = "inputs";
+const INPUT_CONTENT_TYPES: ReadonlyMap<string, string> = new Map([
+    ["specs.tar.gz", "application/gzip"],
+    ["sdk-config.json", "application/json"],
+    ["build-request.json", "application/json"]
+]);
 
 async function readBundle(bundleDir: string, context: TaskContext): Promise<Bundle> {
     const absoluteBundleDir = path.resolve(bundleDir);
@@ -168,23 +208,73 @@ async function readBundle(bundleDir: string, context: TaskContext): Promise<Bund
     }
 
     const modules: BundleModule[] = await Promise.all(
-        fileNames.filter(isDeployableModuleFile).map(async (name) => {
-            const content = await readFile(path.join(absoluteBundleDir, name));
-            return {
+        fileNames.filter(isDeployableModuleFile).map((name) =>
+            readBundleFile({
+                absolutePath: path.join(absoluteBundleDir, name),
                 name,
-                content,
-                contentType: getModuleContentType(name),
-                hash: createHash("sha256").update(content).digest("hex")
-            };
-        })
+                contentType: getModuleContentType(name)
+            })
+        )
     );
+
+    const hasInputsDirectory = entries.some((entry) => entry.isDirectory() && entry.name === INPUTS_DIRECTORY);
+    const inputs = hasInputsDirectory
+        ? await readBundleInputs(path.join(absoluteBundleDir, INPUTS_DIRECTORY), context)
+        : [];
 
     return {
         metadata: normalizeMetadata(rawMetadata),
         mainModule: main,
         compatibilityDate: compatibility_date,
         compatibilityFlags: Array.isArray(compatibility_flags) ? compatibility_flags.map(String) : [],
-        modules
+        modules,
+        inputs
+    };
+}
+
+async function readBundleInputs(absoluteInputsDir: string, context: TaskContext): Promise<BundleInput[]> {
+    let entries;
+    try {
+        entries = await readdir(absoluteInputsDir, { withFileTypes: true });
+    } catch {
+        return context.failAndThrow(`Could not read the server bundle's inputs at ${absoluteInputsDir}.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
+
+    const inputs: BundleInput[] = [];
+    for (const entry of entries) {
+        const contentType = entry.isFile() ? INPUT_CONTENT_TYPES.get(entry.name) : undefined;
+        if (contentType == null) {
+            context.logger.debug(`  Ignoring unknown entry in ${INPUTS_DIRECTORY}/: ${entry.name}`);
+            continue;
+        }
+        inputs.push(
+            await readBundleFile({
+                absolutePath: path.join(absoluteInputsDir, entry.name),
+                name: entry.name,
+                contentType
+            })
+        );
+    }
+    return inputs;
+}
+
+async function readBundleFile({
+    absolutePath,
+    name,
+    contentType
+}: {
+    absolutePath: string;
+    name: string;
+    contentType: string;
+}): Promise<BundleFile> {
+    const content = await readFile(absolutePath);
+    return {
+        name,
+        content,
+        contentType,
+        hash: createHash("sha256").update(content).digest("hex")
     };
 }
 
@@ -327,6 +417,7 @@ function validateBeforeDeploy({
     bundle: Bundle;
     context: TaskContext;
 }): void {
+    // Only Worker modules count toward the budget; provenance inputs are stored, not run.
     const errors = [
         getSlugValidationError(orgId, "The organization id"),
         getSlugValidationError(slug, "The slug"),
@@ -343,37 +434,35 @@ function validateBeforeDeploy({
 }
 
 /**
- * Uploads one module to the registry's content store: a check `PUT` returns an
- * upload URL only when the content is not already stored. The final register
- * `PUT` creates the org-scoped content record that the deploy resolves module
- * hashes against, so it always runs — even when the bytes were already present.
+ * Puts one file's bytes in the registry's content store. The check `PUT` on
+ * `/v2/registry/content` returns a presigned upload URL only when the content
+ * is not already stored. Nothing else is needed: the deploy request registers
+ * every module and input hash for the org itself.
  */
-async function uploadModule({
-    module,
+async function uploadContent({
+    file,
     orgId,
-    slug,
     token,
     context
 }: {
-    module: BundleModule;
+    file: BundleFile;
     orgId: string;
-    slug: string;
     token: string;
     context: TaskContext;
 }): Promise<void> {
-    const checkUrl = `${FDR_ORIGIN}/v2/registry/content/${encodeURIComponent(orgId)}/${module.hash}`;
-    context.logger.debug(`  Upload check: PUT ${checkUrl} (${module.contentType}, ${module.content.byteLength} bytes)`);
+    const checkUrl = `${FDR_ORIGIN}/v2/registry/content/${encodeURIComponent(orgId)}/${file.hash}`;
+    context.logger.debug(`  Upload check: PUT ${checkUrl} (${file.contentType}, ${file.content.byteLength} bytes)`);
 
     let checkRes: Response;
     try {
         checkRes = await fetch(checkUrl, {
             method: "PUT",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ contentType: module.contentType, contentLength: module.content.byteLength })
+            body: JSON.stringify({ contentType: file.contentType, contentLength: file.content.byteLength })
         });
-    } catch (err) {
+    } catch (error) {
         return context.failAndThrow(
-            `Upload check for ${module.name} failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+            `Upload check for ${file.name} failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(error)}`,
             undefined,
             { code: CliError.Code.NetworkError }
         );
@@ -382,7 +471,7 @@ async function uploadModule({
     if (!checkRes.ok) {
         const errorBody = await checkRes.text();
         const detail = parseErrorDetail(errorBody) ?? errorBody;
-        context.failAndThrow(`Upload check failed for ${module.name}: HTTP ${checkRes.status} — ${detail}`, undefined, {
+        context.failAndThrow(`Upload check failed for ${file.name}: HTTP ${checkRes.status} — ${detail}`, undefined, {
             code: CliError.Code.NetworkError
         });
     }
@@ -392,67 +481,36 @@ async function uploadModule({
         checkBody = (await checkRes.json()) as { status: string; uploadUrl?: string };
     } catch {
         return context.failAndThrow(
-            `Upload check for ${module.name} returned a non-JSON response — is a Fern registry running at ${FDR_ORIGIN}?`,
+            `Upload check for ${file.name} returned a non-JSON response — is a Fern registry running at ${FDR_ORIGIN}?`,
             undefined,
             { code: CliError.Code.NetworkError }
         );
     }
-    context.logger.debug(`  Upload status for ${module.name}: ${checkBody.status}`);
+    context.logger.debug(`  Upload status for ${file.name}: ${checkBody.status}`);
 
-    if (checkBody.status === "upload_required" && checkBody.uploadUrl != null) {
-        context.logger.debug(`  Uploading ${module.name} (${module.content.byteLength} bytes)...`);
-        let uploadRes: Response;
-        try {
-            uploadRes = await fetch(checkBody.uploadUrl, {
-                method: "PUT",
-                headers: { "Content-Type": module.contentType },
-                body: new Uint8Array(
-                    module.content.buffer as ArrayBuffer,
-                    module.content.byteOffset,
-                    module.content.byteLength
-                )
-            });
-        } catch (err) {
-            return context.failAndThrow(
-                `Upload of ${module.name} failed — could not reach the upload URL: ${describeFetchError(err)}`,
-                undefined,
-                { code: CliError.Code.NetworkError }
-            );
-        }
-        if (!uploadRes.ok) {
-            const errorBody = await uploadRes.text().catch(() => "");
-            context.failAndThrow(
-                `Upload of ${module.name} failed: HTTP ${uploadRes.status}${errorBody ? ` — ${errorBody}` : ""}`,
-                undefined,
-                { code: CliError.Code.NetworkError }
-            );
-        }
+    if (checkBody.status !== "upload_required" || checkBody.uploadUrl == null) {
+        return;
     }
 
-    const registerPath = ["mcp-servers", slug, module.name].map(encodeURIComponent).join("/");
-    const registerUrl = `${FDR_ORIGIN}/v2/registry/files/${encodeURIComponent(orgId)}/${registerPath}`;
-    context.logger.debug(`  Registering ${module.name} → mcp-servers/${slug}/${module.name}`);
-
-    let registerRes: Response;
+    context.logger.debug(`  Uploading ${file.name} (${file.content.byteLength} bytes)...`);
+    let uploadRes: Response;
     try {
-        registerRes = await fetch(registerUrl, {
+        uploadRes = await fetch(checkBody.uploadUrl, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ hash: module.hash, contentType: module.contentType })
+            headers: { "Content-Type": file.contentType },
+            body: new Uint8Array(file.content.buffer as ArrayBuffer, file.content.byteOffset, file.content.byteLength)
         });
-    } catch (err) {
+    } catch (error) {
         return context.failAndThrow(
-            `Registering ${module.name} failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+            `Upload of ${file.name} failed — could not reach the upload URL: ${describeFetchError(error)}`,
             undefined,
             { code: CliError.Code.NetworkError }
         );
     }
-
-    if (!registerRes.ok) {
-        const errorBody = await registerRes.text().catch(() => "");
-        const detail = parseErrorDetail(errorBody) ?? errorBody;
+    if (!uploadRes.ok) {
+        const errorBody = await uploadRes.text().catch(() => "");
         context.failAndThrow(
-            `Registering ${module.name} failed: HTTP ${registerRes.status}${detail ? ` — ${detail}` : ""}`,
+            `Upload of ${file.name} failed: HTTP ${uploadRes.status}${errorBody ? ` — ${errorBody}` : ""}`,
             undefined,
             { code: CliError.Code.NetworkError }
         );
@@ -472,6 +530,10 @@ async function postDeploy({
     generatorName,
     generatorVersion,
     cliVersion,
+    config,
+    git,
+    ciSource,
+    deployerAuthor,
     context
 }: {
     orgId: string;
@@ -481,36 +543,64 @@ async function postDeploy({
     generatorName: string;
     generatorVersion: string;
     cliVersion: string | undefined;
+    config: unknown;
+    git: GitInfo | undefined;
+    ciSource: CISource | undefined;
+    deployerAuthor: DeployerAuthor | undefined;
     context: TaskContext;
 }): Promise<DeployResponse> {
     const deployUrl = `${FDR_ORIGIN}/mcp-hosting/deploy`;
     context.logger.debug(`Deploying to ${deployUrl}`);
 
+    // Deployer identity headers, sent exactly as docs publishing sends them.
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+    };
+    if (cliVersion != null) {
+        headers["X-CLI-Version"] = cliVersion;
+    }
+    if (ciSource != null) {
+        headers["X-CI-Source"] = JSON.stringify(ciSource);
+        context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
+    if (deployerAuthor?.username != null) {
+        headers["X-Deployer-Author"] = deployerAuthor.username;
+    }
+    if (deployerAuthor?.email != null) {
+        headers["X-Deployer-Author-Email"] = deployerAuthor.email;
+    }
+
+    const contentRef = (file: BundleFile): { name: string; hash: string; contentType: string } => ({
+        name: file.name,
+        hash: file.hash,
+        contentType: file.contentType
+    });
+
     let res: Response;
     try {
         res = await fetch(deployUrl, {
             method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            headers,
             body: JSON.stringify({
                 orgId,
                 slug,
                 mainModule: bundle.mainModule,
                 compatibilityDate: bundle.compatibilityDate,
                 compatibilityFlags: bundle.compatibilityFlags,
-                modules: bundle.modules.map((module) => ({
-                    name: module.name,
-                    hash: module.hash,
-                    contentType: module.contentType
-                })),
+                modules: bundle.modules.map(contentRef),
                 metadata: bundle.metadata,
                 generatorName,
                 generatorVersion,
-                ...(cliVersion != null ? { cliVersion } : {})
+                ...(cliVersion != null ? { cliVersion } : {}),
+                ...(config != null ? { config } : {}),
+                ...(git != null ? { git } : {}),
+                ...(bundle.inputs.length > 0 ? { inputs: bundle.inputs.map(contentRef) } : {})
             })
         });
-    } catch (err) {
+    } catch (error) {
         return context.failAndThrow(
-            `Deploy failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+            `Deploy failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(error)}`,
             undefined,
             { code: CliError.Code.NetworkError }
         );

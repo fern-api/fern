@@ -20,6 +20,8 @@ import { tmpdir } from "os";
 import path from "path";
 
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { detectCISource, detectDeployerAuthor } from "../../utils/environment.js";
+import { detectGitInfo } from "../../utils/gitInfo.js";
 import { deployHostedMcpServer } from "../mcp/deployMcpServer.js";
 import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
 import { filterGenerators } from "./filterGenerators.js";
@@ -256,6 +258,7 @@ export async function generateWorkspace({
                 }
                 await deployFernHostedOutputs({
                     group,
+                    workspace,
                     organization,
                     cliVersion: workspace.cliVersion,
                     token,
@@ -290,6 +293,7 @@ async function assignFernHostedOutputDirectories(
 
 async function deployFernHostedOutputs({
     group,
+    workspace,
     organization,
     cliVersion,
     token,
@@ -297,6 +301,7 @@ async function deployFernHostedOutputs({
     context
 }: {
     group: generatorsYml.GeneratorGroup;
+    workspace: AbstractAPIWorkspace<unknown>;
     organization: string;
     cliVersion: string;
     token: FernToken | undefined;
@@ -322,6 +327,10 @@ async function deployFernHostedOutputs({
             { code: CliError.Code.AuthError }
         );
     }
+    // Provenance: who deployed, from which checkout. Best-effort, shared by every deploy in the group.
+    const ciSource = detectCISource();
+    const deployerAuthor = detectDeployerAuthor();
+    const git = await detectGitInfo({ ciSource, cwd: workspace.absoluteFilePath });
     for (const generator of fernHostedGenerators) {
         const bundleDir = generator.absolutePathToLocalOutput;
         if (bundleDir == null) {
@@ -336,6 +345,10 @@ async function deployFernHostedOutputs({
                 generatorName: generator.name,
                 generatorVersion: generator.version,
                 cliVersion,
+                config: generator.config,
+                git,
+                ciSource,
+                deployerAuthor,
                 context: deployContext
             });
         });
