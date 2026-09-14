@@ -5,20 +5,15 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/allof-inline/fern/internal"
+	internal "github.com/allof/fern/internal"
 	big "math/big"
 	time "time"
 )
 
 var (
-	plantPostFieldSpecies           = big.NewInt(1 << 0)
-	plantPostFieldFamily            = big.NewInt(1 << 1)
-	plantPostFieldGenus             = big.NewInt(1 << 2)
-	plantPostFieldCommonName        = big.NewInt(1 << 3)
-	plantPostFieldWateringFrequency = big.NewInt(1 << 4)
-	plantPostFieldSunExposure       = big.NewInt(1 << 5)
-	plantPostFieldPlantedAt         = big.NewInt(1 << 6)
-	plantPostFieldSoilType          = big.NewInt(1 << 7)
+	plantPostFieldSunExposure = big.NewInt(1 << 0)
+	plantPostFieldPlantedAt   = big.NewInt(1 << 1)
+	plantPostFieldSoilType    = big.NewInt(1 << 2)
 )
 
 type PlantPost struct {
@@ -29,8 +24,8 @@ type PlantPost struct {
 	// The botanical genus.
 	Genus string `json:"genus" url:"-"`
 	// The common name of the plant.
-	CommonName        string                     `json:"commonName" url:"-"`
-	WateringFrequency PlantPostWateringFrequency `json:"wateringFrequency" url:"-"`
+	CommonName        *string                     `json:"commonName,omitempty" url:"-"`
+	WateringFrequency *PlantBaseWateringFrequency `json:"wateringFrequency,omitempty" url:"-"`
 	// Required sun exposure level.
 	SunExposure PlantPostSunExposure `json:"sunExposure" url:"-"`
 	// Date the plant was planted.
@@ -47,41 +42,6 @@ func (p *PlantPost) require(field *big.Int) {
 		p.explicitFields = big.NewInt(0)
 	}
 	p.explicitFields.Or(p.explicitFields, field)
-}
-
-// SetSpecies sets the Species field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlantPost) SetSpecies(species string) {
-	p.Species = species
-	p.require(plantPostFieldSpecies)
-}
-
-// SetFamily sets the Family field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlantPost) SetFamily(family string) {
-	p.Family = family
-	p.require(plantPostFieldFamily)
-}
-
-// SetGenus sets the Genus field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlantPost) SetGenus(genus string) {
-	p.Genus = genus
-	p.require(plantPostFieldGenus)
-}
-
-// SetCommonName sets the CommonName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlantPost) SetCommonName(commonName string) {
-	p.CommonName = commonName
-	p.require(plantPostFieldCommonName)
-}
-
-// SetWateringFrequency sets the WateringFrequency field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlantPost) SetWateringFrequency(wateringFrequency PlantPostWateringFrequency) {
-	p.WateringFrequency = wateringFrequency
-	p.require(plantPostFieldWateringFrequency)
 }
 
 // SetSunExposure sets the SunExposure field and marks it as non-optional;
@@ -561,26 +521,33 @@ func (b *BaseOrgMetadata) String() string {
 }
 
 var (
-	combinedEntityFieldID      = big.NewInt(1 << 0)
-	combinedEntityFieldName    = big.NewInt(1 << 1)
-	combinedEntityFieldSummary = big.NewInt(1 << 2)
-	combinedEntityFieldStatus  = big.NewInt(1 << 3)
+	combinedEntityFieldStatus  = big.NewInt(1 << 0)
+	combinedEntityFieldID      = big.NewInt(1 << 1)
+	combinedEntityFieldName    = big.NewInt(1 << 2)
+	combinedEntityFieldSummary = big.NewInt(1 << 3)
 )
 
 type CombinedEntity struct {
+	Status CombinedEntityStatus `json:"status" url:"status"`
 	// Unique identifier.
 	ID string `json:"id" url:"id"`
-	// Display name from Describable.
+	// Display name from Identifiable.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// A short summary.
-	Summary *string              `json:"summary,omitempty" url:"summary,omitempty"`
-	Status  CombinedEntityStatus `json:"status" url:"status"`
+	Summary *string `json:"summary,omitempty" url:"summary,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (c *CombinedEntity) GetStatus() CombinedEntityStatus {
+	if c == nil {
+		return ""
+	}
+	return c.Status
 }
 
 func (c *CombinedEntity) GetID() string {
@@ -604,13 +571,6 @@ func (c *CombinedEntity) GetSummary() *string {
 	return c.Summary
 }
 
-func (c *CombinedEntity) GetStatus() CombinedEntityStatus {
-	if c == nil {
-		return ""
-	}
-	return c.Status
-}
-
 func (c *CombinedEntity) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -623,6 +583,13 @@ func (c *CombinedEntity) require(field *big.Int) {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CombinedEntity) SetStatus(status CombinedEntityStatus) {
+	c.Status = status
+	c.require(combinedEntityFieldStatus)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -644,13 +611,6 @@ func (c *CombinedEntity) SetName(name *string) {
 func (c *CombinedEntity) SetSummary(summary *string) {
 	c.Summary = summary
 	c.require(combinedEntityFieldSummary)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CombinedEntity) SetStatus(status CombinedEntityStatus) {
-	c.Status = status
-	c.require(combinedEntityFieldStatus)
 }
 
 func (c *CombinedEntity) UnmarshalJSON(data []byte) error {
@@ -1108,21 +1068,28 @@ func (i *Identifiable) String() string {
 }
 
 var (
-	organizationFieldID       = big.NewInt(1 << 0)
-	organizationFieldMetadata = big.NewInt(1 << 1)
-	organizationFieldName     = big.NewInt(1 << 2)
+	organizationFieldName     = big.NewInt(1 << 0)
+	organizationFieldID       = big.NewInt(1 << 1)
+	organizationFieldMetadata = big.NewInt(1 << 2)
 )
 
 type Organization struct {
-	ID       string                `json:"id" url:"id"`
-	Metadata *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Name     string                `json:"name" url:"name"`
+	Name     string           `json:"name" url:"name"`
+	ID       string           `json:"id" url:"id"`
+	Metadata *BaseOrgMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *Organization) GetID() string {
@@ -1132,18 +1099,11 @@ func (o *Organization) GetID() string {
 	return o.ID
 }
 
-func (o *Organization) GetMetadata() *OrganizationMetadata {
+func (o *Organization) GetMetadata() *BaseOrgMetadata {
 	if o == nil {
 		return nil
 	}
 	return o.Metadata
-}
-
-func (o *Organization) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
@@ -1160,6 +1120,13 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetID(id string) {
@@ -1169,16 +1136,9 @@ func (o *Organization) SetID(id string) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *Organization) SetMetadata(metadata *OrganizationMetadata) {
+func (o *Organization) SetMetadata(metadata *BaseOrgMetadata) {
 	o.Metadata = metadata
 	o.require(organizationFieldMetadata)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *Organization) SetName(name string) {
-	o.Name = name
-	o.require(organizationFieldName)
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
@@ -1209,108 +1169,6 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
-	if o == nil {
-		return "<nil>"
-	}
-	if len(o.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-var (
-	organizationMetadataFieldRegion = big.NewInt(1 << 0)
-	organizationMetadataFieldDomain = big.NewInt(1 << 1)
-)
-
-type OrganizationMetadata struct {
-	// Deployment region from DetailedOrg.
-	Region string `json:"region" url:"region"`
-	// Custom domain name.
-	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (o *OrganizationMetadata) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *OrganizationMetadata) GetDomain() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Domain
-}
-
-func (o *OrganizationMetadata) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
-	return o.extraProperties
-}
-
-func (o *OrganizationMetadata) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
-	}
-	o.explicitFields.Or(o.explicitFields, field)
-}
-
-// SetRegion sets the Region field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationMetadata) SetRegion(region string) {
-	o.Region = region
-	o.require(organizationMetadataFieldRegion)
-}
-
-// SetDomain sets the Domain field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationMetadata) SetDomain(domain *string) {
-	o.Domain = domain
-	o.require(organizationMetadataFieldDomain)
-}
-
-func (o *OrganizationMetadata) UnmarshalJSON(data []byte) error {
-	type unmarshaler OrganizationMetadata
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OrganizationMetadata(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	o.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (o *OrganizationMetadata) MarshalJSON() ([]byte, error) {
-	type embed OrganizationMetadata
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*o),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (o *OrganizationMetadata) String() string {
 	if o == nil {
 		return "<nil>"
 	}
@@ -1731,34 +1589,6 @@ func NewPlantPostSunExposureFromString(s string) (PlantPostSunExposure, error) {
 }
 
 func (p PlantPostSunExposure) Ptr() *PlantPostSunExposure {
-	return &p
-}
-
-type PlantPostWateringFrequency string
-
-const (
-	PlantPostWateringFrequencyDaily    PlantPostWateringFrequency = "daily"
-	PlantPostWateringFrequencyWeekly   PlantPostWateringFrequency = "weekly"
-	PlantPostWateringFrequencyBiweekly PlantPostWateringFrequency = "biweekly"
-	PlantPostWateringFrequencyMonthly  PlantPostWateringFrequency = "monthly"
-)
-
-func NewPlantPostWateringFrequencyFromString(s string) (PlantPostWateringFrequency, error) {
-	switch s {
-	case "daily":
-		return PlantPostWateringFrequencyDaily, nil
-	case "weekly":
-		return PlantPostWateringFrequencyWeekly, nil
-	case "biweekly":
-		return PlantPostWateringFrequencyBiweekly, nil
-	case "monthly":
-		return PlantPostWateringFrequencyMonthly, nil
-	}
-	var t PlantPostWateringFrequency
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (p PlantPostWateringFrequency) Ptr() *PlantPostWateringFrequency {
 	return &p
 }
 
@@ -2287,14 +2117,14 @@ func (r *RuleType) String() string {
 }
 
 var (
-	ruleTypeSearchResponseFieldPaging  = big.NewInt(1 << 0)
-	ruleTypeSearchResponseFieldResults = big.NewInt(1 << 1)
+	ruleTypeSearchResponseFieldResults = big.NewInt(1 << 0)
+	ruleTypeSearchResponseFieldPaging  = big.NewInt(1 << 1)
 )
 
 type RuleTypeSearchResponse struct {
-	Paging *PagingCursors `json:"paging" url:"paging"`
 	// Current page of results from the requested resource.
-	Results []*RuleType `json:"results" url:"results"`
+	Results []*RuleType    `json:"results,omitempty" url:"results,omitempty"`
+	Paging  *PagingCursors `json:"paging" url:"paging"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2303,18 +2133,18 @@ type RuleTypeSearchResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RuleTypeSearchResponse) GetPaging() *PagingCursors {
-	if r == nil {
-		return nil
-	}
-	return r.Paging
-}
-
 func (r *RuleTypeSearchResponse) GetResults() []*RuleType {
 	if r == nil {
 		return nil
 	}
 	return r.Results
+}
+
+func (r *RuleTypeSearchResponse) GetPaging() *PagingCursors {
+	if r == nil {
+		return nil
+	}
+	return r.Paging
 }
 
 func (r *RuleTypeSearchResponse) GetExtraProperties() map[string]interface{} {
@@ -2331,18 +2161,18 @@ func (r *RuleTypeSearchResponse) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetPaging sets the Paging field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RuleTypeSearchResponse) SetPaging(paging *PagingCursors) {
-	r.Paging = paging
-	r.require(ruleTypeSearchResponseFieldPaging)
-}
-
 // SetResults sets the Results field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RuleTypeSearchResponse) SetResults(results []*RuleType) {
 	r.Results = results
 	r.require(ruleTypeSearchResponseFieldResults)
+}
+
+// SetPaging sets the Paging field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RuleTypeSearchResponse) SetPaging(paging *PagingCursors) {
+	r.Paging = paging
+	r.require(ruleTypeSearchResponseFieldPaging)
 }
 
 func (r *RuleTypeSearchResponse) UnmarshalJSON(data []byte) error {
@@ -2740,11 +2570,11 @@ type TreeRecord struct {
 	// Unique tree identifier.
 	ID string `json:"id" url:"id"`
 	// Display name of the tree.
-	TreeName string `json:"treeName" url:"treeName"`
+	TreeName *string `json:"treeName,omitempty" url:"treeName,omitempty"`
 	// A description of the tree.
 	TreeDescription *string `json:"treeDescription,omitempty" url:"treeDescription,omitempty"`
 	// The species of tree.
-	TreeSpecies string `json:"treeSpecies" url:"treeSpecies"`
+	TreeSpecies *string `json:"treeSpecies,omitempty" url:"treeSpecies,omitempty"`
 	// Height of the tree in feet.
 	HeightInFeet *float64 `json:"heightInFeet,omitempty" url:"heightInFeet,omitempty"`
 	// Date the tree was planted.
@@ -2764,9 +2594,9 @@ func (t *TreeRecord) GetID() string {
 	return t.ID
 }
 
-func (t *TreeRecord) GetTreeName() string {
+func (t *TreeRecord) GetTreeName() *string {
 	if t == nil {
-		return ""
+		return nil
 	}
 	return t.TreeName
 }
@@ -2778,9 +2608,9 @@ func (t *TreeRecord) GetTreeDescription() *string {
 	return t.TreeDescription
 }
 
-func (t *TreeRecord) GetTreeSpecies() string {
+func (t *TreeRecord) GetTreeSpecies() *string {
 	if t == nil {
-		return ""
+		return nil
 	}
 	return t.TreeSpecies
 }
@@ -2822,7 +2652,7 @@ func (t *TreeRecord) SetID(id string) {
 
 // SetTreeName sets the TreeName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TreeRecord) SetTreeName(treeName string) {
+func (t *TreeRecord) SetTreeName(treeName *string) {
 	t.TreeName = treeName
 	t.require(treeRecordFieldTreeName)
 }
@@ -2836,7 +2666,7 @@ func (t *TreeRecord) SetTreeDescription(treeDescription *string) {
 
 // SetTreeSpecies sets the TreeSpecies field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TreeRecord) SetTreeSpecies(treeSpecies string) {
+func (t *TreeRecord) SetTreeSpecies(treeSpecies *string) {
 	t.TreeSpecies = treeSpecies
 	t.require(treeRecordFieldTreeSpecies)
 }
@@ -3006,14 +2836,14 @@ func (u *User) String() string {
 }
 
 var (
-	userSearchResponseFieldPaging  = big.NewInt(1 << 0)
-	userSearchResponseFieldResults = big.NewInt(1 << 1)
+	userSearchResponseFieldResults = big.NewInt(1 << 0)
+	userSearchResponseFieldPaging  = big.NewInt(1 << 1)
 )
 
 type UserSearchResponse struct {
-	Paging *PagingCursors `json:"paging" url:"paging"`
 	// Current page of results from the requested resource.
-	Results []*User `json:"results" url:"results"`
+	Results []*User        `json:"results,omitempty" url:"results,omitempty"`
+	Paging  *PagingCursors `json:"paging" url:"paging"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3022,18 +2852,18 @@ type UserSearchResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserSearchResponse) GetPaging() *PagingCursors {
-	if u == nil {
-		return nil
-	}
-	return u.Paging
-}
-
 func (u *UserSearchResponse) GetResults() []*User {
 	if u == nil {
 		return nil
 	}
 	return u.Results
+}
+
+func (u *UserSearchResponse) GetPaging() *PagingCursors {
+	if u == nil {
+		return nil
+	}
+	return u.Paging
 }
 
 func (u *UserSearchResponse) GetExtraProperties() map[string]interface{} {
@@ -3050,18 +2880,18 @@ func (u *UserSearchResponse) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetPaging sets the Paging field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserSearchResponse) SetPaging(paging *PagingCursors) {
-	u.Paging = paging
-	u.require(userSearchResponseFieldPaging)
-}
-
 // SetResults sets the Results field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserSearchResponse) SetResults(results []*User) {
 	u.Results = results
 	u.require(userSearchResponseFieldResults)
+}
+
+// SetPaging sets the Paging field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserSearchResponse) SetPaging(paging *PagingCursors) {
+	u.Paging = paging
+	u.require(userSearchResponseFieldPaging)
 }
 
 func (u *UserSearchResponse) UnmarshalJSON(data []byte) error {

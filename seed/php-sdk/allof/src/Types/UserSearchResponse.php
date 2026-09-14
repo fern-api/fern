@@ -9,10 +9,10 @@ use Seed\Core\Types\ArrayType;
 class UserSearchResponse extends JsonSerializableType
 {
     /**
-     * @var ?array<User> $results Current page of results from the requested resource.
+     * @var array<User> $results Current page of results from the requested resource.
      */
     #[JsonProperty('results'), ArrayType([User::class])]
-    public ?array $results;
+    public array $results;
 
     /**
      * @var PagingCursors $paging
@@ -22,14 +22,14 @@ class UserSearchResponse extends JsonSerializableType
 
     /**
      * @param array{
+     *   results: array<User>,
      *   paging: PagingCursors,
-     *   results?: ?array<User>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->results = $values['results'] ?? null;
+        $this->results = $values['results'];
         $this->paging = $values['paging'];
     }
 
