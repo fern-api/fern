@@ -113,6 +113,9 @@ type fileWriter struct {
 	stringMethodTests    map[string]struct{}
 	enumTests            map[string][]string // map[typeName][]enumValues for enum tests
 	extraPropertiesTests map[string]struct{} // types that have GetExtraProperties()
+	// requiredNullableRoundTripTests maps type names to the wire names of their
+	// required-nullable fields, for JSON round-trip test generation.
+	requiredNullableRoundTripTests map[string][]string
 }
 
 // GetterSetterTestConfig contains configuration for generating getter/setter tests
@@ -295,9 +298,7 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 
 	f.P("var (")
 	for i, propertyName := range propertyNames {
-		constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
-		// Convert to camelCase for the constant name (not exported)
-		constantName = strings.ToLower(constantName[:1]) + constantName[1:]
+		constantName := fieldBitConstantName(typeName, propertyName)
 		if i < 63 {
 			f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
 		} else {
@@ -306,6 +307,13 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 	}
 	f.P(")")
 	f.P()
+}
+
+// fieldBitConstantName returns the (unexported) name of the bit constant for the
+// given type's property, e.g. accountBalanceFieldLimit.
+func fieldBitConstantName(typeName string, propertyName string) string {
+	constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+	return strings.ToLower(constantName[:1]) + constantName[1:]
 }
 
 // WriteSetterMethods writes setter methods for each field.
@@ -317,9 +325,7 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 	receiver := typeNameToReceiver(typeName)
 	for i, propertyName := range propertyNames {
 		setterName := fmt.Sprintf("Set%s", propertyName)
-		fieldConstantName := fmt.Sprintf("%sField%s", typeName, propertyName)
-		// Convert to camelCase for the constant name
-		fieldConstantName = strings.ToLower(fieldConstantName[:1]) + fieldConstantName[1:]
+		fieldConstantName := fieldBitConstantName(typeName, propertyName)
 
 		// Use safe name for parameter to avoid reserved keywords
 		paramName := propertySafeNames[i]
@@ -413,6 +419,18 @@ func (f *fileWriter) AddJSONMarshalingTestData(typeName string, hasLiterals bool
 	f.jsonMarshalingTests[typeName] = hasLiterals
 }
 
+// AddRequiredNullableRoundTripTest marks a type for required-nullable JSON
+// round-trip test generation, given the wire names of its required-nullable fields.
+func (f *fileWriter) AddRequiredNullableRoundTripTest(typeName string, wireNames []string) {
+	if len(wireNames) == 0 {
+		return
+	}
+	if f.requiredNullableRoundTripTests == nil {
+		f.requiredNullableRoundTripTests = make(map[string][]string)
+	}
+	f.requiredNullableRoundTripTests[typeName] = wireNames
+}
+
 // AddStringMethodTest marks a type for String() method test generation.
 func (f *fileWriter) AddStringMethodTest(typeName string) {
 	if f.stringMethodTests == nil {
@@ -443,7 +461,8 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		len(f.jsonMarshalingTests) == 0 &&
 		len(f.stringMethodTests) == 0 &&
 		len(f.enumTests) == 0 &&
-		len(f.extraPropertiesTests) == 0 {
+		len(f.extraPropertiesTests) == 0 &&
+		len(f.requiredNullableRoundTripTests) == 0 {
 		return nil, nil
 	}
 
@@ -603,6 +622,16 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	sort.Strings(jsonTestNames)
 	for _, typeName := range jsonTestNames {
 		testWriter.WriteJSONMarshalingTests(typeName, f.jsonMarshalingTests[typeName])
+	}
+
+	// Write required-nullable round-trip tests for types that have them (sorted for deterministic output)
+	requiredNullableTestNames := make([]string, 0, len(f.requiredNullableRoundTripTests))
+	for typeName := range f.requiredNullableRoundTripTests {
+		requiredNullableTestNames = append(requiredNullableTestNames, typeName)
+	}
+	sort.Strings(requiredNullableTestNames)
+	for _, typeName := range requiredNullableTestNames {
+		testWriter.WriteRequiredNullableRoundTripTests(typeName, f.requiredNullableRoundTripTests[typeName])
 	}
 
 	// Write String() method tests for types that have them (sorted for deterministic output)
@@ -876,6 +905,67 @@ func (f *fileWriter) WriteJSONMarshalingTests(typeName string, hasLiterals bool)
 		f.P("\t\tassert.NoError(t, err, \"unmarshaling empty object should succeed\")")
 		f.P("\t})")
 	}
+	f.P("}")
+	f.P()
+}
+
+// WriteRequiredNullableRoundTripTests generates tests asserting that required-nullable
+// fields survive a JSON decode/encode round-trip: a field present as null stays null,
+// an absent field stays absent, and a freshly constructed value omits the field.
+func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNames []string) {
+	var nullInput strings.Builder
+	nullInput.WriteString("{")
+	for i, wireName := range wireNames {
+		if i > 0 {
+			nullInput.WriteString(",")
+		}
+		nullInput.WriteString(fmt.Sprintf("%q:null", wireName))
+	}
+	nullInput.WriteString("}")
+
+	f.P("func TestRequiredNullableRoundTrip", typeName, "(t *testing.T) {")
+	f.P("\trequiredNullableKeys := []string{")
+	for _, wireName := range wireNames {
+		f.P("\t\t", fmt.Sprintf("%q", wireName), ",")
+	}
+	f.P("\t}")
+	f.P("\tmarshalToMap := func(t *testing.T, obj *", typeName, ") map[string]json.RawMessage {")
+	f.P("\t\tdata, err := json.Marshal(obj)")
+	f.P("\t\trequire.NoError(t, err, \"marshaling should succeed\")")
+	f.P("\t\tvar result map[string]json.RawMessage")
+	f.P("\t\trequire.NoError(t, json.Unmarshal(data, &result), \"marshaled data should be a JSON object\")")
+	f.P("\t\treturn result")
+	f.P("\t}")
+	f.P()
+	f.P("\tt.Run(\"NullPreserved\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`", nullInput.String(), "`), &obj))")
+	f.P("\t\tresult := marshalToMap(t, &obj)")
+	f.P("\t\tfor _, key := range requiredNullableKeys {")
+	f.P("\t\t\tvalue, ok := result[key]")
+	f.P("\t\t\trequire.True(t, ok, \"required nullable field %q received as null should be present in the output\", key)")
+	f.P("\t\t\tassert.Equal(t, \"null\", string(value), \"required nullable field %q received as null should be null in the output\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"AbsentStaysAbsent\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tvar obj ", typeName)
+	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`{}`), &obj))")
+	f.P("\t\tresult := marshalToMap(t, &obj)")
+	f.P("\t\tfor _, key := range requiredNullableKeys {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"required nullable field %q absent from the input should be absent from the output\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
+	f.P()
+	f.P("\tt.Run(\"FreshValueOmits\", func(t *testing.T) {")
+	f.P("\t\tt.Parallel()")
+	f.P("\t\tresult := marshalToMap(t, &", typeName, "{})")
+	f.P("\t\tfor _, key := range requiredNullableKeys {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"required nullable field %q should be omitted from a freshly constructed value\", key)")
+	f.P("\t\t}")
+	f.P("\t})")
 	f.P("}")
 	f.P()
 }
