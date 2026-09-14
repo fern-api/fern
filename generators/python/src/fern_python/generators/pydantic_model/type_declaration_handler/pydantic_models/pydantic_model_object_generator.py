@@ -10,7 +10,7 @@ from ..object_generator import (
     ObjectProperty,
 )
 from fern_python.codegen import AST, SourceFile
-from fern_python.pydantic_codegen.pydantic_model import sanitize_field_name
+from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
@@ -444,35 +444,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 _EXTRA_ATTRIBUTES = "extra_attributes"
 
 # Builder method names that would shadow generated or pydantic model API.
-_RESERVED_METHOD_NAMES = {
-    "to_xml",
-    "append",
-    "copy",
-    "dict",
-    "json",
-    "schema",
-    "schema_json",
-    "construct",
-    "validate",
-    "parse_obj",
-    "parse_raw",
-    "parse_file",
-    "from_orm",
-    "update_forward_refs",
-    "model_dump",
-    "model_dump_json",
-    "model_validate",
-    "model_validate_json",
-    "model_construct",
-    "model_copy",
-    "model_json_schema",
-    "model_fields",
-    "model_config",
-    "model_extra",
-    "model_fields_set",
-    "model_post_init",
-    "model_rebuild",
-}
+_RESERVED_METHOD_NAMES = {"to_xml", "append"} | BASE_MODEL_PROPERTIES
 
 
 def _is_xml_attribute(property: ObjectProperty) -> bool:
