@@ -4,6 +4,9 @@ from dataclasses import dataclass
 from typing import Iterable, List, Optional, Protocol, Sequence, Union, runtime_checkable
 from xml.sax.saxutils import escape, quoteattr
 
+import pydantic
+from .pydantic_utilities import IS_PYDANTIC_V2
+
 XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
 
@@ -79,6 +82,19 @@ def append_xml_child(parent: object, field_name: str, child: object) -> None:
     current = parent.__dict__.get(field_name)
     updated = [*current, child] if current is not None else [child]
     object.__setattr__(parent, field_name, updated)
+
+
+def extra_xml_attributes(model: pydantic.BaseModel) -> List[XmlAttribute]:
+    """Renders fields that were passed to the model but are not declared on it as XML attributes.
+
+    Lets callers set attributes the schema does not know about (`Say("hi", foo="bar")` -> `<Say foo="bar">`).
+    """
+    if IS_PYDANTIC_V2:
+        extras = model.model_extra or {}  # type: ignore[attr-defined]
+    else:
+        declared = set(model.__fields__)  # type: ignore[attr-defined]
+        extras = {key: value for key, value in model.__dict__.items() if key not in declared}
+    return [XmlAttribute(name=key, value=value) for key, value in extras.items() if value is not None]
 
 
 def _render_attribute_value(attribute: XmlAttribute) -> Optional[str]:

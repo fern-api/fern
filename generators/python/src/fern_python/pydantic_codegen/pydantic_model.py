@@ -66,6 +66,7 @@ class PydanticModel:
         self._v1_or_v2_root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._extra_fields = extra_fields
+        self._has_custom_init = False
         self._frozen = frozen
         self._orm_mode = orm_mode
         self._smart_union = smart_union
@@ -247,6 +248,8 @@ class PydanticModel:
         declaration: AST.FunctionDeclaration,
         decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
+        if declaration.name == "__init__":
+            self._has_custom_init = True
         return self._class_declaration.add_method(
             declaration=declaration,
             decorator=decorator,
@@ -357,7 +360,7 @@ class PydanticModel:
         self._maybe_model_config()
 
     def _maybe_add_positional_init(self) -> None:
-        if not self._positional_single_property_constructors:
+        if not self._positional_single_property_constructors or self._has_custom_init:
             return
 
         # Find fields that are required (no default value) and NOT discriminator fields

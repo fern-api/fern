@@ -13,3 +13,10 @@
     `say.break_(time="100ms")`). Method names derive from the XML tag; on a clash with a field they get an
     `add_` prefix (`Dial.add_number`, `Message.add_body`).
   type: feat
+- summary: |
+    XML-encoded types match the ergonomics of hand-written XML helper libraries: text-bearing elements
+    accept their body positionally (`Say("Hello", voice="man")`), constructors and builder methods accept
+    arbitrary `**extra_attributes: str` that are rendered as XML attributes (`Say("Hi", foo="bar")` ->
+    `<Say foo="bar">Hi</Say>`), and `str()` of a root element (one never nested in another XML type)
+    includes the `<?xml version="1.0" encoding="UTF-8"?>` declaration. `to_xml(xml_declaration=...)` is unchanged.
+  type: feat

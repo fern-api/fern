@@ -7,6 +7,7 @@ import pydantic
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
     append_xml_child,
+    extra_xml_attributes,
     XmlAttribute,
     XmlChild,
     serialize_xml_element,
@@ -102,3 +103,18 @@ def test_append_xml_child_on_frozen_model() -> None:
     append_xml_child(response, "children", Say("hi"))
     append_xml_child(response, "children", Say("bye"))
     assert response.children == [Say("hi"), Say("bye")]
+
+
+def test_extra_xml_attributes_renders_undeclared_fields_escaped() -> None:
+    class Say(pydantic.BaseModel):
+        model_config = pydantic.ConfigDict(extra="allow")
+        message: Optional[str] = None
+        voice: Optional[str] = None
+
+    say = Say.model_validate({"message": "hi", "foo": "a<b&c", "skipped": None})
+    xml = serialize_xml_element(
+        name="Say",
+        attributes=[XmlAttribute(name="voice", value=say.voice), *extra_xml_attributes(say)],
+        text=say.message,
+    )
+    assert xml == '<Say foo="a&lt;b&amp;c">hi</Say>'
