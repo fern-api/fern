@@ -1,0 +1,4 @@
+- summary: |
+    The generated README only documents pagination (`SyncPager`, `iter_pages()`) when paginated
+    clients are actually generated, so the README and `list()` return types stay in sync.
+  type: fix
