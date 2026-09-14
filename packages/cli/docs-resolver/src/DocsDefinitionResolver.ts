@@ -1533,8 +1533,10 @@ export class DocsDefinitionResolver {
         const landingPage: FernNavigation.V1.LandingPageNode | undefined =
             landingPageConfig != null ? this.toLandingPageNode(landingPageConfig, parentSlug) : undefined;
         // The site-level changelog is slugged off the root (parentSlug), not off any product.
-        // The intersection is only needed until the published @fern-api/fdr-sdk includes
-        // `ProductGroupNode.changelog`; it is a pure widening and can be dropped after the bump.
+        // TODO: drop this widening once the published @fern-api/fdr-sdk declares
+        // `ProductGroupNode.changelog` (added in fern-platform#14420). It is a pure widening, and
+        // `__test__/root-changelog.test.ts` asserts the emitted node at runtime, so a rename or
+        // retype upstream fails the test rather than silently emitting nav the backend ignores.
         const node: FernNavigation.V1.ProductGroupNode & { changelog: FernNavigation.V1.ChangelogNode | undefined } = {
             id,
             type: "productgroup",

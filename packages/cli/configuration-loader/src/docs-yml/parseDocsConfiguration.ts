@@ -912,7 +912,9 @@ async function getNavigationConfiguration({
     if (rootChangelog != null && products == null) {
         throw new CliError({
             message:
-                "A top-level `changelog` in docs.yml is only supported alongside `products`. Add the changelog to `navigation` instead.",
+                "A top-level `changelog` in docs.yml is only supported alongside `products`. " +
+                "For a site using `versions`, add the changelog to each version's `navigation`; " +
+                "otherwise add it to the top-level `navigation`.",
             code: CliError.Code.ConfigError
         });
     }
