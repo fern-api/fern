@@ -701,8 +701,8 @@ describe("GeneratedThrowingEndpointResponse", () => {
 
             it("extracts default value for long/int64 primitive type", () => {
                 const LONG_WITH_DEFAULT = FernIr.TypeReference.primitive({
-                    v1: FernIr.PrimitiveType.Long,
-                    v2: FernIr.PrimitiveTypeV2.long({ default: 100 })
+                    v1: "LONG",
+                    v2: FernIr.PrimitiveTypeV2.long({ default: 100, validation: undefined })
                 });
                 const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
                     page: createRequestProperty("offset", LONG_WITH_DEFAULT),
@@ -724,8 +724,8 @@ describe("GeneratedThrowingEndpointResponse", () => {
 
             it("extracts BigInt default value for long/int64 when useBigInt is enabled", () => {
                 const LONG_WITH_DEFAULT = FernIr.TypeReference.primitive({
-                    v1: FernIr.PrimitiveType.Long,
-                    v2: FernIr.PrimitiveTypeV2.long({ default: 100 })
+                    v1: "LONG",
+                    v2: FernIr.PrimitiveTypeV2.long({ default: 100, validation: undefined })
                 });
                 const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
                     page: createRequestProperty("offset", LONG_WITH_DEFAULT),

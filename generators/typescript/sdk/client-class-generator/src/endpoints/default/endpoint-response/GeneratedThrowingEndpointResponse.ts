@@ -678,7 +678,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             primitive: (primitiveType) => {
                 const maybeV2Scheme = primitiveType.v2;
                 if (maybeV2Scheme != null) {
-                    defaultValue = FernIr.PrimitiveTypeV2._visit(maybeV2Scheme, {
+                    defaultValue = FernIr.PrimitiveTypeV2._visit<ts.Expression | undefined>(maybeV2Scheme, {
                         integer: (it) => (it.default != null ? createNumericLiteralSafe(it.default) : undefined),
                         double: (it) => (it.default != null ? createNumericLiteralSafe(it.default) : undefined),
                         string: (it) => (it.default != null ? ts.factory.createStringLiteral(it.default) : undefined),
