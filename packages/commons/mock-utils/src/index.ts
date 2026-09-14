@@ -15,6 +15,20 @@ export function isEqualToMatcher(matcher: QueryParameterMatcher): matcher is { e
     return "equalTo" in matcher;
 }
 
+/**
+ * Binary payload served by WireMock stubs for `fileDownload` responses: a minimal, valid
+ * single-page PDF whose second line is the conventional binary marker comment (bytes > 0x7F),
+ * so the payload is not valid UTF-8 and genuinely exercises binary stream handling in SDKs.
+ */
+export const FILE_DOWNLOAD_FIXTURE_BASE64 =
+    "JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5MgolJUVPRgo=";
+
+/**
+ * Content type served for `fileDownload` responses. The IR's `FileDownloadResponse` carries no
+ * media type (unlike `TextResponse.contentType`), so the generic binary media type is used.
+ */
+export const FILE_DOWNLOAD_FIXTURE_CONTENT_TYPE = "application/octet-stream";
+
 export interface WireMockMapping {
     id: string;
     name: string;
@@ -29,7 +43,8 @@ export interface WireMockMapping {
     };
     response: {
         status: number;
-        body: string;
+        body?: string;
+        base64Body?: string;
         headers: Record<string, string>;
     };
     uuid: string;
@@ -300,6 +315,13 @@ export class WireMock {
             }
         }
 
+        // Serve real binary bytes for successful file download responses. File download examples carry
+        // no body, so the JSON path above would otherwise stub the endpoint with the JSON string `""`.
+        const isBinaryFileDownload = endpoint.response?.body?.type === "fileDownload" && status < 400;
+        if (isBinaryFileDownload) {
+            contentType = FILE_DOWNLOAD_FIXTURE_CONTENT_TYPE;
+        }
+
         // Build descriptive name
         const endpointName = endpoint.displayName || getOriginalName(endpoint.name);
         const exampleName = example?.name != null ? getOriginalName(example.name) : "default";
@@ -395,7 +417,7 @@ export class WireMock {
             },
             response: {
                 status,
-                body,
+                ...(isBinaryFileDownload ? { base64Body: FILE_DOWNLOAD_FIXTURE_BASE64 } : { body }),
                 headers: {
                     "Content-Type": contentType
                 }

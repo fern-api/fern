@@ -503,7 +503,7 @@ function buildCase(args: {
         ...(specFilledBodyProperties.length > 0 ? { specFilledBodyProperties } : {}),
         response: {
             status: mapping.response.status,
-            body: mapping.response.body
+            body: mapping.response.body ?? ""
         }
     };
 }
