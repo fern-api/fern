@@ -129,6 +129,7 @@ class ModuleManager:
         recursion_limit: Optional[int] = None,
         import_paths: Optional[List[str]] = None,
         package_name: Optional[str] = None,
+        license_header: Optional[str] = None,
     ) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
         self._sorted_modules = sorted_modules or []
@@ -136,6 +137,7 @@ class ModuleManager:
         self._recursion_limit = recursion_limit
         self._import_paths = import_paths
         self._package_name = package_name
+        self._license_header = license_header
 
     def register_additional_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         for export in exports:
@@ -187,6 +189,7 @@ class ModuleManager:
                 # don't sort imports in __init__.py because the import order is
                 # controlled to avoid issues with circular imports
                 should_sort_imports=False,
+                license_header=self._license_header,
             )
 
             sorted_exports = self._build_sorted_exports(module_info)

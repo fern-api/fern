@@ -1,12 +1,17 @@
-import { cwd, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
+import YAML from "yaml";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
-import { serializeMigrationSource } from "./projectMigrationSource.js";
+import {
+    identifySourceDerivedApiFields,
+    resolveMigrationPathParameterStyle,
+    serializeMigrationSource
+} from "./projectMigrationSource.js";
 import { selectMigrationTarget } from "./selectMigrationTarget.js";
 import { writeOutputFile } from "./writeOutputFile.js";
 
@@ -14,9 +19,11 @@ export interface SdkMigrateArgs {
     api?: string;
     force: boolean;
     group?: string[];
-    output: string;
+    output?: string;
     strict: boolean;
 }
+
+const DEFAULT_SDK_CONFIG_FILENAME = RelativeFilePath.of("sdk-config.yml");
 
 export async function sdkMigrate({
     project,
@@ -37,13 +44,17 @@ export async function sdkMigrate({
         groups,
         cliContext
     });
+    const outputPath = resolveOutputPath(args.output, workspace.absoluteFilePath);
+    const sourceBaseDirectory = args.output == null ? workspace.absoluteFilePath.toString() : cwd().toString();
 
     let mapped: MappingResult;
     try {
         mapped = mapFernGroupToSdkConfig({
             fernWorkspace,
             group,
-            source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: cwd().toString() })
+            source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: sourceBaseDirectory }),
+            clientPathParameterStyle: resolveMigrationPathParameterStyle(sourceSpecs),
+            sourceDerivedApiFields: identifySourceDerivedApiFields({ workspace, groups })
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
@@ -64,14 +75,28 @@ export async function sdkMigrate({
         });
     }
 
-    if (args.output === "-") {
-        cliContext.writeJsonToStdout(mapped.sdkConfig);
+    const serialized = YAML.stringify(mapped.sdkConfig, { lineWidth: 0 });
+    const yaml = serialized.endsWith("\n") ? serialized : `${serialized}\n`;
+    if (outputPath == null) {
+        cliContext.writeTextToStdout(yaml);
         return;
     }
 
-    const outputPath = resolve(cwd(), args.output);
-    await writeOutputFile(outputPath, `${JSON.stringify(mapped.sdkConfig, null, 2)}\n`, args.force);
+    await writeOutputFile(outputPath, yaml, args.force);
     cliContext.stderr.info(`Created SDK Config v1 at ${outputPath}`);
+}
+
+function resolveOutputPath(
+    requestedOutput: string | undefined,
+    workspaceDirectory: AbsoluteFilePath
+): AbsoluteFilePath | undefined {
+    if (requestedOutput === "-") {
+        return undefined;
+    }
+    if (requestedOutput == null) {
+        return join(workspaceDirectory, DEFAULT_SDK_CONFIG_FILENAME);
+    }
+    return resolve(cwd(), requestedOutput);
 }
 
 function printDiagnostics(cliContext: CliContext, diagnostics: readonly FernConfigMappingDiagnostic[]): void {

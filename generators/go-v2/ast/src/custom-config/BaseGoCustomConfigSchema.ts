@@ -32,6 +32,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     customPagerName: z.string().optional(),
     enableRequestBodyPagination: z.boolean().optional(),
+    enableNestedRequestBodyPagination: z.boolean().optional(),
     offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),

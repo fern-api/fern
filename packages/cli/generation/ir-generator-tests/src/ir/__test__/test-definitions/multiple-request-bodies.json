@@ -15,6 +15,7 @@
                 "tokenEnvVar": null,
                 "tokenPlaceholder": null,
                 "key": "BearerAuthScheme",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

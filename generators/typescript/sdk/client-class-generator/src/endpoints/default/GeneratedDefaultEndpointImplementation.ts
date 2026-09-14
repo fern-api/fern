@@ -224,7 +224,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         invocation: ts.Expression;
         context: FileContext;
     }): ts.Node[] | undefined {
-        if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
+        if (this.endpoint.pagination == null) {
             return undefined;
         }
 
@@ -308,13 +308,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             ts.factory.createBinaryExpression(
                                 ts.factory.createIdentifier(pageVariableName),
                                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(pageVariableName),
-                                        ts.factory.createIdentifier("getNextPage")
-                                    ),
-                                    undefined,
-                                    []
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(pageVariableName),
+                                            ts.factory.createIdentifier("getNextPage")
+                                        ),
+                                        undefined,
+                                        []
+                                    )
                                 )
                             )
                         )

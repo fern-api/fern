@@ -10,6 +10,7 @@ import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema.js";
 import { OAuthPkceSchema } from "./OAuthPkceSchema.js";
 import { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema.js";
 import { RedirectUriSchema } from "./RedirectUriSchema.js";
+import { WithPlaygroundDocsSchema } from "./WithPlaygroundDocsSchema.js";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.OAuthSchemeSchema.Raw,
@@ -47,10 +48,11 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
             .record(core.serialization.string(), core.serialization.string())
             .optional(),
     })
-    .extend(WithDocsSchema);
+    .extend(WithDocsSchema)
+    .extend(WithPlaygroundDocsSchema);
 
 export declare namespace OAuthSchemeSchema {
-    export interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithPlaygroundDocsSchema.Raw {
         scheme: "oauth";
         type: OAuthFlowTypeSchema.Raw;
         scopes?: AuthScope.Raw[] | null;

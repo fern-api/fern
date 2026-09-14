@@ -43,11 +43,12 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::PATCH,
                 "",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/merge-patch+json",
                 options,
             )
             .await
@@ -112,11 +113,12 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::PATCH,
                 &format!("complex/{}", id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/merge-patch+json",
                 options,
             )
             .await
@@ -166,11 +168,12 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::PATCH,
                 &format!("named-mixed/{}", id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/merge-patch+json",
                 options,
             )
             .await
@@ -221,11 +224,12 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::PATCH,
                 "optional-merge-patch-test",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/merge-patch+json",
                 options,
             )
             .await

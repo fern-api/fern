@@ -44,6 +44,11 @@ export declare namespace ReconnectingWebSocket {
         maxEnqueuedMessages?: number;
         startClosed?: boolean;
         debug?: boolean;
+        /**
+         * Decides whether a close event should trigger a reconnect. Return `false` to treat the close as terminal.
+         * Not consulted when `close()` was called or the abort signal fired. Defaults to `event.code !== 1000`.
+         */
+        shouldReconnect?: (event: Events.CloseEvent) => boolean;
     };
 
     export type UrlProvider = string | (() => string) | (() => Promise<string>);
@@ -58,6 +63,10 @@ export declare namespace ReconnectingWebSocket {
     };
 }
 
+const NORMAL_CLOSURE_CODE = 1000;
+
+const defaultShouldReconnect = (event: Events.CloseEvent): boolean => event.code !== NORMAL_CLOSURE_CODE;
+
 const DEFAULT_OPTIONS = {
     maxReconnectionDelay: 10000,
     minReconnectionDelay: 1000 + Math.random() * 4000,
@@ -68,6 +77,7 @@ const DEFAULT_OPTIONS = {
     maxEnqueuedMessages: Infinity,
     startClosed: false,
     debug: false,
+    shouldReconnect: defaultShouldReconnect,
 };
 
 export class ReconnectingWebSocket {
@@ -511,7 +521,7 @@ export class ReconnectingWebSocket {
         this._debug("close event");
         this._clearTimeouts();
 
-        if (event.code === 1000) {
+        if (this._shouldReconnect && !this._isReconnectableClose(event)) {
             this._shouldReconnect = false;
         }
 
@@ -524,6 +534,16 @@ export class ReconnectingWebSocket {
         }
         this._listeners.close.forEach((listener) => this._callEventListener(event, listener));
     };
+
+    private _isReconnectableClose(event: Events.CloseEvent): boolean {
+        const { shouldReconnect = DEFAULT_OPTIONS.shouldReconnect } = this._options;
+        try {
+            return shouldReconnect(event);
+        } catch (error) {
+            this._debug("shouldReconnect threw, treating close as terminal", error);
+            return false;
+        }
+    }
 
     private _removeListeners() {
         if (!this._ws) {

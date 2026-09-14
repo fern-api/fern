@@ -198,10 +198,11 @@ func (f *Foo) String() string {
 }
 
 var (
-	updateFooRequestFieldXIdempotencyKey = big.NewInt(1 << 0)
-	updateFooRequestFieldNullableText    = big.NewInt(1 << 1)
-	updateFooRequestFieldNullableNumber  = big.NewInt(1 << 2)
-	updateFooRequestFieldNonNullableText = big.NewInt(1 << 3)
+	updateFooRequestFieldXIdempotencyKey      = big.NewInt(1 << 0)
+	updateFooRequestFieldNullableText         = big.NewInt(1 << 1)
+	updateFooRequestFieldNullableNumber       = big.NewInt(1 << 2)
+	updateFooRequestFieldNonNullableText      = big.NewInt(1 << 3)
+	updateFooRequestFieldRequiredNullableText = big.NewInt(1 << 4)
 )
 
 type UpdateFooRequest struct {
@@ -212,6 +213,8 @@ type UpdateFooRequest struct {
 	NullableNumber *float64 `json:"nullable_number,omitempty" url:"-"`
 	// Regular non-nullable field
 	NonNullableText *string `json:"non_nullable_text,omitempty" url:"-"`
+	// Must be sent, but may be null to clear the value
+	RequiredNullableText *string `json:"required_nullable_text,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -250,6 +253,13 @@ func (u *UpdateFooRequest) SetNullableNumber(nullableNumber *float64) {
 func (u *UpdateFooRequest) SetNonNullableText(nonNullableText *string) {
 	u.NonNullableText = nonNullableText
 	u.require(updateFooRequestFieldNonNullableText)
+}
+
+// SetRequiredNullableText sets the RequiredNullableText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetRequiredNullableText(requiredNullableText *string) {
+	u.RequiredNullableText = requiredNullableText
+	u.require(updateFooRequestFieldRequiredNullableText)
 }
 
 func (u *UpdateFooRequest) UnmarshalJSON(data []byte) error {

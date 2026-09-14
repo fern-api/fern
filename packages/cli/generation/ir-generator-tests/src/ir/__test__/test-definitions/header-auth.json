@@ -30,6 +30,7 @@
                 "headerEnvVar": null,
                 "headerPlaceholder": "YOUR_API_KEY",
                 "key": "Header",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

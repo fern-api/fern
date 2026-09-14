@@ -11,6 +11,8 @@ import {
     validateSdkConfigV1
 } from "@postman/sdk-config/sdk-config/v1";
 
+import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
+
 export interface MappingResult {
     diagnostics: FernConfigMappingDiagnostic[];
     sdkConfig: ReturnType<typeof validateSdkConfigV1>;
@@ -19,13 +21,17 @@ export interface MappingResult {
 export function mapFernGroupToSdkConfig({
     fernWorkspace,
     group,
-    source
+    source,
+    clientPathParameterStyle,
+    sourceDerivedApiFields
 }: {
     fernWorkspace: Pick<FernWorkspace, "definition">;
     group: generatorsYml.GeneratorGroup;
     source: SdkConfigV1SourceConfig;
+    clientPathParameterStyle?: "inline" | "wrapped";
+    sourceDerivedApiFields?: SourceDerivedApiFields;
 }): MappingResult {
-    const apiProjection = mapFernDefinitionToSdkConfigApi(fernWorkspace.definition);
+    const apiProjection = mapFernDefinitionToSdkConfigApi(fernWorkspace.definition, sourceDerivedApiFields);
     const input: FernResolvedGeneratorGroupInput = {
         apiName: fernWorkspace.definition.rootApiFile.contents.name,
         source,
@@ -37,24 +43,41 @@ export function mapFernGroupToSdkConfig({
         }
     };
     const mapped = mapFernConfigToSdkConfigV1(input);
+    const sdkConfig =
+        clientPathParameterStyle == null || mapped.sdkConfig.client?.pathParameterStyle != null
+            ? mapped.sdkConfig
+            : {
+                  ...mapped.sdkConfig,
+                  client: {
+                      ...(mapped.sdkConfig.client ?? {}),
+                      pathParameterStyle: clientPathParameterStyle
+                  }
+              };
     return {
         diagnostics: [...apiProjection.diagnostics, ...mapped.unsupportedFields],
-        sdkConfig: validateSdkConfigV1(mapped.sdkConfig)
+        sdkConfig: validateSdkConfigV1(sdkConfig)
     };
 }
 
-export function mapFernDefinitionToSdkConfigApi(definition: FernDefinition): {
+export function mapFernDefinitionToSdkConfigApi(
+    definition: FernDefinition,
+    sourceDerivedApiFields?: SourceDerivedApiFields
+): {
     api: SdkConfigV1ApiConfigInput;
     diagnostics: FernConfigMappingDiagnostic[];
 } {
     const root = definition.rootApiFile.contents;
-    const environments = Object.entries(root.environments ?? {})
-        .sort(([left], [right]) => left.localeCompare(right))
-        .map(([name, environment]) => ({
-            name,
-            urls: mapEnvironmentUrls(environment),
-            ...(typeof environment === "string" || environment.docs == null ? {} : { description: environment.docs })
-        }));
+    const environments = sourceDerivedApiFields?.environments
+        ? []
+        : Object.entries(root.environments ?? {})
+              .sort(([left], [right]) => left.localeCompare(right))
+              .map(([name, environment]) => ({
+                  name,
+                  urls: mapEnvironmentUrls(environment),
+                  ...(typeof environment === "string" || environment.docs == null
+                      ? {}
+                      : { description: environment.docs })
+              }));
     const headers = Object.entries(root.headers ?? {}).map(([headerName, header]) =>
         typeof header === "string"
             ? { name: headerName }
@@ -64,12 +87,16 @@ export function mapFernDefinitionToSdkConfigApi(definition: FernDefinition): {
                   ...(header.docs == null ? {} : { description: header.docs })
               }
     );
-    const auth = mapFernAuth(root);
-    const baseUrl = root["default-url"] ?? definition.rootApiFile.defaultUrl;
+    const auth = sourceDerivedApiFields?.auth ? { diagnostics: [] } : mapFernAuth(root);
+    const baseUrl = sourceDerivedApiFields?.environments
+        ? undefined
+        : (root["default-url"] ?? definition.rootApiFile.defaultUrl);
     return {
         api: {
             ...(baseUrl == null ? {} : { baseUrl }),
-            ...(root["default-environment"] == null ? {} : { defaultEnvironment: root["default-environment"] }),
+            ...(sourceDerivedApiFields?.environments || root["default-environment"] == null
+                ? {}
+                : { defaultEnvironment: root["default-environment"] }),
             ...(environments.length === 0 ? {} : { environments }),
             ...(headers.length === 0 ? {} : { headers }),
             ...(auth.auth == null ? {} : { auth: auth.auth })

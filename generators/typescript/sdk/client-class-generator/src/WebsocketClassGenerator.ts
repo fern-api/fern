@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass } from "@fern-typescript/contexts";
 
-import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketClassImpl.js";
+import { GeneratedWebsocketSocketClassImpl, WebsocketHandlerMode } from "./GeneratedWebsocketSocketClassImpl.js";
 
 export declare namespace WebsocketClassGenerator {
     export interface Init {
@@ -10,6 +10,7 @@ export declare namespace WebsocketClassGenerator {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         skipResponseValidation: boolean;
+        websocketHandlerMode: WebsocketHandlerMode;
     }
 
     export namespace generateWebsocketSocket {
@@ -27,17 +28,20 @@ export class WebsocketClassGenerator {
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;
+    private websocketHandlerMode: WebsocketHandlerMode;
 
     constructor({
         intermediateRepresentation,
         retainOriginalCasing,
         omitUndefined,
-        skipResponseValidation
+        skipResponseValidation,
+        websocketHandlerMode
     }: WebsocketClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.skipResponseValidation = skipResponseValidation;
+        this.websocketHandlerMode = websocketHandlerMode;
     }
 
     public generateWebsocketSocket({
@@ -53,7 +57,8 @@ export class WebsocketClassGenerator {
             includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
-            skipResponseValidation: this.skipResponseValidation
+            skipResponseValidation: this.skipResponseValidation,
+            websocketHandlerMode: this.websocketHandlerMode
         });
     }
 }

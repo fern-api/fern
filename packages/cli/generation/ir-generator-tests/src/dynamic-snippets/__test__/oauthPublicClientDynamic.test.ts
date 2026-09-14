@@ -17,7 +17,14 @@ function withOAuthScheme(
         auth: {
             requirement: FernIr.auth.AuthSchemesRequirement.All,
             docs: undefined,
-            schemes: [FernIr.auth.AuthScheme.oauth({ key: "MyOAuth", docs: undefined, configuration })]
+            schemes: [
+                FernIr.auth.AuthScheme.oauth({
+                    key: "MyOAuth",
+                    docs: undefined,
+                    playgroundDocs: undefined,
+                    configuration
+                })
+            ]
         }
     };
 }

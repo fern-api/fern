@@ -1,10 +1,10 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { casingsGenerator } from "@fern-typescript/test-utils";
-import { ts } from "ts-morph";
+import { ClassDeclarationStructure, ModuleDeclarationStructure, Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
-import { GeneratedWebsocketSocketClassImpl } from "../GeneratedWebsocketSocketClassImpl.js";
+import { GeneratedWebsocketSocketClassImpl, WebsocketHandlerMode } from "../GeneratedWebsocketSocketClassImpl.js";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -139,6 +139,7 @@ function createImpl(opts?: {
     skipResponseValidation?: boolean;
     channel?: FernIr.WebSocketChannel;
     serviceClassName?: string;
+    websocketHandlerMode?: WebsocketHandlerMode;
 }): GeneratedWebsocketSocketClassImpl {
     return new GeneratedWebsocketSocketClassImpl({
         packageId: "pkg_test" as unknown as PackageId,
@@ -147,8 +148,75 @@ function createImpl(opts?: {
         serviceClassName: opts?.serviceClassName ?? "ChatSocket",
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
-        skipResponseValidation: opts?.skipResponseValidation ?? false
+        skipResponseValidation: opts?.skipResponseValidation ?? false,
+        websocketHandlerMode: opts?.websocketHandlerMode ?? "replace"
     });
+}
+
+/**
+ * Renders the structures emitted by `writeToFile` into real TypeScript source text.
+ */
+function renderGeneratedSource(impl: GeneratedWebsocketSocketClassImpl): string {
+    const context = createMockContext();
+    impl.writeToFile(context);
+    const project = new Project({ useInMemoryFileSystem: true });
+    const sourceFile = project.createSourceFile("Socket.ts", "");
+    sourceFile.addModule(context._addedModules[0] as ModuleDeclarationStructure);
+    sourceFile.addClass(context._addedClasses[0] as ClassDeclarationStructure);
+    return sourceFile.getFullText();
+}
+
+interface FakeSocketListeners {
+    open: Array<() => void>;
+    message: Array<(event: { data: string }) => void>;
+    close: Array<(event: unknown) => void>;
+    error: Array<(event: { message: string }) => void>;
+}
+
+interface RuntimeSocket {
+    on: (event: keyof FakeSocketListeners, callback: (...args: never[]) => void) => void;
+    off: (event: keyof FakeSocketListeners, callback: (...args: never[]) => void) => void;
+}
+
+interface RuntimeHarness {
+    socket: RuntimeSocket;
+    emit: <K extends keyof FakeSocketListeners>(event: K, ...args: Parameters<FakeSocketListeners[K][number]>) => void;
+}
+
+/**
+ * Compiles the generated socket class to JavaScript and instantiates it against a fake
+ * underlying ReconnectingWebSocket so the handler-dispatch behavior can be exercised at runtime.
+ */
+function instantiateGeneratedSocket(mode: WebsocketHandlerMode): RuntimeHarness {
+    const source = renderGeneratedSource(createImpl({ includeSerdeLayer: false, websocketHandlerMode: mode }));
+    const js = ts.transpileModule(source, {
+        compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 }
+    }).outputText;
+
+    const listeners: FakeSocketListeners = { open: [], message: [], close: [], error: [] };
+    const fakeReconnectingWebSocket = {
+        addEventListener: <K extends keyof FakeSocketListeners>(event: K, listener: FakeSocketListeners[K][number]) => {
+            (listeners[event] as Array<FakeSocketListeners[K][number]>).push(listener);
+        },
+        removeEventListener: () => undefined
+    };
+
+    const exports: { ChatSocket?: new (args: { socket: unknown }) => RuntimeSocket } = {};
+    const fromJson = (data: string): unknown => JSON.parse(data);
+    new Function("exports", "fromJson", js)(exports, fromJson);
+    if (exports.ChatSocket == null) {
+        throw new Error("Generated source did not export ChatSocket");
+    }
+    const socket = new exports.ChatSocket({ socket: fakeReconnectingWebSocket });
+
+    return {
+        socket,
+        emit: (event, ...args) => {
+            for (const listener of listeners[event]) {
+                (listener as (...a: unknown[]) => void)(...args);
+            }
+        }
+    };
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -442,6 +510,137 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(onMethod!.parameters.map((p: { name: string }) => p.name)).toEqual(["event", "callback"]);
         });
+    });
+
+    describe.each<WebsocketHandlerMode>(["replace", "accumulate"])("websocketHandlerMode=%s", (mode) => {
+        it("matches snapshot with serde layer", () => {
+            expect(
+                renderGeneratedSource(createImpl({ includeSerdeLayer: true, websocketHandlerMode: mode }))
+            ).toMatchSnapshot();
+        });
+
+        it("matches snapshot without serde layer", () => {
+            expect(
+                renderGeneratedSource(createImpl({ includeSerdeLayer: false, websocketHandlerMode: mode }))
+            ).toMatchSnapshot();
+        });
+
+        it("generates both on and off methods", () => {
+            const impl = createImpl({ websocketHandlerMode: mode });
+            const context = createMockContext();
+            impl.writeToFile(context);
+
+            const classStructure = context._addedClasses[0] as { methods: { name: string }[] };
+            const methodNames = classStructure.methods.map((m: { name: string }) => m.name);
+            expect(methodNames).toContain("on");
+            expect(methodNames).toContain("off");
+        });
+
+        it("dispatches a single handler for open, message, close and error", () => {
+            const { socket, emit } = instantiateGeneratedSocket(mode);
+            const calls: string[] = [];
+            socket.on("open", () => calls.push("open"));
+            socket.on("message", ((message: { text: string }) => calls.push(`message:${message.text}`)) as never);
+            socket.on("close", () => calls.push("close"));
+            socket.on("error", ((error: Error) => calls.push(`error:${error.message}`)) as never);
+
+            emit("open");
+            emit("message", { data: JSON.stringify({ text: "hi" }) });
+            emit("error", { message: "boom" });
+            emit("close", {});
+
+            expect(calls).toEqual(["open", "message:hi", "error:boom", "close"]);
+        });
+
+        it("off() detaches a registered handler", () => {
+            const { socket, emit } = instantiateGeneratedSocket(mode);
+            const calls: string[] = [];
+            const handler = () => calls.push("open");
+            socket.on("open", handler);
+            emit("open");
+            socket.off("open", handler);
+            emit("open");
+
+            expect(calls).toEqual(["open"]);
+        });
+
+        it("off() with a different callback is a no-op", () => {
+            const { socket, emit } = instantiateGeneratedSocket(mode);
+            const calls: string[] = [];
+            socket.on("open", () => calls.push("registered"));
+            socket.off("open", () => calls.push("never-registered"));
+            emit("open");
+
+            expect(calls).toEqual(["registered"]);
+        });
+
+        it("off() for an event with no handler is a no-op", () => {
+            const { socket, emit } = instantiateGeneratedSocket(mode);
+            expect(() => socket.off("open", () => undefined)).not.toThrow();
+            expect(() => emit("open")).not.toThrow();
+        });
+
+        it(
+            mode === "replace"
+                ? "second on() for the same event replaces the first handler"
+                : "second on() for the same event accumulates and fires both in registration order",
+            () => {
+                const { socket, emit } = instantiateGeneratedSocket(mode);
+                const calls: string[] = [];
+                socket.on("message", ((message: { text: string }) => calls.push(`a:${message.text}`)) as never);
+                socket.on("message", ((message: { text: string }) => calls.push(`b:${message.text}`)) as never);
+                socket.on("message", ((message: { text: string }) => calls.push(`c:${message.text}`)) as never);
+
+                emit("message", { data: JSON.stringify({ text: "1" }) });
+
+                expect(calls).toEqual(mode === "replace" ? ["c:1"] : ["a:1", "b:1", "c:1"]);
+            }
+        );
+
+        it("off() only removes the matching handler", () => {
+            const { socket, emit } = instantiateGeneratedSocket(mode);
+            const calls: string[] = [];
+            const a = () => calls.push("a");
+            const b = () => calls.push("b");
+            socket.on("open", a);
+            socket.on("open", b);
+            socket.off("open", a);
+            emit("open");
+
+            expect(calls).toEqual(["b"]);
+        });
+
+        if (mode === "accumulate") {
+            it("a handler removing itself during dispatch does not skip later handlers", () => {
+                const { socket, emit } = instantiateGeneratedSocket(mode);
+                const calls: string[] = [];
+                const a = () => {
+                    calls.push("a");
+                    socket.off("open", a);
+                };
+                const b = () => calls.push("b");
+                socket.on("open", a);
+                socket.on("open", b);
+                emit("open");
+                emit("open");
+
+                expect(calls).toEqual(["a", "b", "b"]);
+            });
+
+            it("off() removes the most recent registration of a duplicated handler", () => {
+                const { socket, emit } = instantiateGeneratedSocket(mode);
+                const calls: string[] = [];
+                const a = () => calls.push("a");
+                const b = () => calls.push("b");
+                socket.on("open", a);
+                socket.on("open", b);
+                socket.on("open", a);
+                socket.off("open", a);
+                emit("open");
+
+                expect(calls).toEqual(["a", "b"]);
+            });
+        }
     });
 
     describe("handleMessage with serde layer", () => {

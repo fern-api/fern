@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": undefined,
         "key": "bearerAuth",
+        "playgroundDocs": undefined,
         "token": "apiKey",
         "tokenEnvVar": "YOUR_TOKEN_NAME",
         "tokenPlaceholder": undefined,

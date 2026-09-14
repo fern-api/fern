@@ -1,6 +1,6 @@
 # ADR-0008: Credential precedence chain and storage fallback
 
-**Status:** Accepted — 2026-06-11
+**Status:** Accepted — 2026-06-11. Amended 2026-09-04 ([#17653](https://github.com/fern-api/fern/pull/17653)) — slot-scoped shadowing, alternatives, and remedy selection.
 **Context:** [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) — first-class OAuth + login support. Once `auth login` writes credentials to the keyring, multiple credential sources can coexist for the same scheme. The grilling session resolved the resolution order, the storage backend with its fallback path, and the on-failure UX.
 
 ## Decision
@@ -28,14 +28,32 @@ Entry key is `(service=<cli_name>, account=<scheme_name>)`. Value is a JSON toke
 
 Higher-priority sources mask lower-priority ones. `auth status` lists every visible source and marks shadowing explicitly. `auth login` warns at flow start when an env var would shadow the keyring entry the flow is about to write — so users discover the footgun before they're confused by it. Error messages on 401/403 disclose *which* source supplied the credential, so users know where to look when the shadow is unintended.
 
+**Shadowing is scoped to a credential slot, not to a scheme.** A scheme can need more than one value — basic auth needs a username *and* a password; OAuth client credentials need a client id *and* a client secret. Each value is its own **slot** with its own precedence chain, and slots do not shadow each other: a scheme authenticates only when every slot resolves. Reporting a set password as `shadowed` by the username (which is what a single flattened list produces) is not a cosmetic wart — it reads as "your password is being ignored" and sends users off to unset variables that were working fine.
+
+Some sources satisfy a scheme *instead of* the whole slot set rather than filling one slot. A cached OAuth access token is the case in hand: it authenticates on its own, without the client id / secret that would mint it. These are reported as **alternatives** — ORed against the required slots — and they do not displace the slots in the listing, because "did the CLI pick up my `OAUTH_CLIENT_ID`?" is a question the user still needs answered when a cached token happens to be present.
+
+`logged_in` in `auth status --format json` is therefore true when every required slot resolves, or when an alternative does. The invariant to hold it to is agreement with `AuthProvider::has_credentials`: a status surface that contradicts the request path is worse than no status surface. (Known divergence: an expired access token with a cached refresh token and a contract refresh endpoint satisfies `has_credentials_for_url` but produces no slot, so it reports not-logged-in while requests succeed.)
+
+Providers behind `SchemeBinding::Custom` are opaque to this machinery unless they opt in via `AuthProvider::credential_slots`. Without it, a scheme that reads credentials perfectly well at request time reports `(no credential sources bound)`.
+
 ### Failure modes during command execution
 
 | State | Behavior |
 |---|---|
-| No creds in any source | Print `Run \`<bin> auth login\` to authenticate.` to stderr; exit non-zero. **Never auto-trigger login from a non-auth command.** |
+| No creds in any source | Print a remedy to stderr; exit non-zero. The remedy must match how the scheme actually resolves credentials — see *Remedy selection* below. **Never auto-trigger login from a non-auth command.** |
 | Access token expired, refresh token cached | Silent refresh before request goes out; persist new tokens; proceed. (Existing `OAuth2TokenProvider` path, extended to keyring entries.) |
 | Refresh fails / refresh token revoked | Wipe the keyring entry; print `Your session has expired. Run \`<bin> auth login\` again.`; exit non-zero. |
 | 401/403 with apparently-valid token | Surface the server error verbatim. **No retry-with-refresh.** |
+
+### Remedy selection
+
+`auth login --with-token` writes the keyring. Suggesting it for a scheme that never *reads* the keyring sends the user down a path that silently does nothing — OAuth client credentials read env vars and the token cache; basic auth reads its two env slots (`inject_keyring_sources` deliberately leaves `SchemeBinding::Basic` alone). So the remedy is chosen from the scheme's own resolution shape:
+
+| Scheme has | Remedy |
+|---|---|
+| a declared login flow | ``Run `<bin> auth login` `` |
+| a keyring source in its slots | ``Run `<bin> auth login --with-token` `` |
+| neither, but unresolved env slots | `Set <VAR>, <VAR> to authenticate.` |
 
 ## Consequences
 
@@ -65,7 +83,9 @@ Higher-priority sources mask lower-priority ones. `auth status` lists every visi
 - FER-9856
 - [ADR-0001](./0001-auth-provider-no-cred-extraction.md) — credentials never leave `AuthCredentialSource` / `AuthProvider::apply`; precedence resolution stays inside `AuthCredentialSource::Chain`
 - [ADR-0007](./0007-login-flows-one-shot-per-binary.md) — sibling decision on how flows are declared
-- `src/auth/credential.rs` — `AuthCredentialSource` (new `Keyring` variant lands here)
+- `src/auth/credential.rs` — `AuthCredentialSource` (new `Keyring` variant lands here); `CredentialSlots` (required slots + alternatives)
+- `src/auth/login.rs` — `expand_slots` / `evaluate_slots` / `remedy_line` implement the status rendering described above
+- `src/auth/provider.rs` — `AuthProvider::credential_slots`, the opt-in hook for `Custom` providers
 - `src/auth/oauth2.rs` — existing `TokenCache` (repurposed as the file-fallback backend; existing `OAuth2TokenProvider` refresh path extended to keyring-stored tokens)
 - `src/auth/error.rs` — `handle_error_response` (extended to disclose credential source on 401/403)
 - `CONTEXT.md` § "Auth & login" — domain language for **credential precedence chain**, **shadowing**, **keyring entry**

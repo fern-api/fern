@@ -15,6 +15,7 @@
                 "tokenEnvVar": "SEED_API_KEY",
                 "tokenPlaceholder": "YOUR_API_KEY",
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

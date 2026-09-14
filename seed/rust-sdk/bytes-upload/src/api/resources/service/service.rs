@@ -38,6 +38,7 @@ impl ServiceClient {
                 "upload-content",
                 Some(request.to_vec()),
                 None,
+                "application/octet-stream",
                 options,
             )
             .await
@@ -81,6 +82,7 @@ impl ServiceClient {
                     .string("model", request.model.clone())
                     .string("language", request.language.clone())
                     .build(),
+                "application/octet-stream",
                 options,
             )
             .await

@@ -1867,6 +1867,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -1916,6 +1919,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -2919,6 +2925,9 @@
                 "indented",
                 "cards"
               ]
+            },
+            "api-reference-expand-properties": {
+              "type": "boolean"
             },
             "show-nav-availability-badges": {
               "type": "boolean"
@@ -4070,6 +4079,9 @@
                       "respect-per-spec-base-path": {
                         "type": "boolean"
                       },
+                      "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
                       "namespaced-errors": {
                         "type": "boolean"
                       }
@@ -4666,6 +4678,9 @@
                           "type": "boolean"
                         },
                         "respect-per-spec-base-path": {
+                          "type": "boolean"
+                        },
+                        "respect-operation-id-word-boundaries": {
                           "type": "boolean"
                         },
                         "namespaced-errors": {

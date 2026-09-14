@@ -68,6 +68,7 @@ impl ApiClient {
                 "documents/upload",
                 Some(request.to_vec()),
                 None,
+                "application/pdf",
                 options,
             )
             .await

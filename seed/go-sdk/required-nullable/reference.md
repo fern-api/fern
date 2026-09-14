@@ -96,6 +96,9 @@ request := &fern.UpdateFooRequest{
     NonNullableText: fern.String(
         "non_nullable_text",
     ),
+    RequiredNullableText: fern.String(
+        "required_nullable_text",
+    ),
 }
 client.UpdateFoo(
     context.TODO(),
@@ -149,6 +152,14 @@ client.UpdateFoo(
 <dd>
 
 **nonNullableText:** `*string` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requiredNullableText:** `*string` — Must be sent, but may be null to clear the value
     
 </dd>
 </dl>

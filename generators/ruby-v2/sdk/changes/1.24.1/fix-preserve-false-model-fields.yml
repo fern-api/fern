@@ -1,0 +1,5 @@
+- summary: |
+    Preserve `false` values in model fields. Previously `Model#initialize` used `||` to
+    coalesce values, so any boolean field set to `false` was dropped and never serialized
+    (e.g. `users.update(blocked: false)` sent an empty body).
+  type: fix

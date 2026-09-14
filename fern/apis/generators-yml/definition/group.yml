@@ -146,6 +146,9 @@ types:
       mode: optional<GithubSelfhostedMode>
       branch: optional<string>
       license: optional<license.GithubLicenseSchema>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
 
   GithubSelfhostedMode:
     enum:
@@ -177,6 +180,9 @@ types:
         docs: If specified, commits and tags the release on this branch instead of the default branch. The branch must exist.
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for commit and release configuration
 
   GithubCommitAndReleaseMode:
@@ -191,6 +197,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"pull-request">
       reviewers: optional<reviewers.ReviewersSchema>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for pull request configuration
 
   GithubPushSchema:
@@ -199,6 +208,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"push">
       branch: optional<string>
+      workflows:
+        type: optional<boolean>
+        docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
       # Add properties for push configuration
 
   NpmOutputLocationSchema:

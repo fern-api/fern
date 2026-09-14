@@ -52,6 +52,7 @@
     "@fern-api/ruby-base": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/ruby-model": "workspace:*",
+    "@fern-api/test-utils": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "67.21.0",

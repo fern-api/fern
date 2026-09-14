@@ -8,6 +8,7 @@ import { gunzipSync, gzipSync } from "zlib";
 import {
     createFernSdkGenApiBatchRequest,
     createFernSdkGenApiRequest,
+    type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiPayload,
@@ -106,6 +107,20 @@ function runtimePayload(body: Buffer): FernSdkGenApiPayload {
 
 function sdkConfigPayload(body: string): FernSdkGenApiPayload {
     return { payloadKind: "sdk-config-v1", body: Buffer.from(body) };
+}
+
+function sdkConfigV1(
+    target: FernSdkConfigV1Payload["targets"][number] = {
+        language: "typescript",
+        generatorVersion: "4.0.0"
+    }
+): FernSdkConfigV1Payload {
+    return {
+        body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
+        sdkName: "petstore",
+        sdkVersion: "1.2.3",
+        targets: [target]
+    };
 }
 
 function sourceArchive(
@@ -211,6 +226,72 @@ function createPreflightBatch({
 }
 
 describe("isEligibleForFernSdkGenApi", () => {
+    it("routes an explicit SDK Config target and uses its generator version", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "3.86.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.generatorInvocation.version).toBe("4.0.0");
+        expect(result?.route).toMatchObject({
+            configKind: "sdk-config-v1",
+            payloadKind: "sdk-config-v1",
+            requestedVersion: "4.0.0"
+        });
+    });
+
+    it("rejects an SDK Config that does not contain the selected language", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "python", generatorVersion: "6.0.0" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("does not contain a target for typescript")
+        );
+    });
+
+    it("rejects non-SDK generators instead of falling back to Fiddle", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-postman" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("selected group contains fernapi/fern-postman")
+        );
+    });
+
+    it("rejects explicit SDK Config generation when the backend is disabled", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: false,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("requires the sdk-gen-api generation backend")
+        );
+    });
+
     it("routes cutover-1 and rejects legacy configuration at and after cutover", () => {
         const startTargetWork = vi.fn();
 
@@ -222,10 +303,8 @@ describe("isEligibleForFernSdkGenApi", () => {
                 requireEnvVars: true,
                 isPreview: false
             });
-            expect(result?.error).toHaveProperty(
-                "message",
-                expect.stringContaining("fern sdk migrate --output <path>")
-            );
+            expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
+            expect(result?.error).toHaveProperty("message", expect.stringContaining("--sdk-config"));
         }
         expect(() => {
             selectFernSdkGenApiRoute(invocation({ version: "latest" }));
@@ -234,7 +313,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(startTargetWork).not.toHaveBeenCalled();
     });
 
-    it("rejects legacy configuration at cutover when sdk-gen-api routing is disabled", () => {
+    it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
             enabled: false,
@@ -243,10 +322,8 @@ describe("isEligibleForFernSdkGenApi", () => {
         });
 
         expect(result?.route).toBeUndefined();
-        expect(result?.error).toMatchObject({
-            code: "CONFIG_ERROR",
-            message: expect.stringContaining("fern sdk migrate --output <path>")
-        });
+        expect(result?.error).toBeUndefined();
+        expect(result?.generatorInvocation.version).toBe("4.0.0");
     });
 
     it("preserves non-exact legacy versions when sdk-gen-api routing is disabled", () => {
@@ -290,7 +367,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.generatorInvocation.version).toBe("4.0.0");
         expect(result?.route).toBeUndefined();
-        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate --output <path>"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
     it("keeps pre-cutover GitHub delivery on Fiddle", () => {
@@ -354,7 +431,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeInstanceOf(Error);
-        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate --output <path>"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
     it("settles route failures per target while retaining successful siblings", async () => {
@@ -668,6 +745,31 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.parse(payload.body.toString("utf8")).apiVersion).toBe(apiVersion);
     });
 
+    it("uses SDK Config identity without inheriting legacy package metadata", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "LegacyApiName",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                version: "4.0.0",
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@legacy/sdk",
+                        token: "secret"
+                    })
+                )
+            }),
+            sdkName: "customer-sdk",
+            sdkVersion: "2.3.4",
+            specsTarGzBuffer: validSourceArchive,
+            payload: sdkConfigPayload('{"schemaVersion":"sdk-config/v1"}')
+        });
+
+        expect(request.targets[0]?.sdk).toMatchObject({ name: "customer-sdk", version: "2.3.4" });
+        expect(request.targets[0]).not.toHaveProperty("package");
+    });
+
     it("uses the generator language instead of hard-coding TypeScript", () => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",
@@ -903,6 +1005,23 @@ describe("isEligibleForFernSdkGenApi", () => {
                 sourceArchive([{ type: "protobuf", specPath: "/fern/specs/protobuf0" }])
             )
         ).toThrow("does not support Fern source type protobuf");
+    });
+
+    it("allows an empty source archive for a runtime-bundle target", () => {
+        const route = selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }));
+        if (route == null) {
+            throw new Error("Expected a known runtime-bundle route");
+        }
+
+        expect(() => validateFernSdkGenApiSourceCompatibility(route, sourceArchive([]))).not.toThrow();
+    });
+
+    it("keeps SDK Config targets dependent on at least one source spec", () => {
+        const route = nativeSdkConfigRoute(invocation({ version: "4.0.0" }));
+
+        expect(() => validateFernSdkGenApiSourceCompatibility(route, sourceArchive([]))).toThrow(
+            "SDK Config v1 requires at least one effective Fern source spec"
+        );
     });
 
     it.each([
@@ -1390,11 +1509,21 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a bundle larger than 25 MiB decompressed before submission", async () => {
+    it("accepts a bundle exactly 100 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1)))]
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024)))]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("fern-runtime-bundle 0 is 25.00 MiB decompressed");
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects a bundle one byte over 100 MiB decompressed before submission", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024 + 1)))]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "fern-runtime-bundle 0 is 100.00 MiB decompressed, exceeding the 100.00 MiB decompressed limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 

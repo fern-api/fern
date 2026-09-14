@@ -41,13 +41,15 @@ function convertAuthScheme({
                 passwordName: getOriginalName(scheme.password),
                 usernameName: getOriginalName(scheme.username),
                 description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs,
                 passwordAlwaysEmpty: scheme.passwordOmit
             };
         case "bearer":
             return {
                 type: "bearerAuth",
                 tokenName: getOriginalName(scheme.token),
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         case "header":
             return {
@@ -55,7 +57,8 @@ function convertAuthScheme({
                 headerWireValue: getWireValue(scheme.name),
                 nameOverride: getOriginalName(getInnerName(scheme.name)),
                 prefix: scheme.prefix,
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         case "oauth": {
             // FDR only models the client-credentials playground flow. The authorization-code
@@ -66,7 +69,8 @@ function convertAuthScheme({
                 return {
                     type: "bearerAuth",
                     tokenName: "token",
-                    description: scheme.docs
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
                 };
             }
 
@@ -88,14 +92,16 @@ function convertAuthScheme({
                               accessTokenLocator: tokenPath,
                               headerName: configuration.tokenHeader,
                               tokenPrefix: configuration.tokenPrefix,
-                              description: scheme.docs
+                              description: scheme.docs,
+                              playgroundDescription: scheme.playgroundDocs
                           }
                       }
                   }
                 : {
                       type: "bearerAuth",
                       tokenName: "token",
-                      description: scheme.docs
+                      description: scheme.docs,
+                      playgroundDescription: scheme.playgroundDocs
                   };
         }
         case "inferred": {
@@ -119,7 +125,8 @@ function convertAuthScheme({
                 return {
                     type: "bearerAuth",
                     tokenName: getWireValue(authHeader.responseProperty.property.name),
-                    description: scheme.docs
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
                 };
             }
             const firstHeader = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
@@ -129,13 +136,15 @@ function convertAuthScheme({
                     headerWireValue: firstHeader.headerName,
                     prefix: firstHeader.valuePrefix,
                     nameOverride: undefined,
-                    description: scheme.docs
+                    description: scheme.docs,
+                    playgroundDescription: scheme.playgroundDocs
                 };
             }
             return {
                 type: "bearerAuth",
                 tokenName: "token",
-                description: scheme.docs
+                description: scheme.docs,
+                playgroundDescription: scheme.playgroundDocs
             };
         }
         default:

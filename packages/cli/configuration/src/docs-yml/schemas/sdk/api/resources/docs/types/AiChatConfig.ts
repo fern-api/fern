@@ -25,4 +25,9 @@ export interface AiChatConfig {
      * being sent to Ask Fern. Disabled by default.
      */
     maskPii?: boolean;
+    /**
+     * Overrides the disclaimer shown in the Ask Fern chat
+     * (default: "Responses are generated using AI and may contain mistakes.").
+     */
+    disclaimer?: string;
 }

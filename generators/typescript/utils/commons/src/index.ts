@@ -46,6 +46,7 @@ export * from "./public-exports-manager/index.js";
 export * from "./referencing/index.js";
 export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode.js";
 export { type TypeReferenceNode } from "./TypeReferenceNode.js";
+export { applyExactOptionalPropertyTypes } from "./typescript-project/applyExactOptionalPropertyTypes.js";
 export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest.js";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm.js";
 export * from "./typescript-project/index.js";

@@ -79,6 +79,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     ignoreTags: undefined,
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
+    respectOperationIdWordBoundaries: undefined,
     namespacedErrors: undefined
 };
 
@@ -195,6 +196,7 @@ export function parseOpenApiDefinitionSettingsSchema(
         ignoreTags: settings?.["ignore-tags"],
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
+        respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
         namespacedErrors: settings?.["namespaced-errors"]
     };
 }
@@ -941,6 +943,7 @@ async function convertOutputMode({
                       githubLicense: licenseSchema
                   })
                 : undefined;
+        const workflows = generator.github.workflows ?? true;
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
@@ -954,7 +957,8 @@ async function convertOutputMode({
                     branch: releaseConfig.branch,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
@@ -975,7 +979,8 @@ async function convertOutputMode({
                     publishInfo,
                     downloadSnippets,
                     reviewers,
-                    branch: pullRequestConfig.branch
+                    branch: pullRequestConfig.branch,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
@@ -987,7 +992,8 @@ async function convertOutputMode({
                     branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                     license,
                     publishInfo,
-                    downloadSnippets
+                    downloadSnippets,
+                    workflows
                 };
                 return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
             }
