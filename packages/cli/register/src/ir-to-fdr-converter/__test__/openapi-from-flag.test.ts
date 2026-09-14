@@ -3556,4 +3556,53 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/float-primitive-type-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/float-primitive-type-ir.snap");
     });
+
+    it("should preserve OpenAPI xml metadata as IR xml encoding", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/xml-encoding")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "xml-encoding"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const typesByName = Object.fromEntries(
+            Object.values(intermediateRepresentation.types).map((type) => [getOriginalName(type.name.name), type])
+        );
+
+        expect(typesByName.Dial?.encoding?.xml).toEqual({
+            name: "Dial",
+            namespace: "https://www.twilio.com/twiml",
+            prefix: "tw"
+        });
+        expect(typesByName.Pause?.encoding?.xml).toEqual({ name: "Pause", namespace: undefined, prefix: undefined });
+        expect(typesByName.PlainObject?.encoding).toBeUndefined();
+
+        const dialShape = typesByName.Dial?.shape;
+        assert(dialShape?.type === "object");
+        expect(dialShape.properties.map((property) => property.xml)).toEqual([
+            { kind: "TEXT", name: undefined, wrapped: undefined, listSeparator: undefined },
+            { kind: "ATTRIBUTE", name: "statusCallbackEvent", wrapped: undefined, listSeparator: " " },
+            { kind: "ELEMENT", name: "Numbers", wrapped: true, listSeparator: undefined }
+        ]);
+
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/xml-encoding-ir.snap");
+    });
 });

@@ -63,10 +63,31 @@ types:
   Encoding:
     union:
       protobuf: ProtobufEncoding
+      xml: XmlEncoding
 
   ProtobufEncoding:
     properties:
       typeName: string
+
+  XmlEncoding:
+    docs: Populated from the OpenAPI `xml` object on an object schema; marks the object as an XML element.
+    properties:
+      name:
+        type: string
+        docs: The element name on the wire, casing preserved.
+      namespace: optional<string>
+      prefix: optional<string>
+
+  XmlPropertyEncoding:
+    docs: How a property serializes inside its parent XML element.
+    properties:
+      name:
+        type: optional<string>
+        docs: The attribute or element name on the wire; defaults to the property key.
+      attribute: optional<boolean>
+      text: optional<boolean>
+      wrapped: optional<boolean>
+      separator: optional<string>
 
   SchemaId:
     type: string

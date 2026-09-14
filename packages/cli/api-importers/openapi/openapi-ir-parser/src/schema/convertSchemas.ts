@@ -39,6 +39,7 @@ import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
 } from "./convertUndiscriminatedOneOf.js";
+import { getXmlEncoding } from "./convertXml.js";
 import { getDefaultAsString } from "./defaults/getDefault.js";
 import {
     getExampleAsArray,
@@ -158,7 +159,11 @@ export function convertSchema(
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     const source = getSourceExtension(schema) ?? fileSource;
-    const encoding = getEncoding({ schema, logger: context.logger });
+    const encoding = getEncoding({
+        schema,
+        fallbackXmlName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
+        logger: context.logger
+    });
 
     // In OpenAPI 3.1+, $ref siblings are supported. Extract sibling examples from reference objects
     // before resolving the reference, so they take precedence over the referenced schema's examples.
@@ -1446,7 +1451,7 @@ export function convertSchemaObject(
                 fullExamples,
                 additionalProperties: schema.additionalProperties,
                 availability,
-                encoding,
+                encoding: encoding ?? getXmlEncoding({ schema, fallbackName: nameOverride ?? generatedName }),
                 source,
                 minProperties: schema.minProperties,
                 maxProperties: schema.maxProperties
@@ -2069,14 +2074,16 @@ export function getProperty<T>(object: object, property: string): T | undefined 
 
 function getEncoding({
     schema,
+    fallbackXmlName,
     logger
 }: {
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+    fallbackXmlName: string;
     logger: Logger;
 }): Encoding | undefined {
     const encoding = getFernEncoding({ schema, logger });
     if (encoding == null) {
         return undefined;
     }
-    return convertEncoding(encoding);
+    return convertEncoding({ encodingSchema: encoding, fallbackXmlName });
 }
