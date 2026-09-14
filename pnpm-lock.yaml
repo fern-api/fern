@@ -5063,6 +5063,8 @@ importers:
         specifier: 'catalog:'
         version: 0.219.0
 
+  packages/cli/cli-v2/dist/beta: {}
+
   packages/cli/config:
     devDependencies:
       '@fern-api/configs':
