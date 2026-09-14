@@ -52,7 +52,7 @@ export class TwimlBuilderGenerator {
     private generateTagClass(tag: FernIr.TwimlTag): python.Class {
         const class_ = python.class_({
             name: this.names.getClassName(tag),
-            docs: describe(tag.docs, `<${tag.xmlName}> TwiML element.`),
+            docs: pythonDocstring(describe(tag.docs, `<${tag.xmlName}> TwiML element.`)),
             extends_: [python.reference({ name: TWIML_BASE_CLASS, modulePath: this.packagePath })]
         });
 
@@ -84,7 +84,9 @@ export class TwimlBuilderGenerator {
             return_: python.Type.none(),
             docstring: this.getDocstring({ tag, intro: `Create a new <${tag.xmlName}> element.` })
         });
-        const attributeNames = tag.attributes.map((attribute) => this.names.getAttributeName(attribute));
+        const attributeNames = this.names
+            .getPublicAttributes(tag)
+            .map((attribute) => this.names.getAttributeName(attribute));
         method.addStatement(
             python.codeBlock(
                 `super().__init__(${[...attributeNames.map((name) => `${name}=${name}`), "**kwargs"].join(", ")})`
@@ -109,7 +111,7 @@ export class TwimlBuilderGenerator {
         if (child.body != null) {
             forwarded.push(this.names.getBodyName(child.body));
         }
-        for (const attribute of child.attributes) {
+        for (const attribute of this.names.getPublicAttributes(child)) {
             const name = this.names.getAttributeName(attribute);
             forwarded.push(`${name}=${name}`);
         }
@@ -145,10 +147,11 @@ export class TwimlBuilderGenerator {
                 })
             );
         }
-        if (tag.attributes.length > 0) {
+        const attributes = this.names.getPublicAttributes(tag);
+        if (attributes.length > 0) {
             parameters.push(python.parameter({ name: "*", type: undefined }));
         }
-        for (const attribute of tag.attributes) {
+        for (const attribute of attributes) {
             parameters.push(
                 python.parameter({
                     name: this.names.getAttributeName(attribute),
@@ -161,12 +164,8 @@ export class TwimlBuilderGenerator {
         return parameters;
     }
 
-    /**
-     * A tag with children may legitimately be built with no body text (`<Say><emphasis>..`), so the
-     * body is only mandatory when the definition requires it and there is nothing else to nest.
-     */
     private isBodyRequired(tag: FernIr.TwimlTag): boolean {
-        return tag.body != null && tag.body.required && tag.children.length === 0;
+        return tag.body != null && tag.body.required;
     }
 
     private getDocstring({ tag, intro, returns }: { tag: FernIr.TwimlTag; intro: string; returns?: string }): string {
@@ -174,7 +173,7 @@ export class TwimlBuilderGenerator {
         if (tag.body != null) {
             lines.push(`:param ${this.names.getBodyName(tag.body)}: ${describe(tag.body.docs, "element body")}`);
         }
-        for (const attribute of tag.attributes) {
+        for (const attribute of this.names.getPublicAttributes(tag)) {
             lines.push(
                 `:param ${this.names.getAttributeName(attribute)}: ${describe(attribute.docs, `\`${attribute.xmlName}\` attribute`)}`
             );
@@ -183,13 +182,18 @@ export class TwimlBuilderGenerator {
         if (returns != null) {
             lines.push("", `:returns: ${returns}`);
         }
-        return lines.join("\n");
+        return pythonDocstring(lines.join("\n"));
     }
 }
 
 function describe(docs: string | undefined, fallback: string): string {
     const collapsed = docs?.replace(/\s+/g, " ").trim();
     return collapsed != null && collapsed.length > 0 ? collapsed : fallback;
+}
+
+/** Text safe to place between `"""` delimiters: no unescaped backslashes, triple quotes or trailing quote. */
+export function pythonDocstring(text: string): string {
+    return text.replace(/\\/g, "\\\\").replace(/"""/g, '\\"\\"\\"').replace(/"$/, '\\"');
 }
 
 /** Double-quoted Python string literal. */

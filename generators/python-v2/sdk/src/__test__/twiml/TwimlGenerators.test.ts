@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pythonString, TwimlBuilderGenerator } from "../../twiml/TwimlBuilderGenerator.js";
+import { pythonDocstring, pythonString, TwimlBuilderGenerator } from "../../twiml/TwimlBuilderGenerator.js";
 import { lowerCamel } from "../../twiml/TwimlNames.js";
 import { TwimlSnippetGenerator } from "../../twiml/TwimlSnippetGenerator.js";
 import { createNames, EXAMPLES, VOICE } from "./fixture.js";
@@ -31,10 +31,15 @@ describe("TwimlNames", () => {
         });
     });
 
+    it("drops internal attributes from the generated surface", () => {
+        const redirect = names.getTagOrThrow("voice/redirect");
+        expect(names.getPublicAttributes(redirect).map((attribute) => attribute.xmlName)).toEqual(["method"]);
+    });
+
     it("always resolves every attribute keyword back to its exact XML name", () => {
         for (const tag of Object.values(VOICE.tags)) {
             const overrides = names.getAttributeNameOverrides(tag);
-            for (const attribute of tag.attributes) {
+            for (const attribute of names.getPublicAttributes(tag)) {
                 const pythonName = names.getAttributeName(attribute);
                 expect(overrides[pythonName] ?? lowerCamel(pythonName)).toBe(attribute.xmlName);
             }
@@ -59,14 +64,31 @@ describe("pythonString", () => {
     });
 });
 
+describe("pythonDocstring", () => {
+    it("escapes backslashes, embedded triple quotes and a trailing quote", () => {
+        expect(pythonDocstring('Use """raw""" speech\\ "')).toBe('Use \\"\\"\\"raw\\"\\"\\" speech\\\\ \\"');
+    });
+});
+
 describe("TwimlBuilderGenerator", () => {
+    const module = new TwimlBuilderGenerator({
+        namespace: VOICE,
+        names: createNames(),
+        packagePath: ["acme", "twiml"]
+    })
+        .generate()
+        .toString();
+
     it("generates a module with a builder class per tag", () => {
-        const generator = new TwimlBuilderGenerator({
-            namespace: VOICE,
-            names: createNames(),
-            packagePath: ["acme", "twiml"]
-        });
-        expect(generator.generate().toString()).toMatchSnapshot();
+        expect(module).toMatchSnapshot();
+    });
+
+    it("keeps internal attributes out of signatures, docstrings and forwarding", () => {
+        expect(module).not.toContain("tracing");
+    });
+
+    it("keeps a required body required even when the tag nests children", () => {
+        expect(module).toContain("def emphasis(\n        self,\n        words: str,\n        *,");
     });
 });
 

@@ -111,7 +111,7 @@ class Prompt(TwiML):
 
 
 class Redirect(TwiML):
-    """<Redirect> TwiML element."""
+    """Redirect to another \\"\\"\\"TwiML\\"\\"\\" document\\\\ \\""""
     name = "Redirect"
     def __init__(
         self,
@@ -164,7 +164,7 @@ class Say(TwiML):
         return self.nest(SsmlBreak(strength=strength, **kwargs))
     def emphasis(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,
@@ -210,7 +210,7 @@ class SsmlEmphasis(TwiML):
     name = "emphasis"
     def __init__(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,
@@ -221,8 +221,7 @@ class SsmlEmphasis(TwiML):
         :param level: \`level\` attribute
         :param kwargs: additional attributes"""
         super().__init__(level=level, **kwargs)
-        if words is not None:
-            self.value = format_value(words)
+        self.value = format_value(words)
     def break_(self, *, strength: Optional[str] = None, **kwargs: Any) -> "SsmlBreak":
         """Create a <break> element and append it as a child.
         
@@ -233,7 +232,7 @@ class SsmlEmphasis(TwiML):
         return self.nest(SsmlBreak(strength=strength, **kwargs))
     def emphasis(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,

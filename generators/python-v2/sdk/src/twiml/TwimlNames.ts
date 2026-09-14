@@ -78,13 +78,18 @@ export class TwimlNames {
         return this.caseConverter.snakeSafe(getOriginalName(body.name));
     }
 
+    /** Attributes that reach the generated SDK; `internal` ones are only accepted through `**kwargs`. */
+    public getPublicAttributes(tag: FernIr.TwimlTag): FernIr.TwimlAttribute[] {
+        return tag.attributes.filter((attribute) => attribute.visibility === FernIr.TwimlVisibility.Public);
+    }
+
     /**
      * Attributes whose Python keyword differs from what the runtime derives by lowerCamel-casing
      * the keyword (e.g. `xml_lang` -> `xml:lang`, `for_` -> `for`, `interpret_as` -> `interpret-as`).
      */
     public getAttributeNameOverrides(tag: FernIr.TwimlTag): Record<string, string> {
         const overrides: Record<string, string> = {};
-        for (const attribute of tag.attributes) {
+        for (const attribute of this.getPublicAttributes(tag)) {
             const pythonName = this.getAttributeName(attribute);
             if (lowerCamel(pythonName) !== attribute.xmlName) {
                 overrides[pythonName] = attribute.xmlName;

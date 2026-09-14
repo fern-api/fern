@@ -46,7 +46,6 @@ class VoiceResponse(TwiML):
         hangup_on_star: Optional[bool] = None,
         caller_id: Optional[str] = None,
         record: Optional[str] = None,
-        recording_status_callback_event: Optional[List[str]] = None,
         **kwargs: Any,
     ) -> "Dial":
         """Create a <Dial> element and append it as a child.
@@ -58,7 +57,6 @@ class VoiceResponse(TwiML):
         :param hangup_on_star: Hangup call on star press
         :param caller_id: Caller ID to display
         :param record: Record the call
-        :param recording_status_callback_event: Recording status callback events
         :param kwargs: additional attributes
 
         :returns: the newly created <Dial> element"""
@@ -71,7 +69,6 @@ class VoiceResponse(TwiML):
                 hangup_on_star=hangup_on_star,
                 caller_id=caller_id,
                 record=record,
-                recording_status_callback_event=recording_status_callback_event,
                 **kwargs,
             )
         )
@@ -135,7 +132,6 @@ class Dial(TwiML):
         hangup_on_star: Optional[bool] = None,
         caller_id: Optional[str] = None,
         record: Optional[str] = None,
-        recording_status_callback_event: Optional[List[str]] = None,
         **kwargs: Any,
     ) -> None:
         """Create a new <Dial> element.
@@ -147,7 +143,6 @@ class Dial(TwiML):
         :param hangup_on_star: Hangup call on star press
         :param caller_id: Caller ID to display
         :param record: Record the call
-        :param recording_status_callback_event: Recording status callback events
         :param kwargs: additional attributes"""
         super().__init__(
             action=action,
@@ -156,7 +151,6 @@ class Dial(TwiML):
             hangup_on_star=hangup_on_star,
             caller_id=caller_id,
             record=record,
-            recording_status_callback_event=recording_status_callback_event,
             **kwargs,
         )
         if number is not None:
@@ -406,7 +400,7 @@ class Say(TwiML):
 
     def emphasis(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,
@@ -448,7 +442,7 @@ class SsmlEmphasis(TwiML):
 
     def __init__(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,
@@ -459,8 +453,7 @@ class SsmlEmphasis(TwiML):
         :param level: Specify the degree of emphasis
         :param kwargs: additional attributes"""
         super().__init__(level=level, **kwargs)
-        if words is not None:
-            self.value = format_value(words)
+        self.value = format_value(words)
 
     def break_(
         self,
@@ -480,7 +473,7 @@ class SsmlEmphasis(TwiML):
 
     def emphasis(
         self,
-        words: Optional[str] = None,
+        words: str,
         *,
         level: Optional[str] = None,
         **kwargs: Any,

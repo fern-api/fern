@@ -7,8 +7,13 @@ const STRING: FernIr.TwimlType = FernIr.TwimlType.primitive("STRING");
 const INTEGER: FernIr.TwimlType = FernIr.TwimlType.primitive("INTEGER");
 const PHONE_NUMBER: FernIr.TwimlType = FernIr.TwimlType.primitive("PHONE_NUMBER");
 
-function attribute(name: string, xmlName: string, type: FernIr.TwimlType): FernIr.TwimlAttribute {
-    return { name, xmlName, type, visibility: "public", docs: undefined };
+function attribute(
+    name: string,
+    xmlName: string,
+    type: FernIr.TwimlType,
+    visibility: FernIr.TwimlVisibility = FernIr.TwimlVisibility.Public
+): FernIr.TwimlAttribute {
+    return { name, xmlName, type, visibility, docs: undefined };
 }
 
 function tag(args: {
@@ -35,9 +40,11 @@ function tag(args: {
 
 /**
  * A voice namespace exercising the interesting cases: an optional body (`Say`), a required body
- * (`Redirect`), a Python keyword attribute (`for`), an attribute whose XML name is not the
- * lowerCamel form of its Python name (`xml:lang`), a lowercase SSML tag whose method name would
- * shadow a keyword (`break`), and recursion (`emphasis` inside `emphasis`).
+ * (`Redirect`, and `emphasis` which also nests children), an internal attribute that must not
+ * surface in the SDK (`Redirect.tracing`), a Python keyword attribute (`for`), an attribute whose
+ * XML name is not the lowerCamel form of its Python name (`xml:lang`), a lowercase SSML tag whose
+ * method name would shadow a keyword (`break`), docs containing `"""`, and recursion
+ * (`emphasis` inside `emphasis`).
  */
 export const VOICE: FernIr.TwimlNamespace = {
     name: "voice",
@@ -69,8 +76,12 @@ export const VOICE: FernIr.TwimlNamespace = {
             id: "voice/redirect",
             name: "redirect",
             xmlName: "Redirect",
+            docs: 'Redirect to another """TwiML""" document\\ "',
             body: { name: "url", type: FernIr.TwimlType.primitive("URL"), required: true, docs: undefined },
-            attributes: [attribute("method", "method", FernIr.TwimlType.primitive("HTTP_METHOD"))]
+            attributes: [
+                attribute("method", "method", FernIr.TwimlType.primitive("HTTP_METHOD")),
+                attribute("tracing", "tracing", STRING, FernIr.TwimlVisibility.Internal)
+            ]
         }),
         "voice/prompt": tag({
             id: "voice/prompt",
@@ -93,7 +104,7 @@ export const VOICE: FernIr.TwimlNamespace = {
             id: "voice/ssml_emphasis",
             name: "ssml_emphasis",
             xmlName: "emphasis",
-            body: { name: "words", type: STRING, required: false, docs: undefined },
+            body: { name: "words", type: STRING, required: true, docs: undefined },
             attributes: [attribute("level", "level", STRING)],
             children: ["voice/ssml_break", "voice/ssml_emphasis"]
         }),
