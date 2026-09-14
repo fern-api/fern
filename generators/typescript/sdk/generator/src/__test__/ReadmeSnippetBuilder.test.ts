@@ -532,7 +532,7 @@ describe("ReadmeSnippetBuilder", () => {
             expect(paginationSnippets).toHaveLength(1);
         });
 
-        it("omits pagination snippets when generatePaginatedClients is false", () => {
+        it("includes pagination snippets even when generatePaginatedClients is false", () => {
             const endpoint = createEndpoint("ep1", "listUsers", {
                 pagination: {
                     type: "cursor",
@@ -560,7 +560,9 @@ describe("ReadmeSnippetBuilder", () => {
             });
 
             const snippets = builder.buildReadmeSnippets();
-            expect(snippets[FernGeneratorCli.StructuredFeatureId.Pagination]).toBeUndefined();
+            const paginationSnippets = snippets[FernGeneratorCli.StructuredFeatureId.Pagination];
+            assert(Array.isArray(paginationSnippets));
+            expect(paginationSnippets).toHaveLength(1);
         });
 
         it("uses explicitly configured pagination endpoints from readmeConfig", () => {

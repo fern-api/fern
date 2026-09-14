@@ -224,7 +224,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         invocation: ts.Expression;
         context: FileContext;
     }): ts.Node[] | undefined {
-        if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
+        if (this.endpoint.pagination == null) {
             return undefined;
         }
 
