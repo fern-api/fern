@@ -390,12 +390,16 @@ export type BaseClientOptions = {
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
         const serverVariableInterpolation = this.getServerVariableInterpolation(context);
+        const declaresBaseUrl =
+            this.ir.environments?.baseUrlEnvVar != null && !serverVariableInterpolation.declaresBaseUrl;
+        const baseUrlSection = declaresBaseUrl ? `    const baseUrl = ${this.getBaseUrlOptionExpression()};\n\n` : "";
+        const baseUrlReturnFields = declaresBaseUrl ? "\n        baseUrl," : "";
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}    return {
-        ...options,${rootPathParamDefaults}${serverVariableInterpolation.returnFields}
+): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}${baseUrlSection}    return {
+        ...options,${rootPathParamDefaults}${baseUrlReturnFields}${serverVariableInterpolation.returnFields}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -415,8 +419,12 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
      * provided the base URL is rebuilt from the environment's URL template(s) using those values.
      * Returns empty strings when the API declares no server variables, leaving output unchanged.
      */
-    private getServerVariableInterpolation(context: FileContext): { section: string; returnFields: string } {
-        const empty = { section: "", returnFields: "" };
+    private getServerVariableInterpolation(context: FileContext): {
+        section: string;
+        returnFields: string;
+        declaresBaseUrl: boolean;
+    } {
+        const empty = { section: "", returnFields: "", declaresBaseUrl: false };
         const options = getServerVariableOptions(this.ir, this.caseConverter);
         if (options.length === 0) {
             return empty;
@@ -452,7 +460,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
                     const literal = urlTemplateToTemplateLiteral(urlTemplate, options);
                     return `                [${environmentsEnum}.${environmentName}, ${literal}],`;
                 });
-                const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
+                const section = `    let baseUrl = ${this.getBaseUrlOptionExpression()};
     if (${condition}) {
 ${localDeclarations}
         if (baseUrl == null) {
@@ -464,7 +472,7 @@ ${entries.join("\n")}
     }
 
 `;
-                return { section, returnFields: "\n        baseUrl," };
+                return { section, returnFields: "\n        baseUrl,", declaresBaseUrl: true };
             }
             case "multipleBaseUrls": {
                 const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
@@ -509,11 +517,20 @@ ${entries.join("\n")}
     }
 
 `;
-                return { section, returnFields: "\n        environment," };
+                return { section, returnFields: "\n        environment,", declaresBaseUrl: false };
             }
             default:
                 assertNever(environments);
         }
+    }
+
+    /** Expression for the caller-supplied base URL, falling back to the configured env var when neither baseUrl nor environment was passed. */
+    private getBaseUrlOptionExpression(): string {
+        const envVar = this.ir.environments?.baseUrlEnvVar;
+        if (envVar == null) {
+            return `${OPTIONS_PARAMETER_NAME}?.baseUrl`;
+        }
+        return `${OPTIONS_PARAMETER_NAME}?.baseUrl ?? (${OPTIONS_PARAMETER_NAME}?.environment == null ? process.env?.[${JSON.stringify(envVar)}] : undefined)`;
     }
 
     private getRootPathParameterDefaults(): string {

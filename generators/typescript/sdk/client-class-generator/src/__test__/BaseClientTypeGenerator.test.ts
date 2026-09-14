@@ -1678,6 +1678,39 @@ describe("BaseClientTypeGenerator", () => {
             return ir;
         }
 
+        function createSingleBaseUrlWithoutServerVariablesIR(): FernIr.IntermediateRepresentation {
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            urlTemplate: undefined,
+                            urlVariables: [],
+                            audiences: undefined,
+                            defaultUrl: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function withBaseUrlEnvVar(
+            ir: FernIr.IntermediateRepresentation,
+            baseUrlEnvVar: string
+        ): FernIr.IntermediateRepresentation {
+            if (ir.environments == null) {
+                throw new Error("Expected environments config");
+            }
+            ir.environments.baseUrlEnvVar = baseUrlEnvVar;
+            return ir;
+        }
+
         function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
             const gen = createGenerator({ ir });
             const context = createMockContext();
@@ -1729,6 +1762,26 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).toContain(
                 "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
             );
+        });
+
+        it("reads the base URL from the configured env var for single base URL environments", () => {
+            expect(
+                getNormalizeFunction(
+                    withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL")
+                )
+            ).toMatchSnapshot();
+        });
+
+        it("reads the base URL from the configured env var for multiple base URL environments", () => {
+            expect(
+                getNormalizeFunction(withBaseUrlEnvVar(createMultipleBaseUrlsIR(), "MY_API_BASE_URL"))
+            ).toMatchSnapshot();
+        });
+
+        it("uses the configured env var in single base URL server variable interpolation", () => {
+            expect(
+                getNormalizeFunction(withBaseUrlEnvVar(createSingleBaseUrlIR(), "MY_API_BASE_URL"))
+            ).toMatchSnapshot();
         });
     });
 });
