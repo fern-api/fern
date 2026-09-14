@@ -1,0 +1,26 @@
+{
+    "class_name": "message",
+    "tag_name": "message",
+    "docstring": "<Message> TwiML Verb",
+    "body": {
+        "body": {
+            "type": "string",
+            "docstring": "Message Body"
+        }
+    },
+    "attributes": {
+        "to": {
+            "type": "phone_number",
+            "docstring": "Phone Number to send Message to"
+        },
+        "from": {
+            "type": "phone_number",
+            "docstring": "Phone Number to send Message from"
+        },
+        "action": {
+            "type": "url",
+            "docstring": "A URL specifying where Twilio should send status callbacks"
+        }
+    },
+    "children": ["messaging/body", "messaging/media"]
+}

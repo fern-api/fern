@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  title: python-twiml
+  version: ""
+paths:
+  /Calls:
+    post:
+      summary: Create a call
+      operationId: calls_create
+      tags:
+        - Calls
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - To
+                - From
+              properties:
+                To:
+                  type: string
+                From:
+                  type: string
+                Twiml:
+                  type: string
+                  format: twiml
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Call"
+components:
+  schemas:
+    Call:
+      type: object
+      properties:
+        sid:
+          type: string
+        status:
+          type: string

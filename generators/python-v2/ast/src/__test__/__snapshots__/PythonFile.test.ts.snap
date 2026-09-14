@@ -38,6 +38,7 @@ class DeeplyNestedTestClass(DeepClass):
 
 exports[`PythonFile > Add a class with a reference to itself 1`] = `
 "from parent_module import ParentTestClass
+from typing import Dict, Any
 
 class TestClass(ParentTestClass):
     @classmethod

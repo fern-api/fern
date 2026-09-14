@@ -1,0 +1,12 @@
+{
+    "class_name": "media",
+    "tag_name": "media",
+    "docstring": "<Media> TwiML Noun",
+    "body": {
+        "url": {
+            "type": "url",
+            "docstring": "Media URL",
+            "required": true
+        }
+    }
+}

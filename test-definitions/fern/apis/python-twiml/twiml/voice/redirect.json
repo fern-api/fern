@@ -1,0 +1,18 @@
+{
+    "class_name": "redirect",
+    "tag_name": "redirect",
+    "docstring": "<Redirect> TwiML Verb",
+    "body": {
+        "url": {
+            "type": "url",
+            "docstring": "Redirect URL",
+            "required": true
+        }
+    },
+    "attributes": {
+        "method": {
+            "type": "http_method",
+            "docstring": "Redirect URL method"
+        }
+    }
+}

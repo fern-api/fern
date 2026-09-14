@@ -1,0 +1,46 @@
+{
+    "class_name": "dial",
+    "tag_name": "dial",
+    "docstring": "<Dial> TwiML Verb",
+    "enums": {
+        "record": ["do-not-record", "record-from-answer", "record-from-ringing"]
+    },
+    "body": {
+        "number": {
+            "type": "phone_number",
+            "docstring": "Phone number to dial"
+        }
+    },
+    "attributes": {
+        "action": {
+            "type": "url",
+            "docstring": "Action URL"
+        },
+        "method": {
+            "type": "http_method",
+            "docstring": "Action URL method"
+        },
+        "timeout": {
+            "type": "integer",
+            "docstring": "Time to wait for answer"
+        },
+        "hangup_on_star": {
+            "type": "boolean",
+            "docstring": "Hangup call on star press"
+        },
+        "caller_id": {
+            "type": "phone_number|string",
+            "docstring": "Caller ID to display"
+        },
+        "record": {
+            "type": "enum:record",
+            "docstring": "Record the call"
+        },
+        "recording_status_callback_event": {
+            "type": "string[]",
+            "docstring": "Recording status callback events",
+            "library_visibility": "internal"
+        }
+    },
+    "children": ["voice/number"]
+}

@@ -23,6 +23,13 @@ export class Parameter extends AstNode {
         this.name = name;
         this.type = type;
         this.initializer = initializer;
+
+        if (type != null) {
+            this.inheritReferences(type);
+        }
+        if (initializer != null) {
+            this.inheritReferences(initializer);
+        }
     }
 
     public write(writer: Writer): void {

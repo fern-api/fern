@@ -1,0 +1,10 @@
+<Response>
+    <Gather input="dtmf speech" numDigits="4">
+        <Say>Please enter your card number.</Say>
+        <Prompt for="payment-card-number" attempt="1 2">
+            <Say voice="alice">Card number &amp; expiry, please.</Say>
+            <Pause length="1"/>
+        </Prompt>
+    </Gather>
+    <Redirect method="POST">https://example.com/next?step=2&amp;retry=true</Redirect>
+</Response>

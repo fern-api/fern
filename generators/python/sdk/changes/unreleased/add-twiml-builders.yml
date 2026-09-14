@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate a `twiml` subpackage when the API definition includes a `twiml` spec: a small
+    XML runtime (`TwiML` base class with `append`/`nest`/`add_text`/`add_child` and `to_xml()`),
+    one builder module per TwiML namespace (`voice_response.py`, `messaging_response.py`, ...)
+    with a class per tag and fluent child methods, and a pytest that renders each XML example
+    through the generated builders and asserts it round-trips.
+  type: feat

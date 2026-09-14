@@ -11,6 +11,7 @@ import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { type OutputDirectory, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { TwimlGenerator } from "./twiml/TwimlGenerator.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
@@ -87,6 +88,12 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
                     );
                 }
             }
+        }
+
+        if (context.ir.twiml != null) {
+            new TwimlGenerator({ context, twiml: context.ir.twiml }).generate({
+                includeTests: context.customConfig.output_directory !== sourceRoot
+            });
         }
 
         await context.project.persist();

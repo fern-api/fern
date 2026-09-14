@@ -1,0 +1,23 @@
+{
+    "class_name": "gather",
+    "tag_name": "gather",
+    "docstring": "<Gather> TwiML Verb",
+    "enums": {
+        "input": ["dtmf", "speech"]
+    },
+    "attributes": {
+        "input": {
+            "type": "enum:input[]",
+            "docstring": "Input type Twilio should accept"
+        },
+        "action": {
+            "type": "url",
+            "docstring": "Action URL"
+        },
+        "num_digits": {
+            "type": "integer",
+            "docstring": "Number of digits to collect"
+        }
+    },
+    "children": ["voice/say", "voice/pause", "voice/prompt"]
+}
