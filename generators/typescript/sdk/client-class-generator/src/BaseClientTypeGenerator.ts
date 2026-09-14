@@ -390,10 +390,12 @@ export type BaseClientOptions = {
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
         const serverVariableInterpolation = this.getServerVariableInterpolation(context);
-        const declaresBaseUrl =
+        const emitBaseUrlSection =
             this.ir.environments?.baseUrlEnvVar != null && !serverVariableInterpolation.declaresBaseUrl;
-        const baseUrlSection = declaresBaseUrl ? `    const baseUrl = ${this.getBaseUrlOptionExpression()};\n\n` : "";
-        const baseUrlReturnFields = declaresBaseUrl ? "\n        baseUrl," : "";
+        const baseUrlSection = emitBaseUrlSection
+            ? `    const baseUrl = ${this.getBaseUrlOptionExpression()};\n\n`
+            : "";
+        const baseUrlReturnFields = emitBaseUrlSection ? "\n        baseUrl," : "";
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
