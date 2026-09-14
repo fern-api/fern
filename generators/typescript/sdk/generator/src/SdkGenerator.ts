@@ -121,6 +121,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         outputEsm: boolean;
+        esmOnly: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
@@ -659,7 +660,8 @@ export class SdkGenerator {
             linter: config.linter,
             autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
             idempotencyKeyHeaderName:
-                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
+                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key",
+            esModulePackage: config.esmOnly || config.outputEsm
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -836,6 +838,7 @@ export class SdkGenerator {
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  esmOnly: this.config.esmOnly,
                   outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,

@@ -21,6 +21,7 @@ export interface SdkCustomConfig {
     namespaceExport: string | undefined;
     naming: NamingConfig | undefined;
     outputEsm: boolean;
+    esmOnly: boolean;
     outputSourceFiles: boolean;
     outputSrcOnly: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;

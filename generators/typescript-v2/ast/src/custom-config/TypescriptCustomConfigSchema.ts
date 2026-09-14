@@ -28,6 +28,7 @@ export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
 export const TypescriptCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
+    esmOnly: z.optional(z.boolean()),
     outputSourceFiles: z.optional(z.boolean()),
     outputSrcOnly: z.optional(z.boolean()),
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),

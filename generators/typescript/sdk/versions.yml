@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.93.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `esmOnly` configuration flag. When enabled, the generated package ships
+        only the existing ESM build: `package.json` is marked `type: "module"`, the exports map
+        only exposes the `.mjs`/`.d.mts` entry points, and the CommonJS build (`tsconfig.cjs.json`,
+        `build:cjs`) is no longer generated. This avoids the dual package hazard for consumers who
+        want a pure-ESM package. The default behavior (dual CJS + ESM output, including with
+        `outputEsm: true`) is unchanged. `esmOnly` is incompatible with `useLegacyExports` and
+        `bundle`.
+      type: feat
+    - summary: |
+        Fix the `build:esm` script in packages generated with `outputEsm: true`. These packages
+        are marked `type: "module"`, so Node interpreted the CommonJS helper
+        `scripts/rename-to-esm-files.js` as ESM and the build failed with
+        `ReferenceError: require is not defined in ES module scope`. The helper is now emitted
+        as `scripts/rename-to-esm-files.cjs` whenever the package is `type: "module"`.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
 - version: 3.92.0
   changelogEntry:
     - summary: |
