@@ -714,12 +714,18 @@ function getGeneratorNameAndImage(
             containerImage: `${generator.image.registry}/${correctedImageName}${digest != null ? `@${digest}` : ""}`
         };
     }
-    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization.
+    //
+    // The digest is split off here too, and for the same reason as above: `normalizedName` is what
+    // IR version resolution and the on-prem adapter cutover check are keyed on, and both match
+    // exactly. A digest left glued to the name would miss every lookup, so a pinned adapter image
+    // would run while being handed Fern's `GeneratorConfig` instead of SDK Config IR.
+    const { name: nameWithoutDigest, digest } = splitImageDigest(generator.name, context);
+    const correctedName = correctIncorrectDockerOrgWithWarning(nameWithoutDigest, context);
     const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
     return {
         normalizedName,
-        containerImage: undefined
+        containerImage: digest != null ? `${normalizedName}@${digest}` : undefined
     };
 }
 

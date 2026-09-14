@@ -4,7 +4,8 @@ import {
     generatorWantsSdkConfigIr,
     generatorWantsSpecs,
     isOnPremAdapter,
-    onPremAdapterLanguage
+    onPremAdapterLanguage,
+    UnresolvableGeneratorVersionError
 } from "../constants.js";
 
 // The adapter is published under the Fern generator names it replaces, so the name is identical
@@ -39,6 +40,30 @@ describe("isOnPremAdapter", () => {
         expect(isOnPremAdapter("fernapi/fern-kotlin-sdk", "99.0.0")).toBe(false);
         expect(isOnPremAdapter("fernapi/fern-cli-generator", "99.0.0")).toBe(false);
         expect(isOnPremAdapter("acme/some-generator", "99.0.0")).toBe(false);
+    });
+
+    // Answering `false` here would be a routing decision, not an absence of one: it hands the
+    // container a Fern `GeneratorConfig`, which fails inside the container as `CONFIG_INVALID` if
+    // the tag resolves to an adapter release. The tag is what is ambiguous, so the tag is named.
+    it("refuses a moving tag on a name that has a cutover", () => {
+        expect(() => isOnPremAdapter("fernapi/fern-python-sdk", "latest")).toThrow(UnresolvableGeneratorVersionError);
+        expect(() => isOnPremAdapter("fernapi/fern-python-sdk", "latest")).toThrow(/pin a concrete version/i);
+    });
+
+    it("refuses a version it cannot parse at all", () => {
+        expect(() => isOnPremAdapter("fernapi/fern-go-sdk", "abc")).toThrow(UnresolvableGeneratorVersionError);
+        expect(() => isOnPremAdapter("fernapi/fern-go-sdk", "")).toThrow(UnresolvableGeneratorVersionError);
+    });
+
+    // A name with no cutover is never routed on version, so there is nothing to be ambiguous about.
+    it("still ignores a moving tag on a name that has no cutover", () => {
+        expect(isOnPremAdapter("fernapi/fern-postman", "latest")).toBe(false);
+    });
+
+    it("accepts a partial version, which is unambiguous once coerced", () => {
+        expect(isOnPremAdapter("fernapi/fern-python-sdk", "6")).toBe(true);
+        expect(isOnPremAdapter("fernapi/fern-python-sdk", "v6.1")).toBe(true);
+        expect(isOnPremAdapter("fernapi/fern-python-sdk", "5")).toBe(false);
     });
 });
 

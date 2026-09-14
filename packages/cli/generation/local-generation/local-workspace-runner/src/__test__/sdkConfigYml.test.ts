@@ -172,6 +172,27 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         }
     });
 
+    // `docs` merges key by key, the same as `client` and `package`. Replacing the root wholesale
+    // would make setting one target-level docs key silently drop every root-level one.
+    it("merges a target's docs over the root rather than replacing it", async () => {
+        const sdkConfig = await loadFixture(
+            SDK_CONFIG_YML.replace(
+                "docs:\n  includeApiReference: true",
+                "docs:\n  includeApiReference: true\n  referenceBaseUrl: https://docs.abbey.test"
+            ).replace(
+                "  - language: typescript\n",
+                "  - language: typescript\n    docs:\n      includeApiReference: false\n"
+            )
+        );
+        const built = build(sdkConfig);
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.docs.includeApiReference).toBe(false);
+            expect(built.sdkConfigIr.docs.referenceBaseUrl).toBe("https://docs.abbey.test");
+        }
+    });
+
     it("splits a target's flat generation block into common and language-specific halves", async () => {
         const built = build(await loadFixture());
         expect(built.success).toBe(true);

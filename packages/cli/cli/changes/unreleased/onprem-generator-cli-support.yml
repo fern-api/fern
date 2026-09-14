@@ -20,3 +20,11 @@
       release versions exist. It applies only to an invocation that already resolves to the adapter,
       and a digest-pinned image still wins. Unset, the version in generators.yml is what runs.
   type: internal
+
+- summary: |
+      A generator name that Postman's on-prem adapter is also published under can no longer be run
+      from a moving tag such as `latest`. The version is what distinguishes Fern's generator from the
+      adapter at the same name, so a moving tag leaves the container's configuration contract
+      ambiguous; it is now rejected with an error naming the generator and asking for a concrete
+      version. Names the adapter is not published under are unaffected.
+  type: internal

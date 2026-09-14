@@ -1,4 +1,5 @@
 import path from "path";
+import semver from "semver";
 
 export const DOCKER_FERN_DIRECTORY = "/fern";
 export const CODEGEN_OUTPUT_DIRECTORY_NAME = "output";
@@ -52,81 +53,85 @@ export const TYPE_RELOCATIONS_FILENAME = ".fern-type-relocations.json";
 export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH";
 
 /**
- * The version at which each Fern generator name becomes the Postman on-prem adapter.
+ * Each Fern generator name the Postman on-prem adapter is published under: the language that image
+ * bakes in, and the version at which the name starts meaning the adapter rather than Fern's own
+ * generator.
  *
  * The adapter is published under the Fern generator names it replaces, at the version its language
  * carries in Postman's cutover matrix, so a customer keeps their `generators.yml` entry and changes
  * only the version. The name is therefore identical whether the image is Fern's or Postman's, and
  * the version is the only thing that distinguishes them — a name allowlist cannot express this.
  *
- * One language maps to several names (TypeScript has two), which is why this is keyed on name.
- * `kotlin` and `cli` have cutover versions but no Fern generator the adapter is a drop-in for, so
- * they are absent by design.
+ * One language maps to several names (TypeScript has two), which is why this is keyed on name and
+ * carries the language as a value rather than the other way round. `kotlin` and `cli` have cutover
+ * versions but no Fern generator the adapter is a drop-in for, so they are absent by design.
+ *
+ * Language and cutover live in one entry so they cannot drift apart: every name that has a cutover
+ * necessarily has a language, and vice versa.
+ *
+ * The cutovers assume **Fern never publishes a version at or above a cutover major under these
+ * names** — including a prerelease, since `2.0.0-rc.1` coerces to `2.0.0`. Each cutover currently
+ * sits one major above Fern's release, so there is room, but the invariant is an agreement between
+ * two release processes rather than something this file can enforce. An explicit registry check is
+ * the durable fix if the adapter ever ships somewhere other than `fernapi`.
  */
-const ONPREM_ADAPTER_CUTOVER: ReadonlyMap<string, string> = new Map([
-    ["fernapi/fern-typescript-sdk", "4.0.0"],
-    ["fernapi/fern-typescript-node-sdk", "4.0.0"],
-    ["fernapi/fern-python-sdk", "6.0.0"],
-    ["fernapi/fern-java-sdk", "5.0.0"],
-    ["fernapi/fern-go-sdk", "2.0.0"],
-    ["fernapi/fern-csharp-sdk", "3.0.0"],
-    ["fernapi/fern-php-sdk", "3.0.0"],
-    ["fernapi/fern-ruby-sdk", "2.0.0"],
-    ["fernapi/fern-rust-sdk", "1.0.0"],
-    ["fernapi/fern-swift-sdk", "1.0.0"]
+const ONPREM_ADAPTER: ReadonlyMap<string, { language: string; cutover: string }> = new Map([
+    ["fernapi/fern-typescript-sdk", { language: "typescript", cutover: "4.0.0" }],
+    ["fernapi/fern-typescript-node-sdk", { language: "typescript", cutover: "4.0.0" }],
+    ["fernapi/fern-python-sdk", { language: "python", cutover: "6.0.0" }],
+    ["fernapi/fern-java-sdk", { language: "java", cutover: "5.0.0" }],
+    ["fernapi/fern-go-sdk", { language: "go", cutover: "2.0.0" }],
+    ["fernapi/fern-csharp-sdk", { language: "csharp", cutover: "3.0.0" }],
+    ["fernapi/fern-php-sdk", { language: "php", cutover: "3.0.0" }],
+    ["fernapi/fern-ruby-sdk", { language: "ruby", cutover: "2.0.0" }],
+    ["fernapi/fern-rust-sdk", { language: "rust", cutover: "1.0.0" }],
+    ["fernapi/fern-swift-sdk", { language: "swift", cutover: "1.0.0" }]
 ]);
 
 /**
- * The language the adapter generates, derived from the generator name.
+ * Raised when a generator name that has a cutover carries a version the cutover cannot be evaluated
+ * against, such as a moving tag.
  *
- * The adapter bakes one language into each image, and under the cutover naming the generator name
- * already identifies it — so nothing has to be declared in `generators.yml`.
+ * Thrown rather than answered with `false`, because `false` is itself a routing decision: it hands
+ * the container a Fern `GeneratorConfig`. If the tag resolves to an adapter release the run fails
+ * inside the container with `CONFIG_INVALID`, naming neither the tag nor `generators.yml`.
  */
-const ONPREM_ADAPTER_LANGUAGE: ReadonlyMap<string, string> = new Map([
-    ["fernapi/fern-typescript-sdk", "typescript"],
-    ["fernapi/fern-typescript-node-sdk", "typescript"],
-    ["fernapi/fern-python-sdk", "python"],
-    ["fernapi/fern-java-sdk", "java"],
-    ["fernapi/fern-go-sdk", "go"],
-    ["fernapi/fern-csharp-sdk", "csharp"],
-    ["fernapi/fern-php-sdk", "php"],
-    ["fernapi/fern-ruby-sdk", "ruby"],
-    ["fernapi/fern-rust-sdk", "rust"],
-    ["fernapi/fern-swift-sdk", "swift"]
-]);
-
-/** Numeric comparison of dot-separated leading integers. Falls back to 0 for a non-numeric part. */
-function compareVersions(left: string, right: string): number {
-    const leftParts = left.split(".");
-    const rightParts = right.split(".");
-    for (let index = 0; index < Math.max(leftParts.length, rightParts.length); index++) {
-        const l = Number.parseInt(leftParts[index] ?? "0", 10) || 0;
-        const r = Number.parseInt(rightParts[index] ?? "0", 10) || 0;
-        if (l !== r) {
-            return l < r ? -1 : 1;
-        }
+export class UnresolvableGeneratorVersionError extends Error {
+    constructor(generatorName: string, version: string) {
+        super(
+            `Generator "${generatorName}" is pinned to "${version}" in generators.yml, which is not a ` +
+                "version this can compare against the on-prem adapter cutover. This generator name is " +
+                "published by both Fern and Postman, and the version is what distinguishes them, so a " +
+                "moving tag leaves it ambiguous which of the two the container will be. Pin a concrete " +
+                "version, for example 6.0.0."
+        );
+        this.name = "UnresolvableGeneratorVersionError";
     }
-    return 0;
 }
 
 /**
  * Whether this generator invocation resolves to the Postman on-prem adapter rather than Fern's own
  * generator of the same name.
  *
- * A prerelease is treated as its release version, so `4.0.0-rc1` is on the adapter side of the
- * cutover — an rc of the adapter is still the adapter.
+ * A prerelease sorts below its release under semver, so the cutover is compared against the release
+ * version: `4.0.0-rc1` is on the adapter side, because an rc of the adapter is still the adapter.
+ * This holds only while Fern publishes no prerelease at or above a cutover major — see the note on
+ * {@link ONPREM_ADAPTER}.
  */
 export function isOnPremAdapter(generatorName: string, version: string): boolean {
-    const cutover = ONPREM_ADAPTER_CUTOVER.get(generatorName);
-    if (cutover == null) {
+    const entry = ONPREM_ADAPTER.get(generatorName);
+    if (entry == null) {
         return false;
     }
-    const release = version.split("-")[0] ?? version;
-    return compareVersions(release, cutover) >= 0;
+    const parsed = semver.coerce(version);
+    if (parsed == null) {
+        throw new UnresolvableGeneratorVersionError(generatorName, version);
+    }
+    return semver.gte(parsed, entry.cutover);
 }
 
 export function onPremAdapterLanguage(generatorName: string): string | undefined {
-    return ONPREM_ADAPTER_LANGUAGE.get(generatorName);
+    return ONPREM_ADAPTER.get(generatorName)?.language;
 }
 
 /**

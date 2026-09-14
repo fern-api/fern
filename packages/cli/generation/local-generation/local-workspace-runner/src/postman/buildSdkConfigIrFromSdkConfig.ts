@@ -93,7 +93,7 @@ export function buildSdkConfigIrFromSdkConfig({
         api: sdkConfig.api,
         client: { ...sdkConfig.client, ...target.client },
         package: { ...sdkConfig.package, ...target.package },
-        docs: target.docs ?? sdkConfig.docs,
+        docs: { ...sdkConfig.docs, ...target.docs },
         generation: mergeGeneration({ sdkConfig, target, language }),
         output: { delivery: "files", path: outputPath },
         compatibility: {
