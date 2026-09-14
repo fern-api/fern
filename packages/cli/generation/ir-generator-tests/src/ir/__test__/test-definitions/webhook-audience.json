@@ -680,6 +680,7 @@
         "smartCasing": true,
         "smartCasingDigitWordBoundary": null
     },
+    "twiml": null,
     "subpackages": {
         "subpackage_webhooks": {
             "name": "webhooks",
