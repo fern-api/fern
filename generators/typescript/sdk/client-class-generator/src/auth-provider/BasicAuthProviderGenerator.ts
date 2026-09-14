@@ -12,6 +12,7 @@ import {
 } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace BasicAuthProviderGenerator {
     export interface Init {
@@ -21,6 +22,7 @@ export declare namespace BasicAuthProviderGenerator {
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
         optionalAuth?: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -37,6 +39,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
     private readonly optionalAuth: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: BasicAuthProviderGenerator.Init) {
@@ -46,6 +49,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
         this.optionalAuth = init.optionalAuth ?? false;
+        this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -265,8 +269,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameOmit = this.authScheme.usernameOmit === true;
         const passwordOmit = this.authScheme.passwordOmit === true;
 
-        const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
-        const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
+        const usernameEnvCheck =
+            usernameEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_USERNAME", guarded: this.guardProcessEnvAccess })}`
+                : "";
+        const passwordEnvCheck =
+            passwordEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_PASSWORD", guarded: this.guardProcessEnvAccess })}`
+                : "";
 
         // Per-field checks: omittable fields are always satisfied, required fields must be present
         const usernameCheck = usernameOmit
@@ -336,13 +346,13 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvFallback = usernameOmit
             ? '""'
             : usernameEnvVar != null
-              ? `\n            (${usernameSupplierGetCode}) ??\n            process.env?.[ENV_USERNAME]`
+              ? `\n            (${usernameSupplierGetCode}) ??\n            ${emitEnvVarValue({ envConstant: "ENV_USERNAME", guarded: this.guardProcessEnvAccess })}`
               : usernameSupplierGetCode;
 
         const passwordEnvFallback = passwordOmit
             ? '""'
             : passwordEnvVar != null
-              ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
+              ? `\n            (${passwordSupplierGetCode}) ??\n            ${emitEnvVarValue({ envConstant: "ENV_PASSWORD", guarded: this.guardProcessEnvAccess })}`
               : passwordSupplierGetCode;
 
         // Build per-field null checks based on individual omit flags.

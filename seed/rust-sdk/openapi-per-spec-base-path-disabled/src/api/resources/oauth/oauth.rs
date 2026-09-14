@@ -42,7 +42,7 @@ impl OauthClient {
         options: Option<RequestOptions>,
     ) -> Result<GetTokenResponse, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_form_request(
                 Method::POST,
                 "oauth/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

@@ -19,7 +19,7 @@ import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils
 import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
+import { getEndpointNamespace, getErrorNamespace } from "./utils/getNamespaceFromGroup.js";
 import {
     getDocsFromTypeReference,
     getTypeFromTypeReference,
@@ -466,9 +466,13 @@ export function buildEndpoint({
             "status-code": parseInt(statusCode)
         };
 
+        const errorNamespace = getErrorNamespace({
+            endpointNamespace: maybeEndpointNamespace,
+            error: httpError
+        });
         const errorDeclarationFile = resolveLocationWithNamespace({
             location: ERROR_DECLARATIONS_FILENAME,
-            namespaceOverride: maybeEndpointNamespace
+            namespaceOverride: errorNamespace
         });
 
         if (httpError.schema != null) {
@@ -477,7 +481,7 @@ export function buildEndpoint({
                 context,
                 fileContainingReference: errorDeclarationFile,
                 declarationFile: errorDeclarationFile,
-                namespace: maybeEndpointNamespace,
+                namespace: errorNamespace,
                 declarationDepth: 0
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
@@ -486,7 +490,10 @@ export function buildEndpoint({
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
-            schema: context.isErrorUnknownSchema(parseInt(statusCode))
+            schema: context.isErrorUnknownSchema({
+                statusCode: parseInt(statusCode),
+                namespace: httpError.namespace
+            })
                 ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration
         });

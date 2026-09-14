@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.CreateOauth2Token"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpOauthTokenRequiredGrantType;\n\nvar client = new SeedCsharpOauthTokenRequiredGrantTypeClient(\n    clientOptions: new ClientOptions { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\nawait client.Auth.CreateOauth2TokenAsync(\n    new CreateOauth2TokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+            }
+        }
+    ]
+}

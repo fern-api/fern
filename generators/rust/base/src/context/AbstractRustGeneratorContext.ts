@@ -50,6 +50,8 @@ export abstract class AbstractRustGeneratorContext<
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
     private readonly irUsesTypeCache = new Map<string, boolean>();
     private readonly featureCache = new Map<string, boolean>();
+    private typeIdByDeclaration: Map<FernIr.TypeDeclaration, FernIr.TypeId> | undefined;
+    private typeDeclarationByPascalPath: Map<string, FernIr.TypeDeclaration> | undefined;
 
     /**
      * Returns the path prefix for core serde helper modules used in
@@ -144,9 +146,10 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 when base64 types are used, or when per-endpoint
-        // auth routing needs it to encode basic auth credentials.
-        if (this.usesBase64() || (this.isEndpointSecurity() && this.hasBasicAuthScheme())) {
+        // Conditionally include base64 when base64 types are used, or when a basic auth scheme
+        // has to be encoded. Both auth paths need it: per-endpoint routing and the flat
+        // client-wide application.
+        if (this.usesBase64() || this.hasBasicAuthScheme()) {
             this.dependencyManager.add("base64", "0.22");
         }
 
@@ -597,6 +600,47 @@ export abstract class AbstractRustGeneratorContext<
         return this.cachedFeature("hasBytesEndpoints", () =>
             Object.values(this.ir.services).some((service) =>
                 service.endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes")
+            )
+        );
+    }
+
+    /**
+     * Whether any endpoint declares an `application/x-www-form-urlencoded` request body. Those
+     * cannot go through `execute_request`, whose `.json()` sends a JSON document and stamps
+     * `application/json` over the declared media type.
+     */
+    public hasFormUrlEncodedEndpoints(): boolean {
+        return this.cachedFeature("hasFormUrlEncodedEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) =>
+                    (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded")
+                )
+            )
+        );
+    }
+
+    /**
+     * Whether any endpoint declares a JSON request media type OTHER than `application/json` --
+     * a vendor type, or `application/merge-patch+json`. Those endpoints cannot go through
+     * `execute_request`, whose `.json()` call stamps `application/json` over the declared type.
+     */
+    public hasNonDefaultJsonContentTypeEndpoints(): boolean {
+        return this.cachedFeature("hasNonDefaultJsonContentTypeEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
+                    const contentType = endpoint.requestBody?._visit<string | undefined>({
+                        inlinedRequestBody: (body) => body.contentType,
+                        reference: (body) => body.contentType,
+                        fileUpload: () => undefined,
+                        bytes: () => undefined,
+                        _other: () => undefined
+                    });
+                    return (
+                        contentType != null &&
+                        contentType !== "application/json" &&
+                        contentType.includes("json")
+                    );
+                })
             )
         );
     }
@@ -1061,8 +1105,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "foo_importing_type.rs")
      */
     public getUniqueFilenameForType(typeDeclaration: FernIr.TypeDeclaration): string {
-        // Find typeId in IR by matching the typeDeclaration reference
-        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
+        const typeId = this.getTypeIdForDeclaration(typeDeclaration);
 
         if (!typeId) {
             throw new Error(
@@ -1082,8 +1125,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
     public getUniqueTypeNameForDeclaration(typeDeclaration: FernIr.TypeDeclaration): string {
-        // Find typeId in IR by matching the typeDeclaration reference
-        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
+        const typeId = this.getTypeIdForDeclaration(typeDeclaration);
 
         if (!typeId) {
             throw new Error(
@@ -1105,15 +1147,8 @@ export abstract class AbstractRustGeneratorContext<
     public getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string {
         const baseTypeName = this.case.pascalSafe(declaredTypeName.name);
 
-        // Try to find the type declaration in IR
-        const typeDeclaration = Object.values(this.ir.types).find(
-            (type) =>
-                this.case.pascalSafe(type.name.name) === baseTypeName &&
-                type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
-                type.name.fernFilepath.allParts.every(
-                    (part, idx) =>
-                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
-                )
+        const typeDeclaration = this.getTypeDeclarationsByPascalPath().get(
+            this.getPascalPathKey(declaredTypeName, baseTypeName)
         );
 
         if (typeDeclaration) {
@@ -1123,6 +1158,40 @@ export abstract class AbstractRustGeneratorContext<
 
         // Fallback: return base name if not found in IR (could be external type or error type)
         return baseTypeName;
+    }
+
+    private getTypeIdForDeclaration(typeDeclaration: FernIr.TypeDeclaration): FernIr.TypeId | undefined {
+        if (this.typeIdByDeclaration == null) {
+            this.typeIdByDeclaration = new Map();
+            for (const [typeId, type] of Object.entries(this.ir.types)) {
+                if (!this.typeIdByDeclaration.has(type)) {
+                    this.typeIdByDeclaration.set(type, typeId);
+                }
+            }
+        }
+        return this.typeIdByDeclaration.get(typeDeclaration);
+    }
+
+    /**
+     * Index of type declarations keyed by their pascal-cased name and fernFilepath.
+     * The first declaration registered for a key wins, matching the order of `ir.types`.
+     */
+    private getTypeDeclarationsByPascalPath(): Map<string, FernIr.TypeDeclaration> {
+        if (this.typeDeclarationByPascalPath == null) {
+            this.typeDeclarationByPascalPath = new Map();
+            for (const type of Object.values(this.ir.types)) {
+                const key = this.getPascalPathKey(type.name, this.case.pascalSafe(type.name.name));
+                if (!this.typeDeclarationByPascalPath.has(key)) {
+                    this.typeDeclarationByPascalPath.set(key, type);
+                }
+            }
+        }
+        return this.typeDeclarationByPascalPath;
+    }
+
+    private getPascalPathKey(declaredTypeName: FernIr.DeclaredTypeName, pascalTypeName: string): string {
+        const parts = declaredTypeName.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
+        return [...parts, pascalTypeName].join("\u0000");
     }
 
     // TODO: @iamnamananand996 simplify collisions detection more

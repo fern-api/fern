@@ -15,6 +15,7 @@
                 "tokenEnvVar": "MY_API_KEY",
                 "tokenPlaceholder": null,
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

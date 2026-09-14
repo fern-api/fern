@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `license_header` custom config option that emits the configured text as a comment
+    at the top of every generated Python file, above the auto-generated notice.
+
+    ```yaml
+    config:
+      license_header: |
+        Copyright 2024 Acme, Inc.
+        Licensed under the Apache License, Version 2.0.
+    ```
+  type: feat

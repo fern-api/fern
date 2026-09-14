@@ -6,6 +6,7 @@ import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { responseBodyLoader } from "../utils/responseBody.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
 export declare namespace HttpEndpointGenerator {
@@ -444,9 +445,7 @@ export class HttpEndpointGenerator {
         statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
 
         const jsonResponseBody =
-            endpoint.response?.body != null &&
-            endpoint.response.body.type === "json" &&
-            endpoint.response.body.value.responseBodyType.type === "named"
+            endpoint.response?.body != null && endpoint.response.body.type === "json"
                 ? endpoint.response.body.value
                 : undefined;
 
@@ -469,9 +468,6 @@ export class HttpEndpointGenerator {
                         thenBody: [
                             ruby.codeblock((writer) => {
                                 if (wrapWithHttpResponse) {
-                                    if (jsonResponseBody.responseBodyType.type !== "named") {
-                                        writer.writeLine(`parsed_response = nil`);
-                                    }
                                     this.loadResponseBodyFromJson({
                                         writer,
                                         typeReference: jsonResponseBody.responseBodyType,
@@ -591,19 +587,17 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
-        switch (typeReference.type) {
-            case "named": {
-                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
-                if (storeInVariable) {
-                    writer.writeLine(`parsed_response = ${loadExpression}`);
-                } else {
-                    writer.writeLine(loadExpression);
-                }
-                break;
-            }
-            default:
-                break;
+        if (storeInVariable) {
+            writer.write("parsed_response = ");
         }
+        writer.writeNode(
+            responseBodyLoader({
+                context: this.context,
+                typeReference,
+                responseVariableName: HTTP_RESPONSE_VN
+            })
+        );
+        writer.newLine();
     }
 
     private generateEnhancedDocstring({

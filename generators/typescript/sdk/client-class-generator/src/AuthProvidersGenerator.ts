@@ -24,6 +24,10 @@ export declare namespace AuthProvidersGenerator {
         // When true, treat auth as optional even when the spec mandates it,
         // so the client can be constructed without providing credentials.
         optionalAuth?: boolean;
+        // When true, environment variable reads are wrapped in a
+        // `typeof process !== "undefined"` guard so they do not throw in runtimes
+        // without a Node `process` global.
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -35,7 +39,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
         neverThrowErrors,
         includeSerdeLayer,
         shouldUseWrapper,
-        optionalAuth = false
+        optionalAuth = false,
+        guardProcessEnvAccess = false
     }: AuthProvidersGenerator.Init) {
         const isAuthMandatory = ir.sdkConfig.isAuthMandatory && !optionalAuth;
         this.authProviderGenerator = (() => {
@@ -62,7 +67,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         neverThrowErrors,
                         isAuthMandatory,
                         shouldUseWrapper,
-                        optionalAuth
+                        optionalAuth,
+                        guardProcessEnvAccess
                     });
                 case "bearer":
                     return new BearerAuthProviderGenerator({
@@ -71,7 +77,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         neverThrowErrors,
                         isAuthMandatory,
                         shouldUseWrapper,
-                        optionalAuth
+                        optionalAuth,
+                        guardProcessEnvAccess
                     });
                 case "header":
                     return new HeaderAuthProviderGenerator({
@@ -80,7 +87,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         neverThrowErrors,
                         isAuthMandatory,
                         shouldUseWrapper,
-                        optionalAuth
+                        optionalAuth,
+                        guardProcessEnvAccess
                     });
                 case "oauth":
                     return new OAuthAuthProviderGenerator({
@@ -88,7 +96,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         authScheme,
                         neverThrowErrors,
                         includeSerdeLayer,
-                        shouldUseWrapper
+                        shouldUseWrapper,
+                        guardProcessEnvAccess
                     });
                 default:
                     assertNever(authScheme);

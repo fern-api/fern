@@ -772,6 +772,7 @@
           "pathParameters": [
             {
               "name": "id",
+              "docs": "Bookmark ID",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -1018,6 +1019,7 @@
           "allPathParameters": [
             {
               "name": "id",
+              "docs": "Bookmark ID",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",

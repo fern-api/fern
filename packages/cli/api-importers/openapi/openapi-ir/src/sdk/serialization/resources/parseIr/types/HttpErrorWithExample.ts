@@ -17,6 +17,7 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
         statusCode: StatusCode,
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
+        namespace: core.serialization.string().optional(),
     })
     .extend(WithDescription)
     .extend(WithName)
@@ -27,5 +28,6 @@ export declare namespace HttpErrorWithExample {
         statusCode: StatusCode.Raw;
         schema: serializers.SchemaWithExample.Raw;
         fullExamples?: NamedFullExample.Raw[] | null;
+        namespace?: string | null;
     }
 }

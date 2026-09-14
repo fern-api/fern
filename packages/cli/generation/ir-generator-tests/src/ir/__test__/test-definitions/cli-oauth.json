@@ -283,6 +283,7 @@
                     "refreshEndpoint": null
                 },
                 "key": "OAuth2",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],

@@ -19,6 +19,7 @@
           "name": "api_key",
           "wireValue": "X-API-Key",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {

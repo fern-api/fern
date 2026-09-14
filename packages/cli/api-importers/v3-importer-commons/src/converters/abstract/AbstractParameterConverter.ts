@@ -70,6 +70,8 @@ export abstract class AbstractParameterConverter<
 
         const parameterDefaultValue = resolvedParameterSchema?.default;
 
+        const docs = this.getParameterDescription({ schema });
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -79,13 +81,14 @@ export abstract class AbstractParameterConverter<
                             name: this.parameter.name,
                             wireValue: this.parameter.name
                         }),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
                         clientDefault: undefined,
                         defaultValue: parameterDefaultValue,
                         v2Examples: this.convertParameterExamples({
-                            schema: parameterSchemaWithExampleOverride ?? schema
+                            schema: parameterSchemaWithExampleOverride ?? schema,
+                            originalSchema: schema
                         }),
                         availability,
                         explode: this.getExplodeForQueryParameter()
@@ -100,13 +103,14 @@ export abstract class AbstractParameterConverter<
                             name: this.parameter.name,
                             wireValue: this.parameter.name
                         }),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
                         clientDefault: undefined,
                         defaultValue: parameterDefaultValue,
                         v2Examples: this.convertParameterExamples({
-                            schema: parameterSchemaWithExampleOverride ?? schema
+                            schema: parameterSchemaWithExampleOverride ?? schema,
+                            originalSchema: schema
                         }),
                         availability
                     },
@@ -117,13 +121,14 @@ export abstract class AbstractParameterConverter<
                     type: "path",
                     parameter: {
                         name: this.context.casingsGenerator.generateName(this.parameter.name),
-                        docs: this.parameter.description,
+                        docs,
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
                         clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
-                            schema: parameterSchemaWithExampleOverride ?? schema
+                            schema: parameterSchemaWithExampleOverride ?? schema,
+                            originalSchema: schema
                         }),
                         explode: this.getExplodeForPathParameter()
                     },
@@ -132,6 +137,25 @@ export abstract class AbstractParameterConverter<
             default:
                 return undefined;
         }
+    }
+
+    /**
+     * A parameter's description may be declared either on the parameter object or inside the
+     * parameter's schema; both are valid OpenAPI. For a `$ref` schema, only a sibling description on
+     * the reference itself counts; the referenced type's own description belongs to that type.
+     */
+    private getParameterDescription({
+        schema
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    }): string | undefined {
+        if (this.parameter.description != null) {
+            return this.parameter.description;
+        }
+        if ("description" in schema && typeof schema.description === "string") {
+            return schema.description;
+        }
+        return undefined;
     }
 
     private getParameterSchemaWithExampleOverride({
@@ -154,9 +178,11 @@ export abstract class AbstractParameterConverter<
     }
 
     protected convertParameterExamples({
-        schema
+        schema,
+        originalSchema
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        originalSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     }): V2SchemaExamples {
         const v2Examples: V2SchemaExamples = {
             userSpecifiedExamples: {},
@@ -189,6 +215,24 @@ export abstract class AbstractParameterConverter<
             });
         }
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
+            const schemaExamples = this.context.getExamplesFromSchema({
+                schema: this.resolveSchemaChain(originalSchema),
+                breadcrumbs: this.breadcrumbs
+            });
+            for (const schemaExample of schemaExamples) {
+                const exampleName = this.context.generateUniqueName({
+                    prefix: `${this.parameter.name}_example`,
+                    existingNames: Object.keys(v2Examples.userSpecifiedExamples)
+                });
+                v2Examples.userSpecifiedExamples[exampleName] = this.generateOrValidateExample({
+                    schema,
+                    example: this.context.resolveExample(schemaExample),
+                    exampleName
+                });
+            }
+        }
+
+        if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
             const exampleName = `${this.parameter.name}_example`;
             v2Examples.autogeneratedExamples[exampleName] = this.generateOrValidateExample({
                 schema,
@@ -198,6 +242,29 @@ export abstract class AbstractParameterConverter<
             });
         }
         return v2Examples;
+    }
+
+    private resolveSchemaChain(
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): OpenAPIV3_1.SchemaObject | undefined {
+        const visited = new Set<string>();
+        let current = schemaOrReference;
+        while (this.context.isReferenceObject(current)) {
+            if (visited.has(current.$ref)) {
+                return undefined;
+            }
+            visited.add(current.$ref);
+            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>({
+                reference: current,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            current = resolved.value;
+        }
+        return current;
     }
 
     private generateOrValidateExample({

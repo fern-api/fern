@@ -427,8 +427,8 @@ export async function runLocalGenerationForWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
                     writeUnitTests: true,
-                    generateOauthClients: orgBody?.oauthClientEnabled ?? false,
-                    generatePaginatedClients: orgBody?.paginationEnabled ?? false,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? true,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? true,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
@@ -487,6 +487,7 @@ export async function runLocalGenerationForWorkspace({
                                           newVersion: autoVersioningNewVersion ?? version,
                                           versionBump: autoVersioningVersionBump,
                                           previewMode: selfhostedGithubConfig.previewMode,
+                                          workflows: selfhostedGithubConfig.workflows ?? true,
                                           generatorName: generatorInvocation.name,
                                           automationMode,
                                           autoMerge,

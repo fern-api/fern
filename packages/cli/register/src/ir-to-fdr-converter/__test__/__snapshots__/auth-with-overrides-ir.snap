@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": undefined,
         "key": "customAuth",
+        "playgroundDocs": undefined,
         "token": "token",
         "tokenEnvVar": "CUSTOM_AUTH_TOKEN",
         "tokenPlaceholder": undefined,

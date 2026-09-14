@@ -5,6 +5,7 @@ import type { FileContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace OAuthAuthProviderGenerator {
     export interface Init {
@@ -13,6 +14,7 @@ export declare namespace OAuthAuthProviderGenerator {
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -45,6 +47,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
@@ -52,6 +55,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+        this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -781,8 +785,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     ): string {
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const clientIdEnvCheck = clientIdEnvVar != null ? " || process.env?.[ENV_CLIENT_ID] != null" : "";
-        const clientSecretEnvCheck = clientSecretEnvVar != null ? " || process.env?.[ENV_CLIENT_SECRET] != null" : "";
+        const clientIdEnvCheck =
+            clientIdEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_CLIENT_ID", guarded: this.guardProcessEnvAccess })}`
+                : "";
+        const clientSecretEnvCheck =
+            clientSecretEnvVar != null
+                ? ` || ${emitEnvVarPresenceCheck({ envConstant: "ENV_CLIENT_SECRET", guarded: this.guardProcessEnvAccess })}`
+                : "";
 
         const clientIdCheck = `options?.${wrapperAccess}[CLIENT_ID_PARAM] != null${clientIdEnvCheck}`;
         const clientSecretCheck = `options?.${wrapperAccess}[CLIENT_SECRET_PARAM] != null${clientSecretEnvCheck}`;
@@ -801,7 +811,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientId = process.env?.[ENV_CLIENT_ID];
+        const envClientId = ${emitEnvVarValue({ envConstant: "ENV_CLIENT_ID", guarded: this.guardProcessEnvAccess })};
         if (envClientId != null) {
             return envClientId;
         }
@@ -828,7 +838,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientId = process.env?.[ENV_CLIENT_ID];
+        const envClientId = ${emitEnvVarValue({ envConstant: "ENV_CLIENT_ID", guarded: this.guardProcessEnvAccess })};
         if (envClientId != null) {
             return envClientId;
         }
@@ -864,7 +874,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientSecret = process.env?.[ENV_CLIENT_SECRET];
+        const envClientSecret = ${emitEnvVarValue({ envConstant: "ENV_CLIENT_SECRET", guarded: this.guardProcessEnvAccess })};
         if (envClientSecret != null) {
             return envClientSecret;
         }
@@ -891,7 +901,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
-        const envClientSecret = process.env?.[ENV_CLIENT_SECRET];
+        const envClientSecret = ${emitEnvVarValue({ envConstant: "ENV_CLIENT_SECRET", guarded: this.guardProcessEnvAccess })};
         if (envClientSecret != null) {
             return envClientSecret;
         }

@@ -1,4 +1,237 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.121.0
+  changelogEntry:
+    - summary: |
+        Add an optional `disclaimer` field to the `ai-search`/`ai-chat` docs.yml config.
+        It overrides the disclaimer shown in the Ask Fern chat (default:
+        "Responses are generated using AI and may contain mistakes.").
+      type: feat
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 5.120.5
+  changelogEntry:
+    - summary: |
+        Fix `theme.tabs.placement` / `theme.tabs.alignment` being sent to the docs publishing API in lowercase,
+        which caused `fern generate --docs` to fail with `config.theme.tabs: Invalid input` even though
+        `fern check` passed.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 5.120.4
+  changelogEntry:
+    - summary: |
+        Honor `required` on OpenAPI response headers: header value types are only wrapped in
+        `optional` when the Header Object does not declare `required: true`, matching the
+        request-parameter behavior.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 5.120.3
+  changelogEntry:
+    - summary: |
+        `fern check` now validates changelogs inside a product's nested `versions` against
+        their full `/product/version/...` URL, so a changelog made servable by either the
+        product or version slug (e.g. `/platform/release-notes/updates`) is no longer
+        rejected by the `valid-changelog-slug` rule. Previously the docs validator never
+        traversed `product.versions` files.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 5.120.2
+  changelogEntry:
+    - summary: |
+        `fern check` no longer rejects a changelog whose feed URL is made servable by its
+        parent product or version slug (e.g. a "Release Notes" product with an "Updates"
+        changelog tab at `/release-notes/updates`). The `valid-changelog-slug` rule now
+        includes the product/version URL segment when checking for an allowlisted segment
+        and reports the full resolved path.
+      type: fix
+  createdAt: "2026-09-11"
+  irVersion: 67
+- version: 5.120.1
+  changelogEntry:
+    - summary: |
+        Support sdk-gen-api generation for Fern Definition workspaces with no source specs.
+      type: fix
+    - summary: |
+        Allow sdk-gen-api runtime bundles up to the existing 100 MiB decoded payload budget.
+      type: fix
+  createdAt: "2026-09-10"
+  irVersion: 67
+- version: 5.120.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in OpenAPI setting `respect-operation-id-word-boundaries`. When enabled, operation ids
+        are split on every word boundary (camelCase transitions and digits) when deriving endpoint names,
+        so a redundant tag prefix is stripped and the remaining words are preserved: with tag `sharing`,
+        `Sharing_ListFolderMembers` becomes `listFolderMembers` instead of `listfoldermembers`, and with
+        tag `files`, `filesGetThumbnailV2` becomes `getThumbnailV2` instead of keeping the tag prefix.
+        This applies to the v3 OpenAPI parser, so it affects generated API reference URLs. Defaults to
+        false, since enabling it changes the URLs of already published pages.
+      type: feat
+  createdAt: "2026-09-10"
+  irVersion: 67
+- version: 5.119.2
+  changelogEntry:
+    - summary: |
+        Convert OpenAPI response header schemas (including header `content` schemas when
+        `respect-parameter-content` is enabled) into typed references instead of collapsing
+        them to `optional<string>`. Object, enum, array, and `$ref` response headers now carry
+        their schema into IR, so docs render expandable schema properties on response headers
+        just like request headers.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 5.119.1
+  changelogEntry:
+    - summary: |
+        Use schema-level `example`/`examples` for OpenAPI parameters (including JSON-encoded
+        object headers resolved via `respect-parameter-content`) when the parameter itself has
+        no example, instead of autogenerating one from property types.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 5.119.0
+  changelogEntry:
+    - summary: |
+        Add a `layout.api-reference-expand-properties` option to docs.yml. Set it to `true` to
+        render the first level of nested object and union fields in the API reference expanded on
+        page load instead of behind a "Show N properties" button. Deeper levels stay collapsed.
+      type: feat
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 5.118.0
+  changelogEntry:
+    - summary: |
+        Allow `fern generate --sdk-config <path>` to validate an SDK Config v1 YAML or JSON document and submit it to sdk-gen-api for multi-target expansion. Generation without the flag continues through the existing legacy Fern configuration and IR flow.
+      type: feat
+  createdAt: "2026-09-09"
+  irVersion: 67
+- version: 5.117.0
+  changelogEntry:
+    - summary: |
+        Add support for playground-specific auth documentation. Set `x-fern-playground-description` on an
+        OpenAPI security scheme (or `playground-docs` on a Fern definition auth scheme) to render text below
+        that scheme's input in the API playground, leaving the API reference's authorization description
+        (`description`/`docs`) untouched. Applies to bearer, basic, header, and OAuth client-credentials
+        schemes. Supports a markdown subset: `[label](url)` links (absolute or relative), bare URLs,
+        `inline code`, and blank-line-separated paragraphs.
+      type: feat
+    - summary: |
+        Write `fern sdk migrate` output as sparse YAML and default to `sdk-config.yml` beside the selected `generators.yml` when `--output` is omitted, without modifying the existing Fern project files. Source-derived environments and authentication remain in the referenced API specifications instead of being duplicated in SDK Config, empty global configuration blocks are omitted, and explicit Fern overrides are preserved.
+      type: feat
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 5.116.0
+  changelogEntry:
+    - summary: |
+        Add `github.workflows: false` to `generators.yml` (defaults to `true`). When disabled, generated
+        `.github/workflows/*` files are not committed to the SDK repository: existing workflow files are
+        left untouched and newly generated ones are skipped. Useful when the GitHub App used to push
+        does not have the `workflows` permission.
+      type: feat
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 5.115.0
+  changelogEntry:
+    - summary: |
+        `fern generate --local` now supports `FERN_CA_BUNDLE`: set it to a PEM CA bundle on the host and the file is
+        mounted read-only into the generator container with `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE` and `GIT_SSL_CAINFO`
+        pointing at it. This lets network calls made *inside* the generator container succeed behind a corporate
+        TLS-interception proxy: `pnpm install` (TypeScript), `go mod tidy` (Go), and `dotnet format`'s implicit NuGet
+        restore (C#).
+
+        `SSL_CERT_FILE`/`GIT_SSL_CAINFO` replace rather than extend the trust store, so the file must be a complete
+        bundle — the public roots plus your corporate CA. On Linux the system maintains one at
+        `/etc/ssl/certs/ca-certificates.crt`; elsewhere you can build one from the roots Node already ships:
+
+            node -e 'console.log(require("tls").rootCertificates.join("\n"))' > ~/certs/fern-ca-bundle.crt
+            cat corp-root.pem >> ~/certs/fern-ca-bundle.crt
+
+        The path is a bind-mount source resolved by the container runtime rather than by the CLI, so it has to be
+        visible to that runtime. Before generating, the CLI now starts a short-lived probe container to confirm the
+        bundle is really visible inside it, and fails with guidance for your platform when it is not — this catches
+        Colima, podman machine and Docker-in-Docker, where an unresolvable bind source is silently replaced with an
+        empty directory instead of raising an error.
+
+        The JVM ignores these variables, so the CLI warns for Java generators, whose Gradle steps need
+        `FERN_JAVA_SKIP_FORMATTING=true` on such networks.
+      type: feat
+    - summary: |
+        Environment variables passed to local generator containers are no longer wrapped in literal quote characters
+        (`-e KEY="value"`), which previously leaked the quotes into the value seen by the generator.
+      type: fix
+  createdAt: "2026-09-08"
+  irVersion: 67
+- version: 5.114.1
+  changelogEntry:
+    - summary: |
+        Scope the `namespaced-errors` OpenAPI setting to the spec that enables it, and only honor an explicit
+        `x-fern-sdk-namespace` on the response object. Previously enabling the setting on one spec applied it to
+        every spec in the API, and errors whose body schema lived in a namespace were moved into that namespace.
+      type: fix
+  createdAt: "2026-09-04"
+  irVersion: 67
+- version: 5.114.0
+  changelogEntry:
+    - summary: |
+        Add the `namespaced-errors` OpenAPI setting (default `false`). When enabled, an error whose
+        response object (`components.responses[...]`) or body schema carries `x-fern-sdk-namespace` is
+        declared in, and its shared-error conflict detection is scoped to, that namespace instead of the
+        endpoint's. This lets each namespace get its own typed `TooManyRequestsError` etc. while endpoints
+        and other types stay at the root.
+      type: feat
+    - summary: |
+        Fix object schema equality in the OpenAPI importer: two structurally identical inline object
+        schemas were never considered equal, so a shared `components.responses` entry with an inline body
+        referenced by several endpoints collapsed the shared error to `unknown`.
+      type: fix
+  createdAt: "2026-09-04"
+  irVersion: 67
+- version: 5.113.3
+  changelogEntry:
+    - summary: |
+        Revert the namespace-scoped shared-error collapse (#17619) and the case-insensitive namespace/tag flattening
+        (#17643) in the OpenAPI importer. Shared errors are again compared API-wide by status code, and an operation tag
+        that only matches the spec `namespace` case-insensitively is again treated as a sub-group.
+      type: fix
+  createdAt: "2026-09-04"
+  irVersion: 67
+- version: 5.113.2
+  changelogEntry:
+    - summary: |
+        Fall back to an OpenAPI parameter's inline schema description when the parameter itself has no
+        description, so query, header, and path parameter docs appear in generated API references.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 5.113.1
+  changelogEntry:
+    - summary: |
+        When an OpenAPI spec has `namespace` set, an operation tag that matches the
+        namespace case-insensitively (e.g. tag `Video` with `namespace: video`) is now
+        treated as the namespace itself instead of creating a nested `video.video`
+        sub-package.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 5.113.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk migrate` to create Postman SDK Config v1 from existing Fern SDK groups, including the exact single- or multi-spec API source paths. Repeat `--group` to consolidate groups that resolve to the same API schema and source configuration into one multi-language configuration.
+      type: feat
+  createdAt: "2026-09-03"
+  irVersion: 67
+- version: 5.112.1
+  changelogEntry:
+    - summary: |
+        When importing OpenAPI specs with `namespace` set, shared SDK errors are now
+        collapsed to `unknown` per namespace instead of across the whole API. A status
+        code that has a different body schema in one namespace no longer degrades the
+        typed error body in other namespaces.
+      type: fix
+  createdAt: "2026-09-03"
+  irVersion: 67
 - version: 5.112.0
   changelogEntry:
     - summary: |

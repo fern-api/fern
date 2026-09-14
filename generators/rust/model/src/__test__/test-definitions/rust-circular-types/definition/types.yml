@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  # Enums never derive Default.
+  Kind:
+    enum:
+      - leaf
+      - branch
+  # A and B reference each other, but only B -> A is an edge the Default analysis
+  # follows: Vec<B> implements Default whatever B does, so A -> B stops at the list.
+  # A genuine cycle in the analyzed graph would be an infinitely sized Rust struct, so
+  # cycles are covered by synthetic IRs in defaultSupport.test.ts instead of here.
+  A:
+    properties:
+      kind: Kind
+      children: list<B>
+  B:
+    properties:
+      parent: A
+  # Root and C reach A on different paths.
+  Root:
+    properties:
+      a: A
+      c: C
+  C:
+    properties:
+      b: B
+  # D only holds the non-Default subgraph behind optional, so it can derive Default.
+  D:
+    properties:
+      a: optional<A>
+      name: string
+  # E is an alias of a defaultable type.
+  E: D
+  # Default support depends on whether `unknown` counts, directly and through a
+  # named property, so the two readings must not share an answer.
+  Payload:
+    properties:
+      data: unknown
+  Wrapper:
+    properties:
+      payload: Payload
+  # Self-referential through a container.
+  Node:
+    properties:
+      children: list<Node>
+  Leaf:
+    properties:
+      value: string

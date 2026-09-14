@@ -91,7 +91,7 @@ exports[`GeneratedDefaultEndpointImplementation > invokeFetcherAndReturnResponse
 return _response.body;"
 `;
 
-exports[`GeneratedDefaultEndpointImplementation > maybeLeverageInvocation > returns pagination leverage code when pagination and generatePaginatedClients are both set 1`] = `
+exports[`GeneratedDefaultEndpointImplementation > maybeLeverageInvocation > returns pagination leverage code when pagination is set, regardless of generatePaginatedClients 1`] = `
 "const pageableResponse = result;
 for await (const item of pageableResponse) {
     console.log(item);

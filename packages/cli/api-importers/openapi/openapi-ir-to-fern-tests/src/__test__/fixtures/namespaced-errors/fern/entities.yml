@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Entities
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /entities:
+    get:
+      operationId: listEntities
+      tags:
+        - Entities
+      responses:
+        "200":
+          description: OK
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /entities/{id}:
+    get:
+      operationId: getEntity
+      tags:
+        - Entities
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  responses:
+    NotFound:
+      x-fern-sdk-namespace: entity
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Error:
+      x-fern-sdk-namespace: entity
+      type: object
+      properties:
+        code:
+          type: string

@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "displayName",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

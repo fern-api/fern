@@ -146,7 +146,7 @@ async function tryRunContainer({
         ...(pull ? ["--pull", "always"] : []),
         ...(platform != null ? ["--platform", platform] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,

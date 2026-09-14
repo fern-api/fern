@@ -1,0 +1,5 @@
+- summary: |
+    Use schema-level `example`/`examples` for OpenAPI parameters (including JSON-encoded
+    object headers resolved via `respect-parameter-content`) when the parameter itself has
+    no example, instead of autogenerating one from property types.
+  type: fix

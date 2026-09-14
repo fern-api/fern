@@ -38,10 +38,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -75,10 +77,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -108,10 +112,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -143,10 +149,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -178,10 +186,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -215,10 +225,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -250,10 +262,51 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
 
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_integer_to_object(request: {
+        #     1 => {
+        #       string: "string"
+        #     }
+        #   })
+        #
+        # @return [Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        def get_and_return_map_of_integer_to_object(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/map-integer-to-object",
+            body: params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
 
         # @param request_options [Hash]
@@ -285,10 +338,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

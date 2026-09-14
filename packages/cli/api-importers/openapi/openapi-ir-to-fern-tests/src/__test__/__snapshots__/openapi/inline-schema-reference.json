@@ -17,7 +17,8 @@
                 {
                   "response": {
                     "body": {
-                      "message": "message",
+                      "id": 1,
+                      "name": "name",
                     },
                   },
                 },
@@ -50,23 +51,12 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "NotFound",
               "Schema1",
               "Schema2",
               "GetExampleResponseMessage",
             ],
           },
           "GetExampleResponseMessage": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "message": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NotFound": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -101,12 +91,6 @@
         },
       },
       "rawContents": "types:
-  NotFound:
-    properties:
-      message: optional<string>
-    source:
-      openapi: ../openapi.yml
-    inline: true
   GetExampleResponseMessage:
     properties:
       message: optional<string>
@@ -116,7 +100,6 @@
   GetExampleResponse:
     discriminated: false
     union:
-      - NotFound
       - Schema1
       - Schema2
       - GetExampleResponseMessage
@@ -151,7 +134,8 @@ service:
       examples:
         - response:
             body:
-              message: message
+              id: 1
+              name: name
   source:
     openapi: ../openapi.yml
 ",

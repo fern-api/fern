@@ -90,6 +90,13 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: exact-optional-property-types
+      customConfig:
+        exactOptionalPropertyTypes: true
+    - outputFolder: exact-optional-property-types-serde-layer
+      customConfig:
+        noSerdeLayer: false
+        exactOptionalPropertyTypes: true
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
@@ -182,6 +189,22 @@ fixtures:
   union-query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+  query-parameters-openapi-as-objects:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-query-parameters
+      customConfig:
+        deepObjectMapQueryParameters: true
+  ts-deep-object-map-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: deep-object-map-no-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+    - outputFolder: deep-object-map-serde
+      customConfig:
+        deepObjectMapQueryParameters: true
+        noSerdeLayer: false
   file-download:
     - outputFolder: no-custom-config
       customConfig: null
@@ -412,6 +435,9 @@ fixtures:
       customConfig:
         alwaysSendAuth: true
         optional-auth: true
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null
@@ -517,6 +543,12 @@ fixtures:
     - outputFolder: legacy-exports
       customConfig:
         useLegacyExports: true
+    - outputFolder: esm-only
+      customConfig:
+        esmOnly: true
+    - outputFolder: output-esm
+      customConfig:
+        outputEsm: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm

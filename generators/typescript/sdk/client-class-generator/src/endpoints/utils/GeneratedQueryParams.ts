@@ -1,4 +1,5 @@
 import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -12,6 +13,8 @@ export declare namespace GeneratedQueryParams {
     export interface Init {
         queryParameters: FernIr.QueryParameter[] | undefined;
         referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+        /** Only used to make generation-time error messages actionable. */
+        endpointLabel?: string;
     }
 }
 
@@ -20,16 +23,20 @@ export class GeneratedQueryParams {
 
     private queryParameters: FernIr.QueryParameter[] | undefined;
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+    private endpointLabel: string | undefined;
 
-    constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
+    constructor({ queryParameters, referenceToQueryParameterProperty, endpointLabel }: GeneratedQueryParams.Init) {
         this.queryParameters = queryParameters;
         this.referenceToQueryParameterProperty = referenceToQueryParameterProperty;
+        this.endpointLabel = endpointLabel;
     }
 
     public getBuildStatements(context: FileContext): ts.Statement[] {
         if (this.queryParameters == null || this.queryParameters.length === 0) {
             return [];
         }
+
+        this.assertDeepObjectMapsAreEncodable(context);
 
         const properties: ts.ObjectLiteralElementLike[] = [];
 
@@ -93,8 +100,12 @@ export class GeneratedQueryParams {
             queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
                 ? queryParameter.valueType.container.list
                 : queryParameter.valueType;
-        const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
-        const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
+        const scalarNeedsTransform = this.scalarValueNeedsTransform(
+            queryParameter.valueType,
+            context,
+            queryParameter.explode
+        );
+        const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context, queryParameter.explode);
         const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
 
         const scalarExpression = this.getScalarValueExpression({
@@ -237,6 +248,36 @@ export class GeneratedQueryParams {
             return referenceToQueryParameter;
         }
 
+        if (this.isDeepObjectMap(queryParameter.valueType, context, queryParameter.explode)) {
+            if (context.includeSerdeLayer && this.mapNeedsSerde(queryParameter.valueType, context)) {
+                const serializerCall = context.typeSchema
+                    .getSchemaOfTypeReference(queryParameter.valueType)
+                    .jsonOrThrow(referenceToQueryParameter, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                        skipValidation: false,
+                        breadcrumbsPrefix: ["request", paramName],
+                        omitUndefined: context.omitUndefined
+                    });
+                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
+                    return ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            referenceToQueryParameter,
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        serializerCall,
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        referenceToQueryParameter
+                    );
+                }
+                return serializerCall;
+            }
+            return referenceToQueryParameter;
+        }
+
         return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
             includeNullCheckIfOptional: true
         });
@@ -254,7 +295,7 @@ export class GeneratedQueryParams {
         context: FileContext;
     }): ts.Expression {
         const objectType = this.getObjectType(listItemType, context);
-        const needsItemTransform = this.listItemNeedsTransform(listItemType, context);
+        const needsItemTransform = this.listItemNeedsTransform(listItemType, context, queryParameter.explode);
 
         if (!needsItemTransform) {
             return referenceToQueryParameter;
@@ -283,6 +324,24 @@ export class GeneratedQueryParams {
                     });
         } else if (objectType != null) {
             getItemExpression = (itemReference) => itemReference;
+        } else if (this.isDeepObjectMap(listItemType, context, queryParameter.explode)) {
+            // Reached only when the map's values need serde (see listItemNeedsTransform); the
+            // resulting plain object is then deep-object-encoded by the query builder, matching
+            // how the scalar branch treats the same type.
+            getItemExpression = (itemReference) =>
+                context.typeSchema.getSchemaOfTypeReference(listItemType).jsonOrThrow(itemReference, {
+                    allowUnrecognizedEnumValues: true,
+                    allowUnrecognizedUnionMembers: true,
+                    unrecognizedObjectKeys: "passthrough",
+                    skipValidation: false,
+                    breadcrumbsPrefix: [
+                        "request",
+                        context.retainOriginalCasing
+                            ? getOriginalName(queryParameter.name)
+                            : context.case.camelUnsafe(queryParameter.name)
+                    ],
+                    omitUndefined: context.omitUndefined
+                });
         } else {
             getItemExpression = (itemReference) =>
                 context.type.stringify(itemReference, listItemType, { includeNullCheckIfOptional: false });
@@ -483,6 +542,195 @@ export class GeneratedQueryParams {
         return undefined;
     }
 
+    /**
+     * With `deepObjectMapQueryParameters` enabled, a map query parameter is handed to the
+     * query builder (after serde, if its values need it) so it serializes in deepObject form
+     * (`key[sub]=value`, recursing into nested objects/maps) rather than as a JSON string.
+     */
+    private isDeepObjectMap(
+        typeReference: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
+        if (!context.deepObjectMapQueryParameters) {
+            return false;
+        }
+        // deepObject encoding is what `explode: true` means. When the spec explicitly asks for
+        // `explode: false` (comma-joined), leave the parameter on its existing path rather than
+        // exploding it into `key[sub]=value`.
+        if (explode === false) {
+            return false;
+        }
+        return this.getMapType(typeReference, context) != null;
+    }
+
+    private getMapType(typeReference: FernIr.TypeReference, context: FileContext): FernIr.MapType | undefined {
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getMapType(typeDeclaration.shape.aliasOf, context);
+                }
+                return undefined;
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.getMapType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getMapType(typeReference.container.nullable, context);
+                    case "map":
+                        return typeReference.container;
+                    default:
+                        return undefined;
+                }
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Whether a map's values contain anything the serde layer must transform before the
+     * query builder can stringify them (wire-cased object keys, dates, enums, unions, ...).
+     */
+    private mapNeedsSerde(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        const mapType = this.getMapType(typeReference, context);
+        return mapType != null && this.typeNeedsSerde(mapType.valueType, context);
+    }
+
+    private typeNeedsSerde(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        switch (typeReference.type) {
+            case "primitive":
+                return primitiveTypeNeedsStringify(typeReference.primitive);
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.typeNeedsSerde(typeDeclaration.shape.aliasOf, context);
+                }
+                return true;
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.typeNeedsSerde(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.typeNeedsSerde(typeReference.container.nullable, context);
+                    case "list":
+                        return this.typeNeedsSerde(typeReference.container.list, context);
+                    case "set":
+                        // A set of primitives/enums is generated as a JS `Set`, which the query
+                        // builder can't walk (it enumerates values with `Object.entries`, which
+                        // yields nothing for a `Set`), so the parameter would silently vanish from
+                        // the URL. Route it through serde, which emits an array.
+                        if (this.isGeneratedAsJsSet(typeReference.container.set, context)) {
+                            return true;
+                        }
+                        return this.typeNeedsSerde(typeReference.container.set, context);
+                    case "map":
+                        return this.typeNeedsSerde(typeReference.container.valueType, context);
+                    case "literal":
+                        return false;
+                    default:
+                        return assertNever(typeReference.container);
+                }
+            }
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    /**
+     * `deepObjectMapQueryParameters` explodes a map into `key[sub]=value` by handing the object to
+     * the query builder, which walks it with `Object.entries`. Typed values are safe: the serde
+     * layer normalizes them first, and without the serde layer the generated types are already
+     * JSON-compatible (a `datetime` property is typed `string`, not `Date`).
+     *
+     * `unknown` values are the exception. There is no schema to normalize them against, so a
+     * non-plain object -- a `Date`, a `Set`, a class instance -- contributes no enumerable keys and
+     * would be dropped from the query string with no error. Refuse to generate rather than emit an
+     * SDK that silently loses data.
+     */
+    private assertDeepObjectMapsAreEncodable(context: FileContext): void {
+        if (!context.deepObjectMapQueryParameters || this.queryParameters == null) {
+            return;
+        }
+        for (const queryParameter of this.queryParameters) {
+            if (!this.isDeepObjectMap(queryParameter.valueType, context, queryParameter.explode)) {
+                continue;
+            }
+            const mapType = this.getMapType(queryParameter.valueType, context);
+            if (mapType == null || !this.containsUnknown(mapType.valueType, context)) {
+                continue;
+            }
+            const wireValue = getWireValue(queryParameter.name);
+            const on = this.endpointLabel != null ? ` on ${this.endpointLabel}` : "";
+            throw new Error(
+                `Query parameter '${wireValue}'${on} is a map with \`unknown\` values, which ` +
+                    "`deepObjectMapQueryParameters` cannot safely encode: a non-plain object such as a Date " +
+                    "or a Set would be silently dropped from the query string.\n" +
+                    "Either give the map a concrete value type (so the serde layer can normalize it), or " +
+                    "disable `deepObjectMapQueryParameters`."
+            );
+        }
+    }
+
+    /** Whether `unknown` appears anywhere in a map's value type, through containers and aliases. */
+    private containsUnknown(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+        switch (typeReference.type) {
+            case "unknown":
+                return true;
+            case "primitive":
+                return false;
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.containsUnknown(typeDeclaration.shape.aliasOf, context);
+                }
+                // Named objects/unions/enums are normalized by their own generated schema, so we
+                // do not recurse into their properties here.
+                return false;
+            }
+            case "container":
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.containsUnknown(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.containsUnknown(typeReference.container.nullable, context);
+                    case "list":
+                        return this.containsUnknown(typeReference.container.list, context);
+                    case "set":
+                        return this.containsUnknown(typeReference.container.set, context);
+                    case "map":
+                        return this.containsUnknown(typeReference.container.valueType, context);
+                    case "literal":
+                        return false;
+                    default:
+                        return assertNever(typeReference.container);
+                }
+            default:
+                return assertNever(typeReference);
+        }
+    }
+
+    /**
+     * Mirrors `TypeReferenceToParsedTypeNodeConverter.set`: with the serde layer enabled, a set of
+     * primitives (or enums) is generated as a JS `Set` rather than an array. Without the serde
+     * layer it falls back to a list, which the query builder handles natively.
+     */
+    private isGeneratedAsJsSet(itemType: FernIr.TypeReference, context: FileContext): boolean {
+        if (!context.includeSerdeLayer) {
+            return false;
+        }
+        const resolvedType = context.type.resolveTypeReference(itemType);
+        return (
+            resolvedType.type === "primitive" ||
+            (resolvedType.type === "named" && resolvedType.shape === FernIr.ShapeType.Enum)
+        );
+    }
+
     private isOptional(typeReference: FernIr.TypeReference): boolean {
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true;
@@ -490,10 +738,19 @@ export class GeneratedQueryParams {
         return false;
     }
 
-    private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: FileContext): boolean {
+    private listItemNeedsTransform(
+        listItemType: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
         const objectType = this.getObjectType(listItemType, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
+        }
+        // Keep `allowMultiple` map params consistent with their scalar counterpart: both branches of
+        // the `Array.isArray` ternary must agree on deepObject vs. stringified encoding.
+        if (this.isDeepObjectMap(listItemType, context, explode)) {
+            return context.includeSerdeLayer && this.mapNeedsSerde(listItemType, context);
         }
         const primitiveType = this.getPrimitiveType(listItemType, context);
         if (primitiveType != null) {
@@ -502,7 +759,11 @@ export class GeneratedQueryParams {
         return true;
     }
 
-    private scalarValueNeedsTransform(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    private scalarValueNeedsTransform(
+        typeReference: FernIr.TypeReference,
+        context: FileContext,
+        explode: boolean | undefined
+    ): boolean {
         const objectType = this.getObjectType(typeReference, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
@@ -510,6 +771,9 @@ export class GeneratedQueryParams {
         const primitiveType = this.getPrimitiveType(typeReference, context);
         if (primitiveType != null) {
             return primitiveTypeNeedsStringify(primitiveType.primitive);
+        }
+        if (this.isDeepObjectMap(typeReference, context, explode)) {
+            return context.includeSerdeLayer && this.mapNeedsSerde(typeReference, context);
         }
         return true;
     }

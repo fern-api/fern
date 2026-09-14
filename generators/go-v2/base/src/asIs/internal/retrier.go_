@@ -54,6 +54,9 @@ func buildRetryOptions(maxAttempts uint, disableRetries bool) []RetryOption {
 type Retrier struct {
 	attempts uint
 	disabled bool
+
+	// sleep waits between attempts; tests override it to avoid real delays.
+	sleep func(ctx context.Context, delay time.Duration) error
 }
 
 // NewRetrier constructs a new *Retrier with the given options, if any.
@@ -69,6 +72,7 @@ func NewRetrier(opts ...RetryOption) *Retrier {
 	return &Retrier{
 		attempts: attempts,
 		disabled: options.disabled,
+		sleep:    sleepWithContext,
 	}
 }
 
@@ -147,17 +151,23 @@ func (r *Retrier) run(
 	if r.shouldRetry(response) {
 		defer func() { _ = response.Body.Close() }()
 
+		body, err := decompressedResponseBody(response)
+		if err != nil {
+			return nil, err
+		}
+		retryError := decodeError(response, body, errorDecoder)
+
+		// Don't wait on a backoff if no attempts remain.
+		if retryAttempt+1 >= maxRetryAttempts {
+			return nil, retryError
+		}
+
 		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {
 			return nil, err
 		}
 
-		if err := sleepWithContext(request.Context(), delay); err != nil {
-			return nil, err
-		}
-
-		body, err := decompressedResponseBody(response)
-		if err != nil {
+		if err := r.sleep(request.Context(), delay); err != nil {
 			return nil, err
 		}
 
@@ -166,8 +176,8 @@ func (r *Retrier) run(
 			request,
 			errorDecoder,
 			maxRetryAttempts,
-			retryAttempt + 1,
-			decodeError(response, body, errorDecoder),
+			retryAttempt+1,
+			retryError,
 		)
 	}
 
@@ -258,20 +268,29 @@ func (r *Retrier) exponentialBackoff(retryAttempt uint) (time.Duration, error) {
 // addJitterWithRange applies jitter to the given delay.
 // minPercent and maxPercent define the jitter range (e.g., 100, 120 for +0% to +20%).
 func (r *Retrier) addJitterWithRange(delay time.Duration, minPercent, maxPercent int) (time.Duration, error) {
-	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent - minPercent) / 100))
+	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent-minPercent) / 100))
+	if jitterRange.Sign() <= 0 {
+		// The delay is too small to jitter; rand.Int panics on a non-positive max.
+		return clampRetryDelay(delay), nil
+	}
 	jitter, err := rand.Int(rand.Reader, jitterRange)
 	if err != nil {
 		return 0, err
 	}
 
-	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay * time.Duration(minPercent-100)/100
-	if jitteredDelay < minRetryDelay {
-		jitteredDelay = minRetryDelay
+	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay*time.Duration(minPercent-100)/100
+	return clampRetryDelay(jitteredDelay), nil
+}
+
+// clampRetryDelay bounds the given delay to [minRetryDelay, maxRetryDelay].
+func clampRetryDelay(delay time.Duration) time.Duration {
+	if delay < minRetryDelay {
+		return minRetryDelay
 	}
-	if jitteredDelay > maxRetryDelay {
-		jitteredDelay = maxRetryDelay
+	if delay > maxRetryDelay {
+		return maxRetryDelay
 	}
-	return jitteredDelay, nil
+	return delay
 }
 
 // addPositiveJitter applies positive jitter to the given delay (100%-120% range).

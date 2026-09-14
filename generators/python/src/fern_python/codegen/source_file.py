@@ -58,6 +58,7 @@ class SourceFileImpl(SourceFile):
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
         whitelabel: bool = False,
+        license_header: Optional[str] = None,
     ):
         self._module_path = module_path
         self._reference_resolver = reference_resolver
@@ -71,6 +72,7 @@ class SourceFileImpl(SourceFile):
         self._should_format_as_snippet = should_format_as_snippet
         self._should_include_header = should_include_header
         self._whitelabel = whitelabel
+        self._license_header = license_header
 
     def get_imports_manager(self) -> ImportsManager:
         return self._imports_manager
@@ -231,6 +233,7 @@ class SourceFileImpl(SourceFile):
             should_format_as_snippet=self._should_format_as_snippet,
             should_include_header=self._should_include_header,
             whitelabel=self._whitelabel,
+            license_header=self._license_header,
         )
         self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
         for statement in self._statements:

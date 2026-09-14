@@ -21,7 +21,7 @@ type TypeReference = FernIr.TypeReference;
 
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
-import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
+import { getClientCredentialsOrThrow, isGrantTypeProperty } from "../oauth/getClientCredentials.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
@@ -1701,9 +1701,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const params: ConstructorParameter[] = [];
         // Include required, non-literal custom properties, matching Java's approach of
         // skipping only literals. Keep the optional guard to avoid adding optional-typed
-        // properties as required constructor parameters.
+        // properties as required constructor parameters. The grant type is hardcoded by
+        // OAuthTokenProvider, so it is never a constructor parameter.
         for (const customProperty of configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
-            if (isLiteralTypeReference(customProperty.property.valueType)) {
+            if (isLiteralTypeReference(customProperty.property.valueType) || isGrantTypeProperty(customProperty)) {
                 continue;
             }
             const typeRef = this.context.csharpTypeMapper.convert({

@@ -652,7 +652,26 @@ fn command_declares_long(cmd: &clap::Command, long: &str) -> bool {
 /// `ArgMatches` (see [`build_global_header_overrides`]), so attaching it
 /// to the leaf is what makes the flag, its env fallback, and its default
 /// available on the operations that don't collide.
+///
+/// The copies are not `global(true)`, so the root post-pass that files
+/// globals under [`crate::cli_args::HELP_HEADING_GLOBAL`] would miss them.
+/// The heading is stamped here instead — once, before the walk — so they
+/// still render alongside the other globals in `--help`.
 fn register_global_header_on_nonconflicting_leaves(
+    cmd: clap::Command,
+    arg: &clap::Arg,
+    long: &str,
+) -> clap::Command {
+    let arg = arg
+        .clone()
+        .help_heading(crate::cli_args::HELP_HEADING_GLOBAL);
+    attach_global_arg_to_nonconflicting_leaves(cmd, &arg, long)
+}
+
+/// The recursive half of [`register_global_header_on_nonconflicting_leaves`],
+/// split out so the help heading is applied to the arg once rather than
+/// re-cloned and re-stamped at every level of the command tree.
+fn attach_global_arg_to_nonconflicting_leaves(
     cmd: clap::Command,
     arg: &clap::Arg,
     long: &str,
@@ -674,7 +693,7 @@ fn register_global_header_on_nonconflicting_leaves(
         let arg = arg.clone();
         let long = long.to_string();
         out = out.mut_subcommand(name, move |sub| {
-            register_global_header_on_nonconflicting_leaves(sub, &arg, &long)
+            attach_global_arg_to_nonconflicting_leaves(sub, &arg, &long)
         });
     }
     out
@@ -3567,6 +3586,8 @@ mod tests {
         );
         let arg = clap::Arg::new("__global_header::X-Country").long("country");
         let cli = register_global_header_on_nonconflicting_leaves(cli, &arg, "country");
+        // Same post-pass `run_async` applies to the finished tree.
+        let cli = crate::cli_args::apply_global_help_heading(cli);
         let products = cli.find_subcommand("products").unwrap();
         let retrieve = products.find_subcommand("retrieve").unwrap();
         let list = products.find_subcommand("list").unwrap();
@@ -3577,12 +3598,25 @@ mod tests {
                 .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
             "colliding leaf must keep only its per-op param",
         );
-        // list has no --country → global-header arg attached.
-        assert!(
-            list.get_arguments()
-                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
-            "non-colliding leaf must receive the global-header flag",
+        // list has no --country → global-header arg attached, filed with
+        // the other globals in `--help`.
+        let copy = list
+            .get_arguments()
+            .find(|a| a.get_id().as_str() == "__global_header::X-Country")
+            .expect("non-colliding leaf must receive the global-header flag");
+        assert_eq!(
+            copy.get_help_heading(),
+            Some(crate::cli_args::HELP_HEADING_GLOBAL)
         );
+        // Rendered help on the sibling files the copy under Global options
+        // with no residual `Options:` section.
+        let help = list.clone().render_help().to_string();
+        let global_pos = help
+            .find(crate::cli_args::HELP_HEADING_GLOBAL)
+            .expect("Global options heading must render");
+        let country_pos = help.find("--country").expect("--country must render");
+        assert!(global_pos < country_pos, "{help}");
+        assert!(!help.contains("\nOptions:"), "{help}");
     }
 
     /// Full regression for FER-11145: a global header whose flag name

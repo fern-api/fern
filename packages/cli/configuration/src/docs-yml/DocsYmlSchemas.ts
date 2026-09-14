@@ -249,7 +249,8 @@ export const AIChatConfig = z.object({
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
     datasources: z.array(AIChatDatasource).optional(),
-    "mask-pii": z.boolean().optional()
+    "mask-pii": z.boolean().optional(),
+    disclaimer: z.string().optional()
 });
 
 // ===== Font schemas =====
@@ -311,6 +312,7 @@ export const LayoutConfig = z.object({
     "mobile-toc": z.boolean().optional(),
     "changelog-layout": ChangelogLayout.optional(),
     "api-reference-layout": ApiReferenceLayout.optional(),
+    "api-reference-expand-properties": z.boolean().optional(),
     "show-nav-availability-badges": z.boolean().optional()
 });
 

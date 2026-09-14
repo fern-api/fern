@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
+default-group: production
+api:
+    specs:
+        - openapi: ./openapi.yml
+groups:
+    production:
+        audiences: []
+        generators:
+            - name: fernapi/fern-typescript-sdk
+              version: 3.63.3
+              config: {}
+              output:
+                  location: local-file-system
+                  path: ./generated/typescript
+            - name: fernapi/fern-python-sdk
+              version: 4.3.10
+              config: {}
+              output:
+                  location: local-file-system
+                  path: ./generated/python
+    typescript-only:
+        audiences: []
+        generators:
+            - name: fernapi/fern-typescript-sdk
+              version: 3.63.3
+              config: {}
+              output:
+                  location: local-file-system
+                  path: ./generated/typescript
+    python-only:
+        audiences: []
+        generators:
+            - name: fernapi/fern-python-sdk
+              version: 4.3.10
+              config: {}
+              output:
+                  location: local-file-system
+                  path: ./generated/python
+    npm:
+        generators:
+            - name: fernapi/fern-typescript-sdk
+              version: 3.63.3
+              config: {}
+              output:
+                  location: npm
+                  package-name: "@acme/sdk"
+    maven:
+        generators:
+            - name: fernapi/fern-java-sdk
+              version: 3.2.2
+              config: {}
+              output:
+                  location: maven
+                  coordinate: " com.acme : sdk "
+              github:
+                  repository: acme/sdk
+                  mode: pull-request
+    warning:
+        generators:
+            - name: fernapi/fern-typescript-sdk
+              version: 3.63.3
+              smart-casing: false
+              disable-examples: true
+              config: {}
+              output:
+                  location: local-file-system
+                  path: ./generated/warning

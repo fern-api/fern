@@ -1,0 +1,6 @@
+- summary: |
+    `fern generate --local` without a `FERN_TOKEN` (and air-gapped remote generation) now enables
+    pagination and OAuth client generation by default instead of silently disabling them. Previously
+    the Python SDK's paginated endpoints returned a plain response object while the README documented
+    a pager, because the org lookup that enables these features was skipped.
+  type: fix

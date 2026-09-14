@@ -1,0 +1,5 @@
+- summary: |
+    Revert the namespace-scoped shared-error collapse (#17619) and the case-insensitive namespace/tag flattening
+    (#17643) in the OpenAPI importer. Shared errors are again compared API-wide by status code, and an operation tag
+    that only matches the spec `namespace` case-insensitively is again treated as a sub-group.
+  type: fix

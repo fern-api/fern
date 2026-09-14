@@ -1,0 +1,10 @@
+name: migration-api
+default-url: https://api.example.com
+default-environment: Production
+environments:
+  Production: https://api.example.com
+headers:
+  X-API-Version:
+    name: apiVersion
+    type: optional<string>
+    env: API_VERSION

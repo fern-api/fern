@@ -5,7 +5,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
-import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
+import { getClientCredentialsOrThrow, isGrantTypeProperty } from "../oauth/getClientCredentials.js";
 import { getServerVariableOptions } from "../root-client/serverVariables.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
@@ -477,8 +477,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             ];
             for (const customProperty of configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
                 if (
-                    customProperty.property.valueType.type === "container" &&
-                    customProperty.property.valueType.container.type === "literal"
+                    (customProperty.property.valueType.type === "container" &&
+                        customProperty.property.valueType.container.type === "literal") ||
+                    isGrantTypeProperty(customProperty)
                 ) {
                     continue;
                 }

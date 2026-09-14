@@ -1,0 +1,6 @@
+- summary: |
+    When importing OpenAPI specs with `namespace` set, shared SDK errors are now
+    collapsed to `unknown` per namespace instead of across the whole API. A status
+    code that has a different body schema in one namespace no longer degrades the
+    typed error body in other namespaces.
+  type: fix

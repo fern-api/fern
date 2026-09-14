@@ -2,12 +2,14 @@
   "apiName": "",
   "auth": {
     "description": undefined,
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "Bearer": {
       "description": undefined,
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },

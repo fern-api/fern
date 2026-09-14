@@ -166,13 +166,22 @@ export class CliContext {
         return this.jsonMode;
     }
 
+    public get isTTY(): boolean {
+        return this.ttyAwareLogger.isTTY;
+    }
+
     /**
      * Write a value as formatted JSON to stdout.
      * Temporarily restores the real stdout, writes, then re-redirects.
      */
     public writeJsonToStdout(value: unknown): void {
+        this.writeTextToStdout(JSON.stringify(value, null, 2) + "\n");
+    }
+
+    /** Write machine-readable text to stdout while keeping status and diagnostics on stderr. */
+    public writeTextToStdout(value: string): void {
         this.stdoutRedirector.restore();
-        process.stdout.write(JSON.stringify(value, null, 2) + "\n");
+        process.stdout.write(value);
         if (this.jsonMode) {
             this.stdoutRedirector.redirect();
         }
@@ -438,13 +447,29 @@ export class CliContext {
      * @returns Promise<boolean> representing the user's choice
      */
     public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+        return this.selectPrompt({
+            message,
+            choices: [
+                { name: "No", value: false },
+                { name: "Yes", value: true }
+            ],
+            default: defaultValue
+        });
+    }
+
+    public async selectPrompt<T>({
+        message,
+        choices,
+        default: defaultValue
+    }: {
+        message: string;
+        choices: Array<{ name: string; value: T }>;
+        default?: T;
+    }): Promise<T> {
         try {
-            const answer = await select({
+            return await select({
                 message,
-                choices: [
-                    { name: "No", value: false },
-                    { name: "Yes", value: true }
-                ],
+                choices,
                 default: defaultValue,
                 theme: {
                     prefix: chalk.yellow("?"),
@@ -455,7 +480,6 @@ export class CliContext {
                     }
                 }
             });
-            return answer;
         } catch (error) {
             // User pressed Ctrl+C
             if ((error as Error)?.name === "ExitPromptError") {

@@ -115,6 +115,12 @@ export interface LayoutConfig {
      */
     apiReferenceLayout?: FernDocsConfig.ApiReferenceLayout;
     /**
+     * If `api-reference-expand-properties` is set to true, the first level of nested object
+     * and union fields in the API reference is expanded on page load instead of hidden behind
+     * a "Show N properties" button. Deeper levels stay collapsed. Defaults to false.
+     */
+    apiReferenceExpandProperties?: boolean;
+    /**
      * If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
      * are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
      * availability badge is unaffected by this setting.
