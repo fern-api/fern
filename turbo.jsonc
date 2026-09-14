@@ -249,7 +249,7 @@
             "env": ["POSTHOG_API_KEY"]
         },
         "dist:all": {
-            "with": ["dist", "dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod"]
+            "with": ["dist", "dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod", "dist:cli:beta"]
         },
         "dockerTagLatest": {
             "cache": false,

@@ -19,7 +19,7 @@ buildCli({
         POSTHOG_API_KEY: null,
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
         SENTRY_ENVIRONMENT: "beta",
-        DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com",
+        DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com", // intentional, we do not have a beta docs domain yet
         DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle2.s3.amazonaws.com/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://dev2-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle3.s3.amazonaws.com/",
