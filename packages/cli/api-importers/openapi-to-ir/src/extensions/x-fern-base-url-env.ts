@@ -23,7 +23,7 @@ export class FernBaseUrlEnvExtension extends AbstractExtension<string> {
 
         if (typeof extensionValue !== "string" || extensionValue.length === 0) {
             this.context.errorCollector.collect({
-                message: "Received unexpected non-string value for x-fern-base-url-env",
+                message: "Expected a non-empty string value for x-fern-base-url-env",
                 path: this.breadcrumbs
             });
             return undefined;
