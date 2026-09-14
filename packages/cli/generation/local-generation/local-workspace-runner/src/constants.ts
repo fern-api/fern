@@ -89,27 +89,6 @@ const ONPREM_ADAPTER: ReadonlyMap<string, { language: string; cutover: string }>
 ]);
 
 /**
- * Raised when a generator name that has a cutover carries a version the cutover cannot be evaluated
- * against, such as a moving tag.
- *
- * Thrown rather than answered with `false`, because `false` is itself a routing decision: it hands
- * the container a Fern `GeneratorConfig`. If the tag resolves to an adapter release the run fails
- * inside the container with `CONFIG_INVALID`, naming neither the tag nor `generators.yml`.
- */
-export class UnresolvableGeneratorVersionError extends Error {
-    constructor(generatorName: string, version: string) {
-        super(
-            `Generator "${generatorName}" is pinned to "${version}" in generators.yml, which is not a ` +
-                "version this can compare against the on-prem adapter cutover. This generator name is " +
-                "published by both Fern and Postman, and the version is what distinguishes them, so a " +
-                "moving tag leaves it ambiguous which of the two the container will be. Pin a concrete " +
-                "version, for example 6.0.0."
-        );
-        this.name = "UnresolvableGeneratorVersionError";
-    }
-}
-
-/**
  * Whether this generator invocation resolves to the Postman on-prem adapter rather than Fern's own
  * generator of the same name.
  *
@@ -117,6 +96,13 @@ export class UnresolvableGeneratorVersionError extends Error {
  * version: `4.0.0-rc1` is on the adapter side, because an rc of the adapter is still the adapter.
  * This holds only while Fern publishes no prerelease at or above a cutover major — see the note on
  * {@link ONPREM_ADAPTER}.
+ *
+ * A version semver cannot read at all — `latest` above all, which is what `fern sdk generate`
+ * defaults to — is Fern's own generator. Selecting the adapter is an explicit act: the whole cutover
+ * design is "keep your generators.yml entry and change only the version", so a workspace that names
+ * no version has not opted in. This is safe only while the adapter is not published into `fernapi`
+ * under a moving tag, which is the same open question as the namespace itself; if it ever is, this
+ * needs a registry check rather than a version comparison.
  */
 export function isOnPremAdapter(generatorName: string, version: string): boolean {
     const entry = ONPREM_ADAPTER.get(generatorName);
@@ -125,7 +111,7 @@ export function isOnPremAdapter(generatorName: string, version: string): boolean
     }
     const parsed = semver.coerce(version);
     if (parsed == null) {
-        throw new UnresolvableGeneratorVersionError(generatorName, version);
+        return false;
     }
     return semver.gte(parsed, entry.cutover);
 }
