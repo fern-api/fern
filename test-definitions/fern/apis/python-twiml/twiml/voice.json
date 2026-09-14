@@ -1,0 +1,6 @@
+{
+    "class_name": "voice_response",
+    "tag_name": "response",
+    "docstring": "<Response> TwiML for Voice",
+    "children": ["voice/say", "voice/dial", "voice/pause", "voice/gather", "voice/redirect"]
+}

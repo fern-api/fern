@@ -1,0 +1,28 @@
+{
+    "class_name": "number",
+    "tag_name": "number",
+    "docstring": "<Number> TwiML Noun",
+    "enums": {
+        "event": ["initiated", "ringing", "answered", "completed"]
+    },
+    "body": {
+        "phone_number": {
+            "type": "phone_number",
+            "docstring": "Phone Number to dial"
+        }
+    },
+    "attributes": {
+        "send_digits": {
+            "type": "string",
+            "docstring": "DTMF tones to play when the call is answered"
+        },
+        "status_callback_event": {
+            "type": "enum:event[]",
+            "docstring": "Events to call status callback"
+        },
+        "byoc": {
+            "type": "sid<BY>",
+            "docstring": "BYOC trunk SID"
+        }
+    }
+}

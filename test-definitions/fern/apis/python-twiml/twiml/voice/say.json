@@ -1,0 +1,30 @@
+{
+    "class_name": "say",
+    "tag_name": "say",
+    "docstring": "<Say> TwiML Verb",
+    "enums": {
+        "voice": ["man", "woman", "alice"],
+        "language": ["en", "en-GB", "fr"]
+    },
+    "body": {
+        "message": {
+            "type": "string",
+            "docstring": "Message to say"
+        }
+    },
+    "attributes": {
+        "voice": {
+            "type": "enum:voice",
+            "docstring": "Voice to use"
+        },
+        "loop": {
+            "type": "integer",
+            "docstring": "Times to loop message"
+        },
+        "language": {
+            "type": "enum:language",
+            "docstring": "Message language"
+        }
+    },
+    "children": ["voice/ssml_break", "voice/ssml_emphasis"]
+}

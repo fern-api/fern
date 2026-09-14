@@ -28,7 +28,7 @@ export { Decorator } from "./Decorator.js";
 export { Field } from "./Field.js";
 export { Lambda } from "./Lambda.js";
 export { LambdaParameter } from "./LambdaParameter.js";
-export { Method } from "./Method.js";
+export { ClassMethodType, Method } from "./Method.js";
 export { MethodArgument } from "./MethodArgument.js";
 export { MethodInvocation } from "./MethodInvocation.js";
 export { ModuleImport } from "./ModuleImport.js";

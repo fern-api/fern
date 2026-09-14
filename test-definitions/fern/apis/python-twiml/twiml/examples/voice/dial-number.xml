@@ -1,0 +1,5 @@
+<Response>
+    <Dial callerId="+15551112222" hangupOnStar="true">
+        <Number statusCallbackEvent="initiated ringing" byoc="BY1234567890abcdef1234567890abcdef">+15558675310</Number>
+    </Dial>
+</Response>

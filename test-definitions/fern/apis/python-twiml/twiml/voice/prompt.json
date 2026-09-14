@@ -1,0 +1,19 @@
+{
+    "class_name": "prompt",
+    "tag_name": "prompt",
+    "docstring": "<Prompt> Twiml Verb",
+    "enums": {
+        "for": ["payment-card-number", "expiration-date", "security-code", "postal-code"]
+    },
+    "attributes": {
+        "for": {
+            "type": "enum:for",
+            "docstring": "Name of the payment source data element"
+        },
+        "attempt": {
+            "type": "integer[]",
+            "docstring": "Current attempt count"
+        }
+    },
+    "children": ["voice/say", "voice/pause"]
+}

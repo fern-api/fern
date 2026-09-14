@@ -555,6 +555,9 @@ fixtures:
   openapi-per-spec-base-path-disabled:
     - customConfig: null
       outputFolder: no-custom-config
+  python-twiml:
+    - customConfig: null
+      outputFolder: no-custom-config
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

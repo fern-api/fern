@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Message to="+15558675310" from="+15017122661">
+        <Body>Hello, "World" &lt;3</Body>
+        <Media>https://demo.twilio.com/owl.png</Media>
+    </Message>
+    <Redirect>https://example.com/fallback</Redirect>
+</Response>

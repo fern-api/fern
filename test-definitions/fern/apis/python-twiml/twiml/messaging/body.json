@@ -1,0 +1,12 @@
+{
+    "class_name": "body",
+    "tag_name": "body",
+    "docstring": "<Body> TwiML Noun",
+    "body": {
+        "message": {
+            "type": "string",
+            "docstring": "Message Body",
+            "required": true
+        }
+    }
+}

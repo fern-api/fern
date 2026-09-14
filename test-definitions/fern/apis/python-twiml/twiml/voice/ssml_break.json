@@ -1,0 +1,19 @@
+{
+    "class_name": "ssml_break",
+    "tag_name": "break",
+    "tag_casing": "none",
+    "docstring": "Adding a Pause in <Say>",
+    "enums": {
+        "strength": ["none", "x-weak", "weak", "medium", "strong", "x-strong"]
+    },
+    "attributes": {
+        "strength": {
+            "type": "enum:strength",
+            "docstring": "Set a pause based on strength"
+        },
+        "time": {
+            "type": "string",
+            "docstring": "Set a pause to a specific length of time in seconds or milliseconds"
+        }
+    }
+}

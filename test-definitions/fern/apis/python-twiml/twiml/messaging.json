@@ -1,0 +1,6 @@
+{
+    "class_name": "messaging_response",
+    "tag_name": "response",
+    "docstring": "<Response> TwiML for Messages",
+    "children": ["messaging/message", "messaging/redirect"]
+}
