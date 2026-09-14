@@ -2,9 +2,8 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { Type, TypeId, TypeReference, XmlEncoding } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { XmlSchemaExtension } from "../../extensions/xml.js";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 

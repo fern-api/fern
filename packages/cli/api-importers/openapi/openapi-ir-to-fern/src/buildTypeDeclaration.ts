@@ -815,13 +815,7 @@ function convertPropertyTypeReferenceToTypeDefinition({
     propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined;
     encoding?: RawSchemas.EncodingSchema | undefined;
 }): RawSchemas.ObjectPropertySchema {
-    if (
-        audiences.length === 0 &&
-        name == null &&
-        availability == null &&
-        propertyAccess == null &&
-        encoding == null
-    ) {
+    if (audiences.length === 0 && name == null && availability == null && propertyAccess == null && encoding == null) {
         return typeReference;
     } else {
         return {
