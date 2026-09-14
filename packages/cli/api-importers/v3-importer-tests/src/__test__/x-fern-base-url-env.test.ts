@@ -38,7 +38,8 @@ describe("x-fern-base-url-env", () => {
     }, 90_000);
 
     it("leaves baseUrlEnvVar undefined when the extension is absent", async () => {
-        const ir = await getIRForFixture("no-content-response-preserves-status-code");
+        const ir = await getIRForFixture("x-fern-base-url-env-absent");
+        expect(ir.environments).toBeDefined();
         expect(ir.environments?.baseUrlEnvVar).toBeUndefined();
     }, 90_000);
 
