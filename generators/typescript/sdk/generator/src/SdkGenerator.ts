@@ -186,6 +186,7 @@ export declare namespace SdkGenerator {
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
         guardProcessEnvAccess: boolean;
+        websocketHandlerMode: "replace" | "accumulate";
         generateReactQueryHooks: boolean;
     }
 }
@@ -592,7 +593,8 @@ export class SdkGenerator {
             intermediateRepresentation,
             retainOriginalCasing: config.retainOriginalCasing,
             omitUndefined: config.omitUndefined,
-            skipResponseValidation: config.skipResponseValidation
+            skipResponseValidation: config.skipResponseValidation,
+            websocketHandlerMode: config.websocketHandlerMode
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

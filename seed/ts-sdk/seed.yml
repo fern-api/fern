@@ -408,6 +408,10 @@ fixtures:
       customConfig:
         noSerdeLayer: true
         generateWebSocketClients: true
+    - outputFolder: accumulate-handlers
+      customConfig:
+        generateWebSocketClients: true
+        websocketHandlerMode: accumulate
   property-access:
     - outputFolder: no-custom-config
       customConfig: null

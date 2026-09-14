@@ -30,7 +30,7 @@ import {
 } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
+import { convertToEncodingSchema, convertXmlPropertyToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference.js";
 
@@ -202,12 +202,14 @@ export function buildObjectTypeDeclaration({
         const name = property.nameOverride;
         const availability = convertAvailability(property.availability);
         const propertyAccess = getPropertyAccess(property);
+        const encoding = property.xml != null ? convertXmlPropertyToEncodingSchema(property.xml) : undefined;
         properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
             typeReference,
             audiences,
             name,
             availability,
-            propertyAccess
+            propertyAccess,
+            encoding
         });
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
@@ -803,15 +805,17 @@ function convertPropertyTypeReferenceToTypeDefinition({
     audiences,
     name,
     availability,
-    propertyAccess
+    propertyAccess,
+    encoding
 }: {
     typeReference: RawSchemas.TypeReferenceSchema;
     audiences: string[];
     name?: string | undefined;
     availability?: RawSchemas.AvailabilityUnionSchema;
     propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined;
+    encoding?: RawSchemas.EncodingSchema | undefined;
 }): RawSchemas.ObjectPropertySchema {
-    if (audiences.length === 0 && name == null && availability == null && propertyAccess == null) {
+    if (audiences.length === 0 && name == null && availability == null && propertyAccess == null && encoding == null) {
         return typeReference;
     } else {
         return {
@@ -819,7 +823,8 @@ function convertPropertyTypeReferenceToTypeDefinition({
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
             ...(availability != null ? { availability } : {}),
-            ...(propertyAccess != null ? { access: propertyAccess } : {})
+            ...(propertyAccess != null ? { access: propertyAccess } : {}),
+            ...(encoding != null ? { encoding } : {})
         };
     }
 }

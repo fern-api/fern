@@ -470,6 +470,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -501,6 +502,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -570,6 +572,7 @@
               "type": "named",
               "typeId": "ErrorEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -601,6 +604,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -632,6 +636,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -667,6 +672,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -998,6 +1004,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1025,6 +1032,7 @@
               "type": "named",
               "typeId": "EventResponseStatus",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1057,6 +1065,7 @@
               "type": "named",
               "typeId": "EventRequest",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1182,6 +1191,7 @@
               "type": "named",
               "typeId": "SystemEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1213,6 +1223,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1244,6 +1255,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1304,6 +1316,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1413,6 +1426,7 @@
               "type": "named",
               "typeId": "UserEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1444,6 +1458,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1475,6 +1490,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1507,6 +1523,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

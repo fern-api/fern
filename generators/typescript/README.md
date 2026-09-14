@@ -270,6 +270,30 @@ config:
     guardProcessEnvAccess: true
 ```
 
+#### ✨ `websocketHandlerMode`
+
+**Type:** `"replace" | "accumulate"`
+
+**Default:** `"replace"`
+
+Controls how the generated WebSocket `Socket` classes (see `generateWebSocketClients`) store handlers
+registered with `socket.on(event, callback)`.
+
+- `replace` (default): a second `on()` call for the same event replaces the previously registered
+  handler, so exactly one handler runs per event.
+- `accumulate`: handlers for the same event are appended and all run in registration order, matching
+  `EventEmitter`/`EventTarget` semantics.
+
+In both modes the socket also exposes `socket.off(event, callback)` to detach a handler previously
+registered with `on()`.
+
+```yaml
+# generators.yml
+config:
+    generateWebSocketClients: true
+    websocketHandlerMode: accumulate
+```
+
 #### ✨ `extraDependencies`
 
 **Type:** map\<string, string\>

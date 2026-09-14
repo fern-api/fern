@@ -441,6 +441,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -480,6 +481,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -519,6 +521,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

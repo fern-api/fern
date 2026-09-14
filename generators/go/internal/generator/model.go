@@ -148,6 +148,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	var propertyNames []string
 	var propertyTypes []string
 	var propertySafeNames []string
+	var requiredNullableProperties []requiredNullableProperty
 
 	// Collect property names and types from extended objects recursively
 	var collectProperties func(*ir.ObjectTypeDeclaration)
@@ -170,6 +171,12 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
 				propertyTypes = append(propertyTypes, goType)
+				if isNullableType(property.ValueType, t.writer.types) {
+					requiredNullableProperties = append(requiredNullableProperties, requiredNullableProperty{
+						wireValue:    property.Name.WireValue,
+						constantName: fieldBitConstantName(t.typeName, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)),
+					})
+				}
 			}
 		}
 	}
@@ -178,6 +185,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 	// Write bigint constants for struct properties
 	t.writer.WriteStructPropertyBitConstants(t.typeName, propertyNames)
+	requiredNullableFieldsName := writeRequiredNullableFields(t.writer, t.typeName, requiredNullableProperties)
 
 	t.writer.P("type ", t.typeName, " struct {")
 	objectProperties := t.visitObjectProperties(
@@ -277,6 +285,15 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
 	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
 	t.writer.AddStringMethodTest(t.typeName)
+	if len(objectProperties.literals) == 0 {
+		// Literal fields must be present with a specific value, so the round-trip
+		// inputs (which only contain the required-nullable keys) can't be decoded.
+		requiredNullableWireNames := make([]string, 0, len(requiredNullableProperties))
+		for _, property := range requiredNullableProperties {
+			requiredNullableWireNames = append(requiredNullableWireNames, property.wireValue)
+		}
+		t.writer.AddRequiredNullableRoundTripTest(t.typeName, requiredNullableWireNames)
+	}
 
 	// Objects always have GetExtraProperties method, add tests for it
 	t.writer.AddExtraPropertiesTest(t.typeName)
@@ -292,6 +309,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P("}")
 		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
+		writeRequireFieldsFromJSON(t.writer, receiver, requiredNullableFieldsName)
 		if t.includeRawJSON {
 			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
@@ -329,6 +347,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = unmarshaler.", literal.Name.Name.PascalCase.UnsafeName)
 		}
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
+		writeRequireFieldsFromJSON(t.writer, receiver, requiredNullableFieldsName)
 		if t.includeRawJSON {
 			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
@@ -2327,6 +2346,56 @@ func singleUnionTypePropertiesToInitializer(
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value
+}
+
+// requiredNullableProperty is a required, nullable object property whose
+// presence in incoming JSON must be tracked so that an explicit null survives
+// a decode/encode round-trip.
+type requiredNullableProperty struct {
+	wireValue    string
+	constantName string
+}
+
+// writeRequiredNullableFields writes the wire name to field bit mapping for
+// the given type's required-nullable properties, and returns the variable name.
+// Returns an empty string if the type has no required-nullable properties.
+func writeRequiredNullableFields(
+	f *fileWriter,
+	typeName string,
+	properties []requiredNullableProperty,
+) string {
+	if len(properties) == 0 {
+		return ""
+	}
+	variableName := strings.ToLower(typeName[:1]) + typeName[1:] + "RequiredNullableFields"
+	f.P("// ", variableName, " maps the wire names of ", typeName, "'s required, nullable fields to their field bits.")
+	f.P("var ", variableName, " = map[string]*big.Int{")
+	for _, property := range properties {
+		f.P(fmt.Sprintf("%q: %s,", property.wireValue, property.constantName))
+	}
+	f.P("}")
+	f.P()
+	return variableName
+}
+
+// writeRequireFieldsFromJSON writes the UnmarshalJSON logic that marks every
+// required-nullable field present in the incoming JSON as explicitly set, so
+// that a null value is preserved when the value is marshaled again.
+func writeRequireFieldsFromJSON(
+	f *fileWriter,
+	receiver string,
+	requiredNullableFieldsName string,
+) {
+	if requiredNullableFieldsName == "" {
+		return
+	}
+	f.P("presentFields, err := internal.ExplicitFieldsFromJSON(data, ", requiredNullableFieldsName, ")")
+	f.P("if err != nil {")
+	f.P("return err")
+	f.P("}")
+	f.P("if presentFields != nil {")
+	f.P(receiver, ".require(presentFields)")
+	f.P("}")
 }
 
 func writeExtractExtraProperties(

@@ -54,7 +54,8 @@
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -102,7 +103,8 @@
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -134,7 +136,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"

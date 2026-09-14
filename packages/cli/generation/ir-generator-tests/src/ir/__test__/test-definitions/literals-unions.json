@@ -54,7 +54,8 @@
             "referencedTypes": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -120,7 +121,8 @@
             ],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "source": null,
             "userProvidedExamples": [],

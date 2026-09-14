@@ -31,3 +31,5 @@ export * from "./WithSdkMethodName.js";
 export * from "./WithSource.js";
 export * from "./WithStatusCode.js";
 export * from "./WithTitle.js";
+export * from "./XmlEncoding.js";
+export * from "./XmlPropertyEncoding.js";
