@@ -1,6 +1,7 @@
 import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import {
     ExportsManager,
     getParameterNameForRootPathParameter,
@@ -993,6 +994,22 @@ return core.makePassthroughRequest(input, init, {
 
         const environment = this.getEnvironment(endpoint, context);
 
+        // PROTOTYPE: resolution order is explicit baseUrl > base-url-env variable > environment.
+        const baseUrlEnvVar = getBaseUrlEnvVarForPrototype(context.ir.environments);
+        if (baseUrlEnvVar != null) {
+            return ts.factory.createBinaryExpression(
+                ts.factory.createBinaryExpression(
+                    referenceToBaseUrl,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createIdentifier(
+                        emitEnvVarValue({ envConstant: JSON.stringify(baseUrlEnvVar), guarded: true })
+                    )
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                environment
+            );
+        }
+
         return ts.factory.createBinaryExpression(
             referenceToBaseUrl,
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
@@ -1384,4 +1401,19 @@ function anyEndpointWithAuth({
     }
 
     return false;
+}
+
+/**
+ * PROTOTYPE ONLY — reads `EnvironmentsConfig.baseUrlEnvVar` without typed access.
+ *
+ * This package pins `@fern-fern/ir-sdk` to 67.21.0, which predates the field (added in
+ * 67.25.0 by the CLI-side PR). Once that IR publishes, bump the dependency and read
+ * `environments.baseUrlEnvVar` directly instead of narrowing an unknown here.
+ */
+function getBaseUrlEnvVarForPrototype(environments: FernIr.EnvironmentsConfig | undefined): string | undefined {
+    if (environments == null) {
+        return undefined;
+    }
+    const candidate = (environments as { baseUrlEnvVar?: unknown }).baseUrlEnvVar;
+    return typeof candidate === "string" && candidate.length > 0 ? candidate : undefined;
 }

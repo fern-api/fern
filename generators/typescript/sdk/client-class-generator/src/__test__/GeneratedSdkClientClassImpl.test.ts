@@ -749,6 +749,41 @@ describe("GeneratedSdkClientClassImpl", () => {
             const ref = clientClass.getBaseUrl(endpoint, context);
             expect(serializeExpression(ref)).toMatchSnapshot();
         });
+
+        it("reads the base-url-env variable between baseUrl and the environment", () => {
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: undefined,
+                environments: FernIr.Environments.singleBaseUrl({ environments: [] })
+            };
+            // PROTOTYPE: baseUrlEnvVar is not in the pinned IR types yet (see
+            // getBaseUrlEnvVarForPrototype in GeneratedSdkClientClassImpl).
+            (ir.environments as { baseUrlEnvVar?: string }).baseUrlEnvVar = "MAVENAGI_BASE_URL";
+
+            const clientClass = createClientClass();
+            const context = createMockFileContext({ ir });
+            const endpoint = createHttpEndpoint();
+            const serialized = serializeExpression(clientClass.getBaseUrl(endpoint, context));
+
+            expect(serialized).toContain("MAVENAGI_BASE_URL");
+            expect(serialized).toMatchSnapshot();
+        });
+
+        it("leaves the expression unchanged when no base-url-env is declared", () => {
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: undefined,
+                environments: FernIr.Environments.singleBaseUrl({ environments: [] })
+            };
+
+            const clientClass = createClientClass();
+            const context = createMockFileContext({ ir });
+            const endpoint = createHttpEndpoint();
+            const serialized = serializeExpression(clientClass.getBaseUrl(endpoint, context));
+
+            expect(serialized).not.toContain("process.env");
+            expect(serialized).toMatchSnapshot();
+        });
     });
 
     describe("static constants", () => {
