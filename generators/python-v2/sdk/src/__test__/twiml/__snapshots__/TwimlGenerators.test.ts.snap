@@ -20,6 +20,8 @@ class VoiceResponse(TwiML):
         *,
         voice: Optional[str] = None,
         loop: Optional[int] = None,
+        interpret_as: Optional[str] = None,
+        voice_v2: Optional[str] = None,
         **kwargs: Any,
     ) -> "Say":
         """Create a <Say> element and append it as a child.
@@ -27,10 +29,12 @@ class VoiceResponse(TwiML):
         :param message: Message to say
         :param voice: \`voice\` attribute
         :param loop: \`loop\` attribute
+        :param interpret_as: \`interpret-as\` attribute
+        :param voice_v2: \`voiceV2\` attribute
         :param kwargs: additional attributes
         
         :returns: the newly created <Say> element"""
-        return self.nest(Say(message, voice=voice, loop=loop, **kwargs))
+        return self.nest(Say(message, voice=voice, loop=loop, interpret_as=interpret_as, voice_v2=voice_v2, **kwargs))
     def redirect(
         self,
         url: str,
@@ -89,6 +93,8 @@ class Prompt(TwiML):
         *,
         voice: Optional[str] = None,
         loop: Optional[int] = None,
+        interpret_as: Optional[str] = None,
+        voice_v2: Optional[str] = None,
         **kwargs: Any,
     ) -> "Say":
         """Create a <Say> element and append it as a child.
@@ -96,10 +102,12 @@ class Prompt(TwiML):
         :param message: Message to say
         :param voice: \`voice\` attribute
         :param loop: \`loop\` attribute
+        :param interpret_as: \`interpret-as\` attribute
+        :param voice_v2: \`voiceV2\` attribute
         :param kwargs: additional attributes
         
         :returns: the newly created <Say> element"""
-        return self.nest(Say(message, voice=voice, loop=loop, **kwargs))
+        return self.nest(Say(message, voice=voice, loop=loop, interpret_as=interpret_as, voice_v2=voice_v2, **kwargs))
 
 
 class Redirect(TwiML):
@@ -124,12 +132,15 @@ class Redirect(TwiML):
 class Say(TwiML):
     """<Say> TwiML Verb"""
     name = "Say"
+    ATTRIBUTE_NAMES: ClassVar[Dict[str, str]] = {"interpret_as": "interpret-as"}
     def __init__(
         self,
         message: Optional[str] = None,
         *,
         voice: Optional[str] = None,
         loop: Optional[int] = None,
+        interpret_as: Optional[str] = None,
+        voice_v2: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
         """Create a new <Say> element.
@@ -137,8 +148,10 @@ class Say(TwiML):
         :param message: Message to say
         :param voice: \`voice\` attribute
         :param loop: \`loop\` attribute
+        :param interpret_as: \`interpret-as\` attribute
+        :param voice_v2: \`voiceV2\` attribute
         :param kwargs: additional attributes"""
-        super().__init__(voice=voice, loop=loop, **kwargs)
+        super().__init__(voice=voice, loop=loop, interpret_as=interpret_as, voice_v2=voice_v2, **kwargs)
         if message is not None:
             self.value = format_value(message)
     def break_(self, *, strength: Optional[str] = None, **kwargs: Any) -> "SsmlBreak":

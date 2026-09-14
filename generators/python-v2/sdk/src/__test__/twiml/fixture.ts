@@ -57,7 +57,12 @@ export const VOICE: FernIr.TwimlNamespace = {
             xmlName: "Say",
             docs: "<Say> TwiML Verb",
             body: { name: "message", type: STRING, required: false, docs: "Message to say" },
-            attributes: [attribute("voice", "voice", STRING), attribute("loop", "loop", INTEGER)],
+            attributes: [
+                attribute("voice", "voice", STRING),
+                attribute("loop", "loop", INTEGER),
+                attribute("interpret_as", "interpret-as", STRING),
+                attribute("voice_v2", "voiceV2", STRING)
+            ],
             children: ["voice/ssml_break", "voice/ssml_emphasis", "voice/ssml_lang"]
         }),
         "voice/redirect": tag({

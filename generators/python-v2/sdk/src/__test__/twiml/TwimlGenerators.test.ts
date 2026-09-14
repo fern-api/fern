@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { TwimlBuilderGenerator } from "../../twiml/TwimlBuilderGenerator.js";
+import { pythonString, TwimlBuilderGenerator } from "../../twiml/TwimlBuilderGenerator.js";
+import { lowerCamel } from "../../twiml/TwimlNames.js";
 import { TwimlSnippetGenerator } from "../../twiml/TwimlSnippetGenerator.js";
 import { createNames, EXAMPLES, VOICE } from "./fixture.js";
 
@@ -22,9 +23,22 @@ describe("TwimlNames", () => {
 
     it("only overrides attribute names the runtime cannot derive by lowerCamel-casing", () => {
         expect(names.getAttributeNameOverrides(names.getTagOrThrow("voice/prompt"))).toEqual({});
+        expect(names.getAttributeNameOverrides(names.getTagOrThrow("voice/say"))).toEqual({
+            interpret_as: "interpret-as"
+        });
         expect(names.getAttributeNameOverrides(names.getTagOrThrow("voice/ssml_lang"))).toEqual({
             xml_lang: "xml:lang"
         });
+    });
+
+    it("always resolves every attribute keyword back to its exact XML name", () => {
+        for (const tag of Object.values(VOICE.tags)) {
+            const overrides = names.getAttributeNameOverrides(tag);
+            for (const attribute of tag.attributes) {
+                const pythonName = names.getAttributeName(attribute);
+                expect(overrides[pythonName] ?? lowerCamel(pythonName)).toBe(attribute.xmlName);
+            }
+        }
     });
 
     it("collapses unions whose members map to the same Python type", () => {
@@ -34,6 +48,14 @@ describe("TwimlNames", () => {
             "List[int]",
             "str"
         ]);
+    });
+});
+
+describe("pythonString", () => {
+    it("escapes every character that would break a double-quoted literal", () => {
+        expect(pythonString('<Say voice="alice">a\\b</Say>\r\n\t')).toBe(
+            '"<Say voice=\\"alice\\">a\\\\b</Say>\\r\\n\\t"'
+        );
     });
 });
 

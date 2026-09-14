@@ -91,9 +91,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         }
 
         if (context.ir.twiml != null) {
-            new TwimlGenerator({ context, twiml: context.ir.twiml }).generate({
-                includeTests: context.customConfig.output_directory !== sourceRoot
-            });
+            new TwimlGenerator({ context, twiml: context.ir.twiml }).generate();
         }
 
         await context.project.persist();

@@ -43,7 +43,7 @@ class TwiML:
         self.attrs: typing.Dict[str, typing.Any] = {}
         for key, attribute in kwargs.items():
             if attribute is not None:
-                self.attrs[self.ATTRIBUTE_NAMES.get(key) or lower_camel(key)] = attribute
+                self.attrs[self.ATTRIBUTE_NAMES.get(key, lower_camel(key))] = attribute
 
     def __str__(self) -> str:
         return self.to_xml()
