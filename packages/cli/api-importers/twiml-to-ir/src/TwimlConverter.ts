@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { AbstractSpecConverter, APIErrorLevel } from "@fern-api/v3-importer-commons";
 import { TwimlExampleSource, TwimlNamespaceSource, TwimlTagSource } from "./loadTwimlDocument.js";
@@ -64,7 +65,7 @@ export class TwimlConverter extends AbstractSpecConverter<TwimlConverterContext,
                 "body"
             ]);
         }
-        const [firstBody] = bodies;
+        const [firstBody] = bodies.length === 1 ? bodies : [];
         return {
             id,
             name: this.context.casingsGenerator.generateName(tag.class_name),
@@ -78,7 +79,10 @@ export class TwimlConverter extends AbstractSpecConverter<TwimlConverterContext,
                 this.convertAttribute({ key, attribute, enumNames, id, relativeFilepath })
             ),
             enums: Object.fromEntries(
-                Object.entries(tag.enums ?? {}).map(([name, values]) => [name, this.convertEnum({ name, values })])
+                Object.entries(tag.enums ?? {}).map(([name, values]) => [
+                    name,
+                    this.convertEnum({ name, values, relativeFilepath })
+                ])
             ),
             children: (tag.children ?? []).filter((child) => {
                 if (namespace.tags[child] != null) {
@@ -108,7 +112,9 @@ export class TwimlConverter extends AbstractSpecConverter<TwimlConverterContext,
         relativeFilepath: string;
     }): FernIr.TwimlBody {
         return {
-            name: this.context.casingsGenerator.generateName(toNeutralName(name)),
+            name: this.context.casingsGenerator.generateName(
+                this.toNeutralName(name, [relativeFilepath, "body", name])
+            ),
             docs: toDocs(body.docstring),
             type: this.convertType({ type: body.type, enumNames, path: [relativeFilepath, "body", name], id }),
             required: body.required ?? false
@@ -129,7 +135,9 @@ export class TwimlConverter extends AbstractSpecConverter<TwimlConverterContext,
         relativeFilepath: string;
     }): FernIr.TwimlAttribute {
         return {
-            name: this.context.casingsGenerator.generateName(toNeutralName(key)),
+            name: this.context.casingsGenerator.generateName(
+                this.toNeutralName(key, [relativeFilepath, "attributes", key])
+            ),
             xmlName: toXmlAttributeName(key),
             docs: toDocs(attribute.docstring),
             type: this.convertType({
@@ -142,16 +150,39 @@ export class TwimlConverter extends AbstractSpecConverter<TwimlConverterContext,
         };
     }
 
-    private convertEnum({ name, values }: { name: string; values: string[] }): FernIr.TwimlEnum {
+    private convertEnum({
+        name,
+        values,
+        relativeFilepath
+    }: {
+        name: string;
+        values: string[];
+        relativeFilepath: string;
+    }): FernIr.TwimlEnum {
+        const path = [relativeFilepath, "enums", name];
         return {
-            name: this.context.casingsGenerator.generateName(toNeutralName(name)),
+            name: this.context.casingsGenerator.generateName(this.toNeutralName(name, path)),
             values: values.map((value) =>
                 this.context.casingsGenerator.generateNameAndWireValue({
-                    name: toNeutralName(value),
+                    name: this.toNeutralName(value, [...path, value]),
                     wireValue: value
                 })
             )
         };
+    }
+
+    /**
+     * Strips characters that cannot appear in a Fern name (e.g. the trailing `_` in `for_` or the
+     * `-` in `speech-timeout`). Falls back to the raw key when nothing is left so the error is loud
+     * rather than an empty identifier.
+     */
+    private toNeutralName(key: string, path: string[]): string {
+        const neutral = toNeutralName(key);
+        if (neutral.length > 0) {
+            return neutral;
+        }
+        this.collectError(`'${key}' cannot be converted to a valid identifier`, path);
+        return key;
     }
 
     private convertType({
@@ -204,6 +235,8 @@ function toVisibility(visibility: TwimlVisibility | undefined): FernIr.TwimlVisi
             return FernIr.TwimlVisibility.Public;
         case "internal":
             return FernIr.TwimlVisibility.Internal;
+        default:
+            assertNever(visibility);
     }
 }
 

@@ -14,6 +14,7 @@ export declare namespace TwimlExampleConverter {
 }
 
 const LIST_SEPARATOR = /\s+/;
+const INTEGER_PATTERN = /^[+-]?\d+$/;
 
 type ValueResult = { ok: true; value: FernIr.TwimlExampleValue } | { ok: false; reason: string };
 
@@ -57,6 +58,10 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         };
     }
 
+    /**
+     * htmlparser2 recovers from malformed XML (unclosed or mismatched tags) instead of failing, so
+     * structural mistakes surface as tag-graph validation errors below rather than parse errors.
+     */
     private parseRootElement(): Element | undefined {
         const document = parseDocument(this.example.xml, { xmlMode: true });
         const elements = document.children.filter(isTag);
@@ -97,8 +102,12 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         if (single != null && valid.length === 1) {
             return single;
         }
+        const listNamespaces = (namespaces: FernIr.TwimlNamespace[]): string =>
+            namespaces.map((namespace) => `'${nameToString(namespace.name)}'`).join(", ");
         this.collectError(
-            `root element <${root.name}> is valid in namespaces ${candidates.map((c) => `'${nameToString(c.name)}'`).join(", ")}; place the example under a <namespace>/ directory to disambiguate`
+            valid.length === 0
+                ? `root element <${root.name}> matches namespaces ${listNamespaces(candidates)} but the document is not valid in any of them`
+                : `root element <${root.name}> is valid in namespaces ${listNamespaces(valid)}; place the example under a <namespace>/ directory to disambiguate`
         );
         return undefined;
     }
@@ -172,8 +181,13 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
             }
             content.push(converted.content);
         }
-        if (tag.body == null && content.some((entry) => entry.type === "text")) {
+        const hasText = content.some((entry) => entry.type === "text");
+        if (tag.body == null && hasText) {
             this.collectError(`<${element.name}> does not accept text content`, path);
+            valid = false;
+        }
+        if (tag.body?.required === true && !hasText) {
+            this.collectError(`<${element.name}> requires text content`, path);
             valid = false;
         }
         return valid ? { tag: tag.id, attributes, content } : undefined;
@@ -276,7 +290,7 @@ function convertPrimitiveValue({
 }): ValueResult {
     switch (primitive) {
         case FernIr.TwimlPrimitiveType.Integer: {
-            const parsed = Number(rawValue);
+            const parsed = INTEGER_PATTERN.test(rawValue.trim()) ? Number(rawValue) : Number.NaN;
             return Number.isInteger(parsed)
                 ? { ok: true, value: FernIr.TwimlExampleValue.integer(parsed) }
                 : { ok: false, reason: `'${rawValue}' is not an integer` };

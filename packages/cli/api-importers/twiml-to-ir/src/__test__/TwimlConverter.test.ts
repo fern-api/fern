@@ -124,7 +124,9 @@ describe("TwimlConverter examples", () => {
                 expect.stringContaining("<Say> does not accept attribute 'volume'"),
                 expect.stringContaining("'two' is not an integer"),
                 expect.stringContaining("<Pause> does not accept text content"),
-                expect.stringContaining("<Number> is not allowed inside <Response>")
+                expect.stringContaining("<Number> is not allowed inside <Response>"),
+                expect.stringContaining("'' is not an integer"),
+                expect.stringContaining("<emphasis> requires text content")
             ])
         );
         expect(ir.twiml?.examples).toEqual([]);
