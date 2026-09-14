@@ -1,0 +1,8 @@
+- summary: |
+    Object types carrying IR `encoding.xml` metadata (e.g. Twilio TwiML verbs imported from an OpenAPI
+    `xml` object) now generate a `to_xml()` method (and `__str__`) that serializes the model as an XML
+    element: properties marked as attributes become XML attributes, the text property becomes the element
+    body, and remaining properties are emitted as ordered child elements, honoring wire names,
+    namespaces/prefixes, wrapped lists and attribute list separators. A `core/xml_utilities.py` helper is
+    emitted only when the API contains XML-encoded types.
+  type: feat

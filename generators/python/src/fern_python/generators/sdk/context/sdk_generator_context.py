@@ -2,6 +2,7 @@ import typing
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
+from ...context.pydantic_generator_context import has_xml_types
 from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
 from ..custom_config import SDKCustomConfig
@@ -87,6 +88,7 @@ class SdkGeneratorContext(ABC):
             custom_config=custom_config,
             has_webhook_signature_verification=_has_webhook_signature_verification,
             has_streaming_endpoints=_has_streaming_endpoints,
+            has_xml_types=has_xml_types(ir),
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
