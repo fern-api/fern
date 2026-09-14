@@ -5,16 +5,19 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { JsonEncoding } from "./JsonEncoding.js";
 import { ProtoEncoding } from "./ProtoEncoding.js";
+import { XmlEncoding } from "./XmlEncoding.js";
 
 export const Encoding: core.serialization.ObjectSchema<serializers.Encoding.Raw, FernIr.Encoding> =
     core.serialization.objectWithoutOptionalProperties({
         json: JsonEncoding.optional(),
         proto: ProtoEncoding.optional(),
+        xml: XmlEncoding.optional(),
     });
 
 export declare namespace Encoding {
     export interface Raw {
         json?: JsonEncoding.Raw | null;
         proto?: ProtoEncoding.Raw | null;
+        xml?: XmlEncoding.Raw | null;
     }
 }

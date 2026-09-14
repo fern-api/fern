@@ -173,26 +173,34 @@ function convertTypeDeclarationEncoding({
 }
 
 function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
-    return encodingSchema.proto != null
-        ? {
-              json: undefined,
-              proto: {}
-          }
-        : {
-              json: {},
-              proto: undefined
-          };
+    if (encodingSchema.proto != null) {
+        return { json: undefined, proto: {}, xml: undefined };
+    }
+    if (encodingSchema.xml?.name != null) {
+        return {
+            json: undefined,
+            proto: undefined,
+            xml: {
+                name: encodingSchema.xml.name,
+                namespace: encodingSchema.xml.namespace,
+                prefix: encodingSchema.xml.prefix
+            }
+        };
+    }
+    return { json: {}, proto: undefined, xml: undefined };
 }
 
 function convertSourceToEncoding(source: Source | undefined): Encoding {
     return source != null && source.type === "proto"
         ? {
               json: undefined,
-              proto: {}
+              proto: {},
+              xml: undefined
           }
         : {
               json: {},
-              proto: undefined
+              proto: undefined,
+              xml: undefined
           };
 }
 function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean | undefined {

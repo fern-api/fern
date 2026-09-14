@@ -39,6 +39,7 @@ import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
 } from "./convertUndiscriminatedOneOf.js";
+import { getXmlEncoding } from "./convertXml.js";
 import { getDefaultAsString } from "./defaults/getDefault.js";
 import {
     getExampleAsArray,
@@ -1446,7 +1447,7 @@ export function convertSchemaObject(
                 fullExamples,
                 additionalProperties: schema.additionalProperties,
                 availability,
-                encoding,
+                encoding: encoding ?? getXmlEncoding({ schema, fallbackName: nameOverride ?? generatedName }),
                 source,
                 minProperties: schema.minProperties,
                 maxProperties: schema.maxProperties

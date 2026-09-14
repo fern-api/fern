@@ -9,3 +9,4 @@ export { SdkMethodNameExtension } from "./x-fern-sdk-method-name.js";
 export { ServerFromOperationNameExtension } from "./x-fern-server-name-from-operation.js";
 export { FernTypeExtension } from "./x-fern-type.js";
 export { FernTypeNameExtension } from "./x-fern-type-name.js";
+export { XmlPropertyExtension, XmlSchemaExtension } from "./xml.js";

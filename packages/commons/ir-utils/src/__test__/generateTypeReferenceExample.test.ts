@@ -36,6 +36,7 @@ function makeObjectTypeDeclaration(
                 valueType: propertyTypeRefs[i] ?? stringRef(),
                 propertyAccess: undefined,
                 defaultValue: undefined,
+                xml: undefined,
                 v2Examples: undefined
             })),
             extendedProperties: undefined,

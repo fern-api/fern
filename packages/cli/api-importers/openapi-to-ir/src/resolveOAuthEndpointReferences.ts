@@ -291,7 +291,7 @@ function findRequestBodyProperty({
 
     let properties: FernIr.ObjectProperty[] | undefined;
     if (endpoint.requestBody.type === "inlinedRequestBody") {
-        properties = endpoint.requestBody.properties;
+        properties = endpoint.requestBody.properties.map((prop) => ({ ...prop, xml: undefined }));
     } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
         properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
     }
@@ -321,7 +321,7 @@ function findCustomRequestProperties({
 
     let properties: FernIr.ObjectProperty[] | undefined;
     if (endpoint.requestBody.type === "inlinedRequestBody") {
-        properties = endpoint.requestBody.properties;
+        properties = endpoint.requestBody.properties.map((prop) => ({ ...prop, xml: undefined }));
     } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
         properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
     }

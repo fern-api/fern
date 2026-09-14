@@ -18,6 +18,7 @@ import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties.js";
 import { convertAvailability } from "./convertAvailability.js";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas.js";
+import { getXmlPropertyEncoding } from "./convertXml.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedPropertyName } from "./utils/getSchemaName.js";
@@ -354,7 +355,11 @@ export function convertObject({
                 generatedName,
                 availability,
                 readonly,
-                writeonly
+                writeonly,
+                xml:
+                    encoding?.type === "xml"
+                        ? getXmlPropertyEncoding({ propertySchema, resolvedPropertySchema })
+                        : undefined
             };
         }
     );

@@ -7,5 +7,12 @@ export function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Enco
             typeName: encodingSchema.proto.type
         });
     }
+    if (encodingSchema.xml?.name != null) {
+        return Encoding.xml({
+            name: encodingSchema.xml.name,
+            namespace: encodingSchema.xml.namespace,
+            prefix: encodingSchema.xml.prefix
+        });
+    }
     return undefined;
 }

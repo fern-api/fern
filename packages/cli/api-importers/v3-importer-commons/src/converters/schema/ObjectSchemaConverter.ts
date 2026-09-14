@@ -1,9 +1,10 @@
 import { isNonNullish } from "@fern-api/core-utils";
-import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { Type, TypeId, TypeReference, XmlEncoding } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { XmlSchemaExtension } from "../../extensions/xml.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 
@@ -17,6 +18,7 @@ export declare namespace ObjectSchemaConverter {
         propertiesByAudience: Record<string, Set<string>>;
         referencedTypes: Set<string>;
         inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
+        xmlEncoding: XmlEncoding | undefined;
     }
 }
 
@@ -25,10 +27,12 @@ export class ObjectSchemaConverter extends AbstractConverter<
     ObjectSchemaConverter.Output
 > {
     private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly xmlEncoding: XmlEncoding | undefined;
 
     constructor({ context, breadcrumbs, schema }: ObjectSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
+        this.xmlEncoding = new XmlSchemaExtension({ breadcrumbs: this.breadcrumbs, schema, context }).convert();
     }
 
     public convert(): ObjectSchemaConverter.Output {
@@ -46,7 +50,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 }),
                 propertiesByAudience: {},
                 inlinedTypes: {},
-                referencedTypes: new Set()
+                referencedTypes: new Set(),
+                xmlEncoding: this.xmlEncoding
             };
         }
 
@@ -60,7 +65,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
             required: this.schema.required ?? [],
             breadcrumbs: this.breadcrumbs,
             context: this.context,
-            errorCollector: this.context.errorCollector
+            errorCollector: this.context.errorCollector,
+            withinXmlElement: this.xmlEncoding != null
         });
 
         const extends_: TypeReference[] = [];
@@ -194,7 +200,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                         required: [], // All variant properties are optional on the parent
                         breadcrumbs: variantBreadcrumbs,
                         context: this.context,
-                        errorCollector: this.context.errorCollector
+                        errorCollector: this.context.errorCollector,
+                        withinXmlElement: this.xmlEncoding != null
                     });
 
                     properties.push(...variantProperties);
@@ -237,7 +244,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
                 breadcrumbs,
                 context: this.context,
-                errorCollector: this.context.errorCollector
+                errorCollector: this.context.errorCollector,
+                withinXmlElement: this.xmlEncoding != null
             });
 
             properties.push(...allOfProperties);
@@ -261,7 +269,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
             }),
             propertiesByAudience,
             referencedTypes,
-            inlinedTypes
+            inlinedTypes,
+            xmlEncoding: this.xmlEncoding
         };
     }
 
