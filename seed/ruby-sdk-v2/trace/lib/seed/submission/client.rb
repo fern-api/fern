@@ -40,7 +40,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::ExecutionSessionResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::ExecutionSessionResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -76,10 +76,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::ExecutionSessionResponse.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Stops execution session.
@@ -143,7 +145,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

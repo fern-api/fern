@@ -1,0 +1,7 @@
+- summary: |
+    `fern check` now validates changelogs inside a product's nested `versions` against
+    their full `/product/version/...` URL, so a changelog made servable by either the
+    product or version slug (e.g. `/platform/release-notes/updates`) is no longer
+    rejected by the `valid-changelog-slug` rule. Previously the docs validator never
+    traversed `product.versions` files.
+  type: fix

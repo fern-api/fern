@@ -230,6 +230,39 @@ describe("collectRawSpecs", () => {
         expect(archive.specIndexesByGeneratorIndex.get(3)).toEqual([0]);
     });
 
+    it("creates one manifest-only archive for grouped Fern Definition targets", async () => {
+        const archive = await createGroupedSpecsTarGzArchive({
+            generatorSelections: [
+                { generatorIndex: 0, specs: [] },
+                { generatorIndex: 1, specs: [] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs).toEqual([]);
+        expect(archive.specIndexesByGeneratorIndex).toEqual(
+            new Map([
+                [0, []],
+                [1, []]
+            ])
+        );
+
+        const archivePath = path.join(tmpDir.path, "manifest-only.tar.gz");
+        await writeFile(archivePath, archive.buffer);
+        const archivedFiles = new Map<string, Buffer>();
+        await tar.list({
+            file: archivePath,
+            onReadEntry: (entry) => {
+                const chunks: Buffer[] = [];
+                entry.on("data", (chunk: Buffer) => chunks.push(Buffer.from(chunk)));
+                entry.on("end", () => archivedFiles.set(entry.path, Buffer.concat(chunks)));
+            }
+        });
+
+        expect([...archivedFiles.keys()]).toEqual(["specs-manifest.json"]);
+        expect(JSON.parse(archivedFiles.get("specs-manifest.json")?.toString("utf8") ?? "")).toEqual({ specs: [] });
+    });
+
     it("deduplicates specs with implicit and explicit default import settings", async () => {
         const specFile = path.join(sourceDir, "api", "defaults.yaml");
         await writeFile(specFile, MINIMAL_OPENAPI);

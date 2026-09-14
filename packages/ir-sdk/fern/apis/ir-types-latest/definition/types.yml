@@ -15,12 +15,60 @@ types:
     properties:
       json: optional<JsonEncoding>
       proto: optional<ProtoEncoding>
+      xml: optional<XmlEncoding>
 
   JsonEncoding:
     properties: {}
 
   ProtoEncoding:
     properties: {}
+
+  XmlEncoding:
+    docs: |
+      Present when an object type is an XML element (e.g. a markup document such as
+      Twilio's TwiML, which the generated SDK builds and serializes rather than sends
+      as JSON). Populated from the OpenAPI `xml` object on the schema.
+    properties:
+      name:
+        type: string
+        docs: The XML element name, exactly as it appears on the wire (casing preserved).
+      namespace:
+        type: optional<string>
+        docs: The XML namespace URI, if any.
+      prefix:
+        type: optional<string>
+        docs: The namespace prefix to use for the element name.
+
+  XmlPropertyEncoding:
+    docs: |
+      How an object property serializes when its parent object is an XML element.
+      Only populated on properties of objects with an `XmlEncoding`.
+    properties:
+      kind: XmlPropertyKind
+      name:
+        type: optional<string>
+        docs: |
+          The attribute or element name on the wire. Falls back to the property's
+          wire value when absent.
+      wrapped:
+        type: optional<boolean>
+        docs: |
+          For list properties: whether the items are wrapped in a container element
+          named `name`. Absent or false means items are emitted directly as children.
+      listSeparator:
+        type: optional<string>
+        docs: |
+          For list-valued attributes or text: the string used to join items into a
+          single value (e.g. `" "` for space-delimited lists).
+
+  XmlPropertyKind:
+    enum:
+      - value: ATTRIBUTE
+        docs: Serialized as an attribute on the parent element.
+      - value: TEXT
+        docs: Serialized as the text content of the parent element.
+      - value: ELEMENT
+        docs: Serialized as a child element (or ordered list of child elements).
 
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
@@ -144,6 +192,9 @@ types:
           arrays) since the existing primitive `default` lives on the
           `PrimitiveType` and cannot represent container defaults.
       v2Examples: optional<examples.V2SchemaExamples>
+      xml:
+        type: optional<XmlPropertyEncoding>
+        docs: Present only when the enclosing object type has an `XmlEncoding`.
 
   ObjectPropertyAccess:
     enum:

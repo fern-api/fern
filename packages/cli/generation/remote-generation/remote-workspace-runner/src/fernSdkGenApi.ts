@@ -32,6 +32,7 @@ const MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES = 5 * 1024 * 1024;
 const MAX_PAYLOAD_BYTES = 25 * 1024 * 1024;
 const MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES = 25 * 1024 * 1024;
 const MAX_TOTAL_PAYLOAD_BYTES = 100 * 1024 * 1024;
+const MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES = MAX_TOTAL_PAYLOAD_BYTES;
 const MAX_TOTAL_UPLOAD_FILE_BYTES = 50 * 1024 * 1024;
 const MAX_REQUEST_FIELD_BYTES = 1024 * 1024;
 const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
@@ -1027,7 +1028,7 @@ function validateProtocolInputs(
             participant.payload.payloadKind === "fern-runtime-bundle"
                 ? getBoundedGzipSize({
                       buffer: participant.payload.body,
-                      maxBytes: MAX_PAYLOAD_BYTES,
+                      maxBytes: MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES,
                       label: payloadLabel(participant, index),
                       context: first.context
                   })

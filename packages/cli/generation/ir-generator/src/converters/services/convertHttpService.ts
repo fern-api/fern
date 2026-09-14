@@ -486,12 +486,14 @@ function convertTransportToEncoding(transport: Transport, service: RawSchemas.Ht
         case "http":
             return {
                 json: {},
-                proto: undefined
+                proto: undefined,
+                xml: undefined
             };
         case "grpc":
             return {
                 json: undefined,
-                proto: {}
+                proto: {},
+                xml: undefined
             };
         default:
             assertNever(transport);

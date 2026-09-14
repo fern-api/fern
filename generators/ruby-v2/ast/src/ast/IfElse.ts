@@ -21,6 +21,12 @@ export declare namespace IfElse {
         elseIf?: IfElse.If[];
         /** The body to execute if all conditions are false (optional) */
         elseBody?: AstNode;
+        /**
+         * Emit `unless cond` instead of `if cond`. Use this rather than negating the
+         * condition yourself: rubocop's Style/NegatedIf rejects `if !cond`. Ruby has no
+         * `elsunless`, so this cannot be combined with `elseIf`.
+         */
+        negated?: boolean;
     }
 }
 
@@ -28,12 +34,17 @@ export class IfElse extends AstNode {
     public readonly ifBranch: IfElse.If;
     public readonly elseIfs: IfElse.If[];
     public readonly elseBody: AstNode[] | undefined;
+    public readonly negated: boolean;
 
-    constructor({ if: ifBranch, elseIf, elseBody }: IfElse.Args) {
+    constructor({ if: ifBranch, elseIf, elseBody, negated }: IfElse.Args) {
         super();
         this.ifBranch = ifBranch;
         this.elseIfs = elseIf ?? [];
         this.elseBody = elseBody ? (Array.isArray(elseBody) ? elseBody : [elseBody]) : undefined;
+        this.negated = negated ?? false;
+        if (this.negated && this.elseIfs.length > 0) {
+            throw new Error("Ruby has no `elsunless`; a negated IfElse cannot have elseIf branches");
+        }
     }
 
     public write(writer: Writer): void {
@@ -45,7 +56,7 @@ export class IfElse extends AstNode {
         }
 
         // Write the primary if branch
-        writer.write("if ");
+        writer.write(this.negated ? "unless " : "if ");
         this.ifBranch.condition.write(writer);
         writer.writeLine();
         writer.indent();
@@ -83,8 +94,8 @@ export class IfElse extends AstNode {
     }
 
     /**
-     * Returns the modifier-form rendering (`stmt if cond`) when this if is
-     * eligible:
+     * Returns the modifier-form rendering (`stmt if cond`, or `stmt unless cond`
+     * when negated) when this if is eligible:
      *   - exactly one statement in the then-body
      *   - no elsif and no else
      *   - the single statement is not an intrinsically multi-line AST node
@@ -128,7 +139,7 @@ export class IfElse extends AstNode {
         if (stmtRendered.includes("\n") || conditionRendered.includes("\n")) {
             return undefined;
         }
-        return `${stmtRendered} if ${conditionRendered}`;
+        return `${stmtRendered} ${this.negated ? "unless" : "if"} ${conditionRendered}`;
     }
 }
 

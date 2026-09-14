@@ -395,6 +395,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -468,6 +469,7 @@
               "type": "named",
               "typeId": "RateResponseRateType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -503,6 +505,7 @@
               "type": "named",
               "typeId": "FixedRate",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -626,6 +629,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -673,6 +677,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -705,6 +710,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

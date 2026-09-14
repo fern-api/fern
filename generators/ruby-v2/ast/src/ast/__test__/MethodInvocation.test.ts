@@ -42,6 +42,17 @@ describe("MethodInvocation", () => {
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
 
+    test("writes method invocation with safe navigation and a block", () => {
+        const method = ruby.invokeMethod({
+            on: ruby.codeblock(`list`),
+            method: "each",
+            arguments_: [],
+            safeNavigation: true,
+            block: [["item"], [ruby.codeblock(`puts item`)]]
+        });
+        expect(method.toString(writerConfig)).toBe("list&.each do |item|\n  puts item\nend");
+    });
+
     test("writes method invocation with a block with one block arg", () => {
         const method = ruby.invokeMethod({
             on: ruby.codeblock(`2`),

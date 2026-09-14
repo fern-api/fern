@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.http_methods.test_get(id: "id")
+client.endpoints.enum.get_and_return_enum(request: "SUNNY")

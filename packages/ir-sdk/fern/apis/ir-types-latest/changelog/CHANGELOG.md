@@ -5,13 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v67.25.0] - 2026-09-09
+## [v67.26.0] - 2026-09-14
 
 - Add `EnvironmentsConfig.baseUrlEnvVar` (optional `string`): the name of an environment
   variable that generated SDKs read at client construction to override the base URL. Populated
   from `base-url-env` in `api.yml` (or the `api.environments` override in `generators.yml`) and
   from the root-level `x-fern-base-url-env` extension in OpenAPI specs. Explicitly passed base
   URLs still take precedence; when the variable is unset, SDKs fall back to the default environment.
+
+## [v67.25.0] - 2026-09-14
+
+- Add `Encoding.xml` (`XmlEncoding`: `name`, optional `namespace`/`prefix`) on `TypeDeclaration`
+  and `ObjectProperty.xml` (`XmlPropertyEncoding`: `kind` ATTRIBUTE | TEXT | ELEMENT, optional
+  `name`, `wrapped`, `listSeparator`). Populated from the OpenAPI `xml` object plus the
+  `x-fern-xml-text` and `x-fern-xml-list-separator` extensions, so generators can emit XML
+  document builders (e.g. Twilio TwiML) for object types that are markup elements rather than
+  JSON payloads. Both fields are optional; generators that do not read them are unaffected.
 
 ## [v67.24.0] - 2026-09-04
 

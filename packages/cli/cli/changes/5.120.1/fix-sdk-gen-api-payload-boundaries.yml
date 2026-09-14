@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Allow sdk-gen-api runtime bundles up to the existing 100 MiB decoded payload budget.
+  type: fix

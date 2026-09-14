@@ -874,7 +874,8 @@ export class ExampleTypeFactory {
         let requiredProperties: Record<string, SchemaWithExample> = {};
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema);
-            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+            // A nullable property is still required; optional properties are wrapped with `optional`.
+            if (resolvedSchema.type !== "optional") {
                 requiredProperties[property.key] = property.schema;
             }
         }

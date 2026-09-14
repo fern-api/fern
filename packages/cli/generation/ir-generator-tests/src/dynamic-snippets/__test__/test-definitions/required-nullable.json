@@ -609,6 +609,39 @@
                             },
                             "propertyAccess": null,
                             "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "required_nullable_text",
+                                "name": {
+                                    "originalName": "required_nullable_text",
+                                    "camelCase": {
+                                        "unsafeName": "requiredNullableText",
+                                        "safeName": "requiredNullableText"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "required_nullable_text",
+                                        "safeName": "required_nullable_text"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REQUIRED_NULLABLE_TEXT",
+                                        "safeName": "REQUIRED_NULLABLE_TEXT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "RequiredNullableText",
+                                        "safeName": "RequiredNullableText"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },

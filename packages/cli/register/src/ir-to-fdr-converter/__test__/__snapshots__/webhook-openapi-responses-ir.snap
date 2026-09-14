@@ -195,6 +195,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -222,6 +223,7 @@
               "type": "named",
               "typeId": "DocumentUploadedEventEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -253,6 +255,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -284,6 +287,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -315,6 +319,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -339,6 +344,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -455,6 +461,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -482,6 +489,7 @@
               "type": "named",
               "typeId": "PaymentSessionStatus",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -514,6 +522,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -545,6 +554,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -584,6 +594,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -608,6 +619,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -684,6 +696,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -711,6 +724,7 @@
               "type": "named",
               "typeId": "PaymentSessionCompletedEventEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -745,6 +759,7 @@
               "type": "named",
               "typeId": "PaymentSession",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -769,6 +784,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -982,6 +998,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1013,6 +1030,7 @@
                 "type": "named",
                 "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1048,6 +1066,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1083,6 +1102,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1118,6 +1138,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -1146,6 +1167,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
           ],
           "v2Examples": {

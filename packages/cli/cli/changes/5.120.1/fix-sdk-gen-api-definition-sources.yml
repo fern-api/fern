@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support sdk-gen-api generation for Fern Definition workspaces with no source specs.
+  type: fix

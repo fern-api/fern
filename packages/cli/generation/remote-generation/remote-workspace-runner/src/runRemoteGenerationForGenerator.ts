@@ -339,8 +339,8 @@ export async function runRemoteGenerationForGenerator({
     }
 
     const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
-    let generateOauthClients = false;
-    let generatePaginatedClients = false;
+    let generateOauthClients = true;
+    let generatePaginatedClients = true;
     if (!isAirGapped && requiresFdrRegistration) {
         const venus = createVenusService({ token: token.value });
         const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
@@ -353,8 +353,12 @@ export async function runRemoteGenerationForGenerator({
                 ir.readmeConfig.whiteLabel = true;
             }
             ir.selfHosted = orgResponse.body.selfHostedSdKs;
-            generateOauthClients = orgResponse.body.oauthClientEnabled ?? false;
-            generatePaginatedClients = orgResponse.body.paginationEnabled ?? false;
+            generateOauthClients = orgResponse.body.oauthClientEnabled ?? true;
+            generatePaginatedClients = orgResponse.body.paginationEnabled ?? true;
+        } else {
+            interactiveTaskContext.logger.warn(
+                `Failed to load organization settings for ${projectConfig.organization}; assuming pagination and OAuth clients are enabled.`
+            );
         }
     }
 

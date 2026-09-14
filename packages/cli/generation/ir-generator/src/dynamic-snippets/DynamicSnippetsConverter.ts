@@ -419,7 +419,7 @@ export class DynamicSnippetsConverter {
     private convertBodyPropertiesToParameters({
         properties
     }: {
-        properties: ObjectProperty[];
+        properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[];
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
             name: this.inflateNameAndWireValue(property.name),
@@ -911,8 +911,10 @@ export class DynamicSnippetsConverter {
         return values;
     }
 
-    private getRequestBodyProperties(requestBody: HttpRequestBody): ObjectProperty[] {
-        const properties: ObjectProperty[] = [];
+    private getRequestBodyProperties(
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] = [];
 
         if (requestBody.type === "inlinedRequestBody") {
             properties.push(...requestBody.properties);
