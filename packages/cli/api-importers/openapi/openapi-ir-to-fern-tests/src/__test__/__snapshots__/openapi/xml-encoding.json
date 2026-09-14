@@ -179,18 +179,7 @@
             },
             "inline": undefined,
             "properties": {
-              "children": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<list<ResponseChildrenItem>>",
-              },
+              "children": "optional<list<ResponseChildrenItem>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -221,18 +210,7 @@
             },
             "inline": undefined,
             "properties": {
-              "children": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<list<Break>>",
-              },
+              "children": "optional<list<Break>>",
               "loop": {
                 "encoding": {
                   "xml": {
@@ -288,10 +266,7 @@
   Response:
     docs: Root TwiML element.
     properties:
-      children:
-        type: optional<list<ResponseChildrenItem>>
-        encoding:
-          xml: {}
+      children: optional<list<ResponseChildrenItem>>
     source:
       openapi: ../openapi.yml
     encoding:
@@ -314,10 +289,7 @@
         encoding:
           xml:
             attribute: true
-      children:
-        type: optional<list<Break>>
-        encoding:
-          xml: {}
+      children: optional<list<Break>>
     source:
       openapi: ../openapi.yml
     encoding:

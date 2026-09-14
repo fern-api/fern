@@ -225,7 +225,6 @@
             "conflict": {},
             "generatedName": "categoryId",
             "key": "id",
-            "xml": {},
             "schema": {
               "generatedName": "CategoryId",
               "value": {
@@ -245,7 +244,6 @@
             "conflict": {},
             "generatedName": "categoryName",
             "key": "name",
-            "xml": {},
             "schema": {
               "generatedName": "CategoryName",
               "value": {
@@ -285,7 +283,6 @@
             "conflict": {},
             "generatedName": "tagId",
             "key": "id",
-            "xml": {},
             "schema": {
               "generatedName": "TagId",
               "value": {
@@ -305,7 +302,6 @@
             "conflict": {},
             "generatedName": "tagName",
             "key": "name",
-            "xml": {},
             "schema": {
               "generatedName": "TagName",
               "value": {
@@ -345,7 +341,6 @@
             "conflict": {},
             "generatedName": "petId",
             "key": "id",
-            "xml": {},
             "schema": {
               "generatedName": "PetId",
               "value": {
@@ -387,7 +382,6 @@
             "conflict": {},
             "generatedName": "petName",
             "key": "name",
-            "xml": {},
             "schema": {
               "schema": {
                 "example": "doggie",
@@ -455,7 +449,6 @@
             "conflict": {},
             "generatedName": "petStatus",
             "key": "status",
-            "xml": {},
             "schema": {
               "generatedName": "PetStatus",
               "description": "pet status in the store",

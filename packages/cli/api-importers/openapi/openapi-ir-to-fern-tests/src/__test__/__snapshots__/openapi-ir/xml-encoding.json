@@ -19,7 +19,6 @@
             "conflict": {},
             "generatedName": "responseChildren",
             "key": "children",
-            "xml": {},
             "schema": {
               "generatedName": "ResponseChildren",
               "value": {
@@ -153,7 +152,6 @@
             "conflict": {},
             "generatedName": "sayChildren",
             "key": "children",
-            "xml": {},
             "schema": {
               "generatedName": "SayChildren",
               "value": {

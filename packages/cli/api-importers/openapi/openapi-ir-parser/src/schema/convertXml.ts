@@ -35,7 +35,7 @@ export function getXmlPropertyEncoding({
 }: {
     propertySchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
     resolvedPropertySchema: OpenAPIV3.SchemaObject;
-}): XmlPropertyEncoding {
+}): XmlPropertyEncoding | undefined {
     const inlineXml = "xml" in propertySchema ? propertySchema.xml : undefined;
     const xml = inlineXml ?? resolvedPropertySchema.xml;
     const text =
@@ -44,11 +44,12 @@ export function getXmlPropertyEncoding({
     const separator =
         getExtension<string>(propertySchema, FernOpenAPIExtension.XML_LIST_SEPARATOR) ??
         getExtension<string>(resolvedPropertySchema, FernOpenAPIExtension.XML_LIST_SEPARATOR);
-    return {
+    const encoding: XmlPropertyEncoding = {
         name: xml?.name,
         attribute: xml?.attribute,
         text: text ?? undefined,
         wrapped: xml?.wrapped,
         separator: separator ?? undefined
     };
+    return Object.values(encoding).every((value) => value == null) ? undefined : encoding;
 }

@@ -71,30 +71,8 @@
             },
             "inline": undefined,
             "properties": {
-              "id": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<long>",
-              },
-              "name": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<string>",
-              },
+              "id": "optional<long>",
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -134,30 +112,8 @@
                 },
                 "type": "optional<Category>",
               },
-              "id": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<long>",
-              },
-              "name": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "string",
-              },
+              "id": "optional<long>",
+              "name": "string",
               "photoUrls": {
                 "encoding": {
                   "xml": {
@@ -172,15 +128,6 @@
               },
               "status": {
                 "docs": "pet status in the store",
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
                 "type": "optional<PetStatus>",
               },
               "tags": {
@@ -223,30 +170,8 @@
             },
             "inline": undefined,
             "properties": {
-              "id": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<long>",
-              },
-              "name": {
-                "encoding": {
-                  "xml": {
-                    "attribute": undefined,
-                    "name": undefined,
-                    "separator": undefined,
-                    "text": undefined,
-                    "wrapped": undefined,
-                  },
-                },
-                "type": "optional<string>",
-              },
+              "id": "optional<long>",
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -297,14 +222,8 @@ types:
   Category:
     docs: A category for a pet
     properties:
-      id:
-        type: optional<long>
-        encoding:
-          xml: {}
-      name:
-        type: optional<string>
-        encoding:
-          xml: {}
+      id: optional<long>
+      name: optional<string>
     source:
       openapi: ../openapi.yml
     encoding:
@@ -313,14 +232,8 @@ types:
   Tag:
     docs: A tag for a pet
     properties:
-      id:
-        type: optional<long>
-        encoding:
-          xml: {}
-      name:
-        type: optional<string>
-        encoding:
-          xml: {}
+      id: optional<long>
+      name: optional<string>
     source:
       openapi: ../openapi.yml
     encoding:
@@ -338,19 +251,13 @@ types:
   Pet:
     docs: A pet for sale in the pet store
     properties:
-      id:
-        type: optional<long>
-        encoding:
-          xml: {}
+      id: optional<long>
       category:
         type: optional<Category>
         encoding:
           xml:
             name: Category
-      name:
-        type: string
-        encoding:
-          xml: {}
+      name: string
       photoUrls:
         type: list<string>
         encoding:
@@ -366,8 +273,6 @@ types:
       status:
         type: optional<PetStatus>
         docs: pet status in the store
-        encoding:
-          xml: {}
     source:
       openapi: ../openapi.yml
     encoding:
