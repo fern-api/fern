@@ -52682,6 +52682,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
   "audiences": [],
   "generationMetadata": null,
   "apiPlayground": null,
-  "casingsConfig": null
+  "casingsConfig": null,
+  "twiml": null
 }"
 `;
