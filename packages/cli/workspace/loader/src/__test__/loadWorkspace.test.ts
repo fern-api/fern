@@ -163,6 +163,40 @@ describe("loadWorkspace twiml", () => {
             type: WorkspaceLoaderFailureType.FILE_MISSING
         });
     });
+
+    it("fails with ABSOLUTE_FILEPATH when the definitions or examples path is absolute", async () => {
+        const absoluteDefinitions = join(absolutePathToFixture, RelativeFilePath.of("definitions"));
+        const absoluteExamples = join(absolutePathToFixture, RelativeFilePath.of("examples"));
+        const load = (schema: { path: string; examples: string | undefined }) =>
+            loadSingleNamespaceAPIWorkspace({
+                absolutePathToWorkspace: absolutePathToFixture,
+                namespace: undefined,
+                definitions: [
+                    {
+                        schema: { type: "twiml", ...schema },
+                        origin: undefined,
+                        overrides: undefined,
+                        overlays: undefined,
+                        audiences: [],
+                        settings: undefined
+                    }
+                ]
+            });
+
+        const definitions = await load({ path: absoluteDefinitions, examples: undefined });
+        assert(!Array.isArray(definitions) && !definitions.didSucceed);
+        expect(definitions.failures[RelativeFilePath.of("generators.yml")]).toEqual({
+            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+            filepath: absoluteDefinitions
+        });
+
+        const examples = await load({ path: "definitions", examples: absoluteExamples });
+        assert(!Array.isArray(examples) && !examples.didSucceed);
+        expect(examples.failures[RelativeFilePath.of("generators.yml")]).toEqual({
+            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+            filepath: absoluteExamples
+        });
+    });
 });
 
 describe("loadWorkspace MISCONFIGURED_DIRECTORY", () => {

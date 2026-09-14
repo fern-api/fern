@@ -18,6 +18,11 @@ const INTEGER_PATTERN = /^[+-]?\d+$/;
 
 type ValueResult = { ok: true; value: FernIr.TwimlExampleValue } | { ok: false; reason: string };
 
+type ErrorReporter = (message: string, path: string[]) => void;
+
+// biome-ignore lint/suspicious/noEmptyBlockStatements: candidate namespaces are validated without reporting
+const IGNORE_ERRORS: ErrorReporter = () => {};
+
 /**
  * Parses an XML example document and resolves every element against the tag graph, so
  * generators can render it as a builder snippet without re-implementing validation.
@@ -45,7 +50,13 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         if (rootTag == null) {
             return undefined;
         }
-        const root = this.convertElement({ element: rootElement, tag: rootTag, namespace, path: [rootElement.name] });
+        const root = this.convertElement({
+            element: rootElement,
+            tag: rootTag,
+            namespace,
+            path: [rootElement.name],
+            report: (message, path) => this.collectError(message, path)
+        });
         if (root == null) {
             return undefined;
         }
@@ -112,14 +123,17 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         return undefined;
     }
 
+    /**
+     * Applies the same rules as the final conversion (children, attributes, values, bodies) without
+     * emitting errors, so a rejected candidate namespace does not pollute the diagnostics.
+     */
     private isValidIn({ element, namespace }: { element: Element; namespace: FernIr.TwimlNamespace }): boolean {
-        const walk = (node: Element, tag: FernIr.TwimlTag): boolean =>
-            node.children.filter(isTag).every((child) => {
-                const childTag = this.findChildTag({ tag, namespace, xmlName: child.name });
-                return childTag != null && walk(child, childTag);
-            });
         const rootTag = namespace.tags[namespace.root];
-        return rootTag != null && walk(element, rootTag);
+        return (
+            rootTag != null &&
+            this.convertElement({ element, tag: rootTag, namespace, path: [element.name], report: IGNORE_ERRORS }) !=
+                null
+        );
     }
 
     private findChildTag({
@@ -144,25 +158,27 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         element,
         tag,
         namespace,
-        path
+        path,
+        report
     }: {
         element: Element;
         tag: FernIr.TwimlTag;
         namespace: FernIr.TwimlNamespace;
         path: string[];
+        report: ErrorReporter;
     }): FernIr.TwimlExampleNode | undefined {
         let valid = true;
         const attributes: FernIr.TwimlExampleAttribute[] = [];
         for (const [xmlName, rawValue] of Object.entries(element.attribs)) {
             const attribute = tag.attributes.find((candidate) => candidate.xmlName === xmlName);
             if (attribute == null) {
-                this.collectError(`<${element.name}> does not accept attribute '${xmlName}'`, path);
+                report(`<${element.name}> does not accept attribute '${xmlName}'`, path);
                 valid = false;
                 continue;
             }
             const result = convertValue({ type: attribute.type, tag, rawValue });
             if (!result.ok) {
-                this.collectError(`attribute '${xmlName}': ${result.reason}`, [...path, `@${xmlName}`]);
+                report(`attribute '${xmlName}': ${result.reason}`, [...path, `@${xmlName}`]);
                 valid = false;
                 continue;
             }
@@ -171,7 +187,7 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
 
         const content: FernIr.TwimlExampleContent[] = [];
         for (const child of element.children) {
-            const converted = this.convertChild({ child, tag, namespace, path });
+            const converted = this.convertChild({ child, tag, namespace, path, report });
             if (converted.type === "skip") {
                 continue;
             }
@@ -183,11 +199,11 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         }
         const hasText = content.some((entry) => entry.type === "text");
         if (tag.body == null && hasText) {
-            this.collectError(`<${element.name}> does not accept text content`, path);
+            report(`<${element.name}> does not accept text content`, path);
             valid = false;
         }
         if (tag.body?.required === true && !hasText) {
-            this.collectError(`<${element.name}> requires text content`, path);
+            report(`<${element.name}> requires text content`, path);
             valid = false;
         }
         return valid ? { tag: tag.id, attributes, content } : undefined;
@@ -197,12 +213,14 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         child,
         tag,
         namespace,
-        path
+        path,
+        report
     }: {
         child: ChildNode;
         tag: FernIr.TwimlTag;
         namespace: FernIr.TwimlNamespace;
         path: string[];
+        report: ErrorReporter;
     }): { type: "content"; content: FernIr.TwimlExampleContent } | { type: "skip" } | { type: "invalid" } {
         if (isText(child)) {
             return child.data.trim().length === 0
@@ -214,10 +232,16 @@ export class TwimlExampleConverter extends AbstractConverter<TwimlConverterConte
         }
         const childTag = this.findChildTag({ tag, namespace, xmlName: child.name });
         if (childTag == null) {
-            this.collectError(`<${child.name}> is not allowed inside <${tag.xmlName}>`, [...path, child.name]);
+            report(`<${child.name}> is not allowed inside <${tag.xmlName}>`, [...path, child.name]);
             return { type: "invalid" };
         }
-        const node = this.convertElement({ element: child, tag: childTag, namespace, path: [...path, child.name] });
+        const node = this.convertElement({
+            element: child,
+            tag: childTag,
+            namespace,
+            path: [...path, child.name],
+            report
+        });
         return node != null ? { type: "content", content: FernIr.TwimlExampleContent.node(node) } : { type: "invalid" };
     }
 
@@ -249,7 +273,10 @@ function convertValue({
 }): ValueResult {
     return visitDiscriminatedUnion(type)._visit<ValueResult>({
         primitive: ({ value }) => convertPrimitiveValue({ primitive: value, rawValue }),
-        sid: () => ({ ok: true, value: FernIr.TwimlExampleValue.string(rawValue) }),
+        sid: ({ prefix }) =>
+            rawValue.startsWith(prefix)
+                ? { ok: true, value: FernIr.TwimlExampleValue.string(rawValue) }
+                : { ok: false, reason: `'${rawValue}' is not a SID with prefix '${prefix}'` },
         enum: ({ value: enumName }) => {
             const match = tag.enums[enumName]?.values.find((value) => wireValueOf(value) === rawValue);
             return match != null

@@ -1,0 +1,6 @@
+{
+    "class_name": "alpha_response",
+    "tag_name": "response",
+    "docstring": "<Response> for alpha",
+    "children": ["alpha/redirect"]
+}

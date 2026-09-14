@@ -1,0 +1,3 @@
+<Response>
+    <Redirect method="POST">https://example.com/next</Redirect>
+</Response>

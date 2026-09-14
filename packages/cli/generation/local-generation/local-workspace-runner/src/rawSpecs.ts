@@ -773,7 +773,10 @@ async function copyMaterializedSpec({
             ? {}
             : {
                   overridePaths: materialized.manifestEntry.overridePaths.map(replaceContainerPathPrefix)
-              })
+              }),
+        ...(materialized.manifestEntry.examplesPath == null
+            ? {}
+            : { examplesPath: replaceContainerPathPrefix(materialized.manifestEntry.examplesPath) })
     };
 
     function replacePrefix(value: string): string {
@@ -798,6 +801,7 @@ const SUPPORTED_MATERIALIZED_MANIFEST_ENTRY_KEYS = new Set<string>([
     "type",
     "specPath",
     "overridePaths",
+    "examplesPath",
     "namespace",
     "apiImportSettings"
 ] satisfies Array<keyof RawSpecsManifestEntry>);

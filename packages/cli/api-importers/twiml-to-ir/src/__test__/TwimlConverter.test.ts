@@ -125,10 +125,30 @@ describe("TwimlConverter examples", () => {
                 expect.stringContaining("'two' is not an integer"),
                 expect.stringContaining("<Pause> does not accept text content"),
                 expect.stringContaining("<Number> is not allowed inside <Response>"),
+                expect.stringContaining("'CA1234567890abcdef1234567890abcdef' is not a SID with prefix 'BY'"),
                 expect.stringContaining("'' is not an integer"),
                 expect.stringContaining("<emphasis> requires text content")
             ])
         );
+        expect(ir.twiml?.examples).toEqual([]);
+    });
+
+    it("disambiguates a shared root element by attribute validity without leaking candidate errors", async () => {
+        const { ir, errorCollector } = await convertFixture({ fixture: "shared-root" });
+
+        expect(errorMessages(errorCollector)).toEqual([]);
+        expect(ir.twiml?.examples.map((example) => example.root.tag)).toEqual(["alpha"]);
+    });
+
+    it("reports examples that are valid in more than one namespace", async () => {
+        const { ir, errorCollector } = await convertFixture({
+            fixture: "shared-root",
+            examplesDir: "invalid-examples"
+        });
+
+        expect(errorMessages(errorCollector)).toEqual([
+            expect.stringContaining("is valid in namespaces 'alpha', 'beta'; place the example under a <namespace>/")
+        ]);
         expect(ir.twiml?.examples).toEqual([]);
     });
 });

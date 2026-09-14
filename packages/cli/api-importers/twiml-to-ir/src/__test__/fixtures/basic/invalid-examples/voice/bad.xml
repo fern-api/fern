@@ -2,4 +2,7 @@
     <Say voice="robot" volume="loud">Hi</Say>
     <Pause length="two">text not allowed</Pause>
     <Number>+15558675310</Number>
+    <Dial>
+        <Number byoc="CA1234567890abcdef1234567890abcdef">+15558675310</Number>
+    </Dial>
 </Response>

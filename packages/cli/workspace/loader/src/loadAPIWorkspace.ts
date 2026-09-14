@@ -164,6 +164,20 @@ export async function loadSingleNamespaceAPIWorkspace({
         }
 
         if (definition.schema.type === "twiml") {
+            const absoluteTwimlPath = [definition.schema.path, definition.schema.examples].find(
+                (filepath) => filepath != null && path.isAbsolute(filepath)
+            );
+            if (absoluteTwimlPath != null) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                            filepath: absoluteTwimlPath
+                        }
+                    }
+                };
+            }
             const relativeFilepathToTwiml = RelativeFilePath.of(definition.schema.path);
             const absoluteFilepathToTwiml = join(absolutePathToWorkspace, relativeFilepathToTwiml);
             if (!(await doesPathExist(absoluteFilepathToTwiml))) {
