@@ -355,6 +355,10 @@ export async function runRemoteGenerationForGenerator({
             ir.selfHosted = orgResponse.body.selfHostedSdKs;
             generateOauthClients = orgResponse.body.oauthClientEnabled ?? true;
             generatePaginatedClients = orgResponse.body.paginationEnabled ?? true;
+        } else {
+            interactiveTaskContext.logger.warn(
+                `Failed to load organization settings for ${projectConfig.organization}; assuming pagination and OAuth clients are enabled.`
+            );
         }
     }
 
