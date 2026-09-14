@@ -70,6 +70,17 @@ def serialize_xml_element(
     return f"{XML_DECLARATION}{element}" if xml_declaration else element
 
 
+def append_xml_child(parent: object, field_name: str, child: object) -> None:
+    """Appends `child` to the list-valued `field_name` of `parent`, creating the list if unset.
+
+    Bypasses pydantic's frozen-model guard so fluent builder methods can grow a
+    model in place (the mutation is confined to the children list).
+    """
+    current = parent.__dict__.get(field_name)
+    updated = [*current, child] if current is not None else [child]
+    object.__setattr__(parent, field_name, updated)
+
+
 def _render_attribute_value(attribute: XmlAttribute) -> Optional[str]:
     value = attribute.value
     if value is None:

@@ -1,4 +1,5 @@
-from typing import List, Optional
+import dataclasses
+from typing import Dict, List, Optional, Sequence, Set, Tuple
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
@@ -184,6 +185,189 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 body=AST.CodeWriter("return self.to_xml()"),
             )
         )
+        self._add_xml_builder_methods(pydantic_model, properties=properties)
+
+    def _add_xml_builder_methods(
+        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]
+    ) -> None:
+        """Emits fluent `append(child)` / `<tag>(...)` methods for list-valued child element properties."""
+        list_properties: List[Tuple[ObjectProperty, ir_types.TypeReference]] = []
+        for property in properties:
+            if not _is_xml_element(property):
+                continue
+            item_type = _unwrap_list_item_type(property.value_type)
+            if item_type is not None:
+                list_properties.append((property, item_type))
+        if len(list_properties) == 0:
+            return
+
+        reserved_names: Set[str] = {_field_name(property) for property in properties} | {"to_xml", "append"}
+        for property, item_type in list_properties:
+            field_name = _field_name(property)
+            if len(list_properties) == 1:
+                self._add_append_method(pydantic_model, field_name=field_name, item_type=item_type)
+            for child_type_id, method_name in self._builder_method_names(item_type, reserved_names).items():
+                reserved_names.add(method_name)
+                self._add_child_builder_method(
+                    pydantic_model, method_name=method_name, field_name=field_name, child_type_id=child_type_id
+                )
+
+    def _add_append_method(
+        self, pydantic_model: FernAwarePydanticModel, *, field_name: str, item_type: ir_types.TypeReference
+    ) -> None:
+        core_utilities = self._context.core_utilities
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            writer.write_reference(core_utilities.get_xml_utility("append_xml_child"))
+            writer.write_line(f"(self, {_quote(field_name)}, child)")
+            writer.write_line("return self")
+
+        pydantic_model.add_method_unsafe(
+            AST.FunctionDeclaration(
+                name="append",
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(
+                            name="child", type_hint=pydantic_model.get_type_hint_for_type_reference(item_type)
+                        )
+                    ],
+                    return_type=AST.TypeHint(type=pydantic_model.to_reference()),
+                ),
+                body=AST.CodeWriter(write_body),
+                docstring=AST.CodeWriter("Appends a child element and returns this element for chaining."),
+            )
+        )
+
+    def _builder_method_names(
+        self, item_type: ir_types.TypeReference, reserved_names: Set[str]
+    ) -> Dict[ir_types.TypeId, str]:
+        """Maps each xml-encoded object member of the child type to a unique snake_case method name.
+
+        Names derive from the child's XML tag (`<say-as>` -> `say_as`, `<break>` -> `break_`); on a
+        clash with a field or another child they fall back to the class name, then an `add_` prefix.
+        """
+        candidates: Dict[ir_types.TypeId, str] = {}
+        for type_id in self._get_xml_object_type_ids(item_type):
+            declaration = self._context.get_declaration_for_type_id(type_id)
+            tag = (
+                declaration.encoding.xml.name
+                if declaration.encoding is not None and declaration.encoding.xml is not None
+                else self._context.get_class_name_for_type_id(type_id, as_request=False)
+            )
+            candidates[type_id] = _snake_name(tag)
+
+        tag_counts: Dict[str, int] = {}
+        for name in candidates.values():
+            tag_counts[name] = tag_counts.get(name, 0) + 1
+
+        result: Dict[ir_types.TypeId, str] = {}
+        taken = set(reserved_names)
+        for type_id, name in candidates.items():
+            if tag_counts[name] > 1:
+                name = _snake_name(self._context.get_class_name_for_type_id(type_id, as_request=False))
+            if name in taken:
+                name = f"add_{name}"
+            taken.add(name)
+            result[type_id] = name
+        return result
+
+    def _get_xml_object_type_ids(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
+        type_ids = self._context.maybe_get_type_ids_for_type_reference(type_reference)
+        if type_ids is None:
+            return []
+        result: List[ir_types.TypeId] = []
+        for type_id in type_ids:
+            declaration = self._context.get_declaration_for_type_id(type_id)
+            has_xml = declaration.encoding is not None and declaration.encoding.xml is not None
+            result.extend(
+                declaration.shape.visit(
+                    alias=lambda _: [],
+                    enum=lambda _: [],
+                    object=lambda _: [type_id] if has_xml else [],
+                    union=lambda _: [],
+                    undiscriminated_union=lambda union: [
+                        member_id
+                        for member in union.members
+                        for member_id in self._get_xml_object_type_ids(member.type)
+                    ],
+                )
+            )
+        return result
+
+    def _add_child_builder_method(
+        self,
+        pydantic_model: FernAwarePydanticModel,
+        *,
+        method_name: str,
+        field_name: str,
+        child_type_id: ir_types.TypeId,
+    ) -> None:
+        core_utilities = self._context.core_utilities
+        child_class = pydantic_model.get_class_reference_for_type_id(child_type_id)
+        # Cyclic child types are imported at the bottom of the module; that import has already run by
+        # the time the method body executes, so the constructor call must not be string-quoted.
+        child_constructor = dataclasses.replace(child_class, has_been_dynamically_imported=True)
+        child_declaration = self._context.get_declaration_for_type_id(child_type_id)
+        child_tag = (
+            child_declaration.encoding.xml.name
+            if child_declaration.encoding is not None and child_declaration.encoding.xml is not None
+            else None
+        )
+        child_properties = [
+            ObjectProperty(name=p.name, value_type=p.value_type, docs=p.docs, xml=p.xml)
+            for p in self._context.get_all_properties_including_extensions(child_type_id)
+        ]
+
+        # The text body is the leading positional parameter (`response.say("Hello", voice=...)`);
+        # attributes are keyword-only; nested child lists are populated via the child's own builders.
+        text_property = next((p for p in child_properties if _is_xml_text(p)), None)
+        keyword_properties = [
+            p
+            for p in child_properties
+            if p is not text_property and not (_is_xml_element(p) and _unwrap_list_item_type(p.value_type) is not None)
+        ]
+
+        def parameter(property: ObjectProperty) -> AST.NamedFunctionParameter:
+            return AST.NamedFunctionParameter(
+                name=_field_name(property),
+                type_hint=pydantic_model.get_type_hint_for_type_reference(property.value_type),
+                initializer=self._context.get_initializer_for_type_reference(property.value_type),
+            )
+
+        ordered_keyword_properties = sorted(
+            keyword_properties,
+            key=lambda p: self._context.get_initializer_for_type_reference(p.value_type) is not None,
+        )
+        forwarded_properties: Sequence[ObjectProperty] = (
+            [text_property, *ordered_keyword_properties] if text_property is not None else ordered_keyword_properties
+        )
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            writer.write("child = ")
+            writer.write_reference(child_constructor)
+            writer.write("(")
+            writer.write(", ".join(f"{_field_name(p)}={_field_name(p)}" for p in forwarded_properties))
+            writer.write_line(")")
+            writer.write_reference(core_utilities.get_xml_utility("append_xml_child"))
+            writer.write_line(f"(self, {_quote(field_name)}, child)")
+            writer.write_line("return child")
+
+        docstring = f"Appends a `<{child_tag}>` child element and returns it." if child_tag is not None else None
+        if child_declaration.docs is not None:
+            docstring = f"{docstring}\n\n{child_declaration.docs}" if docstring is not None else child_declaration.docs
+
+        pydantic_model.add_method_unsafe(
+            AST.FunctionDeclaration(
+                name=method_name,
+                signature=AST.FunctionSignature(
+                    parameters=[parameter(text_property)] if text_property is not None else [],
+                    named_parameters=[parameter(p) for p in ordered_keyword_properties],
+                    return_type=AST.TypeHint(type=child_class),
+                ),
+                body=AST.CodeWriter(write_body),
+                docstring=AST.CodeWriter(docstring) if docstring is not None else None,
+            )
+        )
 
 
 def _is_xml_attribute(property: ObjectProperty) -> bool:
@@ -213,6 +397,31 @@ def _xml_name(property: ObjectProperty) -> str:
 
 def _field_name(property: ObjectProperty) -> str:
     return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
+
+
+def _snake_name(name: str) -> str:
+    return resolve_name(get_name_from_wire_value(name)).snake_case.safe_name
+
+
+def _unwrap_list_item_type(type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
+    """Returns the item type of a (possibly optional/nullable) list, or None if not a list."""
+
+    def visit_container(container: ir_types.ContainerType) -> Optional[ir_types.TypeReference]:
+        return container.visit(
+            list_=lambda item: item,
+            map_=lambda _: None,
+            nullable=_unwrap_list_item_type,
+            optional=_unwrap_list_item_type,
+            set_=lambda _: None,
+            literal=lambda _: None,
+        )
+
+    return type_reference.visit(
+        container=visit_container,
+        named=lambda _: None,
+        primitive=lambda _: None,
+        unknown=lambda: None,
+    )
 
 
 def _quote(value: str) -> str:

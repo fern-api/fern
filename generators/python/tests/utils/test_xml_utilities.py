@@ -1,8 +1,12 @@
 import datetime as dt
 import enum
+from typing import List, Optional
+
+import pydantic
 
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
+    append_xml_child,
     XmlAttribute,
     XmlChild,
     serialize_xml_element,
@@ -16,6 +20,9 @@ class Voice(str, enum.Enum):
 class Say:
     def __init__(self, message: str) -> None:
         self.message = message
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Say) and other.message == self.message
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         return serialize_xml_element(name="Say", text=self.message, xml_declaration=xml_declaration)
@@ -84,3 +91,14 @@ def test_namespace_prefix_and_declaration() -> None:
         xml_declaration=True,
     )
     assert xml == f'{XML_DECLARATION}<tw:Dial xmlns:tw="https://www.twilio.com/twiml" />'
+
+
+def test_append_xml_child_on_frozen_model() -> None:
+    class Response(pydantic.BaseModel):
+        model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+        children: Optional[List[Say]] = None
+
+    response = Response()
+    append_xml_child(response, "children", Say("hi"))
+    append_xml_child(response, "children", Say("bye"))
+    assert response.children == [Say("hi"), Say("bye")]
