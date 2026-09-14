@@ -38,6 +38,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly EVENT_PARAMETER_NAME = "event";
     private static readonly CALLBACK_PARAMETER_NAME = "callback";
     private static readonly MESSAGE_PARAMETER_NAME = "message";
+    private static readonly EVENT_NAMES = ["open", "message", "close", "error"] as const;
     private static readonly CLOSE_CODE_VALUE = 1000;
 
     private readonly channel: FernIr.WebSocketChannel;
@@ -283,7 +284,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isReadonly: true,
             scope: Scope.Protected,
             initializer: this.accumulateHandlers
-                ? `{ open: [], ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}: [], close: [], error: [] }`
+                ? `{ ${GeneratedWebsocketSocketClassImpl.EVENT_NAMES.map((name) => `${name}: []`).join(", ")} }`
                 : "{}"
         };
     }
@@ -404,7 +405,10 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private getDispatchStatement(event: "open" | "message" | "close" | "error", args: string): string {
+    private getDispatchStatement(
+        event: (typeof GeneratedWebsocketSocketClassImpl.EVENT_NAMES)[number],
+        args: string
+    ): string {
         const target = `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.${event}`;
         if (!this.accumulateHandlers) {
             return `${target}?.(${args});`;
