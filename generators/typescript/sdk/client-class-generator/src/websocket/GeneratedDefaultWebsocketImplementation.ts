@@ -49,6 +49,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly CONNECTION_TIMEOUT_PROPERTY_NAME = "connectionTimeoutInSeconds";
     private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
+    private static readonly SHOULD_RECONNECT_PROPERTY_NAME = "shouldReconnect";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
     private static readonly ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
@@ -243,7 +244,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     name: GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
-                    docs: ["Number of reconnect attempts. Defaults to 30."]
+                    docs: [
+                        "Maximum number of times to automatically reconnect after the connection closes unexpectedly. Defaults to 30. Set to 0 to disable reconnecting."
+                    ]
                 },
                 {
                     name: GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME,
@@ -256,6 +259,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     type: getTextOfTsNode(ts.factory.createTypeReferenceNode("AbortSignal")),
                     hasQuestionToken: true,
                     docs: ["A signal to abort the WebSocket connection."]
+                },
+                {
+                    name: GeneratedDefaultWebsocketImplementation.SHOULD_RECONNECT_PROPERTY_NAME,
+                    type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.CloseEvent._getReferenceToType())}) => boolean`,
+                    hasQuestionToken: true,
+                    docs: [
+                        "Decides whether a close event should trigger a reconnect. Return false to treat the close as terminal. Defaults to reconnecting on any close code other than 1000."
+                    ]
                 }
             ],
             isExported: true
@@ -375,6 +386,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 undefined,
                 undefined,
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME)
+            ),
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.SHOULD_RECONNECT_PROPERTY_NAME)
             )
         );
 
@@ -617,6 +633,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         ts.factory.createToken(ts.SyntaxKind.ColonToken),
                         ts.factory.createIdentifier("undefined")
                     )
+                ),
+                ts.factory.createShorthandPropertyAssignment(
+                    GeneratedDefaultWebsocketImplementation.SHOULD_RECONNECT_PROPERTY_NAME
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),

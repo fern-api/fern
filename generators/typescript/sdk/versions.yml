@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.94.0
+  changelogEntry:
+    - summary: |
+        Add a `websocketHandlerMode` config option (`"replace" | "accumulate"`, defaults to `"replace"`)
+        for generated WebSocket `Socket` classes. With `accumulate`, multiple `on()` handlers for the same
+        event are all kept and run in registration order instead of the last one replacing the previous.
+        Generated sockets now also expose `off(event, callback)` to detach a handler in both modes.
+        Defaults to `replace`, so generated output is unchanged unless the option is enabled.
+      type: feat
+    - summary: |
+        Fix the generated README/reference pagination snippet, which assigned `page.getNextPage()`
+        without `await` and therefore did not type-check.
+      type: fix
+    - summary: |
+        Add an optional `shouldReconnect(event: CloseEvent) => boolean` option to `ReconnectingWebSocket` and to the
+        generated WebSocket `connect()` args. Return `false` to treat a close as terminal and suppress the automatic
+        reconnect (e.g. after the client sent an end-of-stream message and the server closed with a non-1000 code).
+        Defaults to the existing behaviour of reconnecting on any close code other than 1000. Also clarifies the
+        `reconnectAttempts` docstring (defaults to 30; set to 0 to disable reconnecting).
+      type: feat
+  createdAt: "2026-09-14"
+  irVersion: 67
+- version: 3.93.1
+  changelogEntry:
+    - summary: |
+        The generated README now always includes a Pagination section (and pagination usage snippets)
+        when the API has paginated endpoints, matching the client which always returns `core.Page`.
+        Previously the section was dropped when the CLI ran without org information (e.g. `fern generate --local` without a `FERN_TOKEN`).
+      type: fix
+  createdAt: "2026-09-14"
+  irVersion: 67
 - version: 3.93.0
   changelogEntry:
     - summary: |

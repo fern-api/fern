@@ -122,6 +122,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // Workers, Deno). Node behavior is unchanged.
     guardProcessEnvAccess: z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
+    // Controls how generated WebSocket socket classes store handlers registered via `on()`.
+    // `replace` (default): a second `on()` for the same event replaces the previous handler.
+    // `accumulate`: handlers accumulate and run in registration order.
+    websocketHandlerMode: z.optional(z.enum(["replace", "accumulate"])),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
