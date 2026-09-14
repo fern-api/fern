@@ -1,0 +1,7 @@
+- summary: |
+    `fern docs md generate` now runs the library parser(s) locally using Docker by
+    default, so the command no longer requires authentication and the `--local` flag
+    is deprecated as a no-op. A new `--remote` flag is available as an escape hatch
+    for environments without a container runtime (e.g. containerized CI); it generates
+    on Fern's servers and requires authentication and a `git` library input.
+  type: feat

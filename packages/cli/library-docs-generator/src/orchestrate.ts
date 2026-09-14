@@ -12,10 +12,10 @@ import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
+export type LibraryLanguage = "PYTHON" | "CPP";
+
 const POLL_INTERVAL_MS = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
-
-export type LibraryLanguage = "PYTHON" | "CPP";
 
 /**
  * Lightweight client interface for the library docs endpoints.
@@ -124,10 +124,11 @@ const defaultWrapStep: StepWrapper = ({ operation }) => operation();
  * Iterates over the configured libraries, producing the library-docs IR and
  * running the local MDX generator for each.
  *
- * By default the IR is produced remotely via the FDR library-docs endpoints
- * (start generation, poll for completion, download the resulting IR). When
- * `local` is set, the parser Docker images are run directly on the user's
- * machine and no network calls or authentication are required.
+ * By default the IR is produced by running the parser Docker images directly
+ * on the user's machine — no network calls or authentication are required.
+ * When `remote` is set (escape hatch for environments without Docker), the IR
+ * is produced via the FDR library-docs endpoints instead, which requires
+ * authentication.
  *
  * All libraries are attempted (via `Promise.allSettled`) so a single failure
  * does not abort generation for the remaining ones. If any library failed,
@@ -138,24 +139,25 @@ export async function runLibraryDocsGeneration({
     libraries,
     library,
     docsDirectoryPath,
-    orgId,
-    tokenValue,
     context,
     wrapStep = defaultWrapStep,
-    local = false
+    remote = false,
+    orgId,
+    tokenValue
 }: {
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration | undefined>;
     /** Optional library name to filter to a single entry. */
     library?: string;
     /** Absolute path of the directory containing docs.yml — used to resolve input/output paths. */
     docsDirectoryPath: AbsoluteFilePath;
-    orgId: string;
-    /** The raw bearer token value. Required unless `local` is set. */
-    tokenValue?: string;
     context: TaskContext;
     wrapStep?: StepWrapper;
-    /** Run parser Docker images locally instead of using Fern's servers. */
-    local?: boolean;
+    /** Escape hatch: generate the IR on Fern's servers instead of running the parser Docker images locally. */
+    remote?: boolean;
+    /** Organization id; required when `remote` is set. */
+    orgId?: string;
+    /** The raw bearer token value; required when `remote` is set. */
+    tokenValue?: string;
 }): Promise<{ successful: number }> {
     if (Object.keys(libraries).length === 0) {
         throw new CliError({
@@ -177,17 +179,17 @@ export async function runLibraryDocsGeneration({
 
     const librariesToGenerate = library != null ? { [library]: libraries[library] } : libraries;
 
-    let client: LibraryDocsClient | undefined;
-    if (!local) {
-        if (tokenValue == null) {
+    let remoteGeneration: { client: LibraryDocsClient; orgId: string } | undefined;
+    if (remote) {
+        if (tokenValue == null || orgId == null) {
             throw new CliError({
                 message:
-                    "Authentication is required for remote library docs generation.\n\n" +
-                    "  Run 'fern login', or pass --local to parse libraries locally with Docker.",
+                    "Authentication is required for remote library docs generation (--remote).\n\n" +
+                    "  Run 'fern login', or drop --remote to parse libraries locally with Docker.",
                 code: CliError.Code.AuthError
             });
         }
-        client = createLibraryDocsClient({ token: tokenValue });
+        remoteGeneration = { client: createLibraryDocsClient({ token: tokenValue }), orgId };
     }
 
     const results = await Promise.allSettled(
@@ -199,14 +201,12 @@ export async function runLibraryDocsGeneration({
                 });
             }
             await generateSingleLibrary({
-                client,
                 context,
                 name,
                 config,
                 docsDirectoryPath,
-                orgId,
                 wrapStep,
-                local
+                remoteGeneration
             });
         })
     );
@@ -232,23 +232,19 @@ export async function runLibraryDocsGeneration({
 }
 
 async function generateSingleLibrary({
-    client,
     context,
     name,
     config,
     docsDirectoryPath,
-    orgId,
     wrapStep,
-    local
+    remoteGeneration
 }: {
-    client: LibraryDocsClient | undefined;
     context: TaskContext;
     name: string;
     config: docsYml.RawSchemas.LibraryConfiguration;
     docsDirectoryPath: AbsoluteFilePath;
-    orgId: string;
     wrapStep: StepWrapper;
-    local: boolean;
+    remoteGeneration: { client: LibraryDocsClient; orgId: string } | undefined;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
 
@@ -282,19 +278,26 @@ async function generateSingleLibrary({
         });
     }
 
-    let ir: unknown;
-    if (local) {
-        ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
-    } else if (client != null) {
-        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep });
-    } else {
-        // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
-        // path), but keeps the nullable `client` honest without a non-null assertion.
-        throw new CliError({
-            message: `Library '${name}': authentication is required for remote generation. Re-run with --local or run 'fern login'.`,
-            code: CliError.Code.AuthError
-        });
-    }
+    const ir =
+        remoteGeneration != null
+            ? await generateIrRemotely({
+                  client: remoteGeneration.client,
+                  name,
+                  config,
+                  language,
+                  orgId: remoteGeneration.orgId,
+                  doxyfileContent,
+                  wrapStep
+              })
+            : await generateIrLocally({
+                  context,
+                  name,
+                  config,
+                  docsDirectoryPath,
+                  language,
+                  doxyfileContent,
+                  wrapStep
+              });
 
     if (language === "CPP") {
         const cppIr = ir as CppLibraryDocsIr;
@@ -348,7 +351,7 @@ async function generateIrRemotely({
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
         throw new CliError({
-            message: `Library '${name}': 'path' input requires the --local flag. Use 'git' input for remote generation.`,
+            message: `Library '${name}': 'path' input is not supported with --remote. Drop --remote to parse the local checkout, or use a 'git' input.`,
             code: CliError.Code.ConfigError
         });
     }
