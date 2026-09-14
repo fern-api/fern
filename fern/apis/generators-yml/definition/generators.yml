@@ -765,6 +765,19 @@ types:
     properties:
       conjure: string
 
+  TwimlSpecSchema:
+    docs: |
+      A directory of TwiML tag definitions (one JSON file per tag, grouped by
+      namespace such as `voice/`, `messaging/`, `fax/`). Generators emit an XML
+      builder library from it instead of an HTTP client.
+    properties:
+      twiml:
+        type: string
+        docs: Path to the directory containing the TwiML definitions.
+      examples:
+        type: optional<string>
+        docs: Path to a directory of `.xml` example documents rendered as code snippets.
+
   SpecSchema:
     discriminated: false
     union:
@@ -773,6 +786,7 @@ types:
       - ProtobufSpecSchema
       - OpenRPCSpecSchema
       - GraphQLSpecSchema
+      - TwimlSpecSchema
 
   GraphQLSpecSchema:
     properties:

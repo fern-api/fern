@@ -13,6 +13,7 @@ imports:
   http: http.yml
   proto: proto.yml
   publish: publish.yml
+  twiml: twiml.yml
   types: types.yml
   variables: variables.yml
   webhooks: webhooks.yml
@@ -90,6 +91,11 @@ types:
         docs: |
           Configuration used for generating names. Stored for backwards compatibility so that
           IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
+      twiml:
+        type: optional<twiml.TwimlDefinition>
+        docs: |
+          XML builder (TwiML) definitions loaded from a `twiml` spec. Present only when the API
+          declares one; generators without TwiML support ignore it.
 
   CasingsConfig:
     docs: |

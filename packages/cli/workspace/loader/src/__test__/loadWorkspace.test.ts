@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
+import { OSSWorkspace, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import assert from "assert";
@@ -101,6 +101,66 @@ describe("loadWorkspace", () => {
         expect(result.failures[RelativeFilePath.of("generators.yml")]).toEqual({
             type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
             filepath: absolutePathToOpenApi
+        });
+    });
+});
+
+describe("loadWorkspace twiml", () => {
+    const absolutePathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/twiml"));
+
+    it("loads twiml definitions and examples into allSpecs", async () => {
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixture,
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            workspaceName: undefined
+        });
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+        assert(workspace.workspace instanceof OSSWorkspace);
+
+        expect(workspace.workspace.allSpecs).toEqual([
+            {
+                type: "twiml",
+                absoluteFilepath: join(absolutePathToFixture, RelativeFilePath.of("definitions")),
+                absoluteFilepathToOverrides: undefined,
+                absoluteFilepathToExamples: join(absolutePathToFixture, RelativeFilePath.of("examples"))
+            }
+        ]);
+        expect(workspace.workspace.getAbsoluteFilePaths()).toEqual([
+            absolutePathToFixture,
+            join(absolutePathToFixture, RelativeFilePath.of("definitions")),
+            join(absolutePathToFixture, RelativeFilePath.of("examples"))
+        ]);
+    });
+
+    it("fails with FILE_MISSING when the definitions or examples directory does not exist", async () => {
+        const load = (schema: { path: string; examples: string | undefined }) =>
+            loadSingleNamespaceAPIWorkspace({
+                absolutePathToWorkspace: absolutePathToFixture,
+                namespace: undefined,
+                definitions: [
+                    {
+                        schema: { type: "twiml", ...schema },
+                        origin: undefined,
+                        overrides: undefined,
+                        overlays: undefined,
+                        audiences: [],
+                        settings: undefined
+                    }
+                ]
+            });
+
+        const missingDefinitions = await load({ path: "does-not-exist", examples: undefined });
+        assert(!Array.isArray(missingDefinitions) && !missingDefinitions.didSucceed);
+        expect(missingDefinitions.failures[RelativeFilePath.of("does-not-exist")]).toEqual({
+            type: WorkspaceLoaderFailureType.FILE_MISSING
+        });
+
+        const missingExamples = await load({ path: "definitions", examples: "no-examples" });
+        assert(!Array.isArray(missingExamples) && !missingExamples.didSucceed);
+        expect(missingExamples.failures[RelativeFilePath.of("no-examples")]).toEqual({
+            type: WorkspaceLoaderFailureType.FILE_MISSING
         });
     });
 });

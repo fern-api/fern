@@ -1,0 +1,5 @@
+<Response>
+    <Say voice="robot" volume="loud">Hi</Say>
+    <Pause length="two">text not allowed</Pause>
+    <Number>+15558675310</Number>
+</Response>

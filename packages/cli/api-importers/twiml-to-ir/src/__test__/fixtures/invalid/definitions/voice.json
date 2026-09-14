@@ -1,0 +1,5 @@
+{
+    "class_name": "voice_response",
+    "tag_name": "response",
+    "children": ["voice/say", "voice/missing"]
+}

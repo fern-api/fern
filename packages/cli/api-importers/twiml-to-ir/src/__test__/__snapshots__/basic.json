@@ -1,0 +1,567 @@
+{
+  "namespaces": [
+    {
+      "name": "voice",
+      "root": "voice",
+      "tags": {
+        "voice": {
+          "id": "voice",
+          "name": "voice_response",
+          "xmlName": "Response",
+          "docs": "<Response> TwiML for Voice",
+          "attributes": [],
+          "enums": {},
+          "children": [
+            "voice/say",
+            "voice/dial",
+            "voice/pause"
+          ],
+          "visibility": "public"
+        },
+        "voice/dial": {
+          "id": "voice/dial",
+          "name": "dial",
+          "xmlName": "Dial",
+          "docs": "<Dial> TwiML Verb",
+          "body": {
+            "name": "number",
+            "docs": "Phone number to dial",
+            "type": {
+              "value": "PHONE_NUMBER",
+              "type": "primitive"
+            },
+            "required": false
+          },
+          "attributes": [
+            {
+              "name": "action",
+              "xmlName": "action",
+              "docs": "Action URL",
+              "type": {
+                "value": "URL",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "method",
+              "xmlName": "method",
+              "docs": "Action URL method",
+              "type": {
+                "value": "HTTP_METHOD",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "timeout",
+              "xmlName": "timeout",
+              "docs": "Time to wait for answer",
+              "type": {
+                "value": "INTEGER",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "hangup_on_star",
+              "xmlName": "hangupOnStar",
+              "docs": "Hangup call on star press",
+              "type": {
+                "value": "BOOLEAN",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "caller_id",
+              "xmlName": "callerId",
+              "docs": "Caller ID to display",
+              "type": {
+                "members": [
+                  {
+                    "value": "PHONE_NUMBER",
+                    "type": "primitive"
+                  },
+                  {
+                    "value": "STRING",
+                    "type": "primitive"
+                  }
+                ],
+                "type": "union"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "record",
+              "xmlName": "record",
+              "docs": "Record the call",
+              "type": {
+                "value": "record",
+                "type": "enum"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "recording_status_callback_event",
+              "xmlName": "recordingStatusCallbackEvent",
+              "docs": "Recording status callback events",
+              "type": {
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "visibility": "internal"
+            }
+          ],
+          "enums": {
+            "record": {
+              "name": "record",
+              "values": [
+                {
+                  "wireValue": "do-not-record",
+                  "name": "do_not_record"
+                },
+                {
+                  "wireValue": "record-from-answer",
+                  "name": "record_from_answer"
+                },
+                {
+                  "wireValue": "record-from-ringing",
+                  "name": "record_from_ringing"
+                }
+              ]
+            }
+          },
+          "children": [
+            "voice/number"
+          ],
+          "visibility": "public"
+        },
+        "voice/number": {
+          "id": "voice/number",
+          "name": "number",
+          "xmlName": "Number",
+          "docs": "<Number> TwiML Noun",
+          "body": {
+            "name": "phone_number",
+            "docs": "Phone Number to dial",
+            "type": {
+              "value": "PHONE_NUMBER",
+              "type": "primitive"
+            },
+            "required": false
+          },
+          "attributes": [
+            {
+              "name": "send_digits",
+              "xmlName": "sendDigits",
+              "docs": "DTMF tones to play when the call is answered",
+              "type": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "status_callback_event",
+              "xmlName": "statusCallbackEvent",
+              "docs": "Events to call status callback",
+              "type": {
+                "value": {
+                  "value": "event",
+                  "type": "enum"
+                },
+                "type": "list"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "byoc",
+              "xmlName": "byoc",
+              "docs": "BYOC trunk SID",
+              "type": {
+                "prefix": "BY",
+                "type": "sid"
+              },
+              "visibility": "public"
+            }
+          ],
+          "enums": {
+            "event": {
+              "name": "event",
+              "values": [
+                "initiated",
+                "ringing",
+                "answered",
+                "completed"
+              ]
+            }
+          },
+          "children": [],
+          "visibility": "public"
+        },
+        "voice/pause": {
+          "id": "voice/pause",
+          "name": "pause",
+          "xmlName": "Pause",
+          "docs": "<Pause> TwiML Verb",
+          "attributes": [
+            {
+              "name": "length",
+              "xmlName": "length",
+              "docs": "Length in seconds to pause",
+              "type": {
+                "value": "INTEGER",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            }
+          ],
+          "enums": {},
+          "children": [],
+          "visibility": "public"
+        },
+        "voice/say": {
+          "id": "voice/say",
+          "name": "say",
+          "xmlName": "Say",
+          "docs": "<Say> TwiML Verb",
+          "body": {
+            "name": "message",
+            "docs": "Message to say",
+            "type": {
+              "value": "STRING",
+              "type": "primitive"
+            },
+            "required": false
+          },
+          "attributes": [
+            {
+              "name": "voice",
+              "xmlName": "voice",
+              "docs": "Voice to use",
+              "type": {
+                "value": "voice",
+                "type": "enum"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "loop",
+              "xmlName": "loop",
+              "docs": "Times to loop message",
+              "type": {
+                "value": "INTEGER",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "language",
+              "xmlName": "language",
+              "docs": "Message language",
+              "type": {
+                "value": "language",
+                "type": "enum"
+              },
+              "visibility": "public"
+            }
+          ],
+          "enums": {
+            "voice": {
+              "name": "voice",
+              "values": [
+                "man",
+                "woman",
+                "alice"
+              ]
+            },
+            "language": {
+              "name": "language",
+              "values": [
+                "en",
+                {
+                  "wireValue": "en-GB",
+                  "name": "en_GB"
+                },
+                "fr"
+              ]
+            }
+          },
+          "children": [
+            "voice/ssml_break",
+            "voice/ssml_emphasis"
+          ],
+          "visibility": "public"
+        },
+        "voice/ssml_break": {
+          "id": "voice/ssml_break",
+          "name": "ssml_break",
+          "xmlName": "break",
+          "docs": "Adding a Pause in <Say>",
+          "attributes": [
+            {
+              "name": "strength",
+              "xmlName": "strength",
+              "docs": "Set a pause based on strength",
+              "type": {
+                "value": "strength",
+                "type": "enum"
+              },
+              "visibility": "public"
+            },
+            {
+              "name": "time",
+              "xmlName": "time",
+              "docs": "Set a pause to a specific length of time in seconds or milliseconds",
+              "type": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "visibility": "public"
+            }
+          ],
+          "enums": {
+            "strength": {
+              "name": "strength",
+              "values": [
+                "none",
+                {
+                  "wireValue": "x-weak",
+                  "name": "x_weak"
+                },
+                "weak",
+                "medium",
+                "strong",
+                {
+                  "wireValue": "x-strong",
+                  "name": "x_strong"
+                }
+              ]
+            }
+          },
+          "children": [],
+          "visibility": "public"
+        },
+        "voice/ssml_emphasis": {
+          "id": "voice/ssml_emphasis",
+          "name": "ssml_emphasis",
+          "xmlName": "emphasis",
+          "docs": "Emphasizing Words in <Say>",
+          "body": {
+            "name": "words",
+            "docs": "Words to emphasize",
+            "type": {
+              "value": "STRING",
+              "type": "primitive"
+            },
+            "required": true
+          },
+          "attributes": [
+            {
+              "name": "level",
+              "xmlName": "level",
+              "docs": "Specify the degree of emphasis",
+              "type": {
+                "value": "level",
+                "type": "enum"
+              },
+              "visibility": "public"
+            }
+          ],
+          "enums": {
+            "level": {
+              "name": "level",
+              "values": [
+                "strong",
+                "moderate",
+                "reduced"
+              ]
+            }
+          },
+          "children": [
+            "voice/ssml_break",
+            "voice/ssml_emphasis"
+          ],
+          "visibility": "public"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "id": "dial-number",
+      "name": "dial-number",
+      "xml": "<Response>\n    <Dial callerId=\"+15551112222\" hangupOnStar=\"true\">\n        <Number statusCallbackEvent=\"initiated ringing\" byoc=\"BY1234567890abcdef1234567890abcdef\">+15558675310</Number>\n    </Dial>\n</Response>\n",
+      "root": {
+        "tag": "voice",
+        "attributes": [],
+        "content": [
+          {
+            "tag": "voice/dial",
+            "attributes": [
+              {
+                "name": "caller_id",
+                "value": {
+                  "value": "+15551112222",
+                  "type": "string"
+                }
+              },
+              {
+                "name": "hangup_on_star",
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                }
+              }
+            ],
+            "content": [
+              {
+                "tag": "voice/number",
+                "attributes": [
+                  {
+                    "name": "status_callback_event",
+                    "value": {
+                      "items": [
+                        {
+                          "value": "initiated",
+                          "type": "enum"
+                        },
+                        {
+                          "value": "ringing",
+                          "type": "enum"
+                        }
+                      ],
+                      "type": "list"
+                    }
+                  },
+                  {
+                    "name": "byoc",
+                    "value": {
+                      "value": "BY1234567890abcdef1234567890abcdef",
+                      "type": "string"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "value": "+15558675310",
+                    "type": "text"
+                  }
+                ],
+                "type": "node"
+              }
+            ],
+            "type": "node"
+          }
+        ]
+      }
+    },
+    {
+      "id": "say-hello",
+      "name": "say-hello",
+      "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n    <Say voice=\"woman\" loop=\"2\">Hello!</Say>\n</Response>\n",
+      "root": {
+        "tag": "voice",
+        "attributes": [],
+        "content": [
+          {
+            "tag": "voice/say",
+            "attributes": [
+              {
+                "name": "voice",
+                "value": {
+                  "value": "woman",
+                  "type": "enum"
+                }
+              },
+              {
+                "name": "loop",
+                "value": {
+                  "value": 2,
+                  "type": "integer"
+                }
+              }
+            ],
+            "content": [
+              {
+                "value": "Hello!",
+                "type": "text"
+              }
+            ],
+            "type": "node"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ssml-mixed",
+      "name": "ssml-mixed",
+      "xml": "<Response>\n    <Say>Hello <emphasis level=\"strong\">world<break strength=\"x-weak\"/>again</emphasis>, bye</Say>\n</Response>\n",
+      "root": {
+        "tag": "voice",
+        "attributes": [],
+        "content": [
+          {
+            "tag": "voice/say",
+            "attributes": [],
+            "content": [
+              {
+                "value": "Hello ",
+                "type": "text"
+              },
+              {
+                "tag": "voice/ssml_emphasis",
+                "attributes": [
+                  {
+                    "name": "level",
+                    "value": {
+                      "value": "strong",
+                      "type": "enum"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "value": "world",
+                    "type": "text"
+                  },
+                  {
+                    "tag": "voice/ssml_break",
+                    "attributes": [
+                      {
+                        "name": "strength",
+                        "value": {
+                          "value": {
+                            "wireValue": "x-weak",
+                            "name": "x_weak"
+                          },
+                          "type": "enum"
+                        }
+                      }
+                    ],
+                    "content": [],
+                    "type": "node"
+                  },
+                  {
+                    "value": "again",
+                    "type": "text"
+                  }
+                ],
+                "type": "node"
+              },
+              {
+                "value": ", bye",
+                "type": "text"
+              }
+            ],
+            "type": "node"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -237,7 +237,8 @@ export function generateIntermediateRepresentation({
         audiences: workspace.definition.rootApiFile.contents.audiences,
         generationMetadata: generationMetadata,
         apiPlayground: true,
-        casingsConfig: { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary }
+        casingsConfig: { generationLanguage, keywords, smartCasing, smartCasingDigitWordBoundary },
+        twiml: workspace.twiml
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

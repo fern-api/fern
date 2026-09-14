@@ -53,6 +53,7 @@
     "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/openapi-to-ir": "workspace:*",
     "@fern-api/openrpc-to-ir": "workspace:*",
+    "@fern-api/twiml-to-ir": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",

@@ -79,6 +79,7 @@ export function makeMinimalIr(
         generationMetadata: undefined,
         apiPlayground: undefined,
         casingsConfig: undefined,
+        twiml: undefined,
         ...overrides
     };
 }

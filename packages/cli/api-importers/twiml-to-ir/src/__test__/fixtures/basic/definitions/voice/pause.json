@@ -1,0 +1,11 @@
+{
+    "class_name": "pause",
+    "tag_name": "pause",
+    "docstring": "<Pause> TwiML Verb",
+    "attributes": {
+        "length": {
+            "type": "integer",
+            "docstring": "Length in seconds to pause"
+        }
+    }
+}

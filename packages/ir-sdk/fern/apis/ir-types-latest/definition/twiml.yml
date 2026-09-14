@@ -1,0 +1,167 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  TwimlTagId:
+    type: string
+    docs: |
+      Stable identifier of a tag, namespaced by the TwiML document it belongs to
+      (e.g. `voice/say`, `messaging/message`). Child references and example nodes
+      point at tags by this id.
+
+  TwimlDefinition:
+    docs: |
+      Declarative description of an XML builder library (TwiML). Unlike the HTTP
+      surface of the IR, a TwiML definition is a graph of XML tags: each tag has
+      attributes, optional text content and an ordered set of allowed child tags.
+      Generators emit one builder class per tag plus a small XML runtime, and can
+      render the `examples` as language-specific snippets.
+    properties:
+      namespaces:
+        type: list<TwimlNamespace>
+        docs: One entry per root document (e.g. voice, messaging, fax).
+      examples:
+        type: list<TwimlExample>
+        docs: Example documents, validated against the tag graph.
+
+  TwimlNamespace:
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: commons.NameOrString
+        docs: e.g. `voice`. Generators typically emit one module per namespace.
+      root:
+        type: TwimlTagId
+        docs: The tag that represents the document root (`<Response>`).
+      tags:
+        type: map<TwimlTagId, TwimlTag>
+        docs: Every tag reachable from `root`, including the root itself.
+
+  TwimlTag:
+    extends: commons.WithDocs
+    properties:
+      id: TwimlTagId
+      name:
+        type: commons.NameOrString
+        docs: Name of the generated builder class (e.g. `say`, `sip_uri`, `voice_response`).
+      xmlName:
+        type: string
+        docs: Exact element name written to XML, casing already applied (e.g. `Say`, `break`, `Uri`).
+      body:
+        type: optional<TwimlBody>
+        docs: Text content accepted by this tag, if any.
+      attributes: list<TwimlAttribute>
+      enums:
+        type: map<string, TwimlEnum>
+        docs: Enums scoped to this tag, keyed by the name used in `TwimlType.enum`.
+      children:
+        type: list<TwimlTagId>
+        docs: Tags that may be nested inside this one. May include this tag's own id (recursive SSML).
+      visibility: TwimlVisibility
+
+  TwimlVisibility:
+    enum:
+      - public
+      - internal
+
+  TwimlBody:
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: commons.NameOrString
+        docs: Parameter name used for the text content in builders (e.g. `message`, `url`).
+      type: TwimlType
+      required: boolean
+
+  TwimlAttribute:
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: commons.NameOrString
+        docs: Language-neutral name; generators derive casing and keyword escaping from it.
+      xmlName:
+        type: string
+        docs: Exact attribute name written to XML (e.g. `callerId`, `xml:lang`, `interpret-as`).
+      type: TwimlType
+      visibility: TwimlVisibility
+
+  TwimlType:
+    union:
+      primitive: TwimlPrimitiveType
+      sid: TwimlSidType
+      enum:
+        type: string
+        docs: Key into the enclosing tag's `enums`.
+      list: TwimlType
+      union: TwimlUnionType
+
+  TwimlPrimitiveType:
+    enum:
+      - STRING
+      - INTEGER
+      - BOOLEAN
+      - URL
+      - HTTP_METHOD
+      - PHONE_NUMBER
+      - OBJECT
+
+  TwimlSidType:
+    properties:
+      prefix:
+        type: string
+        docs: Two-letter Twilio SID prefix (e.g. `CA`, `DE`).
+
+  TwimlUnionType:
+    properties:
+      members: list<TwimlType>
+
+  TwimlEnum:
+    properties:
+      name: commons.NameOrString
+      values: list<commons.NameAndWireValueOrString>
+
+  TwimlExample:
+    extends: commons.WithDocs
+    properties:
+      id:
+        type: string
+        docs: Stable identifier, e.g. the docs slug `say-using-language-attribute`.
+      name: commons.NameOrString
+      xml:
+        type: string
+        docs: The example document exactly as authored.
+      root: TwimlExampleNode
+
+  TwimlExampleNode:
+    properties:
+      tag: TwimlTagId
+      attributes: list<TwimlExampleAttribute>
+      content:
+        type: list<TwimlExampleContent>
+        docs: Ordered mixed content; text and child elements may interleave (SSML).
+
+  TwimlExampleAttribute:
+    properties:
+      name:
+        type: commons.NameOrString
+        docs: Matches `TwimlAttribute.name` on the node's tag.
+      value: TwimlExampleValue
+
+  TwimlExampleValue:
+    union:
+      string: string
+      integer: integer
+      boolean: boolean
+      enum: commons.NameAndWireValueOrString
+      list: TwimlExampleValueList
+
+  TwimlExampleValueList:
+    properties:
+      items: list<TwimlExampleValue>
+
+  TwimlExampleContent:
+    union:
+      text: string
+      node: TwimlExampleNode

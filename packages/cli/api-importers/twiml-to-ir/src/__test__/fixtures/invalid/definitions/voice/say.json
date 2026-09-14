@@ -1,0 +1,11 @@
+{
+    "class_name": "say",
+    "tag_name": "say",
+    "enums": {
+        "voice": ["man", "woman"]
+    },
+    "attributes": {
+        "voice": { "type": "enum:nope" },
+        "loop": { "type": "int" }
+    }
+}

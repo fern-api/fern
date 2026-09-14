@@ -65,4 +65,9 @@ export interface IntermediateRepresentation {
      * IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
      */
     casingsConfig: FernIr.CasingsConfig | undefined;
+    /**
+     * XML builder (TwiML) definitions loaded from a `twiml` spec. Present only when the API
+     * declares one; generators without TwiML support ignore it.
+     */
+    twiml: FernIr.TwimlDefinition | undefined;
 }

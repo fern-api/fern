@@ -132,7 +132,8 @@ export type APIDefinitionSchema =
     | ProtoAPIDefinitionSchema
     | OSSAPIDefinitionSchema
     | OpenRPCDefinitionSchema
-    | GraphQLDefinitionSchema;
+    | GraphQLDefinitionSchema
+    | TwimlDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -155,6 +156,12 @@ export interface OpenRPCDefinitionSchema {
 
 export interface GraphQLDefinitionSchema {
     type: "graphql";
+    path: string;
+    examples: string | undefined;
+}
+
+export interface TwimlDefinitionSchema {
+    type: "twiml";
     path: string;
     examples: string | undefined;
 }
