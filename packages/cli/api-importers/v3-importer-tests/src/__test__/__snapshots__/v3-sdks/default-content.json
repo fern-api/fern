@@ -252,6 +252,7 @@
   "subpackages": {
     "subpackage_generativelanguage": {
       "name": "generativelanguage",
+      "displayName": "generativelanguage",
       "fernFilepath": {
         "allParts": [
           "generativelanguage"

@@ -555,6 +555,7 @@
   "subpackages": {
     "subpackage_link": {
       "name": "link",
+      "displayName": "link",
       "fernFilepath": {
         "allParts": [
           "link"

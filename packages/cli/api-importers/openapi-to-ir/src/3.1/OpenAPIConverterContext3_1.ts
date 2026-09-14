@@ -10,7 +10,7 @@ import { DisplayNameExtension } from "../extensions/x-display-name.js";
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
     public globalHeaderNames: string[] | undefined;
-    private readonly tagToDisplayName: Record<string, string> = {};
+    private tagToDisplayName: Record<string, string> | undefined;
 
     public isReferenceObject(
         parameter:
@@ -109,18 +109,25 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         this.globalHeaderNames = globalHeaders.map((header) => getWireValue(header.name));
     }
 
-    public getDisplayNameForTag(tag: string): string {
-        if (Object.keys(this.tagToDisplayName).length === 0) {
-            for (const tag of this.spec.tags ?? []) {
-                const displayNameExtension = new DisplayNameExtension({
-                    breadcrumbs: ["tags", tag.name],
-                    tag,
+    /**
+     * Returns the `x-displayName` declared on a tag, or undefined when the tag has no such
+     * extension. Callers decide how to label a tag that carries no explicit display name.
+     */
+    public getExplicitDisplayNameForTag(tag: string): string | undefined {
+        if (this.tagToDisplayName == null) {
+            const tagToDisplayName: Record<string, string> = {};
+            for (const specTag of this.spec.tags ?? []) {
+                const displayName = new DisplayNameExtension({
+                    breadcrumbs: ["tags", specTag.name],
+                    tag: specTag,
                     context: this
-                });
-                const tagDisplayName = displayNameExtension.convert()?.displayName ?? tag.name;
-                this.tagToDisplayName[tag.name] = tagDisplayName;
+                }).convert()?.displayName;
+                if (displayName != null) {
+                    tagToDisplayName[specTag.name] = displayName;
+                }
             }
+            this.tagToDisplayName = tagToDisplayName;
         }
-        return this.tagToDisplayName[tag] ?? tag;
+        return this.tagToDisplayName[tag];
     }
 }

@@ -4144,6 +4144,7 @@
   "subpackages": {
     "subpackage_pet": {
       "name": "pet",
+      "displayName": "pet",
       "fernFilepath": {
         "allParts": [
           "pet"
@@ -4159,6 +4160,7 @@
     },
     "subpackage_order": {
       "name": "order",
+      "displayName": "order",
       "fernFilepath": {
         "allParts": [
           "order"
