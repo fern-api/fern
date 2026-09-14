@@ -2,9 +2,37 @@ types:
   EncodingSchema:
     properties:
       proto: optional<ProtobufTypeSchema>
+      xml: optional<XmlEncodingSchema>
 
   ProtobufTypeSchema:
     properties:
       type:
         docs: The name of the Protobuf type (e.g. google.protobuf.Struct).
         type: string
+
+  XmlEncodingSchema:
+    docs: |
+      On a type declaration: marks the object as an XML element (e.g. a TwiML verb).
+      On an object property: controls how the property serializes within its parent element.
+    properties:
+      name:
+        docs: The element or attribute name on the wire, casing preserved. Defaults to the type or property name.
+        type: optional<string>
+      namespace:
+        docs: The XML namespace URI.
+        type: optional<string>
+      prefix:
+        docs: The namespace prefix for the element name.
+        type: optional<string>
+      attribute:
+        docs: Serialize this property as an attribute of the parent element instead of a child element.
+        type: optional<boolean>
+      text:
+        docs: Serialize this property as the text content of the parent element.
+        type: optional<boolean>
+      wrapped:
+        docs: For list properties, wrap the items in a container element named `name`.
+        type: optional<boolean>
+      separator:
+        docs: For list-valued attributes or text, the string used to join items (e.g. a space).
+        type: optional<string>

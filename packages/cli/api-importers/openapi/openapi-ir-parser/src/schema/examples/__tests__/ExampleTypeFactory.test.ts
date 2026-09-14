@@ -150,7 +150,8 @@ function makeObjectSchema({
             conflict: {},
             nameOverride: undefined,
             generatedName: key,
-            availability: undefined
+            availability: undefined,
+            xml: undefined
         })),
         allOfPropertyConflicts: [],
         fullExamples: undefined,

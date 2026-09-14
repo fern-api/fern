@@ -723,6 +723,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -754,6 +755,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -824,6 +826,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -855,6 +858,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -894,6 +898,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

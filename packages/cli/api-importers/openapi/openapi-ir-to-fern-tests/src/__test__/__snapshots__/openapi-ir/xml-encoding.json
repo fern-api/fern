@@ -1,0 +1,533 @@
+{
+  "specVersion": "1.0.0",
+  "title": "TwiML-style XML encoding",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Response": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "responseChildren",
+            "key": "children",
+            "schema": {
+              "generatedName": "ResponseChildren",
+              "value": {
+                "value": {
+                  "value": {
+                    "generatedName": "ResponseChildrenItem",
+                    "schemas": [
+                      {
+                        "generatedName": "ResponseChildrenItemZero",
+                        "schema": "Say",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      },
+                      {
+                        "generatedName": "ResponseChildrenItemOne",
+                        "schema": "Dial",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "undiscriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "generatedName": "ResponseChildren",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Root TwiML element.",
+        "generatedName": "Response",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Response",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Say": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "sayMessage",
+            "key": "message",
+            "xml": {
+              "text": true
+            },
+            "schema": {
+              "generatedName": "SayMessage",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SayMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sayVoice",
+            "key": "voice",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "SayVoice",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SayVoice",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sayLoop",
+            "key": "loop",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "SayLoop",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "SayLoop",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sayChildren",
+            "key": "children",
+            "schema": {
+              "generatedName": "SayChildren",
+              "value": {
+                "value": {
+                  "generatedName": "SayChildrenItem",
+                  "schema": "Break",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "SayChildren",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Say",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Say",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Break": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "breakStrength",
+            "key": "strength",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "BreakStrength",
+              "value": {
+                "generatedName": "BreakStrength",
+                "values": [
+                  {
+                    "generatedName": "none",
+                    "value": "none",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "XWeak",
+                    "value": "x-weak",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "weak",
+                    "value": "weak",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "medium",
+                    "value": "medium",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "strong",
+                    "value": "strong",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "XStrong",
+                    "value": "x-strong",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "breakTime",
+            "key": "time",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "BreakTime",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BreakTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Break",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "break",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Dial": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "dialNumber",
+            "key": "number",
+            "xml": {
+              "text": true
+            },
+            "schema": {
+              "generatedName": "DialNumber",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DialNumber",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "dialStatusCallbackEvent",
+            "key": "status_callback_event",
+            "xml": {
+              "name": "statusCallbackEvent",
+              "attribute": true,
+              "separator": " "
+            },
+            "schema": {
+              "generatedName": "DialStatusCallbackEvent",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "DialStatusCallbackEventItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "DialStatusCallbackEvent",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "dialNumbers",
+            "key": "numbers",
+            "xml": {
+              "name": "Numbers",
+              "wrapped": true
+            },
+            "schema": {
+              "generatedName": "DialNumbers",
+              "value": {
+                "value": {
+                  "generatedName": "DialNumbersItem",
+                  "schema": "Number",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "DialNumbers",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Dial",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Dial",
+          "namespace": "https://www.twilio.com/twiml",
+          "prefix": "tw",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Number": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "numberPhoneNumber",
+            "key": "phone_number",
+            "xml": {
+              "text": true
+            },
+            "schema": {
+              "generatedName": "NumberPhoneNumber",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NumberPhoneNumber",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "numberSendDigits",
+            "key": "send_digits",
+            "xml": {
+              "name": "sendDigits",
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "NumberSendDigits",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NumberSendDigits",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Number",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Number",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Pause": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "pauseLength",
+            "key": "length",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "PauseLength",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "PauseLength",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "XML element without an explicit xml.name; falls back to the schema name.",
+        "generatedName": "Pause",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Pause",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PlainObject": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "plainObjectId",
+            "key": "id",
+            "schema": {
+              "generatedName": "PlainObjectId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlainObjectId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Not XML-encoded; properties must not carry xml metadata.",
+        "generatedName": "PlainObject",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

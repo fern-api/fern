@@ -1462,6 +1462,90 @@
       ],
       "additionalProperties": false
     },
+    "encoding.XmlEncodingSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The element or attribute name on the wire, casing preserved. Defaults to the type or property name."
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The XML namespace URI."
+        },
+        "prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The namespace prefix for the element name."
+        },
+        "attribute": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as an attribute of the parent element instead of a child element."
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as the text content of the parent element."
+        },
+        "wrapped": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list properties, wrap the items in a container element named `name`."
+        },
+        "separator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list-valued attributes or text, the string used to join items (e.g. a space)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "On a type declaration: marks the object as an XML element (e.g. a TwiML verb).\nOn an object property: controls how the property serializes within its parent element."
+    },
     "encoding.EncodingSchema": {
       "type": "object",
       "properties": {
@@ -1469,6 +1553,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "xml": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/encoding.XmlEncodingSchema"
             },
             {
               "type": "null"
