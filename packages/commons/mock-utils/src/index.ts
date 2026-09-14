@@ -317,7 +317,9 @@ export class WireMock {
 
         // Serve real binary bytes for successful file download responses. File download examples carry
         // no body, so the JSON path above would otherwise stub the endpoint with the JSON string `""`.
-        const isBinaryFileDownload = endpoint.response?.body?.type === "fileDownload" && status < 400;
+        // Error examples keep their declared status and JSON error body.
+        const isBinaryFileDownload =
+            endpoint.response?.body?.type === "fileDownload" && example?.response?.type !== "error";
         if (isBinaryFileDownload) {
             contentType = FILE_DOWNLOAD_FIXTURE_CONTENT_TYPE;
         }

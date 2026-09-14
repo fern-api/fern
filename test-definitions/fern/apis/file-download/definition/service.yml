@@ -11,4 +11,4 @@ service:
       method: POST
       response: file
       examples:
-        - request: {}
+        - {}
