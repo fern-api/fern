@@ -185,7 +185,7 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      * WebSocket that accepted the message. The callback is only invoked when the message was
      * sent directly, never when it was queued or dropped. This lets callers associate a
      * protocol-level message with the specific connection it was delivered on, e.g. to decide
-     * in {@link #shouldReconnectAfterClose(WebSocket, int)} whether a later close of that same
+     * in {@link #shouldReconnectAfterClose(WebSocket, int, String)} whether a later close of that same
      * connection was expected.
      *
      * @param message The message to send
@@ -355,7 +355,7 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
         }
         connectionEstablishedTime = 0L;
         onWebSocketClosed(webSocket, code, reason);
-        if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code)) {
+        if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code, reason)) {
             scheduleReconnect();
         }
     }
@@ -371,9 +371,10 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      *
      * @param webSocket The WebSocket that was closed
      * @param code The close status code reported by OkHttp
+     * @param reason The close reason sent by the peer, or an empty string
      * @return true to schedule a reconnect, false to stay disconnected
      */
-    protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code) {
+    protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code, String reason) {
         return code != 1000;
     }
 

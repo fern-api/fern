@@ -73,8 +73,9 @@ public class ReconnectingWebSocketListenerGeneratorTest {
             + " supplier);\n"
             + "    this.reconnectPolicy = reconnectPolicy;\n"
             + "  }\n"
-            + "  @Override protected boolean shouldReconnectAfterClose(okhttp3.WebSocket webSocket, int code) {\n"
-            + "    return reconnectPolicy == null ? super.shouldReconnectAfterClose(webSocket, code)"
+            + "  @Override protected boolean shouldReconnectAfterClose(okhttp3.WebSocket webSocket, int code,"
+            + " String reason) {\n"
+            + "    return reconnectPolicy == null ? super.shouldReconnectAfterClose(webSocket, code, reason)"
             + " : reconnectPolicy.test(code);\n"
             + "  }\n"
             + "  @Override public int closedCallbackCount() { return closedCallbacks.get(); }\n"
@@ -250,8 +251,8 @@ public class ReconnectingWebSocketListenerGeneratorTest {
     void generatedSource_keepsDefaultReconnectDecision() {
         String normalized = generatedSource.replaceAll("\\s+", " ");
         assertThat(normalized)
-                .contains("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code))")
-                .contains("protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code) { "
+                .contains("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code, reason))")
+                .contains("protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code, String reason) { "
                         + "return code != 1000; }")
                 .contains("webSocket.close(code == 1005 ? 1000 : code, reason)");
     }

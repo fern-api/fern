@@ -342,7 +342,7 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "WebSocket that accepted the message. The callback is only invoked when the message was\n"
                         + "sent directly, never when it was queued or dropped. This lets callers associate a\n"
                         + "protocol-level message with the specific connection it was delivered on, e.g. to decide\n"
-                        + "in {@link #shouldReconnectAfterClose(WebSocket, int)} whether a later close of that same\n"
+                        + "in {@link #shouldReconnectAfterClose(WebSocket, int, String)} whether a later close of that same\n"
                         + "connection was expected.\n"
                         + "\n"
                         + "@param message The message to send\n"
@@ -547,6 +547,7 @@ public class ReconnectingWebSocketListenerGenerator {
                 .returns(TypeName.BOOLEAN)
                 .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
                 .addParameter(TypeName.INT, "code")
+                .addParameter(String.class, "reason")
                 .addJavadoc("Decides whether a completed close handshake should trigger a reconnect.\n"
                         + "\n"
                         + "Only consulted when reconnection has not been disabled via {@link #disconnect()}.\n"
@@ -558,6 +559,7 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "\n"
                         + "@param webSocket The WebSocket that was closed\n"
                         + "@param code The close status code reported by OkHttp\n"
+                        + "@param reason The close reason sent by the peer, or an empty string\n"
                         + "@return true to schedule a reconnect, false to stay disconnected\n")
                 .addStatement("return code != $L", NORMAL_CLOSURE_CODE)
                 .build();
@@ -581,7 +583,7 @@ public class ReconnectingWebSocketListenerGenerator {
                 .endControlFlow()
                 .addStatement("connectionEstablishedTime = 0L")
                 .addStatement("onWebSocketClosed(webSocket, code, reason)")
-                .beginControlFlow("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code))")
+                .beginControlFlow("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code, reason))")
                 .addStatement("scheduleReconnect()")
                 .endControlFlow()
                 .build();
