@@ -72,8 +72,11 @@ function createResponseError(name: string): FernIr.ResponseError {
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
-function createMockContext(): any {
+function createMockContext(customConfig?: { useBigInt?: boolean }): any {
     return {
+        config: {
+            customConfig: customConfig ?? {}
+        },
         includeSerdeLayer: true,
         type: {
             getReferenceToType: (typeRef: FernIr.TypeReference) => {
@@ -693,6 +696,52 @@ describe("GeneratedThrowingEndpointResponse", () => {
                     // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                     const initText = serializeStatements([info!.initializeOffset]);
                     expect(initText).toContain("5");
+                }
+            });
+
+            it("extracts default value for long/int64 primitive type", () => {
+                const LONG_WITH_DEFAULT = FernIr.TypeReference.primitive({
+                    v1: "LONG",
+                    v2: FernIr.PrimitiveTypeV2.long({ default: 100, validation: undefined })
+                });
+                const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
+                    page: createRequestProperty("offset", LONG_WITH_DEFAULT),
+                    results: createResponseProperty("items", LIST_STRING_TYPE),
+                    step: undefined,
+                    hasNextPage: undefined
+                });
+                const instance = createInstance({ pagination: offsetPagination });
+                const context = createMockContext();
+                const info = instance.getPaginationInfo(context);
+                expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                    const initText = serializeStatements([info!.initializeOffset]);
+                    expect(initText).toContain("100");
+                }
+            });
+
+            it("extracts BigInt default value for long/int64 when useBigInt is enabled", () => {
+                const LONG_WITH_DEFAULT = FernIr.TypeReference.primitive({
+                    v1: "LONG",
+                    v2: FernIr.PrimitiveTypeV2.long({ default: 100, validation: undefined })
+                });
+                const offsetPagination: FernIr.Pagination = FernIr.Pagination.offset({
+                    page: createRequestProperty("offset", LONG_WITH_DEFAULT),
+                    results: createResponseProperty("items", LIST_STRING_TYPE),
+                    step: undefined,
+                    hasNextPage: undefined
+                });
+                const instance = createInstance({ pagination: offsetPagination });
+                const context = createMockContext({ useBigInt: true });
+                const info = instance.getPaginationInfo(context);
+                expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                    const initText = serializeStatements([info!.initializeOffset]);
+                    expect(initText).toContain('BigInt("100")');
                 }
             });
 
