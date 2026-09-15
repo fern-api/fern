@@ -343,6 +343,9 @@ async function collectIconsFromNavigation({
                     }
                 })
             );
+            if (navigation.changelog != null) {
+                await collectIconsFromNavigationItem({ item: navigation.changelog, filepaths });
+            }
             break;
     }
 
