@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.19.3
+  changelogEntry:
+    - summary: |
+        Generated `ReconnectingWebSocketListener` now acknowledges peer-initiated close frames by
+        overriding `onClosing`, so OkHttp completes the close handshake and `onClosed` (and the
+        public disconnect lifecycle) fires for server-initiated closes. A no-status close (local
+        sentinel 1005) is acknowledged with 1000, since 1005 is not a wire-valid close code.
+        The reconnect decision is exposed as a `protected boolean shouldReconnectAfterClose(WebSocket, int, String)`
+        hook (default unchanged: `code != 1000`) so resource-specific subclasses can treat a
+        protocol-established terminal close as final. Adds `send(String, Consumer<WebSocket>)` /
+        `sendBinary(ByteString, Consumer<WebSocket>)` overloads that report which socket directly
+        accepted a message (not invoked for queued or dropped messages).
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 4.19.2
   changelogEntry:
     - summary: |
