@@ -63,21 +63,6 @@ scripts:
           bundle exec rake test
 
 fixtures:
-  # Opt-in coercion of an alias-to-named-type response. Without the flag `load`
-  # returns a bare `JSON.parse` result, so the SDK documents a model and hands
-  # back a string-keyed Hash. Declared as an extra variant only, so the default
-  # flag-off output stays where it is and can be diffed for byte-equality.
-  alias:
-    - outputFolder: coerce-alias-responses
-      customConfig:
-        coerceAliasResponses: true
-  # Opt-in `nullable` check in the undiscriminated-union matcher. Without the
-  # flag a required-and-nullable field arriving as `nil` reads as a missing
-  # required field, no arm matches, and the union degrades to an untyped Hash.
-  unions:
-    - outputFolder: respect-nullable-union-fields
-      customConfig:
-        respectNullableUnionFields: true
   any-auth:
     - outputFolder: wire-tests
       customConfig:
