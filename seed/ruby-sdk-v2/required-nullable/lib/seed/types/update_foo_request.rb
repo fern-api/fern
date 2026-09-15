@@ -12,6 +12,8 @@ module Seed
       field :nullable_number, -> { Integer }, optional: true, nullable: false
 
       field :non_nullable_text, -> { String }, optional: true, nullable: false
+
+      field :required_nullable_text, -> { String }, optional: false, nullable: true
     end
   end
 end

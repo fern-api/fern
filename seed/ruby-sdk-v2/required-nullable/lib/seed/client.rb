@@ -66,7 +66,8 @@ module Seed
     #     x_idempotency_key: "X-Idempotency-Key",
     #     nullable_text: "nullable_text",
     #     nullable_number: 1.1,
-    #     non_nullable_text: "non_nullable_text"
+    #     non_nullable_text: "non_nullable_text",
+    #     required_nullable_text: "required_nullable_text"
     #   )
     #
     # @return [Seed::Types::Foo]

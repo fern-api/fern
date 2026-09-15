@@ -11,6 +11,9 @@ pub struct UpdateFooRequest {
     /// Regular non-nullable field
     #[serde(skip_serializing_if = "Option::is_none")]
     pub non_nullable_text: Option<String>,
+    /// Must be sent, but may be null to clear the value
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub required_nullable_text: Option<String>,
 }
 
 impl UpdateFooRequest {
@@ -25,6 +28,7 @@ pub struct UpdateFooRequestBuilder {
     nullable_text: Option<String>,
     nullable_number: Option<f64>,
     non_nullable_text: Option<String>,
+    required_nullable_text: Option<String>,
 }
 
 impl UpdateFooRequestBuilder {
@@ -43,12 +47,18 @@ impl UpdateFooRequestBuilder {
         self
     }
 
+    pub fn required_nullable_text(mut self, value: impl Into<String>) -> Self {
+        self.required_nullable_text = Some(value.into());
+        self
+    }
+
     /// Consumes the builder and constructs a [`UpdateFooRequest`].
     pub fn build(self) -> Result<UpdateFooRequest, BuildError> {
         Ok(UpdateFooRequest {
             nullable_text: self.nullable_text,
             nullable_number: self.nullable_number,
             non_nullable_text: self.non_nullable_text,
+            required_nullable_text: self.required_nullable_text,
         })
     }
 }
