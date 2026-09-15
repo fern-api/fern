@@ -5,5 +5,11 @@ import type * as GeneratorsYml from "../../../../../index.js";
 export interface WithEnvironmentsSchema {
     "default-url"?: string;
     "default-environment"?: string;
+    /**
+     * The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs
+     * read to override the base URL. When the variable is set, it takes precedence over
+     * the default environment; an explicitly provided base URL still wins.
+     */
+    "base-url-env"?: string;
     environments?: Record<string, GeneratorsYml.fernDefinition.EnvironmentSchema>;
 }
