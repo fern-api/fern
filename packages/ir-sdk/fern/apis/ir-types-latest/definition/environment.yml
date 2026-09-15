@@ -9,6 +9,12 @@ types:
   EnvironmentsConfig:
     properties:
       defaultEnvironment: optional<EnvironmentId>
+      baseUrlEnvVar:
+        type: optional<string>
+        docs: |
+          The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs
+          read at construction time to override the base URL. If set, its value takes
+          precedence over the default environment; an explicitly provided base URL still wins.
       environments: Environments
   Environments:
     union:

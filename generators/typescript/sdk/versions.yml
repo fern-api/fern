@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.94.2
+  changelogEntry:
+    - summary: |
+        A union member whose discriminant value collides with a JavaScript built-in
+        no longer has the disambiguation prefix applied to the string literal.
+        A branch with `condition_type: "Date"` emitted
+        `conditionType: "globalThis.Date"` — so the property could not be typed
+        without a cast, since the API expects `"Date"`, and with `noSerdeLayer:
+        false` the serializer's inferred discriminant no longer matched the declared
+        literal and the package failed to compile. Qualification exists to
+        disambiguate a shadowed *type reference*; a literal is a value, and
+        rewriting one changes what the SDK sends. String literals are now skipped,
+        which also covers builder expressions and visitor signatures, where the same
+        rewrite could reach an object literal. Type references are unaffected: a
+        sibling property typed `Date` still becomes `globalThis.Date`.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 3.94.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests for cursor, URI, and path pagination when the example
+        response uses an empty string to indicate there is no next page. Terminal URI
+        and path continuations are preserved in the mocked response, and the tests skip
+        `hasNextPage()` and `getNextPage()` assertions, matching the generated pager.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 3.94.0
   changelogEntry:
     - summary: |

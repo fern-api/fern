@@ -3,8 +3,8 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UserSearchResponse {
     /// Current page of results from the requested resource.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub results: Option<Vec<User>>,
+    #[serde(default)]
+    pub results: Vec<User>,
     #[serde(default)]
     pub paging: PagingCursors,
 }
@@ -35,10 +35,13 @@ impl UserSearchResponseBuilder {
 
     /// Consumes the builder and constructs a [`UserSearchResponse`].
     /// This method will fail if any of the following fields are not set:
+    /// - [`results`](UserSearchResponseBuilder::results)
     /// - [`paging`](UserSearchResponseBuilder::paging)
     pub fn build(self) -> Result<UserSearchResponse, BuildError> {
         Ok(UserSearchResponse {
-            results: self.results,
+            results: self
+                .results
+                .ok_or_else(|| BuildError::missing_field("results"))?,
             paging: self
                 .paging
                 .ok_or_else(|| BuildError::missing_field("paging"))?,

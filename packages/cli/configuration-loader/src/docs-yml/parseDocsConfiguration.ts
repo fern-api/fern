@@ -107,6 +107,7 @@ export async function parseDocsConfiguration({
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         products,
+        rootChangelog: rawDocsConfiguration.changelog,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
@@ -888,6 +889,7 @@ async function getVersionedNavigationConfiguration({
 async function getNavigationConfiguration({
     tabs,
     products,
+    rootChangelog,
     versions,
     navigation,
     absolutePathToFernFolder,
@@ -898,6 +900,7 @@ async function getNavigationConfiguration({
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
+    rootChangelog?: docsYml.RawSchemas.ChangelogConfiguration;
     versions?: docsYml.RawSchemas.VersionConfig[];
     navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -906,6 +909,15 @@ async function getNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.DocsNavigationConfiguration> {
+    if (rootChangelog != null && products == null) {
+        throw new CliError({
+            message:
+                "A top-level `changelog` in docs.yml is only supported alongside `products`. " +
+                "For a site using `versions`, add the changelog to each version's `navigation`; " +
+                "otherwise add it to the top-level `navigation`.",
+            code: CliError.Code.ConfigError
+        });
+    }
     if (navigation != null) {
         return await convertNavigationConfiguration({
             tabs,
@@ -1007,7 +1019,11 @@ async function getNavigationConfiguration({
 
         return {
             type: "productgroup",
-            products: productNavbars
+            products: productNavbars,
+            changelog:
+                rootChangelog != null
+                    ? await convertChangelogConfiguration({ rawConfig: rootChangelog, absolutePathToConfig })
+                    : undefined
         };
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
@@ -1481,6 +1497,15 @@ async function convertNavigationItem({
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
+            specs: rawConfig.specs?.map((spec) => ({
+                type: spec.type,
+                absolutePath: resolveFilepath(spec.path, absolutePathToConfig),
+                namespace: spec.namespace ?? undefined,
+                absoluteOverlayPaths:
+                    spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
+                absoluteOverridePaths:
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
+            })),
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
@@ -1520,17 +1545,7 @@ async function convertNavigationItem({
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
-        return {
-            type: "changelog",
-            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
-            hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
-            slug: rawConfig.slug,
-            viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
-        };
+        return await convertChangelogConfiguration({ rawConfig, absolutePathToConfig });
     }
     if (isRawFolderConfig(rawConfig)) {
         return await expandFolderConfiguration({
@@ -1753,6 +1768,26 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+async function convertChangelogConfiguration({
+    rawConfig,
+    absolutePathToConfig
+}: {
+    rawConfig: docsYml.RawSchemas.ChangelogConfiguration;
+    absolutePathToConfig: AbsoluteFilePath;
+}): Promise<docsYml.DocsNavigationItem.Changelog> {
+    return {
+        type: "changelog",
+        changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+        hidden: rawConfig.hidden ?? false,
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+        slug: rawConfig.slug,
+        viewers: parseRoles(rawConfig.viewers),
+        orphaned: rawConfig.orphaned,
+        featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+    };
 }
 
 function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {

@@ -264,6 +264,12 @@ types:
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
       products: optional<list<ProductConfig>>
+      changelog:
+        type: optional<ChangelogConfiguration>
+        docs: |
+          A site-level changelog shared by every product. Only valid alongside `products`.
+          It is served at the root (e.g. `/changelog`) rather than under any product slug,
+          and does not appear in the product switcher.
       landing-page:
         type: optional<PageConfiguration>
         docs: Creates a landing page for your documentation website.
@@ -1535,6 +1541,27 @@ types:
       - name: OpenByDefault
         value: open-by-default
 
+  ApiSpecType:
+    enum:
+      - openapi
+      - asyncapi
+      - graphql
+
+  ApiSpecConfiguration:
+    docs: A source API specification referenced directly by docs.yml.
+    properties:
+      type: ApiSpecType
+      path:
+        type: string
+        docs: Path to the API specification, relative to docs.yml.
+      namespace: optional<string>
+      overlays:
+        type: optional<string>
+        docs: Path to an OpenAPI Overlay document, relative to docs.yml.
+      overrides:
+        type: optional<list<string>>
+        docs: Paths to Fern override documents, relative to docs.yml.
+
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -1542,6 +1569,9 @@ types:
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
+      specs:
+        type: optional<list<ApiSpecConfiguration>>
+        docs: API specifications to load directly. When provided, these take precedence over the API workspace referenced by `api-name`.
       openrpc:
         type: optional<string>
         docs: Path to an openrpc spec.

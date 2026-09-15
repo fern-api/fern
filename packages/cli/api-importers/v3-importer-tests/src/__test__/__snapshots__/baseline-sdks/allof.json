@@ -331,22 +331,16 @@
             "name": "results",
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "list": {
-                      "name": "RuleTypeResponse",
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:RuleTypeResponse",
-                      "type": "named"
-                    },
-                    "type": "list"
+                "list": {
+                  "name": "RuleTypeResponse",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
                   },
-                  "type": "container"
+                  "typeId": "type_:RuleTypeResponse",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "list"
               },
               "type": "container"
             },
@@ -1553,13 +1547,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:RuleTypeResponse",
-                  "type": "named"
-                },
-                "type": "list"
+                "value": "type_:RuleTypeResponse",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "list"
             }
           },
           {

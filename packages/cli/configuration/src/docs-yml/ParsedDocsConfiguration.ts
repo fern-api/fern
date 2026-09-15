@@ -241,6 +241,8 @@ export interface VersionedDocsNavigation {
 export interface ProductGroupDocsNavigation {
     type: "productgroup";
     products: ProductInfo[];
+    /** Site-level changelog shared by all products, slugged off the root rather than any product. */
+    changelog: DocsNavigationItem.Changelog | undefined;
 }
 
 export interface VersionInfo
@@ -417,6 +419,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         apiName: string | undefined;
+        specs: ParsedApiSpecConfiguration[] | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
         availability: Availability | undefined;
@@ -483,6 +486,16 @@ export declare namespace DocsNavigationItem {
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
+
+export interface ParsedApiSpecConfiguration {
+    type: ApiSpecType;
+    absolutePath: AbsoluteFilePath;
+    namespace: string | undefined;
+    absoluteOverlayPaths: AbsoluteFilePath[];
+    absoluteOverridePaths: AbsoluteFilePath[];
+}
+
+export type ApiSpecType = "openapi" | "asyncapi" | "graphql";
 
 export declare namespace ParsedApiReferenceLayoutItem {
     export interface Section

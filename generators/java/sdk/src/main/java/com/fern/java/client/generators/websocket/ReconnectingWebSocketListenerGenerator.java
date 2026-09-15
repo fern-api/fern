@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
@@ -27,6 +28,8 @@ public class ReconnectingWebSocketListenerGenerator {
     private static final long CONNECTION_TIMEOUT_MS = 4000L;
     private static final int DEFAULT_MAX_RETRIES = Integer.MAX_VALUE;
     private static final int DEFAULT_MAX_ENQUEUED_MESSAGES = 1000;
+    private static final int NORMAL_CLOSURE_CODE = 1000;
+    private static final int NO_STATUS_CLOSE_CODE = 1005;
 
     private final String corePackageName;
     private final ClassName className;
@@ -148,13 +151,17 @@ public class ReconnectingWebSocketListenerGenerator {
         methods.add(generateConnect());
         methods.add(generateDisconnect());
         methods.add(generateSend());
+        methods.add(generateSendWithCallback());
         methods.add(generateSendBinary());
+        methods.add(generateSendBinaryWithCallback());
         methods.add(generateGetWebSocket()); // Add getter for thread-safe WebSocket access
         methods.add(generateOnOpen());
         methods.add(generateOnMessage());
         methods.add(generateOnBinaryMessage());
         methods.add(generateOnFailure());
+        methods.add(generateOnClosing());
         methods.add(generateOnClosed());
+        methods.add(generateShouldReconnectAfterClose());
         methods.add(generateGetNextDelay());
         methods.add(generateScheduleReconnect());
         methods.add(generateFlushMessageQueue());
@@ -317,9 +324,36 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "\n"
                         + "@param message The message to send\n"
                         + "@return true if sent immediately, false if queued or dropped\n")
+                .addStatement("return send(message, null)")
+                .build();
+    }
+
+    private MethodSpec generateSendWithCallback() {
+        return MethodSpec.methodBuilder("send")
+                .addModifiers(Modifier.PUBLIC, Modifier.SYNCHRONIZED)
+                .returns(TypeName.BOOLEAN)
+                .addParameter(String.class, "message")
+                .addParameter(
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get("okhttp3", "WebSocket")),
+                        "onSent")
+                .addJavadoc("Sends a message or queues it if not connected, exposing the accepting socket.\n"
+                        + "\n"
+                        + "Behaves like {@link #send(String)}, but additionally invokes {@code onSent} with the\n"
+                        + "WebSocket that accepted the message. The callback is only invoked when the message was\n"
+                        + "sent directly, never when it was queued or dropped. This lets callers associate a\n"
+                        + "protocol-level message with the specific connection it was delivered on, e.g. to decide\n"
+                        + "in {@link #shouldReconnectAfterClose(WebSocket, int, String)} whether a later close of that same\n"
+                        + "connection was expected.\n"
+                        + "\n"
+                        + "@param message The message to send\n"
+                        + "@param onSent Callback receiving the WebSocket that accepted the message, or null\n"
+                        + "@return true if sent immediately, false if queued or dropped\n")
                 .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
                 .beginControlFlow("if (ws != null)")
                 .addStatement("boolean sent = ws.send(message)")
+                .beginControlFlow("if (sent && onSent != null)")
+                .addStatement("onSent.accept(ws)")
+                .endControlFlow()
                 .beginControlFlow("if (!sent && messageQueue.size() < maxEnqueuedMessages)")
                 .addStatement("messageQueue.offer(message)")
                 .addStatement("return false")
@@ -352,9 +386,33 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "\n"
                         + "@param data The binary data to send\n"
                         + "@return true if sent immediately, false if queued or dropped\n")
+                .addStatement("return sendBinary(data, null)")
+                .build();
+    }
+
+    private MethodSpec generateSendBinaryWithCallback() {
+        return MethodSpec.methodBuilder("sendBinary")
+                .addModifiers(Modifier.PUBLIC, Modifier.SYNCHRONIZED)
+                .returns(TypeName.BOOLEAN)
+                .addParameter(ClassName.get("okio", "ByteString"), "data")
+                .addParameter(
+                        ParameterizedTypeName.get(ClassName.get(Consumer.class), ClassName.get("okhttp3", "WebSocket")),
+                        "onSent")
+                .addJavadoc("Sends binary data or queues it if not connected, exposing the accepting socket.\n"
+                        + "\n"
+                        + "Behaves like {@link #sendBinary(ByteString)}, but additionally invokes {@code onSent} with\n"
+                        + "the WebSocket that accepted the data. The callback is only invoked when the data was sent\n"
+                        + "directly, never when it was queued or dropped.\n"
+                        + "\n"
+                        + "@param data The binary data to send\n"
+                        + "@param onSent Callback receiving the WebSocket that accepted the data, or null\n"
+                        + "@return true if sent immediately, false if queued or dropped\n")
                 .addStatement("$T ws = webSocket", ClassName.get("okhttp3", "WebSocket"))
                 .beginControlFlow("if (ws != null)")
                 .addStatement("boolean sent = ws.send(data)")
+                .beginControlFlow("if (sent && onSent != null)")
+                .addStatement("onSent.accept(ws)")
+                .endControlFlow()
                 .beginControlFlow("if (!sent && binaryMessageQueue.size() < maxEnqueuedMessages)")
                 .addStatement("binaryMessageQueue.offer(data)")
                 .addStatement("return false")
@@ -461,6 +519,52 @@ public class ReconnectingWebSocketListenerGenerator {
                 .build();
     }
 
+    private MethodSpec generateOnClosing() {
+        return MethodSpec.methodBuilder("onClosing")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.VOID)
+                .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                .addParameter(TypeName.INT, "code")
+                .addParameter(String.class, "reason")
+                .addJavadoc("Acknowledges a peer-initiated close so OkHttp can complete the close handshake and\n"
+                        + "invoke {@link #onClosed(WebSocket, int, String)}.\n"
+                        + "\n"
+                        + "Code " + NO_STATUS_CLOSE_CODE
+                        + " is a local \"no status received\" sentinel reported when the peer sent an empty\n"
+                        + "close frame. It is not a valid code to put on the wire, so it is acknowledged with\n"
+                        + "the normal closure code " + NORMAL_CLOSURE_CODE + " instead.\n"
+                        + "\n"
+                        + "@hidden\n")
+                .addStatement(
+                        "webSocket.close(code == $L ? $L : code, reason)", NO_STATUS_CLOSE_CODE, NORMAL_CLOSURE_CODE)
+                .build();
+    }
+
+    private MethodSpec generateShouldReconnectAfterClose() {
+        return MethodSpec.methodBuilder("shouldReconnectAfterClose")
+                .addModifiers(Modifier.PROTECTED)
+                .returns(TypeName.BOOLEAN)
+                .addParameter(ClassName.get("okhttp3", "WebSocket"), "webSocket")
+                .addParameter(TypeName.INT, "code")
+                .addParameter(String.class, "reason")
+                .addJavadoc("Decides whether a completed close handshake should trigger a reconnect.\n"
+                        + "\n"
+                        + "Only consulted when reconnection has not been disabled via {@link #disconnect()}.\n"
+                        + "The default treats normal closure (" + NORMAL_CLOSURE_CODE
+                        + ") as terminal and reconnects on any\n"
+                        + "other code. Subclasses can override this when protocol context establishes that a\n"
+                        + "particular close is terminal, for example a no-status close following a message that\n"
+                        + "ends the stream.\n"
+                        + "\n"
+                        + "@param webSocket The WebSocket that was closed\n"
+                        + "@param code The close status code reported by OkHttp\n"
+                        + "@param reason The close reason sent by the peer, or an empty string\n"
+                        + "@return true to schedule a reconnect, false to stay disconnected\n")
+                .addStatement("return code != $L", NORMAL_CLOSURE_CODE)
+                .build();
+    }
+
     private MethodSpec generateOnClosed() {
         return MethodSpec.methodBuilder("onClosed")
                 .addAnnotation(Override.class)
@@ -479,7 +583,7 @@ public class ReconnectingWebSocketListenerGenerator {
                 .endControlFlow()
                 .addStatement("connectionEstablishedTime = 0L")
                 .addStatement("onWebSocketClosed(webSocket, code, reason)")
-                .beginControlFlow("if (code != 1000 && shouldReconnect.get())")
+                .beginControlFlow("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code, reason))")
                 .addStatement("scheduleReconnect()")
                 .endControlFlow()
                 .build();

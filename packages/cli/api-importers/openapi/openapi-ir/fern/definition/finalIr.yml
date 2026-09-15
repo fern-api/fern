@@ -18,6 +18,11 @@ types:
         type: optional<string>
       title: optional<string>
       description: optional<string>
+      baseUrlEnv:
+        docs: |
+          Environment variable name populated via `x-fern-base-url-env` that
+          generated SDKs read to override the base URL.
+        type: optional<string>
       basePath: optional<string>
       basePathParameters:
         type: optional<list<PathParameter>>

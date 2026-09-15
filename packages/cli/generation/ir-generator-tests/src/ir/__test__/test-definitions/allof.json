@@ -595,25 +595,19 @@
                         "valueType": {
                             "_type": "container",
                             "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "list",
-                                        "list": {
-                                            "_type": "named",
-                                            "name": "RuleType",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_:RuleType",
-                                            "default": null,
-                                            "inline": null
-                                        }
-                                    }
+                                "_type": "list",
+                                "list": {
+                                    "_type": "named",
+                                    "name": "RuleType",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:RuleType",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -779,25 +773,19 @@
                         "valueType": {
                             "_type": "container",
                             "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "list",
-                                        "list": {
-                                            "_type": "named",
-                                            "name": "User",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_:User",
-                                            "default": null,
-                                            "inline": null
-                                        }
-                                    }
+                                "_type": "list",
+                                "list": {
+                                    "_type": "named",
+                                    "name": "User",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:User",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -3151,17 +3139,39 @@
                                                                 "shape": {
                                                                     "type": "container",
                                                                     "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "list",
-                                                                                    "list": [
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "typeName": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "typeName": {
+                                                                                        "typeId": "type_:RuleType",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "name": "RuleType",
+                                                                                        "displayName": null
+                                                                                    },
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "typeId": "type_:RuleType",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -3171,159 +3181,103 @@
                                                                                                     "name": "RuleType",
                                                                                                     "displayName": null
                                                                                                 },
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "value": {
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "name",
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "name"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "name"
+                                                                                                },
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "typeId": "type_:RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "name": "RuleType",
+                                                                                                    "displayName": null
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "description",
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "container",
+                                                                                                        "container": {
+                                                                                                            "type": "optional",
+                                                                                                            "optional": {
                                                                                                                 "shape": {
                                                                                                                     "type": "primitive",
                                                                                                                     "primitive": {
                                                                                                                         "type": "string",
                                                                                                                         "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "typeId": "type_:RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "name": "RuleType",
-                                                                                                                "displayName": null
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "name",
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "name"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "name"
-                                                                                                            },
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "typeId": "type_:RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "name": "RuleType",
-                                                                                                                "displayName": null
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "description",
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "container",
-                                                                                                                    "container": {
-                                                                                                                        "type": "optional",
-                                                                                                                        "optional": {
-                                                                                                                            "shape": {
-                                                                                                                                "type": "primitive",
-                                                                                                                                "primitive": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "string": {
-                                                                                                                                        "original": "description"
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                            },
-                                                                                                                            "jsonExample": "description"
-                                                                                                                        },
-                                                                                                                        "valueType": {
-                                                                                                                            "_type": "primitive",
-                                                                                                                            "primitive": {
-                                                                                                                                "v1": "STRING",
-                                                                                                                                "v2": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "default": null,
-                                                                                                                                    "validation": null
-                                                                                                                                }
-                                                                                                                            }
+                                                                                                                            "original": "description"
                                                                                                                         }
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "jsonExample": "description"
                                                                                                             },
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "typeId": "type_:RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "name": "RuleType",
-                                                                                                                "displayName": null
-                                                                                                            },
-                                                                                                            "propertyAccess": null
+                                                                                                            "valueType": {
+                                                                                                                "_type": "primitive",
+                                                                                                                "primitive": {
+                                                                                                                    "v1": "STRING",
+                                                                                                                    "v2": {
+                                                                                                                        "type": "string",
+                                                                                                                        "default": null,
+                                                                                                                        "validation": null
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
                                                                                                         }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
-                                                                                                }
-                                                                                            },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "name": "name",
-                                                                                                "description": "description"
+                                                                                                    },
+                                                                                                    "jsonExample": "description"
+                                                                                                },
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "typeId": "type_:RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "name": "RuleType",
+                                                                                                    "displayName": null
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
-                                                                                        }
-                                                                                    ],
-                                                                                    "itemType": {
-                                                                                        "_type": "named",
-                                                                                        "name": "RuleType",
-                                                                                        "fernFilepath": {
-                                                                                            "allParts": [],
-                                                                                            "packagePath": [],
-                                                                                            "file": null
-                                                                                        },
-                                                                                        "displayName": null,
-                                                                                        "typeId": "type_:RuleType",
-                                                                                        "default": null,
-                                                                                        "inline": null
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": [
-                                                                                {
+                                                                                },
+                                                                                "jsonExample": {
                                                                                     "id": "id",
                                                                                     "name": "name",
                                                                                     "description": "description"
                                                                                 }
-                                                                            ]
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "named",
-                                                                                    "name": "RuleType",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:RuleType",
-                                                                                    "default": null,
-                                                                                    "inline": null
-                                                                                }
                                                                             }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": "RuleType",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:RuleType",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -3375,7 +3329,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "fa817ef7",
+                                "id": "f346ef35",
                                 "url": "/rule-types",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3411,121 +3365,17 @@
                                                                 "shape": {
                                                                     "type": "container",
                                                                     "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "list",
-                                                                                    "list": [
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "name",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "name"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "name"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "description",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "container",
-                                                                                                                    "container": {
-                                                                                                                        "type": "optional",
-                                                                                                                        "optional": {
-                                                                                                                            "shape": {
-                                                                                                                                "type": "primitive",
-                                                                                                                                "primitive": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "string": {
-                                                                                                                                        "original": "description"
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                            },
-                                                                                                                            "jsonExample": "description"
-                                                                                                                        },
-                                                                                                                        "valueType": {
-                                                                                                                            "_type": "primitive",
-                                                                                                                            "primitive": {
-                                                                                                                                "v1": "STRING",
-                                                                                                                                "v2": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "default": null,
-                                                                                                                                    "validation": null
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "description"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
-                                                                                                },
-                                                                                                "typeName": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "name": "RuleType",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -3534,122 +3384,24 @@
                                                                                                     },
                                                                                                     "displayName": null,
                                                                                                     "typeId": "type_:RuleType"
-                                                                                                }
-                                                                                            },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "name": "name",
-                                                                                                "description": "description"
-                                                                                            }
-                                                                                        },
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "name",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "name"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "name"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "description",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "RuleType",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:RuleType"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "container",
-                                                                                                                    "container": {
-                                                                                                                        "type": "optional",
-                                                                                                                        "optional": {
-                                                                                                                            "shape": {
-                                                                                                                                "type": "primitive",
-                                                                                                                                "primitive": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "string": {
-                                                                                                                                        "original": "description"
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                            },
-                                                                                                                            "jsonExample": "description"
-                                                                                                                        },
-                                                                                                                        "valueType": {
-                                                                                                                            "_type": "primitive",
-                                                                                                                            "primitive": {
-                                                                                                                                "v1": "STRING",
-                                                                                                                                "v2": {
-                                                                                                                                    "type": "string",
-                                                                                                                                    "default": null,
-                                                                                                                                    "validation": null
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "description"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
                                                                                                 },
-                                                                                                "typeName": {
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "name",
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "name": "RuleType",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -3658,17 +3410,71 @@
                                                                                                     },
                                                                                                     "displayName": null,
                                                                                                     "typeId": "type_:RuleType"
-                                                                                                }
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "name"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "name"
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "name": "name",
-                                                                                                "description": "description"
+                                                                                            {
+                                                                                                "name": "description",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:RuleType"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "container",
+                                                                                                        "container": {
+                                                                                                            "type": "optional",
+                                                                                                            "optional": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "primitive",
+                                                                                                                    "primitive": {
+                                                                                                                        "type": "string",
+                                                                                                                        "string": {
+                                                                                                                            "original": "description"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "description"
+                                                                                                            },
+                                                                                                            "valueType": {
+                                                                                                                "_type": "primitive",
+                                                                                                                "primitive": {
+                                                                                                                    "v1": "STRING",
+                                                                                                                    "v2": {
+                                                                                                                        "type": "string",
+                                                                                                                        "default": null,
+                                                                                                                        "validation": null
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "description"
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
-                                                                                        }
-                                                                                    ],
-                                                                                    "itemType": {
-                                                                                        "_type": "named",
+                                                                                        ],
+                                                                                        "extraProperties": null
+                                                                                    },
+                                                                                    "typeName": {
                                                                                         "name": "RuleType",
                                                                                         "fernFilepath": {
                                                                                             "allParts": [],
@@ -3676,43 +3482,152 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "typeId": "type_:RuleType",
-                                                                                        "default": null,
-                                                                                        "inline": null
+                                                                                        "typeId": "type_:RuleType"
                                                                                     }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "id": "id",
+                                                                                    "name": "name",
+                                                                                    "description": "description"
                                                                                 }
                                                                             },
-                                                                            "jsonExample": [
-                                                                                {
-                                                                                    "id": "id",
-                                                                                    "name": "name",
-                                                                                    "description": "description"
-                                                                                },
-                                                                                {
-                                                                                    "id": "id",
-                                                                                    "name": "name",
-                                                                                    "description": "description"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "named",
-                                                                                    "name": "RuleType",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:RuleType"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "name",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:RuleType"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "name"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "name"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "description",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "RuleType",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:RuleType"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "container",
+                                                                                                        "container": {
+                                                                                                            "type": "optional",
+                                                                                                            "optional": {
+                                                                                                                "shape": {
+                                                                                                                    "type": "primitive",
+                                                                                                                    "primitive": {
+                                                                                                                        "type": "string",
+                                                                                                                        "string": {
+                                                                                                                            "original": "description"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "jsonExample": "description"
+                                                                                                            },
+                                                                                                            "valueType": {
+                                                                                                                "_type": "primitive",
+                                                                                                                "primitive": {
+                                                                                                                    "v1": "STRING",
+                                                                                                                    "v2": {
+                                                                                                                        "type": "string",
+                                                                                                                        "default": null,
+                                                                                                                        "validation": null
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "description"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            }
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:RuleType",
-                                                                                    "default": null,
-                                                                                    "inline": null
+                                                                                    "typeName": {
+                                                                                        "name": "RuleType",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:RuleType"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "id": "id",
+                                                                                    "name": "name",
+                                                                                    "description": "description"
                                                                                 }
                                                                             }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": "RuleType",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:RuleType",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -5071,17 +4986,39 @@
                                                                 "shape": {
                                                                     "type": "container",
                                                                     "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "list",
-                                                                                    "list": [
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "typeName": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "typeName": {
+                                                                                        "typeId": "type_:User",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "name": "User",
+                                                                                        "displayName": null
+                                                                                    },
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "typeId": "type_:User",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -5091,111 +5028,56 @@
                                                                                                     "name": "User",
                                                                                                     "displayName": null
                                                                                                 },
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "typeId": "type_:User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "name": "User",
-                                                                                                                "displayName": null
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "email",
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "email"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "email"
-                                                                                                            },
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "typeId": "type_:User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "name": "User",
-                                                                                                                "displayName": null
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
-                                                                                                }
+                                                                                                "propertyAccess": null
                                                                                             },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "email": "email"
+                                                                                            {
+                                                                                                "name": "email",
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "email"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "email"
+                                                                                                },
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "typeId": "type_:User",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "name": "User",
+                                                                                                    "displayName": null
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
-                                                                                        }
-                                                                                    ],
-                                                                                    "itemType": {
-                                                                                        "_type": "named",
-                                                                                        "name": "User",
-                                                                                        "fernFilepath": {
-                                                                                            "allParts": [],
-                                                                                            "packagePath": [],
-                                                                                            "file": null
-                                                                                        },
-                                                                                        "displayName": null,
-                                                                                        "typeId": "type_:User",
-                                                                                        "default": null,
-                                                                                        "inline": null
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": [
-                                                                                {
+                                                                                },
+                                                                                "jsonExample": {
                                                                                     "id": "id",
                                                                                     "email": "email"
                                                                                 }
-                                                                            ]
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "named",
-                                                                                    "name": "User",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:User",
-                                                                                    "default": null,
-                                                                                    "inline": null
-                                                                                }
                                                                             }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": "User",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:User",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -5245,7 +5127,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "53509ec7",
+                                "id": "90f9177f",
                                 "url": "/users",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -5281,75 +5163,17 @@
                                                                 "shape": {
                                                                     "type": "container",
                                                                     "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "list",
-                                                                                    "list": [
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:User"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "email",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:User"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "email"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "email"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
-                                                                                                },
-                                                                                                "typeName": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "name": "User",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -5358,75 +5182,24 @@
                                                                                                     },
                                                                                                     "displayName": null,
                                                                                                     "typeId": "type_:User"
-                                                                                                }
-                                                                                            },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "email": "email"
-                                                                                            }
-                                                                                        },
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "named",
-                                                                                                "shape": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": [
-                                                                                                        {
-                                                                                                            "name": "id",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:User"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "id"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "id"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "name": "email",
-                                                                                                            "originalTypeDeclaration": {
-                                                                                                                "name": "User",
-                                                                                                                "fernFilepath": {
-                                                                                                                    "allParts": [],
-                                                                                                                    "packagePath": [],
-                                                                                                                    "file": null
-                                                                                                                },
-                                                                                                                "displayName": null,
-                                                                                                                "typeId": "type_:User"
-                                                                                                            },
-                                                                                                            "value": {
-                                                                                                                "shape": {
-                                                                                                                    "type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "type": "string",
-                                                                                                                        "string": {
-                                                                                                                            "original": "email"
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": "email"
-                                                                                                            },
-                                                                                                            "propertyAccess": null
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "extraProperties": null
                                                                                                 },
-                                                                                                "typeName": {
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "email",
+                                                                                                "originalTypeDeclaration": {
                                                                                                     "name": "User",
                                                                                                     "fernFilepath": {
                                                                                                         "allParts": [],
@@ -5435,16 +5208,25 @@
                                                                                                     },
                                                                                                     "displayName": null,
                                                                                                     "typeId": "type_:User"
-                                                                                                }
-                                                                                            },
-                                                                                            "jsonExample": {
-                                                                                                "id": "id",
-                                                                                                "email": "email"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "email"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "email"
+                                                                                                },
+                                                                                                "propertyAccess": null
                                                                                             }
-                                                                                        }
-                                                                                    ],
-                                                                                    "itemType": {
-                                                                                        "_type": "named",
+                                                                                        ],
+                                                                                        "extraProperties": null
+                                                                                    },
+                                                                                    "typeName": {
                                                                                         "name": "User",
                                                                                         "fernFilepath": {
                                                                                             "allParts": [],
@@ -5452,41 +5234,104 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "typeId": "type_:User",
-                                                                                        "default": null,
-                                                                                        "inline": null
+                                                                                        "typeId": "type_:User"
                                                                                     }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "id": "id",
+                                                                                    "email": "email"
                                                                                 }
                                                                             },
-                                                                            "jsonExample": [
-                                                                                {
-                                                                                    "id": "id",
-                                                                                    "email": "email"
-                                                                                },
-                                                                                {
-                                                                                    "id": "id",
-                                                                                    "email": "email"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "named",
-                                                                                    "name": "User",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "id",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "User",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:User"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "id"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "id"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "email",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "User",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:User"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "email"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "email"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            }
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:User",
-                                                                                    "default": null,
-                                                                                    "inline": null
+                                                                                    "typeName": {
+                                                                                        "name": "User",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:User"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "id": "id",
+                                                                                    "email": "email"
                                                                                 }
                                                                             }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": "User",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:User",
+                                                                            "default": null,
+                                                                            "inline": null
                                                                         }
                                                                     }
                                                                 },
@@ -8518,6 +8363,7 @@
     },
     "environments": {
         "defaultEnvironment": "Default",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -9415,13 +9261,10 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:RuleType"
-                                }
+                                "type": "named",
+                                "value": "type_:RuleType"
                             }
                         },
                         "propertyAccess": null,
@@ -9609,13 +9452,10 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:User"
-                                }
+                                "type": "named",
+                                "value": "type_:User"
                             }
                         },
                         "propertyAccess": null,

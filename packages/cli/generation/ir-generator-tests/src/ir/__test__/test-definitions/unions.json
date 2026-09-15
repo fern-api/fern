@@ -4883,6 +4883,168 @@
             "availability": null,
             "docs": null
         },
+        "type_types:UnionWithGlobalNameCollisions": {
+            "inline": null,
+            "name": {
+                "name": "UnionWithGlobalNameCollisions",
+                "fernFilepath": {
+                    "allParts": [
+                        "types"
+                    ],
+                    "packagePath": [],
+                    "file": "types"
+                },
+                "displayName": null,
+                "typeId": "type_types:UnionWithGlobalNameCollisions"
+            },
+            "shape": {
+                "_type": "union",
+                "discriminant": "type",
+                "extends": [],
+                "baseProperties": [],
+                "inheritedBaseProperties": [],
+                "types": [
+                    {
+                        "discriminantValue": "Date",
+                        "shape": {
+                            "_type": "singleProperty",
+                            "name": "value",
+                            "type": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            }
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "discriminantValue": "Error",
+                        "shape": {
+                            "_type": "singleProperty",
+                            "name": "value",
+                            "type": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            }
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "discriminantValue": "Aim",
+                        "shape": {
+                            "_type": "singleProperty",
+                            "name": "value",
+                            "type": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            }
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "default": null,
+                "discriminatorContext": "data"
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "source": null,
+            "userProvidedExamples": [
+                {
+                    "name": "date",
+                    "shape": {
+                        "type": "union",
+                        "discriminant": "type",
+                        "singleUnionType": {
+                            "wireDiscriminantValue": "Date",
+                            "shape": {
+                                "type": "singleProperty",
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "collides-with-the-js-global"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "collides-with-the-js-global"
+                            }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
+                    },
+                    "jsonExample": {
+                        "type": "Date",
+                        "value": "collides-with-the-js-global"
+                    },
+                    "docs": null
+                },
+                {
+                    "name": "aim",
+                    "shape": {
+                        "type": "union",
+                        "discriminant": "type",
+                        "singleUnionType": {
+                            "wireDiscriminantValue": "Aim",
+                            "shape": {
+                                "type": "singleProperty",
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "no-collision"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "no-collision"
+                            }
+                        },
+                        "baseProperties": [],
+                        "extendProperties": []
+                    },
+                    "jsonExample": {
+                        "type": "Aim",
+                        "value": "no-collision"
+                    },
+                    "docs": null
+                }
+            ],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
         "type_types:UnionWithOptionalTime": {
             "inline": null,
             "name": {
@@ -9336,6 +9498,7 @@
             "type_types:UnionWithLiteral",
             "type_types:UnionWithBaseProperties",
             "type_types:UnionWithTime",
+            "type_types:UnionWithGlobalNameCollisions",
             "type_types:UnionWithOptionalTime",
             "type_types:UnionWithSingleElement",
             "type_types:UnionWithDuplicateTypes",
@@ -17980,6 +18143,188 @@
                     }
                 }
             },
+            "type_types:UnionWithGlobalNameCollisions": {
+                "type": "discriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "UnionWithGlobalNameCollisions",
+                        "camelCase": {
+                            "unsafeName": "unionWithGlobalNameCollisions",
+                            "safeName": "unionWithGlobalNameCollisions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union_with_global_name_collisions",
+                            "safeName": "union_with_global_name_collisions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION_WITH_GLOBAL_NAME_COLLISIONS",
+                            "safeName": "UNION_WITH_GLOBAL_NAME_COLLISIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnionWithGlobalNameCollisions",
+                            "safeName": "UnionWithGlobalNameCollisions"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "types",
+                                "camelCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPES",
+                                    "safeName": "TYPES"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Types",
+                                    "safeName": "Types"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    }
+                },
+                "discriminant": {
+                    "wireValue": "type",
+                    "name": {
+                        "originalName": "type",
+                        "camelCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPE",
+                            "safeName": "TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Type",
+                            "safeName": "Type"
+                        }
+                    }
+                },
+                "inheritedBaseProperties": [],
+                "types": {
+                    "Date": {
+                        "type": "singleProperty",
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "discriminantValue": {
+                            "wireValue": "Date",
+                            "name": {
+                                "originalName": "Date",
+                                "camelCase": {
+                                    "unsafeName": "date",
+                                    "safeName": "date"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "date",
+                                    "safeName": "date"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATE",
+                                    "safeName": "DATE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Date",
+                                    "safeName": "Date"
+                                }
+                            }
+                        },
+                        "properties": null
+                    },
+                    "Error": {
+                        "type": "singleProperty",
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "discriminantValue": {
+                            "wireValue": "Error",
+                            "name": {
+                                "originalName": "Error",
+                                "camelCase": {
+                                    "unsafeName": "error",
+                                    "safeName": "error"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "error",
+                                    "safeName": "error"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ERROR",
+                                    "safeName": "ERROR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Error",
+                                    "safeName": "Error"
+                                }
+                            }
+                        },
+                        "properties": null
+                    },
+                    "Aim": {
+                        "type": "singleProperty",
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "discriminantValue": {
+                            "wireValue": "Aim",
+                            "name": {
+                                "originalName": "Aim",
+                                "camelCase": {
+                                    "unsafeName": "aim",
+                                    "safeName": "aim"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "aim",
+                                    "safeName": "aim"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AIM",
+                                    "safeName": "AIM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Aim",
+                                    "safeName": "Aim"
+                                }
+                            }
+                        },
+                        "properties": null
+                    }
+                }
+            },
             "type_types:UnionWithOptionalTime": {
                 "type": "discriminatedUnion",
                 "declaration": {
@@ -21223,6 +21568,7 @@
                 "type_types:UnionWithLiteral",
                 "type_types:UnionWithBaseProperties",
                 "type_types:UnionWithTime",
+                "type_types:UnionWithGlobalNameCollisions",
                 "type_types:UnionWithOptionalTime",
                 "type_types:UnionWithSingleElement",
                 "type_types:UnionWithDuplicateTypes",

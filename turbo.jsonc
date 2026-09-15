@@ -154,6 +154,25 @@
             ],
             "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
+        "dist:cli:beta": {
+            "outputs": ["dist/beta/**"],
+            "dependsOn": ["^compile", "compile"],
+            "inputs": [
+                "$TURBO_ARGS",
+                "src/**",
+                "package.json",
+                "tsconfig.json",
+                "build.tsconfig.json",
+                "tsconfig.build.json",
+                "build-utils.mjs",
+                "build.beta.mjs",
+                "$TURBO_ROOT$/shared/.prettierignore",
+                "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+                "$TURBO_ROOT$/tsconfig.eslint.json",
+                "$TURBO_ROOT$/packages/configs/**"
+            ],
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
+        },
         "dist:cli:dev": {
             "outputs": ["dist/dev/**"],
             "dependsOn": ["^compile", "compile"],
@@ -230,7 +249,7 @@
             "env": ["POSTHOG_API_KEY"]
         },
         "dist:all": {
-            "with": ["dist", "dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod"]
+            "with": ["dist", "dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod", "dist:cli:beta"]
         },
         "dockerTagLatest": {
             "cache": false,

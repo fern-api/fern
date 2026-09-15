@@ -107,7 +107,7 @@ module <%= gem_namespace %>
                   # Validate that all required (non-optional) fields are present
                   # This ensures undiscriminated unions properly distinguish between member types
                   member_type.fields.each do |field_name, field|
-                    raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}" if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
+                    raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}" if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional<% if (respectNullableUnionFields) { %> && !(field.nullable && [field.api_name, field.name].any? { |k| value.key?(k.to_sym) || value.key?(k.to_s) })<% } %>
                   end
 
                   true

@@ -361,6 +361,7 @@ async function getAreRootApiFilesEquivalent(
         headers: noop,
         "idempotency-headers": noop,
         "default-environment": noop,
+        "base-url-env": noop,
         environments: noop,
         "error-discrimination": (errorDiscrimination) => {
             const errorDiscriminationIsEqual = isEqual(

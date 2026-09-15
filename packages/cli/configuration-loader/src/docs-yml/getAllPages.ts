@@ -92,16 +92,19 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                 });
             });
         case "productgroup":
-            return navigation.products.flatMap((product) => {
-                if (product.type === "external") {
-                    return [];
-                }
+            return [
+                ...navigation.products.flatMap((product) => {
+                    if (product.type === "external") {
+                        return [];
+                    }
 
-                return getAllPages({
-                    landingPage: product.landingPage,
-                    navigation: product.navigation
-                });
-            });
+                    return getAllPages({
+                        landingPage: product.landingPage,
+                        navigation: product.navigation
+                    });
+                }),
+                ...(navigation.changelog != null ? getAllPagesFromNavigationItem({ item: navigation.changelog }) : [])
+            ];
         default:
             assertNever(navigation);
     }

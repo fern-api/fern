@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.124.0
+  changelogEntry:
+    - summary: |
+        Add a top-level `changelog` key to `docs.yml` for multi-product sites. The changelog is shared
+        by every product, served at the site root (e.g. `/changelog`) instead of under a product slug,
+        and does not appear in the product switcher.
+
+        ```yaml
+        products:
+          - display-name: Ferns
+            path: products/ferns.yml
+          - display-name: Cacti
+            path: products/cacti.yml
+        changelog:
+          changelog: ./changelog
+        ```
+      type: feat
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 5.123.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now unions `required` across all `allOf` branches. Previously, when a child
+        `allOf` branch redeclared a property that a parent branch marked as required (without listing it
+        in its own `required`), the property was imported as optional. Required nullable properties are
+        now correctly represented as `nullable` in the IR rather than `optional`.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
+- version: 5.123.0
+  changelogEntry:
+    - summary: |
+        Configure Postman's on-prem SDK generators from `sdk-config.yml` on local generation. A generator at or above its language's cutover version reads the migrated configuration written by `fern sdk migrate`, and an unmigrated workspace is told how to migrate rather than generated from `generators.yml`. Generators below the cutover continue to run from `generators.yml` unchanged.
+      type: feat
+    - summary: |
+        Local generation can now run the generator container with a specific network mode, set with the
+        FERN_GENERATOR_NETWORK environment variable. Setting it to `none` runs the generator with no
+        network access, which air-gapped environments require. Unset, container networking is unchanged.
+      type: internal
+    - summary: |
+        A generator image can now be pinned by digest in generators.yml, for example
+        `name: fern-python-sdk@sha256:...`. The digest is passed through to the container runtime
+        unchanged so the exact pinned image runs, while the generator name used for IR version
+        resolution is unaffected. A malformed digest is rejected with an error naming generators.yml.
+        Tag-based references are unchanged.
+      type: internal
+    - summary: |
+        Setting the USE_FERN_RC environment variable runs the on-prem adapter's current pre-release
+        instead of the version the workspace asks for, for following the adapter internally before its
+        release versions exist. It applies only to an invocation that already resolves to the adapter,
+        and a digest-pinned image still wins. Unset, the version in generators.yml is what runs.
+      type: internal
+    - summary: |
+        The on-prem adapter cutover check now compares versions with semver rather than a hand-rolled
+        parser, so a partial version like `6` or `v6.1` is read correctly. A version semver cannot read
+        at all, such as the `latest` that local generation defaults to, means Fern's own generator:
+        selecting the adapter is done by naming its version.
+      type: internal
+    - summary: |
+        When a generator image is pinned by digest, the generation log now also reports the version
+        declared in generators.yml. A digest identifies the artifact but not which generator release it
+        is, which made a pinned run hard to correlate back to a version.
+      type: internal
+    - summary: |
+        FERN_RC_NAMESPACE overrides the namespace the on-prem adapter's pre-release is pulled from,
+        defaulting to `fernenterprise`, for pointing a run at a staging or personal namespace without
+        editing generators.yml. Only applies when USE_FERN_RC is set.
+      type: internal
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 5.122.0
   changelogEntry:
     - summary: |

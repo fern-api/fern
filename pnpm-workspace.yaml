@@ -7,9 +7,11 @@ packages:
   - "!packages/cli/cli/dist/local"
   - "!packages/cli/cli/dist/dev"
   - "!packages/cli/cli/dist/prod"
+  - "!packages/cli/cli/dist/beta"
   - "!packages/cli/cli-v2/dist/local"
   - "!packages/cli/cli-v2/dist/dev"
   - "!packages/cli/cli-v2/dist/prod"
+  - "!packages/cli/cli-v2/dist/beta"
 
 # Supply chain security settings
 # See: https://pnpm.io/settings
@@ -89,6 +91,7 @@ catalog:
   "@inquirer/prompts": ^7.1.0
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
+  "@postman/sdk-config": 0.3.1
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.1.3
   "@sentry/cli": ^2.42.2
