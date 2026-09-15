@@ -980,13 +980,10 @@
                         }
                     },
                     "typeReference": {
-                        "type": "optional",
+                        "type": "list",
                         "value": {
-                            "type": "list",
-                            "value": {
-                                "type": "named",
-                                "value": "type_:RuleType"
-                            }
+                            "type": "named",
+                            "value": "type_:RuleType"
                         }
                     },
                     "propertyAccess": null,
@@ -1174,13 +1171,10 @@
                         }
                     },
                     "typeReference": {
-                        "type": "optional",
+                        "type": "list",
                         "value": {
-                            "type": "list",
-                            "value": {
-                                "type": "named",
-                                "value": "type_:User"
-                            }
+                            "type": "named",
+                            "value": "type_:User"
                         }
                     },
                     "propertyAccess": null,

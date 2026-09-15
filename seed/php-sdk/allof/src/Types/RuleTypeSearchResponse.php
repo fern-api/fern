@@ -9,10 +9,10 @@ use Seed\Core\Types\ArrayType;
 class RuleTypeSearchResponse extends JsonSerializableType
 {
     /**
-     * @var ?array<RuleType> $results Current page of results from the requested resource.
+     * @var array<RuleType> $results Current page of results from the requested resource.
      */
     #[JsonProperty('results'), ArrayType([RuleType::class])]
-    public ?array $results;
+    public array $results;
 
     /**
      * @var PagingCursors $paging
@@ -22,14 +22,14 @@ class RuleTypeSearchResponse extends JsonSerializableType
 
     /**
      * @param array{
+     *   results: array<RuleType>,
      *   paging: PagingCursors,
-     *   results?: ?array<RuleType>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->results = $values['results'] ?? null;
+        $this->results = $values['results'];
         $this->paging = $values['paging'];
     }
 
