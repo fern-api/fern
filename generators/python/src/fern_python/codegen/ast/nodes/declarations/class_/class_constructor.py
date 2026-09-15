@@ -19,6 +19,8 @@ class ClassConstructor(AstNode):
             include_args=signature.include_args,
             named_parameters=signature.named_parameters,
             include_kwargs=signature.include_kwargs,
+            kwargs_name=signature.kwargs_name,
+            kwargs_type_hint=signature.kwargs_type_hint,
             return_type=None if signature.has_arguments() else TypeHint.none(),
         )
         # Convert overload signatures to include 'self' parameter
@@ -30,6 +32,8 @@ class ClassConstructor(AstNode):
                     include_args=overload.include_args,
                     named_parameters=overload.named_parameters,
                     include_kwargs=overload.include_kwargs,
+                    kwargs_name=overload.kwargs_name,
+                    kwargs_type_hint=overload.kwargs_type_hint,
                     return_type=None,
                 )
                 for overload in overloads
