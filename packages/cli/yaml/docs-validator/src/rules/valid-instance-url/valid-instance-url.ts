@@ -1,6 +1,14 @@
 import { Rule, RuleViolation } from "../../Rule.js";
 
-const VALID_FERN_DOMAINS = ["docs.buildwithfern.com", "docs.dev.buildwithfern.com"];
+const VALID_FERN_DOMAINS = [
+    "docs.buildwithfern.com",
+    "docs.dev.buildwithfern.com",
+    "buildwithfern.dev",
+    "fernapi.dev",
+    "ferndocs.com",
+    "ferndocs.dev",
+    "fernmcp.dev"
+];
 const MAX_SUBDOMAIN_LENGTH = 62;
 
 function validateSubdomain(subdomain: string): { valid: boolean; error?: string; suggestion?: string } {
@@ -49,8 +57,11 @@ export function validateInstanceUrl(url: string): RuleViolation | null {
         };
     }
 
-    // Check if the URL ends with a valid Fern domain
-    const matchedDomain = VALID_FERN_DOMAINS.find((domain) => hostname.endsWith(domain));
+    // Check if the URL is the valid Fern domain itself, or a subdomain of one.
+    // Prefer the longest match so that e.g. docs.dev.buildwithfern.com wins over docs.buildwithfern.com.
+    const matchedDomain = [...VALID_FERN_DOMAINS]
+        .sort((a, b) => b.length - a.length)
+        .find((domain) => hostname === domain || hostname.endsWith("." + domain));
     if (!matchedDomain) {
         return {
             severity: "fatal",
@@ -58,17 +69,14 @@ export function validateInstanceUrl(url: string): RuleViolation | null {
         };
     }
 
-    // Extract subdomain using a safer approach
-    const suffix = "." + matchedDomain;
-    if (!hostname.endsWith(suffix)) {
-        // hostname is exactly the domain without subdomain
+    if (hostname === matchedDomain) {
         return {
             severity: "fatal",
             message: `Invalid URL "${url}". A subdomain is required before ${matchedDomain}`
         };
     }
 
-    const subdomain = hostname.slice(0, hostname.length - suffix.length);
+    const subdomain = hostname.slice(0, hostname.length - (matchedDomain.length + 1));
 
     // Validate subdomain is not empty
     if (!subdomain || subdomain.length === 0) {
