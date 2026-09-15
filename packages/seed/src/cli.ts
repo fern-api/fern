@@ -999,12 +999,12 @@ function addPublishCommands(cli: Argv) {
                             default: false,
                             demandOption: false
                         })
-                        .conflicts("beta", "dev")
                         .check((argv) => {
-                            return (
-                                // Check: Either version or changelog and previousChangelog must be provided
-                                argv.ver || (argv.changelog && argv.previousChangelog)
-                            );
+                            if (argv.beta && argv.dev) {
+                                throw new Error("Arguments --beta and --dev are mutually exclusive");
+                            }
+                            // Either version or changelog and previousChangelog must be provided
+                            return argv.ver || (argv.changelog && argv.previousChangelog);
                         }),
                 async (argv) => {
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
