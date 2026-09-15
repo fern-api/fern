@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# `api.auth: any: [...]` for the CLI. The spec's operations only name its own
+# `BasicAuth`; `OAuth2` (client-credentials) is declared here alone, the way a
+# customer layers OAuth onto a vendor spec. The generated `main.rs` must pin
+# `.auth_strategy(AuthStrategy::Any)` so the runtime picks whichever scheme has
+# credentials instead of routing on each operation's `security` (which would
+# never select OAuth2 and would send `widgets list` unauthenticated).
+auth-schemes:
+  BasicAuth:
+    scheme: basic
+    username:
+      env: ACME_ACCOUNT_SID
+    password:
+      env: ACME_AUTH_TOKEN
+  OAuth2:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: ACME_CLIENT_ID
+    client-secret-env: ACME_CLIENT_SECRET
+    get-token:
+      endpoint: POST /token
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+api:
+  auth:
+    any:
+      - BasicAuth
+      - OAuth2
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

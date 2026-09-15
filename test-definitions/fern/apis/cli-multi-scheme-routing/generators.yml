@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Two spec-declared schemes with differing per-operation `security`, and
+# deliberately NO `api.auth` block.
+#
+# Pins that the `.auth_strategy(...)` emission does NOT reach this shape on the
+# importer path seed exercises (OpenAPI -> OpenAPI IR -> Fern definition -> IR).
+# That path collapses multiple `components.securitySchemes` down to a single
+# scheme and reports `auth.requirement: ALL`, so `authStrategyVariant` returns
+# `undefined` and the runtime keeps its `Auto` default -- per-operation routing,
+# exactly as before this fixture's generator change.
+#
+# The direct importer (`@fern-api/openapi-to-ir`, i.e. `seed inspect -d`) reports
+# `ANY` over both schemes for the same spec, which *would* pin
+# `AuthStrategy::Any` and replace routing with first-credential-wins. If this
+# fixture ever starts emitting `.auth_strategy(AuthStrategy::Any)`, seed has
+# moved to that importer and the behaviour change described in
+# `changes/unreleased/emit-auth-strategy-from-ir.yml` now reaches every
+# multi-scheme OpenAPI CLI that never asked for it.
+api:
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

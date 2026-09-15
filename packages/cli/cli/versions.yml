@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.122.0
+  changelogEntry:
+    - summary: |
+        Preserve OpenAPI `xml` metadata when importing object schemas. Schemas with an `xml` object
+        are emitted with `encoding.xml` (name, namespace, prefix) in the IR, and their properties carry
+        `ObjectProperty.xml` describing whether they serialize as an attribute, text body, or child
+        element (including `wrapped` lists and the new `x-fern-xml-list-separator` / `x-fern-xml-text`
+        extensions). The same metadata can be expressed in Fern Definition files via `encoding.xml`.
+      type: feat
+  createdAt: "2026-09-14"
+  irVersion: 67
 - version: 5.121.2
   changelogEntry:
     - summary: |
