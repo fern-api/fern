@@ -57,7 +57,9 @@ describe("loadSdkConfigV1", () => {
                     generatorVersion: "4.0.0",
                     sdkName: "petstore-node",
                     sdkVersion: "2.0.0",
-                    clientPathParameterStyle: "language-default"
+                    clientPathParameterStyle: "language-default",
+                    requestedOutput: { type: "download" },
+                    absolutePathToLocalOutputArchive: join(directory, "generated", "typescript.zip")
                 }
             ]
         });
@@ -131,6 +133,42 @@ describe("loadSdkConfigV1", () => {
                             mode: "pull-request",
                             publish: { registry: "npm" }
                         }
+                    }
+                ]
+            }
+        });
+    });
+
+    it("resolves a configured ZIP filename relative to sdk-config.yml", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [
+                    {
+                        language: "typescript",
+                        output: { delivery: "zip", fileName: "./artifacts/petstore.zip" }
+                    }
+                ]
+            })
+        );
+
+        await expect(loadSdkConfigV1(configPath)).resolves.toMatchObject({
+            payload: {
+                targets: [
+                    {
+                        requestedOutput: { type: "download" },
+                        absolutePathToLocalOutputArchive: join(directory, "artifacts", "petstore.zip")
                     }
                 ]
             }

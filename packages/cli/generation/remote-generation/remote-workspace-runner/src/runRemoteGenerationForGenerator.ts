@@ -39,6 +39,7 @@ import {
     FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
+    resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
@@ -329,7 +330,12 @@ export async function runRemoteGenerationForGenerator({
                     body: sdkConfigV1.body,
                     package: sdkConfigTarget.package
                 },
-                requestedOutput: sdkConfigTarget.requestedOutput,
+                // Preview must never retain a publishing destination from SDK Config.
+                requestedOutput: resolveSdkConfigRequestedOutput(
+                    sdkConfigTarget.requestedOutput,
+                    absolutePathToPreview != null
+                ),
+                absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
                 absolutePathToPreview,
                 context: interactiveTaskContext,
                 targetIdSeed: sdkGenApiTargetIdSeed,

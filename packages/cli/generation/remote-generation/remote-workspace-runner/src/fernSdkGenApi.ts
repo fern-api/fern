@@ -11,7 +11,7 @@ import { createHash } from "crypto";
 import FormData from "form-data";
 import path from "path";
 import { gunzipSync } from "zlib";
-import { downloadFilesForTask } from "./RemoteTaskHandler.js";
+import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -77,6 +77,13 @@ export type FernSdkGenApiRequestedOutput =
           publish?: FernSdkGenApiPublishConfig;
       }
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
+
+export function resolveSdkConfigRequestedOutput(
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined,
+    isPreview: boolean
+): FernSdkGenApiRequestedOutput | undefined {
+    return isPreview ? { type: "download" } : requestedOutput;
+}
 
 interface FernBuildStatus {
     buildId: string;
@@ -468,6 +475,8 @@ export interface FernSdkConfigV1Payload {
         sdkVersion?: string;
         clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
         requestedOutput?: FernSdkGenApiRequestedOutput;
+        /** Local-only destination for a requested ZIP artifact; never serialized to sdk-gen-api. */
+        absolutePathToLocalOutputArchive?: AbsoluteFilePath;
         package?: FernSdkGenApiPackageConfig;
     }>;
 }
@@ -484,6 +493,7 @@ export interface FernSdkGenApiBuildParameters {
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
+    absolutePathToLocalOutputArchive?: AbsoluteFilePath;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
     targetIdSeed?: string;
@@ -1133,17 +1143,26 @@ async function finishFernSdkGenApiTarget(
             code: CliError.Code.InternalError
         });
     }
-    const outputPath =
-        participant.absolutePathToPreview != null
-            ? join(
-                  participant.absolutePathToPreview,
-                  RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
-              )
-            : participant.generatorInvocation.absolutePathToLocalOutput;
-    if (outputPath != null) {
+    if (participant.absolutePathToPreview != null) {
         await downloadFilesForTask({
             s3PreSignedReadUrl: target.result.artifactUrl,
-            absolutePathToLocalOutput: outputPath,
+            absolutePathToLocalOutput: join(
+                participant.absolutePathToPreview,
+                RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
+            ),
+            context: participant.context,
+            skipFernignore: participant.skipFernignore
+        });
+    } else if (participant.absolutePathToLocalOutputArchive != null) {
+        await downloadArchiveForTask({
+            s3PreSignedReadUrl: target.result.artifactUrl,
+            absolutePathToLocalOutput: participant.absolutePathToLocalOutputArchive,
+            context: participant.context
+        });
+    } else if (participant.generatorInvocation.absolutePathToLocalOutput != null) {
+        await downloadFilesForTask({
+            s3PreSignedReadUrl: target.result.artifactUrl,
+            absolutePathToLocalOutput: participant.generatorInvocation.absolutePathToLocalOutput,
             context: participant.context,
             skipFernignore: participant.skipFernignore
         });

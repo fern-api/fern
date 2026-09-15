@@ -18,6 +18,7 @@ describe("createSdkConfigWorkspace", () => {
 
     afterEach(async () => {
         vi.resetAllMocks();
+        vi.unstubAllGlobals();
         await Promise.all(temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })));
     });
 
@@ -92,5 +93,41 @@ describe("createSdkConfigWorkspace", () => {
                 cliVersion: "0.0.0"
             })
         );
+    });
+
+    it("rejects URL sources until they can be resolved safely with relative references", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+
+        await expect(
+            createSdkConfigWorkspace({
+                sdkConfig: parseSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: {
+                        specs: [
+                            {
+                                id: "payments",
+                                type: "openapi",
+                                url: "https://example.com/openapi.yaml"
+                            }
+                        ]
+                    },
+                    api: {},
+                    client: {},
+                    package: {},
+                    docs: {},
+                    generation: {},
+                    targets: [{ language: "typescript", generatorVersion: "4.0.0", output: { delivery: "zip" } }]
+                }),
+                absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+                cliVersion: "0.0.0",
+                context: {
+                    failAndThrow: (message: string) => {
+                        throw new Error(message);
+                    }
+                } as never
+            })
+        ).rejects.toThrow("Download https://example.com/openapi.yaml into your project and use a path source");
     });
 });

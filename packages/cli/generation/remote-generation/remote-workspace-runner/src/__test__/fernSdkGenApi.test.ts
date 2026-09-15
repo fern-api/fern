@@ -13,12 +13,14 @@ import {
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
+    resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
     selectFernSdkGenApiRoute
 } from "../fernSdkGenApi.js";
@@ -1799,6 +1801,17 @@ describe("fernapi/fern-mcp-server target", () => {
                 publish: { registry: "npm" }
             }
         });
+    });
+
+    it("forces SDK Config preview output to download instead of publishing", () => {
+        const githubOutput: FernSdkGenApiRequestedOutput = {
+            type: "github",
+            repository: "acme/sdk",
+            mode: "pull-request"
+        };
+
+        expect(resolveSdkConfigRequestedOutput(githubOutput, true)).toEqual({ type: "download" });
+        expect(resolveSdkConfigRequestedOutput(githubOutput, false)).toBe(githubOutput);
     });
 
     it("infers npm for legacy publish output with no explicit registry override", () => {

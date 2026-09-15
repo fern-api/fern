@@ -88,7 +88,10 @@ export async function loadProjectFromDirectory({
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
     ]);
 
-    if (!skipApiWorkspaces && (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists)) {
+    if (
+        !skipApiWorkspaces &&
+        (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists)
+    ) {
         apiWorkspaces = await loadApis({
             cliName,
             fernDirectory: absolutePathToFernDirectory,

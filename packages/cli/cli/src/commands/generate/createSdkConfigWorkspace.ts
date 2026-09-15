@@ -1,3 +1,4 @@
+import path from "node:path";
 import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml, getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -5,11 +6,9 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
-import { mkdtemp, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import path from "node:path";
 
 const SDK_CONFIG_GROUP = "sdk-config";
+const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
 
 const GENERATOR_BY_LANGUAGE: Record<string, string> = {
     typescript: "fernapi/fern-typescript-sdk",
@@ -44,9 +43,7 @@ export async function createSdkConfigWorkspace({
     const group: generatorsYml.GeneratorGroup = {
         groupName: SDK_CONFIG_GROUP,
         audiences:
-            sdkConfig.api.audiences == null
-                ? { type: "all" }
-                : { type: "select", audiences: sdkConfig.api.audiences },
+            sdkConfig.api.audiences == null ? { type: "all" } : { type: "select", audiences: sdkConfig.api.audiences },
         generators: await Promise.all(
             sdkConfig.targets.map(async (target) => {
                 const name = GENERATOR_BY_LANGUAGE[target.language];
@@ -130,9 +127,13 @@ function createGeneratorInvocation({
         automation: { generate: true, preview: true, upgrade: true, verify: true },
         containerImage: undefined,
         irVersionOverride: undefined,
+        // SDK Config permits files delivery without a path. Keep those outputs separated by
+        // language under a stable directory next to sdk-config.yml.
         absolutePathToLocalOutput:
             output?.delivery === "files"
-                ? AbsoluteFilePath.of(path.resolve(configDirectory, output.path ?? `generated/${language}`))
+                ? AbsoluteFilePath.of(
+                      path.resolve(configDirectory, output.path ?? `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}`)
+                  )
                 : undefined,
         absolutePathToLocalSnippets: undefined,
         keywords: undefined,
@@ -206,26 +207,15 @@ async function resolveSourcePath(
     if ("path" in spec) {
         return AbsoluteFilePath.of(path.resolve(configDirectory, spec.path));
     }
-    const response = await fetch(spec.url, { signal: AbortSignal.timeout(30_000) });
-    if (!response.ok) {
-        return context.failAndThrow(
-            `Could not download SDK Config source '${spec.id}' from ${spec.url}: ${response.status} ${response.statusText}`,
-            undefined,
-            { code: CliError.Code.NetworkError }
-        );
-    }
-    const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-source-"));
-    const absolutePath = path.join(directory, `${sanitizeFilename(spec.id)}.json`);
-    await writeFile(absolutePath, Buffer.from(await response.arrayBuffer()));
-    return AbsoluteFilePath.of(absolutePath);
+    return context.failAndThrow(
+        `SDK Config URL source '${spec.id}' is not supported by the Fern CLI yet. Download ${spec.url} into your project and use a path source instead.`,
+        undefined,
+        { code: CliError.Code.ConfigError }
+    );
 }
 
 function resolveTransformPath(value: string, configDirectory: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.resolve(configDirectory, value));
-}
-
-function sanitizeFilename(value: string): string {
-    return value.replace(/[^a-zA-Z0-9._-]/g, "-");
 }
 
 function isLegacyGenerationLanguage(language: string): language is generatorsYml.GenerationLanguage {
