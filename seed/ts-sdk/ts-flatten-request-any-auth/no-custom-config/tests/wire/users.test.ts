@@ -13,8 +13,16 @@ describe("UsersClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { id: "body-id", name: "Ada" };
+        const rawResponseBody = { id: "body-id", name: "Ada" };
 
-        server.mockEndpoint().put("/users/path-id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+        server
+            .mockEndpoint()
+            .put("/users/path-id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.users.updateUser({
             id: "path-id",
@@ -23,7 +31,7 @@ describe("UsersClient", () => {
                 name: "Ada",
             },
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateUserProfile", async () => {
@@ -35,6 +43,7 @@ describe("UsersClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { id: "body-id", name: "Ada" };
+        const rawResponseBody = { id: "body-id", name: "Ada" };
 
         server
             .mockEndpoint()
@@ -42,12 +51,13 @@ describe("UsersClient", () => {
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.users.updateUserProfile("path-id", {
             id: "body-id",
             name: "Ada",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -316,7 +316,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "f10ef3d8",
+                                "id": "cf966c17",
                                 "name": null,
                                 "url": "/users/path-id",
                                 "rootPathParameters": [],
@@ -429,7 +429,89 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": null
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_users:UpdateUser",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            "users"
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": "users"
+                                                    },
+                                                    "name": "UpdateUser",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "body-id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "body-id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_users:UpdateUser",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        "users"
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": "users"
+                                                                },
+                                                                "name": "UpdateUser",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "name",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "Ada"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "Ada"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_users:UpdateUser",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        "users"
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": "users"
+                                                                },
+                                                                "name": "UpdateUser",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "id": "body-id",
+                                                "name": "Ada"
+                                            }
+                                        }
                                     }
                                 },
                                 "docs": null
@@ -828,7 +910,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "f10ef3d8",
+                                "id": "cf966c17",
                                 "name": null,
                                 "url": "/users/path-id/profile",
                                 "rootPathParameters": [],
@@ -941,7 +1023,89 @@
                                     "type": "ok",
                                     "value": {
                                         "type": "body",
-                                        "value": null
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_users:UpdateUser",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            "users"
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": "users"
+                                                    },
+                                                    "name": "UpdateUser",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "body-id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "body-id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_users:UpdateUser",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        "users"
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": "users"
+                                                                },
+                                                                "name": "UpdateUser",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "name",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "Ada"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "Ada"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_users:UpdateUser",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        "users"
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": "users"
+                                                                },
+                                                                "name": "UpdateUser",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "id": "body-id",
+                                                "name": "Ada"
+                                            }
+                                        }
                                     }
                                 },
                                 "docs": null

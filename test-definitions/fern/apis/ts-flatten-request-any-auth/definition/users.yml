@@ -23,6 +23,10 @@ service:
           request:
             id: body-id
             name: Ada
+          response:
+            body:
+              id: body-id
+              name: Ada
 
     updateUserProfile:
       path: /users/{id}/profile
@@ -37,3 +41,7 @@ service:
           request:
             id: body-id
             name: Ada
+          response:
+            body:
+              id: body-id
+              name: Ada
