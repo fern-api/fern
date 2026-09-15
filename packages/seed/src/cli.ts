@@ -1005,7 +1005,9 @@ function addPublishCommands(cli: Argv) {
                             }
                             // Either version or changelog and previousChangelog must be provided
                             if (!argv.ver && !(argv.changelog && argv.previousChangelog)) {
-                                throw new Error("Either --ver or both --changelog and --previousChangelog must be provided");
+                                throw new Error(
+                                    "Either --ver or both --changelog and --previousChangelog must be provided"
+                                );
                             }
                             return true;
                         }),
@@ -1061,7 +1063,7 @@ function addPublishCommands(cli: Argv) {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
-                        .check((argv) => { 
+                        .check((argv) => {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided-
                                 argv.ver || (argv.changelog && argv.previousChangelog)
