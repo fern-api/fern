@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -174,9 +175,30 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      * @return true if sent immediately, false if queued or dropped
      */
     public synchronized boolean send(String message) {
+        return send(message, null);
+    }
+
+    /**
+     * Sends a message or queues it if not connected, exposing the accepting socket.
+     *
+     * Behaves like {@link #send(String)}, but additionally invokes {@code onSent} with the
+     * WebSocket that accepted the message. The callback is only invoked when the message was
+     * sent directly, never when it was queued or dropped. This lets callers associate a
+     * protocol-level message with the specific connection it was delivered on, e.g. to decide
+     * in {@link #shouldReconnectAfterClose(WebSocket, int, String)} whether a later close of that same
+     * connection was expected.
+     *
+     * @param message The message to send
+     * @param onSent Callback receiving the WebSocket that accepted the message, or null
+     * @return true if sent immediately, false if queued or dropped
+     */
+    public synchronized boolean send(String message, Consumer<WebSocket> onSent) {
         WebSocket ws = webSocket;
         if (ws != null) {
             boolean sent = ws.send(message);
+            if (sent && onSent != null) {
+                onSent.accept(ws);
+            }
             if (!sent && messageQueue.size() < maxEnqueuedMessages) {
                 messageQueue.offer(message);
                 return false;
@@ -205,9 +227,27 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
      * @return true if sent immediately, false if queued or dropped
      */
     public synchronized boolean sendBinary(ByteString data) {
+        return sendBinary(data, null);
+    }
+
+    /**
+     * Sends binary data or queues it if not connected, exposing the accepting socket.
+     *
+     * Behaves like {@link #sendBinary(ByteString)}, but additionally invokes {@code onSent} with
+     * the WebSocket that accepted the data. The callback is only invoked when the data was sent
+     * directly, never when it was queued or dropped.
+     *
+     * @param data The binary data to send
+     * @param onSent Callback receiving the WebSocket that accepted the data, or null
+     * @return true if sent immediately, false if queued or dropped
+     */
+    public synchronized boolean sendBinary(ByteString data, Consumer<WebSocket> onSent) {
         WebSocket ws = webSocket;
         if (ws != null) {
             boolean sent = ws.send(data);
+            if (sent && onSent != null) {
+                onSent.accept(ws);
+            }
             if (!sent && binaryMessageQueue.size() < maxEnqueuedMessages) {
                 binaryMessageQueue.offer(data);
                 return false;
@@ -287,6 +327,21 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
     }
 
     /**
+     * Acknowledges a peer-initiated close so OkHttp can complete the close handshake and
+     * invoke {@link #onClosed(WebSocket, int, String)}.
+     *
+     * Code 1005 is a local "no status received" sentinel reported when the peer sent an empty
+     * close frame. It is not a valid code to put on the wire, so it is acknowledged with
+     * the normal closure code 1000 instead.
+     *
+     * @hidden
+     */
+    @Override
+    public void onClosing(WebSocket webSocket, int code, String reason) {
+        webSocket.close(code == 1005 ? 1000 : code, reason);
+    }
+
+    /**
      * @hidden
      */
     @Override
@@ -300,9 +355,27 @@ public abstract class ReconnectingWebSocketListener extends WebSocketListener {
         }
         connectionEstablishedTime = 0L;
         onWebSocketClosed(webSocket, code, reason);
-        if (code != 1000 && shouldReconnect.get()) {
+        if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code, reason)) {
             scheduleReconnect();
         }
+    }
+
+    /**
+     * Decides whether a completed close handshake should trigger a reconnect.
+     *
+     * Only consulted when reconnection has not been disabled via {@link #disconnect()}.
+     * The default treats normal closure (1000) as terminal and reconnects on any
+     * other code. Subclasses can override this when protocol context establishes that a
+     * particular close is terminal, for example a no-status close following a message that
+     * ends the stream.
+     *
+     * @param webSocket The WebSocket that was closed
+     * @param code The close status code reported by OkHttp
+     * @param reason The close reason sent by the peer, or an empty string
+     * @return true to schedule a reconnect, false to stay disconnected
+     */
+    protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code, String reason) {
+        return code != 1000;
     }
 
     /**
