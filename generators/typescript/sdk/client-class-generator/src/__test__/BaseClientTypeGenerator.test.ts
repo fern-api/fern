@@ -478,7 +478,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -490,7 +491,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -506,7 +508,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -557,7 +560,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -569,7 +573,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -585,7 +590,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -1077,7 +1083,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -1089,7 +1096,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -1105,7 +1113,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -1647,6 +1656,7 @@ describe("BaseClientTypeGenerator", () => {
             const ir = createIR();
             ir.environments = {
                 defaultEnvironment: "RegionalApiServer",
+                baseUrlEnvVar: undefined,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         { id: "base", name: casingsGenerator.generateName("base") },
@@ -1688,6 +1698,7 @@ describe("BaseClientTypeGenerator", () => {
             const ir = createIR();
             ir.environments = {
                 defaultEnvironment: "Default",
+                baseUrlEnvVar: undefined,
                 environments: FernIr.Environments.singleBaseUrl({
                     environments: [
                         {
@@ -1710,6 +1721,7 @@ describe("BaseClientTypeGenerator", () => {
             const ir = createIR();
             ir.environments = {
                 defaultEnvironment: "Default",
+                baseUrlEnvVar: undefined,
                 environments: FernIr.Environments.singleBaseUrl({
                     environments: [
                         {

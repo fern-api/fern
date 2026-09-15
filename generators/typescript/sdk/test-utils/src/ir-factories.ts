@@ -439,7 +439,8 @@ export function createObjectProperty(
         availability: undefined,
         v2Examples: undefined,
         propertyAccess: undefined,
-        defaultValue: undefined
+        defaultValue: undefined,
+        xml: undefined
     };
 }
 

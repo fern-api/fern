@@ -912,7 +912,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -924,7 +925,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -940,7 +942,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
