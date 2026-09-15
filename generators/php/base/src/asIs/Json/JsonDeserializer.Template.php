@@ -19,7 +19,14 @@ class JsonDeserializer
      */
     public static function deserializeDateTime(string $datetime): DateTime
     {
-        try {
+<% if (it.rejectEmptyDateTimeStrings) { %>        // PHP's DateTime constructor treats an empty string as "construct for the
+        // current moment" and does not throw, so the catch below never fires for it
+        // and the caller receives a fabricated timestamp. The sibling
+        // deserializeDate already rejects an empty string via createFromFormat.
+        if (trim($datetime) === '') {
+            throw new JsonException("Cannot create DateTime from an empty string");
+        }
+<% } %>        try {
             return new DateTime($datetime);
         } catch (Exception $e) {
             throw new JsonException("Failed to create DateTime from string: $datetime", previous: $e);

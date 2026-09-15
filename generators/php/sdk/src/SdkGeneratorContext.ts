@@ -741,7 +741,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public override getExtraTemplateVarsForFile(filename: string): Record<string, string | boolean> | undefined {
         const vars: Record<string, string | boolean> = {
             defaultMaxRetries: String(this.customConfig.maxRetries ?? 2),
-            respectOptionalRequestBody: this.customConfig.respectOptionalRequestBody ?? false
+            respectOptionalRequestBody: this.customConfig.respectOptionalRequestBody ?? false,
+            rejectEmptyDateTimeStrings: this.customConfig.rejectEmptyDateTimeStrings ?? false
         };
         if (filename === AsIsFiles.CustomPager) {
             vars.customPagerClassName = this.getCustomPagerClassName();
