@@ -1,10 +1,10 @@
 import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
-import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { discoverDeclaredSkills, generateSkillsIndexManifest } from "../declaredSkills.js";
+import { discoverDeclaredSkills, generateSkillsIndexManifest, writeSkillsIndexManifest } from "../declaredSkills.js";
 
 describe("discoverDeclaredSkills", () => {
     let skillsDirectory: AbsoluteFilePath;
@@ -232,6 +232,43 @@ describe("discoverDeclaredSkills", () => {
         expect(skills.map((skill) => skill.name)).toEqual(["my-skill"]);
     });
 
+    it("flags escaping references written with angle brackets, balanced parentheses, or link definitions", async () => {
+        await writeFileAt(
+            "my-skill/SKILL.md",
+            skillMarkdown(
+                "my-skill",
+                [
+                    "[spaces](<../shared notes.md>)",
+                    "[parens](../shared/notes%20(draft).md)",
+                    "![image][logo]",
+                    "",
+                    "[logo]: ../assets/logo.png"
+                ].join("\n")
+            )
+        );
+
+        const { violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: skillsDirectory });
+
+        expect(violations.map((violation) => violation.message)).toEqual([
+            expect.stringContaining('Reference "../shared notes.md" escapes'),
+            expect.stringContaining('Reference "../shared/notes (draft).md" escapes'),
+            expect.stringContaining('Reference "../assets/logo.png" escapes')
+        ]);
+    });
+
+    it("parses prompt-style markdown that is not valid MDX", async () => {
+        await writeFileAt(
+            "my-skill/SKILL.md",
+            skillMarkdown("my-skill", "Replace {placeholder} with <value> and see [notes](notes.md).\n")
+        );
+        await writeFileAt("my-skill/notes.md", "# notes\n");
+
+        const { skills, violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: skillsDirectory });
+
+        expect(violations).toEqual([]);
+        expect(skills.map((skill) => skill.name)).toEqual(["my-skill"]);
+    });
+
     it("does not treat files inside a skill as nested skills", async () => {
         await writeFileAt("my-skill/SKILL.md", skillMarkdown("my-skill"));
         await writeFileAt("my-skill/examples/SKILL.md", "not frontmatter");
@@ -244,5 +281,20 @@ describe("discoverDeclaredSkills", () => {
             "SKILL.md",
             "examples/SKILL.md"
         ]);
+    });
+
+    it("writes the manifest to one shared temp directory, reusing the file for identical content", async () => {
+        await writeFileAt("my-skill/SKILL.md", skillMarkdown("my-skill"));
+        await writeFileAt("other-skill/SKILL.md", skillMarkdown("other-skill"));
+        const { skills } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: skillsDirectory });
+
+        const first = await writeSkillsIndexManifest(skills);
+        const again = await writeSkillsIndexManifest(skills);
+        const different = await writeSkillsIndexManifest(skills.slice(0, 1));
+
+        expect(again).toEqual(first);
+        expect(different).not.toEqual(first);
+        expect(path.dirname(different)).toEqual(path.dirname(first));
+        expect(await readFile(first, "utf-8")).toEqual(generateSkillsIndexManifest(skills));
     });
 });

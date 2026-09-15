@@ -9,8 +9,16 @@ import {
     relative,
     resolve
 } from "@fern-api/fs-utils";
-import { readdir, readFile } from "fs/promises";
+import { createHash } from "crypto";
+import { mkdtemp, readdir, readFile, writeFile } from "fs/promises";
 import grayMatter from "gray-matter";
+import type { Root as MdastRoot } from "mdast";
+import { fromMarkdown } from "mdast-util-from-markdown";
+import { gfmFromMarkdown } from "mdast-util-gfm";
+import { gfm } from "micromark-extension-gfm";
+import { tmpdir } from "os";
+import path from "path";
+import { visit } from "unist-util-visit";
 
 /**
  * Upload destination for agent skills declared via `page-actions.options.skills.path` in
@@ -26,8 +34,6 @@ export const SKILL_NAME_KEBAB_CASE_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const SKILL_MARKDOWN_FILENAME = "SKILL.md";
 const MARKDOWN_FILE_EXTENSIONS = [".md", ".mdx"];
-/** Matches markdown link and image targets: `[text](target)` and `![alt](target)`. */
-const MARKDOWN_LINK_TARGET_REGEX = /!?\[[^\]]*\]\(\s*<?([^()<>\s]+)>?\s*(?:"[^"]*")?\)/g;
 
 export interface DeclaredSkillFile {
     absoluteFilePath: AbsoluteFilePath;
@@ -150,6 +156,26 @@ export function generateSkillsIndexManifest(skills: DeclaredSkill[]): string {
         undefined,
         2
     );
+}
+
+let manifestDirectory: Promise<string> | undefined;
+
+/**
+ * Writes the generated `index.json` to disk so it can join the publish payload like any other
+ * file. Uploaders read the path later (ledger blob upload, `fern docs dev` serving `/_local/…`),
+ * so the file must outlive this call: one temp directory is shared for the whole process and
+ * manifests are content-addressed, so `fern docs dev` rebuilds reuse a file instead of piling up
+ * a new directory per reload.
+ */
+export async function writeSkillsIndexManifest(skills: DeclaredSkill[]): Promise<AbsoluteFilePath> {
+    manifestDirectory ??= mkdtemp(path.join(tmpdir(), "fern-agent-skills-"));
+    const manifest = generateSkillsIndexManifest(skills);
+    const contentHash = createHash("sha256").update(manifest).digest("hex").slice(0, 16);
+    const manifestPath = AbsoluteFilePath.of(path.join(await manifestDirectory, `index-${contentHash}.json`));
+    if (!(await doesPathExist(manifestPath, "file"))) {
+        await writeFile(manifestPath, manifest);
+    }
+    return manifestPath;
 }
 
 /**
@@ -335,45 +361,44 @@ function referenceEscapesSkillDirectory({
 }
 
 /**
- * Removes fenced code blocks (``` / ~~~) and inline code spans (`…`) so that link and image
- * syntax shown as an *example* inside documentation isn't mistaken for a live reference. A
- * `../foo` in a code sample is not a real link and must not be flagged as escaping the skill.
+ * Skills are plain (GFM) markdown, not MDX: parsing them with the docs MDX pipeline would choke
+ * on prompt text like `{placeholder}` or `<tag>`. The parser handles code fences and inline
+ * code natively, so link syntax shown as an example is never mistaken for a live reference.
  */
-function stripCodeSpansAndFences(markdown: string): string {
-    const lines = markdown.split("\n");
-    const stripped: string[] = [];
-    let openFence: string | undefined;
-    for (const line of lines) {
-        const fenceChar = line.match(/^\s*(`{3,}|~{3,})/)?.[1]?.[0];
-        if (openFence == null) {
-            if (fenceChar != null) {
-                openFence = fenceChar;
-                continue;
-            }
-            // drop inline code spans (`code`, ``co`de``) before this line is scanned
-            stripped.push(line.replace(/`+[^`]*`+/g, ""));
-        } else if (fenceChar === openFence) {
-            openFence = undefined;
-        }
-    }
-    return stripped.join("\n");
+function parseSkillMarkdown(markdown: string): MdastRoot {
+    return fromMarkdown(grayMatter(markdown).content, {
+        extensions: [gfm()],
+        mdastExtensions: [gfmFromMarkdown()]
+    });
 }
 
 function extractRelativeMarkdownReferences(markdown: string): string[] {
-    const targets: string[] = [];
-    for (const match of stripCodeSpansAndFences(markdown).matchAll(MARKDOWN_LINK_TARGET_REGEX)) {
-        const rawTarget = match[1];
-        if (rawTarget == null) {
-            continue;
+    const rawTargets: string[] = [];
+    visit(parseSkillMarkdown(markdown), ["link", "image", "definition"], (node) => {
+        if (node.type === "link" || node.type === "image" || node.type === "definition") {
+            rawTargets.push(node.url);
         }
+    });
+
+    const targets: string[] = [];
+    for (const rawTarget of rawTargets) {
         // strip anchors and query strings
-        const target = rawTarget.split("#")[0]?.split("?")[0] ?? "";
+        const target = decodePathSegmentsIfPossible(rawTarget.split("#")[0]?.split("?")[0] ?? "");
         if (target.length === 0 || isExternalOrAbsoluteReference(target)) {
             continue;
         }
         targets.push(target);
     }
     return targets;
+}
+
+/** Markdown destinations may be percent-encoded (`my%20notes.md`); malformed escapes are kept verbatim. */
+function decodePathSegmentsIfPossible(target: string): string {
+    try {
+        return decodeURIComponent(target);
+    } catch {
+        return target;
+    }
 }
 
 function isExternalOrAbsoluteReference(target: string): boolean {
