@@ -12,7 +12,7 @@ export const ApiSpecConfiguration: core.serialization.ObjectSchema<
     type: ApiSpecType,
     path: core.serialization.string(),
     namespace: core.serialization.string().optional(),
-    overlays: core.serialization.list(core.serialization.string()).optional(),
+    overlays: core.serialization.string().optional(),
     overrides: core.serialization.list(core.serialization.string()).optional(),
 });
 
@@ -21,7 +21,7 @@ export declare namespace ApiSpecConfiguration {
         type: ApiSpecType.Raw;
         path: string;
         namespace?: string | null;
-        overlays?: string[] | null;
+        overlays?: string | null;
         overrides?: string[] | null;
     }
 }

@@ -1,4 +1,6 @@
+import { getOpenAPISettings, type OpenAPISpec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -135,6 +137,129 @@ describe("DocsDefinitionResolver direct API specs", () => {
         expect(registration).toMatchObject({ apiName: "payments" });
         expect(Object.keys(registration?.graphqlOperations ?? {})).toHaveLength(1);
         expect(Object.keys(registration?.graphqlTypes ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("fails direct GraphQL resolution when the schema is malformed", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-invalid-graphql-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(path.join(directory, "specs"));
+        await mkdir(fernDirectory);
+        await writeFile(path.join(directory, "specs", "schema.graphql"), "type Query {\n");
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: GraphQL API reference",
+                "    specs:",
+                "      - type: graphql",
+                "        path: ../specs/schema.graphql",
+                ""
+            ].join("\n")
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi: vi.fn<RegisterApiFn>(async () => "payments-api-definition")
+        });
+
+        await expect(resolver.resolve()).rejects.toThrow("Failed to process GraphQL spec(s)");
+    });
+
+    it("falls back to the configured API workspace when specs is empty", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-empty-specs-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        const specPath = AbsoluteFilePath.of(path.join(directory, "openapi.yml"));
+        await mkdir(fernDirectory);
+        await writeFile(
+            specPath,
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
+        );
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            "instances: []\nnavigation:\n  - api: API reference\n    api-name: payments\n    specs: []\n"
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const spec: OpenAPISpec = {
+            type: "openapi",
+            absoluteFilepath: specPath,
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            settings: getOpenAPISettings(),
+            source: { type: "openapi", file: specPath }
+        };
+        const legacyWorkspace = new OSSWorkspace({
+            allSpecs: [spec],
+            specs: [spec],
+            workspaceName: "payments",
+            absoluteFilePath: AbsoluteFilePath.of(fernDirectory),
+            generatorsConfiguration: undefined,
+            cliVersion: "test"
+        });
+        const registerApi = vi.fn<RegisterApiFn>(async () => "payments-api-definition");
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [legacyWorkspace],
+            apiWorkspaces: [legacyWorkspace],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi
+        });
+
+        await resolver.resolve();
+
+        expect(registerApi).toHaveBeenCalledOnce();
+    });
+
+    it("rejects an array of overlays because the source loader supports one overlay", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-multiple-overlays-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(fernDirectory);
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: API reference",
+                "    specs:",
+                "      - type: openapi",
+                "        path: ./openapi.yml",
+                "        overlays:",
+                "          - ./first-overlay.yml",
+                "          - ./second-overlay.yml",
+                ""
+            ].join("\n")
+        );
+
+        await expect(
+            loadDocsWorkspace({
+                fernDirectory: AbsoluteFilePath.of(fernDirectory),
+                context: createMockTaskContext()
+            })
+        ).rejects.toThrow("does not match any allowed schema");
     });
 
     it("resolves an AsyncAPI reference without generators.yml", async () => {

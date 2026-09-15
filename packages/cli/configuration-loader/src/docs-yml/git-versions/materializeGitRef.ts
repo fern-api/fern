@@ -370,9 +370,20 @@ export async function materializeGitRef({
     // while callers may retain the non-canonical spelling. Relativizing those two
     // spellings can escape the materialized worktree and point back at the current
     // checkout, causing ref-backed versions to silently use current-branch content.
-    const canonicalRepoRoot = AbsoluteFilePath.of(await realpath(repoRoot));
-    const canonicalFernFolder = AbsoluteFilePath.of(await realpath(absolutePathToFernFolder));
-    const fernFolderRelativeToRepoRoot = relative(canonicalRepoRoot, canonicalFernFolder);
+    let repoRootForRelative = AbsoluteFilePath.of(repoRoot);
+    let fernFolderForRelative = absolutePathToFernFolder;
+    try {
+        // Canonicalize the pair together. Falling back as a pair preserves the lexical
+        // relationship if either path disappears or cannot be resolved.
+        [repoRootForRelative, fernFolderForRelative] = await Promise.all([
+            realpath(repoRoot).then(AbsoluteFilePath.of),
+            realpath(absolutePathToFernFolder).then(AbsoluteFilePath.of)
+        ]);
+    } catch {
+        // The previous implementation was purely lexical, so realpath failures must
+        // not introduce a new failure mode.
+    }
+    const fernFolderRelativeToRepoRoot = relative(repoRootForRelative, fernFolderForRelative);
 
     const cacheKey = shaCacheKey(repoRoot, sha);
     const cached = materializedRefsBySha.get(cacheKey);

@@ -18,7 +18,7 @@ describe("parseDocsConfiguration — direct API specs", () => {
                             type: "openapi",
                             path: "../specs/openapi.yml",
                             namespace: "payments",
-                            overlays: ["../specs/overlay.yml"],
+                            overlays: "../specs/overlay.yml",
                             overrides: ["../specs/override.yml"]
                         }
                     ]

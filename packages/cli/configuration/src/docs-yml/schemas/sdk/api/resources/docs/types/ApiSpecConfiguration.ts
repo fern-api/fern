@@ -10,8 +10,8 @@ export interface ApiSpecConfiguration {
     /** Path to the API specification, relative to docs.yml. */
     path: string;
     namespace?: string;
-    /** Paths to OpenAPI Overlay documents, relative to docs.yml. */
-    overlays?: string[];
+    /** Path to an OpenAPI Overlay document, relative to docs.yml. */
+    overlays?: string;
     /** Paths to Fern override documents, relative to docs.yml. */
     overrides?: string[];
 }

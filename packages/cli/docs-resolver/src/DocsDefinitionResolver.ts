@@ -1246,7 +1246,7 @@ export class DocsDefinitionResolver {
     private async createDirectApiWorkspace(
         apiSection: docsYml.DocsNavigationItem.ApiSection
     ): Promise<OSSWorkspace | undefined> {
-        if (apiSection.specs == null) {
+        if (apiSection.specs == null || apiSection.specs.length === 0) {
             return undefined;
         }
         const specs: Spec[] = apiSection.specs.map((spec): Spec => {
@@ -1259,12 +1259,6 @@ export class DocsDefinitionResolver {
                     namespace: spec.namespace
                 };
             }
-            if (spec.absoluteOverlayPaths.length > 1) {
-                throw new CliError({
-                    message: `Docs API spec '${spec.absolutePath}' declares multiple overlays, but docs generation currently supports one overlay per specification.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
             return {
                 type: "openapi",
                 absoluteFilepath: spec.absolutePath,
@@ -1272,14 +1266,19 @@ export class DocsDefinitionResolver {
                 absoluteFilepathToOverlays: spec.absoluteOverlayPaths[0],
                 settings: getOpenAPISettings(),
                 source: {
-                    type: spec.type,
+                    // AsyncAPI uses the OpenAPISpec container because OSSWorkspace converts
+                    // both formats into the same IR. source.type selects the actual parser.
+                    type: spec.type === "asyncapi" ? "asyncapi" : "openapi",
                     file: spec.absolutePath
                 },
                 namespace: spec.namespace
             } satisfies OpenAPISpec;
         });
+        // AsyncAPI is intentionally represented by OpenAPISpec with source.type="asyncapi",
+        // so the outer discriminant includes both OpenAPI and AsyncAPI sources here.
+        const openApiCompatibleSpecs = specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi");
         const workspace = new OSSWorkspace({
-            specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
+            specs: openApiCompatibleSpecs,
             allSpecs: specs,
             workspaceName: apiSection.apiName,
             absoluteFilePath: this.docsWorkspace.absoluteFilePath,
@@ -1287,7 +1286,6 @@ export class DocsDefinitionResolver {
             changelog: undefined,
             cliVersion: this.cliVersion ?? "unknown"
         });
-        await workspace.processGraphQLSpecs(this.taskContext);
         return workspace;
     }
 
@@ -2040,7 +2038,9 @@ export class DocsDefinitionResolver {
                 // expected for Fern Definition APIs (no OSS workspace)
             }
         }
-        const graphqlData = await this.extractGraphQLData(graphqlWorkspace);
+        const graphqlData = await this.extractGraphQLData(graphqlWorkspace, {
+            failOnError: directApiWorkspace != null
+        });
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
@@ -2173,7 +2173,10 @@ export class DocsDefinitionResolver {
     /**
      * Extract GraphQL operations from the provided workspace.
      */
-    private async extractGraphQLData(workspace?: OSSWorkspace): Promise<{
+    private async extractGraphQLData(
+        workspace?: OSSWorkspace,
+        { failOnError = false }: { failOnError?: boolean } = {}
+    ): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
@@ -2222,6 +2225,10 @@ export class DocsDefinitionResolver {
                     }
                 }
             } catch (error) {
+                const message = `Failed to process GraphQL spec(s) ${filePaths.join(", ")}: ${extractErrorMessage(error)}`;
+                if (failOnError) {
+                    throw new CliError({ message, code: CliError.Code.ConfigError });
+                }
                 this.taskContext.logger.error(
                     `Failed to process GraphQL spec(s) ${filePaths.join(", ")}:`,
                     extractErrorMessage(error)

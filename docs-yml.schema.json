@@ -1804,16 +1804,13 @@
         "overlays": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "description": "Paths to OpenAPI Overlay documents, relative to docs.yml."
+          "description": "Path to an OpenAPI Overlay document, relative to docs.yml."
         },
         "overrides": {
           "oneOf": [

@@ -819,7 +819,7 @@ export const ApiSpecConfiguration = z.object({
     type: ApiSpecType,
     path: z.string(),
     namespace: z.string().optional(),
-    overlays: z.array(z.string()).optional(),
+    overlays: z.string().optional(),
     overrides: z.array(z.string()).optional()
 });
 

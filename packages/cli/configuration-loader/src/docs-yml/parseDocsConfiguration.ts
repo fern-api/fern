@@ -1485,7 +1485,8 @@ async function convertNavigationItem({
                 type: spec.type,
                 absolutePath: resolveFilepath(spec.path, absolutePathToConfig),
                 namespace: spec.namespace ?? undefined,
-                absoluteOverlayPaths: spec.overlays?.map((overlay) => resolveFilepath(overlay, absolutePathToConfig)) ?? [],
+                absoluteOverlayPaths:
+                    spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
                 absoluteOverridePaths:
                     spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
             })),
