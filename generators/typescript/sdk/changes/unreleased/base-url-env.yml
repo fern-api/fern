@@ -1,0 +1,3 @@
+- summary: |
+    SDKs now read the base URL from the environment variable configured via base-url-env / x-fern-base-url-env when no baseUrl or environment option is passed, respecting guardProcessEnvAccess for the environment-variable read.
+  type: feat

@@ -585,6 +585,7 @@ export class SdkGenerator {
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
             allowUserAgentAppInfo: config.allowUserAgentAppInfo,
+            guardProcessEnvAccess: config.guardProcessEnvAccess,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
