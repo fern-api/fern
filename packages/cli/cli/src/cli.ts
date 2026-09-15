@@ -2301,6 +2301,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description: "Run the legacy development server"
                 })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run the experimental Astro development server (requires --bundle-path or FERN_DOCS_ASTRO_PATH pointing at the Astro docs app)"
+                })
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
@@ -2353,6 +2359,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
+                astro: argv.astro,
                 backendPort,
                 forceDownload: argv.forceDownload
             });
