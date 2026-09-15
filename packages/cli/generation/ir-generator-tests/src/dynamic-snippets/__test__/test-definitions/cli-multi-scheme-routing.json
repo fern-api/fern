@@ -1,203 +1,6 @@
 {
     "version": "1.0.0",
-    "types": {
-        "type_system:HealthSystemResponse": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "HealthSystemResponse",
-                    "camelCase": {
-                        "unsafeName": "healthSystemResponse",
-                        "safeName": "healthSystemResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "health_system_response",
-                        "safeName": "health_system_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "HEALTH_SYSTEM_RESPONSE",
-                        "safeName": "HEALTH_SYSTEM_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "HealthSystemResponse",
-                        "safeName": "HealthSystemResponse"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "system",
-                            "camelCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SYSTEM",
-                                "safeName": "SYSTEM"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "System",
-                                "safeName": "System"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "system",
-                        "camelCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SYSTEM",
-                            "safeName": "SYSTEM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "System",
-                            "safeName": "System"
-                        }
-                    }
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "status",
-                        "name": {
-                            "originalName": "status",
-                            "camelCase": {
-                                "unsafeName": "status",
-                                "safeName": "status"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status",
-                                "safeName": "status"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS",
-                                "safeName": "STATUS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Status",
-                                "safeName": "Status"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false,
-            "deferredUnionBaseProperties": null
-        },
-        "type_:Widget": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "Widget",
-                    "camelCase": {
-                        "unsafeName": "widget",
-                        "safeName": "widget"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "widget",
-                        "safeName": "widget"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "WIDGET",
-                        "safeName": "WIDGET"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Widget",
-                        "safeName": "Widget"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "id",
-                        "name": {
-                            "originalName": "id",
-                            "camelCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "name",
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false,
-            "deferredUnionBaseProperties": null
-        }
-    },
+    "types": {},
     "headers": [],
     "endpoints": {
         "endpoint_widgets.list": {
@@ -205,7 +8,7 @@
                 "type": "header",
                 "header": {
                     "name": {
-                        "wireValue": "x-api-key",
+                        "wireValue": "X-Api-Key",
                         "name": {
                             "originalName": "apiKey",
                             "camelCase": {
@@ -314,12 +117,126 @@
             },
             "examples": null
         },
+        "endpoint_admin.listUsers": {
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "wireValue": "X-Api-Key",
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                "wrapperProperty": null
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "listUsers",
+                    "camelCase": {
+                        "unsafeName": "listUsers",
+                        "safeName": "listUsers"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_users",
+                        "safeName": "list_users"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_USERS",
+                        "safeName": "LIST_USERS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListUsers",
+                        "safeName": "ListUsers"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "admin",
+                            "camelCase": {
+                                "unsafeName": "admin",
+                                "safeName": "admin"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "admin",
+                                "safeName": "admin"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ADMIN",
+                                "safeName": "ADMIN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Admin",
+                                "safeName": "Admin"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "admin",
+                        "camelCase": {
+                            "unsafeName": "admin",
+                            "safeName": "admin"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "admin",
+                            "safeName": "admin"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ADMIN",
+                            "safeName": "ADMIN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Admin",
+                            "safeName": "Admin"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/admin/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_system.health": {
             "auth": {
                 "type": "header",
                 "header": {
                     "name": {
-                        "wireValue": "x-api-key",
+                        "wireValue": "X-Api-Key",
                         "name": {
                             "originalName": "apiKey",
                             "camelCase": {

@@ -755,40 +755,57 @@ export class DynamicSnippetsConverter {
             return undefined;
         }
         const scheme = auth.schemes[0];
+        const wrapperProperty =
+            auth.requirement === "ANY" || auth.requirement === "ENDPOINT_SECURITY"
+                ? this.fullCasingsGenerator.generateName(scheme.key)
+                : undefined;
         switch (scheme.type) {
             case "basic": {
-                return DynamicSnippets.Auth.basic({
+                const basicAuth = {
+                    wrapperProperty,
                     username: this.inflateName(scheme.username),
                     usernameOmit: scheme.usernameOmit,
                     password: this.inflateName(scheme.password),
                     passwordOmit: scheme.passwordOmit
-                });
+                };
+                return DynamicSnippets.Auth.basic(basicAuth);
             }
-            case "bearer":
-                return DynamicSnippets.Auth.bearer({
+            case "bearer": {
+                const bearerAuth = {
+                    wrapperProperty,
                     token: this.inflateName(scheme.token)
-                });
-            case "header":
-                return DynamicSnippets.Auth.header({
+                };
+                return DynamicSnippets.Auth.bearer(bearerAuth);
+            }
+            case "header": {
+                const headerAuth = {
+                    wrapperProperty,
                     header: {
                         name: this.inflateNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
                         variable: undefined
                     }
-                });
+                };
+                return DynamicSnippets.Auth.header(headerAuth);
+            }
             case "oauth": {
                 const customProperties = this.getOAuthCustomProperties(scheme);
-                return DynamicSnippets.Auth.oauth({
+                const oauth = {
+                    wrapperProperty,
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
                     clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
                     customProperties: customProperties.length > 0 ? customProperties : undefined
-                });
+                };
+                return DynamicSnippets.Auth.oauth(oauth);
             }
-            case "inferred":
-                return DynamicSnippets.Auth.inferred({
+            case "inferred": {
+                const inferredAuth = {
+                    wrapperProperty,
                     parameters: this.getInferredAuthParameters(scheme)
-                });
+                };
+                return DynamicSnippets.Auth.inferred(inferredAuth);
+            }
             default:
                 assertNever(scheme);
         }

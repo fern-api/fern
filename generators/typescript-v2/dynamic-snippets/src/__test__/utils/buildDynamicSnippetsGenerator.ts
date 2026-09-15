@@ -6,12 +6,16 @@ import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator.js";
 
 export function buildDynamicSnippetsGenerator({
     irFilepath,
-    config
+    config,
+    modifyIr
 }: {
     irFilepath: AbsoluteFilePath;
     config: FernGeneratorExec.GeneratorConfig;
+    modifyIr?: (
+        ir: import("@fern-api/dynamic-ir-sdk").FernIr.dynamic.DynamicIntermediateRepresentation
+    ) => import("@fern-api/dynamic-ir-sdk").FernIr.dynamic.DynamicIntermediateRepresentation;
 }): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
     const ir = JSON.parse(content);
-    return new DynamicSnippetsGenerator({ ir, config });
+    return new DynamicSnippetsGenerator({ ir: modifyIr?.(ir) ?? ir, config });
 }
