@@ -78,6 +78,25 @@ export class EmptyRealtimeSocket {
         this.eventHandlers[event] = callback;
     }
 
+    /**
+     * @param event - The event to detach from.
+     * @param callback - The callback previously registered with `on`. No-op if it is not the callback currently registered for this event.
+     * Usage:
+     * ```typescript
+     * const handler = () => console.log('The websocket is open');
+     * this.on('open', handler);
+     * this.off('open', handler);
+     * ```
+     */
+    public off<T extends keyof EmptyRealtimeSocket.EventHandlers>(
+        event: T,
+        callback: EmptyRealtimeSocket.EventHandlers[T],
+    ): void {
+        if (this.eventHandlers[event] === callback) {
+            delete this.eventHandlers[event];
+        }
+    }
+
     /** Connect to the websocket and register event handlers. */
     public connect(): EmptyRealtimeSocket {
         this.socket.reconnect();

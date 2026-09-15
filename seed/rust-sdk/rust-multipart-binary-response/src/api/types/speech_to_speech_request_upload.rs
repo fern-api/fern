@@ -28,9 +28,7 @@ impl SpeechToSpeechRequest2 {
         );
 
         if let Some(ref value) = self.model_id {
-            if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("model_id", json_str);
-            }
+            form = form.text("model_id", value.clone());
         }
 
         form

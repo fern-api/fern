@@ -76,6 +76,9 @@ func (c *Client) GetFoo(
 //	    NonNullableText: fern.String(
 //	        "non_nullable_text",
 //	    ),
+//	    RequiredNullableText: fern.String(
+//	        "required_nullable_text",
+//	    ),
 //	}
 //	client.UpdateFoo(
 //	    context.TODO(),

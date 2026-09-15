@@ -938,18 +938,42 @@ export class SubClientGenerator {
             const bytesBody = endpoint.queryParameters.length > 0
                 ? "Some(request.body.to_vec())"
                 : "Some(request.to_vec())";
+            // The declared media type, which the IR carries on the bytes body. The
+            // `application/octet-stream` fallback is load-bearing rather than defensive: an
+            // endpoint that declares no content-type has always sent that, and must keep sending it.
+            const bytesContentType =
+                endpoint.requestBody?.type === "bytes"
+                    ? (endpoint.requestBody.contentType ?? "application/octet-stream")
+                    : "application/octet-stream";
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
+            ${JSON.stringify(bytesContentType)},
             options,`;
         } else {
+            // A JSON body whose DECLARED media type is not `application/json` -- a vendor type, or
+            // `application/merge-patch+json`. `execute_request` calls `.json()`, which stamps
+            // `application/json` over it, so those endpoints take the variant that sets the header.
+            const declaredJsonContentType = this.getNonDefaultJsonContentType(endpoint);
+            if (declaredJsonContentType != null) {
+                executeMethod = "execute_request_with_content_type";
+            }
+            // `application/x-www-form-urlencoded` needs the body FORM-encoded, not JSON under a
+            // form label, so it takes a variant of its own rather than the header override above.
+            if (this.isFormUrlEncodedEndpoint(endpoint)) {
+                executeMethod = "execute_form_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
-            ${this.buildQueryParameters(endpoint)},
+            ${this.buildQueryParameters(endpoint)},${
+                declaredJsonContentType != null
+                    ? `\n            ${JSON.stringify(declaredJsonContentType)},`
+                    : ""
+            }
             options,`;
 
             if (responseType === "binary") {
@@ -1531,6 +1555,17 @@ export class SubClientGenerator {
     private buildQueryParameterStatements(queryParams: FernIr.QueryParameter[], endpoint?: FernIr.HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
             const wireValue = getWireValue(queryParam.name);
+
+            // `style: form` with `explode: false` is ONE comma-joined value, not a repeated key.
+            // The IR carries `explode` and the generator read it nowhere, so every array went out
+            // exploded regardless of what the endpoint declared. Joined HERE rather than by a new
+            // `QueryBuilder` method: that file is emitted verbatim into every SDK, so a method
+            // would land in 130 crates to change behaviour in the few that declare `explode:
+            // false`.
+            if (queryParam.allowMultiple && queryParam.explode === false) {
+                return `.string("${wireValue}", ${this.buildJoinedArrayExpression(queryParam, endpoint)})`;
+            }
+
             const method = this.getQueryBuilderMethod(queryParam);
 
             // Determine parameter source based on endpoint type
@@ -1544,6 +1579,30 @@ export class SubClientGenerator {
 
         return `QueryBuilder::new()${builderChain.join("")}
             .build()`;
+    }
+
+    /**
+     * `Option<String>` holding the array's elements joined with commas, or `None` when the array
+     * is absent or empty - an empty array must produce no parameter, since `key=` would claim the
+     * caller sent one empty element.
+     */
+    private buildJoinedArrayExpression(
+        queryParam: FernIr.QueryParameter,
+        endpoint?: FernIr.HttpEndpoint
+    ): string {
+        // `allowMultiple` makes the field a `Vec<Option<T>>`, not an `Option<Vec<T>>`, so the
+        // elements are flattened out of their `Option`s and the EMPTINESS test is on the joined
+        // string rather than on the vector.
+        const source = this.getQueryParameterSource(queryParam, endpoint).replace(/\.clone\(\)$/, "");
+        return `{
+                let joined = ${source}
+                    .iter()
+                    .flatten()
+                    .map(|value| value.to_string())
+                    .collect::<Vec<_>>()
+                    .join(",");
+                if joined.is_empty() { None } else { Some(joined) }
+            }`;
     }
 
     // Smart parameter source detection
@@ -1914,6 +1973,33 @@ export class SubClientGenerator {
             streamParameter: () => "none",
             _other: () => "none"
         });
+    }
+
+    /**
+     * The endpoint's declared request media type, when it is a JSON one OTHER than
+     * `application/json` -- `application/vnd.foo+json`, `application/merge-patch+json`. Returns
+     * undefined for `application/json` itself and for anything that is not JSON, so only the
+     * endpoints that need the header override are routed away from `execute_request`.
+     *
+     * The IR has always carried this on the request body; the Rust generator read it nowhere.
+     */
+    private getNonDefaultJsonContentType(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const contentType = endpoint.requestBody?._visit<string | undefined>({
+            inlinedRequestBody: (body) => body.contentType,
+            reference: (body) => body.contentType,
+            fileUpload: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+        if (contentType == null || contentType === "application/json") {
+            return undefined;
+        }
+        return contentType.endsWith("+json") || contentType.includes("json") ? contentType : undefined;
+    }
+
+    /** Whether the endpoint declares an `application/x-www-form-urlencoded` request body. */
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded");
     }
 
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {

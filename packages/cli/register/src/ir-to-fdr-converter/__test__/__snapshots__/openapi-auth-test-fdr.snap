@@ -2,12 +2,14 @@
   "apiName": "Auth Test API",
   "auth": {
     "description": "JWT Bearer token authentication",
+    "playgroundDescription": undefined,
     "tokenName": "token",
     "type": "bearerAuth",
   },
   "authSchemes": {
     "bearerAuth": {
       "description": "JWT Bearer token authentication",
+      "playgroundDescription": undefined,
       "tokenName": "token",
       "type": "bearerAuth",
     },

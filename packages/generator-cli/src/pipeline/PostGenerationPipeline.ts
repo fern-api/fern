@@ -1,6 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
+import { stripGeneratedWorkflows } from "./github/stripGeneratedWorkflows";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
@@ -124,6 +125,18 @@ export class PostGenerationPipeline {
             success: true,
             steps: {}
         };
+
+        // Must run before any step commits (GenerationCommitStep commits via `git add -A`).
+        // A partial strip must never reach a commit, so a failure here aborts the pipeline.
+        if (this.config.github?.enabled && this.config.github.workflows === false) {
+            try {
+                stripGeneratedWorkflows(this.config.outputDir, this.logger);
+            } catch (error) {
+                result.success = false;
+                result.errors = [`failed to strip generated workflows: ${extractErrorMessage(error)}`];
+                return result;
+            }
+        }
 
         const pipelineContext: PipelineContext = {
             previousStepResults: {}

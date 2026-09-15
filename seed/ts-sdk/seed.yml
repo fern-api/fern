@@ -90,6 +90,13 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: exact-optional-property-types
+      customConfig:
+        exactOptionalPropertyTypes: true
+    - outputFolder: exact-optional-property-types-serde-layer
+      customConfig:
+        noSerdeLayer: false
+        exactOptionalPropertyTypes: true
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
@@ -401,6 +408,10 @@ fixtures:
       customConfig:
         noSerdeLayer: true
         generateWebSocketClients: true
+    - outputFolder: accumulate-handlers
+      customConfig:
+        generateWebSocketClients: true
+        websocketHandlerMode: accumulate
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
@@ -536,6 +547,12 @@ fixtures:
     - outputFolder: legacy-exports
       customConfig:
         useLegacyExports: true
+    - outputFolder: esm-only
+      customConfig:
+        esmOnly: true
+    - outputFolder: output-esm
+      customConfig:
+        outputEsm: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm

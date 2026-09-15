@@ -17,6 +17,7 @@
         "passwordEnvVar": "PLANT_STORE_API_TOKEN",
         "passwordOmit": false,
         "passwordPlaceholder": undefined,
+        "playgroundDocs": undefined,
         "type": "basic",
         "username": "project_id",
         "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
@@ -722,6 +723,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -753,6 +755,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -823,6 +826,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -854,6 +858,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -893,6 +898,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

@@ -3,7 +3,11 @@ import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import type { AutomationRunOptions } from "@fern-api/remote-workspace-runner";
+import {
+    type AutomationRunOptions,
+    type FernSdkConfigV1Payload,
+    getFernSdkGenApiLanguage
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -12,6 +16,7 @@ import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
+import { loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
@@ -39,6 +44,7 @@ export async function generateAPIWorkspaces({
     runner,
     inspect,
     lfsOverride,
+    sdkConfigPath,
     fernignorePath,
     skipFernignore,
     dynamicIrOnly,
@@ -73,6 +79,7 @@ export async function generateAPIWorkspaces({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    sdkConfigPath?: string;
     fernignorePath: string | undefined;
     skipFernignore: boolean;
     dynamicIrOnly: boolean;
@@ -97,6 +104,24 @@ export async function generateAPIWorkspaces({
     packOnly?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
+    let sdkConfigV1: FernSdkConfigV1Payload | undefined;
+
+    if (sdkConfigPath != null) {
+        if (useLocalDocker) {
+            return cliContext.failAndThrow(
+                "SDK Config v1 generation is only supported with remote sdk-gen-api generation",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        try {
+            const loaded = await loadSdkConfigV1(sdkConfigPath);
+            sdkConfigV1 = loaded.payload;
+            cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
+        } catch (error) {
+            return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
+        }
+    }
 
     if (!useLocalDocker) {
         const currentToken = await cliContext.runTask(async (context) => {
@@ -119,9 +144,35 @@ export async function generateAPIWorkspaces({
         token = await getToken();
     }
 
-    await confirmOutputDirectoriesForEligibleGenerators({
+    // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
+    // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
+    // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
+    // lacks a `default-group`), `resolveGroupsOrFail` throws before we start any generation.
+    // We keep the resolved names so `generateWorkspace` doesn't need to re-run the resolver
+    // (and re-log "Using default group '…' from generators.yml").
+    const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
         project,
         groupNames,
+        sdkConfigV1,
+        automation,
+        cliContext
+    });
+    if (sdkConfigV1 != null) {
+        const selectedWorkspaces = [...resolvedGroupNamesByWorkspace.entries()].filter(
+            ([, resolvedGroups]) => resolvedGroups.length > 0
+        );
+        if (selectedWorkspaces.length !== 1) {
+            return cliContext.failAndThrow(
+                `SDK Config v1 must resolve to exactly one API workspace; resolved ${selectedWorkspaces.length}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+    }
+
+    await confirmOutputDirectoriesForEligibleGenerators({
+        project,
+        resolvedGroupNamesByWorkspace,
         generatorName,
         generatorIndex,
         automation,
@@ -135,19 +186,6 @@ export async function generateAPIWorkspaces({
         properties: {
             workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
         }
-    });
-
-    // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
-    // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
-    // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
-    // lacks a `default-group`), `resolveGroupsOrFail` throws before we start any generation.
-    // We keep the resolved names so `generateWorkspace` doesn't need to re-run the resolver
-    // (and re-log "Using default group '…' from generators.yml").
-    const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
-        project,
-        groupNames,
-        automation,
-        cliContext
     });
 
     await Promise.all(
@@ -185,6 +223,7 @@ export async function generateAPIWorkspaces({
                     runner,
                     inspect,
                     lfsOverride,
+                    sdkConfigV1,
                     fernignorePath,
                     skipFernignore,
                     dynamicIrOnly,
@@ -218,11 +257,13 @@ export async function generateAPIWorkspaces({
 async function resolveGroupsForAllWorkspaces({
     project,
     groupNames,
+    sdkConfigV1,
     automation,
     cliContext
 }: {
     project: Project;
     groupNames: string[] | undefined;
+    sdkConfigV1: FernSdkConfigV1Payload | undefined;
     automation: AutomationRunOptions | undefined;
     cliContext: CliContext;
 }): Promise<Map<AbstractAPIWorkspace<unknown>, string[]>> {
@@ -230,6 +271,11 @@ async function resolveGroupsForAllWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (sdkConfigV1 != null && (groupNames == null || groupNames.length === 0)) {
+                    const resolved = resolveGroupsForSdkConfig({ workspace, sdkConfigV1, context });
+                    resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                    return;
+                }
                 const resolved = resolveGroupsForWorkspace({
                     workspace,
                     groupNames,
@@ -245,6 +291,127 @@ async function resolveGroupsForAllWorkspaces({
     return resolvedGroupNamesByWorkspace;
 }
 
+export function resolveGroupsForSdkConfig({
+    workspace,
+    sdkConfigV1,
+    context
+}: {
+    workspace: AbstractAPIWorkspace<unknown>;
+    sdkConfigV1: FernSdkConfigV1Payload;
+    context: Parameters<typeof resolveGroupsForWorkspace>[0]["context"];
+}): string[] {
+    const generatorsConfiguration = workspace.generatorsConfiguration;
+    if (generatorsConfiguration == null) {
+        return context.failAndThrow(
+            "SDK Config v1 generation requires generators.yml to load the Fern API workspace",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+
+    const requestedTargets = new Map(sdkConfigV1.targets.map((target) => [target.language, target]));
+    const requestedLanguages = new Set(requestedTargets.keys());
+    const candidates = generatorsConfiguration.groups.flatMap((group) => {
+        const languages = group.generators.flatMap((generator) => {
+            const language = getFernSdkGenApiLanguage(generator.name);
+            if (language == null) {
+                return [];
+            }
+            const target = requestedTargets.get(language);
+            if (target == null || (target.generatorVersion != null && target.generatorVersion !== generator.version)) {
+                return [];
+            }
+            return [language];
+        });
+        if (
+            languages.length === 0 ||
+            languages.length !== group.generators.length ||
+            languages.some((language) => !requestedLanguages.has(language))
+        ) {
+            return [];
+        }
+        return [{ groupName: group.groupName, languages: new Set(languages) }];
+    });
+    const exactCovers = findMinimalExactGroupCovers(candidates, requestedLanguages);
+    if (exactCovers.length === 0) {
+        return context.failAndThrow(
+            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const coversWithDefault = exactCovers.filter((cover) =>
+        cover.some(({ groupName }) => groupName === generatorsConfiguration.defaultGroup)
+    );
+    const preferredCovers = coversWithDefault.length > 0 ? coversWithDefault : exactCovers;
+    if (preferredCovers.length > 1) {
+        const descriptions = preferredCovers
+            .map((cover) =>
+                cover
+                    .map(({ groupName }) => groupName)
+                    .sort()
+                    .join(" + ")
+            )
+            .sort()
+            .join("; ");
+        return context.failAndThrow(
+            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) match multiple generator group combinations: ${descriptions}. Pass --group explicitly.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return (preferredCovers[0] ?? []).map(({ groupName }) => groupName).sort();
+}
+
+interface SdkConfigGroupCandidate {
+    groupName: string;
+    languages: Set<string>;
+}
+
+function findMinimalExactGroupCovers(
+    candidates: SdkConfigGroupCandidate[],
+    requestedLanguages: Set<string>
+): SdkConfigGroupCandidate[][] {
+    const sortedCandidates = [...candidates].sort((left, right) => left.groupName.localeCompare(right.groupName));
+    let minimumGroupCount = Number.POSITIVE_INFINITY;
+    let covers: SdkConfigGroupCandidate[][] = [];
+
+    const visit = (uncovered: Set<string>, selected: SdkConfigGroupCandidate[]): void => {
+        if (uncovered.size === 0) {
+            if (selected.length < minimumGroupCount) {
+                minimumGroupCount = selected.length;
+                covers = [[...selected]];
+            } else if (selected.length === minimumGroupCount) {
+                covers.push([...selected]);
+            }
+            return;
+        }
+        if (selected.length >= minimumGroupCount) {
+            return;
+        }
+        const nextLanguage = [...uncovered].sort()[0];
+        if (nextLanguage == null) {
+            return;
+        }
+        for (const candidate of sortedCandidates) {
+            if (
+                !candidate.languages.has(nextLanguage) ||
+                [...candidate.languages].some((language) => !uncovered.has(language))
+            ) {
+                continue;
+            }
+            const remaining = new Set(uncovered);
+            for (const language of candidate.languages) {
+                remaining.delete(language);
+            }
+            visit(remaining, [...selected, candidate]);
+        }
+    };
+
+    visit(new Set(requestedLanguages), []);
+    return covers;
+}
+
 /**
  * Walks the project's generators and prompts the user to confirm overwriting any local-file-system
  * output directories that already exist. Skips generators that wouldn't run anyway (per
@@ -254,7 +421,7 @@ async function resolveGroupsForAllWorkspaces({
  */
 async function confirmOutputDirectoriesForEligibleGenerators({
     project,
-    groupNames,
+    resolvedGroupNamesByWorkspace,
     generatorName,
     generatorIndex,
     automation,
@@ -262,7 +429,7 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force
 }: {
     project: Project;
-    groupNames: string[] | undefined;
+    resolvedGroupNamesByWorkspace: Map<AbstractAPIWorkspace<unknown>, string[]>;
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     automation: AutomationRunOptions | undefined;
@@ -270,12 +437,14 @@ async function confirmOutputDirectoriesForEligibleGenerators({
     force: boolean;
 }): Promise<void> {
     for (const workspace of project.apiWorkspaces) {
-        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
+        const resolvedGroupNames = resolvedGroupNamesByWorkspace.get(workspace);
         const rootAutorelease = workspace.generatorsConfiguration?.rawConfiguration.autorelease;
         const groupsInScope =
-            workspace.generatorsConfiguration?.groups.filter(
-                (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
-            ) ?? [];
+            resolvedGroupNames == null
+                ? []
+                : (workspace.generatorsConfiguration?.groups.filter((group) =>
+                      resolvedGroupNames.includes(group.groupName)
+                  ) ?? []);
         for (const group of groupsInScope) {
             const filterResult = filterGenerators({
                 generators: group.generators,

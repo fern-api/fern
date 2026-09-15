@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { InferredGetTokenEndpointSchema } from "./InferredGetTokenEndpointSchema.js";
+import { WithPlaygroundDocsSchema } from "./WithPlaygroundDocsSchema.js";
 
 export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
     serializers.InferredBearerAuthSchema.Raw,
@@ -14,10 +15,11 @@ export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
         scheme: core.serialization.stringLiteral("bearer"),
         "get-token": InferredGetTokenEndpointSchema,
     })
-    .extend(WithDocsSchema);
+    .extend(WithDocsSchema)
+    .extend(WithPlaygroundDocsSchema);
 
 export declare namespace InferredBearerAuthSchema {
-    export interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithPlaygroundDocsSchema.Raw {
         scheme: "bearer";
         "get-token": InferredGetTokenEndpointSchema.Raw;
     }

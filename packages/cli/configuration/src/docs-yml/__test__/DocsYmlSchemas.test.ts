@@ -41,6 +41,14 @@ describe("DocsYmlSchemas", () => {
         expect(properties["check"]).toBeDefined();
     });
 
+    it("layout.api-reference-expand-properties is an optional boolean", () => {
+        const parse = (layout: unknown) => DocsConfiguration.safeParse({ instances: [], layout });
+        expect(parse({}).success).toBe(true);
+        expect(parse({ "api-reference-expand-properties": true }).success).toBe(true);
+        expect(parse({ "api-reference-expand-properties": false }).success).toBe(true);
+        expect(parse({ "api-reference-expand-properties": "yes" }).success).toBe(false);
+    });
+
     it("AIChatConfig defaults mask-pii to undefined (masking off by default)", () => {
         const parsed = AIChatConfig.parse({});
         expect(parsed["mask-pii"]).toBeUndefined();

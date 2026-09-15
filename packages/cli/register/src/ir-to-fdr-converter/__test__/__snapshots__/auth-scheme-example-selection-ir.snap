@@ -19,6 +19,7 @@
           "name": "apiKey",
           "wireValue": "x-user-token",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -53,6 +54,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -87,6 +89,7 @@
           "name": "apiKey",
           "wireValue": "Authorization",
         },
+        "playgroundDocs": undefined,
         "prefix": undefined,
         "type": "header",
         "valueType": {
@@ -508,6 +511,7 @@ Examples should use the first available auth scheme (admin).
               "type": "named",
               "typeId": "ResourceRequestType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -537,6 +541,7 @@ Examples should use the first available auth scheme (admin).
               "type": "named",
               "typeId": "ResourceRequestAmount",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -568,6 +573,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -642,6 +648,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -757,6 +764,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

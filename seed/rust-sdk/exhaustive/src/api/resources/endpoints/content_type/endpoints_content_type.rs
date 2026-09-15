@@ -60,11 +60,12 @@ impl ContentTypeClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::POST,
                 "/foo/bar",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/json-patch+json",
                 options,
             )
             .await
@@ -117,11 +118,12 @@ impl ContentTypeClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_with_content_type(
                 Method::POST,
                 "/foo/baz",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
+                "application/json-patch+json; charset=utf-8",
                 options,
             )
             .await

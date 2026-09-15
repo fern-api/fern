@@ -5,6 +5,7 @@ import { ExampleConverter } from "../converters/ExampleConverter.js";
 import { SchemaConverter } from "../converters/schema/SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter.js";
 import { ErrorCollector } from "../ErrorCollector.js";
+import { XmlPropertyExtension } from "../extensions/xml.js";
 import { Extensions } from "../index.js";
 
 export function convertProperties({
@@ -12,13 +13,16 @@ export function convertProperties({
     required,
     breadcrumbs,
     context,
-    errorCollector
+    errorCollector,
+    withinXmlElement = false
 }: {
     properties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
     required: string[];
     breadcrumbs: string[];
     context: AbstractConverterContext<object>;
     errorCollector: ErrorCollector;
+    /** Whether the enclosing object is an XML element; property `xml` encodings are only emitted when true. */
+    withinXmlElement?: boolean;
 }): {
     convertedProperties: ObjectProperty[];
     propertiesByAudience: Record<string, Set<string>>;
@@ -68,6 +72,14 @@ export function convertProperties({
                 availability: convertedProperty.availability,
                 propertyAccess: context.getPropertyAccess(propertySchema),
                 defaultValue: resolvedPropertySchema?.default,
+                xml: withinXmlElement
+                    ? new XmlPropertyExtension({
+                          breadcrumbs: propertyBreadcrumbs,
+                          propertySchema,
+                          resolvedPropertySchema: resolvedPropertySchema ?? undefined,
+                          context
+                      }).convert()
+                    : undefined,
                 v2Examples:
                     convertedProperty.schema?.typeDeclaration?.v2Examples ??
                     generatePropertyV2Examples({

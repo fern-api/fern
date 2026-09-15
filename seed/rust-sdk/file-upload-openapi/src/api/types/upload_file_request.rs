@@ -23,9 +23,7 @@ impl UploadFileRequest {
             );
         }
 
-        if let Ok(json_str) = serde_json::to_string(&self.name) {
-            form = form.text("name", json_str);
-        }
+        form = form.text("name", self.name.clone());
 
         form
     }

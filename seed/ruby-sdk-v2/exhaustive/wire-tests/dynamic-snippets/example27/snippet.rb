@@ -6,8 +6,8 @@ client = Seed::MyClient.new(
 )
 
 client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
-  required_string: "requiredString",
-  required_integer: 1,
-  optional_string: "optionalString",
-  required_long: 1000000
+  required_string: "hello",
+  required_integer: 0,
+  optional_string: "world",
+  required_long: 0
 )

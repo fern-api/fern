@@ -30,13 +30,18 @@ module <%= gem_namespace %>
         # Adds a file to the multipart form data.
         #
         # @param name [String] The name of the form field
-        # @param file [#read] The file or readable object
-        # @param filename [String, nil] Optional filename (defaults to basename of path for File objects)
+        # @param file [String, #read] A path to a file on disk, or a file/readable object
+        # @param filename [String, nil] Optional filename (defaults to basename of the path for paths and File objects)
         # @param content_type [String, nil] Optional content type (e.g. "image/png")
         # @return [self] Returns self for chaining
         def add_file(name:, file:, filename: nil, content_type: nil)
           headers = content_type ? { "Content-Type" => content_type } : nil
-          filename ||= filename_for(file)
+          if file.is_a?(::String)
+            filename ||= ::File.basename(file)
+            file = ::File.binread(file)
+          else
+            filename ||= filename_for(file)
+          end
           add_part(FormDataPart.new(name:, value: file, filename:, headers:))
         end
 

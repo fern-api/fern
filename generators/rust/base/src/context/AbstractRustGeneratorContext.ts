@@ -146,9 +146,10 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 when base64 types are used, or when per-endpoint
-        // auth routing needs it to encode basic auth credentials.
-        if (this.usesBase64() || (this.isEndpointSecurity() && this.hasBasicAuthScheme())) {
+        // Conditionally include base64 when base64 types are used, or when a basic auth scheme
+        // has to be encoded. Both auth paths need it: per-endpoint routing and the flat
+        // client-wide application.
+        if (this.usesBase64() || this.hasBasicAuthScheme()) {
             this.dependencyManager.add("base64", "0.22");
         }
 
@@ -599,6 +600,47 @@ export abstract class AbstractRustGeneratorContext<
         return this.cachedFeature("hasBytesEndpoints", () =>
             Object.values(this.ir.services).some((service) =>
                 service.endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes")
+            )
+        );
+    }
+
+    /**
+     * Whether any endpoint declares an `application/x-www-form-urlencoded` request body. Those
+     * cannot go through `execute_request`, whose `.json()` sends a JSON document and stamps
+     * `application/json` over the declared media type.
+     */
+    public hasFormUrlEncodedEndpoints(): boolean {
+        return this.cachedFeature("hasFormUrlEncodedEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) =>
+                    (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded")
+                )
+            )
+        );
+    }
+
+    /**
+     * Whether any endpoint declares a JSON request media type OTHER than `application/json` --
+     * a vendor type, or `application/merge-patch+json`. Those endpoints cannot go through
+     * `execute_request`, whose `.json()` call stamps `application/json` over the declared type.
+     */
+    public hasNonDefaultJsonContentTypeEndpoints(): boolean {
+        return this.cachedFeature("hasNonDefaultJsonContentTypeEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
+                    const contentType = endpoint.requestBody?._visit<string | undefined>({
+                        inlinedRequestBody: (body) => body.contentType,
+                        reference: (body) => body.contentType,
+                        fileUpload: () => undefined,
+                        bytes: () => undefined,
+                        _other: () => undefined
+                    });
+                    return (
+                        contentType != null &&
+                        contentType !== "application/json" &&
+                        contentType.includes("json")
+                    );
+                })
             )
         );
     }

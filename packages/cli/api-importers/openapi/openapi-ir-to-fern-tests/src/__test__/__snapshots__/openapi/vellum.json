@@ -5481,6 +5481,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                       "frequency_penalty": 1.1,
                       "max_tokens": 1,
                       "presence_penalty": 1.1,
+                      "stop": null,
                       "temperature": 1.1,
                       "top_p": 1.1,
                     },
@@ -5711,6 +5712,7 @@ service:
             parameters:
               temperature: 1.1
               max_tokens: 1
+              stop: null
               top_p: 1.1
               frequency_penalty: 1.1
               presence_penalty: 1.1

@@ -3,7 +3,7 @@ import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, DEFAULT_PROFILES_COMMAND_NAME, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
-import { detectAuthBindings } from "./detectAuth.js";
+import { authStrategyVariant, detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
@@ -172,7 +172,11 @@ export async function runPipeline(args: {
                 ? (customConfig.profiles.commandName ?? DEFAULT_PROFILES_COMMAND_NAME)
                 : undefined,
         profilesRevokeOperation:
-            customConfig.profiles?.enabled === true ? customConfig.profiles.revokeOperation : undefined
+            customConfig.profiles?.enabled === true ? customConfig.profiles.revokeOperation : undefined,
+        // A strategy only composes bound schemes, so skip deriving one when
+        // there are none — `copySpecs` would drop it anyway, and this keeps
+        // unauthenticated CLIs off the mapping entirely.
+        authStrategy: authBindings.length > 0 ? authStrategyVariant(ir.auth) : undefined
     });
     await writeGitignore(outputDir);
 

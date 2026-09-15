@@ -8,4 +8,6 @@ export interface GithubPullRequestSchema {
     license?: GeneratorsYml.GithubLicenseSchema;
     mode: "pull-request";
     reviewers?: GeneratorsYml.ReviewersSchema;
+    /** Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped. */
+    workflows?: boolean;
 }

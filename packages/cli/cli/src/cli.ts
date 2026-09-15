@@ -810,6 +810,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
                 })
+                .option("sdk-config", {
+                    type: "string",
+                    description: "Path to an SDK Config v1 YAML or JSON document"
+                })
                 .option("disable-dynamic-snippets", {
                     boolean: true,
                     description: "Disable dynamic SDK snippets in docs generation",
@@ -1002,6 +1006,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.sdkConfig != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --sdk-config flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
@@ -1025,6 +1036,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
+                    sdkConfigPath: argv.sdkConfig,
                     fernignorePath: argv.fernignore,
                     skipFernignore: argv["skip-fernignore"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
@@ -1091,6 +1103,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 runner: argv.runner as ContainerRunner,
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
+                sdkConfigPath: argv.sdkConfig,
                 fernignorePath: argv.fernignore,
                 skipFernignore: argv["skip-fernignore"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
@@ -2805,9 +2818,9 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 .option("output", {
                     type: "string",
                     alias: "o",
-                    demandOption: true,
                     nargs: 1,
-                    description: 'Path to write SDK Config v1, or "-" for stdout'
+                    description:
+                        'Path to write SDK Config v1 YAML; defaults to sdk-config.yml beside generators.yml, or use "-" for stdout'
                 })
                 .option("force", {
                     type: "boolean",

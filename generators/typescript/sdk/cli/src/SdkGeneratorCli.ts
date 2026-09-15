@@ -8,6 +8,7 @@ import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
+    applyExactOptionalPropertyTypes,
     convertJestImportsToVitest,
     fixImportsForEsm,
     NpmPackage,
@@ -45,6 +46,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             namespaceExport: parsed?.namespaceExport,
             naming: parsed?.naming,
             outputEsm: parsed?.outputEsm ?? false,
+            esmOnly: parsed?.esmOnly ?? false,
             outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
@@ -76,6 +78,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             enableInlineTypes: parsed?.enableInlineTypes ?? true,
             packageJson: parsed?.packageJson,
             packageJsonMergeStrategy: parsed?.packageJsonMergeStrategy ?? "shallow",
+            exactOptionalPropertyTypes: parsed?.exactOptionalPropertyTypes ?? false,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
             writeUnitTests: parsed?.writeUnitTests ?? true,
@@ -113,6 +116,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             optionalAuth: parsed?.["optional-auth"] ?? false,
             guardProcessEnvAccess: parsed?.guardProcessEnvAccess ?? false,
+            websocketHandlerMode: parsed?.websocketHandlerMode ?? "replace",
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
             generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
@@ -154,6 +158,19 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             if (parsed?.packagePath != null) {
                 logger.error(
                     "`testFramework` `vitest` does not currently support `packagePath`. Please remove `packagePath` or set `testFramework` to `jest`."
+                );
+            }
+        }
+
+        if (parsed?.esmOnly) {
+            if (parsed?.useLegacyExports) {
+                throw new Error(
+                    "Incompatible configuration: `esmOnly` cannot be combined with `useLegacyExports`. Please remove one of the two options."
+                );
+            }
+            if (parsed?.bundle) {
+                throw new Error(
+                    "Incompatible configuration: `esmOnly` cannot be combined with `bundle`. Please remove one of the two options."
                 );
             }
         }
@@ -223,6 +240,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 neverThrowErrors: customConfig.neverThrowErrors,
                 shouldBundle: customConfig.shouldBundle,
                 outputEsm: customConfig.outputEsm,
+                esmOnly: customConfig.esmOnly,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
                 generateWebSocketClients: customConfig.generateWebSocketClients,
@@ -287,6 +305,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 optionalAuth: customConfig.optionalAuth,
                 guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
+                websocketHandlerMode: customConfig.websocketHandlerMode,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });
@@ -368,6 +387,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 persistedTypescriptProject.getRootDirectory(),
                 persistedTypescriptProject.getTestDirectory()
             );
+        }
+        if (customConfig.exactOptionalPropertyTypes) {
+            await applyExactOptionalPropertyTypes(persistedTypescriptProject.getRootDirectory());
         }
     }
 

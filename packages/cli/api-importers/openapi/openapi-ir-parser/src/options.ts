@@ -191,6 +191,19 @@ export interface ParseOpenAPIOptions {
     respectPerSpecBasePath: boolean;
 
     /**
+     * If true, operation ids are tokenized on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so that a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + `Sharing_ListFolderMembers` -> `listFolderMembers`).
+     * If false, only separator-delimited chunks are tokenized, so operation ids containing an
+     * underscore or a digit keep their tag prefix and lose their internal word boundaries
+     * (e.g. `listfoldermembers`).
+     *
+     * Only the v3 OpenAPI parser reads this, so it changes generated API reference URLs. Changing it
+     * renames already published pages, so it defaults to false.
+     */
+    respectOperationIdWordBoundaries: boolean;
+
+    /**
      * If true, an error whose response object (`components.responses[...]`) carries `x-fern-sdk-namespace`
      * is declared in, and shared within, that namespace instead of the endpoint's namespace. Errors without
      * the extension are unaffected. Defaults to false.
@@ -242,6 +255,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     ignoreTags: false,
     respectParameterContent: false,
     respectPerSpecBasePath: false,
+    respectOperationIdWordBoundaries: false,
     namespacedErrors: false
 };
 

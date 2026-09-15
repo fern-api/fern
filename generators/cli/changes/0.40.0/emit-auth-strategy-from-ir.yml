@@ -1,0 +1,35 @@
+- summary: |
+    **Behavior change for multi-scheme CLIs.** The generated `main.rs` now emits
+    `.auth_strategy(AuthStrategy::Any)` whenever the IR's `auth.requirement` is `ANY`
+    (`.auth_strategy(AuthStrategy::Routing)` for `endpoint-security`). Previously the
+    runtime derived its strategy from the baked spec and dispatched per operation, so
+    each request used the scheme that operation's `security` named.
+
+    With `Any`, the first scheme in `generators.yml` order that has credentials is used
+    for **every** authenticated request and per-operation `security` is no longer
+    consulted. This matches what the SDK generators have always done for
+    `api.auth: any:`, and it is what makes a scheme declared only in `generators.yml`
+    (e.g. OAuth client-credentials layered onto a vendor spec) reachable at all —
+    per-operation routing could never select it, so those requests went out
+    unauthenticated.
+
+    Two groups are affected:
+
+    - `api.auth: any: [...]` in `generators.yml`. One `auth login` now covers every
+      operation. If your schemes map to different accounts or privileges, reorder
+      `any:` so the preferred credential is declared first — declaration order is now
+      the precedence lever, and it is the same lever your SDKs already use.
+    - Specs with two or more `components.securitySchemes` and **no** `api.auth` block.
+      The importer derives `ANY` from the scheme count alone, so these CLIs switch from
+      per-endpoint routing to first-credential-wins even though nothing in
+      `generators.yml` asked for it. If your operations genuinely need different
+      schemes, declare `api.auth: endpoint-security` to keep per-operation dispatch.
+
+    A selected scheme whose credentials fail (e.g. a rejected OAuth token exchange) now
+    fails the command. The SDKs instead fall through to the next scheme; the CLI is
+    deliberately stricter, because silently substituting one credential for another with
+    different privileges is worse in a terminal than a loud failure.
+
+    `ALL` over several schemes has no equivalent strategy and now warns and leaves the
+    runtime on its `Auto` default, rather than pinning one.
+  type: feat

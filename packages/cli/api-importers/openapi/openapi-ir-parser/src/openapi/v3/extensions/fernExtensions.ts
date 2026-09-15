@@ -560,6 +560,26 @@ export const FernOpenAPIExtension = {
     ENCODING: "x-fern-encoding",
 
     /**
+     * On a property of an XML element schema (one declaring an OpenAPI `xml` object), marks the
+     * property as the element's text content rather than an attribute or child element.
+     *
+     * Say:
+     *  xml:
+     *    name: Say
+     *  properties:
+     *    message:
+     *      type: string
+     *      x-fern-xml-text: true
+     */
+    XML_TEXT: "x-fern-xml-text",
+
+    /**
+     * On a list-valued attribute or text property of an XML element schema, the string used to
+     * join items into a single value (e.g. `" "` for space-delimited lists).
+     */
+    XML_LIST_SEPARATOR: "x-fern-xml-list-separator",
+
+    /**
      * Allows users to configure gRPC services. This must be specified on individual service
      * declarations.
      *

@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { DetectedAuthBinding } from "./detectAuth.js";
+import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
 export interface RawSpecsManifestEntry {
@@ -100,6 +100,13 @@ export async function copySpecs(args: {
     profilesCommandName?: string;
     /** Dotted command path for `profiles remove --revoke`. */
     profilesRevokeOperation?: string;
+    /**
+     * When set and at least one auth binding exists, emit
+     * `.auth_strategy(AuthStrategy::<variant>)` on the OpenApiBinding chain so the
+     * runtime composes the bound schemes the way the IR's `auth.requirement`
+     * says, rather than deriving a strategy from the spec's `security`.
+     */
+    authStrategy?: AuthStrategyVariant;
 }): Promise<void> {
     const {
         outputDir,
@@ -111,7 +118,8 @@ export async function copySpecs(args: {
         rootGroup,
         userAgentSuffixFlag,
         profilesCommandName,
-        profilesRevokeOperation
+        profilesRevokeOperation,
+        authStrategy
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -144,7 +152,8 @@ export async function copySpecs(args: {
             rootGroup,
             userAgentSuffixFlag,
             profilesCommandName,
-            profilesRevokeOperation
+            profilesRevokeOperation,
+            authStrategy
         })
     );
 
@@ -239,6 +248,7 @@ function renderMainRs(args: {
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
+    authStrategy?: AuthStrategyVariant;
 }): string {
     const {
         binaryName,
@@ -249,8 +259,13 @@ function renderMainRs(args: {
         rootGroup,
         userAgentSuffixFlag,
         profilesCommandName,
-        profilesRevokeOperation
+        profilesRevokeOperation,
+        authStrategy
     } = args;
+
+    // A strategy only means something once there is a scheme to compose;
+    // skip it (and its import) for unauthenticated APIs.
+    const emittedAuthStrategy = authBindings.length > 0 ? authStrategy : undefined;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -268,6 +283,9 @@ function renderMainRs(args: {
                 authTypeImports.add(imp.trim());
             }
         }
+    }
+    if (emittedAuthStrategy != null) {
+        authTypeImports.add("AuthStrategy");
     }
     if (authTypeImports.size > 0) {
         imports.push(`use fern_cli_sdk::auth::{${[...authTypeImports].sort().join(", ")}};`);
@@ -372,6 +390,11 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
+    }
+    // Root `.auth(...)` registrations are merged into the binding at run
+    // time, so the strategy composing them is an `OpenApiBinding` setting.
+    if (emittedAuthStrategy != null) {
+        lines.push(`                .auth_strategy(AuthStrategy::${emittedAuthStrategy})`);
     }
     if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);

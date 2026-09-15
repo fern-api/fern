@@ -1,0 +1,12 @@
+- summary: |
+    Deserialize non-object JSON response bodies. Endpoints whose response is a top-level
+    list, map, set, primitive, or unknown JSON value previously returned `nil`; they now
+    parse the body and coerce it to the declared type. Bodies are parsed with
+    `symbolize_names: true` to match `Model.load`, so an `unknown` value is symbol-keyed
+    wherever it appears; maps whose keys coerce to `Integer` keep string keys, since JSON
+    object keys are always strings and a `Symbol` cannot coerce to `Integer`. A named type
+    behind an `optional`/`nullable` wrapper now deserializes through `.load` like a bare
+    named type, so a union member is resolved instead of the body reaching the caller as
+    raw parsed JSON. Every successful response with an empty body (including named types)
+    returns `nil` instead of raising `JSON::ParserError`.
+  type: fix

@@ -5,7 +5,8 @@ import type * as FernDefinition from "../../../index.js";
 export interface HeaderAuthSchemeSchema
     extends FernDefinition.WithEnvironmentVariable,
         FernDefinition.WithName,
-        FernDefinition.WithDocsSchema {
+        FernDefinition.WithDocsSchema,
+        FernDefinition.WithPlaygroundDocsSchema {
     header: string;
     /** Defaults to string */
     type?: string;

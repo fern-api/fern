@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.10.0
+  changelogEntry:
+    - summary: |
+        Add `workflows` to `GithubStepConfig`. When `false`, the post-generation pipeline drops newly
+        generated `.github/workflows/*` files and restores tracked ones from HEAD before any commit,
+        so SDK delivery never touches workflow files (no GitHub App `workflows` permission required).
+      type: feat
+  createdAt: "2026-09-08"
 - version: 0.9.56
   changelogEntry:
     - summary: |

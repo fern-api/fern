@@ -45,6 +45,7 @@ export function convertFields({
                 availability: convertedField.availability,
                 propertyAccess: undefined,
                 defaultValue: undefined,
+                xml: undefined,
                 v2Examples: undefined
             };
 

@@ -51,6 +51,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     }
 
     public convert(): AuthScheme | undefined {
+        const playgroundDocs = this.getExtension<string>("x-fern-playground-description");
         switch (this.securityScheme.type) {
             case "http": {
                 // Case insensitivity for securityScheme.scheme required per OAS spec
@@ -64,7 +65,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         token: this.context.casingsGenerator.generateName(tokenName),
                         tokenEnvVar,
                         tokenPlaceholder,
-                        docs: this.securityScheme.description
+                        docs: this.securityScheme.description,
+                        playgroundDocs
                     });
                 }
                 if (this.securityScheme.scheme?.toLowerCase() === "basic") {
@@ -85,7 +87,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         passwordOmit: false,
                         usernamePlaceholder,
                         passwordPlaceholder,
-                        docs: this.securityScheme.description
+                        docs: this.securityScheme.description,
+                        playgroundDocs
                     });
                 }
                 break;
@@ -107,7 +110,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         prefix,
                         headerEnvVar,
                         headerPlaceholder,
-                        docs: this.securityScheme.description
+                        docs: this.securityScheme.description,
+                        playgroundDocs
                     });
                 }
                 break;
@@ -119,7 +123,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
                     tokenPlaceholder: undefined,
-                    docs: this.securityScheme.description
+                    docs: this.securityScheme.description,
+                    playgroundDocs
                 });
             }
         }

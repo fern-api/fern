@@ -38,7 +38,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -73,7 +73,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -108,7 +108,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::StringResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::StringResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -143,7 +143,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -177,10 +177,12 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::Response.load(response.body))
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # @param request_options [Hash]
@@ -211,7 +213,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::OptionalWithDocs.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Service::Types::OptionalWithDocs.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -246,7 +248,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::OptionalStringResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Seed::Types::OptionalStringResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

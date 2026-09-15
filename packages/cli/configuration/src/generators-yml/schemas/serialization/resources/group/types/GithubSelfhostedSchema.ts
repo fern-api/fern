@@ -15,6 +15,7 @@ export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
     mode: GithubSelfhostedMode.optional(),
     branch: core.serialization.string().optional(),
     license: GithubLicenseSchema.optional(),
+    workflows: core.serialization.boolean().optional(),
 });
 
 export declare namespace GithubSelfhostedSchema {
@@ -24,5 +25,6 @@ export declare namespace GithubSelfhostedSchema {
         mode?: GithubSelfhostedMode.Raw | null;
         branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;
+        workflows?: boolean | null;
     }
 }

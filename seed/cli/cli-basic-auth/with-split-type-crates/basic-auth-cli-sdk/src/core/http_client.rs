@@ -1,4 +1,5 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{future::BoxFuture, Stream, StreamExt};
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue},
@@ -402,6 +403,20 @@ impl HttpClient {
         options: &Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         let headers = request.headers_mut();
+
+        // Basic auth resolves to `Authorization: Basic <base64(user:pass)>`. Applied before the
+        // bearer branch below, which overwrites the same header when a token is also configured.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded = base64::engine::general_purpose::STANDARD
+                .encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            headers.insert(
+                "Authorization",
+                basic_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+        }
 
         // Apply API key (request options override config)
         let api_key = options

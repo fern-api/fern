@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `layout.api-reference-expand-properties` option to docs.yml. Set it to `true` to
+    render the first level of nested object and union fields in the API reference expanded on
+    page load instead of behind a "Show N properties" button. Deeper levels stay collapsed.
+  type: feat

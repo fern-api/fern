@@ -401,7 +401,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.TestTypeUtils,
 
             // HTTP tests
-            AsIsFiles.TestHttpRawClient
+            AsIsFiles.TestHttpRawClient,
+
+            // Multipart tests
+            AsIsFiles.TestMultipartFormData
         ];
 
         if (this.hasHmacWebhookSignatureVerification()) {

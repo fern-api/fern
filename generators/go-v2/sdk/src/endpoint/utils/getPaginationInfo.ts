@@ -4,6 +4,10 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import {
+    getRequestBodyPagePropertySetter,
+    RequestBodyPagePathItem
+} from "../../utils/getRequestBodyPagePropertySetter.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { PaginationInfo } from "../PaginationInfo.js";
 
@@ -11,6 +15,7 @@ const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;
 const PAGE_REQUEST_RESPONSE_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Response`;
 const PAGED_REQUEST_VARIABLE_NAME = "nextRequest";
+const INITIAL_CURSOR_VARIABLE_NAME = "cursor";
 
 /**
  * A page property that lives on the request body. The pager advances the page by setting the field on
@@ -18,10 +23,17 @@ const PAGED_REQUEST_VARIABLE_NAME = "nextRequest";
  */
 interface RequestBodyPageProperty {
     requestParameterName: string;
-    /** e.g. request.Cursor */
+    /** The Go field name of the page property, e.g. Cursor */
+    fieldName: string;
+    /** The objects that contain the page property, outermost first. Empty for top-level properties. */
+    propertyPath: RequestBodyPagePathItem[];
+    /** e.g. request.Options.Cursor */
     requestReference: string;
-    /** e.g. nextRequest.Cursor */
-    pagedRequestReference: string;
+    /**
+     * The conditions under which the page property can be read from the caller's request without
+     * dereferencing a nil intermediate, e.g. ["request.Options != nil"]. Empty for top-level properties.
+     */
+    requestNilChecks: string[];
 }
 
 export function getPaginationInfo({
@@ -71,7 +83,7 @@ export function getPaginationInfo({
             requestBodyPageProperty
         }),
         initializePager: getInitializePager({ context, pagination, callerReference }),
-        callGetPage: getCallGetPage({ pagination, pageType, requestPagePropertyReference })
+        callGetPage: getCallGetPage({ pagination, pageType, requestPagePropertyReference, requestBodyPageProperty })
     };
 }
 
@@ -257,12 +269,36 @@ function instantiatePager({
 function getCallGetPage({
     pagination,
     pageType,
-    requestPagePropertyReference
+    requestPagePropertyReference,
+    requestBodyPageProperty
 }: {
     pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
+    requestBodyPageProperty: RequestBodyPageProperty | undefined;
 }): go.AstNode {
+    const nilChecks = requestBodyPageProperty?.requestNilChecks ?? [];
+    if (pagination.type === "cursor" && requestBodyPageProperty != null && nilChecks.length > 0) {
+        return go.codeblock((writer) => {
+            writer.write(`var ${INITIAL_CURSOR_VARIABLE_NAME} `);
+            writer.writeNode(pageType);
+            writer.newLine();
+            writer.writeLine(`if ${nilChecks.join(" && ")} {`);
+            writer.indent();
+            writer.writeLine(`${INITIAL_CURSOR_VARIABLE_NAME} = ${requestBodyPageProperty.requestReference}`);
+            writer.dedent();
+            writer.writeLine("}");
+            writer.write("return ");
+            writer.writeNode(
+                invokeGetPage({
+                    pagination,
+                    pageType,
+                    requestPagePropertyReference: go.codeblock(INITIAL_CURSOR_VARIABLE_NAME)
+                })
+            );
+            writer.newLine();
+        });
+    }
     return go.codeblock((writer) => {
         writer.write("return ");
         writer.writeNode(invokeGetPage({ pagination, pageType, requestPagePropertyReference }));
@@ -617,11 +653,12 @@ function getPagePropertySetter({
         case "cursor":
         case "offset":
             if (requestBodyPageProperty != null) {
-                return go.codeblock((writer) => {
-                    writer.writeLine(
-                        `${PAGED_REQUEST_VARIABLE_NAME} := *${requestBodyPageProperty.requestParameterName}`
-                    );
-                    writer.writeLine(`${requestBodyPageProperty.pagedRequestReference} = ${PAGE_REQUEST_CURSOR_NAME}`);
+                return getRequestBodyPagePropertySetter({
+                    requestReference: requestBodyPageProperty.requestParameterName,
+                    pagedRequestVariableName: PAGED_REQUEST_VARIABLE_NAME,
+                    propertyPath: requestBodyPageProperty.propertyPath,
+                    fieldName: requestBodyPageProperty.fieldName,
+                    value: PAGE_REQUEST_CURSOR_NAME
                 });
             }
             return go.codeblock((writer) => {
@@ -674,7 +711,7 @@ function getPagePropertyInitializer({
             if (requestBodyPageProperty != null) {
                 return getRequestBodyOffsetInitializer({
                     pageType,
-                    requestReference: requestBodyPageProperty.requestReference,
+                    requestBodyPageProperty,
                     useItemIndex
                 });
             }
@@ -718,21 +755,33 @@ function getPagePropertyInitializer({
 
 function getRequestBodyOffsetInitializer({
     pageType,
-    requestReference,
+    requestBodyPageProperty,
     useItemIndex
 }: {
     pageType: go.Type;
-    requestReference: string;
+    requestBodyPageProperty: RequestBodyPageProperty;
     useItemIndex: boolean;
 }): go.AstNode {
+    const { requestReference, requestNilChecks } = requestBodyPageProperty;
     return go.codeblock((writer) => {
         if (!pageType.isOptional()) {
-            writer.writeLine(`next := ${requestReference}`);
+            if (requestNilChecks.length === 0) {
+                writer.writeLine(`next := ${requestReference}`);
+                return;
+            }
+            writer.write("var next ");
+            writer.writeNode(pageType);
+            writer.newLine();
+            writer.writeLine(`if ${requestNilChecks.join(" && ")} {`);
+            writer.indent();
+            writer.writeLine(`next = ${requestReference}`);
+            writer.dedent();
+            writer.writeLine("}");
             return;
         }
         writer.writeNode(getOffsetInitializer({ pageType, useItemIndex }));
         writer.newLine();
-        writer.writeLine(`if ${requestReference} != nil {`);
+        writer.writeLine(`if ${[...requestNilChecks, `${requestReference} != nil`].join(" && ")} {`);
         writer.indent();
         writer.writeLine(`next = *${requestReference}`);
         writer.dedent();
@@ -1044,10 +1093,27 @@ function getRequestBodyPageProperty({
             }
             const requestParameterName = signature.request.getRequestParameterName();
             const fieldName = context.getFieldName(pagination.page.property.name);
+            const propertyPath = (pagination.page.propertyPath ?? []).map((item) =>
+                getRequestBodyPagePathItem({ context, item })
+            );
+            const requestNilChecks: string[] = [];
+            let container = requestParameterName;
+            for (const item of propertyPath) {
+                container = `${container}.${item.fieldName}`;
+                for (let depth = 0; depth < item.pointerValueTypes.length; depth++) {
+                    requestNilChecks.push(`${"*".repeat(depth)}${container} != nil`);
+                }
+                // Go dereferences a single pointer implicitly on field access; deeper pointers are explicit.
+                if (item.pointerValueTypes.length > 1) {
+                    container = `(${"*".repeat(item.pointerValueTypes.length - 1)}${container})`;
+                }
+            }
             return {
                 requestParameterName,
-                requestReference: `${requestParameterName}.${fieldName}`,
-                pagedRequestReference: `${PAGED_REQUEST_VARIABLE_NAME}.${fieldName}`
+                fieldName,
+                propertyPath,
+                requestReference: `${container}.${fieldName}`,
+                requestNilChecks
             };
         }
         case "custom":
@@ -1057,6 +1123,63 @@ function getRequestBodyPageProperty({
         default:
             assertNever(pagination);
     }
+}
+
+/**
+ * Resolves the pointers an intermediate object on the page property path generates with. The mapped
+ * Go type alone cannot tell, because named aliases generate as the type they alias: an alias to an
+ * object is a pointer alias (`type Options = *WithOffset`) that maps to a plain reference, and an
+ * optional alias to an object generates as a double pointer (`*Options`).
+ */
+function getRequestBodyPagePathItem({
+    context,
+    item
+}: {
+    context: SdkGeneratorContext;
+    item: FernIr.PropertyPathItem;
+}): RequestBodyPagePathItem {
+    const pointerValueTypes: go.Type[] = [];
+    const seen = new Set<FernIr.TypeId>();
+    let reference = item.type;
+    while (true) {
+        if (
+            reference.type === "container" &&
+            (reference.container.type === "optional" || reference.container.type === "nullable")
+        ) {
+            const inner =
+                reference.container.type === "optional" ? reference.container.optional : reference.container.nullable;
+            const innerType = context.goTypeMapper.convert({ reference: inner });
+            if (innerType.isOptional()) {
+                // optional<Object> collapses to a single pointer, resolved below.
+                reference = inner;
+                continue;
+            }
+            const type = context.goTypeMapper.convert({ reference });
+            if (type.isOptional()) {
+                // optional<Alias> where the alias is not itself optional, e.g. an alias to an object.
+                pointerValueTypes.push(innerType);
+            }
+            reference = inner;
+            continue;
+        }
+        if (reference.type === "named" && !seen.has(reference.typeId)) {
+            seen.add(reference.typeId);
+            const shape = context.getTypeDeclarationOrThrow(reference.typeId).shape;
+            if (shape.type === "alias") {
+                reference = shape.aliasOf;
+                continue;
+            }
+        }
+        break;
+    }
+    const type = context.goTypeMapper.convert({ reference });
+    if (type.isOptional()) {
+        pointerValueTypes.push(type.underlying());
+    }
+    return {
+        fieldName: context.getFieldName(item.name),
+        pointerValueTypes
+    };
 }
 
 function getRequestVariableName({ signature }: { signature: EndpointSignatureInfo }): string {

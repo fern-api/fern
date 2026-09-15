@@ -350,6 +350,58 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(r
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_integer_to_object</a>(request) -> Internal::Types::Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.container.get_and_return_map_of_integer_to_object(request: {
+  1 => {
+    string: "string"
+  }
+})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>

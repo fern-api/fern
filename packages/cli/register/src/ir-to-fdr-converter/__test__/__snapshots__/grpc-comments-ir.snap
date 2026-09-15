@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": undefined,
         "key": "Bearer",
+        "playgroundDocs": undefined,
         "token": "token",
         "tokenEnvVar": undefined,
         "tokenPlaceholder": undefined,
@@ -447,6 +448,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -486,6 +488,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -525,6 +528,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -564,6 +568,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -604,6 +609,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -679,6 +685,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -718,6 +725,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -757,6 +765,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -836,6 +845,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

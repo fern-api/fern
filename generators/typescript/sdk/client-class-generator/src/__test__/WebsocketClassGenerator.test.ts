@@ -32,6 +32,7 @@ function createGenerator(opts?: Partial<WebsocketClassGenerator.Init>): Websocke
         retainOriginalCasing: false,
         omitUndefined: false,
         skipResponseValidation: false,
+        websocketHandlerMode: "replace",
         ...opts
     });
 }

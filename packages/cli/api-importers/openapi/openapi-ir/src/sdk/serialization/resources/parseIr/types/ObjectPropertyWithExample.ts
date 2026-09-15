@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { SchemaId } from "../../commons/types/SchemaId.js";
 import { WithAvailability } from "../../commons/types/WithAvailability.js";
+import { XmlPropertyEncoding } from "../../commons/types/XmlPropertyEncoding.js";
 import { ObjectPropertyConflictInfo } from "../../finalIr/types/ObjectPropertyConflictInfo.js";
 
 export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
@@ -20,6 +21,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         nameOverride: core.serialization.string().optional(),
         generatedName: core.serialization.string(),
+        xml: XmlPropertyEncoding.optional(),
     })
     .extend(WithAvailability);
 
@@ -33,5 +35,6 @@ export declare namespace ObjectPropertyWithExample {
         conflict: Record<SchemaId.Raw, ObjectPropertyConflictInfo.Raw>;
         nameOverride?: string | null;
         generatedName: string;
+        xml?: XmlPropertyEncoding.Raw | null;
     }
 }

@@ -15,6 +15,7 @@
                 "tokenEnvVar": "COURIER_API_KEY",
                 "tokenPlaceholder": null,
                 "key": "Bearer",
+                "playgroundDocs": null,
                 "docs": null
             }
         ],
@@ -81,7 +82,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
