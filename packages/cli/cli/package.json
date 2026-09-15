@@ -32,6 +32,7 @@
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
+    "dist:cli:beta": "node build.beta.mjs",
     "dist:cli:dev": "node build.dev.mjs",
     "dist:cli:local": "node build.local.mjs",
     "dist:cli:prod": "node build.prod.mjs",
