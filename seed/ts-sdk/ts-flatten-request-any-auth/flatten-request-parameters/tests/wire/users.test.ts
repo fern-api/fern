@@ -12,12 +12,12 @@ describe("UsersClient", () => {
             apiKey: { apiKey: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = { id: "body-id", name: "Ada" };
+        const rawRequestBody = { id: "user-1", name: "Ada" };
         const rawResponseBody = { id: "body-id", name: "Ada" };
 
         server
             .mockEndpoint()
-            .put("/users/path-id")
+            .put("/users/user-1")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -25,7 +25,7 @@ describe("UsersClient", () => {
             .build();
 
         const response = await client.users.updateUser({
-            id: "body-id",
+            id: "user-1",
             name: "Ada",
         });
         expect(response).toEqual(rawResponseBody);
@@ -39,20 +39,20 @@ describe("UsersClient", () => {
             apiKey: { apiKey: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = { id: "body-id", name: "Ada" };
+        const rawRequestBody = { id: "user-1", name: "Ada" };
         const rawResponseBody = { id: "body-id", name: "Ada" };
 
         server
             .mockEndpoint()
-            .put("/users/path-id/profile")
+            .put("/users/user-1/profile")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.users.updateUserProfile("path-id", {
-            id: "body-id",
+        const response = await client.users.updateUserProfile("user-1", {
+            id: "user-1",
             name: "Ada",
         });
         expect(response).toEqual(rawResponseBody);

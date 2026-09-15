@@ -31,7 +31,7 @@ export class UsersClient {
      *
      * @example
      *     await client.users.updateUser({
-     *         id: "body-id",
+     *         id: "user-1",
      *         name: "Ada"
      *     })
      */
@@ -97,8 +97,8 @@ export class UsersClient {
      * @throws {@link errors.SeedTsFlattenRequestAnyAuthTimeoutError}
      *
      * @example
-     *     await client.users.updateUserProfile("path-id", {
-     *         id: "body-id",
+     *     await client.users.updateUserProfile("user-1", {
+     *         id: "user-1",
      *         name: "Ada"
      *     })
      */

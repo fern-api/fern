@@ -316,9 +316,9 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "cf966c17",
+                                "id": "ffa79b46",
                                 "name": null,
-                                "url": "/users/path-id",
+                                "url": "/users/user-1",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
@@ -329,11 +329,11 @@
                                                 "primitive": {
                                                     "type": "string",
                                                     "string": {
-                                                        "original": "path-id"
+                                                        "original": "user-1"
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "path-id"
+                                            "jsonExample": "user-1"
                                         }
                                     }
                                 ],
@@ -368,11 +368,11 @@
                                                             "primitive": {
                                                                 "type": "string",
                                                                 "string": {
-                                                                    "original": "body-id"
+                                                                    "original": "user-1"
                                                                 }
                                                             }
                                                         },
-                                                        "jsonExample": "body-id"
+                                                        "jsonExample": "user-1"
                                                     },
                                                     "originalTypeDeclaration": {
                                                         "typeId": "type_users:UpdateUser",
@@ -421,7 +421,7 @@
                                         }
                                     },
                                     "jsonExample": {
-                                        "id": "body-id",
+                                        "id": "user-1",
                                         "name": "Ada"
                                     }
                                 },
@@ -910,9 +910,9 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "cf966c17",
+                                "id": "ffa79b46",
                                 "name": null,
-                                "url": "/users/path-id/profile",
+                                "url": "/users/user-1/profile",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
@@ -923,11 +923,11 @@
                                                 "primitive": {
                                                     "type": "string",
                                                     "string": {
-                                                        "original": "path-id"
+                                                        "original": "user-1"
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "path-id"
+                                            "jsonExample": "user-1"
                                         }
                                     }
                                 ],
@@ -962,11 +962,11 @@
                                                             "primitive": {
                                                                 "type": "string",
                                                                 "string": {
-                                                                    "original": "body-id"
+                                                                    "original": "user-1"
                                                                 }
                                                             }
                                                         },
-                                                        "jsonExample": "body-id"
+                                                        "jsonExample": "user-1"
                                                     },
                                                     "originalTypeDeclaration": {
                                                         "typeId": "type_users:UpdateUser",
@@ -1015,7 +1015,7 @@
                                         }
                                     },
                                     "jsonExample": {
-                                        "id": "body-id",
+                                        "id": "user-1",
                                         "name": "Ada"
                                     }
                                 },

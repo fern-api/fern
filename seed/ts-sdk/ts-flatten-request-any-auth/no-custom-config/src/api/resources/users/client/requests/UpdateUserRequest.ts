@@ -5,9 +5,9 @@ import type * as SeedTsFlattenRequestAnyAuth from "../../../../index.js";
 /**
  * @example
  *     {
- *         id: "path-id",
+ *         id: "user-1",
  *         body: {
- *             id: "body-id",
+ *             id: "user-1",
  *             name: "Ada"
  *         }
  *     }

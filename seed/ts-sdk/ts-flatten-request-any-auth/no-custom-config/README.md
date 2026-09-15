@@ -44,9 +44,9 @@ import { SeedTsFlattenRequestAnyAuthClient } from "@fern/ts-flatten-request-any-
 
 const client = new SeedTsFlattenRequestAnyAuthClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY" });
 await client.users.updateUser({
-    id: "path-id",
+    id: "user-1",
     body: {
-        id: "body-id",
+        id: "user-1",
         name: "Ada"
     }
 });

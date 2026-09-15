@@ -3,7 +3,7 @@
 /**
  * @example
  *     {
- *         id: "body-id",
+ *         id: "user-1",
  *         name: "Ada"
  *     }
  */

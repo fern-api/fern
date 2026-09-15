@@ -14,7 +14,7 @@
 
 ```typescript
 await client.users.updateUser({
-    id: "body-id",
+    id: "user-1",
     name: "Ada"
 });
 
@@ -65,8 +65,8 @@ await client.users.updateUser({
 <dd>
 
 ```typescript
-await client.users.updateUserProfile("path-id", {
-    id: "body-id",
+await client.users.updateUserProfile("user-1", {
+    id: "user-1",
     name: "Ada"
 });
 

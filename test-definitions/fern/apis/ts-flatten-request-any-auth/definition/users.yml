@@ -19,9 +19,9 @@ service:
       response: UpdateUser
       examples:
         - path-parameters:
-            id: path-id
+            id: user-1
           request:
-            id: body-id
+            id: user-1
             name: Ada
           response:
             body:
@@ -37,9 +37,9 @@ service:
       response: UpdateUser
       examples:
         - path-parameters:
-            id: path-id
+            id: user-1
           request:
-            id: body-id
+            id: user-1
             name: Ada
           response:
             body:
