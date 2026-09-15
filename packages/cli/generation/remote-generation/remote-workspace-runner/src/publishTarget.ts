@@ -13,8 +13,10 @@ export interface PublishTarget {
     label: string;
     /** Version published. */
     version: string;
-    /** Canonical URL of the published package on its registry. */
-    url: string;
+    /** Registry package coordinate or other non-URL publication identifier. */
+    identifier?: string;
+    /** Canonical URL of the published package on its registry, when reported. */
+    url?: string;
 }
 
 /**
