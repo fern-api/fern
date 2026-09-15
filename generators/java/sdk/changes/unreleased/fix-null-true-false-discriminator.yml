@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Escape the Java literals `null`, `true`, and `false` when they're used as a
+    discriminated union's discriminator value. Previously the generated Java
+    identifier was left unescaped (e.g. a static factory method literally named
+    `null`), which JavaPoet rejected with `not a valid name: null`, aborting
+    generation. The identifier is now escaped to `null_`/`true_`/`false_`
+    (matching the existing convention for other reserved words like `static`),
+    while the serialized discriminator value is unchanged.
+  type: fix
