@@ -19,7 +19,7 @@ export function partitionV1Specs(v1Specs: Spec[]): {
     allSpecs: Spec[];
 } {
     const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | V1ProtobufSpec => {
-        if (spec.type === "openrpc" || spec.type === "graphql") {
+        if (spec.type === "openrpc" || spec.type === "graphql" || spec.type === "twiml") {
             return false;
         }
         if (spec.type === "protobuf" && !spec.fromOpenAPI) {

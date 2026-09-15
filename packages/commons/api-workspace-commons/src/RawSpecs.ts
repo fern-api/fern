@@ -1,4 +1,4 @@
-export type RawSpecType = "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
+export type RawSpecType = "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql" | "twiml";
 
 export interface RawSpecImportSettings {
     respectNullableSchemas?: boolean;
@@ -19,6 +19,7 @@ export interface RawSpecsManifestEntry {
     type: RawSpecType;
     specPath: string;
     overridePaths?: string[];
+    examplesPath?: string;
     namespace?: string;
     apiImportSettings?: RawSpecImportSettings;
 }

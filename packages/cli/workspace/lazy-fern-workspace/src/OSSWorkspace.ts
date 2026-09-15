@@ -9,7 +9,8 @@ import {
     OpenAPISettings,
     OpenAPISpec,
     ProtobufSpec,
-    Spec
+    Spec,
+    TwimlSpec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
@@ -20,8 +21,8 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
-import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
-import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
+import { FernIr, IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
+import { mergeIntermediateRepresentation, mergeTwimlDefinitions } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { type ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import {
@@ -31,6 +32,7 @@ import {
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { CliError, TaskContext } from "@fern-api/task-context";
+import { loadTwimlDocument, TwimlConverter, TwimlConverterContext } from "@fern-api/twiml-to-ir";
 
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
@@ -486,6 +488,24 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
                 }
+            } else if (spec.type === "twiml") {
+                const result = new TwimlConverter({
+                    context: await this.createTwimlConverterContext({ spec, context, errorCollectors }),
+                    audiences
+                }).convert();
+
+                mergedIr =
+                    mergedIr === undefined
+                        ? result
+                        : mergeIntermediateRepresentation(
+                              mergedIr,
+                              result,
+                              constructCasingsGenerator({
+                                  generationLanguage: "typescript",
+                                  keywords: undefined,
+                                  smartCasing: false
+                              })
+                          );
             }
         }
 
@@ -538,6 +558,70 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         return mergedIr;
+    }
+
+    private async createTwimlConverterContext({
+        spec,
+        context,
+        errorCollectors
+    }: {
+        spec: TwimlSpec;
+        context: TaskContext;
+        errorCollectors: ErrorCollector[];
+    }): Promise<TwimlConverterContext> {
+        const relativeFilepathToSpec = relativize(cwd(), spec.absoluteFilepath);
+        const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
+        errorCollectors.push(errorCollector);
+        return new TwimlConverterContext({
+            generationLanguage: "typescript",
+            logger: context.logger,
+            smartCasing: false,
+            spec: await loadTwimlDocument({
+                absoluteFilepathToDefinitions: spec.absoluteFilepath,
+                absoluteFilepathToExamples: spec.absoluteFilepathToExamples,
+                errorCollector
+            }),
+            exampleGenerationArgs: { disabled: true },
+            errorCollector,
+            enableUniqueErrorsPerEndpoint: false,
+            generateV1Examples: false,
+            settings: getOpenAPISettings()
+        });
+    }
+
+    /**
+     * Converts the workspace's `twiml` specs into the IR's `twiml` section. TwiML has no Fern
+     * definition equivalent, so this is how `toFernWorkspace` carries it through to the IR.
+     */
+    private async convertTwimlSpecs({
+        context,
+        logWarnings
+    }: {
+        context: TaskContext;
+        logWarnings: boolean;
+    }): Promise<FernIr.TwimlDefinition | undefined> {
+        const twimlSpecs = this.allSpecs.filter((spec): spec is TwimlSpec => spec.type === "twiml");
+        if (twimlSpecs.length === 0) {
+            return undefined;
+        }
+
+        const errorCollectors: ErrorCollector[] = [];
+        let twiml: FernIr.TwimlDefinition | undefined;
+        for (const spec of twimlSpecs) {
+            const converterContext = await this.createTwimlConverterContext({ spec, context, errorCollectors });
+            const converted = new TwimlConverter({
+                context: converterContext,
+                audiences: { type: "all" }
+            }).convertTwimlDefinition();
+            twiml = mergeTwimlDefinitions(twiml, converted);
+        }
+
+        for (const errorCollector of errorCollectors) {
+            if (errorCollector.hasErrors()) {
+                await errorCollector.logErrors({ logWarnings });
+            }
+        }
+        return twiml;
     }
 
     private async generateAllProtobufIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
@@ -648,7 +732,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             },
             definition,
             cliVersion: this.cliVersion,
-            sources: this.sources
+            sources: this.sources,
+            twiml: await this.convertTwimlSpecs({ context, logWarnings: false })
         });
     }
 
@@ -798,7 +883,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         : spec.absoluteFilepathToOverrides != null
                           ? [spec.absoluteFilepathToOverrides]
                           : [];
-                    const examplesPath = spec.type === "graphql" ? spec.absoluteFilepathToExamples : undefined;
+                    const examplesPath =
+                        spec.type === "graphql" || spec.type === "twiml" ? spec.absoluteFilepathToExamples : undefined;
                     return [mainPath, ...overridePaths, ...(examplesPath != null ? [examplesPath] : [])];
                 })
                 .filter(isNonNullish)

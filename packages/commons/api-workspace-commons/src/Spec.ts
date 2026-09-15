@@ -3,7 +3,7 @@ import type { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import type { OpenAPISettings } from "./openapi/OpenAPISettings.js";
 import type { Source } from "./Source.js";
 
-export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec | GraphQLSpec;
+export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec | GraphQLSpec | TwimlSpec;
 
 export interface OpenAPISpec {
     type: "openapi";
@@ -40,6 +40,13 @@ export interface GraphQLSpec {
     absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     absoluteFilepathToExamples: AbsoluteFilePath | undefined;
     namespace?: string;
+}
+
+export interface TwimlSpec {
+    type: "twiml";
+    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined;
 }
 
 /**

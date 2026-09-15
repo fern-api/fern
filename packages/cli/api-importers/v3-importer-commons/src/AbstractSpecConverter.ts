@@ -96,7 +96,8 @@ export abstract class AbstractSpecConverter<
             generationMetadata: undefined,
             apiPlayground: undefined,
             casingsConfig: undefined,
-            specVersion: undefined
+            specVersion: undefined,
+            twiml: undefined
         };
     }
 

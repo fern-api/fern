@@ -483,6 +483,46 @@ describe("collectRawSpecs", () => {
         );
     });
 
+    it("renumbers grouped TwiML sources and their examples directories", async () => {
+        const twimlSpec = async (name: string, withExamples: boolean) => {
+            const definitions = path.join(sourceDir, name, "definitions");
+            await mkdir(definitions, { recursive: true });
+            await writeFile(path.join(definitions, "voice.json"), JSON.stringify({ root: "voice_response" }));
+            let absoluteFilepathToExamples: AbsoluteFilePath | undefined;
+            if (withExamples) {
+                const examples = path.join(sourceDir, name, "examples");
+                await mkdir(examples, { recursive: true });
+                await writeFile(path.join(examples, "hello.xml"), "<Response/>");
+                absoluteFilepathToExamples = AbsoluteFilePath.of(examples);
+            }
+            return {
+                type: "twiml" as const,
+                absoluteFilepath: AbsoluteFilePath.of(definitions),
+                absoluteFilepathToOverrides: undefined,
+                absoluteFilepathToExamples
+            };
+        };
+        const first = await twimlSpec("twiml-a", false);
+        const second = await twimlSpec("twiml-b", true);
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            generatorSelections: [{ generatorIndex: 0, specs: [first, second] }],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs).toEqual([
+            { type: "twiml", specPath: "/fern/specs/twiml0" },
+            { type: "twiml", specPath: "/fern/specs/twiml1", examplesPath: "/fern/specs/twiml1-examples" }
+        ]);
+        const archivePath = path.join(tmpDir.path, "twiml-sources.tar.gz");
+        const extractDir = path.join(tmpDir.path, "twiml-extracted");
+        await writeFile(archivePath, archive.buffer);
+        await mkdir(extractDir);
+        await tar.extract({ file: archivePath, cwd: extractDir });
+        expect(await readFile(path.join(extractDir, "twiml1-examples", "hello.xml"), "utf8")).toBe("<Response/>");
+        await expect(readFile(path.join(extractDir, "twiml0-examples", "hello.xml"), "utf8")).rejects.toThrow();
+    });
+
     it("rejects effective import settings that SDK Config cannot preserve", () => {
         const spec = {
             ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),

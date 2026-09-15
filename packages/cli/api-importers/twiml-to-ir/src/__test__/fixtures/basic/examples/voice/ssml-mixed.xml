@@ -1,0 +1,3 @@
+<Response>
+    <Say>Hello <emphasis level="strong">world<break strength="x-weak"/>again</emphasis>, bye</Say>
+</Response>

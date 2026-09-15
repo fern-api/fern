@@ -1,0 +1,5 @@
+<Response>
+    <Say loop="">
+        <emphasis level="strong"/>
+    </Say>
+</Response>

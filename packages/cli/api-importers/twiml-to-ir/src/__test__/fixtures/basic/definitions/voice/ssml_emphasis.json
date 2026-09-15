@@ -1,0 +1,23 @@
+{
+    "class_name": "ssml_emphasis",
+    "tag_name": "emphasis",
+    "tag_casing": "none",
+    "docstring": "Emphasizing Words in <Say>",
+    "enums": {
+        "level": ["strong", "moderate", "reduced"]
+    },
+    "body": {
+        "words": {
+            "type": "string",
+            "docstring": "Words to emphasize",
+            "required": true
+        }
+    },
+    "attributes": {
+        "level": {
+            "type": "enum:level",
+            "docstring": "Specify the degree of emphasis"
+        }
+    },
+    "children": ["voice/ssml_break", "voice/ssml_emphasis"]
+}

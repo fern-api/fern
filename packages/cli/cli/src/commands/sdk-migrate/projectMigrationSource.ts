@@ -257,6 +257,7 @@ function resolveWorkspaceSpec(
             };
         case "protobuf":
         case "openrpc":
+        case "twiml":
             throw unsupportedSourceType(spec.type);
     }
 }
@@ -305,6 +306,8 @@ function definitionMatchesSpecType(definition: generatorsYml.APIDefinitionLocati
             return definition.schema.type === "openrpc";
         case "protobuf":
             return definition.schema.type === "protobuf";
+        case "twiml":
+            return definition.schema.type === "twiml";
     }
 }
 
@@ -336,7 +339,7 @@ function absoluteSpecPath(spec: Spec): string {
 }
 
 function specNamespace(spec: Spec): string | undefined {
-    return spec.type === "protobuf" ? undefined : spec.namespace;
+    return spec.type === "protobuf" || spec.type === "twiml" ? undefined : spec.namespace;
 }
 
 function resolveIdentifiableSource(source: IdentifiableSource): ResolvedMigrationSourceSpec {

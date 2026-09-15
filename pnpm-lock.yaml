@@ -4205,6 +4205,52 @@ importers:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.5(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
+  packages/cli/api-importers/twiml-to-ir:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/v3-importer-commons':
+        specifier: workspace:*
+        version: link:../v3-importer-commons
+      domhandler:
+        specifier: 'catalog:'
+        version: 5.0.3
+      htmlparser2:
+        specifier: 'catalog:'
+        version: 9.1.0
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.76
+    devDependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../../commons/api-workspace-commons
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.5(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
       '@fern-api/api-workspace-commons':
@@ -7175,6 +7221,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/twiml-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/twiml-to-ir
       '@fern-api/v3-importer-commons':
         specifier: workspace:*
         version: link:../../api-importers/v3-importer-commons

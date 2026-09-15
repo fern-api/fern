@@ -6,3 +6,4 @@ export { isNamespacedApiConfiguration } from "./isNamespacedApiConfiguration.js"
 export { isOpenApiSpecSchema } from "./isOpenApiSpecSchema.js";
 export { isOpenRpcSpecSchema } from "./isOpenRpcSpecSchema.js";
 export { isProtoSpecSchema } from "./isProtoSpecSchema.js";
+export { isTwimlSpecSchema } from "./isTwimlSpecSchema.js";

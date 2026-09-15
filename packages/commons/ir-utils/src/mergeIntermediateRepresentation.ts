@@ -87,7 +87,21 @@ export function mergeIntermediateRepresentation(
         audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])],
         generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata,
         apiPlayground: ir1.apiPlayground ?? ir2.apiPlayground,
-        casingsConfig: ir1.casingsConfig ?? ir2.casingsConfig
+        casingsConfig: ir1.casingsConfig ?? ir2.casingsConfig,
+        twiml: mergeTwimlDefinitions(ir1.twiml, ir2.twiml)
+    };
+}
+
+export function mergeTwimlDefinitions(
+    twiml1: FernIr.TwimlDefinition | undefined,
+    twiml2: FernIr.TwimlDefinition | undefined
+): FernIr.TwimlDefinition | undefined {
+    if (twiml1 == null || twiml2 == null) {
+        return twiml1 ?? twiml2;
+    }
+    return {
+        namespaces: [...twiml1.namespaces, ...twiml2.namespaces],
+        examples: [...twiml1.examples, ...twiml2.examples]
     };
 }
 

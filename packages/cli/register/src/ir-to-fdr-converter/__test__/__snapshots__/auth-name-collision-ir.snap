@@ -447,6 +447,7 @@
   "sourceConfig": undefined,
   "specVersion": undefined,
   "subpackages": {},
+  "twiml": undefined,
   "types": {},
   "variables": [],
   "webhookGroups": {},

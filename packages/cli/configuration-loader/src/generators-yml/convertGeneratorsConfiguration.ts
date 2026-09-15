@@ -529,6 +529,19 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: apiSettings
             };
+        } else if (generatorsYml.isTwimlSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "twiml",
+                    path: spec.twiml,
+                    examples: spec.examples
+                },
+                origin: undefined,
+                overrides: undefined,
+                overlays: undefined,
+                audiences: [],
+                settings: apiSettings
+            };
         } else {
             continue;
         }

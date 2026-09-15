@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `twiml` spec type to `generators.yml` (`api.specs[].twiml` with an optional `examples`
+    directory). TwiML JSON tag definitions and XML example documents are validated and converted
+    into the new `twiml` section of the IR so generators can emit TwiML builder classes and snippets.
+  type: feat

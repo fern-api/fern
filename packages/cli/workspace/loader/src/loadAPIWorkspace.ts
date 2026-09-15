@@ -163,6 +163,62 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
+        if (definition.schema.type === "twiml") {
+            const absoluteTwimlPath = [definition.schema.path, definition.schema.examples].find(
+                (filepath) => filepath != null && path.isAbsolute(filepath)
+            );
+            if (absoluteTwimlPath != null) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                            filepath: absoluteTwimlPath
+                        }
+                    }
+                };
+            }
+            const relativeFilepathToTwiml = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToTwiml = join(absolutePathToWorkspace, relativeFilepathToTwiml);
+            if (!(await doesPathExist(absoluteFilepathToTwiml))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [relativeFilepathToTwiml]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            const relativeFilepathToTwimlExamples =
+                definition.schema.examples != null ? RelativeFilePath.of(definition.schema.examples) : undefined;
+            const absoluteFilepathToTwimlExamples =
+                relativeFilepathToTwimlExamples != null
+                    ? join(absolutePathToWorkspace, relativeFilepathToTwimlExamples)
+                    : undefined;
+            if (
+                relativeFilepathToTwimlExamples != null &&
+                absoluteFilepathToTwimlExamples != null &&
+                !(await doesPathExist(absoluteFilepathToTwimlExamples))
+            ) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [relativeFilepathToTwimlExamples]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            specs.push({
+                type: "twiml",
+                absoluteFilepath: absoluteFilepathToTwiml,
+                absoluteFilepathToOverrides: undefined,
+                absoluteFilepathToExamples: absoluteFilepathToTwimlExamples
+            });
+            continue;
+        }
+
         // Reject user-specified absolute paths (only allow absolute paths from git source resolution)
         if (path.isAbsolute(definition.schema.path) && !definition.resolvedAbsolutePath) {
             return {
@@ -355,7 +411,7 @@ export async function loadAPIWorkspace({
             didSucceed: true as const,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
-                    if (spec.type === "openrpc") {
+                    if (spec.type === "openrpc" || spec.type === "twiml") {
                         return false;
                     }
                     if (spec.type === "protobuf") {

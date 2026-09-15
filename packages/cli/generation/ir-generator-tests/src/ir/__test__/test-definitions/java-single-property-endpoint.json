@@ -518,6 +518,7 @@
         "smartCasing": true,
         "smartCasingDigitWordBoundary": null
     },
+    "twiml": null,
     "subpackages": {
         "subpackage_single-property": {
             "name": "single-property",

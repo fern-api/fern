@@ -1,0 +1,11 @@
+{
+    "class_name": "redirect",
+    "tag_name": "redirect",
+    "docstring": "<Redirect> without attributes",
+    "body": {
+        "url": {
+            "type": "url",
+            "docstring": "Redirect URL"
+        }
+    }
+}

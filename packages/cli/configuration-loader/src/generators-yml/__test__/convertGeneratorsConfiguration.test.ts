@@ -635,6 +635,40 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.api.definitions[2]?.settings?.shouldUseIdiomaticRequestNames).toBe(true);
         });
 
+        it("twiml specs are converted with optional examples", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [
+                            { openapi: "openapi/twilio_api_v2010.json" },
+                            { twiml: "../twiml", examples: "../twiml/examples" },
+                            { twiml: "../twiml-no-examples" }
+                        ]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions.map((definition) => definition.schema.type)).toEqual([
+                "oss",
+                "twiml",
+                "twiml"
+            ]);
+            expect(converted.api.definitions[1]?.schema).toEqual({
+                type: "twiml",
+                path: "../twiml",
+                examples: "../twiml/examples"
+            });
+            expect(converted.api.definitions[2]?.schema).toEqual({
+                type: "twiml",
+                path: "../twiml-no-examples",
+                examples: undefined
+            });
+        });
+
         it("OpenAPI-specific settings work alongside base settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({

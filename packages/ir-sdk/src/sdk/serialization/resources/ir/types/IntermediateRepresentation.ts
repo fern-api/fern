@@ -22,6 +22,7 @@ import { HttpPath } from "../../http/types/HttpPath.js";
 import { HttpService } from "../../http/types/HttpService.js";
 import { PathParameter } from "../../http/types/PathParameter.js";
 import { PublishingConfig } from "../../publish/types/PublishingConfig.js";
+import { TwimlDefinition } from "../../twiml/types/TwimlDefinition.js";
 import { TypeDeclaration } from "../../types/types/TypeDeclaration.js";
 import { VariableDeclaration } from "../../variables/types/VariableDeclaration.js";
 import { WebhookGroup } from "../../webhooks/types/WebhookGroup.js";
@@ -75,6 +76,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     generationMetadata: GenerationMetadata.optional(),
     apiPlayground: core.serialization.boolean().optional(),
     casingsConfig: CasingsConfig.optional(),
+    twiml: TwimlDefinition.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -113,5 +115,6 @@ export declare namespace IntermediateRepresentation {
         generationMetadata?: GenerationMetadata.Raw | null;
         apiPlayground?: boolean | null;
         casingsConfig?: CasingsConfig.Raw | null;
+        twiml?: TwimlDefinition.Raw | null;
     }
 }

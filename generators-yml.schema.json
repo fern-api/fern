@@ -3308,6 +3308,31 @@
       ],
       "additionalProperties": false
     },
+    "generators.TwimlSpecSchema": {
+      "type": "object",
+      "properties": {
+        "twiml": {
+          "type": "string",
+          "description": "Path to the directory containing the TwiML definitions."
+        },
+        "examples": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Path to a directory of `.xml` example documents rendered as code snippets."
+        }
+      },
+      "required": [
+        "twiml"
+      ],
+      "additionalProperties": false,
+      "description": "A directory of TwiML tag definitions (one JSON file per tag, grouped by\nnamespace such as `voice/`, `messaging/`, `fax/`). Generators emit an XML\nbuilder library from it instead of an HTTP client."
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -3324,6 +3349,9 @@
         },
         {
           "$ref": "#/definitions/generators.GraphQLSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.TwimlSpecSchema"
         }
       ]
     },

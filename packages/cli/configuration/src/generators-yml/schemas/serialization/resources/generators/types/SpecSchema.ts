@@ -8,6 +8,7 @@ import { GraphQlSpecSchema } from "./GraphQlSpecSchema.js";
 import { OpenApiSpecSchema } from "./OpenApiSpecSchema.js";
 import { OpenRpcSpecSchema } from "./OpenRpcSpecSchema.js";
 import { ProtobufSpecSchema } from "./ProtobufSpecSchema.js";
+import { TwimlSpecSchema } from "./TwimlSpecSchema.js";
 
 export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, GeneratorsYml.SpecSchema> =
     core.serialization.undiscriminatedUnion([
@@ -16,6 +17,7 @@ export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, G
         ProtobufSpecSchema,
         OpenRpcSpecSchema,
         GraphQlSpecSchema,
+        TwimlSpecSchema,
     ]);
 
 export declare namespace SpecSchema {
@@ -24,5 +26,6 @@ export declare namespace SpecSchema {
         | AsyncApiSpecSchema.Raw
         | ProtobufSpecSchema.Raw
         | OpenRpcSpecSchema.Raw
-        | GraphQlSpecSchema.Raw;
+        | GraphQlSpecSchema.Raw
+        | TwimlSpecSchema.Raw;
 }

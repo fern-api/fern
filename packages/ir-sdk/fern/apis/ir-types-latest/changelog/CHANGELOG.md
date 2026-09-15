@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.26.0] - 2026-09-14
+
+- Add `IntermediateRepresentation.twiml` (optional `TwimlDefinition`, new `twiml.yml`): a
+  language-neutral description of an XML builder library (TwiML) as a graph of tags with
+  attributes, text bodies, tag-scoped enums and allowed children, plus validated example
+  documents (`TwimlExample`). Populated from the new `twiml` spec type in `generators.yml`.
+
 ## [v67.25.0] - 2026-09-14
 
 - Add `Encoding.xml` (`XmlEncoding`: `name`, optional `namespace`/`prefix`) on `TypeDeclaration`

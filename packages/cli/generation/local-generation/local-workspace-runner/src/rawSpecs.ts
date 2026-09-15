@@ -9,7 +9,8 @@ import {
     type RawSpecImportSettings,
     type RawSpecsManifest,
     type RawSpecsManifestEntry,
-    Spec
+    Spec,
+    type TwimlSpec
 } from "@fern-api/api-workspace-commons";
 import { type Audiences } from "@fern-api/configuration";
 import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
@@ -113,6 +114,8 @@ async function resolveAndWriteSpec({
             return copyProtobuf({ spec, hostOutputDir, containerBaseDir, index });
         case "graphql":
             return copyGraphQL({ spec, hostOutputDir, containerBaseDir, index });
+        case "twiml":
+            return copyTwiml({ spec, hostOutputDir, containerBaseDir, index });
         default:
             assertNever(spec);
     }
@@ -327,6 +330,38 @@ async function copyGraphQL({
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
+    }
+
+    return entry;
+}
+
+/**
+ * TwiML definitions are a directory of JSON files (one per tag, plus one per namespace root) with an
+ * optional sibling directory of XML examples, so both are copied recursively rather than bundled.
+ */
+async function copyTwiml({
+    spec,
+    hostOutputDir,
+    containerBaseDir,
+    index
+}: {
+    spec: TwimlSpec;
+    hostOutputDir: string;
+    containerBaseDir: string;
+    index: number;
+}): Promise<RawSpecsManifestEntry> {
+    const dirname = `twiml${index}`;
+    await cp(spec.absoluteFilepath, path.join(hostOutputDir, dirname), { recursive: true });
+
+    const entry: RawSpecsManifestEntry = {
+        type: "twiml",
+        specPath: toContainerPath(dirname, containerBaseDir)
+    };
+
+    if (spec.absoluteFilepathToExamples != null) {
+        const examplesDirname = `${dirname}-examples`;
+        await cp(spec.absoluteFilepathToExamples, path.join(hostOutputDir, examplesDirname), { recursive: true });
+        entry.examplesPath = toContainerPath(examplesDirname, containerBaseDir);
     }
 
     return entry;
@@ -738,7 +773,10 @@ async function copyMaterializedSpec({
             ? {}
             : {
                   overridePaths: materialized.manifestEntry.overridePaths.map(replaceContainerPathPrefix)
-              })
+              }),
+        ...(materialized.manifestEntry.examplesPath == null
+            ? {}
+            : { examplesPath: replaceContainerPathPrefix(materialized.manifestEntry.examplesPath) })
     };
 
     function replacePrefix(value: string): string {
@@ -763,6 +801,7 @@ const SUPPORTED_MATERIALIZED_MANIFEST_ENTRY_KEYS = new Set<string>([
     "type",
     "specPath",
     "overridePaths",
+    "examplesPath",
     "namespace",
     "apiImportSettings"
 ] satisfies Array<keyof RawSpecsManifestEntry>);
@@ -954,6 +993,12 @@ function createSpecDeduplicationKey(spec: Spec): string {
                 overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
                 examples: spec.absoluteFilepathToExamples,
                 namespace: spec.namespace
+            });
+        case "twiml":
+            return stableStringify({
+                type: spec.type,
+                path: spec.absoluteFilepath,
+                examples: spec.absoluteFilepathToExamples
             });
         default:
             assertNever(spec);

@@ -20,7 +20,7 @@ export {
 } from "./global-parameters/resolveGlobalParameterApplicability.js";
 export { hashJSON } from "./hashJSON.js";
 export { IntermediateRepresentationChangeDetector } from "./IntermediateRepresentationChangeDetector.js";
-export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentation.js";
+export { mergeIntermediateRepresentation, mergeTwimlDefinitions } from "./mergeIntermediateRepresentation.js";
 export { IdGenerator } from "./utils/IdGenerator.js";
 export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPayloadSchema.js";
 export type { NameInput } from "./utils/namesUtils.js";
