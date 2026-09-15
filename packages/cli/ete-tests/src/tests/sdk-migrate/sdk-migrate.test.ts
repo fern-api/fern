@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, readFile } from "fs/promises";
+import { cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
@@ -54,6 +54,16 @@ describe("fern sdk migrate", () => {
             schemaVersion: "sdk-config/v1",
             source: { specs: [{ path: "./openapi.yml" }] }
         });
+        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+            {
+                navigation: [
+                    {
+                        api: "API reference",
+                        specs: [{ type: "openapi", path: "./openapi.yml" }]
+                    }
+                ]
+            }
+        );
         expect(await readFile(generators, "utf-8")).toBe(originalGenerators);
 
         const legacyGeneration = await runFernCli(
@@ -69,6 +79,36 @@ describe("fern sdk migrate", () => {
         const generationOutput = `${legacyGeneration.stdout}\n${legacyGeneration.stderr}`;
         expect(generationOutput).toContain("'missing' is not a valid group or alias");
         expect(generationOutput).not.toContain("SDK Config");
+        await temporaryDirectory.cleanup();
+    });
+
+    it("preserves AsyncAPI source types in sdk-config.yml and docs.yml", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+        const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
+        const generators = await readFile(generatorsPath, "utf-8");
+        await writeFile(generatorsPath, generators.replace("- openapi: ./openapi.yml", "- asyncapi: ./asyncapi.yml"));
+
+        const result = await runFernCli(["sdk", "migrate", "--api", "default", "--output", "-"], {
+            cwd: directory,
+            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            signal
+        });
+
+        expect(yaml.load(result.stdout)).toMatchObject({
+            source: { specs: [{ type: "asyncapi", path: "./fern/asyncapi.yml" }] }
+        });
+        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+            {
+                navigation: [
+                    {
+                        api: "API reference",
+                        specs: [{ type: "asyncapi", path: "./asyncapi.yml" }]
+                    }
+                ]
+            }
+        );
         await temporaryDirectory.cleanup();
     });
 

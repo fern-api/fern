@@ -146,6 +146,7 @@ export interface ProtoAPIDefinitionSchema {
 export interface OSSAPIDefinitionSchema {
     type: "oss";
     path: string;
+    sourceType?: "openapi" | "asyncapi";
 }
 
 export interface OpenRPCDefinitionSchema {

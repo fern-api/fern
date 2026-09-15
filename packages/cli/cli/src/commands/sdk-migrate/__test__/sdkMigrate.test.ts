@@ -257,6 +257,35 @@ describe("SDK Config migration", () => {
         expect(resolveMigrationPathParameterStyle(specs)).toBe("wrapped");
     });
 
+    it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
+        const absoluteFilepath = AbsoluteFilePath.of("/tmp/mock-clone/openapi/service.yml");
+        const configuredDefinition = createConfiguredOpenApiDefinition("openapi/service.yml", false, false);
+        configuredDefinition.gitSource = {
+            repo: "https://github.com/acme/api-specs.git",
+            ref: "main",
+            path: "openapi/service.yml"
+        };
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [createWorkspaceOpenApiSpec("Payments", absoluteFilepath)],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: { Payments: [configuredDefinition] },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        expect(() =>
+            resolveMigrationSourceSpecs({
+                workspace,
+                fernWorkspace: {} as FernWorkspace,
+                generator: createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")
+            })
+        ).toThrow("cannot create durable local paths for git-backed API specification");
+    });
+
     it("rejects conflicting API-level path parameter behavior across source specs", () => {
         const inline = {
             ...createResolvedSourceSpec("inline", undefined),

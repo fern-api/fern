@@ -1,0 +1,21 @@
+asyncapi: 2.6.0
+info:
+  title: Migration Events API
+  version: 1.0.0
+servers:
+  production:
+    url: wss://api.example.com/events
+    protocol: wss
+channels:
+  users/signed-up:
+    subscribe:
+      operationId: receiveUserSignedUp
+      message:
+        name: UserSignedUp
+        payload:
+          type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
