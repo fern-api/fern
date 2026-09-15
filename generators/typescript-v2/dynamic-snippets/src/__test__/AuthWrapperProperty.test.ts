@@ -8,6 +8,9 @@ const DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY = AbsoluteFilePath.of(
     `${__dirname}/../../../../../packages/cli/generation/ir-generator-tests/src/dynamic-snippets/__test__/test-definitions`
 );
 const IR_FILEPATH = AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "exhaustive.json"));
+const REAL_FIXTURE_IR_FILEPATH = AbsoluteFilePath.of(
+    join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "ts-flatten-request-any-auth.json")
+);
 
 const REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
     endpoint: {
@@ -104,5 +107,37 @@ describe("auth wrapperProperty", () => {
 
         expect(response.snippet).toContain("token:");
         expect(response.snippet).not.toContain("bearerAuth: {");
+    });
+
+    it("nests auth constructor options for a real multi-auth fixture", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({})
+        });
+
+        const response = await generator.generate({
+            endpoint: {
+                method: "PUT",
+                path: "/users/{id}"
+            },
+            baseURL: undefined,
+            environment: undefined,
+            auth: {
+                type: "bearer",
+                token: "<token>"
+            },
+            pathParameters: {
+                id: "path-id"
+            },
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: {
+                id: "body-id",
+                name: "Ada"
+            }
+        });
+
+        expect(response.snippet).toContain("bearerAuth: {");
+        expect(response.snippet).toContain('token: "<token>"');
     });
 });

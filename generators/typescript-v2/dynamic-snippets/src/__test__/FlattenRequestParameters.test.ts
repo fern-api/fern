@@ -8,6 +8,9 @@ const DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY = AbsoluteFilePath.of(
     `${__dirname}/../../../../../packages/cli/generation/ir-generator-tests/src/dynamic-snippets/__test__/test-definitions`
 );
 const IR_FILEPATH = AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "exhaustive.json"));
+const REAL_FIXTURE_IR_FILEPATH = AbsoluteFilePath.of(
+    join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "ts-flatten-request-any-auth.json")
+);
 
 const STRING_NAME: FernIr.dynamic.Name = {
     originalName: "string",
@@ -56,6 +59,28 @@ const REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
     headers: undefined,
     requestBody: {
         string: "value"
+    }
+};
+
+const REAL_FIXTURE_REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
+    endpoint: {
+        method: "PUT",
+        path: "/users/{id}"
+    },
+    baseURL: undefined,
+    environment: undefined,
+    auth: {
+        type: "bearer",
+        token: "<token>"
+    },
+    pathParameters: {
+        id: "path-id"
+    },
+    queryParameters: undefined,
+    headers: undefined,
+    requestBody: {
+        id: "body-id",
+        name: "Ada"
     }
 };
 
@@ -148,5 +173,63 @@ describe("flattenRequestParameters", () => {
 
         expect(response.snippet.match(/\bstring:/g)?.length).toBe(1);
         expect(response.snippet).toContain('string: "body"');
+    });
+
+    it("flattens a real referenced object body and drops the colliding request path parameter", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenRequestParameters: true
+                }
+            })
+        });
+
+        const response = await generator.generate(REAL_FIXTURE_REQUEST);
+
+        expect(response.snippet).toContain('id: "body-id"');
+        expect(response.snippet).toContain('name: "Ada"');
+        expect(response.snippet).not.toContain("body:");
+        expect(response.snippet).not.toContain('"path-id"');
+        expect(response.snippet.match(/\bid:/g)?.length).toBe(1);
+    });
+
+    it("preserves the body and request path parameter when flattening is disabled", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenRequestParameters: false
+                }
+            })
+        });
+
+        const response = await generator.generate(REAL_FIXTURE_REQUEST);
+
+        expect(response.snippet).toContain('id: "path-id"');
+        expect(response.snippet).toContain("body: {");
+    });
+
+    it("emits endpoint-level path parameters positionally for a real referenced body", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenRequestParameters: true
+                }
+            })
+        });
+
+        const response = await generator.generate({
+            ...REAL_FIXTURE_REQUEST,
+            endpoint: {
+                method: "PUT",
+                path: "/users/{id}/profile"
+            }
+        });
+
+        expect(response.snippet).toContain('updateUserProfile("path-id", {');
+        expect(response.snippet).toContain('id: "body-id"');
+        expect(response.snippet).toContain('name: "Ada"');
     });
 });
