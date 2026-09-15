@@ -6,6 +6,7 @@ export interface CliSeedWorkspaceConfiguration {
     publishGa: FernSeedConfig.PublishCommand;
     publishRc: FernSeedConfig.PublishCommand;
     publishDev: FernSeedConfig.PublishCommand;
+    publishBeta: FernSeedConfig.PublishCommand;
     /** The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object. */
     changelogLocation?: string | undefined;
 }
