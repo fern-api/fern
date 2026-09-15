@@ -999,6 +999,7 @@ function addPublishCommands(cli: Argv) {
                             default: false,
                             demandOption: false
                         })
+                        .conflicts("beta", "dev")
                         .check((argv) => {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided
