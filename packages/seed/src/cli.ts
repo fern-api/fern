@@ -1058,9 +1058,9 @@ function addPublishCommands(cli: Argv) {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
-                        .check((argv) => {
+                        .check((argv) => { 
                             return (
-                                // Check: Either version or changelog and previousChangelog must be provided
+                                // Check: Either version or changelog and previousChangelog must be provided-
                                 argv.ver || (argv.changelog && argv.previousChangelog)
                             );
                         }),
