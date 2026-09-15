@@ -11,8 +11,8 @@ import { createHash } from "crypto";
 import FormData from "form-data";
 import path from "path";
 import { gunzipSync } from "zlib";
-import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 import { type PublishTarget } from "./publishTarget.js";
+import { downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -1143,10 +1143,7 @@ async function executeFernSdkGenApiBuild(
     }
 }
 
-function sanitizeFernSdkGenApiSubmissionError(
-    error: unknown,
-    sensitiveValues: string[]
-): FernSdkGenApiSubmissionError {
+function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: string[]): FernSdkGenApiSubmissionError {
     if (!(error instanceof AxiosError)) {
         return new FernSdkGenApiSubmissionError(
             redactSensitiveValues(error instanceof Error ? error.message : "Unknown submission error", sensitiveValues),
