@@ -1143,11 +1143,18 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     sources.dedup();
     let mut row = serde_json::Map::new();
     row.insert("profile".into(), "[env]".into());
-    row.insert("active".into(), "*".into());
+    // Deliberately *not* marked active. `ACTIVE` means "this is the selected
+    // profile", and this row is not a profile — it is what currently supplies
+    // credentials. Marking both put two `*` in one column and left the reader
+    // unable to say which was in effect, when the honest answer is that both
+    // are: the active profile still provides region, parameters, retries and
+    // base URL while these variables provide the credential. The note carries
+    // that, and `auth status` shows it per scheme.
+    row.insert("active".into(), "".into());
     row.insert("credential".into(), sources.join(", ").into());
     row.insert(
         "note".into(),
-        "environment variables take precedence over every profile".into(),
+        "supplies the credential; overrides the active profile\'s stored one".into(),
     );
     Some(serde_json::Value::Object(row))
 }

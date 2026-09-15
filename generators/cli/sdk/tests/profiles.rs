@@ -1057,3 +1057,33 @@ fn a_child_inherits_the_parents_retries() {
         "the child should inherit it: {listed}",
     );
 }
+
+#[test]
+fn exactly_one_row_is_marked_active_even_when_env_credentials_are_set() {
+    // `ACTIVE` answers "which profile is selected". The `[env]` row is not a
+    // profile, so marking it too put two `*` in one column and left the reader
+    // unable to say which was in effect — when the honest answer is that both
+    // contribute: the profile supplies region / parameters / retries, the env
+    // vars supply the credential. The note carries that instead.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod"]);
+    sandbox.run(&["profiles", "create", "staging", "--use"]);
+
+    let listed = stdout(&sandbox.run_with_env(
+        &["profiles", "list", "--format", "json"],
+        &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
+    ));
+    let rows: serde_json::Value = serde_json::from_str(&listed).expect("json");
+    let rows = rows.as_array().expect("array");
+
+    // The pseudo-row is present...
+    assert!(
+        rows.iter().any(|r| r["profile"] == "[env]"),
+        "the [env] row must still appear: {listed}",
+    );
+    // ...and exactly one row claims to be active.
+    let active = rows.iter().filter(|r| r["active"] == "*").count();
+    assert_eq!(active, 1, "exactly one ACTIVE marker expected: {listed}");
+    let marked = rows.iter().find(|r| r["active"] == "*").expect("one active");
+    assert_eq!(marked["profile"], "staging", "the selected profile is the active one");
+}
