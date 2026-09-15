@@ -951,3 +951,109 @@ fn the_profiles_file_lives_beside_the_other_credential_state() {
         Some("openapi-fixture"),
     );
 }
+
+#[test]
+fn a_child_given_its_own_credential_does_not_overwrite_the_parents() {
+    // `create kid --parent prod --from-env` used to write the child's
+    // credential into the *parent's* keyring slot, because `resolve` fills an
+    // absent `credential` with the chain root's name. Two children then
+    // clobbered each other and the parent, and all three resolved to whichever
+    // was written last — silent corruption of a working profile.
+    let sandbox = Sandbox::new();
+    assert_ok(
+        &sandbox.run_with_env(
+            &["profiles", "create", "prod", "--from-env"],
+            &[("OPENAPI_FIXTURE_API_KEY", "parent-key")],
+        ),
+        "create parent",
+    );
+    assert_ok(
+        &sandbox.run_with_env(
+            &["profiles", "create", "kid", "--parent", "prod", "--from-env"],
+            &[("OPENAPI_FIXTURE_API_KEY", "child-key")],
+        ),
+        "create child with its own credential",
+    );
+
+    let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    assert!(
+        listed.contains("\"credential\": \"kid\""),
+        "a child handed its own credential must own its slot: {listed}",
+    );
+    assert!(
+        listed.contains("\"credential\": \"prod\""),
+        "the parent must keep its own slot: {listed}",
+    );
+}
+
+#[test]
+fn a_child_with_no_credential_of_its_own_still_inherits() {
+    // The inheritance path the fix must not break: nothing supplied, so the
+    // child shares the parent's slot. That is the whole point of `--parent`.
+    let sandbox = Sandbox::new();
+    assert_ok(
+        &sandbox.run_with_env(
+            &["profiles", "create", "prod", "--from-env"],
+            &[("OPENAPI_FIXTURE_API_KEY", "parent-key")],
+        ),
+        "create parent",
+    );
+    assert_ok(
+        &sandbox.run(&["profiles", "create", "kid", "--parent", "prod"]),
+        "create child with no credential",
+    );
+
+    let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    assert_eq!(
+        listed.matches("\"credential\": \"prod\"").count(),
+        2,
+        "both rows should point at the parent's slot: {listed}",
+    );
+}
+
+#[test]
+fn a_profile_can_set_retries_and_the_flag_and_env_outrank_it() {
+    // The requirement: a user with several profiles sets how many retries are
+    // allowed per profile. Precedence is the same chain every other profile
+    // field uses — flag > env > profile > whatever x-fern-retries declared.
+    let sandbox = Sandbox::new();
+    assert_ok(
+        &sandbox.run(&["profiles", "create", "flaky", "--retries", "7", "--use"]),
+        "create with --retries",
+    );
+
+    let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    assert!(listed.contains("\"retries\": 7"), "profile should carry it: {listed}");
+
+    // `profiles current` surfaces it too, so "what will this command do?" is answerable.
+    let current = stdout(&sandbox.run(&["profiles", "current", "--format", "json"]));
+    assert!(current.contains("\"retries\": 7"), "{current}");
+}
+
+#[test]
+fn retries_zero_is_distinct_from_unset() {
+    // `Some(0)` means "never retry in this profile" and must survive a
+    // round-trip rather than being dropped as a falsy value.
+    let sandbox = Sandbox::new();
+    assert_ok(
+        &sandbox.run(&["profiles", "create", "careful", "--retries", "0", "--use"]),
+        "create with --retries 0",
+    );
+    let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    assert!(listed.contains("\"retries\": 0"), "0 must persist: {listed}");
+}
+
+#[test]
+fn a_child_inherits_the_parents_retries() {
+    // Unlike `format`, retries describe the network the profile talks to,
+    // which a subaccount shares with its parent.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--retries", "6"]);
+    sandbox.run(&["profiles", "create", "sub", "--parent", "prod"]);
+    let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    assert_eq!(
+        listed.matches("\"retries\": 6").count(),
+        2,
+        "the child should inherit it: {listed}",
+    );
+}

@@ -289,6 +289,17 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
         // command that sends no request the only thing it could mean is the
         // profile's.
         .arg(
+            Arg::new("retries")
+                .long("retries")
+                .value_name("N")
+                .value_parser(clap::value_parser!(u32))
+                .help(
+                    "Additional retry attempts for requests made under this profile \
+                     (0 disables retries here). Overrides x-fern-retries; an explicit \
+                     --retries or <NAME>_RETRIES on the command still wins.",
+                ),
+        )
+        .arg(
             Arg::new("default-format")
                 .long("default-format")
                 .value_name("FORMAT")
@@ -408,6 +419,7 @@ fn create_owns_flag(kebab: &str) -> bool {
     matches!(
         kebab,
         "name" | "parent" | "set" | "server-var" | "base-url" | "default-format"
+            | "retries"
             | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env"
             | "force" | "use" | "help"
     ) || kebab == PROFILE_FLAG
@@ -594,6 +606,9 @@ fn handle_create(
         crate::output::reject_dangerous_chars(base_url, "--base-url")?;
         entry.base_url = Some(base_url.clone());
     }
+    if let Some(retries) = matches.get_one::<u32>("retries") {
+        entry.retries = Some(*retries);
+    }
     if let Some(format) = matches.get_one::<String>("default-format") {
         // Validated here rather than at read time: a profile that stores an
         // unknown format would fail every subsequent command with an error
@@ -644,6 +659,24 @@ fn handle_create(
             continue;
         }
         entry.server_variables.insert(variable.clone(), value.clone());
+    }
+
+    // Supplying a credential means this profile owns one, so it must not be
+    // written into the slot it would otherwise *inherit*.
+    //
+    // `resolve` fills an absent `credential` with the chain root's name, which
+    // is what makes `--parent` mean "same account, different context". But
+    // `create child --parent prod --with-token` then wrote the child's
+    // credential to `<scheme>#prod`, overwriting the parent's — so two
+    // children clobbered each other and the parent, and all three resolved to
+    // whichever was written last. Silent credential corruption.
+    //
+    // An explicit `--credential` still wins: sharing a slot deliberately is a
+    // supported thing to ask for.
+    if (matches.get_flag("with-token") || matches.get_flag("from-env"))
+        && matches.get_one::<String>("credential").is_none()
+    {
+        entry.credential = Some(name.clone());
     }
 
     // Resolve now, before writing, so a bad `--parent` (cycle, depth) is
@@ -919,6 +952,9 @@ fn handle_list<W: Write>(
             }
             if let Some(base_url) = &resolved.base_url {
                 row.insert("base_url".into(), base_url.clone().into());
+            }
+            if let Some(retries) = resolved.retries {
+                row.insert("retries".into(), retries.into());
             }
             if let Some(format) = &resolved.format {
                 row.insert("format".into(), format.clone().into());
@@ -1358,6 +1394,9 @@ fn handle_current<W: Write>(
             }
             if let Some(base_url) = &profile.base_url {
                 map.insert("base_url".into(), base_url.clone().into());
+            }
+            if let Some(retries) = profile.retries {
+                map.insert("retries".into(), retries.into());
             }
             if let Some(format) = &profile.format {
                 map.insert("format".into(), format.clone().into());

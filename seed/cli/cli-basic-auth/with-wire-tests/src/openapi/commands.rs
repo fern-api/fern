@@ -100,6 +100,7 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "page-delay",
     "no-pager",
     "no-extract",
+    "retries",
     "no-retry",
     "no-stream",
     "quiet",
@@ -722,6 +723,18 @@ fn build_resource_command(
                         "Disable x-fern-sdk-return-value extraction and print the full response body",
                     )
                     .action(clap::ArgAction::SetTrue)
+                    .help_heading(HELP_HEADING_REQUEST),
+            )
+            .arg(
+                Arg::new("retries")
+                    .long("retries")
+                    .value_name("N")
+                    .value_parser(clap::value_parser!(u32))
+                    .help(
+                        "Retry a failed request up to N additional times, overriding \
+                         x-fern-retries on this operation. 0 is the same as --no-retry. \
+                         Falls back to <NAME>_RETRIES, then the active profile.",
+                    )
                     .help_heading(HELP_HEADING_REQUEST),
             )
             .arg(

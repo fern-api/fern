@@ -79,6 +79,10 @@ pub struct ProfileEntry {
     /// Explicit base-URL override, for specs that declare no server
     /// variables to template.
     pub base_url: Option<String>,
+    /// Default `--retries` for this profile: additional attempts after the
+    /// first. `Some(0)` means "never retry in this profile", which is a
+    /// meaningful setting and therefore distinct from `None`.
+    pub retries: Option<u32>,
     /// Default `--format` for this profile.
     pub format: Option<String>,
     /// Default values for named operation parameters, keyed by the wire name
@@ -164,6 +168,7 @@ impl ProfileStore {
             credential: str_field(table, "credential"),
             oauth_client_id: str_field(table, "oauth_client_id"),
             base_url: str_field(table, "base_url"),
+            retries: u32_field(table, "retries"),
             format: str_field(table, "format"),
             parameters: map_field(table, "parameters"),
             server_variables: map_field(table, "server_variables"),
@@ -204,6 +209,7 @@ impl ProfileStore {
         set_str(table, "credential", entry.credential.as_deref());
         set_str(table, "oauth_client_id", entry.oauth_client_id.as_deref());
         set_str(table, "base_url", entry.base_url.as_deref());
+        set_u32(table, "retries", entry.retries);
         set_str(table, "format", entry.format.as_deref());
         set_map(table, "parameters", &entry.parameters);
         set_map(table, "server_variables", &entry.server_variables);
@@ -282,6 +288,23 @@ fn str_field(table: &dyn toml_edit::TableLike, key: &str) -> Option<String> {
     table.get(key)?.as_str().map(str::to_string)
 }
 
+/// Read a non-negative integer. A negative or non-integer value is dropped
+/// with a warning rather than clamped: `retries = -1` is a mistake, and
+/// silently reading it as `0` would turn retries off without saying so.
+fn u32_field(table: &dyn toml_edit::TableLike, key: &str) -> Option<u32> {
+    let value = table.get(key)?;
+    match value.as_integer() {
+        Some(n) if (0..=i64::from(u32::MAX)).contains(&n) => Some(n as u32),
+        _ => {
+            tracing::warn!(
+                key,
+                "profiles.toml: expected a non-negative integer; ignoring this key",
+            );
+            None
+        }
+    }
+}
+
 /// Read a sub-table of string values. Non-string values are skipped with a
 /// warning: a `parameters` entry that is a table or an array cannot become a
 /// clap default, and dropping it silently would look like the profile simply
@@ -302,6 +325,15 @@ fn map_field(table: &dyn toml_edit::TableLike, key: &str) -> BTreeMap<String, St
         }
     }
     out
+}
+
+fn set_u32(table: &mut Table, key: &str, value: Option<u32>) {
+    match value {
+        Some(v) => table[key] = toml_edit::value(i64::from(v)),
+        None => {
+            table.remove(key);
+        }
+    }
 }
 
 fn set_str(table: &mut Table, key: &str, value: Option<&str>) {
@@ -329,7 +361,7 @@ fn set_map(table: &mut Table, key: &str, values: &BTreeMap<String, String>) {
 
 /// Resolve `name` against the store, folding in its `parent` chain.
 ///
-/// Inherited: `credential`, `oauth_client_id`, `base_url`, `server_variables`,
+/// Inherited: `credential`, `oauth_client_id`, `base_url`, `retries`, `server_variables`,
 /// and `parameters` (per key, child wins). **Not** inherited: `format`. A
 /// subaccount profile borrowing its parent's credentials is the point of the
 /// feature; silently borrowing its rendering is not — `--format` belongs to
@@ -392,6 +424,9 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
         if entry.base_url.is_some() {
             resolved.base_url = entry.base_url.clone();
         }
+        if entry.retries.is_some() {
+            resolved.retries = entry.retries;
+        }
         resolved.parameters.extend(
             entry
                 .parameters
@@ -438,6 +473,11 @@ pub struct ResolvedProfile {
     pub credential: Option<String>,
     pub oauth_client_id: Option<String>,
     pub base_url: Option<String>,
+    /// Additional retry attempts for this profile. Inherited, unlike
+    /// `format`: retries describe the network the profile talks to, which a
+    /// subaccount shares with its parent, whereas output shape belongs to the
+    /// invocation.
+    pub retries: Option<u32>,
     pub format: Option<String>,
     pub parameters: BTreeMap<String, String>,
     pub server_variables: BTreeMap<String, String>,
@@ -656,6 +696,7 @@ AccountSid = "AC99"
             credential: Some("prod".to_string()),
             oauth_client_id: Some("abc123".to_string()),
             base_url: Some("https://api.au1.example.com".to_string()),
+            retries: None,
             format: Some("json".to_string()),
             parameters: [("AccountSid".to_string(), "AC11".to_string())].into(),
             server_variables: [

@@ -198,6 +198,12 @@ pub fn format() -> Option<String> {
 /// `profiles.toml` and `profiles list` can show it without unlocking the
 /// keychain; the client *secret* is in the keyring under
 /// [`keyring_account`].
+/// The profile's `--retries` value: additional attempts after the first.
+/// `Some(0)` is meaningful ("never retry here") and distinct from `None`.
+pub fn retries() -> Option<u32> {
+    active()?.retries
+}
+
 pub fn oauth_client_id() -> Option<String> {
     active()?.oauth_client_id.clone()
 }
