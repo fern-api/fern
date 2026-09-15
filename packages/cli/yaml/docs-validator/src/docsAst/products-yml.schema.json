@@ -527,6 +527,67 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiSpecType": {
+      "type": "string",
+      "enum": [
+        "openapi",
+        "asyncapi",
+        "graphql"
+      ]
+    },
+    "docs.ApiSpecConfiguration": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/docs.ApiSpecType"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the API specification, relative to docs.yml."
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overlays": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Path to an OpenAPI Overlay document, relative to docs.yml."
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Paths to Fern override documents, relative to docs.yml."
+        }
+      },
+      "required": [
+        "type",
+        "path"
+      ],
+      "additionalProperties": false,
+      "description": "A source API specification referenced directly by docs.yml."
+    },
     "docs.AudienceId": {
       "type": "string",
       "description": "ID of audience which is used to filter the API spec."
@@ -1379,6 +1440,20 @@
             }
           ],
           "description": "Name of API that we are referencing"
+        },
+        "specs": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecConfiguration"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "API specifications to load directly. When provided, these take precedence over the API workspace referenced by `api-name`."
         },
         "openrpc": {
           "oneOf": [

@@ -16,6 +16,8 @@ export * from "./ApiReferenceOperationConfiguration.js";
 export * from "./ApiReferencePackageConfiguration.js";
 export * from "./ApiReferencePackageConfigurationWithOptions.js";
 export * from "./ApiReferenceSectionConfiguration.js";
+export * from "./ApiSpecConfiguration.js";
+export * from "./ApiSpecType.js";
 export * from "./Audience.js";
 export * from "./AudienceId.js";
 export * from "./Availability.js";
