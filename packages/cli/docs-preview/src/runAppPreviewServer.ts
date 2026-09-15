@@ -1,27 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
-import {
-    applyTranslatedApiTitlesToNavTree,
-    applyTranslatedFrontmatterToNavTree,
-    applyTranslatedNavigationOverlays,
-    findIncompatibleTranslatedApiIds,
-    getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    stripMdxComments,
-    transformAtPrefixImports,
-    wrapWithHttps
-} from "@fern-api/docs-resolver";
-import { APIV1Read, DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import {
-    AbsoluteFilePath,
-    dirname,
-    doesPathExist,
-    listFiles,
-    RelativeFilePath,
-    relative,
-    resolve
-} from "@fern-api/fs-utils";
+import { wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -31,12 +11,13 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm } from "fs/promises";
+import { rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
+import { computeTranslatedDefinitions } from "./computeTranslatedDefinitions.js";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
@@ -45,6 +26,7 @@ import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 import { GenerationFileManager, isContentOnlyEdit } from "./reloadUtils.js";
+import { SnippetDependencyTracker } from "./SnippetDependencyTracker.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -218,250 +200,6 @@ class SlugChangeTracker {
             // Initialize empty map, will be populated when navigation is ready during change detection
             this.pageSlugMap = new Map();
         }
-    }
-}
-
-/**
- * Dependency tracking system for markdown snippets
- */
-class SnippetDependencyTracker {
-    // Map: snippet file path -> Set of page files that reference it
-    private snippetToPages = new Map<string, Set<string>>();
-    // Map: page file path -> Set of snippet files it references
-    private pageToSnippets = new Map<string, Set<string>>();
-    // Whether a full scan has populated the maps at least once.
-    private hasBuiltInitialMap = false;
-
-    constructor(private context: TaskContext) {}
-
-    /**
-     * Extract referenced markdown and code files from a markdown file
-     */
-    private extractReferences(
-        markdown: string,
-        markdownFilePath: AbsoluteFilePath,
-        fernFolderPath: AbsoluteFilePath
-    ): Set<string> {
-        const references = new Set<string>();
-
-        // Extract markdown references: <Markdown src="path/to/file.md" />
-        const markdownRegex = /<Markdown\s+src={?['"]([^'"]+\.mdx?)['"](?! \+)}?\s*\/>/g;
-        let match;
-        while ((match = markdownRegex.exec(markdown)) !== null) {
-            const src = match[1];
-            if (src) {
-                const referencedFilePath = resolve(
-                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
-                );
-                references.add(referencedFilePath);
-            }
-        }
-
-        // Extract code references: <Code src="path/to/file.js" />
-        const codeRegex = /<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
-        while ((match = codeRegex.exec(markdown)) !== null) {
-            const src = match[1];
-            if (src) {
-                const referencedFilePath = resolve(
-                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
-                );
-                references.add(referencedFilePath);
-            }
-        }
-
-        return references;
-    }
-
-    /**
-     * Scan all pages in the project and build dependency maps
-     */
-    async buildDependencyMap(project: Project): Promise<void> {
-        this.snippetToPages.clear();
-        this.pageToSnippets.clear();
-
-        const docsWorkspace = project.docsWorkspaces;
-        if (!docsWorkspace) {
-            return;
-        }
-
-        this.context.logger.debug("Building snippet dependency map...");
-
-        try {
-            // Find all markdown files in the docs workspace directory
-            const markdownFiles = await this.findMarkdownFiles(docsWorkspace.absoluteFilePath);
-
-            for (const markdownFile of markdownFiles) {
-                try {
-                    const content = await readFile(markdownFile, "utf-8");
-                    const referencedFiles = this.extractReferences(
-                        content,
-                        markdownFile,
-                        docsWorkspace.absoluteFilePath
-                    );
-
-                    // Update page -> snippets (forward) mapping
-                    this.pageToSnippets.set(markdownFile, referencedFiles);
-                } catch (error) {
-                    this.context.logger.debug(`Failed to read markdown file ${markdownFile}: ${error}`);
-                }
-            }
-
-            // Derive the snippet -> pages (reverse) mapping from the forward mapping.
-            this.rebuildReverseMap();
-            this.hasBuiltInitialMap = true;
-
-            this.context.logger.debug(
-                `Built dependency map: ${this.snippetToPages.size} snippets, ${this.pageToSnippets.size} pages`
-            );
-        } catch (error) {
-            this.context.logger.debug(`Failed to build dependency map: ${error}`);
-        }
-    }
-
-    /**
-     * Incrementally updates the dependency maps for a set of changed markdown files,
-     * avoiding a full re-scan of every page in the workspace.
-     *
-     * Only content-only (`.md`/`.mdx`) reloads take this path. For each changed file we
-     * re-read it and recompute its outgoing references (the page -> snippets forward
-     * edge); deleted files are dropped. We then rebuild the snippet -> pages reverse
-     * map from the forward map in memory (no disk I/O), so the reverse map is always
-     * fully consistent with the forward map and can never accumulate stale edges.
-     *
-     * Reloads never overlap (the watcher handler serializes them behind `isReloading`),
-     * so these mutations are not subject to concurrent access. Falls back to a full
-     * scan if an initial map has not been built yet.
-     */
-    async updateDependencyMapForFiles(changedFiles: AbsoluteFilePath[], project: Project): Promise<void> {
-        const docsWorkspace = project.docsWorkspaces;
-        if (!docsWorkspace) {
-            return;
-        }
-
-        if (!this.hasBuiltInitialMap) {
-            await this.buildDependencyMap(project);
-            return;
-        }
-
-        for (const changedFile of changedFiles) {
-            const lower = changedFile.toLowerCase();
-            if (!lower.endsWith(".md") && !lower.endsWith(".mdx")) {
-                // Non-markdown files are never keys in the forward map. Changing a
-                // referenced snippet's *content* does not alter the dependency graph
-                // (the reverse edge keyed by the snippet path is unaffected), so there
-                // is nothing to update here.
-                continue;
-            }
-
-            if (!(await doesPathExist(changedFile))) {
-                // Deleted page: drop its forward edge. The reverse map is rebuilt below.
-                this.pageToSnippets.delete(changedFile);
-                continue;
-            }
-
-            try {
-                const content = await readFile(changedFile, "utf-8");
-                const referencedFiles = this.extractReferences(content, changedFile, docsWorkspace.absoluteFilePath);
-                this.pageToSnippets.set(changedFile, referencedFiles);
-            } catch (error) {
-                this.context.logger.debug(`Failed to read markdown file ${changedFile}: ${error}`);
-                // Drop a stale forward edge for a now-unreadable file so the reverse map
-                // does not retain references that may no longer be accurate.
-                this.pageToSnippets.delete(changedFile);
-            }
-        }
-
-        this.rebuildReverseMap();
-    }
-
-    /**
-     * Rebuilds the snippet -> pages (reverse) map from the page -> snippets (forward)
-     * map. A pure in-memory transformation, so it can never leave stale reverse edges.
-     */
-    private rebuildReverseMap(): void {
-        this.snippetToPages.clear();
-        for (const [page, references] of this.pageToSnippets) {
-            for (const reference of references) {
-                let pages = this.snippetToPages.get(reference);
-                if (pages == null) {
-                    pages = new Set();
-                    this.snippetToPages.set(reference, pages);
-                }
-                pages.add(page);
-            }
-        }
-    }
-
-    /**
-     * Find all markdown files in the docs workspace directory
-     */
-    private async findMarkdownFiles(fernFolderPath: AbsoluteFilePath): Promise<AbsoluteFilePath[]> {
-        try {
-            // Get .md files
-            const mdFiles = await listFiles(fernFolderPath, "md");
-            // Get .mdx files
-            const mdxFiles = await listFiles(fernFolderPath, "mdx");
-            // Combine both lists
-            return [...mdFiles, ...mdxFiles];
-        } catch (error) {
-            this.context.logger.debug(`Failed to list files in ${fernFolderPath}: ${error}`);
-            return [];
-        }
-    }
-
-    /**
-     * Given a list of changed files, return all files that need to be reloaded (including dependent pages)
-     */
-    getFilesToReload(changedFiles: AbsoluteFilePath[]): AbsoluteFilePath[] {
-        const filesToReload = new Set<string>();
-
-        // Add all originally changed files
-        for (const file of changedFiles) {
-            filesToReload.add(file);
-        }
-
-        // For each changed file, check if it's a snippet that other pages depend on
-        for (const changedFile of changedFiles) {
-            const dependentPages = this.snippetToPages.get(changedFile);
-            if (dependentPages) {
-                this.context.logger.debug(`Snippet ${changedFile} affects ${dependentPages.size} pages`);
-                for (const dependentPage of dependentPages) {
-                    filesToReload.add(dependentPage);
-                }
-            }
-        }
-
-        return Array.from(filesToReload).map(AbsoluteFilePath.of);
-    }
-
-    /**
-     * Check if any of the changed files are snippets that affect other pages
-     */
-    hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
-        for (const file of changedFiles) {
-            const pages = this.snippetToPages.get(file);
-            if (pages && pages.size > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Get debug info about current dependencies
-     */
-    getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
-        let totalDependencies = 0;
-        for (const pages of this.snippetToPages.values()) {
-            totalDependencies += pages.size;
-        }
-        return {
-            snippetCount: this.snippetToPages.size,
-            pageCount: this.pageToSnippets.size,
-            totalDependencies
-        };
     }
 }
 
@@ -804,229 +542,6 @@ export async function runAppPreviewServer({
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 500;
 
-    /**
-     * Computes translated definitions for each locale.
-     * Similar to what publishDocs.ts does for production, but for local preview.
-     */
-    async function computeTranslatedDefinitions(
-        result: PreviewDocsResult
-    ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
-        const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const {
-            docsDefinition,
-            translationPages,
-            translationNavigationOverlays,
-            translatedApiDefinitions,
-            collectedFileIds,
-            docsWorkspacePath,
-            markdownFilesToPathName
-        } = result;
-
-        const hasTranslatedPages = translationPages != null && Object.keys(translationPages).length > 0;
-        const hasTranslatedApis = translatedApiDefinitions != null && Object.keys(translatedApiDefinitions).length > 0;
-        if (!hasTranslatedPages && !hasTranslatedApis) {
-            return translations;
-        }
-
-        const defaultLocale = docsDefinition.config.translations?.defaultLocale;
-
-        // A locale qualifies if it has translated pages, translated API specs, or both.
-        const localesToBuild = new Set<string>([
-            ...Object.keys(translationPages ?? {}),
-            ...Object.keys(translatedApiDefinitions ?? {})
-        ]);
-
-        for (const locale of localesToBuild) {
-            // Skip the default locale - we use the base definition for that
-            if (locale === defaultLocale) {
-                continue;
-            }
-
-            const localePages = translationPages?.[locale] ?? {};
-
-            try {
-                // Locale-aware file loaders that prefer translated snippets when available
-                const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
-                    const relPath = relative(docsWorkspacePath, filepath);
-                    const translatedPath = resolve(
-                        docsWorkspacePath,
-                        RelativeFilePath.of(`translations/${locale}/${relPath}`)
-                    );
-                    return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
-                };
-
-                const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                    const pathToRead = await resolveLocalePath(filepath);
-                    const raw = await readFile(pathToRead, "utf-8");
-                    const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
-                    return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
-                };
-
-                const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                    const pathToRead = await resolveLocalePath(filepath);
-                    return readFile(pathToRead, "utf-8");
-                };
-
-                // Build translated pages by merging base pages with locale-specific pages
-                // Start by copying all defined pages from the base definition
-                const translatedPages: Record<string, DocsV1Read.PageContent> = {};
-                for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
-                    if (page != null) {
-                        translatedPages[pageId] = page;
-                    }
-                }
-
-                for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
-                    try {
-                        const basePage = translatedPages[pagePath];
-                        const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
-
-                        // Resolve <Markdown src="..."/> snippets (locale-aware)
-                        const { markdown: markdownResolved } = await replaceReferencedMarkdown({
-                            markdown: rawMarkdown,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile,
-                            context,
-                            markdownLoader: localeAwareMarkdownLoader
-                        });
-
-                        // Resolve <Code src="..."/> references (locale-aware)
-                        const codeResolved = await replaceReferencedCode({
-                            markdown: markdownResolved,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile,
-                            context,
-                            fileLoader: localeAwareFileLoader
-                        });
-
-                        // Transform @/ prefix imports to relative paths
-                        const importsResolved = transformAtPrefixImports({
-                            markdown: codeResolved,
-                            absolutePathToFernFolder: docsWorkspacePath,
-                            absolutePathToMarkdownFile,
-                            context
-                        });
-
-                        // Strip MDX comments
-                        let processedMarkdown = stripMdxComments(importsResolved);
-
-                        // Replace image paths using collected file IDs
-                        processedMarkdown = replaceImagePathsAndUrls(
-                            processedMarkdown,
-                            collectedFileIds,
-                            markdownFilesToPathName,
-                            {
-                                absolutePathToMarkdownFile,
-                                absolutePathToFernFolder: docsWorkspacePath
-                            },
-                            context
-                        );
-
-                        translatedPages[pagePath] = {
-                            markdown: processedMarkdown,
-                            rawMarkdown: processedMarkdown,
-                            editThisPageUrl: basePage?.editThisPageUrl,
-                            editThisPageLaunch: basePage?.editThisPageLaunch
-                        };
-                    } catch (pageError) {
-                        context.logger.warn(
-                            `Failed to process translated page "${pagePath}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
-                        );
-                    }
-                }
-
-                // Apply translated frontmatter to nav tree
-                let updatedRoot = applyTranslatedFrontmatterToNavTree(
-                    docsDefinition.config.root,
-                    localePages as Record<string, string>,
-                    context
-                );
-
-                // Apply navigation overlay (translated display-names, titles, etc.)
-                const localeNavOverlay = translationNavigationOverlays?.[locale];
-                let translatedAnnouncement = docsDefinition.config.announcement;
-                let translatedNavbarLinks = docsDefinition.config.navbarLinks;
-                if (localeNavOverlay != null) {
-                    updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
-                    translatedAnnouncement = getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-                    if (localeNavOverlay.navbarLinks != null) {
-                        translatedNavbarLinks = localeNavOverlay.navbarLinks;
-                    }
-                }
-
-                const baseApis = docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>;
-                const localeApis = translatedApiDefinitions?.[locale];
-
-                // A translated spec that drifts from the base — most commonly a changed
-                // OpenAPI tag name (which derives subpackage/endpoint ids), but also a
-                // missing/added endpoint or a changed path — produces an API whose nav
-                // nodes can't all be resolved. Serving such a definition would make the
-                // docs renderer fail to resolve a nav node and return a 500. For those
-                // APIs we serve the base (default-locale) definition and keep the base nav
-                // ids, but still localize the sidebar titles we can match by locator.
-                let servedLocaleApis = localeApis;
-                let rewritableApiIds: ReadonlySet<string> | undefined;
-                if (localeApis != null && updatedRoot != null) {
-                    const incompatibleApiIds = findIncompatibleTranslatedApiIds(updatedRoot, baseApis, localeApis);
-                    if (incompatibleApiIds.size > 0) {
-                        context.logger.warn(
-                            `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for locale ` +
-                                `"${locale}" diverge from the default-locale spec (e.g. changed OpenAPI tag names, ` +
-                                `operationIds, or paths, or a missing/added endpoint), so they can't be fully matched ` +
-                                `to the navigation tree. Serving the default-locale API for those (localized sidebar ` +
-                                `titles are still applied where they can be matched). For fully localized API reference ` +
-                                `content, translate only human-readable text and keep tag names/operationIds/paths ` +
-                                `identical to the base spec.`
-                        );
-                        servedLocaleApis = Object.fromEntries(
-                            Object.entries(localeApis).filter(([apiId]) => !incompatibleApiIds.has(apiId))
-                        );
-                    }
-                    rewritableApiIds = new Set(
-                        Object.keys(localeApis).filter((apiId) => !incompatibleApiIds.has(apiId))
-                    );
-                }
-
-                const hasServedLocaleApis = servedLocaleApis != null && Object.keys(servedLocaleApis).length > 0;
-                const translatedApis = hasServedLocaleApis
-                    ? { ...docsDefinition.apis, ...servedLocaleApis }
-                    : docsDefinition.apis;
-
-                // Splicing `apis` alone leaves the sidebar in the default language, since
-                // the nav tree bakes in titles from the base API definition. Localize
-                // titles for every translated API (matched by id or locator); ids are only
-                // repointed for the APIs whose translated definition we actually serve.
-                if (localeApis != null && Object.keys(localeApis).length > 0 && updatedRoot != null) {
-                    updatedRoot = applyTranslatedApiTitlesToNavTree(updatedRoot, baseApis, localeApis, {
-                        rewritableApiIds
-                    });
-                }
-
-                const translatedDefinition: DocsV1Read.DocsDefinition = {
-                    ...docsDefinition,
-                    apis: translatedApis,
-                    pages: translatedPages,
-                    config: {
-                        ...docsDefinition.config,
-                        root: updatedRoot,
-                        announcement: translatedAnnouncement,
-                        navbarLinks: translatedNavbarLinks
-                    }
-                };
-
-                translations.set(locale, translatedDefinition);
-                context.logger.debug(
-                    `Computed translated definition for locale "${locale}"` +
-                        (localeApis != null ? ` (with ${Object.keys(localeApis).length} translated API(s))` : "")
-                );
-            } catch (error) {
-                context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
-            }
-        }
-
-        return translations;
-    }
-
     // Generation counter backed by a temp file so the Next.js process can
     // detect stale cache entries without an HTTP round-trip.
     const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
@@ -1133,7 +648,7 @@ export async function runAppPreviewServer({
 
     // Compute translated definitions after loading
     if (previewResult != null) {
-        translatedDefinitions = await computeTranslatedDefinitions(previewResult);
+        translatedDefinitions = await computeTranslatedDefinitions(previewResult, context);
         if (translatedDefinitions.size > 0) {
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
@@ -1452,7 +967,7 @@ export async function runAppPreviewServer({
                         previewResult = reloadedPreviewResult;
 
                         // Recompute translated definitions
-                        translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
+                        translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult, context);
                         if (translatedDefinitions.size > 0) {
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }

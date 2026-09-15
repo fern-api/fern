@@ -5470,6 +5470,9 @@ importers:
       '@fern-api/register':
         specifier: workspace:*
         version: link:../register
+      '@fern-api/remote-workspace-runner':
+        specifier: workspace:*
+        version: link:../generation/remote-generation/remote-workspace-runner
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -5491,6 +5494,9 @@ importers:
       gray-matter:
         specifier: 'catalog:'
         version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
+      mime-types:
+        specifier: 'catalog:'
+        version: 2.1.35
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -5522,6 +5528,9 @@ importers:
       '@types/express':
         specifier: 'catalog:'
         version: 4.17.25
+      '@types/mime-types':
+        specifier: 'catalog:'
+        version: 2.1.4
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
