@@ -180,4 +180,13 @@ public final class XmlReader {
     public static <T> Optional<List<T>> optionalList(List<T> items) {
         return items.isEmpty() ? Optional.empty() : Optional.of(items);
     }
+
+    /**
+     * Like {@link #optionalList} but for wrapped lists, where an empty wrapper element is a present, empty list.
+     */
+    public static <T> Optional<List<T>> optionalWrappedList(Element element, String wrapperName, List<T> items) {
+        return children(element, Collections.singletonList(wrapperName)).isEmpty()
+                ? Optional.empty()
+                : Optional.of(items);
+    }
 }

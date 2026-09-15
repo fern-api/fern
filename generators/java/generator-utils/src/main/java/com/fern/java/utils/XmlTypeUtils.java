@@ -61,24 +61,33 @@ public final class XmlTypeUtils {
     private static boolean isXmlElementType(
             Map<TypeId, TypeDeclaration> typeDeclarations, TypeReference type, Set<TypeId> visited) {
         Optional<TypeId> typeId = type.getNamed().map(named -> named.getTypeId());
-        if (typeId.isEmpty() || !visited.add(typeId.get())) {
+        if (typeId.isEmpty()) {
             return false;
+        }
+        if (!visited.add(typeId.get())) {
+            // a type reached again along the current path is a cycle; let the other members decide
+            return true;
         }
         TypeDeclaration typeDeclaration = typeDeclarations.get(typeId.get());
         if (typeDeclaration == null) {
+            visited.remove(typeId.get());
             return false;
         }
-        if (typeDeclaration.getShape().isObject()) {
-            return getXmlEncoding(typeDeclaration).isPresent();
+        try {
+            if (typeDeclaration.getShape().isObject()) {
+                return getXmlEncoding(typeDeclaration).isPresent();
+            }
+            Optional<UndiscriminatedUnionTypeDeclaration> union =
+                    typeDeclaration.getShape().getUndiscriminatedUnion();
+            if (union.isPresent()) {
+                return !union.get().getMembers().isEmpty()
+                        && union.get().getMembers().stream()
+                                .allMatch(member -> isXmlElementType(typeDeclarations, member.getType(), visited));
+            }
+            return false;
+        } finally {
+            visited.remove(typeId.get());
         }
-        Optional<UndiscriminatedUnionTypeDeclaration> union =
-                typeDeclaration.getShape().getUndiscriminatedUnion();
-        if (union.isPresent()) {
-            return !union.get().getMembers().isEmpty()
-                    && union.get().getMembers().stream()
-                            .allMatch(member -> isXmlElementType(typeDeclarations, member.getType(), visited));
-        }
-        return false;
     }
 
     /** The element names that values of this type can appear as. Empty for scalar types. */

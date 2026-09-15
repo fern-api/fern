@@ -295,7 +295,17 @@ public final class XmlObjectMethodsGenerator {
         if (shape.list) {
             CodeBlock list =
                     CodeBlock.of("$L.stream().map($L).collect($T.toList())", elements, converter, Collectors.class);
-            return shape.optional ? CodeBlock.of("$T.optionalList($L)", xmlReaderClassName, list) : list;
+            if (!shape.optional) {
+                return list;
+            }
+            return shape.wrapped
+                    ? CodeBlock.of(
+                            "$T.optionalWrappedList($L, $S, $L)",
+                            xmlReaderClassName,
+                            ELEMENT_VARIABLE,
+                            shape.xmlName,
+                            list)
+                    : CodeBlock.of("$T.optionalList($L)", xmlReaderClassName, list);
         }
         CodeBlock first = CodeBlock.of("$L.stream().findFirst().map($L)", elements, converter);
         return shape.optional

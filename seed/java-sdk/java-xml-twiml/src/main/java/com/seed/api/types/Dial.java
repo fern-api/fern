@@ -121,9 +121,12 @@ public final class Dial implements XmlSerializable {
         return new Dial(
                 XmlReader.text(element),
                 XmlReader.attribute(element, "statusCallbackEvent").map(v -> XmlReader.split(v, " ")),
-                XmlReader.optionalList(XmlReader.wrappedChildren(element, "Numbers", "Number").stream()
-                        .map(Number::fromXml)
-                        .collect(Collectors.toList())),
+                XmlReader.optionalWrappedList(
+                        element,
+                        "Numbers",
+                        XmlReader.wrappedChildren(element, "Numbers", "Number").stream()
+                                .map(Number::fromXml)
+                                .collect(Collectors.toList())),
                 XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent")));
     }
 
