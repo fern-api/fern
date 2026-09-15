@@ -107,7 +107,7 @@ num-bigint = { version = "0.4", features = ["serde"], optional = true }
 ordered-float = { version = "4.5", features = ["serde"], optional = true }
 # Added by the generated SDK crate for specs with server-sent events (see
 # AbstractRustGeneratorContext, which declares these two behind an `sse` feature).
-reqwest-sse = { version = "0.1", optional = true }
+reqwest-sse = { version = "0.2", optional = true }
 pin-project = { version = "1.1", optional = true }
 
 serde = { version = "1", features = ["derive"] }
