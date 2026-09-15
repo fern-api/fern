@@ -353,6 +353,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -376,6 +377,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -400,6 +402,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -427,6 +430,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -451,6 +455,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -529,6 +534,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -607,6 +613,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -635,6 +642,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -642,6 +650,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -669,6 +678,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -676,6 +686,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -928,6 +939,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -957,6 +969,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -985,6 +998,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1010,6 +1024,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -1039,6 +1054,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -1118,6 +1134,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1125,6 +1142,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1157,6 +1175,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1164,6 +1183,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -1225,6 +1245,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1479,6 +1500,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1486,6 +1508,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -1498,6 +1521,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1507,6 +1531,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -1543,6 +1568,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1550,6 +1576,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1559,6 +1586,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
