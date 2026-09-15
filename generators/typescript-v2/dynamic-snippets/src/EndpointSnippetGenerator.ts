@@ -24,6 +24,7 @@ type AuthWithWrapperProperty = AuthFields & {
     wrapperProperty?: FernIr.dynamic.Name;
 };
 
+// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.26.0 ships wrapperProperty on Auth
 function hasAuthWrapperProperty(auth: AuthFields): auth is AuthWithWrapperProperty {
     return "wrapperProperty" in auth;
 }
@@ -688,6 +689,7 @@ export class EndpointSnippetGenerator {
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
             case "referenced": {
+                let literal: ts.TypeLiteral | undefined;
                 if (
                     this.context.customConfig?.flattenRequestParameters === true &&
                     body.bodyType.type === "typeReference" &&
@@ -695,18 +697,18 @@ export class EndpointSnippetGenerator {
                 ) {
                     const named = this.context.resolveNamedType({ typeId: body.bodyType.value.value });
                     if (named?.type === "object") {
-                        const flattened = this.context.dynamicTypeLiteralMapper.convert({
+                        literal = this.context.dynamicTypeLiteralMapper.convert({
                             typeReference: body.bodyType.value,
                             value,
                             convertOpts: { isForRequest: true }
                         });
-                        const fields = flattened.getObjectFields();
+                        const fields = literal.getObjectFields();
                         if (fields != null) {
                             return fields;
                         }
                     }
                 }
-                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value });
+                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value, literal });
                 // an example that omits an optional request body has no value to write, so the
                 // property is dropped rather than passed explicitly as undefined
                 return ts.TypeLiteral.isNop(field.value) ? [] : [field];
@@ -731,14 +733,16 @@ export class EndpointSnippetGenerator {
 
     private getReferencedRequestBodyPropertyObjectField({
         body,
-        value
+        value,
+        literal
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
+        literal?: ts.TypeLiteral;
     }): ts.ObjectField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: literal ?? this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
         };
     }
 

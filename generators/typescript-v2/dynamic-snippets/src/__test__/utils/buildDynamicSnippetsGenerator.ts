@@ -1,4 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { readFileSync } from "fs";
 
@@ -12,8 +13,8 @@ export function buildDynamicSnippetsGenerator({
     irFilepath: AbsoluteFilePath;
     config: FernGeneratorExec.GeneratorConfig;
     modifyIr?: (
-        ir: import("@fern-api/dynamic-ir-sdk").FernIr.dynamic.DynamicIntermediateRepresentation
-    ) => import("@fern-api/dynamic-ir-sdk").FernIr.dynamic.DynamicIntermediateRepresentation;
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation
+    ) => FernIr.dynamic.DynamicIntermediateRepresentation;
 }): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
     const ir = JSON.parse(content);

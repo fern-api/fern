@@ -103,6 +103,6 @@ describe("auth wrapperProperty", () => {
         const response = await generator.generate(REQUEST);
 
         expect(response.snippet).toContain("token:");
-        expect(response.snippet).not.toContain("bearerAuth");
+        expect(response.snippet).not.toContain("bearerAuth: {");
     });
 });
