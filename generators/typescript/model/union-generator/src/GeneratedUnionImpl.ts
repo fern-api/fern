@@ -993,18 +993,59 @@ const GLOBAL_TS_TYPES: string[] = ["Date", "Error", "Object", "File", "Record", 
  * versions in a type text string. For example, if "Date" is shadowed, `"Date"` becomes
  * `"globalThis.Date"` while `"SeedApi.Date"` and `"DateRange"` are left unchanged.
  */
-function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
-    if (shadowedGlobalTypes.length === 0) {
-        return typeText;
-    }
+/**
+ * Matches a complete string literal — single-quoted, double-quoted or a
+ * template literal — including escaped characters inside it.
+ */
+const STRING_LITERAL = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+
+/**
+ * Applies globalThis-qualification to a span of type text known to contain no
+ * string literals.
+ */
+function qualifyOutsideStringLiterals(span: string, shadowedGlobalTypes: string[]): string {
     for (const globalType of shadowedGlobalTypes) {
         // Replace standalone occurrences of the global type name with globalThis-qualified version.
         // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
         // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
         const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
-        typeText = typeText.replace(pattern, `globalThis.${globalType}`);
+        span = span.replace(pattern, `globalThis.${globalType}`);
     }
-    return typeText;
+    return span;
+}
+
+function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
+    if (shadowedGlobalTypes.length === 0) {
+        return typeText;
+    }
+    // String literals are skipped. Qualification disambiguates a *type
+    // reference* that a sibling union member interface would shadow; a literal
+    // is a value, and rewriting one changes what the SDK sends on the wire.
+    //
+    // A union member whose discriminant value collides with a built-in — e.g.
+    // `condition_type: "Date"` — had the prefix applied to the literal as well,
+    // emitting `conditionType: "globalThis.Date"`. The API expects `"Date"`, so
+    // the property became untypeable without a cast, and with the serde layer
+    // enabled the inferred discriminant no longer matched the declared literal
+    // and the package failed to compile.
+    //
+    // This function receives whole rendered TS text — property types, visitor
+    // signatures and builder expressions — so literals can appear in any of
+    // them, which is why the skip lives here rather than at one call site.
+    //
+    // A template literal is treated as opaque. Interpolated type references
+    // inside one therefore go unqualified, which is the safe direction: failing
+    // to qualify is a name-resolution problem the compiler reports, while
+    // rewriting a value is silent.
+    let qualified = "";
+    let cursor = 0;
+    for (const literal of typeText.matchAll(STRING_LITERAL)) {
+        const start = literal.index ?? 0;
+        qualified += qualifyOutsideStringLiterals(typeText.slice(cursor, start), shadowedGlobalTypes);
+        qualified += literal[0];
+        cursor = start + literal[0].length;
+    }
+    return qualified + qualifyOutsideStringLiterals(typeText.slice(cursor), shadowedGlobalTypes);
 }
 
 function qualifyShadowedGlobalTypes(
