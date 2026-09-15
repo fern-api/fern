@@ -264,6 +264,12 @@ types:
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
       products: optional<list<ProductConfig>>
+      changelog:
+        type: optional<ChangelogConfiguration>
+        docs: |
+          A site-level changelog shared by every product. Only valid alongside `products`.
+          It is served at the root (e.g. `/changelog`) rather than under any product slug,
+          and does not appear in the product switcher.
       landing-page:
         type: optional<PageConfiguration>
         docs: Creates a landing page for your documentation website.

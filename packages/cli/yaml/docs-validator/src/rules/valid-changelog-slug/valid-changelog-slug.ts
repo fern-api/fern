@@ -216,6 +216,30 @@ function collectFromNavigation(
     );
 }
 
+/**
+ * The site-level `changelog:` in docs.yml (valid alongside `products:`) is slugged off the root,
+ * so it contributes no ancestor segments — unlike a changelog nested under a product or version.
+ */
+function collectFromRootChangelog(
+    changelog: docsYml.RawSchemas.ChangelogConfiguration | undefined
+): ChangelogLocation[] {
+    if (changelog == null) {
+        return [];
+    }
+    const changelogFolder = docsYml.getChangelogFolderFromNavigationItem(changelog);
+    if (changelogFolder == null) {
+        return [];
+    }
+    return [
+        {
+            where: `changelog (${changelogFolder})`,
+            slug: changelog.slug,
+            title: changelog.title ?? docsYml.DEFAULT_CHANGELOG_TITLE,
+            ancestorSegments: []
+        }
+    ];
+}
+
 function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[] {
     const violations: RuleViolation[] = [];
     for (const loc of locations) {
@@ -243,7 +267,8 @@ export const ValidChangelogSlugRule: Rule = {
             file: async ({ config }) => {
                 const locations: ChangelogLocation[] = [
                     ...collectFromNavigation(config.navigation, config.tabs, "navigation", []),
-                    ...collectFromTabs(config.tabs, "tabs", [])
+                    ...collectFromTabs(config.tabs, "tabs", []),
+                    ...collectFromRootChangelog(config.changelog)
                 ];
                 return violationsForLocations(locations);
             },
