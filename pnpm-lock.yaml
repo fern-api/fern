@@ -5065,6 +5065,12 @@ importers:
 
   packages/cli/cli-v2/dist/beta: {}
 
+  packages/cli/cli/dist/beta:
+    optionalDependencies:
+      '@boundaryml/baml':
+        specifier: ^0.219.0
+        version: 0.219.0
+
   packages/cli/config:
     devDependencies:
       '@fern-api/configs':
