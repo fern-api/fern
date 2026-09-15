@@ -156,6 +156,20 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError>;
 
+    /// Field names `auth login --with-token` should collect for this
+    /// provider, stored together as one JSON keyring entry.
+    ///
+    /// `None` — the default — means the scheme takes a single opaque value,
+    /// which is how bearer and API-key paste works today.
+    ///
+    /// `Some([...])` is for schemes whose credential is several values:
+    /// OAuth2 client credentials returns `["client_id", "client_secret"]`.
+    /// One entry rather than one per field because the OS keychain prompts
+    /// per item, and a multi-part credential is still one credential.
+    fn credential_fields(&self) -> Option<Vec<&'static str>> {
+        None
+    }
+
     /// Post-construction hook: inject the on-disk token cache for
     /// cross-invocation persistence. Called by [`CliApp`] in
     /// `propagate_root_auth` once it knows the binary name.

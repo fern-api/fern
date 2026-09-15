@@ -80,6 +80,7 @@ The SDK is deliberately small. Customizations attach via:
 | Builder methods on `CliApp` (after `.binding(...)`) | Aliases, deprecation, custom commands, response transforms, error recovery |
 | `CliApp::http(\|t\| ...)` / `grpc` / `websocket` | Transport infra (TLS, proxy, retry policy, user-agent), `before_send` hook (not yet implemented) |
 | Builder methods on `OpenApiBinding` / `GraphqlBinding` / etc. | Spec, auth wiring, paginators, server vars |
+| `CliApp::profiles(...)` | Named profiles: per-tenant credentials, parameter defaults, server variables ([see below](#named-profiles-multi-tenant-clis)) |
 
 Anything that doesn't fit one of those gets written as a **custom command** — a `fn` item that calls `ctx.invoke_by_name(...)` and does whatever Rust logic the case requires.
 
@@ -101,6 +102,93 @@ fn main() {
 ### Default a flag from an env var
 
 > *Not yet implemented.* `default_arg` and `ArgSource` are spec'd but not yet wired to dispatch. For now, use `server_var` on the binding for global path parameters, or read environment variables directly in a custom command handler.
+
+To default a flag from *stored per-tenant config* rather than the environment, see [named profiles](#named-profiles-multi-tenant-clis).
+
+### Named profiles (multi-tenant CLIs)
+
+For an API where every call carries a tenant identifier — an account SID, an
+org slug, a workspace — profiles let the user set it once instead of typing it
+on every command.
+
+Enable it in `generators.yml`:
+
+```yaml
+- name: fernapi/fern-cli
+  version: <version>
+  config:
+    profiles:
+      enabled: true
+      # Optional. Defaults to `profiles`. Rename it when your API already
+      # owns that noun as a resource.
+      commandName: profiles
+      # Optional. Names an operation that revokes a profile's remote
+      # credential; adds `--revoke` to `profiles remove`. Omit it and the
+      # flag is never registered.
+      revokeOperation: iam.keys.remove
+```
+
+Off by default: enabling it adds a top-level subcommand group and a global
+`--profile` / `-p` flag, which is a surface change for an existing CLI.
+
+That gives your users:
+
+```bash
+# once per account — the secret goes to the OS keychain, never to disk in plaintext
+acme profiles create prod --set AccountSid=AC11… --with-token
+acme profiles create acme --parent prod --set AccountSid=AC99…   # subaccount, same credential
+acme profiles create au   --set AccountSid=AC11… --region au1 --edge sydney
+
+acme profiles use acme        # pick the one you are working in
+
+acme messages list            # steady state — no --account-sid, no exported env vars
+acme messages list -p prod    # one command against another tenant; the active profile is unchanged
+acme profiles list            # "which account am I about to hit?"
+acme profiles current         # …and why
+acme profiles remove au       # confirms; also deletes that profile's stored credential
+```
+
+Agents and scripts should use the stateless form — `-p` per invocation mutates
+no global state, so parallel invocations cannot race:
+
+```bash
+for tenant in prod acme; do acme messages list -p "$tenant" --format json; done
+```
+
+CI keeps using environment variables and ignores profiles entirely.
+
+**Precedence per value** is `explicit flag → environment variable → profile →
+the spec's own default`. Environment variables sit above profiles deliberately,
+so a pipeline that exports them is never silently overridden by a profile a
+developer stored on the same machine.
+
+**What a profile can carry:** a credential slot, parameter defaults
+(`--set <name>=<value>`, validated against the parsed operation table so a typo
+is rejected rather than silently ignored), server-URL template variables
+(`--server-var <name>=<value>`, or `--<name> <value>` for any variable your spec
+declares), an explicit `--base-url`, and a default output format
+(`--default-format`, spelled so it cannot be confused with the global
+`--format`). Nothing else —
+profiles are not a config file for arbitrary settings.
+
+**Server variables also read an env var.** Each `{variable}` your spec declares in
+a server URL is settable three ways — `--region au1`, the profile, or
+`<PREFIX>_<VARIABLE>` where `<PREFIX>` is your binary name uppercased with `-`
+replaced by `_`:
+
+```bash
+export TWILIO_REGION=au1      # pins it for the shell session
+twilio messages list          # no --region needed
+twilio messages list --region us1   # the flag still wins
+```
+
+(`x-fern-sdk-variables` use the bare name — `gardenId` reads `GARDEN_ID`, not
+`<PREFIX>_GARDEN_ID`.)
+
+**Where it lives:** `~/.config/<bin>/profiles.toml`, beside the credential
+store. Secrets are never written there; the file names a keychain account. See
+[ADR-0011](adr/0011-profile-resolution-precedence.md) for the full resolution
+rules and the reasoning behind them.
 
 ### Strip an envelope from list responses
 
@@ -441,6 +529,8 @@ fn main() {
     CliApp::new("acme")
         // Root-level auth (shared across all bindings):
         .auth(ApiKeyAuth::new("ApiKey").env("ACME_API_KEY"))
+        // Named profiles (usually wired from generators.yml, not by hand):
+        // .profiles(fern_cli_sdk::profiles::ProfilesConfig::new())
         // Binding (spec config):
         .binding(
             OpenApiBinding::new()
