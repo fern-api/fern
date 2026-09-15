@@ -15,6 +15,8 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
 import { resolveRemoteSpecs } from "./resolveRemoteSpecs.js";
@@ -242,7 +244,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 audiences: definition.audiences ?? []
             },
             source: {
-                type: "openapi",
+                type: await resolveOssSourceType(definition.schema.sourceType, absoluteFilepath),
                 file: absoluteFilepath
             },
             namespace
@@ -250,6 +252,22 @@ export async function loadSingleNamespaceAPIWorkspace({
     }
 
     return specs;
+}
+
+async function resolveOssSourceType(
+    declaredType: "openapi" | "asyncapi" | undefined,
+    absoluteFilepath: AbsoluteFilePath
+): Promise<"openapi" | "asyncapi"> {
+    if (declaredType != null) {
+        return declaredType;
+    }
+    try {
+        const document = yaml.load(await readFile(absoluteFilepath, "utf-8"));
+        return typeof document === "object" && document != null && "asyncapi" in document ? "asyncapi" : "openapi";
+    } catch {
+        // Preserve existing loading behavior and let the API parser report malformed documents.
+        return "openapi";
+    }
 }
 
 export async function loadAPIWorkspace({
