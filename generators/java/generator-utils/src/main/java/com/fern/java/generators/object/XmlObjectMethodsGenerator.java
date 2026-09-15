@@ -31,8 +31,8 @@ import javax.lang.model.element.Modifier;
 import org.w3c.dom.Element;
 
 /**
- * Adds xml support to a generated object type: {@code toXml()}, a static {@code fromXml(...)} factory, and builder
- * methods that append typed child elements.
+ * Adds xml support to a generated object type: {@code toXml()}, static {@code fromXml(...)} factories on the type and
+ * on its {@code Builder}, and builder methods that append typed child elements.
  */
 public final class XmlObjectMethodsGenerator {
 
@@ -55,6 +55,10 @@ public final class XmlObjectMethodsGenerator {
     private final boolean isRoot;
     private final List<EnrichedObjectProperty> properties;
     private final Optional<String> additionalPropertiesFieldName;
+    private final String additionalChildrenFieldName;
+    private final String additionalChildrenGetterName;
+    private final boolean usesBuilderConstructor;
+    private final ClassName builderClassName;
     private final ClassName xmlWriterClassName;
     private final ClassName xmlReaderClassName;
     private final ClassName xmlSerializableClassName;
@@ -65,8 +69,15 @@ public final class XmlObjectMethodsGenerator {
             TypeId typeId,
             XmlEncoding xmlEncoding,
             List<EnrichedObjectProperty> properties,
-            Optional<String> additionalPropertiesFieldName) {
+            Optional<String> additionalPropertiesFieldName,
+            String additionalChildrenFieldName,
+            String additionalChildrenGetterName,
+            boolean usesBuilderConstructor) {
         this.generatorContext = generatorContext;
+        this.additionalChildrenFieldName = additionalChildrenFieldName;
+        this.additionalChildrenGetterName = additionalChildrenGetterName;
+        this.usesBuilderConstructor = usesBuilderConstructor;
+        this.builderClassName = objectClassName.nestedClass(BUILDER_CLASS_NAME);
         this.typeDeclarations = generatorContext.getTypeDeclarations();
         this.objectClassName = objectClassName;
         this.xmlEncoding = xmlEncoding;
@@ -84,37 +95,24 @@ public final class XmlObjectMethodsGenerator {
         TypeSpec.Builder builder = typeSpec.toBuilder()
                 .addSuperinterface(xmlSerializableClassName)
                 .addMethod(generateToXml())
-                .addMethod(generateToXmlWithDeclaration());
-        findFieldConstructor(typeSpec).ifPresent(constructor -> builder.addMethod(generateFromXmlString())
-                .addMethod(generateFromXmlElement(constructor)));
+                .addMethod(generateToXmlWithDeclaration())
+                .addMethod(generateFromXmlString(objectClassName))
+                .addMethod(generateFromXmlElement());
         List<MethodSpec> childBuilderMethods = generateChildBuilderMethods(typeSpec);
-        if (childBuilderMethods.isEmpty()) {
-            return builder.build();
-        }
         boolean hasFinalStage =
                 typeSpec.typeSpecs.stream().anyMatch(nested -> nested.name.equals(FINAL_STAGE_INTERFACE_NAME));
         builder.typeSpecs.clear();
         for (TypeSpec nested : typeSpec.typeSpecs) {
-            builder.addType(withChildBuilderMethods(nested, childBuilderMethods, hasFinalStage));
+            TypeSpec updated = withChildBuilderMethods(nested, childBuilderMethods, hasFinalStage);
+            if (nested.name.equals(BUILDER_CLASS_NAME)) {
+                updated = updated.toBuilder()
+                        .addMethod(generateFromXmlString(builderClassName))
+                        .addMethod(generateBuilderFromXmlElement())
+                        .build();
+            }
+            builder.addType(updated);
         }
         return builder.build();
-    }
-
-    /**
-     * The constructor taking one parameter per field, in field order (very large objects instead use a builder-based
-     * constructor, which {@code fromXml} does not support).
-     */
-    private Optional<MethodSpec> findFieldConstructor(TypeSpec typeSpec) {
-        List<String> expectedParameters =
-                properties.stream().map(p -> p.fieldSpec().get().name).collect(Collectors.toList());
-        additionalPropertiesFieldName.ifPresent(expectedParameters::add);
-        return typeSpec.methodSpecs.stream()
-                .filter(MethodSpec::isConstructor)
-                .filter(constructor -> constructor.parameters.stream()
-                        .map(parameter -> parameter.name)
-                        .collect(Collectors.toList())
-                        .equals(expectedParameters))
-                .findFirst();
     }
 
     private MethodSpec generateToXml() {
@@ -154,6 +152,7 @@ public final class XmlObjectMethodsGenerator {
         }
         additionalPropertiesFieldName.ifPresent(
                 fieldName -> method.addStatement("$L.attributes(this.$L)", WRITER_VARIABLE, fieldName));
+        method.addStatement("$L.children(this.$L)", WRITER_VARIABLE, additionalChildrenFieldName);
         method.addStatement("return $L.toXml($L)", WRITER_VARIABLE, XML_DECLARATION_PARAMETER);
         return method.build();
     }
@@ -188,43 +187,93 @@ public final class XmlObjectMethodsGenerator {
         }
     }
 
-    private MethodSpec generateFromXmlString() {
+    private MethodSpec generateFromXmlString(ClassName returnType) {
         return MethodSpec.methodBuilder(FROM_XML_METHOD_NAME)
                 .addJavadoc("Parses an xml document whose root element is <$L>.\n", xmlEncoding.getName())
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(String.class, "xml")
-                .returns(objectClassName)
+                .returns(returnType)
                 .addStatement("return $L($T.parse(xml))", FROM_XML_METHOD_NAME, xmlReaderClassName)
                 .build();
     }
 
-    private MethodSpec generateFromXmlElement(MethodSpec constructor) {
+    /**
+     * Parses into the immutable type. Regular objects are constructed from one argument per field; very large objects
+     * (which only have a builder-based constructor) are populated through the builder's private fields.
+     */
+    private MethodSpec generateFromXmlElement() {
         MethodSpec.Builder method = MethodSpec.methodBuilder(FROM_XML_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(Element.class, ELEMENT_VARIABLE)
                 .returns(objectClassName)
                 .addStatement("$T.expect($L, $S)", xmlReaderClassName, ELEMENT_VARIABLE, xmlEncoding.getName());
-        List<CodeBlock> arguments = new ArrayList<>();
+        List<String> fieldNames = new ArrayList<>();
+        List<CodeBlock> values = new ArrayList<>();
         List<String> attributeNames = new ArrayList<>();
+        List<String> childElementNames = new ArrayList<>();
         for (EnrichedObjectProperty property : properties) {
             PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
-            if (shape.kind.getEnumValue() == XmlPropertyKind.Value.ATTRIBUTE) {
-                attributeNames.add(shape.xmlName);
+            switch (shape.kind.getEnumValue()) {
+                case ATTRIBUTE:
+                    attributeNames.add(shape.xmlName);
+                    break;
+                case ELEMENT:
+                    childElementNames.addAll(
+                            shape.wrapped ? Collections.singletonList(shape.xmlName) : shape.elementNames());
+                    break;
+                default:
+                    break;
             }
-            arguments.add(generateReadProperty(property, shape));
+            fieldNames.add(property.fieldSpec().get().name);
+            values.add(generateReadProperty(property, shape));
         }
-        additionalPropertiesFieldName.ifPresent(fieldName -> arguments.add(CodeBlock.of(
-                "$T.extraAttributes($L, $T.asList($L))",
-                xmlReaderClassName,
-                ELEMENT_VARIABLE,
-                Arrays.class,
-                attributeNames.stream().map(name -> CodeBlock.of("$S", name)).collect(CodeBlock.joining(", ")))));
-        if (arguments.size() != constructor.parameters.size()) {
-            throw new IllegalStateException("fromXml argument count " + arguments.size()
-                    + " does not match constructor of " + objectClassName.simpleName());
+        additionalPropertiesFieldName.ifPresent(fieldName -> {
+            fieldNames.add(fieldName);
+            values.add(CodeBlock.of(
+                    "$T.extraAttributes($L, $L)", xmlReaderClassName, ELEMENT_VARIABLE, stringList(attributeNames)));
+        });
+        fieldNames.add(additionalChildrenFieldName);
+        values.add(CodeBlock.of(
+                "$T.unknownChildren($L, $L)", xmlReaderClassName, ELEMENT_VARIABLE, stringList(childElementNames)));
+        if (!usesBuilderConstructor) {
+            method.addStatement("return new $T($L)", objectClassName, CodeBlock.join(values, ",\n"));
+            return method.build();
         }
-        method.addStatement("return new $T($L)", objectClassName, CodeBlock.join(arguments, ",\n"));
+        method.addStatement("$T builder = new $T()", builderClassName, builderClassName);
+        for (int i = 0; i < fieldNames.size(); i++) {
+            method.addStatement("builder.$L = $L", fieldNames.get(i), values.get(i));
+        }
+        method.addStatement("return new $T(builder)", objectClassName);
         return method.build();
+    }
+
+    /** {@code Builder.fromXml(Element)}: parses into the immutable type, then copies everything into a builder. */
+    private MethodSpec generateBuilderFromXmlElement() {
+        MethodSpec.Builder method = MethodSpec.methodBuilder(FROM_XML_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addParameter(Element.class, ELEMENT_VARIABLE)
+                .returns(builderClassName)
+                .addStatement(
+                        "$T parsed = $T.$L($L)",
+                        objectClassName,
+                        objectClassName,
+                        FROM_XML_METHOD_NAME,
+                        ELEMENT_VARIABLE)
+                .addStatement("$T builder = new $T().from(parsed)", builderClassName, builderClassName);
+        additionalPropertiesFieldName.ifPresent(fieldName -> method.addStatement(
+                "builder.$L(parsed.$L())",
+                fieldName,
+                fieldName.startsWith("_") ? "_getAdditionalProperties" : "getAdditionalProperties"));
+        method.addStatement("builder.$L(parsed.$L())", additionalChildrenFieldName, additionalChildrenGetterName);
+        method.addStatement("return builder");
+        return method.build();
+    }
+
+    private static CodeBlock stringList(List<String> values) {
+        return CodeBlock.of(
+                "$T.asList($L)",
+                Arrays.class,
+                values.stream().map(value -> CodeBlock.of("$S", value)).collect(CodeBlock.joining(", ")));
     }
 
     private CodeBlock generateReadProperty(EnrichedObjectProperty property, PropertyShape shape) {

@@ -5,6 +5,7 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,11 +13,14 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.XmlElement;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,9 +33,13 @@ public final class Pause implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private Pause(Optional<Integer> length, Map<String, Object> additionalProperties) {
+    private final List<XmlElement> additionalChildren;
+
+    private Pause(
+            Optional<Integer> length, Map<String, Object> additionalProperties, List<XmlElement> additionalChildren) {
         this.length = length;
         this.additionalProperties = additionalProperties;
+        this.additionalChildren = additionalChildren;
     }
 
     @JsonProperty("length")
@@ -48,6 +56,11 @@ public final class Pause implements XmlSerializable {
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
+    }
+
+    @JsonIgnore
+    public List<XmlElement> getAdditionalChildren() {
+        return this.additionalChildren;
     }
 
     private boolean equalTo(Pause other) {
@@ -78,6 +91,7 @@ public final class Pause implements XmlSerializable {
         XmlWriter writer = new XmlWriter("Pause");
         writer.attribute("length", this.length);
         writer.attributes(this.additionalProperties);
+        writer.children(this.additionalChildren);
         return writer.toXml(xmlDeclaration);
     }
 
@@ -92,7 +106,8 @@ public final class Pause implements XmlSerializable {
         XmlReader.expect(element, "Pause");
         return new Pause(
                 XmlReader.attribute(element, "length").map(v -> XmlReader.convert(v, Integer.class)),
-                XmlReader.extraAttributes(element, Arrays.asList("length")));
+                XmlReader.extraAttributes(element, Arrays.asList("length")),
+                XmlReader.unknownChildren(element, Arrays.asList()));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -101,6 +116,9 @@ public final class Pause implements XmlSerializable {
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
+
+        @JsonIgnore
+        private List<XmlElement> additionalChildren = new ArrayList<>();
 
         private Builder() {}
 
@@ -121,7 +139,7 @@ public final class Pause implements XmlSerializable {
         }
 
         public Pause build() {
-            return new Pause(length, additionalProperties);
+            return new Pause(length, additionalProperties, additionalChildren);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -132,6 +150,34 @@ public final class Pause implements XmlSerializable {
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;
+        }
+
+        /**
+         * Appends a child element that is not described by the API definition.
+         */
+        public Builder addChild(XmlElement child) {
+            this.additionalChildren.add(child);
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            this.additionalChildren.addAll(additionalChildren);
+            return this;
+        }
+
+        /**
+         * Parses an xml document whose root element is <Pause>.
+         */
+        public static Builder fromXml(String xml) {
+            return fromXml(XmlReader.parse(xml));
+        }
+
+        public static Builder fromXml(Element element) {
+            Pause parsed = Pause.fromXml(element);
+            Builder builder = new Builder().from(parsed);
+            builder.additionalProperties(parsed.getAdditionalProperties());
+            builder.additionalChildren(parsed.getAdditionalChildren());
+            return builder;
         }
     }
 }

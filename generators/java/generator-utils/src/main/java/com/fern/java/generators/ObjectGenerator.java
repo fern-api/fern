@@ -188,7 +188,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 generatorContext.deserializeWithAdditionalProperties(),
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
-                generatorContext.builderNotNullChecks());
+                generatorContext.builderNotNullChecks(),
+                xmlObjectEncoding.map(_encoding -> XmlCoreGenerator.getXmlElementClassName(generatorContext)));
         TypeSpec typeSpec = genericObjectGenerator.generate();
         if (xmlObjectEncoding.isEmpty()) {
             return typeSpec;
@@ -199,7 +200,14 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 xmlObjectEncoding.get().typeId,
                 xmlObjectEncoding.get().xmlEncoding,
                 genericObjectGenerator.getAllEnrichedProperties(),
-                genericObjectGenerator.getAdditionalPropertiesFieldNameIfSupported());
+                genericObjectGenerator.getAdditionalPropertiesFieldNameIfSupported(),
+                genericObjectGenerator
+                        .getAdditionalChildrenFieldNameIfSupported()
+                        .get(),
+                genericObjectGenerator
+                        .getAdditionalChildrenGetterNameIfSupported()
+                        .get(),
+                genericObjectGenerator.usesBuilderConstructor());
         return xmlMethodsGenerator.addXmlSupport(typeSpec);
     }
 

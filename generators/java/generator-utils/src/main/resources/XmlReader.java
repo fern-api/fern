@@ -123,6 +123,22 @@ public final class XmlReader {
         return matches;
     }
 
+    /**
+     * Returns every direct child element whose (prefix-less) name is not in {@code knownNames}, preserved as generic
+     * {@link XmlElement}s.
+     */
+    public static List<XmlElement> unknownChildren(Element element, Collection<String> knownNames) {
+        List<XmlElement> unknown = new ArrayList<>();
+        NodeList nodes = element.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE && !knownNames.contains(localName((Element) node))) {
+                unknown.add(XmlElement.fromXml((Element) node));
+            }
+        }
+        return unknown;
+    }
+
     public static List<Element> children(Element element, String... names) {
         return children(element, Arrays.asList(names));
     }

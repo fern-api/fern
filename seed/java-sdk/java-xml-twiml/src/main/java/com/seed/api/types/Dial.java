@@ -5,6 +5,7 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.XmlElement;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -37,15 +39,19 @@ public final class Dial implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
+    private final List<XmlElement> additionalChildren;
+
     private Dial(
             Optional<String> number,
             Optional<List<String>> statusCallbackEvent,
             Optional<List<Number>> numbers,
-            Map<String, Object> additionalProperties) {
+            Map<String, Object> additionalProperties,
+            List<XmlElement> additionalChildren) {
         this.number = number;
         this.statusCallbackEvent = statusCallbackEvent;
         this.numbers = numbers;
         this.additionalProperties = additionalProperties;
+        this.additionalChildren = additionalChildren;
     }
 
     @JsonProperty("number")
@@ -72,6 +78,11 @@ public final class Dial implements XmlSerializable {
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
+    }
+
+    @JsonIgnore
+    public List<XmlElement> getAdditionalChildren() {
+        return this.additionalChildren;
     }
 
     private boolean equalTo(Dial other) {
@@ -106,6 +117,7 @@ public final class Dial implements XmlSerializable {
         writer.attribute("statusCallbackEvent", this.statusCallbackEvent, " ");
         writer.wrappedChildren("Numbers", "Number", this.numbers);
         writer.attributes(this.additionalProperties);
+        writer.children(this.additionalChildren);
         return writer.toXml(xmlDeclaration);
     }
 
@@ -127,7 +139,8 @@ public final class Dial implements XmlSerializable {
                         XmlReader.wrappedChildren(element, "Numbers", "Number").stream()
                                 .map(Number::fromXml)
                                 .collect(Collectors.toList())),
-                XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent")));
+                XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent")),
+                XmlReader.unknownChildren(element, Arrays.asList("Numbers")));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -140,6 +153,9 @@ public final class Dial implements XmlSerializable {
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
+
+        @JsonIgnore
+        private List<XmlElement> additionalChildren = new ArrayList<>();
 
         private Builder() {}
 
@@ -184,7 +200,7 @@ public final class Dial implements XmlSerializable {
         }
 
         public Dial build() {
-            return new Dial(number, statusCallbackEvent, numbers, additionalProperties);
+            return new Dial(number, statusCallbackEvent, numbers, additionalProperties, additionalChildren);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -198,6 +214,19 @@ public final class Dial implements XmlSerializable {
         }
 
         /**
+         * Appends a child element that is not described by the API definition.
+         */
+        public Builder addChild(XmlElement child) {
+            this.additionalChildren.add(child);
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            this.additionalChildren.addAll(additionalChildren);
+            return this;
+        }
+
+        /**
          * Appends a <Number> child element.
          */
         public Builder addNumber(Number number) {
@@ -205,6 +234,21 @@ public final class Dial implements XmlSerializable {
             updated.add(number);
             this.numbers = Optional.of(updated);
             return this;
+        }
+
+        /**
+         * Parses an xml document whose root element is <Dial>.
+         */
+        public static Builder fromXml(String xml) {
+            return fromXml(XmlReader.parse(xml));
+        }
+
+        public static Builder fromXml(Element element) {
+            Dial parsed = Dial.fromXml(element);
+            Builder builder = new Builder().from(parsed);
+            builder.additionalProperties(parsed.getAdditionalProperties());
+            builder.additionalChildren(parsed.getAdditionalChildren());
+            return builder;
         }
     }
 }

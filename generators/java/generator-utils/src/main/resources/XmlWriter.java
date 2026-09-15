@@ -104,6 +104,19 @@ public final class XmlWriter {
     }
 
     /**
+     * Adds child elements that carry their own element name.
+     */
+    public XmlWriter children(Collection<? extends XmlSerializable> values) {
+        if (values == null) {
+            return this;
+        }
+        for (XmlSerializable child : values) {
+            content.add(child.toXml(false));
+        }
+        return this;
+    }
+
+    /**
      * Adds child elements wrapped in a container element with the given name. Nothing is emitted when the value is
      * absent.
      */

@@ -3,5 +3,8 @@
     implement `XmlSerializable` with `toXml()` and a static `fromXml(String)` parser, backed by new
     core `XmlWriter`/`XmlReader` utilities. Builders gain per-child-element methods
     (e.g. `Response.builder().say(...)`) and undiscriminated child unions dispatch `fromXml` by
-    element name. Types without xml metadata are unchanged.
+    element name. `Builder.fromXml(String)` returns a populated builder, unknown child elements are
+    preserved as `XmlElement`s (readable via `getAdditionalChildren()`, addable via `addChild(...)`)
+    and round-tripped by `toXml()`, and very large objects that use a builder-based constructor also
+    get `fromXml`. Types without xml metadata are unchanged.
   type: feat

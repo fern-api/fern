@@ -5,6 +5,7 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.XmlElement;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -33,9 +35,15 @@ public final class Response implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private Response(Optional<List<ResponseChildrenItem>> children, Map<String, Object> additionalProperties) {
+    private final List<XmlElement> additionalChildren;
+
+    private Response(
+            Optional<List<ResponseChildrenItem>> children,
+            Map<String, Object> additionalProperties,
+            List<XmlElement> additionalChildren) {
         this.children = children;
         this.additionalProperties = additionalProperties;
+        this.additionalChildren = additionalChildren;
     }
 
     @JsonProperty("children")
@@ -52,6 +60,11 @@ public final class Response implements XmlSerializable {
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
+    }
+
+    @JsonIgnore
+    public List<XmlElement> getAdditionalChildren() {
+        return this.additionalChildren;
     }
 
     private boolean equalTo(Response other) {
@@ -82,6 +95,7 @@ public final class Response implements XmlSerializable {
         XmlWriter writer = new XmlWriter("Response");
         writer.children("children", this.children);
         writer.attributes(this.additionalProperties);
+        writer.children(this.additionalChildren);
         return writer.toXml(xmlDeclaration);
     }
 
@@ -98,7 +112,8 @@ public final class Response implements XmlSerializable {
                 XmlReader.optionalList(XmlReader.children(element, "Say", "Dial", "Pause", "Hangup").stream()
                         .map(ResponseChildrenItem::fromXml)
                         .collect(Collectors.toList())),
-                XmlReader.extraAttributes(element, Arrays.asList()));
+                XmlReader.extraAttributes(element, Arrays.asList()),
+                XmlReader.unknownChildren(element, Arrays.asList("Say", "Dial", "Pause", "Hangup")));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -107,6 +122,9 @@ public final class Response implements XmlSerializable {
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
+
+        @JsonIgnore
+        private List<XmlElement> additionalChildren = new ArrayList<>();
 
         private Builder() {}
 
@@ -127,7 +145,7 @@ public final class Response implements XmlSerializable {
         }
 
         public Response build() {
-            return new Response(children, additionalProperties);
+            return new Response(children, additionalProperties, additionalChildren);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -137,6 +155,19 @@ public final class Response implements XmlSerializable {
 
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
+
+        /**
+         * Appends a child element that is not described by the API definition.
+         */
+        public Builder addChild(XmlElement child) {
+            this.additionalChildren.add(child);
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            this.additionalChildren.addAll(additionalChildren);
             return this;
         }
 
@@ -178,6 +209,21 @@ public final class Response implements XmlSerializable {
             updated.add(ResponseChildrenItem.of(hangup));
             this.children = Optional.of(updated);
             return this;
+        }
+
+        /**
+         * Parses an xml document whose root element is <Response>.
+         */
+        public static Builder fromXml(String xml) {
+            return fromXml(XmlReader.parse(xml));
+        }
+
+        public static Builder fromXml(Element element) {
+            Response parsed = Response.fromXml(element);
+            Builder builder = new Builder().from(parsed);
+            builder.additionalProperties(parsed.getAdditionalProperties());
+            builder.additionalChildren(parsed.getAdditionalChildren());
+            return builder;
         }
     }
 }

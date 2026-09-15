@@ -5,15 +5,19 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.XmlElement;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.w3c.dom.Element;
 
@@ -22,8 +26,11 @@ import org.w3c.dom.Element;
 public final class Hangup implements XmlSerializable {
     private final Map<String, Object> additionalProperties;
 
-    private Hangup(Map<String, Object> additionalProperties) {
+    private final List<XmlElement> additionalChildren;
+
+    private Hangup(Map<String, Object> additionalProperties, List<XmlElement> additionalChildren) {
         this.additionalProperties = additionalProperties;
+        this.additionalChildren = additionalChildren;
     }
 
     @java.lang.Override
@@ -35,6 +42,11 @@ public final class Hangup implements XmlSerializable {
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
+    }
+
+    @JsonIgnore
+    public List<XmlElement> getAdditionalChildren() {
+        return this.additionalChildren;
     }
 
     @java.lang.Override
@@ -55,6 +67,7 @@ public final class Hangup implements XmlSerializable {
     public String toXml(boolean xmlDeclaration) {
         XmlWriter writer = new XmlWriter("Hangup");
         writer.attributes(this.additionalProperties);
+        writer.children(this.additionalChildren);
         return writer.toXml(xmlDeclaration);
     }
 
@@ -67,13 +80,18 @@ public final class Hangup implements XmlSerializable {
 
     public static Hangup fromXml(Element element) {
         XmlReader.expect(element, "Hangup");
-        return new Hangup(XmlReader.extraAttributes(element, Arrays.asList()));
+        return new Hangup(
+                XmlReader.extraAttributes(element, Arrays.asList()),
+                XmlReader.unknownChildren(element, Arrays.asList()));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
+
+        @JsonIgnore
+        private List<XmlElement> additionalChildren = new ArrayList<>();
 
         private Builder() {}
 
@@ -82,7 +100,7 @@ public final class Hangup implements XmlSerializable {
         }
 
         public Hangup build() {
-            return new Hangup(additionalProperties);
+            return new Hangup(additionalProperties, additionalChildren);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -93,6 +111,34 @@ public final class Hangup implements XmlSerializable {
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;
+        }
+
+        /**
+         * Appends a child element that is not described by the API definition.
+         */
+        public Builder addChild(XmlElement child) {
+            this.additionalChildren.add(child);
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            this.additionalChildren.addAll(additionalChildren);
+            return this;
+        }
+
+        /**
+         * Parses an xml document whose root element is <Hangup>.
+         */
+        public static Builder fromXml(String xml) {
+            return fromXml(XmlReader.parse(xml));
+        }
+
+        public static Builder fromXml(Element element) {
+            Hangup parsed = Hangup.fromXml(element);
+            Builder builder = new Builder().from(parsed);
+            builder.additionalProperties(parsed.getAdditionalProperties());
+            builder.additionalChildren(parsed.getAdditionalChildren());
+            return builder;
         }
     }
 }
