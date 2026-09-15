@@ -1,4 +1,10 @@
-import { GraphQLSpec, groupGraphQLSpecsByNamespace, type Spec } from "@fern-api/api-workspace-commons";
+import {
+    getOpenAPISettings,
+    GraphQLSpec,
+    groupGraphQLSpecsByNamespace,
+    type OpenAPISpec,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import {
@@ -1237,6 +1243,54 @@ export class DocsDefinitionResolver {
         throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
+    private async createDirectApiWorkspace(
+        apiSection: docsYml.DocsNavigationItem.ApiSection
+    ): Promise<OSSWorkspace | undefined> {
+        if (apiSection.specs == null) {
+            return undefined;
+        }
+        const specs: Spec[] = apiSection.specs.map((spec): Spec => {
+            if (spec.type === "graphql") {
+                return {
+                    type: "graphql",
+                    absoluteFilepath: spec.absolutePath,
+                    absoluteFilepathToOverrides: spec.absoluteOverridePaths,
+                    absoluteFilepathToExamples: undefined,
+                    namespace: spec.namespace
+                };
+            }
+            if (spec.absoluteOverlayPaths.length > 1) {
+                throw new CliError({
+                    message: `Docs API spec '${spec.absolutePath}' declares multiple overlays, but docs generation currently supports one overlay per specification.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return {
+                type: "openapi",
+                absoluteFilepath: spec.absolutePath,
+                absoluteFilepathToOverrides: spec.absoluteOverridePaths,
+                absoluteFilepathToOverlays: spec.absoluteOverlayPaths[0],
+                settings: getOpenAPISettings(),
+                source: {
+                    type: spec.type,
+                    file: spec.absolutePath
+                },
+                namespace: spec.namespace
+            } satisfies OpenAPISpec;
+        });
+        const workspace = new OSSWorkspace({
+            specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
+            allSpecs: specs,
+            workspaceName: apiSection.apiName,
+            absoluteFilePath: this.docsWorkspace.absoluteFilePath,
+            generatorsConfiguration: undefined,
+            changelog: undefined,
+            cliVersion: this.cliVersion ?? "unknown"
+        });
+        await workspace.processGraphQLSpecs(this.taskContext);
+        return workspace;
+    }
+
     /**
      * Builds a translated IR for each configured non-default locale whose
      * `translations/<locale>/apis/<apiName>/` directory contains a translated copy of
@@ -1842,7 +1896,14 @@ export class DocsDefinitionResolver {
         // For git-ref-backed versions the api section's definition is loaded from the ref's
         // materialized fern folder; otherwise from the current working-tree workspaces.
         const { apiWorkspaces, ossWorkspaces } = await this.resolveApiWorkspaces(contentSource);
+        const directApiWorkspace = await this.createDirectApiWorkspace(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
+
+        // GraphQL is registered separately from the Fern IR below. A GraphQL-only direct
+        // workspace therefore has no OpenAPI/AsyncAPI IR for the v3 parser to produce, and
+        // should use the same empty Fern IR fallback as the legacy generators.yml path.
+        const shouldAttemptOpenApiIr =
+            directApiWorkspace == null || directApiWorkspace.allSpecs.some((spec) => spec.type !== "graphql");
 
         let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
@@ -1851,9 +1912,9 @@ export class DocsDefinitionResolver {
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
-        if (useV3Parser) {
+        if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
-                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                openapiWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1868,9 +1929,10 @@ export class DocsDefinitionResolver {
 
         // Extract OpenAPI IR tags when tag description pages are enabled
         let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
-        if (item.tagDescriptionPages && useV3Parser) {
+        if (item.tagDescriptionPages && useV3Parser && shouldAttemptOpenApiIr) {
             try {
-                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                const workspaceForTags =
+                    openapiWorkspace ?? directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
                 const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
@@ -1896,10 +1958,13 @@ export class DocsDefinitionResolver {
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
+            if (directApiWorkspace != null && openapiError != null) {
+                throw openapiError;
+            }
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await this.getFernWorkspaceForApiSection(item, apiWorkspaces).toFernWorkspace(
+            workspace = await (directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)).toFernWorkspace(
                 { context: this.taskContext },
                 {
                     enableUniqueErrorsPerEndpoint: true,
@@ -1928,9 +1993,9 @@ export class DocsDefinitionResolver {
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
-            // access to generators.yml configuration and source file paths.
+            // access to the resolved API source file paths.
             try {
-                workspace = await this.getFernWorkspaceForApiSection(item, apiWorkspaces).toFernWorkspace(
+                workspace = await (directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)).toFernWorkspace(
                     { context: this.taskContext },
                     {
                         enableUniqueErrorsPerEndpoint: true,
@@ -1970,7 +2035,7 @@ export class DocsDefinitionResolver {
         let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
         if (graphqlWorkspace == null) {
             try {
-                graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                graphqlWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
             } catch {
                 // expected for Fern Definition APIs (no OSS workspace)
             }

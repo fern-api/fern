@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
+import { ApiSpecConfiguration } from "./ApiSpecConfiguration.js";
 import { Audience } from "./Audience.js";
 import { Availability } from "./Availability.js";
 import { CollapsedValue } from "./CollapsedValue.js";
@@ -18,6 +19,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     .object({
         api: core.serialization.string(),
         apiName: core.serialization.property("api-name", core.serialization.string().optional()),
+        specs: core.serialization.list(ApiSpecConfiguration).optional(),
         openrpc: core.serialization.string().optional(),
         audiences: Audience.optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
@@ -47,6 +49,7 @@ export declare namespace ApiReferenceConfiguration {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         api: string;
         "api-name"?: string | null;
+        specs?: ApiSpecConfiguration.Raw[] | null;
         openrpc?: string | null;
         audiences?: Audience.Raw | null;
         "display-errors"?: boolean | null;
