@@ -21,7 +21,7 @@ import {
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, join, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { GraphQLConverter, type GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -914,7 +914,7 @@ export class DocsDefinitionResolver {
             });
         }
 
-        if (existsSync(join(this.docsWorkspace.absoluteFilePath, WELL_KNOWN_SKILLS_DIRECTORY))) {
+        if (await doesPathExist(join(this.docsWorkspace.absoluteFilePath, WELL_KNOWN_SKILLS_DIRECTORY))) {
             this.taskContext.logger.warn(
                 `Ignoring ${WELL_KNOWN_SKILLS_DIRECTORY}/ because page-actions.options.skills.path is declared in docs.yml — ` +
                     `the skills bundle is generated from ${skillsDirectory} instead.`
