@@ -85,6 +85,106 @@ describe("migrateDocsConfiguration", () => {
         expect(await readFile(docsPath, "utf8")).toBe(firstMigration);
     });
 
+    it("writes independent specs arrays for multiple associated API sections", async () => {
+        await writeFile(docsPath, "instances: []\nnavigation:\n  - api: First reference\n  - api: Second reference\n");
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: undefined,
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+            })
+        ).resolves.toBe(2);
+
+        const migratedText = await readFile(docsPath, "utf8");
+        expect(migratedText).not.toMatch(/[&*][A-Za-z0-9_-]+/);
+        expect(YAML.parse(migratedText)).toMatchObject({
+            navigation: [
+                { api: "First reference", specs: [{ path: "../specs/openapi.yml" }] },
+                { api: "Second reference", specs: [{ path: "../specs/openapi.yml" }] }
+            ]
+        });
+    });
+
+    it("does not treat feature-flag payloads as API reference sections", async () => {
+        await writeFile(
+            docsPath,
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: API reference",
+                "    feature-flag:",
+                "      flag: api-variant",
+                "      match:",
+                "        api: internal",
+                ""
+            ].join("\n")
+        );
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: undefined,
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+            })
+        ).resolves.toBe(1);
+
+        expect(YAML.parse(await readFile(docsPath, "utf8"))).toMatchObject({
+            navigation: [
+                {
+                    api: "API reference",
+                    specs: [{ path: "../specs/openapi.yml" }],
+                    "feature-flag": { match: { api: "internal" } }
+                }
+            ]
+        });
+    });
+
+    it("rejects custom API import settings that docs.yml cannot preserve", async () => {
+        const original = "instances: []\nnavigation:\n  - api: API reference\n";
+        await writeFile(docsPath, original);
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.apiImportSettings = { titleAsSchemaName: true };
+        sourceSpec.hasCustomApiSettings = true;
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: undefined,
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [sourceSpec]
+            })
+        ).rejects.toThrow("cannot preserve custom API import settings");
+        expect(await readFile(docsPath, "utf8")).toBe(original);
+    });
+
+    it("uses the first overlay when docs.yml cannot represent additional overlays", async () => {
+        await writeFile(docsPath, "instances: []\nnavigation:\n  - api: API reference\n");
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.absoluteOverlayPaths.push(
+            AbsoluteFilePath.of(join(temporaryDirectory, "specs", "second-overlay.yml"))
+        );
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: undefined,
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [sourceSpec]
+            })
+        ).resolves.toBe(1);
+        expect(YAML.parse(await readFile(docsPath, "utf8"))).toMatchObject({
+            navigation: [
+                {
+                    api: "API reference",
+                    specs: [{ overlays: "../specs/overlay.yml" }]
+                }
+            ]
+        });
+    });
+
     it("preserves GraphQL source types in direct docs specs", async () => {
         await writeFile(docsPath, "instances: []\nnavigation:\n  - api: GraphQL API reference\n");
         const sourceSpec = createSourceSpec(temporaryDirectory);
@@ -157,8 +257,7 @@ describe("migrateDocsConfiguration", () => {
     it("updates API sections in referenced product files", async () => {
         await mkdir(join(temporaryDirectory, "fern", "products"));
         const productPath = join(temporaryDirectory, "fern", "products", "payments.yml");
-        const rootDocs =
-            "instances: []\nproducts:\n  - display-name: Payments\n    path: ./products/payments.yml\n";
+        const rootDocs = "instances: []\nproducts:\n  - display-name: Payments\n    path: ./products/payments.yml\n";
         await writeFile(docsPath, rootDocs);
         await writeFile(productPath, "navigation:\n  - api: API reference\n");
 

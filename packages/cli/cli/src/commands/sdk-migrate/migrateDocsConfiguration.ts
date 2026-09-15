@@ -29,8 +29,8 @@ export async function migrateDocsConfiguration({
         ...collectReferencedNavigationPaths(rootDocument, dirname(docsPath).toString())
     ];
     let updatedSections = 0;
-    for (const configurationPath of configurationPaths) {
-        const document = configurationPath === docsPath ? rootDocument : await loadDocument(configurationPath);
+    for (const [index, configurationPath] of configurationPaths.entries()) {
+        const document = index === 0 ? rootDocument : await loadDocument(configurationPath);
         updatedSections += await migrateDocument({
             document,
             configurationPath,
@@ -66,9 +66,7 @@ async function migrateDocument({
     isOnlyApiWorkspace: boolean;
     sourceSpecs: ResolvedMigrationSourceSpec[];
 }): Promise<number> {
-    const serializedSpecs = sourceSpecs.map((spec) =>
-        serializeDocsSpec(spec, dirname(configurationPath).toString())
-    );
+    const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
     visitNode(document.contents, (map) => {
         if (!isApiReferenceSection(map) || map.has("specs")) {
@@ -82,7 +80,10 @@ async function migrateDocument({
         if (!isAssociated) {
             return;
         }
-        map.set("specs", serializedSpecs);
+        map.set(
+            "specs",
+            sourceSpecs.map((spec) => serializeDocsSpec(spec, docsDirectory))
+        );
         updatedSections++;
     });
 
@@ -94,10 +95,7 @@ async function migrateDocument({
     return updatedSections;
 }
 
-function collectReferencedNavigationPaths(
-    document: YAML.Document.Parsed,
-    fernDirectory: string
-): AbsoluteFilePath[] {
+function collectReferencedNavigationPaths(document: YAML.Document.Parsed, fernDirectory: string): AbsoluteFilePath[] {
     if (!isMap(document.contents)) {
         return [];
     }
@@ -135,10 +133,19 @@ function addReferencedPath(node: unknown, fernDirectory: string, paths: Set<stri
     }
 }
 
-function serializeDocsSpec(spec: ResolvedMigrationSourceSpec, docsDirectory: string): docsYml.RawSchemas.ApiSpecConfiguration {
+function serializeDocsSpec(
+    spec: ResolvedMigrationSourceSpec,
+    docsDirectory: string
+): docsYml.RawSchemas.ApiSpecConfiguration {
     if (spec.type !== "openapi" && spec.type !== "asyncapi" && spec.type !== "graphql") {
         throw new CliError({
             message: `Docs migration does not support direct ${spec.type} API specifications`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    if (spec.hasCustomApiSettings === true || spec.apiImportSettings != null) {
+        throw new CliError({
+            message: `Docs migration cannot preserve custom API import settings for '${spec.absolutePath}' because direct docs.yml specifications do not support them yet. Migrate this API reference manually or remove the custom settings before retrying.`,
             code: CliError.Code.ConfigError
         });
     }
@@ -172,6 +179,9 @@ function visitNode(node: Node | null | undefined, visitMap: (map: YAMLMap) => vo
     if (isMap(node)) {
         visitMap(node);
         for (const pair of node.items) {
+            if (scalarString(pair.key) === "feature-flag") {
+                continue;
+            }
             visitNode(pair.value as Node | null, visitMap);
         }
         return;

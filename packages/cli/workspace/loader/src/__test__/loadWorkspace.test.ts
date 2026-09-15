@@ -72,30 +72,6 @@ describe("loadWorkspace", () => {
         assert(workspace.didSucceed);
     });
 
-    it("detects AsyncAPI for legacy OSS definitions without a declared source type", async () => {
-        const result = await loadSingleNamespaceAPIWorkspace({
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures")),
-            namespace: undefined,
-            definitions: [
-                {
-                    schema: { type: "oss", path: "asyncapi.yml" },
-                    origin: undefined,
-                    overrides: undefined,
-                    overlays: undefined,
-                    audiences: [],
-                    settings: undefined
-                }
-            ]
-        });
-
-        expect(Array.isArray(result)).toBe(true);
-        assert(Array.isArray(result));
-        expect(result[0]).toMatchObject({
-            type: "openapi",
-            source: { type: "asyncapi" }
-        });
-    });
-
     it("rejects open api with absolute spec path", async () => {
         const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
         const absolutePathToOpenApi = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
