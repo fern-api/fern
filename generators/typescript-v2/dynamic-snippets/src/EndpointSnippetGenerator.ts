@@ -671,8 +671,15 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
+        const bodyFieldNames = new Set(requestBodyFields.map((field) => field.name));
+
         return ts.TypeLiteral.object({
-            fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
+            fields: [
+                ...pathParameterFields.filter((field) => !bodyFieldNames.has(field.name)),
+                ...queryParameterFields,
+                ...headerFields,
+                ...requestBodyFields
+            ]
         });
     }
 

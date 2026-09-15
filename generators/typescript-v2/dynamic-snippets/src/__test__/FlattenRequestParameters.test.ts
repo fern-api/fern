@@ -9,6 +9,37 @@ const DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY = AbsoluteFilePath.of(
 );
 const IR_FILEPATH = AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "exhaustive.json"));
 
+const STRING_NAME: FernIr.dynamic.Name = {
+    originalName: "string",
+    camelCase: {
+        unsafeName: "string",
+        safeName: "string"
+    },
+    pascalCase: {
+        unsafeName: "String",
+        safeName: "String"
+    },
+    snakeCase: {
+        unsafeName: "string",
+        safeName: "string"
+    },
+    screamingSnakeCase: {
+        unsafeName: "STRING",
+        safeName: "STRING"
+    }
+};
+
+const STRING_PATH_PARAMETER: FernIr.dynamic.NamedParameter = {
+    name: {
+        name: STRING_NAME,
+        wireValue: "string"
+    },
+    typeReference: {
+        type: "primitive",
+        value: "STRING"
+    }
+};
+
 const REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
     endpoint: {
         method: "POST",
@@ -80,5 +111,42 @@ describe("flattenRequestParameters", () => {
         });
 
         expect(response.snippet).toContain("body:");
+    });
+
+    it("omits path parameters that collide with flattened body fields", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenRequestParameters: true
+                }
+            }),
+            modifyIr: (ir) => {
+                const endpoint = ir.endpoints["endpoint_endpoints/params.createWithBodyAndQuery"];
+                if (endpoint == null || endpoint.request.type !== "inlined") {
+                    throw new Error("Expected the body-and-query endpoint to have an inlined request");
+                }
+                endpoint.location.path = "/params/body-and-query/{string}";
+                endpoint.request.pathParameters = [STRING_PATH_PARAMETER];
+                return ir;
+            }
+        });
+
+        const response = await generator.generate({
+            ...REQUEST,
+            endpoint: {
+                method: "POST",
+                path: "/params/body-and-query/{string}"
+            },
+            pathParameters: {
+                string: "path"
+            },
+            requestBody: {
+                string: "body"
+            }
+        });
+
+        expect(response.snippet.match(/\bstring:/g)?.length).toBe(1);
+        expect(response.snippet).toContain('string: "body"');
     });
 });
