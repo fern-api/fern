@@ -108,6 +108,9 @@ catalogs:
     '@open-rpc/meta-schema':
       specifier: ^1.14.9
       version: 1.14.9
+    '@postman/sdk-config':
+      specifier: 0.3.1
+      version: 0.3.1
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -4535,7 +4538,7 @@ importers:
         specifier: 'catalog:'
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
-        specifier: 0.3.1
+        specifier: 'catalog:'
         version: 0.3.1
       '@sentry/cli':
         specifier: 'catalog:'
@@ -6242,6 +6245,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
+      '@postman/sdk-config':
+        specifier: 'catalog:'
+        version: 0.3.1
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
