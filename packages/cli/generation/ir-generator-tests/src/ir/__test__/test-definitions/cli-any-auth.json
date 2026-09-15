@@ -1143,6 +1143,7 @@
     },
     "environments": {
         "defaultEnvironment": "Production",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
