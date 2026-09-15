@@ -143,6 +143,37 @@ pub struct TokenBundle {
     /// Epoch seconds when the access token expires. `None` = no expiry known.
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub expires_at: Option<u64>,
+    /// Digest of the client credentials this token was minted for (see
+    /// `client_fingerprint`). `None` for tokens from login flows or older
+    /// cache files, which are honoured regardless of the configured client.
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub client_fingerprint: Option<String>,
+}
+
+/// Truncated SHA-256 over the configured credential inputs (`client_id`,
+/// `client_secret` and, for the refresh-token grant, the refresh token). Stored next to a
+/// cached token so a token minted for one client is never served once the
+/// configured credentials change; the secret itself never reaches disk.
+pub fn client_fingerprint(
+    client_id: &str,
+    client_secret: &str,
+    refresh_token: Option<&str>,
+) -> String {
+    use sha2::Digest;
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(client_id.as_bytes());
+    hasher.update([0u8]);
+    hasher.update(client_secret.as_bytes());
+    if let Some(refresh_token) = refresh_token {
+        hasher.update([0u8]);
+        hasher.update(refresh_token.as_bytes());
+    }
+    hasher
+        .finalize()
+        .iter()
+        .take(16)
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
 }
 
 impl TokenBundle {
@@ -156,6 +187,19 @@ impl TokenBundle {
             access_token: access.to_string(),
             refresh_token: refresh.map(str::to_string),
             expires_at,
+            client_fingerprint: None,
+        }
+    }
+
+    /// Whether this bundle may be served to a caller configured with the
+    /// given client fingerprint. Untagged bundles (login flows, legacy cache
+    /// files) always match; a tagged bundle is only served to the client it
+    /// was minted for, so partially configured credentials never fall back
+    /// to a stale token.
+    pub fn matches_client(&self, fingerprint: Option<&str>) -> bool {
+        match &self.client_fingerprint {
+            Some(cached) => fingerprint == Some(cached.as_str()),
+            None => true,
         }
     }
 
@@ -181,6 +225,7 @@ impl TokenBundle {
                 access_token: value.to_string(),
                 refresh_token: None,
                 expires_at: None,
+                client_fingerprint: None,
             },
         }
     }
@@ -324,7 +369,9 @@ mod tests {
             let handles: Vec<_> = (0..16)
                 .map(|i| {
                     let target = target.clone();
-                    scope.spawn(move || atomic_write(&target, format!(r#"{{"writer":{i}}}"#).as_bytes()))
+                    scope.spawn(move || {
+                        atomic_write(&target, format!(r#"{{"writer":{i}}}"#).as_bytes())
+                    })
                 })
                 .collect();
             handles.into_iter().map(|h| h.join().unwrap()).collect()
@@ -339,9 +386,13 @@ mod tests {
         // Last writer wins, but the file must always be one writer's complete
         // payload — never a mix, and never absent.
         let contents = std::fs::read_to_string(&target).unwrap();
-        let parsed: serde_json::Value = serde_json::from_str(&contents)
-            .unwrap_or_else(|e| panic!("target is not valid JSON after concurrent writes: {e} in {contents:?}"));
-        assert!(parsed.get("writer").is_some(), "unexpected payload: {contents}");
+        let parsed: serde_json::Value = serde_json::from_str(&contents).unwrap_or_else(|e| {
+            panic!("target is not valid JSON after concurrent writes: {e} in {contents:?}")
+        });
+        assert!(
+            parsed.get("writer").is_some(),
+            "unexpected payload: {contents}"
+        );
 
         // No temp files orphaned in the directory.
         let leftovers: Vec<String> = std::fs::read_dir(dir.path())
@@ -350,7 +401,10 @@ mod tests {
             .map(|e| e.file_name().to_string_lossy().into_owned())
             .filter(|n| n.contains(".tmp"))
             .collect();
-        assert!(leftovers.is_empty(), "temp files left behind: {leftovers:?}");
+        assert!(
+            leftovers.is_empty(),
+            "temp files left behind: {leftovers:?}"
+        );
     }
 
     /// A failed write must not leave its temp file behind. Renaming a file onto
@@ -378,7 +432,10 @@ mod tests {
             .map(|e| e.file_name().to_string_lossy().into_owned())
             .filter(|n| n.contains(".tmp"))
             .collect();
-        assert!(leftovers.is_empty(), "temp file leaked after a failed write: {leftovers:?}");
+        assert!(
+            leftovers.is_empty(),
+            "temp file leaked after a failed write: {leftovers:?}"
+        );
     }
 
     /// Pins [`TempFileGuard`]: armed drops unlink, disarmed drops don't. Drop
@@ -447,7 +504,10 @@ mod tests {
     #[test]
     fn parse_oauth_error_message_falls_back_to_description_only() {
         let body = r#"{"error_description":"some detail"}"#;
-        assert_eq!(parse_oauth_error_message(body).as_deref(), Some("some detail"));
+        assert_eq!(
+            parse_oauth_error_message(body).as_deref(),
+            Some("some detail")
+        );
     }
 
     #[test]

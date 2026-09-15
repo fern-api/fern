@@ -21,12 +21,16 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly keepContainer: boolean;
     private readonly runner?: ContainerRunner;
     private readonly disableTelemetry: boolean;
+    private readonly network?: string;
+    private readonly declaredVersion?: string;
 
     constructor({
         containerImage,
         keepContainer,
         runner,
         disableTelemetry,
+        network,
+        declaredVersion,
         dockerImage,
         keepDocker
     }: {
@@ -35,6 +39,18 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         runner?: ContainerRunner;
         /** When true, disables telemetry collection inside the generator container. */
         disableTelemetry?: boolean;
+        /**
+         * Container network mode. `"none"` runs the generator with no network access, which is what
+         * an air-gapped generation requires: the guarantee has to hold for the customer's run, not
+         * only for a CI check.
+         */
+        network?: string;
+        /**
+         * The version the workspace asked for. Logged when the image reference does not carry it,
+         * which is what a digest pin looks like: the reference then identifies the artifact but says
+         * nothing about which generator release it is.
+         */
+        declaredVersion?: string;
         /** @deprecated Use containerImage instead */
         dockerImage?: string;
         /** @deprecated Use keepContainer instead */
@@ -44,6 +60,8 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         this.keepContainer = keepContainer ?? keepDocker ?? false;
         this.runner = runner;
         this.disableTelemetry = disableTelemetry ?? false;
+        this.network = network;
+        this.declaredVersion = declaredVersion;
     }
 
     public async execute({
@@ -59,7 +77,13 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         inspect,
         runner
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
+        const declaredVersionSuffix =
+            this.declaredVersion != null && !this.containerImage.endsWith(`:${this.declaredVersion}`)
+                ? ` (generators.yml version ${this.declaredVersion})`
+                : "";
+        context.logger.info(
+            `Executing generator ${generatorName} using container image: ${this.containerImage}${declaredVersionSuffix}`
+        );
 
         const binds = [
             `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,
@@ -126,7 +150,8 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
                 envVars,
                 ports,
                 removeAfterCompletion: !this.keepContainer,
-                runner: this.runner ?? runner
+                runner: this.runner ?? runner,
+                ...(this.network != null ? { network: this.network } : {})
             });
         } catch (error) {
             if (error instanceof CliError) {

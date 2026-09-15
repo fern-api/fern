@@ -1,6 +1,8 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
+    authStrategyVariant,
+    customRequestPropertyBinding,
     detectAuthBindings,
     joinUrl,
     renderFullPath,
@@ -272,6 +274,39 @@ describe("detectAuthBindings", () => {
 // OAuth descriptor rendering and endpoint resolution helpers
 // ---------------------------------------------------------------------------
 
+describe("authStrategyVariant", () => {
+    it("maps ANY → Any so a generators.yml-only scheme (e.g. OAuth) is honored", () => {
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.Any, schemes: [{}, {}] })).toBe("Any");
+    });
+
+    it("maps ENDPOINT_SECURITY → Routing", () => {
+        expect(
+            authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.EndpointSecurity, schemes: [{}, {}] })
+        ).toBe("Routing");
+    });
+
+    it("leaves ALL on the runtime's Auto default so single-scheme CLIs are unchanged", () => {
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [] })).toBeUndefined();
+        expect(authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}] })).toBeUndefined();
+    });
+
+    // Reachable without the user asking for it: merging a one-scheme spec
+    // (ALL) with a two-scheme spec (ANY) keeps the first's requirement and
+    // the second's schemes. Throwing would fail generation for workspaces
+    // that build today, so warn and leave the runtime on Auto.
+    it("warns and falls back to Auto on ALL over several schemes", () => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+        try {
+            expect(
+                authStrategyVariant({ requirement: FernIr.AuthSchemesRequirement.All, schemes: [{}, {}] })
+            ).toBeUndefined();
+            expect(warn).toHaveBeenCalledWith(expect.stringContaining("ALL over 2 schemes"));
+        } finally {
+            warn.mockRestore();
+        }
+    });
+});
+
 describe("renderRequestProperty", () => {
     it("renders nested body request paths", () => {
         expect(
@@ -295,7 +330,62 @@ describe("renderRequestProperty", () => {
     });
 });
 
-const singleEnv = (args: { url: string; id?: string; defaultEnvironment?: string }): FernIr.EnvironmentsConfig => ({
+describe("customRequestPropertyBinding", () => {
+    const bodyProp = (wireValue: string, optional: boolean): FernIr.RequestProperty => {
+        const string = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
+        return {
+            propertyPath: undefined,
+            property: FernIr.RequestPropertyValue.body({
+                name: wireValue,
+                valueType: optional ? FernIr.TypeReference.container(FernIr.ContainerType.optional(string)) : string,
+                propertyAccess: undefined,
+                availability: undefined,
+                docs: undefined,
+                defaultValue: undefined,
+                v2Examples: undefined
+            })
+        };
+    };
+
+    it("pins an unconstrained grant_type to the flow's RFC 6749 value instead of an env var", () => {
+        const token = customRequestPropertyBinding({
+            property: bodyProp("grant_type", true),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "TOKEN"
+        });
+        expect(token.value).toBe('OAuth2RequestValue::literal(serde_json::json!("client_credentials"))');
+        expect(token.envVar).toBeUndefined();
+
+        const refresh = customRequestPropertyBinding({
+            property: bodyProp("grant_type", false),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "REFRESH"
+        });
+        expect(refresh.value).toBe('OAuth2RequestValue::literal(serde_json::json!("refresh_token"))');
+        expect(refresh.envVar).toBeUndefined();
+    });
+
+    it("still derives env vars for other unconstrained properties", () => {
+        const binding = customRequestPropertyBinding({
+            property: bodyProp("audience", true),
+            envPrefix: "ACME",
+            schemeName: "OAuth2",
+            endpointKind: "TOKEN"
+        });
+        expect(binding.value).toBe('OAuth2RequestValue::optional_env("ACME_OAUTH2_TOKEN_AUDIENCE", false)');
+        expect(binding.envVar).toBe("ACME_OAUTH2_TOKEN_AUDIENCE");
+        expect(binding.optional).toBe(true);
+    });
+});
+
+const singleEnv = (args: {
+    url: string;
+    id?: string;
+    defaultEnvironment?: string;
+    defaultUrl?: string;
+}): FernIr.EnvironmentsConfig => ({
     defaultEnvironment: args.defaultEnvironment,
     environments: FernIr.Environments.singleBaseUrl({
         environments: [
@@ -304,7 +394,7 @@ const singleEnv = (args: { url: string; id?: string; defaultEnvironment?: string
                 name: "Production",
                 url: args.url,
                 audiences: undefined,
-                defaultUrl: undefined,
+                defaultUrl: args.defaultUrl,
                 urlTemplate: undefined,
                 urlVariables: undefined,
                 docs: undefined
@@ -313,7 +403,11 @@ const singleEnv = (args: { url: string; id?: string; defaultEnvironment?: string
     })
 });
 
-const multiEnv = (args: { urls: Record<string, string>; defaultEnvironment?: string }): FernIr.EnvironmentsConfig => ({
+const multiEnv = (args: {
+    urls: Record<string, string>;
+    defaultEnvironment?: string;
+    defaultUrls?: Record<string, string>;
+}): FernIr.EnvironmentsConfig => ({
     defaultEnvironment: args.defaultEnvironment,
     environments: FernIr.Environments.multipleBaseUrls({
         baseUrls: Object.keys(args.urls).map((id) => ({ id, name: id })),
@@ -323,7 +417,7 @@ const multiEnv = (args: { urls: Record<string, string>; defaultEnvironment?: str
                 name: "Production",
                 urls: args.urls,
                 audiences: undefined,
-                defaultUrls: undefined,
+                defaultUrls: args.defaultUrls,
                 urlTemplates: undefined,
                 urlVariables: undefined,
                 docs: undefined
@@ -365,6 +459,62 @@ describe("resolveDefaultBaseUrl", () => {
                 baseUrlId: "auth"
             })
         ).toBe("https://auth.example.com");
+    });
+
+    // `url` is the server template resolved with each variable's default, which
+    // can name a host that doesn't exist (Twilio declares `oauth.{region}
+    // .twilio.com` but only `oauth.twilio.com` resolves). `x-fern-default-url`
+    // is the untemplated host, and the CLI can't supply variables, so it wins.
+    it("prefers x-fern-default-url over the variable-substituted single base URL", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: singleEnv({
+                    url: "https://oauth.us1.example.com",
+                    defaultUrl: "https://oauth.example.com",
+                    defaultEnvironment: "prod"
+                }),
+                baseUrlId: undefined
+            })
+        ).toBe("https://oauth.example.com");
+    });
+
+    it("prefers x-fern-default-url over the variable-substituted pinned base URL", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: multiEnv({
+                    urls: { auth: "https://oauth.us1.example.com", api: "https://api.us1.example.com" },
+                    defaultUrls: { auth: "https://oauth.example.com", api: "https://api.example.com" },
+                    defaultEnvironment: "prod"
+                }),
+                baseUrlId: "auth"
+            })
+        ).toBe("https://oauth.example.com");
+    });
+
+    it("falls back to the substituted URL for a base URL with no default declared", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: multiEnv({
+                    urls: { auth: "https://oauth.us1.example.com", api: "https://api.us1.example.com" },
+                    defaultUrls: { api: "https://api.example.com" },
+                    defaultEnvironment: "prod"
+                }),
+                baseUrlId: "auth"
+            })
+        ).toBe("https://oauth.us1.example.com");
+    });
+
+    it("applies the default-URL preference to the unpinned first base URL too", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: multiEnv({
+                    urls: { auth: "https://oauth.us1.example.com", api: "https://api.us1.example.com" },
+                    defaultUrls: { auth: "https://oauth.example.com" },
+                    defaultEnvironment: "prod"
+                }),
+                baseUrlId: undefined
+            })
+        ).toBe("https://oauth.example.com");
     });
 });
 

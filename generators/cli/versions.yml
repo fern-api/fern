@@ -1,4 +1,64 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.40.0
+  changelogEntry:
+    - summary: |
+        **Behavior change for multi-scheme CLIs.** The generated `main.rs` now emits
+        `.auth_strategy(AuthStrategy::Any)` whenever the IR's `auth.requirement` is `ANY`
+        (`.auth_strategy(AuthStrategy::Routing)` for `endpoint-security`). Previously the
+        runtime derived its strategy from the baked spec and dispatched per operation, so
+        each request used the scheme that operation's `security` named.
+
+        With `Any`, the first scheme in `generators.yml` order that has credentials is used
+        for **every** authenticated request and per-operation `security` is no longer
+        consulted. This matches what the SDK generators have always done for
+        `api.auth: any:`, and it is what makes a scheme declared only in `generators.yml`
+        (e.g. OAuth client-credentials layered onto a vendor spec) reachable at all —
+        per-operation routing could never select it, so those requests went out
+        unauthenticated.
+
+        Two groups are affected:
+
+        - `api.auth: any: [...]` in `generators.yml`. One `auth login` now covers every
+          operation. If your schemes map to different accounts or privileges, reorder
+          `any:` so the preferred credential is declared first — declaration order is now
+          the precedence lever, and it is the same lever your SDKs already use.
+        - Specs with two or more `components.securitySchemes` and **no** `api.auth` block.
+          The importer derives `ANY` from the scheme count alone, so these CLIs switch from
+          per-endpoint routing to first-credential-wins even though nothing in
+          `generators.yml` asked for it. If your operations genuinely need different
+          schemes, declare `api.auth: endpoint-security` to keep per-operation dispatch.
+
+        A selected scheme whose credentials fail (e.g. a rejected OAuth token exchange) now
+        fails the command. The SDKs instead fall through to the next scheme; the CLI is
+        deliberately stricter, because silently substituting one credential for another with
+        different privileges is worse in a terminal than a loud failure.
+
+        `ALL` over several schemes has no equivalent strategy and now warns and leaves the
+        runtime on its `Auto` default, rather than pinning one.
+      type: feat
+    - summary: |
+        OAuth2 client-credentials CLIs now send `grant_type=client_credentials` (and
+        `grant_type=refresh_token` on the refresh endpoint) when the spec declares
+        `grant_type` without a literal or default value, instead of exposing it as an
+        optional `<BIN>_<SCHEME>_TOKEN_GRANT_TYPE` env var that was silently omitted.
+      type: fix
+    - summary: |
+        Cached OAuth2 tokens in `credentials.json` are now tagged with a fingerprint of
+        the client credentials they were minted for. Changing the client ID/secret env
+        vars no longer reuses the previous client's access or refresh token.
+      type: fix
+    - summary: |
+        OAuth token and refresh endpoints now resolve their URL from `x-fern-default-url`
+        when the spec's server is templated, instead of the template filled with each
+        variable's default. A spec declaring `https://oauth.{region}.example.com` with
+        `x-fern-default-url: https://oauth.example.com` previously baked
+        `https://oauth.us1.example.com` into the token request — a host that need not
+        exist, since the regional form is often not a real name. The CLI has no way to
+        supply server variables, so the untemplated default is always the correct
+        choice; this matches what the SDK generators already do.
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 0.39.4
   changelogEntry:
     - summary: |
