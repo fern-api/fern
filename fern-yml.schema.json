@@ -5333,6 +5333,42 @@
             "api-name": {
               "type": "string"
             },
+            "specs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openapi",
+                      "asyncapi",
+                      "graphql"
+                    ]
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": "string"
+                  },
+                  "overlays": {
+                    "type": "string"
+                  },
+                  "overrides": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "path"
+                ],
+                "additionalProperties": false
+              }
+            },
             "openrpc": {
               "type": "string"
             },

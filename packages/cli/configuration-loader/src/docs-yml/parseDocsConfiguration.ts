@@ -1481,6 +1481,15 @@ async function convertNavigationItem({
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
+            specs: rawConfig.specs?.map((spec) => ({
+                type: spec.type,
+                absolutePath: resolveFilepath(spec.path, absolutePathToConfig),
+                namespace: spec.namespace ?? undefined,
+                absoluteOverlayPaths:
+                    spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
+                absoluteOverridePaths:
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
+            })),
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
