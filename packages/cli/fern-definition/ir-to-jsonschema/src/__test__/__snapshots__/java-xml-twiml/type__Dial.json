@@ -24,6 +24,19 @@
         }
       ]
     },
+    "record": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DialRecordItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "numbers": {
       "oneOf": [
         {
@@ -40,6 +53,13 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "DialRecordItem": {
+      "type": "string",
+      "enum": [
+        "record-from-answer",
+        "record-from-ringing"
+      ]
+    },
     "Number": {
       "type": "object",
       "properties": {

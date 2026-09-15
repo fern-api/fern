@@ -35,6 +35,8 @@ public final class Dial implements XmlSerializable {
 
     private final Optional<List<String>> statusCallbackEvent;
 
+    private final Optional<List<DialRecordItem>> record;
+
     private final Optional<List<Number>> numbers;
 
     private final Map<String, Object> additionalProperties;
@@ -44,11 +46,13 @@ public final class Dial implements XmlSerializable {
     private Dial(
             Optional<String> number,
             Optional<List<String>> statusCallbackEvent,
+            Optional<List<DialRecordItem>> record,
             Optional<List<Number>> numbers,
             Map<String, Object> additionalProperties,
             List<XmlElement> additionalChildren) {
         this.number = number;
         this.statusCallbackEvent = statusCallbackEvent;
+        this.record = record;
         this.numbers = numbers;
         this.additionalProperties = additionalProperties;
         this.additionalChildren = additionalChildren;
@@ -62,6 +66,11 @@ public final class Dial implements XmlSerializable {
     @JsonProperty("status_callback_event")
     public Optional<List<String>> getStatusCallbackEvent() {
         return statusCallbackEvent;
+    }
+
+    @JsonProperty("record")
+    public Optional<List<DialRecordItem>> getRecord() {
+        return record;
     }
 
     @JsonProperty("numbers")
@@ -88,12 +97,13 @@ public final class Dial implements XmlSerializable {
     private boolean equalTo(Dial other) {
         return number.equals(other.number)
                 && statusCallbackEvent.equals(other.statusCallbackEvent)
+                && record.equals(other.record)
                 && numbers.equals(other.numbers);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.number, this.statusCallbackEvent, this.numbers);
+        return Objects.hash(this.number, this.statusCallbackEvent, this.record, this.numbers);
     }
 
     @java.lang.Override
@@ -115,6 +125,7 @@ public final class Dial implements XmlSerializable {
         XmlWriter writer = new XmlWriter("Dial", "https://www.twilio.com/twiml", "tw");
         writer.text(this.number);
         writer.attribute("statusCallbackEvent", this.statusCallbackEvent, " ");
+        writer.attribute("record", this.record, " ");
         writer.wrappedChildren("Numbers", "Number", this.numbers);
         writer.attributes(this.additionalProperties);
         writer.children(this.additionalChildren);
@@ -132,14 +143,17 @@ public final class Dial implements XmlSerializable {
         XmlReader.expect(element, "Dial");
         return new Dial(
                 XmlReader.text(element),
-                XmlReader.attribute(element, "statusCallbackEvent").map(v -> XmlReader.split(v, " ")),
+                XmlReader.attribute(element, "statusCallbackEvent").map(raw -> XmlReader.split(raw, " ")),
+                XmlReader.attribute(element, "record").map(raw -> XmlReader.split(raw, " ").stream()
+                        .map(v -> XmlReader.convert(v, DialRecordItem.class))
+                        .collect(Collectors.toList())),
                 XmlReader.optionalWrappedList(
                         element,
                         "Numbers",
                         XmlReader.wrappedChildren(element, "Numbers", "Number").stream()
                                 .map(Number::fromXml)
                                 .collect(Collectors.toList())),
-                XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent")),
+                XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent", "record")),
                 XmlReader.unknownChildren(element, Arrays.asList("Numbers")));
     }
 
@@ -148,6 +162,8 @@ public final class Dial implements XmlSerializable {
         private Optional<String> number = Optional.empty();
 
         private Optional<List<String>> statusCallbackEvent = Optional.empty();
+
+        private Optional<List<DialRecordItem>> record = Optional.empty();
 
         private Optional<List<Number>> numbers = Optional.empty();
 
@@ -162,6 +178,7 @@ public final class Dial implements XmlSerializable {
         public Builder from(Dial other) {
             number(other.getNumber());
             statusCallbackEvent(other.getStatusCallbackEvent());
+            record(other.getRecord());
             numbers(other.getNumbers());
             return this;
         }
@@ -188,6 +205,17 @@ public final class Dial implements XmlSerializable {
             return this;
         }
 
+        @JsonSetter(value = "record", nulls = Nulls.SKIP)
+        public Builder record(Optional<List<DialRecordItem>> record) {
+            this.record = record;
+            return this;
+        }
+
+        public Builder record(List<DialRecordItem> record) {
+            this.record = Optional.ofNullable(record);
+            return this;
+        }
+
         @JsonSetter(value = "numbers", nulls = Nulls.SKIP)
         public Builder numbers(Optional<List<Number>> numbers) {
             this.numbers = numbers;
@@ -200,7 +228,7 @@ public final class Dial implements XmlSerializable {
         }
 
         public Dial build() {
-            return new Dial(number, statusCallbackEvent, numbers, additionalProperties, additionalChildren);
+            return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, additionalChildren);
         }
 
         public Builder additionalProperty(String key, Object value) {

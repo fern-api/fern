@@ -308,14 +308,14 @@ public final class XmlObjectMethodsGenerator {
         if (shape.list) {
             CodeBlock items = converter.isEmpty()
                     ? CodeBlock.of(
-                            "$T.split(v, $S)", xmlReaderClassName, shape.listSeparator.orElse(DEFAULT_LIST_SEPARATOR))
+                            "$T.split(raw, $S)", xmlReaderClassName, shape.listSeparator.orElse(DEFAULT_LIST_SEPARATOR))
                     : CodeBlock.of(
-                            "$T.split(v, $S).stream().map($L).collect($T.toList())",
+                            "$T.split(raw, $S).stream().map($L).collect($T.toList())",
                             xmlReaderClassName,
                             shape.listSeparator.orElse(DEFAULT_LIST_SEPARATOR),
                             converter,
                             Collectors.class);
-            CodeBlock parsed = CodeBlock.of("$L.map(v -> $L)", source, items);
+            CodeBlock parsed = CodeBlock.of("$L.map(raw -> $L)", source, items);
             return shape.optional ? parsed : CodeBlock.of("$L.orElseGet($T::emptyList)", parsed, Collections.class);
         }
         CodeBlock parsed = converter.isEmpty() ? source : CodeBlock.of("$L.map($L)", source, converter);

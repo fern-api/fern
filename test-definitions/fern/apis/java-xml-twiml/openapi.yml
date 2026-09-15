@@ -71,6 +71,16 @@ components:
             name: statusCallbackEvent
             attribute: true
           x-fern-xml-list-separator: " "
+        record:
+          type: array
+          items:
+            type: string
+            enum:
+              - record-from-answer
+              - record-from-ringing
+          xml:
+            attribute: true
+          x-fern-xml-list-separator: " "
         numbers:
           type: array
           items:

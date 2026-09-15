@@ -104,6 +104,13 @@
       },
       "additionalProperties": false
     },
+    "DialRecordItem": {
+      "type": "string",
+      "enum": [
+        "record-from-answer",
+        "record-from-ringing"
+      ]
+    },
     "Number": {
       "type": "object",
       "properties": {
@@ -149,6 +156,19 @@
               "type": "array",
               "items": {
                 "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DialRecordItem"
               }
             },
             {
