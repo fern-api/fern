@@ -467,6 +467,8 @@ export interface FernSdkConfigV1Payload {
         sdkName?: string;
         sdkVersion?: string;
         clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
+        requestedOutput?: FernSdkGenApiRequestedOutput;
+        package?: FernSdkGenApiPackageConfig;
     }>;
 }
 
@@ -481,6 +483,7 @@ export interface FernSdkGenApiBuildParameters {
     token: FernToken;
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
     targetIdSeed?: string;
@@ -753,7 +756,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             targetIdSeed: participant.targetIdSeed,
             sourceSpecIndexes: participant.sourceSpecIndexes,
             audiences: participant.audiences,
-            payload: participant.payload
+            payload: participant.payload,
+            requestedOutput: participant.requestedOutput
         }))
     });
     const serializedRequest = JSON.stringify(request);
@@ -1182,7 +1186,8 @@ export function createFernSdkGenApiRequest({
     sdkVersion,
     apiVersion,
     specsTarGzBuffer,
-    payload
+    payload,
+    requestedOutput
 }: {
     apiName: string;
     organization: string;
@@ -1193,13 +1198,14 @@ export function createFernSdkGenApiRequest({
     apiVersion?: string;
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkName, sdkVersion, apiVersion, payload }]
+        targets: [{ generatorInvocation, sdkName, sdkVersion, apiVersion, payload, requestedOutput }]
     });
 }
 
@@ -1223,6 +1229,7 @@ export function createFernSdkGenApiBatchRequest({
         sourceSpecIndexes?: number[];
         audiences?: string[];
         payload: FernSdkGenApiPayload;
+        requestedOutput?: FernSdkGenApiRequestedOutput;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -1241,7 +1248,10 @@ export function createFernSdkGenApiBatchRequest({
         return id;
     });
     const requestTargets = targets.map(
-        ({ generatorInvocation, sdkName, sdkVersion, apiVersion, targetIdSeed, audiences, payload }, index) => {
+        (
+            { generatorInvocation, sdkName, sdkVersion, apiVersion, targetIdSeed, audiences, payload, requestedOutput },
+            index
+        ) => {
             const language = getFernSdkGenApiLanguage(generatorInvocation.name);
             if (language == null) {
                 throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
@@ -1292,7 +1302,7 @@ export function createFernSdkGenApiBatchRequest({
                           }
                         : {})
                 },
-                requestedOutput: output.requestedOutput
+                requestedOutput: requestedOutput ?? output.requestedOutput
             };
         }
     );

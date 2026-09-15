@@ -324,7 +324,12 @@ export async function runRemoteGenerationForGenerator({
                 apiVersion: sdkConfigV1.apiVersion,
                 token,
                 specsTarGzBuffer: candidate.specsTarGzBuffer,
-                payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.body },
+                payload: {
+                    payloadKind: "sdk-config-v1",
+                    body: sdkConfigV1.body,
+                    package: sdkConfigTarget.package
+                },
+                requestedOutput: sdkConfigTarget.requestedOutput,
                 absolutePathToPreview,
                 context: interactiveTaskContext,
                 targetIdSeed: sdkGenApiTargetIdSeed,

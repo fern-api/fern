@@ -1020,7 +1020,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
+                        defaultToAllApiWorkspaces: false,
+                        skipApiWorkspaces: argv.sdkConfig != null
                     }),
                     cliContext,
                     version: argv.version,
@@ -1087,7 +1088,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             return await generateAPIWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    skipApiWorkspaces: argv.sdkConfig != null
                 }),
                 cliContext,
                 version: argv.version,
@@ -2803,7 +2805,7 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create a Postman SDK Config v1 file from one or more resolved Fern SDK groups",
+        "Create an SDK Config v1 file from one or more resolved Fern SDK groups",
         (yargs) =>
             yargs
                 .option("group", {

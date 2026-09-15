@@ -3,8 +3,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import {
     createGroupedSpecsTarGzArchiveSettled,
     createSpecsTarGzArchive,
-    generatorWantsSpecs,
-    validateSdkConfigImportSettings
+    generatorWantsSpecs
 } from "@fern-api/local-workspace-runner";
 import {
     type FernSdkConfigV1Payload,
@@ -53,17 +52,7 @@ export function createFernSourceArchiveResolver({
                 if (request.sdkGenApiRoute == null) {
                     return undefined;
                 }
-                const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
-                if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                    const configTarget = sdkConfigV1?.targets.find(
-                        (target) => target.language === request.sdkGenApiRoute?.language
-                    );
-                    validateSdkConfigImportSettings(specs, {
-                        clientPathParameterStyle:
-                            configTarget?.clientPathParameterStyle ?? sdkConfigV1?.clientPathParameterStyle
-                    });
-                }
-                return specs;
+                return await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
             })
         );
         const generatorSelections = settledSelections.flatMap((result, index) => {

@@ -1773,6 +1773,34 @@ describe("fernapi/fern-mcp-server target", () => {
         expect(request.targets[0]?.package).toBeUndefined();
     });
 
+    it("uses SDK Config output metadata instead of the adapter invocation", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: { ...sdkConfigPayload("{}"), package: { packageName: "@acme/sdk" } },
+            requestedOutput: {
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                publish: { registry: "npm" }
+            }
+        });
+
+        expect(request.targets[0]).toMatchObject({
+            package: { packageName: "@acme/sdk" },
+            requestedOutput: {
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                publish: { registry: "npm" }
+            }
+        });
+    });
+
     it("infers npm for legacy publish output with no explicit registry override", () => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",
