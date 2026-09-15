@@ -1384,6 +1384,7 @@
     },
     "environments": {
         "defaultEnvironment": null,
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [

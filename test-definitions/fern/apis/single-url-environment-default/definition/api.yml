@@ -4,5 +4,6 @@ environments:
   Production: https://production.com/api
   Staging: https://staging.com/api
 default-environment: Production
+base-url-env: SINGLE_URL_ENVIRONMENT_DEFAULT_BASE_URL
 error-discrimination:
   strategy: status-code
