@@ -214,6 +214,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
+                    respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -234,6 +235,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
+        respectNullableUnionFields,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -247,6 +249,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         maxRetries?: number;
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
+        respectNullableUnionFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -261,6 +264,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 allowUserAgentAppInfo,
                 maxRetries,
                 respectOptionalRequestBody,
+                respectNullableUnionFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
@@ -326,6 +330,7 @@ function getTemplateVariables({
     allowUserAgentAppInfo,
     maxRetries,
     respectOptionalRequestBody,
+    respectNullableUnionFields,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -337,6 +342,7 @@ function getTemplateVariables({
     allowUserAgentAppInfo?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
+    respectNullableUnionFields?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -356,6 +362,10 @@ function getTemplateVariables({
         // Emits the JSON::Request omit_content_type_without_body parameter only when the
         // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
         respectOptionalRequestBody: respectOptionalRequestBody ?? false,
+        // Consults `nullable` in the union matcher's required-field check only when
+        // the opt-in flag is on, so flag-off internal/types/union.rb stays
+        // byte-identical.
+        respectNullableUnionFields: respectNullableUnionFields ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,
