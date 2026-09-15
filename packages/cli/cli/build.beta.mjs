@@ -1,4 +1,4 @@
-import { buildCli, buildCompletionHelper, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
+import { buildCli, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
 
 buildCli({
     outDir: "dist/beta",
@@ -24,13 +24,12 @@ buildCli({
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://dev2-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle3.s3.amazonaws.com/",
         CLI_NAME: "fern-beta",
-        CLI_PACKAGE_NAME: "@fern-api/fern-v2-beta"
+        CLI_PACKAGE_NAME: "@fern-api/fern-api-beta"
     },
+
     packageJsonOverrides: {
-        name: "@fern-api/fern-v2-beta",
-        bin: { "fern-v2-beta": "cli.cjs" }
+        name: "@fern-api/fern-api-beta",
+        bin: { "fern-beta": "cli.cjs" }
     },
     tsupOverrides: PRODUCTION_TSUP_OVERRIDES
 });
-
-await buildCompletionHelper({ outDir: "dist/beta", minify: false });
