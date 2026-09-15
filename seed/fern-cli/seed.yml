@@ -23,3 +23,11 @@ publishDev:
     - pnpm turbo run dist:cli:dev --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:dev --access public --tag latest
     - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/dev/
+publishBeta:
+  workingDirectory: packages/cli/cli
+  versionSubstitution: $VERSION
+  command:
+    - pnpm install
+    - pnpm turbo run dist:cli:beta --filter @fern-api/cli -- $VERSION
+    - pnpm --filter @fern-api/cli publish:cli:beta --access public --tag latest
+    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/beta/

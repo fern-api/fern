@@ -994,6 +994,11 @@ function addPublishCommands(cli: Argv) {
                             default: false,
                             demandOption: false
                         })
+                        .option("beta", {
+                            type: "boolean",
+                            default: false,
+                            demandOption: false
+                        })
                         .check((argv) => {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided
@@ -1016,7 +1021,8 @@ function addPublishCommands(cli: Argv) {
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context,
-                        isDevRelease: argv.dev
+                        isDevRelease: argv.dev,
+                        isBetaRelease: argv.beta
                     });
                 }
             )

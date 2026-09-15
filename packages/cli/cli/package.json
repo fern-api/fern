@@ -41,6 +41,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "publish:cli:beta": "pnpm publish ./dist/beta --no-git-checks",
     "publish:cli:dev": "pnpm publish ./dist/dev --no-git-checks",
     "publish:cli:prod": "pnpm publish ./dist/prod --no-git-checks",
     "test": "vitest --passWithNoTests --run",
