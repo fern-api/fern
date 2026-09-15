@@ -9,6 +9,7 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
+    AuthScheme,
     ContainerType,
     DeclaredTypeName,
     dynamic as DynamicSnippets,
@@ -400,6 +401,18 @@ export class DynamicSnippetsConverter {
         }
     }
 
+    private getAuthWrapperProperty(auth: ApiAuth, scheme: AuthScheme): DynamicSnippets.Name | undefined {
+        switch (auth.requirement) {
+            case "ANY":
+            case "ENDPOINT_SECURITY":
+                return this.fullCasingsGenerator.generateName(scheme.key);
+            case "ALL":
+                return undefined;
+            default:
+                assertNever(auth.requirement);
+        }
+    }
+
     private convertPathParameters({
         pathParameters
     }: {
@@ -755,10 +768,7 @@ export class DynamicSnippetsConverter {
             return undefined;
         }
         const scheme = auth.schemes[0];
-        const wrapperProperty =
-            auth.requirement === "ANY" || auth.requirement === "ENDPOINT_SECURITY"
-                ? this.fullCasingsGenerator.generateName(scheme.key)
-                : undefined;
+        const wrapperProperty = this.getAuthWrapperProperty(auth, scheme);
         switch (scheme.type) {
             case "basic": {
                 const basicAuth = {

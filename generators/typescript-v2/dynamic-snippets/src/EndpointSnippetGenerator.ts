@@ -20,17 +20,17 @@ type AuthFields =
     | FernIr.dynamic.OAuth
     | FernIr.dynamic.InferredAuth;
 
-type AuthWithWrapperProperty = AuthFields & {
-    wrapperProperty?: FernIr.dynamic.Name;
+type AuthWithWrapperPropertyField = AuthFields & {
+    wrapperProperty?: FernIr.dynamic.Name | null;
 };
 
 // TODO: remove once @fern-api/dynamic-ir-sdk >= 67.26.0 ships wrapperProperty on Auth
-function hasAuthWrapperProperty(auth: AuthFields): auth is AuthWithWrapperProperty {
+function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPropertyField {
     return "wrapperProperty" in auth;
 }
 
 function getAuthWrapperProperty(auth: AuthFields): FernIr.dynamic.Name | undefined {
-    return hasAuthWrapperProperty(auth) ? auth.wrapperProperty : undefined;
+    return hasWrapperPropertyField(auth) ? (auth.wrapperProperty ?? undefined) : undefined;
 }
 
 export class EndpointSnippetGenerator {
