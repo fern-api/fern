@@ -9,7 +9,7 @@ groups:
           token: ${GITHUB_TOKEN}
           mode: push
           uri: fern-api/php-sdk-tests
-          branch: any-auth
+          branch: ts-flatten-request-any-auth
   go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
@@ -19,4 +19,4 @@ groups:
           token: ${GITHUB_TOKEN}
           mode: push
           uri: fern-api/go-sdk-tests
-          branch: any-auth
+          branch: ts-flatten-request-any-auth
