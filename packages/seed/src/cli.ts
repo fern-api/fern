@@ -1004,7 +1004,10 @@ function addPublishCommands(cli: Argv) {
                                 throw new Error("Arguments --beta and --dev are mutually exclusive");
                             }
                             // Either version or changelog and previousChangelog must be provided
-                            return argv.ver || (argv.changelog && argv.previousChangelog);
+                            if (!argv.ver && !(argv.changelog && argv.previousChangelog)) {
+                                throw new Error("Either --ver or both --changelog and --previousChangelog must be provided");
+                            }
+                            return true;
                         }),
                 async (argv) => {
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
