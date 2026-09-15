@@ -236,6 +236,7 @@ function createGenerator(opts?: {
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    guardProcessEnvAccess?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
@@ -243,6 +244,7 @@ function createGenerator(opts?: {
         omitFernHeaders: opts?.omitFernHeaders ?? false,
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
         allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
+        guardProcessEnvAccess: opts?.guardProcessEnvAccess,
         retainOriginalCasing: false,
         parameterNaming: "default",
         caseConverter
@@ -1751,8 +1753,11 @@ describe("BaseClientTypeGenerator", () => {
             return ir;
         }
 
-        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
-            const gen = createGenerator({ ir });
+        function getNormalizeFunction(
+            ir: FernIr.IntermediateRepresentation,
+            opts?: { guardProcessEnvAccess?: boolean }
+        ): string {
+            const gen = createGenerator({ ir, guardProcessEnvAccess: opts?.guardProcessEnvAccess });
             const context = createMockContext();
             gen.writeToFile(context);
             const normalizeFunction = context._captured.statements.find((s: string) =>
@@ -1805,11 +1810,20 @@ describe("BaseClientTypeGenerator", () => {
         });
 
         it("reads the base URL from the configured env var for single base URL environments", () => {
-            expect(
-                getNormalizeFunction(
-                    withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL")
-                )
-            ).toMatchSnapshot();
+            const normalizeFunction = getNormalizeFunction(
+                withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL")
+            );
+            expect(normalizeFunction).not.toContain('typeof process !== "undefined"');
+            expect(normalizeFunction).toMatchSnapshot();
+        });
+
+        it("guards the configured base URL env var when requested", () => {
+            const normalizeFunction = getNormalizeFunction(
+                withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL"),
+                { guardProcessEnvAccess: true }
+            );
+            expect(normalizeFunction).toContain('typeof process !== "undefined"');
+            expect(normalizeFunction).toMatchSnapshot();
         });
 
         it("reads the base URL from the configured env var for multiple base URL environments", () => {

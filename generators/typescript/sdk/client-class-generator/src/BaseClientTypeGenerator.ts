@@ -4,6 +4,7 @@ import type { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
 import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
@@ -15,6 +16,7 @@ export declare namespace BaseClientTypeGenerator {
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
         allowUserAgentAppInfo: boolean;
+        guardProcessEnvAccess?: boolean;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
@@ -113,6 +115,7 @@ export class BaseClientTypeGenerator {
     private readonly omitFernHeaders: boolean;
     private readonly includePlatformHeaders: boolean;
     private readonly allowUserAgentAppInfo: boolean;
+    private readonly guardProcessEnvAccess: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
@@ -123,6 +126,7 @@ export class BaseClientTypeGenerator {
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        guardProcessEnvAccess,
         retainOriginalCasing,
         parameterNaming,
         caseConverter
@@ -132,6 +136,7 @@ export class BaseClientTypeGenerator {
         this.omitFernHeaders = omitFernHeaders;
         this.includePlatformHeaders = includePlatformHeaders;
         this.allowUserAgentAppInfo = allowUserAgentAppInfo;
+        this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
@@ -532,7 +537,12 @@ ${entries.join("\n")}
         if (envVar == null) {
             return `${OPTIONS_PARAMETER_NAME}?.baseUrl`;
         }
-        return `${OPTIONS_PARAMETER_NAME}?.baseUrl ?? (${OPTIONS_PARAMETER_NAME}?.environment == null ? process.env?.[${JSON.stringify(envVar)}] : undefined)`;
+        return `${OPTIONS_PARAMETER_NAME}?.baseUrl ?? (${OPTIONS_PARAMETER_NAME}?.environment == null ? ${emitEnvVarValue(
+            {
+                envConstant: JSON.stringify(envVar),
+                guarded: this.guardProcessEnvAccess
+            }
+        )} : undefined)`;
     }
 
     private getRootPathParameterDefaults(): string {
