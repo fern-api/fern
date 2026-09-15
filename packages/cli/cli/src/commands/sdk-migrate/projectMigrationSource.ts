@@ -395,7 +395,17 @@ function resolveGeneratorSpecOverrides(
 }
 
 function hasDefinedSettings(settings: object | undefined): boolean {
-    return settings != null && Object.values(settings).some((value) => value !== undefined);
+    return (
+        settings != null &&
+        Object.entries(settings).some(
+            ([key, value]) =>
+                value !== undefined &&
+                !(
+                    key === "removeDiscriminantsFromSchemas" &&
+                    value === generatorsYml.RemoveDiscriminantsFromSchemas.Always
+                )
+        )
+    );
 }
 
 function normalizePaths(value: string | string[] | undefined): string[] {

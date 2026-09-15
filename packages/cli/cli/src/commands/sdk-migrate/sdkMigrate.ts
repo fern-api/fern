@@ -6,8 +6,8 @@ import YAML from "yaml";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
-import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
+import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
     resolveMigrationPathParameterStyle,
@@ -46,8 +46,7 @@ export async function sdkMigrate({
         cliContext
     });
     const outputPath = resolveOutputPath(args.output, workspace.absoluteFilePath);
-    const sourceBaseDirectory =
-        outputPath == null ? cwd().toString() : dirname(outputPath).toString();
+    const sourceBaseDirectory = outputPath == null ? cwd().toString() : dirname(outputPath).toString();
 
     let mapped: MappingResult;
     try {
