@@ -1,6 +1,6 @@
 import { execFileSync } from "child_process";
 import { Eta } from "eta";
-import { mkdtempSync, readFileSync, writeFileSync } from "fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -35,6 +35,24 @@ function render(rejectEmptyDateTimeStrings: boolean): string {
     });
 }
 
+/**
+ * Renders with only the variables the *model* generator supplies.
+ *
+ * `JsonDeserializer` is in `getCoreSerializationAsIsFiles`, so the model
+ * generator emits it too — and `ModelGeneratorContext` supplies no extra
+ * template vars. Under Eta's `useWith: true`, reading a missing *bare*
+ * identifier raises rather than evaluating falsy, so a bare
+ * `rejectEmptyDateTimeStrings` would abort model generation entirely. Every
+ * other SDK-only flag in a shared template is read through `it.` for this
+ * reason.
+ */
+function renderAsModelGenerator(): string {
+    return eta.renderString(readFileSync(TEMPLATE_PATH).toString(), {
+        namespace: "Acme\\Core\\Json",
+        coreNamespace: "Acme\\Core"
+    });
+}
+
 function hasPhp(): boolean {
     try {
         execFileSync("php", ["--version"], { stdio: "ignore" });
@@ -61,6 +79,13 @@ describe("deserializeDateTime empty-string handling", () => {
         expect(rendered.indexOf("trim($datetime) === ''")).toBeLessThan(
             rendered.indexOf("return new DateTime($datetime)")
         );
+    });
+
+    it("renders for the model generator, which supplies no flag at all", () => {
+        // Guards the `it.` prefix. With a bare identifier this throws and PHP
+        // model packages cannot be generated.
+        expect(() => renderAsModelGenerator()).not.toThrow();
+        expect(renderAsModelGenerator()).not.toContain("Cannot create DateTime from an empty string");
     });
 
     it("leaves deserializeDate alone, which already rejected an empty string", () => {
@@ -92,7 +117,11 @@ describe("deserializeDateTime empty-string handling", () => {
                     `    echo "THREW:" . get_class($e);\n` +
                     `}\n`
             );
-            return execFileSync("php", [file], { encoding: "utf-8" }).trim();
+            try {
+                return execFileSync("php", [file], { encoding: "utf-8" }).trim();
+            } finally {
+                rmSync(dir, { recursive: true, force: true });
+            }
         }
 
         it("fabricates the current time when the flag is off", () => {
