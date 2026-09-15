@@ -3316,6 +3316,7 @@ dependencies = [
 name = "basic_auth_cli_sdk"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "basic_auth_cli_types",
  "bytes",
  "futures",
