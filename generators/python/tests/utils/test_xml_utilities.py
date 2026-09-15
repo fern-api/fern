@@ -6,6 +6,7 @@ from typing import List, Optional
 import pydantic
 import pytest
 
+from core_utilities.shared.pydantic_utilities import IS_PYDANTIC_V2
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
     append_xml_child,
@@ -97,9 +98,20 @@ def test_namespace_prefix_and_declaration() -> None:
 
 
 def test_append_xml_child_on_frozen_model() -> None:
-    class Response(pydantic.BaseModel):
-        model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
-        children: Optional[List[Say]] = None
+    if IS_PYDANTIC_V2:
+
+        class Response(pydantic.BaseModel):
+            model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+            children: Optional[List[Say]] = None
+
+    else:
+
+        class Response(pydantic.BaseModel):  # type: ignore[no-redef]
+            children: Optional[List[Say]] = None
+
+            class Config:
+                frozen = True
+                arbitrary_types_allowed = True
 
     response = Response()
     append_xml_child(response, "children", Say("hi"))
@@ -108,12 +120,23 @@ def test_append_xml_child_on_frozen_model() -> None:
 
 
 def test_extra_xml_attributes_renders_undeclared_fields_escaped() -> None:
-    class Say(pydantic.BaseModel):
-        model_config = pydantic.ConfigDict(extra="allow")
-        message: Optional[str] = None
-        voice: Optional[str] = None
+    if IS_PYDANTIC_V2:
 
-    say = Say.model_validate({"message": "hi", "foo": "a<b&c", "skipped": None})
+        class Say(pydantic.BaseModel):
+            model_config = pydantic.ConfigDict(extra="allow")
+            message: Optional[str] = None
+            voice: Optional[str] = None
+
+    else:
+
+        class Say(pydantic.BaseModel):  # type: ignore[no-redef]
+            message: Optional[str] = None
+            voice: Optional[str] = None
+
+            class Config:
+                extra = pydantic.Extra.allow
+
+    say = Say(**{"message": "hi", "foo": "a<b&c", "skipped": None})
     xml = serialize_xml_element(
         name="Say",
         attributes=[XmlAttribute(name="voice", value=say.voice), *extra_xml_attributes(say)],
