@@ -58,6 +58,60 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/repo/output");
     });
 
+    it("fern-hosted maps to a download output mode and carries the slug", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    mcp: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-mcp-server",
+                                version: "0.0.1",
+                                output: {
+                                    location: "fern-hosted",
+                                    slug: "petstore"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const invocation = converted.groups[0]?.generators[0];
+        expect(invocation?.fernHostedOutput).toEqual({ slug: "petstore" });
+        expect(invocation?.absolutePathToLocalOutput).toBeUndefined();
+        expect(invocation?.outputMode.type).toEqual("downloadFiles");
+    });
+
+    it("fern-hosted slug is optional", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    mcp: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-mcp-server",
+                                version: "0.0.1",
+                                output: {
+                                    location: "fern-hosted"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        expect(converted.groups[0]?.generators[0]?.fernHostedOutput).toEqual({ slug: undefined });
+    });
+
     it("MIT license", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({

@@ -9,13 +9,20 @@ import {
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
     getOutputRepoUrl,
+    isSdkGenApiOnly,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext, TaskResult } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { mkdtemp } from "fs/promises";
+import { tmpdir } from "os";
+import path from "path";
 
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { detectCISource, detectDeployerAuthor } from "../../utils/environment.js";
+import { detectGitInfo } from "../../utils/gitInfo.js";
+import { deployHostedMcpServer } from "../mcp/deployMcpServer.js";
 import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
@@ -155,7 +162,7 @@ export async function generateWorkspace({
             generatorsYmlAbsolutePath
         });
         if (runnable != null) {
-            runnableGroups.push({ resolvedGroupName, group: runnable });
+            runnableGroups.push({ resolvedGroupName, group: await assignFernHostedOutputDirectories(runnable) });
         }
     }
 
@@ -165,6 +172,15 @@ export async function generateWorkspace({
         runnableGroups.map(({ resolvedGroupName, group }) =>
             context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
                 if (useLocalDocker) {
+                    const unsupported = group.generators.find((generator) => isSdkGenApiOnly(generator.name));
+                    if (unsupported != null) {
+                        groupContext.failAndThrow(
+                            `${unsupported.name} does not support --local. ` +
+                                "Remove --local to run this generator through the remote pipeline.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
                     await runLocalGenerationForWorkspace({
                         token,
                         projectConfig,
@@ -240,9 +256,103 @@ export async function generateWorkspace({
                         version
                     });
                 }
+                await deployFernHostedOutputs({
+                    group,
+                    workspace,
+                    organization,
+                    cliVersion: workspace.cliVersion,
+                    token,
+                    absolutePathToPreview,
+                    context: groupContext
+                });
             })
         )
     );
+}
+
+/**
+ * fern-hosted invocations have no user-facing output path: generation lands in a
+ * managed temp directory (every generation path — local docker, remote, and
+ * sdk-gen-api — writes or downloads to `absolutePathToLocalOutput`), and the
+ * generated bundle is deployed from there once the group finishes.
+ */
+async function assignFernHostedOutputDirectories(
+    group: generatorsYml.GeneratorGroup
+): Promise<generatorsYml.GeneratorGroup> {
+    const generators = await Promise.all(
+        group.generators.map(async (generator) => {
+            if (generator.fernHostedOutput == null || generator.absolutePathToLocalOutput != null) {
+                return generator;
+            }
+            const outputDirectory = await mkdtemp(path.join(tmpdir(), "fern-hosted-mcp-"));
+            return { ...generator, absolutePathToLocalOutput: AbsoluteFilePath.of(outputDirectory) };
+        })
+    );
+    return { ...group, generators };
+}
+
+async function deployFernHostedOutputs({
+    group,
+    workspace,
+    organization,
+    cliVersion,
+    token,
+    absolutePathToPreview,
+    context
+}: {
+    group: generatorsYml.GeneratorGroup;
+    workspace: AbstractAPIWorkspace<unknown>;
+    organization: string;
+    cliVersion: string;
+    token: FernToken | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+    context: TaskContext;
+}): Promise<void> {
+    const fernHostedGenerators = group.generators.filter((generator) => generator.fernHostedOutput != null);
+    if (fernHostedGenerators.length === 0) {
+        return;
+    }
+    if (absolutePathToPreview != null) {
+        context.logger.debug("Skipping hosted MCP server deploy in preview mode.");
+        return;
+    }
+    if (context.getResult() === TaskResult.Failure) {
+        context.logger.warn("Skipping hosted MCP server deploy because generation failed.");
+        return;
+    }
+    if (token == null) {
+        return context.failAndThrow(
+            "Deploying to Fern's hosted MCP platform requires authentication. Run `fern login` or set FERN_TOKEN.",
+            undefined,
+            { code: CliError.Code.AuthError }
+        );
+    }
+    // Provenance: who deployed, from which checkout. Best-effort, shared by every deploy in the group.
+    const ciSource = detectCISource();
+    const deployerAuthor = detectDeployerAuthor();
+    const git = await detectGitInfo({ ciSource, cwd: workspace.absoluteFilePath });
+    for (const generator of fernHostedGenerators) {
+        const bundleDir = generator.absolutePathToLocalOutput;
+        if (bundleDir == null) {
+            continue;
+        }
+        await context.runInteractiveTask({ name: `deploy ${generator.name}` }, async (deployContext) => {
+            await deployHostedMcpServer({
+                bundleDir,
+                organization,
+                slug: generator.fernHostedOutput?.slug,
+                token: token.value,
+                generatorName: generator.name,
+                generatorVersion: generator.version,
+                cliVersion,
+                config: generator.config,
+                git,
+                ciSource,
+                deployerAuthor,
+                context: deployContext
+            });
+        });
+    }
 }
 
 /**

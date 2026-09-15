@@ -1,6 +1,11 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 export type { FernSdkConfigV1Payload } from "./fernSdkGenApi.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
+export {
+    getFernSdkGenApiLanguage,
+    isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
+    synthesizesSdkConfig
+} from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,
@@ -10,6 +15,13 @@ export type {
 } from "./fernSdkGenApiSourceArchive.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+export {
+    type MappingResult,
+    mapFernDefinitionToSdkConfigApi,
+    mapFernGroupToSdkConfig,
+    type SourceDerivedApiFields
+} from "./mapFernGroupToSdkConfig.js";
+export { prepareFernSdkGenApiSdkConfigPayload } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";
 export type {
