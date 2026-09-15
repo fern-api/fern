@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.124.0
+  changelogEntry:
+    - summary: |
+        Add a top-level `changelog` key to `docs.yml` for multi-product sites. The changelog is shared
+        by every product, served at the site root (e.g. `/changelog`) instead of under a product slug,
+        and does not appear in the product switcher.
+
+        ```yaml
+        products:
+          - display-name: Ferns
+            path: products/ferns.yml
+          - display-name: Cacti
+            path: products/cacti.yml
+        changelog:
+          changelog: ./changelog
+        ```
+      type: feat
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 5.123.1
   changelogEntry:
     - summary: |
