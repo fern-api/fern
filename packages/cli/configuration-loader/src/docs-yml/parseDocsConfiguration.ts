@@ -571,6 +571,7 @@ function convertSettingsConfig(
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
+        showPermissionDeniedPage: settings.showPermissionDeniedPage ?? false,
         httpSnippets: settings.httpSnippets ?? true,
         searchText: settings.searchText ?? undefined,
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
