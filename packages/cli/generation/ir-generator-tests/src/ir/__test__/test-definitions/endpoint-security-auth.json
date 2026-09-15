@@ -3490,6 +3490,25 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
+                        }
                     }
                 },
                 "declaration": {
@@ -3791,6 +3810,25 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
+                        }
                     }
                 },
                 "declaration": {
@@ -3892,6 +3930,25 @@
                         "pascalCase": {
                             "unsafeName": "Token",
                             "safeName": "Token"
+                        }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
                         }
                     }
                 },
@@ -3995,6 +4052,25 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
+                        }
                     }
                 },
                 "declaration": {
@@ -4096,6 +4172,25 @@
                         "pascalCase": {
                             "unsafeName": "Token",
                             "safeName": "Token"
+                        }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
                         }
                     }
                 },
@@ -4199,6 +4294,25 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
+                        }
                     }
                 },
                 "declaration": {
@@ -4301,6 +4415,25 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
+                        }
                     }
                 },
                 "declaration": {
@@ -4402,6 +4535,25 @@
                         "pascalCase": {
                             "unsafeName": "Token",
                             "safeName": "Token"
+                        }
+                    },
+                    "wrapperProperty": {
+                        "originalName": "Bearer",
+                        "camelCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bearer",
+                            "safeName": "bearer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BEARER",
+                            "safeName": "BEARER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bearer",
+                            "safeName": "Bearer"
                         }
                     }
                 },
