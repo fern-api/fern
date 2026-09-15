@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0
+  changelogEntry:
+    - summary: |
+        A 503 now raises a typed error instead of `ArgumentError`.
+        `ServiceUnavailableError` inherited from `ApiError`, which accepts 0..1
+        positional arguments, while it is raised with the `(msg, code:)` signature
+        its siblings use — so constructing it threw from inside the SDK and the
+        caller lost the response during exactly the outage they needed to see. Every
+        other 5xx mapped correctly; this was a one-word divergence from
+        `ResponseError`.
+      type: fix
+    - summary: |
+        Add `respectNullableUnionFields` (opt-in). The undiscriminated-union matcher
+        tested a member's required fields against `optional` alone, so a field that
+        is required *and* `nullable` and legitimately arrives as `nil` read as a
+        missing required field. The arm was rejected, no member matched, and the
+        union silently degraded to an untyped Hash while the SDK documented the
+        model — callers then hit `NoMethodError` on the documented accessors.
+        `Model#to_h` already pairs the two flags this way. Opt-in because a caller
+        of an already published gem may be reading that Hash by key; enabling it
+        changes the returned type.
+      type: feat
+    - summary: |
+        Add `coerceAliasResponses` (opt-in). A type alias to a named type generated a
+        `load` that did a bare `JSON.parse`, so an endpoint whose response schema is
+        a `$ref` to another schema returned a string-keyed Hash while the SDK
+        documented the aliased model — and it parsed without `symbolize_names`,
+        unlike `Model.load`, so even hash access used different keys. With the flag,
+        `load` delegates to the aliased type's own coercion. Aliases to primitives,
+        containers and `unknown` are unaffected: there is no named type to delegate
+        to. Opt-in because a caller of an already published gem may be reading that
+        Hash by key.
+      type: feat
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 1.24.1
   changelogEntry:
     - summary: |
