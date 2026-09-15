@@ -18,7 +18,7 @@ public record RuleTypeSearchResponse : IJsonOnDeserialized
     /// Current page of results from the requested resource.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<RuleType>? Results { get; set; }
+    public IEnumerable<RuleType> Results { get; set; } = new List<RuleType>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
