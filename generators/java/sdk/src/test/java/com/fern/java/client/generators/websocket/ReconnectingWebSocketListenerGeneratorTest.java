@@ -40,6 +40,7 @@ public class ReconnectingWebSocketListenerGeneratorTest {
     private static final int GOING_AWAY = 1001;
     private static final int NO_STATUS_RECEIVED = 1005;
     private static final long RECONNECT_WAIT_MS = 500L;
+    private static final long RECONNECT_GRACE_MS = 100L;
 
     /** Implemented by the runtime-compiled test subclass so the test can talk to it without reflection. */
     public interface ListenerHarness {
@@ -247,10 +248,11 @@ public class ReconnectingWebSocketListenerGeneratorTest {
 
     @Test
     void generatedSource_keepsDefaultReconnectDecision() {
-        assertThat(generatedSource)
+        String normalized = generatedSource.replaceAll("\\s+", " ");
+        assertThat(normalized)
                 .contains("if (shouldReconnect.get() && shouldReconnectAfterClose(webSocket, code))")
-                .contains("protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code) {\n"
-                        + "    return code != 1000;")
+                .contains("protected boolean shouldReconnectAfterClose(WebSocket webSocket, int code) { "
+                        + "return code != 1000; }")
                 .contains("webSocket.close(code == 1005 ? 1000 : code, reason)");
     }
 
@@ -260,14 +262,17 @@ public class ReconnectingWebSocketListenerGeneratorTest {
                 harnessClass.getConstructor(Supplier.class, IntPredicate.class).newInstance(supplier, reconnectPolicy);
     }
 
-    /** Waits for the reconnect executor to (not) fire and returns the number of connection attempts observed. */
+    /**
+     * Waits for the reconnect executor to (not) fire and returns the number of connection attempts observed. Once
+     * {@code expected} attempts are seen, keeps watching for a grace period so extra attempts are caught.
+     */
     private static int awaitReconnects(CountingSupplier supplier, int expected) throws InterruptedException {
         long deadline = System.currentTimeMillis() + RECONNECT_WAIT_MS;
-        while (System.currentTimeMillis() < deadline) {
-            if (supplier.calls.get() >= expected && expected > 0) {
-                break;
-            }
+        while (System.currentTimeMillis() < deadline && supplier.calls.get() < expected) {
             Thread.sleep(20);
+        }
+        if (expected > 0) {
+            Thread.sleep(RECONNECT_GRACE_MS);
         }
         return supplier.calls.get();
     }
