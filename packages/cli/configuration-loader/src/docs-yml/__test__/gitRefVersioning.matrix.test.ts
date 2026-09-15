@@ -53,8 +53,7 @@ const VERSION_FILE = "navigation:\n  - section: V2\n    contents:\n      - page:
 const DOCS_WITH_TOP_NAV =
     "instances: []\nnavigation:\n  - section: V1\n    contents:\n      - page: P1\n        path: ./pages/v1.mdx\n      - api: API reference\n        api-name: versioned\n        specs:\n          - type: openapi\n            path: ./openapi.yml\n";
 const DOCS_WITH_NEITHER = "instances: []\n";
-const OPENAPI =
-    "openapi: 3.0.0\ninfo:\n  title: Versioned API\n  version: 1.0.0\npaths: {}\n";
+const OPENAPI = "openapi: 3.0.0\ninfo:\n  title: Versioned API\n  version: 1.0.0\npaths: {}\n";
 
 describe("git-ref versioning: Git LFS", () => {
     let workdir: string;

@@ -1,6 +1,6 @@
 import {
-    getOpenAPISettings,
     GraphQLSpec,
+    getOpenAPISettings,
     groupGraphQLSpecsByNamespace,
     type OpenAPISpec,
     type Spec
@@ -1930,7 +1930,9 @@ export class DocsDefinitionResolver {
         if (item.tagDescriptionPages && useV3Parser && shouldAttemptOpenApiIr) {
             try {
                 const workspaceForTags =
-                    openapiWorkspace ?? directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                    openapiWorkspace ??
+                    directApiWorkspace ??
+                    this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
                 const openApiIr = await workspaceForTags.getOpenAPIIr({
                     context: this.taskContext,
                     loadAiExamples: true
@@ -1962,7 +1964,9 @@ export class DocsDefinitionResolver {
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await (directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)).toFernWorkspace(
+            workspace = await (
+                directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
+            ).toFernWorkspace(
                 { context: this.taskContext },
                 {
                     enableUniqueErrorsPerEndpoint: true,
@@ -1993,7 +1997,9 @@ export class DocsDefinitionResolver {
             // for dynamic snippet generation and AI example enhancement, which require
             // access to the resolved API source file paths.
             try {
-                workspace = await (directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)).toFernWorkspace(
+                workspace = await (
+                    directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
+                ).toFernWorkspace(
                     { context: this.taskContext },
                     {
                         enableUniqueErrorsPerEndpoint: true,

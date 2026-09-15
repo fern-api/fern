@@ -1,11 +1,11 @@
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { getOpenAPISettings, type OpenAPISpec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { DocsDefinitionResolver, type RegisterApiFn } from "../DocsDefinitionResolver.js";
@@ -185,10 +185,7 @@ describe("DocsDefinitionResolver direct API specs", () => {
         const fernDirectory = path.join(directory, "fern");
         const specPath = AbsoluteFilePath.of(path.join(directory, "openapi.yml"));
         await mkdir(fernDirectory);
-        await writeFile(
-            specPath,
-            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
-        );
+        await writeFile(specPath, "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n");
         await writeFile(
             path.join(fernDirectory, "docs.yml"),
             "instances: []\nnavigation:\n  - api: API reference\n    api-name: payments\n    specs: []\n"
