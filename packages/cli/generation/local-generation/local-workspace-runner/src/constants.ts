@@ -89,20 +89,23 @@ const ONPREM_ADAPTER: ReadonlyMap<string, { language: string; cutover: string }>
 ]);
 
 /**
- * Whether this generator invocation resolves to the Postman on-prem adapter rather than Fern's own
- * generator of the same name.
+ * Whether this invocation is Postman's on-prem adapter rather than Fern's own generator of the same
+ * name — which is what decides that the container is configured from `sdk-config.yml` and handed SDK
+ * Config IR, instead of from `generators.yml` and handed a Fern `GeneratorConfig`.
  *
- * A prerelease sorts below its release under semver, so the cutover is compared against the release
- * version: `4.0.0-rc1` is on the adapter side, because an rc of the adapter is still the adapter.
- * This holds only while Fern publishes no prerelease at or above a cutover major — see the note on
- * {@link ONPREM_ADAPTER}.
+ * `false` for every generator Fern ships today. It becomes true only for the names in
+ * {@link ONPREM_ADAPTER}, and only at or above the version recorded there.
  *
- * A version semver cannot read at all — `latest` above all, which is what `fern sdk generate`
- * defaults to — is Fern's own generator. Selecting the adapter is an explicit act: the whole cutover
- * design is "keep your generators.yml entry and change only the version", so a workspace that names
- * no version has not opted in. This is safe only while the adapter is not published into `fernapi`
- * under a moving tag, which is the same open question as the namespace itself; if it ever is, this
- * needs a registry check rather than a version comparison.
+ * Two version cases are decided deliberately rather than by accident of parsing:
+ *
+ * - A **prerelease** counts as its release, so `4.0.0-rc1` is the adapter — an rc of the adapter is
+ *   still the adapter. This holds only while Fern publishes no prerelease at or above a cutover
+ *   major under these names.
+ * - A version semver **cannot read at all**, `latest` above all — which is what `fern sdk generate`
+ *   defaults to — is Fern's generator. Selecting the adapter is an explicit act, since the design is
+ *   "keep your generators.yml entry and change only the version", so naming no version is not
+ *   opting in. Safe only while the adapter is not published into `fernapi` under a moving tag; if it
+ *   ever is, this needs a registry check rather than a version comparison.
  */
 export function isOnPremAdapter(generatorName: string, version: string): boolean {
     const entry = ONPREM_ADAPTER.get(generatorName);
@@ -161,8 +164,19 @@ export function usesOnPremAdapterPrerelease(env: NodeJS.ProcessEnv = process.env
     return value === "true" || value === "1";
 }
 
-/** Namespace Postman publishes the on-prem adapter under. */
-const ONPREM_ADAPTER_NAMESPACE = "fernenterprise";
+/** Default namespace Postman publishes the on-prem adapter under. */
+const DEFAULT_ONPREM_ADAPTER_NAMESPACE = "fernenterprise";
+
+/**
+ * Overrides the namespace the adapter's pre-release is pulled from, for pointing a run at a staging
+ * registry or a personal namespace without editing generators.yml.
+ */
+export const ONPREM_ADAPTER_NAMESPACE_ENV_VAR = "FERN_RC_NAMESPACE";
+
+export function getOnPremAdapterNamespace(env: NodeJS.ProcessEnv = process.env): string {
+    const value = env[ONPREM_ADAPTER_NAMESPACE_ENV_VAR]?.trim();
+    return value !== undefined && value !== "" ? value : DEFAULT_ONPREM_ADAPTER_NAMESPACE;
+}
 
 /** The moving tag the adapter's publish workflow points at each language's newest pre-release. */
 const ONPREM_ADAPTER_PRERELEASE_TAG = "rc";
@@ -198,7 +212,7 @@ export function resolveGeneratorImage(
         isOnPremAdapter(generatorInvocation.name, generatorInvocation.version) &&
         usesOnPremAdapterPrerelease(env)
     ) {
-        return `${ONPREM_ADAPTER_NAMESPACE}/fern-${language}-sdk:${ONPREM_ADAPTER_PRERELEASE_TAG}`;
+        return `${getOnPremAdapterNamespace(env)}/fern-${language}-sdk:${ONPREM_ADAPTER_PRERELEASE_TAG}`;
     }
 
     return `${repository}:${generatorInvocation.version}`;

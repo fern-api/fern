@@ -22,6 +22,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly runner?: ContainerRunner;
     private readonly disableTelemetry: boolean;
     private readonly network?: string;
+    private readonly declaredVersion?: string;
 
     constructor({
         containerImage,
@@ -29,6 +30,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         runner,
         disableTelemetry,
         network,
+        declaredVersion,
         dockerImage,
         keepDocker
     }: {
@@ -43,6 +45,12 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
          * only for a CI check.
          */
         network?: string;
+        /**
+         * The version the workspace asked for. Logged when the image reference does not carry it,
+         * which is what a digest pin looks like: the reference then identifies the artifact but says
+         * nothing about which generator release it is.
+         */
+        declaredVersion?: string;
         /** @deprecated Use containerImage instead */
         dockerImage?: string;
         /** @deprecated Use keepContainer instead */
@@ -53,6 +61,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         this.runner = runner;
         this.disableTelemetry = disableTelemetry ?? false;
         this.network = network;
+        this.declaredVersion = declaredVersion;
     }
 
     public async execute({
@@ -68,7 +77,13 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         inspect,
         runner
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
+        const declaredVersionSuffix =
+            this.declaredVersion != null && !this.containerImage.endsWith(`:${this.declaredVersion}`)
+                ? ` (generators.yml version ${this.declaredVersion})`
+                : "";
+        context.logger.info(
+            `Executing generator ${generatorName} using container image: ${this.containerImage}${declaredVersionSuffix}`
+        );
 
         const binds = [
             `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,

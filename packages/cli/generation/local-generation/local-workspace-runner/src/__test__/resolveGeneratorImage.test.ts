@@ -103,6 +103,24 @@ describe("resolveGeneratorImage", () => {
             ).toBe(digest);
         });
 
+        it("pulls the pre-release from an overridden namespace when one is set", () => {
+            expect(
+                resolveGeneratorImage(ON_PREM_ADAPTER, { USE_FERN_RC: "true", FERN_RC_NAMESPACE: "acme-staging" })
+            ).toBe("acme-staging/fern-python-sdk:rc");
+        });
+
+        it("falls back to the default namespace when the override is absent or blank", () => {
+            expect(resolveGeneratorImage(ON_PREM_ADAPTER, { USE_FERN_RC: "true", FERN_RC_NAMESPACE: "  " })).toBe(
+                "fernenterprise/fern-python-sdk:rc"
+            );
+        });
+
+        it("ignores the namespace override when the pre-release switch is off", () => {
+            expect(resolveGeneratorImage(ON_PREM_ADAPTER, { FERN_RC_NAMESPACE: "acme-staging" })).toBe(
+                "fernapi/fern-python-sdk:6.0.0"
+            );
+        });
+
         it("substitutes the language's own reference, not python's, for every adapter name", () => {
             expect(
                 resolveGeneratorImage(

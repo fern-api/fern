@@ -199,6 +199,7 @@ export async function writeFilesToDiskAndRunGenerator({
             containerImage: resolveGeneratorImage(generatorInvocation),
             keepContainer: keepDocker,
             disableTelemetry,
+            declaredVersion: generatorInvocation.version,
             ...(getConfiguredGeneratorNetwork() != null ? { network: getConfiguredGeneratorNetwork() } : {})
         });
 
@@ -251,10 +252,16 @@ export async function writeFilesToDiskAndRunGenerator({
         paths
     });
 
-    await writeFile(
-        absolutePathToWriteConfigJson,
-        JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
-    );
+    // The adapter is configured by sdk-config.yml and reads SDK Config IR at this same path, so for
+    // those invocations the document is written further down instead. Skipped rather than written
+    // and overwritten, so this file is written exactly once whichever generator is running.
+    const wantsSdkConfigIr = generatorWantsSdkConfigIr(generatorInvocation.name, generatorInvocation.version);
+    if (!wantsSdkConfigIr) {
+        await writeFile(
+            absolutePathToWriteConfigJson,
+            JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
+        );
+    }
 
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
@@ -298,10 +305,13 @@ export async function writeFilesToDiskAndRunGenerator({
         });
     }
 
-    // The Postman adapter reads SDK Config IR, not a Fern generator config. Overwriting the same file
-    // keeps the container contract unchanged -- the path is still handed over as the sole container
-    // argument -- so only the document at that path differs.
-    if (generatorWantsSdkConfigIr(generatorInvocation.name, generatorInvocation.version)) {
+    // The Postman adapter reads SDK Config IR, not a Fern generator config. Writing it at the same
+    // path keeps the container contract unchanged -- that path is still handed over as the sole
+    // container argument -- so only the document at that path differs.
+    //
+    // This builds the IR from the workspace's existing sdk-config.yml. It does not migrate anything:
+    // a workspace without that file is refused here, with the `fern sdk migrate` command to run.
+    if (wantsSdkConfigIr) {
         const built = await resolveSdkConfigIr({
             generatorInvocation,
             absolutePathToFernConfig,

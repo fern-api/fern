@@ -27,3 +27,15 @@
       at all, such as the `latest` that local generation defaults to, means Fern's own generator:
       selecting the adapter is done by naming its version.
   type: internal
+
+- summary: |
+      When a generator image is pinned by digest, the generation log now also reports the version
+      declared in generators.yml. A digest identifies the artifact but not which generator release it
+      is, which made a pinned run hard to correlate back to a version.
+  type: internal
+
+- summary: |
+      FERN_RC_NAMESPACE overrides the namespace the on-prem adapter's pre-release is pulled from,
+      defaulting to `fernenterprise`, for pointing a run at a staging or personal namespace without
+      editing generators.yml. Only applies when USE_FERN_RC is set.
+  type: internal
