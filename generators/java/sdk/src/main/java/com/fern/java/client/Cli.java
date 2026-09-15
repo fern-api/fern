@@ -88,6 +88,7 @@ import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.generators.WrappedAliasGenerator;
+import com.fern.java.generators.XmlCoreGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.generators.tests.UndiscriminatedUnionDeserializationTestGenerator;
 import com.fern.java.output.GeneratedFile;
@@ -100,6 +101,7 @@ import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.utils.NameUtils;
+import com.fern.java.utils.XmlTypeUtils;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -287,6 +289,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
         this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
+
+        if (XmlTypeUtils.hasXmlTypes(ir)) {
+            new XmlCoreGenerator(context).generateFiles().forEach(this::addGeneratedFile);
+        }
 
         boolean hasUnknownAliasTypes = ir.getTypes().values().stream()
                 .anyMatch(typeDeclaration -> typeDeclaration.getShape().isAlias()

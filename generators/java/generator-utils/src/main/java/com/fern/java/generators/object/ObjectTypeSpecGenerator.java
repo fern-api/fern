@@ -206,6 +206,15 @@ public final class ObjectTypeSpecGenerator {
         return constructorBuilder.build();
     }
 
+    /** The properties in constructor-parameter order (inherited interface properties first). */
+    public List<EnrichedObjectProperty> getAllEnrichedProperties() {
+        return allEnrichedProperties;
+    }
+
+    public Optional<String> getAdditionalPropertiesFieldNameIfSupported() {
+        return supportAdditionalProperties ? Optional.of(getAdditionalPropertiesFieldName()) : Optional.empty();
+    }
+
     private String getAdditionalPropertiesFieldName() {
         boolean hasConflict = allEnrichedProperties.stream()
                 .anyMatch(enrichedObjectProperty ->
