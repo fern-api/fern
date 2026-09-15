@@ -1,12 +1,17 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-import { cwd } from "@fern-api/fs-utils";
-import type { FernSdkConfigV1Payload } from "@fern-api/remote-workspace-runner";
-import { parseSdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
+import { dirname, resolve } from "node:path";
+import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
+import type {
+    FernSdkConfigV1Payload,
+    FernSdkGenApiPackageConfig,
+    FernSdkGenApiRequestedOutput
+} from "@fern-api/remote-workspace-runner";
+import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 
 export interface LoadedSdkConfigV1 {
     absolutePath: string;
+    config: SdkConfigV1;
     payload: FernSdkConfigV1Payload;
 }
 
@@ -28,6 +33,7 @@ export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConf
         const parsed = parseSdkConfigV1(document);
         return {
             absolutePath,
+            config: parsed,
             payload: {
                 // The SDK Generation API wire contract is JSON even though the customer-facing
                 // document convention is YAML.
@@ -39,15 +45,30 @@ export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConf
                 ...(parsed.client.pathParameterStyle != null
                     ? { clientPathParameterStyle: parsed.client.pathParameterStyle }
                     : {}),
-                targets: parsed.targets.map((target) => ({
-                    language: target.language,
-                    ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
-                    ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
-                    ...(target.sdkVersion != null ? { sdkVersion: target.sdkVersion } : {}),
-                    ...(target.client?.pathParameterStyle != null
-                        ? { clientPathParameterStyle: target.client.pathParameterStyle }
-                        : {})
-                }))
+                targets: parsed.targets.map((target) => {
+                    const output = target.output ?? parsed.output;
+                    return {
+                        language: target.language,
+                        ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
+                        ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
+                        ...(target.sdkVersion != null ? { sdkVersion: target.sdkVersion } : {}),
+                        ...(target.client?.pathParameterStyle != null
+                            ? { clientPathParameterStyle: target.client.pathParameterStyle }
+                            : {}),
+                        requestedOutput: toRequestedOutput(output),
+                        ...(output?.delivery === "zip"
+                            ? {
+                                  absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
+                                      resolve(
+                                          dirname(absolutePath),
+                                          output.fileName ?? `generated/${target.language}.zip`
+                                      )
+                                  )
+                              }
+                            : {}),
+                        package: { ...parsed.package, ...target.package } satisfies FernSdkGenApiPackageConfig
+                    };
+                })
             }
         };
     } catch (error) {
@@ -56,4 +77,19 @@ export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConf
             { cause: error }
         );
     }
+}
+
+function toRequestedOutput(output: SdkConfigV1["output"]): FernSdkGenApiRequestedOutput {
+    if (output == null || output.delivery === "files" || output.delivery === "zip") {
+        return { type: "download" };
+    }
+    return {
+        type: "github",
+        repository: output.github.repository,
+        ...(output.github.host == null ? {} : { host: output.github.host }),
+        ...(output.github.branch == null ? {} : { branch: output.github.branch }),
+        ...(output.github.mode == null ? {} : { mode: output.github.mode }),
+        ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
+        ...(output.publish == null ? {} : { publish: output.publish })
+    };
 }

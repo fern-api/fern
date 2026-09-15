@@ -41,6 +41,8 @@ export declare namespace loadProject {
         nameOverride?: string;
         sdkLanguage?: generatorsYml.GenerationLanguage;
         preserveSchemaIds?: boolean;
+        /** Skip legacy API discovery when a caller-owned configuration loader provides the workspace. */
+        skipApiWorkspaces?: boolean;
     }
 
     export interface LoadProjectFromDirectoryArgs extends Args {
@@ -70,6 +72,7 @@ export async function loadProjectFromDirectory({
     cliVersion,
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
+    skipApiWorkspaces = false,
     context
 }: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
     let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
@@ -85,7 +88,10 @@ export async function loadProjectFromDirectory({
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
     ]);
 
-    if (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists) {
+    if (
+        !skipApiWorkspaces &&
+        (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists)
+    ) {
         apiWorkspaces = await loadApis({
             cliName,
             fernDirectory: absolutePathToFernDirectory,
@@ -98,7 +104,7 @@ export async function loadProjectFromDirectory({
 
     const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
 
-    if (apiWorkspaces.length === 0 && docsWorkspaces == null) {
+    if (apiWorkspaces.length === 0 && docsWorkspaces == null && !skipApiWorkspaces) {
         return context.failAndThrow(
             `No SDK specifications or docs specifications found. Please ensure one of the following .yml (not .yaml) files is present:\n` +
                 ` › ${GENERATORS_CONFIGURATION_FILENAME}\n` +

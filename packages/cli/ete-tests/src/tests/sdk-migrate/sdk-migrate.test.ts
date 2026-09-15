@@ -192,10 +192,10 @@ describe("fern sdk migrate", () => {
             }
         );
 
-        expect((yaml.load(result.stdout) as { targets: unknown[] }).targets).toMatchObject([
-            { language: "typescript", generatorVersion: "3.63.3" },
-            { language: "python", generatorVersion: "4.3.10" }
-        ]);
+        const targets = (yaml.load(result.stdout) as { targets: Array<Record<string, unknown>> }).targets;
+        expect(targets).toMatchObject([{ language: "typescript" }, { language: "python" }]);
+        expect(targets).toHaveLength(2);
+        expect(targets.every((target) => !("generatorVersion" in target))).toBe(true);
         await temporaryDirectory.cleanup();
     });
 

@@ -3,16 +3,13 @@ import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import {
-    type AutomationRunOptions,
-    type FernSdkConfigV1Payload,
-    getFernSdkGenApiLanguage
-} from "@fern-api/remote-workspace-runner";
+import { type AutomationRunOptions, type FernSdkConfigV1Payload } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
@@ -114,9 +111,27 @@ export async function generateAPIWorkspaces({
                 { code: CliError.Code.ConfigError }
             );
         }
+        if (groupNames != null && groupNames.length > 0) {
+            return cliContext.failAndThrow(
+                "--group cannot be used with --sdk-config because SDK Config targets are authoritative",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
         try {
             const loaded = await loadSdkConfigV1(sdkConfigPath);
             sdkConfigV1 = loaded.payload;
+            const workspace = await cliContext.runTask(async (context) =>
+                createSdkConfigWorkspace({
+                    sdkConfig: loaded.config,
+                    absolutePathToConfig: loaded.absolutePath,
+                    cliVersion: cliContext.environment.packageVersion,
+                    context
+                })
+            );
+            // SDK Config owns both sources and targets. Ignore any workspace assembled from
+            // generators.yml while retaining project-level organization configuration.
+            project = { ...project, apiWorkspaces: [workspace] };
             cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
         } catch (error) {
             return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
@@ -272,8 +287,13 @@ async function resolveGroupsForAllWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (sdkConfigV1 != null && (groupNames == null || groupNames.length === 0)) {
-                    const resolved = resolveGroupsForSdkConfig({ workspace, sdkConfigV1, context });
-                    resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                    const sdkConfigGroup = workspace.generatorsConfiguration?.defaultGroup;
+                    if (sdkConfigGroup == null) {
+                        return context.failAndThrow("SDK Config workspace has no generation targets", undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                    resolvedGroupNamesByWorkspace.set(workspace, [sdkConfigGroup]);
                     return;
                 }
                 const resolved = resolveGroupsForWorkspace({
@@ -289,127 +309,6 @@ async function resolveGroupsForAllWorkspaces({
         })
     );
     return resolvedGroupNamesByWorkspace;
-}
-
-export function resolveGroupsForSdkConfig({
-    workspace,
-    sdkConfigV1,
-    context
-}: {
-    workspace: AbstractAPIWorkspace<unknown>;
-    sdkConfigV1: FernSdkConfigV1Payload;
-    context: Parameters<typeof resolveGroupsForWorkspace>[0]["context"];
-}): string[] {
-    const generatorsConfiguration = workspace.generatorsConfiguration;
-    if (generatorsConfiguration == null) {
-        return context.failAndThrow(
-            "SDK Config v1 generation requires generators.yml to load the Fern API workspace",
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-    }
-
-    const requestedTargets = new Map(sdkConfigV1.targets.map((target) => [target.language, target]));
-    const requestedLanguages = new Set(requestedTargets.keys());
-    const candidates = generatorsConfiguration.groups.flatMap((group) => {
-        const languages = group.generators.flatMap((generator) => {
-            const language = getFernSdkGenApiLanguage(generator.name);
-            if (language == null) {
-                return [];
-            }
-            const target = requestedTargets.get(language);
-            if (target == null || (target.generatorVersion != null && target.generatorVersion !== generator.version)) {
-                return [];
-            }
-            return [language];
-        });
-        if (
-            languages.length === 0 ||
-            languages.length !== group.generators.length ||
-            languages.some((language) => !requestedLanguages.has(language))
-        ) {
-            return [];
-        }
-        return [{ groupName: group.groupName, languages: new Set(languages) }];
-    });
-    const exactCovers = findMinimalExactGroupCovers(candidates, requestedLanguages);
-    if (exactCovers.length === 0) {
-        return context.failAndThrow(
-            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) cannot be matched exactly to generator groups in ${generatorsConfiguration.absolutePathToConfiguration}. Pass --group explicitly or regenerate sdk-config.yml from the current Fern configuration.`,
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-    }
-    const coversWithDefault = exactCovers.filter((cover) =>
-        cover.some(({ groupName }) => groupName === generatorsConfiguration.defaultGroup)
-    );
-    const preferredCovers = coversWithDefault.length > 0 ? coversWithDefault : exactCovers;
-    if (preferredCovers.length > 1) {
-        const descriptions = preferredCovers
-            .map((cover) =>
-                cover
-                    .map(({ groupName }) => groupName)
-                    .sort()
-                    .join(" + ")
-            )
-            .sort()
-            .join("; ");
-        return context.failAndThrow(
-            `SDK Config v1 targets (${[...requestedLanguages].join(", ")}) match multiple generator group combinations: ${descriptions}. Pass --group explicitly.`,
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-    }
-    return (preferredCovers[0] ?? []).map(({ groupName }) => groupName).sort();
-}
-
-interface SdkConfigGroupCandidate {
-    groupName: string;
-    languages: Set<string>;
-}
-
-function findMinimalExactGroupCovers(
-    candidates: SdkConfigGroupCandidate[],
-    requestedLanguages: Set<string>
-): SdkConfigGroupCandidate[][] {
-    const sortedCandidates = [...candidates].sort((left, right) => left.groupName.localeCompare(right.groupName));
-    let minimumGroupCount = Number.POSITIVE_INFINITY;
-    let covers: SdkConfigGroupCandidate[][] = [];
-
-    const visit = (uncovered: Set<string>, selected: SdkConfigGroupCandidate[]): void => {
-        if (uncovered.size === 0) {
-            if (selected.length < minimumGroupCount) {
-                minimumGroupCount = selected.length;
-                covers = [[...selected]];
-            } else if (selected.length === minimumGroupCount) {
-                covers.push([...selected]);
-            }
-            return;
-        }
-        if (selected.length >= minimumGroupCount) {
-            return;
-        }
-        const nextLanguage = [...uncovered].sort()[0];
-        if (nextLanguage == null) {
-            return;
-        }
-        for (const candidate of sortedCandidates) {
-            if (
-                !candidate.languages.has(nextLanguage) ||
-                [...candidate.languages].some((language) => !uncovered.has(language))
-            ) {
-                continue;
-            }
-            const remaining = new Set(uncovered);
-            for (const language of candidate.languages) {
-                remaining.delete(language);
-            }
-            visit(remaining, [...selected, candidate]);
-        }
-    };
-
-    visit(new Set(requestedLanguages), []);
-    return covers;
 }
 
 /**
