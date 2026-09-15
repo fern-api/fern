@@ -85,9 +85,8 @@ public final class XmlObjectMethodsGenerator {
                 .addSuperinterface(xmlSerializableClassName)
                 .addMethod(generateToXml())
                 .addMethod(generateToXmlWithDeclaration());
-        if (hasFieldConstructor(typeSpec)) {
-            builder.addMethod(generateFromXmlString()).addMethod(generateFromXmlElement());
-        }
+        findFieldConstructor(typeSpec).ifPresent(constructor -> builder.addMethod(generateFromXmlString())
+                .addMethod(generateFromXmlElement(constructor)));
         List<MethodSpec> childBuilderMethods = generateChildBuilderMethods(typeSpec);
         if (childBuilderMethods.isEmpty()) {
             return builder.build();
@@ -102,15 +101,20 @@ public final class XmlObjectMethodsGenerator {
     }
 
     /**
-     * Whether the object's constructor takes one parameter per field (as opposed to the builder-based constructor used
-     * for very large objects, which {@code fromXml} does not support).
+     * The constructor taking one parameter per field, in field order (very large objects instead use a builder-based
+     * constructor, which {@code fromXml} does not support).
      */
-    private boolean hasFieldConstructor(TypeSpec typeSpec) {
-        ClassName builderClassName = objectClassName.nestedClass(BUILDER_CLASS_NAME);
+    private Optional<MethodSpec> findFieldConstructor(TypeSpec typeSpec) {
+        List<String> expectedParameters =
+                properties.stream().map(p -> p.fieldSpec().get().name).collect(Collectors.toList());
+        additionalPropertiesFieldName.ifPresent(expectedParameters::add);
         return typeSpec.methodSpecs.stream()
                 .filter(MethodSpec::isConstructor)
-                .noneMatch(constructor -> constructor.parameters.size() == 1
-                        && constructor.parameters.get(0).type.equals(builderClassName));
+                .filter(constructor -> constructor.parameters.stream()
+                        .map(parameter -> parameter.name)
+                        .collect(Collectors.toList())
+                        .equals(expectedParameters))
+                .findFirst();
     }
 
     private MethodSpec generateToXml() {
@@ -194,7 +198,7 @@ public final class XmlObjectMethodsGenerator {
                 .build();
     }
 
-    private MethodSpec generateFromXmlElement() {
+    private MethodSpec generateFromXmlElement(MethodSpec constructor) {
         MethodSpec.Builder method = MethodSpec.methodBuilder(FROM_XML_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(Element.class, ELEMENT_VARIABLE)
@@ -215,6 +219,10 @@ public final class XmlObjectMethodsGenerator {
                 ELEMENT_VARIABLE,
                 Arrays.class,
                 attributeNames.stream().map(name -> CodeBlock.of("$S", name)).collect(CodeBlock.joining(", ")))));
+        if (arguments.size() != constructor.parameters.size()) {
+            throw new IllegalStateException("fromXml argument count " + arguments.size()
+                    + " does not match constructor of " + objectClassName.simpleName());
+        }
         method.addStatement("return new $T($L)", objectClassName, CodeBlock.join(arguments, ",\n"));
         return method.build();
     }
@@ -317,11 +325,8 @@ public final class XmlObjectMethodsGenerator {
             String fieldName = property.fieldSpec().get().name;
             for (ChildVariant variant : shape.childVariants()) {
                 String methodName = KeyWordUtils.getKeyWordCompatibleMethodName(variant.camelCaseName);
-                if (!takenNames.add(methodName)) {
-                    methodName = "add" + variant.pascalCaseName;
-                    if (!takenNames.add(methodName)) {
-                        continue;
-                    }
+                for (int suffix = 1; !takenNames.add(methodName); suffix++) {
+                    methodName = "add" + variant.pascalCaseName + (suffix == 1 ? "" : suffix);
                 }
                 CodeBlock item = variant.isUnionMember
                         ? CodeBlock.of("$T.of($L)", shape.itemTypeName, variant.parameterName)

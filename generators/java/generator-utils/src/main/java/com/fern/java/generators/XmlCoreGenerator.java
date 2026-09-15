@@ -43,6 +43,9 @@ public final class XmlCoreGenerator extends AbstractFilesGenerator {
     private GeneratedFile generateResource(ClassName className) {
         String resourceName = "/" + className.simpleName() + ".java";
         try (InputStream is = XmlCoreGenerator.class.getResourceAsStream(resourceName)) {
+            if (is == null) {
+                throw new RuntimeException("Missing resource " + resourceName);
+            }
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
