@@ -1409,13 +1409,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const value = exampleObject[explicitDiscriminator.propertyName];
             if (typeof value === "string") {
                 const mappedRef = explicitDiscriminator.mapping?.[value];
-                const refIndex = unionSchemas.findIndex(
-                    (subSchema) =>
-                        this.context.isReferenceObject(subSchema) &&
-                        (mappedRef != null ? subSchema.$ref === mappedRef : subSchema.$ref.endsWith(`/${value}`))
+                const refIndices = unionSchemas.flatMap((subSchema, index) =>
+                    this.context.isReferenceObject(subSchema) &&
+                    (mappedRef != null ? subSchema.$ref === mappedRef : subSchema.$ref.endsWith(`/${value}`))
+                        ? [index]
+                        : []
                 );
-                if (refIndex !== -1) {
-                    return refIndex;
+                if (refIndices.length === 1 && refIndices[0] != null) {
+                    return refIndices[0];
                 }
             }
         }
