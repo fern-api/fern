@@ -1,7 +1,60 @@
 import { describe, expect, it } from "vitest";
-import { resolveChangelogEntryFallback } from "../pipeline/steps/AutoVersionStep";
+import { aggregateChunkAnalyses, resolveChangelogEntryFallback } from "../pipeline/steps/AutoVersionStep";
 
 const TRAILER = "\n\n🌿 Generated with Fern";
+
+describe("aggregateChunkAnalyses", () => {
+    it("keeps entries as-is when the winning bump's chunk has an entry", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MINOR", message: "feat: add listWidgets", changelogEntry: "### Added\n- listWidgets" },
+            {
+                versionBump: "MAJOR",
+                message: "feat!: remove getWidget",
+                changelogEntry: "### Removed\n- getWidget",
+                versionBumpReason: "Removed getWidget"
+            }
+        ]);
+        expect(result.bestBump).toBe("MAJOR");
+        expect(result.bestMessage).toBe("feat!: remove getWidget");
+        expect(result.changelogEntries).toEqual(["### Added\n- listWidgets", "### Removed\n- getWidget"]);
+        expect(result.usedBumpReasonAsEntry).toBe(false);
+    });
+
+    it("prepends the bump reason when only lower-severity chunks produced entries", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MINOR", message: "feat: add listWidgets", changelogEntry: "### Added\n- listWidgets" },
+            {
+                versionBump: "MAJOR",
+                message: "feat!: remove getWidget",
+                changelogEntry: "",
+                versionBumpReason: "Removed getWidget"
+            }
+        ]);
+        expect(result.bestBump).toBe("MAJOR");
+        expect(result.changelogEntries).toEqual(["Removed getWidget", "### Added\n- listWidgets"]);
+        expect(result.usedBumpReasonAsEntry).toBe(true);
+    });
+
+    it("does not prepend when another chunk at the same level has an entry", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MAJOR", message: "feat!: a", changelogEntry: "", versionBumpReason: "a" },
+            { versionBump: "MAJOR", message: "feat!: b", changelogEntry: "### Removed\n- b" }
+        ]);
+        expect(result.changelogEntries).toEqual(["### Removed\n- b"]);
+        expect(result.usedBumpReasonAsEntry).toBe(false);
+    });
+
+    it("leaves PATCH bumps and missing reasons alone", () => {
+        expect(
+            aggregateChunkAnalyses([{ versionBump: "PATCH", message: "fix: x", versionBumpReason: "x" }])
+                .changelogEntries
+        ).toEqual([]);
+        expect(
+            aggregateChunkAnalyses([{ versionBump: "MINOR", message: "feat: y", changelogEntry: "  " }])
+                .changelogEntries
+        ).toEqual([]);
+    });
+});
 
 describe("resolveChangelogEntryFallback", () => {
     it("returns undefined when FAI already provided a changelog entry", () => {
