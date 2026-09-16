@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.125.3
+  changelogEntry:
+    - summary: |
+        Preserve OpenAPI top-level `tags[].description` as the package description when importing
+        OpenAPI specs with the default parser, so tag descriptions reach the docs API definition.
+      type: fix
+  createdAt: "2026-09-16"
+  irVersion: 67
 - version: 5.125.2
   changelogEntry:
     - summary: |
