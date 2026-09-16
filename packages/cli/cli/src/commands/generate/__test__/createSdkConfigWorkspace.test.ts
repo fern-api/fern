@@ -102,6 +102,47 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    it("preserves an explicitly pinned generator version without resolving latest", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
+        );
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: {
+                    specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }]
+                },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [
+                    {
+                        language: "typescript",
+                        generatorVersion: "4.0.0",
+                        output: { delivery: "zip" }
+                    }
+                ]
+            }),
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        expect(workspace.generatorsConfiguration?.groups[0]?.generators[0]).toMatchObject({
+            name: "fernapi/fern-typescript-sdk",
+            version: "4.0.0"
+        });
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        await cleanup();
+    });
+
     it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
         vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
             openapi: "3.0.0",
