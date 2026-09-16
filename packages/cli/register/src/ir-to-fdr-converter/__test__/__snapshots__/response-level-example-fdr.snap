@@ -31,7 +31,7 @@
   },
   "subpackages": {
     "subpackage_plant": {
-      "description": undefined,
+      "description": "Everything about your Plants",
       "displayName": "plant",
       "endpoints": [
         {
