@@ -162,6 +162,47 @@ the spec's own default`. Environment variables sit above profiles deliberately,
 so a pipeline that exports them is never silently overridden by a profile a
 developer stored on the same machine.
 
+**The quickest way in is `profiles set`,** which takes the names you already
+use — no scheme names, no stdin piping:
+
+```bash
+acme profiles set prod \
+  ACME_ACCOUNT_SID=AC1111 ACME_AUTH_TOKEN=... \
+  ACME_REGION=us1 ACME_RETRIES=3
+```
+
+`KEY` may be any environment variable this CLI reads — a credential, or a
+setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
+`<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
+to the OS keyring** under that profile's slot; everything else to
+`profiles.toml`. The profile is created if it does not exist.
+
+One assignment reaches **every scheme that declares the variable**. When a
+vendor spec plus a layered auth block produces several schemes sharing one
+credential pair, this covers all of them in one command and tells you so:
+
+```
+✓ Created profile `prod`
+    ACME_ACCOUNT_SID → keyring
+    ACME_AUTH_TOKEN → keyring
+  Credential stored for 3 schemes: accountSid_authToken, apikey_or_sid, account_id_token
+```
+
+Multi-field credentials merge, so setting one half later does not discard the
+other. Keys are classified before anything is written, so a run whose third
+assignment is invalid leaves the first two unapplied. An unrecognised key is
+rejected with a suggestion rather than stored inert:
+
+```
+$ acme profiles set prod ACME_ACCOUNT_SI=AC1
+error: `ACME_ACCOUNT_SI` is not something this CLI can store on a profile.
+       Did you mean `ACME_ACCOUNT_SID`?
+```
+
+That last property is why this is not a `.env` file: a typo in a `.env` is a
+silent no-op, and a credential in one sits in plaintext at whatever your umask
+gives. Here the key is validated and the secret goes to the keychain.
+
 **What a profile can carry:** a credential slot, parameter defaults
 (`--set <name>=<value>`, validated against the parsed operation table so a typo
 is rejected rather than silently ignored), server-URL template variables
@@ -214,6 +255,18 @@ a basic credential — truncated, and absent for schemes that have no username
 what your profiles actually set, so a CLI with no regions shows no `REGION`
 column. `CREDENTIALS_FROM` appears only when a profile borrows another's
 credential. Add `--format json` for the machine-readable form.
+
+**When environment variables are in play,** `profiles current` says so.
+A *complete* env credential outranks an ambient profile's stored one and is
+reported as `credential_overridden_by_env`; env vars supplying only part of a
+multi-value credential are reported as `credential_partially_shadowed_by_env`,
+because nothing authenticates in that state and calling it an override would
+contradict `auth status`. `profiles list` also warns about a variable that is
+set, closely resembles one this CLI reads, and is not read:
+
+```
+⚠ `ACME_ACCOUNT_ID` is set but this CLI does not read it. Did you mean `ACME_ACCOUNT_SID`?
+```
 
 **Where it lives:** `~/.config/<bin>/profiles.toml`, beside the credential
 store. Secrets are never written there; the file names a keychain account. See

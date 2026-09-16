@@ -125,6 +125,38 @@ clap resolves `CommandLine > EnvVariable > DefaultValue`, and `apply_server_vars
 source but `DefaultValue` as caller-pinned — so the rung slots in without touching the resolution
 logic. Under `-p`, `outranks_env()` demotes env so the explicitly named profile still wins.
 
+### Setting state by the name the user knows
+
+`profiles create --with-token --scheme <name>` is the precise way to store a
+credential and the wrong default. It requires knowing the scheme names, which
+are spec-internal, and on a CLI whose schemes share one credential pair it has
+to be run once per scheme — three times for a Twilio-shaped API, with names a
+user cannot guess, or two thirds of the operations stay unauthenticated with no
+indication why.
+
+`profiles set <name> KEY=VALUE …` keys on the **environment variable name**
+instead, which is already in the user's shell and the vendor's docs. One
+assignment fans out to every scheme declaring that variable.
+
+Classification is generic rather than a table of known names.
+`login::expand_slots` returns one slot per required value in the same order
+`scheme_credential_fields` names them, so the slot *index* yields the field:
+`required[0]` is `username`, `required[1]` is `password`. Nothing in the command
+knows what a scheme's halves are called, so it works for any customer's schemes.
+
+Three rules keep it honest:
+
+1. **Secrets to the keyring, settings to the file.** This gives the authoring
+   ergonomics people want from a `.env` without putting a credential in a file
+   that has no permission hardening.
+2. **Classify everything before writing anything.** A run that sets two keys and
+   rejects the third must not leave the first two applied.
+3. **A prefixed-but-unrecognised key is an error, not a parameter.**
+   `<PREFIX>_…` is unambiguously meant to be one of this CLI's own variables,
+   and that surface is known exhaustively. Falling through to the parameter path
+   would accept a typo on any CLI whose binding cannot enumerate parameters —
+   precisely the silent no-op the validation exists to prevent.
+
 ### What the listing shows
 
 `profiles list` had a `CREDENTIAL` column that echoed the profile name back on
