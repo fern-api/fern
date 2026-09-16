@@ -166,10 +166,24 @@ developer stored on the same machine.
 (`--set <name>=<value>`, validated against the parsed operation table so a typo
 is rejected rather than silently ignored), server-URL template variables
 (`--server-var <name>=<value>`, or `--<name> <value>` for any variable your spec
-declares), an explicit `--base-url`, and a default output format
-(`--default-format`, spelled so it cannot be confused with the global
-`--format`). Nothing else —
-profiles are not a config file for arbitrary settings.
+declares), an explicit `--base-url`, a retry limit (`--retries <N>`), and a
+default output format (`--default-format`, spelled so it cannot be confused
+with the global `--format`). Nothing else — profiles are not a config file for
+arbitrary settings, so an unknown key is rejected at write time rather than
+stored and silently ignored.
+
+**Retries are per profile.** `--retries <N>` counts attempts *after* the first,
+so `--retries 0` is the same as `--no-retry`. It overrides `x-fern-retries` for
+the operation and resolves `flag > <PREFIX>_RETRIES > profile > spec`:
+
+```bash
+acme profiles create flaky-sandbox --retries 6
+acme profiles create prod --retries 2
+```
+
+Unlike `--default-format`, retries **are** inherited by a child profile: they
+describe the network a profile talks to, which a subaccount shares with its
+parent.
 
 **Server variables also read an env var.** Each `{variable}` your spec declares in
 a server URL is settable three ways — `--region au1`, the profile, or
@@ -184,6 +198,22 @@ twilio messages list --region us1   # the flag still wins
 
 (`x-fern-sdk-variables` use the bare name — `gardenId` reads `GARDEN_ID`, not
 `<PREFIX>_GARDEN_ID`.)
+
+**What the listing shows:**
+
+```
+PROFILE      ACCOUNT      REGION  RETRIES  CREDENTIALS_FROM  ACTIVE
+sierra-prod  AC12345678…  us1     2                          *
+tenant-acme  AC99998888…  au1     6
+tenant-sub   AC12345678…  us1     2        sierra-prod
+```
+
+`ACCOUNT` is the identifier behind the stored credential — the username half of
+a basic credential — truncated, and absent for schemes that have no username
+(bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
+what your profiles actually set, so a CLI with no regions shows no `REGION`
+column. `CREDENTIALS_FROM` appears only when a profile borrows another's
+credential. Add `--format json` for the machine-readable form.
 
 **Where it lives:** `~/.config/<bin>/profiles.toml`, beside the credential
 store. Secrets are never written there; the file names a keychain account. See

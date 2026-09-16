@@ -56,6 +56,15 @@
     could not be pinned for a shell session. Additive — an unset variable resolves exactly as
     before. `x-fern-sdk-variables` keep their existing unprefixed spelling.
 
+    `profiles list` shows an `ACCOUNT` column — the identifier behind the stored credential
+    (the username half of a basic credential), truncated. It is absent for schemes with no
+    username field, when nothing is stored, or when the keyring read fails, so rendering the
+    listing never errors or blocks on a locked keychain. The keyring slot name survives as
+    `credentials_from` and is emitted only when it differs from the profile's own name, so it
+    marks exactly the row borrowing another profile's credential. `profiles current` renames
+    `source` to `selected_by`. A root profile whose slot is its own name no longer writes a
+    redundant `credential` key to `profiles.toml`.
+
     Three changes deliberately apply to **every** generated CLI, not just those that enable profiles,
     because each fixes something that was already broken:
 

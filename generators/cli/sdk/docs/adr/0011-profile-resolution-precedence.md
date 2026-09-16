@@ -16,6 +16,7 @@ A profile is a **named bundle of request context**, resolved once per invocation
 | `parameters` | a `clap::Arg`'s `default_value` |
 | `server_variables` | `server_var(...)` substitution |
 | `base_url` | `cli_args::resolve_base_url_override` |
+| `retries` | `RetriesConfig::max_attempts`, over `x-fern-retries` |
 | `format` | `formatter::OutputPipeline` |
 
 Anything not in that table is out of scope. Profiles are deliberately **not** a config file for arbitrary settings.
@@ -123,6 +124,30 @@ it would break anyone relying on it.
 clap resolves `CommandLine > EnvVariable > DefaultValue`, and `apply_server_vars` treats any
 source but `DefaultValue` as caller-pinned — so the rung slots in without touching the resolution
 logic. Under `-p`, `outranks_env()` demotes env so the explicitly named profile still wins.
+
+### What the listing shows
+
+`profiles list` had a `CREDENTIAL` column that echoed the profile name back on
+every row, because `credential` is the keyring *account suffix* and defaults to
+the profile's own name. True, and useless.
+
+The listing now shows **`ACCOUNT`** — the username half of a stored basic
+credential, truncated (`AC12345678…`). That answers the question a listing
+exists to answer: which account is this profile? A username is not a secret, so
+surfacing it is safe. The column is absent when no scheme has a username field
+(bearer / API-key CLIs have no account), when nothing is stored, or when the
+keyring read fails — rendering a column must never make `profiles list` error
+or block on a locked keychain.
+
+The slot name survives as **`credentials_from`**, emitted only when it differs
+from the profile's own name, so it appears on exactly the row borrowing someone
+else's credential. `source` became **`selected_by`**, which says what it is: why
+this profile is in play, and therefore which precedence rule applies.
+
+This follows the domain-column convention the CLIs users already run: gcloud
+lists `ACCOUNT / PROJECT / REGION / ZONE`, kubectl lists
+`CLUSTER / AUTHINFO / NAMESPACE`. AWS's `list-profiles` prints bare names and is
+the weaker surface for it.
 
 ### Shipping posture
 
