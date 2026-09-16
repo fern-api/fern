@@ -1009,7 +1009,7 @@ function findErrorHeadersByStatusCode({
         if (error == null) {
             continue;
         }
-        if (error.statusCode === statusCode) {
+        if (error.isWildcardStatusCode !== true && error.statusCode === statusCode) {
             return error.headers;
         }
         if (
@@ -1390,38 +1390,37 @@ function convertHttpEndpointExample({
             bytes: () => undefined,
             _other: () => undefined
         }),
-        responseStatusCode:
-            irEndpoint.response?.statusCode ??
-            Ir.http.ExampleResponse._visit(example.response, {
-                ok: (ok) =>
-                    ok._visit({
-                        body: (body) => (body != null ? 200 : 204),
-                        stream: (stream) => (stream.length > 0 ? 200 : 204),
-                        sse: (stream) => (stream.length > 0 ? 200 : 204),
-                        _other: () => {
-                            throw new CliError({
-                                message: "Unknown ExampleResponseBody: " + ok.type,
-                                code: CliError.Code.InternalError
-                            });
-                        }
-                    }),
-                error: ({ error: errorName }) => {
-                    const error = ir.errors[errorName.errorId];
-                    if (error == null) {
+        responseStatusCode: Ir.http.ExampleResponse._visit(example.response, {
+            ok: (ok) =>
+                irEndpoint.response?.statusCode ??
+                ok._visit({
+                    body: (body) => (body != null ? 200 : 204),
+                    stream: (stream) => (stream.length > 0 ? 200 : 204),
+                    sse: (stream) => (stream.length > 0 ? 200 : 204),
+                    _other: () => {
                         throw new CliError({
-                            message: "Cannot find error " + errorName.errorId,
-                            code: CliError.Code.ResolutionError
+                            message: "Unknown ExampleResponseBody: " + ok.type,
+                            code: CliError.Code.InternalError
                         });
                     }
-                    return error.statusCode;
-                },
-                _other: () => {
+                }),
+            error: ({ error: errorName }) => {
+                const error = ir.errors[errorName.errorId];
+                if (error == null) {
                     throw new CliError({
-                        message: "Unknown ExampleResponse: " + example.response.type,
-                        code: CliError.Code.InternalError
+                        message: "Cannot find error " + errorName.errorId,
+                        code: CliError.Code.ResolutionError
                     });
                 }
-            }),
+                return error.statusCode;
+            },
+            _other: () => {
+                throw new CliError({
+                    message: "Unknown ExampleResponse: " + example.response.type,
+                    code: CliError.Code.InternalError
+                });
+            }
+        }),
         responseBody: example.response._visit({
             ok: (ok) =>
                 ok._visit({

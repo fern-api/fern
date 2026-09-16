@@ -1511,10 +1511,13 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         const fdrEndpointV1 = fdrApiDefinitionV1.rootPackage.endpoints[0];
         const v1Example429 = fdrEndpointV1?.examples.find((example) => example.name === "v1 throttled");
+        expect(v1Example429?.responseStatusCode).toBe(429);
         expect(getResponseHeaders(v1Example429)).toEqual({ "Retry-After": 10 });
         const v1Example500 = fdrEndpointV1?.examples.find((example) => example.name === "v1 server error");
+        expect(v1Example500?.responseStatusCode).toBe(500);
         expect(getResponseHeaders(v1Example500)).toEqual({ "X-Server-Retry": 5 });
         const v1ExampleHeaderLess = fdrEndpointV1?.examples.find((example) => example.name === "v1 header-less error");
+        expect(v1ExampleHeaderLess?.responseStatusCode).toBe(400);
         expect(getResponseHeaders(v1ExampleHeaderLess)).toBeUndefined();
     });
 
