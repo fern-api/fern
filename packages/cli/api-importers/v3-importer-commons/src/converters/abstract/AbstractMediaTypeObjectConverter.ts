@@ -230,12 +230,24 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
     private getExamplesFromSchemaOrReference(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): unknown[] {
-        const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-            schemaOrReference: schema,
-            breadcrumbs: this.breadcrumbs,
-            skipErrorCollector: true
-        });
-        return this.context.getExamplesFromSchema({ schema: resolvedSchema, breadcrumbs: this.breadcrumbs });
+        const visited = new Set<string>();
+        let current = schema;
+        while (this.context.isReferenceObject(current)) {
+            if (visited.has(current.$ref)) {
+                return [];
+            }
+            visited.add(current.$ref);
+            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>({
+                reference: current,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (!resolved.resolved) {
+                return [];
+            }
+            current = resolved.value;
+        }
+        return this.context.getExamplesFromSchema({ schema: current, breadcrumbs: this.breadcrumbs });
     }
 
     protected generateOrValidateExample({
