@@ -88,6 +88,18 @@
                 "name": "string",
               },
             },
+            "responseHeaders": {
+              "X-Api-Result": {
+                "content_type": "image/jpeg",
+              },
+              "X-Media-Example": {
+                "transport": "delta",
+              },
+              "X-RateLimit-Remaining": 99,
+              "X-Schema-Ref-Example": {
+                "content_type": "image/jpeg",
+              },
+            },
             "responseStatusCode": 200,
           },
         ],
