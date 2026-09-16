@@ -1410,7 +1410,7 @@
   "subpackages": {
     "subpackage_plant": {
       "displayName": undefined,
-      "docs": undefined,
+      "docs": "Everything about your Plants",
       "errors": [],
       "fernFilepath": {
         "allParts": [
