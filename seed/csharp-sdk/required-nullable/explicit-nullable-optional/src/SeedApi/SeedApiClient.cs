@@ -228,6 +228,7 @@ public partial class SeedApiClient : ISeedApiClient
     ///         NullableText = "nullable_text",
     ///         NullableNumber = 1.1,
     ///         NonNullableText = "non_nullable_text",
+    ///         RequiredNullableText = "required_nullable_text",
     ///     }
     /// );
     /// </code></example>

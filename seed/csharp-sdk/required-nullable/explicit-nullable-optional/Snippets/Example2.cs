@@ -15,7 +15,8 @@ public partial class Examples
                 XIdempotencyKey = "X-Idempotency-Key",
                 NullableText = "nullable_text",
                 NullableNumber = 1.1,
-                NonNullableText = "non_nullable_text"
+                NonNullableText = "non_nullable_text",
+                RequiredNullableText = "required_nullable_text"
             }
         );
     }
