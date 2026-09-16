@@ -1097,10 +1097,13 @@ function convertV2HttpEndpointExample({
 
     const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     const responseStatusCode = example.response?.statusCode ?? irEndpoint.response?.statusCode ?? 200;
+    const successStatusCode = irEndpoint.response?.statusCode ?? 200;
     const responseHeaders =
         responseStatusCode >= 400
             ? findErrorHeadersByStatusCode({ irEndpoint, ir, statusCode: responseStatusCode })
-            : irEndpoint.responseHeaders;
+            : responseStatusCode === successStatusCode
+              ? irEndpoint.responseHeaders
+              : undefined;
     return {
         name: shouldUseExampleName ? exampleName : undefined,
         description: "",
@@ -1294,7 +1297,9 @@ function convertHttpEndpointExample({
     const { codeSamples } = userSpecifiedExample ?? { codeSamples: [] };
     const responseHeadersForExample = Ir.http.ExampleResponse._visit(example.response, {
         ok: () => irEndpoint.responseHeaders,
-        error: ({ error: errorName }) => ir.errors[errorName.errorId]?.headers ?? undefined,
+        // v1 error examples name their error declaration explicitly, so headers are
+        // resolved by direct lookup — no status-code/wildcard matching needed.
+        error: ({ error: errorName }) => ir.errors[errorName.errorId]?.headers,
         _other: () => irEndpoint.responseHeaders
     });
     return {
