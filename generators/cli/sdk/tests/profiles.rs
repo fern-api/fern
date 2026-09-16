@@ -1242,3 +1242,34 @@ fn no_near_miss_warning_when_the_real_variable_is_set_or_unrelated() {
     );
     assert!(!stderr(&unrelated).contains("Did you mean"), "{}", stderr(&unrelated));
 }
+
+#[test]
+fn the_env_row_labels_its_variables_and_prose_sorts_last() {
+    // Two layout bugs in one assertion. The `[env]` row reused the profile
+    // `credential` key for its *variable names*, which produced a `CREDENTIAL`
+    // header that every real profile row left blank. And because
+    // `serde_json::Map` is a BTreeMap, raw column order is alphabetical, which
+    // put the wide `NOTE` prose ahead of the value it annotates.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--use"]);
+
+    let output = sandbox.run_with_env(
+        &["profiles", "list", "--human"],
+        &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
+    );
+    assert_ok(&output, "profiles list");
+    let text = stdout(&output);
+    let header = text.lines().next().expect("a header row");
+
+    assert!(header.contains("VARIABLES"), "env vars need their own label: {header}");
+    assert!(
+        !header.contains("CREDENTIAL "),
+        "the old profile key must not leak into the header: {header}",
+    );
+    let note = header.find("NOTE").expect("NOTE column");
+    let variables = header.find("VARIABLES").expect("VARIABLES column");
+    assert!(
+        variables < note,
+        "the value should precede the prose explaining it: {header}",
+    );
+}

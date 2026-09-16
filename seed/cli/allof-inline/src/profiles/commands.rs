@@ -1045,8 +1045,31 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
     const FIRST: &str = "profile";
     const LAST: &str = "active";
 
-    // Column discovery, in first-seen order across rows so a field only some
-    // profiles set still gets a column.
+    // Column discovery across rows, so a field only some profiles set still
+    // gets a column. `serde_json::Map` is a `BTreeMap`, so raw discovery order
+    // is alphabetical — which put the wide `NOTE` prose ahead of the value it
+    // annotates. Rank known columns explicitly and leave the rest alphabetical
+    // between them, so the layout is deterministic and reads identifier-first.
+    const EARLY: &[&str] = &[
+        "account",
+        "variables",
+        "credentials_from",
+        "parent",
+        "base_url",
+        "retries",
+        "format",
+    ];
+    fn rank(key: &str) -> usize {
+        if let Some(index) = EARLY.iter().position(|candidate| *candidate == key) {
+            return index;
+        }
+        // Prose last: it explains the row rather than carrying a value.
+        match key {
+            "note" | "error" => EARLY.len() + 1,
+            _ => EARLY.len(),
+        }
+    }
+
     let mut middle: Vec<String> = Vec::new();
     for row in rows {
         for key in flatten_row(row).into_iter().map(|(k, _)| k) {
@@ -1055,6 +1078,7 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
             }
         }
     }
+    middle.sort_by(|a, b| rank(a).cmp(&rank(b)).then_with(|| a.cmp(b)));
     let columns: Vec<String> = std::iter::once(FIRST.to_string())
         .chain(middle)
         .chain(std::iter::once(LAST.to_string()))
@@ -1291,7 +1315,11 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     // base URL while these variables provide the credential. The note carries
     // that, and `auth status` shows it per scheme.
     row.insert("active".into(), "".into());
-    row.insert("credential".into(), sources.join(", ").into());
+    // `variables`, not `credential`: this row lists *environment variable
+    // names*, and reusing the profile key put them under a `CREDENTIAL` header
+    // that every real profile row then left blank. The profile rows' own
+    // identifier column is `account`; their slot pointer is `credentials_from`.
+    row.insert("variables".into(), sources.join(", ").into());
     row.insert(
         "note".into(),
         "supplies the credential; overrides the active profile\'s stored one".into(),
@@ -1850,7 +1878,7 @@ fn handle_current<W: Write>(
                 } else {
                     "credential_partially_shadowed_by_env"
                 };
-                map.insert(key.into(), env_row["credential"].clone());
+                map.insert(key.into(), env_row["variables"].clone());
             }
             serde_json::Value::Object(map)
         }
