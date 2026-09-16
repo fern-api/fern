@@ -102,6 +102,7 @@ export async function generateAPIWorkspaces({
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
     let sdkConfigV1: FernSdkConfigV1Payload | undefined;
+    let cleanupSdkConfigWorkspace: (() => Promise<void>) | undefined;
 
     if (sdkConfigPath != null) {
         if (useLocalDocker) {
@@ -121,7 +122,7 @@ export async function generateAPIWorkspaces({
         try {
             const loaded = await loadSdkConfigV1(sdkConfigPath);
             sdkConfigV1 = loaded.payload;
-            const workspace = await cliContext.runTask(async (context) =>
+            const createdWorkspace = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: loaded.config,
                     absolutePathToConfig: loaded.absolutePath,
@@ -129,135 +130,141 @@ export async function generateAPIWorkspaces({
                     context
                 })
             );
+            cleanupSdkConfigWorkspace = createdWorkspace.cleanup;
             // SDK Config owns both sources and targets. Ignore any workspace assembled from
             // generators.yml while retaining project-level organization configuration.
-            project = { ...project, apiWorkspaces: [workspace] };
+            project = { ...project, apiWorkspaces: [createdWorkspace.workspace] };
             cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
         } catch (error) {
+            await cleanupSdkConfigWorkspace?.();
             return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
         }
     }
 
-    if (!useLocalDocker) {
-        const currentToken = await cliContext.runTask(async (context) => {
-            return askToLogin(context);
+    try {
+        if (!useLocalDocker) {
+            const currentToken = await cliContext.runTask(async (context) => {
+                return askToLogin(context);
+            });
+            if (currentToken.type === "user") {
+                await cliContext.runTask(async (context) => {
+                    await createOrganizationIfDoesNotExist({
+                        organization: project.config.organization,
+                        token: currentToken,
+                        context
+                    });
+                });
+            }
+            token = currentToken;
+        } else {
+            // Local generation must stay non-interactive: silently pick up an existing
+            // token (FERN_TOKEN env var or saved login file) so Venus calls are
+            // authenticated when possible, and leave `token` undefined otherwise.
+            token = await getToken();
+        }
+
+        // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
+        // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
+        // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
+        // lacks a `default-group`), `resolveGroupsOrFail` throws before we start any generation.
+        // We keep the resolved names so `generateWorkspace` doesn't need to re-run the resolver
+        // (and re-log "Using default group '…' from generators.yml").
+        const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
+            project,
+            groupNames,
+            sdkConfigV1,
+            automation,
+            cliContext
         });
-        if (currentToken.type === "user") {
-            await cliContext.runTask(async (context) => {
-                await createOrganizationIfDoesNotExist({
-                    organization: project.config.organization,
-                    token: currentToken,
-                    context
-                });
-            });
-        }
-        token = currentToken;
-    } else {
-        // Local generation must stay non-interactive: silently pick up an existing
-        // token (FERN_TOKEN env var or saved login file) so Venus calls are
-        // authenticated when possible, and leave `token` undefined otherwise.
-        token = await getToken();
-    }
-
-    // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
-    // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
-    // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
-    // lacks a `default-group`), `resolveGroupsOrFail` throws before we start any generation.
-    // We keep the resolved names so `generateWorkspace` doesn't need to re-run the resolver
-    // (and re-log "Using default group '…' from generators.yml").
-    const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
-        project,
-        groupNames,
-        sdkConfigV1,
-        automation,
-        cliContext
-    });
-    if (sdkConfigV1 != null) {
-        const selectedWorkspaces = [...resolvedGroupNamesByWorkspace.entries()].filter(
-            ([, resolvedGroups]) => resolvedGroups.length > 0
-        );
-        if (selectedWorkspaces.length !== 1) {
-            return cliContext.failAndThrow(
-                `SDK Config v1 must resolve to exactly one API workspace; resolved ${selectedWorkspaces.length}`,
-                undefined,
-                { code: CliError.Code.ConfigError }
+        if (sdkConfigV1 != null) {
+            const selectedWorkspaces = [...resolvedGroupNamesByWorkspace.entries()].filter(
+                ([, resolvedGroups]) => resolvedGroups.length > 0
             );
+            if (selectedWorkspaces.length !== 1) {
+                return cliContext.failAndThrow(
+                    `SDK Config v1 must resolve to exactly one API workspace; resolved ${selectedWorkspaces.length}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
         }
-    }
 
-    await confirmOutputDirectoriesForEligibleGenerators({
-        project,
-        resolvedGroupNamesByWorkspace,
-        generatorName,
-        generatorIndex,
-        automation,
-        cliContext,
-        force
-    });
+        await confirmOutputDirectoriesForEligibleGenerators({
+            project,
+            resolvedGroupNamesByWorkspace,
+            generatorName,
+            generatorIndex,
+            automation,
+            cliContext,
+            force
+        });
 
-    cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: resolvePosthogCommandLabel(automation),
-        properties: {
-            workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
-        }
-    });
+        cliContext.instrumentPostHogEvent({
+            orgId: project.config.organization,
+            command: resolvePosthogCommandLabel(automation),
+            properties: {
+                workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
+            }
+        });
 
-    await Promise.all(
-        project.apiWorkspaces.map(async (workspace) => {
-            const resolvedGroupNames = resolvedGroupNamesByWorkspace.get(workspace);
-            // Workspaces skipped by the pre-flight (no generators.yml or no configured groups)
-            // still need to run through `generateWorkspace` so the existing warning paths fire.
-            // An undefined entry means "skipped"; an empty array would mean "resolved to nothing".
-            await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const absolutePathToPreview = preview
-                    ? outputDir != null
-                        ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
-                        : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
-                    : undefined;
+        await Promise.all(
+            project.apiWorkspaces.map(async (workspace) => {
+                const resolvedGroupNames = resolvedGroupNamesByWorkspace.get(workspace);
+                // Workspaces skipped by the pre-flight (no generators.yml or no configured groups)
+                // still need to run through `generateWorkspace` so the existing warning paths fire.
+                // An undefined entry means "skipped"; an empty array would mean "resolved to nothing".
+                await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                    const absolutePathToPreview = preview
+                        ? outputDir != null
+                            ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
+                            : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                        : undefined;
 
-                if (absolutePathToPreview != null) {
-                    context.logger.info(`Writing preview to ${absolutePathToPreview}`);
-                }
+                    if (absolutePathToPreview != null) {
+                        context.logger.info(`Writing preview to ${absolutePathToPreview}`);
+                    }
 
-                await generateWorkspace({
-                    organization: project.config.organization,
-                    workspace,
-                    projectConfig: project.config,
-                    context,
-                    version,
-                    resolvedGroupNames: resolvedGroupNames ?? [],
-                    generatorName,
-                    generatorIndex,
-                    shouldLogS3Url,
-                    token,
-                    useLocalDocker,
-                    keepDocker,
-                    absolutePathToPreview,
-                    mode,
-                    runner,
-                    inspect,
-                    lfsOverride,
-                    sdkConfigV1,
-                    fernignorePath,
-                    skipFernignore,
-                    dynamicIrOnly,
-                    noReplay,
-                    verify,
-                    retryRateLimited,
-                    requireEnvVars,
-                    automationMode,
-                    autoMerge,
-                    skipIfNoDiff,
-                    generateTests,
-                    automation,
-                    pack,
-                    packMode,
-                    packOnly
+                    await generateWorkspace({
+                        organization: project.config.organization,
+                        workspace,
+                        projectConfig: project.config,
+                        context,
+                        version,
+                        resolvedGroupNames: resolvedGroupNames ?? [],
+                        generatorName,
+                        generatorIndex,
+                        shouldLogS3Url,
+                        token,
+                        useLocalDocker,
+                        keepDocker,
+                        absolutePathToPreview,
+                        mode,
+                        runner,
+                        inspect,
+                        lfsOverride,
+                        sdkConfigV1,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        noReplay,
+                        verify,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        skipIfNoDiff,
+                        generateTests,
+                        automation,
+                        pack,
+                        packMode,
+                        packOnly
+                    });
                 });
-            });
-        })
-    );
+            })
+        );
+    } finally {
+        await cleanupSdkConfigWorkspace?.();
+    }
 }
 
 /**

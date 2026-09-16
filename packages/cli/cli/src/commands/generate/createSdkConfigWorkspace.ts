@@ -1,8 +1,10 @@
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml, getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
@@ -25,6 +27,11 @@ const GENERATOR_BY_LANGUAGE: Record<string, string> = {
     mcp: "fernapi/fern-mcp-server"
 };
 
+export interface CreatedSdkConfigWorkspace {
+    workspace: OSSWorkspace;
+    cleanup: () => Promise<void>;
+}
+
 export async function createSdkConfigWorkspace({
     sdkConfig,
     absolutePathToConfig,
@@ -35,75 +42,89 @@ export async function createSdkConfigWorkspace({
     absolutePathToConfig: string;
     cliVersion: string;
     context: TaskContext;
-}): Promise<OSSWorkspace> {
+}): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
-    const specs = await Promise.all(
-        sdkConfig.source.specs.map((spec) => createSpec({ spec, sdkConfig, configDirectory, context }))
-    );
-    const group: generatorsYml.GeneratorGroup = {
-        groupName: SDK_CONFIG_GROUP,
-        audiences:
-            sdkConfig.api.audiences == null ? { type: "all" } : { type: "select", audiences: sdkConfig.api.audiences },
-        generators: await Promise.all(
-            sdkConfig.targets.map(async (target) => {
-                const name = GENERATOR_BY_LANGUAGE[target.language];
-                if (name == null) {
-                    return context.failAndThrow(
-                        `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
-                        undefined,
-                        { code: CliError.Code.ConfigError }
-                    );
-                }
-                const version =
-                    target.generatorVersion ??
-                    (await getLatestGeneratorVersion({
-                        generatorName: name,
-                        cliVersion,
-                        channel: undefined,
-                        includeMajor: true,
-                        context
-                    }));
-                if (version == null) {
-                    return context.failAndThrow(
-                        `Could not resolve a generator version for SDK Config target '${target.language}'`,
-                        undefined,
-                        { code: CliError.Code.NetworkError }
-                    );
-                }
-                return createGeneratorInvocation({
-                    name,
-                    version,
-                    language: target.language,
-                    output: target.output ?? sdkConfig.output,
-                    configDirectory
-                });
-            })
-        ),
-        reviewers: undefined
+    const temporaryDirectories: string[] = [];
+    const cleanup = async () => {
+        await Promise.all(
+            temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true, force: true }))
+        );
     };
-    const generatorsConfiguration: generatorsYml.GeneratorsConfiguration = {
-        api: undefined,
-        defaultGroup: SDK_CONFIG_GROUP,
-        groupAliases: {},
-        reviewers: undefined,
-        groups: [group],
-        whitelabel: undefined,
-        ai: undefined,
-        replay: undefined,
-        rawConfiguration: {} as generatorsYml.GeneratorsConfigurationSchema,
-        // This is an in-memory adapter. The path is retained only for diagnostics; it is never parsed as generators.yml.
-        absolutePathToConfiguration: AbsoluteFilePath.of(absolutePathToConfig)
-    };
-    const workspace = new OSSWorkspace({
-        allSpecs: specs,
-        specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
-        generatorsConfiguration,
-        workspaceName: undefined,
-        cliVersion,
-        absoluteFilePath: AbsoluteFilePath.of(configDirectory)
-    });
-    await workspace.processGraphQLSpecs(context);
-    return workspace;
+    try {
+        const specs: Spec[] = [];
+        for (const spec of sdkConfig.source.specs) {
+            specs.push(await createSpec({ spec, sdkConfig, configDirectory, context, temporaryDirectories }));
+        }
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: SDK_CONFIG_GROUP,
+            audiences:
+                sdkConfig.api.audiences == null
+                    ? { type: "all" }
+                    : { type: "select", audiences: sdkConfig.api.audiences },
+            generators: await Promise.all(
+                sdkConfig.targets.map(async (target) => {
+                    const name = GENERATOR_BY_LANGUAGE[target.language];
+                    if (name == null) {
+                        return context.failAndThrow(
+                            `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                    const version =
+                        target.generatorVersion ??
+                        (await getLatestGeneratorVersion({
+                            generatorName: name,
+                            cliVersion,
+                            channel: undefined,
+                            includeMajor: true,
+                            context
+                        }));
+                    if (version == null) {
+                        return context.failAndThrow(
+                            `Could not resolve a generator version for SDK Config target '${target.language}'`,
+                            undefined,
+                            { code: CliError.Code.NetworkError }
+                        );
+                    }
+                    return createGeneratorInvocation({
+                        name,
+                        version,
+                        language: target.language,
+                        output: target.output ?? sdkConfig.output,
+                        configDirectory
+                    });
+                })
+            ),
+            reviewers: undefined
+        };
+        const generatorsConfiguration: generatorsYml.GeneratorsConfiguration = {
+            api: undefined,
+            defaultGroup: SDK_CONFIG_GROUP,
+            groupAliases: {},
+            reviewers: undefined,
+            groups: [group],
+            whitelabel: undefined,
+            ai: undefined,
+            replay: undefined,
+            rawConfiguration: {} as generatorsYml.GeneratorsConfigurationSchema,
+            // This is an in-memory adapter. The path is retained only for diagnostics; it is never parsed as generators.yml.
+            absolutePathToConfiguration: AbsoluteFilePath.of(absolutePathToConfig)
+        };
+        const workspace = new OSSWorkspace({
+            allSpecs: specs,
+            specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
+            generatorsConfiguration,
+            workspaceName: undefined,
+            cliVersion,
+            absoluteFilePath: AbsoluteFilePath.of(configDirectory)
+        });
+        await workspace.processGraphQLSpecs(context);
+        return { workspace, cleanup };
+    } catch (error) {
+        await cleanup();
+        throw error;
+    }
 }
 
 function createGeneratorInvocation({
@@ -151,12 +172,14 @@ async function createSpec({
     spec,
     sdkConfig,
     configDirectory,
-    context
+    context,
+    temporaryDirectories
 }: {
     spec: SdkConfigV1SourceSpec;
     sdkConfig: SdkConfigV1;
     configDirectory: string;
     context: TaskContext;
+    temporaryDirectories: string[];
 }): Promise<Spec> {
     if ((spec.overlays?.length ?? 0) > 1) {
         return context.failAndThrow(
@@ -165,7 +188,7 @@ async function createSpec({
             { code: CliError.Code.ConfigError }
         );
     }
-    const absoluteFilepath = await resolveSourcePath(spec, configDirectory, context);
+    const absoluteFilepath = await resolveSourcePath(spec, configDirectory, context, temporaryDirectories);
     const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, configDirectory));
     if (spec.type === "graphql") {
         return {
@@ -202,20 +225,44 @@ async function createSpec({
 async function resolveSourcePath(
     spec: SdkConfigV1SourceSpec,
     configDirectory: string,
-    context: TaskContext
+    context: TaskContext,
+    temporaryDirectories: string[]
 ): Promise<AbsoluteFilePath> {
     if ("path" in spec) {
         return AbsoluteFilePath.of(path.resolve(configDirectory, spec.path));
     }
-    return context.failAndThrow(
-        `SDK Config URL source '${spec.id}' is not supported by the Fern CLI yet. Download ${spec.url} into your project and use a path source instead.`,
-        undefined,
-        { code: CliError.Code.ConfigError }
-    );
+    if (spec.type !== "openapi") {
+        return context.failAndThrow(
+            `SDK Config ${spec.type} URL source '${spec.id}' is not supported by the Fern CLI yet. Download ${spec.url} into your project and use a path source instead.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    let bundled: unknown;
+    try {
+        bundled = await bundleRemoteOpenAPI(spec.url);
+    } catch (error) {
+        return context.failAndThrow(
+            `Could not resolve SDK Config OpenAPI source '${spec.id}' from ${spec.url}`,
+            error,
+            {
+                code: CliError.Code.NetworkError
+            }
+        );
+    }
+    const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-source-"));
+    temporaryDirectories.push(directory);
+    const absolutePath = path.join(directory, `${sanitizeFilename(spec.id)}.json`);
+    await writeFile(absolutePath, `${JSON.stringify(bundled)}\n`);
+    return AbsoluteFilePath.of(absolutePath);
 }
 
 function resolveTransformPath(value: string, configDirectory: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.resolve(configDirectory, value));
+}
+
+function sanitizeFilename(value: string): string {
+    return value.replace(/[^a-zA-Z0-9._-]/g, "-");
 }
 
 function isLegacyGenerationLanguage(language: string): language is generatorsYml.GenerationLanguage {

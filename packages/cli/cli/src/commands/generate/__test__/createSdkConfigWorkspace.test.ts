@@ -1,7 +1,8 @@
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
+import { bundleRemoteOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -11,6 +12,11 @@ import { createSdkConfigWorkspace } from "../createSdkConfigWorkspace.js";
 vi.mock("@fern-api/configuration-loader", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/configuration-loader")>()),
     getLatestGeneratorVersion: vi.fn()
+}));
+
+vi.mock("@fern-api/lazy-fern-workspace", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("@fern-api/lazy-fern-workspace")>()),
+    bundleRemoteOpenAPI: vi.fn()
 }));
 
 describe("createSdkConfigWorkspace", () => {
@@ -32,7 +38,7 @@ describe("createSdkConfigWorkspace", () => {
             "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
         );
 
-        const workspace = await createSdkConfigWorkspace({
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
             sdkConfig: parseSdkConfigV1({
                 schemaVersion: "sdk-config/v1",
                 sdkName: "payments",
@@ -93,9 +99,57 @@ describe("createSdkConfigWorkspace", () => {
                 cliVersion: "0.0.0"
             })
         );
+        await cleanup();
     });
 
-    it("rejects URL sources until they can be resolved safely with relative references", async () => {
+    it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
+        vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
+            openapi: "3.0.0",
+            info: { title: "Payments", version: "1.0.0" },
+            paths: {}
+        });
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+
+        const created = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: {
+                    specs: [
+                        {
+                            id: "payments",
+                            type: "openapi",
+                            url: "https://example.com/openapi.yaml"
+                        }
+                    ]
+                },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [{ language: "typescript", generatorVersion: "4.0.0", output: { delivery: "zip" } }]
+            }),
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        const materialized = created.workspace.allSpecs[0];
+        if (materialized?.type !== "openapi") {
+            throw new Error("Expected an OpenAPI specification");
+        }
+        expect(bundleRemoteOpenAPI).toHaveBeenCalledWith("https://example.com/openapi.yaml");
+        expect(JSON.parse(await readFile(materialized.absoluteFilepath, "utf-8"))).toMatchObject({
+            info: { title: "Payments" }
+        });
+
+        await created.cleanup();
+        await expect(access(materialized.absoluteFilepath)).rejects.toThrow();
+    });
+
+    it.each(["asyncapi", "graphql"] as const)("rejects unsupported %s URL sources", async (type) => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
 
@@ -105,13 +159,7 @@ describe("createSdkConfigWorkspace", () => {
                     schemaVersion: "sdk-config/v1",
                     sdkName: "payments",
                     source: {
-                        specs: [
-                            {
-                                id: "payments",
-                                type: "openapi",
-                                url: "https://example.com/openapi.yaml"
-                            }
-                        ]
+                        specs: [{ id: "payments", type, url: `https://example.com/${type}.yaml` }]
                     },
                     api: {},
                     client: {},
@@ -128,6 +176,6 @@ describe("createSdkConfigWorkspace", () => {
                     }
                 } as never
             })
-        ).rejects.toThrow("Download https://example.com/openapi.yaml into your project and use a path source");
+        ).rejects.toThrow(`SDK Config ${type} URL source 'payments' is not supported`);
     });
 });
