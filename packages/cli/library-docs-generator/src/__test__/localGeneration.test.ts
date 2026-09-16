@@ -20,7 +20,7 @@ import { runContainer } from "@fern-api/docker-utils";
 import { runLibraryDocsGeneration } from "../orchestrate.js";
 
 /**
- * End-to-end coverage of the `fern docs md generate --local` path for a
+ * End-to-end coverage of the `fern docs md generate` path for a
  * local path and git input libraries.
  *
  * Only the Docker boundary (`runContainer`) is mocked — it emits a realistic
@@ -29,9 +29,8 @@ import { runLibraryDocsGeneration } from "../orchestrate.js";
  * source-path resolution, `LocalParserRunner`, IR validation, and the Python
  * MDX generator writing files to `output.path` on disk.
  *
- * This is the local analogue of the git/remote render coverage in
- * fern-platform's `library-docs-generate.spec.ts`, and closes the seam that
- * let a `path` input be required by `--local` yet unhandled elsewhere.
+ * This is the local analogue of the git render coverage in
+ * fern-platform's `library-docs-generate.spec.ts`.
  */
 
 type LoggerMock = { info: Mock; error: Mock; debug: Mock; warn: Mock; trace: Mock; log: Mock };
@@ -142,7 +141,7 @@ function pythonIr(): FdrAPI.libraryDocs.PythonLibraryDocsIr {
     } as unknown as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 }
 
-describe("runLibraryDocsGeneration — --local path input (end-to-end to disk)", () => {
+describe("runLibraryDocsGeneration — path input (end-to-end to disk)", () => {
     let docsDir: string;
 
     beforeEach(() => {
@@ -178,9 +177,7 @@ describe("runLibraryDocsGeneration — --local path input (end-to-end to disk)",
         const result = await runLibraryDocsGeneration({
             libraries,
             docsDirectoryPath: AbsoluteFilePath.of(docsDir),
-            orgId: "smoke-test",
-            context: makeContext(),
-            local: true
+            context: makeContext()
         });
 
         expect(result).toEqual({ successful: 1 });
@@ -245,9 +242,7 @@ describe("runLibraryDocsGeneration — --local path input (end-to-end to disk)",
             runLibraryDocsGeneration({
                 libraries,
                 docsDirectoryPath: AbsoluteFilePath.of(docsDir),
-                orgId: "smoke-test",
-                context: makeContext(),
-                local: true
+                context: makeContext()
             })
         ).resolves.toEqual({ successful: 1 });
 
