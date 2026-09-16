@@ -80,7 +80,6 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
-    useAllSchemaExamples: undefined,
     namespacedErrors: undefined
 };
 
@@ -198,7 +197,6 @@ export function parseOpenApiDefinitionSettingsSchema(
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
-        useAllSchemaExamples: settings?.["use-all-schema-examples"],
         namespacedErrors: settings?.["namespaced-errors"]
     };
 }

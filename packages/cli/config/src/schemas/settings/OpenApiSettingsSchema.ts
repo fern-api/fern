@@ -155,14 +155,6 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     "respect-operation-id-word-boundaries": z.boolean().optional(),
 
     /**
-     * If true, every entry of a schema-level `examples` array (plus a schema-level `example`) on a request or
-     * response body schema is surfaced as a separate, selectable API reference example when the media type
-     * object defines no examples of its own. If false, only the first schema-level example is used.
-     * Only the v3 OpenAPI parser reads this. Defaults to false.
-     */
-    "use-all-schema-examples": z.boolean().optional(),
-
-    /**
      * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
      * within, that namespace instead of the endpoint's namespace.
      * Defaults to false.

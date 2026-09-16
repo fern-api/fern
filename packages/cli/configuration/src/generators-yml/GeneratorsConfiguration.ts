@@ -107,7 +107,6 @@ export interface APIDefinitionSettings {
     respectParameterContent: boolean | undefined;
     respectPerSpecBasePath: boolean | undefined;
     respectOperationIdWordBoundaries: boolean | undefined;
-    useAllSchemaExamples: boolean | undefined;
     namespacedErrors: boolean | undefined;
 }
 

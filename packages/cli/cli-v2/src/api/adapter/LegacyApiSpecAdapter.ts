@@ -212,7 +212,6 @@ export class LegacyApiSpecAdapter {
             respectParameterContent: settings["respect-parameter-content"],
             respectPerSpecBasePath: settings["respect-per-spec-base-path"],
             respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
-            useAllSchemaExamples: settings["use-all-schema-examples"],
             namespacedErrors: settings["namespaced-errors"]
         };
 

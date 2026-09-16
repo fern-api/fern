@@ -204,15 +204,6 @@ export interface ParseOpenAPIOptions {
     respectOperationIdWordBoundaries: boolean;
 
     /**
-     * If true, every entry of a schema-level `examples` array (plus a schema-level `example`) on a request
-     * or response body schema is surfaced as a separate, selectable API reference example when the media
-     * type object defines no examples of its own. If false, only the first schema-level example is used.
-     *
-     * Only the v3 OpenAPI parser reads this. Defaults to false.
-     */
-    useAllSchemaExamples: boolean;
-
-    /**
      * If true, an error whose response object (`components.responses[...]`) carries `x-fern-sdk-namespace`
      * is declared in, and shared within, that namespace instead of the endpoint's namespace. Errors without
      * the extension are unaffected. Defaults to false.
@@ -265,7 +256,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectParameterContent: false,
     respectPerSpecBasePath: false,
     respectOperationIdWordBoundaries: false,
-    useAllSchemaExamples: false,
     namespacedErrors: false
 };
 

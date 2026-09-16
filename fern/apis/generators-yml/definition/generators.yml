@@ -646,14 +646,6 @@ types:
           from the legacy importer are unaffected. Changing it changes existing API reference URLs.
           Defaults to false.
         default: false
-      use-all-schema-examples:
-        type: optional<boolean>
-        docs: |
-          If true, every entry of a schema-level `examples` array (plus a schema-level `example`) on a request or
-          response body schema is surfaced as a separate, selectable API reference example when the media type
-          object defines no examples of its own. If false, only the first schema-level example is used.
-          Only the v3 OpenAPI parser reads this. Defaults to false.
-        default: false
       namespaced-errors:
         type: optional<boolean>
         docs: |
