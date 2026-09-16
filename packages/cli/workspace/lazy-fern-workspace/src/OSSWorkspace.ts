@@ -178,7 +178,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             respectOperationIdWordBoundaries: collapseSpecBooleanSetting(
                 specs,
                 (s) => s?.respectOperationIdWordBoundaries
-            )
+            ),
+            useAllSchemaExamples: collapseSpecBooleanSetting(specs, (s) => s?.useAllSchemaExamples)
         });
         this.specs = specs;
         this.allSpecs = allSpecs;

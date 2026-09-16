@@ -4082,6 +4082,9 @@
                       "respect-operation-id-word-boundaries": {
                         "type": "boolean"
                       },
+                      "use-all-schema-examples": {
+                        "type": "boolean"
+                      },
                       "namespaced-errors": {
                         "type": "boolean"
                       }
@@ -4681,6 +4684,9 @@
                           "type": "boolean"
                         },
                         "respect-operation-id-word-boundaries": {
+                          "type": "boolean"
+                        },
+                        "use-all-schema-examples": {
                           "type": "boolean"
                         },
                         "namespaced-errors": {

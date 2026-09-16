@@ -31,6 +31,7 @@ export declare namespace BaseOpenAPIWorkspace {
         pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
         coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
         respectOperationIdWordBoundaries: boolean | undefined;
+        useAllSchemaExamples: boolean | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -60,6 +61,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public readonly coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     public readonly respectOperationIdWordBoundaries: boolean | undefined;
+    public readonly useAllSchemaExamples: boolean | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -87,6 +89,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.pathParameterOrder = args.pathParameterOrder;
         this.coerceConstsTo = args.coerceConstsTo;
         this.respectOperationIdWordBoundaries = args.respectOperationIdWordBoundaries;
+        this.useAllSchemaExamples = args.useAllSchemaExamples;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -160,6 +163,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public coerceEnumsToLiterals: boolean | undefined;
     public coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     public respectOperationIdWordBoundaries: boolean | undefined;
+    public useAllSchemaExamples: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -180,6 +184,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.pathParameterOrder = args.pathParameterOrder;
         this.coerceConstsTo = args.coerceConstsTo;
         this.respectOperationIdWordBoundaries = args.respectOperationIdWordBoundaries;
+        this.useAllSchemaExamples = args.useAllSchemaExamples;
         this.converter = new FernDefinitionConverter(args);
     }
 

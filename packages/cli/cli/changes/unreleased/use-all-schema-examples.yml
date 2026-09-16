@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in OpenAPI setting `use-all-schema-examples`. When enabled, every entry of a schema-level
+    `examples` array on a request or response body schema becomes a separate, selectable example in the
+    API reference (labelled `Example 1`, `Example 2`, ...) whenever the media type object does not define
+    its own `example`/`examples`. Defaults to false, preserving the existing behavior of using only the
+    first schema-level example.
+  type: feat

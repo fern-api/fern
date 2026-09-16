@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+      settings:
+        use-all-schema-examples: true

@@ -42,6 +42,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "respect-parameter-content": core.serialization.boolean().optional(),
         "respect-per-spec-base-path": core.serialization.boolean().optional(),
         "respect-operation-id-word-boundaries": core.serialization.boolean().optional(),
+        "use-all-schema-examples": core.serialization.boolean().optional(),
         "namespaced-errors": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
@@ -75,6 +76,7 @@ export declare namespace OpenApiSettingsSchema {
         "respect-parameter-content"?: boolean | null;
         "respect-per-spec-base-path"?: boolean | null;
         "respect-operation-id-word-boundaries"?: boolean | null;
+        "use-all-schema-examples"?: boolean | null;
         "namespaced-errors"?: boolean | null;
     }
 }

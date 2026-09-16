@@ -83,6 +83,7 @@
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
     "respectOperationIdWordBoundaries": false,
+    "useAllSchemaExamples": false,
     "namespacedErrors": false
   }
 }

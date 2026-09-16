@@ -2904,6 +2904,17 @@
           ],
           "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
         },
+        "use-all-schema-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, every entry of a schema-level `examples` array (plus a schema-level `example`) on a request or\nresponse body schema is surfaced as a separate, selectable API reference example when the media type\nobject defines no examples of its own. If false, only the first schema-level example is used.\nOnly the v3 OpenAPI parser reads this. Defaults to false."
+        },
         "namespaced-errors": {
           "oneOf": [
             {
@@ -3640,6 +3651,17 @@
             }
           ],
           "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
+        },
+        "use-all-schema-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, every entry of a schema-level `examples` array (plus a schema-level `example`) on a request or\nresponse body schema is surfaced as a separate, selectable API reference example when the media type\nobject defines no examples of its own. If false, only the first schema-level example is used.\nOnly the v3 OpenAPI parser reads this. Defaults to false."
         },
         "namespaced-errors": {
           "oneOf": [
