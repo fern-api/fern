@@ -1,9 +1,10 @@
-import { ApiValidationResult, DocsValidationResult } from "./printCheckReport.js";
+import { ApiValidationResult, DocsValidationResult, formatViolationPath } from "./printCheckReport.js";
 
 export interface CheckJsonViolation {
     api?: string;
     severity: string;
     rule?: string;
+    path?: string;
     message: string;
 }
 
@@ -40,6 +41,10 @@ export function buildCheckJsonResult({
             if (violation.name != null) {
                 entry.rule = violation.name;
             }
+            const path = formatViolationPath(violation);
+            if (path !== "") {
+                entry.path = path;
+            }
             apis.push(entry);
         }
     }
@@ -53,6 +58,10 @@ export function buildCheckJsonResult({
             };
             if (violation.name != null) {
                 entry.rule = violation.name;
+            }
+            const path = formatViolationPath(violation);
+            if (path !== "") {
+                entry.path = path;
             }
             docs.push(entry);
         }
