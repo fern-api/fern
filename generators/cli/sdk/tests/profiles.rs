@@ -1102,3 +1102,103 @@ fn exactly_one_row_is_marked_active_even_when_env_credentials_are_set() {
     let marked = rows.iter().find(|r| r["active"] == "*").expect("one active");
     assert_eq!(marked["profile"], "staging", "the selected profile is the active one");
 }
+
+#[test]
+fn a_bare_create_says_that_nothing_was_stored() {
+    // `profiles create <name>` stores no credential, and not saying so is the
+    // difference between a working first five minutes and a confusing hour:
+    // the next `auth status` reports every keyring rung as `missing` with no
+    // hint which command was meant to fill them.
+    let sandbox = Sandbox::new();
+    let output = sandbox.run(&["profiles", "create", "prod"]);
+    assert_ok(&output, "bare create");
+    assert!(
+        stderr(&output).contains("No credential stored yet"),
+        "{}",
+        stderr(&output),
+    );
+}
+
+#[test]
+fn the_hint_is_suppressed_when_nothing_is_missing() {
+    // It must not fire when a credential was just captured, when the profile
+    // inherits one, or when env vars already supply it — there the line is
+    // noise and undermines the cases where it matters.
+    let sandbox = Sandbox::new();
+
+    let captured = sandbox.run_with_env(
+        &["profiles", "create", "withcred", "--from-env"],
+        &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
+    );
+    assert!(!stderr(&captured).contains("No credential stored yet"), "{}", stderr(&captured));
+
+    sandbox.run(&["profiles", "create", "parent"]);
+    let child = sandbox.run(&["profiles", "create", "kid", "--parent", "parent"]);
+    assert!(!stderr(&child).contains("No credential stored yet"), "{}", stderr(&child));
+
+    let with_env = sandbox.run_with_env(
+        &["profiles", "create", "envuser"],
+        &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
+    );
+    assert!(!stderr(&with_env).contains("No credential stored yet"), "{}", stderr(&with_env));
+}
+
+#[test]
+fn auth_login_from_env_captures_into_the_active_profile() {
+    // "Capture what is already in my shell into the profile I am on" is a
+    // login. Routing it through `profiles create <name> --from-env --force`
+    // made users name a profile they had already selected, and reads wrong.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--use"]);
+    sandbox.run(&["profiles", "create", "staging"]);
+
+    let first = sandbox.run_with_env(
+        &["auth", "login", "--from-env"],
+        &[("OPENAPI_FIXTURE_API_KEY", "prod-key")],
+    );
+    assert_ok(&first, "auth login --from-env");
+    assert!(stderr(&first).contains("profile `prod`"), "{}", stderr(&first));
+
+    // Switching and capturing again must land in a *different* slot.
+    sandbox.run(&["profiles", "use", "staging"]);
+    let second = sandbox.run_with_env(
+        &["auth", "login", "--from-env"],
+        &[("OPENAPI_FIXTURE_API_KEY", "staging-key")],
+    );
+    assert_ok(&second, "second capture");
+    assert!(stderr(&second).contains("profile `staging`"), "{}", stderr(&second));
+
+    // Each profile now reads its own.
+    for profile in ["prod", "staging"] {
+        let status = sandbox.run(&["-p", profile, "auth", "status", "--format", "json"]);
+        let parsed: serde_json::Value = serde_json::from_str(&stdout(&status)).expect("json");
+        assert_eq!(
+            parsed["schemes"][0]["logged_in"],
+            serde_json::Value::Bool(true),
+            "{profile} should read its own credential: {}",
+            stdout(&status),
+        );
+    }
+}
+
+#[test]
+fn auth_login_from_env_explains_itself_when_no_variable_is_set() {
+    // The failure has to name the variables it looked for, or the user is told
+    // "no credential" with no way to find out which name was expected.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--use"]);
+    let output = sandbox.run(&["auth", "login", "--from-env"]);
+    assert_ne!(output.status.code(), Some(0), "{}", stdout(&output));
+    let text = format!("{}{}", stdout(&output), stderr(&output));
+    assert!(text.contains("--from-env"), "{text}");
+    assert!(text.contains("auth status"), "should point at the surface that lists them: {text}");
+}
+
+#[test]
+fn auth_login_rejects_from_env_together_with_with_token() {
+    // They are two different sources for one value; taking both would make the
+    // precedence between them invisible.
+    let sandbox = Sandbox::new();
+    let output = sandbox.run(&["auth", "login", "--from-env", "--with-token"]);
+    assert_ne!(output.status.code(), Some(0));
+}

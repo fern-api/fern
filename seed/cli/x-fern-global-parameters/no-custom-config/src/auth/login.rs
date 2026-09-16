@@ -344,6 +344,17 @@ pub fn build_auth_command() -> Command {
             Command::new("login")
                 .about("Authenticate this CLI (runs the declared OAuth flow, or pastes a token)")
                 .arg(
+                    Arg::new("from-env")
+                        .long("from-env")
+                        .help(
+                            "Capture the credential from this CLI's own environment \
+                             variables into the active profile's keyring slot, instead \
+                             of reading it from stdin",
+                        )
+                        .action(clap::ArgAction::SetTrue)
+                        .conflicts_with("with-token"),
+                )
+                .arg(
                     Arg::new("with-token")
                         .long("with-token")
                         .action(ArgAction::SetTrue)
@@ -435,6 +446,14 @@ fn handle_login(
     } else {
         resolve_scheme_for(matches.get_one::<String>("scheme"), auth_bindings, login_flows)?
     };
+
+    // `--from-env` exists here and not only on `profiles create` because
+    // "capture what is already in my shell into the profile I am on" is a
+    // login, and routing it through `profiles create <name> --from-env --force`
+    // made users name a profile they had already selected.
+    if matches.get_flag("from-env") {
+        return run_env_capture(cli_name, &scheme, auth_bindings);
+    }
 
     if with_token {
         // Universal paste path — surfaces the token_paste_url hint from
@@ -849,6 +868,102 @@ fn describe_source(s: &AuthCredentialSource) -> String {
 /// exists for. Falls back to the guesses only when the scheme is not in the
 /// bindings at all, which is the `--with-token --scheme <name>` path on a
 /// CLI that declares none.
+/// `auth login --from-env`: read the scheme's declared env vars and store the
+/// value under the active profile's keyring slot.
+///
+/// Deliberately the same capture as `profiles create --from-env`, including the
+/// shadow warning: `--from-env` *reads* the variable, so without the warning
+/// the user is told the capture succeeded and never learns that the variable
+/// they captured from keeps winning over the copy they just made.
+fn run_env_capture(
+    cli_name: &str,
+    scheme: &str,
+    auth_bindings: &[(String, SchemeBinding)],
+) -> Result<(), CliError> {
+    let account = crate::profiles::keyring_account(scheme);
+    let fields = scheme_credential_fields(scheme, auth_bindings);
+    let stored = match fields {
+        Some(fields) => {
+            let captured = env_multi_credential(auth_bindings, scheme, &fields)
+                .ok_or_else(|| from_env_error(cli_name, scheme, &fields.join(" and ")))?;
+            multi_field_keyring_value(&captured)?
+        }
+        None => env_credential(auth_bindings, scheme)
+            .ok_or_else(|| from_env_error(cli_name, scheme, "a credential"))?,
+    };
+    crate::auth::keyring_store::active_store().set(cli_name, &account, &stored)?;
+
+    let mut stderr = std::io::stderr();
+    let scope = match crate::profiles::active_name() {
+        Some(profile) => format!(" (profile `{profile}`)"),
+        None => String::new(),
+    };
+    let _ = writeln!(
+        stderr,
+        "{}",
+        green(&format!(
+            "\u{2713} Stored credential for scheme {scheme}{scope} in {}",
+            crate::auth::keyring_store::active_store().backend_label(),
+        )),
+    );
+    warn_if_env_shadows(
+        &mut stderr,
+        &shadowing_env_vars(cli_name, scheme, auth_bindings),
+    );
+    Ok(())
+}
+
+pub(crate) fn from_env_error(cli_name: &str, scheme: &str, what: &str) -> CliError {
+    CliError::Validation(format!(
+        "--from-env: no environment variable currently supplies {what} for scheme \
+         `{scheme}`. Run `{cli_name} auth status` to see which ones are read."
+    ))
+}
+
+/// Every field of a multi-value scheme, captured from env vars only.
+///
+/// `expand_slots` returns one *required* slot per field, in declaration
+/// order — username before password, client id before secret — which is
+/// what makes the halves separable; a flat source list would not be.
+pub(crate) fn env_multi_credential(
+    bindings: &[(String, SchemeBinding)],
+    scheme: &str,
+    fields: &[&'static str],
+) -> Option<Vec<(&'static str, String)>> {
+    use secrecy::ExposeSecret;
+    let binding = bindings.iter().find(|(name, _)| name == scheme)?;
+    let slots = expand_slots(scheme, &binding.1, &[], "");
+    let mut values = slots.required.into_iter().map(|slot| {
+        slot.into_iter()
+            .filter(|source| matches!(source, AuthCredentialSource::Env(_)))
+            .find_map(|source| source.resolve())
+            .map(|secret| secret.expose_secret().to_string())
+    });
+    let mut out = Vec::with_capacity(fields.len());
+    for field in fields {
+        out.push((*field, values.next()??));
+    }
+    Some(out)
+}
+
+/// The value an env-var credential source currently supplies for `scheme`.
+///
+/// Deliberately env-only: `--from-env` captures the environment, so reading
+/// through the whole chain would let it capture a *keyring* value and write
+/// it back to a different keyring account, which is a confusing no-op at
+/// best.
+pub(crate) fn env_credential(bindings: &[(String, SchemeBinding)], scheme: &str) -> Option<String> {
+    use secrecy::ExposeSecret;
+    let binding = bindings.iter().find(|(name, _)| name == scheme)?;
+    // No login flows and no cli_name: this reads env vars only, so the
+    // synthesized keyring source those arguments would add is irrelevant.
+    crate::profiles::commands::credential_sources(scheme, &binding.1, &[], "")
+        .into_iter()
+        .filter(|source| matches!(source, AuthCredentialSource::Env(_)))
+        .find_map(|source| source.resolve())
+        .map(|secret| secret.expose_secret().to_string())
+}
+
 pub fn shadowing_env_vars(
     cli_name: &str,
     scheme_name: &str,

@@ -708,14 +708,14 @@ fn handle_create(
             }
             (true, None) => login::read_token_from_stdin()?,
             (false, Some(fields)) => {
-                let captured = env_multi_credential(ctx.auth_bindings, &scheme, &fields)
+                let captured = login::env_multi_credential(ctx.auth_bindings, &scheme, &fields)
                     .ok_or_else(|| {
-                        from_env_error(ctx.cli_name, &scheme, &fields.join(" and "))
+                        login::from_env_error(ctx.cli_name, &scheme, &fields.join(" and "))
                     })?;
                 login::multi_field_keyring_value(&captured)?
             }
-            (false, None) => env_credential(ctx.auth_bindings, &scheme)
-                .ok_or_else(|| from_env_error(ctx.cli_name, &scheme, "a credential"))?,
+            (false, None) => login::env_credential(ctx.auth_bindings, &scheme)
+                .ok_or_else(|| login::from_env_error(ctx.cli_name, &scheme, "a credential"))?,
         };
         active_store().set(ctx.cli_name, &account, &stored)?;
         let _ = writeln!(
@@ -765,7 +765,39 @@ fn handle_create(
             ctx.command_name,
         );
     }
+
+    // `profiles create <name>` on its own stores no credential, and saying so
+    // is the difference between a working first five minutes and a confusing
+    // hour. Without this the next `auth status` reports every keyring rung as
+    // `missing` and the user has no idea which command was supposed to fill
+    // them, or that `create` was never going to.
+    //
+    // Suppressed when a credential was just captured, when the profile
+    // inherits one, and when env vars already supply it — in those cases
+    // nothing is missing and the line would be noise.
+    let captured = matches.get_flag("with-token") || matches.get_flag("from-env");
+    let inherits = entry.parent.is_some() || matches.get_one::<String>("credential").is_some();
+    if !captured && !inherits && !any_env_credential(ctx) {
+        let _ = writeln!(
+            stderr,
+            "  No credential stored yet. Run `{} auth login` (or re-run with \
+             `--from-env` to capture one already in your shell).",
+            ctx.cli_name,
+        );
+    }
     Ok(())
+}
+
+/// Whether environment variables already supply a credential, in which case
+/// the "no credential stored" hint would be misleading — the CLI works.
+fn any_env_credential(ctx: &ProfilesContext<'_>) -> bool {
+    ctx.auth_bindings.iter().any(|(scheme, binding)| {
+        credential_sources(scheme, binding, ctx.login_flows, ctx.cli_name)
+            .into_iter()
+            .any(|source| {
+                matches!(source, AuthCredentialSource::Env(_)) && source.resolve().is_some()
+            })
+    })
 }
 
 /// Whether `create` overwrote an existing profile. Read from the flag rather
@@ -838,7 +870,7 @@ fn parse_key_values(
 /// whether a scheme is satisfied, and not at all for the two things below,
 /// which only ask "which env vars does this scheme read?". Flattening in one
 /// place keeps the two callers from answering that differently.
-fn credential_sources(
+pub(crate) fn credential_sources(
     scheme: &str,
     binding: &SchemeBinding,
     login_flows: &[DynLoginFlow],
@@ -853,56 +885,6 @@ fn credential_sources(
         .collect()
 }
 
-fn from_env_error(cli_name: &str, scheme: &str, what: &str) -> CliError {
-    CliError::Validation(format!(
-        "--from-env: no environment variable currently supplies {what} for scheme \
-         `{scheme}`. Run `{cli_name} auth status` to see which ones are read."
-    ))
-}
-
-/// Every field of a multi-value scheme, captured from env vars only.
-///
-/// `expand_slots` returns one *required* slot per field, in declaration
-/// order — username before password, client id before secret — which is
-/// what makes the halves separable; a flat source list would not be.
-fn env_multi_credential(
-    bindings: &[(String, SchemeBinding)],
-    scheme: &str,
-    fields: &[&'static str],
-) -> Option<Vec<(&'static str, String)>> {
-    use secrecy::ExposeSecret;
-    let binding = bindings.iter().find(|(name, _)| name == scheme)?;
-    let slots = login::expand_slots(scheme, &binding.1, &[], "");
-    let mut values = slots.required.into_iter().map(|slot| {
-        slot.into_iter()
-            .filter(|source| matches!(source, AuthCredentialSource::Env(_)))
-            .find_map(|source| source.resolve())
-            .map(|secret| secret.expose_secret().to_string())
-    });
-    let mut out = Vec::with_capacity(fields.len());
-    for field in fields {
-        out.push((*field, values.next()??));
-    }
-    Some(out)
-}
-
-/// The value an env-var credential source currently supplies for `scheme`.
-///
-/// Deliberately env-only: `--from-env` captures the environment, so reading
-/// through the whole chain would let it capture a *keyring* value and write
-/// it back to a different keyring account, which is a confusing no-op at
-/// best.
-fn env_credential(bindings: &[(String, SchemeBinding)], scheme: &str) -> Option<String> {
-    use secrecy::ExposeSecret;
-    let binding = bindings.iter().find(|(name, _)| name == scheme)?;
-    // No login flows and no cli_name: this reads env vars only, so the
-    // synthesized keyring source those arguments would add is irrelevant.
-    credential_sources(scheme, &binding.1, &[], "")
-        .into_iter()
-        .filter(|source| matches!(source, AuthCredentialSource::Env(_)))
-        .find_map(|source| source.resolve())
-        .map(|secret| secret.expose_secret().to_string())
-}
 
 // ── list ────────────────────────────────────────────────────────────────
 
