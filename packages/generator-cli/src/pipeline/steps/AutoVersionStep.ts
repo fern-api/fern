@@ -440,7 +440,8 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string;
         analysis: FAIAnalysis;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
+        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
         this.logger.info(`AutoVersionStep: ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`);
@@ -518,7 +519,8 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string;
         analysis: FAIAnalysis;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
+        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
         this.logger.info(
@@ -872,6 +874,27 @@ export class AutoVersionStep extends BaseStep {
         await writeFile(changelogPath, prependChangelogBlock({ existingContent: existing, version, entry }), "utf-8");
     }
 
+    /**
+     * MAJOR/MINOR bumps must ship a changelog entry. FAI occasionally returns a
+     * bump with a populated `pr_description` / `version_bump_reason` but an empty
+     * `changelog_entry`; reuse that text rather than writing a version-only block.
+     */
+    private withChangelogFallback(analysis: FAIAnalysis): FAIAnalysis {
+        const fallback = resolveChangelogEntryFallback(analysis);
+        if (fallback == null) {
+            if (analysis.versionBump !== "PATCH" && !hasText(analysis.changelogEntry)) {
+                this.logger.warn(
+                    `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry and no fallback text.`
+                );
+            }
+            return analysis;
+        }
+        this.logger.warn(
+            `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry; using the PR description instead.`
+        );
+        return { ...analysis, changelogEntry: fallback };
+    }
+
     private brandMessage(message: string): string {
         if (this.config.isWhitelabel) {
             return message;
@@ -1077,7 +1100,32 @@ export class AutoVersionStep extends BaseStep {
     }
 }
 
-interface FAIAnalysis {
+function hasText(value: string | undefined): value is string {
+    return value != null && value.trim().length > 0;
+}
+
+/** Body of a conventional commit message: everything after the subject line, minus the Fern trailer. */
+function commitMessageBody(message: string): string | undefined {
+    const [, ...rest] = message.replace(FERN_TRAILER, "").split("\n");
+    const body = rest.join("\n").trim();
+    return body.length > 0 ? body : undefined;
+}
+
+/**
+ * Returns replacement changelog text for a MAJOR/MINOR analysis whose `changelogEntry`
+ * is empty, or `undefined` when no fallback applies (entry present, PATCH bump, or
+ * nothing usable in the other fields).
+ */
+export function resolveChangelogEntryFallback(analysis: FAIAnalysis): string | undefined {
+    if (hasText(analysis.changelogEntry) || analysis.versionBump === "PATCH") {
+        return undefined;
+    }
+    return [analysis.prDescription, analysis.versionBumpReason, commitMessageBody(analysis.message)]
+        .find(hasText)
+        ?.trim();
+}
+
+export interface FAIAnalysis {
     versionBump: string;
     message: string;
     changelogEntry?: string;
