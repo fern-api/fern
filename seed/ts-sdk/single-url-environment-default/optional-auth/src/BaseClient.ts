@@ -73,8 +73,13 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         options?.headers,
     );
 
+    const baseUrl =
+        options?.baseUrl ??
+        (options?.environment == null ? process.env?.SINGLE_URL_ENVIRONMENT_DEFAULT_BASE_URL : undefined);
+
     return {
         ...options,
+        baseUrl,
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;
