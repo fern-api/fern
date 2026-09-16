@@ -1117,7 +1117,7 @@ interface FaiAnalyzeResponse {
 const FAI_VERSION_BUMPS = ["MAJOR", "MINOR", "PATCH", "NO_CHANGE"];
 const FAI_NDJSON_MEDIA_TYPE = "application/x-ndjson";
 // Upper bound on one FAI analysis, covering both the request and the streamed body.
-const FAI_ANALYZE_DEADLINE_MS = 15 * 60_000;
+const FAI_ANALYZE_DEADLINE_MS = 5 * 60_000;
 
 function isNdjsonResponse(response: Response): boolean {
     const contentType = response.headers?.get("content-type") ?? "";

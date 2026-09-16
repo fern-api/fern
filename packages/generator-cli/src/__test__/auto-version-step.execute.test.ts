@@ -1310,7 +1310,7 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         mockFetch.mockImplementation((_url: string, init: RequestInit) => {
             expect(init.signal).toBeInstanceOf(AbortSignal);
             // Heartbeats keep arriving but the analysis never finishes: only the deadline can end this.
-            vi.advanceTimersByTime(15 * 60_000);
+            vi.advanceTimersByTime(5 * 60_000);
             return Promise.resolve(ndjsonResponse([{ type: "heartbeat" }, { type: "heartbeat" }], 7, { close: false }));
         });
 
