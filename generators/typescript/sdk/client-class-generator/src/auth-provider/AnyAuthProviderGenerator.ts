@@ -162,6 +162,12 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                                         "endpointMetadata",
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    ),
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "forceRefresh",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
                                     )
                                 ])
                             )

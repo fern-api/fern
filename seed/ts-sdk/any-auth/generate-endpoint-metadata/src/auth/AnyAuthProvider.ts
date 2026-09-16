@@ -10,7 +10,10 @@ export class AnyAuthProvider implements core.AuthProvider {
         this.authProviders = authProviders;
     }
 
-    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+    public async getAuthRequest(arg?: {
+        endpointMetadata?: core.EndpointMetadata;
+        forceRefresh?: boolean;
+    }): Promise<core.AuthRequest> {
         const availableProviders = this.authProviders;
 
         for (const provider of availableProviders) {

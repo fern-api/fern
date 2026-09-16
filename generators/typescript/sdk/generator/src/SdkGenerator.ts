@@ -188,6 +188,7 @@ export declare namespace SdkGenerator {
         guardProcessEnvAccess: boolean;
         websocketHandlerMode: "replace" | "accumulate";
         generateReactQueryHooks: boolean;
+        refreshOnFailedAuth: boolean;
     }
 }
 
@@ -577,7 +578,8 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            alwaysSendAuth: config.alwaysSendAuth
+            alwaysSendAuth: config.alwaysSendAuth,
+            refreshOnFailedAuth: config.refreshOnFailedAuth
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,

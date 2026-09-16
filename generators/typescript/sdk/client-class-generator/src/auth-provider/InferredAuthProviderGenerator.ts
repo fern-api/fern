@@ -319,7 +319,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     isAsync: true,
                     parameters: [
                         {
-                            name: "{ endpointMetadata }",
+                            name: "{ endpointMetadata, forceRefresh }",
                             type: getTextOfTsNode(
                                 ts.factory.createTypeLiteralNode([
                                     ts.factory.createPropertySignature(
@@ -327,6 +327,12 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                         "endpointMetadata",
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    ),
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "forceRefresh",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
                                     )
                                 ])
                             ),
@@ -340,6 +346,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ),
                     statements: this.authScheme.tokenEndpoint.expiryProperty
                         ? `
+        if (forceRefresh) {
+            this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
+            this.${EXPIRES_AT_FIELD_NAME} = undefined;
+        }
         try {
             const authRequest = await this.${GET_CACHED_AUTH_REQUEST_METHOD_NAME}();
             return authRequest;

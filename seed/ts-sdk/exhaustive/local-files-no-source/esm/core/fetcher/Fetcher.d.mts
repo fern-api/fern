@@ -26,6 +26,11 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        /**
+         * Returns fresh auth headers. When provided, a 401 or 403 response triggers a call to this
+         * function and the request is retried with the returned headers, within the `maxRetries` budget.
+         */
+        refreshAuthHeaders?: () => Promise<Record<string, string>>;
     }
     type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `refresh-on-failed-auth` configuration option. When enabled, a `401` or `403` response
+    forces the auth provider to refresh its credentials (e.g. re-fetch an OAuth access token that was
+    revoked before its cached expiry) and the request is retried. Refresh attempts share the same
+    `maxRetries` budget and backoff as other retries. Defaults to `false`.
+  type: feat

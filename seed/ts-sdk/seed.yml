@@ -332,6 +332,9 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: refresh-on-failed-auth
+      customConfig:
+        refresh-on-failed-auth: true
   oauth-client-credentials-custom-prefix-openapi:
     - outputFolder: .
       customConfig: null

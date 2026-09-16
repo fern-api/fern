@@ -84,6 +84,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        refreshOnFailedAuth: boolean;
     }
 }
 
@@ -130,6 +131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly refreshOnFailedAuth: boolean;
 
     constructor({
         caseConverter,
@@ -159,7 +161,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        refreshOnFailedAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -182,6 +185,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.refreshOnFailedAuth = refreshOnFailedAuth;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -1305,6 +1309,62 @@ return core.makePassthroughRequest(input, init, {
 
     public hasAuthProvider(): boolean {
         return this.authProvider != null;
+    }
+
+    public endpointUsesAuthProvider({
+        context,
+        endpoint
+    }: {
+        context: FileContext;
+        endpoint: FernIr.HttpEndpoint;
+    }): boolean {
+        return (
+            this.hasAuthProvider() &&
+            (endpoint.auth || this.alwaysSendAuth) &&
+            context.authProvider.isAuthEndpoint(endpoint) === false
+        );
+    }
+
+    /**
+     * Returns `async () => (await this._options.authProvider.getAuthRequest({ ..., forceRefresh: true })).headers`
+     * when `refresh-on-failed-auth` is enabled and the endpoint is authenticated, otherwise `undefined`.
+     */
+    public getReferenceToRefreshAuthHeaders({
+        context,
+        endpoint
+    }: {
+        context: FileContext;
+        endpoint: FernIr.HttpEndpoint;
+    }): ts.Expression | undefined {
+        if (!this.refreshOnFailedAuth || !this.endpointUsesAuthProvider({ context, endpoint })) {
+            return undefined;
+        }
+        const argProperties: ts.ObjectLiteralElementLike[] = [];
+        if (this.generateEndpointMetadata) {
+            argProperties.push(
+                ts.factory.createPropertyAssignment(
+                    "endpointMetadata",
+                    this.getReferenceToMetadataForEndpointSupplier()
+                )
+            );
+        }
+        argProperties.push(ts.factory.createPropertyAssignment("forceRefresh", ts.factory.createTrue()));
+        return ts.factory.createArrowFunction(
+            [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
+            undefined,
+            [],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createParenthesizedExpression(
+                    context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+                        this.getReferenceToAuthProviderOrThrow(),
+                        ts.factory.createObjectLiteralExpression(argProperties)
+                    )
+                ),
+                ts.factory.createIdentifier("headers")
+            )
+        );
     }
 
     public getReferenceToOption(option: string): ts.Expression {
