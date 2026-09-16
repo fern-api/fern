@@ -19,6 +19,7 @@ export interface ResolvedMigrationSourceSpec {
     apiImportSettings?: SdkConfigV1SourceSpec["apiImportSettings"];
     clientPathParameterStyle?: "inline" | "wrapped";
     clientPathParameterStyleExplicit?: boolean;
+    hasCustomApiSettings?: boolean;
     idHint?: string;
     name?: string;
     namespace?: string;
@@ -72,13 +73,20 @@ export function resolveMigrationSourceSpecs({
     }
     if (hasSpecs(workspace)) {
         const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
-        return workspace.allSpecs.map((spec) =>
-            resolveWorkspaceSpec(
+        return workspace.allSpecs.map((spec) => {
+            const configuredDefinition = findConfiguredDefinition(
+                workspace.absoluteFilePath.toString(),
                 spec,
-                findConfiguredDefinition(workspace.absoluteFilePath.toString(), spec, configuredDefinitions)?.location
-                    .settings
-            )
-        );
+                configuredDefinitions
+            );
+            if (configuredDefinition?.location.gitSource != null) {
+                throw new CliError({
+                    message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
+        });
     }
     if (fernWorkspace.sources.length > 0) {
         return fernWorkspace.sources.map(resolveIdentifiableSource);
@@ -231,6 +239,7 @@ function resolveWorkspaceSpec(
                 absoluteOverlayPaths: spec.absoluteFilepathToOverlays == null ? [] : [spec.absoluteFilepathToOverlays],
                 absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
                 apiImportSettings: projectFernApiImportSettings(settings),
+                hasCustomApiSettings: hasDefinedSettings(settings),
                 ...(spec.source.type !== "openapi"
                     ? {}
                     : {
@@ -370,6 +379,7 @@ function resolveGeneratorSpecOverrides(
                 path.resolve(workspacePath, override)
             ),
             apiImportSettings: projectRawApiImportSettings(spec.settings),
+            hasCustomApiSettings: hasDefinedSettings(spec.settings),
             clientPathParameterStyle:
                 spec.settings?.["inline-path-parameters"] == null
                     ? DEFAULT_PATH_PARAMETER_STYLE
@@ -382,6 +392,20 @@ function resolveGeneratorSpecOverrides(
             type: "openapi"
         };
     });
+}
+
+function hasDefinedSettings(settings: object | undefined): boolean {
+    return (
+        settings != null &&
+        Object.entries(settings).some(
+            ([key, value]) =>
+                value !== undefined &&
+                !(
+                    key === "removeDiscriminantsFromSchemas" &&
+                    value === generatorsYml.RemoveDiscriminantsFromSchemas.Always
+                )
+        )
+    );
 }
 
 function normalizePaths(value: string | string[] | undefined): string[] {

@@ -755,7 +755,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             })
         },
         next: {
@@ -769,7 +770,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             }
         },
         results: {
@@ -783,7 +785,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             }
         }
     });

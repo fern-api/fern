@@ -689,6 +689,10 @@ describe("convertGeneratorsConfiguration", () => {
 
             // Verify AsyncAPI-specific settings merge with base settings
             expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.schema).toMatchObject({
+                type: "oss",
+                sourceType: "asyncapi"
+            });
             expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
             expect(converted.api.definitions[0]?.settings?.asyncApiMessageNaming).toBe("v2");
         });
