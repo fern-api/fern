@@ -319,7 +319,8 @@ export abstract class AbstractSpecConverter<
             namespace: this.context.namespace
         });
         const pkg = this.getOrCreatePackage({ group: endpointGroup });
-        if (pkg.docs == null && endpointGroupDescription != null && pkg !== this.ir.rootPackage) {
+        // First tag description wins; never overwrite docs a package already has.
+        if (pkg !== this.ir.rootPackage && pkg.docs == null && endpointGroupDescription != null) {
             pkg.docs = endpointGroupDescription;
         }
 
