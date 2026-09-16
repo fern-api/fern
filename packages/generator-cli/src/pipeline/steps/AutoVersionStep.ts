@@ -880,7 +880,7 @@ export class AutoVersionStep extends BaseStep {
      * `changelog_entry`; reuse that text rather than writing a version-only block.
      */
     private withChangelogFallback(analysis: FAIAnalysis): FAIAnalysis {
-        const fallback = resolveChangelogEntryFallback(analysis);
+        const fallback = resolveChangelogEntryFallbackWithSource(analysis);
         if (fallback == null) {
             if (analysis.versionBump !== "PATCH" && !hasText(analysis.changelogEntry)) {
                 this.logger.warn(
@@ -890,9 +890,9 @@ export class AutoVersionStep extends BaseStep {
             return analysis;
         }
         this.logger.warn(
-            `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry; using the PR description instead.`
+            `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry; using the ${fallback.source} instead.`
         );
-        return { ...analysis, changelogEntry: fallback };
+        return { ...analysis, changelogEntry: fallback.text };
     }
 
     private brandMessage(message: string): string {
@@ -1106,9 +1106,33 @@ function hasText(value: string | undefined): value is string {
 
 /** Body of a conventional commit message: everything after the subject line, minus the Fern trailer. */
 function commitMessageBody(message: string): string | undefined {
-    const [, ...rest] = message.replace(FERN_TRAILER, "").split("\n");
+    const trimmed = message.trimEnd();
+    const withoutTrailer = trimmed.endsWith(FERN_TRAILER) ? trimmed.slice(0, -FERN_TRAILER.length) : trimmed;
+    const [, ...rest] = withoutTrailer.split("\n");
     const body = rest.join("\n").trim();
     return body.length > 0 ? body : undefined;
+}
+
+interface ChangelogEntryFallback {
+    source: "PR description" | "version bump reason" | "commit message body";
+    text: string;
+}
+
+function resolveChangelogEntryFallbackWithSource(analysis: FAIAnalysis): ChangelogEntryFallback | undefined {
+    if (hasText(analysis.changelogEntry) || analysis.versionBump === "PATCH") {
+        return undefined;
+    }
+    const candidates: Array<[ChangelogEntryFallback["source"], string | undefined]> = [
+        ["PR description", analysis.prDescription],
+        ["version bump reason", analysis.versionBumpReason],
+        ["commit message body", commitMessageBody(analysis.message)]
+    ];
+    for (const [source, text] of candidates) {
+        if (hasText(text)) {
+            return { source, text: text.trim() };
+        }
+    }
+    return undefined;
 }
 
 /**
@@ -1117,12 +1141,7 @@ function commitMessageBody(message: string): string | undefined {
  * nothing usable in the other fields).
  */
 export function resolveChangelogEntryFallback(analysis: FAIAnalysis): string | undefined {
-    if (hasText(analysis.changelogEntry) || analysis.versionBump === "PATCH") {
-        return undefined;
-    }
-    return [analysis.prDescription, analysis.versionBumpReason, commitMessageBody(analysis.message)]
-        .find(hasText)
-        ?.trim();
+    return resolveChangelogEntryFallbackWithSource(analysis)?.text;
 }
 
 export interface FAIAnalysis {
