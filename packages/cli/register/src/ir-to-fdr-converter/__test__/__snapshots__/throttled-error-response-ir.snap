@@ -248,16 +248,24 @@
               },
               "valueType": {
                 "_visit": [Function],
-                "primitive": {
-                  "v1": "INTEGER",
-                  "v2": {
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
                     "_visit": [Function],
-                    "default": undefined,
-                    "type": "integer",
-                    "validation": undefined,
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "_visit": [Function],
+                        "default": undefined,
+                        "type": "integer",
+                        "validation": undefined,
+                      },
+                    },
+                    "type": "primitive",
                   },
+                  "type": "optional",
                 },
-                "type": "primitive",
+                "type": "container",
               },
             },
           ],
