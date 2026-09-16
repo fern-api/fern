@@ -24,7 +24,7 @@ type AuthWithWrapperPropertyField = AuthFields & {
     wrapperProperty?: FernIr.dynamic.Name | null;
 };
 
-// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.26.0 ships wrapperProperty on Auth
+// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.27.0 ships wrapperProperty on Auth
 function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPropertyField {
     return "wrapperProperty" in auth;
 }
