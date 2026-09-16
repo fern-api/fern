@@ -110,6 +110,18 @@ impl Vocabulary {
     }
 
     /// The parameter names, in their original spellings.
+    /// Whether `name` is a parameter this CLI accepts.
+    ///
+    /// Mirrors [`Self::validate_parameter`]'s forgiving case: a binding that
+    /// cannot enumerate its surface (GraphQL today) leaves `parameters` empty,
+    /// and rejecting everything there would be worse than accepting it.
+    pub fn is_known_parameter(&self, name: &str) -> bool {
+        self.parameters.is_empty()
+            || self
+                .parameters
+                .contains_key(&crate::text::normalize_identifier(name))
+    }
+
     pub fn parameter_labels(&self) -> &BTreeSet<String> {
         &self.parameter_labels
     }
@@ -403,6 +415,28 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                         .help("Profile to activate, or `-` to clear the active profile"),
                 ),
         )
+        .subcommand(
+            Command::new("set")
+                .about("Set credentials or settings on a profile, by the name you already use")
+                .arg(
+                    Arg::new("name")
+                        .value_name("NAME")
+                        .required(true)
+                        .help("Profile to modify; created if it does not exist"),
+                )
+                .arg(
+                    Arg::new("assignments")
+                        .value_name("KEY=VALUE")
+                        .required(true)
+                        .num_args(1..)
+                        .help(
+                            "One or more assignments. KEY may be an environment variable \
+                             this CLI reads (a credential, or a setting such as \
+                             <NAME>_RETRIES) or an API parameter name. Credentials go to \
+                             the keyring; everything else to profiles.toml.",
+                        ),
+                ),
+        )
         .subcommand(build_remove_command(config))
         .subcommand(
             Command::new("current").about("Show the profile this invocation would use, and why"),
@@ -476,7 +510,8 @@ fn build_remove_command(config: &ProfilesConfig) -> Command {
 /// Mirrors how `dispatch_auth` is gated on `login | logout | status`: when a
 /// spec also declares a `profiles` group, only these leaves are intercepted
 /// and everything else falls through to the spec's binding.
-pub const BUILTIN_SUBCOMMANDS: &[&str] = &["create", "list", "ls", "use", "remove", "rm", "current"];
+pub const BUILTIN_SUBCOMMANDS: &[&str] = &["create", "list", "ls", "use",
+    "set", "remove", "rm", "current"];
 
 // ── Dispatch ────────────────────────────────────────────────────────────
 
@@ -513,6 +548,7 @@ pub async fn dispatch_profiles<W: Write>(
         Some(("create", m)) => handle_create(m, ctx, &mut store),
         Some(("list" | "ls", m)) => handle_list(m, ctx, &store, out),
         Some(("use", m)) => handle_use(m, ctx, &mut store),
+        Some(("set", m)) => handle_set(m, ctx, &mut store),
         Some(("remove" | "rm", m)) => handle_remove(m, ctx, &mut store).await,
         Some(("current", m)) => handle_current(m, ctx, &store, out),
         _ => Err(CliError::Validation(
@@ -969,6 +1005,7 @@ fn handle_list<W: Write>(
     if let Some(row) = env_pseudo_row(ctx) {
         rows.push(row);
     }
+    warn_about_near_miss_env_vars(ctx);
 
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
         .map_err(|e| CliError::Validation(e.to_string()))?;
@@ -1164,6 +1201,68 @@ fn truncate_account(value: &str) -> String {
     format!("{head}\u{2026}")
 }
 
+/// Warn about a variable that is set, looks like one of this CLI's credential
+/// variables, and is not read.
+///
+/// `TWILIO_ACCOUNT_ID` instead of `TWILIO_ACCOUNT_SID` produced no diagnostic
+/// at all: the variable is simply not consulted, so nothing fires, and the
+/// only hint was the `[env]` row listing one name where the user expected two.
+/// Scoped to declared names that are *unset* while a near neighbour *is* set,
+/// so it cannot fire on the hundreds of unrelated variables in a shell.
+fn warn_about_near_miss_env_vars(ctx: &ProfilesContext<'_>) {
+    let mut declared: Vec<String> = Vec::new();
+    for (scheme, binding) in ctx.auth_bindings {
+        for source in credential_sources(scheme, binding, ctx.login_flows, ctx.cli_name) {
+            if let AuthCredentialSource::Env(name) = source {
+                if !declared.contains(&name) {
+                    declared.push(name);
+                }
+            }
+        }
+    }
+    let set_in_env: Vec<String> = std::env::vars_os()
+        .filter_map(|(key, _)| key.into_string().ok())
+        .collect();
+
+    let mut stderr = std::io::stderr();
+    for name in &declared {
+        if std::env::var_os(name).is_some() {
+            continue;
+        }
+        // A near neighbour that *is* set, and that this CLI does not read.
+        let Some(hit) = crate::text::nearest(name, set_in_env.iter().cloned()) else {
+            continue;
+        };
+        if declared.contains(&hit) || hit == *name {
+            continue;
+        }
+        let _ = writeln!(
+            stderr,
+            "{}",
+            login::yellow(&format!(
+                "\u{26a0} `{hit}` is set but this CLI does not read it. Did you mean `{name}`?",
+            )),
+        );
+    }
+}
+
+/// Whether environment variables alone fully satisfy at least one scheme.
+///
+/// Distinguishes "env is what will be sent" from "env supplies one half of a
+/// two-value credential and nothing authenticates". Both states involve env
+/// vars outranking the keyring; only the first is an override.
+fn env_satisfies_a_scheme(ctx: &ProfilesContext<'_>) -> bool {
+    ctx.auth_bindings.iter().any(|(scheme, binding)| {
+        let slots = login::expand_slots(scheme, binding, ctx.login_flows, ctx.cli_name);
+        !slots.required.is_empty()
+            && slots.required.iter().all(|slot| {
+                slot.iter().any(|source| {
+                    matches!(source, AuthCredentialSource::Env(_)) && source.resolve().is_some()
+                })
+            })
+    })
+}
+
 /// A synthetic `[env]` row when environment variables currently supply a
 /// credential — which wins over any profile.
 fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
@@ -1198,6 +1297,286 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
         "supplies the credential; overrides the active profile\'s stored one".into(),
     );
     Some(serde_json::Value::Object(row))
+}
+
+// ── set ─────────────────────────────────────────────────────────────────
+
+/// Where one `KEY=VALUE` assignment belongs.
+enum SetTarget {
+    /// A credential env var. Carries every (scheme, field) it maps to — one
+    /// var is frequently declared by several schemes, and writing only the
+    /// first would leave the others unauthenticated with no indication why.
+    Credential(Vec<(String, Option<&'static str>)>),
+    Retries,
+    BaseUrl,
+    Format,
+    ServerVariable(String),
+    Parameter(String),
+}
+
+/// Every (scheme, field) pair that reads `var`.
+///
+/// `expand_slots` returns one slot per required value in the same order
+/// `scheme_credential_fields` names them, so slot *index* gives the field:
+/// `required[0]` is `username`, `required[1]` is `password`. That keeps this
+/// generic — nothing here knows what a scheme's halves are called.
+fn credential_targets(
+    var: &str,
+    ctx: &ProfilesContext<'_>,
+) -> Vec<(String, Option<&'static str>)> {
+    let mut out = Vec::new();
+    for (scheme, binding) in ctx.auth_bindings {
+        let slots = login::expand_slots(scheme, binding, ctx.login_flows, ctx.cli_name);
+        let fields = login::scheme_credential_fields(scheme, ctx.auth_bindings);
+        for (index, slot) in slots.required.iter().enumerate() {
+            let declares = slot
+                .iter()
+                .any(|source| matches!(source, AuthCredentialSource::Env(name) if name == var));
+            if declares {
+                out.push((
+                    scheme.clone(),
+                    fields.as_ref().and_then(|f| f.get(index).copied()),
+                ));
+            }
+        }
+    }
+    out
+}
+
+/// Classify a key, or explain why it cannot be set.
+fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliError> {
+    let targets = credential_targets(key, ctx);
+    if !targets.is_empty() {
+        return Ok(SetTarget::Credential(targets));
+    }
+
+    let prefix = format!("{}_", crate::text::env_var_prefix(ctx.cli_name));
+    if let Some(rest) = key.strip_prefix(&prefix) {
+        match rest {
+            "RETRIES" => return Ok(SetTarget::Retries),
+            "BASE_URL" => return Ok(SetTarget::BaseUrl),
+            "OUTPUT" => return Ok(SetTarget::Format),
+            _ => {
+                // `<PREFIX>_<SERVER_VAR>` — the env rung a server variable
+                // already reads, so the spelling is one the user has seen.
+                for variable in &ctx.vocabulary.server_variables {
+                    if crate::text::to_screaming_snake(variable) == rest {
+                        return Ok(SetTarget::ServerVariable(variable.clone()));
+                    }
+                }
+            }
+        }
+        // Prefixed but unrecognised. Stop here rather than falling through to
+        // the parameter path: `<PREFIX>_…` is unambiguously meant to be one of
+        // *this* CLI's environment variables, and that surface is known
+        // exhaustively. Falling through would accept a typo on any CLI whose
+        // binding cannot enumerate parameters, which is precisely the silent
+        // no-op this command is supposed to prevent.
+        return Err(unsettable_key(key, ctx));
+    }
+
+    if ctx.vocabulary.is_known_parameter(key) {
+        return Ok(SetTarget::Parameter(key.to_string()));
+    }
+
+    Err(unsettable_key(key, ctx))
+}
+
+/// The error for a key this CLI cannot place, with a suggestion when one is
+/// close. A silently-ignored key is the failure mode `--set` validation exists
+/// to prevent, so `set` refuses rather than storing something inert.
+fn unsettable_key(key: &str, ctx: &ProfilesContext<'_>) -> CliError {
+    let prefix = crate::text::env_var_prefix(ctx.cli_name);
+    let mut known: Vec<String> = Vec::new();
+    for (scheme, binding) in ctx.auth_bindings {
+        known.extend(login::shadowing_env_vars(ctx.cli_name, scheme, std::slice::from_ref(
+            &(scheme.clone(), binding.clone()),
+        )));
+    }
+    for suffix in ["RETRIES", "BASE_URL", "OUTPUT"] {
+        known.push(format!("{prefix}_{suffix}"));
+    }
+    for variable in &ctx.vocabulary.server_variables {
+        known.push(format!("{prefix}_{}", crate::text::to_screaming_snake(variable)));
+    }
+    known.sort();
+    known.dedup();
+
+    let suggestion = crate::text::nearest(key, known.iter().cloned())
+        .or_else(|| crate::text::nearest(key, ctx.vocabulary.parameter_labels().iter().cloned()))
+        .map(|hit| format!(" Did you mean `{hit}`?"))
+        .unwrap_or_default();
+    CliError::Validation(format!(
+        "`{key}` is not something this CLI can store on a profile.{suggestion} \
+         Settable environment variables: {}. API parameters are settable by their \
+         spec name — run `--schema` to list them.",
+        known.join(", "),
+    ))
+}
+
+fn handle_set(
+    matches: &ArgMatches,
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+) -> Result<(), CliError> {
+    let name = matches
+        .get_one::<String>("name")
+        .cloned()
+        .expect("clap marks `name` required");
+    validate_profile_name(&name)?;
+
+    let mut entry = store.entry(&name).unwrap_or(ProfileEntry {
+        name: name.clone(),
+        ..Default::default()
+    });
+    let existed = store.entry(&name).is_some();
+
+    // Classify everything before writing anything: a run that sets two keys
+    // and rejects the third must not leave the first two applied.
+    let mut plan: Vec<(String, String, SetTarget)> = Vec::new();
+    for raw in matches
+        .get_many::<String>("assignments")
+        .into_iter()
+        .flatten()
+    {
+        let (key, value) = raw.split_once('=').ok_or_else(|| {
+            CliError::Validation(format!(
+                "`{raw}` is not a KEY=VALUE assignment. Example: \
+                 `{} {} set {name} {}_RETRIES=5`",
+                ctx.cli_name,
+                ctx.command_name,
+                crate::text::env_var_prefix(ctx.cli_name),
+            ))
+        })?;
+        if value.is_empty() {
+            return Err(CliError::Validation(format!(
+                "`{key}` was given an empty value. To clear a setting, edit \
+                 profiles.toml or recreate the profile."
+            )));
+        }
+        plan.push((key.to_string(), value.to_string(), classify_key(key, ctx)?));
+    }
+
+    let mut stderr = std::io::stderr();
+    let mut notes: Vec<String> = Vec::new();
+    let mut credential_schemes: Vec<String> = Vec::new();
+    // Multi-field credentials accumulate, so `TWILIO_ACCOUNT_SID=… TWILIO_AUTH_TOKEN=…`
+    // in one call produces one complete entry rather than two half-written ones.
+    let mut pending: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+    let mut pending_single: BTreeMap<String, String> = BTreeMap::new();
+
+    for (key, value, target) in plan {
+        match target {
+            SetTarget::Credential(targets) => {
+                for (scheme, field) in targets {
+                    match field {
+                        Some(field) => {
+                            pending
+                                .entry(scheme.clone())
+                                .or_default()
+                                .insert(field.to_string(), value.clone());
+                        }
+                        None => {
+                            pending_single.insert(scheme.clone(), value.clone());
+                        }
+                    }
+                    if !credential_schemes.contains(&scheme) {
+                        credential_schemes.push(scheme);
+                    }
+                }
+                notes.push(format!("{key} \u{2192} keyring"));
+            }
+            SetTarget::Retries => {
+                let parsed: u32 = value.parse().map_err(|_| {
+                    CliError::Validation(format!("`{key}` expects a non-negative integer, got `{value}`"))
+                })?;
+                entry.retries = Some(parsed);
+                notes.push(format!("{key} \u{2192} retries"));
+            }
+            SetTarget::BaseUrl => {
+                crate::output::reject_dangerous_chars(&value, &key)?;
+                entry.base_url = Some(value);
+                notes.push(format!("{key} \u{2192} base_url"));
+            }
+            SetTarget::Format => {
+                entry.format = Some(value);
+                notes.push(format!("{key} \u{2192} format"));
+            }
+            SetTarget::ServerVariable(variable) => {
+                entry.server_variables.insert(variable.clone(), value);
+                notes.push(format!("{key} \u{2192} server_variables.{variable}"));
+            }
+            SetTarget::Parameter(parameter) => {
+                ctx.vocabulary.validate_parameter(&parameter, &value)?;
+                entry.parameters.insert(parameter.clone(), value);
+                notes.push(format!("{key} \u{2192} parameters.{parameter}"));
+            }
+        }
+    }
+
+    // Supplying a credential means this profile owns one — same rule as
+    // `create`, and for the same reason: otherwise the write lands in the slot
+    // the profile would have *inherited*, overwriting its parent's.
+    if !credential_schemes.is_empty() && entry.credential.is_none() {
+        entry.credential = Some(name.clone());
+    }
+
+    store.upsert(&entry);
+    let resolved = store::resolve(store, &name)?;
+    let account_owner = resolved.credential.clone().unwrap_or_else(|| name.clone());
+
+    for (scheme, fields) in &pending {
+        let account = super::keyring_account_for(scheme, &account_owner);
+        // Merge with whatever is already stored so setting one half of a
+        // two-field credential does not discard the other.
+        let mut merged = existing_fields(ctx.cli_name, &account);
+        merged.extend(fields.clone());
+        let pairs: Vec<(&str, String)> = merged
+            .iter()
+            .map(|(field, value)| (field.as_str(), value.clone()))
+            .collect();
+        let stored = login::multi_field_keyring_value(&pairs)?;
+        active_store().set(ctx.cli_name, &account, &stored)?;
+    }
+    for (scheme, value) in &pending_single {
+        let account = super::keyring_account_for(scheme, &account_owner);
+        active_store().set(ctx.cli_name, &account, value)?;
+    }
+    store.save()?;
+
+    let verb = if existed { "Updated" } else { "Created" };
+    let _ = writeln!(
+        stderr,
+        "{}",
+        login::green(&format!("\u{2713} {verb} profile `{name}`")),
+    );
+    for note in &notes {
+        let _ = writeln!(stderr, "    {note}");
+    }
+    if credential_schemes.len() > 1 {
+        let _ = writeln!(
+            stderr,
+            "  Credential stored for {} schemes: {}",
+            credential_schemes.len(),
+            credential_schemes.join(", "),
+        );
+    }
+    if !credential_schemes.is_empty() {
+        let candidates: Vec<String> = credential_schemes
+            .iter()
+            .flat_map(|scheme| login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings))
+            .collect();
+        login::warn_if_env_shadows(&mut stderr, &candidates);
+    }
+    Ok(())
+}
+
+/// Fields already stored under `account`, so a partial write merges.
+fn existing_fields(cli_name: &str, account: &str) -> BTreeMap<String, String> {
+    let Ok(Some(raw)) = active_store().get(cli_name, account) else {
+        return BTreeMap::new();
+    };
+    serde_json::from_str::<BTreeMap<String, String>>(&raw).unwrap_or_default()
 }
 
 // ── use ─────────────────────────────────────────────────────────────────
@@ -1460,9 +1839,18 @@ fn handle_current<W: Write>(
             insert_map(&mut map, "parameters", &profile.parameters);
             insert_map(&mut map, "server_variables", &profile.server_variables);
             if let Some(env_row) = env_pseudo_row(ctx) {
-                // Say so explicitly: the profile is selected, but its
-                // credential is not the one that will be sent.
-                map.insert("credential_overridden_by_env".into(), env_row["credential"].clone());
+                // Only claim an *override* when the env vars actually satisfy
+                // a scheme. With one half of a two-value credential set, the
+                // variable is consulted and does outrank the keyring for that
+                // field — but nothing authenticates, so saying "overridden by
+                // env" while `auth status` reports `logged_in: false` reads as
+                // a contradiction. Report the partial case as partial.
+                let key = if env_satisfies_a_scheme(ctx) {
+                    "credential_overridden_by_env"
+                } else {
+                    "credential_partially_shadowed_by_env"
+                };
+                map.insert(key.into(), env_row["credential"].clone());
             }
             serde_json::Value::Object(map)
         }

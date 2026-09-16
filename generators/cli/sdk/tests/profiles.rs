@@ -1202,3 +1202,43 @@ fn auth_login_rejects_from_env_together_with_with_token() {
     let output = sandbox.run(&["auth", "login", "--from-env", "--with-token"]);
     assert_ne!(output.status.code(), Some(0));
 }
+
+#[test]
+fn a_near_miss_env_var_is_called_out() {
+    // `TWILIO_ACCOUNT_ID` instead of `TWILIO_ACCOUNT_SID` produced no
+    // diagnostic at all — the variable is simply not consulted, so nothing
+    // fires, and the only hint was the `[env]` row listing one name where the
+    // user expected two.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--use"]);
+    let output = sandbox.run_with_env(
+        &["profiles", "list", "--human"],
+        &[("OPENAPI_FIXTURE_API_KY", "typo-value")],
+    );
+    assert_ok(&output, "profiles list");
+    assert!(
+        stderr(&output).contains("OPENAPI_FIXTURE_API_KEY"),
+        "should name the variable actually read: {}",
+        stderr(&output),
+    );
+}
+
+#[test]
+fn no_near_miss_warning_when_the_real_variable_is_set_or_unrelated() {
+    // It must stay silent when the real variable is present, and for the
+    // hundreds of unrelated names in any real shell.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "prod", "--use"]);
+
+    let real = sandbox.run_with_env(
+        &["profiles", "list", "--human"],
+        &[("OPENAPI_FIXTURE_API_KEY", "real-value")],
+    );
+    assert!(!stderr(&real).contains("Did you mean"), "{}", stderr(&real));
+
+    let unrelated = sandbox.run_with_env(
+        &["profiles", "list", "--human"],
+        &[("SOMETHING_COMPLETELY_UNRELATED", "x")],
+    );
+    assert!(!stderr(&unrelated).contains("Did you mean"), "{}", stderr(&unrelated));
+}
