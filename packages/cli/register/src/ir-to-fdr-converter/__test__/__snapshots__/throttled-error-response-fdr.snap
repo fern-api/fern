@@ -88,9 +88,6 @@
                 "name": "string",
               },
             },
-            "responseHeaders": {
-              "X-RateLimit-Remaining": 99,
-            },
             "responseStatusCode": 200,
           },
         ],
@@ -157,6 +154,48 @@
               "type": "optional",
             },
           },
+          {
+            "availability": undefined,
+            "description": "JSON-encoded result metadata.",
+            "key": "X-Api-Result",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResult",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Result declared via direct schema ref.",
+            "key": "X-Schema-Ref-Example",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResult",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Example declared on the media type object.",
+            "key": "X-Media-Example",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResourceGetResponsesHeadersXMediaExample",
+              },
+              "type": "optional",
+            },
+          },
         ],
         "responsesV2": {
           "responses": [
@@ -182,7 +221,9 @@
     "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
-    "types": [],
+    "types": [
+      "ApiResult",
+    ],
     "webhooks": [],
     "websockets": [],
   },
@@ -199,6 +240,66 @@
   },
   "subpackages": {},
   "types": {
+    "ApiResourceGetResponsesHeadersXMediaExample": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ApiResourceGetResponsesHeadersXMediaExample",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "transport",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ApiResult": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ApiResult",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "content_type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
     "GetResourceRequestTooManyRequestsError": {
       "availability": undefined,
       "description": undefined,
