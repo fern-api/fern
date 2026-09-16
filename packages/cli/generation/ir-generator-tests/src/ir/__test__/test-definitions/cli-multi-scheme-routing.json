@@ -1,0 +1,1176 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "specVersion": "1.0.0",
+    "apiName": "api",
+    "apiDisplayName": "Multi Scheme Routing CLI",
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "header",
+                "name": {
+                    "wireValue": "X-Api-Key",
+                    "name": "apiKey"
+                },
+                "valueType": {
+                    "_type": "primitive",
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
+                },
+                "prefix": null,
+                "headerEnvVar": null,
+                "headerPlaceholder": null,
+                "key": "ApiKeyAuth",
+                "playgroundDocs": null,
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_widgets": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        "widgets"
+                    ],
+                    "packagePath": [],
+                    "file": "widgets"
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_widgets.list",
+                    "name": "list",
+                    "displayName": "List widgets",
+                    "subtitle": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "ApiKeyAuth": []
+                        }
+                    ],
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/widgets",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "widgets",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": "Widgets",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": "Widgets"
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "bb6a4a21",
+                                "name": null,
+                                "url": "/widgets",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                "string"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "eecccf02",
+                                "url": "/widgets",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        },
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                "string",
+                                                "string"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
+        "service_admin": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        "admin"
+                    ],
+                    "packagePath": [],
+                    "file": "admin"
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_admin.listUsers",
+                    "name": "listUsers",
+                    "displayName": "List users",
+                    "subtitle": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "AdminBasic": []
+                        }
+                    ],
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/admin/users",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "admin/users",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": "Users",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": "Users"
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "bb6a4a21",
+                                "name": null,
+                                "url": "/admin/users",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                "string"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "eecccf02",
+                                "url": "/admin/users",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        },
+                                                        {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "string"
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                "string",
+                                                "string"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
+        "service_system": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        "system"
+                    ],
+                    "packagePath": [],
+                    "file": "system"
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_system.health",
+                    "name": "health",
+                    "displayName": "Health check",
+                    "subtitle": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/health",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "health",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "5465b825",
+                                "name": null,
+                                "url": "/health",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "b8b5a106",
+                                "url": "/health",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": "errorInstanceId"
+    },
+    "environments": {
+        "defaultEnvironment": "Default",
+        "baseUrlEnvVar": null,
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": "Default",
+                    "url": "https://api.example.com",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "globalParameters": null,
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_widgets.list": {
+                "auth": {
+                    "type": "header",
+                    "header": {
+                        "name": {
+                            "wireValue": "X-Api-Key",
+                            "name": {
+                                "originalName": "apiKey",
+                                "camelCase": {
+                                    "unsafeName": "apiKey",
+                                    "safeName": "apiKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "api_key",
+                                    "safeName": "api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "API_KEY",
+                                    "safeName": "API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "APIKey",
+                                    "safeName": "APIKey"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    "wrapperProperty": null
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "list",
+                        "camelCase": {
+                            "unsafeName": "list",
+                            "safeName": "list"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list",
+                            "safeName": "list"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST",
+                            "safeName": "LIST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "List",
+                            "safeName": "List"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "widgets",
+                                "camelCase": {
+                                    "unsafeName": "widgets",
+                                    "safeName": "widgets"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "widgets",
+                                    "safeName": "widgets"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "WIDGETS",
+                                    "safeName": "WIDGETS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Widgets",
+                                    "safeName": "Widgets"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "widgets",
+                            "camelCase": {
+                                "unsafeName": "widgets",
+                                "safeName": "widgets"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "widgets",
+                                "safeName": "widgets"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "WIDGETS",
+                                "safeName": "WIDGETS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Widgets",
+                                "safeName": "Widgets"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/widgets"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null,
+                    "bodyRequired": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_admin.listUsers": {
+                "auth": {
+                    "type": "header",
+                    "header": {
+                        "name": {
+                            "wireValue": "X-Api-Key",
+                            "name": {
+                                "originalName": "apiKey",
+                                "camelCase": {
+                                    "unsafeName": "apiKey",
+                                    "safeName": "apiKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "api_key",
+                                    "safeName": "api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "API_KEY",
+                                    "safeName": "API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "APIKey",
+                                    "safeName": "APIKey"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    "wrapperProperty": null
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "listUsers",
+                        "camelCase": {
+                            "unsafeName": "listUsers",
+                            "safeName": "listUsers"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_users",
+                            "safeName": "list_users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERS",
+                            "safeName": "LIST_USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsers",
+                            "safeName": "ListUsers"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "admin",
+                                "camelCase": {
+                                    "unsafeName": "admin",
+                                    "safeName": "admin"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "admin",
+                                    "safeName": "admin"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ADMIN",
+                                    "safeName": "ADMIN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Admin",
+                                    "safeName": "Admin"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "admin",
+                            "camelCase": {
+                                "unsafeName": "admin",
+                                "safeName": "admin"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "admin",
+                                "safeName": "admin"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ADMIN",
+                                "safeName": "ADMIN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Admin",
+                                "safeName": "Admin"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/admin/users"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null,
+                    "bodyRequired": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_system.health": {
+                "auth": {
+                    "type": "header",
+                    "header": {
+                        "name": {
+                            "wireValue": "X-Api-Key",
+                            "name": {
+                                "originalName": "apiKey",
+                                "camelCase": {
+                                    "unsafeName": "apiKey",
+                                    "safeName": "apiKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "api_key",
+                                    "safeName": "api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "API_KEY",
+                                    "safeName": "API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "APIKey",
+                                    "safeName": "APIKey"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    "wrapperProperty": null
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "health",
+                        "camelCase": {
+                            "unsafeName": "health",
+                            "safeName": "health"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "health",
+                            "safeName": "health"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HEALTH",
+                            "safeName": "HEALTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Health",
+                            "safeName": "Health"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "system",
+                                "camelCase": {
+                                    "unsafeName": "system",
+                                    "safeName": "system"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "system",
+                                    "safeName": "system"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SYSTEM",
+                                    "safeName": "SYSTEM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "System",
+                                    "safeName": "System"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "system",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/health"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null,
+                    "bodyRequired": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": {
+            "defaultEnvironment": "Default",
+            "environments": {
+                "type": "singleBaseUrl",
+                "environments": [
+                    {
+                        "id": "Default",
+                        "name": {
+                            "originalName": "Default",
+                            "camelCase": {
+                                "unsafeName": "default",
+                                "safeName": "default"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "default",
+                                "safeName": "default"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DEFAULT",
+                                "safeName": "DEFAULT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Default",
+                                "safeName": "Default"
+                            }
+                        },
+                        "url": "https://api.example.com",
+                        "docs": null
+                    }
+                ]
+            }
+        },
+        "variables": null,
+        "globalParameters": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
+    },
+    "subpackages": {
+        "subpackage_widgets": {
+            "name": "widgets",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "widgets"
+                ],
+                "packagePath": [],
+                "file": "widgets"
+            },
+            "service": "service_widgets",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
+            "docs": null
+        },
+        "subpackage_admin": {
+            "name": "admin",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "admin"
+                ],
+                "packagePath": [],
+                "file": "admin"
+            },
+            "service": "service_admin",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
+            "docs": null
+        },
+        "subpackage_system": {
+            "name": "system",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "system"
+                ],
+                "packagePath": [],
+                "file": "system"
+            },
+            "service": "service_system",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_widgets",
+            "subpackage_admin",
+            "subpackage_system"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

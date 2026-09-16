@@ -2,7 +2,7 @@
 
 import type * as FernIr from "../../../../../index.js";
 
-export interface BasicAuth {
+export interface BasicAuth extends FernIr.dynamic.BaseAuth {
     username: FernIr.dynamic.Name;
     /** If true, the username will be omitted from the SDK. */
     usernameOmit: boolean | undefined;

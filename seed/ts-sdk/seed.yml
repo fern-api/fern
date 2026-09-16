@@ -623,6 +623,12 @@ fixtures:
         namespaceExport: SeedErrors
         naming:
           client: SeedErrors
+  ts-flatten-request-any-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
   ts-react-query:
     - outputFolder: .
       customConfig:

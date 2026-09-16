@@ -17560,7 +17560,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "safeName": "ClientSecret"
                         }
                     },
-                    "passwordOmit": null
+                    "passwordOmit": null,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

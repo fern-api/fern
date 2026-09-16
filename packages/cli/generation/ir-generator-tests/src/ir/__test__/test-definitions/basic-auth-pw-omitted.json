@@ -932,7 +932,8 @@
                             "safeName": "Password"
                         }
                     },
-                    "passwordOmit": true
+                    "passwordOmit": true,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -1055,7 +1056,8 @@
                             "safeName": "Password"
                         }
                     },
-                    "passwordOmit": true
+                    "passwordOmit": true,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

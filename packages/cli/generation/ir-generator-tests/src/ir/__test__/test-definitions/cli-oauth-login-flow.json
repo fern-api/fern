@@ -1962,7 +1962,8 @@
                             "safeName": "ClientSecret"
                         }
                     },
-                    "customProperties": null
+                    "customProperties": null,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -2084,7 +2085,8 @@
                             "safeName": "ClientSecret"
                         }
                     },
-                    "customProperties": null
+                    "customProperties": null,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -2306,7 +2308,8 @@
                             "safeName": "ClientSecret"
                         }
                     },
-                    "customProperties": null
+                    "customProperties": null,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -2561,7 +2564,8 @@
                             "safeName": "ClientSecret"
                         }
                     },
-                    "customProperties": null
+                    "customProperties": null,
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
