@@ -46,7 +46,8 @@ export class InferredAuthProvider implements core.AuthProvider {
         endpointMetadata?: core.EndpointMetadata;
         forceRefresh?: boolean;
     } = {}): Promise<core.AuthRequest> {
-        if (forceRefresh) {
+        if (forceRefresh && this.expiresAt != null) {
+            // Only discard a resolved token; an in-flight fetch (no expiry yet) is reused
             this.authRequestPromise = undefined;
             this.expiresAt = undefined;
         }

@@ -346,7 +346,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ),
                     statements: this.authScheme.tokenEndpoint.expiryProperty
                         ? `
-        if (forceRefresh) {
+        if (forceRefresh && this.${EXPIRES_AT_FIELD_NAME} != null) {
+            // Only discard a resolved token; an in-flight fetch (no expiry yet) is reused
             this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
             this.${EXPIRES_AT_FIELD_NAME} = undefined;
         }
