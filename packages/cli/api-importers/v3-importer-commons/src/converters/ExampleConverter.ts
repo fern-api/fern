@@ -113,6 +113,24 @@ function getLiteralValueFromSchema(schema: OpenAPIV3_1.SchemaObject): unknown | 
     return undefined;
 }
 
+/**
+ * Gets the value a schema is pinned to, if it accepts exactly one value via `const` or a
+ * single-entry `enum`. Returns undefined for multi-value enums.
+ */
+function getSingleLiteralValueFromSchema(schema: OpenAPIV3_1.SchemaObject): unknown | undefined {
+    if (schema.const !== undefined) {
+        return schema.const;
+    }
+    if (Array.isArray(schema.enum) && schema.enum.length === 1) {
+        return schema.enum[0];
+    }
+    return undefined;
+}
+
+function isPrimitiveValue(value: unknown): value is string | number | boolean {
+    return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+}
+
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
@@ -279,6 +297,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     }
                 ]
             };
+        }
+        if (this.context.isReferenceObject(resolvedSchema)) {
+            return new ExampleConverter({
+                breadcrumbs: this.breadcrumbs,
+                context: this.context,
+                schema: resolvedSchema,
+                example: this.example,
+                depth: this.depth,
+                generateOptionalProperties: this.generateOptionalProperties,
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
+            }).convert();
         }
         if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
             return {
@@ -1248,6 +1278,34 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
+        const discriminatedIndex = this.findUnionVariantByDiscriminator({
+            resolvedSchema,
+            unionSchemas,
+            example: containerExample
+        });
+        if (discriminatedIndex != null) {
+            const subSchema = unionSchemas[discriminatedIndex];
+            if (subSchema != null) {
+                const result = new ExampleConverter({
+                    breadcrumbs: [...this.breadcrumbs, `${unionType}[${discriminatedIndex}]`],
+                    context: this.context,
+                    schema: unionType === "oneOf" ? { ...resolvedSchema, ...subSchema, oneOf: undefined } : subSchema,
+                    example: containerExample,
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy,
+                    seenRefs: this.getMaybeUpdatedSeenRefs()
+                }).convert();
+                return {
+                    isValid: result.isValid,
+                    coerced: false,
+                    usedProvidedExample: result.usedProvidedExample,
+                    validExample: result.validExample,
+                    errors: result.isValid ? [] : result.errors
+                };
+            }
+        }
+
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
         let firstValidWithProvidedExample: ExampleConverter.Output | null = null;
@@ -1323,6 +1381,109 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
+    }
+
+    /**
+     * Picks the union variant selected by the example's discriminator value, if one can be
+     * determined. Uses the explicit `discriminator` object when present (mapping, then `$ref`
+     * name), and otherwise infers the discriminator from properties that each variant pins to a
+     * single literal value (`const` or single-entry `enum`), e.g. Dropbox's `.tag`.
+     * Returns undefined when the example is not an object or exactly one variant cannot be identified.
+     */
+    private findUnionVariantByDiscriminator({
+        resolvedSchema,
+        unionSchemas,
+        example
+    }: {
+        resolvedSchema: OpenAPIV3_1.SchemaObject;
+        unionSchemas: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject)[];
+        example: unknown;
+    }): number | undefined {
+        if (typeof example !== "object" || example === null || Array.isArray(example)) {
+            return undefined;
+        }
+        const exampleObject: Record<string, unknown> = { ...example };
+        const explicitDiscriminator = resolvedSchema.discriminator;
+
+        if (explicitDiscriminator?.propertyName != null) {
+            const value = exampleObject[explicitDiscriminator.propertyName];
+            if (typeof value === "string") {
+                const mappedRef = explicitDiscriminator.mapping?.[value];
+                const refIndex = unionSchemas.findIndex(
+                    (subSchema) =>
+                        this.context.isReferenceObject(subSchema) &&
+                        (mappedRef != null ? subSchema.$ref === mappedRef : subSchema.$ref.endsWith(`/${value}`))
+                );
+                if (refIndex !== -1) {
+                    return refIndex;
+                }
+            }
+        }
+
+        const variantLiterals = unionSchemas.map((subSchema) => this.getLiteralPropertiesOfVariant(subSchema));
+        const candidateProperties =
+            explicitDiscriminator?.propertyName != null
+                ? [explicitDiscriminator.propertyName]
+                : [...new Set(variantLiterals.flatMap((literals) => [...literals.keys()]))];
+
+        for (const propertyName of candidateProperties) {
+            const exampleValue = exampleObject[propertyName];
+            if (!isPrimitiveValue(exampleValue)) {
+                continue;
+            }
+            const matchingIndices = variantLiterals.flatMap((literals, index) =>
+                literals.has(propertyName) && literals.get(propertyName) === exampleValue ? [index] : []
+            );
+            if (matchingIndices.length === 1 && matchingIndices[0] != null) {
+                return matchingIndices[0];
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Returns the properties of a union variant (including those merged from allOf) that are
+     * pinned to a single literal value via `const` or a single-entry `enum`.
+     */
+    private getLiteralPropertiesOfVariant(
+        subSchema: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+    ): Map<string, unknown> {
+        const literals = new Map<string, unknown>();
+        const resolved = this.resolveSchemaRecursively(subSchema);
+        if (resolved == null) {
+            return literals;
+        }
+        const { mergedProperties } = this.mergeAllOfProperties(resolved);
+        for (const [key, property] of Object.entries(mergedProperties)) {
+            const resolvedProperty = this.resolveSchemaRecursively(property);
+            if (resolvedProperty == null) {
+                continue;
+            }
+            const literal = getSingleLiteralValueFromSchema(resolvedProperty);
+            if (literal !== undefined) {
+                literals.set(key, literal);
+            }
+        }
+        return literals;
+    }
+
+    private resolveSchemaRecursively(
+        schema: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+    ): OpenAPIV3_1.SchemaObject | undefined {
+        const visited = new Set<string>();
+        let current: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject | undefined = schema;
+        while (current != null && this.context.isReferenceObject(current)) {
+            if (visited.has(current.$ref)) {
+                return undefined;
+            }
+            visited.add(current.$ref);
+            current = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: current,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+        }
+        return current;
     }
 
     private convertOneOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
