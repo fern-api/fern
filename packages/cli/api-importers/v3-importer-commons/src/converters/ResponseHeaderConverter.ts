@@ -49,7 +49,8 @@ export function convertResponseHeaders({
             continue;
         }
 
-        const headerSchema = getHeaderSchema({ context, header: resolvedHeader });
+        const headerValueSource = getHeaderValueSource({ context, header: resolvedHeader });
+        const headerSchema = headerValueSource?.schema;
         const isHeaderRequired = resolvedHeader.required === true;
         // The Header Object's `required` defaults to false, so non-required header value
         // types are optional-wrapped — matching `parameter.required` on the request side.
@@ -110,7 +111,8 @@ export function convertResponseHeaders({
             breadcrumbs: headerBreadcrumbs,
             header: resolvedHeader,
             headerName,
-            schema: headerSchema
+            schema: headerSchema,
+            mediaTypeObject: headerValueSource?.mediaTypeObject
         });
 
         headers.push({
@@ -132,27 +134,30 @@ export function convertResponseHeaders({
 }
 
 /**
- * Resolves the schema describing the response header's value. Headers normally declare
+ * Resolves where the response header's value is described. Headers normally declare
  * `schema` directly, but the OpenAPI spec also allows a `content` map for values serialized
  * in a media type — most commonly a JSON-encoded object. Mirrors the request-header
- * handling in `ParameterConverter`.
+ * handling in `ParameterConverter`. The media-type object is returned alongside the schema
+ * so example selection honors the same `respectParameterContent` and JSON gates.
  */
-function getHeaderSchema({
+function getHeaderValueSource({
     context,
     header
 }: {
     context: AbstractConverterContext<object>;
     header: OpenAPIV3_1.HeaderObject;
-}): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
+}):
+    | { schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject; mediaTypeObject?: OpenAPIV3_1.MediaTypeObject }
+    | undefined {
     if (header.schema != null) {
-        return header.schema;
+        return { schema: header.schema };
     }
     if (!context.settings.respectParameterContent || header.content == null) {
         return undefined;
     }
     for (const [contentType, mediaTypeObject] of Object.entries(header.content)) {
         if (mediaTypeObject.schema != null && MediaType.parse(contentType)?.isJSON()) {
-            return mediaTypeObject.schema;
+            return { schema: mediaTypeObject.schema, mediaTypeObject };
         }
     }
     return undefined;
@@ -163,13 +168,15 @@ function convertHeaderExamples({
     breadcrumbs,
     header,
     headerName,
-    schema
+    schema,
+    mediaTypeObject
 }: {
     context: AbstractConverterContext<object>;
     breadcrumbs: string[];
     header: OpenAPIV3_1.HeaderObject;
     headerName: string;
     schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+    mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
 }): V2SchemaExamples {
     const v2Examples: V2SchemaExamples = {
         userSpecifiedExamples: {},
@@ -204,11 +211,9 @@ function convertHeaderExamples({
         });
     }
 
-    // OpenAPI permits at most one entry in a Header Object's `content` map.
-    const [headerMediaType] = Object.values(header.content ?? {});
-    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && headerMediaType != null) {
+    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && mediaTypeObject != null) {
         for (const [key, example] of context.getNamedExamplesFromMediaTypeObject({
-            mediaTypeObject: headerMediaType,
+            mediaTypeObject,
             breadcrumbs: [...breadcrumbs, "headers", headerName, "content"],
             defaultExampleName: `${headerName}_example`
         })) {
