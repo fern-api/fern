@@ -1,7 +1,10 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ConjureWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { createGroupedSpecsTarGzArchiveSettled } from "@fern-api/local-workspace-runner";
+import {
+    createGroupedSpecsTarGzArchiveSettled,
+    validateSdkConfigImportSettings
+} from "@fern-api/local-workspace-runner";
 import { type FernSourceArchiveRequest } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -11,7 +14,8 @@ import { createFernSourceArchiveResolver } from "../createFernSourceArchiveResol
 
 vi.mock("@fern-api/local-workspace-runner", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/local-workspace-runner")>()),
-    createGroupedSpecsTarGzArchiveSettled: vi.fn()
+    createGroupedSpecsTarGzArchiveSettled: vi.fn(),
+    validateSdkConfigImportSettings: vi.fn()
 }));
 
 function makeGenerator(): generatorsYml.GeneratorInvocation {
@@ -39,6 +43,7 @@ function makeGenerator(): generatorsYml.GeneratorInvocation {
 describe("createFernSourceArchiveResolver", () => {
     beforeEach(() => {
         vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockReset();
+        vi.mocked(validateSdkConfigImportSettings).mockReset();
     });
 
     it("returns an actionable error when the workspace cannot expose source specs", async () => {
@@ -129,7 +134,7 @@ describe("createFernSourceArchiveResolver", () => {
                     sdkName: "api",
                     sdkVersion: "1.0.0",
                     audiences: [],
-                    targets: [{ language: "typescript" }]
+                    targets: [{ language: "typescript", clientPathParameterStyle: "wrapped" }]
                 }
             })([request])
         ).rejects.toMatchObject({
@@ -139,5 +144,8 @@ describe("createFernSourceArchiveResolver", () => {
         expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
             expect.objectContaining({ audiences: { type: "select", audiences: [] } })
         );
+        expect(validateSdkConfigImportSettings).toHaveBeenCalledWith([], {
+            clientPathParameterStyle: "wrapped"
+        });
     });
 });

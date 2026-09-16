@@ -57,12 +57,12 @@ describe("SDK Config migration", () => {
             },
             targets: [
                 {
-                    generatorVersion: "3.63.3",
                     language: "typescript",
                     output: { delivery: "zip" }
                 }
             ]
         });
+        expect(result.sdkConfig.targets[0]).not.toHaveProperty("generatorVersion");
         expect(result.sdkConfig.sdkVersion).toBeUndefined();
         expect(result.sdkConfig.apiVersion).toBeUndefined();
         expect(result.sdkConfig.client).toBeUndefined();

@@ -57,7 +57,9 @@ describe("loadSdkConfigV1", () => {
                     generatorVersion: "4.0.0",
                     sdkName: "petstore-node",
                     sdkVersion: "2.0.0",
-                    clientPathParameterStyle: "language-default"
+                    clientPathParameterStyle: "language-default",
+                    requestedOutput: { type: "download" },
+                    absolutePathToLocalOutputArchive: join(directory, "generated", "typescript.zip")
                 }
             ]
         });
@@ -93,6 +95,83 @@ describe("loadSdkConfigV1", () => {
 
         await expect(loadSdkConfigV1(configPath)).resolves.toMatchObject({
             payload: { sdkName: "petstore", targets: [{ language: "typescript" }] }
+        });
+    });
+
+    it("projects SDK Config GitHub delivery and package metadata for the remote request", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: { packageName: "@acme/sdk" },
+                docs: {},
+                generation: {},
+                output: {
+                    delivery: "github",
+                    github: { repository: "acme/sdk", mode: "pull-request" },
+                    publish: { registry: "npm" }
+                },
+                targets: [{ language: "typescript", generatorVersion: "4.0.0" }]
+            })
+        );
+
+        await expect(loadSdkConfigV1(configPath)).resolves.toMatchObject({
+            payload: {
+                targets: [
+                    {
+                        package: { packageName: "@acme/sdk" },
+                        requestedOutput: {
+                            type: "github",
+                            repository: "acme/sdk",
+                            mode: "pull-request",
+                            publish: { registry: "npm" }
+                        }
+                    }
+                ]
+            }
+        });
+    });
+
+    it("resolves a configured ZIP filename relative to sdk-config.yml", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [
+                    {
+                        language: "typescript",
+                        output: { delivery: "zip", fileName: "./artifacts/petstore.zip" }
+                    }
+                ]
+            })
+        );
+
+        await expect(loadSdkConfigV1(configPath)).resolves.toMatchObject({
+            payload: {
+                targets: [
+                    {
+                        requestedOutput: { type: "download" },
+                        absolutePathToLocalOutputArchive: join(directory, "artifacts", "petstore.zip")
+                    }
+                ]
+            }
         });
     });
 });
