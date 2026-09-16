@@ -11,6 +11,9 @@ const IR_FILEPATH = AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTO
 const REAL_FIXTURE_IR_FILEPATH = AbsoluteFilePath.of(
     join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "ts-flatten-request-any-auth.json")
 );
+const OAUTH_FIXTURE_IR_FILEPATH = AbsoluteFilePath.of(
+    join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "java-endpoint-security-token-subpackage.json")
+);
 
 const REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
     endpoint: {
@@ -48,6 +51,28 @@ const bearerAuthWrapperProperty: FernIr.dynamic.Name = {
     screamingSnakeCase: {
         unsafeName: "BEARER_AUTH",
         safeName: "BEARER_AUTH"
+    }
+};
+
+const REAL_FIXTURE_REQUEST: FernIr.dynamic.EndpointSnippetRequest = {
+    endpoint: {
+        method: "PUT",
+        path: "/users/{id}"
+    },
+    baseURL: undefined,
+    environment: undefined,
+    auth: {
+        type: "bearer",
+        token: "<token>"
+    },
+    pathParameters: {
+        id: "path-id"
+    },
+    queryParameters: undefined,
+    headers: undefined,
+    requestBody: {
+        id: "body-id",
+        name: "Ada"
     }
 };
 
@@ -116,28 +141,74 @@ describe("auth wrapperProperty", () => {
         });
 
         const response = await generator.generate({
-            endpoint: {
-                method: "PUT",
-                path: "/users/{id}"
-            },
-            baseURL: undefined,
-            environment: undefined,
-            auth: {
-                type: "bearer",
-                token: "<token>"
-            },
-            pathParameters: {
-                id: "path-id"
-            },
-            queryParameters: undefined,
-            headers: undefined,
-            requestBody: {
-                id: "body-id",
-                name: "Ada"
-            }
+            ...REAL_FIXTURE_REQUEST
         });
 
         expect(response.snippet).toContain("bearerAuth: {");
         expect(response.snippet).toContain('token: "<token>"');
+    });
+
+    it("uses camelCase auth wrapper options with noSerdeLayer", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    noSerdeLayer: true
+                }
+            })
+        });
+
+        const response = await generator.generate(REAL_FIXTURE_REQUEST);
+
+        expect(response.snippet).toContain("bearerAuth: {");
+        expect(response.snippet).not.toContain("BearerAuth");
+    });
+
+    it("uses camelCase auth wrapper options with retainOriginalCasing", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    retainOriginalCasing: true
+                }
+            })
+        });
+
+        const response = await generator.generate(REAL_FIXTURE_REQUEST);
+
+        expect(response.snippet).toContain("bearerAuth: {");
+        expect(response.snippet).not.toContain("BearerAuth");
+    });
+
+    it("uses the camelCase OAuth scheme key with noSerdeLayer", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: OAUTH_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    noSerdeLayer: true
+                }
+            })
+        });
+
+        const response = await generator.generate({
+            endpoint: {
+                method: "GET",
+                path: "/users/mixed"
+            },
+            baseURL: undefined,
+            environment: undefined,
+            auth: {
+                type: "oauth",
+                clientId: "<clientId>",
+                clientSecret: "<clientSecret>"
+            },
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+
+        expect(response.snippet).toContain("oAuth: {");
+        expect(response.snippet).not.toContain("OAuth: {");
     });
 });

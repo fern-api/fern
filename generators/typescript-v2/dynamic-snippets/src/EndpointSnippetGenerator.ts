@@ -378,7 +378,8 @@ export class EndpointSnippetGenerator {
         }
         return [
             {
-                name: this.context.getPropertyName(wrapperProperty),
+                // SDK auth wrapper option is always camelCase(scheme key), regardless of serde/casing config
+                name: wrapperProperty.camelCase.unsafeName,
                 value: ts.TypeLiteral.object({ fields })
             }
         ];
