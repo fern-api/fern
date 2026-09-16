@@ -1296,13 +1296,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     exampleGenerationStrategy: this.exampleGenerationStrategy,
                     seenRefs: this.getMaybeUpdatedSeenRefs()
                 }).convert();
-                return {
-                    isValid: result.isValid,
-                    coerced: false,
-                    usedProvidedExample: result.usedProvidedExample,
-                    validExample: result.validExample,
-                    errors: result.isValid ? [] : result.errors
-                };
+                if (result.isValid) {
+                    return {
+                        isValid: true,
+                        coerced: false,
+                        usedProvidedExample: result.usedProvidedExample,
+                        validExample: result.validExample,
+                        errors: []
+                    };
+                }
             }
         }
 
@@ -1387,7 +1389,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
      * Picks the union variant selected by the example's discriminator value, if one can be
      * determined. Uses the explicit `discriminator` object when present (mapping, then `$ref`
      * name), and otherwise infers the discriminator from properties that each variant pins to a
-     * single literal value (`const` or single-entry `enum`), e.g. Dropbox's `.tag`.
+     * single literal value (`const` or single-entry `enum`), e.g. Dropbox's `.tag`. Inferred
+     * properties must be pinned by every variant so incidental literals in a single variant are ignored.
      * Returns undefined when the example is not an object or exactly one variant cannot be identified.
      */
     private findUnionVariantByDiscriminator({
@@ -1425,7 +1428,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const candidateProperties =
             explicitDiscriminator?.propertyName != null
                 ? [explicitDiscriminator.propertyName]
-                : [...new Set(variantLiterals.flatMap((literals) => [...literals.keys()]))];
+                : [...(variantLiterals[0]?.keys() ?? [])].filter((key) =>
+                      variantLiterals.every((literals) => literals.has(key))
+                  );
 
         for (const propertyName of candidateProperties) {
             const exampleValue = exampleObject[propertyName];
@@ -1622,11 +1627,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const baseProps: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject> = {};
         const baseRequired = new Set<string>(directRequired);
         for (const subSchema of resolvedSchema.allOf) {
-            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                schemaOrReference: subSchema,
-                breadcrumbs: this.breadcrumbs,
-                skipErrorCollector: true
-            });
+            const resolved = this.resolveSchemaRecursively(subSchema);
             if (resolved == null) {
                 continue;
             }
