@@ -204,26 +204,26 @@ function convertHeaderExamples({
         });
     }
 
-    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
-        for (const mediaTypeObject of Object.values(header.content ?? {})) {
-            for (const [key, example] of context.getNamedExamplesFromMediaTypeObject({
-                mediaTypeObject,
-                breadcrumbs: [...breadcrumbs, "headers", headerName, "content"],
-                defaultExampleName: `${headerName}_example`
-            })) {
-                const resolvedExample = context.resolveExampleWithValue(example);
-                if (resolvedExample != null) {
-                    const exampleName = context.generateUniqueName({
-                        prefix: key,
-                        existingNames: Object.keys(v2Examples.userSpecifiedExamples)
-                    });
-                    v2Examples.userSpecifiedExamples[exampleName] = generateHeaderExample({
-                        context,
-                        breadcrumbs,
-                        schema,
-                        example: resolvedExample
-                    });
-                }
+    // OpenAPI permits at most one entry in a Header Object's `content` map.
+    const [headerMediaType] = Object.values(header.content ?? {});
+    if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && headerMediaType != null) {
+        for (const [key, example] of context.getNamedExamplesFromMediaTypeObject({
+            mediaTypeObject: headerMediaType,
+            breadcrumbs: [...breadcrumbs, "headers", headerName, "content"],
+            defaultExampleName: `${headerName}_example`
+        })) {
+            const resolvedExample = context.resolveExampleWithValue(example);
+            if (resolvedExample != null) {
+                const exampleName = context.generateUniqueName({
+                    prefix: key,
+                    existingNames: Object.keys(v2Examples.userSpecifiedExamples)
+                });
+                v2Examples.userSpecifiedExamples[exampleName] = generateHeaderExample({
+                    context,
+                    breadcrumbs,
+                    schema,
+                    example: resolvedExample
+                });
             }
         }
     }
