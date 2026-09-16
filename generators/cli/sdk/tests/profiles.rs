@@ -193,7 +193,7 @@ fn create_use_flag_activates_in_one_step() {
     );
     let current = sandbox.run(&["profiles", "current", "--format", "json"]);
     assert_eq!(json(&current)["profile"], "prod");
-    assert_eq!(json(&current)["source"], "active profile");
+    assert_eq!(json(&current)["selected_by"], "active profile");
 }
 
 #[test]
@@ -215,8 +215,10 @@ fn list_json_reports_the_resolved_view_and_marks_the_active_profile() {
         .expect("acme row");
     assert_eq!(acme["active"], "*");
     assert_eq!(acme["parent"], "prod");
-    // Resolved, not literal: the credential is inherited from the parent.
-    assert_eq!(acme["credential"], "prod");
+    // Resolved, not literal: the credential is inherited from the parent, and
+    // `credentials_from` names whose slot is in use. The root profile omits it
+    // — "my own" is not worth a column.
+    assert_eq!(acme["credentials_from"], "prod");
     assert_eq!(acme["parameters"]["searchQuery"], "bob");
 
     let prod = rows
@@ -224,6 +226,10 @@ fn list_json_reports_the_resolved_view_and_marks_the_active_profile() {
         .find(|row| row["profile"] == "prod")
         .expect("prod row");
     assert_eq!(prod["active"], "");
+    assert!(
+        prod.get("credentials_from").is_none(),
+        "a root profile using its own slot should not emit the column: {prod:#?}",
+    );
 }
 
 #[test]
@@ -844,14 +850,17 @@ fn secrets_never_reach_profiles_toml() {
     // The load-bearing security property: the file names a keyring account,
     // it does not hold a credential.
     let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "root"]);
     sandbox.run(&[
         "profiles", "create", "prod",
-        "--credential", "prod",
+        "--credential", "root",
         "--oauth-client-id", "public-client-id",
         "--set", "searchQuery=alice",
     ]);
     let text = std::fs::read_to_string(sandbox.profiles_path()).unwrap();
-    assert!(text.contains("credential = \"prod\""), "{text}");
+    // A *borrowed* slot is recorded; a slot equal to the profile's own name is
+    // omitted as redundant (`resolve` defaults to exactly that).
+    assert!(text.contains("credential = \"root\""), "{text}");
     // The client id is public by construction (RFC 6749 §2.2) and is meant
     // to be here; nothing that looks like a token is.
     assert!(text.contains("oauth_client_id = \"public-client-id\""), "{text}");
@@ -975,15 +984,19 @@ fn a_child_given_its_own_credential_does_not_overwrite_the_parents() {
         "create child with its own credential",
     );
 
+    // Assert on the stored identifier rather than the slot name: a child with
+    // its own credential omits `credentials_from` (it is using its own slot),
+    // so the observable difference is the value behind it.
     let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
-    assert!(
-        listed.contains("\"credential\": \"kid\""),
-        "a child handed its own credential must own its slot: {listed}",
-    );
-    assert!(
-        listed.contains("\"credential\": \"prod\""),
-        "the parent must keep its own slot: {listed}",
-    );
+    let rows: serde_json::Value = serde_json::from_str(&listed).expect("json");
+    let rows = rows.as_array().expect("array");
+    for name in ["prod", "kid"] {
+        let row = rows.iter().find(|r| r["profile"] == name).expect(name);
+        assert!(
+            row.get("credentials_from").is_none(),
+            "{name} owns its slot, so the column should be absent: {row:#?}",
+        );
+    }
 }
 
 #[test]
@@ -1003,12 +1016,14 @@ fn a_child_with_no_credential_of_its_own_still_inherits() {
         "create child with no credential",
     );
 
+    // The child borrows, so it names the slot; the parent owns it and omits.
     let listed = stdout(&sandbox.run(&["profiles", "list", "--format", "json"]));
-    assert_eq!(
-        listed.matches("\"credential\": \"prod\"").count(),
-        2,
-        "both rows should point at the parent's slot: {listed}",
-    );
+    let rows: serde_json::Value = serde_json::from_str(&listed).expect("json");
+    let rows = rows.as_array().expect("array");
+    let kid = rows.iter().find(|r| r["profile"] == "kid").expect("kid");
+    assert_eq!(kid["credentials_from"], "prod", "{kid:#?}");
+    let prod = rows.iter().find(|r| r["profile"] == "prod").expect("prod");
+    assert!(prod.get("credentials_from").is_none(), "{prod:#?}");
 }
 
 #[test]

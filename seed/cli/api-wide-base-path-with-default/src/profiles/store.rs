@@ -206,7 +206,25 @@ impl ProfileStore {
             return;
         };
         set_str(table, "parent", entry.parent.as_deref());
-        set_str(table, "credential", entry.credential.as_deref());
+        // A root profile whose credential is just its own name carries no
+        // information — `resolve` defaults an absent `credential` to exactly
+        // that. Omitting it keeps the file readable.
+        //
+        // A profile *with a parent* must still write it: there, absent means
+        // "inherit the chain root's slot", which is not the same as "my own
+        // name". Conflating the two is what let a child's `--with-token`
+        // overwrite its parent's credential.
+        let credential_is_redundant =
+            entry.parent.is_none() && entry.credential.as_deref() == Some(entry.name.as_str());
+        set_str(
+            table,
+            "credential",
+            if credential_is_redundant {
+                None
+            } else {
+                entry.credential.as_deref()
+            },
+        );
         set_str(table, "oauth_client_id", entry.oauth_client_id.as_deref());
         set_str(table, "base_url", entry.base_url.as_deref());
         set_u32(table, "retries", entry.retries);

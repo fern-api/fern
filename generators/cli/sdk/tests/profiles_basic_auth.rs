@@ -250,3 +250,56 @@ fn the_profiles_tenant_parameter_reaches_the_request() {
         );
     });
 }
+
+#[test]
+#[serial]
+fn list_shows_the_stored_account_not_the_slot_name() {
+    // What a user wants the listing to answer is "which account is this
+    // profile?", and the answer is the username half of the stored basic
+    // credential. The slot name only ever echoed the profile name back.
+    with_clean_env(|_home| {
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        run(&["bsc", "profiles", "create", "acme"]);
+
+        // Store a different identifier under each.
+        std::env::set_var("BSC_USERNAME", "AC1111111111111111");
+        std::env::set_var("BSC_PASSWORD", "prodtok");
+        run(&["bsc", "profiles", "create", "prod", "--from-env", "--force"]);
+        std::env::set_var("BSC_USERNAME", "AC9999999999999999");
+        std::env::set_var("BSC_PASSWORD", "acmetok");
+        run(&["bsc", "profiles", "create", "acme", "--from-env", "--force"]);
+        std::env::remove_var("BSC_USERNAME");
+        std::env::remove_var("BSC_PASSWORD");
+
+        let (code, output) = run(&["bsc", "profiles", "list", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let rows: serde_json::Value = serde_json::from_str(&output).expect("json");
+        let rows = rows.as_array().expect("array");
+
+        let prod = rows.iter().find(|r| r["profile"] == "prod").expect("prod");
+        let acme = rows.iter().find(|r| r["profile"] == "acme").expect("acme");
+
+        // Truncated, so the column cannot dominate the row.
+        assert_eq!(prod["account"], "AC11111111\u{2026}", "{prod:#?}");
+        assert_eq!(acme["account"], "AC99999999\u{2026}", "{acme:#?}");
+
+        // And neither names a slot — each owns its own.
+        assert!(prod.get("credentials_from").is_none(), "{prod:#?}");
+        assert!(acme.get("credentials_from").is_none(), "{acme:#?}");
+    });
+}
+
+#[test]
+#[serial]
+fn a_profile_with_nothing_stored_has_no_account_column() {
+    // The column must disappear rather than render an empty cell or error,
+    // and a locked keychain has to degrade the same way.
+    with_clean_env(|_home| {
+        run(&["bsc", "profiles", "create", "empty", "--use"]);
+        let (code, output) = run(&["bsc", "profiles", "list", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let rows: serde_json::Value = serde_json::from_str(&output).expect("json");
+        let row = &rows.as_array().expect("array")[0];
+        assert!(row.get("account").is_none(), "{row:#?}");
+    });
+}

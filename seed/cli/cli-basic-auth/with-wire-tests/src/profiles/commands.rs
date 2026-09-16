@@ -945,7 +945,18 @@ fn handle_list<W: Write>(
         }
         if let Some(resolved) = &resolved {
             if let Some(credential) = &resolved.credential {
-                row.insert("credential".into(), credential.clone().into());
+                // The identifier, when we can read it — that is the question a
+                // listing should answer. See `stored_account`.
+                if let Some(account) = stored_account(ctx, credential) {
+                    row.insert("account".into(), account.into());
+                }
+                // The *slot* only when it is not this profile's own. Emitting
+                // it unconditionally printed `prod -> prod` on every row: true,
+                // redundant, and it crowded out the columns that carry
+                // information.
+                if credential != &entry.name {
+                    row.insert("credentials_from".into(), credential.clone().into());
+                }
             }
             if let Some(client_id) = &resolved.oauth_client_id {
                 row.insert("oauth_client_id".into(), client_id.clone().into());
@@ -1121,6 +1132,54 @@ fn insert_map(
         .map(|(k, v)| (k.clone(), serde_json::Value::String(v.clone())))
         .collect();
     row.insert(key.to_string(), serde_json::Value::Object(nested));
+}
+
+/// The account identifier stored for `credential`, for the `ACCOUNT` column.
+///
+/// Reads the *username* half of a stored basic credential — `AC1234…` for a
+/// Twilio-shaped API. A username is not a secret, so surfacing it is safe, and
+/// it is what a user actually wants the listing to answer: "which account is
+/// this profile?" The `CREDENTIALS FROM` column can only answer "which slot",
+/// which is the same as the profile name in the common case and therefore
+/// tells them nothing.
+///
+/// Returns `None` — and the column disappears — when:
+/// - no scheme has a `username` field (bearer / API-key CLIs have no account)
+/// - nothing is stored yet for this profile
+/// - the keyring read fails or is locked
+///
+/// That last case is deliberate: `profiles list` must never error or block on
+/// a locked keychain just to render a column.
+fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
+    for (scheme, binding) in ctx.auth_bindings {
+        if !matches!(binding, SchemeBinding::Basic { .. }) {
+            continue;
+        }
+        let account = super::keyring_account_for(scheme, credential);
+        let Ok(Some(raw)) = crate::auth::keyring_store::active_store().get(ctx.cli_name, &account)
+        else {
+            continue;
+        };
+        let username = serde_json::from_str::<serde_json::Value>(&raw)
+            .ok()
+            .and_then(|v| v.get("username")?.as_str().map(str::to_string));
+        if let Some(username) = username.filter(|u| !u.is_empty()) {
+            return Some(truncate_account(&username));
+        }
+    }
+    None
+}
+
+/// Shorten a long identifier for a table cell, keeping the leading characters
+/// that distinguish accounts (`AC1234…`). Twilio SIDs are 34 characters, which
+/// would dominate the row.
+fn truncate_account(value: &str) -> String {
+    const KEEP: usize = 10;
+    if value.chars().count() <= KEEP + 1 {
+        return value.to_string();
+    }
+    let head: String = value.chars().take(KEEP).collect();
+    format!("{head}\u{2026}")
 }
 
 /// A synthetic `[env]` row when environment variables currently supply a
@@ -1395,9 +1454,17 @@ fn handle_current<W: Write>(
             let profile = &selection.profile;
             let mut map = serde_json::Map::new();
             map.insert("profile".into(), profile.name.clone().into());
-            map.insert("source".into(), selection.source.label().into());
+            // `selected_by`, not `source`: this answers *why* this profile is in
+            // play, and the answer changes precedence — only a profile named
+            // with the flag outranks credential env vars (`outranks_env`).
+            map.insert("selected_by".into(), selection.source.label().into());
             if let Some(credential) = &profile.credential {
-                map.insert("credential".into(), credential.clone().into());
+                if let Some(account) = stored_account(ctx, credential) {
+                    map.insert("account".into(), account.into());
+                }
+                if credential != &profile.name {
+                    map.insert("credentials_from".into(), credential.clone().into());
+                }
             }
             if let Some(base_url) = &profile.base_url {
                 map.insert("base_url".into(), base_url.clone().into());
