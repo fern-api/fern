@@ -208,7 +208,7 @@ describe("auth wrapperProperty", () => {
             requestBody: undefined
         });
 
-        expect(response.snippet).toContain("oAuth: {");
-        expect(response.snippet).not.toContain("OAuth: {");
+        expect(response.snippet).toContain("oauth: {");
+        expect(response.snippet).not.toContain("oAuth");
     });
 });

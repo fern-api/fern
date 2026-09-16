@@ -371,6 +371,11 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private getAuthWrapperPropertyName(wrapperProperty: FernIr.dynamic.Name): string {
+        // mirrors @fern-typescript/commons toCamelCase, which the SDK uses for auth wrapper option names
+        return wrapperProperty.camelCase.unsafeName === "oAuth" ? "oauth" : wrapperProperty.camelCase.unsafeName;
+    }
+
     private wrapAuthFields({ auth, fields }: { auth: AuthFields; fields: ts.ObjectField[] }): ts.ObjectField[] {
         const wrapperProperty = getAuthWrapperProperty(auth);
         if (wrapperProperty == null) {
@@ -379,7 +384,7 @@ export class EndpointSnippetGenerator {
         return [
             {
                 // SDK auth wrapper option is always camelCase(scheme key), regardless of serde/casing config
-                name: wrapperProperty.camelCase.unsafeName,
+                name: this.getAuthWrapperPropertyName(wrapperProperty),
                 value: ts.TypeLiteral.object({ fields })
             }
         ];
