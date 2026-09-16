@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.125.1
+  changelogEntry:
+    - summary: |
+        dynamic IR now sets `wrapperProperty` on auth schemes when the API has multiple auth schemes so snippet generators can nest constructor options the way generated SDKs expect.
+      type: fix
+  createdAt: "2026-09-16"
+  irVersion: 67
 - version: 5.125.0
   changelogEntry:
     - summary: |
