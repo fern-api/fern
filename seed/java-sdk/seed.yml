@@ -331,6 +331,9 @@ fixtures:
     - customConfig:
         custom-interceptors: true
       outputFolder: custom-interceptors
+    - customConfig:
+        enable-closeable-client: true
+      outputFolder: closeable-client
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config

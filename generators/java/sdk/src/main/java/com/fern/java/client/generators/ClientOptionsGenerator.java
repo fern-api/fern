@@ -1172,6 +1172,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+        // Ownership follows the client: true until the caller supplies one via httpClient(...), and carried over by
+        // from(...) so options derived from SDK-owned options (e.g. the staged OAuth build path) stay SDK-owned.
+        boolean closeableClient = clientGeneratorContext.getCustomConfig().enableCloseableClient();
+        if (closeableClient) {
+            builder.addField(FieldSpec.builder(TypeName.BOOLEAN, OWNS_HTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
+                    .initializer("true")
+                    .build());
+        }
+
         // Only add the appInfo builder field when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent
         // is actually written, so default-off generated output stays byte-identical. Stores the sanitized product token
         // (null until the caller supplies appInfo).
@@ -1275,14 +1284,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 Optional.class,
                                 RETRY_JITTER_FACTOR_FIELD.name)
                         .addStatement("return this")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(builderClassName)
-                        .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement("return this")
                         .build());
+
+        MethodSpec.Builder httpClientSetter = MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        if (closeableClient) {
+            httpClientSetter.addStatement("this.$L = false", OWNS_HTTP_CLIENT_FIELD.name);
+        }
+        builder.addMethod(httpClientSetter.addStatement("return this").build());
 
         // Add addInterceptor method when custom-interceptors is enabled
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
@@ -1637,7 +1649,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TIMEOUT_FIELD.name,
                         Optional.class,
                         TIMEOUT_FIELD.name)
-                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        if (clientGeneratorContext.getCustomConfig().enableCloseableClient()) {
+            fromMethod.addStatement(
+                    "builder.$L = clientOptions.$L()", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name);
+        }
+        fromMethod
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
@@ -1770,7 +1787,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Ownership must be captured before `this.httpClient` is overwritten with the derived client below.
         if (closeableClient) {
-            builder.addStatement("boolean $L = this.$L == null", OWNS_HTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+            builder.addStatement(
+                    "boolean $L = this.$L == null || this.$L",
+                    OWNS_HTTP_CLIENT_FIELD.name,
+                    OKHTTP_CLIENT_FIELD.name,
+                    OWNS_HTTP_CLIENT_FIELD.name);
         }
 
         builder.addStatement(

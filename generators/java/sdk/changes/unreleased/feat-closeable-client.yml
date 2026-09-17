@@ -3,8 +3,9 @@
 - summary: |
     Adds an opt-in `enable-closeable-client` config flag. When enabled, the generated root clients
     (sync and async) implement `AutoCloseable`, and `ClientOptions` records whether the SDK created the
-    underlying `OkHttpClient` (`ownsHttpClient()`, set in `ClientOptions.Builder.build()` from whether
-    `httpClient(...)` was supplied). `close()` shuts down the dispatcher executor and evicts the
+    underlying `OkHttpClient` (`ownsHttpClient()`: true unless `httpClient(...)` was supplied, and carried
+    over by `ClientOptions.Builder.from(...)` so options derived from SDK-owned options, such as the OAuth
+    client-credentials build path, stay SDK-owned). `close()` shuts down the dispatcher executor and evicts the
     connection pool only for an SDK-created client, so short-lived JVMs exit promptly instead of being
     held open by OkHttp's non-daemon threads. A client supplied through `httpClient(OkHttpClient)`
     remains owned by the caller and is left untouched: the SDK derives its client via
