@@ -21,20 +21,31 @@ const ON_PREM_SPEC_TYPE_BY_FERN_TYPE: Partial<Record<RawSpecsManifestEntry["type
 
 export declare namespace collectOnPremSourceSpecs {
     type Result = { success: true; specs: [SourceSpec, ...SourceSpec[]] } | { success: false; message: string };
+
+    interface Context {
+        generatorName: string;
+        /**
+         * Whether the image being run generates from every spec rather than only `source.specs[0]`.
+         *
+         * Defaults to `false`, which is what every image published before the capability label did.
+         */
+        supportsMultiSpec?: boolean;
+    }
 }
 
 /**
  * Projects the pre-processed raw specs manifest onto the IR's source specs, in the coordinates the
  * adapter will see.
  *
- * Rejects what the adapter cannot consume rather than passing it through. The container reads
- * `source.specs[0]` and ignores the rest (`requirePrimarySpec`), so a multi-spec workspace would
- * otherwise generate an SDK covering one spec and exit zero -- a silently wrong SDK, which is worse
- * than a refusal naming the specs involved.
+ * Rejects what the adapter cannot consume rather than passing it through. An image that reads
+ * `source.specs[0]` and ignores the rest (`requirePrimarySpec`) would otherwise turn a multi-spec
+ * workspace into an SDK covering one spec that exits zero -- a silently wrong SDK, which is worse
+ * than a refusal naming the specs involved. An image that declares it consumes all of them gets all
+ * of them, in manifest order.
  */
 export function collectOnPremSourceSpecs(
     manifest: RawSpecsManifest | undefined,
-    context: { generatorName: string }
+    context: collectOnPremSourceSpecs.Context
 ): collectOnPremSourceSpecs.Result {
     const entries = manifest?.specs ?? [];
     if (entries.length === 0) {
@@ -58,14 +69,15 @@ export function collectOnPremSourceSpecs(
         };
     }
 
-    if (entries.length > 1) {
+    if (entries.length > 1 && !context.supportsMultiSpec) {
         const described = entries.map((entry) => entry.specPath).join(", ");
         return {
             success: false,
             message:
-                `Generator "${context.generatorName}" received ${entries.length} API specs (${described}), and the ` +
-                "Postman adapter generates from a single spec. Generating would silently cover only the first one. " +
-                "Reduce the workspace to one spec for this generator."
+                `Generator "${context.generatorName}" received ${entries.length} API specs (${described}), and this ` +
+                "image has not declared multi-spec support. Older adapters resolve only the first spec. " +
+                "Upgrade the generator to an image that declares multi-spec support, or reduce the " +
+                "workspace to one spec for this generator."
         };
     }
 

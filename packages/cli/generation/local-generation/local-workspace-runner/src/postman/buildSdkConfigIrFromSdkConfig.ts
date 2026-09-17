@@ -22,6 +22,11 @@ export declare namespace buildSdkConfigIrFromSdkConfig {
         outputPath: string;
         /** Manifest of pre-processed raw specs, in the coordinates the adapter will see. */
         rawSpecsManifest: RawSpecsManifest | undefined;
+        /**
+         * Whether the image being run generates from every spec. Defaults to `false`, so a caller
+         * that has not established the capability gets the single-spec contract.
+         */
+        supportsMultiSpec?: boolean;
     }
 
     type Result =
@@ -53,7 +58,8 @@ export function buildSdkConfigIrFromSdkConfig({
     generatorName,
     organization,
     outputPath,
-    rawSpecsManifest
+    rawSpecsManifest,
+    supportsMultiSpec
 }: buildSdkConfigIrFromSdkConfig.Args): buildSdkConfigIrFromSdkConfig.Result {
     const target = sdkConfig.targets.find((candidate) => candidate.language === language);
     if (target == null) {
@@ -66,7 +72,7 @@ export function buildSdkConfigIrFromSdkConfig({
         };
     }
 
-    const specs = collectOnPremSourceSpecs(rawSpecsManifest, { generatorName });
+    const specs = collectOnPremSourceSpecs(rawSpecsManifest, { generatorName, supportsMultiSpec });
     if (!specs.success) {
         return specs;
     }
