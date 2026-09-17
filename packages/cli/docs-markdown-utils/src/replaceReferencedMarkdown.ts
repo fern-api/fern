@@ -51,18 +51,19 @@ function extractVariablesFromContent(content: string): Set<string> {
     return vars;
 }
 
-const LIST_ITEM_PREFIX_REGEX = /^[ \t]*(?:[-*+]|\d{1,9}[.)])[ \t]+$/;
+// Any number of blockquote markers followed by an optional list marker, e.g. `10. `, `- `, `> 1. `, `> > - `.
+const CONTAINER_PREFIX_REGEX = /^(?:[ \t]*>)*[ \t]*(?:(?:[-*+]|\d{1,9}[.)])[ \t]+)?$/;
 
 /**
- * When the tag is the first thing inside a list item (e.g. `10. <Markdown .../>`),
- * continuation lines must be indented to the list item's content column so they
- * stay inside the item. Otherwise fall back to the tag's leading whitespace.
+ * When the tag is the first thing inside a list item and/or blockquote (e.g. `10. <Markdown .../>`),
+ * continuation lines must keep the blockquote markers and be indented to the item's content column
+ * so they stay inside the container. Otherwise fall back to the tag's leading whitespace.
  */
 function getContinuationIndent(source: string, tagIndex: number, leadingWhitespace: string): string {
     const lineStart = source.lastIndexOf("\n", tagIndex - 1) + 1;
     const linePrefix = source.slice(lineStart, tagIndex);
-    if (LIST_ITEM_PREFIX_REGEX.test(linePrefix)) {
-        return linePrefix.replace(/[^\t]/g, " ");
+    if (CONTAINER_PREFIX_REGEX.test(linePrefix)) {
+        return linePrefix.replace(/[^\t>]/g, " ");
     }
     return leadingWhitespace;
 }
@@ -194,7 +195,8 @@ export async function replaceReferencedMarkdown({
             });
             replaceString = result.markdown;
 
-            const continuationIndent = getContinuationIndent(markdown, match.index + indent.length, indent);
+            const tagIndex = match.index + match[0].indexOf("<Markdown");
+            const continuationIndent = getContinuationIndent(markdown, tagIndex, indent);
             replaceString = replaceString
                 .split("\n")
                 .map((line, i) => (i === 0 ? indent : continuationIndent) + line)

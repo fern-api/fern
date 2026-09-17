@@ -802,6 +802,34 @@ describe("replaceReferencedMarkdown", () => {
         expect(result).toBe("- First line.\n  \n  Second paragraph.\n- Next tip.");
     });
 
+    it("should keep blockquote markers and list indentation for a blockquoted list item", async () => {
+        const markdown = '> 1. <Markdown src="/snippets/care.mdx" />\n> 2. Next tip.';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First\n\nSecond"
+        });
+
+        expect(result).toBe("> 1. First\n>    \n>    Second\n> 2. Next tip.");
+    });
+
+    it("should keep nested blockquote markers when the tag is directly inside a blockquote", async () => {
+        const markdown = '> > <Markdown src="/snippets/care.mdx" />';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First\n\nSecond"
+        });
+
+        expect(result).toBe("> > First\n> > \n> > Second");
+    });
+
     it("should keep leading-whitespace indentation when the tag is not inside a list item", async () => {
         const markdown = 'Intro text <Markdown src="/snippets/care.mdx" />';
 
