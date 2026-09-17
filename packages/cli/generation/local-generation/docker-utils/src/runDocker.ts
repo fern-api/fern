@@ -77,7 +77,7 @@ export async function runContainer({
         });
     // Before the run, not in pullImage: `docker run` pulls the image itself when it is absent or
     // when `--pull always` is passed, so those pulls never reach the explicit pull below.
-    await ensureDockerHubOatLogin({ imageName, runner, logger });
+    await ensureDockerHubOatLogin({ imageName, runner, logger, signal });
     try {
         await tryRun();
     } catch (e) {

@@ -6,12 +6,7 @@ vi.mock("@fern-api/logging-execa", () => ({
 
 import { loggingExeca } from "@fern-api/logging-execa";
 
-import {
-    ensureDockerHubOatLogin,
-    getDockerHubNamespace,
-    resetDockerHubOatLoginsForTest,
-    resolveDockerHubOatLogin
-} from "../dockerHubOatLogin.js";
+import { ensureDockerHubOatLogin, getDockerHubNamespace, resolveDockerHubOatLogin } from "../dockerHubOatLogin.js";
 
 const OAT = "dckr_oat_example";
 
@@ -23,6 +18,10 @@ describe("getDockerHubNamespace", () => {
     it("reads the namespace from an explicit Docker Hub host", () => {
         expect(getDockerHubNamespace("docker.io/fernenterprise/fern-python-sdk:6.0.0")).toBe("fernenterprise");
         expect(getDockerHubNamespace("index.docker.io/fernenterprise/fern-python-sdk")).toBe("fernenterprise");
+    });
+
+    it("reads the namespace from a host in any case, which Docker accepts", () => {
+        expect(getDockerHubNamespace("DOCKER.IO/fernenterprise/fern-python-sdk:rc")).toBe("fernenterprise");
     });
 
     it("is undefined for an official library image", () => {
@@ -67,7 +66,6 @@ describe("resolveDockerHubOatLogin", () => {
 
 describe("ensureDockerHubOatLogin", () => {
     beforeEach(() => {
-        resetDockerHubOatLoginsForTest();
         (loggingExeca as Mock).mockReset();
         (loggingExeca as Mock).mockResolvedValue({ stdout: "", stderr: "", exitCode: 0 });
     });
@@ -86,12 +84,15 @@ describe("ensureDockerHubOatLogin", () => {
         expect(options.secrets).toContain(OAT);
     });
 
-    it("logs in once per process even when several images are pulled", async () => {
-        const env = { DOCKERHUB_OAT: OAT };
-        await ensureDockerHubOatLogin({ imageName: "fernenterprise/fern-python-sdk:rc", env });
-        await ensureDockerHubOatLogin({ imageName: "fernenterprise/fern-go-sdk:rc", env });
+    it("forwards the caller's abort signal so a stalled login is cancellable", async () => {
+        const controller = new AbortController();
+        await ensureDockerHubOatLogin({
+            imageName: "fernenterprise/fern-python-sdk:rc",
+            signal: controller.signal,
+            env: { DOCKERHUB_OAT: OAT }
+        });
 
-        expect((loggingExeca as Mock).mock.calls).toHaveLength(1);
+        expect((loggingExeca as Mock).mock.calls[0]?.[3].signal).toBe(controller.signal);
     });
 
     it("uses the configured container runner", async () => {
@@ -124,11 +125,26 @@ describe("ensureDockerHubOatLogin", () => {
         ).rejects.toThrow(/DOCKERHUB_OAT/);
     });
 
+    it("reports a cancelled login as cancelled rather than blaming the token", async () => {
+        (loggingExeca as Mock).mockResolvedValue({ stdout: "", stderr: "", exitCode: 1 });
+        const controller = new AbortController();
+        controller.abort();
+
+        await expect(
+            ensureDockerHubOatLogin({
+                imageName: "fernenterprise/fern-python-sdk:rc",
+                signal: controller.signal,
+                env: { DOCKERHUB_OAT: OAT }
+            })
+        ).rejects.toThrow(/was cancelled/);
+    });
+
     it("retries a failed login rather than caching the failure", async () => {
         (loggingExeca as Mock).mockResolvedValueOnce({ stdout: "", stderr: "unauthorized", exitCode: 1 });
         const args = { imageName: "fernenterprise/fern-python-sdk:rc", env: { DOCKERHUB_OAT: OAT } };
 
         await expect(ensureDockerHubOatLogin(args)).rejects.toThrow();
         await expect(ensureDockerHubOatLogin(args)).resolves.toBeUndefined();
+        expect((loggingExeca as Mock).mock.calls).toHaveLength(2);
     });
 });

@@ -10,7 +10,7 @@ The `rc` images are private. Export the Docker Hub organization access token and
 export DOCKERHUB_OAT=dckr_oat_...
 ```
 
-Same variable name self-hosted Fern Docs uses, so an existing docs customer already has this set. The CLI runs `docker login --username fernenterprise --password-stdin` before pulling, once per run, and only for images in the `fernenterprise` namespace.
+Same variable name self-hosted Fern Docs uses, so an existing docs customer already has this set. Before each pull the CLI runs `docker login --username fernenterprise --password-stdin`, but only for images in the `fernenterprise` namespace — a workspace running Fern's public `fernapi` generators never sends the token anywhere, and neither does a pull from your own mirrored registry.
 
 Leave it unset and nothing changes — whatever `docker` is already logged into is what pulls, so a manual `docker login` still works:
 
