@@ -139,6 +139,50 @@ describe("loadSdkConfigV1", () => {
         });
     });
 
+    it.each([
+        ["release", "release"],
+        ["pull-request", "pull-request"],
+        ["push", "push"],
+        ["commit", "push"],
+        ["commit-and-release", "release"]
+    ] as const)("maps the SDK Config GitHub %s mode to the remote request %s mode", async (mode, requestedMode) => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                output: {
+                    delivery: "github",
+                    github: { repository: "acme/sdk", mode }
+                },
+                targets: [{ language: "typescript" }]
+            })
+        );
+
+        await expect(loadSdkConfigV1(configPath)).resolves.toMatchObject({
+            payload: {
+                targets: [
+                    {
+                        requestedOutput: {
+                            type: "github",
+                            repository: "acme/sdk",
+                            mode: requestedMode
+                        }
+                    }
+                ]
+            }
+        });
+    });
+
     it("resolves a configured ZIP filename relative to sdk-config.yml", async () => {
         const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
         temporaryDirectories.push(directory);
