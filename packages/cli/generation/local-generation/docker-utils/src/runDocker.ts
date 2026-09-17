@@ -222,7 +222,7 @@ function logForwardedEnvVars({
     }
 }
 
-async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
+export async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
     await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true,
