@@ -1,3 +1,4 @@
+import { basename } from "node:path";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
 import type { RawSpecsManifest, RawSpecsManifestEntry } from "../rawSpecs.js";
@@ -83,10 +84,12 @@ export function collectOnPremSourceSpecs(
 
     const specs = entries.map(
         (entry): SourceSpec => ({
+            ...(entries.length > 1 ? { id: basename(entry.specPath) } : {}),
             specUrl: entry.specPath,
             // Checked above; the filter guarantees a mapping exists for every remaining entry.
             specType: ON_PREM_SPEC_TYPE_BY_FERN_TYPE[entry.type] as SourceSpecType,
-            ...(entry.namespace != null ? { namespace: entry.namespace } : {})
+            ...(entry.namespace != null ? { namespace: entry.namespace } : {}),
+            ...(entry.apiImportSettings != null ? { apiImportSettings: entry.apiImportSettings } : {})
         })
     );
 

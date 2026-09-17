@@ -244,9 +244,45 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         expect(built.success).toBe(true);
         if (built.success) {
             expect(built.sdkConfigIr.source.specs).toEqual([
-                { specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
-                { specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
+                { id: "movies.json", specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
+                { id: "events.json", specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
             ]);
+        }
+    });
+
+    it("preserves distinct per-source import settings alongside root defaults", async () => {
+        const config = await loadFixture();
+        const built = build(
+            {
+                ...config,
+                source: { ...config.source, apiImportSettings: { defaultIntegerFormat: "int64" } }
+            },
+            {
+                supportsMultiSpec: true,
+                rawSpecsManifest: {
+                    specs: [
+                        {
+                            type: "openapi",
+                            specPath: "/fern/specs/openapi0.json",
+                            apiImportSettings: { defaultIntegerFormat: "int32" }
+                        },
+                        {
+                            type: "openapi",
+                            specPath: "/fern/specs/openapi1.json",
+                            apiImportSettings: { defaultIntegerFormat: "uint64" }
+                        }
+                    ]
+                }
+            }
+        );
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.apiImportSettings?.defaultIntegerFormat).toBe("int64");
+            expect(built.sdkConfigIr.source.specs.map((spec) => spec.apiImportSettings?.defaultIntegerFormat)).toEqual([
+                "int32",
+                "uint64"
+            ]);
+            expect(built.sdkConfigIr.source.specs.map((spec) => spec.id)).toEqual(["openapi0.json", "openapi1.json"]);
         }
     });
 
@@ -302,8 +338,8 @@ describe("collectOnPremSourceSpecs", () => {
         expect(collected).toEqual({
             success: true,
             specs: [
-                { specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
-                { specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
+                { id: "movies.json", specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
+                { id: "events.json", specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
             ]
         });
     });
