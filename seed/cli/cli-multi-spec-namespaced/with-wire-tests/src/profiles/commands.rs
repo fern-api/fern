@@ -421,8 +421,10 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                 .arg(
                     Arg::new("name")
                         .value_name("NAME")
-                        .required(true)
-                        .help("Profile to inspect"),
+                        .help(
+                            "Profile to inspect. Defaults to the one this invocation \
+                             would use (--profile, <NAME>_PROFILE, or the active one).",
+                        ),
                 ),
         )
         .subcommand(
@@ -1882,10 +1884,29 @@ fn handle_show<W: Write>(
     store: &ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
-    let name = matches
-        .get_one::<String>("name")
-        .cloned()
-        .expect("clap marks `name` required");
+    // The name is optional and falls back to whatever this invocation would
+    // select. Requiring it made `-p test_2 profiles show` fail with "required
+    // argument NAME", which is a dead end: every other command honours `-p`,
+    // so `show` refusing to is an inconsistency inside the CLI rather than a
+    // meaningful distinction.
+    //
+    // Re-resolve from argv rather than reading the installed global, for the
+    // same reason `current` does: the `profiles` group is exempt from
+    // selection so a stale `active` cannot break the commands that repair it.
+    let name = match matches.get_one::<String>("name").cloned() {
+        Some(name) => name,
+        None => match selection::resolve_selection_in(store, ctx.cli_name, &argv())? {
+            Some(selection) => selection.profile.name.clone(),
+            None => {
+                return Err(CliError::Validation(format!(
+                    "no profile selected, so there is nothing to show. Name one \
+                     (`{} {} show <name>`), or select one with `-p` or \
+                     `{} {} use <name>`.",
+                    ctx.cli_name, ctx.command_name, ctx.cli_name, ctx.command_name,
+                )));
+            }
+        },
+    };
     if store.entry(&name).is_none() {
         return Err(store::unknown_profile(store, &name));
     }

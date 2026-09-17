@@ -1321,3 +1321,38 @@ fn show_names_the_known_profiles_when_the_name_is_wrong() {
     let text = format!("{}{}", stdout(&output), stderr(&output));
     assert!(text.contains("test_1"), "should list what does exist: {text}");
 }
+
+#[test]
+fn show_honours_the_profile_flag_when_no_name_is_given() {
+    // Every other command honours `-p`, so `show` requiring a positional made
+    // `-p test_2 profiles show` fail with "required argument NAME" — an
+    // inconsistency inside the CLI rather than a meaningful distinction.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "test_1", "--use"]);
+    sandbox.run(&["profiles", "create", "test_2", "--default-format", "json"]);
+
+    // -p supplies the name
+    let via_flag = sandbox.run(&["-p", "test_2", "profiles", "show", "--format", "json"]);
+    assert_ok(&via_flag, "-p test_2 profiles show");
+    assert_eq!(json(&via_flag)["profile"], "test_2");
+
+    // no name, no -p: the active profile
+    let bare = sandbox.run(&["profiles", "show", "--format", "json"]);
+    assert_eq!(json(&bare)["profile"], "test_1");
+    assert_eq!(json(&bare)["active"], serde_json::Value::Bool(true));
+
+    // an explicit name beats -p, since it is the more specific statement
+    let both = sandbox.run(&["-p", "test_2", "profiles", "show", "test_1", "--format", "json"]);
+    assert_eq!(json(&both)["profile"], "test_1");
+}
+
+#[test]
+fn show_with_nothing_selected_explains_both_ways_in() {
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "test_1"]);
+    let output = sandbox.run(&["profiles", "show"]);
+    assert_ne!(output.status.code(), Some(0));
+    let text = format!("{}{}", stdout(&output), stderr(&output));
+    assert!(text.contains("show <name>"), "{text}");
+    assert!(text.contains("-p"), "{text}");
+}

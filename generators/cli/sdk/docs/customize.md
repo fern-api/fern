@@ -245,7 +245,9 @@ resolved config without selecting it — `current` answers "what is in effect" a
 takes no name, so it is the wrong verb for "tell me about that other one".
 
 ```bash
-acme profiles show staging --human
+acme profiles show staging --human      # by name
+acme -p staging profiles show           # or let -p name it
+acme profiles show                      # or the one currently in effect
 ```
 
 **What the listing shows:**
