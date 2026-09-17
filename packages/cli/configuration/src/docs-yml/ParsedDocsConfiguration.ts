@@ -118,7 +118,6 @@ export interface ParsedDocsConfiguration {
 
     agents: AgentsConfig | undefined;
 
-
     experimental: ExperimentalConfig | undefined;
 
     pageActions: ParsedPageActionsConfig | undefined;

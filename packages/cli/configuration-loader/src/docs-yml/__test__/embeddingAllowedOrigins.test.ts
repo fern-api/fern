@@ -40,7 +40,7 @@ describe("parseDocsConfiguration — settings.embedding.allowed-origins", () => 
             docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
                 instances: [],
                 navigation: [],
-                embedding: {}
+                settings: { embedding: {} }
             })
         ).toThrow();
     });
