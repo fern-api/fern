@@ -190,6 +190,7 @@ function convertService(
                 }
             }
         }
+        examples.push(...synthesizeErrorExamplesWithHeaders({ irEndpoint, ir, examples }));
         const endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition = {
             slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
@@ -1020,6 +1021,56 @@ function findErrorHeadersByStatusCode({
         }
     }
     return wildcardMatch?.headers;
+}
+
+// OpenAPI IR only carries success-status endpoint examples, so error declarations
+// with header examples need a carrier example for FDR.
+function synthesizeErrorExamplesWithHeaders({
+    irEndpoint,
+    ir,
+    examples
+}: {
+    irEndpoint: Ir.http.HttpEndpoint;
+    ir: Ir.ir.IntermediateRepresentation;
+    examples: FdrCjsSdk.api.v1.register.ExampleEndpointCall[];
+}): ExampleEndpointCallWithResponseHeaders[] {
+    if (examples.length === 0) {
+        return [];
+    }
+
+    const base = examples.find((example) => example.responseStatusCode < 400) ?? examples[0];
+    if (base == null) {
+        return [];
+    }
+
+    return (irEndpoint.errors ?? []).flatMap((responseError) => {
+        const error = ir.errors[responseError.error.errorId];
+        if (
+            error == null ||
+            error.isWildcardStatusCode === true ||
+            examples.some((example) => example.responseStatusCode === error.statusCode)
+        ) {
+            return [];
+        }
+
+        const responseHeaders = convertResponseHeaderExamples(error.headers);
+        if (responseHeaders == null) {
+            return [];
+        }
+
+        return [
+            {
+                ...base,
+                name: undefined,
+                description: undefined,
+                codeSamples: undefined,
+                responseStatusCode: error.statusCode,
+                responseBody: undefined,
+                responseBodyV3: getErrorExamplesFromDeclaration(error, ir)[0]?.responseBody,
+                responseHeaders
+            }
+        ];
+    });
 }
 
 function convertV2HttpEndpointExample({

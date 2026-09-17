@@ -93,6 +93,28 @@
             },
             "responseStatusCode": 200,
           },
+          {
+            "codeSamples": undefined,
+            "description": undefined,
+            "headers": {},
+            "name": undefined,
+            "path": "/api/resource",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": undefined,
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "detail": "Request was throttled. Expected available in 10 seconds.",
+              },
+            },
+            "responseHeaders": {
+              "Retry-After": 10,
+            },
+            "responseStatusCode": 429,
+          },
         ],
         "headers": [],
         "id": "getResource",
