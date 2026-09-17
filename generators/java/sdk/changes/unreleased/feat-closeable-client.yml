@@ -14,6 +14,11 @@
     and declares no checked exception. It only releases the dispatcher executor and connection pool;
     WebSocket reconnect scheduler threads are not affected.
 
+    Known limitation: SDKs using inferred auth or endpoint-scoped OAuth build a separate `ClientOptions`
+    (and therefore a separate `OkHttpClient`) for the token-fetching `AuthClient`; that transport is not
+    reachable from the root client's `close()` and is not released. The OAuth client-credentials build
+    path is covered, since its `AuthClient` shares the root client's transport.
+
     ```java
     try (AcmeClient client = AcmeClient.builder().apiKey("...").build()) {
         client.users().list();
