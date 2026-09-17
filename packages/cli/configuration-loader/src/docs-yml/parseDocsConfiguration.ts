@@ -95,7 +95,6 @@ export async function parseDocsConfiguration({
 
         agents,
 
-        embedding,
 
         pageActions,
 
@@ -323,7 +322,6 @@ export async function parseDocsConfiguration({
 
         agents,
 
-        embedding,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
@@ -582,7 +580,8 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
-        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined
+        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding
     };
 }
 

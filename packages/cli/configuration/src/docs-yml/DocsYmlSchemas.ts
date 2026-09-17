@@ -341,7 +341,8 @@ export const DocsSettingsConfig = z.object({
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
-    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    embedding: EmbeddingConfig.optional()
 });
 
 // ===== Colors =====
@@ -1064,7 +1065,6 @@ export const DocsConfiguration = z.object({
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
     agents: AgentsConfig.optional(),
-    embedding: EmbeddingConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),

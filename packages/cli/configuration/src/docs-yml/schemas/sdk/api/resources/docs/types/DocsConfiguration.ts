@@ -98,11 +98,6 @@ export interface DocsConfiguration {
     aiExamples?: FernDocsConfig.AiExamplesConfig;
     /** Configuration for agent-serving endpoints. */
     agents?: FernDocsConfig.AgentsConfig;
-    /**
-     * Controls which third-party sites may embed your documentation in an iframe.
-     * By default only your docs site itself (and the Fern dashboard) may frame it.
-     */
-    embedding?: FernDocsConfig.EmbeddingConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectsConfiguration;
     check?: FernDocsConfig.CheckConfig;

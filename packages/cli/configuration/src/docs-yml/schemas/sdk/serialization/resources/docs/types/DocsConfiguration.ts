@@ -16,7 +16,6 @@ import { CssConfig } from "./CssConfig.js";
 import { DocsInstance } from "./DocsInstance.js";
 import { DocsSettingsConfig } from "./DocsSettingsConfig.js";
 import { DocsTypographyConfig } from "./DocsTypographyConfig.js";
-import { EmbeddingConfig } from "./EmbeddingConfig.js";
 import { ExperimentalConfig } from "./ExperimentalConfig.js";
 import { FooterLinksConfig } from "./FooterLinksConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
@@ -68,7 +67,6 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
     agents: AgentsConfig.optional(),
-    embedding: EmbeddingConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),
@@ -113,7 +111,6 @@ export declare namespace DocsConfiguration {
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;
         agents?: AgentsConfig.Raw | null;
-        embedding?: EmbeddingConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectsConfiguration.Raw | null;
         check?: CheckConfig.Raw | null;

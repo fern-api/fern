@@ -18,19 +18,19 @@ async function parseRawDocsYml(rawDocsYml: unknown): Promise<docsYml.ParsedDocsC
     });
 }
 
-describe("parseDocsConfiguration — embedding.allowed-origins", () => {
+describe("parseDocsConfiguration — settings.embedding.allowed-origins", () => {
     it("is undefined when the embedding key is omitted", async () => {
         const parsed = await parseRawDocsYml({ instances: [], navigation: [] });
-        expect(parsed.embedding).toBeUndefined();
+        expect(parsed.settings?.embedding).toBeUndefined();
     });
 
     it("passes allowed-origins through as allowedOrigins", async () => {
         const parsed = await parseRawDocsYml({
             instances: [],
             navigation: [],
-            embedding: { "allowed-origins": ["https://app.fernwood.example", "https://*.moss.example"] }
+            settings: { embedding: { "allowed-origins": ["https://app.fernwood.example", "https://*.moss.example"] } }
         });
-        expect(parsed.embedding).toEqual({
+        expect(parsed.settings?.embedding).toEqual({
             allowedOrigins: ["https://app.fernwood.example", "https://*.moss.example"]
         });
     });

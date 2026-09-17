@@ -99,4 +99,9 @@ export interface DocsSettingsConfig {
      * @default: flat
      */
     websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
+    /**
+     * Controls which third-party sites may embed your documentation in an iframe.
+     * By default only your docs site itself (and the Fern dashboard) may frame it.
+     */
+    embedding?: FernDocsConfig.EmbeddingConfig;
 }

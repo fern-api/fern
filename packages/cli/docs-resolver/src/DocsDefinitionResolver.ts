@@ -1111,8 +1111,8 @@ export class DocsDefinitionResolver {
                     : undefined,
             editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
             embedding:
-                this.parsedDocsConfig.embedding != null
-                    ? { allowedOrigins: this.parsedDocsConfig.embedding.allowedOrigins }
+                this.parsedDocsConfig.settings?.embedding != null
+                    ? { allowedOrigins: this.parsedDocsConfig.settings.embedding.allowedOrigins }
                     : undefined,
             pageActions: this.convertPageActions(),
             theme:
