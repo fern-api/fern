@@ -8,7 +8,10 @@ export const EmbeddingConfig: core.serialization.ObjectSchema<
     serializers.EmbeddingConfig.Raw,
     FernDocsConfig.EmbeddingConfig
 > = core.serialization.object({
-    allowedOrigins: core.serialization.property("allowed-origins", core.serialization.list(core.serialization.string())),
+    allowedOrigins: core.serialization.property(
+        "allowed-origins",
+        core.serialization.list(core.serialization.string()),
+    ),
 });
 
 export declare namespace EmbeddingConfig {

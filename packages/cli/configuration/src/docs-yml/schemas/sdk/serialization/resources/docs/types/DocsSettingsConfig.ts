@@ -3,8 +3,8 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { EmbeddingConfig } from "./EmbeddingConfig.js";
+import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { Language } from "./Language.js";
 import { SearchSettingsConfig } from "./SearchSettingsConfig.js";
 import { TitleSource } from "./TitleSource.js";
