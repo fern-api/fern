@@ -42,6 +42,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
     websocketOneofDisplay: core.serialization.property("websocket-oneof-display", WebSocketOneofDisplay.optional()),
     embedding: EmbeddingConfig.optional(),
+    showHeadersInExamples: core.serialization.property(
+        "show-headers-in-examples",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -62,5 +66,6 @@ export declare namespace DocsSettingsConfig {
         "substitute-env-vars"?: boolean | null;
         "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
         embedding?: EmbeddingConfig.Raw | null;
+        "show-headers-in-examples"?: boolean | null;
     }
 }

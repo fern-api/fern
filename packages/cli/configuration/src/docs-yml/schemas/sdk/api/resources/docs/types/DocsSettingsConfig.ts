@@ -104,4 +104,11 @@ export interface DocsSettingsConfig {
      * By default only your docs site itself (and the Fern dashboard) may frame it.
      */
     embedding?: FernDocsConfig.EmbeddingConfig;
+    /**
+     * If set to true, response examples in the API Reference include a raw HTTP block
+     * showing the response status line and response headers alongside the body.
+     *
+     * @default: false
+     */
+    showHeadersInExamples?: boolean;
 }

@@ -579,7 +579,8 @@ function convertSettingsConfig(
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
-        embedding: settings.embedding
+        embedding: settings.embedding,
+        showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
 

@@ -79,6 +79,7 @@
                 "rate_type": "fixed",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],
