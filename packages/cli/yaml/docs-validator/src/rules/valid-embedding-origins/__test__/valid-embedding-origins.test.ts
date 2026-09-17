@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { docsYml } from "@fern-api/configuration";
+import { describe, expect, it } from "vitest";
 
 describe("validateEmbeddingOrigin", () => {
     it.each([
