@@ -51,6 +51,22 @@ function extractVariablesFromContent(content: string): Set<string> {
     return vars;
 }
 
+const LIST_ITEM_PREFIX_REGEX = /^[ \t]*(?:[-*+]|\d{1,9}[.)])[ \t]+$/;
+
+/**
+ * When the tag is the first thing inside a list item (e.g. `10. <Markdown .../>`),
+ * continuation lines must be indented to the list item's content column so they
+ * stay inside the item. Otherwise fall back to the tag's leading whitespace.
+ */
+function getContinuationIndent(source: string, tagIndex: number, leadingWhitespace: string): string {
+    const lineStart = source.lastIndexOf("\n", tagIndex - 1) + 1;
+    const linePrefix = source.slice(lineStart, tagIndex);
+    if (LIST_ITEM_PREFIX_REGEX.test(linePrefix)) {
+        return linePrefix.replace(/[^\t]/g, " ");
+    }
+    return leadingWhitespace;
+}
+
 function getLineNumber(source: string, index: number): number {
     return source.slice(0, index).split("\n").length;
 }
@@ -98,7 +114,7 @@ export async function replaceReferencedMarkdown({
     let match: RegExpExecArray | null;
     while ((match = regex.exec(markdown)) != null) {
         const matchString = match[0];
-        const indent = match[1];
+        const indent = match[1] ?? "";
         const attributesString = match[2];
 
         if (matchString == null || attributesString == null) {
@@ -178,9 +194,10 @@ export async function replaceReferencedMarkdown({
             });
             replaceString = result.markdown;
 
+            const continuationIndent = getContinuationIndent(markdown, match.index + indent.length, indent);
             replaceString = replaceString
                 .split("\n")
-                .map((line) => indent + line)
+                .map((line, i) => (i === 0 ? indent : continuationIndent) + line)
                 .join("\n");
             newMarkdown = newMarkdown.replace(matchString, replaceString);
         } catch (e) {

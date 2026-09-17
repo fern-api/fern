@@ -750,4 +750,69 @@ describe("replaceReferencedMarkdown", () => {
             ])
         );
     });
+
+    it("should indent multi-line snippet continuation lines to the list item content column", async () => {
+        const markdown = [
+            "9. Water the fern.",
+            '10. <Markdown src="/snippets/repot.mdx" />',
+            "11. Trim dead fronds."
+        ].join("\n");
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () =>
+                [
+                    "Choose a pot. You can pick:",
+                    "",
+                    "    * A **clay** pot.",
+                    "    * A plastic pot.",
+                    "",
+                    "Add soil."
+                ].join("\n")
+        });
+
+        expect(result).toBe(
+            [
+                "9. Water the fern.",
+                "10. Choose a pot. You can pick:",
+                "    ",
+                "        * A **clay** pot.",
+                "        * A plastic pot.",
+                "    ",
+                "    Add soil.",
+                "11. Trim dead fronds."
+            ].join("\n")
+        );
+    });
+
+    it("should indent continuation lines for bullet list items", async () => {
+        const markdown = '- <Markdown src="/snippets/care.mdx" />\n- Next tip.';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First line.\n\nSecond paragraph."
+        });
+
+        expect(result).toBe("- First line.\n  \n  Second paragraph.\n- Next tip.");
+    });
+
+    it("should keep leading-whitespace indentation when the tag is not inside a list item", async () => {
+        const markdown = 'Intro text <Markdown src="/snippets/care.mdx" />';
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async () => "First line.\nSecond line."
+        });
+
+        expect(result).toBe("Intro text First line.\n Second line.");
+    });
 });
