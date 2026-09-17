@@ -165,8 +165,15 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                             writer.write(", wrapped=True")
                         writer.write_line("),")
                 writer.write_line("],")
+                writer.write_line(f"additional_children=self.{_ADDITIONAL_CHILDREN},")
                 writer.write_line("xml_declaration=xml_declaration,")
             writer.write_line(")")
+
+        pydantic_model.add_private_instance_field_unsafe(
+            name=_ADDITIONAL_CHILDREN,
+            type_hint=AST.TypeHint.list(AST.TypeHint(type=self._xml_element_class())),
+            default_factory=AST.Expression("list"),
+        )
 
         pydantic_model.add_method_unsafe(
             AST.FunctionDeclaration(
@@ -195,7 +202,156 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             )
         )
         self._add_xml_init(pydantic_model, properties=properties)
+        self._add_from_xml(pydantic_model, xml=xml, properties=properties)
+        self._add_add_child_method(pydantic_model)
         self._add_xml_builder_methods(pydantic_model, properties=properties)
+
+    def _xml_element_class(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=self._context.core_utilities.get_xml_utility("XmlElement").import_,
+        )
+
+    def _add_from_xml(
+        self, pydantic_model: FernAwarePydanticModel, *, xml: ir_types.XmlEncoding, properties: List[ObjectProperty]
+    ) -> None:
+        """Emits `from_xml(xml)`: raw attribute/text strings and parsed children go through the constructor,
+        so pydantic performs scalar conversion; unknown attributes become extras and unknown children are kept."""
+        core_utilities = self._context.core_utilities
+        attribute_names = [_xml_name(p) for p in properties if _is_xml_attribute(p)]
+        known_child_names: List[str] = []
+        child_type_maps: Dict[str, Dict[str, AST.ClassReference]] = {}
+        for property in properties:
+            if not _is_xml_element(property):
+                continue
+            item_type = _unwrap_list_item_type(property.value_type)
+            child_types = self._child_type_map(
+                pydantic_model, item_type if item_type is not None else property.value_type
+            )
+            child_type_maps[_field_name(property)] = child_types
+            wrapped = property.xml is not None and property.xml.wrapped
+            if wrapped or not child_types:
+                # Scalar children (and wrapper elements) are named after the property itself.
+                known_child_names.append(_xml_name(property))
+            known_child_names.extend(child_types.keys())
+
+        def write_property(writer: AST.NodeWriter, property: ObjectProperty) -> None:
+            separator = property.xml.list_separator if property.xml is not None else None
+            separator_arg = f", separator={_quote(separator)}" if separator is not None else ""
+            writer.write(f"{_field_name(property)}=")
+            if _is_xml_attribute(property):
+                writer.write_reference(core_utilities.get_xml_utility("xml_attribute"))
+                writer.write_line(f"(node, {_quote(_xml_name(property))}{separator_arg}),")
+                return
+            if _is_xml_text(property):
+                writer.write_reference(core_utilities.get_xml_utility("xml_text"))
+                writer.write_line(f"(node{separator_arg}),")
+                return
+            item_type = _unwrap_list_item_type(property.value_type)
+            wrapped = property.xml is not None and property.xml.wrapped
+            child_types = child_type_maps[_field_name(property)]
+            writer.write_reference(core_utilities.get_xml_utility("xml_child" if item_type is None else "xml_children"))
+            writer.write("(node, {")
+            if child_types:
+                for index, (tag, class_reference) in enumerate(child_types.items()):
+                    writer.write(f"{', ' if index > 0 else ''}{_quote(tag)}: ")
+                    writer.write_reference(class_reference)
+            else:
+                writer.write(f"{_quote(_xml_name(property))}: str")
+            writer.write("}")
+            if item_type is not None:
+                if wrapped:
+                    writer.write(f", wrapper={_quote(_xml_name(property))}")
+                if _is_optional(property.value_type):
+                    writer.write(", optional=True")
+            writer.write_line("),")
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            writer.write("node = ")
+            writer.write_reference(core_utilities.get_xml_utility("parse_xml"))
+            writer.write_line(f"(xml, {_quote(xml.name)})")
+            writer.write("model = ")
+            writer.write_reference(core_utilities.get_xml_utility("build_xml_model"))
+            writer.write_line("(")
+            with writer.indent():
+                writer.write_line("cls,")
+                writer.write_line("dict(")
+                with writer.indent():
+                    for property in properties:
+                        write_property(writer, property)
+                writer.write_line("),")
+                writer.write_line(f"node, {_set_literal(attribute_names)},")
+            writer.write_line(")")
+            writer.write(f"model.{_ADDITIONAL_CHILDREN}.extend(")
+            writer.write_reference(core_utilities.get_xml_utility("xml_unknown_children"))
+            writer.write_line(f"(node, {_set_literal(known_child_names)}))")
+            writer.write_line("return model")
+
+        pydantic_model.add_method_unsafe(
+            AST.FunctionDeclaration(
+                name="from_xml",
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(
+                            name="xml",
+                            type_hint=AST.TypeHint.union(
+                                AST.TypeHint.str_(),
+                                AST.TypeHint(
+                                    type=AST.ClassReference(
+                                        qualified_name_excluding_import=(),
+                                        import_=core_utilities.get_xml_utility("XmlNode").import_,
+                                    )
+                                ),
+                            ),
+                        )
+                    ],
+                    return_type=AST.TypeHint(type=pydantic_model.to_reference()),
+                ),
+                body=AST.CodeWriter(write_body),
+                docstring=AST.CodeWriter(
+                    f"Parses a `<{xml.name}>` XML element from a document string or a parsed node.\n\n"
+                    "Raises `ValueError` for malformed XML, an unexpected root element or invalid values. "
+                    "Unknown attributes are kept as extra attributes and unknown child elements are preserved."
+                ),
+            ),
+            decorator=AST.ClassMethodDecorator.CLASS_METHOD,
+        )
+
+    def _child_type_map(
+        self, pydantic_model: FernAwarePydanticModel, type_reference: ir_types.TypeReference
+    ) -> Dict[str, AST.ClassReference]:
+        """Maps each xml-encoded object type reachable from the reference to its class, keyed by XML tag."""
+        result: Dict[str, AST.ClassReference] = {}
+        for type_id in self._get_xml_object_type_ids(type_reference):
+            declaration = self._context.get_declaration_for_type_id(type_id)
+            if declaration.encoding is None or declaration.encoding.xml is None:
+                continue
+            # See _add_child_builder_method: cyclic imports have resolved by the time the method body runs.
+            result[declaration.encoding.xml.name] = dataclasses.replace(
+                pydantic_model.get_class_reference_for_type_id(type_id), has_been_dynamically_imported=True
+            )
+        return result
+
+    def _add_add_child_method(self, pydantic_model: FernAwarePydanticModel) -> None:
+        def write_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"self.{_ADDITIONAL_CHILDREN}.append(child)")
+            writer.write_line("return self")
+
+        pydantic_model.add_method_unsafe(
+            AST.FunctionDeclaration(
+                name="add_child",
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(name="child", type_hint=AST.TypeHint(type=self._xml_element_class()))
+                    ],
+                    return_type=AST.TypeHint(type=pydantic_model.to_reference()),
+                ),
+                body=AST.CodeWriter(write_body),
+                docstring=AST.CodeWriter(
+                    "Appends an arbitrary child element (one the schema does not define) and returns this element."
+                ),
+            )
+        )
 
     def _is_xml_root(self) -> bool:
         if self._name is None:
@@ -442,9 +598,15 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
 
 _EXTRA_ATTRIBUTES = "extra_attributes"
+_ADDITIONAL_CHILDREN = "_additional_children"
 
 # Builder method names that would shadow generated or pydantic model API.
-_RESERVED_METHOD_NAMES = {"to_xml", "append"} | BASE_MODEL_PROPERTIES
+_RESERVED_METHOD_NAMES = {"to_xml", "from_xml", "append", "add_child"} | BASE_MODEL_PROPERTIES
+
+
+def _set_literal(names: Sequence[str]) -> str:
+    unique = list(dict.fromkeys(names))
+    return "{" + ", ".join(_quote(name) for name in unique) + "}" if unique else "()"
 
 
 def _is_xml_attribute(property: ObjectProperty) -> bool:

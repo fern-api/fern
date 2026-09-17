@@ -6,7 +6,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ..core.xml_utilities import XmlAttribute, XmlChild, append_xml_child, extra_xml_attributes, serialize_xml_element
+from ..core.xml_utilities import (
+    XmlAttribute,
+    XmlChild,
+    XmlElement,
+    XmlNode,
+    append_xml_child,
+    build_xml_model,
+    extra_xml_attributes,
+    parse_xml,
+    serialize_xml_element,
+    xml_attribute,
+    xml_children,
+    xml_text,
+    xml_unknown_children,
+)
 from .break_ import Break
 from .break_strength import BreakStrength
 
@@ -16,6 +30,7 @@ class Say(UniversalBaseModel):
     voice: typing.Optional[str] = None
     loop: typing.Optional[int] = None
     children: typing.Optional[typing.List[Break]] = None
+    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         """
@@ -32,6 +47,7 @@ class Say(UniversalBaseModel):
             children=[
                 XmlChild(name="children", value=self.children),
             ],
+            additional_children=self._additional_children,
             xml_declaration=xml_declaration,
         )
 
@@ -48,6 +64,35 @@ class Say(UniversalBaseModel):
         **extra_attributes: str,
     ) -> None:
         super().__init__(**dict(message=message, voice=voice, loop=loop, children=children), **extra_attributes)
+
+    @classmethod
+    def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Say:
+        """
+        Parses a `<Say>` XML element from a document string or a parsed node.
+
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        """
+        node = parse_xml(xml, "Say")
+        model = build_xml_model(
+            cls,
+            dict(
+                message=xml_text(node),
+                voice=xml_attribute(node, "voice"),
+                loop=xml_attribute(node, "loop"),
+                children=xml_children(node, {"break": Break}, optional=True),
+            ),
+            node,
+            {"voice", "loop"},
+        )
+        model._additional_children.extend(xml_unknown_children(node, {"break"}))
+        return model
+
+    def add_child(self, child: XmlElement) -> Say:
+        """
+        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        """
+        self._additional_children.append(child)
+        return self
 
     def append(self, child: Break) -> Say:
         """

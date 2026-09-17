@@ -6,7 +6,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ..core.xml_utilities import XmlChild, append_xml_child, extra_xml_attributes, serialize_xml_element
+from ..core.xml_utilities import (
+    XmlChild,
+    XmlElement,
+    XmlNode,
+    append_xml_child,
+    build_xml_model,
+    extra_xml_attributes,
+    parse_xml,
+    serialize_xml_element,
+    xml_children,
+    xml_unknown_children,
+)
 from .dial import Dial
 from .hangup import Hangup
 from .pause import Pause
@@ -20,6 +31,7 @@ class Response(UniversalBaseModel):
     """
 
     children: typing.Optional[typing.List[ResponseChildrenItem]] = None
+    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         """
@@ -33,11 +45,40 @@ class Response(UniversalBaseModel):
             children=[
                 XmlChild(name="children", value=self.children),
             ],
+            additional_children=self._additional_children,
             xml_declaration=xml_declaration,
         )
 
     def __str__(self) -> str:
         return self.to_xml(xml_declaration=True)
+
+    @classmethod
+    def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Response:
+        """
+        Parses a `<Response>` XML element from a document string or a parsed node.
+
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        """
+        node = parse_xml(xml, "Response")
+        model = build_xml_model(
+            cls,
+            dict(
+                children=xml_children(
+                    node, {"Say": Say, "Dial": Dial, "Pause": Pause, "Hangup": Hangup}, optional=True
+                ),
+            ),
+            node,
+            (),
+        )
+        model._additional_children.extend(xml_unknown_children(node, {"Say", "Dial", "Pause", "Hangup"}))
+        return model
+
+    def add_child(self, child: XmlElement) -> Response:
+        """
+        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        """
+        self._additional_children.append(child)
+        return self
 
     def append(self, child: ResponseChildrenItem) -> Response:
         """

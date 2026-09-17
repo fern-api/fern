@@ -6,7 +6,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ..core.xml_utilities import XmlAttribute, XmlChild, append_xml_child, extra_xml_attributes, serialize_xml_element
+from ..core.xml_utilities import (
+    XmlAttribute,
+    XmlChild,
+    XmlElement,
+    XmlNode,
+    append_xml_child,
+    build_xml_model,
+    extra_xml_attributes,
+    parse_xml,
+    serialize_xml_element,
+    xml_attribute,
+    xml_children,
+    xml_text,
+    xml_unknown_children,
+)
 from .number import Number
 
 
@@ -14,6 +28,7 @@ class Dial(UniversalBaseModel):
     number: typing.Optional[str] = None
     status_callback_event: typing.Optional[typing.List[str]] = None
     numbers: typing.Optional[typing.List[Number]] = None
+    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         """
@@ -31,6 +46,7 @@ class Dial(UniversalBaseModel):
             children=[
                 XmlChild(name="Numbers", value=self.numbers, wrapped=True),
             ],
+            additional_children=self._additional_children,
             xml_declaration=xml_declaration,
         )
 
@@ -48,6 +64,34 @@ class Dial(UniversalBaseModel):
         super().__init__(
             **dict(number=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
         )
+
+    @classmethod
+    def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Dial:
+        """
+        Parses a `<Dial>` XML element from a document string or a parsed node.
+
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        """
+        node = parse_xml(xml, "Dial")
+        model = build_xml_model(
+            cls,
+            dict(
+                number=xml_text(node),
+                status_callback_event=xml_attribute(node, "statusCallbackEvent", separator=" "),
+                numbers=xml_children(node, {"Number": Number}, wrapper="Numbers", optional=True),
+            ),
+            node,
+            {"statusCallbackEvent"},
+        )
+        model._additional_children.extend(xml_unknown_children(node, {"Numbers", "Number"}))
+        return model
+
+    def add_child(self, child: XmlElement) -> Dial:
+        """
+        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        """
+        self._additional_children.append(child)
+        return self
 
     def append(self, child: Number) -> Dial:
         """
