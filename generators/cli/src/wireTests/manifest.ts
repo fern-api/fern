@@ -503,7 +503,9 @@ function buildCase(args: {
         ...(specFilledBodyProperties.length > 0 ? { specFilledBodyProperties } : {}),
         response: {
             status: mapping.response.status,
-            body: mapping.response.body
+            // The manifest only models textual bodies. Binary (`base64Body`) mappings keep the
+            // JSON-string `""` stub the CLI harness has always served for file downloads.
+            body: mapping.response.body ?? JSON.stringify("")
         }
     };
 }
