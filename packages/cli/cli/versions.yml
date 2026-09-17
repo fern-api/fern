@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.126.0
+  changelogEntry:
+    - summary: |
+        Every entry of a schema-level `examples` array on an OpenAPI request or response body schema now
+        becomes a separate, selectable example in the API reference (labelled `Example 1`, `Example 2`, ...)
+        whenever the media type object does not define its own `example`/`examples`. Previously only the
+        first schema-level example was used.
+      type: feat
+  createdAt: "2026-09-17"
+  irVersion: 67
 - version: 5.125.3
   changelogEntry:
     - summary: |
