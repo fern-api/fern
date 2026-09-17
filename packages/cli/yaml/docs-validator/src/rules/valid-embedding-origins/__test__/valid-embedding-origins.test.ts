@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { validateEmbeddingOrigin } from "../valid-embedding-origins.js";
+import { docsYml } from "@fern-api/configuration";
 
 describe("validateEmbeddingOrigin", () => {
     it.each([
@@ -9,7 +9,7 @@ describe("validateEmbeddingOrigin", () => {
         "https://*.moss.example",
         "https://docs.fern-wood.example:8443"
     ])("accepts %s", (origin) => {
-        expect(validateEmbeddingOrigin(origin)).toBeUndefined();
+        expect(docsYml.validateEmbeddingOrigin(origin)).toBeUndefined();
     });
 
     it.each([
@@ -26,6 +26,6 @@ describe("validateEmbeddingOrigin", () => {
         " https://app.example.com",
         ""
     ])("rejects %j", (origin) => {
-        expect(validateEmbeddingOrigin(origin)).toBeDefined();
+        expect(docsYml.validateEmbeddingOrigin(origin)).toBeDefined();
     });
 });

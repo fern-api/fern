@@ -35,6 +35,20 @@ describe("parseDocsConfiguration — settings.embedding.allowed-origins", () => 
         });
     });
 
+    it("fails parsing when an allowed origin could inject into the CSP directive", async () => {
+        await expect(
+            parseRawDocsYml({
+                instances: [],
+                navigation: [],
+                settings: {
+                    embedding: {
+                        "allowed-origins": ["https://app.fernwood.example; script-src 'unsafe-inline'"]
+                    }
+                }
+            })
+        ).rejects.toThrow();
+    });
+
     it("rejects an embedding block without allowed-origins", () => {
         expect(() =>
             docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
