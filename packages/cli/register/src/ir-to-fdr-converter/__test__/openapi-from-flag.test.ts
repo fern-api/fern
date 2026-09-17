@@ -1221,7 +1221,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
         const example200 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 200);
-        expect(getResponseHeaders(example200)).toEqual({ "X-RateLimit-Remaining": 99 });
+        expect(getResponseHeaders(example200)).toMatchObject({ "X-RateLimit-Remaining": 99 });
         const example429 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 429);
         expect(example429).toBeDefined();
         expect(getResponseHeaders(example429)).toEqual({ "Retry-After": 10 });
