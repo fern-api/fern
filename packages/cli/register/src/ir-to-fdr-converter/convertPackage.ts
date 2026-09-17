@@ -1034,43 +1034,37 @@ function synthesizeErrorExamplesWithHeaders({
     ir: Ir.ir.IntermediateRepresentation;
     examples: FdrCjsSdk.api.v1.register.ExampleEndpointCall[];
 }): ExampleEndpointCallWithResponseHeaders[] {
-    if (examples.length === 0) {
-        return [];
-    }
-
     const base = examples.find((example) => example.responseStatusCode < 400) ?? examples[0];
     if (base == null) {
         return [];
     }
 
-    return (irEndpoint.errors ?? []).flatMap((responseError) => {
+    const seenStatusCodes = new Set(examples.map((example) => example.responseStatusCode));
+    const synthesizedExamples: ExampleEndpointCallWithResponseHeaders[] = [];
+    for (const responseError of irEndpoint.errors ?? []) {
         const error = ir.errors[responseError.error.errorId];
-        if (
-            error == null ||
-            error.isWildcardStatusCode === true ||
-            examples.some((example) => example.responseStatusCode === error.statusCode)
-        ) {
-            return [];
+        if (error == null || error.isWildcardStatusCode === true || seenStatusCodes.has(error.statusCode)) {
+            continue;
         }
 
         const responseHeaders = convertResponseHeaderExamples(error.headers);
         if (responseHeaders == null) {
-            return [];
+            continue;
         }
 
-        return [
-            {
-                ...base,
-                name: undefined,
-                description: undefined,
-                codeSamples: undefined,
-                responseStatusCode: error.statusCode,
-                responseBody: undefined,
-                responseBodyV3: getErrorExamplesFromDeclaration(error, ir)[0]?.responseBody,
-                responseHeaders
-            }
-        ];
-    });
+        synthesizedExamples.push({
+            ...base,
+            name: undefined,
+            description: undefined,
+            codeSamples: undefined,
+            responseStatusCode: error.statusCode,
+            responseBody: undefined,
+            responseBodyV3: getErrorExamplesFromDeclaration(error, ir)[0]?.responseBody,
+            responseHeaders
+        });
+        seenStatusCodes.add(error.statusCode);
+    }
+    return synthesizedExamples;
 }
 
 function convertV2HttpEndpointExample({
