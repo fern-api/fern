@@ -1,4 +1,5 @@
 import { ContainerRunner } from "@fern-api/core-utils";
+import { ensureDockerHubOatLogin, pullImage } from "@fern-api/docker-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 
@@ -31,27 +32,30 @@ export async function imageSupportsMultiSpec({
     runner: ContainerRunner;
     logger: Logger | undefined;
 }): Promise<boolean> {
-    const { stdout, stderr, exitCode } = await loggingExeca(
-        logger,
-        runner,
-        ["inspect", "--format", "{{json .Config.Labels}}", imageName],
-        {
+    const inspect = () =>
+        loggingExeca(logger, runner, ["inspect", "--type", "image", "--format", "{{json .Config.Labels}}", imageName], {
             reject: false,
             doNotPipeOutput: true
-        }
-    );
+        });
 
-    if (exitCode !== 0) {
-        logger?.debug(
-            `Could not inspect ${imageName} for the ${MULTI_SPEC_LABEL} label (exit code ${exitCode}); ` +
-                `treating it as single-spec.\n${stderr || stdout}`
-        );
-        return false;
-    }
-
-    let labels: unknown;
     try {
-        labels = JSON.parse(stdout.trim());
+        let result = await inspect();
+        if (result.exitCode !== 0) {
+            // Execution normally pulls missing images, but this gate runs before execution.
+            await ensureDockerHubOatLogin({ imageName, runner, logger });
+            await pullImage(imageName, runner);
+            result = await inspect();
+        }
+        if (result.exitCode !== 0) {
+            return false;
+        }
+        const labels: unknown = JSON.parse(result.stdout.trim());
+        return (
+            labels != null &&
+            typeof labels === "object" &&
+            MULTI_SPEC_LABEL in labels &&
+            labels[MULTI_SPEC_LABEL] === "true"
+        );
     } catch (error) {
         logger?.debug(
             `Could not read labels from ${imageName}; treating it as single-spec: ` +
@@ -59,11 +63,4 @@ export async function imageSupportsMultiSpec({
         );
         return false;
     }
-
-    // `null` when the image carries no labels at all, which is what the format string prints for an
-    // absent map.
-    if (labels == null || typeof labels !== "object" || !(MULTI_SPEC_LABEL in labels)) {
-        return false;
-    }
-    return labels[MULTI_SPEC_LABEL] === "true";
 }
