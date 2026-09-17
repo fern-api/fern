@@ -20,6 +20,7 @@ export type {
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 export {
+    formatSdkConfigMappingDiagnostic,
     type MappingResult,
     mapFernDefinitionToSdkConfigApi,
     mapFernGroupToSdkConfig,

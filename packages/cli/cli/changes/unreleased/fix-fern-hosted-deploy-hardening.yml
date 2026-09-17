@@ -1,0 +1,5 @@
+- summary: |
+    Harden fern-hosted generation and deployment by cleaning up temporary output directories,
+    resolving hosted slugs from environment variables, validating MCP bundles, and reporting
+    SDK Config mapping diagnostics.
+  type: fix

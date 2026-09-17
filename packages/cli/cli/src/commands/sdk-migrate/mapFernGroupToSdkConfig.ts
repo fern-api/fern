@@ -2,6 +2,7 @@
 // payloads for sdk-gen-api without depending on the CLI package; re-exported here for
 // `fern sdk migrate` and its tests.
 export {
+    formatSdkConfigMappingDiagnostic,
     type MappingResult,
     mapFernDefinitionToSdkConfigApi,
     mapFernGroupToSdkConfig,

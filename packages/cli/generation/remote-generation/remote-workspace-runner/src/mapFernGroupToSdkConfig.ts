@@ -27,6 +27,11 @@ export interface MappingResult {
     sdkConfig: ReturnType<typeof validateSdkConfigV1>;
 }
 
+export function formatSdkConfigMappingDiagnostic(diagnostic: FernConfigMappingDiagnostic): string {
+    const destination = diagnostic.sdkConfigPath == null ? "" : `; SDK Config: ${diagnostic.sdkConfigPath.join(".")}`;
+    return `[${diagnostic.severity}] [${diagnostic.code}] ${diagnostic.path.join(".")}: ${diagnostic.reason}${destination}; ${diagnostic.suggestedAction}`;
+}
+
 export function mapFernGroupToSdkConfig({
     fernWorkspace,
     group,

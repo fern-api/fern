@@ -14,7 +14,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import {
@@ -45,6 +45,7 @@ import {
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { formatSdkConfigMappingDiagnostic } from "./mapFernGroupToSdkConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
 import { prepareFernSdkGenApiSdkConfigPayload } from "./prepareFernSdkGenApiSdkConfigPayload.js";
@@ -357,8 +358,27 @@ export async function runRemoteGenerationForGenerator({
                     audiences,
                     sourceArchive: sdkGenApiSourceArchive
                 });
+                const mappingErrors = [];
                 for (const diagnostic of synthesized.diagnostics) {
-                    interactiveTaskContext.logger.debug(`SDK Config mapping: ${JSON.stringify(diagnostic)}`);
+                    switch (diagnostic.severity) {
+                        case "error":
+                            mappingErrors.push(diagnostic);
+                            break;
+                        case "warning":
+                            interactiveTaskContext.logger.warn(
+                                `SDK Config mapping: ${formatSdkConfigMappingDiagnostic(diagnostic)}`
+                            );
+                            break;
+                        default:
+                            assertNever(diagnostic.severity);
+                    }
+                }
+                if (mappingErrors.length > 0) {
+                    return interactiveTaskContext.failAndThrow(
+                        "SDK Config mapping failed:\n" + mappingErrors.map(formatSdkConfigMappingDiagnostic).join("\n"),
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
                 }
                 sdkConfigBuildParameters = {
                     apiName: getOriginalName(ir.apiName),

@@ -140,10 +140,11 @@ export async function deployHostedMcpServer({
     return { slug: result.slug, url: result.url, deploymentStatus };
 }
 
-// metadata.json/wrangler.jsonc describe the bundle; catalog.json is the raw
-// catalog artifact (the worker imports catalog.js, never the .json); index.mjs
-// is the generator's local Node runner (stdio/HTTP) — the Worker entrypoint
-// is engine.mjs per wrangler.jsonc.
+// metadata.json/wrangler.jsonc are required bundle descriptors. catalog.json is
+// the raw catalog artifact (the worker imports catalog.js, never the .json);
+// index.mjs is the generator's local Node runner (stdio/HTTP) — the Worker
+// entrypoint is engine.mjs per wrangler.jsonc.
+const REQUIRED_BUNDLE_FILES = ["metadata.json", "wrangler.jsonc"] as const;
 const NON_MODULE_FILES = new Set(["metadata.json", "wrangler.jsonc", "catalog.json", "index.mjs"]);
 
 /** Dotfiles (.DS_Store) and docs (README.md) don't count against the module budget. */
@@ -176,7 +177,7 @@ async function readBundle(bundleDir: string, context: TaskContext): Promise<Bund
     }
 
     const fileNames = entries.filter((entry) => entry.isFile()).map((entry) => entry.name);
-    for (const required of NON_MODULE_FILES) {
+    for (const required of REQUIRED_BUNDLE_FILES) {
         if (!fileNames.includes(required)) {
             context.failAndThrow(
                 `The server bundle is missing ${required} (looked in ${absoluteBundleDir}).`,

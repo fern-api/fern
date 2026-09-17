@@ -414,6 +414,28 @@ describe("deployHostedMcpServer", () => {
         expect(body).not.toHaveProperty("cliVersion");
     });
 
+    it("deploys when optional local runner and catalog files are absent", async () => {
+        const requests = installFetchMock();
+        const bundleDir = await writeBundle();
+        await rm(path.join(bundleDir, "index.mjs"));
+        await rm(path.join(bundleDir, "catalog.json"));
+
+        await deployHostedMcpServer(deployArgs(bundleDir, createTestLogger()));
+
+        expect(deployRequest(requests)).toBeDefined();
+    });
+
+    it("rejects a bundle missing wrangler.jsonc", async () => {
+        const requests = installFetchMock();
+        const bundleDir = await writeBundle();
+        const logger = createTestLogger();
+        await rm(path.join(bundleDir, "wrangler.jsonc"));
+
+        await expect(deployHostedMcpServer(deployArgs(bundleDir, logger))).rejects.toThrow();
+        expect(loggedMessages(logger.error).join("\n")).toContain("The server bundle is missing wrangler.jsonc");
+        expect(requests).toHaveLength(0);
+    });
+
     it("does not count inputs toward the module budget", async () => {
         const requests = installFetchMock();
         const bundleDir = await writeBundle({ inputs: STANDARD_INPUTS, moduleCount: 20 });

@@ -6,7 +6,11 @@ import YAML from "yaml";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
-import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
+import {
+    formatSdkConfigMappingDiagnostic,
+    type MappingResult,
+    mapFernGroupToSdkConfig
+} from "./mapFernGroupToSdkConfig.js";
 import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
@@ -113,10 +117,6 @@ function resolveOutputPath(
 
 function printDiagnostics(cliContext: CliContext, diagnostics: readonly FernConfigMappingDiagnostic[]): void {
     for (const diagnostic of diagnostics) {
-        const destination =
-            diagnostic.sdkConfigPath == null ? "" : `; SDK Config: ${diagnostic.sdkConfigPath.join(".")}`;
-        cliContext.stderr.warn(
-            `[${diagnostic.severity}] [${diagnostic.code}] ${diagnostic.path.join(".")}: ${diagnostic.reason}${destination}; ${diagnostic.suggestedAction}`
-        );
+        cliContext.stderr.warn(formatSdkConfigMappingDiagnostic(diagnostic));
     }
 }
