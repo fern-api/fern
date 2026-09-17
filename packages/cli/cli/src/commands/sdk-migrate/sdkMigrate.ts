@@ -7,7 +7,7 @@ import YAML from "yaml";
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
-import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
+import { applyDocsMigration, prepareDocsMigration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
     resolveMigrationPathParameterStyle,
@@ -76,6 +76,13 @@ export async function sdkMigrate({
         });
     }
 
+    const docsPlan = await prepareDocsMigration({
+        docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
+        workspaceName: workspace.workspaceName,
+        isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
+        sourceSpecs
+    });
+
     const serialized = YAML.stringify(mapped.sdkConfig, { lineWidth: 0 });
     const yaml = serialized.endsWith("\n") ? serialized : `${serialized}\n`;
     if (outputPath == null) {
@@ -85,15 +92,10 @@ export async function sdkMigrate({
         cliContext.stderr.info(`Created SDK Config v1 at ${outputPath}`);
     }
 
-    const updatedDocsSections = await migrateDocsConfiguration({
-        docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
-        workspaceName: workspace.workspaceName,
-        isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
-        sourceSpecs
-    });
-    if (updatedDocsSections > 0) {
+    await applyDocsMigration(docsPlan);
+    if (docsPlan.updatedSections > 0) {
         cliContext.stderr.info(
-            `Updated ${updatedDocsSections} API reference section${updatedDocsSections === 1 ? "" : "s"} across the docs configuration rooted at ${project.docsWorkspaces?.absoluteFilepathToDocsConfig}`
+            `Updated ${docsPlan.updatedSections} API reference section${docsPlan.updatedSections === 1 ? "" : "s"} across the docs configuration rooted at ${project.docsWorkspaces?.absoluteFilepathToDocsConfig}`
         );
     }
 }
