@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: Schema-level Examples API
+  version: 1.0.0
+  description: A response schema carries multiple schema-level examples; the media type object has none.
+
+paths:
+  /files/move_batch:
+    post:
+      summary: Move batch
+      operationId: moveBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RelocationBatchArg"
+      responses:
+        "200":
+          description: Launched or completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RelocationBatchLaunch"
+
+components:
+  schemas:
+    RelocationBatchArg:
+      type: object
+      required:
+        - from_path
+        - to_path
+      properties:
+        from_path:
+          type: string
+        to_path:
+          type: string
+      example:
+        from_path: /Homework/math
+        to_path: /Homework/algebra
+    RelocationBatchLaunch:
+      type: object
+      properties:
+        tag:
+          type: string
+        async_job_id:
+          type: string
+        entries:
+          type: array
+          items:
+            type: string
+      examples:
+        - tag: async_job_id
+          async_job_id: 34g93hh34h04y384084
+        - tag: complete
+          entries:
+            - Prime_Numbers.txt
