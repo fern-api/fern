@@ -32,6 +32,7 @@ import javax.lang.model.element.Modifier;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import okhttp3.OkHttpClient;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -46,6 +47,7 @@ public class CloseableClientTest {
     private static final String PACKAGE = "com.fern.test.closeable";
     private static final String CLASS_NAME = "CloseableRootClient";
 
+    private static URLClassLoader classLoader;
     private static Class<?> clientClass;
 
     /** Stand-in for the generated {@code ClientOptions}, exposing only what the emitted {@code close()} touches. */
@@ -115,9 +117,14 @@ public class CloseableClientTest {
                     + diagnostics.toString(StandardCharsets.UTF_8) + "\n\nSOURCE:\n"
                     + Files.readString(sourceFile));
         }
-        URLClassLoader classLoader =
+        classLoader =
                 new URLClassLoader(new URL[] {classesDir.toUri().toURL()}, CloseableClientTest.class.getClassLoader());
         clientClass = classLoader.loadClass(PACKAGE + "." + CLASS_NAME);
+    }
+
+    @AfterAll
+    static void closeClassLoader() throws Exception {
+        classLoader.close();
     }
 
     private static AutoCloseable newClient(boolean ownsHttpClient, OkHttpClient httpClient) throws Exception {
