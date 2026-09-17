@@ -19,6 +19,14 @@ export declare namespace resolveSdkConfigIr {
         outputPath: string;
         /** Manifest of pre-processed raw specs, in the coordinates the adapter will see. */
         rawSpecsManifest: RawSpecsManifest | undefined;
+        /**
+         * Asks the image being run whether it generates from every spec rather than only the first.
+         *
+         * Consulted only when the manifest holds more than one spec, since every version of the
+         * adapter generates from a lone spec and inspecting the image would cost a subprocess to
+         * learn nothing. Absent, or resolving `false`, keeps the single-spec contract.
+         */
+        supportsMultiSpec?: () => Promise<boolean>;
     }
 
     type Result =
@@ -40,7 +48,8 @@ export async function resolveSdkConfigIr({
     absolutePathToFernConfig,
     organization,
     outputPath,
-    rawSpecsManifest
+    rawSpecsManifest,
+    supportsMultiSpec
 }: resolveSdkConfigIr.Args): Promise<resolveSdkConfigIr.Result> {
     const language = onPremAdapterLanguage(generatorInvocation.name);
     if (language == null) {
@@ -65,7 +74,8 @@ export async function resolveSdkConfigIr({
                 generatorName: generatorInvocation.name,
                 organization,
                 outputPath,
-                rawSpecsManifest
+                rawSpecsManifest,
+                supportsMultiSpec: (rawSpecsManifest?.specs.length ?? 0) > 1 && (await supportsMultiSpec?.()) === true
             });
     }
 }

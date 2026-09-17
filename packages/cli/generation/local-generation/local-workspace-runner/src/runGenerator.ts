@@ -317,7 +317,11 @@ export async function writeFilesToDiskAndRunGenerator({
             absolutePathToFernConfig,
             organization,
             outputPath: paths.outputDirectory,
-            rawSpecsManifest
+            rawSpecsManifest,
+            // Asked of the environment rather than answered here, so the image inspected is the one
+            // it is about to run -- including a digest pin or a registry override the CLI did not
+            // construct. An environment that cannot answer leaves this `false`.
+            supportsMultiSpec: async () => (await environment.supportsMultiSpec?.({ context, runner })) === true
         });
         if (!built.success) {
             throw new CliError({ message: built.message, code: CliError.Code.ConfigError });

@@ -9,6 +9,7 @@ export {
     copyFromContainer,
     copyToContainer,
     execInContainer,
+    pullImage,
     runContainer,
     runDocker,
     startContainer,

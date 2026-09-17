@@ -13,6 +13,7 @@ import {
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getCaBundleMount, getJvmCaBundleWarning } from "./getCaBundleMount.js";
+import { imageSupportsMultiSpec } from "./imageSupportsMultiSpec.js";
 import { verifyCaBundleMount } from "./verifyCaBundleMount.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
@@ -62,6 +63,15 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         this.disableTelemetry = disableTelemetry ?? false;
         this.network = network;
         this.declaredVersion = declaredVersion;
+    }
+
+    public async supportsMultiSpec({ context, runner }: ExecutionEnvironment.SupportsMultiSpecArgs): Promise<boolean> {
+        return imageSupportsMultiSpec({
+            imageName: this.containerImage,
+            // The same resolution `execute` performs, so the image asked is the image run.
+            runner: this.runner ?? runner ?? "docker",
+            logger: context.logger
+        });
     }
 
     public async execute({
