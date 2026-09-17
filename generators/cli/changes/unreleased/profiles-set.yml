@@ -39,3 +39,12 @@
     header that every real profile row left blank. Column order is now pinned rather than
     alphabetical, so the identifier leads and the explanatory `NOTE` sorts last instead of
     landing ahead of the value it annotates.
+- type: feat
+  summary: |
+    `profiles show <name>` prints one profile's resolved config without selecting it.
+    `profiles current` answers "what is in effect" and takes no name, so inspecting another
+    profile previously meant `-p other profiles current` — "run as if I were on other, then
+    tell me what's current" — which reads backwards. Reports `active` so you can tell
+    whether it is the default, and omits `selected_by`, which only means something for the
+    profile actually in play. Matches `gcloud config configurations describe NAME` and
+    `kubectl config get-contexts NAME`.

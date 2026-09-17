@@ -240,6 +240,14 @@ twilio messages list --region us1   # the flag still wins
 (`x-fern-sdk-variables` use the bare name — `gardenId` reads `GARDEN_ID`, not
 `<PREFIX>_GARDEN_ID`.)
 
+**Inspecting one profile:** `profiles show <name>` prints a single profile's
+resolved config without selecting it — `current` answers "what is in effect" and
+takes no name, so it is the wrong verb for "tell me about that other one".
+
+```bash
+acme profiles show staging --human
+```
+
 **What the listing shows:**
 
 ```

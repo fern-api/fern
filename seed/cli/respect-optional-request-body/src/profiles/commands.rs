@@ -416,6 +416,16 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                 ),
         )
         .subcommand(
+            Command::new("show")
+                .about("Show one profile's resolved config, without selecting it")
+                .arg(
+                    Arg::new("name")
+                        .value_name("NAME")
+                        .required(true)
+                        .help("Profile to inspect"),
+                ),
+        )
+        .subcommand(
             Command::new("set")
                 .about("Set credentials or settings on a profile, by the name you already use")
                 .arg(
@@ -511,7 +521,7 @@ fn build_remove_command(config: &ProfilesConfig) -> Command {
 /// spec also declares a `profiles` group, only these leaves are intercepted
 /// and everything else falls through to the spec's binding.
 pub const BUILTIN_SUBCOMMANDS: &[&str] = &["create", "list", "ls", "use",
-    "set", "remove", "rm", "current"];
+    "set", "remove", "rm", "current", "show"];
 
 // ── Dispatch ────────────────────────────────────────────────────────────
 
@@ -549,6 +559,7 @@ pub async fn dispatch_profiles<W: Write>(
         Some(("list" | "ls", m)) => handle_list(m, ctx, &store, out),
         Some(("use", m)) => handle_use(m, ctx, &mut store),
         Some(("set", m)) => handle_set(m, ctx, &mut store),
+        Some(("show", m)) => handle_show(m, ctx, &store, out),
         Some(("remove" | "rm", m)) => handle_remove(m, ctx, &mut store).await,
         Some(("current", m)) => handle_current(m, ctx, &store, out),
         _ => Err(CliError::Validation(
@@ -1824,6 +1835,76 @@ async fn revoke_remote_credential(
 
 // ── current ─────────────────────────────────────────────────────────────
 
+/// The resolved fields of one profile, shared by `current` and `show` so the
+/// two cannot drift into reporting different things about the same profile.
+fn resolved_profile_fields(
+    profile: &store::ResolvedProfile,
+    ctx: &ProfilesContext<'_>,
+) -> serde_json::Map<String, serde_json::Value> {
+    let mut map = serde_json::Map::new();
+    map.insert("profile".into(), profile.name.clone().into());
+    if let Some(credential) = &profile.credential {
+        if let Some(account) = stored_account(ctx, credential) {
+            map.insert("account".into(), account.into());
+        }
+        if credential != &profile.name {
+            map.insert("credentials_from".into(), credential.clone().into());
+        }
+    }
+    if let Some(base_url) = &profile.base_url {
+        map.insert("base_url".into(), base_url.clone().into());
+    }
+    if let Some(retries) = profile.retries {
+        map.insert("retries".into(), retries.into());
+    }
+    if let Some(format) = &profile.format {
+        map.insert("format".into(), format.clone().into());
+    }
+    insert_map(&mut map, "parameters", &profile.parameters);
+    insert_map(&mut map, "server_variables", &profile.server_variables);
+    map
+}
+
+/// `profiles show <name>` — inspect a named profile without selecting it.
+///
+/// `current` answers "what is in effect", which is a different question and
+/// takes no name. Inspecting another profile previously meant
+/// `-p other profiles current` — "run as if I were on other, then tell me
+/// what's current" — which reads backwards and made `-p` look like it was
+/// required to name a profile at all. gcloud (`configurations describe NAME`)
+/// and kubectl (`get-contexts NAME`) both have the direct form.
+///
+/// Deliberately omits `selected_by`: nothing selected this profile, and the
+/// field only means something for the one actually in effect.
+fn handle_show<W: Write>(
+    matches: &ArgMatches,
+    ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
+    out: &mut W,
+) -> Result<(), CliError> {
+    let name = matches
+        .get_one::<String>("name")
+        .cloned()
+        .expect("clap marks `name` required");
+    if store.entry(&name).is_none() {
+        return Err(store::unknown_profile(store, &name));
+    }
+    let resolved = store::resolve(store, &name)?;
+
+    let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
+        .map_err(|e| CliError::Validation(e.to_string()))?;
+    let mut map = resolved_profile_fields(&resolved, ctx);
+    // Whether this is the profile commands would use by default — the one bit
+    // of selection context that is meaningful for a profile you are merely
+    // inspecting.
+    map.insert("active".into(), (store.active() == Some(name.as_str())).into());
+
+    pipeline
+        .emit(out, &serde_json::Value::Object(map), false, true)
+        .map_err(|e| CliError::Other(e.into()))?;
+    Ok(())
+}
+
 fn handle_current<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
@@ -1841,31 +1922,11 @@ fn handle_current<W: Write>(
     let payload = match &selected {
         Some(selection) => {
             let profile = &selection.profile;
-            let mut map = serde_json::Map::new();
-            map.insert("profile".into(), profile.name.clone().into());
+            let mut map = resolved_profile_fields(profile, ctx);
             // `selected_by`, not `source`: this answers *why* this profile is in
             // play, and the answer changes precedence — only a profile named
             // with the flag outranks credential env vars (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
-            if let Some(credential) = &profile.credential {
-                if let Some(account) = stored_account(ctx, credential) {
-                    map.insert("account".into(), account.into());
-                }
-                if credential != &profile.name {
-                    map.insert("credentials_from".into(), credential.clone().into());
-                }
-            }
-            if let Some(base_url) = &profile.base_url {
-                map.insert("base_url".into(), base_url.clone().into());
-            }
-            if let Some(retries) = profile.retries {
-                map.insert("retries".into(), retries.into());
-            }
-            if let Some(format) = &profile.format {
-                map.insert("format".into(), format.clone().into());
-            }
-            insert_map(&mut map, "parameters", &profile.parameters);
-            insert_map(&mut map, "server_variables", &profile.server_variables);
             if let Some(env_row) = env_pseudo_row(ctx) {
                 // Only claim an *override* when the env vars actually satisfy
                 // a scheme. With one half of a two-value credential set, the

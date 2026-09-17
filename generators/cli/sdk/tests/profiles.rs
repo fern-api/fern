@@ -1273,3 +1273,51 @@ fn the_env_row_labels_its_variables_and_prose_sorts_last() {
         "the value should precede the prose explaining it: {header}",
     );
 }
+
+#[test]
+fn show_inspects_a_named_profile_without_selecting_it() {
+    // `current` answers "what is in effect" and takes no name, so inspecting
+    // another profile meant `-p other profiles current` — "run as if I were on
+    // other, then tell me what's current". That reads backwards and made `-p`
+    // look like the only way to name a profile at all.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "test_1", "--use"]);
+    sandbox.run(&["profiles", "create", "test_2", "--default-format", "json"]);
+
+    let output = sandbox.run(&["profiles", "show", "test_2", "--format", "json"]);
+    assert_ok(&output, "profiles show");
+    let shown: serde_json::Value = serde_json::from_str(&stdout(&output)).expect("json");
+    assert_eq!(shown["profile"], "test_2");
+    assert_eq!(shown["format"], "json");
+    assert_eq!(shown["active"], serde_json::Value::Bool(false));
+    // Nothing selected it, so the field that explains *why* a profile is in
+    // play would be a lie here.
+    assert!(shown.get("selected_by").is_none(), "{shown:#?}");
+
+    // The active profile is unchanged — `show` reads, it does not select.
+    let current = sandbox.run(&["profiles", "current", "--format", "json"]);
+    assert_eq!(json(&current)["profile"], "test_1");
+}
+
+#[test]
+fn show_marks_the_active_profile_and_reports_inheritance() {
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "parent", "--use"]);
+    sandbox.run(&["profiles", "create", "child", "--parent", "parent"]);
+
+    let active = sandbox.run(&["profiles", "show", "parent", "--format", "json"]);
+    assert_eq!(json(&active)["active"], serde_json::Value::Bool(true));
+
+    let child = sandbox.run(&["profiles", "show", "child", "--format", "json"]);
+    assert_eq!(json(&child)["credentials_from"], "parent");
+}
+
+#[test]
+fn show_names_the_known_profiles_when_the_name_is_wrong() {
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "test_1"]);
+    let output = sandbox.run(&["profiles", "show", "nope"]);
+    assert_ne!(output.status.code(), Some(0));
+    let text = format!("{}{}", stdout(&output), stderr(&output));
+    assert!(text.contains("test_1"), "should list what does exist: {text}");
+}
