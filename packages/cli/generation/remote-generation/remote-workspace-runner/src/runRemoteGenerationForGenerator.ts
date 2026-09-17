@@ -31,6 +31,7 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import { createAndStartJob } from "./createAndStartJob.js";
 import {
     type FernSdkConfigV1Payload,
@@ -358,7 +359,7 @@ export async function runRemoteGenerationForGenerator({
                     audiences,
                     sourceArchive: sdkGenApiSourceArchive
                 });
-                const mappingErrors = [];
+                const mappingErrors: FernConfigMappingDiagnostic[] = [];
                 for (const diagnostic of synthesized.diagnostics) {
                     switch (diagnostic.severity) {
                         case "error":
