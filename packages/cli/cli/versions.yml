@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.128.3
+  changelogEntry:
+    - summary: |
+        Register error-status endpoint examples carrying the error response headers' example values
+        (e.g. a 429's `Retry-After`), so docs render them when `show-headers-in-examples` is enabled.
+      type: fix
+  createdAt: "2026-09-17"
+  irVersion: 67
 - version: 5.128.2
   changelogEntry:
     - summary: |
