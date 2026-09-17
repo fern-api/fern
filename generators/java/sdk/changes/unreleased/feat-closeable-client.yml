@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Adds an opt-in `enable-closeable-client` config flag. When enabled, the generated root clients
+    (sync and async) implement `AutoCloseable`, and `ClientOptions` records whether the SDK created the
+    underlying `OkHttpClient` (`ownsHttpClient()`, set in `ClientOptions.Builder.build()` from whether
+    `httpClient(...)` was supplied). `close()` shuts down the dispatcher executor and evicts the
+    connection pool only for an SDK-created client, so short-lived JVMs exit promptly instead of being
+    held open by OkHttp's non-daemon threads. A client supplied through `httpClient(OkHttpClient)`
+    remains owned by the caller and is left untouched: the SDK derives its client via
+    `OkHttpClient.newBuilder()`, which shares the source client's `Dispatcher` and `ConnectionPool`, so
+    unconditionally releasing them would tear down the caller's own resources. `close()` is idempotent
+    and declares no checked exception. It only releases the dispatcher executor and connection pool;
+    WebSocket reconnect scheduler threads are not affected.
+
+    ```java
+    try (AcmeClient client = AcmeClient.builder().apiKey("...").build()) {
+        client.users().list();
+    }
+    ```
+
+    Off by default, so existing generated output is unchanged.
+  type: feat

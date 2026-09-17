@@ -194,6 +194,9 @@ fixtures:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
       outputFolder: allow-user-agent-app-info
+    - customConfig:
+        enable-closeable-client: true
+      outputFolder: closeable-client
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
