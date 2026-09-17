@@ -12,7 +12,7 @@ import FormData from "form-data";
 import path from "path";
 import { gunzipSync } from "zlib";
 import { type PublishTarget } from "./publishTarget.js";
-import { downloadFilesForTask } from "./RemoteTaskHandler.js";
+import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -80,6 +80,13 @@ export type FernSdkGenApiRequestedOutput =
           publish?: FernSdkGenApiPublishConfig;
       }
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
+
+export function resolveSdkConfigRequestedOutput(
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined,
+    isPreview: boolean
+): FernSdkGenApiRequestedOutput | undefined {
+    return isPreview ? { type: "download" } : requestedOutput;
+}
 
 interface FernBuildStatus {
     buildId: string;
@@ -581,7 +588,7 @@ function assertDirectCredential(registry: string, field: string, value: string |
     if (value === "OIDC" || value === "<USE_OIDC>") {
         throw new Error(`Direct ${registry} publication through sdk-gen-api does not support OIDC credentials`);
     }
-    if (value.length > MAX_PUBLISH_CREDENTIAL_FIELD_LENGTH) {
+    if (Buffer.byteLength(value, "utf8") > MAX_PUBLISH_CREDENTIAL_FIELD_LENGTH) {
         throw new Error(`Direct ${registry} publication through sdk-gen-api ${field} exceeds the 16 KiB field limit`);
     }
 }
@@ -682,6 +689,10 @@ export interface FernSdkConfigV1Payload {
         sdkName?: string;
         sdkVersion?: string;
         clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
+        requestedOutput?: FernSdkGenApiRequestedOutput;
+        /** Local-only destination for a requested ZIP artifact; never serialized to sdk-gen-api. */
+        absolutePathToLocalOutputArchive?: AbsoluteFilePath;
+        package?: FernSdkGenApiPackageConfig;
     }>;
 }
 
@@ -696,6 +707,8 @@ export interface FernSdkGenApiBuildParameters {
     token: FernToken;
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
+    absolutePathToLocalOutputArchive?: AbsoluteFilePath;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
     targetIdSeed?: string;
@@ -972,7 +985,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             targetIdSeed: participant.targetIdSeed,
             sourceSpecIndexes: participant.sourceSpecIndexes,
             audiences: participant.audiences,
-            payload: participant.payload
+            payload: participant.payload,
+            requestedOutput: participant.requestedOutput
         }))
     });
     const credentials = createFernSdkGenApiPublishCredentials(
@@ -1442,17 +1456,26 @@ async function finishFernSdkGenApiTarget(
             code: CliError.Code.InternalError
         });
     }
-    const outputPath =
-        participant.absolutePathToPreview != null
-            ? join(
-                  participant.absolutePathToPreview,
-                  RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
-              )
-            : participant.generatorInvocation.absolutePathToLocalOutput;
-    if (outputPath != null) {
+    if (participant.absolutePathToPreview != null) {
         await downloadFilesForTask({
             s3PreSignedReadUrl: target.result.artifactUrl,
-            absolutePathToLocalOutput: outputPath,
+            absolutePathToLocalOutput: join(
+                participant.absolutePathToPreview,
+                RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
+            ),
+            context: participant.context,
+            skipFernignore: participant.skipFernignore
+        });
+    } else if (participant.absolutePathToLocalOutputArchive != null) {
+        await downloadArchiveForTask({
+            s3PreSignedReadUrl: target.result.artifactUrl,
+            absolutePathToLocalOutput: participant.absolutePathToLocalOutputArchive,
+            context: participant.context
+        });
+    } else if (participant.generatorInvocation.absolutePathToLocalOutput != null) {
+        await downloadFilesForTask({
+            s3PreSignedReadUrl: target.result.artifactUrl,
+            absolutePathToLocalOutput: participant.generatorInvocation.absolutePathToLocalOutput,
             context: participant.context,
             skipFernignore: participant.skipFernignore
         });
@@ -1556,7 +1579,8 @@ export function createFernSdkGenApiRequest({
     sdkVersion,
     apiVersion,
     specsTarGzBuffer,
-    payload
+    payload,
+    requestedOutput
 }: {
     apiName: string;
     organization: string;
@@ -1567,13 +1591,14 @@ export function createFernSdkGenApiRequest({
     apiVersion?: string;
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkName, sdkVersion, apiVersion, payload }]
+        targets: [{ generatorInvocation, sdkName, sdkVersion, apiVersion, payload, requestedOutput }]
     });
 }
 
@@ -1597,6 +1622,7 @@ export function createFernSdkGenApiBatchRequest({
         sourceSpecIndexes?: number[];
         audiences?: string[];
         payload: FernSdkGenApiPayload;
+        requestedOutput?: FernSdkGenApiRequestedOutput;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -1615,7 +1641,10 @@ export function createFernSdkGenApiBatchRequest({
         return id;
     });
     const requestTargets = targets.map(
-        ({ generatorInvocation, sdkName, sdkVersion, apiVersion, targetIdSeed, audiences, payload }, index) => {
+        (
+            { generatorInvocation, sdkName, sdkVersion, apiVersion, targetIdSeed, audiences, payload, requestedOutput },
+            index
+        ) => {
             const language = getFernSdkGenApiLanguage(generatorInvocation.name);
             if (language == null) {
                 throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
@@ -1666,7 +1695,7 @@ export function createFernSdkGenApiBatchRequest({
                           }
                         : {})
                 },
-                requestedOutput: output.requestedOutput
+                requestedOutput: requestedOutput ?? output.requestedOutput
             };
         }
     );

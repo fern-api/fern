@@ -105,6 +105,7 @@ export class OperationConverter extends AbstractOperationConverter {
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
         const groupDisplayName = this.getGroupDisplayName(group);
+        const groupDescription = this.getGroupDescription(group);
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
@@ -295,6 +296,7 @@ export class OperationConverter extends AbstractOperationConverter {
             audiences,
             group,
             groupDisplayName,
+            groupDescription,
             errors: topLevelErrors,
             endpoint: {
                 ...baseEndpoint,
@@ -1271,5 +1273,17 @@ export class OperationConverter extends AbstractOperationConverter {
             return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
         }
         return undefined;
+    }
+
+    private getGroupDescription(group: string[] | undefined): string | undefined {
+        const rawOperationTag = this.operation.tags?.[0];
+        const baseGroupName = group?.[group.length - 1];
+        if (rawOperationTag == null || baseGroupName == null) {
+            return undefined;
+        }
+        if (camelCase(rawOperationTag) !== camelCase(baseGroupName)) {
+            return undefined;
+        }
+        return this.context.getDescriptionForTag(rawOperationTag);
     }
 }

@@ -88,6 +88,9 @@
                 "name": "string",
               },
             },
+            "responseHeaders": {
+              "X-RateLimit-Remaining": 99,
+            },
             "responseStatusCode": 200,
           },
         ],
@@ -132,7 +135,29 @@
             },
           },
         },
-        "responseHeaders": [],
+        "responseHeaders": [
+          {
+            "availability": undefined,
+            "description": "Requests remaining in the current window.",
+            "key": "X-RateLimit-Remaining",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
         "responsesV2": {
           "responses": [
             {

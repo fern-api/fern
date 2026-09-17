@@ -1,0 +1,50 @@
+- type: feat
+  summary: |
+    `profiles set <name> KEY=VALUE …` sets credentials and settings on a profile using the
+    names you already use. `KEY` may be an environment variable this CLI reads — a
+    credential, or a setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
+    `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. Credentials go to the OS
+    keyring under that profile's slot; everything else to `profiles.toml`. The profile is
+    created if it does not exist.
+
+    One assignment reaches **every** scheme that declares the variable. A vendor spec with
+    several basic schemes sharing one credential pair previously needed one
+    `auth login --scheme <name>` per scheme, with names a user cannot guess; now a single
+    `profiles set prod <NAME>_ACCOUNT_SID=… <NAME>_AUTH_TOKEN=…` covers all of them, and the
+    output names how many it reached.
+
+    Multi-field credentials merge, so setting one half later does not discard the other.
+    Every key is classified before anything is written, so a run whose third assignment is
+    invalid leaves the first two unapplied. An unrecognised key is rejected with a
+    suggestion rather than stored inert — including one that merely looks like one of this
+    CLI's variables.
+- type: fix
+  summary: |
+    `profiles current` no longer reports `credential_overridden_by_env` when environment
+    variables supply only *part* of a multi-value credential. The variable is consulted and
+    does outrank the keyring for that field, but nothing authenticates — so claiming an
+    override contradicted `auth status`, which correctly reported not-logged-in. The partial
+    case is now reported as `credential_partially_shadowed_by_env`.
+- type: fix
+  summary: |
+    `profiles list` warns when a variable is set that closely resembles one of this CLI's
+    credential variables but is not read — `<NAME>_ACCOUNT_ID` when the CLI reads
+    `<NAME>_ACCOUNT_SID`. Previously such a typo produced no diagnostic at all. Scoped to
+    declared names that are unset while a near neighbour is set, so it cannot fire on
+    unrelated variables.
+- type: fix
+  summary: |
+    `profiles list`'s `[env]` row labels its environment variable names under `variables`
+    rather than reusing the profile `credential` key, which produced a `CREDENTIAL` column
+    header that every real profile row left blank. Column order is now pinned rather than
+    alphabetical, so the identifier leads and the explanatory `NOTE` sorts last instead of
+    landing ahead of the value it annotates.
+- type: feat
+  summary: |
+    `profiles show <name>` prints one profile's resolved config without selecting it.
+    `profiles current` answers "what is in effect" and takes no name, so inspecting another
+    profile previously meant `-p other profiles current` — "run as if I were on other, then
+    tell me what's current" — which reads backwards. Reports `active` so you can tell
+    whether it is the default, and omits `selected_by`, which only means something for the
+    profile actually in play. Matches `gcloud config configurations describe NAME` and
+    `kubectl config get-contexts NAME`.

@@ -416,7 +416,8 @@ async function parseAPIConfigurationToApiLocations(
             apiDefinitions.push({
                 schema: {
                     type: "oss",
-                    path: asyncapi
+                    path: asyncapi,
+                    sourceType: "asyncapi"
                 },
                 origin: apiOrigin,
                 overrides: undefined,
@@ -477,7 +478,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: specPath
+                    path: specPath,
+                    sourceType: "asyncapi"
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,

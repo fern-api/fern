@@ -1,0 +1,3 @@
+- summary: |
+    No functional changes. Verifies the CLI release pipeline after the beta publish step was added.
+  type: chore

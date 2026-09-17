@@ -40,6 +40,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     folderTitleSource: core.serialization.property("folder-title-source", TitleSource.optional()),
     substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
     websocketOneofDisplay: core.serialization.property("websocket-oneof-display", WebSocketOneofDisplay.optional()),
+    showHeadersInExamples: core.serialization.property(
+        "show-headers-in-examples",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -59,5 +63,6 @@ export declare namespace DocsSettingsConfig {
         "folder-title-source"?: TitleSource.Raw | null;
         "substitute-env-vars"?: boolean | null;
         "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
+        "show-headers-in-examples"?: boolean | null;
     }
 }

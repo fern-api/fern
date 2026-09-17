@@ -11,6 +11,8 @@ import { DisplayNameExtension } from "../extensions/x-display-name.js";
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
     public globalHeaderNames: string[] | undefined;
     private readonly tagToDisplayName: Record<string, string> = {};
+    private readonly tagToDescription = new Map<string, string>();
+    private tagDescriptionsIndexed = false;
 
     public isReferenceObject(
         parameter:
@@ -122,5 +124,17 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             }
         }
         return this.tagToDisplayName[tag] ?? tag;
+    }
+
+    public getDescriptionForTag(tag: string): string | undefined {
+        if (!this.tagDescriptionsIndexed) {
+            this.tagDescriptionsIndexed = true;
+            for (const specTag of this.spec.tags ?? []) {
+                if (specTag.description != null && specTag.description.trim().length > 0) {
+                    this.tagToDescription.set(specTag.name, specTag.description);
+                }
+            }
+        }
+        return this.tagToDescription.get(tag);
     }
 }

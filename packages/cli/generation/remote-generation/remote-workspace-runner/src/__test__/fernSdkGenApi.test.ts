@@ -15,12 +15,14 @@ import {
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
+    resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
     selectFernSdkGenApiRoute
 } from "../fernSdkGenApi.js";
@@ -2278,6 +2280,24 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
+    it("measures the direct publish secret field limit in UTF-8 bytes", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)],
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "界".repeat(6_000)
+                    })
+                )
+            })
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow("exceeds the 16 KiB field limit");
+        expect(post).not.toHaveBeenCalled();
+    });
+
     it("rejects a publish credentials file larger than 64 KiB before submission", async () => {
         const generatorInvocations = Array.from({ length: 4 }, () =>
             invocation({
@@ -2632,6 +2652,45 @@ describe("fernapi/fern-mcp-server target", () => {
         });
 
         expect(request.targets[0]?.package).toBeUndefined();
+    });
+
+    it("uses SDK Config output metadata instead of the adapter invocation", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: { ...sdkConfigPayload("{}"), package: { packageName: "@acme/sdk" } },
+            requestedOutput: {
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                publish: { registry: "npm" }
+            }
+        });
+
+        expect(request.targets[0]).toMatchObject({
+            package: { packageName: "@acme/sdk" },
+            requestedOutput: {
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                publish: { registry: "npm" }
+            }
+        });
+    });
+
+    it("forces SDK Config preview output to download instead of publishing", () => {
+        const githubOutput: FernSdkGenApiRequestedOutput = {
+            type: "github",
+            repository: "acme/sdk",
+            mode: "pull-request"
+        };
+
+        expect(resolveSdkConfigRequestedOutput(githubOutput, true)).toEqual({ type: "download" });
+        expect(resolveSdkConfigRequestedOutput(githubOutput, false)).toBe(githubOutput);
     });
 
     it("infers npm for legacy publish output with no explicit registry override", () => {

@@ -278,7 +278,8 @@
                             "unsafeName": "APIKey",
                             "safeName": "APIKey"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
