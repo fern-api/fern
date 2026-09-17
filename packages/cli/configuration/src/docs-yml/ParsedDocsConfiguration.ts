@@ -8,6 +8,7 @@ import {
     AnnouncementConfig,
     Availability,
     DocsInstance,
+    EmbeddingConfig,
     ExperimentalConfig,
     LibraryLanguage,
     PlaygroundSettings,
@@ -115,6 +116,8 @@ export interface ParsedDocsConfiguration {
     aiChatConfig: AiChatConfig | undefined;
 
     agents: AgentsConfig | undefined;
+
+    embedding: EmbeddingConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 

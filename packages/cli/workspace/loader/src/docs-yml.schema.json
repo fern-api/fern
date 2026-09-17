@@ -273,6 +273,17 @@
       ],
       "description": "Configuration for agent-serving endpoints."
     },
+    "embedding": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.EmbeddingConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Controls which third-party sites may embed your documentation in an iframe.\nBy default only your docs site itself (and the Fern dashboard) may frame it."
+    },
     "metadata": {
       "oneOf": [
         {
@@ -5103,6 +5114,22 @@
           "description": "Relative filepath to a custom `robots.txt` file that Fern should host at `/robots.txt`,\noverriding the auto-generated version. Fern automatically appends a rule to disallow\nits internal `/api/fern-docs/` routes so they are excluded from crawler indexing."
         }
       },
+      "additionalProperties": false
+    },
+    "docs.EmbeddingConfig": {
+      "type": "object",
+      "properties": {
+        "allowed-origins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.\nEach entry is added to the `frame-ancestors` directive of the Content-Security-Policy header."
+        }
+      },
+      "required": [
+        "allowed-origins"
+      ],
       "additionalProperties": false
     },
     "docs.TwitterCardSetting": {

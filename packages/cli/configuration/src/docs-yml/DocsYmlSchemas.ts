@@ -237,6 +237,10 @@ export const AIChatDatasource = AIChatWebsiteDatasource;
 
 export const PageDescriptionSource = z.enum(["description", "subtitle"]);
 
+export const EmbeddingConfig = z.object({
+    "allowed-origins": z.array(z.string())
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -1060,6 +1064,7 @@ export const DocsConfiguration = z.object({
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
     agents: AgentsConfig.optional(),
+    embedding: EmbeddingConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
     check: CheckConfig.optional(),

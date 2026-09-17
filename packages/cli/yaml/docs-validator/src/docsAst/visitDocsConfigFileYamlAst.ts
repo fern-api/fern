@@ -116,6 +116,7 @@ export async function visitDocsConfigFileYamlAst({
             // If it's a boolean, it's the old format which is handled by noop
         },
         pageActions: noop,
+        embedding: noop,
         announcement: noop,
         backgroundImage: async (background) => {
             if (background == null) {
