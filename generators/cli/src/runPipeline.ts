@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
-import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
+import { copySpecs, DEFAULT_PROFILES_COMMAND_NAME, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { authStrategyVariant, detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
@@ -164,6 +164,15 @@ export async function runPipeline(args: {
         customCommands,
         rootGroup: customConfig.rootGroup,
         userAgentSuffixFlag: customConfig.userAgentSuffixFlag,
+        // `undefined` (not `false`) is the off switch: `copySpecs` emits no
+        // `.profiles(...)` call at all, so the feature is inert rather than
+        // present-and-disabled.
+        profilesCommandName:
+            customConfig.profiles?.enabled === true
+                ? (customConfig.profiles.commandName ?? DEFAULT_PROFILES_COMMAND_NAME)
+                : undefined,
+        profilesRevokeOperation:
+            customConfig.profiles?.enabled === true ? customConfig.profiles.revokeOperation : undefined,
         // A strategy only composes bound schemes, so skip deriving one when
         // there are none — `copySpecs` would drop it anyway, and this keeps
         // unauthenticated CLIs off the mapping entirely.

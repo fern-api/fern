@@ -57,26 +57,80 @@ use crate::error::CliError;
 /// same directory) — same shape, distinct file. Login-flow providers use
 /// the keyring store; legacy `OAuth2TokenProvider` callers (e.g. `xero`)
 /// continue to use this cache via `.with_cache(...)`.
+///
+/// # Profile namespacing
+///
+/// Keying by `token_url` alone is a correctness bug once profiles exist:
+/// two profiles authenticating against the *same* client-credentials token
+/// endpoint resolve to the same entry and clobber each other's access and
+/// refresh tokens. So when a profile is selected the key becomes
+/// `<token_url>#<credential>`.
+///
+/// With no profile the key is `token_url`, byte-identical to what every
+/// pre-profiles binary wrote — so an existing `credentials.json` keeps
+/// resolving after an upgrade and nobody is logged out.
+///
+/// Interactive flows (PKCE, device-code) need no change here: they persist
+/// through [`KeyringStore`](crate::auth::keyring_store::KeyringStore), where
+/// the `<scheme>#<credential>` account namespacing already covers them.
 #[derive(Debug, Clone)]
 pub struct TokenCache {
     path: PathBuf,
+    /// Credential namespace from the active profile, or `None` when running
+    /// unprofiled. Captured at construction rather than read per call so a
+    /// cache handed to `with_token_cache` behaves predictably.
+    profile: Option<String>,
 }
 
 type TokenMap = std::collections::HashMap<String, TokenBundle>;
 
 impl TokenCache {
-    /// Build a cache path at `~/.config/<cli_name>/credentials.json`.
+    /// Build a cache path at `~/.config/<cli_name>/credentials.json`, keyed
+    /// under the active profile (if any).
     pub fn for_cli(cli_name: &str) -> Option<Self> {
+        Self::for_cli_unprofiled(cli_name).map(|cache| Self {
+            profile: crate::profiles::active().and_then(|p| p.credential.clone()),
+            ..cache
+        })
+    }
+
+    /// Build a cache over the same file but with **no** profile namespace,
+    /// so reads and writes see the raw key space.
+    ///
+    /// Used by `profiles remove`, which must purge one profile's entries
+    /// while it is not itself the active profile.
+    pub fn for_cli_unprofiled(cli_name: &str) -> Option<Self> {
         let dir = config_dir()?;
         Some(Self {
             path: dir.join(cli_name).join("credentials.json"),
+            profile: None,
         })
     }
 
     /// Build a cache at an explicit path (for testing).
     #[cfg(test)]
     fn at_path(path: PathBuf) -> Self {
-        Self { path }
+        Self { path, profile: None }
+    }
+
+    /// Build a cache at an explicit path scoped to a profile (for testing).
+    #[cfg(test)]
+    fn at_path_for_profile(path: PathBuf, profile: &str) -> Self {
+        Self {
+            path,
+            profile: Some(profile.to_string()),
+        }
+    }
+
+    /// The map key for `token_url` under this cache's profile namespace.
+    ///
+    /// The single place the namespacing rule lives, so a read and a write
+    /// cannot disagree about where a token is.
+    fn key_for(&self, token_url: &str) -> String {
+        match &self.profile {
+            Some(profile) => format!("{token_url}#{profile}"),
+            None => token_url.to_string(),
+        }
     }
 
     fn read_map(&self) -> TokenMap {
@@ -107,14 +161,23 @@ impl TokenCache {
     /// which client it was minted for.
     #[cfg(test)]
     fn load(&self, token_url: &str) -> Option<TokenBundle> {
-        let map = self.read_map();
-        let entry = map.get(token_url)?;
+        let entry = self.lookup(token_url)?;
         if let Some(expires_at) = entry.expires_at {
             if now_epoch() >= expires_at {
                 return None;
             }
         }
-        Some(entry.clone())
+        Some(entry)
+    }
+
+    /// The cached bundle for `token_url`, expired or not.
+    ///
+    /// Exists so the two callers that need the *refresh* token out of an
+    /// expired entry do not reach into `read_map()` with a bare
+    /// `token_url` — which would bypass [`Self::key_for`] and read another
+    /// profile's tokens.
+    fn lookup(&self, token_url: &str) -> Option<TokenBundle> {
+        self.read_map().get(&self.key_for(token_url)).cloned()
     }
 
     /// Load a non-expired cached token for the given token_url, provided it
@@ -122,7 +185,10 @@ impl TokenCache {
     /// [`TokenBundle::matches_client`]).
     fn load_for_client(&self, token_url: &str, fingerprint: Option<&str>) -> Option<TokenBundle> {
         let map = self.read_map();
-        let entry = map.get(token_url)?;
+        // `key_for`, not `token_url`: the disk cache is namespaced per profile,
+        // so reading the bare URL would serve another tenant's token whenever
+        // the fingerprints happened to agree (or were both absent).
+        let entry = map.get(&self.key_for(token_url))?;
         if !entry.matches_client(fingerprint) {
             return None;
         }
@@ -160,13 +226,15 @@ impl TokenCache {
             now_epoch() + buffered
         });
         // Preserve existing refresh_token if the new response didn't include
-        // one — but only when it belongs to the same client.
+        // one — but only when it belongs to the same client, and only within
+        // this profile's namespace.
+        let key = self.key_for(token_url);
         let prev_refresh = map
-            .get(token_url)
+            .get(&key)
             .filter(|e| e.matches_client(client_fingerprint))
             .and_then(|e| e.refresh_token.clone());
         map.insert(
-            token_url.to_string(),
+            key,
             TokenBundle {
                 access_token: access_token.to_string(),
                 refresh_token: refresh_token.map(|s| s.to_string()).or(prev_refresh),
@@ -180,9 +248,26 @@ impl TokenCache {
     /// Remove the cached entry for a token_url (e.g., on refresh failure).
     fn remove(&self, token_url: &str) {
         let mut map = self.read_map();
-        if map.remove(token_url).is_some() {
+        if map.remove(&self.key_for(token_url)).is_some() {
             let _ = self.write_map(&map);
         }
+    }
+
+    /// Drop every entry belonging to `credential`, and only those.
+    ///
+    /// Called by `profiles remove`. Matching on the `#<credential>` suffix
+    /// leaves the unprofiled entries (bare `token_url`) and every other
+    /// profile's entries untouched — removing one tenant must not log the
+    /// user out of the rest.
+    pub fn purge_profile(&self, credential: &str) -> Result<(), CliError> {
+        let suffix = format!("#{credential}");
+        let mut map = self.read_map();
+        let before = map.len();
+        map.retain(|key, _| !key.ends_with(&suffix));
+        if map.len() == before {
+            return Ok(());
+        }
+        self.write_map(&map)
     }
 }
 
@@ -244,7 +329,18 @@ struct TokenResponse {
     expires_in: Option<u64>,
 }
 
-async fn fetch_token(token_url: &str, grant: &OAuth2Grant) -> Result<TokenResponse, CliError> {
+/// `(client_id, client_secret)` already resolved by the provider, so the
+/// grant-specific request building below stays free of source resolution.
+struct ResolvedClientCredentials {
+    client_id: String,
+    client_secret: String,
+}
+
+async fn fetch_token(
+    token_url: &str,
+    grant: &OAuth2Grant,
+    resolved: &ResolvedClientCredentials,
+) -> Result<TokenResponse, CliError> {
     if token_url.trim().is_empty() {
         return Err(CliError::Validation(
             "OAuth2: token_url must not be empty".to_string(),
@@ -259,8 +355,9 @@ async fn fetch_token(token_url: &str, grant: &OAuth2Grant) -> Result<TokenRespon
             client_secret_env,
             scope,
         } => {
-            let client_id = read_env(client_id_env, "client_id")?;
-            let client_secret = read_env(client_secret_env, "client_secret")?;
+            let (client_id, client_secret) =
+                (resolved.client_id.clone(), resolved.client_secret.clone());
+            let _ = (client_id_env, client_secret_env);
             http.post(token_url)
                 .form(&ClientCredentialsForm {
                     grant_type: "client_credentials",
@@ -276,8 +373,9 @@ async fn fetch_token(token_url: &str, grant: &OAuth2Grant) -> Result<TokenRespon
             client_secret_env,
             refresh_token_env,
         } => {
-            let client_id = read_env(client_id_env, "client_id")?;
-            let client_secret = read_env(client_secret_env, "client_secret")?;
+            let (client_id, client_secret) =
+                (resolved.client_id.clone(), resolved.client_secret.clone());
+            let _ = (client_id_env, client_secret_env);
             let refresh_token = read_env(refresh_token_env, "refresh_token")?;
             http.post(token_url)
                 .form(&RefreshTokenForm {
@@ -355,6 +453,141 @@ fn read_env(var: &str, label: &str) -> Result<String, CliError> {
     read_oauth_env(var, true, label)?.ok_or_else(|| {
         CliError::Auth(format!(
             "Environment variable {var} (OAuth2 {label}) must be non-empty"
+        ))
+    })
+}
+
+/// The OAuth2 `client_id`: the env var first, then the active profile's
+/// `oauth_client_id`.
+///
+/// A client id is public by construction (RFC 6749 §2.2), which is why it
+/// can live in `profiles.toml` at all — and why only *this* value gets a
+/// profile rung. The client secret has none: it is a secret, so it lives in
+/// the keychain under the profile-namespaced account, which the
+/// [`keyring_account`](crate::profiles::keyring_account) change already
+/// covers.
+impl OAuth2TokenProvider {
+    /// The non-env rungs backing the credential whose env var is `var`, for
+    /// `auth status`. Mirrors [`Self::resolve_client_id`] and
+    /// [`Self::resolve_client_secret`]; anything added there has to be added
+    /// here or the status surface starts lying again.
+    fn stored_sources_for_env_var(&self, var: &str) -> Vec<AuthCredentialSource> {
+        let (field, allow_profile_plaintext) = match &self.contract {
+            Some(contract) if contract.client_id_env == var => (CLIENT_ID_FIELD, true),
+            Some(contract) if contract.client_secret_env == var => (CLIENT_SECRET_FIELD, false),
+            _ => match grant_credential_envs(&self.grant) {
+                (id_var, _, _) if id_var == var => (CLIENT_ID_FIELD, true),
+                (_, secret_var, _) if secret_var == var => (CLIENT_SECRET_FIELD, false),
+                // A refresh-token env var, or a provider built outside
+                // `CliApp`: no stored rung to report.
+                _ => return Vec::new(),
+            },
+        };
+        let Some(cli_name) = self.cli_name.get() else {
+            return Vec::new();
+        };
+        let mut sources = vec![AuthCredentialSource::keyring_field(
+            cli_name,
+            crate::profiles::keyring_account(&self.scheme_name),
+            field,
+        )];
+        // The client id may also sit in `profiles.toml` — it is public.
+        if allow_profile_plaintext {
+            if let Some(id) = crate::profiles::oauth_client_id() {
+                sources.push(AuthCredentialSource::Closure(
+                    Arc::new(move || Some(id.clone())),
+                    Some("oauth_client_id in the active profile".to_string()),
+                ));
+            }
+        }
+        sources
+    }
+}
+
+/// Field names inside the JSON keyring entry a client-credentials scheme
+/// stores. Shared by the writer (`auth login`) and the readers below, so the
+/// two cannot disagree about the shape.
+pub(crate) const CLIENT_ID_FIELD: &str = "client_id";
+pub(crate) const CLIENT_SECRET_FIELD: &str = "client_secret";
+
+impl OAuth2TokenProvider {
+    /// One field of this scheme's keyring entry, under the active profile's
+    /// account. `None` when the CLI name is unknown (the provider was built
+    /// outside `CliApp`), when nothing is stored, or when the entry is not
+    /// the JSON object this scheme writes.
+    fn keyring_field(&self, field: &str) -> Option<String> {
+        let cli_name = self.cli_name.get()?;
+        let account = crate::profiles::keyring_account(&self.scheme_name);
+        let raw = crate::auth::keyring_store::active_store()
+            .get(cli_name, &account)
+            .ok()??;
+        serde_json::from_str::<Value>(&raw)
+            .ok()?
+            .get(field)?
+            .as_str()
+            .filter(|value| !value.is_empty())
+            .map(str::to_string)
+    }
+
+    /// The client id: env var, then this profile's keyring entry, then the
+    /// profile's plaintext `oauth_client_id`.
+    ///
+    /// A client id is public (RFC 6749 §2.2), so all three are legitimate
+    /// homes for it; the secret below deliberately has no plaintext rung.
+    fn resolve_client_id(&self, var: &str) -> Result<String, CliError> {
+        if let Some(value) = read_oauth_env(var, false, "client_id")? {
+            return Ok(value);
+        }
+        if let Some(value) = self.keyring_field(CLIENT_ID_FIELD) {
+            return Ok(value);
+        }
+        read_client_id(var)
+    }
+
+    /// The client secret: env var, then this profile's keyring entry.
+    /// Never `profiles.toml` — it is a secret.
+    fn resolve_client_secret(&self, var: &str) -> Result<String, CliError> {
+        if let Some(value) = read_oauth_env(var, false, "client_secret")? {
+            return Ok(value);
+        }
+        self.keyring_field(CLIENT_SECRET_FIELD).ok_or_else(|| {
+            let hint = match crate::profiles::active_name() {
+                Some(profile) => format!(
+                    " (profile `{profile}` has none stored either — run \
+                     `auth login --with-token --scheme {} -p {profile}`)",
+                    self.scheme_name,
+                ),
+                None => String::new(),
+            };
+            CliError::Auth(format!(
+                "Environment variable {var} (OAuth2 client_secret) must be non-empty{hint}"
+            ))
+        })
+    }
+
+    /// Whether both halves are obtainable, mirroring the two resolvers so the
+    /// `has_credentials` probe and the token request cannot disagree.
+    fn client_credentials_available(&self, id_var: &str, secret_var: &str) -> bool {
+        (env_is_set(id_var)
+            || self.keyring_field(CLIENT_ID_FIELD).is_some()
+            || crate::profiles::oauth_client_id().is_some())
+            && (env_is_set(secret_var) || self.keyring_field(CLIENT_SECRET_FIELD).is_some())
+    }
+}
+
+fn read_client_id(var: &str) -> Result<String, CliError> {
+    if let Some(value) = read_oauth_env(var, false, "client_id")? {
+        return Ok(value);
+    }
+    crate::profiles::oauth_client_id().ok_or_else(|| {
+        let hint = match crate::profiles::active_name() {
+            Some(profile) => format!(
+                " (profile `{profile}` does not set oauth_client_id either —                  add it with `profiles create {profile} --force --oauth-client-id <ID>`)"
+            ),
+            None => String::new(),
+        };
+        CliError::Auth(format!(
+            "Environment variable {var} (OAuth2 client_id) must be non-empty{hint}"
         ))
     })
 }
@@ -569,6 +802,11 @@ pub struct OAuth2TokenProvider {
     token_prefix: String,
     cache: OnceLock<TokenCache>,
     cached_tokens: Mutex<TokenMap>,
+    /// Binary name, needed to address the keyring. Arrives with
+    /// [`inject_token_cache`](AuthProvider::inject_token_cache), which
+    /// `CliApp::propagate_root_auth` calls on every `Custom` binding before
+    /// any request runs.
+    cli_name: OnceLock<String>,
 }
 
 impl std::fmt::Debug for OAuth2TokenProvider {
@@ -599,6 +837,7 @@ impl OAuth2TokenProvider {
             token_prefix: "Bearer".to_string(),
             cache: OnceLock::new(),
             cached_tokens: Mutex::new(TokenMap::new()),
+            cli_name: OnceLock::new(),
         }
     }
 
@@ -637,6 +876,7 @@ impl OAuth2TokenProvider {
             token_prefix: token_prefix.into(),
             cache: OnceLock::new(),
             cached_tokens: Mutex::new(TokenMap::new()),
+            cli_name: OnceLock::new(),
         }
     }
 
@@ -726,8 +966,15 @@ impl OAuth2TokenProvider {
             ),
             None => grant_credential_envs(&self.grant),
         };
-        let client_id = read_env(client_id_env, "client_id").ok()?;
-        let client_secret = read_env(client_secret_env, "client_secret").ok()?;
+        // The same chain the token request uses (env -> keyring -> profile),
+        // not `read_env` alone. With a profile-stored client id the env read
+        // fails, the fingerprint comes out `None`, and the entry is written
+        // untagged — and `matches_client` treats an untagged entry as a match
+        // for anything, so a rotated client id would keep serving the old
+        // token. That silently undoes #17717 for exactly the credentials
+        // profiles introduce.
+        let client_id = self.resolve_client_id(client_id_env).ok()?;
+        let client_secret = self.resolve_client_secret(client_secret_env).ok()?;
         let refresh_token = match refresh_token_env {
             Some(env) => Some(read_env(env, "refresh_token").ok()?),
             None => None,
@@ -754,8 +1001,8 @@ impl OAuth2TokenProvider {
             .and_then(|entry| entry.refresh_token.clone())?;
         let contract = self.contract.as_ref()?;
         let refresh_endpoint = contract.refresh_endpoint.as_ref()?;
-        let client_id = read_env(&contract.client_id_env, "client_id").ok()?;
-        let client_secret = read_env(&contract.client_secret_env, "client_secret").ok()?;
+        let client_id = self.resolve_client_id(&contract.client_id_env).ok()?;
+        let client_secret = self.resolve_client_secret(&contract.client_secret_env).ok()?;
         match execute_contract_endpoint(
             refresh_endpoint,
             endpoint.base_url_override.as_deref(),
@@ -788,8 +1035,9 @@ impl OAuth2TokenProvider {
         token_url: &str,
         fingerprint: Option<&str>,
     ) -> Option<String> {
-        let map = cache.read_map();
-        let entry = map.get(token_url)?;
+        // `lookup` is profile-scoped; the fingerprint gate then rejects a
+        // token minted for a different client within the same profile.
+        let entry = cache.lookup(token_url)?;
         if !entry.matches_client(fingerprint) {
             return None;
         }
@@ -797,8 +1045,8 @@ impl OAuth2TokenProvider {
 
         let result = if let Some(contract) = &self.contract {
             let refresh_endpoint = contract.refresh_endpoint.as_ref()?;
-            let client_id = read_env(&contract.client_id_env, "client_id").ok()?;
-            let client_secret = read_env(&contract.client_secret_env, "client_secret").ok()?;
+            let client_id = self.resolve_client_id(&contract.client_id_env).ok()?;
+            let client_secret = self.resolve_client_secret(&contract.client_secret_env).ok()?;
             execute_contract_endpoint(
                 refresh_endpoint,
                 endpoint.base_url_override.as_deref(),
@@ -810,8 +1058,8 @@ impl OAuth2TokenProvider {
             .await
         } else {
             let (client_id_env, client_secret_env, _) = grant_credential_envs(&self.grant);
-            let client_id = read_env(client_id_env, "client_id").ok()?;
-            let client_secret = read_env(client_secret_env, "client_secret").ok()?;
+            let client_id = self.resolve_client_id(client_id_env).ok()?;
+            let client_secret = self.resolve_client_secret(client_secret_env).ok()?;
             refresh_cached_token(token_url, &client_id, &client_secret, refresh_token).await
         };
 
@@ -838,8 +1086,8 @@ impl OAuth2TokenProvider {
         token_url: &str,
     ) -> Result<TokenResponse, CliError> {
         if let Some(contract) = &self.contract {
-            let client_id = read_env(&contract.client_id_env, "client_id")?;
-            let client_secret = read_env(&contract.client_secret_env, "client_secret")?;
+            let client_id = self.resolve_client_id(&contract.client_id_env)?;
+            let client_secret = self.resolve_client_secret(&contract.client_secret_env)?;
             execute_contract_endpoint(
                 &contract.token_endpoint,
                 endpoint.base_url_override.as_deref(),
@@ -850,7 +1098,12 @@ impl OAuth2TokenProvider {
             )
             .await
         } else {
-            fetch_token(token_url, &self.grant).await
+            let (id_var, secret_var, _) = grant_credential_envs(&self.grant);
+            let resolved = ResolvedClientCredentials {
+                client_id: self.resolve_client_id(id_var)?,
+                client_secret: self.resolve_client_secret(secret_var)?,
+            };
+            fetch_token(token_url, &self.grant, &resolved).await
         }
     }
 
@@ -1037,7 +1290,14 @@ impl AuthProvider for OAuth2TokenProvider {
                         // `has_credentials`, which fails the same check.
                         vec![AuthCredentialSource::Missing]
                     } else {
-                        vec![AuthCredentialSource::from_env(var)]
+                        // Every rung the resolvers actually consult, in the
+                        // order they consult them — otherwise `auth status`
+                        // reports "not logged in" for a scheme whose
+                        // credential is stored against the active profile,
+                        // which is the opposite of what it is for.
+                        let mut sources = vec![AuthCredentialSource::from_env(var)];
+                        sources.extend(self.stored_sources_for_env_var(var));
+                        sources
                     }
                 }),
         );
@@ -1086,9 +1346,18 @@ impl AuthProvider for OAuth2TokenProvider {
     }
 
     fn inject_token_cache(&self, cli_name: &str) {
+        let _ = self.cli_name.set(cli_name.to_string());
         if let Some(tc) = TokenCache::for_cli(cli_name) {
             let _ = self.cache.set(tc);
         }
+    }
+
+    fn credential_fields(&self) -> Option<Vec<&'static str>> {
+        // `auth login --with-token` on a client-credentials scheme collects
+        // both halves and stores them as one JSON keyring entry, the same
+        // shape HTTP basic uses. Before this the paste wrote a raw string
+        // that nothing ever read.
+        Some(vec![CLIENT_ID_FIELD, CLIENT_SECRET_FIELD])
     }
 }
 
@@ -1108,8 +1377,7 @@ impl OAuth2TokenProvider {
             {
                 return true;
             }
-            let map = cache.read_map();
-            if let Some(entry) = map.get(token_url) {
+            if let Some(entry) = cache.lookup(token_url) {
                 if entry.matches_client(fingerprint.as_deref())
                     && entry.refresh_token.is_some()
                     && self
@@ -1122,8 +1390,11 @@ impl OAuth2TokenProvider {
             }
         }
         if let Some(contract) = &self.contract {
-            return env_is_set(&contract.client_id_env)
-                && env_is_set(&contract.client_secret_env)
+            return self
+                .client_credentials_available(
+                    &contract.client_id_env,
+                    &contract.client_secret_env,
+                )
                 && contract.token_endpoint.required_env_vars().all(env_is_set);
         }
         match &self.grant {
@@ -1131,14 +1402,13 @@ impl OAuth2TokenProvider {
                 client_id_env,
                 client_secret_env,
                 ..
-            } => env_is_set(client_id_env) && env_is_set(client_secret_env),
+            } => self.client_credentials_available(client_id_env, client_secret_env),
             OAuth2Grant::RefreshToken {
                 client_id_env,
                 client_secret_env,
                 refresh_token_env,
             } => {
-                env_is_set(client_id_env)
-                    && env_is_set(client_secret_env)
+                self.client_credentials_available(client_id_env, client_secret_env)
                     && env_is_set(refresh_token_env)
             }
         }
@@ -1607,6 +1877,164 @@ mod tests {
 
     // `parse_oauth_error_message` + `truncate_body` are tested in
     // `oauth_common::tests` — no need to duplicate here.
+
+    // ---- Token cache profile namespacing (see `TokenCache` docs) ----
+
+    #[test]
+    fn two_profiles_sharing_a_token_url_do_not_read_each_others_tokens() {
+        // The correctness bug profile namespacing exists to fix: keyed by
+        // `token_url` alone, two tenants authenticating against the same
+        // client-credentials endpoint clobber each other's tokens.
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let url = "https://identity.example/token";
+
+        let prod = TokenCache::at_path_for_profile(path.clone(), "prod");
+        let acme = TokenCache::at_path_for_profile(path.clone(), "acme");
+
+        prod.store(url, "access-prod", Some("refresh-prod"), Some(3600))
+            .unwrap();
+        acme.store(url, "access-acme", Some("refresh-acme"), Some(3600))
+            .unwrap();
+
+        assert_eq!(prod.load(url).unwrap().access_token, "access-prod");
+        assert_eq!(acme.load(url).unwrap().access_token, "access-acme");
+        assert_eq!(
+            prod.load(url).unwrap().refresh_token.as_deref(),
+            Some("refresh-prod"),
+        );
+    }
+
+    #[test]
+    fn profile_scoping_and_client_fingerprinting_compose() {
+        // The two mechanisms landed independently (#17654 keys the cache per
+        // profile, #17717 tags each entry with the client that minted it) and
+        // each is blind to the other's failure mode:
+        //
+        //   - fingerprint alone: two profiles share one key, so switching
+        //     profiles overwrites and re-mints on every switch.
+        //   - profile key alone: rotating the client id inside one profile
+        //     keeps serving the token minted for the old client.
+        //
+        // Both have to hold at once.
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let url = "https://identity.example/token";
+
+        let prod = TokenCache::at_path_for_profile(path.clone(), "prod");
+        let acme = TokenCache::at_path_for_profile(path.clone(), "acme");
+
+        let fp_a = client_fingerprint("id-a", "secret-a", None);
+        let fp_b = client_fingerprint("id-b", "secret-b", None);
+
+        prod.store_for_client(url, "tok-prod", None, Some(3600), Some(&fp_a))
+            .unwrap();
+        acme.store_for_client(url, "tok-acme", None, Some(3600), Some(&fp_a))
+            .unwrap();
+
+        // Profile isolation: same client, same token url, different tenants.
+        assert_eq!(
+            prod.load_for_client(url, Some(&fp_a)).unwrap().access_token,
+            "tok-prod",
+        );
+        assert_eq!(
+            acme.load_for_client(url, Some(&fp_a)).unwrap().access_token,
+            "tok-acme",
+        );
+
+        // Client rotation inside one profile is still a miss.
+        assert!(
+            prod.load_for_client(url, Some(&fp_b)).is_none(),
+            "a token minted for another client must not be reused",
+        );
+
+        // And the other profile's entry survives that miss.
+        assert_eq!(
+            acme.load_for_client(url, Some(&fp_a)).unwrap().access_token,
+            "tok-acme",
+        );
+    }
+
+    #[test]
+    fn a_pre_existing_unprofiled_cache_still_resolves() {
+        // Nobody is logged out by an upgrade: with no profile the key is
+        // byte-identical to what every pre-profiles binary wrote.
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let url = "https://identity.example/token";
+
+        // Exactly the shape a pre-profiles binary produced.
+        std::fs::write(
+            &path,
+            serde_json::json!({
+                url: { "access_token": "legacy-access", "refresh_token": "legacy-refresh" }
+            })
+            .to_string(),
+        )
+        .unwrap();
+
+        let unprofiled = TokenCache::at_path(path.clone());
+        assert_eq!(unprofiled.load(url).unwrap().access_token, "legacy-access");
+
+        // A profiled read must NOT see it — that entry belongs to whoever
+        // was logged in before profiles, not to a named tenant.
+        let profiled = TokenCache::at_path_for_profile(path, "prod");
+        assert!(profiled.load(url).is_none());
+    }
+
+    #[test]
+    fn purge_profile_removes_that_profiles_entries_and_only_those() {
+        // `profiles remove` must not log the user out of the tenants they
+        // kept, nor out of their unprofiled session.
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let url = "https://identity.example/token";
+        let other_url = "https://other.example/token";
+
+        let unprofiled = TokenCache::at_path(path.clone());
+        let prod = TokenCache::at_path_for_profile(path.clone(), "prod");
+        let acme = TokenCache::at_path_for_profile(path.clone(), "acme");
+
+        unprofiled.store(url, "legacy", None, None).unwrap();
+        prod.store(url, "prod-a", None, None).unwrap();
+        prod.store(other_url, "prod-b", None, None).unwrap();
+        acme.store(url, "acme-a", None, None).unwrap();
+
+        unprofiled.purge_profile("prod").unwrap();
+
+        assert!(prod.load(url).is_none(), "prod's entry should be gone");
+        assert!(prod.load(other_url).is_none(), "prod's other entry too");
+        assert_eq!(acme.load(url).unwrap().access_token, "acme-a");
+        assert_eq!(unprofiled.load(url).unwrap().access_token, "legacy");
+    }
+
+    #[test]
+    fn purge_profile_is_idempotent_and_does_not_rewrite_a_clean_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let cache = TokenCache::at_path(path.clone());
+        cache
+            .store("https://identity.example/token", "legacy", None, None)
+            .unwrap();
+        let before = std::fs::read_to_string(&path).unwrap();
+
+        cache.purge_profile("never-existed").unwrap();
+        assert_eq!(std::fs::read_to_string(&path).unwrap(), before);
+    }
+
+    #[test]
+    fn a_profile_named_like_a_url_suffix_cannot_collide() {
+        // `#` is the separator precisely because it cannot appear in a
+        // profile name (see `validate_profile_name`), so a bare `token_url`
+        // and a namespaced one are always distinguishable.
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("credentials.json");
+        let cache = TokenCache::at_path(path.clone());
+        assert_eq!(cache.key_for("https://a/token"), "https://a/token");
+
+        let profiled = TokenCache::at_path_for_profile(path, "prod");
+        assert_eq!(profiled.key_for("https://a/token"), "https://a/token#prod");
+    }
 
     // ---- Token cache tests ----
 
