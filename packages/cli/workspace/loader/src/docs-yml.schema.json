@@ -6644,7 +6644,7 @@
               "type": "null"
             }
           ],
-          "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants."
+          "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
         },
         "embedding": {
           "oneOf": [
@@ -6655,7 +6655,7 @@
               "type": "null"
             }
           ],
-          "description": "Controls which third-party sites may embed your documentation in an iframe.\nBy default only your docs site itself (and the Fern dashboard) may frame it.\n\n@default: flat"
+          "description": "Controls which third-party sites may embed your documentation in an iframe.\nBy default only your docs site itself (and the Fern dashboard) may frame it."
         }
       },
       "additionalProperties": false

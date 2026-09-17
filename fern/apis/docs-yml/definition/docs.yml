@@ -1149,13 +1149,13 @@ types:
           Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
           - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
           - `grouped`: Messages are shown as a single parent entry with nested variants.
+
+          @default: flat
       embedding:
         type: optional<EmbeddingConfig>
         docs: |
           Controls which third-party sites may embed your documentation in an iframe.
           By default only your docs site itself (and the Fern dashboard) may frame it.
-
-          @default: flat
 
   SearchSettingsConfig:
     properties:
