@@ -389,6 +389,67 @@ describe("replaceLibrarySymbols", () => {
         );
     });
 
+    it("keeps intraword underscores in heading slugs so C symbols like cuopt_int_t are not blocked", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["cuoptintt"]
+        });
+        const markdown = ["## cuopt_int_t", "", '<LibrarySymbol library="lib" name="cuopt_int_t" />'].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).resolves.toContain("RENDERED(cuopt_int_t)");
+
+        const collide = async (): Promise<RenderedLibrarySymbolMdx> => ({ mdx: "X", anchorIds: ["cuopt_int_t"] });
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol: collide })
+        ).rejects.toThrow(/authored heading '#cuopt_int_t' \(line 1\)/);
+    });
+
+    it("reserves suffixed slugs for repeated headings", async () => {
+        const renderSymbol = async (): Promise<RenderedLibrarySymbolMdx> => ({ mdx: "X", anchorIds: ["reset-1"] });
+        const markdown = [
+            "## Reset",
+            "",
+            "## _Reset_",
+            "",
+            '<LibrarySymbol library="lib" name="Client::reset" />'
+        ].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).rejects.toThrow(/'#reset-1'.*authored heading '#reset-1' \(line 3\)/);
+    });
+
+    it("detects setext and block-quoted headings, offsetting lines past frontmatter", async () => {
+        const renderSymbol = async (): Promise<RenderedLibrarySymbolMdx> => ({ mdx: "X", anchorIds: ["reset"] });
+        const setext = [
+            "---",
+            "title: T",
+            "---",
+            "Reset",
+            "-----",
+            "",
+            '<LibrarySymbol library="lib" name="Client::reset" />'
+        ];
+        await expect(
+            replaceLibrarySymbols({
+                markdown: setext.join("\n"),
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/authored heading '#reset' \(line 4\)/);
+
+        const quoted = ["> ## Reset", "", '<LibrarySymbol library="lib" name="Client::reset" />'];
+        await expect(
+            replaceLibrarySymbols({
+                markdown: quoted.join("\n"),
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/authored heading '#reset' \(line 1\)/);
+    });
+
     it("does not treat `[#id]` in prose as an anchor", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,

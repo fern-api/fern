@@ -1,5 +1,8 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, type TaskContext } from "@fern-api/task-context";
+import type { Heading, Nodes as MdastNodes } from "mdast";
+import { visit } from "unist-util-visit";
+import { parseMarkdownBodyToTree } from "./parseMarkdownToTree";
 
 /**
  * Parsed `<LibrarySymbol ... />` attributes, after validation.
@@ -121,19 +124,33 @@ interface AnchorOwner {
 }
 
 /**
- * Approximates the id the docs renderer derives from heading text (github-slugger rules):
- * inline markup stripped, lowercased, punctuation dropped, spaces turned into hyphens.
+ * Stateful heading slugger matching github-slugger, which the docs renderer uses for heading
+ * ids: lowercase, drop everything except letters, numbers, `-`, `_` and spaces, spaces to `-`,
+ * and suffix repeated slugs with `-1`, `-2`, ... in document order.
  */
-function slugifyHeading(text: string): string {
-    return text
-        .replace(/`([^`]*)`/g, "$1")
-        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
-        .replace(/<[^>]+>/g, "")
-        .replace(/[*_~]/g, "")
-        .trim()
-        .toLowerCase()
-        .replace(/[^\p{L}\p{N}\s-]/gu, "")
-        .replace(/\s+/g, "-");
+class HeadingSlugger {
+    private readonly seen = new Map<string, number>();
+
+    public slug(text: string): string {
+        const base = text
+            .trim()
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, "")
+            .replace(/\s+/g, "-");
+        const count = this.seen.get(base) ?? 0;
+        this.seen.set(base, count + 1);
+        return count === 0 ? base : `${base}-${count}`;
+    }
+}
+
+function mdastToString(node: MdastNodes): string {
+    if ("value" in node && typeof node.value === "string") {
+        return node.value;
+    }
+    if ("children" in node) {
+        return node.children.map((child) => mdastToString(child)).join("");
+    }
+    return "";
 }
 
 function recordAnchor(anchors: Map<string, AnchorOwner>, id: string, line: number, kind: string): void {
@@ -143,14 +160,46 @@ function recordAnchor(anchors: Map<string, AnchorOwner>, id: string, line: numbe
     anchors.set(id, { tag: `the authored ${kind} '#${id}'`, line });
 }
 
-/**
- * Anchors the author already placed on the page (outside inert regions), so an included
- * symbol cannot silently duplicate one of them: explicit `## Title [#id]` suffixes, ids the
- * renderer derives from plain heading text, and `<Anchor id="...">`.
- */
-function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<string, AnchorOwner> {
-    const anchors = new Map<string, AnchorOwner>();
+function recordHeading(
+    anchors: Map<string, AnchorOwner>,
+    slugger: HeadingSlugger,
+    headingText: string,
+    line: number
+): void {
+    const explicit = EXPLICIT_HEADING_ANCHOR_REGEX.exec(headingText)?.[1];
+    if (explicit != null) {
+        recordAnchor(anchors, explicit, line, "anchor");
+    } else {
+        recordAnchor(anchors, slugger.slug(headingText), line, "heading");
+    }
+}
 
+/**
+ * Collects every heading (ATX, setext, nested in block quotes/lists, ...) via the package's
+ * MDX parser, which already skips code and comments. Returns false when the page is not
+ * parseable MDX so the caller can fall back to a line scan.
+ */
+function collectHeadingsFromTree(
+    markdown: string,
+    frontmatterLength: number,
+    anchors: Map<string, AnchorOwner>
+): boolean {
+    let tree: ReturnType<typeof parseMarkdownBodyToTree>;
+    try {
+        tree = parseMarkdownBodyToTree(markdown.slice(frontmatterLength));
+    } catch {
+        return false;
+    }
+    const lineOffset = markdown.slice(0, frontmatterLength).split("\n").length - 1;
+    const slugger = new HeadingSlugger();
+    visit(tree, "heading", (heading: Heading) => {
+        recordHeading(anchors, slugger, mdastToString(heading), (heading.position?.start.line ?? 1) + lineOffset);
+    });
+    return true;
+}
+
+function collectHeadingsByLine(markdown: string, inertRegions: Region[], anchors: Map<string, AnchorOwner>): void {
+    const slugger = new HeadingSlugger();
     let offset = 0;
     let lineNumber = 0;
     for (const line of markdown.split("\n")) {
@@ -161,15 +210,23 @@ function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<stri
             continue;
         }
         const headingText = ATX_HEADING_REGEX.exec(line)?.[1];
-        if (headingText == null) {
-            continue;
+        if (headingText != null) {
+            recordHeading(anchors, slugger, headingText.replace(/[`*_~]/g, ""), lineNumber);
         }
-        const explicit = EXPLICIT_HEADING_ANCHOR_REGEX.exec(headingText)?.[1];
-        if (explicit != null) {
-            recordAnchor(anchors, explicit, lineNumber, "anchor");
-        } else {
-            recordAnchor(anchors, slugifyHeading(headingText), lineNumber, "heading");
-        }
+    }
+}
+
+/**
+ * Anchors the author already placed on the page (outside inert regions), so an included
+ * symbol cannot silently duplicate one of them: explicit `## Title [#id]` suffixes, ids the
+ * renderer derives from plain heading text, and `<Anchor id="...">`.
+ */
+function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<string, AnchorOwner> {
+    const anchors = new Map<string, AnchorOwner>();
+
+    const frontmatterLength = FRONTMATTER_REGEX.exec(markdown)?.[0].length ?? 0;
+    if (!collectHeadingsFromTree(markdown, frontmatterLength, anchors)) {
+        collectHeadingsByLine(markdown, inertRegions, anchors);
     }
 
     ANCHOR_COMPONENT_REGEX.lastIndex = 0;
