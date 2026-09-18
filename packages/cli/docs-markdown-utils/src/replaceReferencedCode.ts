@@ -85,10 +85,7 @@ function extractLines(content: string, linesParam: string): string {
  * by any run of backticks that appears inside it (minimum of three).
  */
 function getCodeFence(content: string): string {
-    let longest = 0;
-    for (const run of content.match(/`+/g) ?? []) {
-        longest = Math.max(longest, run.length);
-    }
+    const longest = (content.match(/`+/g) ?? []).reduce((max, run) => Math.max(max, run.length), 0);
     return "`".repeat(Math.max(3, longest + 1));
 }
 
