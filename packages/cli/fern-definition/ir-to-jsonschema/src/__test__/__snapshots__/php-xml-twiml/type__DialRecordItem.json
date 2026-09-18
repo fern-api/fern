@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "record-from-answer",
+    "record-from-ringing"
+  ],
+  "definitions": {}
+}
