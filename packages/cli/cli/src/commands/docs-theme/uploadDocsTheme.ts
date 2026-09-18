@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { compileGlobalTheme } from "@fern-api/remote-workspace-runner";
+import { CompiledGlobalTheme, compileGlobalTheme } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -84,13 +84,24 @@ export async function uploadDocsTheme({
 
         // FDR merges this ledger-shaped fragment into every site that publishes
         // with `global-theme: <name>`, and re-merges them when it changes.
-        const compiled = await compileGlobalTheme({
-            rawTheme,
-            themeDirectory,
-            taskContext: context,
-            cliVersion: cliContext.environment.packageVersion
-        });
-        await processor.uploadFiles(compiled.files.values());
+        // Without it, publishes fall back to stitching the theme locally.
+        let compiled: CompiledGlobalTheme | undefined;
+        try {
+            compiled = await compileGlobalTheme({
+                rawTheme,
+                themeDirectory,
+                taskContext: context,
+                cliVersion: cliContext.environment.packageVersion
+            });
+            await processor.uploadFiles(compiled.files.values());
+        } catch (err) {
+            compiled = undefined;
+            context.logger.warn(
+                `Could not compile theme for server-side merging; sites using it will stitch it at publish instead: ${
+                    err instanceof Error ? err.message : String(err)
+                }`
+            );
+        }
 
         const saveUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
         context.logger.debug(`Saving theme to ${saveUrl}`);
@@ -103,7 +114,9 @@ export async function uploadDocsTheme({
                 body: JSON.stringify({
                     name,
                     config: processedConfig,
-                    compiled: { config: compiled.config, fileManifest: compiled.fileManifest }
+                    ...(compiled != null && {
+                        compiled: { config: compiled.config, fileManifest: compiled.fileManifest }
+                    })
                 })
             });
         } catch (err) {
