@@ -46,15 +46,15 @@ describe("runLocalParser", () => {
             );
         });
 
-        const ir = await runLocalParser({
+        const result = await runLocalParser({
             context: makeContext(),
             sourcePath: AbsoluteFilePath.of("/tmp/src"),
             language: "PYTHON",
             config: { packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk", branch: "v2.0.0" }
         });
 
-        // The IR is unwrapped from the `{ ir, metadata }` envelope the parser writes.
-        expect(ir).toEqual({ rootModule: { name: "sdk" } });
+        // The `{ ir, metadata }` envelope is returned as written; orchestrate unwraps it.
+        expect(result).toEqual({ ir: { rootModule: { name: "sdk" } }, metadata: { packageName: "sdk" } });
 
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         // Without this command the image boots the Lambda handler instead of the CLI.
@@ -83,14 +83,14 @@ describe("runLocalParser", () => {
             await writeFile(join(outputDir, "ir.json"), JSON.stringify({ ir: { rootNamespace: { name: "acme" } } }));
         });
 
-        const ir = await runLocalParser({
+        const result = await runLocalParser({
             context: makeContext(),
             sourcePath: AbsoluteFilePath.of("/tmp/cpp"),
             language: "CPP",
             config: { doxyfileContent: "PROJECT_NAME = acme", sourceUrl: "https://github.com/acme/cpp" }
         });
 
-        expect(ir).toEqual({ rootNamespace: { name: "acme" } });
+        expect(result).toEqual({ ir: { rootNamespace: { name: "acme" } } });
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         expect(call.imageName).toBe("fernenterprise/fern-cpp-library-docs-parser:latest");
         expect(call.pull).toBe(true);
