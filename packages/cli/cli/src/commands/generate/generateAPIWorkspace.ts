@@ -16,6 +16,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { mapFernGroupToSdkConfig } from "../sdk-migrate/mapFernGroupToSdkConfig.js";
 import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
 import {
     assignFernHostedOutputDirectories,
@@ -252,6 +253,7 @@ export async function generateWorkspace({
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
                         sdkConfigV1,
+                        mapFernGroupToSdkConfig,
                         generateFullProject: pack
                     });
                 }

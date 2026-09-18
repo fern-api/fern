@@ -46,10 +46,13 @@ import {
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
-import { formatSdkConfigMappingDiagnostic } from "./mapFernGroupToSdkConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
-import { prepareFernSdkGenApiSdkConfigPayload } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+import {
+    formatSdkConfigMappingDiagnostic,
+    type MapFernGroupToSdkConfig,
+    prepareFernSdkGenApiSdkConfigPayload
+} from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
@@ -91,7 +94,8 @@ export async function runRemoteGenerationForGenerator({
     sdkGenApiPreparationBatch,
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
-    generateFullProject
+    generateFullProject,
+    mapFernGroupToSdkConfig
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -147,6 +151,7 @@ export async function runRemoteGenerationForGenerator({
     sdkGenApiPreparationBatch?: FernSdkGenApiPreparationBatch;
     sdkGenApiBatch?: FernSdkGenApiBatch;
     sdkGenApiTargetIdSeed?: string;
+    mapFernGroupToSdkConfig?: MapFernGroupToSdkConfig;
     /**
      * When true, filesystem (local-file-system / download) outputs are generated as full,
      * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
@@ -353,11 +358,19 @@ export async function runRemoteGenerationForGenerator({
                         { code: CliError.Code.ConfigError }
                     );
                 }
+                if (mapFernGroupToSdkConfig == null) {
+                    return interactiveTaskContext.failAndThrow(
+                        `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} to sdk-gen-api: no SDK Config mapper was provided`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
                 const synthesized = prepareFernSdkGenApiSdkConfigPayload({
                     workspace,
                     generatorInvocation: candidate.generatorInvocation,
                     audiences,
-                    sourceArchive: sdkGenApiSourceArchive
+                    sourceArchive: sdkGenApiSourceArchive,
+                    mapFernGroupToSdkConfig
                 });
                 const mappingErrors: FernConfigMappingDiagnostic[] = [];
                 for (const diagnostic of synthesized.diagnostics) {

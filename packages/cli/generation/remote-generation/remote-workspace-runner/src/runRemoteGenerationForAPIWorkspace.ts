@@ -31,6 +31,7 @@ import {
     type FernSdkGenApiSourceArchive,
     validateFernSdkGenApiSourceCompatibility
 } from "./fernSdkGenApiSourceArchive.js";
+import type { MapFernGroupToSdkConfig } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
@@ -90,7 +91,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     loginCommand,
     getSpecsTarGzBuffer,
     sdkConfigV1,
-    generateFullProject
+    generateFullProject,
+    mapFernGroupToSdkConfig
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -156,6 +158,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     getSpecsTarGzBuffer?: (requests: FernSourceArchiveRequest[]) => Promise<FernSourceArchiveResolution>;
     /** Validated SDK Config v1 supplied explicitly by the CLI for this API generation. */
     sdkConfigV1?: FernSdkConfigV1Payload;
+    mapFernGroupToSdkConfig?: MapFernGroupToSdkConfig;
     /**
      * When true, filesystem (local-file-system / download) outputs are generated as full,
      * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
@@ -284,6 +287,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
                     sdkGenApiTargetIdSeed: generatorIndex.toString(),
                     generateFullProject,
+                    mapFernGroupToSdkConfig,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -560,6 +564,7 @@ async function generateOne({
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
     generateFullProject,
+    mapFernGroupToSdkConfig,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -604,6 +609,7 @@ async function generateOne({
     sdkGenApiBatch: FernSdkGenApiBatch | undefined;
     sdkGenApiTargetIdSeed: string;
     generateFullProject: boolean | undefined;
+    mapFernGroupToSdkConfig: MapFernGroupToSdkConfig | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -703,7 +709,8 @@ async function generateOne({
             sdkGenApiPreparationBatch,
             sdkGenApiBatch,
             sdkGenApiTargetIdSeed,
-            generateFullProject
+            generateFullProject,
+            mapFernGroupToSdkConfig
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {

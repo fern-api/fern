@@ -21,12 +21,10 @@ export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 export {
     formatSdkConfigMappingDiagnostic,
-    type MappingResult,
-    mapFernDefinitionToSdkConfigApi,
-    mapFernGroupToSdkConfig,
-    type SourceDerivedApiFields
-} from "./mapFernGroupToSdkConfig.js";
-export { prepareFernSdkGenApiSdkConfigPayload } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+    type MapFernGroupToSdkConfig,
+    prepareFernSdkGenApiSdkConfigPayload,
+    type SdkConfigMappingResult
+} from "./prepareFernSdkGenApiSdkConfigPayload.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";
 export type {

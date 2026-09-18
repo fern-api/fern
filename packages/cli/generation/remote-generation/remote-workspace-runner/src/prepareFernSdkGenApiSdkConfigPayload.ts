@@ -3,18 +3,35 @@ import type { Audiences, generatorsYml } from "@fern-api/configuration";
 import {
     type FernConfigMappingDiagnostic,
     parseSdkConfigV1,
+    type SdkConfigV1Document,
     type SdkConfigV1SourceConfig
 } from "@postman/sdk-config/sdk-config/v1";
 
 import type { FernSdkGenApiPayload } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive, FernSdkGenApiSourceManifestEntry } from "./fernSdkGenApiSourceArchive.js";
-import { mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
 
 type SdkConfigSourceType = "openapi" | "asyncapi" | "graphql";
 
 export interface FernSdkGenApiSdkConfigPayload extends FernSdkGenApiPayload {
     payloadKind: "sdk-config-v1";
     diagnostics: FernConfigMappingDiagnostic[];
+}
+
+export interface SdkConfigMappingResult {
+    diagnostics: FernConfigMappingDiagnostic[];
+    sdkConfig: SdkConfigV1Document;
+}
+
+/** Maps a generators.yml group to SDK Config v1; `fern sdk migrate`'s mapper, injected by the CLI. */
+export type MapFernGroupToSdkConfig = (args: {
+    fernWorkspace: Pick<FernWorkspace, "definition">;
+    group: generatorsYml.GeneratorGroup;
+    source: SdkConfigV1SourceConfig;
+}) => SdkConfigMappingResult;
+
+export function formatSdkConfigMappingDiagnostic(diagnostic: FernConfigMappingDiagnostic): string {
+    const destination = diagnostic.sdkConfigPath == null ? "" : `; SDK Config: ${diagnostic.sdkConfigPath.join(".")}`;
+    return `[${diagnostic.severity}] [${diagnostic.code}] ${diagnostic.path.join(".")}: ${diagnostic.reason}${destination}; ${diagnostic.suggestedAction}`;
 }
 
 /**
@@ -28,12 +45,14 @@ export function prepareFernSdkGenApiSdkConfigPayload({
     workspace,
     generatorInvocation,
     audiences,
-    sourceArchive
+    sourceArchive,
+    mapFernGroupToSdkConfig
 }: {
     workspace: Pick<FernWorkspace, "definition">;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     audiences: Audiences;
     sourceArchive: FernSdkGenApiSourceArchive;
+    mapFernGroupToSdkConfig: MapFernGroupToSdkConfig;
 }): FernSdkGenApiSdkConfigPayload {
     const mapped = mapFernGroupToSdkConfig({
         fernWorkspace: workspace,
