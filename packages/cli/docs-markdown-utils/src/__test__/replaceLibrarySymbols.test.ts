@@ -450,6 +450,37 @@ describe("replaceLibrarySymbols", () => {
         ).rejects.toThrow(/authored heading '#reset' \(line 1\)/);
     });
 
+    it("keeps tags inside block-quoted and list-nested fences literal", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: []
+        });
+        const markdown = [
+            "> ```mdx",
+            '> <LibrarySymbol library="lib" name="Quoted" />',
+            "> ```",
+            "",
+            "- item",
+            "",
+            "  ```mdx",
+            '  <LibrarySymbol library="lib" name="Listed" />',
+            "  ```",
+            "",
+            '<LibrarySymbol library="lib" name="Live" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(result).toContain('> <LibrarySymbol library="lib" name="Quoted" />');
+        expect(result).toContain("RENDERED(Live)");
+        expect(result).toContain('  <LibrarySymbol library="lib" name="Listed" />');
+        expect(result).not.toContain("RENDERED(Quoted)");
+        expect(result).not.toContain("RENDERED(Listed)");
+    });
+
     it("does not treat `[#id]` in prose as an anchor", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,

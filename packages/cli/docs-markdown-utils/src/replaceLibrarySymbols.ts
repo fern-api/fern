@@ -1,6 +1,6 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, type TaskContext } from "@fern-api/task-context";
-import type { Heading, Nodes as MdastNodes } from "mdast";
+import type { Heading, Nodes as MdastNodes, Root as MdastRoot } from "mdast";
 import { visit } from "unist-util-visit";
 import { parseMarkdownBodyToTree } from "./parseMarkdownToTree";
 
@@ -54,6 +54,7 @@ const TAG_NAME = "<LibrarySymbol";
 const ALLOWED_ATTRIBUTES: ReadonlySet<string> = new Set(["library", "name", "heading", "members"]);
 type Region = [start: number, end: number];
 
+// MDX has no indented code blocks, so a fence may be indented arbitrarily.
 const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
 const CODE_SPAN_REGEX = /(`+)(?!`)[\s\S]*?[^`]\1(?!`)/g;
 const MDX_COMMENT_REGEX = /\{\/\*[\s\S]*?\*\/\}/g;
@@ -63,12 +64,53 @@ const EXPLICIT_HEADING_ANCHOR_REGEX = /\s*\[#([^\]\s]+)\]$/;
 const ANCHOR_COMPONENT_REGEX = /<Anchor\s[^>]*?\bid\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
 
 /**
- * Regions where a tag is documentation rather than a live component: YAML frontmatter,
- * fenced code blocks (closed by a fence of the same character at least as long as the
- * opener, or EOF), inline code spans of any backtick length, and MDX block comments.
+ * The page parsed with the package's MDX parser, with offsets/lines relative to the full
+ * file (the parser itself only sees the body after frontmatter). Undefined when the page is
+ * not parseable MDX, in which case callers fall back to line/regex scanning.
  */
-function findInertRegions(markdown: string): Region[] {
+interface ParsedPage {
+    tree: MdastRoot;
+    frontmatterLength: number;
+    lineOffset: number;
+}
+
+function parsePage(markdown: string): ParsedPage | undefined {
+    const frontmatterLength = FRONTMATTER_REGEX.exec(markdown)?.[0].length ?? 0;
+    try {
+        return {
+            tree: parseMarkdownBodyToTree(markdown.slice(frontmatterLength)),
+            frontmatterLength,
+            lineOffset: markdown.slice(0, frontmatterLength).split("\n").length - 1
+        };
+    } catch {
+        return undefined;
+    }
+}
+
+const INERT_NODE_TYPES: ReadonlySet<string> = new Set(["code", "inlineCode", "mdxFlowExpression", "mdxTextExpression"]);
+
+/**
+ * Regions where a tag is documentation rather than a live component: YAML frontmatter,
+ * fenced code blocks (including inside block quotes and lists), inline code spans,
+ * and MDX expressions/comments. Taken from the syntax tree when the page parses; otherwise
+ * approximated with a line scan (fences closed by a fence of the same character at least as
+ * long as the opener, or EOF) plus regexes for code spans and comments.
+ */
+function findInertRegions(markdown: string, page: ParsedPage | undefined): Region[] {
     const regions: Region[] = [];
+    if (page != null) {
+        if (page.frontmatterLength > 0) {
+            regions.push([0, page.frontmatterLength]);
+        }
+        visit(page.tree, (node: MdastNodes) => {
+            const start = node.position?.start.offset;
+            const end = node.position?.end.offset;
+            if (INERT_NODE_TYPES.has(node.type) && start != null && end != null) {
+                regions.push([start + page.frontmatterLength, end + page.frontmatterLength]);
+            }
+        });
+        return regions;
+    }
 
     const frontmatter = FRONTMATTER_REGEX.exec(markdown)?.[0];
     if (frontmatter != null) {
@@ -174,28 +216,12 @@ function recordHeading(
     }
 }
 
-/**
- * Collects every heading (ATX, setext, nested in block quotes/lists, ...) via the package's
- * MDX parser, which already skips code and comments. Returns false when the page is not
- * parseable MDX so the caller can fall back to a line scan.
- */
-function collectHeadingsFromTree(
-    markdown: string,
-    frontmatterLength: number,
-    anchors: Map<string, AnchorOwner>
-): boolean {
-    let tree: ReturnType<typeof parseMarkdownBodyToTree>;
-    try {
-        tree = parseMarkdownBodyToTree(markdown.slice(frontmatterLength));
-    } catch {
-        return false;
-    }
-    const lineOffset = markdown.slice(0, frontmatterLength).split("\n").length - 1;
+/** Every heading (ATX, setext, nested in block quotes/lists, ...); the parser already skips code and comments. */
+function collectHeadingsFromTree(page: ParsedPage, anchors: Map<string, AnchorOwner>): void {
     const slugger = new HeadingSlugger();
-    visit(tree, "heading", (heading: Heading) => {
-        recordHeading(anchors, slugger, mdastToString(heading), (heading.position?.start.line ?? 1) + lineOffset);
+    visit(page.tree, "heading", (heading: Heading) => {
+        recordHeading(anchors, slugger, mdastToString(heading), (heading.position?.start.line ?? 1) + page.lineOffset);
     });
-    return true;
 }
 
 function collectHeadingsByLine(markdown: string, inertRegions: Region[], anchors: Map<string, AnchorOwner>): void {
@@ -221,11 +247,16 @@ function collectHeadingsByLine(markdown: string, inertRegions: Region[], anchors
  * symbol cannot silently duplicate one of them: explicit `## Title [#id]` suffixes, ids the
  * renderer derives from plain heading text, and `<Anchor id="...">`.
  */
-function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<string, AnchorOwner> {
+function findAuthoredAnchors(
+    markdown: string,
+    page: ParsedPage | undefined,
+    inertRegions: Region[]
+): Map<string, AnchorOwner> {
     const anchors = new Map<string, AnchorOwner>();
 
-    const frontmatterLength = FRONTMATTER_REGEX.exec(markdown)?.[0].length ?? 0;
-    if (!collectHeadingsFromTree(markdown, frontmatterLength, anchors)) {
+    if (page != null) {
+        collectHeadingsFromTree(page, anchors);
+    } else {
         collectHeadingsByLine(markdown, inertRegions, anchors);
     }
 
@@ -341,8 +372,9 @@ export async function replaceLibrarySymbols({
         return markdown;
     }
 
-    const inertRegions = findInertRegions(markdown);
-    const anchorsOnPage = findAuthoredAnchors(markdown, inertRegions);
+    const page = parsePage(markdown);
+    const inertRegions = findInertRegions(markdown, page);
+    const anchorsOnPage = findAuthoredAnchors(markdown, page, inertRegions);
     const chunks: string[] = [];
     let cursor = 0;
     TAG_REGEX.lastIndex = 0;
