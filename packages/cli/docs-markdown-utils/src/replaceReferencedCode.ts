@@ -80,6 +80,22 @@ function extractLines(content: string, linesParam: string): string {
     return extractedLines.join("\n");
 }
 
+/**
+ * Returns a backtick fence long enough to wrap `content` without being terminated
+ * by any run of backticks that appears inside it (minimum of three).
+ */
+function getCodeFence(content: string): string {
+    let longest = 0;
+    for (const run of content.match(/`+/g) ?? []) {
+        longest = Math.max(longest, run.length);
+    }
+    return "`".repeat(Math.max(3, longest + 1));
+}
+
+function getLineNumber(source: string, index: number): number {
+    return source.slice(0, index).split("\n").length;
+}
+
 const CODE_TAG_REGEX = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
 /**
@@ -185,14 +201,14 @@ export async function replaceReferencedCode({
                             context.logger.warn(
                                 `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
                             );
-                            break;
+                            continue;
                         }
                         replacement = await response.text();
                     } catch (e) {
                         context.logger.warn(
                             `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
                         );
-                        break;
+                        continue;
                     }
                 }
 
@@ -299,8 +315,8 @@ export async function replaceReferencedCode({
                 }
             }
 
-            // TODO: if the code content includes ```, add more backticks to avoid conflicts
-            replacement = `\`\`\`${metastring}\n${replacement}\n\`\`\``;
+            const fence = getCodeFence(replacement);
+            replacement = `${fence}${metastring}\n${replacement}\n${fence}`;
             replacement = replacement
                 .split("\n")
                 .map((line) => indent + line)
@@ -308,8 +324,10 @@ export async function replaceReferencedCode({
             replacement = replacement + "\n"; // add newline after the code block
             newMarkdown = newMarkdown.replace(matchString, replacement);
         } catch (e) {
-            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
-            break;
+            const line = getLineNumber(markdown, match.index);
+            context.logger.warn(
+                `[${absolutePathToMarkdownFile}:${line}] Failed to read code file "${src}" referenced by <Code src>: ${e instanceof Error ? e.message : String(e)}`
+            );
         }
     }
 
