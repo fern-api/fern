@@ -633,6 +633,84 @@
                         },
                         "propertyAccess": null,
                         "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "sortOrders",
+                            "name": {
+                                "originalName": "sortOrders",
+                                "camelCase": {
+                                    "unsafeName": "sortOrders",
+                                    "safeName": "sortOrders"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "sort_orders",
+                                    "safeName": "sort_orders"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SORT_ORDERS",
+                                    "safeName": "SORT_ORDERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SortOrders",
+                                    "safeName": "SortOrders"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:SortOrder"
+                                    }
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "tags",
+                            "name": {
+                                "originalName": "tags",
+                                "camelCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TAGS",
+                                    "safeName": "TAGS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Tags",
+                                    "safeName": "Tags"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],

@@ -59,6 +59,24 @@ paths:
           schema:
             type: string
             nullable: true
+        - name: sortOrders
+          in: query
+          description: Optional array of enum values
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/SortOrder"
+              nullable: true
+        - name: tags
+          in: query
+          description: Optional array of string values
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
       responses:
         "200":
           description: ""
