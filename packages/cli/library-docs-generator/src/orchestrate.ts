@@ -560,6 +560,7 @@ async function downloadIr(
  */
 export function unwrapParserResult(result: unknown, libraryName: string, context: TaskContext): unknown {
     if (result == null || typeof result !== "object") {
+        // Let `validateLibraryIr` produce the library-specific "invalid IR" error.
         return undefined;
     }
     const wrapper = result as { ir?: unknown; warnings?: unknown };
