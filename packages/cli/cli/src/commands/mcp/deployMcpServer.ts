@@ -1,3 +1,4 @@
+import { getDashboardBaseUrl } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { createHash } from "crypto";
@@ -134,8 +135,7 @@ export async function deployHostedMcpServer({
     context.logger.info("");
     context.logger.info(`  ${chalk.bold(result.url)}`);
     context.logger.info("");
-    context.logger.info("Connect a coding agent with:");
-    context.logger.info(`  claude mcp add --transport http ${organization}-${result.slug} ${result.url}`);
+    context.logger.info(`Manage it at ${getDashboardBaseUrl()}/${organization}/mcp/${result.slug}`);
 
     return { slug: result.slug, url: result.url, deploymentStatus };
 }
