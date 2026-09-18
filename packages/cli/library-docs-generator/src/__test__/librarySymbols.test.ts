@@ -420,6 +420,52 @@ describe("renderLibrarySymbol (cpp)", () => {
         expect(result.anchorIds).not.toContain("reset");
     });
 
+    it("nests the generated body headings under the requested heading level", () => {
+        const h2 = renderLibrarySymbol(persistedCpp, {
+            name: "cuopt::Solver",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        const h4 = renderLibrarySymbol(persistedCpp, {
+            name: "cuopt::Solver",
+            heading: 4,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        const levels = (mdx: string) => mdx.split("\n").flatMap((l) => /^(#{1,6}) /.exec(l)?.[1]?.length ?? []);
+        const [h2Top, ...h2Body] = levels(h2.mdx);
+        const [h4Top, ...h4Body] = levels(h4.mdx);
+        expect(h2Top).toBe(2);
+        expect(h4Top).toBe(4);
+        expect(h2Body.length).toBeGreaterThan(0);
+        expect(Math.min(...h2Body)).toBeGreaterThan(2);
+        expect(h4Body).toEqual(h2Body.map((l) => Math.min(6, l + 2)));
+        expect(h4.anchorIds).toEqual(h2.anchorIds);
+    });
+
+    it("keeps positional sectionLabels attached to the retained methods when filtering", () => {
+        const cls = cppClass({
+            path: "labels::Api",
+            name: "Api",
+            methods: [
+                cppFunction({ name: "open", path: "labels::Api::open", signature: "void open()" }),
+                cppFunction({ name: "close", path: "labels::Api::close", signature: "void close()" })
+            ],
+            sectionLabels: { refid_open: "Lifecycle", refid_close: "Cleanup" }
+        });
+        const ir: CppLibraryDocsIr = {
+            ...cppIr,
+            rootNamespace: { ...cppNamespace, classes: [cls], namespaces: [] }
+        };
+        const result = renderLibrarySymbol(
+            { ...persistedCpp, ir },
+            { name: "labels::Api", heading: 2, members: ["close"], linkToGeneratedPages: true }
+        );
+        expect(result.mdx).toContain("Cleanup");
+        expect(result.mdx).not.toContain("Lifecycle");
+    });
+
     it("reports every member anchor emitted by a class render", () => {
         const result = renderLibrarySymbol(persistedCpp, {
             name: "cuopt::Solver",

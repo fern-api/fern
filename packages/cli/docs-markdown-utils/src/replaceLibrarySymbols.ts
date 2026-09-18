@@ -99,7 +99,11 @@ function findInertRegions(markdown: string): Region[] {
 }
 
 function isInert(regions: Region[], index: number): boolean {
-    return regions.some(([start, end]) => index >= start && index < end);
+    return inertRegionEnd(regions, index) != null;
+}
+
+function inertRegionEnd(regions: Region[], index: number): number | undefined {
+    return regions.find(([start, end]) => index >= start && index < end)?.[1];
 }
 
 function extractAttributes(attributesString: string): Record<string, string> {
@@ -202,7 +206,10 @@ export async function replaceLibrarySymbols({
     TAG_REGEX.lastIndex = 0;
     let match: RegExpExecArray | null;
     while ((match = TAG_REGEX.exec(markdown)) != null) {
-        if (isInert(inertRegions, match.index)) {
+        const inertEnd = inertRegionEnd(inertRegions, match.index);
+        if (inertEnd != null) {
+            // An unclosed opener inside code/comments must not swallow the next live tag's `/>`.
+            TAG_REGEX.lastIndex = inertEnd;
             continue;
         }
         const matchString = match[0];

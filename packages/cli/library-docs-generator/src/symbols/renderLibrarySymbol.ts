@@ -367,6 +367,26 @@ function indexCppSymbols(ns: CppNamespaceIr, index: Map<string, CppSymbol>): voi
     }
 }
 
+/**
+ * `sectionLabels` may be keyed by method path or, when keyed by Doxygen refid, correspond
+ * positionally to `methods`. Re-key by path so the mapping survives filtering `methods`.
+ */
+function sectionLabelsByPath(cls: CppClassIr): Record<string, string> {
+    const labelKeys = Object.keys(cls.sectionLabels);
+    if (labelKeys.length === 0 || cls.methods.some((m) => cls.sectionLabels[m.path] != null)) {
+        return cls.sectionLabels;
+    }
+    const byPath: Record<string, string> = {};
+    cls.methods.forEach((method, i) => {
+        const key = labelKeys[i];
+        const label = key != null ? cls.sectionLabels[key] : undefined;
+        if (label != null && byPath[method.path] == null) {
+            byPath[method.path] = label;
+        }
+    });
+    return byPath;
+}
+
 function applyCppMembers(cls: CppClassIr, members: string[] | undefined): CppClassIr {
     if (members == null) {
         return cls;
@@ -375,6 +395,7 @@ function applyCppMembers(cls: CppClassIr, members: string[] | undefined): CppCla
     const matched = new Set<string>();
     const filtered: CppClassIr = {
         ...cls,
+        sectionLabels: sectionLabelsByPath(cls),
         methods: filterMembers(cls.methods, allowlist, matched),
         staticMethods: filterMembers(cls.staticMethods, allowlist, matched),
         memberVariables: filterMembers(cls.memberVariables, allowlist, matched),
@@ -396,9 +417,41 @@ function applyCppMembers(cls: CppClassIr, members: string[] | undefined): CppCla
 }
 
 const FRONTMATTER_REGEX = /^---\n[\s\S]*?\n---\n*/;
+const HEADING_LINE_REGEX = /^(#{1,6})(?= )/;
+const CODE_FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
 
 function stripFrontmatter(mdx: string): string {
     return mdx.replace(FRONTMATTER_REGEX, "");
+}
+
+/**
+ * A generated page body assumes its title is H1 (sections H2, members H3). Shift every
+ * heading outside fenced code so the body nests under the symbol heading at `level`.
+ */
+function nestHeadingsUnder(body: string, level: number): string {
+    const delta = level - 1;
+    if (delta === 0) {
+        return body;
+    }
+    let openFence: string | undefined;
+    return body
+        .split("\n")
+        .map((line) => {
+            const fence = CODE_FENCE_REGEX.exec(line)?.[1];
+            if (fence != null) {
+                if (openFence == null) {
+                    openFence = fence;
+                } else if (fence[0] === openFence[0] && fence.length >= openFence.length) {
+                    openFence = undefined;
+                }
+                return line;
+            }
+            if (openFence != null) {
+                return line;
+            }
+            return line.replace(HEADING_LINE_REGEX, (hashes) => "#".repeat(Math.min(6, hashes.length + delta)));
+        })
+        .join("\n");
 }
 
 function deriveMeta(compound: CppCompoundIr, path: string, repo: string): CompoundMeta {
@@ -462,7 +515,7 @@ function renderCppSymbol(ir: CppLibraryDocsIr, request: LibrarySymbolRequest): R
             default:
                 assertNever(symbol);
         }
-        const mdx = `${heading}\n\n${body.trimEnd()}\n`;
+        const mdx = `${heading}\n\n${nestHeadingsUnder(body, request.heading).trimEnd()}\n`;
         return { mdx, anchorIds: collectEmittedAnchorIds(mdx) };
     } finally {
         clearEntityRegistry();

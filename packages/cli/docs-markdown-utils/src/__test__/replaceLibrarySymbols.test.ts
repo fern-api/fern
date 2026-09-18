@@ -394,6 +394,24 @@ describe("replaceLibrarySymbols", () => {
         ).rejects.toThrow(/a\.mdx:2\].*'#reset'.*\(line 1\).*Include each symbol at most once per page/);
     });
 
+    it("does not let an unclosed opener inside inline code swallow the next live tag", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        const markdown = [
+            'Start with `<LibrarySymbol library="demo"` and add a name.',
+            "",
+            '<LibrarySymbol library="demo" name="Client" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls.map((c) => c.name)).toEqual(["Client"]);
+        expect(result).toContain('`<LibrarySymbol library="demo"`');
+        expect(result).toContain("RENDERED(demo:Client)");
+    });
+
     it("rejects unknown attributes with file:line context", async () => {
         const { renderSymbol, calls } = makeRecordingRenderer();
         await expect(
