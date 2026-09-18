@@ -126,6 +126,7 @@ export async function publishDocsViaLedgerPreview({
         jsFiles: baseLocale.jsFiles,
         redirects: baseLocale.redirects,
         locale: baseLocale.locale,
+        ...(globalTheme != null && { globalTheme }),
         version: baseLocale.version,
         repo: baseLocale.repo,
         git
