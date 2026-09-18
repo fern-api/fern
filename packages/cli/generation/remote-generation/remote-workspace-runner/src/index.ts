@@ -33,6 +33,10 @@ export {
     validateFernSdkGenApiPublishCredentialSources,
     validateFernSdkGenApiPublishTargets
 } from "./fernSdkGenApi.js";
+export type { CompiledGlobalTheme } from "./compileGlobalTheme.js";
+export { canMergeThemeServerSide, compileGlobalTheme, shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
+export type { FernSdkConfigV1Payload } from "./fernSdkGenApi.js";
+export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,

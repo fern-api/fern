@@ -1,0 +1,7 @@
+- summary: |
+    `fern docs theme upload` now also uploads a compiled ledger fragment of the theme, and
+    `fern docs publish` sends the unmerged docs config plus the theme name so FDR merges the
+    global theme server-side. This lets a theme upload automatically refresh every site
+    using that theme. Themes uploaded by older CLIs (or using header/footer components)
+    continue to be stitched locally.
+  type: feat

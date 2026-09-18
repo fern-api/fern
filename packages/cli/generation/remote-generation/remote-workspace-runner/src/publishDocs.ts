@@ -49,7 +49,7 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { logViolations } from "@fern-api/api-workspace-validator";
-import { stitchGlobalTheme } from "@fern-api/docs-resolver";
+import { fetchGlobalTheme, stitchGlobalTheme } from "@fern-api/docs-resolver";
 import { validateMissingRedirects } from "@fern-api/docs-validator";
 import {
     AbsoluteFilePath,
@@ -80,6 +80,7 @@ import {
     readSdkGenSnippets,
     type SdkGenSnippets
 } from "./attachSdkGenSnippets.js";
+import { shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
@@ -330,13 +331,32 @@ export async function publishDocs({
 
     let dynamicIrWorkerPool: DynamicIrWorkerPool | undefined;
     try {
-        const effectiveWorkspace = await stitchGlobalTheme({
-            docsWorkspace,
-            organization,
-            fdrOrigin,
-            token: token.value,
-            taskContext: context
-        });
+        const globalThemeName = docsWorkspace.config.globalTheme;
+        const fetchedTheme =
+            globalThemeName != null
+                ? await fetchGlobalTheme({
+                      themeName: globalThemeName,
+                      organization,
+                      fdrOrigin,
+                      token: token.value,
+                      taskContext: context
+                  })
+                : undefined;
+        const mergeThemeServerSide = shouldMergeThemeServerSide({ deployMode, theme: fetchedTheme });
+        const effectiveWorkspace = mergeThemeServerSide
+            ? docsWorkspace
+            : await stitchGlobalTheme({
+                  docsWorkspace,
+                  organization,
+                  fdrOrigin,
+                  token: token.value,
+                  taskContext: context,
+                  theme: fetchedTheme
+              });
+        const ledgerGlobalTheme = mergeThemeServerSide ? globalThemeName : undefined;
+        if (ledgerGlobalTheme != null) {
+            context.logger.debug(`Global theme "${ledgerGlobalTheme}" will be merged by FDR at publish`);
+        }
 
         // Translated API definitions are registered to FDR after the base definition
         // resolves; the per-locale nav tree is then repointed at them (see below), which
@@ -1023,7 +1043,8 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    globalTheme: ledgerGlobalTheme
                 });
                 if (deployMode === "ledger") {
                     urlToOutput = previewResult.previewUrl;
@@ -1051,7 +1072,8 @@ export async function publishDocs({
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
                     resolver,
-                    source
+                    source,
+                    globalTheme: ledgerGlobalTheme
                 });
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
