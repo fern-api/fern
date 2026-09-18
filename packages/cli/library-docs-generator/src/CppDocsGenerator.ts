@@ -124,9 +124,13 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 
         // Stage 4: Generate index pages for namespaces
         const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
-        const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
+        // Plain-C libraries have no namespaces, so their entities live on the unnamed root.
+        const libraryNs =
+            ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName) ??
+            (ir.rootNamespace.path === "" ? ir.rootNamespace : undefined);
         if (libraryNs) {
-            const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
+            const titleName = libraryNs.name || slugBaseName;
+            const title = LIBRARY_TITLES[titleName] ?? `${titleName} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
             generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug, groups.length > 0);
         }

@@ -460,6 +460,15 @@ describe("generateCpp()", () => {
         const groupPage = readFileSync(join(tmpDir, "groups/status/index.mdx"), "utf-8");
         expect(groupPage).toContain("## Macros");
         expect(groupPage).toContain("- [`LIB_SUCCESS`](../macros/libsuccess)");
+
+        // Root-scoped (plain C) libraries have no child namespace, but still get indexes
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toContain("title: lib API Reference");
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("Macros at global scope.");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
+        expect(macroIndex).toContain("- [`LIB_MAX`](macros/libmax)");
     });
 
     it("writes no group pages when the IR has no groups with members", () => {

@@ -212,7 +212,9 @@ export function renderCategoryIndexPage(
     const lines: string[] = [];
 
     const title = `${nsTitle} — ${category.heading}`;
-    const description = `${category.heading} in the ${nsPath} namespace.`;
+    const description = nsPath
+        ? `${category.heading} in the ${nsPath} namespace.`
+        : `${category.heading} at global scope.`;
     lines.push(...renderFrontmatter(title, description));
     lines.push("");
 
