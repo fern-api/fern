@@ -241,6 +241,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.XmlUtils);
+        }
         return files;
     }
 
@@ -266,6 +269,9 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Test.Xml.XmlElementTests);
+        }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
@@ -324,6 +330,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         files.push(AsIsFiles.Json.AdditionalProperties);
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
+        }
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlElement);
         }
         return files;
     }

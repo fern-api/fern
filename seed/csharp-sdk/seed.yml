@@ -423,6 +423,12 @@ fixtures:
     - customConfig:
         experimental-enable-websockets: true
       outputFolder: no-custom-config
+  csharp-xml-twiml:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: use-undiscriminated-unions
   csharp-xml-entities:
     - customConfig: null
       outputFolder: no-custom-config
