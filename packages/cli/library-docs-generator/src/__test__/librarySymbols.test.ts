@@ -466,6 +466,30 @@ describe("renderLibrarySymbol (cpp)", () => {
         expect(result.mdx).not.toContain("Lifecycle");
     });
 
+    it("keeps distinct positional labels for retained overloads sharing a path", () => {
+        const cls = cppClass({
+            path: "labels::Api",
+            name: "Api",
+            methods: [
+                cppFunction({ name: "open", path: "labels::Api::open", signature: "void open()" }),
+                cppFunction({ name: "scan", path: "labels::Api::scan", signature: "void scan(int)" }),
+                cppFunction({ name: "scan", path: "labels::Api::scan", signature: "void scan(int, int)" })
+            ],
+            sectionLabels: { refid_open: "Lifecycle", refid_scan1: "Single value", refid_scan2: "Multiple values" }
+        });
+        const ir: CppLibraryDocsIr = {
+            ...cppIr,
+            rootNamespace: { ...cppNamespace, classes: [cls], namespaces: [] }
+        };
+        const result = renderLibrarySymbol(
+            { ...persistedCpp, ir },
+            { name: "labels::Api", heading: 2, members: ["scan"], linkToGeneratedPages: true }
+        );
+        expect(result.mdx).toContain("Single value");
+        expect(result.mdx).toContain("Multiple values");
+        expect(result.mdx).not.toContain("Lifecycle");
+    });
+
     it("reports every member anchor emitted by a class render", () => {
         const result = renderLibrarySymbol(persistedCpp, {
             name: "cuopt::Solver",

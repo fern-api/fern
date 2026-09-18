@@ -368,23 +368,25 @@ function indexCppSymbols(ns: CppNamespaceIr, index: Map<string, CppSymbol>): voi
 }
 
 /**
- * `sectionLabels` may be keyed by method path or, when keyed by Doxygen refid, correspond
- * positionally to `methods`. Re-key by path so the mapping survives filtering `methods`.
+ * `sectionLabels` is keyed either by method path or by Doxygen refid, in which case entries
+ * correspond positionally to `methods` (overloads share a path but have distinct refids). When
+ * positional, keep only the entries whose method survived, in the retained order.
  */
-function sectionLabelsByPath(cls: CppClassIr): Record<string, string> {
+function filterSectionLabels(cls: CppClassIr, retained: CppFunctionIr[]): Record<string, string> {
     const labelKeys = Object.keys(cls.sectionLabels);
     if (labelKeys.length === 0 || cls.methods.some((m) => cls.sectionLabels[m.path] != null)) {
         return cls.sectionLabels;
     }
-    const byPath: Record<string, string> = {};
+    const kept = new Set(retained);
+    const filtered: Record<string, string> = {};
     cls.methods.forEach((method, i) => {
         const key = labelKeys[i];
         const label = key != null ? cls.sectionLabels[key] : undefined;
-        if (label != null && byPath[method.path] == null) {
-            byPath[method.path] = label;
+        if (kept.has(method) && key != null && label != null) {
+            filtered[key] = label;
         }
     });
-    return byPath;
+    return filtered;
 }
 
 function applyCppMembers(cls: CppClassIr, members: string[] | undefined): CppClassIr {
@@ -393,10 +395,11 @@ function applyCppMembers(cls: CppClassIr, members: string[] | undefined): CppCla
     }
     const allowlist = new Set(members);
     const matched = new Set<string>();
+    const methods = filterMembers(cls.methods, allowlist, matched);
     const filtered: CppClassIr = {
         ...cls,
-        sectionLabels: sectionLabelsByPath(cls),
-        methods: filterMembers(cls.methods, allowlist, matched),
+        sectionLabels: filterSectionLabels(cls, methods),
+        methods,
         staticMethods: filterMembers(cls.staticMethods, allowlist, matched),
         memberVariables: filterMembers(cls.memberVariables, allowlist, matched),
         typedefs: filterMembers(cls.typedefs, allowlist, matched),
