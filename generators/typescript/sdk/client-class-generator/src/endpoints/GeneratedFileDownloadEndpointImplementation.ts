@@ -250,7 +250,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             })(),
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            refreshAuthHeaders: this.generatedSdkClientClass.getReferenceToRefreshAuthHeaders({
+                context,
+                endpoint: this.endpoint
+            })
         };
 
         return [

@@ -2,7 +2,13 @@ import type { EndpointMetadata } from "../fetcher/EndpointMetadata.js";
 import type { AuthRequest } from "./AuthRequest.js";
 
 export interface AuthProvider {
-    getAuthRequest(arg?: { endpointMetadata?: EndpointMetadata | undefined }): Promise<AuthRequest>;
+    /**
+     * @param arg.forceRefresh When true, bypasses any cached credentials and fetches fresh ones.
+     */
+    getAuthRequest(arg?: {
+        endpointMetadata?: EndpointMetadata | undefined;
+        forceRefresh?: boolean | undefined;
+    }): Promise<AuthRequest>;
 }
 
 export function isAuthProvider(value: unknown): value is AuthProvider {

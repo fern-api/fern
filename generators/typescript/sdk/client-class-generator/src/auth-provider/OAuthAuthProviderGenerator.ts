@@ -357,7 +357,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const getTokenStatements = hasExpiration
             ? `
-        if (this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
+        if (!forceRefresh && this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
@@ -367,7 +367,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this.${REFRESH_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `
             : `
-        if (this.${ACCESS_TOKEN_FIELD_NAME}) {
+        if (!forceRefresh && this.${ACCESS_TOKEN_FIELD_NAME}) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
@@ -511,7 +511,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 parameters: [
                     {
-                        name: "{ endpointMetadata }",
+                        name: "{ endpointMetadata, forceRefresh }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -519,6 +519,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     "endpointMetadata",
                                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                ),
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "forceRefresh",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
                                 )
                             ])
                         ),
@@ -531,7 +537,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ])
                 ),
                 statements: `
-        const token = await this.getToken({ endpointMetadata });
+        const token = await this.getToken({ endpointMetadata, forceRefresh });
 
         return {
             headers: {
@@ -548,7 +554,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "{ endpointMetadata }",
+                        name: "{ endpointMetadata, forceRefresh }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -556,6 +562,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     "endpointMetadata",
                                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                ),
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "forceRefresh",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
                                 )
                             ])
                         ),

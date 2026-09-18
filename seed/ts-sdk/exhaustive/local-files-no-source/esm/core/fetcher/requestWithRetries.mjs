@@ -11,6 +11,10 @@ const INITIAL_RETRY_DELAY = 1000; // in milliseconds
 const MAX_RETRY_DELAY = 60000; // in milliseconds
 const DEFAULT_MAX_RETRIES = 2;
 const JITTER_FACTOR = 0.2; // 20% random jitter
+const AUTH_FAILURE_STATUS_CODES = [401, 403];
+function isAuthFailureStatusCode(statusCode) {
+    return AUTH_FAILURE_STATUS_CODES.includes(statusCode);
+}
 function isRetryableStatusCode(statusCode) {
     return [408, 429].includes(statusCode) || statusCode >= 500;
 }
@@ -50,12 +54,16 @@ function getRetryDelayFromHeaders(response, retryAttempt) {
     return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * Math.pow(2, retryAttempt), MAX_RETRY_DELAY));
 }
 export function requestWithRetries(requestFn_1) {
-    return __awaiter(this, arguments, void 0, function* (requestFn, maxRetries = DEFAULT_MAX_RETRIES) {
+    return __awaiter(this, arguments, void 0, function* (requestFn, maxRetries = DEFAULT_MAX_RETRIES, { refreshAuth } = {}) {
         let response = yield requestFn();
         for (let i = 0; i < maxRetries; ++i) {
-            if (isRetryableStatusCode(response.status)) {
+            const shouldRefreshAuth = refreshAuth != null && isAuthFailureStatusCode(response.status);
+            if (shouldRefreshAuth || isRetryableStatusCode(response.status)) {
                 const delay = getRetryDelayFromHeaders(response, i);
                 yield new Promise((resolve) => setTimeout(resolve, delay));
+                if (shouldRefreshAuth) {
+                    yield refreshAuth();
+                }
                 response = yield requestFn();
             }
             else {

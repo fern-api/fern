@@ -3,6 +3,20 @@ const MAX_RETRY_DELAY = 60000; // in milliseconds
 const DEFAULT_MAX_RETRIES = 2;
 const JITTER_FACTOR = 0.2; // 20% random jitter
 
+const AUTH_FAILURE_STATUS_CODES = [401, 403];
+
+export interface RequestWithRetriesOptions {
+    /**
+     * Called before retrying a request that failed with 401 or 403.
+     * When omitted, auth failures are not retried.
+     */
+    refreshAuth?: () => Promise<void>;
+}
+
+function isAuthFailureStatusCode(statusCode: number): boolean {
+    return AUTH_FAILURE_STATUS_CODES.includes(statusCode);
+}
+
 function isRetryableStatusCode(statusCode: number): boolean {
     return [408, 429].includes(statusCode) || statusCode >= 500;
 }
@@ -51,14 +65,19 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
     maxRetries: number = DEFAULT_MAX_RETRIES,
+    { refreshAuth }: RequestWithRetriesOptions = {},
 ): Promise<Response> {
     let response: Response = await requestFn();
 
     for (let i = 0; i < maxRetries; ++i) {
-        if (isRetryableStatusCode(response.status)) {
+        const shouldRefreshAuth = refreshAuth != null && isAuthFailureStatusCode(response.status);
+        if (shouldRefreshAuth || isRetryableStatusCode(response.status)) {
             const delay = getRetryDelayFromHeaders(response, i);
 
             await new Promise((resolve) => setTimeout(resolve, delay));
+            if (shouldRefreshAuth) {
+                await refreshAuth();
+            }
             response = await requestFn();
         } else {
             break;
