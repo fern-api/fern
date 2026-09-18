@@ -123,5 +123,9 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
 
     public override bool Equals(object? obj) => Equals(obj as XmlElement);
 
-    public override int GetHashCode() => ToXml().GetHashCode();
+    /// <summary>
+    /// Hashes on <see cref="Name"/> only: the element is mutable, so hashing the full content
+    /// would break hash-based collections when an element is modified after insertion.
+    /// </summary>
+    public override int GetHashCode() => Name.GetHashCode();
 }

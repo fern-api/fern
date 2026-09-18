@@ -182,12 +182,20 @@ internal static class XmlUtils
             );
     }
 
+    /// <summary>
+    /// Replaces the text content of <paramref name="element"/>. Null leaves the element unchanged.
+    /// </summary>
     internal static void SetText(XElement element, string? value)
     {
-        if (value != null)
+        if (value == null)
         {
-            element.Add(new XText(value));
+            return;
         }
+        foreach (var node in element.Nodes().OfType<XText>().ToList())
+        {
+            node.Remove();
+        }
+        element.Add(new XText(value));
     }
 
     /// <summary>
@@ -201,6 +209,11 @@ internal static class XmlUtils
         }
     }
 
+    /// <summary>
+    /// Returns the text of the first child named <paramref name="name"/>, or null when the child
+    /// is absent. A present but empty child (<c>&lt;Foo/&gt;</c>) yields <c>""</c> so that an
+    /// explicitly written empty value is distinguishable from a missing one.
+    /// </summary>
     internal static string? GetChildText(XElement element, string name)
     {
         foreach (var child in element.Elements())
@@ -404,7 +417,16 @@ internal static class XmlUtils
         {
             if (type == typeof(bool))
             {
-                return (T)(object)bool.Parse(raw.Trim().ToLowerInvariant());
+                var trimmed = raw.Trim();
+                if (trimmed == "1")
+                {
+                    return (T)(object)true;
+                }
+                if (trimmed == "0")
+                {
+                    return (T)(object)false;
+                }
+                return (T)(object)bool.Parse(trimmed.ToLowerInvariant());
             }
             if (type.IsPrimitive || type == typeof(decimal))
             {
@@ -468,7 +490,9 @@ internal static class XmlUtils
     /// <summary>
     /// Collects child elements that are not part of the typed model. For wrapper elements listed in
     /// <paramref name="wrappers"/> (wrapper name → known item names), only unknown items and
-    /// attributes inside the wrapper are retained.
+    /// attributes inside the wrapper are retained. Every item with a known name is treated as
+    /// consumed by the typed property, so duplicates collapsed by a set-typed property are not
+    /// carried over as additional children.
     /// </summary>
     internal static List<XmlElement> GetAdditionalChildren(
         XElement element,

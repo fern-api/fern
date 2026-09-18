@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using NUnit.Framework;
 using SeedApi;
 using SeedApi.Core;
@@ -85,10 +86,21 @@ public class XmlElementTests
     }
 
     [Test]
+    public void SetText_ReplacesExistingText()
+    {
+        var element = new XElement("Foo", "old");
+        XmlUtils.SetText(element, "new");
+        XmlUtils.SetText(element, null);
+        Assert.That(XmlUtils.GetText(element), Is.EqualTo("new"));
+    }
+
+    [Test]
     public void ParseValue_ParsesScalars()
     {
         Assert.That(XmlUtils.ParseValue<int>("42"), Is.EqualTo(42));
         Assert.That(XmlUtils.ParseValue<bool>("True"), Is.True);
+        Assert.That(XmlUtils.ParseValue<bool>("1"), Is.True);
+        Assert.That(XmlUtils.ParseValue<bool>("0"), Is.False);
         Assert.That(XmlUtils.ParseValue<double>(" 1.5 "), Is.EqualTo(1.5));
         Assert.That(XmlUtils.ParseValue<string>("x"), Is.EqualTo("x"));
         Assert.That(XmlUtils.ParseValue<int?>(null), Is.Null);
