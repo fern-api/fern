@@ -19,6 +19,7 @@ components:
               - $ref: "#/components/schemas/Dial"
               - $ref: "#/components/schemas/Pause"
               - $ref: "#/components/schemas/Hangup"
+              - $ref: "#/components/schemas/Redirect"
     Say:
       type: object
       xml:
@@ -115,6 +116,25 @@ components:
       xml:
         name: Hangup
       properties: {}
+    Redirect:
+      type: object
+      description: Text element with a required attribute.
+      xml:
+        name: Redirect
+      required: [url, method]
+      properties:
+        url:
+          type: string
+          x-fern-xml-text: true
+        method:
+          type: string
+          xml:
+            attribute: true
+        kind:
+          type: string
+          x-fern-type: literal<"redirect">
+          xml:
+            attribute: true
     Wide:
       type: object
       description: Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.

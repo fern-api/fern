@@ -7,7 +7,11 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 type ScalarKind = "string" | "int" | "float" | "bool" | "date" | "dateTime";
 
-type XmlValue = { type: "scalar"; kind: ScalarKind } | { type: "enum"; enum: php.ClassReference } | { type: "object" };
+type XmlValue =
+    | { type: "scalar"; kind: ScalarKind }
+    | { type: "literal"; literal: FernIr.Literal }
+    | { type: "enum"; enum: php.ClassReference }
+    | { type: "object" };
 
 interface XmlProperty {
     name: FernIr.NameAndWireValueOrString;
@@ -147,12 +151,11 @@ export class XmlObjectGenerator {
             }
             case "container":
                 if (typeReference.container.type === "literal") {
-                    return {
-                        type: "scalar",
-                        kind: typeReference.container.literal.type === "boolean" ? "bool" : "string"
-                    };
+                    return { type: "literal", literal: typeReference.container.literal };
                 }
-                return { type: "scalar", kind: "string" };
+                throw new Error(
+                    `Property of xml-encoded type ${this.xml.name} has a ${typeReference.container.type} value, which has no XML representation`
+                );
             case "unknown":
                 return { type: "scalar", kind: "string" };
             default:
@@ -537,6 +540,13 @@ export class XmlObjectGenerator {
                 writer.write(`::class)${property.isOptional ? "?" : ""}->value`);
                 return;
             }
+            if (value.type === "literal") {
+                writer.writeNode(utils);
+                writer.write(
+                    `::${this.getLiteralParserName(value.literal)}(${property.isOptional ? rawOptional : rawRequired}, ${this.getLiteralExpression(value.literal)})`
+                );
+                return;
+            }
             const isPlainString = value.type === "scalar" && value.kind === "string";
             if (property.isOptional) {
                 if (isPlainString) {
@@ -642,10 +652,34 @@ export class XmlObjectGenerator {
      * First-class callable parsing one raw string; enum items are validated by `enumValues`.
      */
     private getScalarParser(property: XmlProperty): php.CodeBlock {
+        const value = property.value;
         return php.codeblock((writer) => {
+            if (value.type === "literal") {
+                writer.write("fn (string $raw) => ");
+                writer.writeNode(this.context.getXmlUtilsClassReference());
+                writer.write(
+                    `::${this.getLiteralParserName(value.literal)}($raw, ${this.getLiteralExpression(value.literal)})`
+                );
+                return;
+            }
             writer.writeNode(this.context.getXmlUtilsClassReference());
-            writer.write(`::${this.getScalarParserName(property.value)}(...)`);
+            writer.write(`::${this.getScalarParserName(value)}(...)`);
         });
+    }
+
+    private getLiteralParserName(literal: FernIr.Literal): string {
+        return literal.type === "boolean" ? "parseBoolLiteral" : "parseLiteral";
+    }
+
+    private getLiteralExpression(literal: FernIr.Literal): string {
+        switch (literal.type) {
+            case "string":
+                return this.phpString(literal.string);
+            case "boolean":
+                return literal.boolean ? "true" : "false";
+            default:
+                assertNever(literal);
+        }
     }
 
     private getScalarParserName(value: XmlValue): string {
@@ -797,8 +831,8 @@ export class XmlObjectGenerator {
             parameters.push(
                 php.parameter({
                     name: "attributes",
-                    type: attributesType,
-                    initializer: allAttributesOptional ? php.codeblock("[]") : undefined,
+                    type: allAttributesOptional ? attributesType : php.Type.optional(attributesType),
+                    initializer: php.codeblock(allAttributesOptional ? "[]" : "null"),
                     docs: `Properties of the new <${childXmlName}> (ignored when a ${childClass.name} is given).`
                 })
             );
@@ -821,16 +855,37 @@ export class XmlObjectGenerator {
             return_: php.Type.reference(childClass),
             docs: `Adds a <${childXmlName}> child element and returns it (for nesting further children).`,
             body: php.codeblock((writer) => {
-                writer.write(`$${childParamName}Element = $${childParamName} instanceof `);
-                writer.writeNode(childClass);
-                writer.write(` ? $${childParamName} : new `);
-                writer.writeNode(childClass);
-                if (textProperty != null) {
+                const constructorArgs =
+                    textProperty != null
+                        ? `[...$attributes, ${this.phpString(textFieldName ?? "")} => $${childParamName}]`
+                        : `$${childParamName}`;
+                if (textProperty != null && !allAttributesOptional) {
+                    writer.write(`if ($${childParamName} instanceof `);
+                    writer.writeNode(childClass);
+                    writer.writeLine(") {");
+                    writer.indent();
+                    writer.writeLine(`$${childParamName}Element = $${childParamName};`);
+                    writer.dedent();
+                    writer.writeLine("} else {");
+                    writer.indent();
+                    writer.writeLine("if ($attributes === null) {");
+                    writer.indent();
                     writer.writeLine(
-                        `([...$attributes, ${this.phpString(textFieldName ?? "")} => $${childParamName}]);`
+                        `throw new \\InvalidArgumentException(${this.phpString(`Attributes are required to construct a new <${childXmlName}>`)});`
                     );
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.write(`$${childParamName}Element = new `);
+                    writer.writeNode(childClass);
+                    writer.writeLine(`(${constructorArgs});`);
+                    writer.dedent();
+                    writer.writeLine("}");
                 } else {
-                    writer.writeLine(`($${childParamName});`);
+                    writer.write(`$${childParamName}Element = $${childParamName} instanceof `);
+                    writer.writeNode(childClass);
+                    writer.write(` ? $${childParamName} : new `);
+                    writer.writeNode(childClass);
+                    writer.writeLine(`(${constructorArgs});`);
                 }
                 if (property.isList) {
                     if (property.isOptional) {

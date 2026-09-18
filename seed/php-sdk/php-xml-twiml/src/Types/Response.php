@@ -21,9 +21,10 @@ class Response extends XmlSerializableType
      *   |Dial
      *   |Pause
      *   |Hangup
+     *   |Redirect
      * )> $children
      */
-    #[JsonProperty('children'), ArrayType([new Union(Say::class, Dial::class, Pause::class, Hangup::class)])]
+    #[JsonProperty('children'), ArrayType([new Union(Say::class, Dial::class, Pause::class, Hangup::class, Redirect::class)])]
     public ?array $children;
 
     /**
@@ -33,6 +34,7 @@ class Response extends XmlSerializableType
      *   |Dial
      *   |Pause
      *   |Hangup
+     *   |Redirect
      * )>,
      * } $values
      */
@@ -78,10 +80,10 @@ class Response extends XmlSerializableType
     {
         XmlUtils::requireName($element, 'Response');
         $result = new self([
-            'children' => XmlUtils::parseChildren($element, ['Say' => Say::fromXmlElement(...), 'Dial' => Dial::fromXmlElement(...), 'Pause' => Pause::fromXmlElement(...), 'Hangup' => Hangup::fromXmlElement(...)]),
+            'children' => XmlUtils::parseChildren($element, ['Say' => Say::fromXmlElement(...), 'Dial' => Dial::fromXmlElement(...), 'Pause' => Pause::fromXmlElement(...), 'Hangup' => Hangup::fromXmlElement(...), 'Redirect' => Redirect::fromXmlElement(...)]),
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, []));
-        $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['Say', 'Dial', 'Pause', 'Hangup']));
+        $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['Say', 'Dial', 'Pause', 'Hangup', 'Redirect']));
         return $result;
     }
 
@@ -162,6 +164,33 @@ class Response extends XmlSerializableType
         $childElement = $child instanceof Hangup ? $child : new Hangup($child);
         $this->children = [...($this->children ?? []), $childElement];
         return $childElement;
+    }
+
+    /**
+     * Adds a <Redirect> child element and returns it (for nesting further children).
+     *
+     * @param (
+     *    Redirect
+     *   |string
+     * ) $url The <Redirect> to add, or its text content.
+     * @param ?array{
+     *   method: string,
+     *   kind?: ?'redirect',
+     * } $attributes Properties of the new <Redirect> (ignored when a Redirect is given).
+     * @return Redirect
+     */
+    public function redirect(Redirect|string $url, ?array $attributes = null): Redirect
+    {
+        if ($url instanceof Redirect) {
+            $urlElement = $url;
+        } else {
+            if ($attributes === null) {
+                throw new \InvalidArgumentException('Attributes are required to construct a new <Redirect>');
+            }
+            $urlElement = new Redirect([...$attributes, 'url' => $url]);
+        }
+        $this->children = [...($this->children ?? []), $urlElement];
+        return $urlElement;
     }
 
     /**

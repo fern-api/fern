@@ -137,6 +137,9 @@ final class XmlUtils
             if ($child instanceof XmlElement && in_array($child->name, $wrapperNames, true)) {
                 $wrapper = $element->getChild($child->name);
                 if ($wrapper !== null) {
+                    foreach ($child->namespaceDeclarations as $prefix => $uri) {
+                        $wrapper->namespaceDeclarations[$prefix] ??= $uri;
+                    }
                     foreach ($child->attributes as $name => $value) {
                         if (!array_key_exists($name, $wrapper->attributes)) {
                             $wrapper->attributes[$name] = $value;
@@ -599,6 +602,44 @@ final class XmlUtils
             throw new InvalidArgumentException("'$raw' is not a valid value for $enum");
         }
         return $case;
+    }
+
+    /**
+     * Validates that a raw value spells the expected string literal and returns the literal.
+     *
+     * @template T of string
+     * @param T $expected
+     * @return ($raw is null ? null : T)
+     * @throws InvalidArgumentException If the value differs from the literal.
+     */
+    public static function parseLiteral(?string $raw, string $expected): ?string
+    {
+        if ($raw === null) {
+            return null;
+        }
+        if (trim($raw) !== $expected) {
+            throw new InvalidArgumentException("Expected literal '$expected' but found '$raw'");
+        }
+        return $expected;
+    }
+
+    /**
+     * Validates that a raw value spells the expected boolean literal and returns the literal.
+     *
+     * @template T of bool
+     * @param T $expected
+     * @return ($raw is null ? null : T)
+     * @throws InvalidArgumentException If the value differs from the literal.
+     */
+    public static function parseBoolLiteral(?string $raw, bool $expected): ?bool
+    {
+        if ($raw === null) {
+            return null;
+        }
+        if (self::parseBool($raw) !== $expected) {
+            throw new InvalidArgumentException("Expected literal '" . ($expected ? 'true' : 'false') . "' but found '$raw'");
+        }
+        return $expected;
     }
 
     /**
