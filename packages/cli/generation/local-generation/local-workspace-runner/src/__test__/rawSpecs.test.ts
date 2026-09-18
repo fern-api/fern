@@ -117,6 +117,8 @@ describe("collectRawSpecs", () => {
                             respectNullableSchemas: false,
                             useTitlesAsName: true,
                             pathParameterOrder: "spec-order",
+                            ignoreTags: true,
+                            disambiguateRequestNames: false,
                             defaultIntegerFormat: "int64"
                         }
                     })
@@ -137,6 +139,8 @@ describe("collectRawSpecs", () => {
             pathParameterOrder: "spec-order",
             defaultIntegerFormat: "int64"
         });
+        expect(manifest.specs[0]?.apiImportSettings).not.toHaveProperty("ignoreTags");
+        expect(manifest.specs[0]?.apiImportSettings).not.toHaveProperty("disambiguateRequestNames");
 
         const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);

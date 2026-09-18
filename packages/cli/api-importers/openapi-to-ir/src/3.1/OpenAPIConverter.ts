@@ -399,6 +399,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             audiences: endpoint.audiences,
                             endpointGroup: endpoint.group,
                             endpointGroupDisplayName: endpoint.groupDisplayName,
+                            endpointGroupDescription: endpoint.groupDescription,
                             inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
                             queryParametersByAudience: endpoint.queryParametersByAudience
                         });
@@ -409,6 +410,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         audiences: endpoint.audiences,
                         endpointGroup: endpoint.group,
                         endpointGroupDisplayName: endpoint.groupDisplayName,
+                        endpointGroupDescription: endpoint.groupDescription,
                         inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
                         queryParametersByAudience: endpoint.queryParametersByAudience
                     });

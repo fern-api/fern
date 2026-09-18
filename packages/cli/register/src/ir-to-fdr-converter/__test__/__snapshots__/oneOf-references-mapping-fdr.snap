@@ -96,6 +96,7 @@
                 "status": "created",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],

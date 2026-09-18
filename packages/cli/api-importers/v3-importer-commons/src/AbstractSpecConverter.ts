@@ -300,6 +300,7 @@ export abstract class AbstractSpecConverter<
         audiences,
         endpointGroup,
         endpointGroupDisplayName,
+        endpointGroupDescription,
         serviceName,
         inlinedRequestPropertiesByAudience,
         queryParametersByAudience
@@ -308,6 +309,7 @@ export abstract class AbstractSpecConverter<
         audiences: string[];
         endpointGroup?: string[];
         endpointGroupDisplayName?: string;
+        endpointGroupDescription?: string;
         serviceName?: string;
         inlinedRequestPropertiesByAudience?: Record<string, Set<string>>;
         queryParametersByAudience?: Record<string, Set<string>>;
@@ -317,6 +319,10 @@ export abstract class AbstractSpecConverter<
             namespace: this.context.namespace
         });
         const pkg = this.getOrCreatePackage({ group: endpointGroup });
+        // First tag description wins; never overwrite docs a package already has.
+        if (pkg !== this.ir.rootPackage && pkg.docs == null && endpointGroupDescription != null) {
+            pkg.docs = endpointGroupDescription;
+        }
 
         const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
         const finalpart = allParts[allParts.length - 1];

@@ -1,0 +1,19 @@
+imports:
+  users: users.yml
+
+name: ts-flatten-request-any-auth
+
+auth:
+  any:
+    - BearerAuth
+    - ApiKey
+
+auth-schemes:
+  BearerAuth:
+    scheme: bearer
+    token:
+      env: MY_TOKEN
+  ApiKey:
+    header: X-API-Key
+    type: string
+    env: MY_API_KEY

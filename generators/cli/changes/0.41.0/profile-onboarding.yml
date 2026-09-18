@@ -1,0 +1,16 @@
+- type: feat
+  summary: |
+    `auth login --from-env` captures the credential already in your shell into the active
+    profile's keyring slot, so "log me in with what I have" no longer routes through
+    `profiles create <name> --from-env --force` — which made users name a profile they had
+    already selected. Honours `-p` to target a non-active profile, and emits the same
+    shadow warning as the create-time capture, since `--from-env` reads the very variable
+    that will keep outranking the copy it just stored. Conflicts with `--with-token`.
+- type: fix
+  summary: |
+    `profiles create <name>` now says when it stored no credential, pointing at
+    `auth login` / `--from-env`. Previously a bare create looked like it had set the
+    profile up, and the next `auth status` reported every keyring rung as `missing` with
+    no hint which command was meant to fill them. Suppressed when a credential was just
+    captured, when the profile inherits one, or when environment variables already supply
+    one — in those cases nothing is missing.

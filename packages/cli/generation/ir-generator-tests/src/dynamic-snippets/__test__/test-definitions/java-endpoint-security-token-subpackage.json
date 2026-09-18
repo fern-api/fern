@@ -342,7 +342,26 @@
                         "safeName": "ClientSecret"
                     }
                 },
-                "customProperties": null
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
             },
             "declaration": {
                 "name": {
@@ -732,7 +751,26 @@
                         "safeName": "ClientSecret"
                     }
                 },
-                "customProperties": null
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
             },
             "declaration": {
                 "name": {
@@ -854,7 +892,26 @@
                         "safeName": "ClientSecret"
                     }
                 },
-                "customProperties": null
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
             },
             "declaration": {
                 "name": {
@@ -976,7 +1033,26 @@
                         "safeName": "ClientSecret"
                     }
                 },
-                "customProperties": null
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
             },
             "declaration": {
                 "name": {

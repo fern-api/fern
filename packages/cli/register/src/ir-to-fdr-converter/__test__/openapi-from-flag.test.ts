@@ -8,15 +8,21 @@
 
 import { spawnSync } from "node:child_process";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
 
 import { convertIrToFdrApi } from "../convertIrToFdrApi.js";
+import type { ExampleEndpointCallWithResponseHeaders } from "../convertPackage.js";
 import { getOriginalName } from "../nameUtils.js";
 
 const hasBuf = spawnSync("buf", ["--version"], { stdio: "ignore" }).status === 0;
+
+// `responseHeaders` exists at runtime but is absent from the pinned @fern-api/fdr-sdk type.
+const getResponseHeaders = (example: unknown): Record<string, unknown> | undefined =>
+    (example as ExampleEndpointCallWithResponseHeaders | undefined)?.responseHeaders;
 
 describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
     it("should replicate complete `fern fdr {file} --from-openapi` pipeline and produce S3-ready output", async () => {
@@ -1214,14 +1220,329 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrApiDefinition.rootPackage.endpoints.length).toBeGreaterThan(0);
 
         const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        const example200 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 200);
+        expect(getResponseHeaders(example200)).toMatchObject({ "X-RateLimit-Remaining": 99 });
+        const example429 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 429);
+        expect(example429).toBeDefined();
+        expect(getResponseHeaders(example429)).toEqual({ "Retry-After": 10 });
+        expect(example429?.name).toBeUndefined();
+        expect(example429?.responseBodyV3?.type).toBe("json");
         if (fdrEndpoint && fdrEndpoint.errorsV2) {
             const fdr429Error = fdrEndpoint.errorsV2.find((error) => error.statusCode === 429);
             expect(fdr429Error).toBeDefined();
         }
 
+        // Declared examples — on the media type object and on the referenced component
+        // schema — land in userSpecifiedExamples for response headers, matching
+        // request-header parameter parity.
+        const endpoint = Object.values(intermediateRepresentation.services)
+            .flatMap((service) => service.endpoints)
+            .find((e) => e.path.head === "/api/resource");
+        const headerWireValue = (h: { name: string | { wireValue: string } }): string =>
+            typeof h.name === "string" ? h.name : h.name.wireValue;
+        const headersByName = new Map((endpoint?.responseHeaders ?? []).map((h) => [headerWireValue(h), h]));
+        const firstUserExample = (headerName: string): unknown =>
+            Object.values(headersByName.get(headerName)?.v2Examples?.userSpecifiedExamples ?? {})[0];
+
+        expect(firstUserExample("X-Api-Result")).toEqual({ content_type: "image/jpeg" });
+        expect(firstUserExample("X-Schema-Ref-Example")).toEqual({ content_type: "image/jpeg" });
+        expect(firstUserExample("X-Media-Example")).toEqual({ transport: "delta" });
+        expect(firstUserExample("X-RateLimit-Remaining")).toEqual(99);
+
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/throttled-error-response-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/throttled-error-response-ir.snap");
+    });
+
+    it("should register response header examples from error declarations on error-status examples", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/throttled-error-response")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "throttled-error-response"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const serviceId = ir.rootPackage.service;
+        const irEndpoint = serviceId != null ? ir.services[serviceId]?.endpoints[0] : undefined;
+        if (irEndpoint?.v2Examples == null) {
+            throw new Error("Expected endpoint with v2Examples");
+        }
+        const throttledError = ir.errors["GetResourceRequestTooManyRequestsError"];
+        const throttledHeader = throttledError?.headers?.at(0);
+        if (throttledHeader == null) {
+            throw new Error("Expected 429 error declaration with headers");
+        }
+
+        // Add a wildcard 5XX error declaration with its own response header so the
+        // wildcard branch of findErrorHeadersByStatusCode is exercised.
+        const serverErrorId = "GetResourceRequestServerError";
+        const serverErrorName = {
+            errorId: serverErrorId,
+            name: serverErrorId,
+            fernFilepath: { allParts: [], file: undefined, packagePath: [] }
+        };
+        ir.errors[serverErrorId] = {
+            docs: undefined,
+            name: serverErrorName,
+            displayName: "ServerError",
+            discriminantValue: { name: serverErrorId, wireValue: serverErrorId },
+            type: undefined,
+            statusCode: 500,
+            isWildcardStatusCode: true,
+            examples: [],
+            v2Examples: undefined,
+            headers: [
+                {
+                    docs: undefined,
+                    availability: undefined,
+                    defaultValue: undefined,
+                    clientDefault: undefined,
+                    env: undefined,
+                    name: "X-Server-Retry",
+                    valueType: throttledHeader.valueType,
+                    v2Examples: {
+                        userSpecifiedExamples: {},
+                        autogeneratedExamples: { "X-Server-Retry_example": 5 }
+                    }
+                }
+            ]
+        };
+        irEndpoint.errors?.push({ docs: undefined, error: serverErrorName });
+
+        // Exact-match: a 429 example picks up the 429 declaration's Retry-After.
+        irEndpoint.v2Examples.userSpecifiedExamples["Throttled example"] = {
+            displayName: undefined,
+            contentType: undefined,
+            request: undefined,
+            response: {
+                docs: undefined,
+                statusCode: 429,
+                body: FernIr.V2HttpEndpointResponseBody.json({ detail: "Request was throttled." })
+            },
+            codeSamples: undefined
+        };
+        // Wildcard: a 503 example falls back to the 5XX declaration's headers.
+        irEndpoint.v2Examples.userSpecifiedExamples["Server error example"] = {
+            displayName: undefined,
+            contentType: undefined,
+            request: undefined,
+            response: {
+                docs: undefined,
+                statusCode: 503,
+                body: FernIr.V2HttpEndpointResponseBody.json({ detail: "Server error." })
+            },
+            codeSamples: undefined
+        };
+        // No match: a 418 example has no matching error declaration, so it must not
+        // fall back to the endpoint's success headers.
+        irEndpoint.v2Examples.userSpecifiedExamples["Teapot example"] = {
+            displayName: undefined,
+            contentType: undefined,
+            request: undefined,
+            response: {
+                docs: undefined,
+                statusCode: 418,
+                body: FernIr.V2HttpEndpointResponseBody.json({ detail: "I'm a teapot." })
+            },
+            codeSamples: undefined
+        };
+
+        const snippetsConfig = {
+            typescriptSdk: undefined,
+            pythonSdk: undefined,
+            javaSdk: undefined,
+            rubySdk: undefined,
+            goSdk: undefined,
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined,
+            rustSdk: undefined
+        };
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir,
+            snippetsConfig,
+            playgroundConfig: { oauth: true },
+            context
+        });
+
+        const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        const example429 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 429);
+        expect(getResponseHeaders(example429)).toEqual({ "Retry-After": 10 });
+        const example503 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 503);
+        expect(getResponseHeaders(example503)).toEqual({ "X-Server-Retry": 5 });
+        const example418 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 418);
+        expect(getResponseHeaders(example418)).toBeUndefined();
+
+        // v1 user-specified error examples also resolve headers from the error
+        // declaration rather than falling back to the endpoint's success headers.
+        // Regenerate a fresh IR so the mutations below can't affect the v2
+        // assertions above (IR union wrappers carry methods, so a structural
+        // clone is not possible).
+        const irV1 = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+        const irV1Endpoint = serviceId != null ? irV1.services[serviceId]?.endpoints[0] : undefined;
+        if (irV1Endpoint == null) {
+            throw new Error("Expected endpoint in fresh IR");
+        }
+        irV1.errors[serverErrorId] = {
+            docs: undefined,
+            name: serverErrorName,
+            displayName: "ServerError",
+            discriminantValue: { name: serverErrorId, wireValue: serverErrorId },
+            type: undefined,
+            statusCode: 500,
+            isWildcardStatusCode: true,
+            examples: [],
+            v2Examples: undefined,
+            headers: [
+                {
+                    docs: undefined,
+                    availability: undefined,
+                    defaultValue: undefined,
+                    clientDefault: undefined,
+                    env: undefined,
+                    name: "X-Server-Retry",
+                    valueType: throttledHeader.valueType,
+                    v2Examples: {
+                        userSpecifiedExamples: {},
+                        autogeneratedExamples: { "X-Server-Retry_example": 5 }
+                    }
+                }
+            ]
+        };
+        irV1Endpoint.errors?.push({ docs: undefined, error: serverErrorName });
+        // Add a header-less error declaration to prove the no-fallback case.
+        const headerLessErrorId = "GetResourceRequestClientError";
+        const headerLessErrorName = {
+            errorId: headerLessErrorId,
+            name: headerLessErrorId,
+            fernFilepath: { allParts: [], file: undefined, packagePath: [] }
+        };
+        irV1.errors[headerLessErrorId] = {
+            docs: undefined,
+            name: headerLessErrorName,
+            displayName: "ClientError",
+            discriminantValue: { name: headerLessErrorId, wireValue: headerLessErrorId },
+            type: undefined,
+            statusCode: 400,
+            isWildcardStatusCode: undefined,
+            examples: [],
+            v2Examples: undefined,
+            headers: undefined
+        };
+        irV1Endpoint.errors?.push({ docs: undefined, error: headerLessErrorName });
+        irV1Endpoint.v2Examples = undefined;
+        irV1Endpoint.userSpecifiedExamples = [
+            {
+                codeSamples: [],
+                example: {
+                    docs: undefined,
+                    id: undefined,
+                    name: "v1 throttled",
+                    url: "/api/resource",
+                    rootPathParameters: [],
+                    servicePathParameters: [],
+                    endpointPathParameters: [],
+                    serviceHeaders: [],
+                    endpointHeaders: [],
+                    queryParameters: [],
+                    request: undefined,
+                    response: FernIr.http.ExampleResponse.error({
+                        error: {
+                            errorId: "GetResourceRequestTooManyRequestsError",
+                            name: "GetResourceRequestTooManyRequestsError",
+                            fernFilepath: { allParts: [], file: undefined, packagePath: [] }
+                        },
+                        body: undefined
+                    })
+                }
+            },
+            {
+                codeSamples: [],
+                example: {
+                    docs: undefined,
+                    id: undefined,
+                    name: "v1 server error",
+                    url: "/api/resource",
+                    rootPathParameters: [],
+                    servicePathParameters: [],
+                    endpointPathParameters: [],
+                    serviceHeaders: [],
+                    endpointHeaders: [],
+                    queryParameters: [],
+                    request: undefined,
+                    response: FernIr.http.ExampleResponse.error({
+                        error: serverErrorName,
+                        body: undefined
+                    })
+                }
+            },
+            {
+                codeSamples: [],
+                example: {
+                    docs: undefined,
+                    id: undefined,
+                    name: "v1 header-less error",
+                    url: "/api/resource",
+                    rootPathParameters: [],
+                    servicePathParameters: [],
+                    endpointPathParameters: [],
+                    serviceHeaders: [],
+                    endpointHeaders: [],
+                    queryParameters: [],
+                    request: undefined,
+                    response: FernIr.http.ExampleResponse.error({
+                        error: headerLessErrorName,
+                        body: undefined
+                    })
+                }
+            }
+        ];
+
+        const fdrApiDefinitionV1 = await convertIrToFdrApi({
+            ir: irV1,
+            snippetsConfig,
+            playgroundConfig: { oauth: true },
+            context
+        });
+
+        const fdrEndpointV1 = fdrApiDefinitionV1.rootPackage.endpoints[0];
+        const v1Example429 = fdrEndpointV1?.examples.find((example) => example.name === "v1 throttled");
+        expect(v1Example429?.responseStatusCode).toBe(429);
+        expect(getResponseHeaders(v1Example429)).toEqual({ "Retry-After": 10 });
+        const v1Example500 = fdrEndpointV1?.examples.find((example) => example.name === "v1 server error");
+        expect(v1Example500?.responseStatusCode).toBe(500);
+        expect(getResponseHeaders(v1Example500)).toEqual({ "X-Server-Retry": 5 });
+        const v1ExampleHeaderLess = fdrEndpointV1?.examples.find((example) => example.name === "v1 header-less error");
+        expect(v1ExampleHeaderLess?.responseStatusCode).toBe(400);
+        expect(getResponseHeaders(v1ExampleHeaderLess)).toBeUndefined();
     });
 
     it("should handle OpenAPI with oneOf discriminator mapping", async () => {

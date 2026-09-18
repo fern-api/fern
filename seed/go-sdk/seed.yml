@@ -194,6 +194,14 @@ fixtures:
     - outputFolder: dedupe-union-base-properties
       customConfig:
         dedupeUnionBaseProperties: true
+  file-download:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  openapi-pdf-download:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null

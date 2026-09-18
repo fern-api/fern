@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_users.updateUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsFlattenRequestAnyAuthClient } from \"@fern/ts-flatten-request-any-auth\";\n\nconst client = new SeedTsFlattenRequestAnyAuthClient({ baseUrl: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.users.updateUser({\n    id: \"user-1\",\n    name: \"Ada\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{id}/profile",
+                "method": "PUT",
+                "identifier_override": "endpoint_users.updateUserProfile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsFlattenRequestAnyAuthClient } from \"@fern/ts-flatten-request-any-auth\";\n\nconst client = new SeedTsFlattenRequestAnyAuthClient({ baseUrl: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.users.updateUserProfile(\"user-1\", {\n    id: \"user-1\",\n    name: \"Ada\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

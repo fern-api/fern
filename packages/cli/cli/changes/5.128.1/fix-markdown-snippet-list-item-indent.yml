@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `<Markdown src="..." />` snippets placed directly inside a list item (e.g. `10. <Markdown src="..." />`)
+    breaking out of the list. Continuation lines of the snippet are now indented to the list item's content column.
+  type: fix

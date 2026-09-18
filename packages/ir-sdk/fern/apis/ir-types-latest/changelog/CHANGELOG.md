@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.27.0] - 2026-09-15
+
+- Add optional `wrapperProperty` to dynamic auth schemes so snippet generators can nest
+  constructor options under the auth scheme key when the API uses multiple auth schemes.
+
 ## [v67.26.0] - 2026-09-14
 
 - Add `EnvironmentsConfig.baseUrlEnvVar` (optional `string`): the name of an environment

@@ -232,7 +232,8 @@
                     },
                     "propertyAccess": null,
                     "variable": null
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
@@ -345,7 +346,8 @@
                     },
                     "propertyAccess": null,
                     "variable": null
-                }
+                },
+                "wrapperProperty": null
             },
             "declaration": {
                 "name": {
