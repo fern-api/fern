@@ -157,17 +157,20 @@ function parseReference(attributes: Record<string, string>): LibrarySymbolRefere
             throw new Error(`Attribute 'heading' must be an integer between 1 and 6, got '${heading}'`);
         }
     }
-    const memberList =
-        members != null
-            ? members
-                  .split(",")
-                  .map((m) => m.trim())
-                  .filter((m) => m !== "")
-            : undefined;
+    const memberList = members != null ? parseMemberList(members) : undefined;
     if (memberList != null && memberList.length === 0) {
         throw new Error("Attribute 'members' must list at least one member name");
     }
     return { library, name, heading: headingLevel, members: memberList };
+}
+
+// Accepts `members="a, b"` and the JSX array form `members={["a", "b"]}`.
+function parseMemberList(raw: string): string[] {
+    const inner = raw.trim().replace(/^\[([\s\S]*)\]$/, "$1");
+    return inner
+        .split(",")
+        .map((m) => m.trim().replace(/^(["'])(.*)\1$/, "$2").trim())
+        .filter((m) => m !== "");
 }
 
 function errorMessage(e: unknown): string {

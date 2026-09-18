@@ -237,6 +237,25 @@ describe("replaceLibrarySymbols", () => {
         ]);
     });
 
+    it("accepts the JSX array form for 'members'", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        await replaceLibrarySymbols({
+            markdown: [
+                "<LibrarySymbol",
+                '  library="lib"',
+                '  name="Client"',
+                "  members={[\"set_parameter\", 'get_parameter']}",
+                "/>"
+            ].join("\n"),
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls).toEqual([
+            { library: "lib", name: "Client", heading: undefined, members: ["set_parameter", "get_parameter"] }
+        ]);
+    });
+
     it("rejects unbalanced or unparseable attributes", async () => {
         const { renderSymbol } = makeRecordingRenderer();
         await expect(
