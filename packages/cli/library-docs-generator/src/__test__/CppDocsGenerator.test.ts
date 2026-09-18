@@ -11,6 +11,7 @@ import type {
     CppGroupIr,
     CppLibraryDocsIr,
     CppNamespaceIr,
+    CppTypedefIr,
     IrMetadata
 } from "../types/CppLibraryDocsIr.js";
 
@@ -407,6 +408,84 @@ describe("generateCpp()", () => {
         const subgroupPage = readFileSync(join(tmpDir, "groups/scan/scan_advanced/index.mdx"), "utf-8");
         expect(subgroupPage).toContain("title: Advanced scan");
         expect(subgroupPage).toContain("- [`cub::Tune`](../../functions/tune)");
+    });
+
+    // cspell:ignore doca argp DOCA ARGP docaargpcmdcreate docaerrort edeb refid
+    it("links member refs whose Doxygen refid is group-scoped (C-style grouped APIs)", () => {
+        // Members documented inside a `\defgroup` get `group__<name>_1ga<hash>` refids, which
+        // carry no qualified name. The ref text is the only handle on the target page.
+        const errorRef = {
+            type: "ref" as const,
+            text: "doca_error_t",
+            refid: "group__DOCA__ARGP_1ga709800305e1197db067f30025480b7c5",
+            kindref: "member"
+        };
+        const createRef = {
+            type: "ref" as const,
+            text: "doca_argp_cmd_create()",
+            refid: "group__DOCA__ARGP_1ga178dab841edeb905479c8197edb019a2",
+            kindref: "member"
+        };
+        const errorTypedef: CppTypedefIr = {
+            name: "doca_error_t",
+            path: "doca_error_t",
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Error code." }] })
+        };
+        const create = makeFunction({ name: "doca_argp_cmd_create", path: "doca_argp_cmd_create" });
+        const setDescription = makeFunction({
+            name: "doca_argp_cmd_set_description",
+            path: "doca_argp_cmd_set_description",
+            parameters: [
+                {
+                    name: "cmd",
+                    typeInfo: {
+                        parts: ["struct doca_argp_cmd *"],
+                        display: "struct doca_argp_cmd *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: undefined
+                }
+            ],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Set command description." }],
+                params: [
+                    {
+                        name: "cmd",
+                        description: [{ type: "text", text: "command created with " }, createRef],
+                        direction: undefined
+                    }
+                ],
+                returns: [{ type: "text", text: "DOCA_SUCCESS on success, see " }, errorRef],
+                seeAlso: [[{ ...createRef, text: "doca_argp_cmd_create" }]]
+            })
+        });
+
+        const ir = makeIr(
+            makeNamespace({ functions: [create, setDescription], typedefs: [errorTypedef] }),
+            { packageName: "doca" },
+            [
+                makeGroup({
+                    id: "group__DOCA__ARGP",
+                    name: "DOCA_ARGP",
+                    title: "DOCA ARGP",
+                    functions: [create, setDescription],
+                    typedefs: [errorTypedef]
+                })
+            ]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "doca" });
+
+        const page = readFileSync(join(tmpDir, "functions/doca_argp_cmd_set_description.mdx"), "utf-8");
+        expect(page).toContain("**Returns:** DOCA_SUCCESS on success, see [doca_error_t](../typedefs/docaerrort)");
+        expect(page).toContain("Command created with [doca_argp_cmd_create()](docaargpcmdcreate)");
+        expect(page).toContain("[doca_argp_cmd_create](docaargpcmdcreate)");
+        expect(page).not.toMatch(/\]\([^)]*\.mdx\)/);
     });
 
     it("writes no group pages when the IR has no groups with members", () => {
