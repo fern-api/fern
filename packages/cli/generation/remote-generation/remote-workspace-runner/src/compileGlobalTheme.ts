@@ -68,7 +68,12 @@ export interface CompiledGlobalTheme {
  * True when every field the theme sets can be merged server-side by FDR.
  */
 export function canMergeThemeServerSide(rawTheme: Record<string, unknown>): boolean {
-    return !THEME_FIELDS_REQUIRING_LOCAL_STITCH.some((field) => rawTheme[camelToKebab(field)] != null);
+    return !THEME_FIELDS_REQUIRING_LOCAL_STITCH.some((field) => themeSetsField(rawTheme, field));
+}
+
+/** theme.yml keys are kebab-case, but `mergeThemeOverride` accepts camelCase too. */
+function themeSetsField(rawTheme: Record<string, unknown>, field: docsYml.ThemeEligibleField): boolean {
+    return rawTheme[camelToKebab(field)] != null || rawTheme[field] != null;
 }
 
 /**
@@ -104,7 +109,7 @@ export async function compileGlobalTheme({
     taskContext: TaskContext;
     cliVersion: string;
 }): Promise<CompiledGlobalTheme> {
-    const themeKeys = docsYml.THEME_ELIGIBLE_FIELDS.filter((field) => rawTheme[camelToKebab(field)] != null);
+    const themeKeys = docsYml.THEME_ELIGIBLE_FIELDS.filter((field) => themeSetsField(rawTheme, field));
 
     const emptyDocsConfig = { instances: [], navigation: [] } as unknown as DocsWorkspace["config"];
     const workspace: DocsWorkspace = {
@@ -148,6 +153,8 @@ export async function compileGlobalTheme({
                         ...(image != null && { width: image.width, height: image.height })
                     };
                     files.set(hash, file.absoluteFilePath);
+                    // Theme file ids double as their manifest paths, so the
+                    // ledger config references `_theme/...` directly.
                     fileIdToPath.set(fileId, fileId);
                     return { ...file, fileId };
                 })
@@ -202,15 +209,14 @@ function pickThemeColors(
         ...(themeKeys.includes("backgroundImage") &&
             palette.backgroundImage != null && { backgroundImage: palette.backgroundImage })
     });
-    const picked =
-        colors.type === "darkAndLight"
-            ? { type: colors.type, dark: pick(colors.dark), light: pick(colors.light) }
-            : { type: colors.type, ...pick(colors) };
-    const hasValues =
-        colors.type === "darkAndLight"
-            ? Object.keys(pick(colors.dark)).length > 0 || Object.keys(pick(colors.light)).length > 0
-            : Object.keys(pick(colors)).length > 0;
-    return hasValues ? (picked as LedgerConfig["colorsV3"]) : undefined;
+    if (colors.type === "darkAndLight") {
+        const dark = pick(colors.dark);
+        const light = pick(colors.light);
+        const hasValues = Object.keys(dark).length > 0 || Object.keys(light).length > 0;
+        return hasValues ? ({ type: colors.type, dark, light } as LedgerConfig["colorsV3"]) : undefined;
+    }
+    const picked = pick(colors);
+    return Object.keys(picked).length > 0 ? ({ type: colors.type, ...picked } as LedgerConfig["colorsV3"]) : undefined;
 }
 
 function camelToKebab(value: string): string {

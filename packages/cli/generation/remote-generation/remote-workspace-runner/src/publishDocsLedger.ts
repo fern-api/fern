@@ -343,7 +343,7 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    // `globalTheme` lands in the SDK's DocsPublishInput with the next fdr-sdk bump.
+    // TODO: drop the intersection once the fdr-sdk dependency ships `globalTheme` on DocsPublishInput.
     const publishInput: DocsPublishInput & { globalTheme?: string } = {
         orgId: organization,
         domain,
