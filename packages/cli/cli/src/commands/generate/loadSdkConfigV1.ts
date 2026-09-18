@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
 import type {
     FernSdkConfigV1Payload,
@@ -88,8 +89,25 @@ function toRequestedOutput(output: SdkConfigV1["output"]): FernSdkGenApiRequeste
         repository: output.github.repository,
         ...(output.github.host == null ? {} : { host: output.github.host }),
         ...(output.github.branch == null ? {} : { branch: output.github.branch }),
-        ...(output.github.mode == null ? {} : { mode: output.github.mode }),
+        ...(output.github.mode == null ? {} : { mode: toRequestedGithubMode(output.github.mode) }),
         ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
         ...(output.publish == null ? {} : { publish: output.publish })
     };
+}
+
+function toRequestedGithubMode(
+    mode: "release" | "pull-request" | "push" | "commit" | "commit-and-release"
+): "release" | "pull-request" | "push" {
+    switch (mode) {
+        case "release":
+        case "pull-request":
+            return mode;
+        case "push":
+        case "commit":
+            return "push";
+        case "commit-and-release":
+            return "release";
+        default:
+            assertNever(mode);
+    }
 }

@@ -441,6 +441,8 @@ function projectFernApiImportSettings(
         objectQueryParameters: settings.objectQueryParameters,
         typeDatesAsStrings: settings.typeDatesAsStrings,
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
+        ignoreTags: settings.ignoreTags,
+        disambiguateRequestNames: settings.disambiguateRequestNames,
         defaultIntegerFormat: settings.defaultIntegerFormat
     };
     const defined = Object.fromEntries(Object.entries(projected).filter(([, value]) => value !== undefined));
@@ -489,6 +491,10 @@ function projectRawApiImportSettings(
             : {
                   groupMultiApiEnvironments: settings["group-multi-api-environments"]
               }),
+        ...(settings["ignore-tags"] == null ? {} : { ignoreTags: settings["ignore-tags"] }),
+        ...(settings["disambiguate-request-names"] == null
+            ? {}
+            : { disambiguateRequestNames: settings["disambiguate-request-names"] }),
         ...(settings["default-integer-format"] == null
             ? {}
             : { defaultIntegerFormat: settings["default-integer-format"] })
