@@ -362,6 +362,13 @@ function indexCppSymbols(ns: CppNamespaceIr, index: Map<string, CppSymbol>): voi
             path: variable.path
         });
     }
+    for (const macro of ns.macros ?? []) {
+        registerCppSymbol(index, macro.path, {
+            kind: "compound",
+            compound: { kind: "macro", data: macro },
+            path: macro.path
+        });
+    }
     for (const child of ns.namespaces) {
         indexCppSymbols(child, index);
     }

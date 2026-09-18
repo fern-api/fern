@@ -19,6 +19,7 @@ import type {
     CppDocstringIr,
     CppFunctionIr,
     CppLibraryDocsIr,
+    CppMacroIr,
     CppNamespaceIr,
     CppTypedefIr
 } from "../types/CppLibraryDocsIr.js";
@@ -212,6 +213,14 @@ const cppTypedef: CppTypedefIr = {
     docstring: cppDocstring("The integer type used by the solver.")
 };
 
+const cppMacro: CppMacroIr = {
+    name: "CUOPT_ABSOLUTE_PRIMAL_TOLERANCE",
+    path: "CUOPT_ABSOLUTE_PRIMAL_TOLERANCE",
+    parameters: undefined,
+    initializer: '"absolute_primal_tolerance"',
+    docstring: cppDocstring("Absolute primal tolerance parameter name.")
+};
+
 const cuoptNamespace: CppNamespaceIr = {
     name: "cuopt",
     path: "cuopt",
@@ -241,6 +250,7 @@ const cppNamespace: CppNamespaceIr = {
     enums: [],
     typedefs: [cppTypedef],
     variables: [],
+    macros: [cppMacro],
     concepts: [],
     namespaces: [cuoptNamespace]
 };
@@ -405,6 +415,19 @@ describe("renderLibrarySymbol (cpp)", () => {
         expect(result.anchorIds).toEqual(["cuoptintt"]);
         expect(result.mdx.startsWith("### `cuopt_int_t` [#cuoptintt]")).toBe(true);
         expect(result.mdx).toContain("The integer type used by the solver.");
+    });
+
+    it("renders a macro", () => {
+        const result = renderLibrarySymbol(persistedCpp, {
+            name: "CUOPT_ABSOLUTE_PRIMAL_TOLERANCE",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        expect(result.anchorIds).toEqual(["cuoptabsoluteprimaltolerance"]);
+        expect(result.mdx.startsWith("### `CUOPT_ABSOLUTE_PRIMAL_TOLERANCE` [#cuoptabsoluteprimaltolerance]")).toBe(true);
+        expect(result.mdx).toContain('#define CUOPT_ABSOLUTE_PRIMAL_TOLERANCE "absolute_primal_tolerance"');
+        expect(result.mdx).toContain("Absolute primal tolerance parameter name.");
     });
 
     it("renders a class with a member allowlist", () => {
