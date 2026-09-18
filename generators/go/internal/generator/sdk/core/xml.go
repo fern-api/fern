@@ -87,7 +87,9 @@ func (x *XmlElement) ChildElements() []*XmlElement {
 		if child == nil {
 			continue
 		}
-		elements = append(elements, child.ToXmlElement())
+		if element := child.ToXmlElement(); element != nil {
+			elements = append(elements, element)
+		}
 	}
 	return elements
 }
@@ -121,7 +123,7 @@ func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
 	name := x.QualifiedName()
 	buffer.WriteByte('<')
 	buffer.WriteString(name)
-	if x.Namespace != "" && declared[x.Prefix] != x.Namespace {
+	if declared[x.Prefix] != x.Namespace && (x.Namespace != "" || x.Prefix == "") {
 		declared = copyDeclarations(declared)
 		declared[x.Prefix] = x.Namespace
 		if x.Prefix == "" {
@@ -134,7 +136,7 @@ func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
 	}
 	for _, attribute := range x.Attributes {
 		buffer.WriteByte(' ')
-		buffer.WriteString(attribute.Name)
+		xmlEscape(buffer, attribute.Name)
 		buffer.WriteString(`="`)
 		xmlEscape(buffer, attribute.Value)
 		buffer.WriteByte('"')
@@ -174,9 +176,9 @@ func ParseXml(document string) (*XmlElement, error) {
 	decoder.Strict = true
 	decoder.Entity = xml.HTMLEntity
 	var (
-		root     *XmlElement
-		stack    []*XmlElement
-		prefixes = []map[string]string{{xmlNamespace: "xml"}}
+		root   *XmlElement
+		stack  []*XmlElement
+		scopes = [][]xmlDeclaration{{{prefix: "xml", namespace: xmlNamespace}}}
 	)
 	for {
 		token, err := decoder.Token()
@@ -190,8 +192,8 @@ func ParseXml(document string) (*XmlElement, error) {
 		case xml.Directive:
 			return nil, errors.New("invalid xml: DOCTYPE declarations are not allowed")
 		case xml.StartElement:
-			element, declared := xmlElementFromStart(token, prefixes[len(prefixes)-1])
-			prefixes = append(prefixes, declared)
+			element, declared := xmlElementFromStart(token, scopes[len(scopes)-1])
+			scopes = append(scopes, declared)
 			if len(stack) == 0 {
 				if root != nil {
 					return nil, errors.New("invalid xml: multiple root elements")
@@ -203,8 +205,11 @@ func ParseXml(document string) (*XmlElement, error) {
 			}
 			stack = append(stack, element)
 		case xml.EndElement:
+			if len(stack) == 0 {
+				return nil, errors.New("invalid xml: unexpected end element")
+			}
 			stack = stack[:len(stack)-1]
-			prefixes = prefixes[:len(prefixes)-1]
+			scopes = scopes[:len(scopes)-1]
 		case xml.CharData:
 			if len(stack) > 0 {
 				stack[len(stack)-1].Text += string(token)
@@ -219,15 +224,32 @@ func ParseXml(document string) (*XmlElement, error) {
 
 const xmlNamespace = "http://www.w3.org/XML/1998/namespace"
 
+// xmlDeclaration is a single xmlns declaration (prefix "" is the default namespace).
+type xmlDeclaration struct {
+	prefix    string
+	namespace string
+}
+
+// prefixFor returns the prefix most recently bound to the namespace in scope.
+func prefixFor(scope []xmlDeclaration, namespace string) (string, bool) {
+	for i := len(scope) - 1; i >= 0; i-- {
+		if scope[i].namespace == namespace {
+			return scope[i].prefix, true
+		}
+	}
+	return "", false
+}
+
 // xmlElementFromStart converts a start tag into an XmlElement. The decoder
 // resolves prefixes to namespace URIs, so the prefixes are recovered from the
-// xmlns declarations in scope (inherited, plus those on this element).
-func xmlElementFromStart(start xml.StartElement, inherited map[string]string) (*XmlElement, map[string]string) {
+// xmlns declarations in scope (inherited, plus those on this element); the
+// innermost declaration of a namespace wins.
+func xmlElementFromStart(start xml.StartElement, inherited []xmlDeclaration) (*XmlElement, []xmlDeclaration) {
 	element := &XmlElement{
 		Name:      start.Name.Local,
 		Namespace: start.Name.Space,
 	}
-	prefixes := inherited
+	scope := inherited
 	copied := false
 	for _, attribute := range start.Attr {
 		var declaredPrefix string
@@ -240,10 +262,10 @@ func xmlElementFromStart(start xml.StartElement, inherited map[string]string) (*
 			continue
 		}
 		if !copied {
-			prefixes = copyDeclarations(inherited)
+			scope = append([]xmlDeclaration(nil), inherited...)
 			copied = true
 		}
-		prefixes[attribute.Value] = declaredPrefix
+		scope = append(scope, xmlDeclaration{prefix: declaredPrefix, namespace: attribute.Value})
 	}
 	for _, attribute := range start.Attr {
 		if attribute.Name.Space == "xmlns" || (attribute.Name.Space == "" && attribute.Name.Local == "xmlns") {
@@ -251,7 +273,7 @@ func xmlElementFromStart(start xml.StartElement, inherited map[string]string) (*
 		}
 		name := attribute.Name.Local
 		if attribute.Name.Space != "" {
-			if prefix, ok := prefixes[attribute.Name.Space]; ok && prefix != "" {
+			if prefix, ok := prefixFor(scope, attribute.Name.Space); ok && prefix != "" {
 				name = prefix + ":" + name
 			} else {
 				name = attribute.Name.Space + ":" + name
@@ -260,14 +282,51 @@ func xmlElementFromStart(start xml.StartElement, inherited map[string]string) (*
 		element.Attributes = append(element.Attributes, XmlAttribute{Name: name, Value: attribute.Value})
 	}
 	if element.Namespace != "" {
-		element.Prefix = prefixes[element.Namespace]
+		element.Prefix, _ = prefixFor(scope, element.Namespace)
 	}
-	return element, prefixes
+	return element, scope
 }
 
 // XmlRootError is returned when a parsed document's root element has an unexpected name.
 func XmlRootError(expected string, element *XmlElement) error {
+	if element == nil {
+		return fmt.Errorf("expected root element <%s>, got nil", expected)
+	}
+	if element.Namespace != "" {
+		return fmt.Errorf("expected root element <%s>, got <%s> (namespace %q)", expected, element.QualifiedName(), element.Namespace)
+	}
 	return fmt.Errorf("expected root element <%s>, got <%s>", expected, element.QualifiedName())
+}
+
+// TakeXmlElement removes the first XmlElement named 'name' from nodes and returns
+// it together with the remaining nodes. It is used to merge the unknown content of
+// a wrapped list back into the wrapper the generated types emit.
+func TakeXmlElement(nodes []XmlNode, name string) (*XmlElement, []XmlNode) {
+	for i, node := range nodes {
+		element, ok := node.(*XmlElement)
+		if !ok || element == nil || element.Name != name {
+			continue
+		}
+		remaining := make([]XmlNode, 0, len(nodes)-1)
+		remaining = append(remaining, nodes[:i]...)
+		return element, append(remaining, nodes[i+1:]...)
+	}
+	return nil, nodes
+}
+
+// Merge copies the attributes, text and children of other onto x and returns x.
+func (x *XmlElement) Merge(other *XmlElement) *XmlElement {
+	if other == nil {
+		return x
+	}
+	for _, attribute := range other.Attributes {
+		x.SetAttribute(attribute.Name, attribute.Value)
+	}
+	if other.Text != "" {
+		x.Text = other.Text
+	}
+	x.Children = append(x.Children, other.Children...)
+	return x
 }
 
 // ParseXmlBool parses an XML boolean ("true"/"false"/"1"/"0").

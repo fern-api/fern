@@ -298,16 +298,22 @@ func (d *Dial) ToXmlElement() *core.XmlElement {
 	if d.Number != nil {
 		element.Text = *d.Number
 	}
-	if len(d.Numbers) > 0 {
+	extraChildren := d.ExtraChildren
+	{
 		wrapper := core.NewXmlElement("Numbers")
 		for _, item := range d.Numbers {
 			if item != nil {
 				wrapper.AddChild(item)
 			}
 		}
-		element.AddChild(wrapper)
+		var unknown *core.XmlElement
+		unknown, extraChildren = core.TakeXmlElement(extraChildren, "Numbers")
+		wrapper.Merge(unknown)
+		if len(wrapper.Children) > 0 || len(wrapper.Attributes) > 0 || wrapper.Text != "" {
+			element.AddChild(wrapper)
+		}
 	}
-	for _, child := range d.ExtraChildren {
+	for _, child := range extraChildren {
 		element.AddChild(child)
 	}
 	return element
@@ -341,7 +347,7 @@ func DialFromXml(document string) (*Dial, error) {
 
 // DialFromXmlElement parses a Dial from its generic XML representation.
 func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
-	if element == nil || element.Name != "Dial" {
+	if element == nil || element.Name != "Dial" || element.Namespace != "https://www.twilio.com/twiml" {
 		return nil, core.XmlRootError("Dial", element)
 	}
 	result := &Dial{}
@@ -367,14 +373,14 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	if element.Text != "" {
+	if strings.TrimSpace(element.Text) != "" {
 		value := element.Text
 		result.Number = &value
 	}
 	for _, child := range element.ChildElements() {
 		switch child.Name {
 		case "Numbers":
-			unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes}
+			unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}
 			for _, item := range child.ChildElements() {
 				switch item.Name {
 				case "Number":
@@ -387,7 +393,7 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 					unknown.AddChild(item)
 				}
 			}
-			if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 {
+			if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 || unknown.Text != "" {
 				result.ExtraChildren = append(result.ExtraChildren, unknown)
 			}
 		default:
@@ -762,7 +768,7 @@ func NumberFromXmlElement(element *core.XmlElement) (*Number, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	if element.Text != "" {
+	if strings.TrimSpace(element.Text) != "" {
 		value := element.Text
 		result.PhoneNumber = &value
 	}
@@ -1585,7 +1591,7 @@ func SayFromXmlElement(element *core.XmlElement) (*Say, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	if element.Text != "" {
+	if strings.TrimSpace(element.Text) != "" {
 		value := element.Text
 		result.Message = &value
 	}

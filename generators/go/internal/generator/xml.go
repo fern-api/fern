@@ -402,13 +402,20 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 		}
 		t.writeXmlSerializeScalar(receiver, property, "element.Text = %s")
 	}
+	extraChildren := receiver + "." + xmlExtraChildrenField
+	if hasWrappedList(properties) {
+		// Unknown content parsed out of a wrapper is merged back into the wrapper
+		// emitted for the typed items, so a document round-trips to one wrapper.
+		t.writer.P("extraChildren := ", extraChildren)
+		extraChildren = "extraChildren"
+	}
 	for _, property := range properties {
 		if property.kind != ir.XmlPropertyKindElement {
 			continue
 		}
 		t.writeXmlSerializeElement(receiver, property)
 	}
-	t.writer.P("for _, child := range ", receiver, ".", xmlExtraChildrenField, " {")
+	t.writer.P("for _, child := range ", extraChildren, " {")
 	t.writer.P("element.AddChild(child)")
 	t.writer.P("}")
 	t.writer.P("return element")
@@ -451,7 +458,11 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	// FromXmlElement
 	t.writer.P("// ", t.typeName, "FromXmlElement parses a ", t.typeName, " from its generic XML representation.")
 	t.writer.P("func ", t.typeName, "FromXmlElement(element *core.XmlElement) (*", t.typeName, ", error) {")
-	t.writer.P("if element == nil || element.Name != ", quote(xml.Name), " {")
+	rootCheck := "element == nil || element.Name != " + quote(xml.Name)
+	if xml.Namespace != nil {
+		rootCheck += " || element.Namespace != " + quote(*xml.Namespace)
+	}
+	t.writer.P("if ", rootCheck, " {")
 	t.writer.P("return nil, core.XmlRootError(", quote(xml.Name), ", element)")
 	t.writer.P("}")
 	t.writer.P("result := &", t.typeName, "{}")
@@ -475,8 +486,13 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 		if property.kind != ir.XmlPropertyKindText {
 			continue
 		}
-		t.writer.P("if element.Text != \"\" {")
-		t.writeXmlParseScalar(property, "element.Text")
+		// Whitespace-only text is indentation between child elements, not a value.
+		t.writer.P("if strings.TrimSpace(element.Text) != \"\" {")
+		input := "element.Text"
+		if property.value.kind != xmlValueString || property.value.list {
+			input = "strings.TrimSpace(element.Text)"
+		}
+		t.writeXmlParseScalar(property, input)
 		t.writer.P("}")
 	}
 	t.writer.P("for _, child := range element.ChildElements() {")
@@ -532,25 +548,38 @@ func (t *typeVisitor) writeXmlSerializeElement(receiver string, property *xmlPro
 	field := receiver + "." + property.field
 	value := property.value
 	isNode := value.kind == xmlValueObject || value.kind == xmlValueUnion
-	if value.list {
-		t.writer.P("if len(", field, ") > 0 {")
-		parent := "element"
-		if property.wrapped {
-			parent = "wrapper"
-			t.writer.P("wrapper := core.NewXmlElement(", quote(property.xmlName), ")")
-		}
+	if value.list && property.wrapped {
+		t.writer.P("{")
+		t.writer.P("wrapper := core.NewXmlElement(", quote(property.xmlName), ")")
 		t.writer.P("for _, item := range ", field, " {")
 		if isNode {
 			t.writer.P("if item != nil {")
-			t.writer.P(parent, ".AddChild(item)")
+			t.writer.P("wrapper.AddChild(item)")
 			t.writer.P("}")
 		} else {
-			t.writer.P(parent, ".AddChild(core.NewXmlElement(", quote(property.xmlName), ").SetText(", xmlFormatExpression(value, "item"), "))")
+			t.writer.P("wrapper.AddChild(core.NewXmlElement(", quote(property.xmlName), ").SetText(", xmlFormatExpression(value, "item"), "))")
 		}
 		t.writer.P("}")
-		if property.wrapped {
-			t.writer.P("element.AddChild(wrapper)")
+		t.writer.P("var unknown *core.XmlElement")
+		t.writer.P("unknown, extraChildren = core.TakeXmlElement(extraChildren, ", quote(property.xmlName), ")")
+		t.writer.P("wrapper.Merge(unknown)")
+		t.writer.P("if len(wrapper.Children) > 0 || len(wrapper.Attributes) > 0 || wrapper.Text != \"\" {")
+		t.writer.P("element.AddChild(wrapper)")
+		t.writer.P("}")
+		t.writer.P("}")
+		return
+	}
+	if value.list {
+		t.writer.P("if len(", field, ") > 0 {")
+		t.writer.P("for _, item := range ", field, " {")
+		if isNode {
+			t.writer.P("if item != nil {")
+			t.writer.P("element.AddChild(item)")
+			t.writer.P("}")
+		} else {
+			t.writer.P("element.AddChild(core.NewXmlElement(", quote(property.xmlName), ").SetText(", xmlFormatExpression(value, "item"), "))")
 		}
+		t.writer.P("}")
 		t.writer.P("}")
 		return
 	}
@@ -567,6 +596,16 @@ func (t *typeVisitor) writeXmlSerializeElement(receiver string, property *xmlPro
 		return
 	}
 	t.writer.P("element.AddChild(core.NewXmlElement(", quote(property.xmlName), ").SetText(", xmlFormatExpression(value, field), "))")
+}
+
+// hasWrappedList reports whether any child element property is a wrapped list.
+func hasWrappedList(properties []*xmlProperty) bool {
+	for _, property := range properties {
+		if property.kind == ir.XmlPropertyKindElement && property.wrapped && property.value.list {
+			return true
+		}
+	}
+	return false
 }
 
 // writeXmlParseScalar writes the statements assigning the XML string in 'input' to the property.
@@ -592,7 +631,7 @@ func (t *typeVisitor) writeXmlParseElement(property *xmlProperty) {
 	value := property.value
 	if property.wrapped && value.list {
 		t.writer.P("case ", quote(property.xmlName), ":")
-		t.writer.P("unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes}")
+		t.writer.P("unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}")
 		t.writer.P("for _, item := range child.ChildElements() {")
 		t.writer.P("switch item.Name {")
 		t.writeXmlParseChildCases(property, "item")
@@ -600,7 +639,7 @@ func (t *typeVisitor) writeXmlParseElement(property *xmlProperty) {
 		t.writer.P("unknown.AddChild(item)")
 		t.writer.P("}")
 		t.writer.P("}")
-		t.writer.P("if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 {")
+		t.writer.P("if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 || unknown.Text != \"\" {")
 		t.writer.P("result.", xmlExtraChildrenField, " = append(result.", xmlExtraChildrenField, ", unknown)")
 		t.writer.P("}")
 		return

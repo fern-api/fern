@@ -91,3 +91,53 @@ func TestXmlScalars(t *testing.T) {
 	assert.Equal(t, []string{"a", "b"}, SplitXmlList(" a  b ", " "))
 	assert.Nil(t, SplitXmlList("", " "))
 }
+
+type nilNode struct{}
+
+func (nilNode) ToXmlElement() *XmlElement { return nil }
+
+func TestXmlElementSkipsNilChildren(t *testing.T) {
+	element := NewXmlElement("A").AddChild(nil).AddChild(nilNode{})
+	assert.Equal(t, "<A />", element.ToXml())
+}
+
+func TestParseXmlPrefixRedeclaration(t *testing.T) {
+	document := `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v" /></a:R>`
+	parsed, err := ParseXml(document)
+	require.NoError(t, err)
+	assert.Equal(t, "a", parsed.Prefix)
+	child := parsed.ChildElements()[0]
+	assert.Equal(t, "b", child.Prefix)
+	assert.Equal(t, "b:k", child.Attributes[0].Name)
+	assert.Equal(t, `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v" /></a:R>`, parsed.ToXml())
+
+	rebound, err := ParseXml(`<foo:R xmlns:foo="http://www.w3.org/XML/1998/namespace" />`)
+	require.NoError(t, err)
+	assert.Equal(t, "foo", rebound.Prefix)
+}
+
+func TestXmlDefaultNamespaceReset(t *testing.T) {
+	parent := &XmlElement{Name: "R", Namespace: "urn:x"}
+	parent.AddChild(NewXmlElement("C"))
+	serialized := parent.ToXml()
+	assert.Equal(t, `<R xmlns="urn:x"><C xmlns="" /></R>`, serialized)
+	parsed, err := ParseXml(serialized)
+	require.NoError(t, err)
+	assert.Equal(t, "", parsed.ChildElements()[0].Namespace)
+}
+
+func TestXmlRootErrorNil(t *testing.T) {
+	assert.EqualError(t, XmlRootError("R", nil), "expected root element <R>, got nil")
+}
+
+func TestTakeXmlElementAndMerge(t *testing.T) {
+	nodes := []XmlNode{NewXmlElement("A"), NewXmlElement("W").SetAttribute("k", "v").AddChild(NewXmlElement("X")), NewXmlElement("B")}
+	taken, rest := TakeXmlElement(nodes, "W")
+	require.NotNil(t, taken)
+	assert.Len(t, rest, 2)
+	merged := NewXmlElement("W").AddChild(NewXmlElement("Y")).Merge(taken)
+	assert.Equal(t, `<W k="v"><Y /><X /></W>`, merged.ToXml())
+	none, same := TakeXmlElement(nodes, "Z")
+	assert.Nil(t, none)
+	assert.Len(t, same, 3)
+}
