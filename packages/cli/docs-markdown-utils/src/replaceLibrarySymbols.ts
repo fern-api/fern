@@ -55,8 +55,9 @@ const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
 const CODE_SPAN_REGEX = /(`+)(?!`)[\s\S]*?[^`]\1(?!`)/g;
 const MDX_COMMENT_REGEX = /\{\/\*[\s\S]*?\*\/\}/g;
 const FRONTMATTER_REGEX = /^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/;
-// `## Title [#id]` and `<Anchor id="id">`, the two forms the library renderers emit.
-const AUTHORED_ANCHOR_REGEX = /\[#([^\]\s]+)\][ \t]*(?=\r?\n|$)|<Anchor\s[^>]*?\bid\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
+const ATX_HEADING_REGEX = /^ {0,3}#{1,6}[ \t]+(.*?)[ \t]*(?:[ \t]#+)?[ \t]*\r?$/;
+const EXPLICIT_HEADING_ANCHOR_REGEX = /\s*\[#([^\]\s]+)\]$/;
+const ANCHOR_COMPONENT_REGEX = /<Anchor\s[^>]*?\bid\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
 
 /**
  * Regions where a tag is documentation rather than a live component: YAML frontmatter,
@@ -120,19 +121,64 @@ interface AnchorOwner {
 }
 
 /**
+ * Approximates the id the docs renderer derives from heading text (github-slugger rules):
+ * inline markup stripped, lowercased, punctuation dropped, spaces turned into hyphens.
+ */
+function slugifyHeading(text: string): string {
+    return text
+        .replace(/`([^`]*)`/g, "$1")
+        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+        .replace(/<[^>]+>/g, "")
+        .replace(/[*_~]/g, "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-");
+}
+
+function recordAnchor(anchors: Map<string, AnchorOwner>, id: string, line: number, kind: string): void {
+    if (id === "" || anchors.has(id)) {
+        return;
+    }
+    anchors.set(id, { tag: `the authored ${kind} '#${id}'`, line });
+}
+
+/**
  * Anchors the author already placed on the page (outside inert regions), so an included
- * symbol cannot silently duplicate one of them.
+ * symbol cannot silently duplicate one of them: explicit `## Title [#id]` suffixes, ids the
+ * renderer derives from plain heading text, and `<Anchor id="...">`.
  */
 function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<string, AnchorOwner> {
     const anchors = new Map<string, AnchorOwner>();
-    AUTHORED_ANCHOR_REGEX.lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = AUTHORED_ANCHOR_REGEX.exec(markdown)) != null) {
-        const id = match[1] ?? match[2] ?? match[3];
-        if (id == null || id === "" || isInert(inertRegions, match.index) || anchors.has(id)) {
+
+    let offset = 0;
+    let lineNumber = 0;
+    for (const line of markdown.split("\n")) {
+        lineNumber += 1;
+        const lineStart = offset;
+        offset += line.length + 1;
+        if (isInert(inertRegions, lineStart)) {
             continue;
         }
-        anchors.set(id, { tag: `the authored anchor '#${id}'`, line: getLineNumber(markdown, match.index) });
+        const headingText = ATX_HEADING_REGEX.exec(line)?.[1];
+        if (headingText == null) {
+            continue;
+        }
+        const explicit = EXPLICIT_HEADING_ANCHOR_REGEX.exec(headingText)?.[1];
+        if (explicit != null) {
+            recordAnchor(anchors, explicit, lineNumber, "anchor");
+        } else {
+            recordAnchor(anchors, slugifyHeading(headingText), lineNumber, "heading");
+        }
+    }
+
+    ANCHOR_COMPONENT_REGEX.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = ANCHOR_COMPONENT_REGEX.exec(markdown)) != null) {
+        if (isInert(inertRegions, match.index)) {
+            continue;
+        }
+        recordAnchor(anchors, match[1] ?? match[2] ?? "", getLineNumber(markdown, match.index), "anchor");
     }
     return anchors;
 }
@@ -299,7 +345,7 @@ export async function replaceLibrarySymbols({
                 const hint =
                     previous.tag === tag
                         ? "Include each symbol at most once per page."
-                        : "Narrow the class with 'members', rename the authored anchor, or move one of the symbols to a different page so fragment links stay unambiguous.";
+                        : "Narrow the class with 'members', rename the authored heading/anchor, or move one of the symbols to a different page so fragment links stay unambiguous.";
                 throw new CliError({
                     message:
                         `${location} ${tag} emits anchor '#${anchorId}', which is already used by ` +

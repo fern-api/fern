@@ -374,6 +374,32 @@ describe("replaceLibrarySymbols", () => {
         }
     });
 
+    it("fails when a plain heading's derived slug collides with an included symbol", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["client-reset"]
+        });
+        const markdown = ["## `Client` **Reset**!", "", '<LibrarySymbol library="lib" name="Client::reset" />'].join(
+            "\n"
+        );
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).rejects.toThrow(
+            /a\.mdx:3\].*'#client-reset'.*already used by the authored heading '#client-reset' \(line 1\)/
+        );
+    });
+
+    it("does not treat `[#id]` in prose as an anchor", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["reset"]
+        });
+        const markdown = ["See issue [#reset]", "", '<LibrarySymbol library="lib" name="Client::reset" />'].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).resolves.toContain("RENDERED(Client::reset)");
+    });
+
     it("ignores authored anchors inside inert regions", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,
