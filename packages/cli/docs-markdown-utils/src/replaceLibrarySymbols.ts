@@ -146,7 +146,8 @@ export async function replaceLibrarySymbols({
             const usageKey = `${reference.library}:${reference.name}`;
             const previousFile = usageTracker.get(usageKey);
             if (previousFile != null) {
-                const where = previousFile === absolutePathToMarkdownFile ? "earlier in this page" : `in ${previousFile}`;
+                const where =
+                    previousFile === absolutePathToMarkdownFile ? "earlier in this page" : `in ${previousFile}`;
                 context.logger.warn(
                     `${location} Symbol '${reference.name}' from library '${reference.library}' is also included ${where}. ` +
                         "Including a symbol more than once duplicates its anchor and content."
