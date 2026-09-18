@@ -54,14 +54,22 @@ type Region = [start: number, end: number];
 const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
 const CODE_SPAN_REGEX = /(`+)(?!`)[\s\S]*?[^`]\1(?!`)/g;
 const MDX_COMMENT_REGEX = /\{\/\*[\s\S]*?\*\/\}/g;
+const FRONTMATTER_REGEX = /^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/;
+// `## Title [#id]` and `<Anchor id="id">`, the two forms the library renderers emit.
+const AUTHORED_ANCHOR_REGEX = /\[#([^\]\s]+)\][ \t]*(?=\r?\n|$)|<Anchor\s[^>]*?\bid\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
 
 /**
- * Regions where a tag is documentation rather than a live component: fenced code blocks
- * (closed by a fence of the same character at least as long as the opener, or EOF),
- * inline code spans of any backtick length, and MDX block comments.
+ * Regions where a tag is documentation rather than a live component: YAML frontmatter,
+ * fenced code blocks (closed by a fence of the same character at least as long as the
+ * opener, or EOF), inline code spans of any backtick length, and MDX block comments.
  */
 function findInertRegions(markdown: string): Region[] {
     const regions: Region[] = [];
+
+    const frontmatter = FRONTMATTER_REGEX.exec(markdown)?.[0];
+    if (frontmatter != null) {
+        regions.push([0, frontmatter.length]);
+    }
 
     let offset = 0;
     let openFence: { marker: string; start: number } | undefined;
@@ -104,6 +112,29 @@ function isInert(regions: Region[], index: number): boolean {
 
 function inertRegionEnd(regions: Region[], index: number): number | undefined {
     return regions.find(([start, end]) => index >= start && index < end)?.[1];
+}
+
+interface AnchorOwner {
+    tag: string;
+    line: number;
+}
+
+/**
+ * Anchors the author already placed on the page (outside inert regions), so an included
+ * symbol cannot silently duplicate one of them.
+ */
+function findAuthoredAnchors(markdown: string, inertRegions: Region[]): Map<string, AnchorOwner> {
+    const anchors = new Map<string, AnchorOwner>();
+    AUTHORED_ANCHOR_REGEX.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = AUTHORED_ANCHOR_REGEX.exec(markdown)) != null) {
+        const id = match[1] ?? match[2] ?? match[3];
+        if (id == null || id === "" || isInert(inertRegions, match.index) || anchors.has(id)) {
+            continue;
+        }
+        anchors.set(id, { tag: `the authored anchor '#${id}'`, line: getLineNumber(markdown, match.index) });
+    }
+    return anchors;
 }
 
 function extractAttributes(attributesString: string): Record<string, string> {
@@ -169,7 +200,12 @@ function parseMemberList(raw: string): string[] {
     const inner = raw.trim().replace(/^\[([\s\S]*)\]$/, "$1");
     return inner
         .split(",")
-        .map((m) => m.trim().replace(/^(["'])(.*)\1$/, "$2").trim())
+        .map((m) =>
+            m
+                .trim()
+                .replace(/^(["'])(.*)\1$/, "$2")
+                .trim()
+        )
         .filter((m) => m !== "");
 }
 
@@ -203,7 +239,7 @@ export async function replaceLibrarySymbols({
     }
 
     const inertRegions = findInertRegions(markdown);
-    const anchorsOnPage = new Map<string, { tag: string; line: number }>();
+    const anchorsOnPage = findAuthoredAnchors(markdown, inertRegions);
     const chunks: string[] = [];
     let cursor = 0;
     TAG_REGEX.lastIndex = 0;
@@ -263,7 +299,7 @@ export async function replaceLibrarySymbols({
                 const hint =
                     previous.tag === tag
                         ? "Include each symbol at most once per page."
-                        : "Narrow the class with 'members', or move one of the symbols to a different page so fragment links stay unambiguous.";
+                        : "Narrow the class with 'members', rename the authored anchor, or move one of the symbols to a different page so fragment links stay unambiguous.";
                 throw new CliError({
                     message:
                         `${location} ${tag} emits anchor '#${anchorId}', which is already used by ` +

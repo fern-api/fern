@@ -332,6 +332,65 @@ describe("replaceLibrarySymbols", () => {
         expect(result).toContain("RENDERED(lib:Live)");
     });
 
+    it("leaves tags inside YAML frontmatter untouched while replacing the body", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        const markdown = [
+            "---",
+            "title: Client",
+            'description: \'Use <LibrarySymbol library="sdk" name="Client" /> to embed it\'',
+            "---",
+            "",
+            '<LibrarySymbol library="sdk" name="Client" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls).toHaveLength(1);
+        expect(result).toContain('description: \'Use <LibrarySymbol library="sdk" name="Client" /> to embed it\'');
+        expect(result).toContain("---\n\nRENDERED(sdk:Client)");
+    });
+
+    it("also treats CRLF frontmatter as inert", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        const markdown =
+            '---\r\ndescription: "<LibrarySymbol library=\\"sdk\\" name=\\"Client\\" />"\r\n---\r\n\r\n<LibrarySymbol library="sdk" name="Client" />';
+        await replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol });
+        expect(calls).toHaveLength(1);
+    });
+
+    it("fails when an included symbol duplicates an anchor the author already placed on the page", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["reset"]
+        });
+        for (const authored of ["## Reset [#reset]", '<Anchor id="reset">Reset</Anchor>']) {
+            const markdown = [authored, "", '<LibrarySymbol library="lib" name="Client::reset" />'].join("\n");
+            await expect(
+                replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+            ).rejects.toThrow(/a\.mdx:3\].*'#reset'.*already used by the authored anchor '#reset' \(line 1\)/);
+        }
+    });
+
+    it("ignores authored anchors inside inert regions", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["reset"]
+        });
+        const markdown = [
+            "```md",
+            "## Reset [#reset]",
+            "```",
+            'Use `## Reset [#reset]` or {/* <Anchor id="reset"> */}',
+            '<LibrarySymbol library="lib" name="Client::reset" />'
+        ].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).resolves.toContain("RENDERED(Client::reset)");
+    });
+
     it("fails when two different symbols on one page emit the same anchor", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,

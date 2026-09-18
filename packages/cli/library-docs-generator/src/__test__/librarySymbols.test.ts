@@ -425,7 +425,9 @@ describe("renderLibrarySymbol (cpp)", () => {
             linkToGeneratedPages: true
         });
         expect(result.anchorIds).toEqual(["cuoptabsoluteprimaltolerance"]);
-        expect(result.mdx.startsWith("### `CUOPT_ABSOLUTE_PRIMAL_TOLERANCE` [#cuoptabsoluteprimaltolerance]")).toBe(true);
+        expect(result.mdx.startsWith("### `CUOPT_ABSOLUTE_PRIMAL_TOLERANCE` [#cuoptabsoluteprimaltolerance]")).toBe(
+            true
+        );
         expect(result.mdx).toContain('#define CUOPT_ABSOLUTE_PRIMAL_TOLERANCE "absolute_primal_tolerance"');
         expect(result.mdx).toContain("Absolute primal tolerance parameter name.");
     });
