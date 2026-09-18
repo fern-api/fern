@@ -14,6 +14,7 @@ export {
     type LibrarySymbolReference,
     type LibrarySymbolRenderer,
     type LibrarySymbolUsageTracker,
+    type RenderedLibrarySymbolMdx,
     replaceLibrarySymbols
 } from "./replaceLibrarySymbols.js";
 export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";

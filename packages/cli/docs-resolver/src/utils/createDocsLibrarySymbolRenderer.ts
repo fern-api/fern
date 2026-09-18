@@ -1,4 +1,5 @@
 import type { docsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import type { LibrarySymbolRenderer } from "@fern-api/docs-markdown-utils";
 import { type AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createLibrarySymbolRenderer } from "@fern-api/library-docs-generator";
@@ -47,13 +48,29 @@ export function createDocsLibrarySymbolRenderer({
     });
 }
 
+/** Content sources of every git-ref-backed version, including versions nested inside product groups. */
 export function getVersionContentSources(
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration
+    navigation: docsYml.DocsNavigationConfiguration
 ): docsYml.VersionContentSource[] {
-    if (parsedDocsConfig.navigation.type !== "versioned") {
-        return [];
-    }
-    return parsedDocsConfig.navigation.versions.flatMap((version) =>
+    return collectVersions(navigation).flatMap((version) =>
         version.contentSource != null ? [version.contentSource] : []
     );
+}
+
+function collectVersions(navigation: docsYml.DocsNavigationConfiguration): docsYml.VersionInfo[] {
+    switch (navigation.type) {
+        case "versioned":
+            return navigation.versions;
+        case "productgroup":
+            return navigation.products.flatMap((product) =>
+                product.type === "internal" && product.navigation.type === "versioned"
+                    ? product.navigation.versions
+                    : []
+            );
+        case "untabbed":
+        case "tabbed":
+            return [];
+        default:
+            assertNever(navigation);
+    }
 }

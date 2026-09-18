@@ -1,6 +1,10 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type PersistedLibraryIr, readLibraryIr } from "./libraryIrFile.js";
-import { DEFAULT_LIBRARY_SYMBOL_HEADING, renderLibrarySymbol } from "./renderLibrarySymbol.js";
+import {
+    DEFAULT_LIBRARY_SYMBOL_HEADING,
+    type RenderedLibrarySymbol,
+    renderLibrarySymbol
+} from "./renderLibrarySymbol.js";
 
 export interface LibrarySymbolRendererOptions {
     /**
@@ -31,7 +35,7 @@ export interface LibrarySymbolRenderRequest {
  */
 export function createLibrarySymbolRenderer(
     options: LibrarySymbolRendererOptions
-): (request: LibrarySymbolRenderRequest) => Promise<string> {
+): (request: LibrarySymbolRenderRequest) => Promise<RenderedLibrarySymbol> {
     const irCache = new Map<string, Promise<PersistedLibraryIr>>();
 
     function loadIr(library: string): Promise<PersistedLibraryIr> {
@@ -58,12 +62,11 @@ export function createLibrarySymbolRenderer(
 
     return async (request) => {
         const persisted = await loadIr(request.library);
-        const { mdx } = renderLibrarySymbol(persisted, {
+        return renderLibrarySymbol(persisted, {
             name: request.name,
             heading: request.heading ?? DEFAULT_LIBRARY_SYMBOL_HEADING,
             members: request.members,
             linkToGeneratedPages: options.hasGeneratedPages(request.library)
         });
-        return mdx;
     };
 }

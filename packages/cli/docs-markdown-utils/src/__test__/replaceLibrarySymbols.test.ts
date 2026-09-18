@@ -5,6 +5,7 @@ import { vi } from "vitest";
 import {
     createLibrarySymbolUsageTracker,
     type LibrarySymbolReference,
+    type RenderedLibrarySymbolMdx,
     replaceLibrarySymbols
 } from "../replaceLibrarySymbols.js";
 
@@ -29,9 +30,9 @@ function makeContextWithWarnSpy() {
 
 function makeRecordingRenderer() {
     const calls: LibrarySymbolReference[] = [];
-    const renderSymbol = async (ref: LibrarySymbolReference): Promise<string> => {
+    const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => {
         calls.push(ref);
-        return `RENDERED(${ref.library}:${ref.name})\nline2`;
+        return { mdx: `RENDERED(${ref.library}:${ref.name})\nline2`, anchorId: undefined };
     };
     return { calls, renderSymbol };
 }
@@ -145,7 +146,7 @@ describe("replaceLibrarySymbols", () => {
     });
 
     it("surfaces renderer errors (unknown library / symbol) with file:line and the tag", async () => {
-        const renderSymbol = async (ref: LibrarySymbolReference): Promise<string> => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => {
             throw new Error(`Unknown library '${ref.library}'. Libraries configured in docs.yml: cuopt-c`);
         };
         await expect(
@@ -213,7 +214,7 @@ describe("replaceLibrarySymbols", () => {
             markdown: tag,
             absolutePathToMarkdownFile: pageA,
             context,
-            renderSymbol: async () => `Usage: \`${tag}\``
+            renderSymbol: async () => ({ mdx: `Usage: \`${tag}\``, anchorId: undefined })
         });
         expect(result).toBe(`Usage: \`${tag}\``);
     });
@@ -282,5 +283,57 @@ describe("replaceLibrarySymbols", () => {
         expect(result).toContain('`<LibrarySymbol library="docs-example" name="Inline" />`');
         expect(result).toContain('{/* <LibrarySymbol library="docs-example" name="Commented" /> */}');
         expect(result).toContain("RENDERED(lib:Live)");
+    });
+
+    it("handles multi-backtick code spans and closing fences longer than the opener", async () => {
+        const { calls, renderSymbol } = makeRecordingRenderer();
+        const markdown = [
+            'Use ``<LibrarySymbol library="docs-example" name="Double" />`` literally.',
+            "",
+            "```",
+            '<LibrarySymbol library="docs-example" name="Fenced" />',
+            "````",
+            "",
+            '<LibrarySymbol library="lib" name="Live" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls.map((c) => c.name)).toEqual(["Live"]);
+        expect(result).toContain('``<LibrarySymbol library="docs-example" name="Double" />``');
+        expect(result).toContain('<LibrarySymbol library="docs-example" name="Fenced" />');
+        expect(result).toContain("RENDERED(lib:Live)");
+    });
+
+    it("fails when two different symbols on one page emit the same anchor", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorId: "reset"
+        });
+        const markdown = [
+            '<LibrarySymbol library="lib" name="alpha::Client::reset" />',
+            '<LibrarySymbol library="lib" name="beta::Client::reset" />'
+        ].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).rejects.toThrow(/a\.mdx:2\].*'#reset'.*already used by 'lib:alpha::Client::reset'/);
+    });
+
+    it("does not treat the same symbol included twice as an anchor collision", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorId: "reset"
+        });
+        const tag = '<LibrarySymbol library="lib" name="Client::reset" />';
+        const result = await replaceLibrarySymbols({
+            markdown: `${tag}\n${tag}`,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(result).toBe("RENDERED(Client::reset)\nRENDERED(Client::reset)");
     });
 });

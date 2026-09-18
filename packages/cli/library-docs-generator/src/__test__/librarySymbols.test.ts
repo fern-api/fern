@@ -518,7 +518,8 @@ describe("library IR persistence", () => {
             heading: undefined,
             members: undefined
         });
-        expect(py).toContain("## `solve`");
+        expect(py.mdx).toContain("## `solve`");
+        expect(py.anchorId).toBe("cuopt-solve");
 
         const c = await render({
             library: "cuopt-c",
@@ -526,7 +527,8 @@ describe("library IR persistence", () => {
             heading: undefined,
             members: undefined
         });
-        expect(c).toContain("## `cuOptGetIntSize` [#cuoptgetintsize]");
+        expect(c.mdx).toContain("## `cuOptGetIntSize` [#cuoptgetintsize]");
+        expect(c.anchorId).toBe("cuoptgetintsize");
 
         await expect(render({ library: "nope", name: "x", heading: undefined, members: undefined })).rejects.toThrow(
             /Unknown library 'nope'. Libraries configured in docs.yml: cuopt-python, cuopt-c/

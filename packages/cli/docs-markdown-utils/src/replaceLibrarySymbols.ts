@@ -17,7 +17,13 @@ export interface LibrarySymbolReference {
  * language-specific rendering code. Any error thrown is surfaced to the author with
  * the file and line of the offending tag.
  */
-export type LibrarySymbolRenderer = (reference: LibrarySymbolReference) => Promise<string>;
+export interface RenderedLibrarySymbolMdx {
+    mdx: string;
+    /** Anchor id emitted for the symbol; used to detect two symbols colliding on one page. */
+    anchorId: string | undefined;
+}
+
+export type LibrarySymbolRenderer = (reference: LibrarySymbolReference) => Promise<RenderedLibrarySymbolMdx>;
 
 /**
  * Shared across all pages of a docs build to detect a symbol authored into more than
@@ -35,21 +41,56 @@ const TAG_REGEX = /([ \t]*)<LibrarySymbol\b([\s\S]*?)\/>/g;
 // name="..." | name='...' | name={"..."} | name={'...'} | name={...}
 const ATTRIBUTE_REGEX = /(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*(?:"([^"]*)"|'([^']*)'|([^}]*))\s*\})/g;
 const TAG_NAME = "<LibrarySymbol";
-// Regions where a tag is documentation, not a live component: fenced code, inline code, MDX comments.
-const INERT_REGION_REGEX =
-    /(^|\n)[ \t]*(`{3,}|~{3,})[\s\S]*?(?:\n[ \t]*\2[ \t]*(?=\n|$)|$)|`[^`\n]*`|\{\/\*[\s\S]*?\*\/\}/g;
+type Region = [start: number, end: number];
 
-function findInertRegions(markdown: string): Array<[start: number, end: number]> {
-    const regions: Array<[number, number]> = [];
-    INERT_REGION_REGEX.lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = INERT_REGION_REGEX.exec(markdown)) != null) {
-        regions.push([match.index, match.index + match[0].length]);
+const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
+const CODE_SPAN_REGEX = /(`+)(?!`)[\s\S]*?[^`]\1(?!`)/g;
+const MDX_COMMENT_REGEX = /\{\/\*[\s\S]*?\*\/\}/g;
+
+/**
+ * Regions where a tag is documentation rather than a live component: fenced code blocks
+ * (closed by a fence of the same character at least as long as the opener, or EOF),
+ * inline code spans of any backtick length, and MDX block comments.
+ */
+function findInertRegions(markdown: string): Region[] {
+    const regions: Region[] = [];
+
+    let offset = 0;
+    let openFence: { marker: string; start: number } | undefined;
+    for (const line of markdown.split("\n")) {
+        const fence = FENCE_REGEX.exec(line)?.[1];
+        if (openFence == null) {
+            if (fence != null) {
+                openFence = { marker: fence, start: offset };
+            }
+        } else if (
+            fence != null &&
+            fence[0] === openFence.marker[0] &&
+            fence.length >= openFence.marker.length &&
+            line.trim() === fence
+        ) {
+            regions.push([openFence.start, offset + line.length]);
+            openFence = undefined;
+        }
+        offset += line.length + 1;
+    }
+    if (openFence != null) {
+        regions.push([openFence.start, markdown.length]);
+    }
+
+    for (const regex of [CODE_SPAN_REGEX, MDX_COMMENT_REGEX]) {
+        regex.lastIndex = 0;
+        let match: RegExpExecArray | null;
+        while ((match = regex.exec(markdown)) != null) {
+            if (!isInert(regions, match.index)) {
+                regions.push([match.index, match.index + match[0].length]);
+            }
+        }
     }
     return regions;
 }
 
-function isInert(regions: Array<[start: number, end: number]>, index: number): boolean {
+function isInert(regions: Region[], index: number): boolean {
     return regions.some(([start, end]) => index >= start && index < end);
 }
 
@@ -139,6 +180,7 @@ export async function replaceLibrarySymbols({
     }
 
     const inertRegions = findInertRegions(markdown);
+    const anchorsOnPage = new Map<string, string>();
     const chunks: string[] = [];
     let cursor = 0;
     TAG_REGEX.lastIndex = 0;
@@ -178,7 +220,7 @@ export async function replaceLibrarySymbols({
             }
         }
 
-        let rendered: string;
+        let rendered: RenderedLibrarySymbolMdx;
         try {
             rendered = await renderSymbol(reference);
         } catch (e) {
@@ -188,7 +230,22 @@ export async function replaceLibrarySymbols({
             });
         }
 
-        const replacement = rendered
+        if (rendered.anchorId != null) {
+            const usageKey = `${reference.library}:${reference.name}`;
+            const previousSymbol = anchorsOnPage.get(rendered.anchorId);
+            if (previousSymbol != null && previousSymbol !== usageKey) {
+                throw new CliError({
+                    message:
+                        `${location} <LibrarySymbol library="${reference.library}" name="${reference.name}" /> emits anchor ` +
+                        `'#${rendered.anchorId}', which is already used by '${previousSymbol}' on this page. ` +
+                        "Move one of the symbols to a different page so fragment links stay unambiguous.",
+                    code: CliError.Code.ConfigError
+                });
+            }
+            anchorsOnPage.set(rendered.anchorId, usageKey);
+        }
+
+        const replacement = rendered.mdx
             .split("\n")
             .map((l) => (l === "" ? l : indent + l))
             .join("\n");

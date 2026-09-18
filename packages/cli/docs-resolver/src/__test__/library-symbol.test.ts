@@ -1,10 +1,81 @@
+import type { docsYml } from "@fern-api/configuration";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { describe, expect, it } from "vitest";
-
 import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
+import { getVersionContentSources } from "../utils/createDocsLibrarySymbolRenderer.js";
+
+function refVersion(version: string, ref: string): docsYml.VersionInfo {
+    return {
+        landingPage: undefined,
+        version,
+        navigation: { type: "untabbed", items: [] },
+        availability: undefined,
+        slug: undefined,
+        hidden: undefined,
+        viewers: undefined,
+        orphaned: undefined,
+        featureFlags: undefined,
+        announcement: undefined,
+        contentSource: {
+            displayVersion: version,
+            ref,
+            sha: "0".repeat(40),
+            absolutePathToFernFolder: AbsoluteFilePath.of(`/checkouts/${ref}/fern`),
+            libraries: undefined
+        }
+    };
+}
+
+describe("getVersionContentSources", () => {
+    it("collects ref-backed versions nested inside product groups", () => {
+        const sources = getVersionContentSources({
+            type: "productgroup",
+            changelog: undefined,
+            products: [
+                {
+                    type: "internal",
+                    product: "SDK",
+                    landingPage: undefined,
+                    subtitle: undefined,
+                    slug: undefined,
+                    icon: "fa-solid fa-box",
+                    image: undefined,
+                    announcement: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined,
+                    navigation: {
+                        type: "versioned",
+                        versions: [
+                            refVersion("v1", "v1.0.0"),
+                            { ...refVersion("v2", "v2.0.0"), contentSource: undefined }
+                        ]
+                    }
+                },
+                {
+                    type: "external",
+                    product: "Status",
+                    subtitle: undefined,
+                    href: "https://status.example.com",
+                    icon: "fa-solid fa-signal",
+                    image: undefined,
+                    target: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                }
+            ]
+        });
+        expect(sources.map((s) => s.ref)).toEqual(["v1.0.0"]);
+    });
+
+    it("returns nothing for untabbed navigation", () => {
+        expect(getVersionContentSources({ type: "untabbed", items: [] })).toEqual([]);
+    });
+});
 
 const context = createMockTaskContext();
 
