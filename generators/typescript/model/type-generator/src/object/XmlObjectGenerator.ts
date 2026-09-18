@@ -54,6 +54,8 @@ interface XmlProperty {
     kind: FernIr.XmlPropertyKind;
     /** The attribute or element name on the wire. */
     wireName: string;
+    /** Whether list items are nested under a wrapper element named `wireName`. */
+    wrapped: boolean;
     isOptional: boolean;
     isList: boolean;
     itemType: FernIr.TypeReference;
@@ -251,15 +253,15 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             }
         ];
 
-        const takenNames = new Set<string>([
-            ...RESERVED_BUILDER_METHODS,
-            ...properties.map((property) => property.key)
-        ]);
+        const takenNames = new Set<string>(RESERVED_BUILDER_METHODS);
         for (const property of properties) {
             const key = getPropertyKey(property.key);
             const target = elementKeys.has(property.key) ? "elements" : "fields";
+            const setterName = takenNames.has(property.key) ? `set${context.case.pascalSafe(property.key)}` : key;
+            takenNames.add(property.key);
+            takenNames.add(setterName);
             methods.push({
-                name: key,
+                name: setterName,
                 parameters: [
                     {
                         name: property.key,
@@ -291,10 +293,9 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         }
         const builtElements = elementProperties.map((property) => {
             const key = getPropertyKey(property.key);
-            const build = property.isList ? "xmlBuildAll" : "xmlBuild";
             const value = property.isList
                 ? `${this.xmlRef(context, "xmlBuildAll")}(this.elements.${key})`
-                : `this.elements.${key} === undefined ? undefined : ${this.xmlRef(context, build)}(this.elements.${key})`;
+                : `this.elements.${key} === undefined ? undefined : ${this.xmlRef(context, "xmlBuild")}(this.elements.${key})`;
             return property.isOptional
                 ? `${key}: ${value}`
                 : `${key}: ${this.xmlRef(context, "xmlRequired")}(${value}, "${this.typeName}.${property.key}")`;
@@ -383,7 +384,11 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const { safeName, unsafeName } = context.case.camel(childXml.name);
         let name = unsafeName;
         if (safeName !== unsafeName || takenNames.has(name)) {
-            name = `add${context.case.pascalSafe(childXml.name)}`;
+            const prefixed = `add${context.case.pascalSafe(childXml.name)}`;
+            name = prefixed;
+            for (let suffix = 2; takenNames.has(name); suffix++) {
+                name = `${prefixed}${suffix}`;
+            }
         }
         takenNames.add(name);
 
@@ -442,10 +447,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
 
     /** The element names (wrapper or child tags) an element property reads from the parent. */
     private getElementNames(property: XmlProperty): string[] {
-        if (property.irProperty.xml?.wrapped) {
-            return [property.wireName];
-        }
-        if (property.childTypes.length === 0) {
+        if (property.wrapped || property.childTypes.length === 0) {
             return [property.wireName];
         }
         return property.childTypes.map(
@@ -488,9 +490,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                               })
                               .join(", ")} }`;
                 if (property.isList) {
-                    const wrapper = property.irProperty.xml?.wrapped
-                        ? `, { wrapper: ${JSON.stringify(property.wireName)} }`
-                        : "";
+                    const wrapper = property.wrapped ? `, { wrapper: ${JSON.stringify(property.wireName)} }` : "";
                     return `${this.xmlRef(context, "xmlChildren")}<${itemType}>(node, ${parsers}${wrapper})`;
                 }
                 return `${this.xmlRef(context, "xmlChild")}<${itemType}>(node, ${parsers})`;
@@ -578,7 +578,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             .map(
                 (property) =>
                     `{ name: ${JSON.stringify(property.wireName)}, value: this.${getPropertyKey(property.key)}${
-                        property.irProperty.xml?.wrapped ? ", wrapped: true" : ""
+                        property.wrapped ? ", wrapped: true" : ""
                     } }`
             );
         const args: string[] = [`name: ${JSON.stringify(this.xml.name)}`];
@@ -619,6 +619,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 irProperty,
                 kind,
                 wireName: irProperty.xml?.name ?? getWireValue(irProperty.name),
+                wrapped: irProperty.xml?.wrapped ?? false,
                 isOptional: valueShape.isOptional,
                 isList: valueShape.isList,
                 itemType: valueShape.itemType,
