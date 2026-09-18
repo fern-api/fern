@@ -225,6 +225,16 @@ export interface CppVariableIr {
     docstring: CppDocstringIr | undefined;
 }
 
+/** A `#define`. Only documented macros are emitted unless `include-undocumented-macros` is set; include guards are never present. */
+export interface CppMacroIr {
+    name: string;
+    path: string;
+    /** Parameter names of a function-like macro; absent for object-like macros. */
+    parameters?: string[];
+    initializer?: string;
+    docstring: CppDocstringIr | undefined;
+}
+
 export interface CppBaseClassRef {
     name: string;
     typeInfo: CppTypeInfo | undefined;
@@ -296,6 +306,8 @@ export interface CppNamespaceIr {
     variables: CppVariableIr[];
     concepts: CppConceptIr[];
     namespaces: CppNamespaceIr[];
+    // Only populated on the root namespace; optional because older IRs omit it.
+    macros?: CppMacroIr[];
 }
 
 export interface CppGroupIr {
@@ -313,6 +325,7 @@ export interface CppGroupIr {
     enums?: CppEnumIr[];
     typedefs?: CppTypedefIr[];
     variables?: CppVariableIr[];
+    macros?: CppMacroIr[];
     subgroups: CppGroupIr[];
 }
 

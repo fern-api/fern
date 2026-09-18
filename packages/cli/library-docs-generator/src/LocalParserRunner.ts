@@ -60,6 +60,8 @@ export interface LocalParserConfig {
     branch?: string;
     /** Contents of a Doxyfile, used only by the C++ parser. */
     doxyfileContent?: string;
+    /** Also emit `#define`s without a doc comment; C++ parser only. */
+    includeUndocumentedMacros?: boolean;
 }
 
 /**
@@ -100,7 +102,8 @@ export async function runLocalParser({
                 packagePath: config.packagePath,
                 sourceUrl: config.sourceUrl,
                 branch: config.branch,
-                doxyfileContent: config.doxyfileContent
+                doxyfileContent: config.doxyfileContent,
+                includeUndocumentedMacros: config.includeUndocumentedMacros
             })
         );
 
