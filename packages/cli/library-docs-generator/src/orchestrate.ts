@@ -286,7 +286,7 @@ async function generateSingleLibrary({
     if (local) {
         ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
     } else if (client != null) {
-        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep });
+        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep, context });
     } else {
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
@@ -336,7 +336,8 @@ async function generateIrRemotely({
     language,
     orgId,
     doxyfileContent,
-    wrapStep
+    wrapStep,
+    context
 }: {
     client: LibraryDocsClient;
     name: string;
@@ -345,6 +346,7 @@ async function generateIrRemotely({
     orgId: string;
     doxyfileContent: string | undefined;
     wrapStep: StepWrapper;
+    context: TaskContext;
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
         throw new CliError({
@@ -375,7 +377,7 @@ async function generateIrRemotely({
 
     return wrapStep({
         message: `Library '${name}': downloading generated IR`,
-        operation: () => downloadIr(client, jobId, name, language)
+        operation: () => downloadIr(client, jobId, name, language, context)
     });
 }
 
@@ -430,10 +432,11 @@ async function generateIrLocally({
         parserConfig = { doxyfileContent };
     }
 
-    const ir = await wrapStep({
+    const result = await wrapStep({
         message: `Library '${name}': parsing library source locally`,
         operation: () => runLocalParser({ context, sourcePath, language, config: parserConfig })
     });
+    const ir = unwrapParserResult(result, name, context);
     validateLibraryIr(ir, language, name);
     return ir;
 }
@@ -521,7 +524,8 @@ async function downloadIr(
     client: LibraryDocsClient,
     jobId: string,
     libraryName: string,
-    language: LibraryLanguage
+    language: LibraryLanguage,
+    context: TaskContext
 ): Promise<unknown> {
     let resultUrl: string;
     try {
@@ -542,12 +546,35 @@ async function downloadIr(
         });
     }
 
-    const irWrapper = (await irFetchResponse.json()) as { ir?: unknown };
-    const ir = irWrapper.ir;
+    const ir = unwrapParserResult(await irFetchResponse.json(), libraryName, context);
 
     validateLibraryIr(ir, language, libraryName);
 
     return ir;
+}
+
+/**
+ * Parsers write `{ ir, metadata, warnings? }`. Warnings are non-fatal problems
+ * (e.g. a Cython module that could not be parsed and was left out) that the
+ * user should see in the CLI output rather than only in server logs.
+ */
+export function unwrapParserResult(result: unknown, libraryName: string, context: TaskContext): unknown {
+    if (result == null || typeof result !== "object") {
+        // Let `validateLibraryIr` produce the library-specific "invalid IR" error.
+        return undefined;
+    }
+    if (hasWarnings(result)) {
+        for (const warning of result.warnings) {
+            if (typeof warning === "string") {
+                context.logger.warn(`Library '${libraryName}': ${warning}`);
+            }
+        }
+    }
+    return "ir" in result ? result.ir : undefined;
+}
+
+function hasWarnings(result: object): result is { warnings: unknown[] } {
+    return "warnings" in result && Array.isArray(result.warnings);
 }
 
 /**

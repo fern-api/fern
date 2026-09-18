@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs md generate` now prints non-fatal warnings reported by the library-docs
+    parsers (for example a Cython `.pyx` module that could not be parsed and was left out
+    of the generated reference) instead of only recording them in server logs.
+  type: fix
