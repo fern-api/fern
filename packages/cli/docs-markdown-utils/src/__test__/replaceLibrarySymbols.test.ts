@@ -481,6 +481,26 @@ describe("replaceLibrarySymbols", () => {
         expect(result).not.toContain("RENDERED(Listed)");
     });
 
+    it("keeps tags inside comments in JSX attribute values literal", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: []
+        });
+        const markdown = [
+            '<Example value={/* <LibrarySymbol library="lib" name="Commented" /> */} />',
+            "",
+            '<LibrarySymbol library="lib" name="Live" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(result).toContain('value={/* <LibrarySymbol library="lib" name="Commented" /> */}');
+        expect(result).toContain("RENDERED(Live)");
+    });
+
     it("does not treat `[#id]` in prose as an anchor", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,

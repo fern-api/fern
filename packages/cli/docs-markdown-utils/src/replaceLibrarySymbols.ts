@@ -109,6 +109,8 @@ function findInertRegions(markdown: string, page: ParsedPage | undefined): Regio
                 regions.push([start + page.frontmatterLength, end + page.frontmatterLength]);
             }
         });
+        // JSX attribute values (`prop={/* ... */}`) are not visited as child nodes.
+        addRegexRegions(markdown, regions, [MDX_COMMENT_REGEX]);
         return regions;
     }
 
@@ -140,7 +142,12 @@ function findInertRegions(markdown: string, page: ParsedPage | undefined): Regio
         regions.push([openFence.start, markdown.length]);
     }
 
-    for (const regex of [CODE_SPAN_REGEX, MDX_COMMENT_REGEX]) {
+    addRegexRegions(markdown, regions, [CODE_SPAN_REGEX, MDX_COMMENT_REGEX]);
+    return regions;
+}
+
+function addRegexRegions(markdown: string, regions: Region[], regexes: RegExp[]): void {
+    for (const regex of regexes) {
         regex.lastIndex = 0;
         let match: RegExpExecArray | null;
         while ((match = regex.exec(markdown)) != null) {
@@ -149,7 +156,6 @@ function findInertRegions(markdown: string, page: ParsedPage | undefined): Regio
             }
         }
     }
-    return regions;
 }
 
 function isInert(regions: Region[], index: number): boolean {
