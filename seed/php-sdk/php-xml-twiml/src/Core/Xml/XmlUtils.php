@@ -617,11 +617,7 @@ final class XmlUtils
         }
         $result = [];
         foreach ($raw as $item) {
-            $case = self::parseEnum($item, $enum);
-            if ($case === null) {
-                throw new InvalidArgumentException("Cannot parse null as a value for $enum");
-            }
-            $result[] = $case->value;
+            $result[] = self::parseEnum($item, $enum)->value;
         }
         return $result;
     }
