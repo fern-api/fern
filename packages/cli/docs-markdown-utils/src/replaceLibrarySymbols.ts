@@ -35,6 +35,23 @@ const TAG_REGEX = /([ \t]*)<LibrarySymbol\b([\s\S]*?)\/>/g;
 // name="..." | name='...' | name={"..."} | name={'...'} | name={...}
 const ATTRIBUTE_REGEX = /(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*(?:"([^"]*)"|'([^']*)'|([^}]*))\s*\})/g;
 const TAG_NAME = "<LibrarySymbol";
+// Regions where a tag is documentation, not a live component: fenced code, inline code, MDX comments.
+const INERT_REGION_REGEX =
+    /(^|\n)[ \t]*(`{3,}|~{3,})[\s\S]*?(?:\n[ \t]*\2[ \t]*(?=\n|$)|$)|`[^`\n]*`|\{\/\*[\s\S]*?\*\/\}/g;
+
+function findInertRegions(markdown: string): Array<[start: number, end: number]> {
+    const regions: Array<[number, number]> = [];
+    INERT_REGION_REGEX.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = INERT_REGION_REGEX.exec(markdown)) != null) {
+        regions.push([match.index, match.index + match[0].length]);
+    }
+    return regions;
+}
+
+function isInert(regions: Array<[start: number, end: number]>, index: number): boolean {
+    return regions.some(([start, end]) => index >= start && index < end);
+}
 
 function extractAttributes(attributesString: string): Record<string, string> {
     const attributes: Record<string, string> = {};
@@ -121,11 +138,15 @@ export async function replaceLibrarySymbols({
         return markdown;
     }
 
+    const inertRegions = findInertRegions(markdown);
     const chunks: string[] = [];
     let cursor = 0;
     TAG_REGEX.lastIndex = 0;
     let match: RegExpExecArray | null;
     while ((match = TAG_REGEX.exec(markdown)) != null) {
+        if (isInert(inertRegions, match.index)) {
+            continue;
+        }
         const matchString = match[0];
         const indent = match[1] ?? "";
         const attributesString = match[2] ?? "";

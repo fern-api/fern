@@ -39,6 +39,11 @@ export interface LibrarySymbolRequest {
     heading: number;
     /** Allowlist of class member names; when set, only these members are rendered. */
     members: string[] | undefined;
+    /**
+     * Whether the library's generated per-symbol pages exist (`output.pages` != false).
+     * When false, type references are emitted as plain code rather than links.
+     */
+    linkToGeneratedPages: boolean;
 }
 
 export interface RenderedLibrarySymbol {
@@ -146,11 +151,21 @@ function notFound(name: string, lang: string, candidates: Iterable<string>): Lib
 // ---------------------------------------------------------------------------
 
 type PythonSymbol =
+    | { kind: "module"; module: FdrAPI.libraryDocs.PythonModuleIr }
     | { kind: "class"; cls: FdrAPI.libraryDocs.PythonClassIr }
     | { kind: "function"; func: FdrAPI.libraryDocs.PythonFunctionIr }
     | { kind: "method"; func: FdrAPI.libraryDocs.PythonFunctionIr; cls: FdrAPI.libraryDocs.PythonClassIr };
 
+function containerNotSupported(kind: "module" | "namespace", name: string, children: string[]): LibrarySymbolError {
+    const sample = children.slice(0, MAX_SUGGESTIONS).map((c) => `'${c}'`);
+    return new LibrarySymbolError(
+        `'${name}' is a ${kind}. <LibrarySymbol /> includes individual classes, functions and methods; ` +
+            `include its members one at a time${sample.length > 0 ? ` (e.g. ${sample.join(", ")})` : ""}.`
+    );
+}
+
 function indexPythonSymbols(module: FdrAPI.libraryDocs.PythonModuleIr, index: Map<string, PythonSymbol>): void {
+    index.set(module.path, { kind: "module", module });
     for (const cls of module.classes) {
         index.set(cls.path, { kind: "class", cls });
         for (const method of cls.methods) {
@@ -207,9 +222,19 @@ function renderPythonSymbol(
         throw notFound(request.name, "python", index.keys());
     }
 
+    if (symbol.kind === "module") {
+        throw containerNotSupported("module", request.name, [
+            ...symbol.module.classes.map((c) => c.path),
+            ...symbol.module.functions.map((f) => f.path)
+        ]);
+    }
+
     assertMembersOnClass(request, symbol.kind === "class");
 
-    const { validPaths, pathAliases } = cached(pythonLinkDataCache, ir, () => buildTypeLinkData(ir));
+    // Type links point into the generated per-symbol pages; without them, render types as plain code.
+    const { validPaths, pathAliases } = request.linkToGeneratedPages
+        ? cached(pythonLinkDataCache, ir, () => buildTypeLinkData(ir))
+        : { validPaths: new Set<string>(), pathAliases: new Map<string, string>() };
     const ctx: RenderContext = { baseSlug, validPaths, pathAliases };
     const anchorId = generateAnchorId(request.name);
     const shortName = request.name.split(".").pop() ?? request.name;
@@ -244,6 +269,7 @@ function renderPythonSymbol(
 // ---------------------------------------------------------------------------
 
 type CppSymbol =
+    | { kind: "namespace"; ns: CppNamespaceIr; path: string }
     | { kind: "compound"; compound: CppCompoundIr; path: string }
     | { kind: "method"; overloads: CppFunctionIr[]; cls: CppClassIr; path: string };
 
@@ -276,6 +302,9 @@ function indexCppClass(cls: CppClassIr, index: Map<string, CppSymbol>): void {
 }
 
 function indexCppSymbols(ns: CppNamespaceIr, index: Map<string, CppSymbol>): void {
+    if (ns.path !== "") {
+        registerCppSymbol(index, ns.path, { kind: "namespace", ns, path: ns.path });
+    }
     for (const cls of ns.classes) {
         indexCppClass(cls, index);
     }
@@ -378,6 +407,13 @@ function renderCppSymbol(ir: CppLibraryDocsIr, request: LibrarySymbolRequest): R
     const symbol = index.get(request.name) ?? index.get(stripTemplateArgs(request.name));
     if (symbol == null) {
         throw notFound(request.name, "cpp", index.keys());
+    }
+
+    if (symbol.kind === "namespace") {
+        throw containerNotSupported("namespace", request.name, [
+            ...symbol.ns.classes.map((c) => c.path),
+            ...symbol.ns.functions.map((f) => f.path)
+        ]);
     }
 
     assertMembersOnClass(request, symbol.kind === "compound" && symbol.compound.kind === "class");

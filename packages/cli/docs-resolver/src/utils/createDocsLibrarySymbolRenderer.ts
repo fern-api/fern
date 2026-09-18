@@ -4,7 +4,7 @@ import { type AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createLibrarySymbolRenderer } from "@fern-api/library-docs-generator";
 
 /** The subset of a library configuration (raw or parsed) needed to locate its persisted IR. */
-export type LibraryOutputSource = Record<string, { output: { path: string } }> | undefined;
+export type LibraryOutputSource = Record<string, { output: { path: string; pages?: boolean } }> | undefined;
 
 /**
  * Builds the `<LibrarySymbol />` renderer for a docs build, mapping each library name in
@@ -24,11 +24,13 @@ export function createDocsLibrarySymbolRenderer({
     versionContentSources?: docsYml.VersionContentSource[];
 }): LibrarySymbolRenderer {
     const outputDirs = new Map<string, AbsoluteFilePath>();
+    const generatesPages = new Map<string, boolean>();
 
     const register = (source: LibraryOutputSource, baseDir: AbsoluteFilePath): void => {
         for (const [name, config] of Object.entries(source ?? {})) {
             if (!outputDirs.has(name)) {
                 outputDirs.set(name, resolve(baseDir, config.output.path));
+                generatesPages.set(name, config.output.pages ?? true);
             }
         }
     };
@@ -40,6 +42,7 @@ export function createDocsLibrarySymbolRenderer({
 
     return createLibrarySymbolRenderer({
         getLibraryOutputDir: (library) => outputDirs.get(library),
+        hasGeneratedPages: (library) => generatesPages.get(library) ?? true,
         knownLibraries: () => [...outputDirs.keys()]
     });
 }

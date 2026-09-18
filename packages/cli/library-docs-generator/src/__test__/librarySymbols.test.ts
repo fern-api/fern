@@ -100,7 +100,18 @@ const solverSettings = pyClass({
 
 const pythonIr = {
     rootModule: pyModule({
-        functions: [pyFunction({ name: "solve", path: "cuopt.solve", signature: "def solve(model) -> Solution" })],
+        functions: [
+            pyFunction({
+                name: "solve",
+                path: "cuopt.solve",
+                signature: "def solve(model) -> SolverSettings",
+                returnTypeInfo: {
+                    display: "SolverSettings",
+                    resolvedPath: "cuopt.linear_programming.SolverSettings",
+                    basePath: "cuopt.linear_programming.SolverSettings"
+                }
+            })
+        ],
         submodules: [
             pyModule({
                 name: "linear_programming",
@@ -201,9 +212,9 @@ const cppTypedef: CppTypedefIr = {
     docstring: cppDocstring("The integer type used by the solver.")
 };
 
-const cppNamespace: CppNamespaceIr = {
-    name: "",
-    path: "",
+const cuoptNamespace: CppNamespaceIr = {
+    name: "cuopt",
+    path: "cuopt",
     docstring: undefined,
     classes: [
         cppClass({
@@ -213,12 +224,25 @@ const cppNamespace: CppNamespaceIr = {
             ]
         })
     ],
+    functions: [],
+    enums: [],
+    typedefs: [],
+    variables: [],
+    concepts: [],
+    namespaces: []
+};
+
+const cppNamespace: CppNamespaceIr = {
+    name: "",
+    path: "",
+    docstring: undefined,
+    classes: [],
     functions: [cppFunction({})],
     enums: [],
     typedefs: [cppTypedef],
     variables: [],
     concepts: [],
-    namespaces: []
+    namespaces: [cuoptNamespace]
 };
 
 const cppIr: CppLibraryDocsIr = {
@@ -240,7 +264,12 @@ const persistedCpp: PersistedLibraryIr = {
 
 describe("renderLibrarySymbol (python)", () => {
     it("renders a module-level function with the generated-page anchor", () => {
-        const result = renderLibrarySymbol(persistedPython, { name: "cuopt.solve", heading: 2, members: undefined });
+        const result = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.solve",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
         expect(result.anchorId).toBe(generateAnchorId("cuopt.solve"));
         expect(result.mdx).toContain("## `solve`");
         expect(result.mdx).toContain('<Anchor id="cuopt-solve">');
@@ -251,7 +280,8 @@ describe("renderLibrarySymbol (python)", () => {
         const result = renderLibrarySymbol(persistedPython, {
             name: "cuopt.linear_programming.SolverSettings",
             heading: 3,
-            members: undefined
+            members: undefined,
+            linkToGeneratedPages: true
         });
         expect(result.mdx.startsWith("### `SolverSettings`")).toBe(true);
         expect(result.mdx).toContain('<Anchor id="cuopt-linear_programming-SolverSettings">');
@@ -264,7 +294,8 @@ describe("renderLibrarySymbol (python)", () => {
         const result = renderLibrarySymbol(persistedPython, {
             name: "cuopt.linear_programming.SolverSettings",
             heading: 2,
-            members: ["set_parameter", "get_parameter"]
+            members: ["set_parameter", "get_parameter"],
+            linkToGeneratedPages: true
         });
         expect(result.mdx).toContain("set_parameter");
         expect(result.mdx).toContain("get_parameter");
@@ -275,7 +306,8 @@ describe("renderLibrarySymbol (python)", () => {
         const result = renderLibrarySymbol(persistedPython, {
             name: "cuopt.linear_programming.SolverSettings.set_parameter",
             heading: 4,
-            members: undefined
+            members: undefined,
+            linkToGeneratedPages: true
         });
         expect(result.mdx.startsWith("#### `set_parameter`")).toBe(true);
         expect(result.mdx).toContain('<Anchor id="cuopt-linear_programming-SolverSettings-set_parameter">');
@@ -284,7 +316,12 @@ describe("renderLibrarySymbol (python)", () => {
 
     it("throws an actionable error for unknown symbols, suggesting close matches", () => {
         expect(() =>
-            renderLibrarySymbol(persistedPython, { name: "cuopt.SolverSettings", heading: 2, members: undefined })
+            renderLibrarySymbol(persistedPython, {
+                name: "cuopt.SolverSettings",
+                heading: 2,
+                members: undefined,
+                linkToGeneratedPages: true
+            })
         ).toThrow(
             /Symbol 'cuopt\.SolverSettings' was not found.*Did you mean: 'cuopt\.linear_programming\.SolverSettings'/
         );
@@ -295,21 +332,62 @@ describe("renderLibrarySymbol (python)", () => {
             renderLibrarySymbol(persistedPython, {
                 name: "cuopt.linear_programming.SolverSettings",
                 heading: 2,
-                members: ["nope"]
+                members: ["nope"],
+                linkToGeneratedPages: true
             })
         ).toThrow(/Unknown member\(s\) 'nope'.*Available members: set_parameter, get_parameter, reset/);
     });
 
     it("rejects members on non-class symbols", () => {
-        expect(() => renderLibrarySymbol(persistedPython, { name: "cuopt.solve", heading: 2, members: ["x"] })).toThrow(
-            LibrarySymbolError
-        );
+        expect(() =>
+            renderLibrarySymbol(persistedPython, {
+                name: "cuopt.solve",
+                heading: 2,
+                members: ["x"],
+                linkToGeneratedPages: true
+            })
+        ).toThrow(LibrarySymbolError);
+    });
+
+    it("links referenced types to generated pages only when those pages exist", () => {
+        const linked = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.solve",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        expect(linked.mdx).toMatch(/links=\{.*cuopt\.linear_programming\.SolverSettings/);
+
+        const unlinked = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.solve",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: false
+        });
+        expect(unlinked.mdx).toContain("SolverSettings");
+        expect(unlinked.mdx).not.toContain("links={");
+    });
+
+    it("explains that modules must be included member by member", () => {
+        expect(() =>
+            renderLibrarySymbol(persistedPython, {
+                name: "cuopt.linear_programming",
+                heading: 2,
+                members: undefined,
+                linkToGeneratedPages: true
+            })
+        ).toThrow(/'cuopt.linear_programming' is a module.*'cuopt.linear_programming.SolverSettings'/);
     });
 });
 
 describe("renderLibrarySymbol (cpp)", () => {
     it("renders a free C function with the generated-page anchor", () => {
-        const result = renderLibrarySymbol(persistedCpp, { name: "cuOptGetIntSize", heading: 2, members: undefined });
+        const result = renderLibrarySymbol(persistedCpp, {
+            name: "cuOptGetIntSize",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
         expect(result.anchorId).toBe("cuoptgetintsize");
         expect(result.mdx.startsWith("## `cuOptGetIntSize` [#cuoptgetintsize]")).toBe(true);
         expect(result.mdx).not.toContain("---\ntitle:");
@@ -318,7 +396,12 @@ describe("renderLibrarySymbol (cpp)", () => {
     });
 
     it("renders a typedef", () => {
-        const result = renderLibrarySymbol(persistedCpp, { name: "cuopt_int_t", heading: 3, members: undefined });
+        const result = renderLibrarySymbol(persistedCpp, {
+            name: "cuopt_int_t",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
         expect(result.anchorId).toBe("cuoptintt");
         expect(result.mdx.startsWith("### `cuopt_int_t` [#cuoptintt]")).toBe(true);
         expect(result.mdx).toContain("The integer type used by the solver.");
@@ -328,7 +411,8 @@ describe("renderLibrarySymbol (cpp)", () => {
         const result = renderLibrarySymbol(persistedCpp, {
             name: "cuopt::Solver",
             heading: 2,
-            members: ["solve"]
+            members: ["solve"],
+            linkToGeneratedPages: true
         });
         expect(result.mdx).toContain("solve");
         expect(result.mdx).not.toContain("reset");
@@ -338,7 +422,8 @@ describe("renderLibrarySymbol (cpp)", () => {
         const result = renderLibrarySymbol(persistedCpp, {
             name: "cuopt::Solver::reset",
             heading: 3,
-            members: undefined
+            members: undefined,
+            linkToGeneratedPages: true
         });
         expect(result.anchorId).toBe("reset");
         expect(result.mdx).toContain("void reset()");
@@ -346,9 +431,25 @@ describe("renderLibrarySymbol (cpp)", () => {
     });
 
     it("throws an actionable error for unknown symbols", () => {
-        expect(() => renderLibrarySymbol(persistedCpp, { name: "Solver", heading: 2, members: undefined })).toThrow(
-            /Symbol 'Solver' was not found.*Did you mean: 'cuopt::Solver'/
-        );
+        expect(() =>
+            renderLibrarySymbol(persistedCpp, {
+                name: "Solver",
+                heading: 2,
+                members: undefined,
+                linkToGeneratedPages: true
+            })
+        ).toThrow(/Symbol 'Solver' was not found.*Did you mean: 'cuopt::Solver'/);
+    });
+
+    it("explains that namespaces must be included member by member", () => {
+        expect(() =>
+            renderLibrarySymbol(persistedCpp, {
+                name: "cuopt",
+                heading: 2,
+                members: undefined,
+                linkToGeneratedPages: true
+            })
+        ).toThrow(/'cuopt' is a namespace.*'cuopt::Solver'/);
     });
 });
 
@@ -407,6 +508,7 @@ describe("library IR persistence", () => {
         ]);
         const render = createLibrarySymbolRenderer({
             getLibraryOutputDir: (lib) => dirs.get(lib),
+            hasGeneratedPages: () => true,
             knownLibraries: () => [...dirs.keys()]
         });
 
@@ -418,7 +520,12 @@ describe("library IR persistence", () => {
         });
         expect(py).toContain("## `solve`");
 
-        const c = await render({ library: "cuopt-c", name: "cuOptGetIntSize", heading: undefined, members: undefined });
+        const c = await render({
+            library: "cuopt-c",
+            name: "cuOptGetIntSize",
+            heading: undefined,
+            members: undefined
+        });
         expect(c).toContain("## `cuOptGetIntSize` [#cuoptgetintsize]");
 
         await expect(render({ library: "nope", name: "x", heading: undefined, members: undefined })).rejects.toThrow(

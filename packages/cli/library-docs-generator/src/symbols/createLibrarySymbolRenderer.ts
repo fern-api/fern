@@ -8,6 +8,12 @@ export interface LibrarySymbolRendererOptions {
      * `output.path` for that library. Return `undefined` for unknown libraries.
      */
     getLibraryOutputDir: (library: string) => AbsoluteFilePath | undefined;
+    /**
+     * Whether `fern docs md generate` writes per-symbol pages for this library
+     * (`output.pages`, default true). When false, type references are rendered as plain
+     * code instead of links into the (non-existent) generated pages.
+     */
+    hasGeneratedPages: (library: string) => boolean;
     /** Library names to list in the "unknown library" error. */
     knownLibraries: () => string[];
 }
@@ -55,7 +61,8 @@ export function createLibrarySymbolRenderer(
         const { mdx } = renderLibrarySymbol(persisted, {
             name: request.name,
             heading: request.heading ?? DEFAULT_LIBRARY_SYMBOL_HEADING,
-            members: request.members
+            members: request.members,
+            linkToGeneratedPages: options.hasGeneratedPages(request.library)
         });
         return mdx;
     };

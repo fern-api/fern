@@ -250,4 +250,37 @@ describe("replaceLibrarySymbols", () => {
             })
         ).rejects.toThrow(/Could not parse attributes near 'bogus'/);
     });
+
+    it("leaves tags inside fenced code, inline code and MDX comments untouched", async () => {
+        const { calls, renderSymbol } = makeRecordingRenderer();
+        const markdown = [
+            "Use it like this:",
+            "",
+            "```mdx",
+            '<LibrarySymbol library="docs-example" name="Fenced" />',
+            "```",
+            "",
+            "~~~",
+            '  <LibrarySymbol library="docs-example" name="Tilde" />',
+            "~~~",
+            "",
+            'Inline: `<LibrarySymbol library="docs-example" name="Inline" />` renders a symbol.',
+            "",
+            '{/* <LibrarySymbol library="docs-example" name="Commented" /> */}',
+            "",
+            '<LibrarySymbol library="lib" name="Live" />'
+        ].join("\n");
+        const result = await replaceLibrarySymbols({
+            markdown,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls.map((c) => c.name)).toEqual(["Live"]);
+        expect(result).toContain('<LibrarySymbol library="docs-example" name="Fenced" />');
+        expect(result).toContain('<LibrarySymbol library="docs-example" name="Tilde" />');
+        expect(result).toContain('`<LibrarySymbol library="docs-example" name="Inline" />`');
+        expect(result).toContain('{/* <LibrarySymbol library="docs-example" name="Commented" /> */}');
+        expect(result).toContain("RENDERED(lib:Live)");
+    });
 });
