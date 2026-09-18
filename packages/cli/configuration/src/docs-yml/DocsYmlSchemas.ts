@@ -237,6 +237,10 @@ export const AIChatDatasource = AIChatWebsiteDatasource;
 
 export const PageDescriptionSource = z.enum(["description", "subtitle"]);
 
+export const EmbeddingConfig = z.object({
+    "allowed-origins": z.array(z.string())
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -337,7 +341,8 @@ export const DocsSettingsConfig = z.object({
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
-    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    embedding: EmbeddingConfig.optional()
 });
 
 // ===== Colors =====
