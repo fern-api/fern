@@ -2,10 +2,14 @@
 
 - summary: |
     Add `output: { location: fern-hosted, slug: <slug> }` to `generators.yml` for
-    `fernapi/fern-mcp-server`. After generation, `fern generate` deploys the generated MCP server
-    bundle to Fern's hosted MCP platform and prints the server URL. `slug` is optional and
-    defaults to `mcp`.
-
-    This output is not yet usable end to end: generating `fernapi/fern-mcp-server` requires
-    sdk-gen-api, which does not serve Fern credentials in production yet.
+    `fernapi/fern-mcp-server`. After generation, `fern generate` deploys the generated MCP
+    server bundle to Fern's hosted MCP platform and prints the server URL (`slug` is optional
+    and defaults to `mcp`). The deploy records provenance (the generator's `config:` block,
+    git repository/branch/commit, CI run and deployer identity, and the bundle's `inputs/`
+    when present) and no longer requires admin registry access. The SDK Config v1 payload for
+    sdk-gen-api-only generators is built from `generators.yml` in memory using the same
+    mapping as `fern sdk migrate`; mapping warnings are reported and mapping errors fail
+    generation. `fern generate` fails fast when `fernapi/fern-mcp-server` runs without
+    sdk-gen-api or with `--local`. Temporary hosted output directories are cleaned up and
+    `slug` supports `${ENV_VAR}` substitution.
   type: feat

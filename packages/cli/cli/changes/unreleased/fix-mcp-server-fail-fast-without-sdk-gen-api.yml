@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    `fern generate` now fails fast with a clear message when `fernapi/fern-mcp-server` is configured
-    but sdk-gen-api routing is disabled (`FERN_USE_SDK_GEN_API` is not `true`), or when it is run with
-    `--local`. This generator has no Fiddle or local Docker fallback, so previously these runs failed
-    opaquely inside the legacy pipeline.
-  type: fix

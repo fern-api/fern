@@ -144,6 +144,7 @@ export async function generateWorkspace({
     // `findGeneratorLineNumber`) to compute recordSkipped line anchors. Sequential resolution
     // is intentional — the config errors inside must still abort the whole run deterministically,
     // before any generation work starts.
+    const temporaryDirectories: AbsoluteFilePath[] = [];
     const runnableGroups: Array<{ resolvedGroupName: string; group: generatorsYml.GeneratorGroup }> = [];
     for (const resolvedGroupName of resolvedGroupNames) {
         const runnable = await resolveRunnableGroup({
@@ -160,7 +161,9 @@ export async function generateWorkspace({
             generatorsYmlAbsolutePath
         });
         if (runnable != null) {
-            runnableGroups.push({ resolvedGroupName, group: runnable });
+            const assignment = await assignFernHostedOutputDirectories(runnable);
+            temporaryDirectories.push(...assignment.temporaryDirectories);
+            runnableGroups.push({ resolvedGroupName, group: assignment.group });
         }
     }
 
@@ -172,124 +175,109 @@ export async function generateWorkspace({
         );
     }
 
-    const temporaryDirectories: AbsoluteFilePath[] = [];
-    try {
-        const assignedRunnableGroups: Array<{
-            resolvedGroupName: string;
-            group: generatorsYml.GeneratorGroup;
-        }> = [];
-        for (const { resolvedGroupName, group } of runnableGroups) {
-            const assignment = await assignFernHostedOutputDirectories(group);
-            temporaryDirectories.push(...assignment.temporaryDirectories);
-            assignedRunnableGroups.push({ resolvedGroupName, group: assignment.group });
-        }
-
-        // Run generation for each runnable group in parallel. Each becomes an interactive subtask
-        // of the workspace task so per-generator tasks opened downstream nest beneath it.
-        await Promise.all(
-            assignedRunnableGroups.map(({ resolvedGroupName, group }) =>
-                context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
-                    if (useLocalDocker) {
-                        const unsupported = group.generators.find((generator) => isSdkGenApiOnly(generator.name));
-                        if (unsupported != null) {
-                            groupContext.failAndThrow(
-                                `${unsupported.name} does not support --local. ` +
-                                    "Remove --local to run this generator through the remote pipeline.",
-                                undefined,
-                                { code: CliError.Code.ConfigError }
-                            );
-                        }
-                        await runLocalGenerationForWorkspace({
-                            token,
-                            projectConfig,
-                            workspace,
-                            generatorGroup: group,
-                            version,
-                            keepDocker,
-                            context: groupContext,
-                            runner,
-                            absolutePathToPreview,
-                            inspect,
-                            ai,
-                            replay,
-                            noReplay,
-                            validateWorkspace: true,
-                            requireEnvVars,
-                            skipFernignore,
-                            automationMode,
-                            autoMerge,
-                            skipIfNoDiff,
-                            generateTests,
-                            generateFullProject: pack,
-                            verify,
-                            disableTelemetry: isTelemetryDisabled()
-                        });
-                    } else if (token != null) {
-                        const getSpecsTarGz = createFernSourceArchiveResolver({
-                            workspace,
-                            context: groupContext,
-                            group,
-                            sdkConfigV1
-                        });
-
-                        await runRemoteGenerationForAPIWorkspace({
-                            projectConfig,
-                            organization,
-                            workspace,
-                            context: groupContext,
-                            generatorGroup: group,
-                            version,
-                            shouldLogS3Url,
-                            token,
-                            whitelabel: workspace.generatorsConfiguration?.whitelabel,
-                            replay,
-                            absolutePathToPreview,
-                            mode,
-                            fernignorePath,
-                            skipFernignore,
-                            dynamicIrOnly,
-                            validateWorkspace: true,
-                            retryRateLimited,
-                            requireEnvVars,
-                            automationMode,
-                            autoMerge,
-                            automation,
-                            occurrenceTracker,
-                            skipIfNoDiff,
-                            noReplay,
-                            verify,
-                            disableTelemetry: isTelemetryDisabled(),
-                            getSpecsTarGzBuffer: getSpecsTarGz,
-                            sdkConfigV1,
-                            generateFullProject: pack
-                        });
+    // Run generation for each runnable group in parallel. Each becomes an interactive subtask
+    // of the workspace task so per-generator tasks opened downstream nest beneath it.
+    await Promise.all(
+        runnableGroups.map(({ resolvedGroupName, group }) =>
+            context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
+                if (useLocalDocker) {
+                    const unsupported = group.generators.find((generator) => isSdkGenApiOnly(generator.name));
+                    if (unsupported != null) {
+                        groupContext.failAndThrow(
+                            `${unsupported.name} does not support --local. ` +
+                                "Remove --local to run this generator through the remote pipeline.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
                     }
-                    if (pack) {
-                        await packLocalOutputForGroup({
-                            group,
-                            context: groupContext,
-                            mode: packMode,
-                            runner,
-                            packOnly,
-                            version
-                        });
-                    }
-                    await deployFernHostedOutputs({
-                        group,
-                        workspace,
-                        organization,
-                        cliVersion: workspace.cliVersion,
+                    await runLocalGenerationForWorkspace({
                         token,
+                        projectConfig,
+                        workspace,
+                        generatorGroup: group,
+                        version,
+                        keepDocker,
+                        context: groupContext,
+                        runner,
                         absolutePathToPreview,
+                        inspect,
+                        ai,
+                        replay,
+                        noReplay,
+                        validateWorkspace: true,
                         requireEnvVars,
-                        context: groupContext
+                        skipFernignore,
+                        automationMode,
+                        autoMerge,
+                        skipIfNoDiff,
+                        generateTests,
+                        generateFullProject: pack,
+                        verify,
+                        disableTelemetry: isTelemetryDisabled()
                     });
-                })
-            )
-        );
-    } finally {
-        await removeFernHostedOutputDirectories(temporaryDirectories, context.logger);
-    }
+                } else if (token != null) {
+                    const getSpecsTarGz = createFernSourceArchiveResolver({
+                        workspace,
+                        context: groupContext,
+                        group,
+                        sdkConfigV1
+                    });
+
+                    await runRemoteGenerationForAPIWorkspace({
+                        projectConfig,
+                        organization,
+                        workspace,
+                        context: groupContext,
+                        generatorGroup: group,
+                        version,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        replay,
+                        absolutePathToPreview,
+                        mode,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        validateWorkspace: true,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        automation,
+                        occurrenceTracker,
+                        skipIfNoDiff,
+                        noReplay,
+                        verify,
+                        disableTelemetry: isTelemetryDisabled(),
+                        getSpecsTarGzBuffer: getSpecsTarGz,
+                        sdkConfigV1,
+                        generateFullProject: pack
+                    });
+                }
+                if (pack) {
+                    await packLocalOutputForGroup({
+                        group,
+                        context: groupContext,
+                        mode: packMode,
+                        runner,
+                        packOnly,
+                        version
+                    });
+                }
+                await deployFernHostedOutputs({
+                    group,
+                    workspace,
+                    organization,
+                    cliVersion: workspace.cliVersion,
+                    token,
+                    absolutePathToPreview,
+                    requireEnvVars,
+                    context: groupContext
+                });
+            })
+        )
+    ).finally(() => removeFernHostedOutputDirectories(temporaryDirectories, context.logger));
 }
 
 /**
