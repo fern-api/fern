@@ -312,38 +312,39 @@ export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<s
     return merged as unknown as RawDocsConfig;
 }
 
-interface StitchGlobalThemeArgs {
-    docsWorkspace: DocsWorkspace;
+export interface FetchGlobalThemeArgs {
+    themeName: string;
     organization: string;
     fdrOrigin: string;
     token: string;
     taskContext: TaskContext;
 }
 
+export interface FetchedGlobalTheme {
+    /** Raw theme config with file references resolved to presigned URLs. */
+    config: Record<string, unknown>;
+    /**
+     * CAS hash of the compiled ledger fragment, when the theme was uploaded by a
+     * CLI that produces one. Its presence means FDR can merge the theme
+     * server-side at publish time.
+     */
+    compiledHash: string | undefined;
+}
+
 /**
- * If the docs.yml declares `global-theme: <name>`, fetches that named theme from
- * FDR, downloads any file assets to a temp directory, and returns a new DocsWorkspace
- * whose raw config has the theme values merged in (theme wins for branding fields).
- *
- * The theme asset directory is reused across publishes of the same theme.
- * If no global-theme is declared, returns the workspace unchanged.
+ * Fetches the named global theme from FDR. Fails the task with a helpful
+ * message when the theme does not exist or FDR is unreachable.
  */
-export async function stitchGlobalTheme({
-    docsWorkspace,
+export async function fetchGlobalTheme({
+    themeName,
     organization,
     fdrOrigin,
     token,
     taskContext
-}: StitchGlobalThemeArgs): Promise<DocsWorkspace> {
-    const themeName = docsWorkspace.config.globalTheme;
-    if (themeName == null) {
-        return docsWorkspace;
-    }
-
+}: FetchGlobalThemeArgs): Promise<FetchedGlobalTheme> {
     taskContext.logger.info(`Fetching global theme "${themeName}" for org "${organization}"...`);
 
     const url = `${fdrOrigin}/v2/registry/themes/${encodeURIComponent(organization)}/${encodeURIComponent(themeName)}`;
-    let themeConfig: Record<string, unknown>;
     try {
         const res = await fetch(url, {
             headers: {
@@ -386,6 +387,7 @@ export async function stitchGlobalTheme({
         // ORPC can encode errors (e.g. NOT_FOUND) inside a 200 response body
         const body = parsed as {
             config?: Record<string, unknown>;
+            compiledHash?: string | null;
             error?: { code?: string; message?: string };
         };
         if (body.error != null) {
@@ -405,15 +407,14 @@ export async function stitchGlobalTheme({
         }
 
         if (body.config == null) {
-            taskContext.failAndThrow(
+            return taskContext.failAndThrow(
                 `Failed to fetch global theme "${themeName}": response missing "config" field`,
                 undefined,
                 { code: CliError.Code.NetworkError }
             );
-            return docsWorkspace; // unreachable — TS needs this for definite-assignment of themeConfig
         }
 
-        themeConfig = body.config;
+        return { config: body.config, compiledHash: body.compiledHash ?? undefined };
     } catch (err) {
         if (err instanceof Error && err.message.includes("fetch failed")) {
             taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`, err, {
@@ -422,6 +423,41 @@ export async function stitchGlobalTheme({
         }
         throw err;
     }
+}
+
+interface StitchGlobalThemeArgs {
+    docsWorkspace: DocsWorkspace;
+    organization: string;
+    fdrOrigin: string;
+    token: string;
+    taskContext: TaskContext;
+    /** Skips the FDR round-trip when the caller already fetched the theme. */
+    theme?: FetchedGlobalTheme;
+}
+
+/**
+ * If the docs.yml declares `global-theme: <name>`, fetches that named theme from
+ * FDR, downloads any file assets to a temp directory, and returns a new DocsWorkspace
+ * whose raw config has the theme values merged in (theme wins for branding fields).
+ *
+ * The theme asset directory is reused across publishes of the same theme.
+ * If no global-theme is declared, returns the workspace unchanged.
+ */
+export async function stitchGlobalTheme({
+    docsWorkspace,
+    organization,
+    fdrOrigin,
+    token,
+    taskContext,
+    theme
+}: StitchGlobalThemeArgs): Promise<DocsWorkspace> {
+    const themeName = docsWorkspace.config.globalTheme;
+    if (themeName == null) {
+        return docsWorkspace;
+    }
+
+    const themeConfig = (theme ?? (await fetchGlobalTheme({ themeName, organization, fdrOrigin, token, taskContext })))
+        .config;
 
     // Reuse a deterministic directory so asset paths remain stable across publishes.
     const tmpDirPath = getGlobalThemeAssetDirectoryPath(organization, themeName);

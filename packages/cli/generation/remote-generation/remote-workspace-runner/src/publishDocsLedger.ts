@@ -273,7 +273,8 @@ export async function publishDocsViaLedger({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    globalTheme
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -297,6 +298,8 @@ export async function publishDocsViaLedger({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /** Org-level theme FDR merges into the (unmerged) locale configs at publish. */
+    globalTheme?: string;
 }): Promise<LedgerPublishResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // If any locale fails to build, the entire publish aborts before any
@@ -340,7 +343,8 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    const publishInput: DocsPublishInput = {
+    // `globalTheme` lands in the SDK's DocsPublishInput with the next fdr-sdk bump.
+    const publishInput: DocsPublishInput & { globalTheme?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -348,7 +352,8 @@ export async function publishDocsViaLedger({
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
-        locales
+        locales,
+        ...(globalTheme != null && { globalTheme })
     };
 
     // Register — server computes deployment hash, returns presigned S3

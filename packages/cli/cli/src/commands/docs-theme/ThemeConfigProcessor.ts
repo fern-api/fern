@@ -57,6 +57,13 @@ export class ThemeConfigProcessor {
         return this.uploadAllFiles(raw);
     }
 
+    /** Ensures every file is in the org's CAS (no-op for content already uploaded). */
+    public async uploadFiles(absolutePaths: Iterable<string>): Promise<void> {
+        for (const absolutePath of absolutePaths) {
+            await this.uploadFileToCas(absolutePath);
+        }
+    }
+
     private async validateAllFiles(raw: Record<string, unknown>): Promise<void> {
         const filePaths = this.collectFilePaths(raw);
         const errors: string[] = [];

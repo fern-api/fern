@@ -1,5 +1,7 @@
 import { FernToken } from "@fern-api/auth";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
+import { compileGlobalTheme } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -45,7 +47,8 @@ export async function uploadDocsTheme({
     }
 
     const orgId = org ?? project.config.organization;
-    const themeYmlPath = path.join(docsWorkspace.absoluteFilePath, "theme", "theme.yml");
+    const themeDirectory = AbsoluteFilePath.of(path.join(docsWorkspace.absoluteFilePath, "theme"));
+    const themeYmlPath = path.join(themeDirectory, "theme.yml");
 
     await cliContext.runTask(async (context) => {
         let rawYaml: unknown;
@@ -71,12 +74,23 @@ export async function uploadDocsTheme({
         context.logger.info(`Uploading theme "${name}" for org "${orgId}"...`);
         context.logger.debug(`FDR origin: ${FDR_ORIGIN}`);
 
+        const rawTheme = rawYaml as Record<string, unknown>;
         const processor = new ThemeConfigProcessor({ docsWorkspace, orgId, token: token.value, context });
-        const { config: processedConfig, filesUploaded } = await processor.process(rawYaml as Record<string, unknown>);
+        const { config: processedConfig, filesUploaded } = await processor.process(rawTheme);
 
         if (filesUploaded > 0) {
             context.logger.info(`Uploaded ${filesUploaded} file asset(s) to CAS`);
         }
+
+        // FDR merges this ledger-shaped fragment into every site that publishes
+        // with `global-theme: <name>`, and re-merges them when it changes.
+        const compiled = await compileGlobalTheme({
+            rawTheme,
+            themeDirectory,
+            taskContext: context,
+            cliVersion: cliContext.environment.packageVersion
+        });
+        await processor.uploadFiles(compiled.files.values());
 
         const saveUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
         context.logger.debug(`Saving theme to ${saveUrl}`);
@@ -86,7 +100,11 @@ export async function uploadDocsTheme({
             res = await fetch(saveUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.value}` },
-                body: JSON.stringify({ name, config: processedConfig })
+                body: JSON.stringify({
+                    name,
+                    config: processedConfig,
+                    compiled: { config: compiled.config, fileManifest: compiled.fileManifest }
+                })
             });
         } catch (err) {
             context.failAndThrow(
