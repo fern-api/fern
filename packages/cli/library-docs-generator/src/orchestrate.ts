@@ -563,15 +563,18 @@ export function unwrapParserResult(result: unknown, libraryName: string, context
         // Let `validateLibraryIr` produce the library-specific "invalid IR" error.
         return undefined;
     }
-    const wrapper = result as { ir?: unknown; warnings?: unknown };
-    if (Array.isArray(wrapper.warnings)) {
-        for (const warning of wrapper.warnings) {
+    if (hasWarnings(result)) {
+        for (const warning of result.warnings) {
             if (typeof warning === "string") {
                 context.logger.warn(`Library '${libraryName}': ${warning}`);
             }
         }
     }
-    return wrapper.ir;
+    return "ir" in result ? result.ir : undefined;
+}
+
+function hasWarnings(result: object): result is { warnings: unknown[] } {
+    return "warnings" in result && Array.isArray(result.warnings);
 }
 
 /**
