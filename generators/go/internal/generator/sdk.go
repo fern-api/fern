@@ -35,6 +35,12 @@ var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
 
+	//go:embed sdk/core/xml.go
+	xmlFile string
+
+	//go:embed sdk/core/xml_test.go
+	xmlTestFile string
+
 	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
 
