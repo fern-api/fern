@@ -318,9 +318,9 @@ asserts the unconfigured output is byte-identical to a committed
 pre-Homebrew seed fixture, so the composition cannot drift from what
 cargo-dist emits.
 
-Enabling Homebrew also points `[package]` at the consumer
-(`withDistributionDefaults` in [`patchCargoToml.ts`](src/patchCargoToml.ts)).
-cargo-dist renders the `.rb` straight off that block:
+`[package]` is pointed at the consumer by `withDistributionDefaults` in
+[`patchCargoToml.ts`](src/patchCargoToml.ts). cargo-dist renders the
+shell/PowerShell installers and the `.rb` straight off that block:
 
 | `[package]` | Where it lands in the formula |
 |---|---|
@@ -328,12 +328,13 @@ cargo-dist renders the `.rb` straight off that block:
 | `homepage` | `homepage "..."` |
 | `description` | `desc "..."` |
 
-`repository` is load-bearing: left at the template's value the URLs
-resolve to `github.com/fern-api/cli-sdk/releases/...` and every
-`brew install` 404s. All three default from `repoUrl` / the API display
-name when unset. Deliberately scoped to the Homebrew case — applying
-them unconditionally would change every existing github-mode
-`Cargo.toml`. `name` is *not* defaulted (it would rename the crate and
+`repository` is load-bearing, and not only for Homebrew: the `curl | sh`
+and `irm | iex` installers emitted for every github-mode CLI fetch their
+archives from it too. Left at the template's value the URLs resolve to
+`github.com/fern-api/cli-sdk/releases/...` and every install 404s. So
+`repository` and `homepage` default from `repoUrl` whenever it is known;
+`description` (formula-only) defaults from the API display name only
+when Homebrew is on. `name` is *not* defaulted (it would rename the crate and
 its `Cargo.lock` entry); it only affects archive filenames, which stay
 internally consistent either way.
 

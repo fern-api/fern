@@ -1,0 +1,9 @@
+- type: fix
+  summary: |
+    The `curl | sh` and `irm | iex` installers no longer 404 for github-mode CLIs that do not
+    publish to Homebrew. cargo-dist bakes the release download URL into those installers from
+    `[package].repository`, which the generator only pointed at the consumer's repo when a
+    Homebrew formula was configured; every other generation kept the template's
+    `github.com/fern-api/cli-sdk`, so the installer downloaded fine but then failed to fetch
+    the archive. `repository` and `homepage` now default to the configured GitHub repo
+    whenever it is known. Explicit `packageIdentity` values still win.

@@ -465,13 +465,50 @@ describe("withDistributionDefaults", () => {
         });
     });
 
-    // Scoped to the Homebrew case: applying it unconditionally would change
-    // the Cargo.toml of every existing github-mode generation.
-    it("is inert when Homebrew is off", () => {
-        const packageIdentity = { name: "acme-cli" };
-        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity })).toBe(packageIdentity);
+    // The curl|sh and irm|iex installers cargo-dist emits for every
+    // github-mode generation download their archives from `repository` too,
+    // so the repo url must land regardless of Homebrew.
+    it("points repository and homepage at the consumer when Homebrew is off", () => {
         expect(
-            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })
+            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: { name: "acme-cli" } })
+        ).toEqual({
+            name: "acme-cli",
+            repository: repoUrl,
+            homepage: repoUrl
+        });
+        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })).toEqual({
+            repository: repoUrl,
+            homepage: repoUrl
+        });
+    });
+
+    // `description` only surfaces in the formula, so it stays Homebrew-only.
+    it("leaves description alone when Homebrew is off", () => {
+        expect(
+            withDistributionDefaults({
+                ...base,
+                publishesHomebrew: false,
+                packageIdentity: { description: "Mine" }
+            })
+        ).toEqual({
+            description: "Mine",
+            repository: repoUrl,
+            homepage: repoUrl
+        });
+    });
+
+    it("is inert when Homebrew is off and the repo url is unknown", () => {
+        const packageIdentity = { name: "acme-cli" };
+        expect(
+            withDistributionDefaults({ ...base, publishesHomebrew: false, repoUrl: undefined, packageIdentity })
+        ).toEqual(packageIdentity);
+        expect(
+            withDistributionDefaults({
+                ...base,
+                publishesHomebrew: false,
+                repoUrl: undefined,
+                packageIdentity: undefined
+            })
         ).toBeUndefined();
     });
 
