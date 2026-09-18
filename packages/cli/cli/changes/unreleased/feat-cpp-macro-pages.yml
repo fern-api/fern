@@ -1,0 +1,4 @@
+- summary: |
+    C/C++ library docs now render pages for documented preprocessor macros (`#define`),
+    listed under a `macros/` folder and in group pages.
+  type: feat

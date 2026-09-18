@@ -119,6 +119,11 @@ export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
         folderName: "variables",
         heading: "Variables",
         collectEntries: (ns) => collectEntityEntries(ns.variables)
+    },
+    {
+        folderName: "macros",
+        heading: "Macros",
+        collectEntries: (ns) => collectEntityEntries(ns.macros ?? [])
     }
 ];
 

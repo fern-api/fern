@@ -2,7 +2,7 @@
  * Main generator for C++ library documentation.
  *
  * Orchestrates the full pipeline:
- * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables) from the namespace tree
+ * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables, macros) from the namespace tree
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
  * 4. Generate hierarchical index pages (namespace → category folders → entity pages)
@@ -229,6 +229,16 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
         });
     }
 
+    // Macros are unscoped, so the root-prefix filter never applies to them.
+    for (const macro of ns.macros ?? []) {
+        result.push({
+            compound: { kind: "macro", data: macro },
+            path: macro.path,
+            namespacePath: [],
+            docstring: macro.docstring
+        });
+    }
+
     for (const childNs of ns.namespaces) {
         result.push(...collectCompounds(childNs, rootPrefix));
     }
@@ -262,6 +272,8 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
             return "typedefs";
         case "variable":
             return "variables";
+        case "macro":
+            return "macros";
         default: {
             const _exhaustive: never = collected.compound;
             throw new CliError({
