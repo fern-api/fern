@@ -10,6 +10,7 @@ import type {
     CppFunctionIr,
     CppGroupIr,
     CppLibraryDocsIr,
+    CppMacroIr,
     CppNamespaceIr,
     IrMetadata
 } from "../types/CppLibraryDocsIr.js";
@@ -124,6 +125,16 @@ function makeGroup(overrides: Partial<CppGroupIr>): CppGroupIr {
         typedefs: [],
         variables: [],
         subgroups: [],
+        ...overrides
+    };
+}
+
+function makeMacro(overrides: Partial<CppMacroIr>): CppMacroIr {
+    return {
+        name: "LIB_SUCCESS",
+        path: "LIB_SUCCESS",
+        initializer: "0",
+        docstring: makeDocstring({ summary: [{ type: "text", text: "Success status code." }] }),
         ...overrides
     };
 }
@@ -407,6 +418,88 @@ describe("generateCpp()", () => {
         const subgroupPage = readFileSync(join(tmpDir, "groups/scan/scan_advanced/index.mdx"), "utf-8");
         expect(subgroupPage).toContain("title: Advanced scan");
         expect(subgroupPage).toContain("- [`cub::Tune`](../../functions/tune)");
+    });
+
+    it("generates macro pages for documented #defines and links them from group pages", () => {
+        const success = makeMacro({});
+        const max = makeMacro({
+            name: "LIB_MAX",
+            path: "LIB_MAX",
+            parameters: ["a", "b"],
+            initializer: "((a) > (b) ? (a) : (b))",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Larger of two values." }],
+                params: [
+                    { name: "a", description: [{ type: "text", text: "first value" }], direction: undefined },
+                    { name: "b", description: [{ type: "text", text: "second value" }], direction: undefined }
+                ]
+            })
+        });
+        const ir = makeIr(makeNamespace({ macros: [success, max] }), { packageName: "lib" }, [
+            makeGroup({ id: "group__status", name: "status", title: "Status", macros: [success] })
+        ]);
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/LIB_SUCCESS.mdx");
+        expect(relativePaths).toContain("macros/LIB_MAX.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const successPage = readFileSync(join(tmpDir, "macros/LIB_SUCCESS.mdx"), "utf-8");
+        expect(successPage).toContain("title: LIB_SUCCESS");
+        expect(successPage).toContain("#define LIB_SUCCESS 0");
+        expect(successPage).not.toContain("**Parameters**");
+
+        const maxPage = readFileSync(join(tmpDir, "macros/LIB_MAX.mdx"), "utf-8");
+        expect(maxPage).toContain("#define LIB_MAX(a, b) ((a) > (b) ? (a) : (b))");
+        expect(maxPage).toContain("**Parameters**");
+        expect(maxPage).toContain('<ParamField path="a">\nFirst value\n</ParamField>');
+        expect(maxPage).not.toContain('type=""');
+
+        const groupPage = readFileSync(join(tmpDir, "groups/status/index.mdx"), "utf-8");
+        expect(groupPage).toContain("## Macros");
+        expect(groupPage).toContain("- [`LIB_SUCCESS`](../macros/libsuccess)");
+
+        // Root-scoped (plain C) libraries have no child namespace, but still get indexes
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toContain("title: lib API Reference");
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("Macros at global scope.");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
+        expect(macroIndex).toContain("- [`LIB_MAX`](macros/libmax)");
+    });
+
+    it("lists root-scoped macros in the library index when the library is a named namespace", () => {
+        const ir = makeIr(
+            makeNamespace({
+                macros: [makeMacro({})],
+                namespaces: [
+                    makeNamespace({
+                        name: "cub",
+                        path: "cub",
+                        classes: [makeClass({ name: "BlockScan", path: "cub::BlockScan" })]
+                    })
+                ]
+            }),
+            { packageName: "cub" }
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/LIB_SUCCESS.mdx");
+        expect(relativePaths).toContain("macros/index.mdx");
+        expect(relativePaths).toContain("classes/BlockScan.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toMatch(/- \[Classes\]\([\w-]+\/classes\)/);
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
     });
 
     it("writes no group pages when the IR has no groups with members", () => {

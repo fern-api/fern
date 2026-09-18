@@ -2,7 +2,7 @@
  * Main generator for C++ library documentation.
  *
  * Orchestrates the full pipeline:
- * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables) from the namespace tree
+ * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables, macros) from the namespace tree
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
  * 4. Generate hierarchical index pages (namespace → category folders → entity pages)
@@ -124,11 +124,22 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 
         // Stage 4: Generate index pages for namespaces
         const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
-        const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
+        // Plain-C libraries have no namespaces, so their entities live on the unnamed root.
+        const libraryNs =
+            ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName) ??
+            (ir.rootNamespace.path === "" ? ir.rootNamespace : undefined);
         if (libraryNs) {
-            const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
+            const titleName = libraryNs.name || slugBaseName;
+            const title = LIBRARY_TITLES[titleName] ?? `${titleName} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
-            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug, groups.length > 0);
+            generateIndexPages(
+                withRootMacros(libraryNs, ir.rootNamespace),
+                title,
+                writer,
+                rootNsName,
+                outputFolderSlug,
+                groups.length > 0
+            );
         }
 
         // Stage 5: Generate pages for the library's Doxygen groups
@@ -139,6 +150,18 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
     }
+}
+
+/**
+ * Macros are unscoped and always land on the root namespace, but the library's
+ * index pages are built from the selected namespace. Attach the root macros so
+ * they show up in the Macros index even when that namespace is a named child.
+ */
+function withRootMacros(libraryNs: CppNamespaceIr, root: CppNamespaceIr): CppNamespaceIr {
+    if (libraryNs === root || (root.macros ?? []).length === 0) {
+        return libraryNs;
+    }
+    return { ...libraryNs, macros: [...(libraryNs.macros ?? []), ...(root.macros ?? [])] };
 }
 
 // ---------------------------------------------------------------------------
@@ -229,6 +252,16 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
         });
     }
 
+    // Macros are unscoped, so the root-prefix filter never applies to them.
+    for (const macro of ns.macros ?? []) {
+        result.push({
+            compound: { kind: "macro", data: macro },
+            path: macro.path,
+            namespacePath: [],
+            docstring: macro.docstring
+        });
+    }
+
     for (const childNs of ns.namespaces) {
         result.push(...collectCompounds(childNs, rootPrefix));
     }
@@ -262,6 +295,8 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
             return "typedefs";
         case "variable":
             return "variables";
+        case "macro":
+            return "macros";
         default: {
             const _exhaustive: never = collected.compound;
             throw new CliError({

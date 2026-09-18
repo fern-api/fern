@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "lang": "cpp",
+  "library": "cuopt-c",
+  "ir": {
+    "metadata": {
+      "packageName": "cuopt",
+      "language": "cpp",
+      "version": "1.0.0"
+    },
+    "rootNamespace": {
+      "name": "",
+      "path": "",
+      "classes": [
+        {
+          "name": "Solver",
+          "path": "cuopt::Solver",
+          "kind": "class",
+          "templateParams": [],
+          "baseClasses": [],
+          "derivedClasses": [],
+          "docstring": {
+            "summary": [
+              {
+                "type": "text",
+                "text": "A solver."
+              }
+            ],
+            "description": [],
+            "params": [],
+            "templateParamsDoc": [],
+            "raises": [],
+            "examples": [],
+            "notes": [],
+            "warnings": [],
+            "remarks": [],
+            "preconditions": [],
+            "postconditions": [],
+            "seeAlso": []
+          },
+          "isAbstract": false,
+          "isFinal": false,
+          "methods": [
+            {
+              "name": "solve",
+              "path": "cuopt::Solver::solve",
+              "signature": "void solve()",
+              "templateParams": [],
+              "parameters": [],
+              "docstring": {
+                "summary": [
+                  {
+                    "type": "text",
+                    "text": "Returns the size in bytes of cuopt_int_t."
+                  }
+                ],
+                "description": [],
+                "params": [],
+                "templateParamsDoc": [],
+                "raises": [],
+                "examples": [],
+                "notes": [],
+                "warnings": [],
+                "remarks": [],
+                "preconditions": [],
+                "postconditions": [],
+                "seeAlso": []
+              },
+              "isStatic": false,
+              "isConst": false,
+              "isConstexpr": false,
+              "isVolatile": false,
+              "isInline": false,
+              "isExplicit": false,
+              "isNoexcept": false,
+              "isNoDiscard": false,
+              "virtuality": "non-virtual",
+              "isDeleted": false
+            }
+          ],
+          "staticMethods": [],
+          "friendFunctions": [],
+          "typedefs": [],
+          "memberVariables": [],
+          "enums": [],
+          "innerClasses": [],
+          "relatedMemberRefs": [],
+          "sectionLabels": {}
+        }
+      ],
+      "functions": [
+        {
+          "name": "cuOptGetIntSize",
+          "path": "cuOptGetIntSize",
+          "signature": "int8_t cuOptGetIntSize(void)",
+          "templateParams": [],
+          "parameters": [],
+          "docstring": {
+            "summary": [
+              {
+                "type": "text",
+                "text": "Returns the size in bytes of cuopt_int_t."
+              }
+            ],
+            "description": [],
+            "params": [],
+            "templateParamsDoc": [],
+            "raises": [],
+            "examples": [],
+            "notes": [],
+            "warnings": [],
+            "remarks": [],
+            "preconditions": [],
+            "postconditions": [],
+            "seeAlso": []
+          },
+          "isStatic": false,
+          "isConst": false,
+          "isConstexpr": false,
+          "isVolatile": false,
+          "isInline": false,
+          "isExplicit": false,
+          "isNoexcept": false,
+          "isNoDiscard": false,
+          "virtuality": "non-virtual",
+          "isDeleted": false
+        }
+      ],
+      "enums": [],
+      "typedefs": [
+        {
+          "name": "cuopt_int_t",
+          "path": "cuopt_int_t",
+          "typeInfo": {
+            "parts": [],
+            "display": "int32_t"
+          },
+          "templateParams": [],
+          "docstring": {
+            "summary": [
+              {
+                "type": "text",
+                "text": "The integer type used by the solver."
+              }
+            ],
+            "description": [],
+            "params": [],
+            "templateParamsDoc": [],
+            "raises": [],
+            "examples": [],
+            "notes": [],
+            "warnings": [],
+            "remarks": [],
+            "preconditions": [],
+            "postconditions": [],
+            "seeAlso": []
+          }
+        }
+      ],
+      "variables": [],
+      "concepts": [],
+      "namespaces": []
+    },
+    "groups": []
+  }
+}

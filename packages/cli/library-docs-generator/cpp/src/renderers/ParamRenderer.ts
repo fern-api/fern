@@ -9,7 +9,12 @@
  * - [optional] and [inferred] prefixes
  */
 
-import type { CppDocstringIr, CppFunctionIr, CppTemplateParamIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type {
+    CppDocstringIr,
+    CppFunctionIr,
+    CppMacroIr,
+    CppTemplateParamIr
+} from "../../../src/types/CppLibraryDocsIr.js";
 import { renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { normalizeAngleBracketSpacing } from "./SignatureRenderer.js";
 
@@ -67,7 +72,10 @@ function renderParamField(
     defaultValue: string | undefined,
     description: string | undefined
 ): string {
-    const props: string[] = [`path="${name}"`, `type="${type}"`];
+    const props: string[] = [`path="${name}"`];
+    if (type) {
+        props.push(`type="${type}"`);
+    }
     if (defaultValue) {
         props.push(`default="${defaultValue}"`);
     }
@@ -362,6 +370,27 @@ export function renderMethodParams(func: CppFunctionIr, docstring: CppDocstringI
         lines.pop();
     }
 
+    return lines.join("\n");
+}
+
+/**
+ * Render a function-like macro's parameters (**Parameters** heading).
+ * Macro parameters are untyped, so only the name and description are shown.
+ */
+export function renderMacroParams(macro: CppMacroIr, docstring: CppDocstringIr | undefined): string {
+    const documented = (macro.parameters ?? []).flatMap((name) => {
+        const description = findParamDescription(name, docstring);
+        return description ? [{ name, description }] : [];
+    });
+    if (documented.length === 0) {
+        return "";
+    }
+    const lines = ["**Parameters**", ""];
+    for (const { name, description } of documented) {
+        lines.push(renderParamField(name, "", undefined, description));
+        lines.push("");
+    }
+    lines.pop();
     return lines.join("\n");
 }
 

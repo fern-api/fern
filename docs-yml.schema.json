@@ -671,6 +671,17 @@
         "path": {
           "type": "string",
           "description": "The output directory where MDX files will be generated.\nExample: ./static/sdk-docs"
+        },
+        "pages": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to write the auto-generated per-module/per-symbol MDX pages and\n`_navigation.yml`. Set to `false` when composing pages by hand with\n`<LibrarySymbol />`; the library IR is still persisted to\n`<path>/.fern/library-ir.json`. Defaults to `true`."
         }
       },
       "required": [
@@ -700,6 +711,17 @@
             }
           ],
           "description": "Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.\nWhen provided, the backend uses this Doxyfile instead of auto-generating one.\nOnly valid when lang is cpp."
+        },
+        "include-undocumented-macros": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,

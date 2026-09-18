@@ -16,11 +16,14 @@ import {
 } from "@fern-api/core-utils";
 import {
     collectCodeSrcUrls,
+    createLibrarySymbolUsageTracker,
     isValidRelativeSlug,
+    type LibrarySymbolRenderer,
     parseImagePaths,
     prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -90,6 +93,7 @@ import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+import { createDocsLibrarySymbolRenderer, getVersionContentSources } from "./utils/createDocsLibrarySymbolRenderer.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
@@ -367,6 +371,24 @@ export class DocsDefinitionResolver {
         return this._parsedDocsConfig?.translationNavigationOverlays;
     }
 
+    private _librarySymbolRenderer: LibrarySymbolRenderer | undefined;
+    /**
+     * Returns the `<LibrarySymbol />` renderer for this docs workspace, backed by the IR
+     * persisted by `fern docs md generate`. Cached so every page (default locale and
+     * translations) shares one IR load per library. Must be called after `resolve()`.
+     */
+    public getLibrarySymbolRenderer(): LibrarySymbolRenderer {
+        if (this._librarySymbolRenderer == null) {
+            this._librarySymbolRenderer = createDocsLibrarySymbolRenderer({
+                libraries: this.parsedDocsConfig.libraries,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+                versionContentSources: getVersionContentSources(this.parsedDocsConfig.navigation),
+                onWarning: (message) => this.taskContext.logger.warn(message)
+            });
+        }
+        return this._librarySymbolRenderer;
+    }
+
     /**
      * Returns the map of absolute file paths to uploaded file IDs.
      * Used by translation processing to rewrite image paths in translated pages.
@@ -549,6 +571,9 @@ export class DocsDefinitionResolver {
             );
         }
 
+        const renderLibrarySymbol = this.getLibrarySymbolRenderer();
+        const librarySymbolUsage = createLibrarySymbolUsageTracker();
+
         for (const [relativePath, markdown] of pageEntries) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
@@ -571,9 +596,17 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 urlCache
             });
+            // Library symbols run after snippets so a <LibrarySymbol /> inside an included snippet also resolves
+            const symbolReplacedMarkdown = await replaceLibrarySymbols({
+                markdown: codeReplacedMarkdown,
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                context: this.taskContext,
+                renderSymbol: renderLibrarySymbol,
+                usageTracker: librarySymbolUsage
+            });
 
             const newMarkdown = transformAtPrefixImports({
-                markdown: codeReplacedMarkdown,
+                markdown: symbolReplacedMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
@@ -2361,6 +2394,12 @@ export class DocsDefinitionResolver {
         if (libraryConfig == null) {
             this.taskContext.logger.warn(
                 `Library '${item.libraryName}' not found in libraries config${this.describeVersionSource(contentSource)}. Skipping.`
+            );
+            return null;
+        }
+        if (!libraryConfig.output.pages) {
+            this.taskContext.logger.warn(
+                `Library '${item.libraryName}' has 'output.pages: false', so no generated pages exist for the 'library' navigation item${this.describeVersionSource(contentSource)}. Skipping.`
             );
             return null;
         }
