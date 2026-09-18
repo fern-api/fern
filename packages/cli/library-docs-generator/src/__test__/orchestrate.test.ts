@@ -307,6 +307,67 @@ describe("runLibraryDocsGeneration", () => {
         );
     });
 
+    it("remote mode: forwards include-undocumented-macros for cpp libraries", async () => {
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-macros" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }],
+            irResponse: { ir: mockCppIr }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+
+        const promise = runLibraryDocsGeneration({
+            libraries: { "c-api": { ...cppConfig(), config: { includeUndocumentedMacros: true } } },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext()
+        });
+        await vi.advanceTimersByTimeAsync(3000);
+        await promise;
+
+        expect((startCalls[0] as { config: unknown }).config).toEqual(
+            expect.objectContaining({ includeUndocumentedMacros: true })
+        );
+    });
+
+    it("rejects include-undocumented-macros for non-cpp libraries", async () => {
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "my-sdk": { ...pythonConfig(), config: { includeUndocumentedMacros: true } } },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                tokenValue: "tok",
+                context: makeContext()
+            })
+        ).rejects.toThrow("'include-undocumented-macros' config is only valid for lang: cpp");
+    });
+
+    it("local mode: forwards include-undocumented-macros to the local parser", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockCppIr);
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "c-api": {
+                    input: { path: "./src" },
+                    output: { path: "./docs" },
+                    lang: "cpp",
+                    config: { includeUndocumentedMacros: true }
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true
+        });
+
+        expect(LocalParserRunner.runLocalParser).toHaveBeenCalledWith(
+            expect.objectContaining({
+                language: "CPP",
+                config: expect.objectContaining({ includeUndocumentedMacros: true })
+            })
+        );
+    });
+
     it("sends the bearer token in the auth header", async () => {
         const { mockFn } = makeMockFetch({
             startResponse: { body: { jobId: "job-auth" } },
