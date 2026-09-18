@@ -207,7 +207,8 @@ export async function getPreviewDocsDefinition({
             previousPreviewResult?.renderLibrarySymbol ??
             createDocsLibrarySymbolRenderer({
                 libraries: docsWorkspace.config.libraries,
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                onWarning: (message) => context.logger.warn(message)
             });
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {

@@ -42,11 +42,13 @@ function isInside(folder: AbsoluteFilePath, file: AbsoluteFilePath): boolean {
 export function createDocsLibrarySymbolRenderer({
     libraries,
     absolutePathToFernFolder,
-    versionContentSources = []
+    versionContentSources = [],
+    onWarning
 }: {
     libraries: LibraryOutputSource;
     absolutePathToFernFolder: AbsoluteFilePath;
     versionContentSources?: docsYml.VersionContentSource[];
+    onWarning?: (message: string) => void;
 }): LibrarySymbolRenderer {
     const currentBranch = toScope(libraries, absolutePathToFernFolder);
     // Longest fern-folder path first so nested checkouts resolve to the most specific scope.
@@ -61,7 +63,8 @@ export function createDocsLibrarySymbolRenderer({
     return createLibrarySymbolRenderer({
         getLibrarySource: (library, absolutePathToMarkdownFile) =>
             scopeFor(absolutePathToMarkdownFile).libraries.get(library),
-        knownLibraries: (absolutePathToMarkdownFile) => [...scopeFor(absolutePathToMarkdownFile).libraries.keys()]
+        knownLibraries: (absolutePathToMarkdownFile) => [...scopeFor(absolutePathToMarkdownFile).libraries.keys()],
+        onWarning
     });
 }
 

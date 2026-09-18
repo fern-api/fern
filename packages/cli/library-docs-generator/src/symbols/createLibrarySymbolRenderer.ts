@@ -31,6 +31,11 @@ export interface LibrarySymbolRendererOptions {
     ) => LibrarySymbolSource | undefined;
     /** Library names to list in the "unknown library" error for the given page. */
     knownLibraries: (absolutePathToMarkdownFile: AbsoluteFilePath) => string[];
+    /**
+     * Receives build warnings, e.g. when a library with `output.pages: false` is included
+     * via `<LibrarySymbol />` and its type references therefore cannot be linked.
+     */
+    onWarning?: (message: string) => void;
 }
 
 export interface LibrarySymbolRenderRequest {
@@ -52,6 +57,19 @@ export function createLibrarySymbolRenderer(
     absolutePathToMarkdownFile: AbsoluteFilePath
 ) => Promise<RenderedLibrarySymbol> {
     const irCache = new Map<AbsoluteFilePath, Promise<PersistedLibraryIr>>();
+    const warnedNoPages = new Set<AbsoluteFilePath>();
+
+    function warnIfPagesDisabled(library: string, source: LibrarySymbolSource): void {
+        if (source.generatesPages || options.onWarning == null || warnedNoPages.has(source.outputDir)) {
+            return;
+        }
+        warnedNoPages.add(source.outputDir);
+        options.onWarning(
+            `Library '${library}' is configured with 'output.pages: false', so type references inside ` +
+                `<LibrarySymbol /> render as plain text and the library is not searchable. ` +
+                `Set 'output.pages: true' (default) to keep type links and search coverage.`
+        );
+    }
 
     function readCached(outputDir: AbsoluteFilePath): Promise<PersistedLibraryIr> {
         const cachedIr = irCache.get(outputDir);
@@ -93,6 +111,7 @@ export function createLibrarySymbolRenderer(
                         : "No libraries are configured under 'libraries:' in docs.yml.")
             );
         }
+        warnIfPagesDisabled(request.library, source);
         const persisted = await loadIr(request.library, source);
         return renderLibrarySymbol(persisted, {
             name: request.name,

@@ -382,7 +382,8 @@ export class DocsDefinitionResolver {
             this._librarySymbolRenderer = createDocsLibrarySymbolRenderer({
                 libraries: this.parsedDocsConfig.libraries,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                versionContentSources: getVersionContentSources(this.parsedDocsConfig.navigation)
+                versionContentSources: getVersionContentSources(this.parsedDocsConfig.navigation),
+                onWarning: (message) => this.taskContext.logger.warn(message)
             });
         }
         return this._librarySymbolRenderer;

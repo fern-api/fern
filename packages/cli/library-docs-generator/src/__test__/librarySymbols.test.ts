@@ -672,4 +672,52 @@ describe("library IR persistence", () => {
         });
         await expect(ok({ ...request, library: "cuopt-python" }, page)).resolves.toBeDefined();
     });
+
+    it("createLibrarySymbolRenderer warns once per library when output.pages is false", async () => {
+        const dir = AbsoluteFilePath.of(join(tmpDir, "no-pages"));
+        await writeLibraryIr({ outputDir: dir, persisted: persistedPython });
+        const page = AbsoluteFilePath.of("/docs/pages/a.mdx");
+        const warnings: string[] = [];
+
+        const render = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: dir, lang: "python", generatesPages: false }),
+            knownLibraries: () => ["cuopt-python"],
+            onWarning: (message) => warnings.push(message)
+        });
+        const rendered = await render(
+            { library: "cuopt-python", name: "cuopt.solve", heading: undefined, members: undefined },
+            page
+        );
+        await render(
+            {
+                library: "cuopt-python",
+                name: "cuopt.linear_programming.SolverSettings",
+                heading: undefined,
+                members: undefined
+            },
+            page
+        );
+
+        expect(rendered.mdx).not.toContain("](");
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain("Library 'cuopt-python' is configured with 'output.pages: false'");
+    });
+
+    it("createLibrarySymbolRenderer does not warn when output.pages is true", async () => {
+        const dir = AbsoluteFilePath.of(join(tmpDir, "with-pages"));
+        await writeLibraryIr({ outputDir: dir, persisted: persistedPython });
+        const warnings: string[] = [];
+
+        const render = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: dir, lang: "python", generatesPages: true }),
+            knownLibraries: () => ["cuopt-python"],
+            onWarning: (message) => warnings.push(message)
+        });
+        await render(
+            { library: "cuopt-python", name: "cuopt.solve", heading: undefined, members: undefined },
+            AbsoluteFilePath.of("/docs/pages/a.mdx")
+        );
+
+        expect(warnings).toEqual([]);
+    });
 });
