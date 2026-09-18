@@ -169,7 +169,10 @@ export async function replaceReferencedCode({
 
     const regex = new RegExp(CODE_TAG_REGEX.source, CODE_TAG_REGEX.flags);
 
-    let newMarkdown = markdown;
+    // Rebuilt from source ranges so that each replacement lands on the exact tag
+    // that produced it, even when identical tags appear more than once.
+    let newMarkdown = "";
+    let cursor = 0;
 
     // while match is found, replace the match with the content of the referenced markdown file
     let match: RegExpExecArray | null;
@@ -319,7 +322,8 @@ export async function replaceReferencedCode({
                 .map((line) => indent + line)
                 .join("\n");
             replacement = replacement + "\n"; // add newline after the code block
-            newMarkdown = newMarkdown.replace(matchString, replacement);
+            newMarkdown += markdown.slice(cursor, match.index) + replacement;
+            cursor = match.index + matchString.length;
         } catch (e) {
             const line = getLineNumber(markdown, match.index);
             context.logger.warn(
@@ -328,5 +332,5 @@ export async function replaceReferencedCode({
         }
     }
 
-    return newMarkdown;
+    return newMarkdown + markdown.slice(cursor);
 }

@@ -243,6 +243,43 @@ describe("replaceReferencedCode", () => {
         `);
     });
 
+    it("should replace the exact occurrence when identical tags fail then succeed", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/same.py" />
+            <Code src="https://example.com/snippets/same.py" />
+        `;
+
+        const originalFetch = globalThis.fetch;
+        let calls = 0;
+        globalThis.fetch = vi.fn(() => {
+            calls++;
+            return Promise.resolve(
+                calls === 1
+                    ? ({ ok: false, status: 503 } as Response)
+                    : ({ ok: true, text: () => Promise.resolve("print('second')") } as Response)
+            );
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context
+            });
+
+            expect(result).toBe(`
+            <Code src="https://example.com/snippets/same.py" />
+            \`\`\`py title={"same.py"}
+            print('second')
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
     it("should override language when language property is present", async () => {
         const markdown = `
             <Code src="../snippets/test.py" language="python" />
