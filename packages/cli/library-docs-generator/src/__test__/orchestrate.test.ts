@@ -1,3 +1,6 @@
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
@@ -395,6 +398,76 @@ describe("runLibraryDocsGeneration", () => {
         expect(CppDocsGenerator.generateCpp).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockCppIr, slug: "cpp-lib" })
         );
+    });
+
+    describe("IR persistence", () => {
+        let tmpDocsDir: string;
+
+        beforeEach(() => {
+            tmpDocsDir = mkdtempSync(join(tmpdir(), "orchestrate-ir-"));
+        });
+
+        afterEach(() => {
+            rmSync(tmpDocsDir, { recursive: true, force: true });
+        });
+
+        it("persists the fetched IR to <output.path>/.fern/library-ir.json before generating pages", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-ir" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: { "my-sdk": pythonConfig() },
+                docsDirectoryPath: AbsoluteFilePath.of(tmpDocsDir),
+                orgId: "org",
+                tokenValue: "tok",
+                context: makeContext()
+            });
+            await vi.advanceTimersByTimeAsync(3000);
+            await promise;
+
+            const irPath = join(tmpDocsDir, "docs", ".fern", "library-ir.json");
+            expect(existsSync(irPath)).toBe(true);
+            expect(JSON.parse(readFileSync(irPath, "utf-8"))).toEqual({
+                schemaVersion: 1,
+                lang: "python",
+                library: "my-sdk",
+                ir: mockPythonIr
+            });
+            expect(PythonDocsGenerator.generate).toHaveBeenCalledTimes(1);
+        });
+
+        it("output.pages: false persists the IR but skips generated pages (cpp)", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-np" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }],
+                irResponse: { ir: mockCppIr }
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+            const context = makeContext();
+
+            const promise = runLibraryDocsGeneration({
+                libraries: {
+                    "cpp-lib": { ...cppConfig(), output: { path: "./cpp-docs", pages: false } }
+                },
+                docsDirectoryPath: AbsoluteFilePath.of(tmpDocsDir),
+                orgId: "org",
+                tokenValue: "tok",
+                context
+            });
+            await vi.advanceTimersByTimeAsync(3000);
+            await expect(promise).resolves.toEqual({ successful: 1 });
+
+            const irPath = join(tmpDocsDir, "cpp-docs", ".fern", "library-ir.json");
+            const persisted = JSON.parse(readFileSync(irPath, "utf-8"));
+            expect(persisted.lang).toBe("cpp");
+            expect(persisted.ir).toEqual(mockCppIr);
+            expect(CppDocsGenerator.generateCpp).not.toHaveBeenCalled();
+            expect(PythonDocsGenerator.generate).not.toHaveBeenCalled();
+            expect(context.logger.info).toHaveBeenCalledWith(expect.stringContaining("output.pages is false"));
+        });
     });
 
     it("respects the library filter — only the named library is generated", async () => {

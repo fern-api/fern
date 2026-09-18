@@ -37,7 +37,7 @@ describe("parseDocsConfiguration — libraries config", () => {
 
         expect(parsed.libraries?.["my-sdk"]).toEqual({
             input: { type: "git", git: "https://github.com/acme/sdk-python", subpath: "packages/sdk" },
-            output: { path: "./static/sdk-docs" },
+            output: { path: "./static/sdk-docs", pages: true },
             lang: "python"
         });
     });
@@ -66,12 +66,12 @@ describe("parseDocsConfiguration — libraries config", () => {
         // both input types are preserved so the renderer can resolve output.path for each
         expect(parsed.libraries?.["local-sdk"]).toEqual({
             input: { type: "path", path: "./local-sdk" },
-            output: { path: "./static/local-sdk-docs" },
+            output: { path: "./static/local-sdk-docs", pages: true },
             lang: "python"
         });
         expect(parsed.libraries?.["git-sdk"]).toEqual({
             input: { type: "git", git: "https://github.com/acme/sdk-python", subpath: undefined },
-            output: { path: "./static/sdk-docs" },
+            output: { path: "./static/sdk-docs", pages: true },
             lang: "python"
         });
     });

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the build-time `<LibrarySymbol library="..." name="..." />` component for library docs.
+    Authors can include a single generated Python or C/C++ symbol (function, class, method, typedef, ...)
+    in hand-written MDX pages, with optional `heading` level and `members` allowlist for classes.
+    `fern docs md generate` now persists the library IR to `<output.path>/.fern/library-ir.json`, which
+    `<LibrarySymbol />` reads during docs resolution, preview and publish (no network re-fetch).
+    Adds `libraries.<name>.output.pages: false` to skip generated pages and navigation while still
+    persisting the IR for hand-composed pages.
+  type: feat

@@ -10,6 +10,7 @@ import chalk from "chalk";
 import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
+import { LIBRARY_IR_SCHEMA_VERSION, writeLibraryIr } from "./symbols/libraryIrFile.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
 const POLL_INTERVAL_MS = 3000;
@@ -296,8 +297,19 @@ async function generateSingleLibrary({
         });
     }
 
+    const generatePages = config.output.pages ?? true;
+
     if (language === "CPP") {
         const cppIr = ir as CppLibraryDocsIr;
+        const irPath = await writeLibraryIr({
+            outputDir: resolvedOutputPath,
+            persisted: { schemaVersion: LIBRARY_IR_SCHEMA_VERSION, lang: "cpp", library: name, ir: cppIr }
+        });
+        context.logger.debug(`Library '${name}': persisted IR to ${irPath}`);
+        if (!generatePages) {
+            logPagesSkipped(context, name, irPath);
+            return;
+        }
         const result = generateCpp({
             ir: cppIr,
             outputDir: resolvedOutputPath,
@@ -313,6 +325,15 @@ async function generateSingleLibrary({
         );
     } else {
         const pythonIr = ir as FdrAPI.libraryDocs.PythonLibraryDocsIr;
+        const irPath = await writeLibraryIr({
+            outputDir: resolvedOutputPath,
+            persisted: { schemaVersion: LIBRARY_IR_SCHEMA_VERSION, lang: "python", library: name, ir: pythonIr }
+        });
+        context.logger.debug(`Library '${name}': persisted IR to ${irPath}`);
+        if (!generatePages) {
+            logPagesSkipped(context, name, irPath);
+            return;
+        }
         const generateResult = generate({
             ir: pythonIr,
             outputDir: resolvedOutputPath,
@@ -323,6 +344,12 @@ async function generateSingleLibrary({
             chalk.green(`Library '${name}': generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`)
         );
     }
+}
+
+function logPagesSkipped(context: TaskContext, name: string, irPath: AbsoluteFilePath): void {
+    context.logger.info(
+        chalk.green(`Library '${name}': persisted IR to ${irPath} (output.pages is false, skipped generated pages)`)
+    );
 }
 
 /**

@@ -9,6 +9,13 @@ export {
     trimAnchor
 } from "./parseImagePaths.js";
 export { parseMarkdownBodyToTree, parseMarkdownToTree } from "./parseMarkdownToTree.js";
+export {
+    createLibrarySymbolUsageTracker,
+    type LibrarySymbolReference,
+    type LibrarySymbolRenderer,
+    type LibrarySymbolUsageTracker,
+    replaceLibrarySymbols
+} from "./replaceLibrarySymbols.js";
 export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
