@@ -471,6 +471,37 @@ describe("generateCpp()", () => {
         expect(macroIndex).toContain("- [`LIB_MAX`](macros/libmax)");
     });
 
+    it("lists root-scoped macros in the library index when the library is a named namespace", () => {
+        const ir = makeIr(
+            makeNamespace({
+                macros: [makeMacro({})],
+                namespaces: [
+                    makeNamespace({
+                        name: "cub",
+                        path: "cub",
+                        classes: [makeClass({ name: "BlockScan", path: "cub::BlockScan" })]
+                    })
+                ]
+            }),
+            { packageName: "cub" }
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/LIB_SUCCESS.mdx");
+        expect(relativePaths).toContain("macros/index.mdx");
+        expect(relativePaths).toContain("classes/BlockScan.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toMatch(/- \[Classes\]\([\w-]+\/classes\)/);
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
+    });
+
     it("writes no group pages when the IR has no groups with members", () => {
         const ir = makeIr(
             makeNamespace({

@@ -132,7 +132,14 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
             const titleName = libraryNs.name || slugBaseName;
             const title = LIBRARY_TITLES[titleName] ?? `${titleName} API Reference`;
             const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
-            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug, groups.length > 0);
+            generateIndexPages(
+                withRootMacros(libraryNs, ir.rootNamespace),
+                title,
+                writer,
+                rootNsName,
+                outputFolderSlug,
+                groups.length > 0
+            );
         }
 
         // Stage 5: Generate pages for the library's Doxygen groups
@@ -143,6 +150,18 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
     }
+}
+
+/**
+ * Macros are unscoped and always land on the root namespace, but the library's
+ * index pages are built from the selected namespace. Attach the root macros so
+ * they show up in the Macros index even when that namespace is a named child.
+ */
+function withRootMacros(libraryNs: CppNamespaceIr, root: CppNamespaceIr): CppNamespaceIr {
+    if (libraryNs === root || (root.macros ?? []).length === 0) {
+        return libraryNs;
+    }
+    return { ...libraryNs, macros: [...(libraryNs.macros ?? []), ...(root.macros ?? [])] };
 }
 
 // ---------------------------------------------------------------------------

@@ -225,7 +225,7 @@ export interface CppVariableIr {
     docstring: CppDocstringIr | undefined;
 }
 
-/** A documented `#define`. Undocumented macros (include guards etc.) are never emitted by the parser. */
+/** A `#define`. Only documented macros are emitted unless `include-undocumented-macros` is set; include guards are never present. */
 export interface CppMacroIr {
     name: string;
     path: string;

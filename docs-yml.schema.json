@@ -710,7 +710,7 @@
               "type": "null"
             }
           ],
-          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Header guards are\nalways skipped. Only valid when lang is cpp."
+          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
