@@ -6,7 +6,6 @@ import { readdir, readFile } from "fs/promises";
 import path from "path";
 
 import { CISource, DeployerAuthor } from "../../utils/environment.js";
-import { GitInfo } from "../../utils/gitInfo.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
 /** Server-side constraints on orgId and slug, mirrored here for a friendly pre-flight message. */
@@ -56,6 +55,12 @@ export interface HostedMcpDeployResult {
     deploymentStatus: string;
 }
 
+export interface GitProvenance {
+    repoUrl: string;
+    branch: string;
+    commitSha?: string;
+}
+
 /**
  * Deploys a generated MCP server bundle to Fern's hosted platform. Called by the
  * `fern generate` pipeline for invocations with `output.location: fern-hosted`.
@@ -91,7 +96,7 @@ export async function deployHostedMcpServer({
     cliVersion: string | undefined;
     /** The raw `config:` block of this generator's generators.yml entry. */
     config: unknown;
-    git: GitInfo | undefined;
+    git: GitProvenance | undefined;
     ciSource: CISource | undefined;
     deployerAuthor: DeployerAuthor | undefined;
     context: TaskContext;
@@ -545,7 +550,7 @@ async function postDeploy({
     generatorVersion: string;
     cliVersion: string | undefined;
     config: unknown;
-    git: GitInfo | undefined;
+    git: GitProvenance | undefined;
     ciSource: CISource | undefined;
     deployerAuthor: DeployerAuthor | undefined;
     context: TaskContext;

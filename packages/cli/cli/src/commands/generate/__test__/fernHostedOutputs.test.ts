@@ -18,13 +18,6 @@ import {
 vi.mock("../../mcp/deployMcpServer.js", () => ({
     deployHostedMcpServer: vi.fn()
 }));
-vi.mock("../../../utils/gitInfo.js", () => ({
-    detectGitInfo: vi.fn(async () => undefined)
-}));
-vi.mock("../../../utils/environment.js", () => ({
-    detectCISource: vi.fn(() => undefined),
-    detectDeployerAuthor: vi.fn(() => undefined)
-}));
 
 const deployHostedMcpServerMock = vi.mocked(deployHostedMcpServer);
 
@@ -235,6 +228,40 @@ describe("deployFernHostedOutputs", () => {
         expect(deployHostedMcpServerMock).toHaveBeenCalledTimes(1);
         expect(deployHostedMcpServerMock).toHaveBeenCalledWith(
             expect.objectContaining({ bundleDir, slug: "acme-mcp", token: "token" })
+        );
+    });
+
+    it("includes git provenance from the CI source", async () => {
+        const commitSha = "0123456789abcdef0123456789abcdef01234567";
+        vi.stubEnv("GITHUB_ACTIONS", "true");
+        vi.stubEnv("GITHUB_REPOSITORY", "acme/api");
+        vi.stubEnv("GITHUB_REF_NAME", "main");
+        vi.stubEnv("GITHUB_SHA", commitSha);
+
+        await deployFernHostedOutputs({
+            group: createGroup([
+                createGenerator({
+                    fernHostedOutput: { slug: "mcp" },
+                    absolutePathToLocalOutput: AbsoluteFilePath.of(path.join(tmpdir(), "bundle"))
+                })
+            ]),
+            workspace,
+            organization: "acme",
+            cliVersion: "1.0.0",
+            token: { value: "token" } as never,
+            absolutePathToPreview: undefined,
+            requireEnvVars: false,
+            context: createContext()
+        });
+
+        expect(deployHostedMcpServerMock).toHaveBeenCalledWith(
+            expect.objectContaining({
+                git: {
+                    repoUrl: "https://github.com/acme/api",
+                    branch: "main",
+                    commitSha
+                }
+            })
         );
     });
 

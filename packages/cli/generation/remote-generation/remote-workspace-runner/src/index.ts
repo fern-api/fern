@@ -19,6 +19,7 @@ export type {
 } from "./fernSdkGenApiSourceArchive.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+export { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 export {
     formatSdkConfigMappingDiagnostic,
     type MapFernGroupToSdkConfig,

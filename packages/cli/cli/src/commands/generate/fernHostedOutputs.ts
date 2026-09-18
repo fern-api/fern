@@ -3,6 +3,7 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { normalizeRepoUrlToHttps } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext, TaskResult } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { mkdtemp, rm } from "fs/promises";
@@ -10,8 +11,7 @@ import { tmpdir } from "os";
 import path from "path";
 
 import { detectCISource, detectDeployerAuthor } from "../../utils/environment.js";
-import { detectGitInfo } from "../../utils/gitInfo.js";
-import { deployHostedMcpServer } from "../mcp/deployMcpServer.js";
+import { deployHostedMcpServer, type GitProvenance } from "../mcp/deployMcpServer.js";
 
 export interface FernHostedOutputAssignment {
     group: generatorsYml.GeneratorGroup;
@@ -99,7 +99,14 @@ export async function deployFernHostedOutputs({
     }
     const ciSource = detectCISource();
     const deployerAuthor = detectDeployerAuthor();
-    const git = await detectGitInfo({ ciSource, cwd: workspace.absoluteFilePath });
+    const git: GitProvenance | undefined =
+        ciSource?.repo != null && ciSource?.branch != null
+            ? {
+                  repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
+                  branch: ciSource.branch,
+                  commitSha: ciSource.commitSha
+              }
+            : undefined;
     for (const generator of fernHostedGenerators) {
         const bundleDir = generator.absolutePathToLocalOutput;
         if (bundleDir == null) {
