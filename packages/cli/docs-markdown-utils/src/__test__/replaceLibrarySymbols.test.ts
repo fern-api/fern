@@ -30,11 +30,16 @@ function makeContextWithWarnSpy() {
 
 function makeRecordingRenderer() {
     const calls: LibrarySymbolReference[] = [];
-    const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => {
+    const pages: AbsoluteFilePath[] = [];
+    const renderSymbol = async (
+        ref: LibrarySymbolReference,
+        absolutePathToMarkdownFile: AbsoluteFilePath
+    ): Promise<RenderedLibrarySymbolMdx> => {
         calls.push(ref);
-        return { mdx: `RENDERED(${ref.library}:${ref.name})\nline2`, anchorId: undefined };
+        pages.push(absolutePathToMarkdownFile);
+        return { mdx: `RENDERED(${ref.library}:${ref.name})\nline2`, anchorIds: [] };
     };
-    return { calls, renderSymbol };
+    return { calls, pages, renderSymbol };
 }
 
 describe("replaceLibrarySymbols", () => {
@@ -214,7 +219,7 @@ describe("replaceLibrarySymbols", () => {
             markdown: tag,
             absolutePathToMarkdownFile: pageA,
             context,
-            renderSymbol: async () => ({ mdx: `Usage: \`${tag}\``, anchorId: undefined })
+            renderSymbol: async () => ({ mdx: `Usage: \`${tag}\``, anchorIds: [] })
         });
         expect(result).toBe(`Usage: \`${tag}\``);
     });
@@ -311,7 +316,7 @@ describe("replaceLibrarySymbols", () => {
     it("fails when two different symbols on one page emit the same anchor", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,
-            anchorId: "reset"
+            anchorIds: ["reset"]
         });
         const markdown = [
             '<LibrarySymbol library="lib" name="alpha::Client::reset" />',
@@ -319,21 +324,111 @@ describe("replaceLibrarySymbols", () => {
         ].join("\n");
         await expect(
             replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
-        ).rejects.toThrow(/a\.mdx:2\].*'#reset'.*already used by 'lib:alpha::Client::reset'/);
+        ).rejects.toThrow(
+            /a\.mdx:2\].*'#reset'.*already used by <LibrarySymbol library="lib" name="alpha::Client::reset" \/> \(line 1\)/
+        );
     });
 
-    it("does not treat the same symbol included twice as an anchor collision", async () => {
+    it("fails when a member anchor of one class collides with a member anchor of another", async () => {
         const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
             mdx: `RENDERED(${ref.name})`,
-            anchorId: "reset"
+            anchorIds: [ref.name.toLowerCase(), "reset"]
         });
-        const tag = '<LibrarySymbol library="lib" name="Client::reset" />';
+        const markdown = [
+            '<LibrarySymbol library="lib" name="Alpha" />',
+            "",
+            '<LibrarySymbol library="lib" name="Beta" />'
+        ].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).rejects.toThrow(
+            /a\.mdx:3\].*name="Beta".*'#reset'.*name="Alpha".*\(line 1\).*Narrow the class with 'members'/
+        );
+    });
+
+    it("fails when a class's member anchor collides with a separately included method", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ref.name === "Client" ? ["client", "solve", "reset"] : ["reset"]
+        });
+        const markdown = [
+            '<LibrarySymbol library="lib" name="Client" />',
+            '<LibrarySymbol library="lib" name="Client::reset" />'
+        ].join("\n");
+        await expect(
+            replaceLibrarySymbols({ markdown, absolutePathToMarkdownFile: pageA, context, renderSymbol })
+        ).rejects.toThrow(/a\.mdx:2\].*'#reset'.*name="Client" \/> \(line 1\)/);
+    });
+
+    it("allows a member-filtered class next to a method it no longer emits", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ref.name === "Client" ? ["client", ...(ref.members ?? [])] : ["reset"]
+        });
+        const markdown = [
+            '<LibrarySymbol library="lib" name="Client" members="solve" />',
+            '<LibrarySymbol library="lib" name="Client::reset" />'
+        ].join("\n");
         const result = await replaceLibrarySymbols({
-            markdown: `${tag}\n${tag}`,
+            markdown,
             absolutePathToMarkdownFile: pageA,
             context,
             renderSymbol
         });
-        expect(result).toBe("RENDERED(Client::reset)\nRENDERED(Client::reset)");
+        expect(result).toBe("RENDERED(Client)\nRENDERED(Client::reset)");
+    });
+
+    it("fails when the same symbol is included twice on one page and emits an anchor", async () => {
+        const renderSymbol = async (ref: LibrarySymbolReference): Promise<RenderedLibrarySymbolMdx> => ({
+            mdx: `RENDERED(${ref.name})`,
+            anchorIds: ["reset"]
+        });
+        const tag = '<LibrarySymbol library="lib" name="Client::reset" />';
+        await expect(
+            replaceLibrarySymbols({
+                markdown: `${tag}\n${tag}`,
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/a\.mdx:2\].*'#reset'.*\(line 1\).*Include each symbol at most once per page/);
+    });
+
+    it("rejects unknown attributes with file:line context", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        await expect(
+            replaceLibrarySymbols({
+                markdown: '\n<LibrarySymbol library="lib" name="pkg.Thing" member="reset" />',
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(
+            /\[\/path\/to\/fern\/pages\/a\.mdx:2\] Invalid <LibrarySymbol \/>: Unknown attribute 'member'\. Supported attributes: library, name, heading, members/
+        );
+        expect(calls).toHaveLength(0);
+    });
+
+    it("rejects duplicate attributes", async () => {
+        const { renderSymbol } = makeRecordingRenderer();
+        await expect(
+            replaceLibrarySymbols({
+                markdown: '<LibrarySymbol library="lib" name="pkg.A" name="pkg.B" />',
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/a\.mdx:1\] Invalid <LibrarySymbol \/>: Duplicate attribute 'name'/);
+    });
+
+    it("passes the authored page path to the renderer", async () => {
+        const { renderSymbol, pages } = makeRecordingRenderer();
+        await replaceLibrarySymbols({
+            markdown: '<LibrarySymbol library="lib" name="pkg.Thing" />',
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(pages).toEqual([pageA]);
     });
 });

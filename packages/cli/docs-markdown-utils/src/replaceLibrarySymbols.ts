@@ -19,11 +19,18 @@ export interface LibrarySymbolReference {
  */
 export interface RenderedLibrarySymbolMdx {
     mdx: string;
-    /** Anchor id emitted for the symbol; used to detect two symbols colliding on one page. */
-    anchorId: string | undefined;
+    /** Every anchor id emitted in `mdx` (symbol and members); used to detect collisions on one page. */
+    anchorIds: string[];
 }
 
-export type LibrarySymbolRenderer = (reference: LibrarySymbolReference) => Promise<RenderedLibrarySymbolMdx>;
+/**
+ * `absolutePathToMarkdownFile` is the authored page containing the tag, so the renderer can
+ * resolve `library` against the docs.yml that owns that page (e.g. a git-ref-backed version).
+ */
+export type LibrarySymbolRenderer = (
+    reference: LibrarySymbolReference,
+    absolutePathToMarkdownFile: AbsoluteFilePath
+) => Promise<RenderedLibrarySymbolMdx>;
 
 /**
  * Shared across all pages of a docs build to detect a symbol authored into more than
@@ -41,6 +48,7 @@ const TAG_REGEX = /([ \t]*)<LibrarySymbol\b([\s\S]*?)\/>/g;
 // name="..." | name='...' | name={"..."} | name={'...'} | name={...}
 const ATTRIBUTE_REGEX = /(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*(?:"([^"]*)"|'([^']*)'|([^}]*))\s*\})/g;
 const TAG_NAME = "<LibrarySymbol";
+const ALLOWED_ATTRIBUTES: ReadonlySet<string> = new Set(["library", "name", "heading", "members"]);
 type Region = [start: number, end: number];
 
 const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
@@ -108,6 +116,14 @@ function extractAttributes(attributesString: string): Record<string, string> {
         const attrName = match[1];
         const attrValue = match[2] ?? match[3] ?? match[4] ?? match[5] ?? match[6];
         if (attrName != null && attrValue != null) {
+            if (!ALLOWED_ATTRIBUTES.has(attrName)) {
+                throw new Error(
+                    `Unknown attribute '${attrName}'. Supported attributes: ${[...ALLOWED_ATTRIBUTES].join(", ")}`
+                );
+            }
+            if (attrName in attributes) {
+                throw new Error(`Duplicate attribute '${attrName}'`);
+            }
             attributes[attrName] = attrValue.trim();
         }
     }
@@ -180,7 +196,7 @@ export async function replaceLibrarySymbols({
     }
 
     const inertRegions = findInertRegions(markdown);
-    const anchorsOnPage = new Map<string, string>();
+    const anchorsOnPage = new Map<string, { tag: string; line: number }>();
     const chunks: string[] = [];
     let cursor = 0;
     TAG_REGEX.lastIndex = 0;
@@ -222,7 +238,7 @@ export async function replaceLibrarySymbols({
 
         let rendered: RenderedLibrarySymbolMdx;
         try {
-            rendered = await renderSymbol(reference);
+            rendered = await renderSymbol(reference, absolutePathToMarkdownFile);
         } catch (e) {
             throw new CliError({
                 message: `${location} <LibrarySymbol library="${reference.library}" name="${reference.name}" />: ${errorMessage(e)}`,
@@ -230,19 +246,22 @@ export async function replaceLibrarySymbols({
             });
         }
 
-        if (rendered.anchorId != null) {
-            const usageKey = `${reference.library}:${reference.name}`;
-            const previousSymbol = anchorsOnPage.get(rendered.anchorId);
-            if (previousSymbol != null && previousSymbol !== usageKey) {
+        const tag = `<LibrarySymbol library="${reference.library}" name="${reference.name}" />`;
+        for (const anchorId of rendered.anchorIds) {
+            const previous = anchorsOnPage.get(anchorId);
+            if (previous != null) {
+                const hint =
+                    previous.tag === tag
+                        ? "Include each symbol at most once per page."
+                        : "Narrow the class with 'members', or move one of the symbols to a different page so fragment links stay unambiguous.";
                 throw new CliError({
                     message:
-                        `${location} <LibrarySymbol library="${reference.library}" name="${reference.name}" /> emits anchor ` +
-                        `'#${rendered.anchorId}', which is already used by '${previousSymbol}' on this page. ` +
-                        "Move one of the symbols to a different page so fragment links stay unambiguous.",
+                        `${location} ${tag} emits anchor '#${anchorId}', which is already used by ` +
+                        `${previous.tag} (line ${previous.line}) on this page. ${hint}`,
                     code: CliError.Code.ConfigError
                 });
             }
-            anchorsOnPage.set(rendered.anchorId, usageKey);
+            anchorsOnPage.set(anchorId, { tag, line });
         }
 
         const replacement = rendered.mdx

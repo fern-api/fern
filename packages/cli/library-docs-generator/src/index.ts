@@ -15,7 +15,8 @@ export { type GenerateOptions, type GenerateResult, generate } from "./PythonDoc
 export {
     createLibrarySymbolRenderer,
     type LibrarySymbolRendererOptions,
-    type LibrarySymbolRenderRequest
+    type LibrarySymbolRenderRequest,
+    type LibrarySymbolSource
 } from "./symbols/createLibrarySymbolRenderer.js";
 export {
     getLibraryIrPath,

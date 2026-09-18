@@ -2,18 +2,42 @@ import type { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import type { LibrarySymbolRenderer } from "@fern-api/docs-markdown-utils";
 import { type AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { createLibrarySymbolRenderer } from "@fern-api/library-docs-generator";
+import { createLibrarySymbolRenderer, type LibrarySymbolSource } from "@fern-api/library-docs-generator";
+import path from "path";
 
 /** The subset of a library configuration (raw or parsed) needed to locate its persisted IR. */
-export type LibraryOutputSource = Record<string, { output: { path: string; pages?: boolean } }> | undefined;
+export type LibraryOutputSource =
+    | Record<string, { output: { path: string; pages?: boolean }; lang: "python" | "cpp" }>
+    | undefined;
+
+interface LibraryScope {
+    /** Fern folder whose docs.yml declares `libraries`; pages under it resolve against them. */
+    absolutePathToFernFolder: AbsoluteFilePath;
+    libraries: Map<string, LibrarySymbolSource>;
+}
+
+function toScope(source: LibraryOutputSource, absolutePathToFernFolder: AbsoluteFilePath): LibraryScope {
+    const libraries = new Map<string, LibrarySymbolSource>();
+    for (const [name, config] of Object.entries(source ?? {})) {
+        libraries.set(name, {
+            outputDir: resolve(absolutePathToFernFolder, config.output.path),
+            lang: config.lang,
+            generatesPages: config.output.pages ?? true
+        });
+    }
+    return { absolutePathToFernFolder, libraries };
+}
+
+function isInside(folder: AbsoluteFilePath, file: AbsoluteFilePath): boolean {
+    const rel = path.relative(folder, file);
+    return rel !== "" && !rel.startsWith("..") && !path.isAbsolute(rel);
+}
 
 /**
- * Builds the `<LibrarySymbol />` renderer for a docs build, mapping each library name in
- * docs.yml `libraries:` to its resolved `output.path` (where `fern docs md generate`
- * persisted the IR).
- *
- * Libraries declared on the current branch take precedence. Libraries that only exist in
- * a git-ref-backed version's docs.yml resolve against that version's materialized checkout.
+ * Builds the `<LibrarySymbol />` renderer for a docs build. Each authored page resolves
+ * `library` against the docs.yml that owns it: pages materialized from a git-ref-backed
+ * version use that version's `libraries:` (so `v1` and `v2` may both declare `sdk` with
+ * different IR); every other page uses the current branch's docs.yml.
  */
 export function createDocsLibrarySymbolRenderer({
     libraries,
@@ -24,27 +48,20 @@ export function createDocsLibrarySymbolRenderer({
     absolutePathToFernFolder: AbsoluteFilePath;
     versionContentSources?: docsYml.VersionContentSource[];
 }): LibrarySymbolRenderer {
-    const outputDirs = new Map<string, AbsoluteFilePath>();
-    const generatesPages = new Map<string, boolean>();
+    const currentBranch = toScope(libraries, absolutePathToFernFolder);
+    // Longest fern-folder path first so nested checkouts resolve to the most specific scope.
+    const versionScopes = versionContentSources
+        .map((contentSource) => toScope(contentSource.libraries, contentSource.absolutePathToFernFolder))
+        .sort((a, b) => b.absolutePathToFernFolder.length - a.absolutePathToFernFolder.length);
 
-    const register = (source: LibraryOutputSource, baseDir: AbsoluteFilePath): void => {
-        for (const [name, config] of Object.entries(source ?? {})) {
-            if (!outputDirs.has(name)) {
-                outputDirs.set(name, resolve(baseDir, config.output.path));
-                generatesPages.set(name, config.output.pages ?? true);
-            }
-        }
-    };
-
-    register(libraries, absolutePathToFernFolder);
-    for (const contentSource of versionContentSources) {
-        register(contentSource.libraries, contentSource.absolutePathToFernFolder);
-    }
+    const scopeFor = (absolutePathToMarkdownFile: AbsoluteFilePath): LibraryScope =>
+        versionScopes.find((scope) => isInside(scope.absolutePathToFernFolder, absolutePathToMarkdownFile)) ??
+        currentBranch;
 
     return createLibrarySymbolRenderer({
-        getLibraryOutputDir: (library) => outputDirs.get(library),
-        hasGeneratedPages: (library) => generatesPages.get(library) ?? true,
-        knownLibraries: () => [...outputDirs.keys()]
+        getLibrarySource: (library, absolutePathToMarkdownFile) =>
+            scopeFor(absolutePathToMarkdownFile).libraries.get(library),
+        knownLibraries: (absolutePathToMarkdownFile) => [...scopeFor(absolutePathToMarkdownFile).libraries.keys()]
     });
 }
 

@@ -25,7 +25,6 @@ import {
 import { renderClassDetailed } from "../renderers/ClassRenderer.js";
 import { renderFunctionDetailed, renderMethodDetailed, renderProperty } from "../renderers/FunctionRenderer.js";
 import type { CppClassIr, CppFunctionIr, CppLibraryDocsIr, CppNamespaceIr } from "../types/CppLibraryDocsIr.js";
-import { generateAnchorId } from "../utils/mdx.js";
 import { buildTypeLinkData, getModulePath, type RenderContext } from "../utils/TypeLinkResolver.js";
 import type { PersistedLibraryIr } from "./libraryIrFile.js";
 
@@ -48,8 +47,25 @@ export interface LibrarySymbolRequest {
 
 export interface RenderedLibrarySymbol {
     mdx: string;
-    /** Stable anchor id — identical to the one used on the generated pages. */
-    anchorId: string;
+    /**
+     * Every anchor id emitted in `mdx` (the symbol's own plus any member anchors), in
+     * document order — identical to the ids used on the generated pages.
+     */
+    anchorIds: string[];
+}
+
+/** Anchor forms emitted by the renderers: Python `<Anchor id="…">` and C++ heading `[#…]` suffixes. */
+const EMITTED_ANCHOR_REGEX = /<Anchor\s+id="([^"]+)"|^#{1,6} .*? \[#([^\]\s]+)\]\s*$/gm;
+
+export function collectEmittedAnchorIds(mdx: string): string[] {
+    const ids = new Set<string>();
+    for (const match of mdx.matchAll(EMITTED_ANCHOR_REGEX)) {
+        const id = match[1] ?? match[2];
+        if (id != null) {
+            ids.add(id);
+        }
+    }
+    return [...ids];
 }
 
 export class LibrarySymbolError extends Error {}
@@ -236,7 +252,6 @@ function renderPythonSymbol(
         ? cached(pythonLinkDataCache, ir, () => buildTypeLinkData(ir))
         : { validPaths: new Set<string>(), pathAliases: new Map<string, string>() };
     const ctx: RenderContext = { baseSlug, validPaths, pathAliases };
-    const anchorId = generateAnchorId(request.name);
     const shortName = request.name.split(".").pop() ?? request.name;
     // The Python renderers wrap the signature in `<Anchor id=...>`, so the heading
     // itself does not carry a custom anchor (that would duplicate the id).
@@ -261,7 +276,8 @@ function renderPythonSymbol(
             assertNever(symbol);
     }
 
-    return { mdx: `${heading}\n\n${body}\n`, anchorId };
+    const mdx = `${heading}\n\n${body}\n`;
+    return { mdx, anchorIds: collectEmittedAnchorIds(mdx) };
 }
 
 // ---------------------------------------------------------------------------
@@ -446,7 +462,8 @@ function renderCppSymbol(ir: CppLibraryDocsIr, request: LibrarySymbolRequest): R
             default:
                 assertNever(symbol);
         }
-        return { mdx: `${heading}\n\n${body.trimEnd()}\n`, anchorId };
+        const mdx = `${heading}\n\n${body.trimEnd()}\n`;
+        return { mdx, anchorIds: collectEmittedAnchorIds(mdx) };
     } finally {
         clearEntityRegistry();
     }

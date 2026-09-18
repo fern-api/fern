@@ -4,7 +4,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "fs
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createLibrarySymbolRenderer } from "../symbols/createLibrarySymbolRenderer.js";
+import { createLibrarySymbolRenderer, type LibrarySymbolSource } from "../symbols/createLibrarySymbolRenderer.js";
 import {
     getLibraryIrPath,
     LIBRARY_IR_SCHEMA_VERSION,
@@ -270,7 +270,7 @@ describe("renderLibrarySymbol (python)", () => {
             members: undefined,
             linkToGeneratedPages: true
         });
-        expect(result.anchorId).toBe(generateAnchorId("cuopt.solve"));
+        expect(result.anchorIds).toEqual([generateAnchorId("cuopt.solve")]);
         expect(result.mdx).toContain("## `solve`");
         expect(result.mdx).toContain('<Anchor id="cuopt-solve">');
         expect(result.mdx).toContain("cuopt.solve()");
@@ -388,7 +388,7 @@ describe("renderLibrarySymbol (cpp)", () => {
             members: undefined,
             linkToGeneratedPages: true
         });
-        expect(result.anchorId).toBe("cuoptgetintsize");
+        expect(result.anchorIds).toEqual(["cuoptgetintsize"]);
         expect(result.mdx.startsWith("## `cuOptGetIntSize` [#cuoptgetintsize]")).toBe(true);
         expect(result.mdx).not.toContain("---\ntitle:");
         expect(result.mdx).toContain("cuOptGetIntSize");
@@ -402,7 +402,7 @@ describe("renderLibrarySymbol (cpp)", () => {
             members: undefined,
             linkToGeneratedPages: true
         });
-        expect(result.anchorId).toBe("cuoptintt");
+        expect(result.anchorIds).toEqual(["cuoptintt"]);
         expect(result.mdx.startsWith("### `cuopt_int_t` [#cuoptintt]")).toBe(true);
         expect(result.mdx).toContain("The integer type used by the solver.");
     });
@@ -416,6 +416,19 @@ describe("renderLibrarySymbol (cpp)", () => {
         });
         expect(result.mdx).toContain("solve");
         expect(result.mdx).not.toContain("reset");
+        expect(result.anchorIds).toContain("solve");
+        expect(result.anchorIds).not.toContain("reset");
+    });
+
+    it("reports every member anchor emitted by a class render", () => {
+        const result = renderLibrarySymbol(persistedCpp, {
+            name: "cuopt::Solver",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        expect(result.anchorIds[0]).toBe("solver");
+        expect(result.anchorIds).toEqual(expect.arrayContaining(["solver", "solve", "reset"]));
     });
 
     it("renders a single method by qualified name", () => {
@@ -425,7 +438,7 @@ describe("renderLibrarySymbol (cpp)", () => {
             members: undefined,
             linkToGeneratedPages: true
         });
-        expect(result.anchorId).toBe("reset");
+        expect(result.anchorIds).toEqual(["reset"]);
         expect(result.mdx).toContain("void reset()");
         expect(result.mdx).not.toContain("void solve()");
     });
@@ -496,42 +509,97 @@ describe("library IR persistence", () => {
         await expect(readLibraryIr(outputDir)).rejects.toThrow(/schema version 999/);
     });
 
-    it("createLibrarySymbolRenderer resolves libraries from persisted IR and rejects unknown libraries", async () => {
+    it("createLibrarySymbolRenderer resolves libraries per page and rejects unknown libraries", async () => {
         const pyDir = AbsoluteFilePath.of(join(tmpDir, "py"));
         const cDir = AbsoluteFilePath.of(join(tmpDir, "c"));
         await writeLibraryIr({ outputDir: pyDir, persisted: persistedPython });
         await writeLibraryIr({ outputDir: cDir, persisted: persistedCpp });
 
-        const dirs = new Map<string, AbsoluteFilePath>([
-            ["cuopt-python", pyDir],
-            ["cuopt-c", cDir]
+        const sources = new Map<string, LibrarySymbolSource>([
+            ["cuopt-python", { outputDir: pyDir, lang: "python", generatesPages: true }],
+            ["cuopt-c", { outputDir: cDir, lang: "cpp", generatesPages: true }]
         ]);
+        const page = AbsoluteFilePath.of("/docs/pages/a.mdx");
         const render = createLibrarySymbolRenderer({
-            getLibraryOutputDir: (lib) => dirs.get(lib),
-            hasGeneratedPages: () => true,
-            knownLibraries: () => [...dirs.keys()]
+            getLibrarySource: (lib) => sources.get(lib),
+            knownLibraries: () => [...sources.keys()]
         });
 
-        const py = await render({
-            library: "cuopt-python",
-            name: "cuopt.solve",
-            heading: undefined,
-            members: undefined
-        });
-        expect(py.mdx).toContain("## `solve`");
-        expect(py.anchorId).toBe("cuopt-solve");
-
-        const c = await render({
-            library: "cuopt-c",
-            name: "cuOptGetIntSize",
-            heading: undefined,
-            members: undefined
-        });
-        expect(c.mdx).toContain("## `cuOptGetIntSize` [#cuoptgetintsize]");
-        expect(c.anchorId).toBe("cuoptgetintsize");
-
-        await expect(render({ library: "nope", name: "x", heading: undefined, members: undefined })).rejects.toThrow(
-            /Unknown library 'nope'. Libraries configured in docs.yml: cuopt-python, cuopt-c/
+        const py = await render(
+            { library: "cuopt-python", name: "cuopt.solve", heading: undefined, members: undefined },
+            page
         );
+        expect(py.mdx).toContain("## `solve`");
+        expect(py.anchorIds).toEqual(["cuopt-solve"]);
+
+        const c = await render(
+            { library: "cuopt-c", name: "cuOptGetIntSize", heading: undefined, members: undefined },
+            page
+        );
+        expect(c.mdx).toContain("## `cuOptGetIntSize` [#cuoptgetintsize]");
+        expect(c.anchorIds).toEqual(["cuoptgetintsize"]);
+
+        await expect(
+            render({ library: "nope", name: "x", heading: undefined, members: undefined }, page)
+        ).rejects.toThrow(/Unknown library 'nope'. Libraries configured in docs.yml: cuopt-python, cuopt-c/);
+    });
+
+    it("createLibrarySymbolRenderer resolves the same library name to different IR per page", async () => {
+        const v1Dir = AbsoluteFilePath.of(join(tmpDir, "v1"));
+        const v2Dir = AbsoluteFilePath.of(join(tmpDir, "v2"));
+        await writeLibraryIr({ outputDir: v1Dir, persisted: { ...persistedPython, library: "sdk" } });
+        await writeLibraryIr({ outputDir: v2Dir, persisted: { ...persistedCpp, library: "sdk" } });
+
+        const v1Page = AbsoluteFilePath.of("/checkouts/v1/fern/pages/a.mdx");
+        const v2Page = AbsoluteFilePath.of("/checkouts/v2/fern/pages/a.mdx");
+        const render = createLibrarySymbolRenderer({
+            getLibrarySource: (lib, page) =>
+                lib !== "sdk"
+                    ? undefined
+                    : page === v1Page
+                      ? { outputDir: v1Dir, lang: "python", generatesPages: true }
+                      : { outputDir: v2Dir, lang: "cpp", generatesPages: true },
+            knownLibraries: () => ["sdk"]
+        });
+
+        const v1 = await render(
+            { library: "sdk", name: "cuopt.solve", heading: undefined, members: undefined },
+            v1Page
+        );
+        expect(v1.anchorIds).toEqual(["cuopt-solve"]);
+        const v2 = await render(
+            { library: "sdk", name: "cuOptGetIntSize", heading: undefined, members: undefined },
+            v2Page
+        );
+        expect(v2.anchorIds).toEqual(["cuoptgetintsize"]);
+    });
+
+    it("createLibrarySymbolRenderer rejects persisted IR whose library or language does not match", async () => {
+        const dir = AbsoluteFilePath.of(join(tmpDir, "stale"));
+        await writeLibraryIr({ outputDir: dir, persisted: persistedPython });
+        const page = AbsoluteFilePath.of("/docs/pages/a.mdx");
+        const request = { name: "cuopt.solve", heading: undefined, members: undefined };
+
+        const staleName = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: dir, lang: "python", generatesPages: true }),
+            knownLibraries: () => ["cuopt-c"]
+        });
+        await expect(staleName({ ...request, library: "cuopt-c" }, page)).rejects.toThrow(
+            /was generated for library 'cuopt-python', not 'cuopt-c'. Re-run 'fern docs md generate'/
+        );
+
+        const wrongLang = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: dir, lang: "cpp", generatesPages: true }),
+            knownLibraries: () => ["cuopt-python"]
+        });
+        await expect(wrongLang({ ...request, library: "cuopt-python" }, page)).rejects.toThrow(
+            /is 'python', but library 'cuopt-python' is configured with language 'cpp'/
+        );
+
+        const ok = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: dir, lang: undefined, generatesPages: true }),
+            knownLibraries: () => ["cuopt-python"]
+        });
+        await expect(ok({ ...request, library: "cuopt-python" }, page)).resolves.toBeDefined();
     });
 });
