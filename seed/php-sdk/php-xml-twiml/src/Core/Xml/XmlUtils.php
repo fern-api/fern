@@ -270,7 +270,9 @@ final class XmlUtils
         if (trim($xml) === '') {
             throw new InvalidArgumentException('Cannot parse XML from an empty string');
         }
-        if (preg_match('/<!DOCTYPE/i', $xml) === 1) {
+        // Only the prolog (before the root element) can legitimately hold a DOCTYPE; checking there
+        // avoids false positives on CDATA or text that merely contains the string.
+        if (preg_match('/^\s*(?:<\?.*?\?>\s*|<!--.*?-->\s*)*<!DOCTYPE/is', $xml) === 1) {
             throw new InvalidArgumentException('XML documents with a DOCTYPE declaration are not allowed');
         }
         $previous = libxml_use_internal_errors(true);
@@ -306,6 +308,8 @@ final class XmlUtils
 
     /**
      * @throws InvalidArgumentException If the element's name (or namespace, if given) does not match.
+     * Unqualified elements are accepted for any expected namespace; only an explicitly different
+     * namespace is rejected, since many producers emit XML without namespace declarations.
      */
     public static function requireName(XmlElement $element, string $expectedName, ?string $expectedNamespace = null): void
     {
@@ -344,6 +348,8 @@ final class XmlUtils
                 $element->addChild(self::fromDom($child));
             }
         }
+        // Text nodes are concatenated (whitespace-only text is dropped); interleaving with child
+        // elements is not preserved, matching toDom() which writes text before children.
         $element->text = trim($text) === '' ? null : $text;
         return $element;
     }
@@ -611,7 +617,11 @@ final class XmlUtils
         }
         $result = [];
         foreach ($raw as $item) {
-            $result[] = self::parseEnum($item, $enum)->value;
+            $case = self::parseEnum($item, $enum);
+            if ($case === null) {
+                throw new InvalidArgumentException("Cannot parse null as a value for $enum");
+            }
+            $result[] = $case->value;
         }
         return $result;
     }
@@ -632,7 +642,7 @@ final class XmlUtils
             $colon = strpos($name, ':');
             $prefix = $colon === false ? null : substr($name, 0, $colon);
             $uri = $prefix === null ? null : $element->namespaceDeclarations[$prefix] ?? null;
-            if ($prefix !== null && $prefix !== $element->prefix && $uri !== null) {
+            if ($uri !== null) {
                 $result["xmlns:$prefix"] = $uri;
             }
         }
