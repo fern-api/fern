@@ -1,7 +1,11 @@
 import { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { CompiledGlobalTheme, compileGlobalTheme } from "@fern-api/remote-workspace-runner";
+import {
+    CompiledGlobalTheme,
+    compileGlobalTheme,
+    themeReferencesRemoteAssets
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -86,14 +90,24 @@ export async function uploadDocsTheme({
         // with `global-theme: <name>`, and re-merges them when it changes.
         // Without it, publishes fall back to stitching the theme locally.
         let compiled: CompiledGlobalTheme | undefined;
+        const hasRemoteAssets = themeReferencesRemoteAssets(rawTheme);
+        if (hasRemoteAssets) {
+            context.logger.info(
+                "Theme references remote asset URLs, so sites using it will stitch it at publish instead of merging server-side."
+            );
+        }
         try {
-            compiled = await compileGlobalTheme({
-                rawTheme,
-                themeDirectory,
-                taskContext: context,
-                cliVersion: cliContext.environment.packageVersion
-            });
-            await processor.uploadFiles(compiled.files.values());
+            compiled = hasRemoteAssets
+                ? undefined
+                : await compileGlobalTheme({
+                      rawTheme,
+                      themeDirectory,
+                      taskContext: context,
+                      cliVersion: cliContext.environment.packageVersion
+                  });
+            if (compiled != null) {
+                await processor.uploadFiles(compiled.files.values());
+            }
         } catch (err) {
             compiled = undefined;
             context.logger.warn(

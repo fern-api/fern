@@ -8,7 +8,8 @@ import {
     canMergeThemeServerSide,
     compileGlobalTheme,
     shouldMergeThemeServerSide,
-    THEME_FILE_PATH_PREFIX
+    THEME_FILE_PATH_PREFIX,
+    themeReferencesRemoteAssets
 } from "../compileGlobalTheme.js";
 
 // 1x1 transparent PNG
@@ -56,6 +57,42 @@ describe("compileGlobalTheme", () => {
         expect(compiled.files.get(logo?.hash ?? "")).toBe(join(themeDirectory, "logo.png"));
     });
 
+    it("strips resolver defaults from partial theme/settings objects and maps logo right-text", async () => {
+        const themeDirectory = await writeThemeDir();
+        const compiled = await compileGlobalTheme({
+            rawTheme: {
+                logo: { dark: "logo.png", light: "logo.png", "right-text": "Docs" },
+                theme: { tabs: "pill" },
+                settings: { "http-snippets": false }
+            },
+            themeDirectory,
+            taskContext: createMockTaskContext(),
+            cliVersion: "0.0.0"
+        });
+
+        expect(compiled.config.logoRightText).toBe("Docs");
+        expect(compiled.config.theme).toEqual({ tabs: "pill" });
+        expect(compiled.config.settings).toEqual({ httpSnippets: false });
+    });
+
+    it("only keeps the colors the theme explicitly sets, per mode", async () => {
+        const compiled = await compileGlobalTheme({
+            rawTheme: { colors: { background: { dark: "#000000", light: "#ffffff" }, border: "#123456" } },
+            themeDirectory: await writeThemeDir(),
+            taskContext: createMockTaskContext(),
+            cliVersion: "0.0.0"
+        });
+
+        const colors = compiled.config.colorsV3;
+        expect(colors?.type).toBe("darkAndLight");
+        if (colors?.type !== "darkAndLight") {
+            throw new Error("expected darkAndLight palette");
+        }
+        // The resolver invents a random accentPrimary; it must never reach the fragment.
+        expect(Object.keys(colors.dark).sort()).toEqual(["background", "border"]);
+        expect(Object.keys(colors.light).sort()).toEqual(["background", "border"]);
+    });
+
     it("only keeps the palette parts the theme sets when colors are not themed", async () => {
         const themeDirectory = await writeThemeDir();
         const compiled = await compileGlobalTheme({
@@ -89,6 +126,18 @@ describe("compileGlobalTheme", () => {
         });
         expect(compiled.config).not.toHaveProperty("header");
         expect(compiled.config.announcement).toEqual({ text: "Hi" });
+    });
+});
+
+describe("themeReferencesRemoteAssets", () => {
+    it("detects remote URLs in logo, favicon, background-image and css", () => {
+        expect(themeReferencesRemoteAssets({ logo: { dark: "https://cdn.example.com/logo.png" } })).toBe(true);
+        expect(themeReferencesRemoteAssets({ favicon: "https://cdn.example.com/favicon.ico" })).toBe(true);
+        expect(themeReferencesRemoteAssets({ "background-image": "https://cdn.example.com/bg.png" })).toBe(true);
+        expect(themeReferencesRemoteAssets({ css: ["local.css", "https://cdn.example.com/a.css"] })).toBe(true);
+        expect(themeReferencesRemoteAssets({ logo: { dark: "logo.png" }, favicon: "favicon.png", css: "a.css" })).toBe(
+            false
+        );
     });
 });
 
