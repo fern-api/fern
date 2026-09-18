@@ -1,4 +1,4 @@
-using System.Xml.Linq;
+using global::System.Xml.Linq;
 using NUnit.Framework;
 using <%= namespace%>;
 using <%= namespace%>.Core;
