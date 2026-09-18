@@ -29,20 +29,33 @@ export function createLibrarySymbolUsageTracker(): LibrarySymbolUsageTracker {
     return new Map();
 }
 
-const TAG_REGEX = /([ \t]*)<LibrarySymbol\b([^>]*?)\/>/g;
-const ATTRIBUTE_REGEX = /(\w+)=(?:{?['"]([^'"]*)['"]?}?|{([^}]+)})/g;
+// Attribute values may contain `>` (e.g. C++ template names), so match up to the closing `/>`
+// rather than stopping at the first `>`.
+const TAG_REGEX = /([ \t]*)<LibrarySymbol\b([\s\S]*?)\/>/g;
+// name="..." | name='...' | name={"..."} | name={'...'} | name={...}
+const ATTRIBUTE_REGEX = /(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|\{\s*(?:"([^"]*)"|'([^']*)'|([^}]*))\s*\})/g;
 const TAG_NAME = "<LibrarySymbol";
 
 function extractAttributes(attributesString: string): Record<string, string> {
     const attributes: Record<string, string> = {};
     ATTRIBUTE_REGEX.lastIndex = 0;
+    let lastEnd = 0;
     let match: RegExpExecArray | null;
     while ((match = ATTRIBUTE_REGEX.exec(attributesString)) != null) {
+        const skipped = attributesString.slice(lastEnd, match.index).trim();
+        if (skipped !== "") {
+            throw new Error(`Could not parse attributes near '${skipped}'`);
+        }
+        lastEnd = match.index + match[0].length;
         const attrName = match[1];
-        const attrValue = match[2] ?? match[3];
+        const attrValue = match[2] ?? match[3] ?? match[4] ?? match[5] ?? match[6];
         if (attrName != null && attrValue != null) {
             attributes[attrName] = attrValue.trim();
         }
+    }
+    const trailing = attributesString.slice(lastEnd).trim();
+    if (trailing !== "") {
+        throw new Error(`Could not parse attributes near '${trailing}'`);
     }
     return attributes;
 }
@@ -108,7 +121,8 @@ export async function replaceLibrarySymbols({
         return markdown;
     }
 
-    let newMarkdown = markdown;
+    const chunks: string[] = [];
+    let cursor = 0;
     TAG_REGEX.lastIndex = 0;
     let match: RegExpExecArray | null;
     while ((match = TAG_REGEX.exec(markdown)) != null) {
@@ -128,15 +142,18 @@ export async function replaceLibrarySymbols({
             });
         }
 
-        const usageKey = `${reference.library}:${reference.name}`;
-        const previousFile = usageTracker?.get(usageKey);
-        if (previousFile != null && previousFile !== absolutePathToMarkdownFile) {
-            context.logger.warn(
-                `${location} Symbol '${reference.name}' from library '${reference.library}' is also included in ${previousFile}. ` +
-                    "Including a symbol on more than one page duplicates its anchor and content."
-            );
-        } else {
-            usageTracker?.set(usageKey, absolutePathToMarkdownFile);
+        if (usageTracker != null) {
+            const usageKey = `${reference.library}:${reference.name}`;
+            const previousFile = usageTracker.get(usageKey);
+            if (previousFile != null) {
+                const where = previousFile === absolutePathToMarkdownFile ? "earlier in this page" : `in ${previousFile}`;
+                context.logger.warn(
+                    `${location} Symbol '${reference.name}' from library '${reference.library}' is also included ${where}. ` +
+                        "Including a symbol more than once duplicates its anchor and content."
+                );
+            } else {
+                usageTracker.set(usageKey, absolutePathToMarkdownFile);
+            }
         }
 
         let rendered: string;
@@ -153,8 +170,10 @@ export async function replaceLibrarySymbols({
             .split("\n")
             .map((l) => (l === "" ? l : indent + l))
             .join("\n");
-        newMarkdown = newMarkdown.replace(matchString, replacement);
+        chunks.push(markdown.slice(cursor, match.index), replacement);
+        cursor = match.index + matchString.length;
     }
+    chunks.push(markdown.slice(cursor));
 
-    return newMarkdown;
+    return chunks.join("");
 }

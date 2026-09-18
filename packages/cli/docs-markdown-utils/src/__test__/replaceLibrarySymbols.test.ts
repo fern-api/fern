@@ -175,16 +175,6 @@ describe("replaceLibrarySymbols", () => {
         });
         expect(warnSpy).not.toHaveBeenCalled();
 
-        // same page again (e.g. re-processing) does not warn
-        await replaceLibrarySymbols({
-            markdown,
-            absolutePathToMarkdownFile: pageA,
-            context: warnContext,
-            renderSymbol,
-            usageTracker
-        });
-        expect(warnSpy).not.toHaveBeenCalled();
-
         await replaceLibrarySymbols({
             markdown,
             absolutePathToMarkdownFile: pageB,
@@ -196,5 +186,68 @@ describe("replaceLibrarySymbols", () => {
         expect(warnSpy.mock.calls[0]?.[0]).toContain(
             "[/path/to/fern/pages/b.mdx:1] Symbol 'pkg.Thing' from library 'lib' is also included in /path/to/fern/pages/a.mdx"
         );
+    });
+
+    it("replaces identical tags independently and warns about the intra-page duplicate", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        const { context: warnContext, warnSpy } = makeContextWithWarnSpy();
+        const tag = '<LibrarySymbol library="lib" name="pkg.Thing" />';
+        const result = await replaceLibrarySymbols({
+            markdown: `${tag}\n\nprose\n\n${tag}`,
+            absolutePathToMarkdownFile: pageA,
+            context: warnContext,
+            renderSymbol,
+            usageTracker: createLibrarySymbolUsageTracker()
+        });
+        expect(result).not.toContain("<LibrarySymbol");
+        expect(result.match(/RENDERED\(lib:pkg\.Thing\)/g)).toHaveLength(2);
+        expect(calls).toHaveLength(2);
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(warnSpy.mock.calls[0]?.[0]).toContain("[/path/to/fern/pages/a.mdx:5]");
+        expect(warnSpy.mock.calls[0]?.[0]).toContain("earlier in this page");
+    });
+
+    it("does not re-replace tag text that the renderer itself emits", async () => {
+        const tag = '<LibrarySymbol library="lib" name="pkg.Thing" />';
+        const result = await replaceLibrarySymbols({
+            markdown: tag,
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol: async () => `Usage: \`${tag}\``
+        });
+        expect(result).toBe(`Usage: \`${tag}\``);
+    });
+
+    it("accepts '>' and '=' inside attribute values", async () => {
+        const { renderSymbol, calls } = makeRecordingRenderer();
+        await replaceLibrarySymbols({
+            markdown: '<LibrarySymbol library="lib" name="ns::Vec<int>::at" members="a=b, c" />',
+            absolutePathToMarkdownFile: pageA,
+            context,
+            renderSymbol
+        });
+        expect(calls).toEqual([
+            { library: "lib", name: "ns::Vec<int>::at", heading: undefined, members: ["a=b", "c"] }
+        ]);
+    });
+
+    it("rejects unbalanced or unparseable attributes", async () => {
+        const { renderSymbol } = makeRecordingRenderer();
+        await expect(
+            replaceLibrarySymbols({
+                markdown: '<LibrarySymbol library="lib" name="pkg.Thing />',
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/Could not parse attributes near 'name="pkg.Thing'/);
+        await expect(
+            replaceLibrarySymbols({
+                markdown: '<LibrarySymbol library="lib" name="pkg.Thing" bogus />',
+                absolutePathToMarkdownFile: pageA,
+                context,
+                renderSymbol
+            })
+        ).rejects.toThrow(/Could not parse attributes near 'bogus'/);
     });
 });
