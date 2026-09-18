@@ -82,6 +82,11 @@ export const AsIsFiles = {
         Optional: "Optional.Template.cs",
         OptionalAttribute: "OptionalAttribute.Template.cs"
     },
+    Xml: {
+        IXmlNode: "IXmlNode.Template.cs",
+        XmlElement: "XmlElement.Template.cs",
+        XmlUtils: "XmlUtils.Template.cs"
+    },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
         QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
@@ -133,6 +138,9 @@ export const AsIsFiles = {
             WebSocketClientTests: "test/WebSockets/WebSocketClientTests.Template.cs",
             WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs",
             WebsocketExceptionTests: "test/WebSockets/WebsocketExceptionTests.Template.cs"
+        },
+        Xml: {
+            XmlElementTests: "test/Xml/XmlElementTests.Template.cs"
         },
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
