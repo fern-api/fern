@@ -12,6 +12,7 @@ import {
     xmlScalar,
     xmlScalarList,
     xmlText,
+    xmlToSet,
     xmlUnknownChildren,
 } from "../../../src/core/xml/index";
 
@@ -24,13 +25,14 @@ describe("serializeXmlElement", () => {
                 { name: "loop", value: 2 },
                 { name: "skipped", value: undefined },
                 { name: "events", value: ["a", "b"], separator: " " },
+                { name: "tags", value: new Set(["c", "d"]), separator: "," },
             ],
             text: 'Hello <world> & "friends"',
-            children: [{ name: "Tag", value: ["x", "y"] }],
+            children: [{ name: "Tag", value: new Set(["x", "y"]) }],
             additionalChildren: [new XmlElement({ name: "Extra", attributes: { k: "v" } })],
         });
         expect(xml).toBe(
-            '<Say voice="Polly.Joanna" loop="2" events="a b">Hello &lt;world&gt; &amp; &quot;friends&quot;<Tag>x</Tag><Tag>y</Tag><Extra k="v" /></Say>',
+            '<Say voice="Polly.Joanna" loop="2" events="a b" tags="c,d">Hello &lt;world&gt; &amp; &quot;friends&quot;<Tag>x</Tag><Tag>y</Tag><Extra k="v" /></Say>',
         );
     });
 
@@ -77,6 +79,16 @@ describe("parseXml", () => {
             /DOCTYPE/,
         );
     });
+
+    it("decodes valid entity references and rejects malformed ones", () => {
+        expect(xmlText(parseXml("<Say>&#65;&#x42;&lt;&gt;&apos;&quot;&#x1F600;</Say>"))).toBe("AB<>'\"\u{1F600}");
+        expect(() => parseXml("<Say>fish & chips</Say>")).toThrow(XmlParseError);
+        expect(() => parseXml("<Say>&amp</Say>")).toThrow(XmlParseError);
+        expect(() => parseXml("<Say>&nbsp;</Say>")).toThrow(/unknown entity &nbsp;/);
+        expect(() => parseXml("<Say>&#x110000;</Say>")).toThrow(/invalid character reference/);
+        expect(() => parseXml("<Say>&#;</Say>")).toThrow(XmlParseError);
+        expect(() => parseXml('<Say a="x & y" />')).toThrow(XmlParseError);
+    });
 });
 
 describe("readers", () => {
@@ -90,6 +102,8 @@ describe("readers", () => {
             "dtmf",
         ]);
         expect(() => xmlScalar("loud", xmlEnum(["quiet"] as const), "strength")).toThrow(/must be one of "quiet"/);
+        expect(xmlToSet(xmlScalarList("a,b,a", ",", (item) => item, "tags"))).toEqual(new Set(["a", "b"]));
+        expect(xmlToSet(undefined)).toBeUndefined();
     });
 
     it("reads typed children, wrapped lists, extra attributes and unknown children", () => {
@@ -101,6 +115,30 @@ describe("readers", () => {
         expect(xmlExtraAttributes(node, [])).toEqual({ foo: "bar" });
         const unknown = xmlUnknownChildren(node, ["Numbers"]);
         expect(unknown.map((child) => child.toXml())).toEqual(['<Brandnew k="v">t</Brandnew>']);
+    });
+
+    it("preserves unknown children inside wrappers without duplicating known ones", () => {
+        const xml = '<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other /></Dial>';
+        const node = parseXml(xml, "Dial");
+        const numbers = xmlChildren(node, { Number: (child) => child.text }, { wrapper: "Numbers" });
+        const unknown = xmlUnknownChildren(node, ["Numbers"], { Numbers: ["Number"] });
+        expect(numbers).toEqual(["+1"]);
+        expect(unknown.map((element) => element.name)).toEqual(["Numbers", "Other"]);
+        expect(unknown[0]?.children.map((element) => element.name)).toEqual(["Extension"]);
+        expect(
+            serializeXmlElement({
+                name: "Dial",
+                children: [
+                    {
+                        name: "Numbers",
+                        wrapped: true,
+                        value: numbers?.map((text) => new XmlElement({ name: "Number", text })),
+                    },
+                ],
+                additionalChildren: unknown,
+            }),
+        ).toBe('<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other /></Dial>');
+        expect(xmlUnknownChildren(parseXml("<Dial><Numbers><Number>+1</Number></Numbers></Dial>"), ["Numbers"], { Numbers: ["Number"] })).toEqual([]);
     });
 
     it("round-trips an XmlElement", () => {

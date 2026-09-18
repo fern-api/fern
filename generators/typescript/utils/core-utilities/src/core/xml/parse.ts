@@ -207,17 +207,32 @@ function decodeEntities(raw: string): string {
     if (!raw.includes("&")) {
         return raw;
     }
-    return raw.replace(/&(#x[0-9A-Fa-f]+|#[0-9]+|[A-Za-z]+);/g, (match, entity: string) => {
-        if (entity.startsWith("#x")) {
-            return String.fromCodePoint(parseInt(entity.substring(2), 16));
+    const segments = raw.split("&");
+    let decoded = segments[0] ?? "";
+    for (const segment of segments.slice(1)) {
+        const end = segment.indexOf(";");
+        if (end === -1) {
+            throw new XmlParseError(`unescaped "&" in "${raw}"`);
         }
-        if (entity.startsWith("#")) {
-            return String.fromCodePoint(parseInt(entity.substring(1), 10));
-        }
-        const named = NAMED_ENTITIES[entity];
-        if (named == null) {
-            throw new XmlParseError(`unknown entity ${match}`);
-        }
+        decoded += decodeEntity(segment.substring(0, end)) + segment.substring(end + 1);
+    }
+    return decoded;
+}
+
+function decodeEntity(entity: string): string {
+    const named = NAMED_ENTITIES[entity];
+    if (named != null) {
         return named;
-    });
+    }
+    const hex = /^#x([0-9A-Fa-f]+)$/.exec(entity);
+    const decimal = /^#([0-9]+)$/.exec(entity);
+    const codePoint = hex?.[1] != null ? parseInt(hex[1], 16) : decimal?.[1] != null ? parseInt(decimal[1], 10) : undefined;
+    if (codePoint == null) {
+        throw new XmlParseError(`unknown entity &${entity};`);
+    }
+    try {
+        return String.fromCodePoint(codePoint);
+    } catch {
+        throw new XmlParseError(`invalid character reference &${entity};`);
+    }
 }

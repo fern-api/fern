@@ -30,6 +30,31 @@ export interface XmlChild {
     wrapped?: boolean;
 }
 
+/**
+ * Shape of a generic element (see `XmlElement`) whose children can be merged into a wrapper
+ * element of the same name, so undeclared children inside wrapped lists round-trip.
+ * Elements carrying text are not merged since a wrapper has no text of its own.
+ */
+interface XmlWrapperFragment extends XmlSerializable {
+    name: string;
+    attributes: Record<string, string>;
+    text?: undefined;
+    children: XmlSerializable[];
+}
+
+function isXmlWrapperFragment(value: XmlSerializable): value is XmlWrapperFragment {
+    return (
+        "name" in value &&
+        typeof value.name === "string" &&
+        "attributes" in value &&
+        typeof value.attributes === "object" &&
+        value.attributes != null &&
+        "children" in value &&
+        Array.isArray(value.children) &&
+        (!("text" in value) || value.text == null)
+    );
+}
+
 export interface SerializeXmlElementArgs {
     name: string;
     namespace?: string;
@@ -68,15 +93,31 @@ export function serializeXmlElement({
         }
     }
 
+    const wrapperNames = new Set(children.filter((child) => child.wrapped === true).map((child) => child.name));
+    const wrapperFragments: XmlWrapperFragment[] = [];
+    const otherChildren: XmlSerializable[] = [];
+    for (const extra of additionalChildren) {
+        if (isXmlWrapperFragment(extra) && wrapperNames.has(localXmlName(extra.name))) {
+            wrapperFragments.push(extra);
+        } else {
+            otherChildren.push(extra);
+        }
+    }
+
     const body: string[] = [];
     const renderedText = joinScalars(text, textSeparator);
     if (renderedText != null) {
         body.push(escapeXml(renderedText));
     }
     for (const child of children) {
-        body.push(...renderChild(child));
+        body.push(
+            ...renderChild(
+                child,
+                wrapperFragments.filter((fragment) => localXmlName(fragment.name) === child.name),
+            ),
+        );
     }
-    for (const extra of additionalChildren) {
+    for (const extra of otherChildren) {
         body.push(extra.toXml());
     }
 
@@ -122,22 +163,40 @@ export function extraXmlAttributes(attributes: Record<string, string> | undefine
     return Object.entries(attributes).map(([name, value]) => ({ name, value }));
 }
 
+function toArray(value: unknown): unknown[] | undefined {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    if (value instanceof Set) {
+        return Array.from(value);
+    }
+    return undefined;
+}
+
 function joinScalars(value: unknown, separator: string | undefined): string | undefined {
     if (value == null) {
         return undefined;
     }
-    if (Array.isArray(value)) {
-        const items = value.map(formatXmlScalar).filter((item): item is string => item != null);
-        return items.join(separator ?? DEFAULT_LIST_SEPARATOR);
+    const items = toArray(value);
+    if (items != null) {
+        return items
+            .map(formatXmlScalar)
+            .filter((item): item is string => item != null)
+            .join(separator ?? DEFAULT_LIST_SEPARATOR);
     }
     return formatXmlScalar(value);
 }
 
-function renderChild({ name, value, wrapped = false }: XmlChild): string[] {
-    if (value == null) {
+function localXmlName(name: string): string {
+    const colon = name.indexOf(":");
+    return colon === -1 ? name : name.substring(colon + 1);
+}
+
+function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragments: XmlWrapperFragment[]): string[] {
+    if (value == null && wrapperFragments.length === 0) {
         return [];
     }
-    const items = Array.isArray(value) ? value : [value];
+    const items = value == null ? [] : (toArray(value) ?? [value]);
     const rendered: string[] = [];
     for (const item of items) {
         if (item == null) {
@@ -152,5 +211,13 @@ function renderChild({ name, value, wrapped = false }: XmlChild): string[] {
     if (!wrapped) {
         return rendered;
     }
-    return [rendered.length === 0 ? `<${name} />` : `<${name}>${rendered.join("")}</${name}>`];
+    const wrapperAttributes: string[] = [];
+    for (const fragment of wrapperFragments) {
+        for (const [attributeName, attributeValue] of Object.entries(fragment.attributes)) {
+            wrapperAttributes.push(` ${attributeName}="${escapeXml(attributeValue)}"`);
+        }
+        rendered.push(...fragment.children.map((child) => child.toXml()));
+    }
+    const open = `<${name}${wrapperAttributes.join("")}`;
+    return [rendered.length === 0 ? `${open} />` : `${open}>${rendered.join("")}</${name}>`];
 }

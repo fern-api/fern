@@ -21,6 +21,6 @@ export function xmlBuild<T>(value: T | XmlBuilder<T>): T {
     return isXmlBuilder(value) ? value.build() : value;
 }
 
-export function xmlBuildAll<T>(values: readonly (T | XmlBuilder<T>)[] | undefined): T[] | undefined {
-    return values?.map((value) => xmlBuild(value));
+export function xmlBuildAll<T, N extends null | undefined>(values: readonly (T | XmlBuilder<T>)[] | N): T[] | N {
+    return values == null ? values : values.map((value) => xmlBuild(value));
 }

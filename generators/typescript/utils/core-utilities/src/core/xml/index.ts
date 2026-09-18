@@ -19,6 +19,7 @@ export {
     xmlScalarList,
     xmlString,
     xmlText,
+    xmlToSet,
     xmlUnknownChildren,
 } from "./read";
 export {

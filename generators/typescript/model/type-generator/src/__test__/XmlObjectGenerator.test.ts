@@ -18,8 +18,16 @@ function optional(inner: FernIr.TypeReference): FernIr.TypeReference {
     return FernIr.TypeReference.container(FernIr.ContainerType.optional(inner));
 }
 
+function nullable(inner: FernIr.TypeReference): FernIr.TypeReference {
+    return FernIr.TypeReference.container(FernIr.ContainerType.nullable(inner));
+}
+
 function list(inner: FernIr.TypeReference): FernIr.TypeReference {
     return FernIr.TypeReference.container(FernIr.ContainerType.list(inner));
+}
+
+function set(inner: FernIr.TypeReference): FernIr.TypeReference {
+    return FernIr.TypeReference.container(FernIr.ContainerType.set(inner));
 }
 
 function xmlProperty(
@@ -103,9 +111,22 @@ function referenceNodeFor(
                 const inner = referenceNodeFor(container.optional, declarations);
                 return typeRefNode(inner.typeNodeWithoutUndefined, true);
             }
+            if (container.type === "nullable") {
+                const inner = referenceNodeFor(container.nullable, declarations);
+                return typeRefNode(
+                    ts.factory.createUnionTypeNode([
+                        inner.typeNodeWithoutUndefined,
+                        ts.factory.createLiteralTypeNode(ts.factory.createNull())
+                    ])
+                );
+            }
             if (container.type === "list") {
                 const inner = referenceNodeFor(container.list, declarations);
                 return typeRefNode(ts.factory.createArrayTypeNode(inner.typeNodeWithoutUndefined));
+            }
+            if (container.type === "set") {
+                const inner = referenceNodeFor(container.set, declarations);
+                return typeRefNode(ts.factory.createTypeReferenceNode("Set", [inner.typeNodeWithoutUndefined]));
             }
             throw new Error(`Unsupported container in test: ${container.type}`);
         }
@@ -160,7 +181,12 @@ function createMockContext(declarations: FernIr.TypeDeclaration[]) {
     } as any;
 }
 
-function generate(declaration: FernIr.TypeDeclaration, others: FernIr.TypeDeclaration[], isXmlRoot: boolean): string {
+function generate(
+    declaration: FernIr.TypeDeclaration,
+    others: FernIr.TypeDeclaration[],
+    isXmlRoot: boolean,
+    { noOptionalProperties = false }: { noOptionalProperties?: boolean } = {}
+): string {
     if (declaration.shape.type !== "object" || declaration.encoding?.xml == null) {
         throw new Error("test declaration must be an xml object");
     }
@@ -177,7 +203,7 @@ function generate(declaration: FernIr.TypeDeclaration, others: FernIr.TypeDeclar
             getEntityName: () => ts.factory.createIdentifier(typeName)
         }),
         includeSerdeLayer: false,
-        noOptionalProperties: false,
+        noOptionalProperties,
         retainOriginalCasing: false,
         enableInlineTypes: true,
         generateReadWriteOnlyTypes: false,
@@ -232,6 +258,18 @@ const dialDeclaration = xmlObjectDeclaration(
     { name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw" }
 );
 
+const collectionsDeclaration = xmlObjectDeclaration(
+    "Collections",
+    [
+        xmlProperty("label", nullable(STRING), { kind: "ATTRIBUTE" }),
+        xmlProperty("note", optional(nullable(STRING)), { kind: "TEXT" }),
+        xmlProperty("tags", optional(set(STRING)), { kind: "ATTRIBUTE", listSeparator: "," }),
+        xmlProperty("breaks", set(createNamedTypeReference("Break")), { kind: "ELEMENT" }),
+        xmlProperty("pause", nullable(createNamedTypeReference("Break")), { kind: "ELEMENT", name: "Pause" })
+    ],
+    { name: "Collections", namespace: undefined, prefix: undefined }
+);
+
 describe("XmlObjectGenerator", () => {
     it("generates a root element with text, attributes and typed children", () => {
         expect(generate(sayDeclaration, [breakDeclaration], true)).toMatchSnapshot();
@@ -239,6 +277,14 @@ describe("XmlObjectGenerator", () => {
 
     it("generates a nested element with namespace, wrapped list and separator, using add-prefix on collisions", () => {
         expect(generate(dialDeclaration, [numberDeclaration], false)).toMatchSnapshot();
+    });
+
+    it("distinguishes nullable from optional and supports set-valued properties", () => {
+        expect(generate(collectionsDeclaration, [breakDeclaration], false)).toMatchSnapshot();
+    });
+
+    it("keeps optional keys required when noOptionalProperties is enabled", () => {
+        expect(generate(sayDeclaration, [breakDeclaration], true, { noOptionalProperties: true })).toMatchSnapshot();
     });
 
     it("leaves non-xml objects as interfaces", () => {

@@ -15,7 +15,10 @@ export interface XmlValueShape {
     /** The element type for lists/sets, otherwise the (non-optional) type itself. */
     itemType: FernIr.TypeReference;
     isList: boolean;
+    /** The property may be omitted (`optional<T>`). */
     isOptional: boolean;
+    /** The property may hold `null` (`nullable<T>`); does not by itself make it optional. */
+    isNullable: boolean;
 }
 
 /**
@@ -28,6 +31,7 @@ export function getXmlValueShape(
 ): XmlValueShape {
     let current = typeReference;
     let isOptional = false;
+    let isNullable = false;
     let isList = false;
     for (;;) {
         switch (current.type) {
@@ -39,7 +43,7 @@ export function getXmlValueShape(
                         current = container.optional;
                         continue;
                     case "nullable":
-                        isOptional = true;
+                        isNullable = true;
                         current = container.nullable;
                         continue;
                     case "list":
@@ -52,7 +56,7 @@ export function getXmlValueShape(
                         continue;
                     case "map":
                     case "literal":
-                        return { itemType: current, isList, isOptional };
+                        return { itemType: current, isList, isOptional, isNullable };
                     default:
                         assertNever(container);
                 }
@@ -64,11 +68,11 @@ export function getXmlValueShape(
                     current = declaration.shape.aliasOf;
                     continue;
                 }
-                return { itemType: current, isList, isOptional };
+                return { itemType: current, isList, isOptional, isNullable };
             }
             case "primitive":
             case "unknown":
-                return { itemType: current, isList, isOptional };
+                return { itemType: current, isList, isOptional, isNullable };
             default:
                 assertNever(current);
         }

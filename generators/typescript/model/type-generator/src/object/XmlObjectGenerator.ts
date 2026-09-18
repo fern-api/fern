@@ -57,6 +57,7 @@ interface XmlProperty {
     /** Whether list items are nested under a wrapper element named `wireName`. */
     wrapped: boolean;
     isOptional: boolean;
+    isNullable: boolean;
     isList: boolean;
     itemType: FernIr.TypeReference;
     /** Type node of the property value (without `undefined`). */
@@ -170,18 +171,22 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         return [this.generateFieldsInterface(context, properties), this.generateBuilderClass(context, properties)];
     }
 
+    private declaredType(property: XmlProperty): string {
+        return getTextOfTsNode(
+            property.isOptional && this.noOptionalProperties
+                ? ts.factory.createUnionTypeNode([
+                      property.valueType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : property.valueType
+        );
+    }
+
     private generateClassProperty(property: XmlProperty): PropertyDeclarationStructure {
         const node: PropertyDeclarationStructure = {
             kind: StructureKind.Property,
             name: getPropertyKey(property.key),
-            type: getTextOfTsNode(
-                property.isOptional && this.noOptionalProperties
-                    ? ts.factory.createUnionTypeNode([
-                          property.valueType,
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                    : property.valueType
-            ),
+            type: this.declaredType(property),
             hasQuestionToken: property.isOptional && !this.noOptionalProperties
         };
         maybeAddDocsStructure(node, property.irProperty.docs);
@@ -193,8 +198,8 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             const node: PropertySignatureStructure = {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(property.key),
-                type: getTextOfTsNode(property.valueType),
-                hasQuestionToken: property.isOptional
+                type: this.declaredType(property),
+                hasQuestionToken: property.isOptional && !this.noOptionalProperties
             };
             maybeAddDocsStructure(node, property.irProperty.docs);
             return node;
@@ -236,7 +241,14 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             constructorStatements.push(
                 `const { ${elementProperties.map((property) => getPropertyKey(property.key)).join(", ")}, ...rest } = fields;`,
                 "this.fields = rest;",
-                `this.elements = { ${elementProperties.map((property) => getPropertyKey(property.key)).join(", ")} };`
+                `this.elements = { ${elementProperties
+                    .map((property) => {
+                        const key = getPropertyKey(property.key);
+                        return isSetTypeNode(property.valueType)
+                            ? `${key}: ${key} == null ? ${key} : Array.from(${key})`
+                            : key;
+                    })
+                    .join(", ")} };`
             );
         } else {
             constructorStatements.push("this.fields = { ...fields };");
@@ -293,12 +305,13 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         }
         const builtElements = elementProperties.map((property) => {
             const key = getPropertyKey(property.key);
+            const built = `${this.xmlRef(context, "xmlBuildAll")}(this.elements.${key})`;
             const value = property.isList
-                ? `${this.xmlRef(context, "xmlBuildAll")}(this.elements.${key})`
-                : `this.elements.${key} === undefined ? undefined : ${this.xmlRef(context, "xmlBuild")}(this.elements.${key})`;
-            return property.isOptional
-                ? `${key}: ${value}`
-                : `${key}: ${this.xmlRef(context, "xmlRequired")}(${value}, "${this.typeName}.${property.key}")`;
+                ? isSetTypeNode(property.valueType)
+                    ? `${this.xmlRef(context, "xmlToSet")}(${built})`
+                    : built
+                : `this.elements.${key} == null ? this.elements.${key} : ${this.xmlRef(context, "xmlBuild")}(this.elements.${key})`;
+            return `${key}: ${this.requireValue(context, property, value, `"${this.typeName}.${property.key}"`)}`;
         });
         buildStatements.push(
             `return new ${this.typeName}({ ...this.fields, ${[
@@ -413,7 +426,8 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private builderValueType(context: Context, property: XmlProperty): string {
         const item = getTextOfTsNode(property.itemTypeNode);
         const itemOrBuilder = `${item} | ${this.xmlType(context, "XmlBuilder")}<${item}>`;
-        return property.isList ? `(${itemOrBuilder})[]` : itemOrBuilder;
+        const value = property.isList ? `(${itemOrBuilder})[]` : itemOrBuilder;
+        return property.isNullable ? `${value} | null` : value;
     }
 
     private fieldsParameter(properties: XmlProperty[]): OptionalKind<ParameterDeclarationStructure> {
@@ -432,6 +446,14 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const childNames = properties
             .filter((property) => property.kind === "ELEMENT")
             .flatMap((property) => this.getElementNames(property).map((name) => JSON.stringify(name)));
+        const wrappers = properties
+            .filter((property) => property.kind === "ELEMENT" && property.wrapped && property.childTypes.length > 0)
+            .map(
+                (property) =>
+                    `${JSON.stringify(property.wireName)}: [${property.childTypes
+                        .map((childType) => JSON.stringify(this.getChildElementName(childType)))
+                        .join(", ")}]`
+            );
         const assignments = properties.map(
             (property) => `${getPropertyKey(property.key)}: ${this.generateReadExpression(context, property)}`
         );
@@ -440,7 +462,9 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             `return new ${this.typeName}({`,
             ...assignments.map((assignment) => `    ${assignment},`),
             `    ${ADDITIONAL_ATTRIBUTES}: ${this.xmlRef(context, "xmlExtraAttributes")}(node, [${attributeNames.join(", ")}]),`,
-            `    ${ADDITIONAL_CHILDREN}: ${this.xmlRef(context, "xmlUnknownChildren")}(node, [${childNames.join(", ")}]),`,
+            `    ${ADDITIONAL_CHILDREN}: ${this.xmlRef(context, "xmlUnknownChildren")}(node, [${childNames.join(", ")}]${
+                wrappers.length > 0 ? `, { ${wrappers.join(", ")} }` : ""
+            }),`,
             "});"
         ];
     }
@@ -450,15 +474,31 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         if (property.wrapped || property.childTypes.length === 0) {
             return [property.wireName];
         }
-        return property.childTypes.map(
-            (childType) => getXmlEncoding(childType)?.name ?? getOriginalName(childType.name.name)
-        );
+        return property.childTypes.map((childType) => this.getChildElementName(childType));
+    }
+
+    private getChildElementName(childType: FernIr.TypeDeclaration): string {
+        return getXmlEncoding(childType)?.name ?? getOriginalName(childType.name.name);
     }
 
     private generateReadExpression(context: Context, property: XmlProperty): string {
         const location = JSON.stringify(`${this.xml.name}.${property.wireName}`);
         const expression = this.generateValueReadExpression(context, property, location);
-        return property.isOptional ? expression : `${this.xmlRef(context, "xmlRequired")}(${expression}, ${location})`;
+        return this.requireValue(context, property, expression, location);
+    }
+
+    /**
+     * Required values throw when absent; required-but-nullable values read as `null` when absent
+     * since XML has no other null representation.
+     */
+    private requireValue(context: Context, property: XmlProperty, expression: string, location: string): string {
+        if (property.isOptional) {
+            return expression;
+        }
+        if (property.isNullable) {
+            return `(${expression}) ?? null`;
+        }
+        return `${this.xmlRef(context, "xmlRequired")}(${expression}, ${location})`;
     }
 
     private generateValueReadExpression(context: Context, property: XmlProperty, location: string): string {
@@ -471,9 +511,11 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                         ? `${this.xmlRef(context, "xmlAttribute")}(node, ${JSON.stringify(property.wireName)})`
                         : `${this.xmlRef(context, "xmlText")}(node)`;
                 const parser = this.getScalarParser(context, property.itemType);
-                return property.isList
-                    ? `${this.xmlRef(context, "xmlScalarList")}(${raw}, ${JSON.stringify(separator)}, ${parser}, ${location})`
-                    : `${this.xmlRef(context, "xmlScalar")}(${raw}, ${parser}, ${location})`;
+                if (!property.isList) {
+                    return `${this.xmlRef(context, "xmlScalar")}(${raw}, ${parser}, ${location})`;
+                }
+                const list = `${this.xmlRef(context, "xmlScalarList")}(${raw}, ${JSON.stringify(separator)}, ${parser}, ${location})`;
+                return isSetTypeNode(property.valueType) ? `${this.xmlRef(context, "xmlToSet")}(${list})` : list;
             }
             case "ELEMENT": {
                 const itemType = getTextOfTsNode(property.itemTypeNode);
@@ -485,13 +527,13 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                                   const ref = getTextOfTsNode(
                                       context.type.getReferenceToNamedType(childType.name).getExpression()
                                   );
-                                  const name = getXmlEncoding(childType)?.name ?? getOriginalName(childType.name.name);
-                                  return `${JSON.stringify(name)}: (child) => ${ref}.fromXml(child)`;
+                                  return `${JSON.stringify(this.getChildElementName(childType))}: (child) => ${ref}.fromXml(child)`;
                               })
                               .join(", ")} }`;
                 if (property.isList) {
                     const wrapper = property.wrapped ? `, { wrapper: ${JSON.stringify(property.wireName)} }` : "";
-                    return `${this.xmlRef(context, "xmlChildren")}<${itemType}>(node, ${parsers}${wrapper})`;
+                    const list = `${this.xmlRef(context, "xmlChildren")}<${itemType}>(node, ${parsers}${wrapper})`;
+                    return isSetTypeNode(property.valueType) ? `${this.xmlRef(context, "xmlToSet")}(${list})` : list;
                 }
                 return `${this.xmlRef(context, "xmlChild")}<${itemType}>(node, ${parsers})`;
             }
@@ -621,6 +663,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 wireName: irProperty.xml?.name ?? getWireValue(irProperty.name),
                 wrapped: irProperty.xml?.wrapped ?? false,
                 isOptional: valueShape.isOptional,
+                isNullable: valueShape.isNullable,
                 isList: valueShape.isList,
                 itemType: valueShape.itemType,
                 valueType: typeNode.typeNodeWithoutUndefined,
@@ -640,6 +683,10 @@ export class XmlObjectGenerator<Context extends BaseContext> {
 }
 
 /** Strips `T[]`, `Array<T>`, `Set<T>` and `| undefined | null` wrappers to get the element type node. */
+function isSetTypeNode(node: ts.TypeNode): boolean {
+    return ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName) && node.typeName.text === "Set";
+}
+
 function unwrapItemTypeNode(node: ts.TypeNode): ts.TypeNode {
     if (ts.isArrayTypeNode(node)) {
         return unwrapItemTypeNode(node.elementType);

@@ -49,7 +49,7 @@ export class Dial implements core.xml.XmlSerializable {
                 { wrapper: "Numbers" },
             ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["statusCallbackEvent", "record"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["Numbers"]),
+            additionalChildren: core.xml.xmlUnknownChildren(node, ["Numbers"], { Numbers: ["Number"] }),
         });
     }
 

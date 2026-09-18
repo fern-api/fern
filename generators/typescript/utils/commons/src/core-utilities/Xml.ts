@@ -17,6 +17,7 @@ export type XmlExport =
     | "xmlText"
     | "xmlScalar"
     | "xmlScalarList"
+    | "xmlToSet"
     | "xmlScalarChild"
     | "xmlRequired"
     | "xmlChild"
