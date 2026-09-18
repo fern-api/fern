@@ -487,9 +487,13 @@ describe("replaceLibrarySymbols", () => {
             anchorIds: []
         });
         const markdown = [
-            '<Example value={/* <LibrarySymbol library="lib" name="Commented" /> */} />',
+            "<Example start={'{/*'} />",
             "",
-            '<LibrarySymbol library="lib" name="Live" />'
+            '<Example value={1 /* <LibrarySymbol library="lib" name="Commented" /> */} />',
+            "",
+            '<LibrarySymbol library="lib" name="Live" />',
+            "",
+            '<Example end="*/}" />'
         ].join("\n");
         const result = await replaceLibrarySymbols({
             markdown,
@@ -497,8 +501,9 @@ describe("replaceLibrarySymbols", () => {
             context,
             renderSymbol
         });
-        expect(result).toContain('value={/* <LibrarySymbol library="lib" name="Commented" /> */}');
+        expect(result).toContain('value={1 /* <LibrarySymbol library="lib" name="Commented" /> */}');
         expect(result).toContain("RENDERED(Live)");
+        expect(result).not.toContain("RENDERED(Commented)");
     });
 
     it("does not treat `[#id]` in prose as an anchor", async () => {

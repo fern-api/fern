@@ -102,15 +102,22 @@ function findInertRegions(markdown: string, page: ParsedPage | undefined): Regio
         if (page.frontmatterLength > 0) {
             regions.push([0, page.frontmatterLength]);
         }
-        visit(page.tree, (node: MdastNodes) => {
+        const addNode = (node: { position?: MdastNodes["position"] }) => {
             const start = node.position?.start.offset;
             const end = node.position?.end.offset;
-            if (INERT_NODE_TYPES.has(node.type) && start != null && end != null) {
+            if (start != null && end != null) {
                 regions.push([start + page.frontmatterLength, end + page.frontmatterLength]);
             }
+        };
+        visit(page.tree, (node: MdastNodes) => {
+            if (INERT_NODE_TYPES.has(node.type)) {
+                addNode(node);
+            }
+            // Attributes (including `prop={/* ... */}` expressions) are not visited as children.
+            if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+                node.attributes.forEach(addNode);
+            }
         });
-        // JSX attribute values (`prop={/* ... */}`) are not visited as child nodes.
-        addRegexRegions(markdown, regions, [MDX_COMMENT_REGEX]);
         return regions;
     }
 
