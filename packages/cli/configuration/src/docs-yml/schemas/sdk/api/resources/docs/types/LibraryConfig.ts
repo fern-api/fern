@@ -11,4 +11,10 @@ export interface LibraryConfig {
      * Only valid when lang is cpp.
      */
     doxyfile?: string;
+    /**
+     * Also generate pages for `#define`s that have no Doxygen comment.
+     * By default only documented macros are rendered. Header guards are
+     * always skipped. Only valid when lang is cpp.
+     */
+    includeUndocumentedMacros?: boolean;
 }

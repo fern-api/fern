@@ -1,4 +1,6 @@
 - summary: |
     C/C++ library docs now render pages for documented preprocessor macros (`#define`),
-    listed under a `macros/` folder and in group pages.
+    listed under a `macros/` folder and in group pages. Set
+    `config.include-undocumented-macros: true` on a `lang: cpp` library to also render
+    macros without a doc comment (header guards are still skipped).
   type: feat
