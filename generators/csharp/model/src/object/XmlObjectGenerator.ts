@@ -187,7 +187,12 @@ export class XmlObjectGenerator {
         const shape = declaration.shape;
         switch (shape.type) {
             case "object":
-                return declaration.encoding?.xml != null ? [declaration] : [];
+                if (declaration.encoding?.xml == null) {
+                    throw new Error(
+                        `Type ${declaration.name.typeId} is used as a child element of xml-encoded type ${this.xml.name} but has no xml encoding`
+                    );
+                }
+                return [declaration];
             case "alias":
                 return this.getXmlChildObjectTypes(shape.aliasOf, seen);
             case "undiscriminatedUnion":

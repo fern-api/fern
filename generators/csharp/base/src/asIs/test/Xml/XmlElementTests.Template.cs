@@ -86,6 +86,16 @@ public class XmlElementTests
     }
 
     [Test]
+    public void FromXml_PreservesInheritedAttributeNamespace()
+    {
+        var parsed = XmlElement.FromXml("<Foo xmlns:a=\"urn:test\"><Bar a:id=\"1\"/></Foo>");
+        var bar = (XmlElement)parsed.Children[0];
+        Assert.That(bar.Attributes["a:id"], Is.EqualTo("1"));
+        Assert.That(bar.ToXml(), Is.EqualTo("<Bar xmlns:a=\"urn:test\" a:id=\"1\" />"));
+        Assert.That(XmlElement.FromXml(parsed.ToXml()), Is.EqualTo(parsed));
+    }
+
+    [Test]
     public void SetText_ReplacesExistingText()
     {
         var element = new XElement("Foo", "old");

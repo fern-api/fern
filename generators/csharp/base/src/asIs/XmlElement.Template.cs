@@ -49,6 +49,11 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     public List<IXmlNode> Children { get; set; } = new();
 
     /// <summary>
+    /// Namespace declarations (prefix to URI) required by prefixed <see cref="Attributes"/>.
+    /// </summary>
+    public Dictionary<string, string> Namespaces { get; set; } = new();
+
+    /// <summary>
     /// Sets an attribute and returns this element for chaining.
     /// </summary>
     public XmlElement SetAttribute(string name, string value)
@@ -69,6 +74,13 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     public XElement ToXElement()
     {
         var element = XmlUtils.CreateElement(Name, Namespace, Prefix);
+        foreach (var ns in Namespaces)
+        {
+            if (element.GetNamespaceOfPrefix(ns.Key) == null)
+            {
+                element.Add(new XAttribute(XNamespace.Xmlns + ns.Key, ns.Value));
+            }
+        }
         foreach (var attribute in Attributes)
         {
             XmlUtils.SetAttribute(element, attribute.Key, attribute.Value);
@@ -108,7 +120,13 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
             {
                 continue;
             }
-            result.Attributes[XmlUtils.GetAttributeName(attribute)] = attribute.Value;
+            var name = XmlUtils.GetAttributeName(attribute);
+            var colon = name.IndexOf(':');
+            if (colon > 0 && attribute.Name.Namespace != XNamespace.Xml)
+            {
+                result.Namespaces[name.Substring(0, colon)] = attribute.Name.NamespaceName;
+            }
+            result.Attributes[name] = attribute.Value;
         }
         foreach (var child in element.Elements())
         {
