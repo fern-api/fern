@@ -14,7 +14,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import {
@@ -31,6 +31,7 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import { createAndStartJob } from "./createAndStartJob.js";
 import {
     type FernSdkConfigV1Payload,
@@ -40,12 +41,18 @@ import {
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
     resolveSdkConfigRequestedOutput,
-    runFernSdkGenApiBuild
+    runFernSdkGenApiBuild,
+    synthesizesSdkConfig
 } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "./fernSdkGenApiSourceArchive.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
 import { prepareFernSdkGenApiRuntimeBundle } from "./prepareFernSdkGenApiRuntimeBundle.js";
+import {
+    formatSdkConfigMappingDiagnostic,
+    type MapFernGroupToSdkConfig,
+    prepareFernSdkGenApiSdkConfigPayload
+} from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
@@ -87,7 +94,8 @@ export async function runRemoteGenerationForGenerator({
     sdkGenApiPreparationBatch,
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
-    generateFullProject
+    generateFullProject,
+    mapFernGroupToSdkConfig
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -143,6 +151,7 @@ export async function runRemoteGenerationForGenerator({
     sdkGenApiPreparationBatch?: FernSdkGenApiPreparationBatch;
     sdkGenApiBatch?: FernSdkGenApiBatch;
     sdkGenApiTargetIdSeed?: string;
+    mapFernGroupToSdkConfig?: MapFernGroupToSdkConfig;
     /**
      * When true, filesystem (local-file-system / download) outputs are generated as full,
      * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
@@ -308,40 +317,107 @@ export async function runRemoteGenerationForGenerator({
         }
         sdkGenApiCandidate = candidate;
         if (sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-            if (sdkConfigV1 == null || sdkConfigTarget == null) {
+            if (sdkConfigV1 != null && sdkConfigTarget != null) {
+                sdkConfigBuildParameters = {
+                    apiName: getOriginalName(ir.apiName),
+                    organization,
+                    cliVersion: workspace.cliVersion,
+                    generatorInvocation: candidate.generatorInvocation,
+                    sdkName: sdkConfigTarget.sdkName ?? sdkConfigV1.sdkName,
+                    sdkVersion: candidate.sdkVersion,
+                    apiVersion: sdkConfigV1.apiVersion,
+                    token,
+                    specsTarGzBuffer: candidate.specsTarGzBuffer,
+                    payload: {
+                        payloadKind: "sdk-config-v1",
+                        body: sdkConfigV1.body,
+                        package: sdkConfigTarget.package
+                    },
+                    // Preview must never retain a publishing destination from SDK Config.
+                    requestedOutput: resolveSdkConfigRequestedOutput(
+                        sdkConfigTarget.requestedOutput,
+                        absolutePathToPreview != null
+                    ),
+                    absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
+                    absolutePathToPreview,
+                    context: interactiveTaskContext,
+                    targetIdSeed: sdkGenApiTargetIdSeed,
+                    sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
+                    skipFernignore
+                };
+            } else if (synthesizesSdkConfig(candidate.generatorInvocation.name)) {
+                // sdk-gen-api-only generators (hosted MCP servers) have no legacy route and no
+                // SDK Config document of their own: generators.yml is their configuration, so
+                // the SDK Config v1 payload is built from it in memory with the same mapping
+                // `fern sdk migrate` uses. Every other generator keeps the explicit
+                // `--sdk-config` flow below.
+                if (sdkGenApiSourceArchive == null) {
+                    return interactiveTaskContext.failAndThrow(
+                        `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} to sdk-gen-api: the source archive is unavailable`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                if (mapFernGroupToSdkConfig == null) {
+                    return interactiveTaskContext.failAndThrow(
+                        `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} to sdk-gen-api: no SDK Config mapper was provided`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                const synthesized = prepareFernSdkGenApiSdkConfigPayload({
+                    workspace,
+                    generatorInvocation: candidate.generatorInvocation,
+                    audiences,
+                    sourceArchive: sdkGenApiSourceArchive,
+                    mapFernGroupToSdkConfig
+                });
+                const mappingErrors: FernConfigMappingDiagnostic[] = [];
+                for (const diagnostic of synthesized.diagnostics) {
+                    switch (diagnostic.severity) {
+                        case "error":
+                            mappingErrors.push(diagnostic);
+                            break;
+                        case "warning":
+                            interactiveTaskContext.logger.warn(
+                                `SDK Config mapping: ${formatSdkConfigMappingDiagnostic(diagnostic)}`
+                            );
+                            break;
+                        default:
+                            assertNever(diagnostic.severity);
+                    }
+                }
+                if (mappingErrors.length > 0) {
+                    return interactiveTaskContext.failAndThrow(
+                        "SDK Config mapping failed:\n" + mappingErrors.map(formatSdkConfigMappingDiagnostic).join("\n"),
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                sdkConfigBuildParameters = {
+                    apiName: getOriginalName(ir.apiName),
+                    organization,
+                    cliVersion: workspace.cliVersion,
+                    generatorInvocation: candidate.generatorInvocation,
+                    sdkVersion: candidate.sdkVersion,
+                    apiVersion: ir.specVersion,
+                    token,
+                    specsTarGzBuffer: candidate.specsTarGzBuffer,
+                    payload: { payloadKind: "sdk-config-v1", body: synthesized.body },
+                    absolutePathToPreview,
+                    context: interactiveTaskContext,
+                    targetIdSeed: sdkGenApiTargetIdSeed,
+                    sourceSpecIndexes: sdkGenApiSourceArchive.specIndexes,
+                    audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                    skipFernignore
+                };
+            } else {
                 return interactiveTaskContext.failAndThrow(
                     `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} without an SDK Config v1 document. Run \`fern sdk migrate\`, then pass the generated document with \`fern generate --sdk-config <path>\`.`,
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
             }
-            sdkConfigBuildParameters = {
-                apiName: getOriginalName(ir.apiName),
-                organization,
-                cliVersion: workspace.cliVersion,
-                generatorInvocation: candidate.generatorInvocation,
-                sdkName: sdkConfigTarget.sdkName ?? sdkConfigV1.sdkName,
-                sdkVersion: candidate.sdkVersion,
-                apiVersion: sdkConfigV1.apiVersion,
-                token,
-                specsTarGzBuffer: candidate.specsTarGzBuffer,
-                payload: {
-                    payloadKind: "sdk-config-v1",
-                    body: sdkConfigV1.body,
-                    package: sdkConfigTarget.package
-                },
-                // Preview must never retain a publishing destination from SDK Config.
-                requestedOutput: resolveSdkConfigRequestedOutput(
-                    sdkConfigTarget.requestedOutput,
-                    absolutePathToPreview != null
-                ),
-                absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
-                absolutePathToPreview,
-                context: interactiveTaskContext,
-                targetIdSeed: sdkGenApiTargetIdSeed,
-                sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
-                skipFernignore
-            };
         }
         if (sdkGenApiTargetIdSeed == null) {
             throw new Error("sdk-gen-api target is missing its preparation ID");
