@@ -14,7 +14,8 @@ import {
     filterOssWorkspaces,
     stitchGlobalTheme,
     type TranslatedApiSpec,
-    type TranslationNavigationOverlay
+    type TranslationNavigationOverlay,
+    type UploadedFile
 } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -163,6 +164,19 @@ export interface PreviewDocsResult {
      * spliced into a per-locale docs definition's `apis` without touching the nav tree.
      */
     translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
+    /**
+     * Write-format inputs from the last full resolve, consumed by the Astro
+     * preview to build ledger publish input. Incremental (markdown-only)
+     * reloads carry the previous value forward.
+     */
+    ledgerSource: PreviewLedgerSource;
+}
+
+export interface PreviewLedgerSource {
+    writeDocsDefinition: DocsV1Write.DocsDefinition;
+    writeApiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    resolver: DocsDefinitionResolver;
+    uploadedFiles: UploadedFile[];
 }
 
 export async function getPreviewDocsDefinition({
@@ -333,7 +347,8 @@ export async function getPreviewDocsDefinition({
                 collectedFileIds: previousPreviewResult.collectedFileIds,
                 docsWorkspacePath: previousPreviewResult.docsWorkspacePath,
                 markdownFilesToPathName: previousPreviewResult.markdownFilesToPathName,
-                translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
+                translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions,
+                ledgerSource: previousPreviewResult.ledgerSource
             };
         }
     }
@@ -348,6 +363,7 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
+    const uploadedFiles: UploadedFile[] = [];
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -363,11 +379,13 @@ export async function getPreviewDocsDefinition({
                     type: "url",
                     url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`)
                 };
-                return {
+                const uploaded: UploadedFile = {
                     absoluteFilePath: file.absoluteFilePath,
                     relativeFilePath: file.relativeFilePath,
                     fileId
                 };
+                uploadedFiles.push(uploaded);
+                return uploaded;
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
         targetAudiences: undefined,
@@ -463,7 +481,13 @@ export async function getPreviewDocsDefinition({
         collectedFileIds,
         docsWorkspacePath: docsWorkspace.absoluteFilePath,
         markdownFilesToPathName,
-        translatedApiDefinitions
+        translatedApiDefinitions,
+        ledgerSource: {
+            writeDocsDefinition,
+            writeApiDefinitions: apiCollector.getWriteAPIsForDefinition(),
+            resolver,
+            uploadedFiles
+        }
     };
 }
 
@@ -529,6 +553,7 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly writeApis = new Map<APIDefinitionID, APIV1Write.ApiDefinition>();
     private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
@@ -551,16 +576,19 @@ class ReferencedAPICollector {
         try {
             const id = uuidv4();
 
+            const writeApiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context: this.context,
+                apiNameOverride: apiName
+            });
+            this.writeApis.set(id, writeApiDefinition);
+
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({
-                    ir,
-                    snippetsConfig,
-                    playgroundConfig,
-                    graphqlOperations,
-                    graphqlTypes,
-                    context: this.context,
-                    apiNameOverride: apiName
-                }),
+                writeApiDefinition,
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},
@@ -599,6 +627,10 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getWriteAPIsForDefinition(): Map<APIDefinitionID, APIV1Write.ApiDefinition> {
+        return this.writeApis;
     }
 
     public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {
