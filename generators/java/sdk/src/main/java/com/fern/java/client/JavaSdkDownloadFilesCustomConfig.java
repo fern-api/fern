@@ -78,6 +78,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
     }
 
     @Value.Default
+    @JsonProperty("enable-closeable-client")
+    default Boolean enableCloseableClient() {
+        return false;
+    }
+
+    @Value.Default
     @JsonProperty("includePlatformHeaders")
     default Boolean includePlatformHeaders() {
         return false;

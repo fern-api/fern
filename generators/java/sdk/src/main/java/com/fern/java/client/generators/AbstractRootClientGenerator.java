@@ -227,6 +227,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         clientBuilder.addMethod(webSocketFactoryMethod.build());
     }
 
+    /**
+     * Makes the root client {@link AutoCloseable}. {@code close()} narrows the interface signature to declare no
+     * checked exception, so callers can use try-with-resources without a catch block. Shutting down an
+     * already-shut-down dispatcher executor and evicting an already-empty pool are both no-ops, so the method is
+     * idempotent.
+     */
+    private static void addCloseMethod(TypeSpec.Builder clientBuilder) {
+        clientBuilder.addSuperinterface(AutoCloseable.class).addMethod(buildCloseMethod());
+    }
+
+    static MethodSpec buildCloseMethod() {
+        return MethodSpec.methodBuilder("close")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Releases resources owned by an SDK-created HTTP client. A client supplied through\n"
+                        + "{@code httpClient(OkHttpClient)} remains owned by the caller and is left untouched.\n")
+                .beginControlFlow("if (!this.clientOptions.ownsHttpClient())")
+                .addStatement("return")
+                .endControlFlow()
+                .addStatement("this.clientOptions.httpClient().dispatcher().executorService().shutdown()")
+                .addStatement("this.clientOptions.httpClient().connectionPool().evictAll()")
+                .build();
+    }
+
     @Override
     public GeneratedRootClient generateFile() {
         AbstractClientGeneratorUtils clientGeneratorUtils = clientGeneratorUtils();
@@ -383,6 +407,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .returns(builderName)
                             .addStatement("return new $T()", builderName)
                             .build());
+        }
+
+        if (clientGeneratorContext.getCustomConfig().enableCloseableClient()) {
+            addCloseMethod(result.getClientImpl());
         }
 
         return GeneratedRootClient.builder()

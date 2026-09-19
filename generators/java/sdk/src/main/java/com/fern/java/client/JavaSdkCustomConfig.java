@@ -176,6 +176,19 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * When true, the generated root clients implement {@link AutoCloseable} and {@code ClientOptions} records whether
+     * the SDK created the underlying {@code OkHttpClient}. {@code close()} shuts down the dispatcher executor and
+     * evicts the connection pool only for an SDK-created client; a client supplied through
+     * {@code httpClient(OkHttpClient)} remains owned by the caller and is left untouched. Off by default, so existing
+     * generated output is unchanged.
+     */
+    @Value.Default
+    @JsonProperty("enable-closeable-client")
+    default Boolean enableCloseableClient() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
