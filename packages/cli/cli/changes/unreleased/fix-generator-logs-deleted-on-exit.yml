@@ -1,0 +1,5 @@
+- summary: |
+    Fix generator log files being deleted before they could be read. The path printed by
+    `Generator logs here: ...` (e.g. during `fern generate --local` and `fern docs md generate --local`)
+    now survives process exit.
+  type: fix
