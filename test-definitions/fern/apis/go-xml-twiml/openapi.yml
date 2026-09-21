@@ -1,0 +1,1157 @@
+openapi: 3.0.3
+info:
+  title: TwiML-style XML encoding
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Response:
+      type: object
+      description: Root TwiML element.
+      xml:
+        name: Response
+      properties:
+        children:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Say"
+              - $ref: "#/components/schemas/Dial"
+              - $ref: "#/components/schemas/Pause"
+              - $ref: "#/components/schemas/Hangup"
+    Say:
+      type: object
+      xml:
+        name: Say
+      properties:
+        message:
+          type: string
+          x-fern-xml-text: true
+        voice:
+          type: string
+          xml:
+            attribute: true
+        loop:
+          type: integer
+          xml:
+            attribute: true
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/Break"
+    Break:
+      type: object
+      xml:
+        name: break
+      properties:
+        strength:
+          type: string
+          enum: [none, x-weak, weak, medium, strong, x-strong]
+          xml:
+            attribute: true
+        time:
+          type: string
+          xml:
+            attribute: true
+    Dial:
+      type: object
+      xml:
+        name: Dial
+        namespace: https://www.twilio.com/twiml
+        prefix: tw
+      properties:
+        number:
+          type: string
+          x-fern-xml-text: true
+        status_callback_event:
+          type: array
+          items:
+            type: string
+          xml:
+            name: statusCallbackEvent
+            attribute: true
+          x-fern-xml-list-separator: " "
+        record:
+          type: array
+          items:
+            type: string
+            enum:
+              - record-from-answer
+              - record-from-ringing
+          xml:
+            attribute: true
+          x-fern-xml-list-separator: " "
+        numbers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Number"
+          xml:
+            name: Numbers
+            wrapped: true
+    Number:
+      type: object
+      xml:
+        name: Number
+      properties:
+        phone_number:
+          type: string
+          x-fern-xml-text: true
+        send_digits:
+          type: string
+          xml:
+            name: sendDigits
+            attribute: true
+    Pause:
+      type: object
+      description: XML element without an explicit xml.name; falls back to the schema name.
+      xml: {}
+      properties:
+        length:
+          type: integer
+          xml:
+            attribute: true
+    Hangup:
+      type: object
+      xml:
+        name: Hangup
+      properties: {}
+    Wide:
+      type: object
+      description: Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.
+      xml:
+        name: Wide
+      properties:
+        attr1:
+          type: string
+          xml:
+            attribute: true
+        attr2:
+          type: string
+          xml:
+            attribute: true
+        attr3:
+          type: string
+          xml:
+            attribute: true
+        attr4:
+          type: string
+          xml:
+            attribute: true
+        attr5:
+          type: string
+          xml:
+            attribute: true
+        attr6:
+          type: string
+          xml:
+            attribute: true
+        attr7:
+          type: string
+          xml:
+            attribute: true
+        attr8:
+          type: string
+          xml:
+            attribute: true
+        attr9:
+          type: string
+          xml:
+            attribute: true
+        attr10:
+          type: string
+          xml:
+            attribute: true
+        attr11:
+          type: string
+          xml:
+            attribute: true
+        attr12:
+          type: string
+          xml:
+            attribute: true
+        attr13:
+          type: string
+          xml:
+            attribute: true
+        attr14:
+          type: string
+          xml:
+            attribute: true
+        attr15:
+          type: string
+          xml:
+            attribute: true
+        attr16:
+          type: string
+          xml:
+            attribute: true
+        attr17:
+          type: string
+          xml:
+            attribute: true
+        attr18:
+          type: string
+          xml:
+            attribute: true
+        attr19:
+          type: string
+          xml:
+            attribute: true
+        attr20:
+          type: string
+          xml:
+            attribute: true
+        attr21:
+          type: string
+          xml:
+            attribute: true
+        attr22:
+          type: string
+          xml:
+            attribute: true
+        attr23:
+          type: string
+          xml:
+            attribute: true
+        attr24:
+          type: string
+          xml:
+            attribute: true
+        attr25:
+          type: string
+          xml:
+            attribute: true
+        attr26:
+          type: string
+          xml:
+            attribute: true
+        attr27:
+          type: string
+          xml:
+            attribute: true
+        attr28:
+          type: string
+          xml:
+            attribute: true
+        attr29:
+          type: string
+          xml:
+            attribute: true
+        attr30:
+          type: string
+          xml:
+            attribute: true
+        attr31:
+          type: string
+          xml:
+            attribute: true
+        attr32:
+          type: string
+          xml:
+            attribute: true
+        attr33:
+          type: string
+          xml:
+            attribute: true
+        attr34:
+          type: string
+          xml:
+            attribute: true
+        attr35:
+          type: string
+          xml:
+            attribute: true
+        attr36:
+          type: string
+          xml:
+            attribute: true
+        attr37:
+          type: string
+          xml:
+            attribute: true
+        attr38:
+          type: string
+          xml:
+            attribute: true
+        attr39:
+          type: string
+          xml:
+            attribute: true
+        attr40:
+          type: string
+          xml:
+            attribute: true
+        attr41:
+          type: string
+          xml:
+            attribute: true
+        attr42:
+          type: string
+          xml:
+            attribute: true
+        attr43:
+          type: string
+          xml:
+            attribute: true
+        attr44:
+          type: string
+          xml:
+            attribute: true
+        attr45:
+          type: string
+          xml:
+            attribute: true
+        attr46:
+          type: string
+          xml:
+            attribute: true
+        attr47:
+          type: string
+          xml:
+            attribute: true
+        attr48:
+          type: string
+          xml:
+            attribute: true
+        attr49:
+          type: string
+          xml:
+            attribute: true
+        attr50:
+          type: string
+          xml:
+            attribute: true
+        attr51:
+          type: string
+          xml:
+            attribute: true
+        attr52:
+          type: string
+          xml:
+            attribute: true
+        attr53:
+          type: string
+          xml:
+            attribute: true
+        attr54:
+          type: string
+          xml:
+            attribute: true
+        attr55:
+          type: string
+          xml:
+            attribute: true
+        attr56:
+          type: string
+          xml:
+            attribute: true
+        attr57:
+          type: string
+          xml:
+            attribute: true
+        attr58:
+          type: string
+          xml:
+            attribute: true
+        attr59:
+          type: string
+          xml:
+            attribute: true
+        attr60:
+          type: string
+          xml:
+            attribute: true
+        attr61:
+          type: string
+          xml:
+            attribute: true
+        attr62:
+          type: string
+          xml:
+            attribute: true
+        attr63:
+          type: string
+          xml:
+            attribute: true
+        attr64:
+          type: string
+          xml:
+            attribute: true
+        attr65:
+          type: string
+          xml:
+            attribute: true
+        attr66:
+          type: string
+          xml:
+            attribute: true
+        attr67:
+          type: string
+          xml:
+            attribute: true
+        attr68:
+          type: string
+          xml:
+            attribute: true
+        attr69:
+          type: string
+          xml:
+            attribute: true
+        attr70:
+          type: string
+          xml:
+            attribute: true
+        attr71:
+          type: string
+          xml:
+            attribute: true
+        attr72:
+          type: string
+          xml:
+            attribute: true
+        attr73:
+          type: string
+          xml:
+            attribute: true
+        attr74:
+          type: string
+          xml:
+            attribute: true
+        attr75:
+          type: string
+          xml:
+            attribute: true
+        attr76:
+          type: string
+          xml:
+            attribute: true
+        attr77:
+          type: string
+          xml:
+            attribute: true
+        attr78:
+          type: string
+          xml:
+            attribute: true
+        attr79:
+          type: string
+          xml:
+            attribute: true
+        attr80:
+          type: string
+          xml:
+            attribute: true
+        attr81:
+          type: string
+          xml:
+            attribute: true
+        attr82:
+          type: string
+          xml:
+            attribute: true
+        attr83:
+          type: string
+          xml:
+            attribute: true
+        attr84:
+          type: string
+          xml:
+            attribute: true
+        attr85:
+          type: string
+          xml:
+            attribute: true
+        attr86:
+          type: string
+          xml:
+            attribute: true
+        attr87:
+          type: string
+          xml:
+            attribute: true
+        attr88:
+          type: string
+          xml:
+            attribute: true
+        attr89:
+          type: string
+          xml:
+            attribute: true
+        attr90:
+          type: string
+          xml:
+            attribute: true
+        attr91:
+          type: string
+          xml:
+            attribute: true
+        attr92:
+          type: string
+          xml:
+            attribute: true
+        attr93:
+          type: string
+          xml:
+            attribute: true
+        attr94:
+          type: string
+          xml:
+            attribute: true
+        attr95:
+          type: string
+          xml:
+            attribute: true
+        attr96:
+          type: string
+          xml:
+            attribute: true
+        attr97:
+          type: string
+          xml:
+            attribute: true
+        attr98:
+          type: string
+          xml:
+            attribute: true
+        attr99:
+          type: string
+          xml:
+            attribute: true
+        attr100:
+          type: string
+          xml:
+            attribute: true
+        attr101:
+          type: string
+          xml:
+            attribute: true
+        attr102:
+          type: string
+          xml:
+            attribute: true
+        attr103:
+          type: string
+          xml:
+            attribute: true
+        attr104:
+          type: string
+          xml:
+            attribute: true
+        attr105:
+          type: string
+          xml:
+            attribute: true
+        attr106:
+          type: string
+          xml:
+            attribute: true
+        attr107:
+          type: string
+          xml:
+            attribute: true
+        attr108:
+          type: string
+          xml:
+            attribute: true
+        attr109:
+          type: string
+          xml:
+            attribute: true
+        attr110:
+          type: string
+          xml:
+            attribute: true
+        attr111:
+          type: string
+          xml:
+            attribute: true
+        attr112:
+          type: string
+          xml:
+            attribute: true
+        attr113:
+          type: string
+          xml:
+            attribute: true
+        attr114:
+          type: string
+          xml:
+            attribute: true
+        attr115:
+          type: string
+          xml:
+            attribute: true
+        attr116:
+          type: string
+          xml:
+            attribute: true
+        attr117:
+          type: string
+          xml:
+            attribute: true
+        attr118:
+          type: string
+          xml:
+            attribute: true
+        attr119:
+          type: string
+          xml:
+            attribute: true
+        attr120:
+          type: string
+          xml:
+            attribute: true
+        attr121:
+          type: string
+          xml:
+            attribute: true
+        attr122:
+          type: string
+          xml:
+            attribute: true
+        attr123:
+          type: string
+          xml:
+            attribute: true
+        attr124:
+          type: string
+          xml:
+            attribute: true
+        attr125:
+          type: string
+          xml:
+            attribute: true
+        attr126:
+          type: string
+          xml:
+            attribute: true
+        attr127:
+          type: string
+          xml:
+            attribute: true
+        attr128:
+          type: string
+          xml:
+            attribute: true
+        attr129:
+          type: string
+          xml:
+            attribute: true
+        attr130:
+          type: string
+          xml:
+            attribute: true
+        attr131:
+          type: string
+          xml:
+            attribute: true
+        attr132:
+          type: string
+          xml:
+            attribute: true
+        attr133:
+          type: string
+          xml:
+            attribute: true
+        attr134:
+          type: string
+          xml:
+            attribute: true
+        attr135:
+          type: string
+          xml:
+            attribute: true
+        attr136:
+          type: string
+          xml:
+            attribute: true
+        attr137:
+          type: string
+          xml:
+            attribute: true
+        attr138:
+          type: string
+          xml:
+            attribute: true
+        attr139:
+          type: string
+          xml:
+            attribute: true
+        attr140:
+          type: string
+          xml:
+            attribute: true
+        attr141:
+          type: string
+          xml:
+            attribute: true
+        attr142:
+          type: string
+          xml:
+            attribute: true
+        attr143:
+          type: string
+          xml:
+            attribute: true
+        attr144:
+          type: string
+          xml:
+            attribute: true
+        attr145:
+          type: string
+          xml:
+            attribute: true
+        attr146:
+          type: string
+          xml:
+            attribute: true
+        attr147:
+          type: string
+          xml:
+            attribute: true
+        attr148:
+          type: string
+          xml:
+            attribute: true
+        attr149:
+          type: string
+          xml:
+            attribute: true
+        attr150:
+          type: string
+          xml:
+            attribute: true
+        attr151:
+          type: string
+          xml:
+            attribute: true
+        attr152:
+          type: string
+          xml:
+            attribute: true
+        attr153:
+          type: string
+          xml:
+            attribute: true
+        attr154:
+          type: string
+          xml:
+            attribute: true
+        attr155:
+          type: string
+          xml:
+            attribute: true
+        attr156:
+          type: string
+          xml:
+            attribute: true
+        attr157:
+          type: string
+          xml:
+            attribute: true
+        attr158:
+          type: string
+          xml:
+            attribute: true
+        attr159:
+          type: string
+          xml:
+            attribute: true
+        attr160:
+          type: string
+          xml:
+            attribute: true
+        attr161:
+          type: string
+          xml:
+            attribute: true
+        attr162:
+          type: string
+          xml:
+            attribute: true
+        attr163:
+          type: string
+          xml:
+            attribute: true
+        attr164:
+          type: string
+          xml:
+            attribute: true
+        attr165:
+          type: string
+          xml:
+            attribute: true
+        attr166:
+          type: string
+          xml:
+            attribute: true
+        attr167:
+          type: string
+          xml:
+            attribute: true
+        attr168:
+          type: string
+          xml:
+            attribute: true
+        attr169:
+          type: string
+          xml:
+            attribute: true
+        attr170:
+          type: string
+          xml:
+            attribute: true
+        attr171:
+          type: string
+          xml:
+            attribute: true
+        attr172:
+          type: string
+          xml:
+            attribute: true
+        attr173:
+          type: string
+          xml:
+            attribute: true
+        attr174:
+          type: string
+          xml:
+            attribute: true
+        attr175:
+          type: string
+          xml:
+            attribute: true
+        attr176:
+          type: string
+          xml:
+            attribute: true
+        attr177:
+          type: string
+          xml:
+            attribute: true
+        attr178:
+          type: string
+          xml:
+            attribute: true
+        attr179:
+          type: string
+          xml:
+            attribute: true
+        attr180:
+          type: string
+          xml:
+            attribute: true
+        attr181:
+          type: string
+          xml:
+            attribute: true
+        attr182:
+          type: string
+          xml:
+            attribute: true
+        attr183:
+          type: string
+          xml:
+            attribute: true
+        attr184:
+          type: string
+          xml:
+            attribute: true
+        attr185:
+          type: string
+          xml:
+            attribute: true
+        attr186:
+          type: string
+          xml:
+            attribute: true
+        attr187:
+          type: string
+          xml:
+            attribute: true
+        attr188:
+          type: string
+          xml:
+            attribute: true
+        attr189:
+          type: string
+          xml:
+            attribute: true
+        attr190:
+          type: string
+          xml:
+            attribute: true
+        attr191:
+          type: string
+          xml:
+            attribute: true
+        attr192:
+          type: string
+          xml:
+            attribute: true
+        attr193:
+          type: string
+          xml:
+            attribute: true
+        attr194:
+          type: string
+          xml:
+            attribute: true
+        attr195:
+          type: string
+          xml:
+            attribute: true
+        attr196:
+          type: string
+          xml:
+            attribute: true
+        attr197:
+          type: string
+          xml:
+            attribute: true
+        attr198:
+          type: string
+          xml:
+            attribute: true
+        attr199:
+          type: string
+          xml:
+            attribute: true
+        attr200:
+          type: string
+          xml:
+            attribute: true
+        attr201:
+          type: string
+          xml:
+            attribute: true
+        attr202:
+          type: string
+          xml:
+            attribute: true
+        attr203:
+          type: string
+          xml:
+            attribute: true
+        attr204:
+          type: string
+          xml:
+            attribute: true
+        attr205:
+          type: string
+          xml:
+            attribute: true
+        attr206:
+          type: string
+          xml:
+            attribute: true
+        attr207:
+          type: string
+          xml:
+            attribute: true
+        attr208:
+          type: string
+          xml:
+            attribute: true
+        attr209:
+          type: string
+          xml:
+            attribute: true
+        attr210:
+          type: string
+          xml:
+            attribute: true
+        attr211:
+          type: string
+          xml:
+            attribute: true
+        attr212:
+          type: string
+          xml:
+            attribute: true
+        attr213:
+          type: string
+          xml:
+            attribute: true
+        attr214:
+          type: string
+          xml:
+            attribute: true
+        attr215:
+          type: string
+          xml:
+            attribute: true
+        attr216:
+          type: string
+          xml:
+            attribute: true
+        attr217:
+          type: string
+          xml:
+            attribute: true
+        attr218:
+          type: string
+          xml:
+            attribute: true
+        attr219:
+          type: string
+          xml:
+            attribute: true
+        attr220:
+          type: string
+          xml:
+            attribute: true
+        attr221:
+          type: string
+          xml:
+            attribute: true
+        attr222:
+          type: string
+          xml:
+            attribute: true
+        attr223:
+          type: string
+          xml:
+            attribute: true
+        attr224:
+          type: string
+          xml:
+            attribute: true
+        attr225:
+          type: string
+          xml:
+            attribute: true
+        attr226:
+          type: string
+          xml:
+            attribute: true
+        attr227:
+          type: string
+          xml:
+            attribute: true
+        attr228:
+          type: string
+          xml:
+            attribute: true
+        attr229:
+          type: string
+          xml:
+            attribute: true
+        attr230:
+          type: string
+          xml:
+            attribute: true
+        attr231:
+          type: string
+          xml:
+            attribute: true
+        attr232:
+          type: string
+          xml:
+            attribute: true
+        attr233:
+          type: string
+          xml:
+            attribute: true
+        attr234:
+          type: string
+          xml:
+            attribute: true
+        attr235:
+          type: string
+          xml:
+            attribute: true
+        attr236:
+          type: string
+          xml:
+            attribute: true
+        attr237:
+          type: string
+          xml:
+            attribute: true
+        attr238:
+          type: string
+          xml:
+            attribute: true
+        attr239:
+          type: string
+          xml:
+            attribute: true
+        attr240:
+          type: string
+          xml:
+            attribute: true
+        attr241:
+          type: string
+          xml:
+            attribute: true
+        attr242:
+          type: string
+          xml:
+            attribute: true
+        attr243:
+          type: string
+          xml:
+            attribute: true
+        attr244:
+          type: string
+          xml:
+            attribute: true
+        attr245:
+          type: string
+          xml:
+            attribute: true
+        attr246:
+          type: string
+          xml:
+            attribute: true
+        attr247:
+          type: string
+          xml:
+            attribute: true
+        attr248:
+          type: string
+          xml:
+            attribute: true
+        attr249:
+          type: string
+          xml:
+            attribute: true
+        attr250:
+          type: string
+          xml:
+            attribute: true
+        attr251:
+          type: string
+          xml:
+            attribute: true
+        attr252:
+          type: string
+          xml:
+            attribute: true
+        attr253:
+          type: string
+          xml:
+            attribute: true
+        attr254:
+          type: string
+          xml:
+            attribute: true
+        attr255:
+          type: string
+          xml:
+            attribute: true
+        attr256:
+          type: string
+          xml:
+            attribute: true
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pause"
+    PlainObject:
+      type: object
+      description: Not XML-encoded; properties must not carry xml metadata.
+      properties:
+        id:
+          type: string

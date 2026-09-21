@@ -1,0 +1,233 @@
+{
+  "type": "object",
+  "properties": {
+    "children": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResponseChildrenItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "Root TwiML element.",
+  "definitions": {
+    "BreakStrength": {
+      "type": "string",
+      "enum": [
+        "none",
+        "x-weak",
+        "weak",
+        "medium",
+        "strong",
+        "x-strong"
+      ]
+    },
+    "Break": {
+      "type": "object",
+      "properties": {
+        "strength": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BreakStrength"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "time": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Say": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "voice": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "loop": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "children": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Break"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DialRecordItem": {
+      "type": "string",
+      "enum": [
+        "record-from-answer",
+        "record-from-ringing"
+      ]
+    },
+    "Number": {
+      "type": "object",
+      "properties": {
+        "phone_number": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "send_digits": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Dial": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status_callback_event": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DialRecordItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "numbers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Pause": {
+      "type": "object",
+      "properties": {
+        "length": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "XML element without an explicit xml.name; falls back to the schema name."
+    },
+    "Hangup": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "ResponseChildrenItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Say"
+        },
+        {
+          "$ref": "#/definitions/Dial"
+        },
+        {
+          "$ref": "#/definitions/Pause"
+        },
+        {
+          "$ref": "#/definitions/Hangup"
+        }
+      ]
+    }
+  }
+}
