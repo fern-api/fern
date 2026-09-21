@@ -10,3 +10,8 @@
     no documentable content (and therefore no generated page), which previously
     produced 404 links (e.g. empty packages containing only `.pxd` files).
   type: fix
+- summary: |
+    Python library docs: signatures of classes and functions that are re-exported from a
+    parent package now use the shortest public import path (e.g. `pkg.Foo` instead of
+    `pkg.sub.impl.Foo`), including their methods and properties. Anchors and links are unchanged.
+  type: fix

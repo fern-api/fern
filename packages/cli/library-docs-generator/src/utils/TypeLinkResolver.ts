@@ -16,6 +16,8 @@ export interface RenderContext {
     validPaths: Set<string>;
     /** Maps re-exported paths to their actual definition paths */
     pathAliases: Map<string, string>;
+    /** Maps definition paths to the shortest path they are re-exported from (e.g. pkg.sub.impl.Foo -> pkg.Foo) */
+    publicPaths?: Map<string, string>;
 }
 
 /**
@@ -26,6 +28,8 @@ export interface TypeLinkData {
     validPaths: Set<string>;
     /** Maps re-exported paths to their actual definition paths */
     pathAliases: Map<string, string>;
+    /** Maps definition paths to the shortest path they are re-exported from */
+    publicPaths: Map<string, string>;
 }
 
 /**
@@ -36,6 +40,18 @@ export interface TypeLinkData {
 export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): TypeLinkData {
     const validPaths = new Set<string>();
     const pathAliases = new Map<string, string>();
+    const publicPaths = new Map<string, string>();
+
+    function addPublicPath(definitionPath: string, name: string, modulePath: string): void {
+        if (getModulePath(definitionPath) === modulePath) {
+            return;
+        }
+        const candidate = `${modulePath}.${name}`;
+        const current = publicPaths.get(definitionPath) ?? definitionPath;
+        if (candidate.split(".").length < current.split(".").length) {
+            publicPaths.set(definitionPath, candidate);
+        }
+    }
 
     function addTypeInfo(typeInfo: FdrAPI.libraryDocs.TypeInfo | undefined): void {
         if (typeInfo?.resolvedPath && typeInfo.basePath && typeInfo.resolvedPath !== typeInfo.basePath) {
@@ -56,6 +72,7 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
         for (const cls of module.classes) {
             validPaths.add(cls.path);
+            addPublicPath(cls.path, cls.name, module.path);
             for (const base of cls.bases) {
                 addTypeInfo(base.typeInfo);
             }
@@ -69,6 +86,7 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
         for (const func of module.functions) {
             processFunction(func);
+            addPublicPath(func.path, func.name, module.path);
         }
 
         for (const attr of module.attributes) {
@@ -83,7 +101,28 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
     processModule(ir.rootModule);
 
-    return { validPaths, pathAliases };
+    return { validPaths, pathAliases, publicPaths };
+}
+
+/**
+ * Return the shortest public path for a definition path, e.g. the package a class is
+ * re-exported from rather than the module it is implemented in. Members of a re-exported
+ * class (methods, attributes) are rewritten under the class's public path.
+ */
+export function getPublicPath(path: string, ctx: RenderContext): string {
+    const publicPaths = ctx.publicPaths;
+    if (publicPaths === undefined || publicPaths.size === 0) {
+        return path;
+    }
+    const parts = path.split(".");
+    for (let i = parts.length; i >= 2; i--) {
+        const prefix = parts.slice(0, i).join(".");
+        const publicPrefix = publicPaths.get(prefix);
+        if (publicPrefix !== undefined) {
+            return [publicPrefix, ...parts.slice(i)].join(".");
+        }
+    }
+    return path;
 }
 
 /**

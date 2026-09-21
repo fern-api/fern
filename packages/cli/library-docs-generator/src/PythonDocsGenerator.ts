@@ -52,8 +52,8 @@ export function generate(options: GenerateOptions): GenerateResult {
     const { ir, outputDir, slug } = options;
 
     // Stage 1: Build type link data (single-pass IR traversal)
-    const { validPaths, pathAliases } = buildTypeLinkData(ir);
-    const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases };
+    const { validPaths, pathAliases, publicPaths } = buildTypeLinkData(ir);
+    const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
 
     // Stage 2: Render pages and stream to disk
     const writer = new MdxFileWriter(outputDir);
