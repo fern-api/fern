@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.60.1
+  changelogEntry:
+    - summary: |
+        Fix remote generation hanging until the 10 minute timeout when the Go generator has no
+        `output:` block in `generators.yml`. The coordinator sends the `publish` output mode in that
+        case, which the generator rejected as unrecognized and exited before reporting the failure.
+        `publish` is now written to disk like `downloadFiles`, and configuration errors are reported
+        to the coordinator so a failure surfaces immediately instead of timing out.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 1.60.0
   changelogEntry:
     - summary: |
