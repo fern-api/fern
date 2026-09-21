@@ -5,3 +5,8 @@
     parsers (for example a Cython `.pyx` module that could not be parsed and was left out
     of the generated reference) instead of only recording them in server logs.
   type: fix
+- summary: |
+    Python library docs: module index pages no longer link to submodules that have
+    no documentable content (and therefore no generated page), which previously
+    produced 404 links (e.g. empty packages containing only `.pxd` files).
+  type: fix

@@ -12,7 +12,7 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { renderModulePage } from "./renderers/ModuleRenderer.js";
+import { moduleHasPage, renderModulePage } from "./renderers/ModuleRenderer.js";
 import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
@@ -93,18 +93,11 @@ function renderModuleTree(
 ): void {
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 
-    const hasDirectContent =
-        module.classes.length > 0 ||
-        module.functions.length > 0 ||
-        module.attributes.length > 0 ||
-        module.docstring != null;
-
     const hasSubmodules = module.submodules.length > 0;
 
-    // Generate page if module has any documentable content.
     // Modules with submodules write to <path>/index.mdx so the folder scanner
     // picks them up as section overview pages (not sibling duplicates).
-    if (hasDirectContent || hasSubmodules) {
+    if (moduleHasPage(module)) {
         const pageKey = hasSubmodules ? `${ctx.baseSlug}/${modulePath}/index.mdx` : `${ctx.baseSlug}/${modulePath}.mdx`;
         const content = renderModulePage(module, ctx, parentPath);
         writer.writePage(pageKey, content);

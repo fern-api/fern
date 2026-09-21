@@ -28,6 +28,17 @@ import { renderClassDetailed } from "./ClassRenderer.js";
 import { renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderFunctionDetailed } from "./FunctionRenderer.js";
 
+/** A module gets its own page only if it has documentable content or children. */
+export function moduleHasPage(module: FdrAPI.libraryDocs.PythonModuleIr): boolean {
+    return (
+        module.classes.length > 0 ||
+        module.functions.length > 0 ||
+        module.attributes.length > 0 ||
+        module.docstring != null ||
+        module.submodules.length > 0
+    );
+}
+
 /**
  * Render a list of submodules, split into Subpackages (have children) and Submodules (leaf nodes).
  * This matches Python/Sphinx conventions where packages contain other modules.
@@ -39,8 +50,9 @@ function renderSubmodulesSection(
 ): string {
     const lines: string[] = [];
 
-    const packages = submodules.filter((sub) => sub.submodules.length > 0);
-    const modules = submodules.filter((sub) => sub.submodules.length === 0);
+    const linkable = submodules.filter(moduleHasPage);
+    const packages = linkable.filter((sub) => sub.submodules.length > 0);
+    const modules = linkable.filter((sub) => sub.submodules.length === 0);
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
         const link = `/${baseSlug}/${modulePath}/${sub.name}`;
