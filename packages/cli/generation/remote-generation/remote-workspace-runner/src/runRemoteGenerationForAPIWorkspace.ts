@@ -23,6 +23,7 @@ import {
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     selectFernSdkGenApiRoute,
+    validateFernSdkGenApiDirectPublishCredentials,
     validateFernSdkGenApiTargetCount
 } from "./fernSdkGenApi.js";
 import {
@@ -355,6 +356,16 @@ export function prepareFernSdkGenApiRoutes({
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
             const route = selectFernSdkGenApiRoute(resolved, sdkConfigV1 == null ? "legacy-fern" : "sdk-config-v1");
+            if (route != null) {
+                try {
+                    validateFernSdkGenApiDirectPublishCredentials(resolved);
+                } catch (error) {
+                    if (route.configKind === "legacy-fern") {
+                        return { generatorInvocation: resolved, route: undefined, error: undefined };
+                    }
+                    throw error;
+                }
+            }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
                 verify,
@@ -399,7 +410,11 @@ function getFernSdkGenApiUnsupportedOutput({
     autoMerge?: boolean;
 }): string | undefined {
     const unsupported: string[] = [];
-    if (generatorInvocation.outputMode.type !== "downloadFiles") {
+    if (
+        generatorInvocation.outputMode.type !== "downloadFiles" &&
+        generatorInvocation.outputMode.type !== "publish" &&
+        generatorInvocation.outputMode.type !== "publishV2"
+    ) {
         unsupported.push(
             `${generatorInvocation.outputMode.type} delivery requires Fern-managed GitHub or registry credentials that sdk-gen-api cannot resolve`
         );
@@ -832,10 +847,14 @@ export async function emitGenerationAnnotations(ctx: GenerationAnnotationContext
     }
 
     if (ctx.publishTarget != null) {
+        const destination = ctx.publishTarget.url ?? ctx.publishTarget.identifier;
         notices.push({
             event: `Published to ${ctx.publishTarget.label}`,
-            body: `${ctx.publishTarget.version} → ${ctx.publishTarget.url}`,
-            summaryLine: `📦 **${ctx.generatorName}** → [${ctx.publishTarget.label} ${ctx.publishTarget.version}](${ctx.publishTarget.url})`
+            body: destination != null ? `${ctx.publishTarget.version} → ${destination}` : ctx.publishTarget.version,
+            summaryLine:
+                ctx.publishTarget.url != null
+                    ? `📦 **${ctx.generatorName}** → [${ctx.publishTarget.label} ${ctx.publishTarget.version}](${ctx.publishTarget.url})`
+                    : `📦 **${ctx.generatorName}** → ${ctx.publishTarget.label} ${ctx.publishTarget.version}${ctx.publishTarget.identifier != null ? ` (${ctx.publishTarget.identifier})` : ""}`
         });
     }
 

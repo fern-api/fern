@@ -80,6 +80,7 @@ The SDK is deliberately small. Customizations attach via:
 | Builder methods on `CliApp` (after `.binding(...)`) | Aliases, deprecation, custom commands, response transforms, error recovery |
 | `CliApp::http(\|t\| ...)` / `grpc` / `websocket` | Transport infra (TLS, proxy, retry policy, user-agent), `before_send` hook (not yet implemented) |
 | Builder methods on `OpenApiBinding` / `GraphqlBinding` / etc. | Spec, auth wiring, paginators, server vars |
+| `CliApp::profiles(...)` | Named profiles: per-tenant credentials, parameter defaults, server variables ([see below](#named-profiles-multi-tenant-clis)) |
 
 Anything that doesn't fit one of those gets written as a **custom command** — a `fn` item that calls `ctx.invoke_by_name(...)` and does whatever Rust logic the case requires.
 
@@ -101,6 +102,186 @@ fn main() {
 ### Default a flag from an env var
 
 > *Not yet implemented.* `default_arg` and `ArgSource` are spec'd but not yet wired to dispatch. For now, use `server_var` on the binding for global path parameters, or read environment variables directly in a custom command handler.
+
+To default a flag from *stored per-tenant config* rather than the environment, see [named profiles](#named-profiles-multi-tenant-clis).
+
+### Named profiles (multi-tenant CLIs)
+
+For an API where every call carries a tenant identifier — an account SID, an
+org slug, a workspace — profiles let the user set it once instead of typing it
+on every command.
+
+Enable it in `generators.yml`:
+
+```yaml
+- name: fernapi/fern-cli
+  version: <version>
+  config:
+    profiles:
+      enabled: true
+      # Optional. Defaults to `profiles`. Rename it when your API already
+      # owns that noun as a resource.
+      commandName: profiles
+      # Optional. Names an operation that revokes a profile's remote
+      # credential; adds `--revoke` to `profiles remove`. Omit it and the
+      # flag is never registered.
+      revokeOperation: iam.keys.remove
+```
+
+Off by default: enabling it adds a top-level subcommand group and a global
+`--profile` / `-p` flag, which is a surface change for an existing CLI.
+
+That gives your users:
+
+```bash
+# once per account — the secret goes to the OS keychain, never to disk in plaintext
+acme profiles create prod --set AccountSid=AC11… --with-token
+acme profiles create acme --parent prod --set AccountSid=AC99…   # subaccount, same credential
+acme profiles create au   --set AccountSid=AC11… --region au1 --edge sydney
+
+acme profiles use acme        # pick the one you are working in
+
+acme messages list            # steady state — no --account-sid, no exported env vars
+acme messages list -p prod    # one command against another tenant; the active profile is unchanged
+acme profiles list            # "which account am I about to hit?"
+acme profiles current         # …and why
+acme profiles remove au       # confirms; also deletes that profile's stored credential
+```
+
+Agents and scripts should use the stateless form — `-p` per invocation mutates
+no global state, so parallel invocations cannot race:
+
+```bash
+for tenant in prod acme; do acme messages list -p "$tenant" --format json; done
+```
+
+CI keeps using environment variables and ignores profiles entirely.
+
+**Precedence per value** is `explicit flag → environment variable → profile →
+the spec's own default`. Environment variables sit above profiles deliberately,
+so a pipeline that exports them is never silently overridden by a profile a
+developer stored on the same machine.
+
+**The quickest way in is `profiles set`,** which takes the names you already
+use — no scheme names, no stdin piping:
+
+```bash
+acme profiles set prod \
+  ACME_ACCOUNT_SID=AC1111 ACME_AUTH_TOKEN=... \
+  ACME_REGION=us1 ACME_RETRIES=3
+```
+
+`KEY` may be any environment variable this CLI reads — a credential, or a
+setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
+`<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
+to the OS keyring** under that profile's slot; everything else to
+`profiles.toml`. The profile is created if it does not exist.
+
+One assignment reaches **every scheme that declares the variable**. When a
+vendor spec plus a layered auth block produces several schemes sharing one
+credential pair, this covers all of them in one command and tells you so:
+
+```
+✓ Created profile `prod`
+    ACME_ACCOUNT_SID → keyring
+    ACME_AUTH_TOKEN → keyring
+  Credential stored for 3 schemes: accountSid_authToken, apikey_or_sid, account_id_token
+```
+
+Multi-field credentials merge, so setting one half later does not discard the
+other. Keys are classified before anything is written, so a run whose third
+assignment is invalid leaves the first two unapplied. An unrecognised key is
+rejected with a suggestion rather than stored inert:
+
+```
+$ acme profiles set prod ACME_ACCOUNT_SI=AC1
+error: `ACME_ACCOUNT_SI` is not something this CLI can store on a profile.
+       Did you mean `ACME_ACCOUNT_SID`?
+```
+
+That last property is why this is not a `.env` file: a typo in a `.env` is a
+silent no-op, and a credential in one sits in plaintext at whatever your umask
+gives. Here the key is validated and the secret goes to the keychain.
+
+**What a profile can carry:** a credential slot, parameter defaults
+(`--set <name>=<value>`, validated against the parsed operation table so a typo
+is rejected rather than silently ignored), server-URL template variables
+(`--server-var <name>=<value>`, or `--<name> <value>` for any variable your spec
+declares), an explicit `--base-url`, a retry limit (`--retries <N>`), and a
+default output format (`--default-format`, spelled so it cannot be confused
+with the global `--format`). Nothing else — profiles are not a config file for
+arbitrary settings, so an unknown key is rejected at write time rather than
+stored and silently ignored.
+
+**Retries are per profile.** `--retries <N>` counts attempts *after* the first,
+so `--retries 0` is the same as `--no-retry`. It overrides `x-fern-retries` for
+the operation and resolves `flag > <PREFIX>_RETRIES > profile > spec`:
+
+```bash
+acme profiles create flaky-sandbox --retries 6
+acme profiles create prod --retries 2
+```
+
+Unlike `--default-format`, retries **are** inherited by a child profile: they
+describe the network a profile talks to, which a subaccount shares with its
+parent.
+
+**Server variables also read an env var.** Each `{variable}` your spec declares in
+a server URL is settable three ways — `--region au1`, the profile, or
+`<PREFIX>_<VARIABLE>` where `<PREFIX>` is your binary name uppercased with `-`
+replaced by `_`:
+
+```bash
+export TWILIO_REGION=au1      # pins it for the shell session
+twilio messages list          # no --region needed
+twilio messages list --region us1   # the flag still wins
+```
+
+(`x-fern-sdk-variables` use the bare name — `gardenId` reads `GARDEN_ID`, not
+`<PREFIX>_GARDEN_ID`.)
+
+**Inspecting one profile:** `profiles show <name>` prints a single profile's
+resolved config without selecting it — `current` answers "what is in effect" and
+takes no name, so it is the wrong verb for "tell me about that other one".
+
+```bash
+acme profiles show staging --human      # by name
+acme -p staging profiles show           # or let -p name it
+acme profiles show                      # or the one currently in effect
+```
+
+**What the listing shows:**
+
+```
+PROFILE      ACCOUNT      REGION  RETRIES  CREDENTIALS_FROM  ACTIVE
+sierra-prod  AC12345678…  us1     2                          *
+tenant-acme  AC99998888…  au1     6
+tenant-sub   AC12345678…  us1     2        sierra-prod
+```
+
+`ACCOUNT` is the identifier behind the stored credential — the username half of
+a basic credential — truncated, and absent for schemes that have no username
+(bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
+what your profiles actually set, so a CLI with no regions shows no `REGION`
+column. `CREDENTIALS_FROM` appears only when a profile borrows another's
+credential. Add `--format json` for the machine-readable form.
+
+**When environment variables are in play,** `profiles current` says so.
+A *complete* env credential outranks an ambient profile's stored one and is
+reported as `credential_overridden_by_env`; env vars supplying only part of a
+multi-value credential are reported as `credential_partially_shadowed_by_env`,
+because nothing authenticates in that state and calling it an override would
+contradict `auth status`. `profiles list` also warns about a variable that is
+set, closely resembles one this CLI reads, and is not read:
+
+```
+⚠ `ACME_ACCOUNT_ID` is set but this CLI does not read it. Did you mean `ACME_ACCOUNT_SID`?
+```
+
+**Where it lives:** `~/.config/<bin>/profiles.toml`, beside the credential
+store. Secrets are never written there; the file names a keychain account. See
+[ADR-0011](adr/0011-profile-resolution-precedence.md) for the full resolution
+rules and the reasoning behind them.
 
 ### Strip an envelope from list responses
 
@@ -441,6 +622,8 @@ fn main() {
     CliApp::new("acme")
         // Root-level auth (shared across all bindings):
         .auth(ApiKeyAuth::new("ApiKey").env("ACME_API_KEY"))
+        // Named profiles (usually wired from generators.yml, not by hand):
+        // .profiles(fern_cli_sdk::profiles::ProfilesConfig::new())
         // Binding (spec config):
         .binding(
             OpenApiBinding::new()

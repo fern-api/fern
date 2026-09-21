@@ -12,9 +12,7 @@ targets:
     output:
       delivery: files
       path: ./generated/typescript
-    generatorVersion: 3.63.3
   - language: python
     output:
       delivery: files
       path: ./generated/python
-    generatorVersion: 4.3.10

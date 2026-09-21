@@ -586,6 +586,53 @@ pub const DEFAULT_RETRY_JITTER: f64 = 0.1;
 /// - per-op block absent → inherit the spec-root block (or `None` if also absent)
 /// - per-op `true` → spec-root config, or all-defaults when root is absent
 /// - per-op `false` (or `{ disabled: true }`) → disabled regardless of root
+/// Process-wide `--retries` override: the number of *additional* attempts the
+/// caller asked for, or `None` to use whatever the spec declared.
+///
+/// A process-global rather than a parameter because
+/// [`execute_method`](crate::openapi::executor::execute_method) already takes
+/// ~20 arguments and has 12 call sites across the OpenAPI and GraphQL
+/// bindings; threading one more through all of them buys nothing. Mirrors the
+/// existing pattern used by `user_agent::SUFFIX_FLAG`,
+/// `keyring_store::active_store()`, and `profiles::selection`. One process
+/// serves one command, so there is no cross-talk.
+static RETRIES_OVERRIDE: std::sync::OnceLock<std::sync::RwLock<Option<u32>>> =
+    std::sync::OnceLock::new();
+
+fn retries_override_slot() -> &'static std::sync::RwLock<Option<u32>> {
+    RETRIES_OVERRIDE.get_or_init(|| std::sync::RwLock::new(None))
+}
+
+/// Install the caller's `--retries` value for this invocation. `None` leaves
+/// the spec's policy untouched.
+pub fn set_retries_override(additional_attempts: Option<u32>) {
+    if let Ok(mut slot) = retries_override_slot().write() {
+        *slot = additional_attempts;
+    }
+}
+
+/// The caller's `--retries` value, if one was resolved this invocation.
+pub fn retries_override() -> Option<u32> {
+    retries_override_slot().read().ok().and_then(|slot| *slot)
+}
+
+/// Apply [`retries_override`] on top of a spec-declared policy.
+///
+/// `--retries N` means N attempts *after* the first, so `max_attempts` is
+/// `N + 1` and `--retries 0` is equivalent to `--no-retry`. The rest of the
+/// policy (backoff base, factor, jitter) is left as the spec declared it —
+/// the caller asked how many times to retry, not how to pace them.
+pub fn with_retries_override(base: &RetriesConfig) -> RetriesConfig {
+    match retries_override() {
+        Some(additional) => RetriesConfig {
+            enabled: additional > 0,
+            max_attempts: additional.saturating_add(1),
+            ..base.clone()
+        },
+        None => base.clone(),
+    }
+}
+
 /// - per-op object → root values, overridden field-by-field by the op block
 #[derive(Debug, Clone, PartialEq)]
 pub struct RetriesConfig {
@@ -1336,6 +1383,53 @@ pub struct JsonSchemaProperty {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    #[serial_test::serial]
+    fn retries_override_replaces_max_attempts_and_keeps_the_pacing() {
+        // `--retries N` answers "how many times", not "how to pace them", so
+        // backoff base / factor / jitter stay as the spec declared.
+        let spec = RetriesConfig {
+            enabled: true,
+            max_attempts: 4,
+            base_delay_ms: 250,
+            factor: 3.0,
+            jitter: 0.5,
+        };
+        set_retries_override(Some(5));
+        let merged = with_retries_override(&spec);
+        assert_eq!(merged.max_attempts, 6, "5 retries = 6 total sends");
+        assert!(merged.enabled);
+        assert_eq!(merged.base_delay_ms, 250);
+        assert_eq!(merged.factor, 3.0);
+        assert_eq!(merged.jitter, 0.5);
+        set_retries_override(None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn retries_override_of_zero_disables_retries() {
+        // `--retries 0` has to mean the same thing as `--no-retry`, or the
+        // flag has a value that looks valid and quietly retries once.
+        let spec = RetriesConfig::default();
+        set_retries_override(Some(0));
+        let merged = with_retries_override(&spec);
+        assert!(!merged.enabled);
+        assert_eq!(merged.max_attempts, 1);
+        set_retries_override(None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn without_an_override_the_spec_policy_is_untouched() {
+        let spec = RetriesConfig {
+            enabled: true,
+            max_attempts: 7,
+            ..RetriesConfig::default()
+        };
+        set_retries_override(None);
+        assert_eq!(with_retries_override(&spec), spec);
+    }
+
     use super::*;
 
     #[test]

@@ -107,6 +107,7 @@ export async function parseDocsConfiguration({
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         products,
+        rootChangelog: rawDocsConfiguration.changelog,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
@@ -270,7 +271,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
-        settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -548,10 +549,18 @@ function convertThemeConfig(
 }
 
 function convertSettingsConfig(
-    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined,
+    context: TaskContext
 ): docsYml.ParsedDocsConfiguration["settings"] {
     if (settings == null) {
         return undefined;
+    }
+
+    if (settings.embedding != null) {
+        const embeddingErrors = docsYml.getEmbeddingOriginErrors(settings.embedding.allowedOrigins);
+        if (embeddingErrors.length > 0) {
+            context.failAndThrow(embeddingErrors.join("\n"));
+        }
     }
 
     // The legacy `default-search-filters` setting is preserved as an alias for
@@ -577,7 +586,9 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
-        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined
+        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding,
+        showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
 
@@ -888,6 +899,7 @@ async function getVersionedNavigationConfiguration({
 async function getNavigationConfiguration({
     tabs,
     products,
+    rootChangelog,
     versions,
     navigation,
     absolutePathToFernFolder,
@@ -898,6 +910,7 @@ async function getNavigationConfiguration({
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
+    rootChangelog?: docsYml.RawSchemas.ChangelogConfiguration;
     versions?: docsYml.RawSchemas.VersionConfig[];
     navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -906,6 +919,15 @@ async function getNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.DocsNavigationConfiguration> {
+    if (rootChangelog != null && products == null) {
+        throw new CliError({
+            message:
+                "A top-level `changelog` in docs.yml is only supported alongside `products`. " +
+                "For a site using `versions`, add the changelog to each version's `navigation`; " +
+                "otherwise add it to the top-level `navigation`.",
+            code: CliError.Code.ConfigError
+        });
+    }
     if (navigation != null) {
         return await convertNavigationConfiguration({
             tabs,
@@ -1007,7 +1029,11 @@ async function getNavigationConfiguration({
 
         return {
             type: "productgroup",
-            products: productNavbars
+            products: productNavbars,
+            changelog:
+                rootChangelog != null
+                    ? await convertChangelogConfiguration({ rawConfig: rootChangelog, absolutePathToConfig })
+                    : undefined
         };
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
@@ -1529,17 +1555,7 @@ async function convertNavigationItem({
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
-        return {
-            type: "changelog",
-            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
-            hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
-            slug: rawConfig.slug,
-            viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
-        };
+        return await convertChangelogConfiguration({ rawConfig, absolutePathToConfig });
     }
     if (isRawFolderConfig(rawConfig)) {
         return await expandFolderConfiguration({
@@ -1762,6 +1778,26 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+async function convertChangelogConfiguration({
+    rawConfig,
+    absolutePathToConfig
+}: {
+    rawConfig: docsYml.RawSchemas.ChangelogConfiguration;
+    absolutePathToConfig: AbsoluteFilePath;
+}): Promise<docsYml.DocsNavigationItem.Changelog> {
+    return {
+        type: "changelog",
+        changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+        hidden: rawConfig.hidden ?? false,
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+        slug: rawConfig.slug,
+        viewers: parseRoles(rawConfig.viewers),
+        orphaned: rawConfig.orphaned,
+        featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+    };
 }
 
 function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {

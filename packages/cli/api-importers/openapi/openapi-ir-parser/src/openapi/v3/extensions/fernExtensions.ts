@@ -61,6 +61,14 @@ export const FernOpenAPIExtension = {
     BASE_PATH: "x-fern-base-path",
 
     /**
+     * The name of an environment variable that generated SDKs read to override
+     * the base URL (e.g. MY_API_BASE_URL). Set at the root of the document.
+     *
+     * x-fern-base-url-env: MY_API_BASE_URL
+     */
+    BASE_URL_ENV: "x-fern-base-url-env",
+
+    /**
      * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
      * This is a place where you can specify any display names related to the
      * configured SDK group names. These display names and descriptions will

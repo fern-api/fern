@@ -412,6 +412,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 authSchemes.push(
                     FernIr.AuthScheme.header({
                         key: "_GlobalAuthorizationHeader",
+                        playgroundDocs: undefined,
                         name: header.name,
                         prefix: undefined,
                         headerEnvVar: header.env,

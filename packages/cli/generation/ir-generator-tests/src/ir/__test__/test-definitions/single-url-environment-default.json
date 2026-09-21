@@ -167,6 +167,7 @@
     },
     "environments": {
         "defaultEnvironment": "Production",
+        "baseUrlEnvVar": "SINGLE_URL_ENVIRONMENT_DEFAULT_BASE_URL",
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -235,7 +236,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

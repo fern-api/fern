@@ -69,9 +69,10 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations field.
+// DocsV1Write.DocsConfig includes the translations and embedding fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
+    embedding: { allowedOrigins: string[] } | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -1109,6 +1110,10 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
+            embedding:
+                this.parsedDocsConfig.settings?.embedding != null
+                    ? { allowedOrigins: this.parsedDocsConfig.settings.embedding.allowedOrigins }
+                    : undefined,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -1584,13 +1589,25 @@ export class DocsDefinitionResolver {
         const id = this.#idgen.get("productgroup");
         const landingPage: FernNavigation.V1.LandingPageNode | undefined =
             landingPageConfig != null ? this.toLandingPageNode(landingPageConfig, parentSlug) : undefined;
-        return {
+        // The site-level changelog is slugged off the root (parentSlug), not off any product.
+        // TODO: drop this widening once the published @fern-api/fdr-sdk declares
+        // `ProductGroupNode.changelog` (added in fern-platform#14420). It is a pure widening, and
+        // `__test__/root-changelog.test.ts` asserts the emitted node at runtime, so a rename or
+        // retype upstream fails the test rather than silently emitting nav the backend ignores.
+        const node: FernNavigation.V1.ProductGroupNode & { changelog: FernNavigation.V1.ChangelogNode | undefined } = {
             id,
             type: "productgroup",
             collapsed: undefined,
             landingPage,
-            children: await Promise.all(productGroup.products.map((product) => this.toProductNode(product, parentSlug)))
+            children: await Promise.all(
+                productGroup.products.map((product) => this.toProductNode(product, parentSlug))
+            ),
+            changelog:
+                productGroup.changelog != null
+                    ? await this.toChangelogNode(productGroup.changelog, parentSlug)
+                    : undefined
         };
+        return node;
     }
 
     private async toProductNode(

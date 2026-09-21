@@ -8,6 +8,7 @@ import {
     AnnouncementConfig,
     Availability,
     DocsInstance,
+    EmbeddingConfig,
     ExperimentalConfig,
     LibraryLanguage,
     PlaygroundSettings,
@@ -47,6 +48,8 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
+    embedding: EmbeddingConfig | undefined;
+    showHeadersInExamples: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;
@@ -241,6 +244,8 @@ export interface VersionedDocsNavigation {
 export interface ProductGroupDocsNavigation {
     type: "productgroup";
     products: ProductInfo[];
+    /** Site-level changelog shared by all products, slugged off the root rather than any product. */
+    changelog: DocsNavigationItem.Changelog | undefined;
 }
 
 export interface VersionInfo

@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "asset_report_token": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "asset_report_token"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

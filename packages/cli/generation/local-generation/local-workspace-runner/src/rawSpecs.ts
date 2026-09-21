@@ -170,6 +170,8 @@ async function resolveOpenAPIOrAsyncAPI({
 
 type ApiImportSettingMapper = (settings: OpenAPISettings) => RawSpecImportSettings;
 
+// Raw source archives are independently validated by sdk-gen-api. Add fields here only after the
+// deployed archive schema accepts them; SDK Config source settings travel in the SDK Config payload.
 const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
     respectNullableSchemas: (settings) => ({ respectNullableSchemas: settings.respectNullableSchemas }),
     useTitlesAsName: (settings) => ({ titleAsSchemaName: settings.useTitlesAsName }),

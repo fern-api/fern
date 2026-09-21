@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+# Overrides the spec's environments but deliberately omits `base-url-env`, so the
+# spec's `x-fern-base-url-env` must still survive.
+api:
+  specs:
+    - openapi: ../openapi.yml
+  environments:
+    Production: https://production.acme.com
+  default-environment: Production

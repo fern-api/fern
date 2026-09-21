@@ -102,6 +102,31 @@ export interface FernCliCustomConfig {
     splitTypeCrates?: boolean;
 
     /**
+     * Named profiles: a `profiles` subcommand group, a global
+     * `--profile` / `-p` flag, and profile-sourced defaults for
+     * credentials, parameters, server variables, base URL, and output
+     * format.
+     *
+     * A profile is a named bundle of request context resolved once per
+     * invocation. It adds no new transport — it is a source of defaults
+     * for mechanisms that already accept them (the keyring account an
+     * `AuthCredentialSource::Keyring` reads, a `clap::Arg`'s
+     * `default_value`, `servers[].variables` substitution).
+     *
+     * Precedence per value is: explicit flag, then environment variable,
+     * then profile, then the spec's own default. Environment variables
+     * sit above profiles so a CI pipeline is never silently overridden by
+     * a developer's stored profile.
+     *
+     * Absent — i.e. **off** — by default. Adding a top-level subcommand
+     * to every existing generated CLI is a surface change, and per the
+     * repo's breaking-changes policy it must not arrive unannounced. With
+     * this block absent, output is byte-identical to a generation without
+     * it.
+     */
+    profiles?: FernCliProfilesConfig;
+
+    /**
      * Opt-in binary distribution channels layered on top of the GitHub
      * Release archives every generated CLI already ships.
      *
@@ -114,6 +139,45 @@ export interface FernCliCustomConfig {
      * when the generator writes to local files.
      */
     distribution?: FernCliDistributionConfig;
+}
+
+/**
+ * Configuration for the `profiles` feature.
+ */
+export interface FernCliProfilesConfig {
+    /**
+     * Whether to emit the profiles surface. Defaults to `false`, so a
+     * `profiles:` block present but not enabled is a no-op — which is
+     * what lets a consumer stage the config change ahead of the flip.
+     */
+    enabled?: boolean;
+
+    /**
+     * Name of the top-level subcommand group. Defaults to `profiles`.
+     *
+     * Configurable because an API may already own that noun as a
+     * resource. The SDK folds the built-in leaves into a spec-owned group
+     * of the same name rather than colliding with it, so renaming is a
+     * preference rather than a requirement — but `tenants` or
+     * `accounts` may read better for a given API.
+     */
+    commandName?: string;
+
+    /**
+     * Dotted command path of an operation that revokes a profile's remote
+     * credential, e.g. `iam.keys.remove`.
+     *
+     * When set, `profiles remove` grows a `--revoke` flag that calls it
+     * before deleting the profile locally. Unset — the default — and the
+     * flag is not registered at all, so the CLI never advertises a
+     * capability it does not have.
+     *
+     * Named here rather than derived because the framework cannot know
+     * which operation deletes a key. It is invoked with the profile's
+     * stored `parameters` as its arguments, so any parameter it requires
+     * has to be on the profile (`profiles create --set <name>=<value>`).
+     */
+    revokeOperation?: string;
 }
 
 /**
@@ -382,11 +446,83 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.splitTypeCrates = obj.splitTypeCrates;
     }
+    if ("profiles" in obj && obj.profiles !== undefined) {
+        result.profiles = validateProfiles(obj.profiles);
+    }
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
     }
     if ("distribution" in obj && obj.distribution !== undefined) {
         result.distribution = validateDistribution(obj.distribution);
+    }
+    return result;
+}
+
+/**
+ * Names the generated CLI already registers as top-level subcommands. A
+ * `commandName` matching one of these would fold the profiles built-ins
+ * into an unrelated group, so it is rejected at the boundary.
+ *
+ * `profiles` itself is absent because it is the default and must stay
+ * selectable.
+ */
+const RESERVED_PROFILES_COMMAND_NAMES: ReadonlySet<string> = new Set([
+    "auth",
+    "completion",
+    "man",
+    "errors",
+    "generate-skills",
+    "help"
+]);
+
+function validateProfiles(raw: unknown): FernCliProfilesConfig {
+    const obj = asConfigObject(raw, "customConfig.profiles");
+    const result: FernCliProfilesConfig = {};
+    if (obj.enabled !== undefined) {
+        if (typeof obj.enabled !== "boolean") {
+            throw new Error(`Invalid customConfig.profiles.enabled: expected a boolean, got ${typeof obj.enabled}.`);
+        }
+        result.enabled = obj.enabled;
+    }
+    if (obj.revokeOperation !== undefined) {
+        if (typeof obj.revokeOperation !== "string") {
+            throw new Error(
+                `Invalid customConfig.profiles.revokeOperation: expected a string, got ${typeof obj.revokeOperation}.`
+            );
+        }
+        // Dotted command path. Interpolated into a Rust string literal and
+        // split on `.` at runtime, so anything else would produce a path
+        // that silently matches no operation.
+        if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(obj.revokeOperation)) {
+            throw new Error(
+                `Invalid customConfig.profiles.revokeOperation: "${obj.revokeOperation}" is not a ` +
+                    'dotted command path. Use the form "<resource>.<method>" (e.g. "iam.keys.remove").'
+            );
+        }
+        result.revokeOperation = obj.revokeOperation;
+    }
+    if (obj.commandName !== undefined) {
+        if (typeof obj.commandName !== "string") {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: expected a string, got ${typeof obj.commandName}.`
+            );
+        }
+        // The value is interpolated into a Rust string literal in main.rs and
+        // becomes a clap subcommand name, so it has to be a safe kebab
+        // identifier — the same constraint `rootGroup` carries.
+        if (!/^[a-z][a-z0-9-]*$/.test(obj.commandName)) {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: "${obj.commandName}" is not a valid ` +
+                    "subcommand name. It must start with a lowercase letter and contain only [a-z0-9-]."
+            );
+        }
+        if (RESERVED_PROFILES_COMMAND_NAMES.has(obj.commandName)) {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: "${obj.commandName}" is already a built-in ` +
+                    'command group on every generated CLI. Choose a different name (e.g. "tenants").'
+            );
+        }
+        result.commandName = obj.commandName;
     }
     return result;
 }

@@ -22,7 +22,8 @@ function createChannel(opts?: { messages?: FernIr.WebSocketMessage[] }): FernIr.
         docs: undefined,
         availability: undefined,
         examples: [],
-        v2Examples: undefined
+        v2Examples: undefined,
+        apiPlayground: undefined
     };
 }
 

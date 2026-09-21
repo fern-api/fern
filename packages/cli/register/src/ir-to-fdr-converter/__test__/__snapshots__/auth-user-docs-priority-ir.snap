@@ -45,6 +45,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "https://api.example.com",
     "environments": {
       "_visit": [Function],

@@ -407,6 +407,7 @@
     },
     "environments": {
         "defaultEnvironment": null,
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "multipleBaseUrls",
             "baseUrls": [
@@ -491,7 +492,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -696,7 +698,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
