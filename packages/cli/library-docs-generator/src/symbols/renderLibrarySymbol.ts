@@ -200,16 +200,30 @@ function containerNotSupported(kind: "module" | "namespace", name: string, child
     );
 }
 
+/**
+ * Re-exported symbols (e.g. `from .impl import Foo` in `pkg/__init__.py`) keep their
+ * definition path in the IR; register the public `<module>.<name>` path as an alias so
+ * authored pages can reference symbols the way users import them.
+ */
+function indexAlias(index: Map<string, PythonSymbol>, alias: string, symbol: PythonSymbol): void {
+    if (!index.has(alias)) {
+        index.set(alias, symbol);
+    }
+}
+
 function indexPythonSymbols(module: FdrAPI.libraryDocs.PythonModuleIr, index: Map<string, PythonSymbol>): void {
     index.set(module.path, { kind: "module", module });
     for (const cls of module.classes) {
         index.set(cls.path, { kind: "class", cls });
+        indexAlias(index, `${module.path}.${cls.name}`, { kind: "class", cls });
         for (const method of cls.methods) {
             index.set(method.path, { kind: "method", func: method, cls });
+            indexAlias(index, `${module.path}.${cls.name}.${method.name}`, { kind: "method", func: method, cls });
         }
     }
     for (const func of module.functions) {
         index.set(func.path, { kind: "function", func });
+        indexAlias(index, `${module.path}.${func.name}`, { kind: "function", func });
     }
     for (const submodule of module.submodules) {
         indexPythonSymbols(submodule, index);

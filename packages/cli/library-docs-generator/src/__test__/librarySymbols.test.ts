@@ -361,6 +361,61 @@ describe("renderLibrarySymbol (python)", () => {
         );
     });
 
+    it("resolves symbols by their public re-export path", () => {
+        const client = pyClass({
+            name: "Client",
+            path: "pkg.grpc.grpc_client.Client",
+            methods: [
+                pyFunction({
+                    name: "submit",
+                    path: "pkg.grpc.grpc_client.Client.submit",
+                    signature: "def submit(self, model) -> str"
+                })
+            ]
+        });
+        const reexported: PersistedLibraryIr = {
+            schemaVersion: LIBRARY_IR_SCHEMA_VERSION,
+            lang: "python",
+            library: "pkg",
+            ir: {
+                rootModule: pyModule({
+                    name: "pkg",
+                    path: "pkg",
+                    submodules: [
+                        pyModule({
+                            name: "grpc",
+                            path: "pkg.grpc",
+                            classes: [client],
+                            submodules: [
+                                pyModule({ name: "grpc_client", path: "pkg.grpc.grpc_client", classes: [client] })
+                            ]
+                        })
+                    ]
+                })
+            } as FdrAPI.libraryDocs.PythonLibraryDocsIr
+        };
+        const viaPublic = renderLibrarySymbol(reexported, {
+            name: "pkg.grpc.Client",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: false
+        });
+        const viaDefinition = renderLibrarySymbol(reexported, {
+            name: "pkg.grpc.grpc_client.Client",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: false
+        });
+        expect(viaPublic.mdx).toBe(viaDefinition.mdx);
+        const method = renderLibrarySymbol(reexported, {
+            name: "pkg.grpc.Client.submit",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: false
+        });
+        expect(method.mdx).toContain('<Anchor id="pkg-grpc-grpc_client-Client-submit">');
+    });
+
     it("throws for unknown members and lists the available ones", () => {
         expect(() =>
             renderLibrarySymbol(persistedPython, {
