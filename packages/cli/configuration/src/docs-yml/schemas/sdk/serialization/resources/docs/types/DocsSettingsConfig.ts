@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { EmbeddingConfig } from "./EmbeddingConfig.js";
 import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { Language } from "./Language.js";
 import { SearchSettingsConfig } from "./SearchSettingsConfig.js";
@@ -40,6 +41,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     folderTitleSource: core.serialization.property("folder-title-source", TitleSource.optional()),
     substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
     websocketOneofDisplay: core.serialization.property("websocket-oneof-display", WebSocketOneofDisplay.optional()),
+    embedding: EmbeddingConfig.optional(),
     showHeadersInExamples: core.serialization.property(
         "show-headers-in-examples",
         core.serialization.boolean().optional(),
@@ -63,6 +65,7 @@ export declare namespace DocsSettingsConfig {
         "folder-title-source"?: TitleSource.Raw | null;
         "substitute-env-vars"?: boolean | null;
         "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
+        embedding?: EmbeddingConfig.Raw | null;
         "show-headers-in-examples"?: boolean | null;
     }
 }
