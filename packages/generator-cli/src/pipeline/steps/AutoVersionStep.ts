@@ -440,7 +440,8 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string;
         analysis: FAIAnalysis;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
+        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
         this.logger.info(`AutoVersionStep: ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`);
@@ -518,7 +519,8 @@ export class AutoVersionStep extends BaseStep {
         previousVersion: string;
         analysis: FAIAnalysis;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
+        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
         this.logger.info(
@@ -872,6 +874,27 @@ export class AutoVersionStep extends BaseStep {
         await writeFile(changelogPath, prependChangelogBlock({ existingContent: existing, version, entry }), "utf-8");
     }
 
+    /**
+     * MAJOR/MINOR bumps must ship a changelog entry. FAI occasionally returns a
+     * bump with a populated `pr_description` / `version_bump_reason` but an empty
+     * `changelog_entry`; reuse that text rather than writing a version-only block.
+     */
+    private withChangelogFallback(analysis: FAIAnalysis): FAIAnalysis {
+        const fallback = resolveChangelogEntryFallbackWithSource(analysis);
+        if (fallback == null) {
+            if (analysis.versionBump !== "PATCH" && !hasText(analysis.changelogEntry)) {
+                this.logger.warn(
+                    `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry and no fallback text.`
+                );
+            }
+            return analysis;
+        }
+        this.logger.warn(
+            `AutoVersionStep: FAI returned a ${analysis.versionBump} bump without a changelog entry; using the ${fallback.source} instead.`
+        );
+        return { ...analysis, changelogEntry: fallback.text };
+    }
+
     private brandMessage(message: string): string {
         if (this.config.isWhitelabel) {
             return message;
@@ -913,10 +936,7 @@ export class AutoVersionStep extends BaseStep {
     ): Promise<FAIAnalysis | null> {
         const { client, VersionBump } = await this.loadBaml();
 
-        let bestBump: string = VersionBump.NO_CHANGE;
-        let bestMessage = "";
-        let bestVersionBumpReason: string | undefined;
-        const changelogEntries: string[] = [];
+        const chunkAnalyses: ChunkAnalysis[] = [];
 
         for (let i = 0; i < chunks.length; i++) {
             const chunk = chunks[i];
@@ -933,20 +953,23 @@ export class AutoVersionStep extends BaseStep {
             if (analysis.version_bump === VersionBump.NO_CHANGE) {
                 continue;
             }
-            const prev = bestBump;
-            bestBump = maxVersionBump(bestBump, analysis.version_bump);
-            if (bestBump !== prev) {
-                bestMessage = analysis.message;
-                bestVersionBumpReason = analysis.version_bump_reason;
-            }
-            const entry = analysis.changelog_entry?.trim();
-            if (entry) {
-                changelogEntries.push(entry);
-            }
+            chunkAnalyses.push({
+                versionBump: analysis.version_bump,
+                message: analysis.message,
+                changelogEntry: analysis.changelog_entry,
+                versionBumpReason: analysis.version_bump_reason
+            });
         }
 
-        if (bestBump === VersionBump.NO_CHANGE) {
+        if (chunkAnalyses.length === 0) {
             return null;
+        }
+        const { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry } =
+            aggregateChunkAnalyses(chunkAnalyses);
+        if (usedBumpReasonAsEntry) {
+            this.logger.warn(
+                `AutoVersionStep: no chunk produced a changelog entry for the ${bestBump} bump; using its version bump reason instead.`
+            );
         }
 
         if (changelogEntries.length <= 1) {
@@ -1077,7 +1100,102 @@ export class AutoVersionStep extends BaseStep {
     }
 }
 
-interface FAIAnalysis {
+interface ChunkAnalysis {
+    versionBump: string;
+    message: string;
+    changelogEntry?: string;
+    versionBumpReason?: string;
+}
+
+interface AggregatedChunkAnalyses {
+    bestBump: string;
+    bestMessage: string;
+    bestVersionBumpReason: string | undefined;
+    changelogEntries: string[];
+    /** True when `changelogEntries` starts with `bestVersionBumpReason` because no chunk at `bestBump` had an entry. */
+    usedBumpReasonAsEntry: boolean;
+}
+
+/**
+ * Picks the highest bump across chunks and collects every non-empty changelog entry.
+ * If no chunk at the winning (MAJOR/MINOR) level produced an entry, the winning chunk's
+ * `versionBumpReason` is prepended so the changelog still describes the change that
+ * drove the bump instead of only the lower-severity ones.
+ */
+export function aggregateChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): AggregatedChunkAnalyses {
+    let bestBump: string = "NO_CHANGE";
+    let bestMessage = "";
+    let bestVersionBumpReason: string | undefined;
+    const entries: Array<{ bump: string; text: string }> = [];
+
+    for (const analysis of chunkAnalyses) {
+        const prev = bestBump;
+        bestBump = maxVersionBump(bestBump, analysis.versionBump);
+        if (bestBump !== prev) {
+            bestMessage = analysis.message;
+            bestVersionBumpReason = analysis.versionBumpReason;
+        }
+        const text = analysis.changelogEntry?.trim();
+        if (text) {
+            entries.push({ bump: analysis.versionBump, text });
+        }
+    }
+
+    const changelogEntries = entries.map((entry) => entry.text);
+    const hasEntryAtBestBump = entries.some((entry) => entry.bump === bestBump);
+    const usedBumpReasonAsEntry = bestBump !== "PATCH" && !hasEntryAtBestBump && hasText(bestVersionBumpReason);
+    if (usedBumpReasonAsEntry && bestVersionBumpReason != null) {
+        changelogEntries.unshift(bestVersionBumpReason.trim());
+    }
+
+    return { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry };
+}
+
+function hasText(value: string | undefined): value is string {
+    return value != null && value.trim().length > 0;
+}
+
+/** Body of a conventional commit message: everything after the subject line, minus the Fern trailer. */
+function commitMessageBody(message: string): string | undefined {
+    const trimmed = message.trimEnd();
+    const withoutTrailer = trimmed.endsWith(FERN_TRAILER) ? trimmed.slice(0, -FERN_TRAILER.length) : trimmed;
+    const [, ...rest] = withoutTrailer.split("\n");
+    const body = rest.join("\n").trim();
+    return body.length > 0 ? body : undefined;
+}
+
+interface ChangelogEntryFallback {
+    source: "PR description" | "version bump reason" | "commit message body";
+    text: string;
+}
+
+function resolveChangelogEntryFallbackWithSource(analysis: FAIAnalysis): ChangelogEntryFallback | undefined {
+    if (hasText(analysis.changelogEntry) || analysis.versionBump === "PATCH") {
+        return undefined;
+    }
+    const candidates: Array<[ChangelogEntryFallback["source"], string | undefined]> = [
+        ["PR description", analysis.prDescription],
+        ["version bump reason", analysis.versionBumpReason],
+        ["commit message body", commitMessageBody(analysis.message)]
+    ];
+    for (const [source, text] of candidates) {
+        if (hasText(text)) {
+            return { source, text: text.trim() };
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Returns replacement changelog text for a MAJOR/MINOR analysis whose `changelogEntry`
+ * is empty, or `undefined` when no fallback applies (entry present, PATCH bump, or
+ * nothing usable in the other fields).
+ */
+export function resolveChangelogEntryFallback(analysis: FAIAnalysis): string | undefined {
+    return resolveChangelogEntryFallbackWithSource(analysis)?.text;
+}
+
+export interface FAIAnalysis {
     versionBump: string;
     message: string;
     changelogEntry?: string;
