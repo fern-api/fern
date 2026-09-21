@@ -489,6 +489,19 @@ describe("generateCpp()", () => {
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
     });
 
+    it("does not let an entity named `index` overwrite the category index page", () => {
+        const indexFn = makeFunction({ name: "index", path: "index" });
+        const ir = makeIr(makeNamespace({ functions: [indexFn] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/index-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/index-2.mdx"), "utf-8")).toContain("title: index");
+        const functionIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(functionIndex).toContain("- [`index`](functions/index-2)");
+    });
+
     it("lists root-scoped macros in the library index when the library is a named namespace", () => {
         const ir = makeIr(
             makeNamespace({

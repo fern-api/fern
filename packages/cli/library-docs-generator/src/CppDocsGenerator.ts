@@ -486,12 +486,16 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
  * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
  * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
  * slugification) to every entry after the first in such a group, in a deterministic
- * order, so every page has a unique URL.
+ * order, so every page has a unique URL. The `index` slug of every directory is
+ * reserved for the generated category/namespace index page.
  */
 function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
     const bySlug = new Map<string, PageEntry[]>();
+    const reserved = new Set<string>();
     for (const entry of entries) {
         const slug = pageKeyToSlugPath(entry.pageKey);
+        const dir = slug.includes("/") ? slug.substring(0, slug.lastIndexOf("/") + 1) : "";
+        reserved.add(`${dir}index`);
         const existing = bySlug.get(slug);
         if (existing) {
             existing.push(entry);
@@ -500,21 +504,22 @@ function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
         }
     }
 
-    const taken = new Set(bySlug.keys());
+    const taken = new Set([...bySlug.keys(), ...reserved]);
     const result: PageEntry[] = [];
-    for (const group of bySlug.values()) {
-        if (group.length === 1) {
+    for (const [slug, group] of bySlug) {
+        const isReserved = reserved.has(slug);
+        if (group.length === 1 && !isReserved) {
             result.push(...group);
             continue;
         }
         const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
         sorted.forEach((entry, index) => {
-            if (index === 0) {
+            if (index === 0 && !isReserved) {
                 result.push(entry);
                 return;
             }
             const base = entry.pageKey.replace(/\.mdx$/, "");
-            let n = index + 1;
+            let n = 2;
             let candidate = `${base}-${n}`;
             while (taken.has(pageKeyToSlugPath(`${candidate}.mdx`))) {
                 n += 1;
