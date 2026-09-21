@@ -242,7 +242,7 @@ describe("addExtraDependencies", () => {
         const toml = '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n# trailing comment\n';
         expect(() => addExtraDependencies(toml, { serde: "1" }, "dependencies")).toThrow(/already a \[dependencies\]/);
         expect(addExtraDependencies(toml, { anyhow: "1" }, "dependencies")).toBe(
-            '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n# trailing comment\n'
+            '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n\n# trailing comment\n'
         );
     });
 
