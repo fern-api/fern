@@ -198,6 +198,9 @@ describe("validateCustomConfig", () => {
         expect(() =>
             validateCustomConfig({ extraDevDependencies: { tokio: { version: "1", features: "full" } } })
         ).toThrow(/extraDevDependencies.tokio.features: expected an array of strings/);
+        expect(() =>
+            validateCustomConfig({ extraDependencies: { tokio: { version: "1", defaultfeatures: false } } })
+        ).toThrow(/extraDependencies.tokio: unknown field\(s\) `defaultfeatures`/);
         expect(() => validateCustomConfig({ extraDependencies: ["tokio"] })).toThrow(/expected an object, got array/);
     });
 

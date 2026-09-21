@@ -493,6 +493,15 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
 
 const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;
 const DEPENDENCY_SPEC_BOOLEAN_FIELDS = ["optional", "defaultFeatures"] as const;
+const DEPENDENCY_SPEC_FIELDS: ReadonlySet<string> = new Set([
+    ...DEPENDENCY_SPEC_STRING_FIELDS,
+    ...DEPENDENCY_SPEC_BOOLEAN_FIELDS,
+    "features"
+]);
+
+function isStringArray(value: unknown): value is string[] {
+    return Array.isArray(value) && value.every((entry) => typeof entry === "string");
+}
 
 function validateDependencyMap(raw: unknown, path: string): Record<string, CargoDependencyValue> {
     const obj = asConfigObject(raw, path);
@@ -545,10 +554,17 @@ function validateDependencySpec(raw: unknown, path: string): CargoDependencySpec
         result[field] = value;
     }
     if (obj.features !== undefined) {
-        if (!Array.isArray(obj.features) || obj.features.some((entry) => typeof entry !== "string")) {
+        if (!isStringArray(obj.features)) {
             throw new Error(`Invalid ${path}.features: expected an array of strings.`);
         }
-        result.features = obj.features as string[];
+        result.features = obj.features;
+    }
+    const unknownKeys = Object.keys(obj).filter((key) => !DEPENDENCY_SPEC_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid ${path}: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                `Supported fields: ${[...DEPENDENCY_SPEC_FIELDS].map((key) => `\`${key}\``).join(", ")}.`
+        );
     }
     if (result.version == null && result.path == null && result.git == null) {
         throw new Error(`Invalid ${path}: a dependency table needs at least one of \`version\`, \`path\`, or \`git\`.`);

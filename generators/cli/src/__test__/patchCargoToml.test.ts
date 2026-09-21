@@ -238,6 +238,14 @@ describe("addExtraDependencies", () => {
         );
     });
 
+    it("detects collisions with quoted keys and appends after a block that ends at EOF", () => {
+        const toml = '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n# trailing comment\n';
+        expect(() => addExtraDependencies(toml, { serde: "1" }, "dependencies")).toThrow(/already a \[dependencies\]/);
+        expect(addExtraDependencies(toml, { anyhow: "1" }, "dependencies")).toBe(
+            '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n# trailing comment\n'
+        );
+    });
+
     it("only checks collisions within the same table", () => {
         expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { wiremock: "0.6" }, "dependencies")).not.toThrow();
     });

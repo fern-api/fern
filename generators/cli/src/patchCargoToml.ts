@@ -194,19 +194,18 @@ function insertionIndex(cargoToml: string, table: CargoDependencyTable): number 
     const header = `\n[${table}]\n`;
     const headerIdx = cargoToml.indexOf(header);
     if (headerIdx !== -1) {
-        const next = cargoToml.indexOf("\n[", headerIdx + header.length);
-        if (next === -1) {
-            return cargoToml.trimEnd().length;
-        }
+        const nextHeader = cargoToml.indexOf("\n[", headerIdx + header.length);
+        const next = nextHeader === -1 ? cargoToml.length : nextHeader;
         // Don't split a comment block that introduces the next section from
         // the section it describes.
         const body = cargoToml.slice(headerIdx + header.length, next);
         const lines = body.split("\n");
         let cut = lines.length;
-        while (cut > 0 && (lines[cut - 1] ?? "").trim().startsWith("#")) {
-            cut--;
-        }
-        while (cut > 0 && (lines[cut - 1] ?? "").trim() === "") {
+        while (cut > 0) {
+            const trimmed = (lines[cut - 1] ?? "").trim();
+            if (trimmed !== "" && !trimmed.startsWith("#")) {
+                break;
+            }
             cut--;
         }
         return headerIdx + header.length + lines.slice(0, cut).join("\n").length;
@@ -236,10 +235,10 @@ function renderDependencyTable(table: CargoDependencyTable, name: string, value:
         lines.push(`features = [${spec.features.map(toTomlString).join(", ")}]`);
     }
     if (spec.optional != null) {
-        lines.push(`optional = ${spec.optional}`);
+        lines.push(`optional = ${spec.optional ? "true" : "false"}`);
     }
     if (spec.defaultFeatures != null) {
-        lines.push(`default-features = ${spec.defaultFeatures}`);
+        lines.push(`default-features = ${spec.defaultFeatures ? "true" : "false"}`);
     }
     return `${lines.join("\n")}\n`;
 }
@@ -262,7 +261,7 @@ function declaredDependencyNames(cargoToml: string, table: CargoDependencyTable)
             const section = header[1];
             const suffix = section.startsWith("target.") ? section.slice(section.lastIndexOf(".") + 1) : section;
             inTable = suffix === table;
-            const subTable = section.match(new RegExp(`^${table}\\.([A-Za-z0-9_-]+)$`));
+            const subTable = section.match(new RegExp(`^${table}\\."?([A-Za-z0-9_-]+)"?$`));
             if (subTable?.[1] != null) {
                 names.add(subTable[1]);
             }
@@ -271,7 +270,7 @@ function declaredDependencyNames(cargoToml: string, table: CargoDependencyTable)
         if (!inTable) {
             continue;
         }
-        const key = line.match(/^([A-Za-z0-9_-]+)\s*=/)?.[1];
+        const key = line.match(/^"?([A-Za-z0-9_-]+)"?\s*=/)?.[1];
         if (key != null) {
             names.add(key);
         }
