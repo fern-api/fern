@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "length": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "XML element without an explicit xml.name; falls back to the schema name.",
+  "definitions": {}
+}
