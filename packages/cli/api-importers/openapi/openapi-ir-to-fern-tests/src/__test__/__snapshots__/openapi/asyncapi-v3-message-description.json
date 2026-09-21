@@ -1,0 +1,130 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "garden.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {
+                    "plantId": "plantId",
+                  },
+                  "type": "waterPlant",
+                },
+                {
+                  "body": {
+                    "moisture": 1.1,
+                  },
+                  "type": "plantStatus",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "plantStatus": {
+              "body": "PlantStatus",
+              "docs": "Current moisture level of a plant",
+              "origin": "server",
+            },
+            "waterPlant": {
+              "body": "WaterPlant",
+              "docs": "Request that the server water the specified plant.",
+              "origin": "client",
+            },
+          },
+          "path": "/v1/ws/garden",
+          "url": undefined,
+        },
+        "types": {
+          "PlantStatus": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "moisture": "double",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "WaterPlant": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "plantId": "string",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/ws/garden
+  auth: false
+  messages:
+    plantStatus:
+      origin: server
+      body: PlantStatus
+      docs: Current moisture level of a plant
+    waterPlant:
+      origin: client
+      body: WaterPlant
+      docs: Request that the server water the specified plant.
+  examples:
+    - messages:
+        - type: waterPlant
+          body:
+            plantId: plantId
+        - type: plantStatus
+          body:
+            moisture: 1.1
+types:
+  PlantStatus:
+    properties:
+      moisture: double
+    source:
+      openapi: ../asyncapi.yml
+  WaterPlant:
+    properties:
+      plantId: string
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+  "specVersion": undefined,
+}

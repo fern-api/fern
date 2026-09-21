@@ -94,6 +94,7 @@
         {
           "origin": "client",
           "name": "testChannel_sendMessage",
+          "description": "Message with marked data information.",
           "body": {
             "schema": {
               "type": "string"
@@ -148,6 +149,7 @@
         {
           "origin": "client",
           "name": "testChannel2_sendMessage",
+          "description": "Message with marked data information.",
           "body": {
             "schema": {
               "type": "string"

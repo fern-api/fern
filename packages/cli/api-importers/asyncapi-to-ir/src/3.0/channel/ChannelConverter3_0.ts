@@ -82,9 +82,10 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
+                    const docs = operation.description ?? this.resolveMessageDocs(message);
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
-                        docs: operation.description
+                        docs
                     });
                     messages.push({
                         type: operationId,
@@ -95,7 +96,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                             node: operation,
                             breadcrumbs: this.breadcrumbs
                         }),
-                        docs: operation.description,
+                        docs,
                         methodName: undefined // AsyncAPI direct-to-IR doesn't support x-fern-sdk-method-name extension
                     });
                 }
@@ -274,6 +275,17 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             });
             return undefined;
         }
+    }
+
+    private resolveMessageDocs(message: OpenAPIV3.ReferenceObject): string | undefined {
+        const resolved = this.context.resolveReference<AsyncAPIV3.ChannelMessage>({
+            reference: message,
+            breadcrumbs: this.breadcrumbs
+        });
+        if (!resolved.resolved) {
+            return undefined;
+        }
+        return resolved.value.description ?? resolved.value.summary;
     }
 
     private resolveChannelServersFromReference(servers: OpenAPIV3.ReferenceObject[]): string | undefined {
