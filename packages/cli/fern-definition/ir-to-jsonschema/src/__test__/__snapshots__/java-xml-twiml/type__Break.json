@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "strength": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BreakStrength"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "time": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "BreakStrength": {
+      "type": "string",
+      "enum": [
+        "none",
+        "x-weak",
+        "weak",
+        "medium",
+        "strong",
+        "x-strong"
+      ]
+    }
+  }
+}
