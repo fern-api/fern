@@ -113,6 +113,14 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.has_credentials()
     }
 
+    /// Whether this provider can authenticate from credentials the user stored
+    /// (keyring), as opposed to ambient env/flag sources. Composition wrappers
+    /// use it to prefer stored credentials when a profile is named with
+    /// `--profile`.
+    fn has_stored_credentials(&self) -> bool {
+        false
+    }
+
     /// Human-readable hints about where this provider reads its credentials
     /// from. Used by the friendly auth-error path to tell the user which
     /// env var / CLI flag / file to set.
