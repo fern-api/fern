@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.131.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.current-page` docs.yml setting. When set to true,
+        the current page is appended to the breadcrumb trail above the page title as a
+        non-clickable item. Defaults to false.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 5.130.0
   changelogEntry:
     - summary: |
