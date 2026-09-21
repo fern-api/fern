@@ -39,6 +39,7 @@ import {
     prepareFernSdkGenApiRoutes
 } from "../runRemoteGenerationForAPIWorkspace.js";
 import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
+import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -249,11 +250,28 @@ describe("isEligibleForFernSdkGenApi", () => {
             payloadKind: "sdk-config-v1",
             requestedVersion: "4.0.0"
         });
+        if (result?.route == null) {
+            throw new Error("Expected a pinned SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+        expect(request.targets[0]?.fernGenerator).toEqual({
+            id: "fernapi/fern-typescript-sdk",
+            version: "4.0.0"
+        });
     });
 
     it("routes an unpinned SDK Config target directly to SDK Config v1", () => {
         const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "latest" })],
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
             enabled: true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
@@ -287,7 +305,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("rejects an unpinned route paired with a Fern runtime bundle", async () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "latest" })],
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
             enabled: true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
@@ -308,9 +326,35 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
+    it("rejects unpinned wire serialization without the internal marker", () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned SDK Config route");
+        }
+
+        expect(() =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ version: "latest" }),
+                sdkGenApiRoute: prepared.route,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: sdkConfigPayload("{}")
+            })
+        ).toThrow("must use the internal SDK Config generator marker");
+    });
+
     it("retains migration guidance for a pinned pre-cutover SDK Config target", () => {
         const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "latest" })],
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
             enabled: true,
             sdkConfigV1: sdkConfigV1({ language: "typescript", generatorVersion: "3.999.999" }),
             requireEnvVars: true,
@@ -320,6 +364,37 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route).toBeUndefined();
         expect(result?.error).toHaveProperty("message", expect.stringContaining("LEGACY_FERN_CONFIG_REQUIRED"));
         expect(result?.error).toHaveProperty("message", expect.stringContaining("USE_LEGACY_FERN_CONFIG"));
+    });
+
+    it("rejects SDK Config omission when the invocation lacks the unpinned marker", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("must use the internal unpinned generator marker")
+        );
+    });
+
+    it("rejects the unpinned marker outside SDK Config instead of falling back", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("cannot be used without SDK Config v1")
+        );
     });
 
     it("rejects an SDK Config that does not contain the selected language", () => {
@@ -492,7 +567,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
     it("renders an omitted SDK Config generator version as unpinned in diagnostics", () => {
         const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "latest" })],
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
             enabled: true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
@@ -2744,7 +2819,7 @@ describe("fernapi/fern-mcp-server target", () => {
 
     it("omits an unpinned SDK Config generator version from the wire request", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
-            generators: [mcpInvocation({ version: "latest" })],
+            generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
             enabled: true,
             sdkConfigV1: sdkConfigV1({ language: "mcp" }),
             requireEnvVars: true,
@@ -2765,7 +2840,7 @@ describe("fernapi/fern-mcp-server target", () => {
         });
 
         expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-mcp-server" });
-        expect(JSON.stringify(request)).not.toContain('"version":"latest"');
+        expect(JSON.stringify(request)).not.toContain(SDK_CONFIG_UNPINNED_GENERATOR_VERSION);
     });
 
     it("does not include package metadata for download output", () => {

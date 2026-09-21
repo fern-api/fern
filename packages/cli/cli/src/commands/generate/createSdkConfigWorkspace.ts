@@ -5,13 +5,13 @@ import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-w
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { resolveSdkConfigGeneratorVersion } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
-const UNPINNED_GENERATOR_VERSION = "latest";
 
 const GENERATOR_BY_LANGUAGE: Record<string, string> = {
     typescript: "fernapi/fern-typescript-sdk",
@@ -73,7 +73,7 @@ export async function createSdkConfigWorkspace({
                 }
                 return createGeneratorInvocation({
                     name,
-                    version: target.generatorVersion ?? UNPINNED_GENERATOR_VERSION,
+                    version: resolveSdkConfigGeneratorVersion(target.generatorVersion),
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
                     configDirectory

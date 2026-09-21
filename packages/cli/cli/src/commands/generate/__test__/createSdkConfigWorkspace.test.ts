@@ -3,7 +3,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import { bundleRemoteOpenAPI } from "@fern-api/lazy-fern-workspace";
-import { createFernSdkGenApiRequest, prepareFernSdkGenApiRoutes } from "@fern-api/remote-workspace-runner";
+import {
+    createFernSdkGenApiRequest,
+    prepareFernSdkGenApiRoutes,
+    SDK_CONFIG_UNPINNED_GENERATOR_VERSION
+} from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -83,7 +87,7 @@ describe("createSdkConfigWorkspace", () => {
                 generators: [
                     {
                         name: "fernapi/fern-typescript-sdk",
-                        version: "latest",
+                        version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION,
                         language: "typescript",
                         absolutePathToLocalOutput: path.join(directory, "generated", "typescript")
                     }
@@ -125,7 +129,7 @@ describe("createSdkConfigWorkspace", () => {
             payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.body }
         });
         expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-typescript-sdk" });
-        expect(JSON.stringify(request)).not.toContain('"version":"latest"');
+        expect(JSON.stringify(request)).not.toContain(SDK_CONFIG_UNPINNED_GENERATOR_VERSION);
         await cleanup();
     });
 

@@ -44,6 +44,7 @@ import {
     selectGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
+import { isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -387,6 +388,11 @@ export function prepareFernSdkGenApiRoutes({
             if (sdkConfigV1 != null && configuredTarget == null) {
                 throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage}`);
             }
+            if (sdkConfigV1 == null && isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                throw new Error(
+                    "The internal unpinned SDK Config generator marker cannot be used without SDK Config v1"
+                );
+            }
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
@@ -406,6 +412,11 @@ export function prepareFernSdkGenApiRoutes({
             }
             let route: GenerationConfigRoute | undefined;
             if (configuredTarget != null && configuredTarget.generatorVersion == null) {
+                if (!isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                    throw new Error(
+                        "An SDK Config target without generatorVersion must use the internal unpinned generator marker"
+                    );
+                }
                 const language = resolved.language ?? configuredLanguage;
                 if (language == null) {
                     throw new Error(`SDK Config v1 generation does not recognize generator ${resolved.name}`);
