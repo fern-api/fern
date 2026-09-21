@@ -194,6 +194,17 @@ fixtures:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
       outputFolder: allow-user-agent-app-info
+    - customConfig:
+        enable-closeable-client: true
+      outputFolder: closeable-client
+    # download-files mode rebuilds the custom config via an explicit allowlist in
+    # Cli.runInDownloadFilesModeHook; this variant guards against the flag being dropped there.
+    - customConfig:
+        enable-closeable-client: true
+        package-prefix: com.fern.sdk
+      outputMode: local_files
+      outputFolder: closeable-client-local-files
+      skipScripts: true
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -328,6 +339,9 @@ fixtures:
     - customConfig:
         custom-interceptors: true
       outputFolder: custom-interceptors
+    - customConfig:
+        enable-closeable-client: true
+      outputFolder: closeable-client
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config

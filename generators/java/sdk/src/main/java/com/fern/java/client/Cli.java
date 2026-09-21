@@ -191,6 +191,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .customInterceptors(customConfig.customInterceptors())
                 .customPlugins(customConfig.customPlugins())
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
+                .enableCloseableClient(customConfig.enableCloseableClient())
                 .includePlatformHeaders(customConfig.includePlatformHeaders())
                 .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
                 .build();

@@ -88,6 +88,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final FieldSpec OWNS_HTTP_CLIENT_FIELD = FieldSpec.builder(
+                    TypeName.BOOLEAN, "ownsHttpClient", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
     private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
                     TypeName.INT, "timeout", Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -667,7 +671,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(HEADER_SUPPLIERS_FIELD.type, HEADER_SUPPLIERS_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
-                        .build())
+                        .build());
+
+        // Only track HTTP client ownership when the opt-in `enable-closeable-client` config is enabled, so default-off
+        // generated output stays byte-identical.
+        boolean closeableClient = clientGeneratorContext.getCustomConfig().enableCloseableClient();
+        if (closeableClient) {
+            constructorBuilder.addParameter(
+                    ParameterSpec.builder(OWNS_HTTP_CLIENT_FIELD.type, OWNS_HTTP_CLIENT_FIELD.name)
+                            .build());
+        }
+
+        constructorBuilder
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
@@ -728,7 +743,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         }
         constructorBuilder
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
-                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        if (closeableClient) {
+            constructorBuilder.addStatement("this.$L = $L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name);
+        }
+        constructorBuilder
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
                 .addStatement(
@@ -771,7 +790,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(environmentField)
                 .addField(HEADERS_FIELD)
                 .addField(HEADER_SUPPLIERS_FIELD)
-                .addField(OKHTTP_CLIENT_FIELD)
+                .addField(OKHTTP_CLIENT_FIELD);
+        if (closeableClient) {
+            clientOptionsBuilder.addField(OWNS_HTTP_CLIENT_FIELD);
+        }
+        clientOptionsBuilder
                 .addField(TIMEOUT_FIELD)
                 .addField(MAX_RETRIES_FIELD)
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
@@ -901,9 +924,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
         MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
 
+        clientOptionsBuilder.addMethod(timeoutGetter).addMethod(httpClientGetter);
+        if (closeableClient) {
+            clientOptionsBuilder.addMethod(createGetter(OWNS_HTTP_CLIENT_FIELD).toBuilder()
+                    .addJavadoc(
+                            "Whether the SDK created the underlying {@code OkHttpClient}. A client supplied through\n"
+                                    + "{@code httpClient(OkHttpClient)} remains owned by the caller.\n")
+                    .build());
+        }
         clientOptionsBuilder
-                .addMethod(timeoutGetter)
-                .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
                 .addMethod(maxRetriesGetter)
                 .addMethod(initialRetryDelayMillisGetter)
@@ -1143,6 +1172,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+        // Ownership follows the client: true until the caller supplies one via httpClient(...), and carried over by
+        // from(...) so options derived from SDK-owned options (e.g. the staged OAuth build path) stay SDK-owned.
+        boolean closeableClient = clientGeneratorContext.getCustomConfig().enableCloseableClient();
+        if (closeableClient) {
+            builder.addField(FieldSpec.builder(TypeName.BOOLEAN, OWNS_HTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
+                    .initializer("true")
+                    .build());
+        }
+
         // Only add the appInfo builder field when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent
         // is actually written, so default-off generated output stays byte-identical. Stores the sanitized product token
         // (null until the caller supplies appInfo).
@@ -1246,14 +1284,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 Optional.class,
                                 RETRY_JITTER_FACTOR_FIELD.name)
                         .addStatement("return this")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(builderClassName)
-                        .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement("return this")
                         .build());
+
+        MethodSpec.Builder httpClientSetter = MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        if (closeableClient) {
+            httpClientSetter.addStatement("this.$L = false", OWNS_HTTP_CLIENT_FIELD.name);
+        }
+        builder.addMethod(httpClientSetter.addStatement("return this").build());
 
         // Add addInterceptor method when custom-interceptors is enabled
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
@@ -1608,7 +1649,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TIMEOUT_FIELD.name,
                         Optional.class,
                         TIMEOUT_FIELD.name)
-                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        if (clientGeneratorContext.getCustomConfig().enableCloseableClient()) {
+            fromMethod.addStatement(
+                    "builder.$L = clientOptions.$L()", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name);
+        }
+        fromMethod
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
@@ -1693,9 +1739,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 HEADER_SUPPLIERS_FIELD.name,
                 OKHTTP_CLIENT_FIELD.name);
 
+        boolean closeableClient = clientGeneratorContext.getCustomConfig().enableCloseableClient();
+
         // Build return string with all optional fields
         StringBuilder returnStringBuilder = new StringBuilder();
-        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
+        returnStringBuilder.append("return new $T($L, $L, $L, $L, ");
+        if (closeableClient) {
+            returnStringBuilder.append(OWNS_HTTP_CLIENT_FIELD.name).append(", ");
+        }
+        returnStringBuilder.append("this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
@@ -1732,6 +1784,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+
+        // Ownership must be captured before `this.httpClient` is overwritten with the derived client below.
+        if (closeableClient) {
+            builder.addStatement(
+                    "boolean $L = this.$L == null || this.$L",
+                    OWNS_HTTP_CLIENT_FIELD.name,
+                    OKHTTP_CLIENT_FIELD.name,
+                    OWNS_HTTP_CLIENT_FIELD.name);
+        }
 
         builder.addStatement(
                         "$T.Builder $L = this.$L != null ? this.$L.newBuilder() : new $T.Builder()",
