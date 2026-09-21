@@ -460,7 +460,7 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P("func ", t.typeName, "FromXmlElement(element *core.XmlElement) (*", t.typeName, ", error) {")
 	rootCheck := "element == nil || element.Name != " + quote(xml.Name)
 	if xml.Namespace != nil {
-		rootCheck += " || element.Namespace != " + quote(*xml.Namespace)
+		rootCheck += " || (element.Namespace != \"\" && element.Namespace != " + quote(*xml.Namespace) + ")"
 	}
 	t.writer.P("if ", rootCheck, " {")
 	t.writer.P("return nil, core.XmlRootError(", quote(xml.Name), ", element)")

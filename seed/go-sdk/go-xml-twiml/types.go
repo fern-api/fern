@@ -347,7 +347,7 @@ func DialFromXml(document string) (*Dial, error) {
 
 // DialFromXmlElement parses a Dial from its generic XML representation.
 func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
-	if element == nil || element.Name != "Dial" || element.Namespace != "https://www.twilio.com/twiml" {
+	if element == nil || element.Name != "Dial" || (element.Namespace != "" && element.Namespace != "https://www.twilio.com/twiml") {
 		return nil, core.XmlRootError("Dial", element)
 	}
 	result := &Dial{}
