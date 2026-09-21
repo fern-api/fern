@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
+import type { WebhookManifest } from "./webhooks.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -91,6 +92,12 @@ export async function copySpecs(args: {
      * says, rather than deriving a strategy from the spec's `security`.
      */
     authStrategy?: AuthStrategyVariant;
+    /**
+     * When set, write it to `webhooks.json` beside the specs and emit
+     * `.webhooks(include_str!("webhooks.json"))` so the CLI exposes
+     * `webhook list` / `webhook invoke`.
+     */
+    webhookManifest?: WebhookManifest;
 }): Promise<void> {
     const {
         outputDir,
@@ -101,7 +108,8 @@ export async function copySpecs(args: {
         customCommands,
         rootGroup,
         userAgentSuffixFlag,
-        authStrategy
+        authStrategy,
+        webhookManifest
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -123,6 +131,10 @@ export async function copySpecs(args: {
         entries.push({ destFilename, namespace: spec.namespace });
     }
 
+    if (webhookManifest != null) {
+        await writeFile(path.join(binDir, WEBHOOK_MANIFEST_FILENAME), JSON.stringify(webhookManifest, null, 2) + "\n");
+    }
+
     await writeFile(
         path.join(binDir, "main.rs"),
         renderMainRs({
@@ -133,7 +145,8 @@ export async function copySpecs(args: {
             customCommands: customCommands ?? false,
             rootGroup,
             userAgentSuffixFlag,
-            authStrategy
+            authStrategy,
+            webhooks: webhookManifest != null
         })
     );
 
@@ -142,6 +155,8 @@ export async function copySpecs(args: {
         await scaffoldCustomRs(binDir, binaryName);
     }
 }
+
+const WEBHOOK_MANIFEST_FILENAME = "webhooks.json";
 
 interface SpecEntry {
     destFilename: string;
@@ -227,6 +242,7 @@ function renderMainRs(args: {
     rootGroup?: string;
     userAgentSuffixFlag?: string;
     authStrategy?: AuthStrategyVariant;
+    webhooks: boolean;
 }): string {
     const {
         binaryName,
@@ -236,7 +252,8 @@ function renderMainRs(args: {
         customCommands,
         rootGroup,
         userAgentSuffixFlag,
-        authStrategy
+        authStrategy,
+        webhooks
     } = args;
 
     // A strategy only means something once there is a scheme to compose;
@@ -344,7 +361,12 @@ function renderMainRs(args: {
         lines.push(`                .command_namespace("${rootGroup}")`);
     }
     // Close the binding
-    lines.push("        );");
+    if (webhooks) {
+        lines.push("        )");
+        lines.push(`        .webhooks(include_str!("${WEBHOOK_MANIFEST_FILENAME}"));`);
+    } else {
+        lines.push("        );");
+    }
 
     if (customCommands) {
         lines.push("");

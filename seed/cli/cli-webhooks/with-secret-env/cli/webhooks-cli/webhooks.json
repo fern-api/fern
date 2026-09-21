@@ -1,0 +1,61 @@
+{
+  "secretEnv": "EXAMPLE_AUTH_TOKEN",
+  "webhooks": [
+    {
+      "name": "call-status",
+      "displayName": "Call status change",
+      "method": "GET",
+      "contentType": "form",
+      "examplePayload": {
+        "CallSid": "CallSid",
+        "CallStatus": "ringing"
+      },
+      "headers": [],
+      "signature": {
+        "header": "X-Example-Signature",
+        "algorithm": "SHA1",
+        "encoding": "BASE64",
+        "components": [
+          "NOTIFICATION_URL",
+          "BODY"
+        ],
+        "delimiter": "",
+        "bodySort": "ALPHABETICAL",
+        "bodyHash": {
+          "algorithm": "SHA256",
+          "encoding": "HEX",
+          "queryParameter": "bodySHA256"
+        }
+      }
+    },
+    {
+      "name": "message-received",
+      "displayName": "Inbound message",
+      "method": "POST",
+      "contentType": "form",
+      "examplePayload": {
+        "MessageSid": "SM1234567890abcdef",
+        "From": "+15551234567",
+        "To": "+15557654321",
+        "Body": "Hello, world!"
+      },
+      "headers": [],
+      "signature": {
+        "header": "X-Example-Signature",
+        "algorithm": "SHA1",
+        "encoding": "BASE64",
+        "components": [
+          "NOTIFICATION_URL",
+          "BODY"
+        ],
+        "delimiter": "",
+        "bodySort": "ALPHABETICAL",
+        "bodyHash": {
+          "algorithm": "SHA256",
+          "encoding": "HEX",
+          "queryParameter": "bodySHA256"
+        }
+      }
+    }
+  ]
+}

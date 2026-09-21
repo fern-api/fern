@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Webhooks CLI
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+x-fern-webhook-signature:
+  type: hmac
+  header: X-Example-Signature
+  algorithm: sha1
+  encoding: base64
+  payload-format:
+    components:
+      - notification-url
+      - body
+    body-sort: alphabetical
+  body-hash-binding:
+    algorithm: sha256
+    encoding: hex
+    location:
+      type: query-parameter
+      name: bodySHA256
+paths:
+  /messages:
+    get:
+      operationId: messages_list
+      x-fern-sdk-group-name: messages
+      x-fern-sdk-method-name: list
+      summary: List messages
+      responses:
+        "200":
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+  /webhooks/message-received:
+    post:
+      operationId: message_received
+      x-fern-webhook: true
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: messageReceived
+      summary: Inbound message
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/MessageReceived"
+            examples:
+              default:
+                value:
+                  MessageSid: SM1234567890abcdef
+                  From: "+15551234567"
+                  To: "+15557654321"
+                  Body: Hello, world!
+      responses:
+        "200":
+          description: OK
+  /webhooks/call-status:
+    get:
+      operationId: call_status
+      x-fern-webhook: true
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: callStatus
+      summary: Call status change
+      parameters:
+        - name: CallSid
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: CallStatus
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [ringing, in-progress, completed]
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        sid:
+          type: string
+        body:
+          type: string
+      required: [sid, body]
+    MessageReceived:
+      type: object
+      properties:
+        MessageSid:
+          type: string
+        From:
+          type: string
+        To:
+          type: string
+        Body:
+          type: string
+        NumMedia:
+          type: integer
+      required: [MessageSid, From, To, Body]

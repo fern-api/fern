@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.41.0
+  changelogEntry:
+    - summary: |
+        Inbound webhooks declared in the spec (OpenAPI `webhooks`, `x-fern-webhook: true`
+        operations, or Fern-definition `webhooks:`) are now lowered to a `webhook` command
+        group instead of being ignored:
+
+        - `<cli> webhook list` — every webhook with its method and whether it is signed.
+        - `<cli> webhook invoke <name> <url>` — builds the webhook's example payload
+          (or a placeholder synthesized from the payload type), signs it the way the
+          provider does, and delivers it to `<url>`. The request originates from the
+          developer's machine, so `http://localhost:3000/hook` works with no tunnel.
+          `-d KEY=VALUE` overrides fields, `--body` replaces the payload, `-X`/`--form`/
+          `--json`/`-H` tune the request, `--no-signature` skips signing, `-i` prints the
+          response status and headers.
+
+        Signing follows the spec's `x-fern-webhook-signature` (or Fern `webhook-signature`)
+        HMAC config: SHA-1/256/384/512, Base64/hex, signature prefix, `payload-format`
+        components (`body`, `timestamp`, `notification-url`, `message-id`) with delimiter,
+        alphabetical body sort (Twilio-style sorted, de-duplicated form params),
+        timestamp header (unix seconds/millis/ISO 8601) and `body-hash-binding`
+        (e.g. Twilio's `bodySHA256` query parameter for JSON bodies). Asymmetric schemes
+        cannot be emulated without the provider's private key and are sent unsigned.
+
+        The secret is read from `--secret` or `$<BINARY>_WEBHOOK_SECRET`; the new
+        `customConfig.webhookSecretEnv` overrides the env var name (e.g. `TWILIO_AUTH_TOKEN`).
+        The generated `main.rs` gains `.webhooks(include_str!("webhooks.json"))` next to
+        the spec bindings; CLIs whose spec declares no webhooks are unchanged.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 0.40.0
   changelogEntry:
     - summary: |
