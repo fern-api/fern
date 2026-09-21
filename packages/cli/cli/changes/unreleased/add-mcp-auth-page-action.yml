@@ -1,0 +1,5 @@
+- summary: |
+    Add `page-actions.options.mcp-auth` to `docs.yml`, which opts an authenticated docs site into
+    the authenticated MCP endpoint (`/_mcp/authed/server`) so MCP clients can log in over OAuth
+    through the site's existing SSO or password auth. Defaults to `false`.
+  type: feat
