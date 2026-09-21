@@ -68,6 +68,7 @@ describe Seed::Internal::Xml::Element do
       assert XmlTestUtils.parse_boolean("1")
       refute XmlTestUtils.parse_boolean("false")
       assert_equal %w[a b], XmlTestUtils.parse_list("a  b", " ") { |item| item }
+      assert_equal %w[a b], XmlTestUtils.parse_list("a,,b", ",") { |item| item }
       assert_equal "yes", XmlTestUtils.parse_literal("yes", "yes")
       assert_raises(ArgumentError) { XmlTestUtils.parse_integer("x") }
       assert_raises(ArgumentError) { XmlTestUtils.parse_boolean("maybe") }

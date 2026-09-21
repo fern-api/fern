@@ -71,7 +71,7 @@ module Seed
 
           # @return [Boolean] whether this element is a document root (`to_s` then includes the XML declaration)
           def xml_root?
-            @xml_root ||= false
+            defined?(@xml_root) ? @xml_root : false
           end
 
           # @return [Array<Property>]
@@ -188,8 +188,12 @@ module Seed
               return nil if children.empty? && property.optional && !property.wrapped
 
               children
-            elsif parent.nil? || property.optional
-              parent.nil? ? nil : Utils.parse_child(parent, parsers)
+            elsif parent.nil?
+              raise ArgumentError, "Missing required wrapper <#{property.xml_name}> on <#{element.name}>" unless property.optional
+
+              nil
+            elsif property.optional
+              Utils.parse_child(parent, parsers)
             else
               Utils.require_child(parent, parsers)
             end
@@ -253,7 +257,7 @@ module Seed
         end
 
         def ==(other)
-          super && additional_attributes == other.additional_attributes &&
+          other.is_a?(Serializable) && super && additional_attributes == other.additional_attributes &&
             additional_children.map(&:to_xml_element) == other.additional_children.map(&:to_xml_element)
         end
 

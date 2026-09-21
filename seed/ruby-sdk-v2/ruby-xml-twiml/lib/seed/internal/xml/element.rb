@@ -104,7 +104,7 @@ module Seed
 
         # @return [Integer]
         def hash
-          [name, namespace, attributes, text].hash
+          [name, namespace, attributes, text, children.map(&:to_xml_element)].hash
         end
 
         # @return [String]

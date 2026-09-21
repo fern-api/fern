@@ -55,7 +55,9 @@ module Seed
             prefix = element.prefix.to_s
             namespace = element.namespace
             namespace = scope[prefix] if namespace.nil? && !prefix.empty?
-            # Reset an inherited default namespace so an unqualified element stays unqualified.
+            # `namespace` semantics from here on: nil = inherit whatever is in scope, "" = explicitly no
+            # namespace (emits `xmlns=""` to reset an inherited default namespace so an unqualified
+            # element stays unqualified), otherwise a URI to declare if not already in scope.
             namespace = "" if namespace.nil? && prefix.empty? && !scope[""].to_s.empty?
             declare.call(prefix, namespace) unless namespace.nil? || (namespace.empty? && scope[""].to_s.empty?)
 
@@ -288,7 +290,7 @@ module Seed
           def parse_list(raw, separator, &)
             return nil if raw.nil?
 
-            raw.split(separator).reject(&:empty?).map(&)
+            raw.split(Regexp.new(Regexp.escape(separator))).reject(&:empty?).map(&)
           end
 
           # @return [Array] the parsed text of all children with the given name
