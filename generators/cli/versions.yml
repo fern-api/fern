@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.41.2
+  changelogEntry:
+    - summary: |
+        A named `--profile` now prefers that profile's stored credentials when
+        selecting among multiple authentication schemes. Previously the first
+        scheme in spec order whose credentials resolved won, so a profile holding
+        only an OAuth2 credential still sent env-var basic auth under `-p <name>`.
+        Covers OAuth2 client credentials and `auth login` tokens (device-code /
+        PKCE) alike; under `--profile`, OAuth2 also resolves its client id from
+        the profile before the environment, so both halves of a client credential
+        come from the same place. Ambient selection (`<BIN>_PROFILE`,
+        `profiles use`) is unchanged — the environment still wins there.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 0.41.1
   changelogEntry:
     - summary: |
