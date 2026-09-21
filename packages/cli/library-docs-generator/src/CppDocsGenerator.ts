@@ -164,7 +164,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 function isPlainCLibrary(root: CppNamespaceIr): boolean {
     return (
         root.path === "" &&
-        root.namespaces.every(isEmptyNamespace) &&
+        root.namespaces.every((ns) => ns.name === "std" && isEmptyNamespace(ns)) &&
         root.concepts.length === 0 &&
         root.classes.every(isPlainCAggregate) &&
         root.functions.every((fn) => fn.templateParams.length === 0) &&
