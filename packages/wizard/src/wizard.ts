@@ -1,5 +1,5 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI output is intentionally written to stdout.
-import { access } from "fs/promises";
+import { stat } from "fs/promises";
 import inquirer from "inquirer";
 import path from "path";
 import { detectRepository } from "./detect";
@@ -33,7 +33,11 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
         console.log("Existing Fern project detected at fern/ — skipping init");
     }
     if (!detection.fernProject.docsConfigExists) {
-        actions.push({ id: "init-docs", label: `fern init --docs${orgLabel(flags.org)}`, selectedByDefault: true });
+        actions.push({
+            id: "init-docs",
+            label: formatCommand({ executable: "fern", args: docsInitArgs(detection, flags.org) }),
+            selectedByDefault: true
+        });
     }
     if (detection.agents.length > 0) {
         actions.push({ id: "agent-mcp", label: "fern login && fern mcp install", selectedByDefault: true });
@@ -192,12 +196,7 @@ async function executeAction(
         return;
     }
     if (id === "init-docs") {
-        const mintlify = detection.docsTools.find((tool) => tool.name === "mintlify");
-        await runFernCommand(
-            ["init", "--docs", ...orgArgs(flags.org), ...(mintlify === undefined ? [] : ["--mintlify", mintlify.path])],
-            dir,
-            detection
-        );
+        await runFernCommand(docsInitArgs(detection, flags.org), dir, detection);
         return;
     }
     let firstError: unknown;
@@ -218,7 +217,7 @@ async function executeAction(
 
 async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | undefined> {
     if (specs.length === 0 || yes) {
-        return specs[0];
+        return pickDefaultSpec(specs);
     }
     const answer = await inquirer.prompt<SpecAnswers>([
         {
@@ -229,6 +228,15 @@ async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | und
         }
     ]);
     return specs.find((spec) => spec.path === answer.specPath);
+}
+
+export function pickDefaultSpec(specs: ApiSpec[]): ApiSpec | undefined {
+    return specs.find((spec) => spec.format === "openapi") ?? specs[0];
+}
+
+export function docsInitArgs(detection: Detection, org: string | undefined): string[] {
+    const mintlify = detection.docsTools.find((tool) => tool.name === "mintlify");
+    return ["init", ...(mintlify === undefined ? ["--docs"] : ["--mintlify", mintlify.path]), ...orgArgs(org)];
 }
 
 async function runFernCommand(args: string[], dir: string, detection: Detection): Promise<void> {
@@ -282,8 +290,7 @@ function orgLabel(org: string | undefined): string {
 
 async function isDirectory(dir: string): Promise<boolean> {
     try {
-        await access(dir);
-        return true;
+        return (await stat(dir)).isDirectory();
     } catch {
         return false;
     }

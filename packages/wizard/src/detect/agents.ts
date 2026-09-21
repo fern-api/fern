@@ -2,7 +2,7 @@ import { access } from "fs/promises";
 import path from "path";
 import type { Agent } from "../types";
 
-export async function detectAgents(dir: string): Promise<Agent[]> {
+export async function detectAgents(dir: string, files: string[]): Promise<Agent[]> {
     const checks: Array<[Agent, string]> = [
         ["cursor", ".cursor"],
         ["claude-code", ".claude"],
@@ -12,7 +12,9 @@ export async function detectAgents(dir: string): Promise<Agent[]> {
     ];
     const agents: Agent[] = [];
     for (const [agent, relativePath] of checks) {
-        if (await exists(path.join(dir, relativePath))) {
+        if (files.some((file) => file === relativePath || file.startsWith(`${relativePath}${path.sep}`))) {
+            agents.push(agent);
+        } else if (await exists(path.join(dir, relativePath))) {
             agents.push(agent);
         }
     }

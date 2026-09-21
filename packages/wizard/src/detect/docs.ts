@@ -1,20 +1,21 @@
-import { readFile } from "fs/promises";
+import { readFile, stat } from "fs/promises";
 import path from "path";
 import { parse } from "yaml";
 import type { DocsToolDetection } from "../types";
-import { walkFiles } from "./walk";
 
-export async function detectDocsTools(dir: string): Promise<DocsToolDetection[]> {
-    const files = await walkFiles(dir);
+export async function detectDocsTools(dir: string, files: string[]): Promise<DocsToolDetection[]> {
     const tools: DocsToolDetection[] = [];
 
+    if (await isReadmeDirectory(path.join(dir, ".readme"))) {
+        tools.push({ name: "readme", path: ".readme" });
+    }
     for (const relativePath of files) {
         const name = path.basename(relativePath);
         if (name === "docusaurus.config.js" || name === "docusaurus.config.ts" || name === "docusaurus.config.mjs") {
             tools.push({ name: "docusaurus", path: relativePath });
         } else if (name === "redocly.yaml" || name === "redocly.yml") {
             tools.push({ name: "redocly", path: relativePath });
-        } else if (name === ".readme" || name === "readme.yml" || name === "readme.yaml" || name === "readme.json") {
+        } else if (name === "readme.yml" || name === "readme.yaml" || name === "readme.json") {
             tools.push({ name: "readme", path: relativePath });
         } else if (name === "mint.json" || name === "docs.json") {
             if (await isMintlifyConfig(path.join(dir, relativePath))) {
@@ -24,6 +25,14 @@ export async function detectDocsTools(dir: string): Promise<DocsToolDetection[]>
     }
 
     return tools;
+}
+
+async function isReadmeDirectory(filePath: string): Promise<boolean> {
+    try {
+        return (await stat(filePath)).isDirectory();
+    } catch {
+        return false;
+    }
 }
 
 async function isMintlifyConfig(filePath: string): Promise<boolean> {

@@ -47,7 +47,3 @@ export async function walkFiles(root: string, maxDepth = 6): Promise<string[]> {
     await visit(root, 0);
     return files.sort();
 }
-
-export function isSkippedDirectory(name: string): boolean {
-    return SKIPPED_DIRECTORIES.has(name);
-}

@@ -1,7 +1,6 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import type { Framework } from "../types";
-import { walkFiles } from "./walk";
 
 const FRAMEWORKS: Record<string, Framework> = {
     express: { name: "express", language: "typescript", canGenerateOpenApi: false },
@@ -24,8 +23,7 @@ const FRAMEWORKS: Record<string, Framework> = {
     aspnet: { name: "aspnet", language: "csharp", canGenerateOpenApi: true }
 };
 
-export async function detectFrameworks(dir: string): Promise<Framework[]> {
-    const files = await walkFiles(dir);
+export async function detectFrameworks(dir: string, files: string[]): Promise<Framework[]> {
     const found = new Map<string, Framework>();
     const packageFiles = files.filter((file) => path.basename(file) === "package.json");
     for (const file of packageFiles) {
@@ -40,7 +38,19 @@ export async function detectFrameworks(dir: string): Promise<Framework[]> {
         }
     }
 
-    for (const file of files) {
+    const frameworkFiles = files.filter((file) => {
+        const name = path.basename(file);
+        return (
+            name === "requirements.txt" ||
+            name === "pyproject.toml" ||
+            name === "Gemfile" ||
+            name === "go.mod" ||
+            name === "pom.xml" ||
+            name.startsWith("build.gradle") ||
+            name.endsWith(".csproj")
+        );
+    });
+    for (const file of frameworkFiles) {
         const name = path.basename(file);
         const contents = await readText(path.join(dir, file));
         if (contents === undefined) {

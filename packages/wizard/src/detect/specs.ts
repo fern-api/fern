@@ -1,41 +1,76 @@
-import { readFile, stat } from "fs/promises";
+import { open, readFile, stat } from "fs/promises";
 import path from "path";
 import { parse } from "yaml";
 import type { ApiSpec } from "../types";
-import { walkFiles } from "./walk";
 
 const MAX_SPEC_SIZE = 5 * 1024 * 1024;
 
-export async function detectApiSpecs(dir: string): Promise<ApiSpec[]> {
-    const files = await walkFiles(dir);
-    const specs: ApiSpec[] = [];
-
-    for (const relativePath of files) {
+export async function detectApiSpecs(dir: string, files: string[]): Promise<ApiSpec[]> {
+    const candidates = files.filter((relativePath) => {
+        const extension = path.extname(relativePath).toLowerCase();
+        return extension === ".proto" || extension === ".yaml" || extension === ".yml" || extension === ".json";
+    });
+    const specs = await mapWithConcurrency(candidates, 8, async (relativePath) => {
         const extension = path.extname(relativePath).toLowerCase();
         if (extension === ".proto") {
-            specs.push({ path: relativePath, format: "protobuf" });
-            continue;
-        }
-        if (extension !== ".yaml" && extension !== ".yml" && extension !== ".json") {
-            continue;
+            return { path: relativePath, format: "protobuf" as const };
         }
 
         try {
-            if ((await stat(path.join(dir, relativePath))).size > MAX_SPEC_SIZE) {
-                continue;
+            const filePath = path.join(dir, relativePath);
+            if ((await stat(filePath)).size > MAX_SPEC_SIZE) {
+                return undefined;
             }
-            const contents = await readFile(path.join(dir, relativePath), "utf8");
+            const prefix = await readPrefix(filePath);
+            if (!/(openapi|swagger|asyncapi)/i.test(prefix)) {
+                return undefined;
+            }
+            const contents = await readFile(filePath, "utf8");
             const document = extension === ".json" ? JSON.parse(contents) : parse(contents);
             const spec = identifySpec(document);
             if (spec !== undefined) {
-                specs.push({ path: relativePath, ...spec });
+                return { path: relativePath, ...spec };
             }
+            return undefined;
         } catch {
-            // Invalid documents are not candidates.
+            return undefined;
+        }
+    });
+
+    return specs.sort((left, right) => left.path.localeCompare(right.path));
+}
+
+async function mapWithConcurrency<T, R>(
+    items: T[],
+    concurrency: number,
+    worker: (item: T) => Promise<R | undefined>
+): Promise<R[]> {
+    const results: Array<R | undefined> = new Array(items.length);
+    let nextIndex = 0;
+    async function runWorker(): Promise<void> {
+        while (nextIndex < items.length) {
+            const index = nextIndex;
+            nextIndex += 1;
+            const item = items[index];
+            if (item === undefined) {
+                return;
+            }
+            results[index] = await worker(item);
         }
     }
+    await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, () => runWorker()));
+    return results.filter((result): result is R => result !== undefined);
+}
 
-    return specs;
+async function readPrefix(filePath: string): Promise<string> {
+    const handle = await open(filePath, "r");
+    try {
+        const buffer = Buffer.alloc(4096);
+        const { bytesRead } = await handle.read(buffer, 0, buffer.length, 0);
+        return buffer.subarray(0, bytesRead).toString("utf8");
+    } finally {
+        await handle.close();
+    }
 }
 
 type SpecDetails = Pick<ApiSpec, "format" | "title" | "version">;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Detection, WizardFlags } from "../types";
-import { fernRunner, installCommand, planActions, validateFlags } from "../wizard";
+import { docsInitArgs, fernRunner, installCommand, pickDefaultSpec, planActions, validateFlags } from "../wizard";
 
 const flags: WizardFlags = {
     dir: "/tmp/project",
@@ -61,5 +61,21 @@ describe("action planning", () => {
             executable: "bunx",
             args: ["fern-api"]
         });
+    });
+
+    it("prefers OpenAPI specs for non-interactive initialization", () => {
+        const specs = [
+            { path: "events.yml", format: "asyncapi" as const },
+            { path: "api.json", format: "openapi" as const }
+        ];
+        expect(pickDefaultSpec(specs)).toEqual(specs[1]);
+        expect(pickDefaultSpec([])).toBeUndefined();
+    });
+
+    it("uses Mintlify initialization instead of combining docs flags", () => {
+        expect(
+            docsInitArgs({ ...baseDetection, docsTools: [{ name: "mintlify", path: "mint.json" }] }, "acme")
+        ).toEqual(["init", "--mintlify", "mint.json", "--org", "acme"]);
+        expect(docsInitArgs(baseDetection, "acme")).toEqual(["init", "--docs", "--org", "acme"]);
     });
 });

@@ -39,9 +39,7 @@ jobs:
         run: |
           pnpm seed:build
 
-          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/wizard/versions.yml | tail -n 1)
-
-          if [ -n "${previous_commit}" ] && git show ${previous_commit}:packages/wizard/versions.yml > /tmp/previous_versions.yml 2>/dev/null; then
+          if git show "${{ github.event.before }}:packages/wizard/versions.yml" > /tmp/previous_versions.yml 2>/dev/null; then
             result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
               --path packages/wizard/versions.yml \
               --previous-path /tmp/previous_versions.yml \

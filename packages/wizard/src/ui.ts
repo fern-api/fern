@@ -56,10 +56,10 @@ export function printNextSteps(cliInterest: boolean): void {
         );
         console.log("    Book a demo: https://buildwithfern.com/book-demo?type=cli");
     }
-    console.log("\n┌──────────────────────────────────────────────────────────────────────────────┐");
-    console.log("│ Hand this to your coding agent:                                             │");
+    console.log(`\n${chalk.bold("Hand this to your coding agent:")}`);
     console.log(
-        "│ Help me get started with Fern. Read https://buildwithfern.com/learn/home/get-started.md and follow it step by step. │"
+        chalk.cyan(
+            "Help me get started with Fern. Read https://buildwithfern.com/learn/home/get-started.md and follow it step by step."
+        )
     );
-    console.log("└──────────────────────────────────────────────────────────────────────────────┘");
 }

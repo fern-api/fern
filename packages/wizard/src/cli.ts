@@ -27,7 +27,7 @@ void yargs(hideBin(process.argv))
         const flags: WizardFlags = {
             dir: argv.dir,
             yes: argv.yes,
-            dryRun: argv["dry-run"],
+            dryRun: argv.dryRun,
             skipInstall: argv.skipInstall,
             org: argv.org
         };

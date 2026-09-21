@@ -5,15 +5,17 @@ import { detectFrameworks } from "./frameworks";
 import { detectPackageManager, hasPackageJson, isFernCliInstalled } from "./package-manager";
 import { detectFernProject } from "./project";
 import { detectApiSpecs } from "./specs";
+import { walkFiles } from "./walk";
 
 export async function detectRepository(dir: string, checkCli = true): Promise<Detection> {
+    const files = await walkFiles(dir);
     const [fernProject, apiSpecs, frameworks, docsTools, agents, packageManager, hasPackageJsonResult, fernCliVersion] =
         await Promise.all([
             detectFernProject(dir),
-            detectApiSpecs(dir),
-            detectFrameworks(dir),
-            detectDocsTools(dir),
-            detectAgents(dir),
+            detectApiSpecs(dir, files),
+            detectFrameworks(dir, files),
+            detectDocsTools(dir, files),
+            detectAgents(dir, files),
             detectPackageManager(dir),
             hasPackageJson(dir),
             checkCli ? isFernCliInstalled() : Promise.resolve(null)

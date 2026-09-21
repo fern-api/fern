@@ -1,4 +1,4 @@
-import { access } from "fs/promises";
+import { access, readdir } from "fs/promises";
 import path from "path";
 import type { FernProject } from "../types";
 
@@ -7,13 +7,13 @@ export async function detectFernProject(dir: string): Promise<FernProject> {
     const candidates = ["fern/fern.config.json", "fern.yml", "fern/docs.yml", "fern/generators.yml"];
     for (const candidate of candidates) {
         if (await exists(path.join(dir, candidate))) {
-            return { exists: true, path: "fern/", docsConfigExists };
+            return { exists: true, path: containingDir(candidate), docsConfigExists };
         }
     }
 
     try {
         const fernApis = path.join(dir, "fern", "apis");
-        const entries = await import("fs/promises").then(({ readdir }) => readdir(fernApis, { withFileTypes: true }));
+        const entries = await readdir(fernApis, { withFileTypes: true });
         for (const entry of entries) {
             if (entry.isDirectory() && (await exists(path.join(fernApis, entry.name, "generators.yml")))) {
                 return { exists: true, path: "fern/", docsConfigExists };
@@ -24,6 +24,11 @@ export async function detectFernProject(dir: string): Promise<FernProject> {
     }
 
     return { exists: false, docsConfigExists };
+}
+
+function containingDir(candidate: string): string {
+    const directory = path.dirname(candidate);
+    return directory === "." ? "./" : `${directory}/`;
 }
 
 async function exists(filePath: string): Promise<boolean> {
