@@ -560,6 +560,12 @@ fn sorted_body_string(pairs: &[(String, String)]) -> String {
     out
 }
 
+/// Computed headers win over a user-supplied `-H` of the same name.
+fn set_header(headers: &mut Vec<(String, String)>, name: &str, value: &str) {
+    headers.retain(|(k, _)| !k.eq_ignore_ascii_case(name));
+    headers.push((name.to_string(), value.to_string()));
+}
+
 fn append_query(url: &str, pairs: &[(String, String)]) -> String {
     if pairs.is_empty() {
         return url.to_string();
@@ -730,7 +736,7 @@ pub fn prepare_delivery(
                 )
             });
             if let Some((h, v)) = &timestamp {
-                headers.push((h.clone(), v.clone()));
+                set_header(&mut headers, h, v);
             }
 
             let mut parts: Vec<String> = Vec::new();
@@ -764,7 +770,7 @@ pub fn prepare_delivery(
             if let Some(prefix) = &sig.prefix {
                 value.insert_str(0, prefix);
             }
-            headers.push((sig.header.clone(), value));
+            set_header(&mut headers, &sig.header, &value);
         }
     }
 
@@ -1046,6 +1052,31 @@ mod tests {
             ),
         );
         assert_eq!(header(&d, "Stripe-Signature"), Some(expected.as_str()));
+    }
+
+    #[test]
+    fn computed_signature_replaces_user_header_of_same_name() {
+        let d = prepare_delivery(
+            &webhook(WebhookContentType::Form, Some(twilio_signature())),
+            DeliveryRequest {
+                url: "http://localhost/hook",
+                method: WebhookMethod::Post,
+                content_type: WebhookContentType::Form,
+                payload: payload(&[("a", "b")]),
+                extra_headers: vec![("x-twilio-signature".into(), "stale".into())],
+                secret: Some("secret"),
+                sign: true,
+                now_unix_millis: 0,
+            },
+        )
+        .unwrap();
+        let matching: Vec<_> = d
+            .headers
+            .iter()
+            .filter(|(k, _)| k.eq_ignore_ascii_case("X-Twilio-Signature"))
+            .collect();
+        assert_eq!(matching.len(), 1);
+        assert_ne!(matching[0].1, "stale");
     }
 
     #[test]
