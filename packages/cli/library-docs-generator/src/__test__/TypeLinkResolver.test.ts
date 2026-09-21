@@ -2,9 +2,12 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 import {
     buildTypeLinkData,
+    createModuleFileLinker,
     extractLinksFromTypes,
     formatSignatureMultiline,
+    getModuleFilePath,
     getModulePath,
+    getPublicPath,
     getTypeDisplay,
     getTypePathForSignature,
     linkTypeInfo,
@@ -116,6 +119,30 @@ function makeCtx(overrides: Partial<RenderContext> = {}): RenderContext {
 }
 
 describe("buildTypeLinkData", () => {
+    it("should map re-exported classes and functions to their shortest public path", () => {
+        const ir = makeIr(
+            makeModule("pkg", "pkg", {
+                classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                functions: [makeFunction("run", "pkg.sub.impl.run", [])],
+                submodules: [
+                    makeModule("sub", "pkg.sub", {
+                        classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                        submodules: [
+                            makeModule("impl", "pkg.sub.impl", {
+                                classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                                functions: [makeFunction("run", "pkg.sub.impl.run", [])]
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        const { publicPaths } = buildTypeLinkData(ir);
+        expect(publicPaths.get("pkg.sub.impl.Foo")).toBe("pkg.Foo");
+        expect(publicPaths.get("pkg.sub.impl.run")).toBe("pkg.run");
+    });
+
     it("should collect module paths", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
@@ -612,5 +639,66 @@ describe("formatSignatureMultiline", () => {
         const params: SignatureParam[] = [{ name: "name", type: "str" }];
         const result = formatSignatureMultiline("class Foo", params);
         expect(result).toBe("class Foo(\n    name: str\n)");
+    });
+});
+
+describe("getPublicPath", () => {
+    const ctx: RenderContext = {
+        baseSlug: "reference",
+        validPaths: new Set(),
+        pathAliases: new Map(),
+        publicPaths: new Map([["pkg.sub.impl.Foo", "pkg.Foo"]])
+    };
+
+    it("should return the public path for a re-exported definition", () => {
+        expect(getPublicPath("pkg.sub.impl.Foo", ctx)).toBe("pkg.Foo");
+    });
+
+    it("should rewrite members of a re-exported class", () => {
+        expect(getPublicPath("pkg.sub.impl.Foo.bar", ctx)).toBe("pkg.Foo.bar");
+    });
+
+    it("should leave paths without a public alias unchanged", () => {
+        expect(getPublicPath("pkg.sub.impl.Other", ctx)).toBe("pkg.sub.impl.Other");
+        expect(getPublicPath("pkg.sub.impl.Other", { ...ctx, publicPaths: undefined })).toBe("pkg.sub.impl.Other");
+    });
+});
+
+describe("module file links", () => {
+    const packageModules = new Set(["pkg", "pkg.sub"]);
+
+    it("maps modules to the MDX file the generator writes", () => {
+        expect(getModuleFilePath("pkg", "ref", packageModules)).toBe("ref/pkg/index.mdx");
+        expect(getModuleFilePath("pkg.sub", "ref", packageModules)).toBe("ref/pkg/sub/index.mdx");
+        expect(getModuleFilePath("pkg.sub.leaf", "ref", packageModules)).toBe("ref/pkg/sub/leaf.mdx");
+    });
+
+    it("links relative to the page being rendered", () => {
+        const fromLeaf = createModuleFileLinker("ref/pkg/other.mdx", "ref", packageModules);
+        expect(fromLeaf("pkg.sub.leaf")).toBe("./sub/leaf.mdx");
+        expect(fromLeaf("pkg")).toBe("./index.mdx");
+        const fromDeep = createModuleFileLinker("ref/pkg/sub/leaf.mdx", "ref", packageModules);
+        expect(fromDeep("pkg.other")).toBe("../other.mdx");
+        expect(fromDeep("pkg.sub")).toBe("./index.mdx");
+    });
+
+    it("uses the file link for cross-module type links when configured", () => {
+        const ctx: RenderContext = {
+            baseSlug: "ref",
+            validPaths: new Set(["pkg.sub.leaf.Foo"]),
+            pathAliases: new Map(),
+            linkToModuleFile: createModuleFileLinker("ref/pkg/other.mdx", "ref", packageModules)
+        };
+        expect(extractLinksFromTypes(["pkg.sub.leaf.Foo"], ctx, "pkg.other")).toEqual({
+            "pkg.sub.leaf.Foo": "./sub/leaf.mdx#pkg-sub-leaf-Foo"
+        });
+        expect(extractLinksFromTypes(["pkg.sub.leaf.Foo"], ctx, "pkg.sub.leaf")).toEqual({
+            "pkg.sub.leaf.Foo": "#pkg-sub-leaf-Foo"
+        });
+    });
+
+    it("records package modules in the link data", () => {
+        const ir = makeIr(makeModule("pkg", "pkg", { submodules: [makeModule("leaf", "pkg.leaf")] }));
+        expect(buildTypeLinkData(ir).packageModules).toEqual(new Set(["pkg"]));
     });
 });

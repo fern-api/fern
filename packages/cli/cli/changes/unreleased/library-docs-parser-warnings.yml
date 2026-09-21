@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs md generate` now prints non-fatal warnings reported by the library-docs
+    parsers (for example a Cython `.pyx` module that could not be parsed and was left out
+    of the generated reference) instead of only recording them in server logs.
+  type: fix
+- summary: |
+    Python library docs: module index pages no longer link to submodules that have
+    no documentable content (and therefore no generated page), which previously
+    produced 404 links (e.g. empty packages containing only `.pxd` files).
+  type: fix
+- summary: |
+    Python library docs: signatures of classes and functions that are re-exported from a
+    parent package now use the shortest public import path (e.g. `pkg.Foo` instead of
+    `pkg.sub.impl.Foo`), including their methods and properties. Anchors and links are unchanged.
+  type: fix
+- summary: |
+    Python library docs: cross-page links (type links in signatures and submodule lists) are
+    now emitted as relative `.mdx` file references that the docs build resolves to the final
+    page URLs. Previously they were absolute `/<library>/...` URLs that broke (404) whenever
+    the generated folder was mounted under a navigation section instead of at the site root.
+    `<CodeBlock links={...}>` values ending in `.md`/`.mdx` are resolved during the build as well.
+  type: fix

@@ -15,6 +15,7 @@ import {
     extractLinksFromTypes,
     formatSignatureMultiline,
     getModulePath,
+    getPublicPath,
     getTypeDisplay,
     getTypePathForSignature,
     type RenderContext,
@@ -33,6 +34,7 @@ interface FunctionSignature {
  */
 function buildFunctionSignature(
     func: FdrAPI.libraryDocs.PythonFunctionIr,
+    ctx: RenderContext,
     omitSelf: boolean = false
 ): FunctionSignature {
     const rawParams = omitSelf ? func.parameters.filter((p) => p.name !== "self" && p.name !== "cls") : func.parameters;
@@ -53,7 +55,7 @@ function buildFunctionSignature(
         typeStrings.push(returnType);
     }
 
-    const code = formatSignatureMultiline(func.path, params, returnType ? [returnType] : undefined);
+    const code = formatSignatureMultiline(getPublicPath(func.path, ctx), params, returnType ? [returnType] : undefined);
     return { code, typeStrings };
 }
 
@@ -106,7 +108,7 @@ export function renderFunctionDetailed(func: FdrAPI.libraryDocs.PythonFunctionIr
     lines.push(`<Anchor id="${generateAnchorId(func.path)}">`, "");
 
     // Signature with links (extracted from param/return types only)
-    const { code, typeStrings } = buildFunctionSignature(func);
+    const { code, typeStrings } = buildFunctionSignature(func, ctx);
     const links = extractLinksFromTypes(typeStrings, ctx, currentModulePath);
     lines.push(renderCodeBlockWithLinks(code, links), "</Anchor>", "");
 
@@ -152,7 +154,7 @@ export function renderMethodDetailed(
     lines.push(`<Anchor id="${generateAnchorId(func.path)}">`, "");
 
     // Signature with links (omit self/cls for methods)
-    const { code, typeStrings } = buildFunctionSignature(func, true);
+    const { code, typeStrings } = buildFunctionSignature(func, ctx, true);
     const links = extractLinksFromTypes(typeStrings, ctx, modulePath);
     lines.push(renderCodeBlockWithLinks(code, links), "</Anchor>", "");
 
