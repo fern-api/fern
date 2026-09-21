@@ -139,25 +139,11 @@ function getQueryParameterTypeReference({
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
-            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
-            let foundPrimitiveString = false;
-            for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
-                if (schema.type === "primitive" && schema.schema.type === "string") {
-                    foundPrimitiveString = true;
-                }
-                if (schema.type === "literal" && schema.value.type === "string") {
-                    if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
-                        potentialEnumValues.push(schema.value.value);
-                    } else {
-                        potentialEnumValues.push({
-                            value: schema.value.value,
-                            name: generateEnumNameFromValue(schema.value.value)
-                        });
-                    }
-                }
-            }
+            const { potentialEnumValues, foundPrimitiveString, hasOtherMembers } = getStringLiteralUnionInfo(
+                resolvedSchema.value.schemas
+            );
 
-            if (potentialEnumValues.length > 0) {
+            if (potentialEnumValues.length > 0 && !hasOtherMembers) {
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
@@ -187,6 +173,19 @@ function getQueryParameterTypeReference({
                         allowMultiple: false
                     };
                 }
+            }
+            if (potentialEnumValues.length > 0) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace,
+                        declarationDepth: 0
+                    }),
+                    allowMultiple: false
+                };
             }
 
             if (resolvedSchema.value.schemas.length === 2) {
@@ -334,25 +333,11 @@ function getQueryParameterTypeReference({
             };
         } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
-            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
-            let foundPrimitiveString = false;
-            for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
-                if (oneOfSchema.type === "primitive" && oneOfSchema.schema.type === "string") {
-                    foundPrimitiveString = true;
-                }
-                if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
-                    if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.value)) {
-                        potentialEnumValues.push(oneOfSchema.value.value);
-                    } else {
-                        potentialEnumValues.push({
-                            value: oneOfSchema.value.value,
-                            name: generateEnumNameFromValue(oneOfSchema.value.value)
-                        });
-                    }
-                }
-            }
+            const { potentialEnumValues, foundPrimitiveString, hasOtherMembers } = getStringLiteralUnionInfo(
+                schema.value.value.schemas
+            );
 
-            if (potentialEnumValues.length > 0) {
+            if (potentialEnumValues.length > 0 && !hasOtherMembers) {
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
@@ -382,6 +367,19 @@ function getQueryParameterTypeReference({
                         allowMultiple: false
                     };
                 }
+            }
+            if (potentialEnumValues.length > 0) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace,
+                        declarationDepth: 0
+                    }),
+                    allowMultiple: false
+                };
             }
 
             if (schema.value.value.schemas.length === 2) {
@@ -536,6 +534,35 @@ function getQueryParameterTypeReference({
             allowMultiple: false
         };
     }
+}
+
+function getStringLiteralUnionInfo(schemas: Schema[]): {
+    potentialEnumValues: (string | RawSchemas.EnumValueSchema)[];
+    foundPrimitiveString: boolean;
+    hasOtherMembers: boolean;
+} {
+    const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
+    let foundPrimitiveString = false;
+    let hasOtherMembers = false;
+
+    for (const schema of schemas) {
+        if (schema.type === "primitive" && schema.schema.type === "string") {
+            foundPrimitiveString = true;
+        } else if (schema.type === "literal" && schema.value.type === "string") {
+            if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
+                potentialEnumValues.push(schema.value.value);
+            } else {
+                potentialEnumValues.push({
+                    value: schema.value.value,
+                    name: generateEnumNameFromValue(schema.value.value)
+                });
+            }
+        } else {
+            hasOtherMembers = true;
+        }
+    }
+
+    return { potentialEnumValues, foundPrimitiveString, hasOtherMembers };
 }
 
 /**

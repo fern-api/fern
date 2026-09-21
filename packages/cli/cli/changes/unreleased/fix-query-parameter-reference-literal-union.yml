@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve referenced members in query parameter unions that also contain string literals.
+    Previously, the literal members could collapse the union to an enum and discard referenced constraints.
+  type: fix

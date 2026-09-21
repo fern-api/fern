@@ -1,0 +1,151 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listResources": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "query-parameters": {
+                    "parent.id": "deadbeef",
+                    "required-parent.id": "deadbeef",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/resources",
+              "request": {
+                "name": "ListResourcesRequest",
+                "query-parameters": {
+                  "parent.id": {
+                    "docs": "Filter resources by their parent identifier.",
+                    "type": "optional<ListResourcesRequestParentId>",
+                  },
+                  "required-parent.id": {
+                    "docs": "Filter resources by a required parent identifier.",
+                    "type": "IdentifierOrNone",
+                  },
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ConstrainedIdentifier": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": "^[a-f0-9]{8}$",
+            },
+          },
+          "IdentifierOrNone": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ConstrainedIdentifier",
+              "literal<"none">",
+            ],
+          },
+          "ListResourcesRequestParentId": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ConstrainedIdentifier",
+              "literal<"none">",
+            ],
+          },
+        },
+      },
+      "rawContents": "types:
+  ListResourcesRequestParentId:
+    discriminated: false
+    union:
+      - ConstrainedIdentifier
+      - literal<"none">
+    source:
+      openapi: ../openapi.yml
+  ConstrainedIdentifier:
+    type: string
+    validation:
+      pattern: ^[a-f0-9]{8}$
+  IdentifierOrNone:
+    discriminated: false
+    union:
+      - ConstrainedIdentifier
+      - literal<"none">
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listResources:
+      path: /resources
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ListResourcesRequest
+        query-parameters:
+          parent.id:
+            type: optional<ListResourcesRequestParentId>
+            docs: Filter resources by their parent identifier.
+          required-parent.id:
+            type: IdentifierOrNone
+            docs: Filter resources by a required parent identifier.
+      examples:
+        - query-parameters:
+            parent.id: deadbeef
+            required-parent.id: deadbeef
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Query Parameter Reference Literal Union",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Query Parameter Reference Literal Union
+",
+  },
+  "specVersion": "1.0.0",
+}
