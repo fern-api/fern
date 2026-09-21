@@ -698,7 +698,14 @@ describe("module file links", () => {
     });
 
     it("records package modules in the link data", () => {
-        const ir = makeIr(makeModule("pkg", "pkg", { submodules: [makeModule("leaf", "pkg.leaf")] }));
+        const ir = makeIr(
+            makeModule("pkg", "pkg", {
+                submodules: [
+                    makeModule("leaf", "pkg.leaf", { docstring: { summary: "Leaf." } }),
+                    makeModule("empty", "pkg.empty", { submodules: [makeModule("stub", "pkg.empty.stub")] })
+                ]
+            })
+        );
         expect(buildTypeLinkData(ir).packageModules).toEqual(new Set(["pkg"]));
     });
 });
