@@ -4,6 +4,7 @@ import {
     caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
+    createObjectProperty,
     namedTypeRefNode,
     primitiveTypeRefNode
 } from "@fern-typescript/test-utils";
@@ -46,18 +47,34 @@ function namedTypeRefNodeWithVariants(name: string, requestName: string, respons
  */
 function createMockBaseContext(opts?: {
     typeRefOverrides?: Map<string, TypeReferenceNode>;
+    inlinePropertyTypeRefOverrides?: Map<string, TypeReferenceNode>;
     getTypeDeclarationFn?: (typeName: FernIr.DeclaredTypeName) => FernIr.TypeDeclaration;
+    getGeneratedTypeFn?: (typeName: FernIr.DeclaredTypeName, typeNameOverride?: string) => unknown;
 }) {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
 
     const typeRefMap = opts?.typeRefOverrides ?? new Map<string, TypeReferenceNode>();
+    const inlinePropertyTypeRefMap = opts?.inlinePropertyTypeRefOverrides ?? new Map<string, TypeReferenceNode>();
 
     return {
         sourceFile,
         // biome-ignore lint/suspicious/noEmptyBlockStatements: test mock with no-op logger
         logger: { debug: () => {}, info: () => {}, warn: () => {}, error: () => {} },
         type: {
+            getReferenceToInlinePropertyType: (typeRef: FernIr.TypeReference): TypeReferenceNode => {
+                if (typeRef.type === "named") {
+                    const inlinePropertyOverride = inlinePropertyTypeRefMap.get(typeRef.typeId);
+                    if (inlinePropertyOverride != null) {
+                        return inlinePropertyOverride;
+                    }
+                    const override = typeRefMap.get(typeRef.typeId);
+                    if (override != null) {
+                        return override;
+                    }
+                }
+                return primitiveTypeRefNode("string");
+            },
             getReferenceToTypeForInlineUnion: (typeRef: FernIr.TypeReference): TypeReferenceNode => {
                 if (typeRef.type === "named") {
                     const override = typeRefMap.get(typeRef.typeId);
@@ -67,9 +84,33 @@ function createMockBaseContext(opts?: {
                 }
                 return primitiveTypeRefNode("string");
             },
+            getReferenceToType: (typeRef: FernIr.TypeReference): TypeReferenceNode => {
+                if (typeRef.type === "named") {
+                    const override = typeRefMap.get(typeRef.typeId);
+                    if (override != null) {
+                        return override;
+                    }
+                }
+                return primitiveTypeRefNode("string");
+            },
+            resolveTypeReference: (typeRef: FernIr.TypeReference): FernIr.ResolvedTypeReference => {
+                if (typeRef.type === "named") {
+                    return FernIr.ResolvedTypeReference.named({
+                        name: typeRef,
+                        shape: FernIr.ShapeType.Object
+                    });
+                }
+                return FernIr.ResolvedTypeReference.primitive({ v1: "STRING", v2: undefined });
+            },
             getGeneratedExample: (_example: FernIr.ExampleTypeReference) => ({
                 build: () => ts.factory.createStringLiteral("example-value")
             }),
+            getGeneratedType:
+                opts?.getGeneratedTypeFn ??
+                ((_typeName: FernIr.DeclaredTypeName, _typeNameOverride?: string) => ({
+                    type: "object",
+                    generateStatements: () => []
+                })),
             getTypeDeclaration:
                 opts?.getTypeDeclarationFn ??
                 ((typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => {
@@ -116,6 +157,7 @@ function createGenerator(opts: {
     members: FernIr.UndiscriminatedUnionMember[];
     docs?: string;
     examples?: FernIr.ExampleType[];
+    baseProperties?: FernIr.ObjectProperty[];
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     noOptionalProperties?: boolean;
@@ -125,7 +167,7 @@ function createGenerator(opts: {
 }): GeneratedUndiscriminatedUnionTypeImpl<any> {
     return new GeneratedUndiscriminatedUnionTypeImpl({
         typeName: opts.typeName,
-        shape: { members: opts.members, baseProperties: undefined },
+        shape: { members: opts.members, baseProperties: opts.baseProperties },
         examples: opts.examples ?? [],
         docs: opts.docs,
         fernFilepath: createFernFilepath(),
@@ -214,6 +256,70 @@ describe("GeneratedUndiscriminatedUnionTypeImpl", () => {
             });
             const output = serializeStatements(generator, context);
             expect(output).toMatchSnapshot();
+        });
+
+        it("declares inline object types referenced only by base properties", () => {
+            const variantType = createDeclaredTypeName("Variant");
+            const inlineOptionsType = createDeclaredTypeName("InlineOptions");
+            const inlineOptionsReference = FernIr.TypeReference.named({
+                ...inlineOptionsType,
+                default: undefined,
+                inline: undefined
+            });
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([
+                    [variantType.typeId, namedTypeRefNode("Variant")],
+                    [inlineOptionsType.typeId, namedTypeRefNode("InlineOptions")]
+                ]),
+                inlinePropertyTypeRefOverrides: new Map([
+                    [inlineOptionsType.typeId, namedTypeRefNode("UnionWithInlineBaseProperty.Options")]
+                ]),
+                getTypeDeclarationFn: (typeName) => ({
+                    name: typeName,
+                    shape: FernIr.Type.object({
+                        properties: [],
+                        extends: [],
+                        extraProperties: false,
+                        extendedProperties: undefined,
+                        deferredUnionBaseProperties: undefined
+                    }),
+                    referencedTypes: new Set<string>(),
+                    encoding: undefined,
+                    autogeneratedExamples: [],
+                    userProvidedExamples: [],
+                    v2Examples: undefined,
+                    docs: undefined,
+                    availability: undefined,
+                    source: undefined,
+                    inline: typeName.typeId === inlineOptionsType.typeId
+                }),
+                getGeneratedTypeFn: (typeName, typeNameOverride) => ({
+                    type: "object",
+                    generateStatements: () => [
+                        `export interface ${typeNameOverride ?? caseConverter.pascalSafe(typeName.name)} { width: number; }`
+                    ]
+                })
+            });
+            const generator = createGenerator({
+                typeName: "UnionWithInlineBaseProperty",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            ...variantType,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                ],
+                baseProperties: [createObjectProperty("options", inlineOptionsReference)],
+                enableInlineTypes: true
+            });
+
+            const output = serializeStatements(generator, context);
+
+            expect(output).toContain("options: UnionWithInlineBaseProperty.Options;");
+            expect(output).toContain("export namespace UnionWithInlineBaseProperty");
+            expect(output).toContain("export interface Options { width: number; }");
         });
 
         it("generates union with member docs", () => {

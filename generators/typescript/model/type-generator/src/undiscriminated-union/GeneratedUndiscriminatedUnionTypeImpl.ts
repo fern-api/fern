@@ -2,6 +2,7 @@ import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     GetReferenceOpts,
+    generateInlinePropertiesModule,
     getPropertyKey,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure,
@@ -68,8 +69,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
+        const inlineTypeStatements = this.generateInlineTypeModuleStatements(context);
         const requestResponseStatements = this.generateRequestResponseModuleStatements(context);
-        if (requestResponseStatements.length === 0) {
+        const moduleStatements = [...inlineTypeStatements, ...requestResponseStatements];
+        if (moduleStatements.length === 0) {
             return undefined;
         }
         const module: ModuleDeclarationStructure = {
@@ -78,7 +81,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             isExported: true,
             hasDeclareKeyword: false,
             declarationKind: ModuleDeclarationKind.Namespace,
-            statements: requestResponseStatements
+            statements: moduleStatements
         };
         return module;
     }
@@ -112,7 +115,11 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
     private getBasePropertyNodes(context: Context): BasePropertyNode[] {
         return this.getBaseProperties().map((property) => {
-            const type = context.type.getReferenceToType(property.valueType);
+            const type = context.type.getReferenceToInlinePropertyType(
+                property.valueType,
+                this.typeName,
+                this.case.pascalSafe(property.name)
+            );
             const shouldIncludeUndefined = type.isOptional && !this.includeSerdeLayer;
             const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
             const toTypeNode = (node: ts.TypeNode, nodeWithoutUndefined: ts.TypeNode | undefined): ts.TypeNode =>
@@ -136,6 +143,21 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                         ? toTypeNode(type.responseTypeNode, type.responseTypeNodeWithoutUndefined)
                         : undefined
             };
+        });
+    }
+
+    private generateInlineTypeModuleStatements(context: Context): (string | WriterFunction | StatementStructures)[] {
+        if (!this.enableInlineTypes) {
+            return [];
+        }
+        return generateInlinePropertiesModule({
+            properties: this.getBaseProperties().map((property) => ({
+                propertyName: this.case.pascalSafe(property.name),
+                typeReference: property.valueType
+            })),
+            generateStatements: (typeName, typeNameOverride) =>
+                context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+            getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
         });
     }
 
