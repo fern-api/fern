@@ -1,0 +1,15 @@
+{
+  "$ref": "#/definitions/ResourceId",
+  "definitions": {
+    "ResourceId": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  }
+}
