@@ -1675,18 +1675,10 @@ export class SubClientGenerator {
             named: (namedType) => {
                 const typeDeclaration = this.context.ir.types[namedType.typeId];
                 if (typeDeclaration?.shape.type === "alias") {
-                    const aliasedType = typeDeclaration.shape.aliasOf;
-                    if (
-                        FernIr.TypeReference._visit(aliasedType, {
-                            primitive: () => true,
-                            named: () => false,
-                            container: () => false,
-                            unknown: () => false,
-                            _other: () => false
-                        })
-                    ) {
-                        return `${paramName}.0`;
-                    }
+                    // An alias is a newtype without `Display`, so interpolate the wrapped value,
+                    // serialized the same way as the aliased type itself. Recursing handles alias
+                    // chains (`.0.0`) and aliases of `unknown`, whose `.0` is a `serde_json::Value`.
+                    return this.getPathParameterExpression(typeDeclaration.shape.aliasOf, `${paramName}.0`);
                 }
                 return paramName;
             },
@@ -1716,7 +1708,7 @@ export class SubClientGenerator {
             // string content directly and fall back to the JSON encoding for the other variants
             // (numbers and booleans print bare, which is what a path expects).
             unknown: () =>
-                `${paramName}.as_str().map(ToString::to_string).unwrap_or_else(|| ${paramName}.to_string())`,
+                `${paramName}.as_str().map(str::to_owned).unwrap_or_else(|| ${paramName}.to_string())`,
             _other: () => paramName
         });
     }
