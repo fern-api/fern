@@ -34,7 +34,10 @@ export function generateInlinePropertiesModule({
                         isExported: true,
                         hasDeclareKeyword: false,
                         name: propertyName,
-                        statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
+                        statements: generateStatements(
+                            typeDeclaration.name,
+                            getInlineTypeName(typeReference, InlineConsts.MAP_VALUE_TYPE_NAME)
+                        )
                     };
 
                     statements.push(mapModule);
@@ -47,6 +50,34 @@ export function generateInlinePropertiesModule({
             });
         }
     );
+}
+
+function getInlineTypeName(typeReference: FernIr.TypeReference, fallback: string): string {
+    switch (typeReference.type) {
+        case "named":
+        case "primitive":
+        case "unknown":
+            return fallback;
+        case "container":
+            switch (typeReference.container.type) {
+                case "list":
+                    return getInlineTypeName(typeReference.container.list, InlineConsts.LIST_ITEM_TYPE_NAME);
+                case "map":
+                    return getInlineTypeName(typeReference.container.valueType, InlineConsts.MAP_VALUE_TYPE_NAME);
+                case "set":
+                    return getInlineTypeName(typeReference.container.set, InlineConsts.LIST_ITEM_TYPE_NAME);
+                case "nullable":
+                    return getInlineTypeName(typeReference.container.nullable, fallback);
+                case "optional":
+                    return getInlineTypeName(typeReference.container.optional, fallback);
+                case "literal":
+                    return fallback;
+                default:
+                    return assertNever(typeReference.container);
+            }
+        default:
+            return assertNever(typeReference);
+    }
 }
 
 function propertyListOrSetStatementGenerator(
@@ -95,7 +126,10 @@ export function generateInlineAliasModule({
                 return undefined;
             }
 
-            return generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME);
+            return generateStatements(
+                typeDeclaration.name,
+                getInlineTypeName(typeReference, InlineConsts.MAP_VALUE_TYPE_NAME)
+            );
         },
         named: () => undefined,
         other: () => undefined
