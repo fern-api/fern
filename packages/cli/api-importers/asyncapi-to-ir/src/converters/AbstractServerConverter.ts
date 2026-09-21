@@ -47,6 +47,7 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
 
         return {
             defaultEnvironment: defaultEnvironmentId,
+            baseUrlEnvVar: undefined,
             environments: Environments.singleBaseUrl({
                 environments
             })

@@ -1794,6 +1794,7 @@
     },
     "environments": {
         "defaultEnvironment": "Default",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -2303,7 +2304,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -2407,7 +2409,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

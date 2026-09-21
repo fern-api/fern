@@ -2244,6 +2244,7 @@
     },
     "environments": {
         "defaultEnvironment": "Default",
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -2821,7 +2822,8 @@
                             "propertyAccess": null,
                             "variable": null
                         }
-                    ]
+                    ],
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -3324,7 +3326,8 @@
                             "propertyAccess": null,
                             "variable": null
                         }
-                    ]
+                    ],
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -3670,7 +3673,8 @@
                             "propertyAccess": null,
                             "variable": null
                         }
-                    ]
+                    ],
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {
@@ -3883,7 +3887,8 @@
                             "propertyAccess": null,
                             "variable": null
                         }
-                    ]
+                    ],
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

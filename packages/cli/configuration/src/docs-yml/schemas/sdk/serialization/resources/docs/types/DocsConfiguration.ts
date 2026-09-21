@@ -9,6 +9,7 @@ import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
 import { AnnouncementConfig } from "./AnnouncementConfig.js";
 import { BackgroundImageConfiguration } from "./BackgroundImageConfiguration.js";
+import { ChangelogConfiguration } from "./ChangelogConfiguration.js";
 import { CheckConfig } from "./CheckConfig.js";
 import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { CssConfig } from "./CssConfig.js";
@@ -51,6 +52,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     tabs: core.serialization.record(TabId, TabConfig).optional(),
     versions: core.serialization.list(VersionConfig).optional(),
     products: core.serialization.list(ProductConfig).optional(),
+    changelog: ChangelogConfiguration.optional(),
     landingPage: core.serialization.property("landing-page", PageConfiguration.optional()),
     navigation: NavigationConfig.optional(),
     navbarLinks: core.serialization.property("navbar-links", core.serialization.list(NavbarLink).optional()),
@@ -94,6 +96,7 @@ export declare namespace DocsConfiguration {
         tabs?: Record<TabId.Raw, TabConfig.Raw> | null;
         versions?: VersionConfig.Raw[] | null;
         products?: ProductConfig.Raw[] | null;
+        changelog?: ChangelogConfiguration.Raw | null;
         "landing-page"?: PageConfiguration.Raw | null;
         navigation?: NavigationConfig.Raw | null;
         "navbar-links"?: NavbarLink.Raw[] | null;

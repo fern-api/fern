@@ -267,6 +267,9 @@ function mapEnvironmentUrls(
 function normalizeGeneratorForMapping(generator: generatorsYml.GeneratorInvocation): FernResolvedGeneratorInput {
     return {
         ...generator,
+        // Migrated SDK Config targets intentionally float to the latest supported generator.
+        // Customers can add generatorVersion later when they want to pin an exact version.
+        version: undefined,
         outputMode: normalizeResolvedOutput(generator.outputMode)
     };
 }

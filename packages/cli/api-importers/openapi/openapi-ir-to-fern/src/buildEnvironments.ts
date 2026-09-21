@@ -172,6 +172,10 @@ function mergeWebsocketUrlsWithoutOverwriting(
 }
 
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
+    const baseUrlEnv = context.environmentOverrides?.["base-url-env"] ?? context.ir.baseUrlEnv;
+    if (baseUrlEnv != null) {
+        context.builder.setBaseUrlEnv(baseUrlEnv);
+    }
     if (context.environmentOverrides != null) {
         for (const [environment, environmentDeclaration] of Object.entries(
             context.environmentOverrides.environments ?? {}

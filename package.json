@@ -57,6 +57,8 @@
     "fern-v2-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli-v2 && echo 'Run node --enable-source-maps packages/cli/cli-v2/dist/dev/cli.cjs'",
     "fern-v2-dev:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli-v2/dist/dev/cli.cjs",
     "fern-v2-dev:bin": "pnpm fern-v2-dev:build && pnpm --filter @fern-api/cli-v2 dist:bin:local",
+    "fern-beta:build": "turbo run dist:cli:beta --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/beta/cli.cjs'",
+    "fern-beta:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/beta/cli.cjs",
     "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo run dist:cli --filter=@fern-api/generator-cli",
     "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
@@ -152,7 +154,8 @@
     "!**/generated",
     "!packages/cli/cli/dist/local",
     "!packages/cli/cli/dist/dev",
-    "!packages/cli/cli/dist/prod"
+    "!packages/cli/cli/dist/prod",
+    "!packages/cli/cli/dist/beta"
   ],
   "dependencies": {
     "js-yaml": "catalog:"

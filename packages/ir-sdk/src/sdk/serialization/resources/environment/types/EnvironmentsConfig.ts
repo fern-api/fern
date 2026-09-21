@@ -11,12 +11,14 @@ export const EnvironmentsConfig: core.serialization.ObjectSchema<
     FernIr.EnvironmentsConfig
 > = core.serialization.objectWithoutOptionalProperties({
     defaultEnvironment: EnvironmentId.optional(),
+    baseUrlEnvVar: core.serialization.string().optional(),
     environments: Environments,
 });
 
 export declare namespace EnvironmentsConfig {
     export interface Raw {
         defaultEnvironment?: EnvironmentId.Raw | null;
+        baseUrlEnvVar?: string | null;
         environments: Environments.Raw;
     }
 }

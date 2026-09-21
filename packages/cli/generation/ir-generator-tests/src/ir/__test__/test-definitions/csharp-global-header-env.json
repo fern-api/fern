@@ -309,7 +309,26 @@
                             "safeName": "Password"
                         }
                     },
-                    "passwordOmit": null
+                    "passwordOmit": null,
+                    "wrapperProperty": {
+                        "originalName": "Basic",
+                        "camelCase": {
+                            "unsafeName": "basic",
+                            "safeName": "basic"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "basic",
+                            "safeName": "basic"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BASIC",
+                            "safeName": "BASIC"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Basic",
+                            "safeName": "Basic"
+                        }
+                    }
                 },
                 "declaration": {
                     "name": {

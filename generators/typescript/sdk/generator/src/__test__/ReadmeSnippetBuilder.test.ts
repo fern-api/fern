@@ -1085,6 +1085,7 @@ describe("ReadmeSnippetBuilder", () => {
                 packageName: "@acme/sdk",
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
+                        playgroundDocs: undefined,
                         configuration: {
                             type: "clientCredentials"
                         } as FernIr.OAuthConfiguration
@@ -1122,6 +1123,7 @@ describe("ReadmeSnippetBuilder", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: {
                             originalName: "token",
                             pascalCase: { unsafeName: "Token", safeName: "Token" },

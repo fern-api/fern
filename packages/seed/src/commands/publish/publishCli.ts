@@ -17,11 +17,13 @@ export interface PublishCliResult {
 export async function publishCli({
     version,
     context,
-    isDevRelease
+    isDevRelease,
+    isBetaRelease
 }: {
     version: string | VersionFilePair;
     context: TaskContext;
     isDevRelease: boolean | undefined;
+    isBetaRelease?: boolean | undefined;
 }): Promise<PublishCliResult> {
     const cliWorkspace = await loadCliWorkspace();
 
@@ -48,13 +50,17 @@ export async function publishCli({
 
     context.logger.info(`Publishing CLI@${publishVersion}...`);
 
-    const publishType = getPublishType({ version: publishVersion, isDevRelease });
+    const publishType = getPublishType({ version: publishVersion, isDevRelease, isBetaRelease });
 
     let publishConfig: PublishCommand;
     switch (publishType) {
         case "dev":
             context.logger.info(`Publishing CLI@${publishVersion} as a dev release...`);
             publishConfig = cliWorkspace.workspaceConfig.publishDev;
+            break;
+        case "beta":
+            context.logger.info(`Publishing CLI@${publishVersion} as a beta release...`);
+            publishConfig = cliWorkspace.workspaceConfig.publishBeta;
             break;
         case "prerelease":
             context.logger.info(`Publishing CLI@${publishVersion} as a pre-release...`);

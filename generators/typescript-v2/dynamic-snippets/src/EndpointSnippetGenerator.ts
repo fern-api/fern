@@ -13,6 +13,26 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+type AuthFields =
+    | FernIr.dynamic.BasicAuth
+    | FernIr.dynamic.BearerAuth
+    | FernIr.dynamic.HeaderAuth
+    | FernIr.dynamic.OAuth
+    | FernIr.dynamic.InferredAuth;
+
+type AuthWithWrapperPropertyField = AuthFields & {
+    wrapperProperty?: FernIr.dynamic.Name | null;
+};
+
+// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.27.0 ships wrapperProperty on Auth
+function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPropertyField {
+    return "wrapperProperty" in auth;
+}
+
+function getAuthWrapperProperty(auth: AuthFields): FernIr.dynamic.Name | undefined {
+    return hasWrapperPropertyField(auth) ? (auth.wrapperProperty ?? undefined) : undefined;
+}
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
 
@@ -275,16 +295,19 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): ts.ObjectField[] {
-        return [
-            {
-                name: this.context.getPropertyName(auth.username),
-                value: ts.TypeLiteral.string(values.username)
-            },
-            {
-                name: this.context.getPropertyName(auth.password),
-                value: ts.TypeLiteral.string(values.password)
-            }
-        ];
+        return this.wrapAuthFields({
+            auth,
+            fields: [
+                {
+                    name: this.context.getPropertyName(auth.username),
+                    value: ts.TypeLiteral.string(values.username)
+                },
+                {
+                    name: this.context.getPropertyName(auth.password),
+                    value: ts.TypeLiteral.string(values.password)
+                }
+            ]
+        });
     }
 
     private getConstructorBearerAuthArgs({
@@ -294,12 +317,15 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BearerAuth;
         values: FernIr.dynamic.BearerAuthValues;
     }): ts.ObjectField[] {
-        return [
-            {
-                name: this.context.getPropertyName(auth.token),
-                value: ts.TypeLiteral.string(values.token)
-            }
-        ];
+        return this.wrapAuthFields({
+            auth,
+            fields: [
+                {
+                    name: this.context.getPropertyName(auth.token),
+                    value: ts.TypeLiteral.string(values.token)
+                }
+            ]
+        });
     }
 
     private getConstructorHeaderAuthArgs({
@@ -309,15 +335,18 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.HeaderAuth;
         values: FernIr.dynamic.HeaderAuthValues;
     }): ts.ObjectField[] {
-        return [
-            {
-                name: this.context.getPropertyName(auth.header.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert({
-                    typeReference: auth.header.typeReference,
-                    value: values.value
-                })
-            }
-        ];
+        return this.wrapAuthFields({
+            auth,
+            fields: [
+                {
+                    name: this.context.getPropertyName(auth.header.name.name),
+                    value: this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: auth.header.typeReference,
+                        value: values.value
+                    })
+                }
+            ]
+        });
     }
 
     private getConstructorOAuthArgs({
@@ -327,14 +356,36 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
     }): ts.ObjectField[] {
+        return this.wrapAuthFields({
+            auth,
+            fields: [
+                {
+                    name: this.context.getPropertyName(auth.clientId),
+                    value: ts.TypeLiteral.string(values.clientId)
+                },
+                {
+                    name: this.context.getPropertyName(auth.clientSecret),
+                    value: ts.TypeLiteral.string(values.clientSecret)
+                }
+            ]
+        });
+    }
+
+    private getAuthWrapperPropertyName(wrapperProperty: FernIr.dynamic.Name): string {
+        // mirrors @fern-typescript/commons toCamelCase, which the SDK uses for auth wrapper option names
+        return wrapperProperty.camelCase.unsafeName === "oAuth" ? "oauth" : wrapperProperty.camelCase.unsafeName;
+    }
+
+    private wrapAuthFields({ auth, fields }: { auth: AuthFields; fields: ts.ObjectField[] }): ts.ObjectField[] {
+        const wrapperProperty = getAuthWrapperProperty(auth);
+        if (wrapperProperty == null) {
+            return fields;
+        }
         return [
             {
-                name: this.context.getPropertyName(auth.clientId),
-                value: ts.TypeLiteral.string(values.clientId)
-            },
-            {
-                name: this.context.getPropertyName(auth.clientSecret),
-                value: ts.TypeLiteral.string(values.clientSecret)
+                // SDK auth wrapper option is always camelCase(scheme key), regardless of serde/casing config
+                name: this.getAuthWrapperPropertyName(wrapperProperty),
+                value: ts.TypeLiteral.object({ fields })
             }
         ];
     }
@@ -626,8 +677,15 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
+        const bodyFieldNames = new Set(requestBodyFields.map((field) => field.name));
+
         return ts.TypeLiteral.object({
-            fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
+            fields: [
+                ...pathParameterFields.filter((field) => !bodyFieldNames.has(field.name)),
+                ...queryParameterFields,
+                ...headerFields,
+                ...requestBodyFields
+            ]
         });
     }
 
@@ -644,7 +702,26 @@ export class EndpointSnippetGenerator {
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
             case "referenced": {
-                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value });
+                let literal: ts.TypeLiteral | undefined;
+                if (
+                    this.context.customConfig?.flattenRequestParameters === true &&
+                    body.bodyType.type === "typeReference" &&
+                    body.bodyType.value.type === "named"
+                ) {
+                    const named = this.context.resolveNamedType({ typeId: body.bodyType.value.value });
+                    if (named?.type === "object") {
+                        literal = this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: body.bodyType.value,
+                            value,
+                            convertOpts: { isForRequest: true }
+                        });
+                        const fields = literal.getObjectFields();
+                        if (fields != null) {
+                            return fields;
+                        }
+                    }
+                }
+                const field = this.getReferencedRequestBodyPropertyObjectField({ body, value, literal });
                 // an example that omits an optional request body has no value to write, so the
                 // property is dropped rather than passed explicitly as undefined
                 return ts.TypeLiteral.isNop(field.value) ? [] : [field];
@@ -669,14 +746,16 @@ export class EndpointSnippetGenerator {
 
     private getReferencedRequestBodyPropertyObjectField({
         body,
-        value
+        value,
+        literal
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
+        literal?: ts.TypeLiteral;
     }): ts.ObjectField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: literal ?? this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
         };
     }
 

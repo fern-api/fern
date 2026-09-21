@@ -689,6 +689,10 @@ describe("convertGeneratorsConfiguration", () => {
 
             // Verify AsyncAPI-specific settings merge with base settings
             expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.schema).toMatchObject({
+                type: "oss",
+                sourceType: "asyncapi"
+            });
             expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
             expect(converted.api.definitions[0]?.settings?.asyncApiMessageNaming).toBe("v2");
         });
@@ -1577,5 +1581,62 @@ describe("convertGeneratorsConfiguration", () => {
 
             expect(converted.groups[0]?.generators[0]?.idempotencyKeyGenerationConfig).toBeUndefined();
         });
+    });
+});
+
+describe("digest pinning", () => {
+    const DIGEST = `sha256:${"a".repeat(64)}`;
+
+    async function convertSingleGenerator(
+        generator: Record<string, unknown>
+    ): Promise<{ name: string | undefined; containerImage: string | undefined }> {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            // biome-ignore lint/suspicious/noExplicitAny: exercising raw generators.yml shapes
+            rawGeneratorsConfiguration: { groups: { group1: { generators: [generator as any] } } },
+            context: createMockTaskContext()
+        });
+        const invocation = converted.groups[0]?.generators[0];
+        return { name: invocation?.name, containerImage: invocation?.containerImage };
+    }
+
+    // `name` is what IR version resolution and the on-prem adapter cutover check match on, and both
+    // match exactly, so a digest left on it would miss every lookup.
+    it("keeps the digest off the generator name on the default path", async () => {
+        const { name, containerImage } = await convertSingleGenerator({
+            name: `fern-python-sdk@${DIGEST}`,
+            version: "6.0.0"
+        });
+
+        expect(name).toBe("fernapi/fern-python-sdk");
+        expect(containerImage).toBe(`fernapi/fern-python-sdk@${DIGEST}`);
+    });
+
+    it("leaves an undigested default invocation deriving its image from the name", async () => {
+        const { name, containerImage } = await convertSingleGenerator({
+            name: "fern-python-sdk",
+            version: "6.0.0"
+        });
+
+        expect(name).toBe("fernapi/fern-python-sdk");
+        expect(containerImage).toBeUndefined();
+    });
+
+    it("keeps the digest off the generator name on the custom-registry path", async () => {
+        const { name, containerImage } = await convertSingleGenerator({
+            image: { registry: "ghcr.io/acme", name: `fern-python-sdk@${DIGEST}` },
+            version: "6.0.0"
+        });
+
+        expect(name).toBe("fernapi/fern-python-sdk");
+        expect(containerImage).toBe(`ghcr.io/acme/fern-python-sdk@${DIGEST}`);
+    });
+
+    // The message is asserted in splitImageDigest.test.ts against a stub that preserves it;
+    // createMockTaskContext's failAndThrow discards it, so this pins the rejection only.
+    it("rejects a malformed digest on the default path too", async () => {
+        await expect(
+            convertSingleGenerator({ name: "fern-python-sdk@sha256:nope", version: "6.0.0" })
+        ).rejects.toThrow();
     });
 });

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
@@ -7,6 +7,7 @@ import YAML from "yaml";
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
+import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
     resolveMigrationPathParameterStyle,
@@ -45,7 +46,7 @@ export async function sdkMigrate({
         cliContext
     });
     const outputPath = resolveOutputPath(args.output, workspace.absoluteFilePath);
-    const sourceBaseDirectory = args.output == null ? workspace.absoluteFilePath.toString() : cwd().toString();
+    const sourceBaseDirectory = outputPath == null ? cwd().toString() : dirname(outputPath).toString();
 
     let mapped: MappingResult;
     try {
@@ -79,11 +80,22 @@ export async function sdkMigrate({
     const yaml = serialized.endsWith("\n") ? serialized : `${serialized}\n`;
     if (outputPath == null) {
         cliContext.writeTextToStdout(yaml);
-        return;
+    } else {
+        await writeOutputFile(outputPath, yaml, args.force);
+        cliContext.stderr.info(`Created SDK Config v1 at ${outputPath}`);
     }
 
-    await writeOutputFile(outputPath, yaml, args.force);
-    cliContext.stderr.info(`Created SDK Config v1 at ${outputPath}`);
+    const updatedDocsSections = await migrateDocsConfiguration({
+        docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
+        workspaceName: workspace.workspaceName,
+        isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
+        sourceSpecs
+    });
+    if (updatedDocsSections > 0) {
+        cliContext.stderr.info(
+            `Updated ${updatedDocsSections} API reference section${updatedDocsSections === 1 ? "" : "s"} across the docs configuration rooted at ${project.docsWorkspaces?.absoluteFilepathToDocsConfig}`
+        );
+    }
 }
 
 function resolveOutputPath(

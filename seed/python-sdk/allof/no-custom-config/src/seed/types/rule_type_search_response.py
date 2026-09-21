@@ -9,7 +9,7 @@ from .rule_type import RuleType
 
 
 class RuleTypeSearchResponse(UniversalBaseModel):
-    results: typing.Optional[typing.List[RuleType]] = pydantic.Field(default=None)
+    results: typing.List[RuleType] = pydantic.Field()
     """
     Current page of results from the requested resource.
     """

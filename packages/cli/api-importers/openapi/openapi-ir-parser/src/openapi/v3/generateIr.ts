@@ -412,12 +412,25 @@ export function generateIr({
 
     const groupInfo = getFernGroups({ document: openApi, context });
 
+    const baseUrlEnv = getExtension<unknown>(openApi, FernOpenAPIExtension.BASE_URL_ENV);
+    let validatedBaseUrlEnv: string | undefined;
+    if (baseUrlEnv != null) {
+        if (typeof baseUrlEnv === "string" && baseUrlEnv.length > 0) {
+            validatedBaseUrlEnv = baseUrlEnv;
+        } else {
+            taskContext.logger.warn(
+                `Expected a non-empty string value for ${FernOpenAPIExtension.BASE_URL_ENV}; ignoring.`
+            );
+        }
+    }
+
     const ir: OpenApiIntermediateRepresentation = {
         apiVersion: getFernVersion({
             context,
             document: openApi
         }),
         specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
+        baseUrlEnv: validatedBaseUrlEnv,
         basePath:
             fernBasePathParsed != null &&
             (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)

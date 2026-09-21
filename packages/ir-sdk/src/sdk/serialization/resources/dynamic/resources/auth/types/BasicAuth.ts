@@ -4,17 +4,20 @@ import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { Name } from "../../commons/types/Name.js";
+import { BaseAuth } from "./BaseAuth.js";
 
 export const BasicAuth: core.serialization.ObjectSchema<serializers.dynamic.BasicAuth.Raw, FernIr.dynamic.BasicAuth> =
-    core.serialization.objectWithoutOptionalProperties({
-        username: Name,
-        usernameOmit: core.serialization.boolean().optional(),
-        password: Name,
-        passwordOmit: core.serialization.boolean().optional(),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            username: Name,
+            usernameOmit: core.serialization.boolean().optional(),
+            password: Name,
+            passwordOmit: core.serialization.boolean().optional(),
+        })
+        .extend(BaseAuth);
 
 export declare namespace BasicAuth {
-    export interface Raw {
+    export interface Raw extends BaseAuth.Raw {
         username: Name.Raw;
         usernameOmit?: boolean | null;
         password: Name.Raw;

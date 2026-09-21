@@ -341,15 +341,14 @@ components:
       type: object
       properties:
         results:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/RuleType'
           description: Current page of results from the requested resource.
         paging:
           $ref: '#/components/schemas/PagingCursors'
       required:
+        - results
         - paging
     User:
       title: User
@@ -368,15 +367,14 @@ components:
       type: object
       properties:
         results:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/User'
           description: Current page of results from the requested resource.
         paging:
           $ref: '#/components/schemas/PagingCursors'
       required:
+        - results
         - paging
     RuleResponseStatus:
       title: RuleResponseStatus

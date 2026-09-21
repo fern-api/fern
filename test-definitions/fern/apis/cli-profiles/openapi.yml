@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Profiles CLI
+  version: 1.0.0
+# A templated server URL, so the fixture exercises the profile's
+# `server_variables` path (and the per-variable `--region` convenience flag
+# that `profiles create` registers from it) rather than only `base_url`.
+servers:
+  - url: https://{region}.api.example.com
+    variables:
+      region:
+        default: us1
+        enum:
+          - us1
+          - au1
+        description: API region.
+paths:
+  # A tenant-scoped path parameter is the canonical case for the feature: it
+  # is the flag a multi-tenant CLI's users would otherwise type on every
+  # single command.
+  /accounts/{AccountSid}/messages:
+    get:
+      operationId: messages_list
+      x-fern-sdk-group-name: messages
+      x-fern-sdk-method-name: list
+      summary: List messages for an account
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          description: The account these messages belong to.
+          schema:
+            type: string
+        # Carries `x-fern-default`, so the emitted help pins the rung a
+        # profile has to outrank.
+        - name: direction
+          in: query
+          description: Filter by message direction.
+          x-fern-default: inbound
+          schema:
+            type: string
+            enum:
+              - inbound
+              - outbound
+      responses:
+        "200":
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Message:
+      type: object
+      properties:
+        sid:
+          type: string
+        body:
+          type: string
+      required:
+        - sid
+        - body

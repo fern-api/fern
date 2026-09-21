@@ -5,6 +5,7 @@ import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { buildContainerEnvVars, FORWARDED_ENV_VARS } from "./buildContainerEnvVars.js";
+import { ensureDockerHubOatLogin } from "./dockerHubOatLogin.js";
 
 export declare namespace runContainer {
     export interface Args {
@@ -29,6 +30,11 @@ export declare namespace runContainer {
          * emulation on other hosts. Leave unset to use the host-native platform.
          */
         platform?: string;
+        /**
+         * Container network mode (`docker run --network <value>`). Pass `"none"` to run a generator
+         * with no network access at all. Leave unset for the runtime default.
+         */
+        network?: string;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
     }
@@ -50,6 +56,7 @@ export async function runContainer({
     runner,
     pull = false,
     platform,
+    network,
     signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
@@ -65,8 +72,12 @@ export async function runContainer({
             runner,
             pull,
             platform,
+            network,
             signal
         });
+    // Before the run, not in pullImage: `docker run` pulls the image itself when it is absent or
+    // when `--pull always` is passed, so those pulls never reach the explicit pull below.
+    await ensureDockerHubOatLogin({ imageName, runner, logger, signal });
     try {
         await tryRun();
     } catch (e) {
@@ -119,6 +130,7 @@ async function tryRunContainer({
     runner,
     pull = false,
     platform,
+    network,
     signal
 }: {
     logger: Logger;
@@ -132,6 +144,7 @@ async function tryRunContainer({
     runner?: ContainerRunner;
     pull?: boolean;
     platform?: string;
+    network?: string;
     signal?: AbortSignal;
 }): Promise<void> {
     const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
@@ -145,6 +158,7 @@ async function tryRunContainer({
         "root",
         ...(pull ? ["--pull", "always"] : []),
         ...(platform != null ? ["--platform", platform] : []),
+        ...(network != null ? ["--network", network] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
         ...Object.entries(containerEnvVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
@@ -230,6 +244,7 @@ export async function startContainer({
     runner?: ContainerRunner;
 }): Promise<string> {
     const containerRunner = runner ?? "docker";
+    await ensureDockerHubOatLogin({ imageName, runner, logger });
 
     const tryStart = async () => {
         const { stdout, exitCode, stderr } = await loggingExeca(

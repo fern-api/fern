@@ -11,6 +11,35 @@ paths:
       responses:
         "200":
           description: Success response
+          headers:
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+                example: 99
+            X-Api-Result:
+              description: JSON-encoded result metadata.
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ApiResult"
+            X-Schema-Ref-Example:
+              description: Result declared via direct schema ref.
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+            X-Media-Example:
+              description: Example declared on the media type object.
+              content:
+                application/json:
+                  example:
+                    transport: delta
+                  schema:
+                    type: object
+                    properties:
+                      transport:
+                        type: string
+                    required:
+                      - transport
           content:
             application/json:
               schema:
@@ -39,3 +68,14 @@ paths:
                   detail:
                     type: string
                     example: "Request was throttled. Expected available in 10 seconds."
+components:
+  schemas:
+    ApiResult:
+      type: object
+      properties:
+        content_type:
+          type: string
+      required:
+        - content_type
+      examples:
+        - content_type: image/jpeg

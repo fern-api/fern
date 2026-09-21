@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "Demo server",
     "environments": {
       "_visit": [Function],
@@ -1409,7 +1410,7 @@
   "subpackages": {
     "subpackage_plant": {
       "displayName": undefined,
-      "docs": undefined,
+      "docs": "Everything about your Plants",
       "errors": [],
       "fernFilepath": {
         "allParts": [

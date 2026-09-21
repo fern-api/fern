@@ -6,6 +6,8 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     api: string;
     /** Name of API that we are referencing */
     apiName?: string;
+    /** API specifications to load directly. When provided, these take precedence over the API workspace referenced by `api-name`. */
+    specs?: FernDocsConfig.ApiSpecConfiguration[];
     /** Path to an openrpc spec. */
     openrpc?: string;
     audiences?: FernDocsConfig.Audience;
