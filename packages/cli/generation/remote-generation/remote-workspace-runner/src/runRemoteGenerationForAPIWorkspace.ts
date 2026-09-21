@@ -41,8 +41,10 @@ import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
-    selectGeneratorConfigRoute
+    selectGeneratorConfigRoute,
+    selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
+import { isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -386,6 +388,11 @@ export function prepareFernSdkGenApiRoutes({
             if (sdkConfigV1 != null && configuredTarget == null) {
                 throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage}`);
             }
+            if (sdkConfigV1 == null && isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                throw new Error(
+                    "The internal unpinned SDK Config generator marker cannot be used without SDK Config v1"
+                );
+            }
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
@@ -403,10 +410,24 @@ export function prepareFernSdkGenApiRoutes({
                 }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
-            const route = selectFernSdkGenApiRoute(
-                resolved,
-                resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
-            );
+            let route: GenerationConfigRoute | undefined;
+            if (configuredTarget != null && configuredTarget.generatorVersion == null) {
+                if (!isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                    throw new Error(
+                        "An SDK Config target without generatorVersion must use the internal unpinned generator marker"
+                    );
+                }
+                const language = resolved.language ?? configuredLanguage;
+                if (language == null) {
+                    throw new Error(`SDK Config v1 generation does not recognize generator ${resolved.name}`);
+                }
+                route = selectUnpinnedSdkConfigRoute({ generatorId: resolved.name, language });
+            } else {
+                route = selectFernSdkGenApiRoute(
+                    resolved,
+                    resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
+                );
+            }
             if (route != null) {
                 try {
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
@@ -428,7 +449,7 @@ export function prepareFernSdkGenApiRoutes({
                     return { generatorInvocation: resolved, route: undefined, error: undefined };
                 }
                 throw new Error(
-                    `Cannot route ${resolved.name} ${resolved.version} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
+                    `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
                 );
             }
             return {

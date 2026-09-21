@@ -159,10 +159,14 @@ export async function runRemoteGenerationForGenerator({
      */
     generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
+    const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     const fdr = createFdrService({ token: token.value });
 
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
+    const isAirGapped = await detectFdrAirGappedMode({
+        requiresFdrRegistration,
+        fdrOrigin: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
+        logger: interactiveTaskContext.logger
+    });
 
     // For local-file-system output, `generatorsYml.getPackageName` always returns
     // undefined, so fall back to the generator `config` (e.g. `package_name`,
@@ -323,6 +327,7 @@ export async function runRemoteGenerationForGenerator({
                     organization,
                     cliVersion: workspace.cliVersion,
                     generatorInvocation: candidate.generatorInvocation,
+                    sdkGenApiRoute,
                     sdkName: sdkConfigTarget.sdkName ?? sdkConfigV1.sdkName,
                     sdkVersion: candidate.sdkVersion,
                     apiVersion: sdkConfigV1.apiVersion,
@@ -353,14 +358,14 @@ export async function runRemoteGenerationForGenerator({
                 // `--sdk-config` flow below.
                 if (sdkGenApiSourceArchive == null) {
                     return interactiveTaskContext.failAndThrow(
-                        `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} to sdk-gen-api: the source archive is unavailable`,
+                        `Cannot submit ${candidate.generatorInvocation.name} ${sdkGenApiRoute.requestedVersion ?? "(unpinned)"} to sdk-gen-api: the source archive is unavailable`,
                         undefined,
                         { code: CliError.Code.ConfigError }
                     );
                 }
                 if (mapFernGroupToSdkConfig == null) {
                     return interactiveTaskContext.failAndThrow(
-                        `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} to sdk-gen-api: no SDK Config mapper was provided`,
+                        `Cannot submit ${candidate.generatorInvocation.name} ${sdkGenApiRoute.requestedVersion ?? "(unpinned)"} to sdk-gen-api: no SDK Config mapper was provided`,
                         undefined,
                         { code: CliError.Code.ConfigError }
                     );
@@ -413,7 +418,7 @@ export async function runRemoteGenerationForGenerator({
                 };
             } else {
                 return interactiveTaskContext.failAndThrow(
-                    `Cannot submit ${candidate.generatorInvocation.name} ${candidate.generatorInvocation.version} without an SDK Config v1 document. Run \`fern sdk migrate\`, then pass the generated document with \`fern generate --sdk-config <path>\`.`,
+                    `Cannot submit ${candidate.generatorInvocation.name} ${sdkGenApiRoute.requestedVersion ?? "(unpinned)"} without an SDK Config v1 document. Run \`fern sdk migrate\`, then pass the generated document with \`fern generate --sdk-config <path>\`.`,
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -425,7 +430,6 @@ export async function runRemoteGenerationForGenerator({
         await sdkGenApiPreparationBatch?.ready(sdkGenApiTargetIdSeed, sdkConfigBuildParameters);
     }
 
-    const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     let generateOauthClients = true;
     let generatePaginatedClients = true;
     if (!isAirGapped && requiresFdrRegistration) {
@@ -590,6 +594,7 @@ export async function runRemoteGenerationForGenerator({
                       organization,
                       cliVersion: workspace.cliVersion,
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                      sdkGenApiRoute,
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
                       token,
@@ -724,6 +729,18 @@ export async function runRemoteGenerationForGenerator({
     }
 
     return result;
+}
+
+export async function detectFdrAirGappedMode({
+    requiresFdrRegistration,
+    fdrOrigin,
+    logger
+}: {
+    requiresFdrRegistration: boolean;
+    fdrOrigin: string;
+    logger: InteractiveTaskContext["logger"];
+}): Promise<boolean> {
+    return requiresFdrRegistration ? await detectAirGappedMode(`${fdrOrigin}/health`, logger) : false;
 }
 
 export function getPublishConfig({

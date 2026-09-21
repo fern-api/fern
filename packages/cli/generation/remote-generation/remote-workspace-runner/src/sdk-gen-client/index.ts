@@ -12,5 +12,6 @@ export {
     GeneratorConfigCompatibilityError,
     getGeneratorLanguage,
     selectGeneratorConfigRoute,
+    selectUnpinnedSdkConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./generatorConfigCompatibility.js";
