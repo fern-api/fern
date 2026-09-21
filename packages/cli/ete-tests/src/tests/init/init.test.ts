@@ -222,6 +222,7 @@ describe("fern init", () => {
             [
                 "instances:",
                 "  - url: https://fern.docs.buildwithfern.com",
+                "title: Fern | Documentation",
                 "navigation:",
                 "  - api: API Reference",
                 ""

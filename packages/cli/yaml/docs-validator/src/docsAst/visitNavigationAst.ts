@@ -36,6 +36,7 @@ export declare namespace visitNavigationAst {
 /**
  * Mirrors how the docs resolver picks the API workspace for an `api:` section:
  * an explicit `api-name` must match a workspace; otherwise a single loaded workspace is used.
+ * Additionally accepts an unnamed workspace among several so validation never flags more than the build would.
  */
 function getApiWorkspaceForApiSection({
     apiSection,
