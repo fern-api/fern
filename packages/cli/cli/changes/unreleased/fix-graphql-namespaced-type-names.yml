@@ -1,0 +1,4 @@
+- summary: |
+    Stop prefixing GraphQL type names with the spec's namespace. A `name:` on a GraphQL spec now
+    only namespaces type ids, so types render as `ProfileImages` instead of `user-profile_ProfileImages`.
+  type: fix
