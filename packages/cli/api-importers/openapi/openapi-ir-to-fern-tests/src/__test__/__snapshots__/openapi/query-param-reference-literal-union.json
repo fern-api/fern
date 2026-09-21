@@ -15,6 +15,8 @@
               "examples": [
                 {
                   "query-parameters": {
+                    "constrained.value": "none",
+                    "mixed.value": "none",
                     "parent.id": "deadbeef",
                     "required-parent.id": "deadbeef",
                   },
@@ -26,6 +28,14 @@
               "request": {
                 "name": "ListResourcesRequest",
                 "query-parameters": {
+                  "constrained.value": {
+                    "docs": "Filter resources by a constrained value.",
+                    "type": "ConstrainedStringOrNone",
+                  },
+                  "mixed.value": {
+                    "docs": "Filter resources by a mixed value.",
+                    "type": "IntegerOrNone",
+                  },
                   "parent.id": {
                     "docs": "Filter resources by their parent identifier.",
                     "type": "optional<ListResourcesRequestParentId>",
@@ -55,6 +65,28 @@
               "pattern": "^[a-f0-9]{8}$",
             },
           },
+          "ConstrainedStringOrNone": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": "^[A-Z]{3}$",
+                },
+              },
+              "literal<"none">",
+            ],
+          },
           "IdentifierOrNone": {
             "base-properties": undefined,
             "discriminated": false,
@@ -66,6 +98,20 @@
             },
             "union": [
               "ConstrainedIdentifier",
+              "literal<"none">",
+            ],
+          },
+          "IntegerOrNone": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "integer",
               "literal<"none">",
             ],
           },
@@ -104,6 +150,22 @@
       - literal<"none">
     source:
       openapi: ../openapi.yml
+  IntegerOrNone:
+    discriminated: false
+    union:
+      - integer
+      - literal<"none">
+    source:
+      openapi: ../openapi.yml
+  ConstrainedStringOrNone:
+    discriminated: false
+    union:
+      - type: string
+        validation:
+          pattern: ^[A-Z]{3}$
+      - literal<"none">
+    source:
+      openapi: ../openapi.yml
 service:
   auth: false
   base-path: ''
@@ -122,10 +184,18 @@ service:
           required-parent.id:
             type: IdentifierOrNone
             docs: Filter resources by a required parent identifier.
+          mixed.value:
+            type: IntegerOrNone
+            docs: Filter resources by a mixed value.
+          constrained.value:
+            type: ConstrainedStringOrNone
+            docs: Filter resources by a constrained value.
       examples:
         - query-parameters:
             parent.id: deadbeef
             required-parent.id: deadbeef
+            mixed.value: none
+            constrained.value: none
   source:
     openapi: ../openapi.yml
 ",

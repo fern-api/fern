@@ -175,17 +175,12 @@ function getQueryParameterTypeReference({
                 }
             }
             if (potentialEnumValues.length > 0) {
-                return {
-                    value: buildTypeReference({
-                        schema,
-                        context,
-                        fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace,
-                        declarationDepth: 0
-                    }),
-                    allowMultiple: false
-                };
+                return buildUndiscriminatedUnionTypeReference({
+                    schema,
+                    context,
+                    fileContainingReference,
+                    namespace
+                });
             }
 
             if (resolvedSchema.value.schemas.length === 2) {
@@ -369,17 +364,12 @@ function getQueryParameterTypeReference({
                 }
             }
             if (potentialEnumValues.length > 0) {
-                return {
-                    value: buildTypeReference({
-                        schema,
-                        context,
-                        fileContainingReference,
-                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace,
-                        declarationDepth: 0
-                    }),
-                    allowMultiple: false
-                };
+                return buildUndiscriminatedUnionTypeReference({
+                    schema,
+                    context,
+                    fileContainingReference,
+                    namespace
+                });
             }
 
             if (schema.value.value.schemas.length === 2) {
@@ -536,6 +526,30 @@ function getQueryParameterTypeReference({
     }
 }
 
+function buildUndiscriminatedUnionTypeReference({
+    schema,
+    context,
+    fileContainingReference,
+    namespace
+}: {
+    schema: Schema;
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
+}): QueryParameterTypeReference {
+    return {
+        value: buildTypeReference({
+            schema,
+            context,
+            fileContainingReference,
+            declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+            namespace,
+            declarationDepth: 0
+        }),
+        allowMultiple: false
+    };
+}
+
 function getStringLiteralUnionInfo(schemas: Schema[]): {
     potentialEnumValues: (string | RawSchemas.EnumValueSchema)[];
     foundPrimitiveString: boolean;
@@ -547,7 +561,12 @@ function getStringLiteralUnionInfo(schemas: Schema[]): {
 
     for (const schema of schemas) {
         if (schema.type === "primitive" && schema.schema.type === "string") {
-            foundPrimitiveString = true;
+            const { format, pattern, minLength, maxLength } = schema.schema;
+            if (format != null || pattern != null || minLength != null || maxLength != null) {
+                hasOtherMembers = true;
+            } else {
+                foundPrimitiveString = true;
+            }
         } else if (schema.type === "literal" && schema.value.type === "string") {
             if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
                 potentialEnumValues.push(schema.value.value);

@@ -10,6 +10,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ParentIdentifier"
         - $ref: "#/components/parameters/RequiredParentIdentifier"
+        - $ref: "#/components/parameters/RequiredMixedValue"
+        - $ref: "#/components/parameters/RequiredConstrainedValue"
       responses:
         "200":
           description: Successful response
@@ -33,6 +35,20 @@ components:
       description: Filter resources by a required parent identifier.
       schema:
         $ref: "#/components/schemas/IdentifierOrNone"
+    RequiredMixedValue:
+      name: mixed.value
+      in: query
+      required: true
+      description: Filter resources by a mixed value.
+      schema:
+        $ref: "#/components/schemas/IntegerOrNone"
+    RequiredConstrainedValue:
+      name: constrained.value
+      in: query
+      required: true
+      description: Filter resources by a constrained value.
+      schema:
+        $ref: "#/components/schemas/ConstrainedStringOrNone"
 
   schemas:
     ConstrainedIdentifier:
@@ -42,6 +58,19 @@ components:
     IdentifierOrNone:
       anyOf:
         - $ref: "#/components/schemas/ConstrainedIdentifier"
+        - type: string
+          enum:
+            - none
+    IntegerOrNone:
+      anyOf:
+        - type: integer
+        - type: string
+          enum:
+            - none
+    ConstrainedStringOrNone:
+      anyOf:
+        - type: string
+          pattern: "^[A-Z]{3}$"
         - type: string
           enum:
             - none
