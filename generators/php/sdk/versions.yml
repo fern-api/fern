@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.0
+  changelogEntry:
+    - summary: |
+        Object types with XML encoding metadata (e.g. TwiML) now extend `XmlSerializableType` and
+        generate `toXml()`/`toXmlElement()`, `fromXml()`/`fromXmlElement()`, and fluent child builder
+        methods (`$response->say('Hello', ['voice' => 'man'])`). Attributes, text, namespaces, prefixes,
+        wrapped lists, separator-delimited lists and enums round-trip; unknown attributes and children
+        are preserved and re-emitted, and parsing rejects DTDs, malformed input and wrong root elements.
+        XML types add `ext-dom`/`ext-libxml` to `composer.json` and a `Core\Xml` runtime.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 2.21.0
   changelogEntry:
     - summary: |
