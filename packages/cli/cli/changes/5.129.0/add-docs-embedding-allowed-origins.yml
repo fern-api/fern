@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `settings.embedding.allowed-origins` to docs.yml. Origins listed there may embed the
+    docs site in an iframe (they are appended to the `frame-ancestors` directive of the
+    Content-Security-Policy header). By default only the site itself may frame it.
+  type: feat

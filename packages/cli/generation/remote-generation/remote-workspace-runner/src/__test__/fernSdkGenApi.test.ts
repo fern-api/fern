@@ -1,12 +1,14 @@
 // cspell:ignore kotlin octocat unstub
 import { generatorsYml } from "@fern-api/configuration";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { createHash } from "crypto";
 import FormData from "form-data";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { gunzipSync, gzipSync } from "zlib";
 import {
     createFernSdkGenApiBatchRequest,
+    createFernSdkGenApiPublishCredentials,
     createFernSdkGenApiRequest,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
@@ -250,7 +252,10 @@ describe("isEligibleForFernSdkGenApi", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
             enabled: true,
-            sdkConfigV1: sdkConfigV1({ language: "python", generatorVersion: "6.0.0" }),
+            sdkConfigV1: sdkConfigV1({
+                language: "python",
+                generatorVersion: "6.0.0"
+            }),
             requireEnvVars: true,
             isPreview: false
         });
@@ -354,7 +359,9 @@ describe("isEligibleForFernSdkGenApi", () => {
             isPreview: false
         });
 
-        expect(result?.generatorInvocation.config).toMatchObject({ literal: "${FERN_LITERAL_TOKEN}" });
+        expect(result?.generatorInvocation.config).toMatchObject({
+            literal: "${FERN_LITERAL_TOKEN}"
+        });
     });
 
     it("resolves generator substitutions before rejecting a legacy cutover target", () => {
@@ -378,7 +385,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                 invocation({
                     version: "3.999.999",
                     outputMode: FernFiddle.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                        FernFiddle.GithubOutputModeV2.push({
+                            owner: "acme",
+                            repo: "sdk",
+                            branch: "main"
+                        })
                     )
                 })
             ],
@@ -396,7 +407,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             "GitHub delivery",
             {
                 outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: "acme",
+                        repo: "sdk",
+                        branch: "main"
+                    })
                 )
             }
         ],
@@ -452,7 +467,10 @@ describe("isEligibleForFernSdkGenApi", () => {
             generators: results.map((result) => result.generatorInvocation),
             routes: results.map((result) => result.route),
             routeErrors: results.map((result) => result.error),
-            sourceResolution: { sourceArchives: new Map([[0, sourceArchive()]]), errors: new Map() }
+            sourceResolution: {
+                sourceArchives: new Map([[0, sourceArchive()]]),
+                errors: new Map()
+            }
         });
         expect(
             getFernSdkGenApiCandidateIndexes(
@@ -503,7 +521,10 @@ describe("isEligibleForFernSdkGenApi", () => {
             apiName: "Petstore",
             organization: "acme",
             cliVersion: "0.0.0",
-            generatorInvocation: invocation({ version: "4.0.0", config: { padding: "x".repeat(600_000) } }),
+            generatorInvocation: invocation({
+                version: "4.0.0",
+                config: { padding: "x".repeat(600_000) }
+            }),
             sdkVersion: "1.2.3",
             token: { value: "token" } as never,
             specsTarGzBuffer: validSourceArchive,
@@ -653,6 +674,183 @@ describe("isEligibleForFernSdkGenApi", () => {
         }
     });
 
+    it.each([
+        [
+            "npm",
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://registry.npmjs.org",
+                packageName: "@acme/sdk",
+                token: "npm-secret"
+            })
+        ],
+        [
+            "maven",
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://repo.example.com",
+                coordinate: "com.acme:sdk",
+                username: "maven-user",
+                password: "maven-secret"
+            })
+        ],
+        [
+            "pypi",
+            FernFiddle.PublishOutputModeV2.pypiOverride({
+                registryUrl: "https://upload.pypi.org/legacy/",
+                coordinate: "acme-sdk",
+                username: "__token__",
+                password: "pypi-secret"
+            })
+        ],
+        [
+            "crates",
+            FernFiddle.PublishOutputModeV2.cratesOverride({
+                registryUrl: "https://crates.io/api/v1/crates",
+                packageName: "acme-sdk",
+                token: "crates-secret"
+            })
+        ]
+    ] as const)("routes direct %s publication through sdk-gen-api", (_registry, publishV2) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.publishV2(publishV2)
+                })
+            ],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+    });
+
+    it.each([
+        [
+            "missing credentials",
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://registry.npmjs.org",
+                packageName: "@acme/sdk",
+                token: ""
+            })
+        ],
+        [
+            "OIDC",
+            FernFiddle.PublishOutputModeV2.cratesOverride({
+                registryUrl: "https://crates.io/api/v1/crates",
+                packageName: "acme-sdk",
+                token: "<USE_OIDC>"
+            })
+        ],
+        [
+            "unsupported registry",
+            FernFiddle.PublishOutputModeV2.nugetOverride({
+                registryUrl: "https://api.nuget.org/v3/index.json",
+                packageName: "Acme.Sdk",
+                apiKey: "nuget-secret"
+            })
+        ]
+    ] as const)("preserves legacy fallback for direct publication with %s", (_name, publishV2) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.publishV2(publishV2)
+                })
+            ],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+    });
+
+    it.each([
+        ["plain HTTP", "http://registry.npmjs.org"],
+        ["user information", "https://token:password@registry.npmjs.org"],
+        ["invalid syntax", "not-a-url"]
+    ])("rejects an SDK Config direct registry URL with %s before network work", (_name, registryUrl) => {
+        const post = vi.spyOn(axios, "post");
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "4.0.0",
+                    outputMode: FernFiddle.OutputMode.publishV2(
+                        FernFiddle.PublishOutputModeV2.npmOverride({
+                            registryUrl,
+                            packageName: "@acme/sdk",
+                            token: "npm-secret"
+                        })
+                    )
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            "Direct registry URL must use HTTPS and must not contain user information"
+        );
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("keeps a direct SDK Config v1 target eligible", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "4.0.0",
+                    outputMode: FernFiddle.OutputMode.publishV2(
+                        FernFiddle.PublishOutputModeV2.npmOverride({
+                            registryUrl: "https://registry.npmjs.org",
+                            packageName: "@acme/sdk",
+                            token: "npm-secret"
+                        })
+                    )
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1(),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route?.payloadKind).toBe("sdk-config-v1");
+    });
+
+    it("routes MCP npm publication with direct credentials", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    name: "fernapi/fern-mcp-server",
+                    language: "mcp",
+                    version: "0.1.0",
+                    outputMode: FernFiddle.OutputMode.publishV2(
+                        FernFiddle.PublishOutputModeV2.npmOverride({
+                            registryUrl: "https://registry.npmjs.org",
+                            packageName: "@acme/mcp-server",
+                            token: "npm-secret"
+                        })
+                    )
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "mcp", generatorVersion: "0.1.0" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route?.payloadKind).toBe("sdk-config-v1");
+    });
+
     it("rejects AUTO until the shared pipeline owns Fern's post-generation version replacement", () => {
         expect(
             isEligibleForFernSdkGenApi({
@@ -670,7 +868,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                 sdkVersion: "1.2.3",
                 specsTarGzBuffer: Buffer.from("archive"),
                 whitelabel: {
-                    github: { token: "token", username: "fern", email: "fern@example.com" }
+                    github: {
+                        token: "token",
+                        username: "fern",
+                        email: "fern@example.com"
+                    }
                 }
             })
         ).toBe(false);
@@ -768,7 +970,10 @@ describe("isEligibleForFernSdkGenApi", () => {
             payload: sdkConfigPayload('{"schemaVersion":"sdk-config/v1"}')
         });
 
-        expect(request.targets[0]?.sdk).toMatchObject({ name: "customer-sdk", version: "2.3.4" });
+        expect(request.targets[0]?.sdk).toMatchObject({
+            name: "customer-sdk",
+            version: "2.3.4"
+        });
         expect(request.targets[0]).not.toHaveProperty("package");
     });
 
@@ -867,6 +1072,122 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.stringify(request)).not.toContain("secret");
     });
 
+    it("maps all direct registry credential variants by target ID without leaking them into the request", () => {
+        const generatorInvocations = [
+            invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "npm-secret"
+                    })
+                )
+            }),
+            invocation({
+                name: "fernapi/fern-python-sdk",
+                language: "python",
+                version: "4.64.1",
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.pypiOverride({
+                        registryUrl: "https://upload.pypi.org/legacy/",
+                        coordinate: "acme-sdk",
+                        username: "__token__",
+                        password: "pypi-token"
+                    })
+                )
+            }),
+            invocation({
+                name: "fernapi/fern-java-sdk",
+                language: "java",
+                version: "3.0.0",
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.mavenOverride({
+                        registryUrl: "https://repo.example.com",
+                        coordinate: "com.acme:sdk",
+                        username: "maven-user",
+                        password: "maven-password",
+                        signature: {
+                            keyId: "signing-key",
+                            password: "signing-password",
+                            secretKey: "signing-secret-key"
+                        }
+                    })
+                )
+            }),
+            invocation({
+                name: "fernapi/fern-rust-sdk",
+                language: "rust",
+                version: "1.0.0",
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.cratesOverride({
+                        registryUrl: "https://crates.io/api/v1/crates",
+                        packageName: "acme-sdk",
+                        token: "crates-secret"
+                    })
+                )
+            })
+        ];
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets: generatorInvocations.map((generatorInvocation, index) => ({
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                targetIdSeed: index.toString(),
+                payload: runtimePayload(Buffer.from(`bundle-${index}`))
+            }))
+        });
+        const credentials = createFernSdkGenApiPublishCredentials(request, generatorInvocations);
+
+        expect(credentials).toEqual({
+            schemaVersion: "fern-publish-credentials/v1",
+            credentialSetId: request.credentialSetId,
+            targets: [
+                {
+                    targetId: request.targets[0]?.targetId,
+                    registry: "npm",
+                    token: "npm-secret"
+                },
+                {
+                    targetId: request.targets[1]?.targetId,
+                    registry: "pypi",
+                    username: "__token__",
+                    password: "pypi-token"
+                },
+                {
+                    targetId: request.targets[2]?.targetId,
+                    registry: "maven",
+                    username: "maven-user",
+                    password: "maven-password",
+                    signature: {
+                        keyId: "signing-key",
+                        password: "signing-password",
+                        secretKey: "signing-secret-key"
+                    }
+                },
+                {
+                    targetId: request.targets[3]?.targetId,
+                    registry: "crates",
+                    token: "crates-secret"
+                }
+            ]
+        });
+        expect(request.credentialSetId).toMatch(/^[0-9a-f-]{36}$/);
+        const serializedRequest = JSON.stringify(request);
+        for (const secret of [
+            "npm-secret",
+            "pypi-token",
+            "maven-password",
+            "signing-password",
+            "signing-secret-key",
+            "crates-secret"
+        ]) {
+            expect(serializedRequest).not.toContain(secret);
+        }
+    });
+
     it("creates one request for a group with multiple languages and duplicate-language targets", () => {
         const request = createFernSdkGenApiBatchRequest({
             apiName: "Petstore",
@@ -931,7 +1252,11 @@ describe("isEligibleForFernSdkGenApi", () => {
         const github = createRequest(
             invocation({
                 outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "main" })
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: "acme",
+                        repo: "sdk",
+                        branch: "main"
+                    })
                 )
             })
         );
@@ -941,6 +1266,62 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(github.idempotencyKey).not.toBe(original.idempotencyKey);
         expect(changedBundle.idempotencyKey).not.toBe(original.idempotencyKey);
         expect(changedSource.idempotencyKey).not.toBe(original.idempotencyKey);
+    });
+
+    it("keeps credential identity and idempotency stable across equivalent direct-publication retries", () => {
+        const directInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.npmjs.org",
+                    packageName: "@acme/sdk",
+                    token: "npm-secret"
+                })
+            )
+        });
+        const first = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: directInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+        const second = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: directInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+        const rotated = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "rotated-npm-secret"
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(Buffer.from("bundle"))
+        });
+
+        expect(first.credentialSetId).toBe(second.credentialSetId);
+        expect(first.idempotencyKey).toBe(second.idempotencyKey);
+        expect(rotated.credentialSetId).toBe(first.credentialSetId);
+        expect(rotated.idempotencyKey).toBe(first.idempotencyKey);
+        expect(first.credentialSetId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+        const serializedRequest = JSON.stringify(rotated);
+        expect(serializedRequest).not.toContain("rotated-npm-secret");
+        expect(serializedRequest).not.toContain(createHash("sha256").update("rotated-npm-secret").digest("hex"));
     });
 
     it("creates a generator-compatible gzip bundle with enriched IR and no publish secrets", async () => {
@@ -1381,6 +1762,364 @@ describe("isEligibleForFernSdkGenApi", () => {
             expect(multipartBuffer.indexOf(filename)).toBeLessThan(multipartBuffer.indexOf(payload));
         });
         expect(multipartBuffer.indexOf(typescriptRuntimeBundle)).toBeLessThan(multipartBuffer.indexOf(pythonSdkConfig));
+        expect(multipartBody).not.toContain('name="credentials"');
+    });
+
+    it("submits direct publish credentials as a separate in-memory JSON multipart file", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.npmjs.org",
+                    packageName: "@acme/sdk",
+                    token: "multipart-npm-secret"
+                })
+            )
+        });
+        const expectedRequest = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        });
+        const post = vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId: expectedRequest.targets[0]?.targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: {
+                            artifactUrl: "https://example.test/sdk.zip",
+                            actualVersion: "1.2.4"
+                        },
+                        publication: {
+                            status: "success",
+                            publishTarget: {
+                                type: "npm",
+                                identifier: "https://registry.example.com/packages/@acme/sdk/1.2.4"
+                            },
+                            output: { packageName: "@acme/sdk" }
+                        }
+                    }
+                ]
+            }
+        } as never);
+
+        const result = await runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        });
+
+        const submittedForm = post.mock.calls[0]?.[1];
+        expect(submittedForm).toBeInstanceOf(FormData);
+        if (!(submittedForm instanceof FormData)) {
+            throw new Error("Expected sdk-gen-api request to use multipart form data");
+        }
+        const multipartBody = submittedForm.getBuffer().toString("utf8");
+        const requestMatch = multipartBody.match(/name="request"\r\n\r\n([^\r\n]+)/);
+        const credentialsMatch = multipartBody.match(
+            /name="credentials"; filename="publish-credentials\.v1\.json"\r\nContent-Type: application\/json\r\n\r\n([^\r\n]+)/
+        );
+        const submittedRequest = JSON.parse(requestMatch?.[1] ?? "{}");
+        const submittedCredentials = JSON.parse(credentialsMatch?.[1] ?? "{}");
+
+        expect(submittedCredentials).toEqual({
+            schemaVersion: "fern-publish-credentials/v1",
+            credentialSetId: submittedRequest.credentialSetId,
+            targets: [
+                {
+                    targetId: submittedRequest.targets[0].targetId,
+                    registry: "npm",
+                    token: "multipart-npm-secret"
+                }
+            ]
+        });
+        expect(JSON.stringify(submittedRequest)).not.toContain("multipart-npm-secret");
+        expect(result.publishTarget).toEqual({
+            registry: "npm",
+            label: "npm",
+            version: "1.2.4",
+            identifier: "https://registry.example.com/packages/@acme/sdk/1.2.4",
+            url: "https://registry.example.com/packages/@acme/sdk/1.2.4"
+        });
+    });
+
+    it("keeps a package identifier out of the publication URL field", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.example.com",
+                    packageName: "@acme/sdk",
+                    token: "npm-secret"
+                })
+            )
+        });
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        });
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId: request.targets[0]?.targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: { artifactUrl: "https://example.test/sdk.zip", actualVersion: "1.2.4" },
+                        publication: {
+                            status: "success",
+                            publishTarget: { type: "npm", identifier: "@acme/sdk" },
+                            output: { packageName: "@acme/sdk" }
+                        }
+                    }
+                ]
+            }
+        } as never);
+
+        const result = await runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        });
+
+        expect(result.publishTarget).toEqual({
+            registry: "npm",
+            label: "npm",
+            version: "1.2.4",
+            identifier: "@acme/sdk"
+        });
+        expect(result.publishTarget?.url).toBeUndefined();
+    });
+
+    it("removes credentials, bearer tokens, and Axios request state from submission errors", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown }> = [];
+        const capturingContext = {
+            logger: { debug: vi.fn(), info: vi.fn() },
+            failAndThrow: (message: string, error: unknown) => {
+                failures.push({ message, error });
+                throw error instanceof Error ? error : new Error(message);
+            }
+        } as never;
+        const credentialSecret = "captured-multipart-secret";
+        const bearerSecret = "captured-bearer-secret";
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.example.com",
+                    packageName: "@acme/sdk",
+                    token: credentialSecret
+                })
+            )
+        });
+        vi.spyOn(axios, "post").mockRejectedValue(
+            new AxiosError(
+                `Request failed for ${bearerSecret}`,
+                "ERR_BAD_RESPONSE",
+                {
+                    headers: { Authorization: `Bearer ${bearerSecret}` },
+                    data: credentialSecret
+                } as never,
+                { body: credentialSecret },
+                {
+                    status: 502,
+                    statusText: "Bad Gateway",
+                    headers: {},
+                    config: {} as never,
+                    data: { message: `Upstream unavailable for ${credentialSecret}` }
+                }
+            )
+        );
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: bearerSecret } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toMatchObject({
+            name: "FernSdkGenApiSubmissionError",
+            message: "Upstream unavailable for [REDACTED]",
+            status: 502,
+            code: "ERR_BAD_RESPONSE"
+        });
+
+        expect(failures).toHaveLength(1);
+        const captured = failures[0];
+        expect(captured?.error).not.toHaveProperty("config");
+        expect(captured?.error).not.toHaveProperty("request");
+        expect(captured?.error).not.toHaveProperty("response");
+        const telemetry = `${captured?.message} ${String(captured?.error)} ${JSON.stringify(captured?.error)}`;
+        expect(telemetry).not.toContain(credentialSecret);
+        expect(telemetry).not.toContain(bearerSecret);
+        expect(telemetry).not.toContain("Authorization");
+    });
+
+    it("removes credentials, bearer tokens, and Axios request state from polling errors", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown }> = [];
+        const capturingContext = {
+            logger: { debug: vi.fn(), info: vi.fn() },
+            failAndThrow: (message: string, error: unknown) => {
+                failures.push({ message, error });
+                throw error instanceof Error ? error : new Error(message);
+            }
+        } as never;
+        const credentialSecret = "polling-multipart-secret";
+        const bearerSecret = "polling-bearer-secret";
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.example.com",
+                    packageName: "@acme/sdk",
+                    token: credentialSecret
+                })
+            )
+        });
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockRejectedValue(
+            new AxiosError(
+                `Polling failed for ${bearerSecret}`,
+                "ERR_BAD_RESPONSE",
+                {
+                    headers: { Authorization: `Bearer ${bearerSecret}` },
+                    data: credentialSecret
+                } as never,
+                { body: credentialSecret },
+                {
+                    status: 503,
+                    statusText: "Service Unavailable",
+                    headers: {},
+                    config: {} as never,
+                    data: { message: `Retry later for ${credentialSecret}` }
+                }
+            )
+        );
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: bearerSecret } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toMatchObject({
+            name: "FernSdkGenApiSubmissionError",
+            message: "Retry later for [REDACTED]",
+            status: 503,
+            code: "ERR_BAD_RESPONSE"
+        });
+
+        expect(failures).toHaveLength(1);
+        const captured = failures[0];
+        expect(captured?.message).toBe("Failed to poll sdk-gen-api build");
+        expect(captured?.error).not.toHaveProperty("config");
+        expect(captured?.error).not.toHaveProperty("request");
+        expect(captured?.error).not.toHaveProperty("response");
+        const telemetry = `${captured?.message} ${String(captured?.error)} ${JSON.stringify(captured?.error)}`;
+        expect(telemetry).not.toContain(credentialSecret);
+        expect(telemetry).not.toContain(bearerSecret);
+        expect(telemetry).not.toContain("Authorization");
+    });
+
+    it("surfaces structured publication failure code and message", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.example.com",
+                    packageName: "@acme/sdk",
+                    token: "npm-secret"
+                })
+            )
+        });
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        });
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [
+                    {
+                        targetId: request.targets[0]?.targetId,
+                        status: "failed",
+                        logs: [],
+                        publication: {
+                            status: "failure",
+                            publishTarget: { type: "npm", identifier: "@acme/sdk" },
+                            error: { code: "publish_failed", message: "SDK publish failed" }
+                        }
+                    }
+                ]
+            }
+        } as never);
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context
+            })
+        ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed");
     });
 
     it("stops polling when the build fails before a target reaches a terminal state", async () => {
@@ -1396,12 +2135,20 @@ describe("isEligibleForFernSdkGenApi", () => {
             specsTarGzBuffer,
             payload: runtimePayload(validRuntimeBundle)
         });
-        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "post").mockResolvedValue({
+            data: { buildId: "build-1" }
+        } as never);
         const get = vi.spyOn(axios, "get").mockResolvedValue({
             data: {
                 buildId: "build-1",
                 status: "failed",
-                targets: [{ targetId: request.targets[0]?.targetId, status: "queued", logs: [] }]
+                targets: [
+                    {
+                        targetId: request.targets[0]?.targetId,
+                        status: "queued",
+                        logs: []
+                    }
+                ]
             }
         } as never);
         await expect(
@@ -1485,6 +2232,93 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
+    it("rejects more than 64 direct publish credential targets", () => {
+        const generatorInvocations = Array.from({ length: 65 }, () =>
+            invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "npm-secret"
+                    })
+                )
+            })
+        );
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets: generatorInvocations.map((generatorInvocation, index) => ({
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                targetIdSeed: index.toString(),
+                payload: runtimePayload(Buffer.from("bundle"))
+            }))
+        });
+
+        expect(() => createFernSdkGenApiPublishCredentials(request, generatorInvocations)).toThrow(
+            "at most 64 direct publish credential targets"
+        );
+    });
+
+    it("rejects a direct publish secret field larger than 16 KiB before submission", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)],
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "x".repeat(16 * 1024 + 1)
+                    })
+                )
+            })
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow("exceeds the 16 KiB field limit");
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("measures the direct publish secret field limit in UTF-8 bytes", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)],
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "界".repeat(6_000)
+                    })
+                )
+            })
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow("exceeds the 16 KiB field limit");
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("rejects a publish credentials file larger than 64 KiB before submission", async () => {
+        const generatorInvocations = Array.from({ length: 4 }, () =>
+            invocation({
+                outputMode: FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "x".repeat(16 * 1024)
+                    })
+                )
+            })
+        );
+        const { builds, post } = createPreflightBatch({
+            payloads: generatorInvocations.map(() => runtimePayload(validRuntimeBundle)),
+            generatorInvocations
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 64 KiB limit");
+        expect(post).not.toHaveBeenCalled();
+    });
+
     it("rejects a bundle larger than 5 MiB before submission", async () => {
         const { builds, post } = createPreflightBatch({
             payloads: [runtimePayload(Buffer.alloc(5 * 1024 * 1024 + 1))]
@@ -1544,8 +2378,14 @@ describe("isEligibleForFernSdkGenApi", () => {
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(sdkConfigPayloadBytes) },
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(remainingPayloadBytes) }
+                {
+                    payloadKind: "sdk-config-v1",
+                    body: Buffer.alloc(sdkConfigPayloadBytes)
+                },
+                {
+                    payloadKind: "sdk-config-v1",
+                    body: Buffer.alloc(remainingPayloadBytes)
+                }
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
@@ -1565,8 +2405,14 @@ describe("isEligibleForFernSdkGenApi", () => {
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(sdkConfigPayloadBytes) },
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(remainingPayloadBytes) }
+                {
+                    payloadKind: "sdk-config-v1",
+                    body: Buffer.alloc(sdkConfigPayloadBytes)
+                },
+                {
+                    payloadKind: "sdk-config-v1",
+                    body: Buffer.alloc(remainingPayloadBytes)
+                }
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
@@ -1577,6 +2423,37 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         await expect(Promise.all(builds)).rejects.toThrow(
             "exceeding the 50 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets"
+        );
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("includes publish credentials in the 50 MiB aggregate upload limit", async () => {
+        const firstPayloadBytes = 25 * 1024 * 1024;
+        const secondPayloadBytes = 50 * 1024 * 1024 - validSourceArchive.length - firstPayloadBytes;
+        const directOutput = () =>
+            FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.npmjs.org",
+                    packageName: "@acme/sdk",
+                    token: "npm-secret"
+                })
+            );
+        const { builds, post } = createPreflightBatch({
+            payloads: [
+                { payloadKind: "sdk-config-v1", body: Buffer.alloc(firstPayloadBytes) },
+                {
+                    payloadKind: "sdk-config-v1",
+                    body: Buffer.alloc(secondPayloadBytes)
+                }
+            ],
+            generatorInvocations: [
+                invocation({ version: "4.0.0", outputMode: directOutput() }),
+                invocation({ version: "4.0.1", outputMode: directOutput() })
+            ]
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "source archive, target payloads, and publish credentials total"
         );
         expect(post).not.toHaveBeenCalled();
     });
@@ -1727,7 +2604,9 @@ describe("fernapi/fern-mcp-server target", () => {
     });
 
     it("maps downloadFiles output mode to download", () => {
-        expect(mapFernSdkGenApiOutput(mcpInvocation()).requestedOutput).toEqual({ type: "download" });
+        expect(mapFernSdkGenApiOutput(mcpInvocation()).requestedOutput).toEqual({
+            type: "download"
+        });
     });
 
     it("builds a request with customConfig passed through unchanged", () => {

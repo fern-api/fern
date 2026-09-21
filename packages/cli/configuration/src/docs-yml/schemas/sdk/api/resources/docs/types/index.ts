@@ -46,6 +46,7 @@ export * from "./DocsSettingsConfig.js";
 export * from "./DocsTypographyConfig.js";
 export * from "./EditThisPageConfig.js";
 export * from "./EditThisPageLaunch.js";
+export * from "./EmbeddingConfig.js";
 export * from "./ExperimentalConfig.js";
 export * from "./ExternalProduct.js";
 export * from "./FeatureFlag.js";
