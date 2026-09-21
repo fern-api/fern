@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import { bundleRemoteOpenAPI } from "@fern-api/lazy-fern-workspace";
+import { createFernSdkGenApiRequest, prepareFernSdkGenApiRoutes } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -28,8 +29,7 @@ describe("createSdkConfigWorkspace", () => {
         await Promise.all(temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })));
     });
 
-    it("constructs sources and resolves an omitted generator version without generators.yml", async () => {
-        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("4.1.0");
+    it("constructs sources without resolving an omitted generator version through FDR", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
         await mkdir(path.join(directory, "specs"));
@@ -83,7 +83,7 @@ describe("createSdkConfigWorkspace", () => {
                 generators: [
                     {
                         name: "fernapi/fern-typescript-sdk",
-                        version: "4.1.0",
+                        version: "latest",
                         language: "typescript",
                         absolutePathToLocalOutput: path.join(directory, "generated", "typescript")
                     }
@@ -93,12 +93,39 @@ describe("createSdkConfigWorkspace", () => {
         expect(workspace.generatorsConfiguration?.absolutePathToConfiguration).toBe(
             path.join(directory, "sdk-config.yml")
         );
-        expect(getLatestGeneratorVersion).toHaveBeenCalledWith(
-            expect.objectContaining({
-                generatorName: "fernapi/fern-typescript-sdk",
-                cliVersion: "0.0.0"
-            })
-        );
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        const generatorInvocation = workspace.generatorsConfiguration?.groups[0]?.generators[0];
+        if (generatorInvocation == null) {
+            throw new Error("Expected the SDK Config generator invocation");
+        }
+        const sdkConfigV1 = {
+            body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
+            sdkName: "payments",
+            sdkVersion: "1.0.0",
+            targets: [{ language: "typescript" }]
+        };
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [generatorInvocation],
+            enabled: true,
+            sdkConfigV1,
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected the unpinned SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Payments",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: prepared.generatorInvocation,
+            sdkGenApiRoute: prepared.route,
+            sdkVersion: "1.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.body }
+        });
+        expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-typescript-sdk" });
+        expect(JSON.stringify(request)).not.toContain('"version":"latest"');
         await cleanup();
     });
 

@@ -41,7 +41,8 @@ import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
-    selectGeneratorConfigRoute
+    selectGeneratorConfigRoute,
+    selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -403,10 +404,19 @@ export function prepareFernSdkGenApiRoutes({
                 }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
-            const route = selectFernSdkGenApiRoute(
-                resolved,
-                resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
-            );
+            let route: GenerationConfigRoute | undefined;
+            if (configuredTarget != null && configuredTarget.generatorVersion == null) {
+                const language = resolved.language ?? configuredLanguage;
+                if (language == null) {
+                    throw new Error(`SDK Config v1 generation does not recognize generator ${resolved.name}`);
+                }
+                route = selectUnpinnedSdkConfigRoute({ generatorId: resolved.name, language });
+            } else {
+                route = selectFernSdkGenApiRoute(
+                    resolved,
+                    resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
+                );
+            }
             if (route != null) {
                 try {
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
@@ -428,7 +438,7 @@ export function prepareFernSdkGenApiRoutes({
                     return { generatorInvocation: resolved, route: undefined, error: undefined };
                 }
                 throw new Error(
-                    `Cannot route ${resolved.name} ${resolved.version} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
+                    `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
                 );
             }
             return {

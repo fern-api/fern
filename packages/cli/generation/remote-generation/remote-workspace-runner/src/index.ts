@@ -5,6 +5,7 @@ export type {
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
 export {
+    createFernSdkGenApiRequest,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
@@ -34,5 +35,8 @@ export type {
     RemoteGeneratorRunRecorder
 } from "./RemoteGeneratorRunRecorder.js";
 export type { FernSourceArchiveRequest, FernSourceArchiveResolution } from "./runRemoteGenerationForAPIWorkspace.js";
-export { runRemoteGenerationForAPIWorkspace } from "./runRemoteGenerationForAPIWorkspace.js";
+export {
+    prepareFernSdkGenApiRoutes,
+    runRemoteGenerationForAPIWorkspace
+} from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";

@@ -6,6 +6,7 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    selectUnpinnedSdkConfigRoute,
     validateGeneratorConfigCompatibility
 } from "../sdk-gen-client/index.js";
 
@@ -192,6 +193,21 @@ describe("validateGeneratorConfigCompatibility", () => {
 
     it("does not expose a language for an unknown generator", () => {
         expect(getGeneratorLanguage("acme/custom-generator")).toBeUndefined();
+    });
+
+    it("routes an unpinned SDK Config target without semver cutover selection", () => {
+        expect(
+            selectUnpinnedSdkConfigRoute({
+                generatorId: "fernapi/fern-typescript-sdk",
+                language: "typescript"
+            })
+        ).toEqual({
+            generatorId: "fernapi/fern-typescript-sdk",
+            language: "typescript",
+            cutoverVersion: "4.0.0",
+            configKind: "sdk-config-v1",
+            payloadKind: "sdk-config-v1"
+        });
     });
 });
 

@@ -30,15 +30,24 @@ export interface ValidateGeneratorConfigCompatibilityInput {
 
 export type SelectGeneratorConfigRouteInput = Omit<ValidateGeneratorConfigCompatibilityInput, "configKind">;
 
-/** Validated route and payload kind that the caller should submit for generation. */
-export interface GenerationConfigRoute {
+interface GenerationConfigRouteBase {
     generatorId: string;
     language: GeneratorLanguage;
-    requestedVersion: string;
     cutoverVersion: string;
-    configKind: GenerationConfigKind;
-    payloadKind: GenerationPayloadKind;
 }
+
+/** Validated route and payload kind that the caller should submit for generation. */
+export type GenerationConfigRoute =
+    | (GenerationConfigRouteBase & {
+          requestedVersion: string;
+          configKind: GenerationConfigKind;
+          payloadKind: GenerationPayloadKind;
+      })
+    | (GenerationConfigRouteBase & {
+          requestedVersion?: never;
+          configKind: "sdk-config-v1";
+          payloadKind: "sdk-config-v1";
+      });
 
 export type GeneratorConfigCompatibilityErrorCode =
     | "UNKNOWN_GENERATOR"
@@ -179,6 +188,47 @@ export function selectGeneratorConfigRoute(input: SelectGeneratorConfigRouteInpu
         cutoverVersion: policy.cutoverVersion,
         configKind: expectedConfigKind,
         payloadKind: isBeforeCutover ? "fern-runtime-bundle" : "sdk-config-v1"
+    };
+}
+
+/** Selects SDK Config v1 for an unpinned target without applying a version cutover. */
+export function selectUnpinnedSdkConfigRoute({
+    generatorId,
+    language
+}: Omit<SelectGeneratorConfigRouteInput, "requestedVersion">): GenerationConfigRoute {
+    const policy = getGeneratorPolicy(generatorId);
+    if (policy === undefined) {
+        throw compatibilityError(
+            { generatorId, language, requestedVersion: "unpinned" },
+            {
+                code: "UNKNOWN_GENERATOR",
+                message: `Unknown first-party generator: ${generatorId}`,
+                cutoverVersion: null,
+                expectedLanguage: null,
+                expectedConfigKind: null,
+                recommendedAction: "USE_KNOWN_GENERATOR_ID"
+            }
+        );
+    }
+    if (policy.language !== language) {
+        throw compatibilityError(
+            { generatorId, language, requestedVersion: "unpinned" },
+            {
+                code: "GENERATOR_LANGUAGE_MISMATCH",
+                message: `Generator ${generatorId} targets ${policy.language}, not ${language}`,
+                cutoverVersion: policy.cutoverVersion,
+                expectedLanguage: policy.language,
+                expectedConfigKind: null,
+                recommendedAction: "USE_GENERATOR_LANGUAGE"
+            }
+        );
+    }
+    return {
+        generatorId,
+        language,
+        cutoverVersion: policy.cutoverVersion,
+        configKind: "sdk-config-v1",
+        payloadKind: "sdk-config-v1"
     };
 }
 

@@ -2,7 +2,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
-import { generatorsYml, getLatestGeneratorVersion } from "@fern-api/configuration-loader";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -11,6 +11,7 @@ import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk
 
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
+const UNPINNED_GENERATOR_VERSION = "latest";
 
 const GENERATOR_BY_LANGUAGE: Record<string, string> = {
     typescript: "fernapi/fern-typescript-sdk",
@@ -61,41 +62,23 @@ export async function createSdkConfigWorkspace({
                 sdkConfig.api.audiences == null
                     ? { type: "all" }
                     : { type: "select", audiences: sdkConfig.api.audiences },
-            generators: await Promise.all(
-                sdkConfig.targets.map(async (target) => {
-                    const name = GENERATOR_BY_LANGUAGE[target.language];
-                    if (name == null) {
-                        return context.failAndThrow(
-                            `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
-                            undefined,
-                            { code: CliError.Code.ConfigError }
-                        );
-                    }
-                    const version =
-                        target.generatorVersion ??
-                        (await getLatestGeneratorVersion({
-                            generatorName: name,
-                            cliVersion,
-                            channel: undefined,
-                            includeMajor: true,
-                            context
-                        }));
-                    if (version == null) {
-                        return context.failAndThrow(
-                            `Could not resolve a generator version for SDK Config target '${target.language}'`,
-                            undefined,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    }
-                    return createGeneratorInvocation({
-                        name,
-                        version,
-                        language: target.language,
-                        output: target.output ?? sdkConfig.output,
-                        configDirectory
-                    });
-                })
-            ),
+            generators: sdkConfig.targets.map((target) => {
+                const name = GENERATOR_BY_LANGUAGE[target.language];
+                if (name == null) {
+                    return context.failAndThrow(
+                        `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                return createGeneratorInvocation({
+                    name,
+                    version: target.generatorVersion ?? UNPINNED_GENERATOR_VERSION,
+                    language: target.language,
+                    output: target.output ?? sdkConfig.output,
+                    configDirectory
+                });
+            }),
             reviewers: undefined
         };
         const generatorsConfiguration: generatorsYml.GeneratorsConfiguration = {
