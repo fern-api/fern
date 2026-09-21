@@ -182,7 +182,11 @@ module <%= gem_namespace %>
               known_children.concat(names)
             end
             if property.list
-              return nil if parent.nil? && property.optional
+              if parent.nil?
+                raise ArgumentError, "Missing required wrapper <#{property.xml_name}> on <#{element.name}>" unless property.optional
+
+                return nil
+              end
 
               children = Utils.parse_children(parent, parsers)
               return nil if children.empty? && property.optional && !property.wrapped

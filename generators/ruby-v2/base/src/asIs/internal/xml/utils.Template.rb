@@ -410,11 +410,9 @@ module <%= gem_namespace %>
             result = []
             element.children.each do |child|
               child_element = child.to_xml_element
-              next if known_names.include?(child_element.name)
-
               known_items = wrappers[child_element.name]
               if known_items.nil?
-                result << child
+                result << child unless known_names.include?(child_element.name)
                 next
               end
               rest = Element.new(
