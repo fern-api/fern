@@ -181,7 +181,7 @@ function isPlainCAggregate(cls: CppClassIr): boolean {
         cls.staticMethods.length === 0 &&
         cls.friendFunctions.length === 0 &&
         cls.typedefs.length === 0 &&
-        cls.enums.length === 0 &&
+        cls.enums.every((e) => !e.isScoped && e.underlyingType === undefined) &&
         !cls.isAbstract &&
         !cls.isFinal &&
         cls.memberVariables.every(
