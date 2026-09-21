@@ -1220,10 +1220,34 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrApiDefinition.rootPackage.endpoints.length).toBeGreaterThan(0);
 
         const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        const example200 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 200);
+        expect(getResponseHeaders(example200)).toMatchObject({ "X-RateLimit-Remaining": 99 });
+        const example429 = fdrEndpoint?.examples.find((example) => example.responseStatusCode === 429);
+        expect(example429).toBeDefined();
+        expect(getResponseHeaders(example429)).toEqual({ "Retry-After": 10 });
+        expect(example429?.name).toBeUndefined();
+        expect(example429?.responseBodyV3?.type).toBe("json");
         if (fdrEndpoint && fdrEndpoint.errorsV2) {
             const fdr429Error = fdrEndpoint.errorsV2.find((error) => error.statusCode === 429);
             expect(fdr429Error).toBeDefined();
         }
+
+        // Declared examples — on the media type object and on the referenced component
+        // schema — land in userSpecifiedExamples for response headers, matching
+        // request-header parameter parity.
+        const endpoint = Object.values(intermediateRepresentation.services)
+            .flatMap((service) => service.endpoints)
+            .find((e) => e.path.head === "/api/resource");
+        const headerWireValue = (h: { name: string | { wireValue: string } }): string =>
+            typeof h.name === "string" ? h.name : h.name.wireValue;
+        const headersByName = new Map((endpoint?.responseHeaders ?? []).map((h) => [headerWireValue(h), h]));
+        const firstUserExample = (headerName: string): unknown =>
+            Object.values(headersByName.get(headerName)?.v2Examples?.userSpecifiedExamples ?? {})[0];
+
+        expect(firstUserExample("X-Api-Result")).toEqual({ content_type: "image/jpeg" });
+        expect(firstUserExample("X-Schema-Ref-Example")).toEqual({ content_type: "image/jpeg" });
+        expect(firstUserExample("X-Media-Example")).toEqual({ transport: "delta" });
+        expect(firstUserExample("X-RateLimit-Remaining")).toEqual(99);
 
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/throttled-error-response-fdr.snap");

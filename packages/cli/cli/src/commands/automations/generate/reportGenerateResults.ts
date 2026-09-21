@@ -237,8 +237,11 @@ function describeSkippedStatus(reason: GeneratorSkipReason | null): string {
 function linksCell(result: GeneratorRunResult): string {
     const parts: string[] = [];
     if (result.publishTarget != null) {
+        const label = escapeHtml(result.publishTarget.label);
         parts.push(
-            `📦 <a href="${escapeHtml(result.publishTarget.url)}">${escapeHtml(result.publishTarget.label)}</a>`
+            result.publishTarget.url != null
+                ? `📦 <a href="${escapeHtml(result.publishTarget.url)}">${label}</a>`
+                : `📦 ${label}${result.publishTarget.identifier != null ? ` (${escapeHtml(result.publishTarget.identifier)})` : ""}`
         );
     }
     if (result.pullRequestUrl != null) {

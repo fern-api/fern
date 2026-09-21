@@ -6464,6 +6464,22 @@
         "grouped"
       ]
     },
+    "docs.EmbeddingConfig": {
+      "type": "object",
+      "properties": {
+        "allowed-origins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.\nEach entry is added to the `frame-ancestors` directive of the Content-Security-Policy header."
+        }
+      },
+      "required": [
+        "allowed-origins"
+      ],
+      "additionalProperties": false
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -6629,6 +6645,17 @@
             }
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
+        },
+        "embedding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EmbeddingConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Controls which third-party sites may embed your documentation in an iframe.\nBy default only your docs site itself (and the Fern dashboard) may frame it."
         },
         "show-headers-in-examples": {
           "oneOf": [

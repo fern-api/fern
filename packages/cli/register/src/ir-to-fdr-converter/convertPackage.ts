@@ -190,6 +190,7 @@ function convertService(
                 }
             }
         }
+        examples.push(...synthesizeErrorExamplesWithHeaders({ irEndpoint, ir, examples }));
         const endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition = {
             slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
@@ -1020,6 +1021,50 @@ function findErrorHeadersByStatusCode({
         }
     }
     return wildcardMatch?.headers;
+}
+
+// OpenAPI IR only carries success-status endpoint examples, so error declarations
+// with header examples need a carrier example for FDR.
+function synthesizeErrorExamplesWithHeaders({
+    irEndpoint,
+    ir,
+    examples
+}: {
+    irEndpoint: Ir.http.HttpEndpoint;
+    ir: Ir.ir.IntermediateRepresentation;
+    examples: FdrCjsSdk.api.v1.register.ExampleEndpointCall[];
+}): ExampleEndpointCallWithResponseHeaders[] {
+    const base = examples.find((example) => example.responseStatusCode < 400) ?? examples[0];
+    if (base == null) {
+        return [];
+    }
+
+    const seenStatusCodes = new Set(examples.map((example) => example.responseStatusCode));
+    const synthesizedExamples: ExampleEndpointCallWithResponseHeaders[] = [];
+    for (const responseError of irEndpoint.errors ?? []) {
+        const error = ir.errors[responseError.error.errorId];
+        if (error == null || error.isWildcardStatusCode === true || seenStatusCodes.has(error.statusCode)) {
+            continue;
+        }
+
+        const responseHeaders = convertResponseHeaderExamples(error.headers);
+        if (responseHeaders == null) {
+            continue;
+        }
+
+        synthesizedExamples.push({
+            ...base,
+            name: undefined,
+            description: undefined,
+            codeSamples: undefined,
+            responseStatusCode: error.statusCode,
+            responseBody: undefined,
+            responseBodyV3: getErrorExamplesFromDeclaration(error, ir)[0]?.responseBody,
+            responseHeaders
+        });
+        seenStatusCodes.add(error.statusCode);
+    }
+    return synthesizedExamples;
 }
 
 function convertV2HttpEndpointExample({
