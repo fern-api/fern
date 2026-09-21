@@ -12,6 +12,7 @@ import { UrlUtils } from "./UrlUtils.js";
 import { Utils } from "./Utils.js";
 import { WebhookCrypto } from "./WebhookCrypto.js";
 import { Websocket } from "./Websocket.js";
+import { Xml } from "./Xml.js";
 import { Zurg } from "./Zurg.js";
 
 export interface CoreUtilities {
@@ -30,4 +31,5 @@ export interface CoreUtilities {
     urlUtils: UrlUtils;
     logging: Logging;
     webhookCrypto: WebhookCrypto;
+    xml: Xml;
 }
