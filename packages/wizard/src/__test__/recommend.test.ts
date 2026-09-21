@@ -11,6 +11,7 @@ function detection(overrides: Partial<Detection>): Detection {
         docsTools: [],
         agents: [],
         packageManager: "npm",
+        hasPackageJson: false,
         fernCliVersion: null,
         ...overrides
     };

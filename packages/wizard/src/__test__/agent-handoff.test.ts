@@ -14,6 +14,7 @@ function detection(agents: Detection["agents"]): Detection {
         docsTools: [],
         agents,
         packageManager: "npm",
+        hasPackageJson: false,
         fernCliVersion: null
     };
 }

@@ -3,6 +3,7 @@ import { access } from "fs/promises";
 import inquirer from "inquirer";
 import path from "path";
 import { detectRepository } from "./detect";
+import { isFernCliInstalled } from "./detect/package-manager";
 import { recommend } from "./recommend";
 import { type Command, formatCommand, runCommand } from "./steps/commands";
 import { writeAgentHandoff } from "./steps/handoff";
@@ -23,12 +24,16 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
         actions.push({ id: "install-cli", label: installLabel(detection), selectedByDefault: true });
     }
     if (!detection.fernProject.exists) {
-        actions.push({ id: "init-api", label: "fern init --openapi <selected-spec>", selectedByDefault: true });
+        actions.push({
+            id: "init-api",
+            label: `fern init --openapi <selected-spec>${orgLabel(flags.org)}`,
+            selectedByDefault: true
+        });
     } else {
         console.log("Existing Fern project detected at fern/ — skipping init");
     }
     if (!detection.fernProject.docsConfigExists) {
-        actions.push({ id: "init-docs", label: "fern init --docs", selectedByDefault: true });
+        actions.push({ id: "init-docs", label: `fern init --docs${orgLabel(flags.org)}`, selectedByDefault: true });
     }
     if (detection.agents.length > 0) {
         actions.push({ id: "agent-mcp", label: "fern login && fern mcp install", selectedByDefault: true });
@@ -63,6 +68,17 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     const selected = flags.yes
         ? actions.filter((action) => action.selectedByDefault)
         : await chooseActions(actions, detection);
+    const validationError = validateFlags(selected, flags);
+    if (validationError !== undefined) {
+        console.error(validationError);
+        return 1;
+    }
+    const effectiveFlags =
+        selected.some((action) => action.id === "init-api" || action.id === "init-docs") &&
+        flags.org === undefined &&
+        !flags.yes
+            ? { ...flags, org: await promptForOrganization() }
+            : flags;
 
     if (flags.dryRun) {
         printPlan(selected);
@@ -82,7 +98,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
             } else if (action.id === "agent-handoff") {
                 await writeAgentHandoff(dir, detection);
             } else {
-                await executeAction(action.id, dir, detection, flags);
+                await executeAction(action.id, dir, detection, effectiveFlags);
             }
         } catch (error) {
             failed = true;
@@ -91,6 +107,26 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     }
     printNextSteps(cliInterest);
     return failed ? 1 : 0;
+}
+
+export function validateFlags(selected: ActionPlan[], flags: WizardFlags): string | undefined {
+    const needsOrganization = selected.some((action) => action.id === "init-api" || action.id === "init-docs");
+    if (needsOrganization && flags.yes && flags.org === undefined && !flags.dryRun) {
+        return "--yes requires --org <name> when initializing a Fern project";
+    }
+    return undefined;
+}
+
+async function promptForOrganization(): Promise<string> {
+    const answer = await inquirer.prompt<{ organization: string }>([
+        {
+            type: "input",
+            name: "organization",
+            message: "Fern organization name (used for fern.config.json)",
+            validate: (input: string) => input.trim().length > 0 || "Organization name cannot be empty"
+        }
+    ]);
+    return answer.organization.trim();
 }
 
 async function chooseActions(actions: ActionPlan[], detection: Detection): Promise<ActionPlan[]> {
@@ -133,13 +169,16 @@ async function executeAction(
 ): Promise<void> {
     if (id === "install-cli") {
         await runCommand(installCommand(detection), dir);
+        if (!detection.hasPackageJson) {
+            detection.fernCliVersion = await isFernCliInstalled();
+        }
         return;
     }
     if (id === "init-api") {
         const spec = await chooseSpec(detection.apiSpecs, flags.yes);
         if (spec === undefined) {
             if (detection.frameworks.length === 0) {
-                await runFernCommand(["init"], dir, detection);
+                await runFernCommand(["init", ...orgArgs(flags.org)], dir, detection);
             } else {
                 console.log("No API specification selected; export OpenAPI from your framework first.");
             }
@@ -193,15 +232,14 @@ async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | und
 }
 
 async function runFernCommand(args: string[], dir: string, detection: Detection): Promise<void> {
-    const command: Command =
-        detection.fernCliVersion === null
-            ? { executable: "npx", args: ["-y", "fern-api", ...args] }
-            : { executable: "fern", args };
-    await runCommand(command, dir);
+    await runCommand(fernRunner(detection, args), dir);
 }
 
-function installCommand(detection: Detection): Command {
+export function installCommand(detection: Detection): Command {
     const packageManager = detection.packageManager;
+    if (!detection.hasPackageJson) {
+        return { executable: "npm", args: ["install", "-g", "fern-api"] };
+    }
     if (packageManager === "npm") {
         return { executable: "npm", args: ["install", "--save-dev", "fern-api"] };
     }
@@ -218,8 +256,28 @@ function installLabel(detection: Detection): string {
     return `Install Fern CLI (${formatCommand(installCommand(detection))})`;
 }
 
+export function fernRunner(detection: Detection, args: string[] = []): Command {
+    if (detection.fernCliVersion !== null) {
+        return { executable: "fern", args };
+    }
+    if (detection.packageManager === "pnpm") {
+        return { executable: "pnpm", args: ["exec", "fern", ...args] };
+    }
+    if (detection.packageManager === "yarn") {
+        return { executable: "yarn", args: ["fern", ...args] };
+    }
+    if (detection.packageManager === "bun") {
+        return { executable: "bunx", args: ["fern-api", ...args] };
+    }
+    return { executable: "npx", args: ["-y", "fern-api", ...args] };
+}
+
 function orgArgs(org: string | undefined): string[] {
     return org === undefined ? [] : ["--org", org];
+}
+
+function orgLabel(org: string | undefined): string {
+    return ` --org ${org ?? "<org>"}`;
 }
 
 async function isDirectory(dir: string): Promise<boolean> {

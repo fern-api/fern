@@ -19,6 +19,10 @@ export async function detectPackageManager(dir: string): Promise<PackageManager>
     return "npm";
 }
 
+export async function hasPackageJson(dir: string): Promise<boolean> {
+    return exists(path.join(dir, "package.json"));
+}
+
 export async function isFernCliInstalled(): Promise<string | null> {
     return new Promise((resolve) => {
         execFile("fern", ["--version"], { timeout: 5000 }, (error, stdout) => {

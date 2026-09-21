@@ -36,6 +36,7 @@ export interface Detection {
     docsTools: DocsToolDetection[];
     agents: Agent[];
     packageManager: PackageManager;
+    hasPackageJson: boolean;
     fernCliVersion: string | null;
 }
 
