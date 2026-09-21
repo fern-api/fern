@@ -156,6 +156,14 @@ types:
       - description
       - subtitle
 
+  EmbeddingConfig:
+    properties:
+      allowed-origins:
+        type: list<string>
+        docs: |
+          Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.
+          Each entry is added to the `frame-ancestors` directive of the Content-Security-Policy header.
+
   AgentsConfig:
     properties:
       page-directive:
@@ -1143,6 +1151,11 @@ types:
           - `grouped`: Messages are shown as a single parent entry with nested variants.
 
           @default: flat
+      embedding:
+        type: optional<EmbeddingConfig>
+        docs: |
+          Controls which third-party sites may embed your documentation in an iframe.
+          By default only your docs site itself (and the Fern dashboard) may frame it.
       show-headers-in-examples:
         type: optional<boolean>
         docs: |
