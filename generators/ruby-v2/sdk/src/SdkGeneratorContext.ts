@@ -370,6 +370,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // lockstep and never ship a dangling require.
             ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
 
+            // XML
+            ...(this.hasXmlTypes()
+                ? [AsIsFiles.XmlElement, AsIsFiles.XmlUtils, AsIsFiles.XmlSerializable, AsIsFiles.TestXmlElement]
+                : []),
+
             // Multipart
             AsIsFiles.MultipartEncoder,
             AsIsFiles.MultipartFormDataPart,

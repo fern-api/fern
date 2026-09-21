@@ -113,6 +113,14 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.has_credentials()
     }
 
+    /// Whether this provider can authenticate from credentials the user stored
+    /// (keyring), as opposed to ambient env/flag sources. Composition wrappers
+    /// use it to prefer stored credentials when a profile is named with
+    /// `--profile`.
+    fn has_stored_credentials(&self) -> bool {
+        false
+    }
+
     /// Human-readable hints about where this provider reads its credentials
     /// from. Used by the friendly auth-error path to tell the user which
     /// env var / CLI flag / file to set.
@@ -155,6 +163,20 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         request: reqwest::RequestBuilder,
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError>;
+
+    /// Field names `auth login --with-token` should collect for this
+    /// provider, stored together as one JSON keyring entry.
+    ///
+    /// `None` — the default — means the scheme takes a single opaque value,
+    /// which is how bearer and API-key paste works today.
+    ///
+    /// `Some([...])` is for schemes whose credential is several values:
+    /// OAuth2 client credentials returns `["client_id", "client_secret"]`.
+    /// One entry rather than one per field because the OS keychain prompts
+    /// per item, and a multi-part credential is still one credential.
+    fn credential_fields(&self) -> Option<Vec<&'static str>> {
+        None
+    }
 
     /// Post-construction hook: inject the on-disk token cache for
     /// cross-invocation persistence. Called by [`CliApp`] in

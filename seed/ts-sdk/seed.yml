@@ -660,6 +660,12 @@ fixtures:
   openapi-per-spec-base-path-disabled:
     - outputFolder: no-custom-config
       customConfig: null
+  ts-xml-twiml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
 
 scripts:
   - image: fernapi/ts-seed

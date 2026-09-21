@@ -3019,6 +3019,21 @@
                 "flat",
                 "grouped"
               ]
+            },
+            "embedding": {
+              "type": "object",
+              "properties": {
+                "allowed-origins": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "allowed-origins"
+              ],
+              "additionalProperties": false
             }
           },
           "additionalProperties": false

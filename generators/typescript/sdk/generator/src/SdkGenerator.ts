@@ -509,7 +509,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             enableInlineTypes: config.enableInlineTypes,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            caseConverter
+            caseConverter,
+            useBigInt: config.useBigInt
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -997,6 +998,9 @@ export class SdkGenerator {
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            if (this.typeResolver.isXmlDependentType(typeDeclaration)) {
+                continue;
+            }
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {

@@ -32,7 +32,14 @@ use crate::auth::keyring_store::active_store;
 type CredentialClosure = Arc<dyn Fn() -> Option<String> + Send + Sync>;
 
 /// How an auth credential's value is resolved at request time.
+///
+/// `#[non_exhaustive]`: new rungs get added as the credential chain grows
+/// (`KeyringField` was the most recent), and a hand-authored `custom.rs`
+/// matching every variant would otherwise fail to compile on each addition.
+/// Downstream matches need a `_` arm; construction goes through the
+/// constructors below rather than struct literals.
 #[derive(Clone)]
+#[non_exhaustive]
 pub enum AuthCredentialSource {
     /// Read from a process environment variable. Surrounding whitespace is
     /// trimmed; returns `None` if unset, empty, or whitespace-only —
@@ -79,6 +86,22 @@ pub enum AuthCredentialSource {
         /// Account name within the service — typically the auth scheme name.
         account: String,
     },
+    /// Read one field out of a JSON object stored in a single keyring entry.
+    ///
+    /// Exists for HTTP basic, whose two halves must be stored together. One
+    /// entry rather than two (`…:username` / `…:password`) because the OS
+    /// keychain prompts per item: two entries means two prompts for one
+    /// logical credential, on every request that has to unlock them.
+    ///
+    /// A non-JSON value, or JSON missing the field, resolves to `None` —
+    /// the same as an absent entry. That keeps a hand-written or
+    /// pre-existing raw-string entry from surfacing as a username.
+    KeyringField {
+        service: String,
+        account: String,
+        /// Key to read out of the stored JSON object (`username` / `password`).
+        field: String,
+    },
     /// No source bound. The provider will report itself as unable to
     /// satisfy requests.
     Missing,
@@ -124,6 +147,20 @@ impl AuthCredentialSource {
         AuthCredentialSource::Keyring {
             service: service.into(),
             account: account.into(),
+        }
+    }
+
+    /// Bind to one field of a JSON object stored at `(service, account)`.
+    /// See [`AuthCredentialSource::KeyringField`].
+    pub fn keyring_field(
+        service: impl Into<String>,
+        account: impl Into<String>,
+        field: impl Into<String>,
+    ) -> Self {
+        AuthCredentialSource::KeyringField {
+            service: service.into(),
+            account: account.into(),
+            field: field.into(),
         }
     }
 
@@ -184,9 +221,50 @@ impl AuthCredentialSource {
                 .get(service, account)?
                 .filter(|v| !v.is_empty())
                 .map(SecretString::from),
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => active_store()
+                .get(service, account)?
+                .as_deref()
+                .and_then(read_json_field(field))
+                .filter(|v| !v.is_empty())
+                .map(SecretString::from),
             AuthCredentialSource::Missing => None,
         };
         Ok(value)
+    }
+
+    /// True when a keyring-backed rung of this source currently holds a value —
+    /// i.e. the credential is one the user stored (`auth login` /
+    /// `profiles set`), not one supplied by env, flag, file or literal.
+    ///
+    /// Lossy by the same rule as [`resolve`](Self::resolve), which it is built
+    /// on: an unreadable keychain (a denied macOS prompt) is indistinguishable
+    /// from an empty account, so both answer `false`. For the `--profile`
+    /// preference pass that means a denial falls through to an ambient
+    /// env-backed scheme instead of surfacing the keychain error — the same
+    /// outcome the pre-preference `has_credentials()` probe produced, since it
+    /// is equally `resolve`-based. Making selection report the distinction
+    /// needs a fallible predicate on
+    /// [`AuthProvider`](crate::auth::AuthProvider); until then the error does
+    /// still surface whenever the stored scheme *is* the one selected, because
+    /// `apply` resolves through [`try_resolve`](Self::try_resolve).
+    pub fn has_stored_value(&self) -> bool {
+        match self {
+            AuthCredentialSource::Keyring { .. }
+            | AuthCredentialSource::KeyringField { .. } => self.resolve().is_some(),
+            AuthCredentialSource::Chain(sources) => {
+                sources.iter().any(|source| source.has_stored_value())
+            }
+            AuthCredentialSource::Env(_)
+            | AuthCredentialSource::Cli(_)
+            | AuthCredentialSource::File(_)
+            | AuthCredentialSource::Literal(_)
+            | AuthCredentialSource::Closure(_, _)
+            | AuthCredentialSource::Missing => false,
+        }
     }
 
     /// The environment-variable name backing this source, if it is an
@@ -227,6 +305,14 @@ impl AuthCredentialSource {
                     "keyring entry {service}:{account} (populated by `{service} auth login`)"
                 )]
             }
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => vec![format!(
+                "{field} from keyring entry {service}:{account} \
+                 (populated by `{service} auth login`)"
+            )],
             AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, None)
             | AuthCredentialSource::Missing => Vec::new(),
@@ -294,6 +380,7 @@ impl AuthCredentialSource {
             | AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, _)
             | AuthCredentialSource::Keyring { .. }
+            | AuthCredentialSource::KeyringField { .. }
             | AuthCredentialSource::Missing => {}
         }
     }
@@ -344,6 +431,11 @@ impl std::fmt::Debug for AuthCredentialSource {
             AuthCredentialSource::Keyring { service, account } => {
                 write!(f, "Keyring({service}:{account})")
             }
+            AuthCredentialSource::KeyringField {
+                service,
+                account,
+                field,
+            } => write!(f, "KeyringField({service}:{account}.{field})"),
             AuthCredentialSource::Missing => write!(f, "Missing"),
         }
     }
@@ -352,6 +444,22 @@ impl std::fmt::Debug for AuthCredentialSource {
 /// Read a credential file: expand `~`, trim trailing whitespace, treat
 /// empty content / missing files as `None`. Result is wrapped in
 /// [`SecretString`] so the file contents can't leak through Debug.
+/// Extract `field` from a JSON object, as a closure so the caller can
+/// `and_then` it onto an `Option<&str>`.
+///
+/// Only string values are returned: a numeric or nested value is not a
+/// credential, and coercing one would produce a header the server rejects
+/// for reasons the user cannot see.
+fn read_json_field(field: &str) -> impl Fn(&str) -> Option<String> + '_ {
+    move |raw| {
+        serde_json::from_str::<serde_json::Value>(raw)
+            .ok()?
+            .get(field)?
+            .as_str()
+            .map(str::to_string)
+    }
+}
+
 fn read_credential_file(path: &Path) -> Option<SecretString> {
     let expanded = expand_home(path);
     let raw = std::fs::read_to_string(&expanded).ok()?;
@@ -827,6 +935,50 @@ mod tests {
 
         let s = AuthCredentialSource::keyring("svc", "nothing-here");
         assert_eq!(resolved(&s), None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_is_true_for_populated_keyring_entry() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "OAuth2", "stashed-token").unwrap();
+        set_active_store(mock);
+
+        assert!(AuthCredentialSource::keyring("svc", "OAuth2").has_stored_value());
+    }
+
+    #[test]
+    fn has_stored_value_is_false_for_env_source() {
+        assert!(!AuthCredentialSource::from_env("AUTH_TOKEN").has_stored_value());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_finds_keyring_entry_inside_chain() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "OAuth2", "stashed-token").unwrap();
+        set_active_store(mock);
+
+        let source = AuthCredentialSource::any([
+            AuthCredentialSource::from_env("AUTH_TOKEN"),
+            AuthCredentialSource::keyring("svc", "OAuth2"),
+        ]);
+        assert!(source.has_stored_value());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_is_false_for_empty_keyring_chain() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(Arc::new(MockKeyringStore::new()));
+
+        let source = AuthCredentialSource::any([
+            AuthCredentialSource::from_env("AUTH_TOKEN"),
+            AuthCredentialSource::keyring("svc", "OAuth2"),
+        ]);
+        assert!(!source.has_stored_value());
     }
 
     /// A store that fails every read, standing in for a denied OS keychain

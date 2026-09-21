@@ -49,6 +49,7 @@
                 "hasMore": false,
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],
@@ -192,6 +193,7 @@
                 "id": "PAY123",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
           {
@@ -226,6 +228,7 @@
                 "id": "PAY123",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
           {
@@ -260,6 +263,7 @@
                 "id": "PAY123",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],

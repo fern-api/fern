@@ -1,0 +1,96 @@
+openapi: 3.0.1
+info:
+  title: openapi-pdf-download
+  version: "1.0.0"
+paths:
+  /asset_report/pdf/get:
+    post:
+      operationId: assetReport_getPdf
+      x-fern-sdk-group-name: assetReport
+      x-fern-sdk-method-name: getPdf
+      tags:
+        - AssetReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetReportPDFGetRequest'
+      responses:
+        "200":
+          description: A PDF of the Asset Report
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/AssetReportPDFGetResponse'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaidError'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaidError'
+  /asset_report/get:
+    post:
+      operationId: assetReport_get
+      x-fern-sdk-group-name: assetReport
+      x-fern-sdk-method-name: get
+      tags:
+        - AssetReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetReportPDFGetRequest'
+      responses:
+        "200":
+          description: Asset report metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetReportGetResponse'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaidError'
+components:
+  schemas:
+    AssetReportPDFGetRequest:
+      type: object
+      properties:
+        asset_report_token:
+          type: string
+      required:
+        - asset_report_token
+    AssetReportGetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+      required:
+        - request_id
+    PlaidError:
+      type: object
+      properties:
+        error_type:
+          type: string
+        error_code:
+          type: string
+        error_message:
+          type: string
+      required:
+        - error_type
+        - error_code
+        - error_message
+    AssetReportPDFGetResponse:
+      type: string
+      format: binary
+      description: AssetReportPDFGetResponse defines the response schema for `/asset_report/pdf/get`

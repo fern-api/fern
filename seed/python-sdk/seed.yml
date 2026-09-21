@@ -549,6 +549,9 @@ fixtures:
     - customConfig:
         respect_optional_request_body: true
       outputFolder: respect-optional-request-body
+  python-xml-twiml:
+    - customConfig: null
+      outputFolder: no-custom-config
   openapi-per-spec-base-path:
     - customConfig: null
       outputFolder: no-custom-config

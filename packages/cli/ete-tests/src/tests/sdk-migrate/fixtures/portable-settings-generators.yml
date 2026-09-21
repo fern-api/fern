@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
+api:
+  specs:
+    - openapi: ./openapi.yml
+      settings:
+        ignore-tags: true
+        disambiguate-request-names: false
+readme:
+  customSections:
+    - title: Node.js
+      language: typescript
+      content: Run npm install.
+    - title: PHP
+      language: php
+      content: Run composer require.
+    - title: Python
+      language: python
+      content: Run pip install.
+groups:
+  ts-sdk:
+    audiences: []
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.63.3
+        config:
+          fetchSupport: native
+          packageJson:
+            description: Example SDK for Node.js.
+            author:
+              name: Example SDKs
+              url: https://example.com
+              email: sdk@example.com
+        output:
+          location: local-file-system
+          path: ./generated/typescript
+  php-sdk:
+    audiences: []
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: 1.14.1
+        config:
+          packageName: acme/example-sdk
+          composerJson:
+            description: Example SDK for PHP.
+            author:
+              name: Example SDKs
+              url: https://example.com
+              email: sdk@example.com
+            license: MIT
+        output:
+          location: local-file-system
+          path: ./generated/php
+  python-sdk:
+    audiences: []
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.3.10
+        config:
+          pydantic_config:
+            skip_validation: true
+          additional_init_exports:
+            - from: types
+              imports:
+                - ApiError
+        output:
+          location: local-file-system
+          path: ./generated/python

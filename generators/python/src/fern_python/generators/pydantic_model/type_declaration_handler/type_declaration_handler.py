@@ -153,6 +153,7 @@ class TypeDeclarationHandler:
                         name=property.name,
                         value_type=property.value_type,
                         docs=property.docs,
+                        xml=property.xml,
                     )
                     for property in object_.properties
                 ],
@@ -161,6 +162,7 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
                 snippet=docstring,
+                xml=self._declaration.encoding.xml if self._declaration.encoding is not None else None,
             ),
             union=self._get_pydantic_union_generator(docstring),
             undiscriminated_union=lambda union: PydanticModelUndiscriminatedUnionGenerator(

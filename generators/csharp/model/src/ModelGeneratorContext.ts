@@ -117,6 +117,9 @@ export class ModelGeneratorContext extends GeneratorContext {
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.XmlUtils);
+        }
         return files;
     }
 
@@ -127,6 +130,9 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests
         ];
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Test.Xml.XmlElementTests);
+        }
 
         // Only include OneOfSerializerTests when OneOf serialization is in use
         if (!this.settings.shouldGenerateUndiscriminatedUnions) {
@@ -137,7 +143,11 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [AsIsFiles.FileParameter, AsIsFiles.Json.AdditionalProperties];
+        const files = [AsIsFiles.FileParameter, AsIsFiles.Json.AdditionalProperties];
+        if (this.hasXmlTypes()) {
+            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlElement);
+        }
+        return files;
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

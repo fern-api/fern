@@ -96,6 +96,7 @@
                   "success": true,
                 },
               },
+              "responseHeaders": undefined,
               "responseStatusCode": 200,
             },
           ],
