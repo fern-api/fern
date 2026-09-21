@@ -324,7 +324,7 @@ export async function getPreviewDocsDefinition({
                 finalMarkdown = replaceImagePathsAndUrls(
                     markdownWithAbsPaths,
                     fileIdsMap,
-                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    previousPreviewResult?.markdownFilesToPathName ?? {},
                     {
                         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                         absolutePathToMarkdownFile: absoluteFilePath
