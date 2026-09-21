@@ -479,6 +479,51 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
         }
     }
 
+    return disambiguateSlugCollisions(result);
+}
+
+/**
+ * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
+ * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
+ * slugification) to every entry after the first in such a group, in a deterministic
+ * order, so every page has a unique URL.
+ */
+function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
+    const bySlug = new Map<string, PageEntry[]>();
+    for (const entry of entries) {
+        const slug = pageKeyToSlugPath(entry.pageKey);
+        const existing = bySlug.get(slug);
+        if (existing) {
+            existing.push(entry);
+        } else {
+            bySlug.set(slug, [entry]);
+        }
+    }
+
+    const taken = new Set(bySlug.keys());
+    const result: PageEntry[] = [];
+    for (const group of bySlug.values()) {
+        if (group.length === 1) {
+            result.push(...group);
+            continue;
+        }
+        const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
+        sorted.forEach((entry, index) => {
+            if (index === 0) {
+                result.push(entry);
+                return;
+            }
+            const base = entry.pageKey.replace(/\.mdx$/, "");
+            let n = index + 1;
+            let candidate = `${base}-${n}`;
+            while (taken.has(pageKeyToSlugPath(`${candidate}.mdx`))) {
+                n += 1;
+                candidate = `${base}-${n}`;
+            }
+            taken.add(pageKeyToSlugPath(`${candidate}.mdx`));
+            result.push({ pageKey: `${candidate}.mdx`, collected: entry.collected });
+        });
+    }
     return result;
 }
 

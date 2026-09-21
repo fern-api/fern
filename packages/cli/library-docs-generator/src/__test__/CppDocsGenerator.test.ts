@@ -472,6 +472,23 @@ describe("generateCpp()", () => {
         expect(macroIndex).toContain("- [`LIB_MAX`](macros/libmax)");
     });
 
+    it("gives slug-equivalent macro names distinct pages and URLs", () => {
+        const upper = makeMacro({ name: "ALWAYS_INLINE", path: "ALWAYS_INLINE" });
+        const lower = makeMacro({ name: "__always_inline", path: "__always_inline" });
+        const ir = makeIr(makeNamespace({ macros: [lower, upper] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/ALWAYS_INLINE.mdx");
+        expect(relativePaths).toContain("macros/__always_inline-2.mdx");
+        expect(relativePaths).not.toContain("macros/__always_inline.mdx");
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`ALWAYS_INLINE`](macros/alwaysinline)");
+        expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
+    });
+
     it("lists root-scoped macros in the library index when the library is a named namespace", () => {
         const ir = makeIr(
             makeNamespace({
