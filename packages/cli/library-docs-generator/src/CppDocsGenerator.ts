@@ -179,6 +179,14 @@ function isPlainCAggregate(cls: CppClassIr): boolean {
         cls.baseClasses.length === 0 &&
         cls.methods.length === 0 &&
         cls.staticMethods.length === 0 &&
+        cls.friendFunctions.length === 0 &&
+        cls.typedefs.length === 0 &&
+        cls.enums.length === 0 &&
+        !cls.isAbstract &&
+        !cls.isFinal &&
+        cls.memberVariables.every(
+            (v) => v.templateParams.length === 0 && !v.isStatic && !v.isConstexpr && !v.isMutable
+        ) &&
         cls.innerClasses.every(isPlainCAggregate)
     );
 }

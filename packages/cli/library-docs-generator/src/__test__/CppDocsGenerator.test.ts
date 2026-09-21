@@ -849,4 +849,27 @@ describe("generateCpp()", () => {
         expect(createPage).toContain("**[out]** The created handle");
         expect(createPage).toContain("```text showLineNumbers={false}\n  minimize c^T x\n  subject to A x <= b\n```");
     });
+
+    it("keeps C++ `using` syntax when a struct carries C++-only features", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const withFriend = makeClass({
+            name: "S",
+            path: "S",
+            kind: "struct",
+            friendFunctions: [makeFunction({ name: "f", path: "f" })]
+        });
+        const ir = makeIr(makeNamespace({ typedefs: [handle], classes: [withFriend] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/Handle.mdx"), "utf-8");
+        expect(page).toContain("using Handle = void *;");
+        expect(page).not.toContain("typedef void *Handle;");
+    });
 });
