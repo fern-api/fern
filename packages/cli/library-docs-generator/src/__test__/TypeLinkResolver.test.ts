@@ -701,7 +701,7 @@ describe("module file links", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
                 submodules: [
-                    makeModule("leaf", "pkg.leaf", { docstring: { summary: "Leaf." } }),
+                    makeModule("leaf", "pkg.leaf", { functions: [makeFunction("f", "pkg.leaf.f")] }),
                     makeModule("empty", "pkg.empty", { submodules: [makeModule("stub", "pkg.empty.stub")] })
                 ]
             })
