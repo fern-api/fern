@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Object types with XML encoding metadata (e.g. TwiML schemas imported from an OpenAPI `xml` object) are now
+        generated as classes with `toXml()`, a static `fromXml()` parser, and a fluent `Builder` (including
+        `Builder.fromXml(xml).build()` and per-child methods such as `response.say(...)`). Element names,
+        attributes, text bodies, nested/union children, wrapped lists, list separators, namespaces and prefixes
+        are honored; undeclared attributes and child elements are preserved as `additionalAttributes` /
+        `additionalChildren` so documents round-trip. Parsing is strict (root name, scalar/enum validation) and
+        rejects DOCTYPE declarations. Non-XML types are unaffected and the XML runtime is only emitted when needed.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 3.95.1
   changelogEntry:
     - summary: |
