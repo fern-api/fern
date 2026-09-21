@@ -7,21 +7,22 @@ import { describe, expect, it } from "vitest";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const FIXTURE = "environments-override-audiences";
+const DECLARED_FIXTURE = "environments-override-declared-audiences";
 
-async function getIR(audiences: Audiences) {
-    const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(FIXTURE), RelativeFilePath.of("fern"));
+async function getIR(audiences: Audiences, fixture: string = FIXTURE) {
+    const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture), RelativeFilePath.of("fern"));
     const context = createMockTaskContext();
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: fixturePath,
         context,
         cliVersion: "0.0.0",
-        workspaceName: FIXTURE
+        workspaceName: fixture
     });
     if (!workspace.didSucceed) {
-        throw new Error(`Failed to load fixture ${FIXTURE}\n${JSON.stringify(workspace.failures)}`);
+        throw new Error(`Failed to load fixture ${fixture}\n${JSON.stringify(workspace.failures)}`);
     }
     if (!(workspace.workspace instanceof OSSWorkspace)) {
-        throw new Error(`Expected OSSWorkspace for fixture ${FIXTURE}`);
+        throw new Error(`Expected OSSWorkspace for fixture ${fixture}`);
     }
     return workspace.workspace.getIntermediateRepresentation({
         context,
@@ -48,5 +49,10 @@ describe("generators.yml environments under audience filtering", () => {
         const endpoints = Object.values(ir.services).flatMap((service) => service.endpoints);
         expect(endpoints).toHaveLength(1);
         expect(endpoints[0]?.baseUrl).toBe("scim");
+    }, 90_000);
+
+    it("filters environments once any environment declares audiences (explicit [] is a declaration)", async () => {
+        const ir = await getIR({ type: "select", audiences: ["public"] }, DECLARED_FIXTURE);
+        expect(ir.environments?.environments.environments.map((env) => env.id)).toEqual(["Production"]);
     }, 90_000);
 });

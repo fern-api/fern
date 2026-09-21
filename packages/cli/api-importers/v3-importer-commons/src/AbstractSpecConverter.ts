@@ -459,9 +459,8 @@ export abstract class AbstractSpecConverter<
             return;
         }
         const environments = environmentConfig.environments.environments;
-        const noEnvironmentDeclaresAudiences = environments.every(
-            (environment) => (audiences?.[environment.id] ?? []).length === 0
-        );
+        const noEnvironmentDeclaresAudiences =
+            audiences == null || environments.every((environment) => environment.audiences == null);
         for (const environment of environments) {
             this.irGraph.markEnvironmentForAudiences(
                 environment,
