@@ -109,10 +109,13 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return this.shape.baseProperties ?? [];
     }
 
-    private getBasePropertiesWithTypeNames(): { property: FernIr.ObjectProperty; typeName: string }[] {
-        const usedNames = new Set([REQUEST_TYPE_NAME, RESPONSE_TYPE_NAME]);
+    private getBasePropertiesWithTypeNames(context: Context): { property: FernIr.ObjectProperty; typeName: string }[] {
+        const usedNames = this.getGeneratedVariantTypeNames(context);
         return this.getBaseProperties().map((property) => {
             const preferredName = this.case.pascalSafe(property.name);
+            if (!this.isInlineBaseProperty(property, context)) {
+                return { property, typeName: preferredName };
+            }
             let typeName = preferredName;
             let suffix = 1;
             while (usedNames.has(typeName)) {
@@ -124,6 +127,49 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         });
     }
 
+    private getGeneratedVariantTypeNames(context: Context): Set<string> {
+        const generatedVariantTypeNames = new Set<string>();
+        if (!this.generateReadWriteOnlyTypes) {
+            return generatedVariantTypeNames;
+        }
+        const memberTypeReferences = this.shape.members.map((member) => this.getTypeReferenceNode(context, member));
+        const basePropertyTypeReferences = this.getBaseProperties().map((property) => ({
+            property,
+            typeReference: context.type.getReferenceToInlinePropertyType(
+                property.valueType,
+                this.typeName,
+                this.case.pascalSafe(property.name)
+            )
+        }));
+        if (
+            memberTypeReferences.some((typeReference) => typeReference.requestTypeNode != null) ||
+            basePropertyTypeReferences.some(
+                ({ property, typeReference }) =>
+                    property.propertyAccess === "READ_ONLY" || typeReference.requestTypeNode != null
+            )
+        ) {
+            generatedVariantTypeNames.add(REQUEST_TYPE_NAME);
+        }
+        if (
+            memberTypeReferences.some((typeReference) => typeReference.responseTypeNode != null) ||
+            basePropertyTypeReferences.some(
+                ({ property, typeReference }) =>
+                    property.propertyAccess === "WRITE_ONLY" || typeReference.responseTypeNode != null
+            )
+        ) {
+            generatedVariantTypeNames.add(RESPONSE_TYPE_NAME);
+        }
+        return generatedVariantTypeNames;
+    }
+
+    private isInlineBaseProperty(property: FernIr.ObjectProperty, context: Context): boolean {
+        if (!this.enableInlineTypes) {
+            return false;
+        }
+        const namedType = getNamedType(property.valueType);
+        return namedType != null && context.type.getTypeDeclaration(namedType).inline === true;
+    }
+
     private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return this.case.camelUnsafe(property.name);
@@ -132,12 +178,8 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     }
 
     private getBasePropertyNodes(context: Context): BasePropertyNode[] {
-        return this.getBasePropertiesWithTypeNames().map(({ property, typeName }) => {
-            const type = context.type.getReferenceToInlinePropertyType(
-                property.valueType,
-                this.typeName,
-                typeName
-            );
+        return this.getBasePropertiesWithTypeNames(context).map(({ property, typeName }) => {
+            const type = context.type.getReferenceToInlinePropertyType(property.valueType, this.typeName, typeName);
             const shouldIncludeUndefined = type.isOptional && !this.includeSerdeLayer;
             const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
             const toTypeNode = (node: ts.TypeNode, nodeWithoutUndefined: ts.TypeNode | undefined): ts.TypeNode =>
@@ -169,7 +211,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             return [];
         }
         return generateInlinePropertiesModule({
-            properties: this.getBasePropertiesWithTypeNames().map(({ property, typeName }) => ({
+            properties: this.getBasePropertiesWithTypeNames(context).map(({ property, typeName }) => ({
                 propertyName: typeName,
                 typeReference: property.valueType
             })),
@@ -431,6 +473,29 @@ interface BasePropertyNode {
     typeNode: ts.TypeNode;
     requestTypeNode: ts.TypeNode | undefined;
     responseTypeNode: ts.TypeNode | undefined;
+}
+
+function getNamedType(typeReference: FernIr.TypeReference): FernIr.NamedType | undefined {
+    if (typeReference.type === "named") {
+        return typeReference;
+    }
+    if (typeReference.type !== "container") {
+        return undefined;
+    }
+    switch (typeReference.container.type) {
+        case "list":
+            return getNamedType(typeReference.container.list);
+        case "map":
+            return getNamedType(typeReference.container.valueType);
+        case "set":
+            return getNamedType(typeReference.container.set);
+        case "nullable":
+            return getNamedType(typeReference.container.nullable);
+        case "optional":
+            return getNamedType(typeReference.container.optional);
+        case "literal":
+            return undefined;
+    }
 }
 
 function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
