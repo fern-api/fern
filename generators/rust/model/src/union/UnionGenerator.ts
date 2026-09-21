@@ -304,17 +304,7 @@ export class UnionGenerator {
         // Generate variant based on its shape
         unionType.shape._visit({
             noProperties: () => {
-                if (this.unionTypeDeclaration.baseProperties.length > 0) {
-                    // Base properties are typed on every variant (getters and constructors
-                    // reference them), so they must be present even without own properties.
-                    writer.writeLine(`    ${variantName} {`);
-                    this.generateBaseProperties(writer);
-                    writer.writeLine(`    },`);
-                } else {
-                    // Use empty struct variant {} instead of unit variant for forward compatibility
-                    // with #[non_exhaustive], fields can be added later without breaking changes
-                    writer.writeLine(`    ${variantName} {},`);
-                }
+                this.generateVariantWithoutOwnProperties(writer, variantName);
             },
             singleProperty: (singleProperty) => {
                 // Check if this field creates a recursive reference
@@ -369,17 +359,7 @@ export class UnionGenerator {
                     if (referencedType?.shape.type === "object") {
                         const properties = referencedType.shape.properties;
                         if (properties.length === 0) {
-                            if (this.unionTypeDeclaration.baseProperties.length > 0) {
-                                // Base properties are typed on every variant (getters and
-                                // constructors reference them), so they must be present even
-                                // when the inlined type has no own properties.
-                                writer.writeLine(`    ${variantName} {`);
-                                this.generateBaseProperties(writer);
-                                writer.writeLine(`    },`);
-                            } else {
-                                // Empty type: generate empty struct variant
-                                writer.writeLine(`    ${variantName} {},`);
-                            }
+                            this.generateVariantWithoutOwnProperties(writer, variantName);
                         } else {
                             // Inline fields directly into the variant
                             writer.writeLine(`    ${variantName} {`);
@@ -474,6 +454,24 @@ export class UnionGenerator {
 
             writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
         });
+    }
+
+    /**
+     * Writes a variant that has no own properties: a noProperties variant, or an inlined
+     * referenced object with an empty property list.
+     */
+    private generateVariantWithoutOwnProperties(writer: rust.Writer, variantName: string): void {
+        if (this.unionTypeDeclaration.baseProperties.length > 0) {
+            // Base properties are typed on every variant (getters and constructors
+            // reference them), so they must be present even without own properties.
+            writer.writeLine(`    ${variantName} {`);
+            this.generateBaseProperties(writer);
+            writer.writeLine(`    },`);
+        } else {
+            // Use empty struct variant {} instead of unit variant for forward compatibility
+            // with #[non_exhaustive], fields can be added later without breaking changes
+            writer.writeLine(`    ${variantName} {},`);
+        }
     }
 
     private generateBaseProperties(writer: rust.Writer): void {
