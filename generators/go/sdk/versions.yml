@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.60.0
+  changelogEntry:
+    - summary: |
+        Add XML support for xml-encoded object types (e.g. TwiML). Generated types gain
+        `ToXml()`/`ToXmlElement()`, `<Type>FromXml(string)`/`<Type>FromXmlElement(...)`,
+        fluent child builders (e.g. `response.Say(...)`, `Add`-prefixed on collision), and
+        `ExtraAttributes`/`ExtraChildren` to round-trip unknown attributes and elements.
+        A standard-library `core/xml.go` runtime is emitted only when xml-encoded types exist.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 1.59.0
   changelogEntry:
     - summary: |
