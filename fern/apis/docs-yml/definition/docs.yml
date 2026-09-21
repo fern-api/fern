@@ -1053,6 +1053,19 @@ types:
           are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
           availability badge is unaffected by this setting.
 
+      breadcrumbs:
+        type: optional<BreadcrumbsConfig>
+        availability: in-development
+        docs: Configures the breadcrumb trail rendered above the page title.
+
+  BreadcrumbsConfig:
+    properties:
+      current-page:
+        type: optional<boolean>
+        docs: |
+          If `current-page` is set to true, the current page is appended to the breadcrumb trail
+          as a non-clickable item. Defaults to false.
+
   DocsSettingsConfig:
     properties:
       search-text:
