@@ -224,9 +224,9 @@ describe("SDK Config migration", () => {
         const workspace = createWorkspace("payments", [group]);
         Object.assign(workspace, { type: "oss" });
 
-        expect(identifySourceDerivedApiFields({ workspace, groups: [group], definition: createDefinition() }).auth).toBe(
-            false
-        );
+        expect(
+            identifySourceDerivedApiFields({ workspace, groups: [group], definition: createDefinition() }).auth
+        ).toBe(false);
     });
 
     it("keeps generator-level header overrides in SDK Config", () => {
