@@ -45,7 +45,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 },
                 propertyAccess: undefined,
                 availability: undefined,
-                defaultValue: undefined
+                defaultValue: undefined,
+                xml: undefined
             });
         }
 
@@ -53,7 +54,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...queryParameter,
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                xml: undefined
             });
         }
 
@@ -61,7 +63,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...header,
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                xml: undefined
             });
         }
 
@@ -77,14 +80,16 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     availability: undefined,
                     defaultValue: undefined,
                     v2Examples: reference.v2Examples,
-                    docs: reference.docs
+                    docs: reference.docs,
+                    xml: undefined
                 });
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     properties.push({
                         ...property,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        xml: undefined
                     });
                 }
             },

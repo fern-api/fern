@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "enum": [
+    "none",
+    "x-weak",
+    "weak",
+    "medium",
+    "strong",
+    "x-strong"
+  ],
+  "definitions": {}
+}
