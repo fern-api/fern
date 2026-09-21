@@ -2,4 +2,4 @@
 
 - summary: |
     Revert `settings.embedding.allowed-origins` in docs.yml (added in 5.129.0).
-  type: break
+  type: fix
