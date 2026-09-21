@@ -95,6 +95,16 @@ const solverSettings = pyClass({
             name: "reset",
             path: "cuopt.linear_programming.SolverSettings.reset",
             signature: "def reset(self) -> None"
+        }),
+        pyFunction({
+            name: "copy",
+            path: "cuopt.linear_programming.SolverSettings.copy",
+            signature: "def copy(self) -> SolverSettings",
+            returnTypeInfo: {
+                display: "SolverSettings",
+                resolvedPath: "cuopt.linear_programming.SolverSettings",
+                basePath: "cuopt.linear_programming.SolverSettings"
+            }
         })
     ]
 });
@@ -246,7 +256,21 @@ const cppNamespace: CppNamespaceIr = {
     path: "",
     docstring: undefined,
     classes: [],
-    functions: [cppFunction({})],
+    functions: [
+        cppFunction({}),
+        cppFunction({
+            name: "cuOptNewEngine",
+            path: "cuOptNewEngine",
+            signature: "cuopt::Solver* cuOptNewEngine(void)",
+            returnType: {
+                parts: [{ text: "cuopt::Solver", refid: "classcuopt_1_1Solver", kindref: "compound" }, " *"],
+                display: "cuopt::Solver *",
+                resolvedPath: "cuopt::Solver",
+                basePath: "cuopt::Solver"
+            },
+            docstring: cppDocstring("Creates a solver.")
+        })
+    ],
     enums: [],
     typedefs: [cppTypedef],
     variables: [],
@@ -376,6 +400,33 @@ describe("renderLibrarySymbol (python)", () => {
         });
         expect(unlinked.mdx).toContain("SolverSettings");
         expect(unlinked.mdx).not.toContain("links={");
+    });
+
+    it("links types as relative .mdx paths into the generated output when given the output dir", () => {
+        const result = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.solve",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true,
+            relativePathToOutputDir: "../generated/python"
+        });
+        expect(result.mdx).toContain(
+            '"cuopt.linear_programming.SolverSettings":"../generated/python/cuopt-python/cuopt/linear_programming.mdx#cuopt-linear_programming-SolverSettings"'
+        );
+    });
+
+    it("never links a type to a same-page anchor, since the anchor lives on the generated page", () => {
+        const result = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.linear_programming.SolverSettings",
+            heading: 2,
+            members: ["copy"],
+            linkToGeneratedPages: true,
+            relativePathToOutputDir: "."
+        });
+        expect(result.mdx).not.toMatch(/"cuopt\.linear_programming\.SolverSettings":"#/);
+        expect(result.mdx).toContain(
+            '"cuopt.linear_programming.SolverSettings":"./cuopt-python/cuopt/linear_programming.mdx#cuopt-linear_programming-SolverSettings"'
+        );
     });
 
     it("explains that modules must be included member by member", () => {
@@ -565,6 +616,35 @@ describe("renderLibrarySymbol (cpp)", () => {
 // IR persistence + renderer factory
 // ---------------------------------------------------------------------------
 
+describe("renderLibrarySymbol (cpp) type links", () => {
+    it("links referenced types to the generated MDX files relative to the output dir", () => {
+        const result = renderLibrarySymbol(persistedCpp, {
+            name: "cuOptNewEngine",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true,
+            relativePathToOutputDir: "../generated/c"
+        });
+        expect(result.mdx).toContain('links={{"Solver": "../generated/c/cuopt/classes/Solver.mdx"}}');
+    });
+
+    it("renders types as plain code without the output dir or generated pages", () => {
+        for (const request of [
+            { linkToGeneratedPages: true },
+            { linkToGeneratedPages: false, relativePathToOutputDir: "../generated/c" }
+        ]) {
+            const result = renderLibrarySymbol(persistedCpp, {
+                name: "cuOptNewEngine",
+                heading: 2,
+                members: undefined,
+                ...request
+            });
+            expect(result.mdx).toContain("cuOptNewEngine");
+            expect(result.mdx).not.toContain(".mdx");
+        }
+    });
+});
+
 describe("library IR persistence", () => {
     let tmpDir: string;
 
@@ -637,6 +717,23 @@ describe("library IR persistence", () => {
         await expect(
             render({ library: "nope", name: "x", heading: undefined, members: undefined }, page)
         ).rejects.toThrow(/Unknown library 'nope'. Libraries configured in docs.yml: cuopt-python, cuopt-c/);
+    });
+
+    it("createLibrarySymbolRenderer links types relative to the authored page's directory", async () => {
+        const pyDir = AbsoluteFilePath.of(join(tmpDir, "generated", "python"));
+        await writeLibraryIr({ outputDir: pyDir, persisted: persistedPython });
+        const render = createLibrarySymbolRenderer({
+            getLibrarySource: () => ({ outputDir: pyDir, lang: "python", generatesPages: true }),
+            knownLibraries: () => ["cuopt-python"]
+        });
+        const page = AbsoluteFilePath.of(join(tmpDir, "authored", "lp", "reference.mdx"));
+        const result = await render(
+            { library: "cuopt-python", name: "cuopt.solve", heading: undefined, members: undefined },
+            page
+        );
+        expect(result.mdx).toContain(
+            '"cuopt.linear_programming.SolverSettings":"../../generated/python/cuopt-python/cuopt/linear_programming.mdx#cuopt-linear_programming-SolverSettings"'
+        );
     });
 
     it("createLibrarySymbolRenderer resolves the same library name to different IR per page", async () => {

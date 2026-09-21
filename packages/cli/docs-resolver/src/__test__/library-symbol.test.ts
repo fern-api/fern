@@ -173,6 +173,25 @@ function collectPageIds(node: unknown, out: string[] = []): string[] {
     return out;
 }
 
+function collectSlugs(node: unknown, out: string[] = []): string[] {
+    if (node == null || typeof node !== "object") {
+        return out;
+    }
+    if (("pageId" in node || "overviewPageId" in node) && "slug" in node && typeof node.slug === "string") {
+        out.push(node.slug);
+    }
+    for (const value of Object.values(node)) {
+        if (Array.isArray(value)) {
+            for (const child of value) {
+                collectSlugs(child, out);
+            }
+        } else if (typeof value === "object") {
+            collectSlugs(value, out);
+        }
+    }
+    return out;
+}
+
 /**
  * `<LibrarySymbol />` tags in authored pages are resolved at build time from the IR
  * persisted by `fern docs md generate` (`<output.path>/.fern/library-ir.json`).
@@ -193,6 +212,24 @@ describe("<LibrarySymbol /> in authored pages", () => {
         expect(markdown).toContain("Use the following to inspect the width at runtime:");
 
         expect(collectPageIds(docs.config.root)).toContain("static/cuopt/solver.mdx");
+    });
+
+    it("links Python types in authored embeds to the generated pages' final URLs", async () => {
+        const docs = await resolveFixture("library-symbol-python");
+        const page = docs.pages[DocsV1Write.PageId(RelativeFilePath.of("pages/reference/python-api.mdx"))];
+        expect(page).toBeDefined();
+        const markdown = page?.markdown ?? "";
+
+        expect(markdown).not.toContain("<LibrarySymbol");
+        expect(markdown).not.toContain(".mdx");
+        // `cuopt.solve` returns a type from a sibling module; the class embed references itself.
+        // Both resolve to the generated module page's navigation slug, never to a same-page anchor.
+        const settingsSlug = collectSlugs(docs.config.root).find((slug) => slug.endsWith("/linear_programming"));
+        expect(settingsSlug, "a nav node for the linear_programming page").toBeDefined();
+        expect(markdown).toContain(
+            `"cuopt.linear_programming.SolverSettings":"/${settingsSlug}#cuopt-linear_programming-SolverSettings"`
+        );
+        expect(markdown).not.toContain('"cuopt.linear_programming.SolverSettings":"#');
     });
 
     it("output.pages: false keeps <LibrarySymbol /> working but omits the generated navigation", async () => {

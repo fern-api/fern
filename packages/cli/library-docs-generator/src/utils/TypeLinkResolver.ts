@@ -25,6 +25,12 @@ export interface RenderContext {
      * URLs, so the output works wherever the library is mounted in the navigation.
      */
     linkToModuleFile?: (targetModulePath: string) => string;
+    /**
+     * Set when rendering outside the generated module pages (e.g. an authored page embedding a
+     * symbol): types defined in the symbol's own module are then linked to that module's page
+     * instead of to a same-page `#anchor` that does not exist on the current page.
+     */
+    isStandalonePage?: boolean;
 }
 
 /**
@@ -194,7 +200,7 @@ function pathToAnchorUrl(typePath: string, ctx: RenderContext, currentModulePath
     const anchor = generateAnchorId(typePath);
     const targetModulePath = parts.slice(0, -1).join(".");
 
-    if (currentModulePath && targetModulePath === currentModulePath) {
+    if (currentModulePath && targetModulePath === currentModulePath && ctx.isStandalonePage !== true) {
         return `#${anchor}`;
     }
 

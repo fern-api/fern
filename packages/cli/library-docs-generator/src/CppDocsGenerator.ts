@@ -368,11 +368,32 @@ function pageKeyToSlugPath(pageKey: string): string {
  * (no slug prefix, no leading slash) so that cross-reference links
  * can be resolved as relative paths during rendering.
  */
-function buildEntityRegistry(entries: PageEntry[]): Map<string, string> {
+/**
+ * Map every qualified name in the library to a link target inside a generated output
+ * directory. Targets are paths to the entity's MDX file relative to `relativePathToOutputDir`
+ * (e.g. `../generated/c/cuopt/functions/cuOptSolve.mdx`, plus `#anchor` for class members),
+ * which the docs build resolves to final URLs. Used to link type references on authored pages,
+ * whose URL relative to the generated pages is not known at render time.
+ */
+export function buildCppFileLinkRegistry(
+    ir: CppLibraryDocsIr,
+    slug: string,
+    relativePathToOutputDir: string
+): Map<string, string> {
+    const rootPrefix = ir.rootNamespace.path ? `${ir.rootNamespace.path}::` : "";
+    const rootNsName = slug.includes("/") ? slug.split("/").pop() : slug;
+    const pageEntries = computePageKeys(collectCompounds(ir.rootNamespace, rootPrefix), rootNsName);
+    return buildEntityRegistry(pageEntries, (pageKey) => `${relativePathToOutputDir}/${pageKey}`);
+}
+
+function buildEntityRegistry(
+    entries: PageEntry[],
+    linkTarget: (pageKey: string) => string = pageKeyToSlugPath
+): Map<string, string> {
     const registry = new Map<string, string>();
 
     for (const entry of entries) {
-        const slugPath = pageKeyToSlugPath(entry.pageKey);
+        const slugPath = linkTarget(entry.pageKey);
         const qualifiedName = stripTemplateArgs(entry.collected.path);
         const fullPath = entry.collected.path;
 

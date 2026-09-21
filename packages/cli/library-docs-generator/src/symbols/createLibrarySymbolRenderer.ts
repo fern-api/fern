@@ -1,4 +1,5 @@
-import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { type AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
+import path from "path";
 import { type PersistedLibraryIr, readLibraryIr } from "./libraryIrFile.js";
 import {
     DEFAULT_LIBRARY_SYMBOL_HEADING,
@@ -36,6 +37,12 @@ export interface LibrarySymbolRendererOptions {
      * via `<LibrarySymbol />` and its type references therefore cannot be linked.
      */
     onWarning?: (message: string) => void;
+}
+
+/** `path.relative` with POSIX separators, as written into markdown links. */
+function posixRelative(from: AbsoluteFilePath, to: AbsoluteFilePath): string {
+    const rel = path.relative(from, to).split(path.sep).join("/");
+    return rel === "" ? "." : rel;
 }
 
 export interface LibrarySymbolRenderRequest {
@@ -117,7 +124,8 @@ export function createLibrarySymbolRenderer(
             name: request.name,
             heading: request.heading ?? DEFAULT_LIBRARY_SYMBOL_HEADING,
             members: request.members,
-            linkToGeneratedPages: source.generatesPages
+            linkToGeneratedPages: source.generatesPages,
+            relativePathToOutputDir: posixRelative(dirname(absolutePathToMarkdownFile), source.outputDir)
         });
     };
 }

@@ -8,4 +8,6 @@
     `<LibrarySymbol />` reads during docs resolution, preview and publish (no network re-fetch).
     Adds `libraries.<name>.output.pages: false` to skip generated pages and navigation while still
     persisting the IR for hand-composed pages.
+    Type references in embedded symbols (parameter, return and member types) link to the library's
+    generated reference pages wherever the library is mounted in the navigation.
   type: feat

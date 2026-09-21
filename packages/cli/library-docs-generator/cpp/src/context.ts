@@ -38,13 +38,17 @@ export interface RenderContext {
 
 let entityRegistry: Map<string, string> = new Map();
 let currentPageSlugPath: string | undefined;
+/** When true, registry values are already final link targets and are emitted as-is. */
+let registryValuesAreLinks = false;
 
-export function setEntityRegistry(registry: Map<string, string>): void {
+export function setEntityRegistry(registry: Map<string, string>, options?: { valuesAreLinks?: boolean }): void {
     entityRegistry = registry;
+    registryValuesAreLinks = options?.valuesAreLinks ?? false;
 }
 
 export function clearEntityRegistry(): void {
     entityRegistry = new Map();
+    registryValuesAreLinks = false;
 }
 
 export function setCurrentPageSlugPath(slugPath: string | undefined): void {
@@ -115,7 +119,13 @@ export function buildLinkPath(qualifiedName: string): string | undefined {
         const stripped = stripTemplateArgs(normalized);
         targetSlugPath = entityRegistry.get(stripped);
     }
-    if (targetSlugPath == null || currentPageSlugPath == null) {
+    if (targetSlugPath == null) {
+        return undefined;
+    }
+    if (registryValuesAreLinks) {
+        return targetSlugPath;
+    }
+    if (currentPageSlugPath == null) {
         return undefined;
     }
     return computeRelativePath(currentPageSlugPath, targetSlugPath);

@@ -22,10 +22,11 @@ import {
     methodAnchorId,
     renderOverloadedMethod
 } from "../../cpp/src/renderers/MethodRenderer.js";
+import { buildCppFileLinkRegistry } from "../CppDocsGenerator.js";
 import { renderClassDetailed } from "../renderers/ClassRenderer.js";
 import { renderFunctionDetailed, renderMethodDetailed, renderProperty } from "../renderers/FunctionRenderer.js";
 import type { CppClassIr, CppFunctionIr, CppLibraryDocsIr, CppNamespaceIr } from "../types/CppLibraryDocsIr.js";
-import { buildTypeLinkData, getModulePath, type RenderContext } from "../utils/TypeLinkResolver.js";
+import { buildTypeLinkData, getModuleFilePath, getModulePath, type RenderContext } from "../utils/TypeLinkResolver.js";
 import type { PersistedLibraryIr } from "./libraryIrFile.js";
 
 export const DEFAULT_LIBRARY_SYMBOL_HEADING = 2;
@@ -43,6 +44,13 @@ export interface LibrarySymbolRequest {
      * When false, type references are emitted as plain code rather than links.
      */
     linkToGeneratedPages: boolean;
+    /**
+     * POSIX path from the directory of the page being rendered to the library's `output.path`
+     * (e.g. `../generated/python`). When set, type links are emitted as relative `.mdx` file
+     * references that the docs build resolves to the final page URLs; otherwise they fall back
+     * to `/<library>/...` URLs, which only resolve when the library is mounted at the site root.
+     */
+    relativePathToOutputDir?: string;
 }
 
 export interface RenderedLibrarySymbol {
@@ -74,6 +82,18 @@ export class LibrarySymbolError extends Error {}
 const pythonIndexCache = new WeakMap<FdrAPI.libraryDocs.PythonLibraryDocsIr, Map<string, PythonSymbol>>();
 const pythonLinkDataCache = new WeakMap<FdrAPI.libraryDocs.PythonLibraryDocsIr, ReturnType<typeof buildTypeLinkData>>();
 const cppIndexCache = new WeakMap<CppLibraryDocsIr, Map<string, CppSymbol>>();
+/** Per IR, the file-link registry for each relative output dir an authored page has used. */
+const cppLinkRegistryCache = new WeakMap<CppLibraryDocsIr, Map<string, Map<string, string>>>();
+
+function cachedBy<K, V>(cache: Map<K, V>, key: K, compute: () => V): V {
+    const existing = cache.get(key);
+    if (existing != null) {
+        return existing;
+    }
+    const value = compute();
+    cache.set(key, value);
+    return value;
+}
 
 function cached<K extends object, V>(cache: WeakMap<K, V>, key: K, compute: () => V): V {
     const existing = cache.get(key);
@@ -97,7 +117,7 @@ export function renderLibrarySymbol(
         case "python":
             return renderPythonSymbol(persisted.ir, persisted.library, request);
         case "cpp":
-            return renderCppSymbol(persisted.ir, request);
+            return renderCppSymbol(persisted.ir, persisted.library, request);
         default:
             assertNever(persisted);
     }
@@ -248,10 +268,26 @@ function renderPythonSymbol(
     assertMembersOnClass(request, symbol.kind === "class");
 
     // Type links point into the generated per-symbol pages; without them, render types as plain code.
-    const { validPaths, pathAliases } = request.linkToGeneratedPages
+    const { validPaths, pathAliases, publicPaths, packageModules } = request.linkToGeneratedPages
         ? cached(pythonLinkDataCache, ir, () => buildTypeLinkData(ir))
-        : { validPaths: new Set<string>(), pathAliases: new Map<string, string>() };
-    const ctx: RenderContext = { baseSlug, validPaths, pathAliases };
+        : {
+              validPaths: new Set<string>(),
+              pathAliases: new Map<string, string>(),
+              publicPaths: new Map<string, string>(),
+              packageModules: new Set<string>()
+          };
+    const outputDir = request.relativePathToOutputDir;
+    const ctx: RenderContext = {
+        baseSlug,
+        validPaths,
+        pathAliases,
+        publicPaths,
+        isStandalonePage: true,
+        linkToModuleFile:
+            outputDir != null
+                ? (targetModulePath) => `${outputDir}/${getModuleFilePath(targetModulePath, baseSlug, packageModules)}`
+                : undefined
+    };
     const shortName = request.name.split(".").pop() ?? request.name;
     // The Python renderers wrap the signature in `<Anchor id=...>`, so the heading
     // itself does not carry a custom anchor (that would duplicate the id).
@@ -476,7 +512,7 @@ function deriveMeta(compound: CppCompoundIr, path: string, repo: string): Compou
     };
 }
 
-function renderCppSymbol(ir: CppLibraryDocsIr, request: LibrarySymbolRequest): RenderedLibrarySymbol {
+function renderCppSymbol(ir: CppLibraryDocsIr, baseSlug: string, request: LibrarySymbolRequest): RenderedLibrarySymbol {
     const index = cached(cppIndexCache, ir, () => {
         const built = new Map<string, CppSymbol>();
         indexCppSymbols(ir.rootNamespace, built);
@@ -502,9 +538,19 @@ function renderCppSymbol(ir: CppLibraryDocsIr, request: LibrarySymbolRequest): R
     const heading = renderHeading(request.heading, `\`${shortName}\``, anchorId);
     const repo = ir.metadata.packageName;
 
-    // An authored page has no slug inside the generated folder, so relative
-    // cross-links cannot be computed: render type references as plain code.
-    setEntityRegistry(new Map());
+    // An authored page has no slug inside the generated folder, so type references are linked
+    // as paths to the generated MDX files (resolved to URLs by the docs build) when the output
+    // directory is known, and rendered as plain code otherwise.
+    const outputDir = request.relativePathToOutputDir;
+    const registry =
+        request.linkToGeneratedPages && outputDir != null
+            ? cachedBy(
+                  cached(cppLinkRegistryCache, ir, () => new Map()),
+                  outputDir,
+                  () => buildCppFileLinkRegistry(ir, baseSlug, outputDir)
+              )
+            : new Map<string, string>();
+    setEntityRegistry(registry, { valuesAreLinks: true });
     setCurrentPageSlugPath(undefined);
     try {
         let body: string;
