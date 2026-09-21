@@ -486,10 +486,17 @@ function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
             return [`\`\`\`${lang} showLineNumbers={false}`, block.code, "```"].join("\n");
         }
         case "verbatim": {
-            // Verbatim blocks: pass through raw content with MDX escaping.
-            // RST verbatim processing has been removed -- RST content is now
-            // pre-processed into structured IR fields by the parser.
-            return escapeMultilineMdxSpecials(block.content);
+            // RST verbatim is pre-processed into structured IR fields by the parser;
+            // anything left here that carries its own fences is passed through.
+            if (block.format === "rst" || /^```/m.test(block.content)) {
+                return escapeMultilineMdxSpecials(block.content);
+            }
+            // Doxygen @verbatim is preformatted text: render it as a plain code block.
+            const content = block.content.replace(/^\n+|\s+$/g, "");
+            if (!content) {
+                return "";
+            }
+            return ["```text showLineNumbers={false}", content, "```"].join("\n");
         }
         case "list": {
             return renderList(block.ordered, block.items, options);

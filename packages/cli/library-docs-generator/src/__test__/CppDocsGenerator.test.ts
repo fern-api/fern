@@ -775,4 +775,75 @@ describe("generateCpp()", () => {
         expect(existsSync(join(tmpDir, "groups/scan/nested/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "groups/scan/nested/scan"))).toBe(false);
     });
+    it("renders plain-C typedefs with C syntax, callback params, directions and verbatim blocks", () => {
+        const callback: CppTypedefIr = {
+            name: "lib_callback",
+            path: "lib_callback",
+            typeInfo: {
+                parts: ["void(*)(const float *solution, void *user_data)"],
+                display: "void(*)(const float *solution, void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Solution callback." }],
+                params: [
+                    { name: "solution", description: [{ type: "text", text: "the solution" }], direction: "in" },
+                    { name: "user_data", description: [{ type: "text", text: "opaque pointer" }], direction: "inout" }
+                ]
+            })
+        };
+        const handle: CppTypedefIr = {
+            name: "lib_handle",
+            path: "lib_handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Opaque handle." }] })
+        };
+        const create = makeFunction({
+            name: "lib_create",
+            path: "lib_create",
+            parameters: [
+                {
+                    name: "out",
+                    typeInfo: {
+                        parts: ["lib_handle *"],
+                        display: "lib_handle *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: "out"
+                }
+            ],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Create a problem of the form" }],
+                description: [
+                    { type: "verbatim", content: "\n  minimize c^T x\n  subject to A x <= b\n", format: undefined }
+                ],
+                params: [
+                    { name: "out", description: [{ type: "text", text: "- the created handle" }], direction: "out" }
+                ]
+            })
+        });
+        const ir = makeIr(makeNamespace({ typedefs: [callback, handle], functions: [create] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/lib_callback.mdx"), "utf-8");
+        expect(callbackPage).toContain("typedef void (*lib_callback)(const float *solution, void *user_data);");
+        expect(callbackPage).not.toContain("using lib_callback");
+        expect(callbackPage).toContain("**Parameters**");
+        expect(callbackPage).toContain('<ParamField path="solution" type="const float *">\n**[in]** The solution');
+        expect(callbackPage).toContain('<ParamField path="user_data" type="void *">\n**[in,out]** Opaque pointer');
+
+        const handlePage = readFileSync(join(tmpDir, "typedefs/lib_handle.mdx"), "utf-8");
+        expect(handlePage).toContain("typedef void *lib_handle;");
+
+        const createPage = readFileSync(join(tmpDir, "functions/lib_create.mdx"), "utf-8");
+        expect(createPage).toContain("**[out]** The created handle");
+        expect(createPage).toContain("```text showLineNumbers={false}\n  minimize c^T x\n  subject to A x <= b\n```");
+    });
 });

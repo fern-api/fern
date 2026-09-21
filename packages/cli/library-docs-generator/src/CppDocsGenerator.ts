@@ -20,6 +20,7 @@ import {
     OPERATOR_SYMBOL_MAP,
     setCurrentPageSlugPath,
     setEntityRegistry,
+    setTypedefSyntax,
     stripTemplateArgs
 } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
@@ -109,6 +110,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     // Build entity registry for cross-reference link resolution
     const registry = buildEntityRegistry(pageEntries);
     setEntityRegistry(registry);
+    setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
         const writer = new MdxFileWriter(outputDir);
@@ -149,7 +151,23 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     } finally {
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
+        setTypedefSyntax("cpp");
     }
+}
+
+/**
+ * A library with no namespaces, classes, concepts or templates is plain C, so
+ * its typedefs are rendered with `typedef` rather than `using` syntax.
+ */
+function isPlainCLibrary(root: CppNamespaceIr): boolean {
+    return (
+        root.path === "" &&
+        root.namespaces.length === 0 &&
+        root.classes.length === 0 &&
+        root.concepts.length === 0 &&
+        root.functions.every((fn) => fn.templateParams.length === 0) &&
+        root.typedefs.every((td) => td.templateParams.length === 0)
+    );
 }
 
 /**
