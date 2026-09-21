@@ -20,6 +20,9 @@ import {
 } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
+const REQUEST_TYPE_NAME = "Request";
+const RESPONSE_TYPE_NAME = "Response";
+
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<FernIr.UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionType<Context>
@@ -106,6 +109,21 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return this.shape.baseProperties ?? [];
     }
 
+    private getBasePropertiesWithTypeNames(): { property: FernIr.ObjectProperty; typeName: string }[] {
+        const usedNames = new Set([REQUEST_TYPE_NAME, RESPONSE_TYPE_NAME]);
+        return this.getBaseProperties().map((property) => {
+            const preferredName = this.case.pascalSafe(property.name);
+            let typeName = preferredName;
+            let suffix = 1;
+            while (usedNames.has(typeName)) {
+                typeName = `${preferredName}Property${suffix === 1 ? "" : suffix}`;
+                suffix++;
+            }
+            usedNames.add(typeName);
+            return { property, typeName };
+        });
+    }
+
     private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return this.case.camelUnsafe(property.name);
@@ -114,11 +132,11 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     }
 
     private getBasePropertyNodes(context: Context): BasePropertyNode[] {
-        return this.getBaseProperties().map((property) => {
+        return this.getBasePropertiesWithTypeNames().map(({ property, typeName }) => {
             const type = context.type.getReferenceToInlinePropertyType(
                 property.valueType,
                 this.typeName,
-                this.case.pascalSafe(property.name)
+                typeName
             );
             const shouldIncludeUndefined = type.isOptional && !this.includeSerdeLayer;
             const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
@@ -151,8 +169,8 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             return [];
         }
         return generateInlinePropertiesModule({
-            properties: this.getBaseProperties().map((property) => ({
-                propertyName: this.case.pascalSafe(property.name),
+            properties: this.getBasePropertiesWithTypeNames().map(({ property, typeName }) => ({
+                propertyName: typeName,
                 typeReference: property.valueType
             })),
             generateStatements: (typeName, typeNameOverride) =>
@@ -231,7 +249,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         if (anyRequestVariantsNeeded) {
             const requestType: TypeAliasDeclarationStructure = {
-                name: "Request",
+                name: REQUEST_TYPE_NAME,
                 kind: StructureKind.TypeAlias,
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
@@ -262,7 +280,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         }
         if (anyResponseVariantsNeeded) {
             const responseType: TypeAliasDeclarationStructure = {
-                name: "Response",
+                name: RESPONSE_TYPE_NAME,
                 kind: StructureKind.TypeAlias,
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
