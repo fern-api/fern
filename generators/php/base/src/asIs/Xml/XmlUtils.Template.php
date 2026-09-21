@@ -453,16 +453,29 @@ final class XmlUtils
     }
 
     /**
-     * Parses the text of every child element with the given name.
+     * Returns the wrapper element of a wrapped list, throwing when it is missing.
+     */
+    public static function requireWrapper(XmlElement $element, string $name): XmlElement
+    {
+        $wrapper = $element->getChild($name);
+        if ($wrapper === null) {
+            throw self::missingChild($element, [$name]);
+        }
+        return $wrapper;
+    }
+
+    /**
+     * Parses the text of every child element with the given name. Returns null when $parent is null
+     * (an absent optional wrapper).
      *
      * @template T
      * @param callable(string): T $parse
-     * @return list<T>
+     * @return ($parent is null ? null : list<T>)
      */
-    public static function parseChildValues(?XmlElement $parent, string $name, callable $parse): array
+    public static function parseChildValues(?XmlElement $parent, string $name, callable $parse): ?array
     {
         if ($parent === null) {
-            return [];
+            return null;
         }
         $result = [];
         foreach ($parent->getChildren($name) as $child) {
@@ -472,16 +485,17 @@ final class XmlUtils
     }
 
     /**
-     * Parses every child element whose name has a parser, in document order.
+     * Parses every child element whose name has a parser, in document order. Returns null when $parent
+     * is null (an absent optional wrapper).
      *
      * @template T
      * @param array<string, callable(XmlElement): T> $parsers Keyed by element name.
-     * @return list<T>
+     * @return ($parent is null ? null : list<T>)
      */
-    public static function parseChildren(?XmlElement $parent, array $parsers): array
+    public static function parseChildren(?XmlElement $parent, array $parsers): ?array
     {
         if ($parent === null) {
-            return [];
+            return null;
         }
         $result = [];
         foreach ($parent->children as $child) {

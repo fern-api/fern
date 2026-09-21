@@ -611,9 +611,13 @@ export class XmlObjectGenerator {
     }
 
     private getParseParent(property: XmlProperty): string {
-        return property.wrapped
-            ? `${ELEMENT_VARIABLE}->getChild(${this.phpString(property.wireName)})`
-            : ELEMENT_VARIABLE;
+        if (!property.wrapped) {
+            return ELEMENT_VARIABLE;
+        }
+        const wire = this.phpString(property.wireName);
+        return property.isOptional
+            ? `${ELEMENT_VARIABLE}->getChild(${wire})`
+            : `${this.context.getXmlUtilsClassReference().name}::requireWrapper(${ELEMENT_VARIABLE}, ${wire})`;
     }
 
     private getChildParsers(childTypes: FernIr.TypeDeclaration[]): php.CodeBlock {
