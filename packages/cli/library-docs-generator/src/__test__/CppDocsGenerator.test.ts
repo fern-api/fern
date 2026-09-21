@@ -489,6 +489,23 @@ describe("generateCpp()", () => {
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
     });
 
+    it("gives slug-equivalent group names distinct folders and URLs", () => {
+        const m1 = makeMacro({ name: "GPU_A", path: "GPU_A" });
+        const m2 = makeMacro({ name: "GPU_B", path: "GPU_B" });
+        const ir = makeIr(makeNamespace({ macros: [m1, m2] }), { packageName: "lib" }, [
+            makeGroup({ id: "group__DOCA__GPUNETIO", name: "DOCA_GPUNETIO", title: "GPUNetIO Engine", macros: [m1] }),
+            makeGroup({ id: "group__DOCAGPUNETIO", name: "DOCAGPUNETIO", title: "GPUNetIO engine", macros: [m2] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        expect(readFileSync(join(tmpDir, "groups/DOCAGPUNETIO/index.mdx"), "utf-8")).toContain("GPU_B");
+        expect(readFileSync(join(tmpDir, "groups/DOCA_GPUNETIO-2/index.mdx"), "utf-8")).toContain("GPU_A");
+        const groupsIndex = readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8");
+        expect(groupsIndex).toContain("](groups/docagpunetio)");
+        expect(groupsIndex).toContain("](groups/docagpunetio-2)");
+    });
+
     it("does not let an entity named `index` overwrite the category index page", () => {
         const indexFn = makeFunction({ name: "index", path: "index" });
         const ir = makeIr(makeNamespace({ functions: [indexFn] }), { packageName: "lib" });

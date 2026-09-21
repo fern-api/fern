@@ -691,6 +691,33 @@ function groupFolderName(group: CppGroupIr): string {
     return sanitizeForFilename(group.name || group.title);
 }
 
+/**
+ * Sibling group folders whose names slugify to the same URL segment (e.g.
+ * `DOCA_GPUNETIO` and `DOCAGPUNETIO`) get a deterministic `-N` suffix so each
+ * group page has its own URL.
+ */
+function uniqueGroupFolderNames(groups: CppGroupIr[]): Map<CppGroupIr, string> {
+    const result = new Map<CppGroupIr, string>();
+    const takenSlugs = new Set<string>();
+    const sorted = [...groups].sort((a, b) => {
+        const fa = groupFolderName(a);
+        const fb = groupFolderName(b);
+        return fa < fb ? -1 : fa > fb ? 1 : 0;
+    });
+    for (const group of sorted) {
+        const base = groupFolderName(group);
+        let folder = base;
+        let n = 2;
+        while (takenSlugs.has(slugifySegment(folder))) {
+            folder = `${base}-${n}`;
+            n += 1;
+        }
+        takenSlugs.add(slugifySegment(folder));
+        result.set(group, folder);
+    }
+    return result;
+}
+
 function groupDisplayName(group: CppGroupIr): string {
     return group.title || group.name;
 }
@@ -710,15 +737,16 @@ function generateGroupPages(renderable: CppGroupIr[], writer: MdxFileWriter, lib
 
     const indexPageKey = `${GROUPS_FOLDER}/index.mdx`;
     setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    const folders = uniqueGroupFolderNames(renderable);
     const entries: GroupListEntry[] = renderable.map((group) => ({
         displayName: groupDisplayName(group),
-        linkPath: `${GROUPS_FOLDER}/${slugifySegment(groupFolderName(group))}`
+        linkPath: `${GROUPS_FOLDER}/${slugifySegment(folders.get(group) ?? groupFolderName(group))}`
     }));
     writer.writePage(indexPageKey, renderGroupsIndexPage(entries, libraryTitle));
 
     const written = new Set<string>();
     for (const group of renderable) {
-        writeGroupPage(group, `${GROUPS_FOLDER}/${groupFolderName(group)}`, writer, written);
+        writeGroupPage(group, `${GROUPS_FOLDER}/${folders.get(group) ?? groupFolderName(group)}`, writer, written);
     }
 }
 
@@ -743,14 +771,15 @@ function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, w
     const sections = collectGroupSections(group);
     const subgroups = group.subgroups.filter((subgroup) => !written.has(subgroup.id) && groupHasContent(subgroup));
     const dirSegment = slugifySegment(dir.split("/").pop() ?? "");
+    const folders = uniqueGroupFolderNames(subgroups);
     const subgroupEntries: GroupListEntry[] = subgroups.map((subgroup) => ({
         displayName: groupDisplayName(subgroup),
-        linkPath: `${dirSegment}/${slugifySegment(groupFolderName(subgroup))}`
+        linkPath: `${dirSegment}/${slugifySegment(folders.get(subgroup) ?? groupFolderName(subgroup))}`
     }));
 
     writer.writePage(pageKey, renderGroupPage(group, sections, subgroupEntries));
 
     for (const subgroup of subgroups) {
-        writeGroupPage(subgroup, `${dir}/${groupFolderName(subgroup)}`, writer, written);
+        writeGroupPage(subgroup, `${dir}/${folders.get(subgroup) ?? groupFolderName(subgroup)}`, writer, written);
     }
 }
