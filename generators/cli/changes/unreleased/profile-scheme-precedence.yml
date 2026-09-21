@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A named `--profile` now prefers stored credentials when selecting among
+    multiple authentication schemes, including OAuth2 client credentials.
+  type: fix

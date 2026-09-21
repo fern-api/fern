@@ -457,15 +457,12 @@ fn read_env(var: &str, label: &str) -> Result<String, CliError> {
     })
 }
 
-/// The OAuth2 `client_id`: the env var first, then the active profile's
-/// `oauth_client_id`.
+/// The OAuth2 `client_id`: a named profile's keyring value, then the env var,
+/// then the active profile's `oauth_client_id`.
 ///
 /// A client id is public by construction (RFC 6749 §2.2), which is why it
-/// can live in `profiles.toml` at all — and why only *this* value gets a
-/// profile rung. The client secret has none: it is a secret, so it lives in
-/// the keychain under the profile-namespaced account, which the
-/// [`keyring_account`](crate::profiles::keyring_account) change already
-/// covers.
+/// can live in `profiles.toml` at all. Without an explicitly named profile,
+/// the environment remains the first source for backward compatibility.
 impl OAuth2TokenProvider {
     /// The non-env rungs backing the credential whose env var is `var`, for
     /// `auth status`. Mirrors [`Self::resolve_client_id`] and
@@ -529,12 +526,13 @@ impl OAuth2TokenProvider {
             .map(str::to_string)
     }
 
-    /// The client id: env var, then this profile's keyring entry, then the
-    /// profile's plaintext `oauth_client_id`.
-    ///
-    /// A client id is public (RFC 6749 §2.2), so all three are legitimate
-    /// homes for it; the secret below deliberately has no plaintext rung.
+    /// Resolve the client id, preferring a named profile's keyring value.
     fn resolve_client_id(&self, var: &str) -> Result<String, CliError> {
+        if crate::profiles::outranks_env() {
+            if let Some(value) = self.keyring_field(CLIENT_ID_FIELD) {
+                return Ok(value);
+            }
+        }
         if let Some(value) = read_oauth_env(var, false, "client_id")? {
             return Ok(value);
         }
@@ -544,9 +542,13 @@ impl OAuth2TokenProvider {
         read_client_id(var)
     }
 
-    /// The client secret: env var, then this profile's keyring entry.
-    /// Never `profiles.toml` — it is a secret.
+    /// Resolve the client secret, preferring a named profile's keyring value.
     fn resolve_client_secret(&self, var: &str) -> Result<String, CliError> {
+        if crate::profiles::outranks_env() {
+            if let Some(value) = self.keyring_field(CLIENT_SECRET_FIELD) {
+                return Ok(value);
+            }
+        }
         if let Some(value) = read_oauth_env(var, false, "client_secret")? {
             return Ok(value);
         }
@@ -1201,6 +1203,13 @@ impl AuthProvider for OAuth2TokenProvider {
         self.has_credentials_for_url(&self.token_url)
     }
 
+    fn has_stored_credentials(&self) -> bool {
+        self.has_credentials()
+            && self.keyring_field(CLIENT_SECRET_FIELD).is_some()
+            && (self.keyring_field(CLIENT_ID_FIELD).is_some()
+                || crate::profiles::oauth_client_id().is_some())
+    }
+
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
         self.has_credentials_for_url(&self.resolved_token_url(endpoint))
     }
@@ -1481,11 +1490,97 @@ impl AuthProvider for MisconfiguredOAuth2Provider {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use crate::auth::oauth2_contract::{OAuth2RequestProperty, OAuth2RequestValue};
     use crate::auth::test_helpers::{auth_header, header as request_header, req};
+    use crate::profiles::{install_for_tests_from, ResolvedProfile, SelectionSource};
     use serial_test::serial;
     use wiremock::matchers::{body_json, body_string_contains, method, path, query_param};
     use wiremock::{Mock, MockServer, ResponseTemplate};
+
+    fn install_oauth_test_profile(source: SelectionSource) {
+        install_for_tests_from(
+            Some(ResolvedProfile {
+                name: "test".to_string(),
+                credential: Some("test".to_string()),
+                ..Default::default()
+            }),
+            source,
+        );
+    }
+
+    fn set_oauth_client_keyring(value: Option<&str>) {
+        let mock = Arc::new(MockKeyringStore::new());
+        if let Some(value) = value {
+            mock.set(
+                "oauth-test",
+                &crate::profiles::keyring_account("oauth2"),
+                value,
+            )
+            .unwrap();
+        }
+        set_active_store(mock);
+    }
+
+    fn clear_oauth_test_state() {
+        std::env::remove_var("TEST_PROFILE_SECRET");
+        install_for_tests_from(None, SelectionSource::Active);
+        set_active_store(Arc::new(MockKeyringStore::new()));
+    }
+
+    #[test]
+    #[serial]
+    fn named_profile_prefers_keyring_oauth_client_secret() {
+        install_oauth_test_profile(SelectionSource::Flag);
+        set_oauth_client_keyring(
+            Some(r#"{"client_id":"stored-id","client_secret":"stored-secret"}"#),
+        );
+        std::env::set_var("TEST_PROFILE_SECRET", "env-secret");
+
+        let provider = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "TEST_PROFILE_ID".to_string(),
+                client_secret_env: "TEST_PROFILE_SECRET".to_string(),
+                scope: None,
+            },
+        );
+        provider.inject_token_cache("oauth-test");
+
+        assert_eq!(
+            provider.resolve_client_secret("TEST_PROFILE_SECRET").unwrap(),
+            "stored-secret"
+        );
+        clear_oauth_test_state();
+    }
+
+    #[test]
+    #[serial]
+    fn ambient_selection_prefers_env_oauth_client_secret() {
+        install_oauth_test_profile(SelectionSource::Active);
+        set_oauth_client_keyring(
+            Some(r#"{"client_id":"stored-id","client_secret":"stored-secret"}"#),
+        );
+        std::env::set_var("TEST_PROFILE_SECRET", "env-secret");
+
+        let provider = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "TEST_PROFILE_ID".to_string(),
+                client_secret_env: "TEST_PROFILE_SECRET".to_string(),
+                scope: None,
+            },
+        );
+        provider.inject_token_cache("oauth-test");
+
+        assert_eq!(
+            provider.resolve_client_secret("TEST_PROFILE_SECRET").unwrap(),
+            "env-secret"
+        );
+        clear_oauth_test_state();
+    }
 
     #[tokio::test(flavor = "multi_thread")]
     #[serial]
