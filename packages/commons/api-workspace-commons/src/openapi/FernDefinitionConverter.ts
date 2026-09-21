@@ -161,7 +161,10 @@ export class FernDefinitionConverter {
             specVersion: ir.specVersion ?? undefined
         };
         Object.defineProperty(fernDefinition, "sourceDerivedGlobalHeaderNames", {
-            value: globalHeaderOverrides == null ? (ir.globalHeaders ?? []).map((header) => header.header) : []
+            configurable: true,
+            enumerable: false,
+            value: (ir.globalHeaders ?? []).map((header) => header.header),
+            writable: true
         });
         return fernDefinition;
     }

@@ -59,11 +59,21 @@ export function identifySourceDerivedApiFields({
     const hasConfiguredHeaders =
         api?.headers != null ||
         groups.some((group) => group.generators.some((generator) => generator.apiOverride?.headers != null));
+    // OSS conversion always defines this non-enumerable metadata. If it is absent, a clone or spread discarded the
+    // provenance, so fail explicitly instead of silently duplicating source-derived headers again.
+    const sourceDerivedGlobalHeaderNames = definition.sourceDerivedGlobalHeaderNames;
+    if (!hasConfiguredHeaders && sourceDerivedGlobalHeaderNames == null) {
+        throw new CliError({
+            message:
+                "Could not determine global-header provenance for the resolved API definition. Reload the workspace before running fern sdk migrate.",
+            code: CliError.Code.InternalError
+        });
+    }
 
     return {
         auth: !hasConfiguredAuth,
         environments: !hasConfiguredEnvironments,
-        headerNames: hasConfiguredHeaders ? [] : (definition.sourceDerivedGlobalHeaderNames ?? [])
+        headerNames: hasConfiguredHeaders ? [] : (sourceDerivedGlobalHeaderNames ?? [])
     };
 }
 

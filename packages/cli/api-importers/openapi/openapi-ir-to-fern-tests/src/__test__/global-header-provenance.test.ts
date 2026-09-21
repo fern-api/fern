@@ -30,10 +30,22 @@ describe("global header provenance", () => {
             absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
         });
 
-        expect(definition.sourceDerivedGlobalHeaderNames).toEqual(["my-api-key", "another_header", "version"]);
+        expect(new Set(definition.sourceDerivedGlobalHeaderNames)).toEqual(
+            new Set(["my-api-key", "another_header", "version"])
+        );
+        expect(definition.sourceDerivedGlobalHeaderNames).toHaveLength(3);
         expect(Object.prototype.propertyIsEnumerable.call(definition, "sourceDerivedGlobalHeaderNames")).toBe(false);
         expect(definition.rootApiFile.contents.headers).toHaveProperty("x-api-key");
         expect(definition.sourceDerivedGlobalHeaderNames).not.toContain("x-api-key");
+
+        const definitionWithConfiguredHeaders = await workspace.workspace.getDefinition(
+            { context, absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH") },
+            { headers: { "X-Configured": "string" } }
+        );
+        expect(new Set(definitionWithConfiguredHeaders.sourceDerivedGlobalHeaderNames)).toEqual(
+            new Set(["my-api-key", "another_header", "version"])
+        );
+        expect(definitionWithConfiguredHeaders.rootApiFile.contents.headers).toEqual({ "X-Configured": "string" });
     }, 90_000);
 
     it("tracks a global header introduced by a retained override", async () => {
