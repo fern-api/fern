@@ -320,6 +320,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(startTargetWork).not.toHaveBeenCalled();
     });
 
+    it("routes sdk-gen-api-only generators to SDK Config v1 at cutover without a document", () => {
+        // Hosted MCP servers are configured in generators.yml and have no legacy route, so the
+        // CLI synthesizes their SDK Config instead of asking for `fern sdk migrate`.
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.1.0", language: "mcp" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toMatchObject({ configKind: "sdk-config-v1", payloadKind: "sdk-config-v1" });
+    });
+
     it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
