@@ -13,7 +13,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { moduleHasPage, renderModulePage } from "./renderers/ModuleRenderer.js";
-import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.js";
+import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
 
@@ -52,12 +52,12 @@ export function generate(options: GenerateOptions): GenerateResult {
     const { ir, outputDir, slug } = options;
 
     // Stage 1: Build type link data (single-pass IR traversal)
-    const { validPaths, pathAliases, publicPaths } = buildTypeLinkData(ir);
+    const { validPaths, pathAliases, publicPaths, packageModules } = buildTypeLinkData(ir);
     const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
 
     // Stage 2: Render pages and stream to disk
     const writer = new MdxFileWriter(outputDir);
-    renderModuleTree(ir.rootModule, ctx, writer, "");
+    renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
 
     // Stage 3: Build navigation tree
     const navigation = buildNavigation(ir.rootModule, slug);
@@ -88,22 +88,30 @@ export function generate(options: GenerateOptions): GenerateResult {
 function renderModuleTree(
     module: FdrAPI.libraryDocs.PythonModuleIr,
     ctx: RenderContext,
+    packageModules: Set<string>,
     writer: MdxFileWriter,
     parentPath: string
 ): void {
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 
-    const hasSubmodules = module.submodules.length > 0;
-
     // Modules with submodules write to <path>/index.mdx so the folder scanner
     // picks them up as section overview pages (not sibling duplicates).
     if (moduleHasPage(module)) {
-        const pageKey = hasSubmodules ? `${ctx.baseSlug}/${modulePath}/index.mdx` : `${ctx.baseSlug}/${modulePath}.mdx`;
-        const content = renderModulePage(module, ctx, parentPath);
+        const pageKey =
+            module.submodules.length > 0
+                ? `${ctx.baseSlug}/${modulePath}/index.mdx`
+                : `${ctx.baseSlug}/${modulePath}.mdx`;
+        // Cross-page links are relative to this page's file so they resolve wherever the
+        // generated folder is mounted in the navigation.
+        const pageCtx: RenderContext = {
+            ...ctx,
+            linkToModuleFile: createModuleFileLinker(pageKey, ctx.baseSlug, packageModules)
+        };
+        const content = renderModulePage(module, pageCtx, parentPath);
         writer.writePage(pageKey, content);
     }
 
     for (const submodule of module.submodules) {
-        renderModuleTree(submodule, ctx, writer, modulePath);
+        renderModuleTree(submodule, ctx, packageModules, writer, modulePath);
     }
 }

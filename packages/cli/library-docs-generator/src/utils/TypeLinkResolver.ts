@@ -18,6 +18,12 @@ export interface RenderContext {
     pathAliases: Map<string, string>;
     /** Maps definition paths to the shortest path they are re-exported from (e.g. pkg.sub.impl.Foo -> pkg.Foo) */
     publicPaths?: Map<string, string>;
+    /**
+     * When set, links to other modules' pages are emitted as paths to the target module's
+     * MDX file (the docs build resolves them to final URLs) instead of `/${baseSlug}/...`
+     * URLs, so the output works wherever the library is mounted in the navigation.
+     */
+    linkToModuleFile?: (targetModulePath: string) => string;
 }
 
 /**
@@ -30,6 +36,43 @@ export interface TypeLinkData {
     pathAliases: Map<string, string>;
     /** Maps definition paths to the shortest path they are re-exported from */
     publicPaths: Map<string, string>;
+    /** Modules that have submodules and are therefore written to `<module>/index.mdx` */
+    packageModules: Set<string>;
+}
+
+/**
+ * MDX file (relative to the library output directory) that documents a module,
+ * mirroring where the generator writes module pages.
+ */
+export function getModuleFilePath(modulePath: string, baseSlug: string, packageModules: Set<string>): string {
+    const segments = modulePath.split(".").join("/");
+    return packageModules.has(modulePath) ? `${baseSlug}/${segments}/index.mdx` : `${baseSlug}/${segments}.mdx`;
+}
+
+/** POSIX-style relative path from the directory of `fromFile` to `toFile`. */
+export function relativeFilePath(fromFile: string, toFile: string): string {
+    const fromParts = fromFile.split("/").slice(0, -1);
+    const toParts = toFile.split("/");
+    let common = 0;
+    while (common < fromParts.length && common < toParts.length && fromParts[common] === toParts[common]) {
+        common++;
+    }
+    const ups = fromParts.slice(common).map(() => "..");
+    const rel = [...ups, ...toParts.slice(common)].join("/");
+    return rel.startsWith("..") ? rel : `./${rel}`;
+}
+
+/**
+ * Build the `linkToModuleFile` callback for a page rendered at `fromFile` (relative to
+ * the library output directory, like the paths returned by `getModuleFilePath`).
+ */
+export function createModuleFileLinker(
+    fromFile: string,
+    baseSlug: string,
+    packageModules: Set<string>
+): (targetModulePath: string) => string {
+    return (targetModulePath) =>
+        relativeFilePath(fromFile, getModuleFilePath(targetModulePath, baseSlug, packageModules));
 }
 
 /**
@@ -41,6 +84,7 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
     const validPaths = new Set<string>();
     const pathAliases = new Map<string, string>();
     const publicPaths = new Map<string, string>();
+    const packageModules = new Set<string>();
 
     function addPublicPath(definitionPath: string, name: string, modulePath: string): void {
         if (getModulePath(definitionPath) === modulePath) {
@@ -69,6 +113,9 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
     function processModule(module: FdrAPI.libraryDocs.PythonModuleIr): void {
         validPaths.add(module.path);
+        if (module.submodules.length > 0) {
+            packageModules.add(module.path);
+        }
 
         for (const cls of module.classes) {
             validPaths.add(cls.path);
@@ -101,7 +148,7 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
     processModule(ir.rootModule);
 
-    return { validPaths, pathAliases, publicPaths };
+    return { validPaths, pathAliases, publicPaths, packageModules };
 }
 
 /**
@@ -137,7 +184,7 @@ export function getModulePath(path: string): string {
 /**
  * Generate anchor URL from a qualified type path.
  */
-function pathToAnchorUrl(typePath: string, baseSlug: string, currentModulePath?: string): string | null {
+function pathToAnchorUrl(typePath: string, ctx: RenderContext, currentModulePath?: string): string | null {
     const parts = typePath.split(".");
     if (parts.length < 2) {
         return null;
@@ -150,7 +197,10 @@ function pathToAnchorUrl(typePath: string, baseSlug: string, currentModulePath?:
         return `#${anchor}`;
     }
 
-    return `/${baseSlug}/${parts.slice(0, -1).join("/")}#${anchor}`;
+    if (ctx.linkToModuleFile != null) {
+        return `${ctx.linkToModuleFile(targetModulePath)}#${anchor}`;
+    }
+    return `/${ctx.baseSlug}/${parts.slice(0, -1).join("/")}#${anchor}`;
 }
 
 /** Regex to match qualified Python paths (at least 2 segments). */
@@ -191,7 +241,7 @@ export function extractLinksFromTypes(
             }
 
             // Generate URL using the actual definition path
-            const url = pathToAnchorUrl(actualPath, ctx.baseSlug, currentModulePath);
+            const url = pathToAnchorUrl(actualPath, ctx, currentModulePath);
             if (url) {
                 // Key is the original path (for text replacement in the code block)
                 links[path] = url;
@@ -241,7 +291,7 @@ export function linkTypeInfo(
 
     // Only link if basePath exists in our docs
     if (typeInfo.basePath && ctx.validPaths.has(typeInfo.basePath)) {
-        const url = pathToAnchorUrl(typeInfo.basePath, ctx.baseSlug, currentModulePath);
+        const url = pathToAnchorUrl(typeInfo.basePath, ctx, currentModulePath);
         if (url) {
             return `[${escapeMdx(displayName)}](${url})`;
         }

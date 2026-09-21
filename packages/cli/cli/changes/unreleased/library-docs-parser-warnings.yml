@@ -15,3 +15,10 @@
     parent package now use the shortest public import path (e.g. `pkg.Foo` instead of
     `pkg.sub.impl.Foo`), including their methods and properties. Anchors and links are unchanged.
   type: fix
+- summary: |
+    Python library docs: cross-page links (type links in signatures and submodule lists) are
+    now emitted as relative `.mdx` file references that the docs build resolves to the final
+    page URLs. Previously they were absolute `/<library>/...` URLs that broke (404) whenever
+    the generated folder was mounted under a navigation section instead of at the site root.
+    `<CodeBlock links={...}>` values ending in `.md`/`.mdx` are resolved during the build as well.
+  type: fix

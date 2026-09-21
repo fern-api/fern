@@ -45,7 +45,7 @@ export function moduleHasPage(module: FdrAPI.libraryDocs.PythonModuleIr): boolea
  */
 function renderSubmodulesSection(
     submodules: FdrAPI.libraryDocs.PythonModuleIr[],
-    baseSlug: string,
+    ctx: RenderContext,
     modulePath: string
 ): string {
     const lines: string[] = [];
@@ -55,7 +55,7 @@ function renderSubmodulesSection(
     const modules = linkable.filter((sub) => sub.submodules.length === 0);
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
-        const link = `/${baseSlug}/${modulePath}/${sub.name}`;
+        const link = ctx.linkToModuleFile?.(sub.path) ?? `/${ctx.baseSlug}/${modulePath}/${sub.name}`;
         return `- **[\`${sub.path}\`](${link})**`;
     };
 
@@ -141,7 +141,7 @@ export function renderModulePage(
 
     // Submodules section (before Module Contents)
     if (module.submodules.length > 0) {
-        lines.push(renderSubmodulesSection(module.submodules, ctx.baseSlug, modulePath));
+        lines.push(renderSubmodulesSection(module.submodules, ctx, modulePath));
     }
 
     // Content sections
