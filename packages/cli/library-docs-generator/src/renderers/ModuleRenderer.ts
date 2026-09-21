@@ -18,6 +18,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { createFrontmatter, escapeTableCell, generateAnchorId } from "../utils/mdx.js";
+import { moduleHasPage, moduleIsPackage } from "../utils/modulePages.js";
 import {
     extractLinksFromTypes,
     getTypeDisplay,
@@ -28,16 +29,7 @@ import { renderClassDetailed } from "./ClassRenderer.js";
 import { renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderFunctionDetailed } from "./FunctionRenderer.js";
 
-/** A module gets its own page only if it has documentable content or children. */
-export function moduleHasPage(module: FdrAPI.libraryDocs.PythonModuleIr): boolean {
-    return (
-        module.classes.length > 0 ||
-        module.functions.length > 0 ||
-        module.attributes.length > 0 ||
-        module.docstring != null ||
-        module.submodules.length > 0
-    );
-}
+export { moduleHasPage, moduleIsPackage } from "../utils/modulePages.js";
 
 /**
  * Render a list of submodules, split into Subpackages (have children) and Submodules (leaf nodes).
@@ -51,8 +43,8 @@ function renderSubmodulesSection(
     const lines: string[] = [];
 
     const linkable = submodules.filter(moduleHasPage);
-    const packages = linkable.filter((sub) => sub.submodules.length > 0);
-    const modules = linkable.filter((sub) => sub.submodules.length === 0);
+    const packages = linkable.filter(moduleIsPackage);
+    const modules = linkable.filter((sub) => !moduleIsPackage(sub));
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
         const link = ctx.linkToModuleFile?.(sub.path) ?? `/${ctx.baseSlug}/${modulePath}/${sub.name}`;

@@ -7,6 +7,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { escapeMdx, generateAnchorId } from "./mdx.js";
+import { moduleIsPackage } from "./modulePages.js";
 
 /**
  * Shared context for rendering, passed to all render functions.
@@ -113,7 +114,7 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
 
     function processModule(module: FdrAPI.libraryDocs.PythonModuleIr): void {
         validPaths.add(module.path);
-        if (module.submodules.length > 0) {
+        if (moduleIsPackage(module)) {
             packageModules.add(module.path);
         }
 

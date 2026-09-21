@@ -14,6 +14,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
+import { moduleHasContent, moduleIsPackage } from "../utils/modulePages.js";
 
 /** A navigation node — either a page or a section. */
 export type NavNode = NavPageNode | NavSectionNode;
@@ -64,14 +65,9 @@ function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath
     const slug = `${baseSlug}/${modulePath}`;
     const pageId = `${slug}.mdx`;
 
-    const hasContent =
-        module.classes.length > 0 ||
-        module.functions.length > 0 ||
-        module.attributes.length > 0 ||
-        module.docstring != null;
-
+    const hasContent = moduleHasContent(module);
     const isRoot = parentPath === "";
-    const hasSubmodules = module.submodules.length > 0;
+    const hasSubmodules = moduleIsPackage(module);
 
     // Leaf module with content → page node
     // Skip root (it becomes the section overview) and modules with submodules (they become sections)

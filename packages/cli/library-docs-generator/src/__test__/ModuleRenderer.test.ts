@@ -164,7 +164,7 @@ describe("renderModulePage (submodules)", () => {
                 makeModule({
                     name: "child",
                     path: "pkg.mymod.child",
-                    submodules: [makeModule({ name: "grandchild", path: "pkg.mymod.child.grandchild" })]
+                    submodules: [makeLeaf("grandchild", "pkg.mymod.child.grandchild")]
                 })
             ]
         });
@@ -179,7 +179,7 @@ describe("renderModulePage (submodules)", () => {
                 makeModule({
                     name: "pkg_child",
                     path: "pkg.mymod.pkg_child",
-                    submodules: [makeModule({ name: "deep", path: "pkg.mymod.pkg_child.deep" })]
+                    submodules: [makeLeaf("deep", "pkg.mymod.pkg_child.deep")]
                 }),
                 makeLeaf("leaf_child", "pkg.mymod.leaf_child")
             ]
@@ -208,6 +208,21 @@ describe("renderModulePage (submodules)", () => {
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("/reference/python/mymod/documented");
         expect(result).not.toContain("empty_pkg");
+    });
+
+    it("omits packages whose descendants are all empty (no page is generated for them)", () => {
+        const mod = makeModule({
+            submodules: [
+                makeModule({
+                    name: "wrapper",
+                    path: "pkg.mymod.wrapper",
+                    submodules: [makeModule({ name: "stubs", path: "pkg.mymod.wrapper.stubs", submodules: [] })]
+                })
+            ]
+        });
+        const result = renderModulePage(mod, emptyCtx());
+        expect(result).not.toContain("wrapper");
+        expect(result).not.toContain("## Subpackages");
     });
 
     it("no submodules section when all submodules are empty", () => {
@@ -736,7 +751,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
         expect(result).toContain("= 0");
     });
 
-    it("package_with_content: renders submodules and Package Contents", () => {
+    it("package_with_content: omits page-less subpackages, renders Package Contents", () => {
         // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["package_with_content"]!;
         const result = renderModulePage(mod, emptyCtx());
@@ -744,10 +759,9 @@ describe("renderModulePage (NeMo fixtures)", () => {
         expect(result).toContain("slug: reference/python/nemo_rl");
         expect(result).toContain("title: nemo_rl");
 
-        // All submodules have children -> Subpackages only
-        expect(result).toContain("## Subpackages");
-        expect(result).toContain("`nemo_rl.algorithms`");
-        expect(result).toContain("`nemo_rl.data`");
+        // Every submodule only contains an empty stub -> no pages exist for them, so no links
+        expect(result).not.toContain("## Subpackages");
+        expect(result).not.toContain("`nemo_rl.algorithms`");
 
         // Has direct content -> Package Contents
         expect(result).toContain("## Package Contents");

@@ -12,7 +12,7 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { moduleHasPage, renderModulePage } from "./renderers/ModuleRenderer.js";
+import { moduleHasPage, moduleIsPackage, renderModulePage } from "./renderers/ModuleRenderer.js";
 import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
@@ -61,10 +61,9 @@ export function generate(options: GenerateOptions): GenerateResult {
 
     // Stage 3: Build navigation tree
     const navigation = buildNavigation(ir.rootModule, slug);
-    const rootPageId =
-        ir.rootModule.submodules.length > 0
-            ? `${slug}/${ir.rootModule.name}/index.mdx`
-            : `${slug}/${ir.rootModule.name}.mdx`;
+    const rootPageId = moduleIsPackage(ir.rootModule)
+        ? `${slug}/${ir.rootModule.name}/index.mdx`
+        : `${slug}/${ir.rootModule.name}.mdx`;
 
     // Stage 4: Write navigation YAML
     const navigationFilePath = writeNavigation(outputDir, navigation);
@@ -97,10 +96,9 @@ function renderModuleTree(
     // Modules with submodules write to <path>/index.mdx so the folder scanner
     // picks them up as section overview pages (not sibling duplicates).
     if (moduleHasPage(module)) {
-        const pageKey =
-            module.submodules.length > 0
-                ? `${ctx.baseSlug}/${modulePath}/index.mdx`
-                : `${ctx.baseSlug}/${modulePath}.mdx`;
+        const pageKey = moduleIsPackage(module)
+            ? `${ctx.baseSlug}/${modulePath}/index.mdx`
+            : `${ctx.baseSlug}/${modulePath}.mdx`;
         // Cross-page links are relative to this page's file so they resolve wherever the
         // generated folder is mounted in the navigation.
         const pageCtx: RenderContext = {
