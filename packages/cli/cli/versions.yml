@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.131.1
+  changelogEntry:
+    - summary: |
+        Preserve omitted SDK Config generator versions so sdk-gen-api can resolve the latest generator server-side.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 5.131.0
   changelogEntry:
     - summary: |
