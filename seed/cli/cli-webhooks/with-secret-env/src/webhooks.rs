@@ -188,8 +188,8 @@ impl CliApp {
     /// baked into the binary at codegen time, so a parse failure is a build
     /// defect, not a runtime condition.
     pub fn webhooks(self, manifest_json: &str) -> Self {
-        let manifest =
-            WebhookManifest::parse(manifest_json).expect("generated webhook manifest is valid JSON");
+        let manifest = WebhookManifest::parse(manifest_json)
+            .expect("generated webhook manifest is valid JSON");
         self.webhooks_from(manifest)
     }
 
@@ -323,7 +323,11 @@ fn print_list(manifest: &WebhookManifest) {
         .max()
         .unwrap_or(4)
         .max(4);
-    println!("{:<width$}  METHOD  SIGNED  DESCRIPTION", "NAME", width = width);
+    println!(
+        "{:<width$}  METHOD  SIGNED  DESCRIPTION",
+        "NAME",
+        width = width
+    );
     for w in &manifest.webhooks {
         let signed = if w.signature.is_some() { "yes" } else { "no" };
         let description = w
@@ -364,9 +368,7 @@ pub struct DeliveryRequest<'a> {
 }
 
 fn invoke(manifest: &WebhookManifest, matches: &ArgMatches) -> Result<(), CliError> {
-    let name = matches
-        .get_one::<String>("name")
-        .expect("required");
+    let name = matches.get_one::<String>("name").expect("required");
     let webhook = manifest
         .find(name)
         .ok_or_else(|| CliError::Validation(format!("unknown webhook {name:?}")))?;
@@ -392,15 +394,12 @@ fn invoke(manifest: &WebhookManifest, matches: &ArgMatches) -> Result<(), CliErr
             _ => serde_json::Map::new(),
         },
     };
-    for entry in matches
-        .get_many::<String>("data")
-        .into_iter()
-        .flatten()
-    {
+    for entry in matches.get_many::<String>("data").into_iter().flatten() {
         let (key, value) = entry.split_once('=').ok_or_else(|| {
             CliError::Validation(format!("invalid -d value {entry:?}; expected KEY=VALUE"))
         })?;
-        payload.insert(key.to_string(), serde_json::Value::String(value.to_string()));
+        let value = coerce_override(payload.get(key), value);
+        payload.insert(key.to_string(), value);
     }
 
     let mut extra_headers: Vec<(String, String)> = webhook
@@ -408,13 +407,11 @@ fn invoke(manifest: &WebhookManifest, matches: &ArgMatches) -> Result<(), CliErr
         .iter()
         .filter_map(|h| h.example.as_ref().map(|v| (h.name.clone(), v.clone())))
         .collect();
-    for entry in matches
-        .get_many::<String>("header")
-        .into_iter()
-        .flatten()
-    {
+    for entry in matches.get_many::<String>("header").into_iter().flatten() {
         let (k, v) = entry.split_once(':').ok_or_else(|| {
-            CliError::Validation(format!("invalid -H value {entry:?}; expected 'Name: value'"))
+            CliError::Validation(format!(
+                "invalid -H value {entry:?}; expected 'Name: value'"
+            ))
         })?;
         extra_headers.push((k.trim().to_string(), v.trim().to_string()));
     }
@@ -452,7 +449,11 @@ fn invoke(manifest: &WebhookManifest, matches: &ArgMatches) -> Result<(), CliErr
     })?;
 
     if matches.get_flag("include") {
-        println!("{} {}", response.status.as_u16(), response.status.canonical_reason().unwrap_or(""));
+        println!(
+            "{} {}",
+            response.status.as_u16(),
+            response.status.canonical_reason().unwrap_or("")
+        );
         for (k, v) in &response.headers {
             println!("{k}: {v}");
         }
@@ -470,6 +471,27 @@ fn invoke(manifest: &WebhookManifest, matches: &ArgMatches) -> Result<(), CliErr
     Ok(())
 }
 
+/// A `-d KEY=VALUE` override keeps the type of the field it replaces: when
+/// the example has a non-string value there and `value` parses as JSON of
+/// the same kind, the parsed value is used; otherwise it stays a string.
+fn coerce_override(existing: Option<&serde_json::Value>, value: &str) -> serde_json::Value {
+    let Some(existing) = existing else {
+        return serde_json::Value::String(value.to_string());
+    };
+    if existing.is_string() {
+        return serde_json::Value::String(value.to_string());
+    }
+    match serde_json::from_str::<serde_json::Value>(value) {
+        Ok(parsed)
+            if std::mem::discriminant(&parsed) == std::mem::discriminant(existing)
+                || (existing.is_null() && !parsed.is_string()) =>
+        {
+            parsed
+        }
+        _ => serde_json::Value::String(value.to_string()),
+    }
+}
+
 fn parse_body_arg(body: &str) -> Result<serde_json::Map<String, serde_json::Value>, CliError> {
     let text = match body.strip_prefix('@') {
         Some(path) => std::fs::read_to_string(path)
@@ -479,7 +501,9 @@ fn parse_body_arg(body: &str) -> Result<serde_json::Map<String, serde_json::Valu
     match serde_json::from_str::<serde_json::Value>(&text) {
         Ok(serde_json::Value::Object(map)) => Ok(map),
         Ok(_) => Err(CliError::Validation("--body must be a JSON object".into())),
-        Err(e) => Err(CliError::Validation(format!("--body is not valid JSON: {e}"))),
+        Err(e) => Err(CliError::Validation(format!(
+            "--body is not valid JSON: {e}"
+        ))),
     }
 }
 
@@ -671,9 +695,14 @@ pub fn prepare_delivery(
             WebhookContentType::Json => {
                 let raw = serde_json::Value::Object(req.payload.clone()).to_string();
                 headers.push(("Content-Type".into(), "application/json".into()));
-                if let Some(binding) = webhook.signature.as_ref().and_then(|s| s.body_hash.as_ref()) {
+                if let Some(binding) = webhook
+                    .signature
+                    .as_ref()
+                    .and_then(|s| s.body_hash.as_ref())
+                {
                     if req.sign {
-                        let hash = encode(binding.encoding, &digest(binding.algorithm, raw.as_bytes()));
+                        let hash =
+                            encode(binding.encoding, &digest(binding.algorithm, raw.as_bytes()));
                         url = append_query(&url, &[(binding.query_parameter.clone(), hash)]);
                         body_hash_applied = true;
                     }
@@ -694,10 +723,12 @@ pub fn prepare_delivery(
                 CliError::Auth("a signing secret is required to sign this webhook".into())
             })?;
 
-            let timestamp = sig
-                .timestamp
-                .as_ref()
-                .map(|t| (t.header.clone(), format_timestamp(t.format, req.now_unix_millis)));
+            let timestamp = sig.timestamp.as_ref().map(|t| {
+                (
+                    t.header.clone(),
+                    format_timestamp(t.format, req.now_unix_millis),
+                )
+            });
             if let Some((h, v)) = &timestamp {
                 headers.push((h.clone(), v.clone()));
             }
@@ -715,20 +746,16 @@ pub fn prepare_delivery(
                     PayloadComponent::NotificationUrl => parts.push(url.clone()),
                     PayloadComponent::Timestamp => match &timestamp {
                         Some((_, v)) => parts.push(v.clone()),
-                        None => {
-                            return Err(CliError::Validation(
-                                "signature scheme signs a timestamp but declares no timestamp header"
-                                    .into(),
-                            ))
-                        }
-                    },
-                    PayloadComponent::MessageId => {
-                        return Err(CliError::Validation(
-                            "this webhook's signature covers a provider-assigned message id, which \
-                             `webhook invoke` cannot emulate; re-run with --no-signature"
+                        None => return Err(CliError::Validation(
+                            "signature scheme signs a timestamp but declares no timestamp header"
                                 .into(),
-                        ))
-                    }
+                        )),
+                    },
+                    PayloadComponent::MessageId => return Err(CliError::Validation(
+                        "this webhook's signature covers a provider-assigned message id, which \
+                             `webhook invoke` cannot emulate; re-run with --no-signature"
+                            .into(),
+                    )),
                 }
             }
             let signed = parts.join(&sig.delimiter);
@@ -769,10 +796,9 @@ async fn send(delivery: &PreparedDelivery) -> Result<DeliveryResponse, CliError>
     if let Some(body) = &delivery.body {
         request = request.body(body.clone());
     }
-    let response = request
-        .send()
-        .await
-        .map_err(|e| CliError::Network(format!("webhook delivery to {} failed: {e}", delivery.url)))?;
+    let response = request.send().await.map_err(|e| {
+        CliError::Network(format!("webhook delivery to {} failed: {e}", delivery.url))
+    })?;
     let status = response.status();
     let headers = response
         .headers()
@@ -783,7 +809,11 @@ async fn send(delivery: &PreparedDelivery) -> Result<DeliveryResponse, CliError>
         .text()
         .await
         .map_err(|e| CliError::Network(format!("failed to read webhook response: {e}")))?;
-    Ok(DeliveryResponse { status, headers, body })
+    Ok(DeliveryResponse {
+        status,
+        headers,
+        body,
+    })
 }
 
 #[cfg(test)]
@@ -808,7 +838,10 @@ mod tests {
         }
     }
 
-    fn webhook(content_type: WebhookContentType, signature: Option<HmacSignature>) -> WebhookDescriptor {
+    fn webhook(
+        content_type: WebhookContentType,
+        signature: Option<HmacSignature>,
+    ) -> WebhookDescriptor {
         WebhookDescriptor {
             name: "sms".into(),
             display_name: None,
@@ -858,10 +891,20 @@ mod tests {
             },
         )
         .unwrap();
-        assert_eq!(header(&d, "X-Twilio-Signature"), Some("RSOYDt4T1cUTdK1PDd93/VVr8B8="));
-        assert_eq!(header(&d, "Content-Type"), Some("application/x-www-form-urlencoded"));
+        assert_eq!(
+            header(&d, "X-Twilio-Signature"),
+            Some("RSOYDt4T1cUTdK1PDd93/VVr8B8=")
+        );
+        assert_eq!(
+            header(&d, "Content-Type"),
+            Some("application/x-www-form-urlencoded")
+        );
         assert_eq!(d.url, "https://mycompany.com/myapp.php?foo=1&bar=2");
-        assert!(d.body.as_deref().unwrap().contains("CallSid=CA1234567890ABCDE"));
+        assert!(d
+            .body
+            .as_deref()
+            .unwrap()
+            .contains("CallSid=CA1234567890ABCDE"));
     }
 
     #[test]
@@ -881,7 +924,10 @@ mod tests {
         )
         .unwrap();
         let raw = r#"{"MessageSid":"SM1"}"#;
-        let hash = encode(SignatureEncoding::Hex, &digest(HashAlgorithm::Sha256, raw.as_bytes()));
+        let hash = encode(
+            SignatureEncoding::Hex,
+            &digest(HashAlgorithm::Sha256, raw.as_bytes()),
+        );
         assert_eq!(d.body.as_deref(), Some(raw));
         assert_eq!(d.url, format!("https://example.com/hook?bodySHA256={hash}"));
         let expected = encode(
@@ -907,7 +953,10 @@ mod tests {
             },
         )
         .unwrap();
-        assert_eq!(d.url, "http://localhost:3000/voice?From=%2B15551234567&To=%2B15557654321");
+        assert_eq!(
+            d.url,
+            "http://localhost:3000/voice?From=%2B15551234567&To=%2B15557654321"
+        );
         assert_eq!(d.body, None);
         let expected = encode(
             SignatureEncoding::Base64,
@@ -990,9 +1039,28 @@ mod tests {
         assert_eq!(header(&d, "X-Timestamp"), Some("1700000000"));
         let expected = encode(
             SignatureEncoding::Hex,
-            &hmac_sign(HashAlgorithm::Sha256, b"whsec", br#"1700000000.{"id":"evt_1"}"#),
+            &hmac_sign(
+                HashAlgorithm::Sha256,
+                b"whsec",
+                br#"1700000000.{"id":"evt_1"}"#,
+            ),
         );
         assert_eq!(header(&d, "Stripe-Signature"), Some(expected.as_str()));
+    }
+
+    #[test]
+    fn data_override_keeps_existing_field_type() {
+        let num = serde_json::json!(1);
+        let flag = serde_json::json!(true);
+        let text = serde_json::json!("x");
+        assert_eq!(coerce_override(Some(&num), "42"), serde_json::json!(42));
+        assert_eq!(
+            coerce_override(Some(&flag), "false"),
+            serde_json::json!(false)
+        );
+        assert_eq!(coerce_override(Some(&num), "abc"), serde_json::json!("abc"));
+        assert_eq!(coerce_override(Some(&text), "42"), serde_json::json!("42"));
+        assert_eq!(coerce_override(None, "42"), serde_json::json!("42"));
     }
 
     #[test]
@@ -1079,7 +1147,13 @@ mod tests {
         .unwrap();
         let w = &manifest.webhooks[0];
         assert_eq!(w.content_type, WebhookContentType::Form);
-        assert_eq!(w.signature.as_ref().unwrap().body_sort, Some(BodySort::Alphabetical));
-        assert_eq!(manifest.find("sms-status").map(|w| w.method), Some(WebhookMethod::Post));
+        assert_eq!(
+            w.signature.as_ref().unwrap().body_sort,
+            Some(BodySort::Alphabetical)
+        );
+        assert_eq!(
+            manifest.find("sms-status").map(|w| w.method),
+            Some(WebhookMethod::Post)
+        );
     }
 }

@@ -21,6 +21,7 @@ pub mod hooks;
 pub mod man;
 pub mod openapi;
 pub mod pager;
+pub mod profiles;
 pub mod stability;
 pub mod user_agent;
 pub mod validate;
