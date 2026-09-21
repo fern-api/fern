@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.130.0
+  changelogEntry:
+    - summary: |
+        Add `output: { location: fern-hosted, slug: <slug> }` to `generators.yml` for
+        `fernapi/fern-mcp-server`. `fern generate` builds the MCP server through sdk-gen-api,
+        deploys it to Fern's hosted MCP platform, and prints the server URL. `slug` is optional
+        (default `mcp`) and supports `${ENV_VAR}` substitution.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 5.129.0
   changelogEntry:
     - summary: |
