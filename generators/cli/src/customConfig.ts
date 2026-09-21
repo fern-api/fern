@@ -482,7 +482,8 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
     if ("extraDevDependencies" in obj && obj.extraDevDependencies !== undefined) {
         result.extraDevDependencies = validateDependencyMap(
             obj.extraDevDependencies,
-            "customConfig.extraDevDependencies"
+            "customConfig.extraDevDependencies",
+            { allowOptional: false }
         );
     }
     if ("distribution" in obj && obj.distribution !== undefined) {
@@ -503,7 +504,11 @@ function isStringArray(value: unknown): value is string[] {
     return Array.isArray(value) && value.every((entry) => typeof entry === "string");
 }
 
-function validateDependencyMap(raw: unknown, path: string): Record<string, CargoDependencyValue> {
+function validateDependencyMap(
+    raw: unknown,
+    path: string,
+    options: { allowOptional: boolean } = { allowOptional: true }
+): Record<string, CargoDependencyValue> {
     const obj = asConfigObject(raw, path);
     const result: Record<string, CargoDependencyValue> = {};
     for (const [name, value] of Object.entries(obj)) {
@@ -520,7 +525,11 @@ function validateDependencyMap(raw: unknown, path: string): Record<string, Cargo
             result[name] = value;
             continue;
         }
-        result[name] = validateDependencySpec(value, `${path}.${name}`);
+        const spec = validateDependencySpec(value, `${path}.${name}`);
+        if (!options.allowOptional && spec.optional === true) {
+            throw new Error(`Invalid ${path}.${name}.optional: cargo does not allow optional dev-dependencies.`);
+        }
+        result[name] = spec;
     }
     return result;
 }

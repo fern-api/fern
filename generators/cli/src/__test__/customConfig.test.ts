@@ -202,6 +202,12 @@ describe("validateCustomConfig", () => {
             validateCustomConfig({ extraDependencies: { tokio: { version: "1", defaultfeatures: false } } })
         ).toThrow(/extraDependencies.tokio: unknown field\(s\) `defaultfeatures`/);
         expect(() => validateCustomConfig({ extraDependencies: ["tokio"] })).toThrow(/expected an object, got array/);
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { mockall: { version: "0.11", optional: true } } })
+        ).toThrow(/extraDevDependencies.mockall.optional: cargo does not allow optional dev-dependencies/);
+        expect(validateCustomConfig({ extraDependencies: { mockall: { version: "0.11", optional: true } } })).toEqual({
+            extraDependencies: { mockall: { version: "0.11", optional: true } }
+        });
     });
 
     it("throws on a packageIdentity name that cargo would reject", () => {

@@ -466,6 +466,12 @@ export function applyCargoTomlPatch(
  */
 export function addCrateDependency(cargoToml: string, crateName: string): string {
     const snakeName = crateName.replace(/-/g, "_");
+    if (declaredDependencyNames(cargoToml, "dependencies").has(snakeName)) {
+        throw new Error(
+            `Invalid customConfig.extraDependencies: "${snakeName}" is the generated \`${crateName}\` crate, ` +
+                "which the CLI generator declares itself. Remove it from the config."
+        );
+    }
     const depBlock = `\n[dependencies.${snakeName}]\npath = "${crateName}"\n`;
     // Append before [profile] sections if present, else at the end.
     const profileIdx = cargoToml.indexOf("\n[profile.");

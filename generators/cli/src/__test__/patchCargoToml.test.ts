@@ -4,6 +4,7 @@ import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
+    addCrateDependency,
     addExtraDependencies,
     addSdkCrateToLock,
     addTypesCrateToLock,
@@ -244,6 +245,14 @@ describe("addExtraDependencies", () => {
         expect(addExtraDependencies(toml, { anyhow: "1" }, "dependencies")).toBe(
             '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n\n# trailing comment\n'
         );
+    });
+
+    it("rejects an extra dependency that shadows a generated crate when the path dep is added later", () => {
+        const withExtra = addExtraDependencies(TEMPLATE_CARGO_TOML, { acme_sdk: "1" }, "dependencies");
+        expect(() => addCrateDependency(withExtra, "acme-sdk")).toThrow(
+            /extraDependencies: "acme_sdk" is the generated `acme-sdk` crate/
+        );
+        expect(() => addCrateDependency(TEMPLATE_CARGO_TOML, "acme-sdk")).not.toThrow();
     });
 
     it("only checks collisions within the same table", () => {
