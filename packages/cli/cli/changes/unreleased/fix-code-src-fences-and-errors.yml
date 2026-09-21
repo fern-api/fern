@@ -1,0 +1,6 @@
+- summary: |
+    `<Code src="..." />` now wraps included files that contain backtick runs in a longer
+    code fence so the block is not terminated early, keeps processing the remaining
+    `<Code>` tags on a page when one referenced file cannot be read, and reports the
+    referencing file and line number together with the underlying error.
+  type: fix
