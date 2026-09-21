@@ -156,17 +156,30 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 }
 
 /**
- * A library with no namespaces, classes, concepts or templates is plain C, so
- * its typedefs are rendered with `typedef` rather than `using` syntax.
+ * A library with no namespaces, concepts, templates or C++ class features
+ * (`class`, inheritance, member functions) is plain C, so its typedefs are
+ * rendered with `typedef` rather than `using` syntax. Plain `struct`/`union`
+ * aggregates are valid C and do not count as evidence of C++.
  */
 function isPlainCLibrary(root: CppNamespaceIr): boolean {
     return (
         root.path === "" &&
         root.namespaces.length === 0 &&
-        root.classes.length === 0 &&
         root.concepts.length === 0 &&
+        root.classes.every(isPlainCAggregate) &&
         root.functions.every((fn) => fn.templateParams.length === 0) &&
         root.typedefs.every((td) => td.templateParams.length === 0)
+    );
+}
+
+function isPlainCAggregate(cls: CppClassIr): boolean {
+    return (
+        cls.kind !== "class" &&
+        cls.templateParams.length === 0 &&
+        cls.baseClasses.length === 0 &&
+        cls.methods.length === 0 &&
+        cls.staticMethods.length === 0 &&
+        cls.innerClasses.every(isPlainCAggregate)
     );
 }
 

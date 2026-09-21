@@ -828,7 +828,10 @@ describe("generateCpp()", () => {
                 ]
             })
         });
-        const ir = makeIr(makeNamespace({ typedefs: [callback, handle], functions: [create] }), { packageName: "lib" });
+        const point = makeClass({ name: "point", path: "point", kind: "struct" });
+        const ir = makeIr(makeNamespace({ typedefs: [callback, handle], functions: [create], classes: [point] }), {
+            packageName: "lib"
+        });
 
         generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
 
