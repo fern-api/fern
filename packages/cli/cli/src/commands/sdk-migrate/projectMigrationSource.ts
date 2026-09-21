@@ -1,5 +1,6 @@
 import {
     type AbstractAPIWorkspace,
+    type FernDefinition,
     type FernWorkspace,
     getOpenAPISettings,
     type IdentifiableSource,
@@ -29,17 +30,20 @@ export interface ResolvedMigrationSourceSpec {
 export interface SourceDerivedApiFields {
     auth: boolean;
     environments: boolean;
+    headerNames: string[];
 }
 
 export function identifySourceDerivedApiFields({
     workspace,
-    groups
+    groups,
+    definition
 }: {
     workspace: AbstractAPIWorkspace<unknown>;
     groups: generatorsYml.GeneratorGroup[];
+    definition: FernDefinition;
 }): SourceDerivedApiFields {
     if (workspace.type !== "oss") {
-        return { auth: false, environments: false };
+        return { auth: false, environments: false, headerNames: [] };
     }
 
     const api = workspace.generatorsConfiguration?.api;
@@ -52,10 +56,14 @@ export function identifySourceDerivedApiFields({
             )
         );
     const hasConfiguredEnvironments = api?.environments != null || api?.["default-environment"] != null;
+    const hasConfiguredHeaders =
+        api?.headers != null ||
+        groups.some((group) => group.generators.some((generator) => generator.apiOverride?.headers != null));
 
     return {
         auth: !hasConfiguredAuth,
-        environments: !hasConfiguredEnvironments
+        environments: !hasConfiguredEnvironments,
+        headerNames: hasConfiguredHeaders ? [] : (definition.sourceDerivedGlobalHeaderNames ?? [])
     };
 }
 

@@ -126,6 +126,7 @@ function projectDefinition(definition: FernDefinition, seen: WeakSet<object>): u
     seen.add(definition);
     const projected = {
         specVersion: definition.specVersion,
+        sourceDerivedGlobalHeaderNames: [...(definition.sourceDerivedGlobalHeaderNames ?? [])].sort(),
         root: {
             contents: definition.rootApiFile.contents,
             defaultUrl: definition.rootApiFile.defaultUrl
