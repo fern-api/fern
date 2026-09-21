@@ -239,6 +239,18 @@ impl AuthCredentialSource {
     /// True when a keyring-backed rung of this source currently holds a value —
     /// i.e. the credential is one the user stored (`auth login` /
     /// `profiles set`), not one supplied by env, flag, file or literal.
+    ///
+    /// Lossy by the same rule as [`resolve`](Self::resolve), which it is built
+    /// on: an unreadable keychain (a denied macOS prompt) is indistinguishable
+    /// from an empty account, so both answer `false`. For the `--profile`
+    /// preference pass that means a denial falls through to an ambient
+    /// env-backed scheme instead of surfacing the keychain error — the same
+    /// outcome the pre-preference `has_credentials()` probe produced, since it
+    /// is equally `resolve`-based. Making selection report the distinction
+    /// needs a fallible predicate on
+    /// [`AuthProvider`](crate::auth::AuthProvider); until then the error does
+    /// still surface whenever the stored scheme *is* the one selected, because
+    /// `apply` resolves through [`try_resolve`](Self::try_resolve).
     pub fn has_stored_value(&self) -> bool {
         match self {
             AuthCredentialSource::Keyring { .. }

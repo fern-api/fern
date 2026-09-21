@@ -238,6 +238,14 @@ impl AuthProvider for LayeredAuthProvider {
         self.primary.has_credentials()
     }
 
+    fn has_stored_credentials(&self) -> bool {
+        // Same primary-only rule: a supplementary header is never what makes a
+        // profile's credentials "stored". Delegating rather than inheriting the
+        // trait default keeps this composite honest if it is ever nested inside
+        // an Any/Routing wrapper — today it is always the outermost one.
+        self.primary.has_stored_credentials()
+    }
+
     fn inject_token_cache(&self, cli_name: &str) {
         self.primary.inject_token_cache(cli_name);
         for layer in &self.layers {
@@ -437,6 +445,21 @@ impl AuthProvider for RoutingAuthProvider {
             Some(reqs) => reqs,
         };
 
+        // With an explicitly named `--profile`, prefer a requirement this
+        // profile actually stored credentials for over the first merely
+        // satisfiable one. Without it, spec order decides as it always has —
+        // ambient selection (`<BIN>_PROFILE`, `profiles use`) must not start
+        // overriding env vars for existing users.
+        //
+        // `all(has_stored_credentials)` is deliberately strict: an AND
+        // requirement mixing a keyring-backed scheme with an env-backed one
+        // (bearer + a static account-id header) is never "all stored", so the
+        // preference doesn't engage for it and the fallthrough picks spec
+        // order. Loosening this to "any stored, all satisfiable" would cover
+        // that case but would also let one stored half of a requirement drag
+        // in an ambient other half — the same mixed-provenance trap
+        // `resolve_client_id` has to avoid. Left strict until a real API asks
+        // for it.
         let satisfiable = if crate::profiles::outranks_env() {
             requirements
                 .iter()
@@ -499,25 +522,31 @@ mod tests {
     use std::sync::Arc;
 
     use crate::auth::credential::AuthCredentialSource;
-    use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use crate::auth::schemes::{BearerAuthProvider, HeaderAuthProvider};
-    use crate::auth::test_helpers::{api_key, auth_header, bearer, header, req};
-    use crate::profiles::{install_for_tests_from, ResolvedProfile, SelectionSource};
+    use crate::auth::test_helpers::{
+        api_key, auth_header, bearer, header, req, GlobalAuthStateGuard,
+    };
+    use crate::profiles::SelectionSource;
 
-    fn install_test_profile(source: SelectionSource) {
-        install_for_tests_from(
-            Some(ResolvedProfile {
-                name: "test".to_string(),
-                credential: Some("test".to_string()),
-                ..Default::default()
-            }),
-            source,
-        );
+    /// Install the global state one precedence test needs: a profile selected
+    /// by `source`, a keyring that either holds the stored bearer or doesn't,
+    /// and the env vars backing the basic scheme. The returned guard undoes
+    /// all of it on drop, panic included — keep it bound for the test's body.
+    fn precedence_state(source: SelectionSource, stored: bool) -> GlobalAuthStateGuard {
+        let mut guard = GlobalAuthStateGuard::new();
+        guard.install_profile("test", source);
+        if stored {
+            guard.install_keyring("compose-test", "oauth", "stored-token");
+        } else {
+            guard.install_empty_keyring();
+        }
+        guard
+            .set_env("FERN_COMPOSE_BASIC_USER", "user")
+            .set_env("FERN_COMPOSE_BASIC_PASSWORD", "password");
+        guard
     }
 
     fn basic_env_provider() -> DynAuthProvider {
-        std::env::set_var("FERN_COMPOSE_BASIC_USER", "user");
-        std::env::set_var("FERN_COMPOSE_BASIC_PASSWORD", "password");
         Arc::new(crate::auth::schemes::BasicAuthProvider::new(
             "basic",
             AuthCredentialSource::from_env("FERN_COMPOSE_BASIC_USER"),
@@ -530,21 +559,6 @@ mod tests {
             "oauth",
             AuthCredentialSource::keyring("compose-test", "oauth"),
         ))
-    }
-
-    fn compose_test_store(stored: bool) {
-        let mock = Arc::new(MockKeyringStore::new());
-        if stored {
-            mock.set("compose-test", "oauth", "stored-token").unwrap();
-        }
-        set_active_store(mock);
-    }
-
-    fn clear_compose_test_state() {
-        std::env::remove_var("FERN_COMPOSE_BASIC_USER");
-        std::env::remove_var("FERN_COMPOSE_BASIC_PASSWORD");
-        install_for_tests_from(None, SelectionSource::Active);
-        set_active_store(Arc::new(MockKeyringStore::new()));
     }
 
     // -------- AnyAuthProvider --------
@@ -565,37 +579,31 @@ mod tests {
     #[tokio::test]
     #[serial_test::serial]
     async fn any_auth_prefers_stored_provider_for_named_profile() {
-        install_test_profile(SelectionSource::Flag);
-        compose_test_store(true);
+        let _state = precedence_state(SelectionSource::Flag, true);
         let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
         let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer stored-token"));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
     #[serial_test::serial]
     async fn any_auth_prefers_first_provider_without_named_profile() {
-        install_test_profile(SelectionSource::Active);
-        compose_test_store(true);
+        let _state = precedence_state(SelectionSource::Active, true);
         let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
         let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert!(auth_header(r).unwrap().starts_with("Basic "));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
     #[serial_test::serial]
     async fn any_auth_falls_back_when_named_profile_has_no_stored_provider() {
-        install_test_profile(SelectionSource::Flag);
-        compose_test_store(false);
+        let _state = precedence_state(SelectionSource::Flag, false);
         let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
         let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert!(auth_header(r).unwrap().starts_with("Basic "));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
@@ -850,37 +858,31 @@ mod tests {
     #[tokio::test]
     #[serial_test::serial]
     async fn routing_prefers_stored_requirement_for_named_profile() {
-        install_test_profile(SelectionSource::Flag);
-        compose_test_store(true);
+        let _state = precedence_state(SelectionSource::Flag, true);
         let out = precedence_routing()
             .apply(req(), &precedence_endpoint())
             .unwrap();
         assert_eq!(auth_header(out).as_deref(), Some("Bearer stored-token"));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
     #[serial_test::serial]
     async fn routing_prefers_first_requirement_without_named_profile() {
-        install_test_profile(SelectionSource::Active);
-        compose_test_store(true);
+        let _state = precedence_state(SelectionSource::Active, true);
         let out = precedence_routing()
             .apply(req(), &precedence_endpoint())
             .unwrap();
         assert!(auth_header(out).unwrap().starts_with("Basic "));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
     #[serial_test::serial]
     async fn routing_falls_back_when_named_profile_has_no_stored_requirement() {
-        install_test_profile(SelectionSource::Flag);
-        compose_test_store(false);
+        let _state = precedence_state(SelectionSource::Flag, false);
         let out = precedence_routing()
             .apply(req(), &precedence_endpoint())
             .unwrap();
         assert!(auth_header(out).unwrap().starts_with("Basic "));
-        clear_compose_test_state();
     }
 
     #[tokio::test]
