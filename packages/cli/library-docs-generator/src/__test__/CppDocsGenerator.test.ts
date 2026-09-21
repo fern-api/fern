@@ -872,4 +872,23 @@ describe("generateCpp()", () => {
         expect(page).toContain("using Handle = void *;");
         expect(page).not.toContain("typedef void *Handle;");
     });
+
+    it("ignores the empty `std` namespace Doxygen emits for C headers", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const ir = makeIr(
+            makeNamespace({ typedefs: [handle], namespaces: [makeNamespace({ name: "std", path: "std" })] }),
+            { packageName: "lib" }
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/Handle.mdx"), "utf-8");
+        expect(page).toContain("typedef void *Handle;");
+    });
 });

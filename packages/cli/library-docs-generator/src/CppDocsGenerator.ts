@@ -164,11 +164,24 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 function isPlainCLibrary(root: CppNamespaceIr): boolean {
     return (
         root.path === "" &&
-        root.namespaces.length === 0 &&
+        root.namespaces.every(isEmptyNamespace) &&
         root.concepts.length === 0 &&
         root.classes.every(isPlainCAggregate) &&
         root.functions.every((fn) => fn.templateParams.length === 0) &&
         root.typedefs.every((td) => td.templateParams.length === 0)
+    );
+}
+
+/** Doxygen emits an empty `std` namespace for C headers that include `<stdint.h>`. */
+function isEmptyNamespace(ns: CppNamespaceIr): boolean {
+    return (
+        ns.namespaces.length === 0 &&
+        ns.classes.length === 0 &&
+        ns.functions.length === 0 &&
+        ns.enums.length === 0 &&
+        ns.typedefs.length === 0 &&
+        ns.variables.length === 0 &&
+        ns.concepts.length === 0
     );
 }
 
