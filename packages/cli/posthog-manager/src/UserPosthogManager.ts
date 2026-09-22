@@ -1,6 +1,6 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import { getRunIdProperties } from "@fern-api/cli-telemetry";
-import { createVenusService } from "@fern-api/core";
+import { createVenusService, detectCodingAgent } from "@fern-api/core";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -44,6 +44,7 @@ export class UserPosthogManager implements PosthogManager {
                 ...event,
                 ...event.properties,
                 usingAccessToken: false,
+                agent: detectCodingAgent(),
                 ...(userEmail != null ? { userEmail } : {}),
                 ...getRunIdProperties()
             }

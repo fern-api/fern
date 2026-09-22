@@ -62,7 +62,6 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
-import { detectCodingAgent } from "./detectCodingAgent.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -268,11 +267,6 @@ export async function publishDocs({
     }
     if (deployerAuthor?.email != null) {
         headers["X-Deployer-Author-Email"] = deployerAuthor.email;
-    }
-    const codingAgent = detectCodingAgent();
-    if (codingAgent != null) {
-        headers["X-Fern-Agent"] = codingAgent;
-        context.logger.debug(`Coding agent detected: ${codingAgent}`);
     }
     const fdr = createFdrService({
         token: token.value,

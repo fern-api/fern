@@ -1,9 +1,11 @@
 /**
  * Coding agents the CLI can recognize from well-known environment variables.
- * The value is sent to FDR in the `X-Fern-Agent` header so agent-driven docs
- * publishes can be counted separately from human ones.
+ * The value is sent to Fern backends in the `X-Fern-Agent` header and attached
+ * to CLI telemetry so agent-driven usage can be measured separately from human usage.
  */
 export type CodingAgent = "claude-code" | "cursor" | "codex" | "devin" | "gemini-cli";
+
+export const FERN_AGENT_HEADER = "X-Fern-Agent";
 
 export function detectCodingAgent(): CodingAgent | undefined {
     if (process.env.CLAUDECODE === "1" || process.env.CLAUDE_CODE_ENTRYPOINT != null) {
@@ -22,4 +24,9 @@ export function detectCodingAgent(): CodingAgent | undefined {
         return "gemini-cli";
     }
     return undefined;
+}
+
+export function getCodingAgentHeaders(): Record<string, string> {
+    const agent = detectCodingAgent();
+    return agent != null ? { [FERN_AGENT_HEADER]: agent } : {};
 }

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { detectCodingAgent } from "../detectCodingAgent.js";
+import { detectCodingAgent } from "../codingAgent.js";
 
 const AGENT_ENV_VARS = [
     "CLAUDECODE",
