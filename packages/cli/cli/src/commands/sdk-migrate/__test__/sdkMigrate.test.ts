@@ -123,7 +123,7 @@ describe("SDK Config migration", () => {
             fernWorkspace: { definition },
             group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
             source: createSource(),
-            sourceDerivedApiFields: { auth: true, environments: true }
+            sourceDerivedApiFields: { auth: true, environments: true, headerNames: [] }
         });
 
         expect(result.sdkConfig.api).toEqual({
@@ -133,14 +133,44 @@ describe("SDK Config migration", () => {
         expect(result.diagnostics).toEqual([]);
     });
 
+    it("omits only global headers that are already represented by the source specification", () => {
+        const definition = createDefinition();
+        definition.rootApiFile.contents.headers = {
+            "X-API-Version": {
+                name: "apiVersion",
+                type: "optional<string>",
+                env: "API_VERSION"
+            },
+            "X-Request-ID": {
+                name: "requestId",
+                type: "optional<string>"
+            }
+        };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            sourceDerivedApiFields: {
+                auth: false,
+                environments: false,
+                headerNames: ["x-api-version"]
+            }
+        });
+
+        expect(result.sdkConfig.api?.headers).toEqual([{ name: "requestId" }]);
+    });
+
     it("only identifies API fields as source-derived for OSS workspaces without Fern overrides", () => {
         const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]);
         const sourceOnly = createWorkspace("payments", [group]);
+        const definition = createDefinition(["X-API-Version"]);
         Object.assign(sourceOnly, { type: "oss" });
 
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: true,
-            environments: true
+            environments: true,
+            headerNames: ["X-API-Version"]
         });
 
         const generatorsConfiguration = sourceOnly.generatorsConfiguration;
@@ -155,19 +185,33 @@ describe("SDK Config migration", () => {
                 auth: "ApiKeyAuth",
                 "auth-schemes": { ApiKeyAuth: { header: "x-api-key" } },
                 environments: { Production: "https://api.example.com" },
-                "default-environment": "Production"
+                "default-environment": "Production",
+                headers: { "X-Configured": "string" }
             }
         };
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: false,
-            environments: false
+            environments: false,
+            headerNames: []
         });
 
         Object.assign(sourceOnly, { type: "fern" });
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: false,
-            environments: false
+            environments: false,
+            headerNames: []
         });
+    });
+
+    it("fails explicitly when a clone loses global header provenance", () => {
+        const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]);
+        const workspace = createWorkspace("payments", [group]);
+        Object.assign(workspace, { type: "oss" });
+        const definitionWithoutProvenance = structuredClone(createDefinition(["X-API-Version"]));
+
+        expect(() =>
+            identifySourceDerivedApiFields({ workspace, groups: [group], definition: definitionWithoutProvenance })
+        ).toThrowError(/Could not determine global-header provenance/);
     });
 
     it("keeps generator-level authentication overrides in SDK Config", () => {
@@ -180,7 +224,22 @@ describe("SDK Config migration", () => {
         const workspace = createWorkspace("payments", [group]);
         Object.assign(workspace, { type: "oss" });
 
-        expect(identifySourceDerivedApiFields({ workspace, groups: [group] }).auth).toBe(false);
+        expect(
+            identifySourceDerivedApiFields({ workspace, groups: [group], definition: createDefinition() }).auth
+        ).toBe(false);
+    });
+
+    it("keeps generator-level header overrides in SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
+        generator.apiOverride = {
+            headers: { "X-API-Version": { name: "apiVersion", type: "optional<string>" } }
+        };
+        const group = createGroup([generator]);
+        const workspace = createWorkspace("payments", [group]);
+        const definition = createDefinition(["X-API-Version"]);
+        Object.assign(workspace, { type: "oss" });
+
+        expect(identifySourceDerivedApiFields({ workspace, groups: [group], definition }).headerNames).toEqual([]);
     });
 
     it("hoists API import settings shared by every source spec", () => {
@@ -530,7 +589,7 @@ describe("SDK Config migration group consolidation", () => {
         const python = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         python.groupName = "python";
         const definition = createDefinition();
-        const workspace = createLoadableWorkspace([typescript, python], [definition, structuredClone(definition)]);
+        const workspace = createLoadableWorkspace([typescript, python], [definition, cloneDefinition(definition)]);
 
         const result = await loadCompatibleMigrationGroups({
             workspace,
@@ -560,7 +619,7 @@ describe("SDK Config migration group consolidation", () => {
         const definition = createDefinition();
 
         const result = await loadCompatibleMigrationGroups({
-            workspace: createLoadableWorkspace([typescript, python], [definition, structuredClone(definition)]),
+            workspace: createLoadableWorkspace([typescript, python], [definition, cloneDefinition(definition)]),
             groups: [typescript, python],
             cliContext: createTaskCliContext()
         });
@@ -606,7 +665,7 @@ describe("SDK Config migration group consolidation", () => {
             loadCompatibleMigrationGroups({
                 workspace: createLoadableWorkspace(
                     [publicGroup, internalGroup],
-                    [definition, structuredClone(definition)]
+                    [definition, cloneDefinition(definition)]
                 ),
                 groups: [publicGroup, internalGroup],
                 cliContext: createTaskCliContext()
@@ -615,8 +674,8 @@ describe("SDK Config migration group consolidation", () => {
     });
 });
 
-function createDefinition(): FernDefinition {
-    return {
+function createDefinition(sourceDerivedGlobalHeaderNames: string[] = []): FernDefinition {
+    const definition: FernDefinition = {
         absoluteFilePath: AbsoluteFilePath.of("/tmp/fern/definition"),
         importedDefinitions: {},
         namedDefinitionFiles: {},
@@ -639,6 +698,24 @@ function createDefinition(): FernDefinition {
         },
         specVersion: "2026-08-31"
     };
+    Object.defineProperty(definition, "sourceDerivedGlobalHeaderNames", {
+        configurable: true,
+        enumerable: false,
+        value: sourceDerivedGlobalHeaderNames,
+        writable: true
+    });
+    return definition;
+}
+
+function cloneDefinition(definition: FernDefinition): FernDefinition {
+    const clone = structuredClone(definition);
+    Object.defineProperty(clone, "sourceDerivedGlobalHeaderNames", {
+        configurable: true,
+        enumerable: false,
+        value: [...(definition.sourceDerivedGlobalHeaderNames ?? [])],
+        writable: true
+    });
+    return clone;
 }
 
 function createSource() {

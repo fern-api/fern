@@ -124,8 +124,13 @@ function projectDefinition(definition: FernDefinition, seen: WeakSet<object>): u
         return { cycle: true };
     }
     seen.add(definition);
+    // This metadata is intentionally non-enumerable. Preserve `null` as a distinct fingerprint when a clone or
+    // spread has lost it, rather than treating unknown provenance as an empty source-header list.
+    const sourceDerivedGlobalHeaderNames = definition.sourceDerivedGlobalHeaderNames;
     const projected = {
         specVersion: definition.specVersion,
+        sourceDerivedGlobalHeaderNames:
+            sourceDerivedGlobalHeaderNames == null ? null : [...sourceDerivedGlobalHeaderNames].sort(),
         root: {
             contents: definition.rootApiFile.contents,
             defaultUrl: definition.rootApiFile.defaultUrl
