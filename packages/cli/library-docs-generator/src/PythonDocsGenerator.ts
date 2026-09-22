@@ -67,13 +67,7 @@ export function generate(options: GenerateOptions): GenerateResult {
     const writer = new MdxFileWriter(stagingDir);
     try {
         renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
-        const target = join(outputDir, slug);
-        rmSync(target, { recursive: true, force: true });
-        const staged = join(stagingDir, slug);
-        if (existsSync(staged)) {
-            mkdirSync(dirname(target), { recursive: true });
-            renameSync(staged, target);
-        }
+        swapIntoPlace(join(stagingDir, slug), join(outputDir, slug), join(stagingDir, ".previous"));
     } finally {
         rmSync(stagingDir, { recursive: true, force: true });
     }
@@ -99,6 +93,30 @@ export function generate(options: GenerateOptions): GenerateResult {
         pageCount: writerResult.pageCount,
         navigationFilePath
     };
+}
+
+/**
+ * Replace `target` with `staged` without a window where neither exists: the previous
+ * tree is renamed aside to `backup` (same filesystem), the staged tree renamed in, and
+ * the backup restored if that fails.
+ */
+function swapIntoPlace(staged: string, target: string, backup: string): void {
+    const hadPrevious = existsSync(target);
+    if (hadPrevious) {
+        renameSync(target, backup);
+    }
+    if (!existsSync(staged)) {
+        return;
+    }
+    try {
+        mkdirSync(dirname(target), { recursive: true });
+        renameSync(staged, target);
+    } catch (error) {
+        if (hadPrevious) {
+            renameSync(backup, target);
+        }
+        throw error;
+    }
 }
 
 /**
