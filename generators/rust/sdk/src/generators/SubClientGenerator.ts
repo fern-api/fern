@@ -497,8 +497,17 @@ export class SubClientGenerator {
             fileDownload: () => false,
             text: () => false,
             bytes: () => false,
-            streaming: () => false,
+            streaming: (streaming) => this.streamingResponseUsesCustomTypes(streaming),
             streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private streamingResponseUsesCustomTypes(streaming: FernIr.StreamingResponse): boolean {
+        return streaming._visit({
+            json: (jsonChunk) => this.isCustomType(jsonChunk.payload),
+            sse: (sseChunk) => this.isCustomType(sseChunk.payload),
+            text: () => false,
             _other: () => false
         });
     }
