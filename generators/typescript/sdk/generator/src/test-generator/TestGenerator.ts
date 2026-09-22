@@ -905,11 +905,10 @@ export function ${functionName}(server: MockServer): void {
                 // The generated OAuthAuthProvider always sends grant_type (either the literal
                 // value or "client_credentials" for a plain string), so the mock must expect it
                 // even when the example omits it.
-                if (!("grant_type" in minimalProperties)) {
-                    const grantTypeValue = this.getSynthesizedGrantTypeValue({ requestProperties, context });
-                    if (grantTypeValue != null) {
-                        minimalProperties["grant_type"] = code`${JSON.stringify(grantTypeValue)}`;
-                    }
+                const synthesizedGrantType = this.getSynthesizedGrantType({ requestProperties, context });
+                if (synthesizedGrantType != null && !(synthesizedGrantType.wireValue in minimalProperties)) {
+                    minimalProperties[synthesizedGrantType.wireValue] =
+                        code`${JSON.stringify(synthesizedGrantType.value)}`;
                 }
 
                 return code`${literalOf(minimalProperties)}`;
@@ -923,25 +922,30 @@ export function ${functionName}(server: MockServer): void {
         });
     }
 
-    private getSynthesizedGrantTypeValue({
+    /**
+     * Mirrors OAuthAuthProviderGenerator: the grant_type property is identified by its
+     * original name, and a non-literal grant_type is always sent as "client_credentials".
+     */
+    private getSynthesizedGrantType({
         requestProperties,
         context
     }: {
         requestProperties: FernIr.OAuthAccessTokenRequestProperties;
         context: FileContext;
-    }): string | undefined {
+    }): { wireValue: string; value: string } | undefined {
         const grantTypeProperty = (requestProperties.customProperties ?? []).find(
-            (customProperty) => getWireValue(customProperty.property.name) === "grant_type"
+            (customProperty) => getOriginalName(customProperty.property.name) === "grant_type"
         );
         if (grantTypeProperty == null) {
             return undefined;
         }
+        const wireValue = getWireValue(grantTypeProperty.property.name);
         const resolvedType = context.type.resolveTypeReference(grantTypeProperty.property.valueType);
         if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
             const literal = resolvedType.container.literal;
-            return literal.type === "string" ? literal.string : undefined;
+            return literal.type === "string" ? { wireValue, value: literal.string } : undefined;
         }
-        return "client_credentials";
+        return { wireValue, value: "client_credentials" };
     }
 
     private getAuthRequestParameters({ shape }: FernIr.ExampleTypeReference): Record<string, Code> {
