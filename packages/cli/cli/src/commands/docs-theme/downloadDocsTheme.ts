@@ -71,7 +71,7 @@ async function fetchThemeConfig({
 
     let res: Response;
     try {
-        res = await fetch(url, { headers: { Accept: "application/json" } });
+        res = await fetch(url, { headers: { Accept: "application/json", "Accept-Encoding": "identity" } });
     } catch (err) {
         return context.failAndThrow(
             `Failed to fetch theme "${name}" — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
