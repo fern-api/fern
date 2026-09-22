@@ -269,9 +269,17 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 writer.write("{")
                                 write_file_property(writer, property_as_union.value)
                                 writer.write("} ")
-                                writer.write_line(
-                                    f"if {self._get_file_property_name(property_as_union.value)} is not None "
-                                )
+                                _optional_name = self._get_file_property_name(property_as_union.value)
+                                _optional_as_union = property_as_union.value.get_as_union()
+                                if (
+                                    _optional_as_union.type == "fileArray"
+                                    and _optional_as_union.content_type is not None
+                                ):
+                                    writer.write_line(
+                                        f"if {_optional_name} is not None and {_optional_name} is not OMIT "
+                                    )
+                                else:
+                                    writer.write_line(f"if {_optional_name} is not None ")
                                 writer.write_line("else {}")
                             writer.write_line("),")
                         else:

@@ -59,7 +59,7 @@ class RawSeedApi:
                             for _file in optional_files
                         ]
                     }
-                    if optional_files is not None
+                    if optional_files is not None and optional_files is not OMIT
                     else {}
                 ),
                 "single_file": core.with_content_type(
@@ -127,7 +127,7 @@ class AsyncRawSeedApi:
                             for _file in optional_files
                         ]
                     }
-                    if optional_files is not None
+                    if optional_files is not None and optional_files is not OMIT
                     else {}
                 ),
                 "single_file": core.with_content_type(
