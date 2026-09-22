@@ -9,7 +9,7 @@ import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
 import com.seed.javaOptionalNullableQueryParams.types.SearchResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaOptionalNullableQueryParamsClient {
+public class AsyncSeedJavaOptionalNullableQueryParamsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaOptionalNullableQueryParamsClient rawClient;
@@ -52,6 +52,15 @@ public class AsyncSeedJavaOptionalNullableQueryParamsClient {
      */
     public CompletableFuture<SearchResponse> search(SearchRequest request, RequestOptions requestOptions) {
         return this.rawClient.search(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaOptionalNullableQueryParamsClientBuilder builder() {

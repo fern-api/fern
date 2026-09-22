@@ -8,7 +8,7 @@ import com.seed.basicAuthPwOmitted.core.Suppliers;
 import com.seed.basicAuthPwOmitted.resources.basicauth.AsyncBasicAuthClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedBasicAuthPwOmittedClient {
+public class AsyncSeedBasicAuthPwOmittedClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncBasicAuthClient> basicAuthClient;
@@ -20,6 +20,15 @@ public class AsyncSeedBasicAuthPwOmittedClient {
 
     public AsyncBasicAuthClient basicAuth() {
         return this.basicAuthClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedBasicAuthPwOmittedClientBuilder builder() {

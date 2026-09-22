@@ -8,7 +8,7 @@ import com.seed.nurseryApi.core.Suppliers;
 import com.seed.nurseryApi.resources.package_.AsyncPackageClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedNurseryApiClient {
+public class AsyncSeedNurseryApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncPackageClient> packageClient;
@@ -20,6 +20,15 @@ public class AsyncSeedNurseryApiClient {
 
     public AsyncPackageClient package_() {
         return this.packageClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedNurseryApiClientBuilder builder() {

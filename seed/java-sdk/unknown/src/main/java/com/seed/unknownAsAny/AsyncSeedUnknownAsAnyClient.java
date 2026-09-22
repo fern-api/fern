@@ -8,7 +8,7 @@ import com.seed.unknownAsAny.core.Suppliers;
 import com.seed.unknownAsAny.resources.unknown.AsyncUnknownClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedUnknownAsAnyClient {
+public class AsyncSeedUnknownAsAnyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUnknownClient> unknownClient;
@@ -20,6 +20,15 @@ public class AsyncSeedUnknownAsAnyClient {
 
     public AsyncUnknownClient unknown() {
         return this.unknownClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedUnknownAsAnyClientBuilder builder() {

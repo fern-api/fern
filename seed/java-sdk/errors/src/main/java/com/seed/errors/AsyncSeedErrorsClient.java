@@ -8,7 +8,7 @@ import com.seed.errors.core.Suppliers;
 import com.seed.errors.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedErrorsClient {
+public class AsyncSeedErrorsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncSimpleClient> simpleClient;
@@ -20,6 +20,15 @@ public class AsyncSeedErrorsClient {
 
     public AsyncSimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedErrorsClientBuilder builder() {

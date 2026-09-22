@@ -16,7 +16,7 @@ import com.seed.api.types.RuleTypeSearchResponse;
 import com.seed.api.types.TreeRecord;
 import com.seed.api.types.UserSearchResponse;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -107,6 +107,15 @@ public class SeedApiClient {
      */
     public TreeRecord createTree(TreeRecord request, RequestOptions requestOptions) {
         return this.rawClient.createTree(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

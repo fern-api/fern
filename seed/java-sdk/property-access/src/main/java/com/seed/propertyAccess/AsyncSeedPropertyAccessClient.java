@@ -8,7 +8,7 @@ import com.seed.propertyAccess.core.RequestOptions;
 import com.seed.propertyAccess.types.User;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedPropertyAccessClient {
+public class AsyncSeedPropertyAccessClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedPropertyAccessClient rawClient;
@@ -31,6 +31,15 @@ public class AsyncSeedPropertyAccessClient {
 
     public CompletableFuture<User> createUser(User request, RequestOptions requestOptions) {
         return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedPropertyAccessClientBuilder builder() {
