@@ -33,3 +33,9 @@
     within the library, on generated pages and `<LibrarySymbol>` embeds alike. Signatures are
     unchanged; untyped source signatures stay untyped.
   type: feat
+- summary: |
+    Python library docs: `fern docs md generate` now clears the library's previously generated
+    page tree before writing, so a module that changes layout (`<name>.mdx` vs
+    `<name>/index.mdx`) no longer leaves a stale file behind. A library whose only submodules
+    are private still gets its root page as the section overview.
+  type: fix

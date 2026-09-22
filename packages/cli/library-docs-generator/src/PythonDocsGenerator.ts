@@ -12,6 +12,8 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { rmSync } from "fs";
+import { join } from "path";
 import { moduleHasPage, moduleIsPackage, renderModulePage } from "./renderers/ModuleRenderer.js";
 import { moduleIsPrivate } from "./utils/modulePages.js";
 import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
@@ -56,7 +58,10 @@ export function generate(options: GenerateOptions): GenerateResult {
     const { validPaths, pathAliases, publicPaths, packageModules } = buildTypeLinkData(ir);
     const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
 
-    // Stage 2: Render pages and stream to disk
+    // Stage 2: Render pages and stream to disk. The library's page tree is owned by the
+    // generator, so clear it first: a module that switches between `<name>.mdx` and
+    // `<name>/index.mdx` layouts must not leave the previous file behind.
+    rmSync(join(outputDir, slug), { recursive: true, force: true });
     const writer = new MdxFileWriter(outputDir);
     renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
 

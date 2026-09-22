@@ -1,0 +1,11 @@
+instances: []
+navigation:
+  - library: guardrails-python-sdk
+    title: SDK Reference
+libraries:
+  guardrails-python-sdk:
+    input:
+      git: https://github.com/acme/guardrails-python
+    output:
+      path: ./static/guardrails
+    lang: python

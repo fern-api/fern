@@ -40,7 +40,7 @@ import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/wo
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
-import { readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import jsYaml from "js-yaml";
 import { camelCase, kebabCase } from "lodash-es";
@@ -2378,7 +2378,9 @@ export class DocsDefinitionResolver {
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 
-        // Derive root page from nav nodes' common parent slug (same pattern as section overviews)
+        // Derive root page from nav nodes' common parent slug (same pattern as section overviews).
+        // A library whose only children are private modules has no nav nodes but still has a
+        // root page, so fall back to the single page written under the library's slug folder.
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
@@ -2387,6 +2389,10 @@ export class DocsDefinitionResolver {
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
+        } else {
+            const rootPage = await this.findSoleLibraryRootPage(outputDir, item.libraryName);
+            overviewPageId =
+                rootPage != null ? await this.registerLibraryMdxPage(outputDir, rootPage, { quiet: true }) : undefined;
         }
 
         const children = await this.convertLibraryNavNodes(navNodes, outputDir, sectionSlug);
@@ -2447,6 +2453,33 @@ export class DocsDefinitionResolver {
             );
             return null;
         }
+    }
+
+    /**
+     * Locate the root page of a library whose `_navigation.yml` is empty. Generated output
+     * lives under `<outputDir>/<libraryName>/`; the root module is either `<root>.mdx` or
+     * `<root>/index.mdx`. Returns the relative path only when exactly one candidate exists.
+     */
+    private async findSoleLibraryRootPage(
+        outputDir: AbsoluteFilePath,
+        libraryName: string
+    ): Promise<string | undefined> {
+        const libraryDir = join(outputDir, RelativeFilePath.of(libraryName));
+        if (!existsSync(libraryDir)) {
+            return undefined;
+        }
+        const candidates: string[] = [];
+        for (const entry of await readdir(libraryDir, { withFileTypes: true })) {
+            if (entry.isFile() && entry.name.endsWith(".mdx")) {
+                candidates.push(`${libraryName}/${entry.name}`);
+            } else if (entry.isDirectory()) {
+                const indexPath = `${libraryName}/${entry.name}/index.mdx`;
+                if (existsSync(join(outputDir, RelativeFilePath.of(indexPath)))) {
+                    candidates.push(indexPath);
+                }
+            }
+        }
+        return candidates.length === 1 ? candidates[0] : undefined;
     }
 
     /**

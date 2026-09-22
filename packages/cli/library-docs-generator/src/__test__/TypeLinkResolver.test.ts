@@ -684,6 +684,18 @@ describe("module file links", () => {
         expect(fromDeep("pkg.sub")).toBe("./index.mdx");
     });
 
+    it("falls back to the public module's absolute URL for private definitions", () => {
+        const ctx: RenderContext = {
+            baseSlug: "ref",
+            validPaths: new Set(["pkg._impl.Foo"]),
+            pathAliases: new Map(),
+            publicPaths: new Map([["pkg._impl.Foo", "pkg.models.Foo"]])
+        };
+        expect(extractLinksFromTypes(["pkg._impl.Foo"], ctx, "pkg.other")).toEqual({
+            "pkg._impl.Foo": "/ref/pkg/models#pkg-_impl-Foo"
+        });
+    });
+
     it("uses the file link for cross-module type links when configured", () => {
         const ctx: RenderContext = {
             baseSlug: "ref",

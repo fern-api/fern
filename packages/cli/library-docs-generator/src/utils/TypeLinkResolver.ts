@@ -216,7 +216,7 @@ function pathToAnchorUrl(typePath: string, ctx: RenderContext, currentModulePath
     if (ctx.linkToModuleFile != null) {
         return `${ctx.linkToModuleFile(targetModulePath)}#${anchor}`;
     }
-    return `/${ctx.baseSlug}/${parts.slice(0, -1).join("/")}#${anchor}`;
+    return `/${ctx.baseSlug}/${targetModulePath.split(".").join("/")}#${anchor}`;
 }
 
 /** Regex to match qualified Python paths (at least 2 segments). */

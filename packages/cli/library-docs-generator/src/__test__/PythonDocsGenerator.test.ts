@@ -353,6 +353,46 @@ describe("generate()", () => {
         expect(api).not.toContain("_impl.mdx");
     });
 
+    it("replaces stale output from a previous layout on regeneration", () => {
+        const asPackage = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        functions: [makeFunction({ name: "g", path: "pkg.sub.g" })]
+                    })
+                ]
+            })
+        );
+        generate({ ir: asPackage, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+
+        const asLeaf = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "_sub",
+                        path: "pkg._sub",
+                        functions: [makeFunction({ name: "g", path: "pkg._sub.g" })]
+                    })
+                ]
+            })
+        );
+        const result = generate({ ir: asLeaf, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        expect(result.rootPageId).toBe("ref/pkg.mdx");
+        expect(result.navigation).toEqual([]);
+        expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/pkg"))).toBe(false);
+    });
+
     it("links private definitions to an equal-depth public re-export", () => {
         const impl = makeClass({ name: "Model", path: "pkg._impl.Model" });
         const ir = makeIr(
