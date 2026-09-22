@@ -461,6 +461,12 @@ function projectFernApiImportSettings(
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
         ignoreTags: settings.ignoreTags,
         disambiguateRequestNames: settings.disambiguateRequestNames,
+        respectReadonlySchemas: settings.respectReadonlySchemas,
+        discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        resolveSchemaCollisions: settings.resolveSchemaCollisions,
+        asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
     };
     const defined = Object.fromEntries(Object.entries(projected).filter(([, value]) => value !== undefined));
@@ -513,6 +519,19 @@ function projectRawApiImportSettings(
         ...(settings["disambiguate-request-names"] == null
             ? {}
             : { disambiguateRequestNames: settings["disambiguate-request-names"] }),
+        ...(settings["respect-readonly-schemas"] == null
+            ? {}
+            : { respectReadonlySchemas: settings["respect-readonly-schemas"] }),
+        ...(settings["prefer-undiscriminated-unions-with-literals"] == null
+            ? {}
+            : {
+                  discriminatedUnionV2: settings["prefer-undiscriminated-unions-with-literals"],
+                  undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
+              }),
+        ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["resolve-schema-collisions"] == null
+            ? {}
+            : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),
         ...(settings["default-integer-format"] == null
             ? {}
             : { defaultIntegerFormat: settings["default-integer-format"] })

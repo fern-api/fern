@@ -175,6 +175,16 @@ type ApiImportSettingMapper = (settings: OpenAPISettings) => RawSpecImportSettin
 const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
     respectNullableSchemas: (settings) => ({ respectNullableSchemas: settings.respectNullableSchemas }),
     useTitlesAsName: (settings) => ({ titleAsSchemaName: settings.useTitlesAsName }),
+    ignoreTags: (settings) => ({ ignoreTags: settings.ignoreTags }),
+    disambiguateRequestNames: (settings) => ({ disambiguateRequestNames: settings.disambiguateRequestNames }),
+    respectReadonlySchemas: (settings) => ({ respectReadonlySchemas: settings.respectReadonlySchemas }),
+    discriminatedUnionV2: (settings) => ({ discriminatedUnionV2: settings.discriminatedUnionV2 }),
+    shouldUseUndiscriminatedUnionsWithLiterals: (settings) => ({
+        undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals
+    }),
+    inlineAllOfSchemas: (settings) => ({ inlineAllOfSchemas: settings.inlineAllOfSchemas }),
+    resolveSchemaCollisions: (settings) => ({ resolveSchemaCollisions: settings.resolveSchemaCollisions }),
+    asyncApiNaming: (settings) => ({ asyncApiMessageNaming: settings.asyncApiNaming }),
     coerceEnumsToLiterals: (settings) => ({ coerceEnumsToLiterals: settings.coerceEnumsToLiterals }),
     shouldUseIdiomaticRequestNames: (settings) => ({
         idiomaticRequestNames: settings.shouldUseIdiomaticRequestNames

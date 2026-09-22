@@ -82,6 +82,136 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.client?.pathParameterStyle).toBe("wrapped");
     });
 
+    it("maps supported Python generator settings into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-python-sdk", "python", "4.3.10");
+        generator.config = {
+            client: {
+                class_name: "BaseSdkClient",
+                filename: "base_client.py",
+                exported_class_name: "SdkClient",
+                exported_filename: "client.py"
+            },
+            pydantic_config: { skip_validation: true },
+            follow_redirects_by_default: true,
+            default_bytes_stream_chunk_size: 1024,
+            recursion_limit: 10_000,
+            extras: { audio: ["audio-runtime"] },
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+        };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.client).toMatchObject({ responseValidation: false });
+        expect(result.sdkConfig.generation).toMatchObject({
+            naming: { clientName: "BaseSdkClient", exportedClientName: "SdkClient" }
+        });
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({
+            client: { fileName: "base_client.py", exportedFileName: "client.py" },
+            followRedirectsByDefault: true,
+            defaultBytesStreamChunkSize: 1024,
+            recursionLimit: 10_000,
+            extras: { audio: ["audio-runtime"] },
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+        });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("preserves package metadata and language-specific README sections across SDK targets", () => {
+        const typescript = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
+        typescript.config = {
+            fetchSupport: "native",
+            packageJson: {
+                description: "TypeScript SDK for the Example API.",
+                author: {
+                    name: "Example SDK Team",
+                    url: "https://sdk.example.com",
+                    email: "support@example.com"
+                }
+            }
+        };
+        const php = createGenerator("fernapi/fern-php-sdk", "php", "3.0.0");
+        php.config = {
+            composerJson: {
+                description: "PHP SDK for the Example API.",
+                author: {
+                    name: "Example SDK Team",
+                    url: "https://sdk.example.com",
+                    email: "support@example.com"
+                },
+                license: "MIT"
+            }
+        };
+        const python = createGenerator("fernapi/fern-python-sdk", "python", "6.0.0");
+        python.config = {
+            pydantic_config: { skip_validation: true },
+            additional_init_exports: [{ from: "types", imports: ["SdkError"] }]
+        };
+        const readme: generatorsYml.ReadmeSchema = {
+            apiName: "Example API",
+            customSections: [
+                { title: "TypeScript usage", language: "typescript", content: "TypeScript example." },
+                { title: "PHP usage", language: "php", content: "PHP example." },
+                { title: "Python usage", language: "python", content: "Python example." }
+            ]
+        };
+        typescript.readme = readme;
+        php.readme = readme;
+        python.readme = readme;
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([typescript, php, python]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.docs).toEqual({ readme: { apiName: "Example API" } });
+        expect(result.sdkConfig.targets).toMatchObject([
+            {
+                language: "typescript",
+                docs: { readme: { customSections: [{ title: "TypeScript usage", content: "TypeScript example." }] } },
+                package: {
+                    description: "TypeScript SDK for the Example API.",
+                    authors: [
+                        {
+                            name: "Example SDK Team",
+                            email: "support@example.com",
+                            url: "https://sdk.example.com"
+                        }
+                    ]
+                },
+                generation: { httpClient: { name: "fetch" } }
+            },
+            {
+                language: "php",
+                docs: { readme: { customSections: [{ title: "PHP usage", content: "PHP example." }] } },
+                package: {
+                    description: "PHP SDK for the Example API.",
+                    authors: [
+                        {
+                            name: "Example SDK Team",
+                            email: "support@example.com",
+                            url: "https://sdk.example.com"
+                        }
+                    ],
+                    license: { type: "MIT" }
+                }
+            },
+            {
+                language: "python",
+                client: { responseValidation: false },
+                docs: { readme: { customSections: [{ title: "Python usage", content: "Python example." }] } },
+                generation: {
+                    additionalInitExports: [{ from: "types", imports: ["SdkError"] }]
+                }
+            }
+        ]);
+        expect(result.diagnostics).toEqual([]);
+    });
+
     it("maps endpoint-specific header authentication", () => {
         const definition = createDefinition();
         definition.rootApiFile.contents.auth = { "endpoint-security": {} };
@@ -314,6 +444,80 @@ describe("SDK Config migration", () => {
             { namespace: "First", apiImportSettings: { titleAsSchemaName: true } }
         ]);
         expect(resolveMigrationPathParameterStyle(specs)).toBe("wrapped");
+    });
+
+    it("projects supported Fern API import settings into SDK Config", () => {
+        const absoluteFilepath = AbsoluteFilePath.of("/tmp/specs/sample.yml");
+        const configuredDefinition = createConfiguredOpenApiDefinition("../specs/sample.yml", false, false);
+        configuredDefinition.settings = {
+            ...configuredDefinition.settings,
+            respectReadonlySchemas: true,
+            shouldUseUndiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2"
+        } as generatorsYml.APIDefinitionSettings;
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [createWorkspaceOpenApiSpec("Sample", absoluteFilepath)],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: { Sample: [configuredDefinition] },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        const [spec] = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace: {} as FernWorkspace,
+            generator: createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        });
+
+        expect(spec?.apiImportSettings).toEqual({
+            titleAsSchemaName: false,
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2"
+        });
+    });
+
+    it("projects generator-level source import settings into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-python-sdk", "python", "4.3.10");
+        generator.apiOverride = {
+            specs: [
+                {
+                    openapi: "../specs/sample.yml",
+                    namespace: "Sample",
+                    settings: {
+                        "respect-readonly-schemas": true,
+                        "prefer-undiscriminated-unions-with-literals": true,
+                        "inline-all-of-schemas": true,
+                        "resolve-schema-collisions": true
+                    }
+                }
+            ]
+        };
+        const workspace = createWorkspace("sample", [createGroup([generator])]);
+        workspace.absoluteFilePath = AbsoluteFilePath.of("/tmp/fern");
+
+        const [spec] = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace: {} as FernWorkspace,
+            generator
+        });
+
+        expect(spec?.apiImportSettings).toEqual({
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true
+        });
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
