@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated OAuth wire-test mock (`tests/wire/mockAuth.ts`) now expects the `grant_type` the generated
+    `OAuthAuthProvider` actually sends. When the token endpoint models `grant_type` as a plain (optional) string
+    and the example omits it, the provider sends `grant_type: "client_credentials"` but the mock previously only
+    matched the example body, so the token request never matched and every authenticated wire test failed with
+    a connection-refused error.
+  type: fix

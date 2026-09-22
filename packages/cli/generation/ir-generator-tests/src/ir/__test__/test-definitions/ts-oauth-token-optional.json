@@ -502,7 +502,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "dd7d2f63",
+                                "id": "21a08fda",
                                 "name": null,
                                 "url": "/v2/token",
                                 "rootPathParameters": [],
@@ -545,49 +545,12 @@
                                                 "jsonExample": "sk_live_abcdef123456789"
                                             },
                                             "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "grant_type",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "container",
-                                                    "container": {
-                                                        "type": "optional",
-                                                        "optional": {
-                                                            "shape": {
-                                                                "type": "primitive",
-                                                                "primitive": {
-                                                                    "type": "string",
-                                                                    "string": {
-                                                                        "original": "client_credentials"
-                                                                    }
-                                                                }
-                                                            },
-                                                            "jsonExample": "client_credentials"
-                                                        },
-                                                        "valueType": {
-                                                            "_type": "primitive",
-                                                            "primitive": {
-                                                                "v1": "STRING",
-                                                                "v2": {
-                                                                    "type": "string",
-                                                                    "default": null,
-                                                                    "validation": null
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "client_credentials"
-                                            },
-                                            "originalTypeDeclaration": null
                                         }
                                     ],
                                     "extraProperties": null,
                                     "jsonExample": {
                                         "client_id": "my_oauth_app_123",
-                                        "client_secret": "sk_live_abcdef123456789",
-                                        "grant_type": "client_credentials"
+                                        "client_secret": "sk_live_abcdef123456789"
                                     }
                                 },
                                 "response": {
@@ -1023,6 +986,112 @@
                                                 "refresh_token": "refresh_token"
                                             }
                                         }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
+        "service_simple": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        "simple"
+                    ],
+                    "packagePath": [],
+                    "file": "simple"
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_simple.getSomething",
+                    "name": "getSomething",
+                    "displayName": null,
+                    "subtitle": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "OAuthScheme": []
+                        }
+                    ],
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/get-something",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/get-something",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "b8b5a106",
+                                "url": "/get-something",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
                                     }
                                 },
                                 "docs": null
@@ -1534,6 +1603,129 @@
                     "type": "json"
                 },
                 "examples": null
+            },
+            "endpoint_simple.getSomething": {
+                "auth": {
+                    "type": "oauth",
+                    "clientId": {
+                        "originalName": "clientId",
+                        "camelCase": {
+                            "unsafeName": "clientID",
+                            "safeName": "clientID"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "client_id",
+                            "safeName": "client_id"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CLIENT_ID",
+                            "safeName": "CLIENT_ID"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ClientID",
+                            "safeName": "ClientID"
+                        }
+                    },
+                    "clientSecret": {
+                        "originalName": "clientSecret",
+                        "camelCase": {
+                            "unsafeName": "clientSecret",
+                            "safeName": "clientSecret"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "client_secret",
+                            "safeName": "client_secret"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CLIENT_SECRET",
+                            "safeName": "CLIENT_SECRET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ClientSecret",
+                            "safeName": "ClientSecret"
+                        }
+                    },
+                    "customProperties": null,
+                    "wrapperProperty": null
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "simple",
+                                "camelCase": {
+                                    "unsafeName": "simple",
+                                    "safeName": "simple"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "simple",
+                                    "safeName": "simple"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SIMPLE",
+                                    "safeName": "SIMPLE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Simple",
+                                    "safeName": "Simple"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "simple",
+                            "camelCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SIMPLE",
+                                "safeName": "SIMPLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Simple",
+                                "safeName": "Simple"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/get-something"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null,
+                    "bodyRequired": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
             }
         },
         "pathParameters": [],
@@ -1574,6 +1766,27 @@
             "hasEndpointsInTree": true,
             "hasWebSocketInTree": false,
             "docs": null
+        },
+        "subpackage_simple": {
+            "name": "simple",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "simple"
+                ],
+                "packagePath": [],
+                "file": "simple"
+            },
+            "service": "service_simple",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
@@ -1587,7 +1800,8 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_auth"
+            "subpackage_auth",
+            "subpackage_simple"
         ],
         "webhooks": null,
         "navigationConfig": null,
