@@ -20,6 +20,7 @@ import {
     OPERATOR_SYMBOL_MAP,
     setCurrentPageSlugPath,
     setEntityRegistry,
+    setTypedefSyntax,
     stripTemplateArgs
 } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
@@ -109,6 +110,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     // Build entity registry for cross-reference link resolution
     const registry = buildEntityRegistry(pageEntries);
     setEntityRegistry(registry);
+    setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
         const writer = new MdxFileWriter(outputDir);
@@ -149,7 +151,57 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     } finally {
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
+        setTypedefSyntax("cpp");
     }
+}
+
+/**
+ * A library with no namespaces, concepts, templates or C++ class features
+ * (`class`, inheritance, member functions) is plain C, so its typedefs are
+ * rendered with `typedef` rather than `using` syntax. Plain `struct`/`union`
+ * aggregates are valid C and do not count as evidence of C++.
+ */
+function isPlainCLibrary(root: CppNamespaceIr): boolean {
+    return (
+        root.path === "" &&
+        root.namespaces.every((ns) => ns.name === "std" && isEmptyNamespace(ns)) &&
+        root.concepts.length === 0 &&
+        root.classes.every(isPlainCAggregate) &&
+        root.functions.every((fn) => fn.templateParams.length === 0) &&
+        root.typedefs.every((td) => td.templateParams.length === 0)
+    );
+}
+
+/** Doxygen emits an empty `std` namespace for C headers that include `<stdint.h>`. */
+function isEmptyNamespace(ns: CppNamespaceIr): boolean {
+    return (
+        ns.namespaces.length === 0 &&
+        ns.classes.length === 0 &&
+        ns.functions.length === 0 &&
+        ns.enums.length === 0 &&
+        ns.typedefs.length === 0 &&
+        ns.variables.length === 0 &&
+        ns.concepts.length === 0
+    );
+}
+
+function isPlainCAggregate(cls: CppClassIr): boolean {
+    return (
+        cls.kind !== "class" &&
+        cls.templateParams.length === 0 &&
+        cls.baseClasses.length === 0 &&
+        cls.methods.length === 0 &&
+        cls.staticMethods.length === 0 &&
+        cls.friendFunctions.length === 0 &&
+        cls.typedefs.length === 0 &&
+        cls.enums.every((e) => !e.isScoped && e.underlyingType === undefined) &&
+        !cls.isAbstract &&
+        !cls.isFinal &&
+        cls.memberVariables.every(
+            (v) => v.templateParams.length === 0 && !v.isStatic && !v.isConstexpr && !v.isMutable
+        ) &&
+        cls.innerClasses.every(isPlainCAggregate)
+    );
 }
 
 /**
@@ -500,6 +552,56 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
         }
     }
 
+    return disambiguateSlugCollisions(result);
+}
+
+/**
+ * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
+ * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
+ * slugification) to every entry after the first in such a group, in a deterministic
+ * order, so every page has a unique URL. The `index` slug of every directory is
+ * reserved for the generated category/namespace index page.
+ */
+function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
+    const bySlug = new Map<string, PageEntry[]>();
+    const reserved = new Set<string>();
+    for (const entry of entries) {
+        const slug = pageKeyToSlugPath(entry.pageKey);
+        const dir = slug.includes("/") ? slug.substring(0, slug.lastIndexOf("/") + 1) : "";
+        reserved.add(`${dir}index`);
+        const existing = bySlug.get(slug);
+        if (existing) {
+            existing.push(entry);
+        } else {
+            bySlug.set(slug, [entry]);
+        }
+    }
+
+    const taken = new Set([...bySlug.keys(), ...reserved]);
+    const result: PageEntry[] = [];
+    for (const [slug, group] of bySlug) {
+        const isReserved = reserved.has(slug);
+        if (group.length === 1 && !isReserved) {
+            result.push(...group);
+            continue;
+        }
+        const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
+        sorted.forEach((entry, index) => {
+            if (index === 0 && !isReserved) {
+                result.push(entry);
+                return;
+            }
+            const base = entry.pageKey.replace(/\.mdx$/, "");
+            let n = 2;
+            let candidate = `${base}-${n}`;
+            while (taken.has(pageKeyToSlugPath(`${candidate}.mdx`))) {
+                n += 1;
+                candidate = `${base}-${n}`;
+            }
+            taken.add(pageKeyToSlugPath(`${candidate}.mdx`));
+            result.push({ pageKey: `${candidate}.mdx`, collected: entry.collected });
+        });
+    }
     return result;
 }
 
@@ -662,6 +764,33 @@ function groupFolderName(group: CppGroupIr): string {
     return sanitizeForFilename(group.name || group.title);
 }
 
+/**
+ * Sibling group folders whose names slugify to the same URL segment (e.g.
+ * `DOCA_GPUNETIO` and `DOCAGPUNETIO`) get a deterministic `-N` suffix so each
+ * group page has its own URL.
+ */
+function uniqueGroupFolderNames(groups: CppGroupIr[]): Map<CppGroupIr, string> {
+    const result = new Map<CppGroupIr, string>();
+    const takenSlugs = new Set<string>();
+    const sorted = [...groups].sort((a, b) => {
+        const fa = groupFolderName(a);
+        const fb = groupFolderName(b);
+        return fa < fb ? -1 : fa > fb ? 1 : 0;
+    });
+    for (const group of sorted) {
+        const base = groupFolderName(group);
+        let folder = base;
+        let n = 2;
+        while (takenSlugs.has(slugifySegment(folder))) {
+            folder = `${base}-${n}`;
+            n += 1;
+        }
+        takenSlugs.add(slugifySegment(folder));
+        result.set(group, folder);
+    }
+    return result;
+}
+
 function groupDisplayName(group: CppGroupIr): string {
     return group.title || group.name;
 }
@@ -681,15 +810,16 @@ function generateGroupPages(renderable: CppGroupIr[], writer: MdxFileWriter, lib
 
     const indexPageKey = `${GROUPS_FOLDER}/index.mdx`;
     setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    const folders = uniqueGroupFolderNames(renderable);
     const entries: GroupListEntry[] = renderable.map((group) => ({
         displayName: groupDisplayName(group),
-        linkPath: `${GROUPS_FOLDER}/${slugifySegment(groupFolderName(group))}`
+        linkPath: `${GROUPS_FOLDER}/${slugifySegment(folders.get(group) ?? groupFolderName(group))}`
     }));
     writer.writePage(indexPageKey, renderGroupsIndexPage(entries, libraryTitle));
 
     const written = new Set<string>();
     for (const group of renderable) {
-        writeGroupPage(group, `${GROUPS_FOLDER}/${groupFolderName(group)}`, writer, written);
+        writeGroupPage(group, `${GROUPS_FOLDER}/${folders.get(group) ?? groupFolderName(group)}`, writer, written);
     }
 }
 
@@ -714,14 +844,15 @@ function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, w
     const sections = collectGroupSections(group);
     const subgroups = group.subgroups.filter((subgroup) => !written.has(subgroup.id) && groupHasContent(subgroup));
     const dirSegment = slugifySegment(dir.split("/").pop() ?? "");
+    const folders = uniqueGroupFolderNames(subgroups);
     const subgroupEntries: GroupListEntry[] = subgroups.map((subgroup) => ({
         displayName: groupDisplayName(subgroup),
-        linkPath: `${dirSegment}/${slugifySegment(groupFolderName(subgroup))}`
+        linkPath: `${dirSegment}/${slugifySegment(folders.get(subgroup) ?? groupFolderName(subgroup))}`
     }));
 
     writer.writePage(pageKey, renderGroupPage(group, sections, subgroupEntries));
 
     for (const subgroup of subgroups) {
-        writeGroupPage(subgroup, `${dir}/${groupFolderName(subgroup)}`, writer, written);
+        writeGroupPage(subgroup, `${dir}/${folders.get(subgroup) ?? groupFolderName(subgroup)}`, writer, written);
     }
 }

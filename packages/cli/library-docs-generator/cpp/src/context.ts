@@ -56,6 +56,22 @@ export function setCurrentPageSlugPath(slugPath: string | undefined): void {
 }
 
 /**
+ * Declaration syntax used when rendering typedef signatures: `using X = T;`
+ * for C++ libraries, `typedef T X;` for plain-C libraries.
+ */
+export type TypedefSyntax = "cpp" | "c";
+
+let typedefSyntax: TypedefSyntax = "cpp";
+
+export function setTypedefSyntax(syntax: TypedefSyntax): void {
+    typedefSyntax = syntax;
+}
+
+export function getTypedefSyntax(): TypedefSyntax {
+    return typedefSyntax;
+}
+
+/**
  * Compute a relative path from one slug path to another.
  *
  * @param fromSlugPath - Current page slug path (e.g., "classes/blockreduce")
