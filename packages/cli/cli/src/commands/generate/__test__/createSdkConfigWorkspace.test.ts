@@ -103,10 +103,9 @@ describe("createSdkConfigWorkspace", () => {
             throw new Error("Expected the SDK Config generator invocation");
         }
         const sdkConfigV1 = {
-            body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
             sdkName: "payments",
             sdkVersion: "1.0.0",
-            targets: [{ language: "typescript" }]
+            targets: [{ body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'), language: "typescript" }]
         };
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [generatorInvocation],
@@ -126,7 +125,7 @@ describe("createSdkConfigWorkspace", () => {
             sdkGenApiRoute: prepared.route,
             sdkVersion: "1.0.0",
             specsTarGzBuffer: Buffer.from("archive"),
-            payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.body }
+            payload: { payloadKind: "sdk-config-v1", body: sdkConfigV1.targets[0]?.body ?? Buffer.alloc(0) }
         });
         expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-typescript-sdk" });
         expect(JSON.stringify(request)).not.toContain(SDK_CONFIG_UNPINNED_GENERATOR_VERSION);

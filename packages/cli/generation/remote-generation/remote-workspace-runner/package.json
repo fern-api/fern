@@ -16,6 +16,13 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
+    },
+    "./direct-publish-credentials": {
+      "development": "./src/directPublishCredentials.ts",
+      "source": "./src/directPublishCredentials.ts",
+      "types": "./lib/directPublishCredentials.d.ts",
+      "import": "./lib/directPublishCredentials.js",
+      "default": "./lib/directPublishCredentials.js"
     }
   },
   "main": "lib/index.js",

@@ -62,7 +62,7 @@ export async function createSdkConfigWorkspace({
                 sdkConfig.api.audiences == null
                     ? { type: "all" }
                     : { type: "select", audiences: sdkConfig.api.audiences },
-            generators: sdkConfig.targets.map((target) => {
+            generators: sdkConfig.targets.map((target, targetIndex) => {
                 const name = GENERATOR_BY_LANGUAGE[target.language];
                 if (name == null) {
                     return context.failAndThrow(
@@ -76,7 +76,8 @@ export async function createSdkConfigWorkspace({
                     version: resolveSdkConfigGeneratorVersion(target.generatorVersion),
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
-                    configDirectory
+                    configDirectory,
+                    sdkConfigTargetIndex: targetIndex
                 });
             }),
             reviewers: undefined
@@ -115,16 +116,19 @@ function createGeneratorInvocation({
     version,
     language,
     output,
-    configDirectory
+    configDirectory,
+    sdkConfigTargetIndex
 }: {
     name: string;
     version: string;
     language: string;
     output: SdkConfigV1["output"];
     configDirectory: string;
-}): generatorsYml.GeneratorInvocation {
+    sdkConfigTargetIndex: number;
+}): generatorsYml.GeneratorInvocation & { sdkConfigTargetIndex: number } {
     return {
         name,
+        sdkConfigTargetIndex,
         version,
         config: {},
         outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),

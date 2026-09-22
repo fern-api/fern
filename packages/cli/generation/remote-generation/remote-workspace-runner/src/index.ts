@@ -4,12 +4,16 @@ export type {
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
+export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
 export {
     createFernSdkGenApiRequest,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
-    synthesizesSdkConfig
+    synthesizesSdkConfig,
+    validateFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishCredentialSources,
+    validateFernSdkGenApiPublishTargets
 } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,

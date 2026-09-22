@@ -56,6 +56,7 @@ import {
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
+import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -205,7 +206,7 @@ export async function runRemoteGenerationForGenerator({
 
     const sdkConfigTarget =
         sdkGenApiRoute?.payloadKind === "sdk-config-v1"
-            ? sdkConfigV1?.targets.find((target) => target.language === sdkGenApiRoute.language)
+            ? resolveSdkConfigTarget(sdkConfigV1, sdkGenApiTargetIdSeed)
             : undefined;
     const configuredSdkVersion = sdkConfigTarget?.sdkVersion ?? sdkConfigV1?.sdkVersion;
     const resolvedVersion =
@@ -333,16 +334,15 @@ export async function runRemoteGenerationForGenerator({
                     apiVersion: sdkConfigV1.apiVersion,
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
-                    payload: {
-                        payloadKind: "sdk-config-v1",
-                        body: sdkConfigV1.body,
-                        package: sdkConfigTarget.package
-                    },
+                    payload: createSdkConfigTargetPayload(sdkConfigTarget),
                     // Preview must never retain a publishing destination from SDK Config.
                     requestedOutput: resolveSdkConfigRequestedOutput(
                         sdkConfigTarget.requestedOutput,
-                        absolutePathToPreview != null
+                        isPreview
                     ),
+                    ...(!isPreview && sdkConfigTarget.publishCredential != null
+                        ? { publishCredential: sdkConfigTarget.publishCredential }
+                        : {}),
                     absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
                     absolutePathToPreview,
                     context: interactiveTaskContext,

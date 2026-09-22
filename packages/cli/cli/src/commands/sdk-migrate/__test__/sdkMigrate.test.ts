@@ -71,6 +71,72 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.generation).toBeUndefined();
     });
 
+    it("preserves exact publish credential environment expressions and omits literal secrets", () => {
+        const safe = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        safe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://registry.npmjs.org",
+                packageName: "@acme/sdk",
+                token: "${NPM_TOKEN}"
+            })
+        );
+        const unsafe = createGenerator("fernapi/fern-python-sdk", "python", "4.0.0");
+        unsafe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.pypiOverride({
+                registryUrl: "https://upload.pypi.org/legacy/",
+                coordinate: "acme-sdk",
+                username: "__token__",
+                password: "literal-secret"
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([safe, unsafe]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("username");
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE" })
+            ])
+        );
+    });
+
+    it("preserves Maven signing expressions only when the complete signature is safe", () => {
+        const generator = createGenerator("fernapi/fern-java-sdk", "java", "3.0.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://central.sonatype.com",
+                coordinate: "com.acme:sdk",
+                username: "${MAVEN_USERNAME}",
+                password: "${MAVEN_PASSWORD}",
+                signature: {
+                    keyId: "${MAVEN_KEY_ID}",
+                    password: "literal-signing-secret",
+                    secretKey: "${MAVEN_SECRET_KEY}"
+                }
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({
+            username: "${MAVEN_USERNAME}",
+            password: "${MAVEN_PASSWORD}"
+        });
+        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("signature");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
+    });
+
     it("preserves API-level path parameter behavior in the customer SDK Config", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },

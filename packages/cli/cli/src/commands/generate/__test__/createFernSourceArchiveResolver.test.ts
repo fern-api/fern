@@ -65,6 +65,7 @@ describe("createFernSourceArchiveResolver", () => {
         };
         const request: FernSourceArchiveRequest = {
             generatorIndex: 3,
+            sdkConfigTargetIndex: 1,
             generatorInvocation,
             sdkGenApiRoute: {
                 generatorId: generatorInvocation.name,
@@ -130,11 +131,13 @@ describe("createFernSourceArchiveResolver", () => {
                 context,
                 group,
                 sdkConfigV1: {
-                    body: Buffer.from("{}"),
                     sdkName: "api",
                     sdkVersion: "1.0.0",
                     audiences: [],
-                    targets: [{ language: "typescript", clientPathParameterStyle: "wrapped" }]
+                    targets: [
+                        { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "inline" },
+                        { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "wrapped" }
+                    ]
                 }
             })([request])
         ).rejects.toMatchObject({
