@@ -161,7 +161,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
  * rendered with `typedef` rather than `using` syntax. Plain `struct`/`union`
  * aggregates are valid C and do not count as evidence of C++.
  */
-function isPlainCLibrary(root: CppNamespaceIr): boolean {
+export function isPlainCLibrary(root: CppNamespaceIr): boolean {
     return (
         root.path === "" &&
         root.namespaces.every((ns) => ns.name === "std" && isEmptyNamespace(ns)) &&

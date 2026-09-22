@@ -14,6 +14,7 @@ import {
     getShortName,
     setCurrentPageSlugPath,
     setEntityRegistry,
+    setTypedefSyntax,
     stripTemplateArgs
 } from "../../cpp/src/context.js";
 import { type CppCompoundIr, renderCompoundPage } from "../../cpp/src/renderers/CompoundPageRenderer.js";
@@ -22,7 +23,7 @@ import {
     methodAnchorId,
     renderOverloadedMethod
 } from "../../cpp/src/renderers/MethodRenderer.js";
-import { buildCppFileLinkRegistry } from "../CppDocsGenerator.js";
+import { buildCppFileLinkRegistry, isPlainCLibrary } from "../CppDocsGenerator.js";
 import { renderClassDetailed } from "../renderers/ClassRenderer.js";
 import { renderFunctionDetailed, renderMethodDetailed, renderProperty } from "../renderers/FunctionRenderer.js";
 import type { CppClassIr, CppFunctionIr, CppLibraryDocsIr, CppNamespaceIr } from "../types/CppLibraryDocsIr.js";
@@ -566,6 +567,7 @@ function renderCppSymbol(ir: CppLibraryDocsIr, baseSlug: string, request: Librar
             : new Map<string, string>();
     setEntityRegistry(registry, { valuesAreLinks: true });
     setCurrentPageSlugPath(undefined);
+    setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
     try {
         let body: string;
         switch (symbol.kind) {
@@ -589,5 +591,6 @@ function renderCppSymbol(ir: CppLibraryDocsIr, baseSlug: string, request: Librar
         return { mdx, anchorIds: collectEmittedAnchorIds(mdx) };
     } finally {
         clearEntityRegistry();
+        setTypedefSyntax("cpp");
     }
 }

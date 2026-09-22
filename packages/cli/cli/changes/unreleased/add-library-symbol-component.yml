@@ -12,4 +12,5 @@
     generated reference pages wherever the library is mounted in the navigation.
     Python symbols may be referenced by their public re-export path (e.g. `pkg.Client` for a class
     defined in `pkg._impl` and re-exported from `pkg/__init__.py`).
+    Typedefs embedded from a plain-C library use `typedef` syntax, matching the generated pages.
   type: feat

@@ -520,7 +520,53 @@ describe("renderLibrarySymbol (cpp)", () => {
         });
         expect(result.anchorIds).toEqual(["cuoptintt"]);
         expect(result.mdx.startsWith("### `cuopt_int_t` [#cuoptintt]")).toBe(true);
+        expect(result.mdx).toContain("using cuopt_int_t = int32_t;");
         expect(result.mdx).toContain("The integer type used by the solver.");
+    });
+
+    it("renders typedefs of a plain-C library with typedef syntax", () => {
+        const ir: CppLibraryDocsIr = {
+            ...cppIr,
+            rootNamespace: {
+                ...cppNamespace,
+                functions: [cppFunction({})],
+                typedefs: [
+                    cppTypedef,
+                    {
+                        ...cppTypedef,
+                        name: "cuOptCallback",
+                        path: "cuOptCallback",
+                        typeInfo: {
+                            parts: [],
+                            display: "void(*)(const cuopt_int_t *solution, void *user_data)",
+                            resolvedPath: undefined,
+                            basePath: undefined
+                        }
+                    }
+                ],
+                namespaces: []
+            }
+        };
+        const alias = renderLibrarySymbol(
+            { ...persistedCpp, ir },
+            { name: "cuopt_int_t", heading: 3, members: undefined, linkToGeneratedPages: true }
+        );
+        expect(alias.mdx).toContain("typedef int32_t cuopt_int_t;");
+        expect(alias.mdx).not.toContain("using ");
+
+        const callback = renderLibrarySymbol(
+            { ...persistedCpp, ir },
+            { name: "cuOptCallback", heading: 3, members: undefined, linkToGeneratedPages: true }
+        );
+        expect(callback.mdx).toContain("typedef void (*cuOptCallback)(const cuopt_int_t *solution, void *user_data);");
+
+        const cpp = renderLibrarySymbol(persistedCpp, {
+            name: "cuopt_int_t",
+            heading: 3,
+            members: undefined,
+            linkToGeneratedPages: true
+        });
+        expect(cpp.mdx).toContain("using cuopt_int_t = int32_t;");
     });
 
     it("renders a macro", () => {
