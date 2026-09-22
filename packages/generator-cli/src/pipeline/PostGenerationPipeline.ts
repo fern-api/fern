@@ -18,8 +18,11 @@ import type {
     PipelineContext,
     PipelineResult,
     ReplayStepResult,
+    StepResult,
     VerificationStepResult
 } from "./types";
+
+const STEP_HEARTBEAT_INTERVAL_MS = 30_000;
 
 export class PostGenerationPipeline {
     private steps: BaseStep[] = [];
@@ -143,8 +146,24 @@ export class PostGenerationPipeline {
         };
 
         for (const step of this.steps) {
+            this.logger.info(`Pipeline step '${step.name}' starting`);
+            const startedAt = Date.now();
+            const heartbeat = setInterval(
+                () =>
+                    this.logger.info(
+                        `Pipeline step '${step.name}' still running (${Math.round((Date.now() - startedAt) / 1000)}s elapsed)`
+                    ),
+                STEP_HEARTBEAT_INTERVAL_MS
+            );
+            heartbeat.unref();
+
             try {
-                const stepResult = await step.execute(pipelineContext);
+                let stepResult: StepResult;
+                stepResult = await step.execute(pipelineContext);
+                const elapsedMs = Date.now() - startedAt;
+                this.logger.info(
+                    `Pipeline step '${step.name}' finished in ${elapsedMs}ms (success=${stepResult.success})`
+                );
 
                 if (step.name === "generationCommit") {
                     const gcResult = stepResult as GenerationCommitStepResult;
@@ -193,6 +212,8 @@ export class PostGenerationPipeline {
                 result.success = false;
                 result.errors = result.errors ?? [];
                 const errorMessage = extractErrorMessage(error);
+                const elapsedMs = Date.now() - startedAt;
+                this.logger.error(`Pipeline step '${step.name}' threw after ${elapsedMs}ms: ${errorMessage}`);
                 result.errors.push(`${step.name} step error: ${errorMessage}`);
                 // Defense-in-depth: an unhandled throw inside VerificationStep should still
                 // abort the pipeline so a broken SDK never makes it to GithubStep, mirroring
@@ -200,6 +221,8 @@ export class PostGenerationPipeline {
                 if (step.name === "verify") {
                     break;
                 }
+            } finally {
+                clearInterval(heartbeat);
             }
         }
 
