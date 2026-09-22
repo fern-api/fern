@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info:
+  title: AllOf Required Inherited Property Test
+  version: 1.0.0
+  description: |
+    A property listed in any allOf branch's `required` is required on the composed
+    type, even when a different branch defines it. Combined with `nullable: true`
+    the property becomes required-nullable and must round-trip `null`.
+servers:
+  - url: https://api.example.com
+paths:
+  /transactions/get:
+    post:
+      summary: Get transactions
+      operationId: getTransactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionsGetRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionsGetResponse"
+components:
+  schemas:
+    TransactionsGetRequest:
+      type: object
+      properties:
+        access_token:
+          type: string
+      required:
+        - access_token
+    TransactionsGetResponse:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
+        plants:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlantRecord"
+      required:
+        - transactions
+        - plants
+    TransactionBase:
+      type: object
+      description: Defines nullable properties without requiring them.
+      properties:
+        transaction_id:
+          type: string
+        pending:
+          type: boolean
+        date:
+          type: string
+          format: date
+        pending_transaction_id:
+          type: string
+          nullable: true
+        account_owner:
+          type: string
+          nullable: true
+        merchant_name:
+          type: string
+          nullable: true
+        iso_currency_code:
+          type: string
+          nullable: true
+      required:
+        - transaction_id
+        - pending
+        - date
+        - iso_currency_code
+    Transaction:
+      description: |
+        Requires `account_owner` and `pending_transaction_id` without defining them;
+        both are defined (nullable, not required) on `TransactionBase`.
+        `merchant_name` is required in no branch and stays optional.
+      allOf:
+        - $ref: "#/components/schemas/TransactionBase"
+        - type: object
+          properties:
+            authorized_date:
+              type: string
+              format: date
+              nullable: true
+            transaction_code:
+              type: string
+              nullable: true
+            category:
+              type: string
+          required:
+            - account_owner
+            - pending_transaction_id
+            - authorized_date
+            - transaction_code
+    Identifiable:
+      type: object
+      properties:
+        id:
+          type: string
+        external_ref:
+          type: string
+          nullable: true
+        note:
+          type: string
+          nullable: true
+      required:
+        - id
+    PlantBase:
+      description: Middle of a three-level allOf chain; defines nothing required.
+      allOf:
+        - $ref: "#/components/schemas/Identifiable"
+        - type: object
+          properties:
+            species:
+              type: string
+              nullable: true
+            watering_frequency:
+              type: string
+    PlantRecord:
+      description: |
+        Grandchild requiring `external_ref` (defined on the grandparent) and
+        `species` (defined on the parent). `note` and `watering_frequency` stay optional.
+      allOf:
+        - $ref: "#/components/schemas/PlantBase"
+        - type: object
+          properties:
+            planted_at:
+              type: string
+              format: date
+          required:
+            - external_ref
+            - species

@@ -330,7 +330,7 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllParentSchemasToInline({
+export function getAllParentSchemasToInline({
     property,
     schemaId,
     context,

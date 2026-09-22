@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix OpenAPI `allOf` required-ness when a branch lists a property in `required` that is defined
+    only by another (parent) branch. The property is now required on the composed type, so a
+    `nullable: true` property becomes required-nullable and round-trips `null` in generated SDKs.
+    Multi-level `allOf` chains are handled; properties required in no branch stay optional.
+  type: fix

@@ -9,7 +9,7 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader.js";
 import { buildPathParameter } from "./buildPathParameter.js";
 import { buildQueryParameter } from "./buildQueryParameter.js";
-import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
+import { getAllParentSchemasToInline, getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
 import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { State } from "./State.js";
@@ -764,15 +764,38 @@ function getRequest({
             }
         }
 
+        // Determine which schemas need to be inlined due to property conflicts
+        const schemasToInline = new Set<SchemaId>();
+        const propertiesToSetToUnknown = new Set<string>();
+        for (const allOfPropertyConflict of resolvedSchema.allOfPropertyConflicts) {
+            allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
+            if (allOfPropertyConflict.conflictingTypeSignatures) {
+                propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
+            }
+        }
+
         const properties = Object.fromEntries(
             resolvedSchema.properties
                 .filter((property) => {
-                    if (property.readonly == null) {
+                    if (property.readonly != null) {
+                        const writeEndpoint = isWriteMethod(endpoint.method);
+                        if (writeEndpoint && property.readonly) {
+                            return false;
+                        }
+                    }
+                    const conflicts = Object.entries(property.conflict);
+                    if (conflicts.every(([_, conflict]) => !conflict.differentSchema)) {
                         return true;
                     }
-                    const writeEndpoint = isWriteMethod(endpoint.method);
-                    if (writeEndpoint && property.readonly) {
-                        return false;
+                    for (const [schemaId] of conflicts) {
+                        for (const schemaToInline of getAllParentSchemasToInline({
+                            property: property.key,
+                            schemaId,
+                            context,
+                            namespace
+                        })) {
+                            schemasToInline.add(schemaToInline);
+                        }
                     }
                     return true;
                 })
@@ -839,16 +862,6 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        // Determine which schemas need to be inlined due to property conflicts
-        const schemasToInline = new Set<SchemaId>();
-        const propertiesToSetToUnknown = new Set<string>();
-        for (const allOfPropertyConflict of resolvedSchema.allOfPropertyConflicts) {
-            allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
-            if (allOfPropertyConflict.conflictingTypeSignatures) {
-                propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
-            }
-        }
-
         // Build extended schemas, skipping those that need to be inlined
         const extendedSchemas: string[] = [];
         for (const referencedSchema of resolvedSchema.allOf) {
