@@ -13,17 +13,24 @@ const AGENT_ENV_VARS = [
 ];
 
 describe("detectCodingAgent", () => {
-    let originalEnv: NodeJS.ProcessEnv;
+    const originalValues = new Map<string, string | undefined>();
 
     beforeEach(() => {
-        originalEnv = { ...process.env };
         for (const name of AGENT_ENV_VARS) {
+            originalValues.set(name, process.env[name]);
             delete process.env[name];
         }
     });
 
     afterEach(() => {
-        process.env = originalEnv;
+        for (const name of AGENT_ENV_VARS) {
+            const value = originalValues.get(name);
+            if (value == null) {
+                delete process.env[name];
+            } else {
+                process.env[name] = value;
+            }
+        }
     });
 
     it("returns undefined when no agent env vars are set", () => {
