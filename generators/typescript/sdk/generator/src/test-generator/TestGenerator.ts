@@ -902,6 +902,16 @@ export function ${functionName}(server: MockServer): void {
                     minimalProperties[clientSecretPropertyName] = code`"test_client_secret"`;
                 }
 
+                // The generated OAuthAuthProvider always sends grant_type (either the literal
+                // value or "client_credentials" for a plain string), so the mock must expect it
+                // even when the example omits it.
+                if (!("grant_type" in minimalProperties)) {
+                    const grantTypeValue = this.getSynthesizedGrantTypeValue({ requestProperties, context });
+                    if (grantTypeValue != null) {
+                        minimalProperties["grant_type"] = code`${JSON.stringify(grantTypeValue)}`;
+                    }
+                }
+
                 return code`${literalOf(minimalProperties)}`;
             },
             reference: () => {
@@ -911,6 +921,27 @@ export function ${functionName}(server: MockServer): void {
                 return undefined;
             }
         });
+    }
+
+    private getSynthesizedGrantTypeValue({
+        requestProperties,
+        context
+    }: {
+        requestProperties: FernIr.OAuthAccessTokenRequestProperties;
+        context: FileContext;
+    }): string | undefined {
+        const grantTypeProperty = (requestProperties.customProperties ?? []).find(
+            (customProperty) => getWireValue(customProperty.property.name) === "grant_type"
+        );
+        if (grantTypeProperty == null) {
+            return undefined;
+        }
+        const resolvedType = context.type.resolveTypeReference(grantTypeProperty.property.valueType);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            const literal = resolvedType.container.literal;
+            return literal.type === "string" ? literal.string : undefined;
+        }
+        return "client_credentials";
     }
 
     private getAuthRequestParameters({ shape }: FernIr.ExampleTypeReference): Record<string, Code> {
