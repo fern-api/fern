@@ -174,6 +174,58 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    it("maps SDK Config import settings to the Fern importer settings", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Sample API\n  version: 1.0.0\npaths: {}\n"
+        );
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "sample-sdk",
+                source: {
+                    apiImportSettings: {
+                        respectReadonlySchemas: true,
+                        discriminatedUnionV2: true,
+                        undiscriminatedUnionsWithLiterals: true,
+                        inlineAllOfSchemas: true,
+                        resolveSchemaCollisions: true,
+                        asyncApiMessageNaming: "v2"
+                    },
+                    specs: [
+                        {
+                            id: "sample-api",
+                            type: "openapi",
+                            path: "./openapi.yml",
+                            apiImportSettings: { discriminatedUnionV2: false }
+                        }
+                    ]
+                },
+                targets: [{ language: "python", output: { delivery: "files" } }]
+            }),
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        const spec = workspace.allSpecs[0];
+        if (spec?.type !== "openapi") {
+            throw new Error("Expected an OpenAPI specification");
+        }
+        expect(spec.settings).toMatchObject({
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: false,
+            shouldUseUndiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiNaming: "v2"
+        });
+        await cleanup();
+    });
+
     it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
         vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
             openapi: "3.0.0",
