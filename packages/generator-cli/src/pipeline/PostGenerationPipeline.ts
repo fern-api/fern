@@ -158,8 +158,7 @@ export class PostGenerationPipeline {
             heartbeat.unref();
 
             try {
-                let stepResult: StepResult;
-                stepResult = await step.execute(pipelineContext);
+                const stepResult: StepResult = await step.execute(pipelineContext);
                 const elapsedMs = Date.now() - startedAt;
                 this.logger.info(
                     `Pipeline step '${step.name}' finished in ${elapsedMs}ms (success=${stepResult.success})`
