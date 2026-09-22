@@ -2931,6 +2931,15 @@
             },
             "show-nav-availability-badges": {
               "type": "boolean"
+            },
+            "breadcrumbs": {
+              "type": "object",
+              "properties": {
+                "current-page": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false

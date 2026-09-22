@@ -1,5 +1,6 @@
 import {
     type AbstractAPIWorkspace,
+    type FernDefinition,
     type FernWorkspace,
     getOpenAPISettings,
     type IdentifiableSource,
@@ -29,17 +30,20 @@ export interface ResolvedMigrationSourceSpec {
 export interface SourceDerivedApiFields {
     auth: boolean;
     environments: boolean;
+    headerNames: string[];
 }
 
 export function identifySourceDerivedApiFields({
     workspace,
-    groups
+    groups,
+    definition
 }: {
     workspace: AbstractAPIWorkspace<unknown>;
     groups: generatorsYml.GeneratorGroup[];
+    definition: FernDefinition;
 }): SourceDerivedApiFields {
     if (workspace.type !== "oss") {
-        return { auth: false, environments: false };
+        return { auth: false, environments: false, headerNames: [] };
     }
 
     const api = workspace.generatorsConfiguration?.api;
@@ -52,10 +56,24 @@ export function identifySourceDerivedApiFields({
             )
         );
     const hasConfiguredEnvironments = api?.environments != null || api?.["default-environment"] != null;
+    const hasConfiguredHeaders =
+        api?.headers != null ||
+        groups.some((group) => group.generators.some((generator) => generator.apiOverride?.headers != null));
+    // OSS conversion always defines this non-enumerable metadata. If it is absent, a clone or spread discarded the
+    // provenance, so fail explicitly instead of silently duplicating source-derived headers again.
+    const sourceDerivedGlobalHeaderNames = definition.sourceDerivedGlobalHeaderNames;
+    if (!hasConfiguredHeaders && sourceDerivedGlobalHeaderNames == null) {
+        throw new CliError({
+            message:
+                "Could not determine global-header provenance for the resolved API definition. Reload the workspace before running fern sdk migrate.",
+            code: CliError.Code.InternalError
+        });
+    }
 
     return {
         auth: !hasConfiguredAuth,
-        environments: !hasConfiguredEnvironments
+        environments: !hasConfiguredEnvironments,
+        headerNames: hasConfiguredHeaders ? [] : (sourceDerivedGlobalHeaderNames ?? [])
     };
 }
 
