@@ -11,6 +11,7 @@ import { validateFernSdkGenApiPublishTargets } from "@fern-api/remote-workspace-
 import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 
+import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
 import { sanitizeSdkConfigPublishCredentials } from "./sdkConfigPublishCredentials.js";
 
 export interface LoadedSdkConfigV1 {
@@ -138,14 +139,6 @@ function requireSingleTarget<T>(targets: T[], index: number): T {
         throw new Error(`SDK Config v1 target ${index} did not survive validation exactly once`);
     }
     return target;
-}
-
-function getDuplicateTargetLanguages(targets: SdkConfigV1["targets"]): Set<string> {
-    const counts = new Map<string, number>();
-    for (const target of targets) {
-        counts.set(target.language, (counts.get(target.language) ?? 0) + 1);
-    }
-    return new Set([...counts].filter(([, count]) => count > 1).map(([language]) => language));
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

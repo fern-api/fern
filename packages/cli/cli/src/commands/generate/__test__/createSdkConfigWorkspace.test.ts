@@ -181,21 +181,39 @@ describe("createSdkConfigWorkspace", () => {
             "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
         );
 
+        const firstConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "typescript", output: { delivery: "files" } }]
+        });
+        const secondConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "typescript", output: { delivery: "files" } }]
+        });
+        const firstTarget = firstConfig.targets[0];
+        const secondTarget = secondConfig.targets[0];
+        if (firstTarget == null || secondTarget == null) {
+            throw new Error("Expected individually validated SDK Config targets");
+        }
+
         const { workspace, cleanup } = await createSdkConfigWorkspace({
-            sdkConfig: parseSdkConfigV1({
-                schemaVersion: "sdk-config/v1",
-                sdkName: "payments",
-                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
-                api: {},
-                client: {},
-                package: {},
-                docs: {},
-                generation: {},
-                targets: [
-                    { language: "typescript", output: { delivery: "files" } },
-                    { language: "typescript", output: { delivery: "files" } }
-                ]
-            }),
+            sdkConfig: {
+                ...firstConfig,
+                targets: [firstTarget, secondTarget]
+            },
             absolutePathToConfig: path.join(directory, "sdk-config.yml"),
             cliVersion: "0.0.0",
             context: createMockTaskContext()

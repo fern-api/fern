@@ -10,6 +10,8 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
+import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
+
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
 
@@ -161,14 +163,6 @@ function createGeneratorInvocation({
         readme: undefined,
         settings: undefined
     };
-}
-
-function getDuplicateTargetLanguages(targets: SdkConfigV1["targets"]): Set<string> {
-    const counts = new Map<string, number>();
-    for (const target of targets) {
-        counts.set(target.language, (counts.get(target.language) ?? 0) + 1);
-    }
-    return new Set([...counts].filter(([, count]) => count > 1).map(([language]) => language));
 }
 
 async function createSpec({

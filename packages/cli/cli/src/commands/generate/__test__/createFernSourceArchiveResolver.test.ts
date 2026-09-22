@@ -105,6 +105,7 @@ describe("createFernSourceArchiveResolver", () => {
         };
         const request: FernSourceArchiveRequest = {
             generatorIndex: 1,
+            sdkConfigTargetIndex: 0,
             generatorInvocation,
             sdkGenApiRoute: {
                 generatorId: generatorInvocation.name,
@@ -148,6 +149,70 @@ describe("createFernSourceArchiveResolver", () => {
             expect.objectContaining({ audiences: { type: "select", audiences: [] } })
         );
         expect(validateSdkConfigImportSettings).toHaveBeenCalledWith([], {
+            clientPathParameterStyle: "inline"
+        });
+    });
+
+    it("uses the selected target path parameter style and falls back to the root style", async () => {
+        const context = createMockTaskContext();
+        const generatorInvocation = makeGenerator();
+        const workspace = new OSSWorkspace({
+            allSpecs: [],
+            specs: [],
+            generatorsConfiguration: undefined,
+            workspaceName: "openapi-api",
+            cliVersion: "0.0.0",
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/openapi-api")
+        });
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [generatorInvocation],
+            reviewers: undefined
+        };
+        const route = {
+            generatorId: generatorInvocation.name,
+            language: "typescript" as const,
+            requestedVersion: generatorInvocation.version,
+            cutoverVersion: "4.0.0",
+            configKind: "sdk-config-v1" as const,
+            payloadKind: "sdk-config-v1" as const
+        };
+        const requests: FernSourceArchiveRequest[] = [
+            { generatorIndex: 0, sdkConfigTargetIndex: 1, generatorInvocation, sdkGenApiRoute: route },
+            { generatorIndex: 1, generatorInvocation, sdkGenApiRoute: route }
+        ];
+        vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockResolvedValue({
+            archive: {
+                buffer: Buffer.alloc(0),
+                manifest: { specs: [] },
+                specIndexesByGeneratorIndex: new Map([
+                    [0, []],
+                    [1, []]
+                ])
+            },
+            errorsByGeneratorIndex: new Map()
+        });
+
+        await createFernSourceArchiveResolver({
+            workspace,
+            context,
+            group,
+            sdkConfigV1: {
+                sdkName: "api",
+                sdkVersion: "1.0.0",
+                clientPathParameterStyle: "inline",
+                targets: [
+                    { body: Buffer.from("{}"), language: "typescript" },
+                    { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "wrapped" }
+                ]
+            }
+        })(requests);
+
+        expect(validateSdkConfigImportSettings).toHaveBeenNthCalledWith(1, [], {
+            clientPathParameterStyle: "wrapped"
+        });
+        expect(validateSdkConfigImportSettings).toHaveBeenNthCalledWith(2, [], {
             clientPathParameterStyle: "inline"
         });
     });
