@@ -12,7 +12,7 @@
 
 import type { CppClassIr, CppFunctionIr, CppTypeInfo } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, type RenderContext, stripTemplateArgs } from "../context.js";
-import { isTypeRef, resolveCompoundRef, resolveMemberRefLink } from "./DescriptionRenderer.js";
+import { buildScopedLinkPath, isTypeRef, resolveCompoundRef, resolveMemberRefLink } from "./DescriptionRenderer.js";
 import { isSfinaeParam } from "./ParamRenderer.js";
 import { formatTemplateParam } from "./shared.js";
 
@@ -198,7 +198,7 @@ export function extractLinksFromTypeText(text: string, excludeNames: Iterable<st
         if (/^\s*[,)[=]/.test(rest)) {
             continue;
         }
-        const linkPath = buildLinkPath(name);
+        const linkPath = buildScopedLinkPath(name);
         if (linkPath && linkPath !== ".") {
             links.set(name, linkPath);
         }

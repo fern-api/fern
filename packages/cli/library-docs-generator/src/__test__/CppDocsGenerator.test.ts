@@ -1071,6 +1071,72 @@ describe("generateCpp()", () => {
         expect(page).toContain("**Returns:** see [error_t](../typedefs/errort)");
     });
 
+    it("prefers the enclosing namespace over a same-named global symbol for unqualified refs", () => {
+        const makeErrorTypedef = (path: string): CppTypedefIr => ({
+            name: "error_t",
+            path,
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: path }] })
+        });
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "acme::Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const callback: CppTypedefIr = {
+            name: "Callback",
+            path: "acme::Callback",
+            typeInfo: {
+                parts: ["void(*)(Handle value)"],
+                display: "void(*)(Handle value)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: undefined
+        };
+        const open = makeFunction({
+            name: "open",
+            path: "acme::open",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Open." }],
+                returns: [
+                    { type: "text", text: "see " },
+                    { type: "ref", text: "error_t", refid: "group__ACME_1ga1", kindref: "member" }
+                ]
+            })
+        });
+        const acme = makeNamespace({
+            name: "acme",
+            path: "acme",
+            functions: [open],
+            typedefs: [makeErrorTypedef("acme::error_t"), handle, callback]
+        });
+        const ir = makeIr(
+            makeNamespace({ typedefs: [makeErrorTypedef("error_t")], namespaces: [acme] }),
+            { packageName: "acme" },
+            [makeGroup({ id: "group__ACME", name: "ACME", title: "ACME", functions: [open] })]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "acme" });
+
+        const typedefPages = readdirSync(join(tmpDir, "typedefs"));
+        const acmeErrorPage = typedefPages.find(
+            (f) =>
+                f.startsWith("error_t") && readFileSync(join(tmpDir, "typedefs", f), "utf-8").includes("acme::error_t")
+        );
+        expect(acmeErrorPage).toBeDefined();
+        const acmeErrorSlug = (acmeErrorPage ?? "").replace(/\.mdx$/, "").replace("_", "");
+        const openPage = readFileSync(join(tmpDir, "functions/open.mdx"), "utf-8");
+        expect(openPage).toContain(`**Returns:** see [error_t](../typedefs/${acmeErrorSlug})`);
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/Callback.mdx"), "utf-8");
+        expect(callbackPage).toContain('<CodeBlock links={{"Handle": "handle"}}>');
+    });
+
     it("ignores the empty `std` namespace Doxygen emits for C headers", () => {
         const handle: CppTypedefIr = {
             name: "Handle",
