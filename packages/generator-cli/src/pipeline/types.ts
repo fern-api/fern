@@ -1,3 +1,5 @@
+import { ContainerRunner } from "@fern-api/core-utils";
+
 export interface PipelineConfig {
     outputDir: string;
 
@@ -105,7 +107,7 @@ export interface FernignoreStepConfig {
 export interface VerifyStepConfig {
     enabled: boolean;
     /** Container runtime to use. Defaults to "docker". */
-    runner?: "docker" | "podman";
+    runner?: ContainerRunner;
 }
 
 export interface GithubStepConfig {
