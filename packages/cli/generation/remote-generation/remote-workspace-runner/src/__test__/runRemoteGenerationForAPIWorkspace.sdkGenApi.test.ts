@@ -10,12 +10,12 @@ vi.mock("../runRemoteGenerationForGenerator.js", () => ({
     runRemoteGenerationForGenerator: runGenerator
 }));
 
+import type { FernSdkConfigV1Payload } from "../fernSdkGenApi.js";
 import {
     createFernSdkGenApiPublishCredentials,
     createFernSdkGenApiRequest,
     FernSdkGenApiBatch
 } from "../fernSdkGenApi.js";
-import type { FernSdkConfigV1Payload } from "../fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive } from "../fernSdkGenApiSourceArchive.js";
 import {
     prepareFernSdkGenApiRoutes,
@@ -345,9 +345,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             { registry: "npm" },
             "credential registry pypi does not match requested registry npm"
         ]
-    ] as const)(
-        "rejects SDK Config %s before source or HTTP work",
-        async (_name, publishCredential, publish, expectedError) => {
+    ] as const)("rejects SDK Config %s before source or HTTP work", async (_name, publishCredential, publish, expectedError) => {
         const getSpecsTarGzBuffer = vi.fn();
         const post = vi.spyOn(axios, "post");
         const get = vi.spyOn(axios, "get");
@@ -394,13 +392,12 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                     ]
                 }
             })
-            ).rejects.toThrow(expectedError);
+        ).rejects.toThrow(expectedError);
 
-            expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
-            expect(post).not.toHaveBeenCalled();
-            expect(get).not.toHaveBeenCalled();
-        }
-    );
+        expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
+        expect(post).not.toHaveBeenCalled();
+        expect(get).not.toHaveBeenCalled();
+    });
 
     it("keeps normalized credential rotation out of request identity", () => {
         const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
@@ -417,12 +414,16 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             });
         const first = createRequest();
         const rotated = createRequest();
-        const firstCredentials = createFernSdkGenApiPublishCredentials(first, [generator], [
-            { registry: "npm", token: "first-secret" }
-        ]);
-        const rotatedCredentials = createFernSdkGenApiPublishCredentials(rotated, [generator], [
-            { registry: "npm", token: "rotated-secret" }
-        ]);
+        const firstCredentials = createFernSdkGenApiPublishCredentials(
+            first,
+            [generator],
+            [{ registry: "npm", token: "first-secret" }]
+        );
+        const rotatedCredentials = createFernSdkGenApiPublishCredentials(
+            rotated,
+            [generator],
+            [{ registry: "npm", token: "rotated-secret" }]
+        );
 
         expect(rotated.credentialSetId).toBe(first.credentialSetId);
         expect(rotated.idempotencyKey).toBe(first.idempotencyKey);

@@ -19,25 +19,25 @@ export function sanitizeSdkConfigPublishCredentials(
         return { sanitizedInput: input, credentials: [] };
     }
     const rootOutput = sanitizeOutput(input.output);
-    const targets = input.targets.map((target) => {
+    const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
-            return target;
+            return { target, credential: undefined };
         }
         const sanitized = sanitizeOutput(target.output);
-        return sanitized.output === target.output ? target : { ...target, output: sanitized.output };
-    });
-    const credentials = input.targets.map((target) => {
         const targetOutput = isRecord(target) ? target.output : undefined;
         const output = targetOutput ?? input.output;
-        return isPreview ? undefined : extractPublishCredential(output);
+        return {
+            target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
+            credential: isPreview ? undefined : extractPublishCredential(output)
+        };
     });
     return {
         sanitizedInput: {
             ...input,
             ...(rootOutput.output === input.output ? {} : { output: rootOutput.output }),
-            targets
+            targets: sanitizedTargets.map(({ target }) => target)
         },
-        credentials
+        credentials: sanitizedTargets.map(({ credential }) => credential)
     };
 }
 
@@ -102,21 +102,22 @@ function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredenti
     }
     if (registry === "maven") {
         const signature = fields.signature;
+        if (signature != null && !isRecord(signature)) {
+            throw new Error("Direct maven publication signature must be an object");
+        }
         return {
             registry,
             username: resolveCredentialValue(registry, "username", fields.username),
             password: resolveCredentialValue(registry, "password", fields.password),
             ...(signature == null
                 ? {}
-                : isRecord(signature)
-                  ? {
-                        signature: {
-                            keyId: resolveCredentialValue(registry, "signature.keyId", signature.keyId),
-                            password: resolveCredentialValue(registry, "signature.password", signature.password),
-                            secretKey: resolveCredentialValue(registry, "signature.secretKey", signature.secretKey)
-                        }
-                    }
-                  : { signature: {} })
+                : {
+                      signature: {
+                          keyId: resolveCredentialValue(registry, "signature.keyId", signature.keyId),
+                          password: resolveCredentialValue(registry, "signature.password", signature.password),
+                          secretKey: resolveCredentialValue(registry, "signature.secretKey", signature.secretKey)
+                      }
+                  })
         };
     }
     switch (registry) {
@@ -201,7 +202,7 @@ function validateCredentialFieldShape(
                 ]);
     const unknown = Object.keys(publish).find((key) => !allowed.has(key));
     if (unknown != null) {
-        throw new Error(`Direct ${registry} publication does not support credential field ${unknown}`);
+        throw new Error(`Direct ${registry} publication does not support option ${unknown}`);
     }
     const allowedCredentialFields =
         registry === "npm" || registry === "crates" ? new Set(["token"]) : new Set(["username", "password"]);

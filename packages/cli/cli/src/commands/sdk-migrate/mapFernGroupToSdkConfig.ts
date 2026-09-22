@@ -92,9 +92,7 @@ function sanitizeMigratedPublishIntent<
         password?: unknown;
         signature?: unknown;
     }
->(
-    value: Publish
-): Omit<Publish, "credentials" | "token" | "username" | "password" | "signature"> {
+>(value: Publish): Omit<Publish, "credentials" | "token" | "username" | "password" | "signature"> {
     const {
         credentials: _credentials,
         token: _token,

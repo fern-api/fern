@@ -104,7 +104,7 @@ describe("createFernSourceArchiveResolver", () => {
             reviewers: undefined
         };
         const request: FernSourceArchiveRequest = {
-            generatorIndex: 3,
+            generatorIndex: 1,
             generatorInvocation,
             sdkGenApiRoute: {
                 generatorId: generatorInvocation.name,
@@ -120,9 +120,9 @@ describe("createFernSourceArchiveResolver", () => {
             archive: {
                 buffer: Buffer.alloc(0),
                 manifest: { specs: [] },
-                specIndexesByGeneratorIndex: new Map([[3, []]])
+                specIndexesByGeneratorIndex: new Map([[1, []]])
             },
-            errorsByGeneratorIndex: new Map([[3, preparationError]])
+            errorsByGeneratorIndex: new Map([[1, preparationError]])
         });
 
         await expect(
@@ -141,14 +141,14 @@ describe("createFernSourceArchiveResolver", () => {
                 }
             })([request])
         ).rejects.toMatchObject({
-            message: "Generator index 3 produced both a source archive and a source preparation error",
+            message: "Generator index 1 produced both a source archive and a source preparation error",
             cause: preparationError
         });
         expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
             expect.objectContaining({ audiences: { type: "select", audiences: [] } })
         );
         expect(validateSdkConfigImportSettings).toHaveBeenCalledWith([], {
-            clientPathParameterStyle: "wrapped"
+            clientPathParameterStyle: "inline"
         });
     });
 });

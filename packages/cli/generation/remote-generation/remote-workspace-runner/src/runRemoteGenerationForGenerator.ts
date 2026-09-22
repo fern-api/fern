@@ -336,10 +336,7 @@ export async function runRemoteGenerationForGenerator({
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: createSdkConfigTargetPayload(sdkConfigTarget),
                     // Preview must never retain a publishing destination from SDK Config.
-                    requestedOutput: resolveSdkConfigRequestedOutput(
-                        sdkConfigTarget.requestedOutput,
-                        isPreview
-                    ),
+                    requestedOutput: resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview),
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }
                         : {}),

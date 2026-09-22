@@ -99,7 +99,9 @@ export function validateFernSdkGenApiPublishTargets(inputs: FernSdkGenApiPublish
         ];
     });
     if (resolved.length > MAX_PUBLISH_CREDENTIAL_TARGETS) {
-        throw new Error(`sdk-gen-api supports at most ${MAX_PUBLISH_CREDENTIAL_TARGETS} direct publish credential targets`);
+        throw new Error(
+            `sdk-gen-api supports at most ${MAX_PUBLISH_CREDENTIAL_TARGETS} direct publish credential targets`
+        );
     }
     const body = Buffer.from(
         JSON.stringify({

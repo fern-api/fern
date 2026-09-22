@@ -56,6 +56,7 @@ export async function createSdkConfigWorkspace({
         for (const spec of sdkConfig.source.specs) {
             specs.push(await createSpec({ spec, sdkConfig, configDirectory, context, temporaryDirectories }));
         }
+        const duplicateLanguages = getDuplicateTargetLanguages(sdkConfig.targets);
         const group: generatorsYml.GeneratorGroup = {
             groupName: SDK_CONFIG_GROUP,
             audiences:
@@ -77,7 +78,8 @@ export async function createSdkConfigWorkspace({
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
                     configDirectory,
-                    sdkConfigTargetIndex: targetIndex
+                    sdkConfigTargetIndex: targetIndex,
+                    hasDuplicateLanguage: duplicateLanguages.has(target.language)
                 });
             }),
             reviewers: undefined
@@ -117,7 +119,8 @@ function createGeneratorInvocation({
     language,
     output,
     configDirectory,
-    sdkConfigTargetIndex
+    sdkConfigTargetIndex,
+    hasDuplicateLanguage
 }: {
     name: string;
     version: string;
@@ -125,6 +128,7 @@ function createGeneratorInvocation({
     output: SdkConfigV1["output"];
     configDirectory: string;
     sdkConfigTargetIndex: number;
+    hasDuplicateLanguage: boolean;
 }): generatorsYml.GeneratorInvocation & { sdkConfigTargetIndex: number } {
     return {
         name,
@@ -140,7 +144,11 @@ function createGeneratorInvocation({
         absolutePathToLocalOutput:
             output?.delivery === "files"
                 ? AbsoluteFilePath.of(
-                      path.resolve(configDirectory, output.path ?? `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}`)
+                      path.resolve(
+                          configDirectory,
+                          output.path ??
+                              `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}${hasDuplicateLanguage ? `-${sdkConfigTargetIndex}` : ""}`
+                      )
                   )
                 : undefined,
         absolutePathToLocalSnippets: undefined,
@@ -153,6 +161,14 @@ function createGeneratorInvocation({
         readme: undefined,
         settings: undefined
     };
+}
+
+function getDuplicateTargetLanguages(targets: SdkConfigV1["targets"]): Set<string> {
+    const counts = new Map<string, number>();
+    for (const target of targets) {
+        counts.set(target.language, (counts.get(target.language) ?? 0) + 1);
+    }
+    return new Set([...counts].filter(([, count]) => count > 1).map(([language]) => language));
 }
 
 async function createSpec({

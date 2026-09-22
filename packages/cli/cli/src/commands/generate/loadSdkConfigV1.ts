@@ -35,6 +35,10 @@ export async function loadSdkConfigV1(configPath: string, isPreview = false): Pr
     try {
         const { sanitizedInput, credentials } = sanitizeSdkConfigPublishCredentials(input, isPreview);
         const { document, parsed } = validateAndParseSdkConfigV1(sanitizedInput);
+        if (document.targets.length !== credentials.length || parsed.targets.length !== credentials.length) {
+            throw new Error("SDK Config v1 target count changed during validation");
+        }
+        const duplicateLanguages = getDuplicateTargetLanguages(parsed.targets);
         const payload: FernSdkConfigV1Payload = {
             sdkName: parsed.sdkName,
             sdkVersion: parsed.sdkVersion,
@@ -64,15 +68,14 @@ export async function loadSdkConfigV1(configPath: string, isPreview = false): Pr
                               absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
                                   resolve(
                                       dirname(absolutePath),
-                                      output.fileName ?? `generated/${target.language}.zip`
+                                      output.fileName ??
+                                          `generated/${target.language}${duplicateLanguages.has(target.language) ? `-${index}` : ""}.zip`
                                   )
                               )
                           }
                         : {}),
                     package: { ...parsed.package, ...target.package } satisfies FernSdkGenApiPackageConfig,
-                    ...(isPreview || credentials[index] == null
-                        ? {}
-                        : { publishCredential: credentials[index] })
+                    ...(isPreview || credentials[index] == null ? {} : { publishCredential: credentials[index] })
                 };
             })
         };
@@ -103,10 +106,6 @@ function validateAndParseSdkConfigV1(input: unknown): {
     document: ReturnType<typeof validateSdkConfigV1>;
     parsed: SdkConfigV1;
 } {
-    if (!hasDuplicateTargetLanguages(input)) {
-        const document = validateSdkConfigV1(input);
-        return { document, parsed: parseSdkConfigV1(document) };
-    }
     if (!isRecord(input) || !Array.isArray(input.targets)) {
         const document = validateSdkConfigV1(input);
         return { document, parsed: parseSdkConfigV1(document) };
@@ -119,41 +118,46 @@ function validateAndParseSdkConfigV1(input: unknown): {
         const document = validateSdkConfigV1(input);
         return { document, parsed: parseSdkConfigV1(document) };
     }
+    const documentTargets = documents.map((document, index) => requireSingleTarget(document.targets, index));
+    const parsedTargets = parsedDocuments.map((document, index) => requireSingleTarget(document.targets, index));
     return {
         document: {
             ...firstDocument,
-            targets: documents.flatMap((document) => (document.targets[0] == null ? [] : [document.targets[0]]))
+            targets: documentTargets
         },
         parsed: {
             ...firstParsed,
-            targets: parsedDocuments.flatMap((document) =>
-                document.targets[0] == null ? [] : [document.targets[0]]
-            )
+            targets: parsedTargets
         }
     };
 }
 
-function hasDuplicateTargetLanguages(input: unknown): boolean {
-    if (!isRecord(input) || !Array.isArray(input.targets)) {
-        return false;
+function requireSingleTarget<T>(targets: T[], index: number): T {
+    const target = targets[0];
+    if (targets.length !== 1 || target == null) {
+        throw new Error(`SDK Config v1 target ${index} did not survive validation exactly once`);
     }
-    const languages = input.targets.flatMap((target) =>
-        isRecord(target) && typeof target.language === "string" ? [target.language] : []
-    );
-    return new Set(languages).size !== languages.length;
+    return target;
+}
+
+function getDuplicateTargetLanguages(targets: SdkConfigV1["targets"]): Set<string> {
+    const counts = new Map<string, number>();
+    for (const target of targets) {
+        counts.set(target.language, (counts.get(target.language) ?? 0) + 1);
+    }
+    return new Set([...counts].filter(([, count]) => count > 1).map(([language]) => language));
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
-function publicationValidationMetadata(
-    requestedOutput: FernSdkGenApiRequestedOutput | undefined
-): { publishRegistry?: string; publishUrl?: string } {
+function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
+    publishRegistry?: string;
+    publishUrl?: string;
+} {
     const publish =
-        requestedOutput?.type === "publish" || requestedOutput?.type === "github"
-            ? requestedOutput.publish
-            : undefined;
+        requestedOutput?.type === "publish" || requestedOutput?.type === "github" ? requestedOutput.publish : undefined;
     return publish == null
         ? {}
         : {

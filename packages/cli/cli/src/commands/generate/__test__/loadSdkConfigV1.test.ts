@@ -86,9 +86,14 @@ describe("loadSdkConfigV1", () => {
             publishCredential: credential
         });
         expect(JSON.parse(serialized).targets[0].output.publish).toEqual({ registry, url: publish.url });
-        ["npm-secret", "pypi-secret", "maven-secret", "maven-signing-secret", "maven-secret-key", "crates-secret"].forEach(
-            (secret) => expect(serialized).not.toContain(secret)
-        );
+        [
+            "npm-secret",
+            "pypi-secret",
+            "maven-secret",
+            "maven-signing-secret",
+            "maven-secret-key",
+            "crates-secret"
+        ].forEach((secret) => expect(serialized).not.toContain(secret));
     });
 
     it("creates distinct sanitized single-target bodies for duplicate-language targets", async () => {
@@ -149,6 +154,10 @@ describe("loadSdkConfigV1", () => {
             expect(JSON.stringify(body)).not.toContain("NPM_TOKEN");
         }
         expect(loaded.payload.targets[0]?.body.equals(loaded.payload.targets[1]?.body ?? Buffer.alloc(0))).toBe(false);
+        expect(loaded.payload.targets.map((target) => target.publishCredential)).toEqual([
+            { registry: "npm", token: "first-secret" },
+            { registry: "npm", token: "second-secret" }
+        ]);
         vi.stubEnv("FIRST_NPM_TOKEN", "rotated-first-secret");
         vi.stubEnv("SECOND_NPM_TOKEN", "rotated-second-secret");
         const rotated = await loadSdkConfigV1(configPath);
@@ -187,6 +196,29 @@ describe("loadSdkConfigV1", () => {
         await expect(loadSdkConfigV1(incomplete.configPath, true)).resolves.toMatchObject({
             payload: { targets: [{ requestedOutput: { type: "download" } }] }
         });
+    });
+
+    it("rejects a non-object Maven signature instead of creating an empty signature", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "java",
+            output: {
+                delivery: "files",
+                publish: { registry: "maven", username: "user", password: "password", signature: "invalid" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "Direct maven publication signature must be an object"
+        );
+    });
+
+    it("reports unsupported publish options without calling them credential fields", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            output: { delivery: "files", publish: { registry: "npm", token: "secret", tag: "next" } }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow("Direct npm publication does not support option tag");
     });
 
     it("fails on a missing direct publishing environment variable", async () => {
@@ -543,6 +575,36 @@ describe("loadSdkConfigV1", () => {
                 ]
             }
         });
+    });
+
+    it("uses target indexes for default duplicate-language ZIP filenames", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [
+                    { language: "typescript", output: { delivery: "zip" } },
+                    { language: "typescript", output: { delivery: "zip" } }
+                ]
+            })
+        );
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets.map((target) => target.absolutePathToLocalOutputArchive)).toEqual([
+            join(directory, "generated", "typescript-0.zip"),
+            join(directory, "generated", "typescript-1.zip")
+        ]);
     });
 });
 

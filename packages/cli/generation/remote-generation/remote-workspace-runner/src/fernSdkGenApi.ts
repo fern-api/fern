@@ -9,23 +9,22 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
-import path from "path";
 import { gunzipSync } from "zlib";
-import { type PublishTarget } from "./publishTarget.js";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    MAX_PUBLISH_CREDENTIALS_BYTES,
+    resolveFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishUrl,
+    validateFernSdkGenApiPublishTargets as validatePublishTargets
+} from "./directPublishCredentials.js";
 import { getSdkGenApiPreviewOutputDirectoryName } from "./previewOutputDirectory.js";
+import { type PublishTarget } from "./publishTarget.js";
+import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
     normalizeSensitiveValues,
     redactPublicationIdentifier,
     redactSensitiveValues
 } from "./redactSensitiveValues.js";
-import {
-    type FernSdkGenApiPublishCredentialSource,
-    MAX_PUBLISH_CREDENTIALS_BYTES,
-    resolveFernSdkGenApiPublishCredentialSource,
-    validateFernSdkGenApiPublishTargets as validatePublishTargets,
-    validateFernSdkGenApiPublishUrl
-} from "./directPublishCredentials.js";
-import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -719,13 +718,12 @@ export function validateFernSdkGenApiPublishTargets(
     );
 }
 
-function publicationValidationMetadata(
-    requestedOutput: FernSdkGenApiRequestedOutput | undefined
-): { publishRegistry?: string; publishUrl?: string } {
+function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
+    publishRegistry?: string;
+    publishUrl?: string;
+} {
     const publish =
-        requestedOutput?.type === "publish" || requestedOutput?.type === "github"
-            ? requestedOutput.publish
-            : undefined;
+        requestedOutput?.type === "publish" || requestedOutput?.type === "github" ? requestedOutput.publish : undefined;
     return publish == null
         ? {}
         : {

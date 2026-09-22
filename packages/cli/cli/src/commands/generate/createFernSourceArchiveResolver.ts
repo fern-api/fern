@@ -55,7 +55,10 @@ export function createFernSourceArchiveResolver({
                 }
                 const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                    const configTarget = sdkConfigV1?.targets[request.sdkConfigTargetIndex ?? request.generatorIndex];
+                    const configTarget =
+                        request.sdkConfigTargetIndex == null
+                            ? undefined
+                            : sdkConfigV1?.targets[request.sdkConfigTargetIndex];
                     validateSdkConfigImportSettings(specs, {
                         clientPathParameterStyle:
                             configTarget?.clientPathParameterStyle ?? sdkConfigV1?.clientPathParameterStyle

@@ -11,9 +11,7 @@ export function resolveSdkConfigTarget(
     return Number.isInteger(targetIndex) && targetIndex >= 0 ? sdkConfigV1.targets[targetIndex] : undefined;
 }
 
-export function createSdkConfigTargetPayload(
-    target: FernSdkConfigV1Payload["targets"][number]
-): FernSdkGenApiPayload {
+export function createSdkConfigTargetPayload(target: FernSdkConfigV1Payload["targets"][number]): FernSdkGenApiPayload {
     return {
         payloadKind: "sdk-config-v1",
         body: target.body,

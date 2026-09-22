@@ -402,9 +402,7 @@ export function prepareFernSdkGenApiRoutes({
             );
             const configuredLanguage = getFernSdkGenApiLanguage(resolved.name);
             const configuredTarget =
-                configuredLanguage == null
-                    ? undefined
-                    : sdkConfigV1?.targets[sdkConfigTargetIndex];
+                configuredLanguage == null ? undefined : sdkConfigV1?.targets[sdkConfigTargetIndex];
             if (sdkConfigV1 != null && configuredLanguage == null) {
                 throw new Error(
                     `SDK Config v1 generation only supports Fern SDK generators routed through sdk-gen-api; the selected group contains ${resolved.name}`
@@ -417,6 +415,9 @@ export function prepareFernSdkGenApiRoutes({
                 throw new Error(
                     `SDK Config v1 target ${sdkConfigTargetIndex} language ${configuredTarget.language} does not match ${configuredLanguage}`
                 );
+            }
+            if (!isPreview && configuredTarget != null) {
+                validateFernSdkGenApiPublishTargets([configuredTarget]);
             }
             if (sdkConfigV1 == null && isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
                 throw new Error(

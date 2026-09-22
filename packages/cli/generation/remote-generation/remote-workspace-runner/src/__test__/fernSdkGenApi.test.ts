@@ -54,13 +54,14 @@ vi.mock("@fern-api/core", async (importOriginal) => ({
     getIrVersionForGenerator: migrationMocks.getIrVersionForGenerator
 }));
 
-vi.mock("@fern-api/ir-migrations", async (importOriginal) => ({
-    ...(await importOriginal<typeof import("@fern-api/ir-migrations")>()),
+vi.mock("@fern-api/ir-migrations", () => ({
     migrateIntermediateRepresentationForGenerator: migrationMocks.migrateForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator: migrationMocks.migrateToVersionForGenerator
 }));
 
 beforeEach(() => {
+    contextLogger.debug.mockReset();
+    contextLogger.info.mockReset();
     migrationMocks.getIrVersionForGenerator.mockReset().mockResolvedValue(undefined);
     migrationMocks.migrateForGenerator.mockReset().mockImplementation(({ intermediateRepresentation }) =>
         Promise.resolve({
@@ -430,7 +431,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route).toBeUndefined();
         expect(result?.error).toHaveProperty(
             "message",
-            expect.stringContaining("does not contain a target for typescript")
+            expect.stringContaining("target 0 language python does not match typescript")
         );
     });
 
@@ -1091,7 +1092,12 @@ describe("isEligibleForFernSdkGenApi", () => {
                 })
             ],
             enabled: true,
-            sdkConfigV1: sdkConfigV1(),
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: { type: "publish", publish: { registry: "npm", url: registryUrl } },
+                publishCredential: { registry: "npm", token: "npm-secret" }
+            }),
             requireEnvVars: true,
             isPreview: false
         });
@@ -1579,9 +1585,9 @@ describe("isEligibleForFernSdkGenApi", () => {
                 "https://pypi.buildwithfern.com"
             )
         ).not.toThrow();
-        expect(() =>
-            validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })
-        ).toThrow("requires password");
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })).toThrow(
+            "requires password"
+        );
         expect(() =>
             validateFernSdkGenApiPublishCredentialSource({
                 registry: "maven",
@@ -1590,12 +1596,12 @@ describe("isEligibleForFernSdkGenApi", () => {
                 signature: { keyId: "key", password: "signing-secret" }
             })
         ).toThrow("requires signature.secretKey");
-        expect(() =>
-            validateFernSdkGenApiPublishCredentialSource({ registry: "npm", token: "OIDC" })
-        ).toThrow("does not support OIDC");
-        expect(() =>
-            validateFernSdkGenApiPublishCredentialSource({ registry: "nuget" })
-        ).toThrow("does not support direct nuget");
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "npm", token: "OIDC" })).toThrow(
+            "does not support OIDC"
+        );
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "nuget" })).toThrow(
+            "does not support direct nuget"
+        );
         expect(() =>
             validateFernSdkGenApiPublishCredentialSource(
                 { registry: "npm", token: "secret" },
@@ -2483,7 +2489,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: request.targets[0]?.targetId,
                         status: "failed",
-                        logs: [],
+                        logs: [{ level: "error", message: "Publisher exposed npm-secret" }],
                         publication: {
                             status: "failure",
                             publishTarget: { type: "npm", identifier: "@acme/sdk" },
