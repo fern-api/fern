@@ -850,6 +850,80 @@ describe("generateCpp()", () => {
         expect(createPage).toContain("```text showLineNumbers={false}\n  minimize c^T x\n  subject to A x <= b\n```");
     });
 
+    it("links typedef names inside function and callback signatures", () => {
+        const floatType: CppTypedefIr = {
+            name: "lib_float",
+            path: "lib_float",
+            typeInfo: { parts: ["float"], display: "float", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const handle: CppTypedefIr = {
+            name: "lib_handle",
+            path: "lib_handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const callback: CppTypedefIr = {
+            name: "lib_callback",
+            path: "lib_callback",
+            typeInfo: {
+                parts: ["void(*", ")(const lib_float *solution, lib_handle handle, void *user_data)"],
+                display: "void(*)(const lib_float *solution, lib_handle handle, void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: undefined
+        };
+        const create = makeFunction({
+            name: "lib_create",
+            path: "lib_create",
+            signature: "lib_float lib_create(lib_handle *out)",
+            returnType: {
+                parts: [{ text: "lib_float", refid: "lib_8h_1a1", kindref: "member" }],
+                display: "lib_float",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            parameters: [
+                {
+                    name: "out",
+                    typeInfo: {
+                        parts: [{ text: "lib_handle", refid: "lib_8h_1a2", kindref: "member" }, " *"],
+                        display: "lib_handle *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: undefined
+                }
+            ]
+        });
+        const ir = makeIr(makeNamespace({ typedefs: [floatType, handle, callback], functions: [create] }), {
+            packageName: "lib"
+        });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const createPage = readFileSync(join(tmpDir, "functions/lib_create.mdx"), "utf-8");
+        expect(createPage).toContain(
+            '<CodeBlock links={{"lib_handle": "../typedefs/libhandle", "lib_float": "../typedefs/libfloat"}}>'
+        );
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/lib_callback.mdx"), "utf-8");
+        expect(callbackPage).toContain('<CodeBlock links={{"lib_float": "libfloat", "lib_handle": "libhandle"}}>');
+        expect(callbackPage).toContain(
+            "typedef void (*lib_callback)(const lib_float *solution, lib_handle handle, void *user_data);"
+        );
+
+        // A typedef never links to itself, and plain underlying types stay a bare fence.
+        const handlePage = readFileSync(join(tmpDir, "typedefs/lib_handle.mdx"), "utf-8");
+        expect(handlePage).not.toContain("links=");
+    });
+
     it("keeps C++ `using` syntax when a struct carries C++-only features", () => {
         const handle: CppTypedefIr = {
             name: "Handle",
