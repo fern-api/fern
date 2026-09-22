@@ -4,6 +4,8 @@ import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
+    addCrateDependency,
+    addExtraDependencies,
     addSdkCrateToLock,
     addTypesCrateToLock,
     applyCargoTomlPatch,
@@ -187,6 +189,74 @@ describe("applyPackageIdentityPatch", () => {
         expect(() => applyPackageIdentityPatch('[lib]\nname = "x"\n', { name: "acme" })).toThrow(
             /could not find the \[package\] section/
         );
+    });
+});
+
+describe("addExtraDependencies", () => {
+    it("appends [dependencies.<name>] sub-tables right after the template's [dependencies] block", () => {
+        const patched = addExtraDependencies(
+            TEMPLATE_CARGO_TOML,
+            {
+                "google-cloud-auth": "1.16",
+                "google-cloud-iam-credentials-v1": { version: "1.12", features: ["a", "b"], defaultFeatures: false }
+            },
+            "dependencies"
+        );
+        expect(patched).toContain('\n[dependencies.google-cloud-auth]\nversion = "1.16"\n');
+        expect(patched).toContain(
+            '\n[dependencies.google-cloud-iam-credentials-v1]\nversion = "1.12"\nfeatures = ["a", "b"]\ndefault-features = false\n'
+        );
+        const depsIdx = patched.indexOf("\n[dependencies]\n");
+        const extraIdx = patched.indexOf("[dependencies.google-cloud-auth]");
+        const targetIdx = patched.indexOf("\n[target.");
+        expect(depsIdx).toBeLessThan(extraIdx);
+        expect(extraIdx).toBeLessThan(targetIdx);
+    });
+
+    it("renders git / path / package / optional fields", () => {
+        const patched = addExtraDependencies(
+            TEMPLATE_CARGO_TOML,
+            { helper: { git: "https://example.com/helper.git", rev: "abc", package: "real-helper", optional: true } },
+            "dev-dependencies"
+        );
+        expect(patched).toContain(
+            '\n[dev-dependencies.helper]\npackage = "real-helper"\ngit = "https://example.com/helper.git"\nrev = "abc"\noptional = true\n'
+        );
+        expect(patched.indexOf("\n[dev-dependencies]\n")).toBeLessThan(patched.indexOf("[dev-dependencies.helper]"));
+    });
+
+    it("is a no-op for an absent or empty map", () => {
+        expect(addExtraDependencies(TEMPLATE_CARGO_TOML, undefined, "dependencies")).toBe(TEMPLATE_CARGO_TOML);
+        expect(addExtraDependencies(TEMPLATE_CARGO_TOML, {}, "dependencies")).toBe(TEMPLATE_CARGO_TOML);
+    });
+
+    it("rejects a crate the template already depends on", () => {
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { clap: "4" }, "dependencies")).toThrow(
+            /extraDependencies: "clap" is already a \[dependencies\] entry/
+        );
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { wiremock: "0.6" }, "dev-dependencies")).toThrow(
+            /extraDevDependencies: "wiremock" is already a \[dev-dependencies\] entry/
+        );
+    });
+
+    it("detects collisions with quoted keys and appends after a block that ends at EOF", () => {
+        const toml = '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n# trailing comment\n';
+        expect(() => addExtraDependencies(toml, { serde: "1" }, "dependencies")).toThrow(/already a \[dependencies\]/);
+        expect(addExtraDependencies(toml, { anyhow: "1" }, "dependencies")).toBe(
+            '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n\n# trailing comment\n'
+        );
+    });
+
+    it("rejects an extra dependency that shadows a generated crate when the path dep is added later", () => {
+        const withExtra = addExtraDependencies(TEMPLATE_CARGO_TOML, { acme_sdk: "1" }, "dependencies");
+        expect(() => addCrateDependency(withExtra, "acme-sdk")).toThrow(
+            /extraDependencies: "acme_sdk" is the generated `acme-sdk` crate/
+        );
+        expect(() => addCrateDependency(TEMPLATE_CARGO_TOML, "acme-sdk")).not.toThrow();
+    });
+
+    it("only checks collisions within the same table", () => {
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { wiremock: "0.6" }, "dependencies")).not.toThrow();
     });
 });
 
@@ -400,6 +470,25 @@ describe("patchCargoToml (filesystem)", () => {
         const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
         expect(lockResult).toContain('name = "agentmail-cli"\nversion = "2.0.0"');
         expect(lockResult).not.toContain('name = "fern-cli-sdk"');
+    });
+
+    it("writes extra dependencies into Cargo.toml without touching Cargo.lock", async () => {
+        await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
+
+        await patchCargoToml({
+            outputDir: tmpDir,
+            binaryName: "acme-cli",
+            version: "2.0.0",
+            extraDependencies: { "google-cloud-auth": "1.16" },
+            extraDevDependencies: { mockall: "0.11" }
+        });
+
+        const result = await readFile(path.join(tmpDir, "Cargo.toml"), "utf-8");
+        expect(result).toContain('[dependencies.google-cloud-auth]\nversion = "1.16"');
+        expect(result).toContain('[dev-dependencies.mockall]\nversion = "0.11"');
+        const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
+        expect(lockResult).not.toContain("google-cloud-auth");
     });
 
     it("keeps Fern's package identity when the customer sets none", async () => {

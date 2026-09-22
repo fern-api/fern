@@ -47,8 +47,19 @@ export async function patchCargoToml(args: {
     typesCrateName?: string;
     sdkCrateName?: string;
     packageIdentity?: CargoPackageIdentity;
+    extraDependencies?: Record<string, CargoDependencyValue>;
+    extraDevDependencies?: Record<string, CargoDependencyValue>;
 }): Promise<void> {
-    const { outputDir, binaryName, version, typesCrateName, sdkCrateName, packageIdentity } = args;
+    const {
+        outputDir,
+        binaryName,
+        version,
+        typesCrateName,
+        sdkCrateName,
+        packageIdentity,
+        extraDependencies,
+        extraDevDependencies
+    } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
 
@@ -66,13 +77,15 @@ export async function patchCargoToml(args: {
         return;
     }
 
-    const patched = applyCargoTomlPatch(contents, binaryName, version ?? "0.0.0", packageIdentity);
+    let patched = applyCargoTomlPatch(contents, binaryName, version ?? "0.0.0", packageIdentity);
     if (patched === contents) {
         throw new Error(
             `Cargo.toml at ${cargoTomlPath} did not match the expected template — no substitutions made. ` +
                 "Did the SDK template's identity tokens change?"
         );
     }
+    patched = addExtraDependencies(patched, extraDependencies, "dependencies");
+    patched = addExtraDependencies(patched, extraDevDependencies, "dev-dependencies");
     await writeFile(cargoTomlPath, patched);
 
     // Cargo.lock records the package's own version alongside its
@@ -106,6 +119,163 @@ export interface CargoPackageIdentity {
     homepage?: string;
     authors?: string[];
     keywords?: string[];
+}
+
+/**
+ * A consumer-declared cargo dependency table. Field names follow the
+ * Rust SDK generator's `extraDependencies` (camelCase `defaultFeatures`
+ * is rendered as cargo's `default-features`).
+ */
+export interface CargoDependencySpec {
+    version?: string;
+    features?: string[];
+    optional?: boolean;
+    defaultFeatures?: boolean;
+    package?: string;
+    path?: string;
+    git?: string;
+    branch?: string;
+    rev?: string;
+    registry?: string;
+}
+
+/** A bare version requirement (`"1.16"`) or a full dependency table. */
+export type CargoDependencyValue = string | CargoDependencySpec;
+
+export type CargoDependencyTable = "dependencies" | "dev-dependencies";
+
+/**
+ * Append consumer-declared crates to `Cargo.toml` as
+ * `[<table>.<name>]` sub-tables, inserted before the first `[profile.`
+ * section (same placement as {@link addCrateDependency}).
+ *
+ * Throws when a name is already declared in the template's `[<table>]`
+ * or `[<table>.<name>]`: TOML forbids redefining a key, and the
+ * bundled crates' feature sets are relied on by the vendored `src/`.
+ */
+export function addExtraDependencies(
+    cargoToml: string,
+    dependencies: Record<string, CargoDependencyValue> | undefined,
+    table: CargoDependencyTable
+): string {
+    if (dependencies == null) {
+        return cargoToml;
+    }
+    const names = Object.keys(dependencies);
+    if (names.length === 0) {
+        return cargoToml;
+    }
+    const declared = declaredDependencyNames(cargoToml, table);
+    const configKey = table === "dependencies" ? "extraDependencies" : "extraDevDependencies";
+    let block = "";
+    for (const name of names) {
+        if (declared.has(name)) {
+            throw new Error(
+                `Invalid customConfig.${configKey}: "${name}" is already a [${table}] entry of the generated CLI ` +
+                    "and cannot be redeclared. Remove it from the config to use the bundled version."
+            );
+        }
+        const value = dependencies[name];
+        if (value == null) {
+            continue;
+        }
+        block += renderDependencyTable(table, name, value);
+    }
+    const at = insertionIndex(cargoToml, table);
+    return cargoToml.slice(0, at) + "\n" + block + cargoToml.slice(at);
+}
+
+/**
+ * Where to splice consumer sub-tables: directly after the template's own
+ * `[<table>]` block when it has one (so the manifest reads top-down),
+ * otherwise before the first `[profile.` section, otherwise EOF.
+ */
+function insertionIndex(cargoToml: string, table: CargoDependencyTable): number {
+    const header = `\n[${table}]\n`;
+    const headerIdx = cargoToml.indexOf(header);
+    if (headerIdx !== -1) {
+        const nextHeader = cargoToml.indexOf("\n[", headerIdx + header.length);
+        const next = nextHeader === -1 ? cargoToml.length : nextHeader;
+        // Don't split a comment block that introduces the next section from
+        // the section it describes.
+        const body = cargoToml.slice(headerIdx + header.length, next);
+        const lines = body.split("\n");
+        let cut = lines.length;
+        while (cut > 0) {
+            const trimmed = (lines[cut - 1] ?? "").trim();
+            if (trimmed !== "" && !trimmed.startsWith("#")) {
+                break;
+            }
+            cut--;
+        }
+        return headerIdx + header.length + lines.slice(0, cut).join("\n").length;
+    }
+    const profileIdx = cargoToml.indexOf("\n[profile.");
+    return profileIdx === -1 ? cargoToml.length : profileIdx;
+}
+
+function renderDependencyTable(table: CargoDependencyTable, name: string, value: CargoDependencyValue): string {
+    const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
+    const lines: string[] = [`\n[${table}.${name}]`];
+    const scalars: [string, string | undefined][] = [
+        ["version", spec.version],
+        ["package", spec.package],
+        ["path", spec.path],
+        ["git", spec.git],
+        ["branch", spec.branch],
+        ["rev", spec.rev],
+        ["registry", spec.registry]
+    ];
+    for (const [key, scalar] of scalars) {
+        if (scalar != null) {
+            lines.push(`${key} = ${toTomlString(scalar)}`);
+        }
+    }
+    if (spec.features != null && spec.features.length > 0) {
+        lines.push(`features = [${spec.features.map(toTomlString).join(", ")}]`);
+    }
+    if (spec.optional != null) {
+        lines.push(`optional = ${spec.optional ? "true" : "false"}`);
+    }
+    if (spec.defaultFeatures != null) {
+        lines.push(`default-features = ${spec.defaultFeatures ? "true" : "false"}`);
+    }
+    return `${lines.join("\n")}\n`;
+}
+
+/**
+ * Crate names declared under `[<table>]`, `[<table>.<name>]`, or a
+ * `[target.'cfg(...)'.<table>]` block. Same line-oriented scan as
+ * {@link parseGeneratedCrateManifest}.
+ */
+function declaredDependencyNames(cargoToml: string, table: CargoDependencyTable): Set<string> {
+    const names = new Set<string>();
+    let inTable = false;
+    for (const rawLine of cargoToml.split("\n")) {
+        const line = rawLine.trim();
+        if (line.startsWith("#") || line.length === 0) {
+            continue;
+        }
+        const header = line.match(/^\[([^\]]+)\]$/);
+        if (header?.[1] != null) {
+            const section = header[1];
+            const suffix = section.startsWith("target.") ? section.slice(section.lastIndexOf(".") + 1) : section;
+            inTable = suffix === table;
+            const subTable = section.match(new RegExp(`^${table}\\."?([A-Za-z0-9_-]+)"?$`));
+            if (subTable?.[1] != null) {
+                names.add(subTable[1]);
+            }
+            continue;
+        }
+        if (!inTable) {
+            continue;
+        }
+        const key = line.match(/^"?([A-Za-z0-9_-]+)"?\s*=/)?.[1];
+        if (key != null) {
+            names.add(key);
+        }
+    }
+    return names;
 }
 
 /** The crate name the SDK template ships with. */
@@ -296,6 +466,12 @@ export function applyCargoTomlPatch(
  */
 export function addCrateDependency(cargoToml: string, crateName: string): string {
     const snakeName = crateName.replace(/-/g, "_");
+    if (declaredDependencyNames(cargoToml, "dependencies").has(snakeName)) {
+        throw new Error(
+            `Invalid customConfig.extraDependencies: "${snakeName}" is the generated \`${crateName}\` crate, ` +
+                "which the CLI generator declares itself. Remove it from the config."
+        );
+    }
     const depBlock = `\n[dependencies.${snakeName}]\npath = "${crateName}"\n`;
     // Append before [profile] sections if present, else at the end.
     const profileIdx = cargoToml.indexOf("\n[profile.");
