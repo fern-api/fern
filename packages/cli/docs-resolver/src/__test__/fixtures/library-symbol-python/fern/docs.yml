@@ -9,5 +9,5 @@ libraries:
     input:
       git: https://github.com/acme/cuopt
     output:
-      path: ./generated/python
+      path: ./static/python
     lang: python
