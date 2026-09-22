@@ -92,8 +92,13 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
             return;
         }
         const candidate = `${modulePath}.${name}`;
-        const current = publicPaths.get(definitionPath) ?? definitionPath;
-        if (candidate.split(".").length < current.split(".").length) {
+        const current = publicPaths.get(definitionPath);
+        // A private definition has no page of its own, so any public re-export beats it.
+        if (current == null && isPrivateModulePath(getModulePath(definitionPath))) {
+            publicPaths.set(definitionPath, candidate);
+            return;
+        }
+        if (candidate.split(".").length < (current ?? definitionPath).split(".").length) {
             publicPaths.set(definitionPath, candidate);
         }
     }

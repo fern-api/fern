@@ -353,6 +353,41 @@ describe("generate()", () => {
         expect(api).not.toContain("_impl.mdx");
     });
 
+    it("links private definitions to an equal-depth public re-export", () => {
+        const impl = makeClass({ name: "Model", path: "pkg._impl.Model" });
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                submodules: [
+                    makeModule({ name: "_impl", path: "pkg._impl", classes: [impl] }),
+                    makeModule({ name: "models", path: "pkg.models", classes: [impl] }),
+                    makeModule({
+                        name: "api",
+                        path: "pkg.api",
+                        functions: [
+                            makeFunction({
+                                name: "build",
+                                path: "pkg.api.build",
+                                signature: "def build() -> pkg._impl.Model",
+                                returnTypeInfo: {
+                                    display: "pkg._impl.Model",
+                                    basePath: "pkg._impl.Model",
+                                    resolvedPath: "pkg._impl.Model"
+                                }
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        const api = readFileSync(join(tmpDir, "ref/pkg/api.mdx"), "utf-8");
+        expect(api).toContain("./models.mdx#pkg-_impl-Model");
+    });
+
     it("resolves cross-module type links in signatures", () => {
         const ir = makeIr(
             makeModule({
