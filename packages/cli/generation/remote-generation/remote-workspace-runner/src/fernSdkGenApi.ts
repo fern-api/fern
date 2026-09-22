@@ -247,7 +247,8 @@ export function selectFernSdkGenApiRoute(
         return selectUnpinnedGeneratorConfigRoute({
             generatorId: generatorInvocation.name,
             language: generatorInvocation.language ?? language,
-            configKind
+            configKind,
+            versionSource: "fern-latest"
         });
     }
     // `configKind` is what the caller can supply for this generator: "sdk-config-v1" when a
@@ -1283,12 +1284,13 @@ function validateParticipantRoute(
     if (sdkGenApiRoute?.requestedVersion == null) {
         if (sdkGenApiRoute != null) {
             if (!isGeneratorVersionForUnpinnedRoute(sdkGenApiRoute, generatorInvocation.version)) {
-                throw new Error("An unpinned sdk-gen-api route does not match its generator version representation");
+                throw unpinnedRouteVersionMismatchError(sdkGenApiRoute, generatorInvocation.version);
             }
             return selectUnpinnedGeneratorConfigRoute({
                 generatorId: generatorInvocation.name,
                 language,
-                configKind: sdkGenApiRoute.configKind
+                configKind: sdkGenApiRoute.configKind,
+                versionSource: sdkGenApiRoute.versionSource
             });
         }
         return validateGeneratorConfigCompatibility({
@@ -1337,9 +1339,15 @@ function resolveFernGeneratorWireVersion(
         return route.requestedVersion;
     }
     if (!isGeneratorVersionForUnpinnedRoute(route, invocation.version)) {
-        throw new Error("An unpinned sdk-gen-api route does not match its generator version representation");
+        throw unpinnedRouteVersionMismatchError(route, invocation.version);
     }
     return undefined;
+}
+
+function unpinnedRouteVersionMismatchError(route: GenerationConfigRoute, invocationVersion: string): Error {
+    return new Error(
+        `An unpinned sdk-gen-api route does not match its generator version representation: invocationVersion=${JSON.stringify(invocationVersion)}; configKind=${route.configKind}; versionSource=${route.requestedVersion == null ? route.versionSource : "pinned"}`
+    );
 }
 
 function resolveFernGeneratorVersionKey(

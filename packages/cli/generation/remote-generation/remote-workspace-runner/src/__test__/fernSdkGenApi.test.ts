@@ -283,6 +283,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             generatorId: "fernapi/fern-typescript-sdk",
             language: "typescript",
             cutoverVersion: "4.0.0",
+            versionSource: "sdk-config-omitted",
             configKind: "sdk-config-v1",
             payloadKind: "sdk-config-v1"
         });
@@ -349,7 +350,9 @@ describe("isEligibleForFernSdkGenApi", () => {
                 specsTarGzBuffer: Buffer.from("archive"),
                 payload: sdkConfigPayload("{}")
             })
-        ).toThrow("does not match its generator version representation");
+        ).toThrow(
+            'does not match its generator version representation: invocationVersion="latest"; configKind=sdk-config-v1; versionSource=sdk-config-omitted'
+        );
     });
 
     it("retains migration guidance for a pinned pre-cutover SDK Config target", () => {
@@ -488,6 +491,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             generatorId: "fernapi/fern-typescript-sdk",
             language: "typescript",
             cutoverVersion: "4.0.0",
+            versionSource: "fern-latest",
             configKind: "legacy-fern",
             payloadKind: "fern-runtime-bundle"
         });
@@ -510,6 +514,33 @@ describe("isEligibleForFernSdkGenApi", () => {
         });
         expect(request.targets[0]?.fernGenerator).not.toHaveProperty("version");
         expect(JSON.stringify(request)).not.toContain('"latest"');
+    });
+
+    it("reports the invocation version and config kind for an unpinned Fern mismatch", () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "latest" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned Fern route");
+        }
+
+        expect(() =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION }),
+                sdkGenApiRoute: prepared.route,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle)
+            })
+        ).toThrow(
+            `invocationVersion="${SDK_CONFIG_UNPINNED_GENERATOR_VERSION}"; configKind=legacy-fern; versionSource=fern-latest`
+        );
     });
 
     it("keeps invalid non-semver generators.yml versions invalid", () => {
@@ -536,6 +567,44 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(result?.error).toBeUndefined();
         expect(result?.route).toMatchObject({ configKind: "sdk-config-v1", payloadKind: "sdk-config-v1" });
+    });
+
+    it("routes MCP latest through synthesized unpinned SDK Config", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "latest", language: "mcp" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toEqual({
+            generatorId: "fernapi/fern-mcp-server",
+            language: "mcp",
+            cutoverVersion: "0.1.0",
+            versionSource: "fern-latest",
+            configKind: "sdk-config-v1",
+            payloadKind: "sdk-config-v1"
+        });
+        if (result?.route == null) {
+            throw new Error("Expected an unpinned synthesized SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+        expect(request.targets[0]).toMatchObject({
+            fernGenerator: { id: "fernapi/fern-mcp-server" },
+            payloadKind: "sdk-config-v1"
+        });
+        expect(request.targets[0]?.fernGenerator).not.toHaveProperty("version");
+        expect(JSON.stringify(request)).not.toContain('"latest"');
     });
 
     it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {

@@ -15,7 +15,7 @@ export function isGeneratorVersionForUnpinnedRoute(route: GenerationConfigRoute,
     if (route.requestedVersion != null) {
         return false;
     }
-    return route.configKind === "legacy-fern"
+    return route.versionSource === "fern-latest"
         ? version === FERN_GENERATOR_LATEST_VERSION
         : isSdkConfigUnpinnedGeneratorVersion(version);
 }

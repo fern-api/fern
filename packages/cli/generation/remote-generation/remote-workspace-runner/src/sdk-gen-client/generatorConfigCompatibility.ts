@@ -47,11 +47,13 @@ export type GenerationConfigRoute =
           (
               | {
                     requestedVersion?: never;
+                    versionSource: "fern-latest";
                     configKind: "legacy-fern";
                     payloadKind: "fern-runtime-bundle";
                 }
               | {
                     requestedVersion?: never;
+                    versionSource: "fern-latest" | "sdk-config-omitted";
                     configKind: "sdk-config-v1";
                     payloadKind: "sdk-config-v1";
                 }
@@ -203,9 +205,11 @@ export function selectGeneratorConfigRoute(input: SelectGeneratorConfigRouteInpu
 export function selectUnpinnedGeneratorConfigRoute({
     generatorId,
     language,
-    configKind
+    configKind,
+    versionSource
 }: Omit<SelectGeneratorConfigRouteInput, "requestedVersion"> & {
     configKind: GenerationConfigKind;
+    versionSource: "fern-latest" | "sdk-config-omitted";
 }): GenerationConfigRoute {
     const policy = getGeneratorPolicy(generatorId);
     if (policy === undefined) {
@@ -235,15 +239,23 @@ export function selectUnpinnedGeneratorConfigRoute({
         );
     }
     const base = { generatorId, language, cutoverVersion: policy.cutoverVersion };
-    return configKind === "legacy-fern"
-        ? { ...base, configKind, payloadKind: "fern-runtime-bundle" }
-        : { ...base, configKind, payloadKind: "sdk-config-v1" };
+    if (configKind === "legacy-fern") {
+        if (versionSource !== "fern-latest") {
+            throw new Error("Legacy Fern unpinned routes must use fern-latest as their version source");
+        }
+        return { ...base, versionSource, configKind, payloadKind: "fern-runtime-bundle" };
+    }
+    return { ...base, versionSource, configKind, payloadKind: "sdk-config-v1" };
 }
 
 export function selectUnpinnedSdkConfigRoute(
     input: Omit<SelectGeneratorConfigRouteInput, "requestedVersion">
 ): GenerationConfigRoute {
-    return selectUnpinnedGeneratorConfigRoute({ ...input, configKind: "sdk-config-v1" });
+    return selectUnpinnedGeneratorConfigRoute({
+        ...input,
+        configKind: "sdk-config-v1",
+        versionSource: "sdk-config-omitted"
+    });
 }
 
 function compatibilityError(
