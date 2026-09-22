@@ -447,6 +447,9 @@ function projectFernApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // generators.yml exposes one preference for literal unions. Fern's authoritative settings adapter expands
+    // that field into both importer flags, so migration must emit both to preserve existing generation behavior.
+    // There is no independently configurable discriminatedUnionV2 field in the generators.yml schema.
     const projected = {
         respectNullableSchemas: settings.respectNullableSchemas,
         titleAsSchemaName: settings.shouldUseTitleAsName,
@@ -479,6 +482,8 @@ function projectRawApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // Keep this raw projection aligned with getAPIDefinitionSettings, which intentionally maps
+    // prefer-undiscriminated-unions-with-literals to both importer flags.
     return {
         ...(settings["respect-nullable-schemas"] == null
             ? {}
