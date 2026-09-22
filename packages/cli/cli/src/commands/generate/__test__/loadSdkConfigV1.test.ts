@@ -230,6 +230,52 @@ describe("loadSdkConfigV1", () => {
         await expect(loadSdkConfigV1(configPath)).rejects.toThrow("Environment variable MISSING_TOKEN is not defined");
     });
 
+    it("resolves credentials only for the selected duplicate-language target", async () => {
+        vi.stubEnv("SELECTED_TOKEN", "selected-secret");
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            {
+                language: "typescript",
+                package: { packageName: "@acme/first" },
+                output: { delivery: "files", publish: { registry: "npm", token: "${MISSING_TOKEN}" } }
+            },
+            {
+                language: "typescript",
+                package: { packageName: "@acme/second" },
+                output: { delivery: "files", publish: { registry: "npm", token: "${SELECTED_TOKEN}" } }
+            }
+        ]);
+
+        const loaded = await loadSdkConfigV1(configPath, false, { generatorIndex: 1 });
+
+        expect(loaded.payload.targets[0]).not.toHaveProperty("publishCredential");
+        expect(loaded.payload.targets[1]?.publishCredential).toEqual({
+            registry: "npm",
+            token: "selected-secret"
+        });
+        expect(
+            loaded.payload.targets.map((target) => JSON.parse(target.body.toString("utf8")).targets[0].package)
+        ).toEqual([{ packageName: "@acme/first" }, { packageName: "@acme/second" }]);
+    });
+
+    it("rejects missing credentials on the selected target", async () => {
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            {
+                language: "typescript",
+                package: { packageName: "@acme/first" },
+                output: { delivery: "files", publish: { registry: "npm", token: "available" } }
+            },
+            {
+                language: "typescript",
+                package: { packageName: "@acme/second" },
+                output: { delivery: "files", publish: { registry: "npm", token: "${MISSING_SELECTED_TOKEN}" } }
+            }
+        ]);
+
+        await expect(loadSdkConfigV1(configPath, false, { generatorIndex: 1 })).rejects.toThrow(
+            "Environment variable MISSING_SELECTED_TOKEN is not defined"
+        );
+    });
+
     it("also strips the installed schema's legacy nested credential container", async () => {
         vi.stubEnv("NPM_TOKEN", "nested-npm-secret");
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
@@ -638,4 +684,28 @@ async function writeSdkConfig(
         })
     );
     return { configPath };
+}
+
+async function writeSdkConfigTargets(
+    temporaryDirectories: string[],
+    targets: Array<Record<string, unknown>>
+): Promise<string> {
+    const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-selection-"));
+    temporaryDirectories.push(directory);
+    const configPath = join(directory, "sdk-config.yml");
+    await writeFile(
+        configPath,
+        YAML.stringify({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "petstore",
+            source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets
+        })
+    );
+    return configPath;
 }

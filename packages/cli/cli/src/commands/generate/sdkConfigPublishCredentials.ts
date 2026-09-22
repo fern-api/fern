@@ -91,13 +91,13 @@ function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredenti
         return undefined;
     }
     if (registry === "npm" || registry === "crates") {
-        return { registry, token: resolveCredentialValue(registry, "token", fields.token) };
+        return { registry, token: credentialValue(registry, "token", fields.token) };
     }
     if (registry === "pypi") {
         return {
             registry,
-            username: resolveCredentialValue(registry, "username", fields.username),
-            password: resolveCredentialValue(registry, "password", fields.password)
+            username: credentialValue(registry, "username", fields.username),
+            password: credentialValue(registry, "password", fields.password)
         };
     }
     if (registry === "maven") {
@@ -107,15 +107,15 @@ function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredenti
         }
         return {
             registry,
-            username: resolveCredentialValue(registry, "username", fields.username),
-            password: resolveCredentialValue(registry, "password", fields.password),
+            username: credentialValue(registry, "username", fields.username),
+            password: credentialValue(registry, "password", fields.password),
             ...(signature == null
                 ? {}
                 : {
                       signature: {
-                          keyId: resolveCredentialValue(registry, "signature.keyId", signature.keyId),
-                          password: resolveCredentialValue(registry, "signature.password", signature.password),
-                          secretKey: resolveCredentialValue(registry, "signature.secretKey", signature.secretKey)
+                          keyId: credentialValue(registry, "signature.keyId", signature.keyId),
+                          password: credentialValue(registry, "signature.password", signature.password),
+                          secretKey: credentialValue(registry, "signature.secretKey", signature.secretKey)
                       }
                   })
         };
@@ -145,12 +145,67 @@ function hasPublishCredentialFields(publish: Record<string, unknown>): boolean {
     );
 }
 
-function resolveCredentialValue(registry: string, field: string, value: unknown): string | undefined {
+export function resolveSdkConfigPublishCredential(
+    credential: FernSdkGenApiPublishCredentialSource
+): FernSdkGenApiPublishCredentialSource {
+    switch (credential.registry) {
+        case "npm":
+        case "crates":
+            return {
+                registry: credential.registry,
+                token: resolveCredentialValue(credential.registry, "token", credential.token)
+            };
+        case "pypi":
+            return {
+                registry: credential.registry,
+                username: resolveCredentialValue(credential.registry, "username", credential.username),
+                password: resolveCredentialValue(credential.registry, "password", credential.password)
+            };
+        case "maven":
+            return {
+                registry: credential.registry,
+                username: resolveCredentialValue(credential.registry, "username", credential.username),
+                password: resolveCredentialValue(credential.registry, "password", credential.password),
+                ...(credential.signature == null
+                    ? {}
+                    : {
+                          signature: {
+                              keyId: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.keyId",
+                                  credential.signature.keyId
+                              ),
+                              password: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.password",
+                                  credential.signature.password
+                              ),
+                              secretKey: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.secretKey",
+                                  credential.signature.secretKey
+                              )
+                          }
+                      })
+            };
+        default:
+            return credential;
+    }
+}
+
+function credentialValue(registry: string, field: string, value: unknown): string | undefined {
     if (value == null) {
         return undefined;
     }
     if (typeof value !== "string") {
         throw new Error(`Direct ${registry} publication credential ${field} must be a string`);
+    }
+    return value;
+}
+
+function resolveCredentialValue(registry: string, field: string, value: string | undefined): string | undefined {
+    if (value == null) {
+        return undefined;
     }
     return replaceEnvVariables(value, {
         onError: (message) => {

@@ -311,8 +311,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                         body: Buffer.from('{"targets":[{"sdkName":"first"}]}'),
                         language: "typescript",
                         generatorVersion: "4.0.0",
-                        requestedOutput: { type: "publish", publish: { registry: "npm" } },
-                        publishCredential: { registry: "npm", token: "first-secret" }
+                        requestedOutput: { type: "publish", publish: { registry: "npm" } }
                     },
                     {
                         body: Buffer.from('{"targets":[{"sdkName":"second"}]}'),
@@ -345,7 +344,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             { registry: "npm" },
             "credential registry pypi does not match requested registry npm"
         ]
-    ] as const)("rejects SDK Config %s before source or HTTP work", async (_name, publishCredential, publish, expectedError) => {
+    ] as const)("rejects selected SDK Config %s before source or HTTP work", async (_name, publishCredential, publish, expectedError) => {
         const getSpecsTarGzBuffer = vi.fn();
         const post = vi.spyOn(axios, "post");
         const get = vi.spyOn(axios, "get");
@@ -361,7 +360,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                     generators: [
                         {
                             ...invocation("fernapi/fern-typescript-sdk", "typescript", "4.0.0"),
-                            sdkConfigTargetIndex: 0
+                            sdkConfigTargetIndex: 1
                         }
                     ],
                     audiences: { type: "all" }
@@ -382,6 +381,13 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                     sdkName: "petstore",
                     sdkVersion: "1.2.3",
                     targets: [
+                        {
+                            body: Buffer.from('{"targets":[{}]}'),
+                            language: "typescript",
+                            generatorVersion: "3.0.0",
+                            requestedOutput: { type: "publish", publish: { registry: "npm" } },
+                            publishCredential: { registry: "npm", token: "unselected-secret" }
+                        },
                         {
                             body: Buffer.from('{"targets":[{}]}'),
                             language: "typescript",

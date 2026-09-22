@@ -208,7 +208,12 @@ export async function runRemoteGenerationForAPIWorkspace({
         throwFirstPreflightError(routeErrors, generatorGroup.generators);
     }
     if (!isSdkPreview) {
-        validateFernSdkGenApiPublishTargets(sdkConfigV1?.targets ?? []);
+        validateFernSdkGenApiPublishTargets(
+            routePreparation.flatMap(({ sdkConfigTargetIndex }) => {
+                const target = sdkConfigTargetIndex == null ? undefined : sdkConfigV1?.targets[sdkConfigTargetIndex];
+                return target == null ? [] : [target];
+            })
+        );
     }
     const sourceRequests = resolvedGenerators.flatMap((generatorInvocation, generatorIndex) =>
         routePreparation[generatorIndex]?.error == null

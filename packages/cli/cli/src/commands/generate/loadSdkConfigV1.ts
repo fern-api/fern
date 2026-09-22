@@ -12,7 +12,11 @@ import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postma
 import YAML from "yaml";
 
 import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
-import { sanitizeSdkConfigPublishCredentials } from "./sdkConfigPublishCredentials.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
+import {
+    resolveSdkConfigPublishCredential,
+    sanitizeSdkConfigPublishCredentials
+} from "./sdkConfigPublishCredentials.js";
 
 export interface LoadedSdkConfigV1 {
     absolutePath: string;
@@ -20,8 +24,17 @@ export interface LoadedSdkConfigV1 {
     payload: FernSdkConfigV1Payload;
 }
 
+interface SdkConfigTargetSelection {
+    generatorName?: string;
+    generatorIndex?: number;
+}
+
 /** Reads and validates a customer SDK Config YAML or JSON document for SDK Generation API transport. */
-export async function loadSdkConfigV1(configPath: string, isPreview = false): Promise<LoadedSdkConfigV1> {
+export async function loadSdkConfigV1(
+    configPath: string,
+    isPreview = false,
+    selection: SdkConfigTargetSelection = {}
+): Promise<LoadedSdkConfigV1> {
     const absolutePath = resolve(cwd(), configPath);
     const body = await readFile(absolutePath);
     let input: unknown;
@@ -40,6 +53,7 @@ export async function loadSdkConfigV1(configPath: string, isPreview = false): Pr
             throw new Error("SDK Config v1 target count changed during validation");
         }
         const duplicateLanguages = getDuplicateTargetLanguages(parsed.targets);
+        const selectedTargetIndexes = getSelectedTargetIndexes(parsed, selection, isPreview);
         const payload: FernSdkConfigV1Payload = {
             sdkName: parsed.sdkName,
             sdkVersion: parsed.sdkVersion,
@@ -76,19 +90,29 @@ export async function loadSdkConfigV1(configPath: string, isPreview = false): Pr
                           }
                         : {}),
                     package: { ...parsed.package, ...target.package } satisfies FernSdkGenApiPackageConfig,
-                    ...(isPreview || credentials[index] == null ? {} : { publishCredential: credentials[index] })
+                    ...(credentials[index] == null || !selectedTargetIndexes.has(index)
+                        ? {}
+                        : { publishCredential: resolveSdkConfigPublishCredential(credentials[index]) })
                 };
             })
         };
         validateFernSdkGenApiPublishTargets(
-            payload.targets.map((target) => ({
-                publicationRequested:
-                    target.requestedOutput?.type === "publish" ||
-                    (target.requestedOutput?.type === "github" && target.requestedOutput.publish != null),
-                credentialsRequired: target.requestedOutput?.type === "publish",
-                ...publicationValidationMetadata(target.requestedOutput),
-                ...(target.publishCredential == null ? {} : { publishCredential: target.publishCredential })
-            }))
+            payload.targets.flatMap((target, index) =>
+                selectedTargetIndexes.has(index)
+                    ? [
+                          {
+                              publicationRequested:
+                                  target.requestedOutput?.type === "publish" ||
+                                  (target.requestedOutput?.type === "github" && target.requestedOutput.publish != null),
+                              credentialsRequired: target.requestedOutput?.type === "publish",
+                              ...publicationValidationMetadata(target.requestedOutput),
+                              ...(target.publishCredential == null
+                                  ? {}
+                                  : { publishCredential: target.publishCredential })
+                          }
+                      ]
+                    : []
+            )
         );
         return {
             absolutePath,
@@ -101,6 +125,27 @@ export async function loadSdkConfigV1(configPath: string, isPreview = false): Pr
             { cause: error }
         );
     }
+}
+
+function getSelectedTargetIndexes(
+    config: SdkConfigV1,
+    selection: SdkConfigTargetSelection,
+    isPreview: boolean
+): Set<number> {
+    if (isPreview) {
+        return new Set();
+    }
+    if (selection.generatorIndex != null) {
+        return selection.generatorIndex < config.targets.length ? new Set([selection.generatorIndex]) : new Set();
+    }
+    if (selection.generatorName != null) {
+        return new Set(
+            config.targets.flatMap((target, index) =>
+                getSdkConfigGeneratorName(target.language) === selection.generatorName ? [index] : []
+            )
+        );
+    }
+    return new Set(config.targets.map((_, index) => index));
 }
 
 function validateAndParseSdkConfigV1(input: unknown): {

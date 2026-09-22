@@ -11,24 +11,10 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
 import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
-
-const GENERATOR_BY_LANGUAGE: Record<string, string> = {
-    typescript: "fernapi/fern-typescript-sdk",
-    python: "fernapi/fern-python-sdk",
-    java: "fernapi/fern-java-sdk",
-    kotlin: "fernapi/fern-kotlin-sdk",
-    go: "fernapi/fern-go-sdk",
-    csharp: "fernapi/fern-csharp-sdk",
-    php: "fernapi/fern-php-sdk",
-    ruby: "fernapi/fern-ruby-sdk-v2",
-    rust: "fernapi/fern-rust-sdk",
-    swift: "fernapi/fern-swift-sdk",
-    cli: "fernapi/fern-cli-generator",
-    mcp: "fernapi/fern-mcp-server"
-};
 
 export interface CreatedSdkConfigWorkspace {
     workspace: OSSWorkspace;
@@ -66,7 +52,7 @@ export async function createSdkConfigWorkspace({
                     ? { type: "all" }
                     : { type: "select", audiences: sdkConfig.api.audiences },
             generators: sdkConfig.targets.map((target, targetIndex) => {
-                const name = GENERATOR_BY_LANGUAGE[target.language];
+                const name = getSdkConfigGeneratorName(target.language);
                 if (name == null) {
                     return context.failAndThrow(
                         `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
