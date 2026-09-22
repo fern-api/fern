@@ -556,9 +556,17 @@ describe("renderLibrarySymbol (cpp)", () => {
 
         const callback = renderLibrarySymbol(
             { ...persistedCpp, ir },
-            { name: "cuOptCallback", heading: 3, members: undefined, linkToGeneratedPages: true }
+            {
+                name: "cuOptCallback",
+                heading: 3,
+                members: undefined,
+                linkToGeneratedPages: true,
+                relativePathToOutputDir: "../generated/c"
+            }
         );
         expect(callback.mdx).toContain("typedef void (*cuOptCallback)(const cuopt_int_t *solution, void *user_data);");
+        // The typedef referenced inside the callback signature links to its generated page.
+        expect(callback.mdx).toMatch(/<CodeBlock links=\{\{"cuopt_int_t": "\.\.\/generated\/c\/[^"]+\.mdx"\}\}>/);
 
         const cpp = renderLibrarySymbol(persistedCpp, {
             name: "cuopt_int_t",
