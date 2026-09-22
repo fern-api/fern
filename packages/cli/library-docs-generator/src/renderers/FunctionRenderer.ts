@@ -126,7 +126,8 @@ export function renderFunctionDetailed(func: FdrAPI.libraryDocs.PythonFunctionIr
         const docstringMdx = renderDocstring(
             func.docstring,
             buildParamAnnotations(func),
-            getTypeDisplay(func.returnTypeInfo) || undefined
+            getTypeDisplay(func.returnTypeInfo) || undefined,
+            { ctx, currentModulePath }
         );
         if (docstringMdx) {
             lines.push(docstringMdx);
@@ -172,7 +173,8 @@ export function renderMethodDetailed(
         const docstringMdx = renderDocstring(
             func.docstring,
             buildParamAnnotations(func),
-            getTypeDisplay(func.returnTypeInfo) || undefined
+            getTypeDisplay(func.returnTypeInfo) || undefined,
+            { ctx, currentModulePath: modulePath }
         );
         if (docstringMdx) {
             lines.push(docstringMdx);
@@ -208,7 +210,10 @@ export function renderProperty(
     // Docstring
     if (func.docstring) {
         lines.push("<Indent>", "");
-        const docstringMdx = renderDocstring(func.docstring);
+        const docstringMdx = renderDocstring(func.docstring, undefined, undefined, {
+            ctx,
+            currentModulePath: modulePath
+        });
         if (docstringMdx) {
             lines.push(docstringMdx);
         }

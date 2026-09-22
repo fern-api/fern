@@ -205,7 +205,10 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
 
     // Docstring
     if (cls.docstring) {
-        const docMdx = renderDocstring(cls.docstring, buildParamAnnotations(cls));
+        const docMdx = renderDocstring(cls.docstring, buildParamAnnotations(cls), undefined, {
+            ctx,
+            currentModulePath
+        });
         if (docMdx) {
             lines.push(docMdx, "");
         }

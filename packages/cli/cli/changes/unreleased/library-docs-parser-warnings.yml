@@ -22,3 +22,14 @@
     the generated folder was mounted under a navigation section instead of at the site root.
     `<CodeBlock links={...}>` values ending in `.md`/`.mdx` are resolved during the build as well.
   type: fix
+- summary: |
+    Python library docs: private modules (`_foo`) are no longer rendered as pages or listed in
+    navigation and submodule lists, matching Sphinx autodoc. Types defined in a private module
+    link to the public package that re-exports them instead of a non-existent private page.
+  type: fix
+- summary: |
+    Python library docs: types named in docstring `Parameters` / `Returns` sections (e.g.
+    `data_model : DataModel`) now link to the documented class when it resolves unambiguously
+    within the library, on generated pages and `<LibrarySymbol>` embeds alike. Signatures are
+    unchanged; untyped source signatures stay untyped.
+  type: feat
