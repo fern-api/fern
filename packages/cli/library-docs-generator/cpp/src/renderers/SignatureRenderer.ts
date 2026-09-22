@@ -12,7 +12,7 @@
 
 import type { CppClassIr, CppFunctionIr, CppTypeInfo } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, type RenderContext, stripTemplateArgs } from "../context.js";
-import { isTypeRef, resolveCompoundRef } from "./DescriptionRenderer.js";
+import { isTypeRef, resolveCompoundRef, resolveMemberRefLink } from "./DescriptionRenderer.js";
 import { isSfinaeParam } from "./ParamRenderer.js";
 import { formatTemplateParam } from "./shared.js";
 
@@ -117,24 +117,90 @@ function normalizeDefaultValueSpacing(paramsStr: string): string {
 
 /**
  * Extract link targets from a type info's parts array.
- * Only compound refs (classes/structs) produce links.
+ * Compound refs (classes/structs) and member refs (typedefs, enums) that have
+ * their own page produce links.
  *
  * Inner class resolution is handled by `resolveCompoundRef` via the
  * module-level `nameToPathMap` populated by `registerClassMembers`.
  */
-function extractLinksFromTypeInfo(typeInfo: CppTypeInfo | undefined): Map<string, string> {
+export function extractLinksFromTypeInfo(typeInfo: CppTypeInfo | undefined): Map<string, string> {
     const links = new Map<string, string>();
     if (!typeInfo) {
         return links;
     }
     for (const part of typeInfo.parts) {
-        if (isTypeRef(part) && part.kindref === "compound") {
-            const shortName = getShortName(part.text);
-            const qualifiedName = resolveCompoundRef(part.text, part.refid);
-            const linkPath = buildLinkPath(qualifiedName);
-            if (linkPath) {
-                links.set(shortName, linkPath);
-            }
+        if (!isTypeRef(part)) {
+            continue;
+        }
+        const shortName = getShortName(part.text);
+        if (links.has(shortName)) {
+            continue;
+        }
+        const linkPath =
+            part.kindref === "compound"
+                ? buildLinkPath(resolveCompoundRef(part.text, part.refid))
+                : resolveMemberRefLink(part.text, part.refid);
+        if (linkPath) {
+            links.set(shortName, linkPath);
+        }
+    }
+    return links;
+}
+
+const C_CPP_KEYWORDS = new Set([
+    "auto",
+    "bool",
+    "char",
+    "class",
+    "const",
+    "constexpr",
+    "double",
+    "enum",
+    "extern",
+    "float",
+    "inline",
+    "int",
+    "long",
+    "mutable",
+    "noexcept",
+    "register",
+    "restrict",
+    "short",
+    "signed",
+    "static",
+    "struct",
+    "typedef",
+    "typename",
+    "union",
+    "unsigned",
+    "using",
+    "void",
+    "volatile",
+    "wchar_t"
+]);
+
+/**
+ * Fallback link extraction for type text whose parts carry no refs (Doxygen emits
+ * none inside function-pointer types, for example). Every identifier in a type
+ * position that resolves to a documented page becomes a link; identifiers directly
+ * followed by `,` `)` `[` or `=` are parameter names and are skipped.
+ */
+export function extractLinksFromTypeText(text: string, excludeNames: Iterable<string> = []): Map<string, string> {
+    const links = new Map<string, string>();
+    const exclude = new Set(excludeNames);
+    const identifierPattern = /[A-Za-z_][A-Za-z0-9_]*(?:::[A-Za-z_][A-Za-z0-9_]*)*/g;
+    for (const match of text.matchAll(identifierPattern)) {
+        const name = match[0];
+        if (exclude.has(name) || links.has(name) || C_CPP_KEYWORDS.has(name)) {
+            continue;
+        }
+        const rest = text.slice((match.index ?? 0) + name.length);
+        if (/^\s*[,)[=]/.test(rest)) {
+            continue;
+        }
+        const linkPath = buildLinkPath(name);
+        if (linkPath && linkPath !== ".") {
+            links.set(name, linkPath);
         }
     }
     return links;
@@ -538,6 +604,33 @@ export function formatLinksJson(links: Record<string, string>): string {
 /**
  * Render a CodeBlock MDX component with optional links.
  */
+/**
+ * Links for a declaration whose type is given by `typeInfo` (typedefs, variables):
+ * parts with Doxygen refs first, then a text scan of the display string for types
+ * Doxygen did not annotate. `excludeNames` are never linked (the declared name).
+ */
+export function buildTypeInfoLinks(typeInfo: CppTypeInfo | undefined, excludeNames: string[]): Record<string, string> {
+    const links: Record<string, string> = {};
+    for (const source of [
+        extractLinksFromTypeInfo(typeInfo),
+        extractLinksFromTypeText(typeInfo?.display ?? "", excludeNames)
+    ]) {
+        for (const [key, value] of source) {
+            if (!excludeNames.includes(key) && !links[key]) {
+                links[key] = value;
+            }
+        }
+    }
+    return links;
+}
+
+/**
+ * Render a signature as a linked `<CodeBlock>` when any links resolved, otherwise as a bare fence.
+ */
+export function renderLinkedCodeBlock(code: string, links: Record<string, string>): string {
+    return Object.keys(links).length > 0 ? renderCodeBlock(code, links) : renderBareCodeBlock(code);
+}
+
 export function renderCodeBlock(code: string, links: Record<string, string>): string {
     const hasLinks = Object.keys(links).length > 0;
     const linksStr = hasLinks ? ` links={${formatLinksJson(links)}}` : "";

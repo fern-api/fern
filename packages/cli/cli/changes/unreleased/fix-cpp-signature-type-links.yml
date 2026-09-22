@@ -1,0 +1,5 @@
+- summary: |
+    C/C++ library docs: typedef and enum names referenced inside function, typedef
+    and variable signature code blocks now link to their generated pages (previously
+    only class/struct references and the parameter list were linked).
+  type: fix

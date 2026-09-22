@@ -27,7 +27,12 @@ import {
     renderClassTemplateParams,
     renderTypedefParams
 } from "./ParamRenderer.js";
-import { normalizeAngleBracketSpacing, renderBareCodeBlock } from "./SignatureRenderer.js";
+import {
+    buildTypeInfoLinks,
+    normalizeAngleBracketSpacing,
+    renderBareCodeBlock,
+    renderLinkedCodeBlock
+} from "./SignatureRenderer.js";
 import {
     formatTemplateParam,
     renderDocstringCallouts,
@@ -121,7 +126,8 @@ export function renderTypedefPage(typedef: CppTypedefIr, meta: CompoundMeta): st
         // Signature
         const signature = formatTypedefSignature(typedef);
         sections.push("");
-        sections.push(renderBareCodeBlock(signature));
+        const links = buildTypeInfoLinks(typedef.typeInfo, [typedef.name, getShortName(typedef.path)]);
+        sections.push(renderLinkedCodeBlock(signature, links));
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {
