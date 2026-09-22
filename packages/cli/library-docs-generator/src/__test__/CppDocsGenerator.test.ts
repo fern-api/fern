@@ -947,6 +947,130 @@ describe("generateCpp()", () => {
         expect(page).not.toContain("typedef void *Handle;");
     });
 
+    it("keeps C++ `using` syntax when the root scope carries C++-only members", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const cppOnlyRoots: Array<Partial<CppNamespaceIr>> = [
+            {
+                enums: [
+                    {
+                        name: "Mode",
+                        path: "Mode",
+                        isScoped: true,
+                        underlyingType: undefined,
+                        values: [],
+                        docstring: undefined
+                    }
+                ]
+            },
+            {
+                variables: [
+                    {
+                        name: "kMax",
+                        path: "kMax",
+                        typeInfo: undefined,
+                        initializer: "3",
+                        templateParams: [],
+                        isStatic: false,
+                        isConstexpr: true,
+                        isMutable: false,
+                        docstring: undefined
+                    }
+                ]
+            },
+            { functions: [makeFunction({ name: "f", path: "f", isNoexcept: true })] }
+        ];
+        for (const root of cppOnlyRoots) {
+            const dir = mkdtempSync(join(tmpdir(), "cpp-plain-c-"));
+            generateCpp({
+                ir: makeIr(makeNamespace({ typedefs: [handle], ...root }), { packageName: "lib" }),
+                outputDir: dir,
+                slug: "reference/lib"
+            });
+            const page = readFileSync(join(dir, "typedefs/Handle.mdx"), "utf-8");
+            expect(page).toContain("using Handle = void *;");
+            rmSync(dir, { recursive: true, force: true });
+        }
+    });
+
+    it("documents parameters of a callback typedef that are themselves function pointers", () => {
+        const callback: CppTypedefIr = {
+            name: "lib_run_cb",
+            path: "lib_run_cb",
+            typeInfo: {
+                parts: ["void(*", ")(void (*on_done)(int status), void *user_data)"],
+                display: "void(*)(void (*on_done)(int status), void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Run callback." }],
+                params: [
+                    {
+                        name: "on_done",
+                        description: [{ type: "text", text: "Invoked on completion." }],
+                        direction: undefined
+                    },
+                    {
+                        name: "user_data",
+                        description: [{ type: "text", text: "Opaque pointer." }],
+                        direction: undefined
+                    }
+                ]
+            })
+        };
+        const ir = makeIr(makeNamespace({ typedefs: [callback] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/lib_run_cb.mdx"), "utf-8");
+        expect(page).toContain("**Parameters**");
+        expect(page).toContain('<ParamField path="on_done" type="void (*)(int status)">');
+        expect(page).toContain("Invoked on completion.");
+        expect(page).toContain('<ParamField path="user_data" type="void *">');
+    });
+
+    it("resolves unqualified group-scoped member refs relative to the current page's namespace", () => {
+        const errorTypedef: CppTypedefIr = {
+            name: "error_t",
+            path: "acme::error_t",
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Error code." }] })
+        };
+        const open = makeFunction({
+            name: "open",
+            path: "acme::open",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Open." }],
+                returns: [
+                    { type: "text", text: "see " },
+                    { type: "ref", text: "error_t", refid: "group__ACME_1ga1", kindref: "member" }
+                ]
+            })
+        });
+        const acme = makeNamespace({
+            name: "acme",
+            path: "acme",
+            functions: [open],
+            typedefs: [errorTypedef]
+        });
+        const ir = makeIr(makeNamespace({ namespaces: [acme] }), { packageName: "acme" }, [
+            makeGroup({ id: "group__ACME", name: "ACME", title: "ACME", functions: [open], typedefs: [errorTypedef] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "acme" });
+
+        const page = readFileSync(join(tmpDir, "functions/open.mdx"), "utf-8");
+        expect(page).toContain("**Returns:** see [error_t](../typedefs/errort)");
+    });
+
     it("ignores the empty `std` namespace Doxygen emits for C headers", () => {
         const handle: CppTypedefIr = {
             name: "Handle",

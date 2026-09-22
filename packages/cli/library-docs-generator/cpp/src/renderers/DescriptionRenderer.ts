@@ -11,7 +11,7 @@ import type {
     CppTypeInfoPartsItem,
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
+import { buildLinkPath, getShortName, lookupMemberPath, stripTemplateArgs } from "../context.js";
 import { escapeMdxText, protectSafeTags, restoreSafeTags } from "./shared.js";
 
 // ---------------------------------------------------------------------------
@@ -142,6 +142,8 @@ export function resolveCompoundRef(text: string, refid: string): string {
  * 2. The reference text as a qualified name. Doxygen assigns members of a `\defgroup`
  *    a `group__*` refid that cannot be decoded, so free functions, typedefs, and enums
  *    documented in groups (the norm for C libraries) are only reachable by name.
+ * 3. The reference text qualified by each enclosing scope of the current page, innermost
+ *    first, mirroring C++ unqualified name lookup for grouped members inside namespaces.
  *
  * Returns `undefined` when the target has no page or is the current page.
  */
@@ -158,7 +160,24 @@ export function resolveMemberRefLink(rawText: string, refid: string): string | u
         linkPath = buildLinkPath(qualifiedName);
     }
     linkPath ??= buildLinkPath(text);
+    if (linkPath == null && !text.includes("::")) {
+        for (const scope of enclosingScopes(currentPagePath)) {
+            linkPath = buildLinkPath(`${scope}::${text}`);
+            if (linkPath != null) {
+                break;
+            }
+        }
+    }
     return linkPath === "." ? undefined : linkPath;
+}
+
+/** `a::b::C` → `["a::b", "a"]`: the namespaces/classes a page's symbol is nested in, innermost first. */
+function enclosingScopes(qualifiedPath: string | undefined): string[] {
+    const scopes = stripTemplateArgs(qualifiedPath ?? "")
+        .split("::")
+        .filter(Boolean)
+        .slice(0, -1);
+    return scopes.map((_, i) => scopes.slice(0, scopes.length - i).join("::"));
 }
 
 // ---------------------------------------------------------------------------
