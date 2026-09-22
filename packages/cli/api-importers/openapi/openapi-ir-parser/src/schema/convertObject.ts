@@ -320,7 +320,15 @@ export function convertObject({
                     availability: convertAvailability(inherited.propertySchema),
                     readonly: inherited.readonly,
                     writeonly: inherited.writeonly,
-                    xml: undefined
+                    xml:
+                        encoding?.type === "xml"
+                            ? getXmlPropertyEncoding({
+                                  propertySchema: inherited.propertySchema,
+                                  resolvedPropertySchema: isReferenceObject(inherited.propertySchema)
+                                      ? context.resolveSchemaReference(inherited.propertySchema)
+                                      : inherited.propertySchema
+                              })
+                            : undefined
                 });
             }
             break;
