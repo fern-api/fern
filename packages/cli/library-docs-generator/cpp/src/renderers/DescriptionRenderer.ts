@@ -11,7 +11,7 @@ import type {
     CppTypeInfoPartsItem,
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
+import { buildLinkPath, getShortName, lookupMemberPath, stripTemplateArgs } from "../context.js";
 import { escapeMdxText, protectSafeTags, restoreSafeTags } from "./shared.js";
 
 // ---------------------------------------------------------------------------
@@ -139,8 +139,9 @@ export function resolveCompoundRef(text: string, refid: string): string {
  * Tries (in order):
  * 1. The decoded Doxygen refid, appending the member's short name when the refid
  *    decodes to its enclosing scope (e.g., a namespace) rather than the member itself.
- * 2. The reference text as a qualified name. Doxygen assigns members of a `\defgroup`
- *    a `group__*` refid that cannot be decoded, so free functions, typedefs, and enums
+ * 2. The reference text by name, via `buildScopedLinkPath` (enclosing scopes of the
+ *    current page first, then global). Doxygen assigns members of a `\defgroup` a
+ *    `group__*` refid that cannot be decoded, so free functions, typedefs, and enums
  *    documented in groups (the norm for C libraries) are only reachable by name.
  *
  * Returns `undefined` when the target has no page or is the current page.
@@ -157,8 +158,34 @@ export function resolveMemberRefLink(rawText: string, refid: string): string | u
                 : decodedPath + "::" + shortName;
         linkPath = buildLinkPath(qualifiedName);
     }
-    linkPath ??= buildLinkPath(text);
+    linkPath ??= buildScopedLinkPath(text);
     return linkPath === "." ? undefined : linkPath;
+}
+
+/**
+ * Look a name up the way C++ unqualified lookup would: each enclosing scope of the
+ * current page (innermost first), then the global scope. Qualified names are looked
+ * up as written.
+ */
+export function buildScopedLinkPath(name: string): string | undefined {
+    if (!name.includes("::")) {
+        for (const scope of enclosingScopes(currentPagePath)) {
+            const scoped = buildLinkPath(`${scope}::${name}`);
+            if (scoped != null) {
+                return scoped;
+            }
+        }
+    }
+    return buildLinkPath(name);
+}
+
+/** `a::b::C` → `["a::b", "a"]`: the namespaces/classes a page's symbol is nested in, innermost first. */
+function enclosingScopes(qualifiedPath: string | undefined): string[] {
+    const scopes = stripTemplateArgs(qualifiedPath ?? "")
+        .split("::")
+        .filter(Boolean)
+        .slice(0, -1);
+    return scopes.map((_, i) => scopes.slice(0, scopes.length - i).join("::"));
 }
 
 // ---------------------------------------------------------------------------

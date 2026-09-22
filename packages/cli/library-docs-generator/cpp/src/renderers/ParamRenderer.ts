@@ -447,6 +447,11 @@ export function parseFunctionPointerType(display: string): FunctionPointerParts 
  * Split a parameter declaration (`const float *solution`) into type and name.
  */
 function splitParamDeclaration(decl: string): { type: string; name: string | undefined } {
+    // Function-pointer parameter: the name sits inside the declarator, `void (*name)(int)`.
+    const fnPtr = decl.match(/^(.*?\(\s*\*\s*)([A-Za-z_]\w*)(\s*\)\s*\(.*\))$/s);
+    if (fnPtr?.[1] != null && fnPtr[2] != null && fnPtr[3] != null) {
+        return { type: normalizeAngleBracketSpacing(fnPtr[1] + fnPtr[3]), name: fnPtr[2] };
+    }
     const match = decl.match(/^(.*?[\s*&])\s*([A-Za-z_]\w*)(\[[^\]]*\])?$/s);
     if (match?.[1] == null || match[2] == null) {
         return { type: decl, name: undefined };

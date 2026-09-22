@@ -49,6 +49,7 @@ import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/Metho
 import type {
     CppClassIr,
     CppDocstringIr,
+    CppFunctionIr,
     CppGroupIr,
     CppLibraryDocsIr,
     CppNamespaceIr
@@ -167,8 +168,22 @@ export function isPlainCLibrary(root: CppNamespaceIr): boolean {
         root.namespaces.every((ns) => ns.name === "std" && isEmptyNamespace(ns)) &&
         root.concepts.length === 0 &&
         root.classes.every(isPlainCAggregate) &&
-        root.functions.every((fn) => fn.templateParams.length === 0) &&
-        root.typedefs.every((td) => td.templateParams.length === 0)
+        root.functions.every(isPlainCFunction) &&
+        root.typedefs.every((td) => td.templateParams.length === 0) &&
+        root.enums.every((e) => !e.isScoped && e.underlyingType === undefined) &&
+        root.variables.every((v) => v.templateParams.length === 0 && !v.isConstexpr && !v.isMutable)
+    );
+}
+
+function isPlainCFunction(fn: CppFunctionIr): boolean {
+    return (
+        fn.templateParams.length === 0 &&
+        !fn.isConstexpr &&
+        !fn.isNoexcept &&
+        !fn.isNoDiscard &&
+        !fn.isDeleted &&
+        fn.refQualifier === undefined &&
+        fn.requiresClause === undefined
     );
 }
 
