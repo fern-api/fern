@@ -319,14 +319,26 @@ export function resolveDocstringTypeUrl(
     for (let depth = scopes.length; depth >= 0; depth--) {
         const prefix = depth > 0 ? `${scopes.slice(0, depth).join(".")}.` : "";
         const inScope = candidates.filter((path) => path.startsWith(prefix));
-        if (inScope.length === 1 && inScope[0] != null) {
-            return pathToAnchorUrl(inScope[0], ctx, currentModulePath) ?? undefined;
+        if (inScope.length === 0) {
+            continue;
         }
-        if (inScope.length > 1) {
-            return undefined;
-        }
+        const chosen = pickUniqueCandidate(inScope, ctx);
+        return chosen != null ? (pathToAnchorUrl(chosen, ctx, currentModulePath) ?? undefined) : undefined;
     }
     return undefined;
+}
+
+/**
+ * Among same-named definitions in one scope, the one re-exported from a package `__init__`
+ * (e.g. `pkg.DataModel` -> `pkg.data_model.DataModel`) is the public API; an unexported twin
+ * (typically a private wrapper class) does not make the name ambiguous.
+ */
+function pickUniqueCandidate(candidates: string[], ctx: RenderContext): string | undefined {
+    if (candidates.length === 1) {
+        return candidates[0];
+    }
+    const reexported = candidates.filter((path) => ctx.publicPaths?.has(path));
+    return reexported.length === 1 ? reexported[0] : undefined;
 }
 
 const TYPE_TOKEN_REGEX = /[a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*/g;
