@@ -282,11 +282,6 @@ export async function runRemoteGenerationForGenerator({
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
-        if (replay?.enabled === true) {
-            return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
-                code: CliError.Code.ConfigError
-            });
-        }
         if (generateFullProject === true) {
             return interactiveTaskContext.failAndThrow(
                 "sdk-gen-api does not yet support full-project generation",
