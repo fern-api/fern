@@ -136,7 +136,12 @@ function getSelectedTargetIndexes(
         return new Set();
     }
     if (selection.generatorIndex != null) {
-        return selection.generatorIndex < config.targets.length ? new Set([selection.generatorIndex]) : new Set();
+        if (selection.generatorIndex < 0 || selection.generatorIndex >= config.targets.length) {
+            throw new Error(
+                `Generator index ${selection.generatorIndex} is out of range for SDK Config v1 targets (expected 0-${config.targets.length - 1})`
+            );
+        }
+        return new Set([selection.generatorIndex]);
     }
     if (selection.generatorName != null) {
         return new Set(

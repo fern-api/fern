@@ -230,7 +230,7 @@ describe("loadSdkConfigV1", () => {
         await expect(loadSdkConfigV1(configPath)).rejects.toThrow("Environment variable MISSING_TOKEN is not defined");
     });
 
-    it("resolves credentials only for the selected duplicate-language target", async () => {
+    it("resolves credentials for the selected last target", async () => {
         vi.stubEnv("SELECTED_TOKEN", "selected-secret");
         const configPath = await writeSdkConfigTargets(temporaryDirectories, [
             {
@@ -255,6 +255,28 @@ describe("loadSdkConfigV1", () => {
         expect(
             loaded.payload.targets.map((target) => JSON.parse(target.body.toString("utf8")).targets[0].package)
         ).toEqual([{ packageName: "@acme/first" }, { packageName: "@acme/second" }]);
+    });
+
+    it.each([-1, 2])("rejects out-of-range generator index %s without exposing credentials", async (generatorIndex) => {
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            {
+                language: "typescript",
+                package: { packageName: "@acme/first" },
+                output: { delivery: "files", publish: { registry: "npm", token: "first-secret" } }
+            },
+            {
+                language: "typescript",
+                package: { packageName: "@acme/second" },
+                output: { delivery: "files", publish: { registry: "npm", token: "second-secret" } }
+            }
+        ]);
+
+        const error = await loadSdkConfigV1(configPath, false, { generatorIndex }).catch((cause: unknown) => cause);
+
+        expect(error).toBeInstanceOf(Error);
+        expect(String(error)).toContain(`Generator index ${generatorIndex} is out of range`);
+        expect(String(error)).not.toContain("first-secret");
+        expect(String(error)).not.toContain("second-secret");
     });
 
     it("rejects missing credentials on the selected target", async () => {
