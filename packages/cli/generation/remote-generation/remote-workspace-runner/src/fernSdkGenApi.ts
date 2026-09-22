@@ -20,10 +20,10 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
-    selectUnpinnedSdkConfigRoute,
+    selectUnpinnedGeneratorConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
-import { isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
+import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
@@ -234,7 +234,7 @@ export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLa
     return getGeneratorLanguage(generatorName);
 }
 
-/** Validates a legacy Fern target and selects its compatible payload route without remote work. */
+/** Validates a legacy Fern target and selects its pinned or unpinned payload route without remote work. */
 export function selectFernSdkGenApiRoute(
     generatorInvocation: generatorsYml.GeneratorInvocation,
     configKind: GenerationConfigKind = "legacy-fern"
@@ -242,6 +242,14 @@ export function selectFernSdkGenApiRoute(
     const language = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (language == null) {
         return undefined;
+    }
+    if (generatorInvocation.version === FERN_GENERATOR_LATEST_VERSION && configKind === "legacy-fern") {
+        return selectUnpinnedGeneratorConfigRoute({
+            generatorId: generatorInvocation.name,
+            language: generatorInvocation.language ?? language,
+            configKind,
+            versionSource: "fern-latest"
+        });
     }
     // `configKind` is what the caller can supply for this generator: "sdk-config-v1" when a
     // `--sdk-config` document was given or the generator synthesizes one from generators.yml
@@ -1275,10 +1283,15 @@ function validateParticipantRoute(
     const { generatorInvocation, sdkGenApiRoute } = participant;
     if (sdkGenApiRoute?.requestedVersion == null) {
         if (sdkGenApiRoute != null) {
-            if (!isSdkConfigUnpinnedGeneratorVersion(generatorInvocation.version)) {
-                throw new Error("An unpinned sdk-gen-api route must use the internal SDK Config generator marker");
+            if (!isGeneratorVersionForUnpinnedRoute(sdkGenApiRoute, generatorInvocation.version)) {
+                throw unpinnedRouteVersionMismatchError(sdkGenApiRoute, generatorInvocation.version);
             }
-            return selectUnpinnedSdkConfigRoute({ generatorId: generatorInvocation.name, language });
+            return selectUnpinnedGeneratorConfigRoute({
+                generatorId: generatorInvocation.name,
+                language,
+                configKind: sdkGenApiRoute.configKind,
+                versionSource: sdkGenApiRoute.versionSource
+            });
         }
         return validateGeneratorConfigCompatibility({
             generatorId: generatorInvocation.name,
@@ -1325,10 +1338,16 @@ function resolveFernGeneratorWireVersion(
     if (route.requestedVersion != null) {
         return route.requestedVersion;
     }
-    if (!isSdkConfigUnpinnedGeneratorVersion(invocation.version)) {
-        throw new Error("An unpinned sdk-gen-api route must use the internal SDK Config generator marker");
+    if (!isGeneratorVersionForUnpinnedRoute(route, invocation.version)) {
+        throw unpinnedRouteVersionMismatchError(route, invocation.version);
     }
     return undefined;
+}
+
+function unpinnedRouteVersionMismatchError(route: GenerationConfigRoute, invocationVersion: string): Error {
+    return new Error(
+        `An unpinned sdk-gen-api route does not match its generator version representation: invocationVersion=${JSON.stringify(invocationVersion)}; configKind=${route.configKind}; versionSource=${route.requestedVersion == null ? route.versionSource : "pinned"}`
+    );
 }
 
 function resolveFernGeneratorVersionKey(

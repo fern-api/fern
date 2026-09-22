@@ -404,6 +404,7 @@ export async function runRemoteGenerationForGenerator({
                     organization,
                     cliVersion: workspace.cliVersion,
                     generatorInvocation: candidate.generatorInvocation,
+                    sdkGenApiRoute,
                     sdkVersion: candidate.sdkVersion,
                     apiVersion: ir.specVersion,
                     token,

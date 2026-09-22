@@ -42,9 +42,10 @@ import {
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
     selectGeneratorConfigRoute,
+    selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
-import { isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
+import { FERN_GENERATOR_LATEST_VERSION, isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -329,6 +330,9 @@ function resolveSuppliedConfigKind({
         return "sdk-config-v1";
     }
     if (language != null && synthesizesSdkConfig(resolved.name)) {
+        if (resolved.version === FERN_GENERATOR_LATEST_VERSION) {
+            return "sdk-config-v1";
+        }
         return selectGeneratorConfigRoute({
             generatorId: resolved.name,
             language: resolved.language ?? language,
@@ -422,6 +426,21 @@ export function prepareFernSdkGenApiRoutes({
                     throw new Error(`SDK Config v1 generation does not recognize generator ${resolved.name}`);
                 }
                 route = selectUnpinnedSdkConfigRoute({ generatorId: resolved.name, language });
+            } else if (
+                sdkConfigV1 == null &&
+                resolved.version === FERN_GENERATOR_LATEST_VERSION &&
+                synthesizesSdkConfig(resolved.name)
+            ) {
+                const language = resolved.language ?? configuredLanguage;
+                if (language == null) {
+                    throw new Error(`SDK Config synthesis does not recognize generator ${resolved.name}`);
+                }
+                route = selectUnpinnedGeneratorConfigRoute({
+                    generatorId: resolved.name,
+                    language,
+                    configKind: "sdk-config-v1",
+                    versionSource: "fern-latest"
+                });
             } else {
                 route = selectFernSdkGenApiRoute(
                     resolved,

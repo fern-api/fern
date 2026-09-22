@@ -29,10 +29,10 @@ function definition(): FernDefinition {
     };
 }
 
-function mcpInvocation(): generatorsYml.GeneratorInvocation {
+function mcpInvocation(version = "0.1.0"): generatorsYml.GeneratorInvocation {
     return {
         name: "fernapi/fern-mcp-server",
-        version: "0.1.0",
+        version,
         language: "mcp",
         config: { serverName: "weather" },
         keywords: [],
@@ -110,6 +110,22 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
                 }
             })
         );
+    });
+
+    it("synthesizes an unpinned MCP payload without serializing latest", () => {
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation("latest"),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(payload.payloadKind).toBe("sdk-config-v1");
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            targets: [{ language: "mcp" }]
+        });
+        expect(payload.body.toString("utf8")).not.toContain('"latest"');
     });
 
     it("refuses source types SDK Config generation cannot represent", () => {
