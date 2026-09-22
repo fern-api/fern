@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --docs` now sends an `X-Fern-Agent` header when run from a coding
+    agent (Claude Code, Cursor, Codex, Devin, Gemini CLI) so agent-driven docs
+    publishes can be measured separately from human ones.
+  type: internal
