@@ -10,9 +10,11 @@ import {
     getPublicPath,
     getTypeDisplay,
     getTypePathForSignature,
+    linkDocstringType,
     linkTypeInfo,
     type RenderContext,
     renderCodeBlockWithLinks,
+    resolveDocstringTypeUrl,
     type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 
@@ -707,5 +709,68 @@ describe("module file links", () => {
             })
         );
         expect(buildTypeLinkData(ir).packageModules).toEqual(new Set(["pkg"]));
+    });
+});
+
+describe("resolveDocstringTypeUrl", () => {
+    const validPaths = new Set([
+        "pkg",
+        "pkg.lp",
+        "pkg.lp.data_model",
+        "pkg.lp.data_model.DataModel",
+        "pkg.lp.data_model.DataModel.set_csr",
+        "pkg.lp.solver",
+        "pkg.lp.solver.Solve",
+        "pkg.lp.solution.Solution",
+        "pkg.routing",
+        "pkg.routing.vr.DataModel",
+        "pkg.routing.vr.Solve",
+        "pkg.Unique"
+    ]);
+    const ctx = makeCtx({ validPaths, linkToModuleFile: (m) => `../${m.replace(/\./g, "/")}.mdx` });
+
+    it("resolves an unqualified class name to the unique definition in the nearest enclosing package", () => {
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel"
+        );
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.routing.vr")).toBe("#pkg-routing-vr-DataModel");
+    });
+
+    it("leaves names that are ambiguous at every scope unlinked", () => {
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.other")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("DataModel", ctx, undefined)).toBeUndefined();
+    });
+
+    it("resolves a globally unique name from any module", () => {
+        expect(resolveDocstringTypeUrl("Solution", ctx, "pkg.routing.vr")).toBe(
+            "../pkg/lp/solution.mdx#pkg-lp-solution-Solution"
+        );
+        expect(resolveDocstringTypeUrl("Unique", ctx, undefined)).toBe("../pkg.mdx#pkg-Unique");
+    });
+
+    it("resolves qualified paths like signature types", () => {
+        expect(resolveDocstringTypeUrl("pkg.lp.solution.Solution", ctx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/solution.mdx#pkg-lp-solution-Solution"
+        );
+        expect(resolveDocstringTypeUrl("np.ndarray", ctx, "pkg.lp.solver")).toBeUndefined();
+    });
+
+    it("never links lowercase names (builtins, modules, functions)", () => {
+        expect(resolveDocstringTypeUrl("int", ctx, "pkg.lp.solver")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("solver", ctx, "pkg.lp")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("set_csr", ctx, "pkg.lp.data_model")).toBeUndefined();
+    });
+
+    it("links every resolvable token in a docstring type string and quotes the rest", () => {
+        expect(linkDocstringType("list of DataModel", ctx, "pkg.lp.solver")).toBe(
+            "`list of` [`DataModel`](../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel)"
+        );
+        expect(linkDocstringType("DataModel or None", ctx, "pkg.lp.solver")).toBe(
+            "[`DataModel`](../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel) `or None`"
+        );
+        expect(linkDocstringType("int", ctx, "pkg.lp.solver")).toBeUndefined();
+        expect(linkDocstringType("Optional[Solution]", ctx, "pkg.lp.solver")).toBe(
+            "`Optional[` [`Solution`](../pkg/lp/solution.mdx#pkg-lp-solution-Solution) `]`"
+        );
     });
 });

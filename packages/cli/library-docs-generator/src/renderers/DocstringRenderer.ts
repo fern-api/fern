@@ -7,6 +7,13 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { escapeMdx, escapeMdxPreservingCodeBlocks, formatTypeAnnotation } from "../utils/mdx.js";
+import { linkDocstringType, type RenderContext } from "../utils/TypeLinkResolver.js";
+
+/** Where the docstring is rendered; enables links from documented types to their generated pages. */
+export interface DocstringLinkContext {
+    ctx: RenderContext;
+    currentModulePath?: string;
+}
 
 /**
  * Sanitize description text and wrap its code blocks for MDX rendering.
@@ -25,6 +32,13 @@ function renderDescriptionText(text: string): string {
     );
 }
 
+function linkDocstringTypeIn(type: string, linkContext: DocstringLinkContext | undefined): string | undefined {
+    if (linkContext == null) {
+        return undefined;
+    }
+    return linkDocstringType(type, linkContext.ctx, linkContext.currentModulePath);
+}
+
 /**
  * Render a full docstring to MDX, including all structured sections:
  * description, parameters, returns, raises, examples, notes, warnings.
@@ -36,7 +50,8 @@ function renderDescriptionText(text: string): string {
 export function renderDocstring(
     docstring: FdrAPI.libraryDocs.DocstringIr | null | undefined,
     paramAnnotations?: Record<string, string>,
-    returnAnnotation?: string
+    returnAnnotation?: string,
+    linkContext?: DocstringLinkContext
 ): string {
     if (!docstring) {
         return "";
@@ -64,20 +79,22 @@ export function renderDocstring(
                 attrs.push(`default="${escapeMdx(param.default)}"`);
             }
 
-            // ParamField is a JSX context — use escapeMdx (code blocks inside JSX are unreliable)
-            lines.push(
-                `<ParamField ${attrs.join(" ")}>`,
-                param.description ? escapeMdx(param.description) : "",
-                "</ParamField>",
-                ""
-            );
+            // ParamField is a JSX context — use escapeMdx (code blocks inside JSX are unreliable).
+            // The `type` prop renders as plain text, so linked types go in the body.
+            const linkedType = type ? linkDocstringTypeIn(type, linkContext) : undefined;
+            const body = [linkedType, param.description ? escapeMdx(param.description) : undefined]
+                .filter((part): part is string => part != null && part !== "")
+                .join(" — ");
+
+            lines.push(`<ParamField ${attrs.join(" ")}>`, body, "</ParamField>", "");
         }
     }
 
     // Returns
     if (docstring.returns) {
         const type = docstring.returns.type || returnAnnotation || "";
-        const typeStr = type ? ` \`${formatTypeAnnotation(type)}\`` : "";
+        const linkedType = type ? linkDocstringTypeIn(type, linkContext) : undefined;
+        const typeStr = linkedType ? ` ${linkedType}` : type ? ` \`${formatTypeAnnotation(type)}\`` : "";
         lines.push(`**Returns:**${typeStr}`, "");
         if (docstring.returns.description) {
             lines.push(renderDescriptionText(docstring.returns.description), "");

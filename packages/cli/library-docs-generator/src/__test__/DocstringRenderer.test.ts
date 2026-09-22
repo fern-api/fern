@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
 import { renderDocstring, renderSimpleDocstring } from "../renderers/DocstringRenderer";
+import type { RenderContext } from "../utils/TypeLinkResolver";
 
 const NEMO_FIXTURES: Record<string, FdrAPI.libraryDocs.DocstringIr> = JSON.parse(
     readFileSync(join(__dirname, "fixtures", "nemo-docstrings.json"), "utf-8")
@@ -569,5 +570,56 @@ describe("renderSimpleDocstring (NeMo fixtures)", () => {
         expect(result).not.toContain("{doctest}");
         expect(result).toContain(">>> import torch");
         expect(result).toContain("</CodeBlock>");
+    });
+});
+
+describe("renderDocstring type links", () => {
+    const ctx: RenderContext = {
+        baseSlug: "reference",
+        validPaths: new Set(["pkg.lp.data_model.DataModel", "pkg.lp.solution.Solution"]),
+        pathAliases: new Map(),
+        linkToModuleFile: (m) => `../generated/${m.replace(/\./g, "/")}.mdx`
+    };
+    const solveDocstring = docstring({
+        params: [
+            { name: "data_model", type: "DataModel", description: "The problem.", default: undefined },
+            { name: "log_file", type: "str", description: "Where to log.", default: undefined }
+        ],
+        returns: { type: "Solution", description: "The solution." }
+    });
+
+    it("links documented parameter and return types to their generated pages", () => {
+        const result = renderDocstring(solveDocstring, undefined, undefined, {
+            ctx,
+            currentModulePath: "pkg.lp.solver"
+        });
+        expect(result).toContain(
+            '<ParamField path="data_model" type="DataModel">\n[`DataModel`](../generated/pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel) — The problem.\n</ParamField>'
+        );
+        expect(result).toContain('<ParamField path="log_file" type="str">\nWhere to log.\n</ParamField>');
+        expect(result).toContain(
+            "**Returns:** [`Solution`](../generated/pkg/lp/solution.mdx#pkg-lp-solution-Solution)"
+        );
+    });
+
+    it("renders types as plain code without a link context", () => {
+        const result = renderDocstring(solveDocstring);
+        expect(result).toContain('<ParamField path="data_model" type="DataModel">\nThe problem.\n</ParamField>');
+        expect(result).toContain("**Returns:** `Solution`");
+        expect(result).not.toContain("](");
+    });
+
+    it("links a type that only appears in the signature annotation", () => {
+        const result = renderDocstring(
+            docstring({
+                params: [{ name: "data_model", type: undefined, description: "The problem.", default: undefined }]
+            }),
+            { data_model: "DataModel" },
+            undefined,
+            { ctx, currentModulePath: "pkg.lp.solver" }
+        );
+        expect(result).toContain(
+            "[`DataModel`](../generated/pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel) — The problem."
+        );
     });
 });

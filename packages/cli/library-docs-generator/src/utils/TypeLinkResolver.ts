@@ -268,6 +268,101 @@ export function extractLinksFromTypes(
     return links;
 }
 
+const shortNameIndexCache = new WeakMap<Set<string>, Map<string, string[]>>();
+
+/** Index definition paths by their last segment, e.g. "DataModel" -> ["pkg.a.DataModel", "pkg.b.DataModel"]. */
+function getShortNameIndex(validPaths: Set<string>): Map<string, string[]> {
+    const cached = shortNameIndexCache.get(validPaths);
+    if (cached != null) {
+        return cached;
+    }
+    const index = new Map<string, string[]>();
+    for (const path of validPaths) {
+        const dot = path.lastIndexOf(".");
+        if (dot < 0) {
+            continue;
+        }
+        const name = path.slice(dot + 1);
+        const paths = index.get(name);
+        if (paths != null) {
+            paths.push(path);
+        } else {
+            index.set(name, [path]);
+        }
+    }
+    shortNameIndexCache.set(validPaths, index);
+    return index;
+}
+
+/**
+ * Resolve a type name as written in a docstring ("DataModel" or "pkg.mod.DataModel") to a
+ * definition URL. Unqualified names must be CapWords (class convention, which also keeps builtins,
+ * modules and functions out) and resolve to the unique definition in the nearest enclosing package
+ * of `currentModulePath`; ambiguous or unknown names are left unlinked.
+ */
+export function resolveDocstringTypeUrl(
+    typeName: string,
+    ctx: RenderContext,
+    currentModulePath?: string
+): string | undefined {
+    if (typeName.includes(".")) {
+        return extractLinksFromTypes([typeName], ctx, currentModulePath)[typeName];
+    }
+    if (!/^[A-Z]/.test(typeName)) {
+        return undefined;
+    }
+    const candidates = getShortNameIndex(ctx.validPaths).get(typeName);
+    if (candidates == null) {
+        return undefined;
+    }
+    const scopes = currentModulePath ? currentModulePath.split(".") : [];
+    for (let depth = scopes.length; depth >= 0; depth--) {
+        const prefix = depth > 0 ? `${scopes.slice(0, depth).join(".")}.` : "";
+        const inScope = candidates.filter((path) => path.startsWith(prefix));
+        if (inScope.length === 1 && inScope[0] != null) {
+            return pathToAnchorUrl(inScope[0], ctx, currentModulePath) ?? undefined;
+        }
+        if (inScope.length > 1) {
+            return undefined;
+        }
+    }
+    return undefined;
+}
+
+const TYPE_TOKEN_REGEX = /[a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*/g;
+
+/**
+ * Render a docstring type string as inline markdown, linking every type name that resolves to a
+ * documented definition. Returns undefined when nothing in the string is linkable.
+ *
+ * "list of DataModel" -> "`list of` [`DataModel`](../data_model.mdx#...)"
+ */
+export function linkDocstringType(typeStr: string, ctx: RenderContext, currentModulePath?: string): string | undefined {
+    let linked = false;
+    const parts: string[] = [];
+    let last = 0;
+    for (const match of typeStr.matchAll(TYPE_TOKEN_REGEX)) {
+        const url = resolveDocstringTypeUrl(match[0], ctx, currentModulePath);
+        if (url == null) {
+            continue;
+        }
+        linked = true;
+        parts.push(renderPlainTypeText(typeStr.slice(last, match.index)));
+        parts.push(`[\`${escapeMdx(match[0])}\`](${url})`);
+        last = match.index + match[0].length;
+    }
+    if (!linked) {
+        return undefined;
+    }
+    parts.push(renderPlainTypeText(typeStr.slice(last)));
+    return parts.filter((part) => part !== "").join(" ");
+}
+
+function renderPlainTypeText(text: string): string {
+    const trimmed = text.trim();
+    return trimmed === "" ? "" : `\`${escapeMdx(trimmed)}\``;
+}
+
 /**
  * Get display string from TypeInfo (short name for tables/docstrings).
  */
