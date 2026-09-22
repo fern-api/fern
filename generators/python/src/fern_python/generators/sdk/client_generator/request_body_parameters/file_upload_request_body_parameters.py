@@ -242,13 +242,24 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             _key_name = self._get_file_property_name(file_property)
                             if file_property_as_union.content_type is not None:
                                 writer.write(f'"{_key_wire}": ')
-                                writer.write_node(
-                                    self._context.core_utilities.with_content_type(
-                                        AST.Expression(
-                                            f'file={_key_name}, default_content_type="{file_property_as_union.content_type}"'
+                                if file_property_as_union.type == "fileArray":
+                                    writer.write("[")
+                                    writer.write_node(
+                                        self._context.core_utilities.with_content_type(
+                                            AST.Expression(
+                                                f'file=_file, default_content_type="{file_property_as_union.content_type}"'
+                                            )
                                         )
                                     )
-                                )
+                                    writer.write(f" for _file in {_key_name}]")
+                                else:
+                                    writer.write_node(
+                                        self._context.core_utilities.with_content_type(
+                                            AST.Expression(
+                                                f'file={_key_name}, default_content_type="{file_property_as_union.content_type}"'
+                                            )
+                                        )
+                                    )
                             else:
                                 writer.write(f'"{_key_wire}": {_key_name}')
 
