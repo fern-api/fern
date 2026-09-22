@@ -9,7 +9,7 @@ import com.seed.api.requests.NonNullableObject;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -61,6 +61,15 @@ public class SeedApiClient {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

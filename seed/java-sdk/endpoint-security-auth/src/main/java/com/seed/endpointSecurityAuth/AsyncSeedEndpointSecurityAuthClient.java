@@ -9,7 +9,7 @@ import com.seed.endpointSecurityAuth.resources.auth.AsyncAuthClient;
 import com.seed.endpointSecurityAuth.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedEndpointSecurityAuthClient {
+public class AsyncSeedEndpointSecurityAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -28,6 +28,15 @@ public class AsyncSeedEndpointSecurityAuthClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

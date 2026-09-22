@@ -8,7 +8,7 @@ import com.seed.errorProperty.core.Suppliers;
 import com.seed.errorProperty.resources.propertybasederror.PropertyBasedErrorClient;
 import java.util.function.Supplier;
 
-public class SeedErrorPropertyClient {
+public class SeedErrorPropertyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<PropertyBasedErrorClient> propertyBasedErrorClient;
@@ -20,6 +20,15 @@ public class SeedErrorPropertyClient {
 
     public PropertyBasedErrorClient propertyBasedError() {
         return this.propertyBasedErrorClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedErrorPropertyClientBuilder builder() {

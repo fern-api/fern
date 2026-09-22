@@ -8,7 +8,7 @@ import com.seed.variables.core.Suppliers;
 import com.seed.variables.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
-public class SeedVariablesClient {
+public class SeedVariablesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class SeedVariablesClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedVariablesClientBuilder builder() {

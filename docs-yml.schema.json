@@ -6208,6 +6208,23 @@
         "cards"
       ]
     },
+    "docs.BreadcrumbsConfig": {
+      "type": "object",
+      "properties": {
+        "current-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `current-page` is set to true, the current page is appended to the breadcrumb trail\nas a non-clickable item. Defaults to false."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6397,6 +6414,17 @@
             }
           ],
           "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
+        },
+        "breadcrumbs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BreadcrumbsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Configures the breadcrumb trail rendered above the page title."
         }
       },
       "additionalProperties": false

@@ -11,7 +11,7 @@ import com.seed.api.types.CreatePlantResponse;
 import com.seed.api.types.CreatePlantWithSchemaResponse;
 import com.seed.api.types.UpdatePlantResponse;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -83,6 +83,15 @@ public class SeedApiClient {
     public CreatePlantWithSchemaResponse createPlantWithSchema(
             CreatePlantWithSchemaRequest request, RequestOptions requestOptions) {
         return this.rawClient.createPlantWithSchema(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

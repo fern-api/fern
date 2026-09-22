@@ -11,7 +11,7 @@ import com.seed.api.types.TokenResponse;
 import com.seed.api.types.User;
 import java.util.List;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -58,6 +58,15 @@ public class SeedApiClient {
 
     public TokenResponse getToken(TokenRequest request, RequestOptions requestOptions) {
         return this.rawClient.getToken(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

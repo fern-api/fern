@@ -126,4 +126,6 @@ export interface LayoutConfig {
      * availability badge is unaffected by this setting.
      */
     showNavAvailabilityBadges?: boolean;
+    /** Configures the breadcrumb trail rendered above the page title. */
+    breadcrumbs?: FernDocsConfig.BreadcrumbsConfig;
 }

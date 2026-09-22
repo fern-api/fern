@@ -25,6 +25,7 @@ export * from "./BackgroundImageConfiguration.js";
 export * from "./BackgroundImageThemedConfig.js";
 export * from "./BlogConfiguration.js";
 export * from "./BodyThemeConfig.js";
+export * from "./BreadcrumbsConfig.js";
 export * from "./ChangelogConfiguration.js";
 export * from "./ChangelogFolderRelativePath.js";
 export * from "./ChangelogLayout.js";

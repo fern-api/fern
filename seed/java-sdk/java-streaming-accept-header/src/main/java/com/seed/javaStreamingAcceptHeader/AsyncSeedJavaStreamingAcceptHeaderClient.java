@@ -8,7 +8,7 @@ import com.seed.javaStreamingAcceptHeader.core.Suppliers;
 import com.seed.javaStreamingAcceptHeader.resources.dummy.AsyncDummyClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedJavaStreamingAcceptHeaderClient {
+public class AsyncSeedJavaStreamingAcceptHeaderClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncDummyClient> dummyClient;
@@ -20,6 +20,15 @@ public class AsyncSeedJavaStreamingAcceptHeaderClient {
 
     public AsyncDummyClient dummy() {
         return this.dummyClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaStreamingAcceptHeaderClientBuilder builder() {

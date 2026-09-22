@@ -8,7 +8,7 @@ import com.seed.singleProperty.core.Suppliers;
 import com.seed.singleProperty.resources.singleproperty.SinglePropertyClient;
 import java.util.function.Supplier;
 
-public class SeedSinglePropertyClient {
+public class SeedSinglePropertyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<SinglePropertyClient> singlePropertyClient;
@@ -20,6 +20,15 @@ public class SeedSinglePropertyClient {
 
     public SinglePropertyClient singleProperty() {
         return this.singlePropertyClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedSinglePropertyClientBuilder builder() {

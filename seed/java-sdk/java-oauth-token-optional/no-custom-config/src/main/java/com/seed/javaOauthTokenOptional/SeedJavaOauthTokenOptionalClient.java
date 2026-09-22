@@ -8,7 +8,7 @@ import com.seed.javaOauthTokenOptional.core.Suppliers;
 import com.seed.javaOauthTokenOptional.resources.auth.AuthClient;
 import java.util.function.Supplier;
 
-public class SeedJavaOauthTokenOptionalClient {
+public class SeedJavaOauthTokenOptionalClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AuthClient> authClient;
@@ -20,6 +20,15 @@ public class SeedJavaOauthTokenOptionalClient {
 
     public AuthClient auth() {
         return this.authClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

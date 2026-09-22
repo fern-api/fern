@@ -41,8 +41,11 @@ import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
-    selectGeneratorConfigRoute
+    selectGeneratorConfigRoute,
+    selectUnpinnedGeneratorConfigRoute,
+    selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
+import { FERN_GENERATOR_LATEST_VERSION, isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -327,6 +330,9 @@ function resolveSuppliedConfigKind({
         return "sdk-config-v1";
     }
     if (language != null && synthesizesSdkConfig(resolved.name)) {
+        if (resolved.version === FERN_GENERATOR_LATEST_VERSION) {
+            return "sdk-config-v1";
+        }
         return selectGeneratorConfigRoute({
             generatorId: resolved.name,
             language: resolved.language ?? language,
@@ -386,6 +392,11 @@ export function prepareFernSdkGenApiRoutes({
             if (sdkConfigV1 != null && configuredTarget == null) {
                 throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage}`);
             }
+            if (sdkConfigV1 == null && isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                throw new Error(
+                    "The internal unpinned SDK Config generator marker cannot be used without SDK Config v1"
+                );
+            }
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
@@ -403,10 +414,39 @@ export function prepareFernSdkGenApiRoutes({
                 }
                 return { generatorInvocation: resolved, route: undefined, error: undefined };
             }
-            const route = selectFernSdkGenApiRoute(
-                resolved,
-                resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
-            );
+            let route: GenerationConfigRoute | undefined;
+            if (configuredTarget != null && configuredTarget.generatorVersion == null) {
+                if (!isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
+                    throw new Error(
+                        "An SDK Config target without generatorVersion must use the internal unpinned generator marker"
+                    );
+                }
+                const language = resolved.language ?? configuredLanguage;
+                if (language == null) {
+                    throw new Error(`SDK Config v1 generation does not recognize generator ${resolved.name}`);
+                }
+                route = selectUnpinnedSdkConfigRoute({ generatorId: resolved.name, language });
+            } else if (
+                sdkConfigV1 == null &&
+                resolved.version === FERN_GENERATOR_LATEST_VERSION &&
+                synthesizesSdkConfig(resolved.name)
+            ) {
+                const language = resolved.language ?? configuredLanguage;
+                if (language == null) {
+                    throw new Error(`SDK Config synthesis does not recognize generator ${resolved.name}`);
+                }
+                route = selectUnpinnedGeneratorConfigRoute({
+                    generatorId: resolved.name,
+                    language,
+                    configKind: "sdk-config-v1",
+                    versionSource: "fern-latest"
+                });
+            } else {
+                route = selectFernSdkGenApiRoute(
+                    resolved,
+                    resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
+                );
+            }
             if (route != null) {
                 try {
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
@@ -428,7 +468,7 @@ export function prepareFernSdkGenApiRoutes({
                     return { generatorInvocation: resolved, route: undefined, error: undefined };
                 }
                 throw new Error(
-                    `Cannot route ${resolved.name} ${resolved.version} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
+                    `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
                 );
             }
             return {

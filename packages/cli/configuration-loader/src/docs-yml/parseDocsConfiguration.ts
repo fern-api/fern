@@ -702,6 +702,11 @@ function convertLayoutConfig(
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when `breadcrumbs.current-page` is true the current page is appended to
+        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }

@@ -1,0 +1,9 @@
+- summary: |
+    `DateTime.MarshalJSON` now formats with `time.RFC3339Nano`, so fractional seconds
+    survive a decode/encode round-trip. Whole-second values marshal byte-identically
+    to before because `.999999999` omits trailing zeros.
+  type: fix
+- summary: |
+    `Date.UnmarshalJSON` now accepts date-time input (e.g. `2025-02-15T00:00:00Z`) as
+    a fallback, preserving the calendar date exactly as written and discarding the time.
+  type: fix

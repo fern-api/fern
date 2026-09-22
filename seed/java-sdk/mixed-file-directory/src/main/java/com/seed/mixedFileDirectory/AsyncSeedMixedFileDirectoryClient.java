@@ -9,7 +9,7 @@ import com.seed.mixedFileDirectory.resources.organization.AsyncOrganizationClien
 import com.seed.mixedFileDirectory.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedMixedFileDirectoryClient {
+public class AsyncSeedMixedFileDirectoryClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncOrganizationClient> organizationClient;
@@ -28,6 +28,15 @@ public class AsyncSeedMixedFileDirectoryClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedMixedFileDirectoryClientBuilder builder() {

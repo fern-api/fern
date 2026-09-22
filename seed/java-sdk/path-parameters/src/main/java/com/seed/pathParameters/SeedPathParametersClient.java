@@ -9,7 +9,7 @@ import com.seed.pathParameters.resources.organizations.OrganizationsClient;
 import com.seed.pathParameters.resources.user.UserClient;
 import java.util.function.Supplier;
 
-public class SeedPathParametersClient {
+public class SeedPathParametersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<OrganizationsClient> organizationsClient;
@@ -28,6 +28,15 @@ public class SeedPathParametersClient {
 
     public UserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedPathParametersClientBuilder builder() {

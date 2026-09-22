@@ -8,7 +8,7 @@ import com.seed.contentTypes.core.Suppliers;
 import com.seed.contentTypes.resources.service.AsyncServiceClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedContentTypesClient {
+public class AsyncSeedContentTypesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class AsyncSeedContentTypesClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedContentTypesClientBuilder builder() {
