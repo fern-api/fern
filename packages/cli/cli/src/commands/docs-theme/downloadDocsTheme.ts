@@ -43,17 +43,13 @@ export async function downloadDocsTheme({
         await mkdir(outDir, { recursive: true });
         context.logger.info(`Downloading theme "${name}" for org "${orgId}" to ${outDir}...`);
 
-        let resolved: Record<string, unknown>;
-        try {
-            resolved = await resolveThemeFileUrls(config, outDir);
-        } catch (err) {
+        const resolved = await resolveThemeFileUrls(config, outDir).catch((err: unknown) =>
             context.failAndThrow(
                 `Failed to download assets for theme "${name}": ${describeFetchError(err)}`,
                 undefined,
                 { code: CliError.Code.NetworkError }
-            );
-            return;
-        }
+            )
+        );
 
         const themeYml = relativizeAssetPaths(resolved, outDir);
         await writeFile(path.join(outDir, "theme.yml"), yaml.dump(themeYml), "utf-8");
@@ -115,10 +111,14 @@ export function isThemeResponse(value: unknown): value is { config: Record<strin
  */
 export function relativizeAssetPaths(value: unknown, outDir: string): unknown {
     if (typeof value === "string") {
-        if (path.isAbsolute(value) && value.startsWith(outDir + path.sep)) {
-            return path.relative(outDir, value).split(path.sep).join("/");
+        if (!path.isAbsolute(value)) {
+            return value;
         }
-        return value;
+        const rel = path.relative(outDir, value);
+        if (rel === "" || rel.startsWith("..") || path.isAbsolute(rel)) {
+            return value;
+        }
+        return rel.split(path.sep).join("/");
     }
     if (Array.isArray(value)) {
         return value.map((item) => relativizeAssetPaths(item, outDir));
