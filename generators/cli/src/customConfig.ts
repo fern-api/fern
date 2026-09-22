@@ -1,5 +1,5 @@
 import { GeneratorConfig } from "@fern-api/base-generator";
-import type { CargoPackageIdentity } from "./patchCargoToml.js";
+import type { CargoDependencySpec, CargoDependencyValue, CargoPackageIdentity } from "./patchCargoToml.js";
 
 /**
  * User-supplied configuration the CLI generator reads from
@@ -84,6 +84,30 @@ export interface FernCliCustomConfig {
      * on it. Only `[package]` metadata is templated.
      */
     packageIdentity?: CargoPackageIdentity;
+
+    /**
+     * Additional crates to declare in the generated root `Cargo.toml`'s
+     * `[dependencies]`, keyed by crate name. Intended for code kept in
+     * `.fernignore` (custom command handlers, custom auth) that needs
+     * crates the CLI runtime itself does not ship.
+     *
+     * Each value is either a version requirement string (`"1.16"`) or a
+     * full dependency table (`{ version, features, optional,
+     * defaultFeatures, package, path, git, branch, rev, registry }`),
+     * mirroring the Rust SDK generator's `extraDependencies`.
+     *
+     * A name that collides with a crate the CLI runtime already depends
+     * on is rejected: the bundled feature sets are load-bearing for the
+     * vendored `src/` tree, so they are not overridable from config.
+     *
+     * The shipped `Cargo.lock` is not re-resolved at generation time (no
+     * cargo or network in the generator), so the first `cargo build`
+     * after generation adds the new crates to the lockfile.
+     */
+    extraDependencies?: Record<string, CargoDependencyValue>;
+
+    /** Same as {@link extraDependencies}, for `[dev-dependencies]`. */
+    extraDevDependencies?: Record<string, CargoDependencyValue>;
 
     /**
      * Split the generated `<binaryName>-types` crate into one crate per API,
@@ -452,8 +476,107 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
     }
+    if ("extraDependencies" in obj && obj.extraDependencies !== undefined) {
+        result.extraDependencies = validateDependencyMap(obj.extraDependencies, "customConfig.extraDependencies");
+    }
+    if ("extraDevDependencies" in obj && obj.extraDevDependencies !== undefined) {
+        result.extraDevDependencies = validateDependencyMap(
+            obj.extraDevDependencies,
+            "customConfig.extraDevDependencies",
+            { allowOptional: false }
+        );
+    }
     if ("distribution" in obj && obj.distribution !== undefined) {
         result.distribution = validateDistribution(obj.distribution);
+    }
+    return result;
+}
+
+const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;
+const DEPENDENCY_SPEC_BOOLEAN_FIELDS = ["optional", "defaultFeatures"] as const;
+const DEPENDENCY_SPEC_FIELDS: ReadonlySet<string> = new Set([
+    ...DEPENDENCY_SPEC_STRING_FIELDS,
+    ...DEPENDENCY_SPEC_BOOLEAN_FIELDS,
+    "features"
+]);
+
+function isStringArray(value: unknown): value is string[] {
+    return Array.isArray(value) && value.every((entry) => typeof entry === "string");
+}
+
+function validateDependencyMap(
+    raw: unknown,
+    path: string,
+    options: { allowOptional: boolean } = { allowOptional: true }
+): Record<string, CargoDependencyValue> {
+    const obj = asConfigObject(raw, path);
+    const result: Record<string, CargoDependencyValue> = {};
+    for (const [name, value] of Object.entries(obj)) {
+        if (!CRATE_NAME_PATTERN.test(name)) {
+            throw new Error(
+                `Invalid ${path}: "${name}" is not a valid cargo crate name. ` +
+                    "It must start with a letter and contain only [A-Za-z0-9_-]."
+            );
+        }
+        if (typeof value === "string") {
+            if (value.length === 0) {
+                throw new Error(`Invalid ${path}.${name}: version requirement must not be empty.`);
+            }
+            result[name] = value;
+            continue;
+        }
+        const spec = validateDependencySpec(value, `${path}.${name}`);
+        if (!options.allowOptional && spec.optional === true) {
+            throw new Error(`Invalid ${path}.${name}.optional: cargo does not allow optional dev-dependencies.`);
+        }
+        result[name] = spec;
+    }
+    return result;
+}
+
+function validateDependencySpec(raw: unknown, path: string): CargoDependencySpec {
+    if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
+        throw new Error(
+            `Invalid ${path}: expected a version string or a dependency table, got ${Array.isArray(raw) ? "array" : typeof raw}.`
+        );
+    }
+    const obj = raw as Record<string, unknown>;
+    const result: CargoDependencySpec = {};
+    for (const field of DEPENDENCY_SPEC_STRING_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (typeof value !== "string") {
+            throw new Error(`Invalid ${path}.${field}: expected a string, got ${typeof value}.`);
+        }
+        result[field] = value;
+    }
+    for (const field of DEPENDENCY_SPEC_BOOLEAN_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (typeof value !== "boolean") {
+            throw new Error(`Invalid ${path}.${field}: expected a boolean, got ${typeof value}.`);
+        }
+        result[field] = value;
+    }
+    if (obj.features !== undefined) {
+        if (!isStringArray(obj.features)) {
+            throw new Error(`Invalid ${path}.features: expected an array of strings.`);
+        }
+        result.features = obj.features;
+    }
+    const unknownKeys = Object.keys(obj).filter((key) => !DEPENDENCY_SPEC_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid ${path}: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                `Supported fields: ${[...DEPENDENCY_SPEC_FIELDS].map((key) => `\`${key}\``).join(", ")}.`
+        );
+    }
+    if (result.version == null && result.path == null && result.git == null) {
+        throw new Error(`Invalid ${path}: a dependency table needs at least one of \`version\`, \`path\`, or \`git\`.`);
     }
     return result;
 }
