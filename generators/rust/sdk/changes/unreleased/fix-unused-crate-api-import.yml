@@ -1,0 +1,7 @@
+- summary: |
+    Client `mod.rs` files no longer emit `use crate::api::*;` when the glob is not
+    needed. Sub-client structs are already re-exported by the containing module, and
+    root-level endpoints only import the glob when they reference generated types.
+    Previously every nested resource module (and the root resources module) produced
+    an `unused_imports` warning on `cargo build`.
+  type: fix

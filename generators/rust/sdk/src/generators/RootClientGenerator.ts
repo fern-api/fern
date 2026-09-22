@@ -230,13 +230,14 @@ export class RootClientGenerator {
                     items: ["Method"]
                 })
             );
-            // Add crate::api::* for custom types used in endpoint parameters/responses
-            imports.push(
-                new UseStatement({
-                    path: "crate::api",
-                    items: ["*"]
-                })
-            );
+            if (this.rootServiceGenerator.needsApiTypesImport()) {
+                imports.push(
+                    new UseStatement({
+                        path: "crate::api",
+                        items: ["*"]
+                    })
+                );
+            }
         }
 
         // Import WebSocket connector types from the websocket module
