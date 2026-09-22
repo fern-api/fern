@@ -14,7 +14,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
-import { moduleHasContent, moduleIsPackage } from "../utils/modulePages.js";
+import { moduleHasContent, moduleIsPackage, moduleIsPrivate } from "../utils/modulePages.js";
 
 /** A navigation node — either a page or a section. */
 export type NavNode = NavPageNode | NavSectionNode;
@@ -61,6 +61,9 @@ export function buildNavigation(rootModule: FdrAPI.libraryDocs.PythonModuleIr, b
  */
 function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath: string, baseSlug: string): NavNode[] {
     const items: NavNode[] = [];
+    if (moduleIsPrivate(module)) {
+        return items;
+    }
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
     const slug = `${baseSlug}/${modulePath}`;
     const pageId = `${slug}.mdx`;

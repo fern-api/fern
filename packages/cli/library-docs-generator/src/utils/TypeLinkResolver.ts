@@ -7,7 +7,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { escapeMdx, generateAnchorId } from "./mdx.js";
-import { moduleIsPackage } from "./modulePages.js";
+import { isPrivateModulePath, moduleIsPackage, moduleIsPrivate } from "./modulePages.js";
 
 /**
  * Shared context for rendering, passed to all render functions.
@@ -113,6 +113,9 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
     }
 
     function processModule(module: FdrAPI.libraryDocs.PythonModuleIr): void {
+        if (moduleIsPrivate(module)) {
+            return;
+        }
         validPaths.add(module.path);
         if (moduleIsPackage(module)) {
             packageModules.add(module.path);
@@ -192,7 +195,14 @@ function pathToAnchorUrl(typePath: string, ctx: RenderContext, currentModulePath
     }
 
     const anchor = generateAnchorId(typePath);
-    const targetModulePath = parts.slice(0, -1).join(".");
+    // A definition in a private module is only documented where it is re-exported.
+    const definitionModulePath = getModulePath(typePath);
+    const targetModulePath = isPrivateModulePath(definitionModulePath)
+        ? getModulePath(getPublicPath(typePath, ctx))
+        : definitionModulePath;
+    if (isPrivateModulePath(targetModulePath)) {
+        return null;
+    }
 
     if (currentModulePath && targetModulePath === currentModulePath) {
         return `#${anchor}`;

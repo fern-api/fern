@@ -13,6 +13,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { moduleHasPage, moduleIsPackage, renderModulePage } from "./renderers/ModuleRenderer.js";
+import { moduleIsPrivate } from "./utils/modulePages.js";
 import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
@@ -91,6 +92,9 @@ function renderModuleTree(
     writer: MdxFileWriter,
     parentPath: string
 ): void {
+    if (moduleIsPrivate(module)) {
+        return;
+    }
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 
     // Modules with submodules write to <path>/index.mdx so the folder scanner
