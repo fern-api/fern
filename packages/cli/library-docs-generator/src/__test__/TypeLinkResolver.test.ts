@@ -741,6 +741,21 @@ describe("resolveDocstringTypeUrl", () => {
         expect(resolveDocstringTypeUrl("DataModel", ctx, undefined)).toBeUndefined();
     });
 
+    it("prefers the definition re-exported from a package over an unexported same-named twin", () => {
+        const twinCtx = makeCtx({
+            validPaths: new Set([...validPaths, "pkg.lp.data_model_wrapper.DataModel"]),
+            publicPaths: new Map([
+                ["pkg.lp.data_model.DataModel", "pkg.lp.DataModel"],
+                ["pkg.routing.vr.DataModel", "pkg.routing.DataModel"]
+            ]),
+            linkToModuleFile: (m) => `../${m.replace(/\./g, "/")}.mdx`
+        });
+        expect(resolveDocstringTypeUrl("DataModel", twinCtx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel"
+        );
+        expect(resolveDocstringTypeUrl("DataModel", twinCtx, "pkg.other")).toBeUndefined();
+    });
+
     it("resolves a globally unique name from any module", () => {
         expect(resolveDocstringTypeUrl("Solution", ctx, "pkg.routing.vr")).toBe(
             "../pkg/lp/solution.mdx#pkg-lp-solution-Solution"
