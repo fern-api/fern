@@ -44,7 +44,7 @@ import {
     selectGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
 } from "./sdk-gen-client/index.js";
-import { isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
+import { FERN_GENERATOR_LATEST_VERSION, isSdkConfigUnpinnedGeneratorVersion } from "./sdkConfigGeneratorVersion.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -327,6 +327,9 @@ function resolveSuppliedConfigKind({
 }): GenerationConfigKind {
     if (sdkConfigV1 != null) {
         return "sdk-config-v1";
+    }
+    if (resolved.version === FERN_GENERATOR_LATEST_VERSION) {
+        return "legacy-fern";
     }
     if (language != null && synthesizesSdkConfig(resolved.name)) {
         return selectGeneratorConfigRoute({

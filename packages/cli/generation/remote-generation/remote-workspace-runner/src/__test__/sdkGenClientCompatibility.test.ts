@@ -6,6 +6,7 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute,
     validateGeneratorConfigCompatibility
 } from "../sdk-gen-client/index.js";
@@ -207,6 +208,22 @@ describe("validateGeneratorConfigCompatibility", () => {
             cutoverVersion: "4.0.0",
             configKind: "sdk-config-v1",
             payloadKind: "sdk-config-v1"
+        });
+    });
+
+    it("routes an unpinned Fern target to the runtime bundle", () => {
+        expect(
+            selectUnpinnedGeneratorConfigRoute({
+                generatorId: "fernapi/fern-typescript-sdk",
+                language: "typescript",
+                configKind: "legacy-fern"
+            })
+        ).toEqual({
+            generatorId: "fernapi/fern-typescript-sdk",
+            language: "typescript",
+            cutoverVersion: "4.0.0",
+            configKind: "legacy-fern",
+            payloadKind: "fern-runtime-bundle"
         });
     });
 });

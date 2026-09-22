@@ -41,6 +41,8 @@ export {
 } from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";
 export {
+    FERN_GENERATOR_LATEST_VERSION,
+    isGeneratorVersionForUnpinnedRoute,
     isSdkConfigUnpinnedGeneratorVersion,
     resolveSdkConfigGeneratorVersion,
     SDK_CONFIG_UNPINNED_GENERATOR_VERSION
