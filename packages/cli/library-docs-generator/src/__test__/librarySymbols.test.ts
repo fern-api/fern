@@ -121,6 +121,45 @@ const pythonIr = {
                     resolvedPath: "cuopt.linear_programming.SolverSettings",
                     basePath: "cuopt.linear_programming.SolverSettings"
                 }
+            }),
+            pyFunction({
+                name: "Solve",
+                path: "cuopt.Solve",
+                signature: "def Solve(data_model, solver_settings=None)",
+                parameters: [
+                    {
+                        name: "data_model",
+                        typeInfo: undefined,
+                        default: undefined,
+                        description: undefined,
+                        kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind
+                    },
+                    {
+                        name: "solver_settings",
+                        typeInfo: undefined,
+                        default: "None",
+                        description: undefined,
+                        kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind
+                    }
+                ],
+                docstring: {
+                    summary: "Solve a problem.",
+                    description: "Solve a problem.",
+                    params: [
+                        { name: "data_model", type: "DataModel", description: "The problem.", default: undefined },
+                        {
+                            name: "solver_settings",
+                            type: "SolverSettings",
+                            description: "Settings.",
+                            default: "None"
+                        }
+                    ],
+                    returns: { type: "SolverSettings", description: "The effective settings." },
+                    raises: [],
+                    examples: [],
+                    notes: [],
+                    warnings: []
+                }
             })
         ],
         submodules: [
@@ -482,6 +521,25 @@ describe("renderLibrarySymbol (python)", () => {
         expect(result.mdx).toContain(
             '"cuopt.linear_programming.SolverSettings":"./cuopt-python/cuopt/linear_programming.mdx#cuopt-linear_programming-SolverSettings"'
         );
+    });
+
+    it("links docstring-declared types on untyped functions without touching the signature", () => {
+        const result = renderLibrarySymbol(persistedPython, {
+            name: "cuopt.Solve",
+            heading: 2,
+            members: undefined,
+            linkToGeneratedPages: true,
+            relativePathToOutputDir: "../generated/python"
+        });
+        expect(result.mdx).toContain("data_model,\n    solver_settings = None\n)");
+        expect(result.mdx).not.toContain("links={");
+        const target =
+            "../generated/python/cuopt-python/cuopt/linear_programming.mdx#cuopt-linear_programming-SolverSettings";
+        expect(result.mdx).toContain(
+            `<ParamField path="solver_settings" type="SolverSettings" default="None">\n[\`SolverSettings\`](${target}) — Settings.\n</ParamField>`
+        );
+        expect(result.mdx).toContain(`**Returns:** [\`SolverSettings\`](${target})`);
+        expect(result.mdx).toContain('<ParamField path="data_model" type="DataModel">\nThe problem.\n</ParamField>');
     });
 
     it("explains that modules must be included member by member", () => {
