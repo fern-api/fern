@@ -6,7 +6,7 @@ package com.seed.license;
 import com.seed.license.core.ClientOptions;
 import com.seed.license.core.RequestOptions;
 
-public class SeedLicenseClient {
+public class SeedLicenseClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedLicenseClient rawClient;
@@ -29,6 +29,15 @@ public class SeedLicenseClient {
 
     public void get(RequestOptions requestOptions) {
         this.rawClient.get(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedLicenseClientBuilder builder() {

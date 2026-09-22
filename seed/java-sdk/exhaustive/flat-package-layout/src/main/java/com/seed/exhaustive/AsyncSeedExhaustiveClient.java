@@ -8,7 +8,7 @@ import com.seed.exhaustive.core.Suppliers;
 import com.seed.exhaustive.endpoints.AsyncEndpointsClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedExhaustiveClient {
+public class AsyncSeedExhaustiveClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncEndpointsClient> endpointsClient;
@@ -48,6 +48,15 @@ public class AsyncSeedExhaustiveClient {
 
     public AsyncReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedExhaustiveClientBuilder builder() {

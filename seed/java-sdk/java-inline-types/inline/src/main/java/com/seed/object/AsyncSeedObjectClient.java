@@ -15,7 +15,7 @@ import com.seed.object.types.SharedChildType;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedObjectClient {
+public class AsyncSeedObjectClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedObjectClient rawClient;
@@ -80,6 +80,15 @@ public class AsyncSeedObjectClient {
 
     public CompletableFuture<OrphanParentWithSharedChild> getOrphanParent(RequestOptions requestOptions) {
         return this.rawClient.getOrphanParent(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedObjectClientBuilder builder() {

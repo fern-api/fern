@@ -5,11 +5,20 @@ package com.seed.dollarStringExamples;
 
 import com.seed.dollarStringExamples.core.ClientOptions;
 
-public class AsyncSeedDollarStringExamplesClient {
+public class AsyncSeedDollarStringExamplesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public AsyncSeedDollarStringExamplesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedDollarStringExamplesClientBuilder builder() {
