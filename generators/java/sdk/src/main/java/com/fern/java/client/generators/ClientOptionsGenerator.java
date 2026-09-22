@@ -918,7 +918,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         "Releases resources owned by this client. Only shuts down the underlying OkHttpClient's\n"
                                 + "dispatcher executor and evicts its connection pool when this client created that\n"
                                 + "OkHttpClient itself; an OkHttpClient supplied via $L is left running, since the\n"
-                                + "caller owns its lifecycle.\n",
+                                + "caller owns its lifecycle.\n"
+                                + "<p>\n"
+                                + "In-flight calls are not cancelled or awaited, and any request issued after this method\n"
+                                + "returns fails with a {@code RejectedExecutionException}. Options derived from this one via\n"
+                                + "{@code Builder.from(...)} share the same dispatcher and connection pool, so closing either\n"
+                                + "releases them for both. Calling this method more than once has no further effect.\n",
                         OKHTTP_CLIENT_FIELD.name)
                 .beginControlFlow("if (!this.$L)", OWNS_HTTP_CLIENT_FIELD.name)
                 .addStatement("return")
@@ -1280,13 +1285,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc(
-                                "Sets the underlying OkHttp client. The caller retains ownership of its lifecycle —\n"
+                                "Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:\n"
                                         + "$L() will not shut down its dispatcher executor or evict its connection pool.\n",
                                 "close")
                         .returns(builderClassName)
                         .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement("this.$L = false", OWNS_HTTP_CLIENT_FIELD.name)
+                        .addStatement("this.$L = $L == null", OWNS_HTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
                         .build());
 
@@ -1731,7 +1736,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Build return string with all optional fields
         StringBuilder returnStringBuilder = new StringBuilder();
-        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.ownsHttpClient, this.timeout.get(), this.");
+        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.");
+        returnStringBuilder.append(OWNS_HTTP_CLIENT_FIELD.name);
+        returnStringBuilder.append(", this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);

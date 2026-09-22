@@ -131,6 +131,11 @@ public final class ClientOptions {
      * dispatcher executor and evicts its connection pool when this client created that
      * OkHttpClient itself; an OkHttpClient supplied via httpClient is left running, since the
      * caller owns its lifecycle.
+     * <p>
+     * In-flight calls are not cancelled or awaited, and any request issued after this method
+     * returns fails with a {@code RejectedExecutionException}. Options derived from this one via
+     * {@code Builder.from(...)} share the same dispatcher and connection pool, so closing either
+     * releases them for both. Calling this method more than once has no further effect.
      */
     public void close() {
         if (!this.ownsHttpClient) {
@@ -246,12 +251,12 @@ public final class ClientOptions {
         }
 
         /**
-         * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle —
+         * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
          * close() will not shut down its dispatcher executor or evict its connection pool.
          */
         public Builder httpClient(OkHttpClient httpClient) {
             this.httpClient = httpClient;
-            this.ownsHttpClient = false;
+            this.ownsHttpClient = httpClient == null;
             return this;
         }
 
