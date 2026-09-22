@@ -339,9 +339,6 @@ function resolveSuppliedConfigKind({
             requestedVersion: resolved.version
         }).configKind;
     }
-    if (resolved.version === FERN_GENERATOR_LATEST_VERSION) {
-        return "legacy-fern";
-    }
     return "legacy-fern";
 }
 
