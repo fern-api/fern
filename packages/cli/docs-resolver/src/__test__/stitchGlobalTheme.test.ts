@@ -434,6 +434,62 @@ describe("mergeThemeProducts", () => {
         expect(mergeThemeProducts({ localProducts: undefined, themeProducts, siteUrls })).toEqual(themeProducts);
     });
 
+    it("adopts this site's own product when the theme entry points at the site root", () => {
+        // A sibling repo serving one product is naturally listed as `https://host/soil`,
+        // not `https://host/soil/soil`, so the root form has to resolve to the product.
+        const soil = { displayName: "Soil", path: "products/soil.yml" };
+        const result = mergeThemeProducts({
+            localProducts: [soil],
+            themeProducts: [
+                { displayName: "Sunflower", href: "https://docs.example.com/seeds/sunflower" },
+                { displayName: "Soil", href: "https://docs.example.com/soil" }
+            ],
+            siteUrls: ["docs.example.com/soil"]
+        });
+        expect(result).toEqual([{ displayName: "Sunflower", href: "https://docs.example.com/seeds/sunflower" }, soil]);
+    });
+
+    it("leaves a site-root theme entry external when the site has no products of its own", () => {
+        const themeProducts = [{ displayName: "Soil", href: "https://docs.example.com/soil" }];
+        expect(
+            mergeThemeProducts({ localProducts: undefined, themeProducts, siteUrls: ["docs.example.com/soil"] })
+        ).toEqual(themeProducts);
+    });
+
+    it("leaves a site-root theme entry external when the site has several products", () => {
+        // Ambiguous — nothing in the href says which of the two was meant.
+        const a = { displayName: "Soil", path: "products/soil.yml" };
+        const b = { displayName: "Compost", path: "products/compost.yml" };
+        const themeProducts = [{ displayName: "Soil", href: "https://docs.example.com/soil" }];
+        expect(
+            mergeThemeProducts({ localProducts: [a, b], themeProducts, siteUrls: ["docs.example.com/soil"] })
+        ).toEqual([...themeProducts, a, b]);
+    });
+
+    it("matches slugs case-insensitively", () => {
+        // `getPathWithinSite` lower-cases the href; an explicit `slug:` does not.
+        const tulip = { displayName: "Tulip Bulbs", path: "products/tulip.yml", slug: "Tulips" };
+        const result = mergeThemeProducts({
+            localProducts: [tulip],
+            themeProducts: [{ displayName: "Tulip Bulbs", href: "https://docs.example.com/seeds/Tulips" }],
+            siteUrls: ["docs.example.com/seeds"]
+        });
+        expect(result).toEqual([tulip]);
+    });
+
+    it("drops repeated theme entries that resolve to the same URL", () => {
+        const sunflower = { displayName: "Sunflower", path: "products/sunflower.yml" };
+        const result = mergeThemeProducts({
+            localProducts: [sunflower],
+            themeProducts: [
+                { displayName: "Sunflower", href: "https://docs.example.com/seeds/sunflower" },
+                { displayName: "Sunflower (stale)", href: "https://docs.example.com/seeds/sunflower/" }
+            ],
+            siteUrls: ["docs.example.com/seeds"]
+        });
+        expect(result).toEqual([sunflower]);
+    });
+
     it("skips malformed theme entries", () => {
         const result = mergeThemeProducts({
             localProducts: undefined,

@@ -28,7 +28,8 @@ export class ThemeExporter {
             }
         }
         if (Array.isArray(themeConfig.products)) {
-            const instance = this.docsWorkspace.config.instances[0];
+            const instances = this.docsWorkspace.config.instances;
+            const instance = instances[0];
             const customDomain = Array.isArray(instance?.customDomain)
                 ? instance.customDomain[0]
                 : instance?.customDomain;
@@ -37,6 +38,14 @@ export class ThemeExporter {
                 context.logger.warn("docs.yml has no instances; skipping `products` in the exported theme.");
                 delete themeConfig.products;
             } else {
+                if (instances.length > 1) {
+                    // The theme is org-wide, so exporting the wrong instance (a staging
+                    // site listed first, say) sends every other repo's switcher there.
+                    context.logger.warn(
+                        `docs.yml declares ${instances.length} instances; product links in the exported theme ` +
+                            `point at the first one (${siteUrl}).`
+                    );
+                }
                 themeConfig.products = themeConfig.products.map((product) => toExternalProduct(product, siteUrl));
             }
         }
@@ -63,7 +72,21 @@ function toExternalProduct(product: unknown, siteUrl: string): unknown {
     if (!isInternalProductRecord(product)) {
         return product;
     }
-    const { path: _path, slug, versions: _versions, announcement: _announcement, ...rest } = product;
+    // `audiences` / `viewers` / `orphaned` / `feature-flag` gate content within the
+    // repo that owns the product. A theme is org-wide and is re-published by repos
+    // that know nothing about those roles or flags, so they are dropped rather than
+    // reinterpreted against a different site's audience and role definitions.
+    const {
+        path: _path,
+        slug,
+        versions: _versions,
+        announcement: _announcement,
+        audiences: _audiences,
+        viewers: _viewers,
+        orphaned: _orphaned,
+        "feature-flag": _featureFlag,
+        ...rest
+    } = product;
     const displayName = rest["display-name"];
     if (typeof displayName !== "string") {
         return product;

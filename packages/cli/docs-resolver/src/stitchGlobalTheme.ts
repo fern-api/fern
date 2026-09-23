@@ -348,6 +348,12 @@ export function getProductSlug({ slug, displayName }: { slug: string | undefined
  * switcher keeps real in-site navigation and highlights the current product; other
  * theme entries stay external links. Local products not listed in the theme are
  * appended so nothing is lost. Theme ordering wins.
+ *
+ * A theme entry may also point at this site's root rather than at
+ * `<root>/<product-slug>` — the natural thing to hand-write for a sibling repo
+ * that serves a single product. That is still this site, so its own internal
+ * product is adopted when there is exactly one. A site with no products of its
+ * own keeps the entry as an external self-link.
  */
 export function mergeThemeProducts({
     localProducts,
@@ -370,24 +376,41 @@ export function mergeThemeProducts({
     };
 
     const merged: docsYml.RawSchemas.ProductConfig[] = [];
+    const seenHrefs = new Set<string>();
     for (const themeProduct of themeProducts) {
         if (!isThemeProduct(themeProduct)) {
             continue;
         }
+        // Two theme entries pointing at the same URL would otherwise leave the
+        // second one behind as a dangling duplicate of the product the first
+        // already claimed.
+        const normalizedHref = normalizeSiteUrl(themeProduct.href);
+        if (seenHrefs.has(normalizedHref)) {
+            continue;
+        }
+        seenHrefs.add(normalizedHref);
         const pathWithinSite = getPathWithinSite(themeProduct.href, siteUrls);
         const productSlug = pathWithinSite?.[0];
-        const localMatch =
-            productSlug != null
-                ? takeLocal(
-                      (product) =>
-                          isInternalProduct(product) &&
-                          getProductSlug({ slug: product.slug, displayName: product.displayName }) === productSlug
-                  )
-                : takeLocal(
-                      (product) =>
-                          !isInternalProduct(product) &&
-                          normalizeSiteUrl(product.href) === normalizeSiteUrl(themeProduct.href)
-                  );
+        let localMatch: docsYml.RawSchemas.ProductConfig | undefined;
+        if (productSlug != null) {
+            // Compared case-insensitively: `getPathWithinSite` lower-cases the href,
+            // while an explicit `slug:` keeps whatever casing it was authored with.
+            const target = productSlug.toLowerCase();
+            localMatch = takeLocal(
+                (product) =>
+                    isInternalProduct(product) &&
+                    getProductSlug({ slug: product.slug, displayName: product.displayName }).toLowerCase() === target
+            );
+        } else if (pathWithinSite != null) {
+            // Points at this site's root. Adopt this site's own internal product, but
+            // only when there is exactly one — with several we cannot tell which was
+            // meant, and with none there is nothing to adopt.
+            localMatch = remaining.filter(isInternalProduct).length === 1 ? takeLocal(isInternalProduct) : undefined;
+        } else {
+            localMatch = takeLocal(
+                (product) => !isInternalProduct(product) && normalizeSiteUrl(product.href) === normalizedHref
+            );
+        }
         merged.push(localMatch ?? themeProduct);
     }
     merged.push(...remaining);

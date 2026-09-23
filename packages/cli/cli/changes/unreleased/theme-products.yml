@@ -4,6 +4,8 @@
     `products` can now be part of a global theme. `fern docs theme export` rewrites internal products to absolute
     links, and at publish time each site merges the theme's product list with its own: theme entries that point into
     the current site are swapped for the local internal product (so in-site navigation and highlighting keep working),
-    products from other repos stay external links, and local products missing from the theme are appended. This lets a
+    products from other repos stay external links, and local products missing from the theme are appended. A theme
+    entry may point either at a product URL (`https://host/repo/product`) or at the site root
+    (`https://host/repo`), which resolves to that site's own product when it has exactly one. This lets a
     multi-repo setup show every product in every site's product switcher.
   type: feat
