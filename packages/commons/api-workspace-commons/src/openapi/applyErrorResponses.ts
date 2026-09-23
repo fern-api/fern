@@ -88,8 +88,9 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
         }
     }
     const errorSchemaRef = getErrorSchemaRef({ schema, name: errorResponses.name });
+    const insertedRefPointers = new Set<string>();
 
-    for (const pathItem of Object.values(document.paths)) {
+    for (const [path, pathItem] of Object.entries(document.paths)) {
         if (pathItem == null) {
             continue;
         }
@@ -111,7 +112,12 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
                 }
                 if (applyTo === "all" || !hasBodySchema(resolved)) {
                     const target = isReferenceObject(response) ? cloneDeep(resolved) : resolved;
-                    setErrorBody({ response: target, errorSchemaRef });
+                    setErrorBody({
+                        response: target,
+                        errorSchemaRef,
+                        responsePath: ["paths", path, method, "responses", statusCode],
+                        insertedRefPointers
+                    });
                     responses[statusCode] = target;
                 }
             }
@@ -127,12 +133,24 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
                         [DEFAULT_ERROR_MEDIA_TYPE]: { schema: errorSchemaRef }
                     }
                 };
+                insertedRefPointers.add(
+                    toJsonPointer([
+                        "paths",
+                        path,
+                        method,
+                        "responses",
+                        statusCode,
+                        "content",
+                        DEFAULT_ERROR_MEDIA_TYPE,
+                        "schema"
+                    ])
+                );
             }
         }
     }
 
     if (!isReferenceObject(schema)) {
-        registerErrorSchema({ document, schema, name: errorResponses.name, errorSchemaRef });
+        registerErrorSchema({ document, schema, name: errorResponses.name, errorSchemaRef, insertedRefPointers });
     }
 
     return document;
@@ -142,10 +160,6 @@ function getErrorSchemaName({ schema, name }: { schema: OpenAPIV3.SchemaObject; 
     return name ?? schema.title ?? DEFAULT_ERROR_RESPONSE_TYPE_NAME;
 }
 
-/**
- * The single `$ref` object inserted into every rewritten response. Sharing one instance lets
- * `registerErrorSchema` tell the references it inserted apart from pre-existing ones of the same name.
- */
 function getErrorSchemaRef({
     schema,
     name
@@ -163,12 +177,14 @@ function registerErrorSchema({
     document,
     schema,
     name,
-    errorSchemaRef
+    errorSchemaRef,
+    insertedRefPointers
 }: {
     document: OpenAPIV3.Document;
     schema: OpenAPIV3.SchemaObject;
     name: string | undefined;
     errorSchemaRef: OpenAPIV3.ReferenceObject;
+    insertedRefPointers: ReadonlySet<string>;
 }): void {
     const schemaName = getErrorSchemaName({ schema, name });
     const components: OpenAPIV3.ComponentsObject = document.components ?? {};
@@ -177,7 +193,12 @@ function registerErrorSchema({
     components.schemas = schemas;
     const existing = schemas[schemaName];
     if (existing != null && !isEqual(existing, schema)) {
-        const remainingRefs = findRemainingRefsToLegacySchema({ document, schemaName, errorSchemaRef });
+        const remainingRefs = findRemainingRefsToLegacySchema({
+            document,
+            schemaName,
+            errorSchemaRef,
+            insertedRefPointers
+        });
         if (remainingRefs.length > 0) {
             throw new Error(
                 `error-responses: components.schemas already contains a different schema named "${schemaName}" ` +
@@ -191,54 +212,56 @@ function registerErrorSchema({
 }
 
 /**
- * JSON Pointers of every `$ref` to `components.schemas[schemaName]` that `applyErrorResponses` did
- * not insert itself. The legacy schema body and shared `components.responses` entries that are no
- * longer referenced from anywhere (their error uses were inlined as copies) are not counted.
+ * JSON Pointers of every `$ref` to `components.schemas[schemaName]` other than the ones
+ * `applyErrorResponses` inserted itself (`insertedRefPointers`). Two locations are not counted:
+ * the legacy schema's own body, and shared `components.responses` entries nothing references
+ * anymore. Such entries are dead from the parser's point of view (only entries reached through a
+ * `$ref` are converted) and are typically dead precisely because every error use was inlined as a
+ * copy; they are left in place and simply resolve to the new schema.
  */
 function findRemainingRefsToLegacySchema({
     document,
     schemaName,
-    errorSchemaRef
+    errorSchemaRef,
+    insertedRefPointers
 }: {
     document: OpenAPIV3.Document;
     schemaName: string;
     errorSchemaRef: OpenAPIV3.ReferenceObject;
+    insertedRefPointers: ReadonlySet<string>;
 }): string[] {
     const referencedResponseNames = new Set<string>();
     const responsesPrefix = "#/components/responses/";
-    walkRefs(document, ({ ref }) => {
-        if (ref.$ref.startsWith(responsesPrefix)) {
-            referencedResponseNames.add(unescapeJsonPointerSegment(ref.$ref.slice(responsesPrefix.length)));
+    const candidates: string[][] = [];
+    walkRefs(document, ({ ref, path }) => {
+        if (ref.startsWith(responsesPrefix)) {
+            referencedResponseNames.add(unescapeJsonPointerSegment(ref.slice(responsesPrefix.length)));
+        }
+        if (ref === errorSchemaRef.$ref && !insertedRefPointers.has(toJsonPointer(path))) {
+            candidates.push(path);
         }
     });
 
-    const remaining: string[] = [];
-    walkRefs(document, ({ ref, path }) => {
-        if (ref === errorSchemaRef || ref.$ref !== errorSchemaRef.$ref) {
-            return;
-        }
-        const [components, section, entryName] = path;
-        if (components === "components" && section === "schemas" && entryName === schemaName) {
-            return;
-        }
-        if (
-            components === "components" &&
-            section === "responses" &&
-            entryName != null &&
-            !referencedResponseNames.has(entryName)
-        ) {
-            return;
-        }
-        remaining.push(`#/${path.map(escapeJsonPointerSegment).join("/")}`);
-    });
-    return remaining;
+    return candidates
+        .filter((path) => {
+            const [components, section, entryName] = path;
+            if (components !== "components" || entryName == null) {
+                return true;
+            }
+            if (section === "schemas" && entryName === schemaName) {
+                return false;
+            }
+            return !(section === "responses" && !referencedResponseNames.has(entryName));
+        })
+        .map(toJsonPointer);
 }
 
-function walkRefs(
-    value: unknown,
-    visit: (found: { ref: OpenAPIV3.ReferenceObject; path: string[] }) => void,
-    path: string[] = []
-): void {
+/**
+ * Visits every schema reference in `value`: `$ref` objects (reported at the object's path) and the
+ * string values of `discriminator.mapping`. Siblings of a `$ref` are traversed too, so schemas that
+ * combine `$ref` with other keywords (allowed in OpenAPI 3.1) do not hide nested references.
+ */
+function walkRefs(value: unknown, visit: (found: { ref: string; path: string[] }) => void, path: string[] = []): void {
     if (Array.isArray(value)) {
         value.forEach((entry, index) => {
             walkRefs(entry, visit, [...path, index.toString()]);
@@ -248,13 +271,26 @@ function walkRefs(
     if (!isRecord(value)) {
         return;
     }
-    if (isReferenceObject(value) && typeof value.$ref === "string") {
-        visit({ ref: value, path });
-        return;
+    if (typeof value.$ref === "string") {
+        visit({ ref: value.$ref, path });
+    }
+    const mapping = isRecord(value.discriminator) ? value.discriminator.mapping : undefined;
+    if (isRecord(mapping)) {
+        for (const [key, target] of Object.entries(mapping)) {
+            if (typeof target === "string") {
+                visit({ ref: target, path: [...path, "discriminator", "mapping", key] });
+            }
+        }
     }
     for (const [key, entry] of Object.entries(value)) {
-        walkRefs(entry, visit, [...path, key]);
+        if (key !== "$ref" && key !== "discriminator") {
+            walkRefs(entry, visit, [...path, key]);
+        }
     }
+}
+
+function toJsonPointer(path: readonly string[]): string {
+    return `#/${path.map(escapeJsonPointerSegment).join("/")}`;
 }
 
 function escapeJsonPointerSegment(segment: string): string {
@@ -310,28 +346,38 @@ function resolveResponse({
     return target;
 }
 
+/**
+ * Points every media type of `response` at `errorSchemaRef` and records the JSON Pointer of each
+ * schema it wrote in `insertedRefPointers`.
+ */
 function setErrorBody({
     response,
-    errorSchemaRef
+    errorSchemaRef,
+    responsePath,
+    insertedRefPointers
 }: {
     response: OpenAPIV3.ResponseObject;
     errorSchemaRef: OpenAPIV3.ReferenceObject;
+    responsePath: readonly string[];
+    insertedRefPointers: Set<string>;
 }): void {
     const content = response.content ?? {};
     response.content = content;
     const mediaTypes = Object.keys(content);
     if (mediaTypes.length === 0) {
         content[DEFAULT_ERROR_MEDIA_TYPE] = { schema: errorSchemaRef };
+        insertedRefPointers.add(toJsonPointer([...responsePath, "content", DEFAULT_ERROR_MEDIA_TYPE, "schema"]));
         return;
     }
     for (const mediaType of mediaTypes) {
         const mediaObject = content[mediaType] ?? {};
         if (mediaObject.schema == null) {
             content[mediaType] = { ...mediaObject, schema: errorSchemaRef };
-            continue;
+        } else {
+            const { example: _example, examples: _examples, ...rest } = mediaObject;
+            content[mediaType] = { ...rest, schema: errorSchemaRef };
         }
-        const { example: _example, examples: _examples, ...rest } = mediaObject;
-        content[mediaType] = { ...rest, schema: errorSchemaRef };
+        insertedRefPointers.add(toJsonPointer([...responsePath, "content", mediaType, "schema"]));
     }
 }
 

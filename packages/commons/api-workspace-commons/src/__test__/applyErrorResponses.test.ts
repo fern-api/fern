@@ -187,6 +187,44 @@ describe("applyErrorResponses", () => {
                 schema: PROBLEM_DETAILS
             })
         ).toThrow("still referenced from #/components/schemas/Wrapper/properties/error");
+
+        const fromRefSibling = createDocument();
+        fromRefSibling.components = {
+            ...fromRefSibling.components,
+            schemas: {
+                ...fromRefSibling.components?.schemas,
+                Wrapper: {
+                    $ref: "#/components/schemas/Base",
+                    properties: { error: { $ref: "#/components/schemas/LegacyError" } }
+                }
+            }
+        };
+        expect(() =>
+            applyErrorResponses({
+                document: fromRefSibling,
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("still referenced from #/components/schemas/Wrapper/properties/error");
+
+        const fromDiscriminatorMapping = createDocument();
+        fromDiscriminatorMapping.components = {
+            ...fromDiscriminatorMapping.components,
+            schemas: {
+                ...fromDiscriminatorMapping.components?.schemas,
+                Union: {
+                    oneOf: [{ $ref: "#/components/schemas/Base" }],
+                    discriminator: { propertyName: "kind", mapping: { legacy: "#/components/schemas/LegacyError" } }
+                }
+            }
+        };
+        expect(() =>
+            applyErrorResponses({
+                document: fromDiscriminatorMapping,
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("still referenced from #/components/schemas/Union/discriminator/mapping/legacy");
     });
 
     it("escapes JSON pointer characters in the component name", () => {
