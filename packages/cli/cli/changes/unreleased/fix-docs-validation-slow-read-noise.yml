@@ -1,0 +1,5 @@
+- summary: |
+    Docs validation no longer logs a "Slow file read" debug line for every markdown page when many
+    files are read concurrently (the timing included threadpool queue time, not disk speed). It now
+    logs one summary per validation run and only flags reads that are outliers relative to the batch.
+  type: fix
