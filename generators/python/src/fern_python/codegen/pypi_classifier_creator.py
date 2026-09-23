@@ -38,8 +38,6 @@ class PyPIClassifierMetadataGenerator:
         LicenseId.APACHE_2: "License :: OSI Approved :: Apache Software License",
     }
 
-    CUSTOM_LICENSE_CLASSIFIER: str = "License :: Other/Proprietary License"
-
     @staticmethod
     def create_classifiers(
         python_version: str,
@@ -86,8 +84,6 @@ class PyPIClassifierMetadataGenerator:
             return None
 
         license_union = license_.get_as_union()
-        if license_union.type == "custom":
-            return PyPIClassifierMetadataGenerator.CUSTOM_LICENSE_CLASSIFIER
         if license_union.type != "basic":
             return None
 

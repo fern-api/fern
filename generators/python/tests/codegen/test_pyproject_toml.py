@@ -177,7 +177,7 @@ class TestPoetryCoreValidation:
 
             content = (Path(tmpdir) / "pyproject.toml").read_text()
             assert 'license = { file = "LICENSE" }' in content
-            assert '"License :: Other/Proprietary License"' in content
+            assert "License ::" not in content
             assert 'license = "MIT"' not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))

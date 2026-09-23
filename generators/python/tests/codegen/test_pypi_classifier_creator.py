@@ -85,12 +85,12 @@ class TestLicenseClassifiers:
 
         assert classifiers[-1] == PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS[LicenseId.APACHE_2]
 
-    def test_custom_license(self) -> None:
-        """Test custom license produces the Other/Proprietary classifier."""
+    def test_custom_license_has_no_classifier(self) -> None:
+        """Test custom license file does not produce a license classifier."""
         license_config = LicenseConfig.factory.custom(CustomLicense(filename="LICENSE"))
         classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
 
-        assert classifiers[-1] == "License :: Other/Proprietary License"
+        assert not any(c.startswith("License ::") for c in classifiers)
 
     def test_license_with_version_constraint(self) -> None:
         """Test full output with license and version constraint."""

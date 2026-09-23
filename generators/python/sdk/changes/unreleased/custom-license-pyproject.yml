@@ -2,7 +2,6 @@
 
 - summary: |
     Custom licenses (`metadata.license: { custom: "./LICENSE" }`) are now declared in the
-    generated `pyproject.toml`: the `[project]` table gets `license = { file = "LICENSE" }` and the
-    `License :: Other/Proprietary License` classifier is added, matching the existing behavior for
-    `MIT` and `Apache-2.0`.
+    generated `pyproject.toml` via `license = { file = "LICENSE" }` in the `[project]` table,
+    complementing the existing `license = "MIT"` / `"Apache-2.0"` support.
   type: feat

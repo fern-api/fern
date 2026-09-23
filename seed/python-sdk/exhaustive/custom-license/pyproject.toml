@@ -30,8 +30,7 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Typing :: Typed",
-    "License :: Other/Proprietary License"
+    "Typing :: Typed"
 ]
 packages = [
     { include = "seed", from = "src"}
