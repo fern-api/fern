@@ -35,6 +35,29 @@ export declare namespace collectOnPremSourceSpecs {
 }
 
 /**
+ * A stable, unique identity for one spec, for the adapter's composition diagnostics.
+ *
+ * The filename is the most legible thing to see in an error, but it is not unique on its own -- a
+ * manifest can carry `v1/openapi.yml` and `v2/openapi.yml`, which is exactly the multi-spec case
+ * this identity exists to disambiguate. The namespace qualifies it where there is one, and a
+ * manifest index breaks whatever ties remain, so no two specs in a run ever share an id. Set on
+ * every run, single- or multi-spec, so diagnostics do not change shape with the spec count.
+ */
+function sourceSpecIds(entries: RawSpecsManifestEntry[]): string[] {
+    const candidates = entries.map((entry) => {
+        const name = basename(entry.specPath);
+        return entry.namespace != null ? `${entry.namespace}/${name}` : name;
+    });
+    const occurrences = new Map<string, number>();
+    for (const candidate of candidates) {
+        occurrences.set(candidate, (occurrences.get(candidate) ?? 0) + 1);
+    }
+    return candidates.map((candidate, index) =>
+        (occurrences.get(candidate) ?? 0) > 1 ? `${candidate}#${index}` : candidate
+    );
+}
+
+/**
  * Projects the pre-processed raw specs manifest onto the IR's source specs, in the coordinates the
  * adapter will see.
  *
@@ -82,9 +105,10 @@ export function collectOnPremSourceSpecs(
         };
     }
 
+    const ids = sourceSpecIds(entries);
     const specs = entries.map(
-        (entry): SourceSpec => ({
-            ...(entries.length > 1 ? { id: basename(entry.specPath) } : {}),
+        (entry, index): SourceSpec => ({
+            id: ids[index] ?? basename(entry.specPath),
             specUrl: entry.specPath,
             // Checked above; the filter guarantees a mapping exists for every remaining entry.
             specType: ON_PREM_SPEC_TYPE_BY_FERN_TYPE[entry.type] as SourceSpecType,

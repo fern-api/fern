@@ -244,8 +244,18 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         expect(built.success).toBe(true);
         if (built.success) {
             expect(built.sdkConfigIr.source.specs).toEqual([
-                { id: "movies.json", specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
-                { id: "events.json", specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
+                {
+                    id: "movies/movies.json",
+                    specUrl: "/fern/specs/movies.json",
+                    specType: "openapi",
+                    namespace: "movies"
+                },
+                {
+                    id: "events/events.json",
+                    specUrl: "/fern/specs/events.json",
+                    specType: "asyncapi",
+                    namespace: "events"
+                }
             ]);
         }
     });
@@ -311,7 +321,7 @@ describe("collectOnPremSourceSpecs", () => {
         const collected = collectOnPremSourceSpecs(OPENAPI_MANIFEST, context);
         expect(collected).toEqual({
             success: true,
-            specs: [{ specUrl: "/fern/specs/openapi.yml", specType: "openapi" }]
+            specs: [{ id: "openapi.yml", specUrl: "/fern/specs/openapi.yml", specType: "openapi" }]
         });
     });
 
@@ -338,10 +348,42 @@ describe("collectOnPremSourceSpecs", () => {
         expect(collected).toEqual({
             success: true,
             specs: [
-                { id: "movies.json", specUrl: "/fern/specs/movies.json", specType: "openapi", namespace: "movies" },
-                { id: "events.json", specUrl: "/fern/specs/events.json", specType: "asyncapi", namespace: "events" }
+                {
+                    id: "movies/movies.json",
+                    specUrl: "/fern/specs/movies.json",
+                    specType: "openapi",
+                    namespace: "movies"
+                },
+                {
+                    id: "events/events.json",
+                    specUrl: "/fern/specs/events.json",
+                    specType: "asyncapi",
+                    namespace: "events"
+                }
             ]
         });
+    });
+
+    // Composition diagnostics name a spec by its id, so two specs sharing a filename have to stay
+    // distinguishable -- the case where the diagnostic matters most.
+    it("disambiguates specs whose filenames collide", () => {
+        const collected = collectOnPremSourceSpecs(
+            {
+                specs: [
+                    { type: "openapi", specPath: "/fern/specs/v1/openapi.yml", namespace: "v1" },
+                    { type: "openapi", specPath: "/fern/specs/v2/openapi.yml", namespace: "v2" },
+                    { type: "openapi", specPath: "/fern/specs/a/openapi.yml" },
+                    { type: "openapi", specPath: "/fern/specs/b/openapi.yml" }
+                ]
+            },
+            { ...context, supportsMultiSpec: true }
+        );
+        expect(collected.success).toBe(true);
+        if (collected.success) {
+            const ids = collected.specs.map((spec) => spec.id);
+            expect(ids).toEqual(["v1/openapi.yml", "v2/openapi.yml", "openapi.yml#2", "openapi.yml#3"]);
+            expect(new Set(ids).size).toBe(ids.length);
+        }
     });
 
     // The capability says the image reads every spec, not that it grew a GraphQL importer.
