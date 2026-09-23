@@ -100,6 +100,11 @@ export async function sdkMigrate({
             `Updated ${updatedDocsSections} API reference section${updatedDocsSections === 1 ? "" : "s"} across the docs configuration rooted at ${project.docsWorkspaces?.absoluteFilepathToDocsConfig}`
         );
     }
+    if (outputPath != null) {
+        cliContext.stderr.info(
+            `Next: review the migrated file, then run fern generate --sdk-config ${JSON.stringify(outputPath.toString())}`
+        );
+    }
 }
 
 function resolveOutputPath(
