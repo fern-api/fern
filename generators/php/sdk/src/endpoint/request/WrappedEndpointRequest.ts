@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { booleanHeaderValue } from "../../utils/booleanHeaderValue.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -111,7 +112,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         propertyName: header.name
                     });
                     const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(header.clientDefault);
-                    if (clientDefaultWire != null) {
+                    if (
+                        (clientDefaultWire === "true" || clientDefaultWire === "false") &&
+                        this.isBooleanHeader(header)
+                    ) {
+                        writer.writeTextStatement(
+                            `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${booleanHeaderValue({
+                                reference: headerParameterReference,
+                                clientDefault: clientDefaultWire === "true"
+                            })}`
+                        );
+                    } else if (clientDefaultWire != null) {
                         const escaped = clientDefaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
                         writer.writeTextStatement(
                             `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${headerParameterReference} ?? '${escaped}'`
@@ -134,22 +145,22 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
-        if (
-            this.context.isEquivalentToPrimitive({
-                typeReference: header.valueType,
-                primitive: FernIr.PrimitiveTypeV1.Boolean
-            })
-        ) {
-            // a boolean header must be spelled out: the transport casts the raw value,
-            // and php's string cast turns true into "1" and false into ""
-            const parameter = this.context.accessRequestProperty({
+        if (this.isBooleanHeader(header)) {
+            const reference = this.context.accessRequestProperty({
                 requestParameterName: this.requestParameterName,
                 propertyName: header.name
             });
-            writer.writeTextStatement(`${parameter} ? 'true' : 'false'`);
+            writer.writeTextStatement(booleanHeaderValue({ reference }));
             return;
         }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
+    }
+
+    private isBooleanHeader(header: FernIr.HttpHeader): boolean {
+        return this.context.isEquivalentToPrimitive({
+            typeReference: header.valueType,
+            primitive: FernIr.PrimitiveTypeV1.Boolean
+        });
     }
 
     private writeMultipartBodyParameter({
