@@ -174,35 +174,45 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 /**
  * Replace `target` with `staged` without a window where neither exists: the previous
  * tree is renamed aside to `backup` (same filesystem), its `.fern/` metadata (the
- * persisted library IR written before page generation) carried over, the staged tree renamed in, and
- * the backup restored if that fails. On success the caller owns `backup` and may delete
- * it; if even the restore fails, `backup` is left in place as the only copy of the
- * previous pages and the thrown error names it.
+ * persisted library IR written before page generation) carried over, and the staged tree
+ * renamed in. If anything after the first rename fails, the previous tree is always
+ * restored to `target`. On success the caller owns `backup` and may delete it; if the
+ * restore itself fails, `backup` is left in place as the only copy of the previous pages
+ * and the thrown error names it. (The `.fern/` IR is rewritten on every run, so it is
+ * never the only copy of anything.)
  */
 function swapIntoPlace(staged: string, target: string, backup: string): void {
-    const hadPrevious = existsSync(target);
-    if (hadPrevious) {
-        renameSync(target, backup);
-        const previousMetadata = join(backup, METADATA_DIR);
-        if (existsSync(previousMetadata)) {
-            renameSync(previousMetadata, join(staged, METADATA_DIR));
-        }
+    if (!existsSync(target)) {
+        renameSync(staged, target);
+        return;
     }
+    renameSync(target, backup);
+    const previousMetadata = join(backup, METADATA_DIR);
+    const stagedMetadata = join(staged, METADATA_DIR);
     try {
+        if (existsSync(previousMetadata)) {
+            renameSync(previousMetadata, stagedMetadata);
+        }
         renameSync(staged, target);
     } catch (error) {
-        if (hadPrevious) {
+        const restoreErrors: string[] = [];
+        if (existsSync(stagedMetadata)) {
             try {
-                if (existsSync(join(staged, METADATA_DIR))) {
-                    renameSync(join(staged, METADATA_DIR), join(backup, METADATA_DIR));
-                }
-                renameSync(backup, target);
-            } catch (restoreError) {
-                throw new Error(
-                    `Failed to replace ${target} and could not restore the previous pages; they were kept at ${backup}. ` +
-                        `Replace error: ${errorMessage(error)}. Restore error: ${errorMessage(restoreError)}`
-                );
+                renameSync(stagedMetadata, previousMetadata);
+            } catch (metadataError) {
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
             }
+        }
+        try {
+            renameSync(backup, target);
+        } catch (pagesError) {
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+        }
+        if (restoreErrors.length > 0) {
+            throw new Error(
+                `Failed to replace ${target} and could not fully restore the previous output. ` +
+                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+            );
         }
         throw error;
     }
