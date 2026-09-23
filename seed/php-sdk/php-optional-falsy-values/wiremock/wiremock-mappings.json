@@ -1,0 +1,77 @@
+{
+  "mappings": [
+    {
+      "id": "d2c6fa59-b7db-4232-ba32-54be8a630400",
+      "name": "listAuditLogs - default",
+      "request": {
+        "urlPathTemplate": "/audit-logs",
+        "method": "GET",
+        "queryParameters": {
+          "offset": {
+            "equalTo": "0"
+          },
+          "includeResolved": {
+            "equalTo": "false"
+          },
+          "filter": {
+            "equalTo": "0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d2c6fa59-b7db-4232-ba32-54be8a630400",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "f682e6c6-4085-4adb-a90f-24ba951d0ae4",
+      "name": "countAuditLogs - default",
+      "request": {
+        "urlPathTemplate": "/audit-logs/count",
+        "method": "GET",
+        "queryParameters": {
+          "resolvedOnly": {
+            "equalTo": "false"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f682e6c6-4085-4adb-a90f-24ba951d0ae4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}
