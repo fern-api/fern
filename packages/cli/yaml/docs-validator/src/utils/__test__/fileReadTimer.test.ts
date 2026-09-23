@@ -3,7 +3,7 @@ import { mkdtemp, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
-import { createTimedFileReader } from "../fileReadTimer.js";
+import { FileReadTimer } from "../fileReadTimer.js";
 
 function collectDebugLogs(): { logger: ReturnType<typeof createLogger>; lines: string[] } {
     const lines: string[] = [];
@@ -15,7 +15,7 @@ function collectDebugLogs(): { logger: ReturnType<typeof createLogger>; lines: s
     return { logger, lines };
 }
 
-describe("createTimedFileReader", () => {
+describe("FileReadTimer", () => {
     it("returns file contents and logs a single summary for concurrent reads", async () => {
         const dir = await mkdtemp(join(tmpdir(), "file-read-timer-"));
         const paths = await Promise.all(
@@ -26,12 +26,12 @@ describe("createTimedFileReader", () => {
             })
         );
 
-        const { readFile, logSummary } = createTimedFileReader();
-        const contents = await Promise.all(paths.map((path) => readFile(path)));
+        const timer = new FileReadTimer();
+        const contents = await Promise.all(paths.map((path) => timer.read(path)));
         expect(contents[7]).toBe("# Plant 7\n");
 
         const { logger, lines } = collectDebugLogs();
-        logSummary(logger, "markdown");
+        timer.logSummary(logger, "markdown");
 
         expect(lines).toHaveLength(1);
         expect(lines[0]).toMatch(/^Read 50 markdown files \(0\.00 MB\) in \d+ms; median per-file wait \d+ms$/);
@@ -40,7 +40,7 @@ describe("createTimedFileReader", () => {
 
     it("logs nothing when no files were read", () => {
         const { logger, lines } = collectDebugLogs();
-        createTimedFileReader().logSummary(logger, "markdown");
+        new FileReadTimer().logSummary(logger, "markdown");
         expect(lines).toHaveLength(0);
     });
 });
