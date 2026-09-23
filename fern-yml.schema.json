@@ -4108,6 +4108,72 @@
                       },
                       "namespaced-errors": {
                         "type": "boolean"
+                      },
+                      "errorResponses": {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "applyTo": {
+                            "type": "string",
+                            "enum": [
+                              "all",
+                              "untyped"
+                            ]
+                          },
+                          "ensure": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "statusCode": {
+                                  "type": "integer",
+                                  "minimum": 400,
+                                  "maximum": 599
+                                },
+                                "methods": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "get",
+                                      "post",
+                                      "put",
+                                      "patch",
+                                      "delete",
+                                      "head",
+                                      "options",
+                                      "trace"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "statusCode"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "additionalProperties": false
@@ -4709,6 +4775,72 @@
                         },
                         "namespaced-errors": {
                           "type": "boolean"
+                        },
+                        "errorResponses": {
+                          "type": "object",
+                          "properties": {
+                            "schema": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "object",
+                                  "propertyNames": {
+                                    "type": "string"
+                                  },
+                                  "additionalProperties": {}
+                                }
+                              ]
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "applyTo": {
+                              "type": "string",
+                              "enum": [
+                                "all",
+                                "untyped"
+                              ]
+                            },
+                            "ensure": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "statusCode": {
+                                    "type": "integer",
+                                    "minimum": 400,
+                                    "maximum": 599
+                                  },
+                                  "methods": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "get",
+                                        "post",
+                                        "put",
+                                        "patch",
+                                        "delete",
+                                        "head",
+                                        "options",
+                                        "trace"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "statusCode"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "schema"
+                          ],
+                          "additionalProperties": false
                         }
                       },
                       "additionalProperties": false

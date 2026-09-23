@@ -3,6 +3,7 @@ import { z } from "zod";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
 import { DefaultIntegerFormatSchema } from "./DefaultIntegerFormatSchema.js";
 import { FormParameterEncodingSchema } from "./FormParameterEncodingSchema.js";
+import { OpenApiErrorResponsesSchema } from "./OpenApiErrorResponsesSchema.js";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema.js";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema.js";
 import { ResolveAliasesSchema } from "./ResolveAliasesSchema.js";
@@ -159,7 +160,13 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * within, that namespace instead of the endpoint's namespace.
      * Defaults to false.
      */
-    "namespaced-errors": z.boolean().optional()
+    "namespaced-errors": z.boolean().optional(),
+
+    /**
+     * Standardize the body of every 4xx/5xx response on a single schema (for example an
+     * RFC 9457 Problem Details object) before the spec is parsed.
+     */
+    errorResponses: OpenApiErrorResponsesSchema.optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

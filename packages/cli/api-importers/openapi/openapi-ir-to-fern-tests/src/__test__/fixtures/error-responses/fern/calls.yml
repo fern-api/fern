@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Calls
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /calls:
+    post:
+      operationId: createCall
+      tags:
+        - Calls
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Call"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CallError"
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+          content:
+            application/json: {}
+components:
+  schemas:
+    Call:
+      type: object
+      properties:
+        sid:
+          type: string
+    CallError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
