@@ -13,6 +13,8 @@
  */
 
 import { CliError } from "@fern-api/task-context";
+import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
+import { dirname, join, relative } from "path";
 import type { CompoundMeta } from "../cpp/src/context.js";
 import {
     clearEntityRegistry,
@@ -112,9 +114,14 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     const registry = buildEntityRegistry(pageEntries);
     setEntityRegistry(registry);
     setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
+    // The generator owns the whole output tree, so pages are rendered into a sibling
+    // staging directory and swapped in wholesale once every page has been written;
+    // otherwise entities removed from the headers would leave stale pages behind.
+    mkdirSync(dirname(outputDir), { recursive: true });
+    const stagingDir = mkdtempSync(join(dirname(outputDir), ".library-docs-"));
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
-        const writer = new MdxFileWriter(outputDir);
+        const writer = new MdxFileWriter(stagingDir);
         for (const entry of pageEntries) {
             const slugPath = pageKeyToSlugPath(entry.pageKey);
             setCurrentPageSlugPath(slugPath);
@@ -148,11 +155,38 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         // Stage 5: Generate pages for the library's Doxygen groups
         generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
-        return writer.result();
+        const result = writer.result();
+        swapIntoPlace(stagingDir, outputDir, `${stagingDir}.previous`);
+        return {
+            writtenFiles: result.writtenFiles.map((file) => join(outputDir, relative(stagingDir, file))),
+            pageCount: result.pageCount
+        };
     } finally {
+        rmSync(stagingDir, { recursive: true, force: true });
+        rmSync(`${stagingDir}.previous`, { recursive: true, force: true });
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
         setTypedefSyntax("cpp");
+    }
+}
+
+/**
+ * Replace `target` with `staged` without a window where neither exists: the previous
+ * tree is renamed aside to `backup` (same filesystem), the staged tree renamed in, and
+ * the backup restored if that fails.
+ */
+function swapIntoPlace(staged: string, target: string, backup: string): void {
+    const hadPrevious = existsSync(target);
+    if (hadPrevious) {
+        renameSync(target, backup);
+    }
+    try {
+        renameSync(staged, target);
+    } catch (error) {
+        if (hadPrevious) {
+            renameSync(backup, target);
+        }
+        throw error;
     }
 }
 

@@ -234,6 +234,37 @@ describe("generateCpp()", () => {
         expect(filenames).toContain("BlockScan.mdx");
     });
 
+    it("replaces the previous output tree so pages for removed entities do not linger", () => {
+        const outputDir = join(tmpDir, "generated", "c");
+        const irBefore = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [
+                    makeClass({ name: "BlockReduce", path: "cub::BlockReduce" }),
+                    makeClass({ name: "BlockScan", path: "cub::BlockScan" })
+                ]
+            })
+        );
+        generateCpp({ ir: irBefore, outputDir, slug: "reference/cub" });
+        expect(collectMdxFiles(outputDir).map((f) => f.split("/").pop())).toContain("BlockScan.mdx");
+
+        const irAfter = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [makeClass({ name: "BlockReduce", path: "cub::BlockReduce" })]
+            })
+        );
+        const result = generateCpp({ ir: irAfter, outputDir, slug: "reference/cub" });
+
+        expect(result.pageCount).toBe(1);
+        const filenames = collectMdxFiles(outputDir).map((f) => f.split("/").pop());
+        expect(filenames).toEqual(["BlockReduce.mdx"]);
+        expect(result.writtenFiles.every((file) => file.startsWith(outputDir))).toBe(true);
+        expect(readdirSync(join(tmpDir, "generated"))).toEqual(["c"]);
+    });
+
     // ------------------------------------------------------------------
     // 2. Collision resolution for template specializations
     // ------------------------------------------------------------------
