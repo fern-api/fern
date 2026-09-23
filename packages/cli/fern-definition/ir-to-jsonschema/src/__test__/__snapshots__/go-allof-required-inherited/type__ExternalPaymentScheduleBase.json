@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "interval": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaymentScheduleInterval"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "interval_execution_day": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "start_date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "end_date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "adjusted_start_date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "description": "Nullable parent with `additionalProperties`; nothing is required here.",
+  "definitions": {
+    "PaymentScheduleInterval": {
+      "type": "string",
+      "enum": [
+        "WEEKLY",
+        "MONTHLY"
+      ]
+    }
+  }
+}

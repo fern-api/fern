@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payment_schedules",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPaymentSchedule"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-allof-required-inherited/fern\"\n\tfernclient \"github.com/go-allof-required-inherited/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreatePaymentSchedule(\n\tcontext.TODO(),\n\t\u0026fern.ExternalPaymentScheduleRequest{\n\t\tStartDate: fern.MustParseDate(\n\t\t\t\"2023-01-15\",\n\t\t),\n\t\tInterval:             fern.PaymentScheduleIntervalWeekly,\n\t\tIntervalExecutionDay: 1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/transactions/get",
+                "method": "POST",
+                "identifier_override": "endpoint_.getTransactions"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-allof-required-inherited/fern\"\n\tfernclient \"github.com/go-allof-required-inherited/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetTransactions(\n\tcontext.TODO(),\n\t\u0026fern.TransactionsGetRequest{\n\t\tAccessToken: \"access_token\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

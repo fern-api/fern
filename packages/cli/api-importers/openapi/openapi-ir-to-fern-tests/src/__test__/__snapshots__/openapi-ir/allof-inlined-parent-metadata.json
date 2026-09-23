@@ -1,0 +1,405 @@
+{
+  "specVersion": "1.0.0",
+  "title": "allOf inlined parent metadata",
+  "description": "A child branch that requires a parent-defined property forces the parent to be\ninlined. Property metadata on the inlined parent (readOnly, x-fern-property-name,\nx-fern-audiences, deprecated, xml) must survive inlining, and readOnly properties\nmust stay out of write request bodies.\n",
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createPlant",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreatePlantRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreatePlantRequest",
+          "schema": "PlantCreate",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "CreatePlantResponse",
+          "schema": "PlantDetails",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/plants",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "nickname": {
+                "type": "null"
+              },
+              "species": {
+                "value": {
+                  "value": "species",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "created_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "nickname": {
+                  "value": {
+                    "value": "nickname",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "internal_notes": {
+                  "value": {
+                    "value": "internal_notes",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "PlantMetadata": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "plantMetadataCreatedAt",
+            "key": "created_at",
+            "schema": {
+              "generatedName": "PlantMetadataCreatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PlantMetadataCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantMetadataNickname",
+            "key": "nickname",
+            "schema": {
+              "generatedName": "PlantMetadataNickname",
+              "value": {
+                "generatedName": "PlantMetadataNickname",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PlantMetadataNickname",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantMetadataLegacyTag",
+            "key": "legacy_tag",
+            "schema": {
+              "generatedName": "PlantMetadataLegacyTag",
+              "availability": "Deprecated",
+              "value": {
+                "availability": "Deprecated",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantMetadataLegacyTag",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "nameOverride": "legacyTag",
+            "availability": "Deprecated"
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantMetadataInternalNotes",
+            "key": "internal_notes",
+            "schema": {
+              "generatedName": "PlantMetadataInternalNotes",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantMetadataInternalNotes",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [
+              "internal"
+            ]
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantMetadataLabel",
+            "key": "label",
+            "xml": {
+              "name": "Label",
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "PlantMetadataLabel",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantMetadataLabel",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PlantMetadata",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "PlantMetadata",
+          "type": "xml"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PlantCreate": {
+        "allOf": [
+          {
+            "generatedName": "PlantMetadata",
+            "schema": "PlantMetadata",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PlantMetadata": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "plantCreateNickname",
+            "key": "nickname",
+            "schema": {
+              "generatedName": "PlantMetadataNickname",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantMetadataNickname",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantCreateSpecies",
+            "key": "species",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PlantCreateSpecies",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PlantCreate",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PlantDetails": {
+        "allOf": [
+          {
+            "generatedName": "PlantMetadata",
+            "schema": "PlantMetadata",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PlantMetadata": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "plantDetailsNickname",
+            "key": "nickname",
+            "schema": {
+              "generatedName": "PlantMetadataNickname",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PlantMetadataNickname",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantDetailsId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PlantDetailsId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PlantDetails",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

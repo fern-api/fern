@@ -1,53 +1,17 @@
 {
   "type": "object",
   "properties": {
-    "treeSpecies": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The species of tree."
-    },
-    "heightInFeet": {
-      "oneOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "Height of the tree in feet."
-    },
     "id": {
       "type": "string",
       "description": "Unique tree identifier."
     },
     "treeName": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
+      "type": "string",
       "description": "Display name of the tree."
     },
-    "treeDescription": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "A description of the tree."
+    "treeSpecies": {
+      "type": "string",
+      "description": "The species of tree."
     },
     "plantedDate": {
       "oneOf": [
@@ -60,10 +24,34 @@
         }
       ],
       "description": "Date the tree was planted."
+    },
+    "heightInFeet": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Height of the tree in feet."
+    },
+    "treeDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A description of the tree."
     }
   },
   "required": [
-    "id"
+    "id",
+    "treeName",
+    "treeSpecies"
   ],
   "additionalProperties": false,
   "definitions": {}
