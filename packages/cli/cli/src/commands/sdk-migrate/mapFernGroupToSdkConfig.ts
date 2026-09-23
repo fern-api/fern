@@ -78,15 +78,20 @@ export function mapFernDefinitionToSdkConfigApi(
                       ? {}
                       : { description: environment.docs })
               }));
-    const headers = Object.entries(root.headers ?? {}).map(([headerName, header]) =>
-        typeof header === "string"
-            ? { name: headerName }
-            : {
-                  name: header.name ?? headerName,
-                  ...(header.env == null ? {} : { environmentVariable: header.env }),
-                  ...(header.docs == null ? {} : { description: header.docs })
-              }
+    const sourceDerivedHeaderNames = new Set(
+        (sourceDerivedApiFields?.headerNames ?? []).map((headerName) => headerName.toLowerCase())
     );
+    const headers = Object.entries(root.headers ?? {})
+        .filter(([headerName]) => !sourceDerivedHeaderNames.has(headerName.toLowerCase()))
+        .map(([headerName, header]) =>
+            typeof header === "string"
+                ? { name: headerName }
+                : {
+                      name: header.name ?? headerName,
+                      ...(header.env == null ? {} : { environmentVariable: header.env }),
+                      ...(header.docs == null ? {} : { description: header.docs })
+                  }
+        );
     const auth = sourceDerivedApiFields?.auth ? { diagnostics: [] } : mapFernAuth(root);
     const baseUrl = sourceDerivedApiFields?.environments
         ? undefined
@@ -267,6 +272,9 @@ function mapEnvironmentUrls(
 function normalizeGeneratorForMapping(generator: generatorsYml.GeneratorInvocation): FernResolvedGeneratorInput {
     return {
         ...generator,
+        // Migrated SDK Config targets intentionally float to the latest supported generator.
+        // Customers can add generatorVersion later when they want to pin an exact version.
+        version: undefined,
         outputMode: normalizeResolvedOutput(generator.outputMode)
     };
 }

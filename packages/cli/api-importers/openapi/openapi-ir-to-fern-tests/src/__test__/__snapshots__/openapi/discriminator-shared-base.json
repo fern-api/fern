@@ -23,11 +23,31 @@
           },
           "ForbiddenError": {
             "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "ACCESS_DENIED",
+                  "message": "message",
+                },
+              },
+            ],
             "status-code": 403,
             "type": "ForbiddenErrorBody",
           },
           "UnauthorizedError": {
             "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "UNABLE_TO_AUTHENTICATE",
+                  "message": "message",
+                },
+              },
+            ],
             "status-code": 401,
             "type": "UnauthorizedErrorBody",
           },
@@ -107,7 +127,7 @@
             "properties": {
               "code": {
                 "docs": "Machine-readable error code",
-                "type": "optional<ForbiddenErrorBodyCode>",
+                "type": "ForbiddenErrorBodyCode",
               },
               "message": {
                 "docs": "Human-readable error message",
@@ -157,7 +177,7 @@
             "properties": {
               "code": {
                 "docs": "Machine-readable error code",
-                "type": "optional<UnauthorizedErrorBodyCode>",
+                "type": "UnauthorizedErrorBodyCode",
               },
               "message": {
                 "docs": "Human-readable error message",
@@ -223,7 +243,7 @@
     docs: Authentication failed
     properties:
       code:
-        type: optional<UnauthorizedErrorBodyCode>
+        type: UnauthorizedErrorBodyCode
         docs: Machine-readable error code
       message:
         type: string
@@ -241,7 +261,7 @@
     docs: Access denied
     properties:
       code:
-        type: optional<ForbiddenErrorBodyCode>
+        type: ForbiddenErrorBodyCode
         docs: Machine-readable error code
       message:
         type: string
@@ -261,10 +281,18 @@ errors:
     status-code: 401
     type: UnauthorizedErrorBody
     docs: Unauthorized
+    examples:
+      - value:
+          code: UNABLE_TO_AUTHENTICATE
+          message: message
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
     docs: Forbidden
+    examples:
+      - value:
+          code: ACCESS_DENIED
+          message: message
 service:
   auth: false
   base-path: ''

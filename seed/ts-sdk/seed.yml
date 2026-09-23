@@ -408,6 +408,10 @@ fixtures:
       customConfig:
         noSerdeLayer: true
         generateWebSocketClients: true
+    - outputFolder: accumulate-handlers
+      customConfig:
+        generateWebSocketClients: true
+        websocketHandlerMode: accumulate
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
@@ -543,6 +547,12 @@ fixtures:
     - outputFolder: legacy-exports
       customConfig:
         useLegacyExports: true
+    - outputFolder: esm-only
+      customConfig:
+        esmOnly: true
+    - outputFolder: output-esm
+      customConfig:
+        outputEsm: true
     - outputFolder: oidc-token
       publishConfig:
         type: npm
@@ -613,6 +623,12 @@ fixtures:
         namespaceExport: SeedErrors
         naming:
           client: SeedErrors
+  ts-flatten-request-any-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
   ts-react-query:
     - outputFolder: .
       customConfig:
@@ -644,6 +660,12 @@ fixtures:
   openapi-per-spec-base-path-disabled:
     - outputFolder: no-custom-config
       customConfig: null
+  ts-xml-twiml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
 
 scripts:
   - image: fernapi/ts-seed

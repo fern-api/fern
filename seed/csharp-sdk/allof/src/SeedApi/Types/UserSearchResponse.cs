@@ -15,7 +15,7 @@ public record UserSearchResponse : IJsonOnDeserialized
     /// Current page of results from the requested resource.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<User>? Results { get; set; }
+    public IEnumerable<User> Results { get; set; } = new List<User>();
 
     [JsonPropertyName("paging")]
     public required PagingCursors Paging { get; set; }

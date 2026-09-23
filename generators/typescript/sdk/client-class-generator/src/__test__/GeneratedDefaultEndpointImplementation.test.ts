@@ -678,25 +678,12 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             expect(result).toBeUndefined();
         });
 
-        it("returns undefined when generatePaginatedClients is false", () => {
+        it("returns pagination leverage code when pagination is set, regardless of generatePaginatedClients", () => {
             const endpoint = createHttpEndpoint();
             endpoint.pagination = createCursorPagination();
             const impl = createImpl({ endpoint });
             const context = createMockFileContext();
             // generatePaginatedClients is false by default
-            const result = impl.maybeLeverageInvocation({
-                invocation: ts.factory.createIdentifier("result"),
-                context
-            });
-            expect(result).toBeUndefined();
-        });
-
-        it("returns pagination leverage code when pagination and generatePaginatedClients are both set", () => {
-            const endpoint = createHttpEndpoint();
-            endpoint.pagination = createCursorPagination();
-            const impl = createImpl({ endpoint });
-            const context = createMockFileContext();
-            context.config.generatePaginatedClients = true;
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
                 context
@@ -768,7 +755,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             })
         },
         next: {
@@ -782,7 +770,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             }
         },
         results: {
@@ -796,7 +785,8 @@ function createCursorPagination(): FernIr.Pagination {
                 availability: undefined,
                 propertyAccess: undefined,
                 defaultValue: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                xml: undefined
             }
         }
     });

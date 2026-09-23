@@ -11,7 +11,7 @@ import {
 import { mapValues } from "lodash-es";
 
 export function convertEnvironments({
-    rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
+    rawApiFileSchema: { "default-environment": defaultEnvironment, "base-url-env": baseUrlEnvVar, environments },
     casingsGenerator
 }: {
     rawApiFileSchema: RawSchemas.WithEnvironmentsSchema;
@@ -28,6 +28,7 @@ export function convertEnvironments({
     return {
         environmentsConfig: {
             defaultEnvironment: defaultEnvironment ?? undefined,
+            baseUrlEnvVar: baseUrlEnvVar ?? undefined,
             environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
                 singleBaseUrl: () =>
                     Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),

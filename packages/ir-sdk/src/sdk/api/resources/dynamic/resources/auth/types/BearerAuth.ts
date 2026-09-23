@@ -2,6 +2,6 @@
 
 import type * as FernIr from "../../../../../index.js";
 
-export interface BearerAuth {
+export interface BearerAuth extends FernIr.dynamic.BaseAuth {
     token: FernIr.dynamic.Name;
 }

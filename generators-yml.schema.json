@@ -1572,6 +1572,90 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.encoding.XmlEncodingSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The element or attribute name on the wire, casing preserved. Defaults to the type or property name."
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The XML namespace URI."
+        },
+        "prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The namespace prefix for the element name."
+        },
+        "attribute": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as an attribute of the parent element instead of a child element."
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as the text content of the parent element."
+        },
+        "wrapped": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list properties, wrap the items in a container element named `name`."
+        },
+        "separator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list-valued attributes or text, the string used to join items (e.g. a space)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "On a type declaration: marks the object as an XML element (e.g. a TwiML verb).\nOn an object property: controls how the property serializes within its parent element."
+    },
     "fernDefinition.encoding.EncodingSchema": {
       "type": "object",
       "properties": {
@@ -1579,6 +1663,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "xml": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.encoding.XmlEncodingSchema"
             },
             {
               "type": "null"
@@ -2799,6 +2893,17 @@
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
         },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
+        },
         "namespaced-errors": {
           "oneOf": [
             {
@@ -3525,6 +3630,17 @@
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
         },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, operation ids are split on every word boundary (camelCase transitions and digits)\nwhen deriving endpoint names, so a redundant tag prefix is stripped and the remaining words\nare preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields\n`listFolderMembers` rather than `listfoldermembers`).\nThis applies to the v3 OpenAPI parser, which generates API reference URLs; SDK method names\nfrom the legacy importer are unaffected. Changing it changes existing API reference URLs.\nDefaults to false."
+        },
         "namespaced-errors": {
           "oneOf": [
             {
@@ -3768,6 +3884,17 @@
               "type": "null"
             }
           ]
+        },
+        "base-url-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs\nread to override the base URL. When the variable is set, it takes precedence over\nthe default environment; an explicitly provided base URL still wins."
         },
         "environments": {
           "oneOf": [
@@ -4201,6 +4328,7 @@
             "pypi",
             "postman",
             "local-file-system",
+            "fern-hosted",
             "nuget",
             "rubygems",
             "crates"
@@ -4400,6 +4528,27 @@
           "required": [
             "location",
             "path"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
+              "const": "fern-hosted"
+            },
+            "slug": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to \"mcp\"."
+            }
+          },
+          "required": [
+            "location"
           ]
         },
         {

@@ -242,7 +242,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 audiences: definition.audiences ?? []
             },
             source: {
-                type: "openapi",
+                type: definition.schema.sourceType ?? "openapi",
                 file: absoluteFilepath
             },
             namespace

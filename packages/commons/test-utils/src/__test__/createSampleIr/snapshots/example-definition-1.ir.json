@@ -734,6 +734,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {
@@ -782,6 +783,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -806,6 +808,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -841,6 +844,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -865,6 +869,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -889,6 +894,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -916,6 +922,7 @@
               "type": "named",
               "typeId": "type_types:OrderStatus",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -931,6 +938,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {
@@ -976,6 +984,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1000,6 +1009,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1024,6 +1034,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1039,6 +1050,7 @@
       "encoding": {
         "json": {},
         "proto": undefined,
+        "xml": undefined,
       },
       "inline": undefined,
       "name": {

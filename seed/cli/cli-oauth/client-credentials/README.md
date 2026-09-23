@@ -48,7 +48,6 @@ Set the following environment variable(s) before using the CLI:
 ```bash
 export ACME_CLIENT_ID="<your OAuth client credential>"
 export ACME_CLIENT_SECRET="<your OAuth client credential>"
-export OAUTH_TEST_OAUTH2_TOKEN_GRANT_TYPE="<your OAuth client credential>"
 export OAUTH_TEST_OAUTH2_TOKEN_TENANT="<your OAuth client credential>"
 # export OAUTH_TEST_OAUTH2_TOKEN_OPTIONAL_HINT="<your OAuth client credential>" # optional
 ```

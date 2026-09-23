@@ -72,7 +72,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
@@ -267,7 +268,8 @@
                             "unsafeName": "APIKey",
                             "safeName": "APIKey"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

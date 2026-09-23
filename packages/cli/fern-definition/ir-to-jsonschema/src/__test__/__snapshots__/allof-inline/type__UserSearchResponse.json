@@ -5,22 +5,16 @@
       "$ref": "#/definitions/PagingCursors"
     },
     "results": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/User"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      },
       "description": "Current page of results from the requested resource."
     }
   },
   "required": [
-    "paging"
+    "paging",
+    "results"
   ],
   "additionalProperties": false,
   "definitions": {

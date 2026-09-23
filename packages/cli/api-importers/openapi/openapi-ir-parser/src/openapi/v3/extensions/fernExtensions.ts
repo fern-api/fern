@@ -61,6 +61,14 @@ export const FernOpenAPIExtension = {
     BASE_PATH: "x-fern-base-path",
 
     /**
+     * The name of an environment variable that generated SDKs read to override
+     * the base URL (e.g. MY_API_BASE_URL). Set at the root of the document.
+     *
+     * x-fern-base-url-env: MY_API_BASE_URL
+     */
+    BASE_URL_ENV: "x-fern-base-url-env",
+
+    /**
      * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
      * This is a place where you can specify any display names related to the
      * configured SDK group names. These display names and descriptions will
@@ -558,6 +566,26 @@ export const FernOpenAPIExtension = {
      *      type: user.v1.User
      */
     ENCODING: "x-fern-encoding",
+
+    /**
+     * On a property of an XML element schema (one declaring an OpenAPI `xml` object), marks the
+     * property as the element's text content rather than an attribute or child element.
+     *
+     * Say:
+     *  xml:
+     *    name: Say
+     *  properties:
+     *    message:
+     *      type: string
+     *      x-fern-xml-text: true
+     */
+    XML_TEXT: "x-fern-xml-text",
+
+    /**
+     * On a list-valued attribute or text property of an XML element schema, the string used to
+     * join items into a single value (e.g. `" "` for space-delimited lists).
+     */
+    XML_LIST_SEPARATOR: "x-fern-xml-list-separator",
 
     /**
      * Allows users to configure gRPC services. This must be specified on individual service

@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "Production server",
     "environments": {
       "_visit": [Function],
@@ -1008,6 +1009,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1047,6 +1049,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1086,6 +1089,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1132,6 +1136,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1201,6 +1206,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1232,6 +1238,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1278,6 +1285,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1346,6 +1354,7 @@
               "type": "named",
               "typeId": "HealthResponseStatus",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1370,6 +1379,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1409,6 +1419,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -1525,6 +1536,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1556,6 +1568,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1595,6 +1608,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1634,6 +1648,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1658,6 +1673,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -1704,6 +1720,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

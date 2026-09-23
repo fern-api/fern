@@ -42,6 +42,9 @@ public final class BuilderGenerator {
 
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
 
+    public static final String ADDITIONAL_CHILDREN_NAME = "additionalChildren";
+    private static final String ADD_CHILD_METHOD_NAME = "addChild";
+
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
     private final ClassName nullableClassName;
@@ -55,6 +58,8 @@ public final class BuilderGenerator {
     private final boolean builderNotNullChecks;
     private final boolean useBuilderConstructor;
     private final Set<String> allPropertyCamelCaseNames;
+    private final Optional<ClassName> additionalChildrenItemType;
+    private final String additionalChildrenFieldName;
 
     public BuilderGenerator(
             ClassName objectClassName,
@@ -64,8 +69,10 @@ public final class BuilderGenerator {
             boolean supportAdditionalProperties,
             boolean disableRequiredPropertyBuilderChecks,
             boolean builderNotNullChecks,
-            boolean useBuilderConstructor) {
+            boolean useBuilderConstructor,
+            Optional<ClassName> additionalChildrenItemType) {
         this.objectClassName = objectClassName;
+        this.additionalChildrenItemType = additionalChildrenItemType;
         this.nullableClassName = nullableClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
@@ -83,6 +90,12 @@ public final class BuilderGenerator {
                 : "additionalProperties";
         if (supportAdditionalProperties) {
             buildMethodArguments.add(additionalPropertiesFieldName);
+        }
+        this.additionalChildrenFieldName = allPropertyCamelCaseNames.contains(ADDITIONAL_CHILDREN_NAME)
+                ? "_" + ADDITIONAL_CHILDREN_NAME
+                : ADDITIONAL_CHILDREN_NAME;
+        if (additionalChildrenItemType.isPresent()) {
+            buildMethodArguments.add(additionalChildrenFieldName);
         }
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
         this.isSerialized = isSerialized;
@@ -153,6 +166,7 @@ public final class BuilderGenerator {
                     .build());
             addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, true);
         }
+        addAdditionalChildrenBuilderMembers(builderImplTypeSpec, true);
 
         List<PoetTypeWithClassName> stagedBuilderTypes = new ArrayList<>();
         stagedBuilderTypes.addAll(interfaces);
@@ -244,6 +258,7 @@ public final class BuilderGenerator {
                     .build());
             addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, false);
         }
+        addAdditionalChildrenBuilderMembers(builderImplTypeSpec, false);
 
         return PoetTypeWithClassName.of(nestedBuilderClassName, builderImplTypeSpec.build());
     }
@@ -438,6 +453,66 @@ public final class BuilderGenerator {
                 .build());
     }
 
+    private String getAdditionalChildrenMethodName() {
+        return additionalChildrenFieldName;
+    }
+
+    private String getAddChildMethodName() {
+        return allPropertyCamelCaseNames.contains(ADD_CHILD_METHOD_NAME)
+                ? "_" + ADD_CHILD_METHOD_NAME
+                : ADD_CHILD_METHOD_NAME;
+    }
+
+    private TypeName getAdditionalChildrenType() {
+        return ParameterizedTypeName.get(ClassName.get(List.class), additionalChildrenItemType.get());
+    }
+
+    private void addAdditionalChildrenBuilderMembers(TypeSpec.Builder builderTypeSpec, boolean isOverridden) {
+        if (additionalChildrenItemType.isEmpty()) {
+            return;
+        }
+        builderTypeSpec.addField(FieldSpec.builder(getAdditionalChildrenType(), additionalChildrenFieldName)
+                .addModifiers(Modifier.PRIVATE)
+                .addAnnotation(JsonIgnore.class)
+                .initializer("new $T<>()", ArrayList.class)
+                .build());
+        MethodSpec.Builder singleSetter = MethodSpec.methodBuilder(getAddChildMethodName())
+                .addJavadoc("Appends a child element that is not described by the API definition.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(nestedBuilderClassName)
+                .addParameter(additionalChildrenItemType.get(), "child")
+                .addStatement("this.$L.add(child)", additionalChildrenFieldName)
+                .addStatement("return this");
+        MethodSpec.Builder bulkSetter = MethodSpec.methodBuilder(getAdditionalChildrenMethodName())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(nestedBuilderClassName)
+                .addParameter(getAdditionalChildrenType(), additionalChildrenFieldName)
+                .addStatement("this.$L.addAll($L)", additionalChildrenFieldName, additionalChildrenFieldName)
+                .addStatement("return this");
+        if (isOverridden) {
+            singleSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+            bulkSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        builderTypeSpec.addMethod(singleSetter.build());
+        builderTypeSpec.addMethod(bulkSetter.build());
+    }
+
+    private void addAdditionalChildrenInterfaceMethods(TypeSpec.Builder interfaceBuilder, ClassName returnClass) {
+        if (additionalChildrenItemType.isEmpty()) {
+            return;
+        }
+        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAddChildMethodName())
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .returns(returnClass)
+                .addParameter(additionalChildrenItemType.get(), "child")
+                .build());
+        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalChildrenMethodName())
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .returns(returnClass)
+                .addParameter(getAdditionalChildrenType(), additionalChildrenFieldName)
+                .build());
+    }
+
     private MethodSpec.Builder getFromSetter() {
         return MethodSpec.methodBuilder(StageBuilderConstants.FROM_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -466,6 +541,7 @@ public final class BuilderGenerator {
         if (this.supportAdditionalProperties) {
             addAdditionalPropertiesInterfaceMethods(finalStageBuilder, finalStageClassName);
         }
+        addAdditionalChildrenInterfaceMethods(finalStageBuilder, finalStageClassName);
 
         List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
         for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {

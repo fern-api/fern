@@ -74,6 +74,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     ignoreTags: "ignoreTags",
     respectParameterContent: "respectParameterContent",
     respectPerSpecBasePath: "respectPerSpecBasePath",
+    respectOperationIdWordBoundaries: "respectOperationIdWordBoundaries",
     namespacedErrors: "namespacedErrors"
 };
 

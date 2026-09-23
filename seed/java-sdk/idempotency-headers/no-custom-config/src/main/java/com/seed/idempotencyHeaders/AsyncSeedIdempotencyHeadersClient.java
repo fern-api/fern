@@ -8,7 +8,7 @@ import com.seed.idempotencyHeaders.core.Suppliers;
 import com.seed.idempotencyHeaders.resources.payment.AsyncPaymentClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedIdempotencyHeadersClient {
+public class AsyncSeedIdempotencyHeadersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncPaymentClient> paymentClient;
@@ -20,6 +20,15 @@ public class AsyncSeedIdempotencyHeadersClient {
 
     public AsyncPaymentClient payment() {
         return this.paymentClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedIdempotencyHeadersClientBuilder builder() {

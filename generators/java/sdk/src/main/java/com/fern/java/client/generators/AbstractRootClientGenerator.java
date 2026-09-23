@@ -250,6 +250,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
         }
 
+        // Make the root client AutoCloseable so callers can release the OkHttpClient the SDK created for them
+        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which only tears anything
+        // down when the client owns the OkHttpClient — a client supplied via Builder.httpClient(...) is left running,
+        // since the caller owns its lifecycle.
+        result.getClientImpl()
+                .addSuperinterface(AutoCloseable.class)
+                .addMethod(MethodSpec.methodBuilder("close")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Releases resources owned by this client. See {@code ClientOptions.close()} for what is\n"
+                                        + "and is not released.\n")
+                        .addStatement("this.clientOptions.close()")
+                        .build());
+
         TypeSpec builderTypeSpec = getClientBuilder();
 
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();

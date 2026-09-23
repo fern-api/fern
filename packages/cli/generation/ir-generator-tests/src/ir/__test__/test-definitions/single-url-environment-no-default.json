@@ -46,7 +46,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
@@ -166,6 +167,7 @@
     },
     "environments": {
         "defaultEnvironment": null,
+        "baseUrlEnvVar": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -234,7 +236,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

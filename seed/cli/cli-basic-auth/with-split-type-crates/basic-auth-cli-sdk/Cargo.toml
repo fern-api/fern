@@ -11,6 +11,7 @@ documentation = "https://docs.rs/basic_auth_cli_sdk"
 doctest = false
 
 [dependencies]
+base64 = "0.22"
 bytes = "1.0"
 futures = "0.3"
 reqwest = { version = "0.12", features = ["json", "stream", "gzip"], default-features = false }

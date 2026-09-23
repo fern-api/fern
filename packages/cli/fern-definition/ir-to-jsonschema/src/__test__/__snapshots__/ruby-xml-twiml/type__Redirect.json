@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "kind": {
+      "oneOf": [
+        {
+          "const": "redirect"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "url",
+    "method"
+  ],
+  "additionalProperties": false,
+  "description": "Text element with a required attribute.",
+  "definitions": {}
+}

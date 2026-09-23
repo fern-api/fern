@@ -9,7 +9,7 @@ import com.seed.api.resources.identity.AsyncIdentityClient;
 import com.seed.api.resources.plants.AsyncPlantsClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncIdentityClient> identityClient;
@@ -28,6 +28,15 @@ public class AsyncSeedApiClient {
 
     public AsyncPlantsClient plants() {
         return this.plantsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

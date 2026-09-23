@@ -380,14 +380,13 @@ components:
         paging:
           $ref: '#/components/schemas/PagingCursors'
         results:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/RuleType'
           description: Current page of results from the requested resource.
       required:
         - paging
+        - results
     User:
       title: User
       type: object
@@ -407,14 +406,13 @@ components:
         paging:
           $ref: '#/components/schemas/PagingCursors'
         results:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/User'
           description: Current page of results from the requested resource.
       required:
         - paging
+        - results
     RuleResponseStatus:
       title: RuleResponseStatus
       type: string

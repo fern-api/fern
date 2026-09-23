@@ -121,6 +121,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         outputEsm: boolean;
+        esmOnly: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
@@ -185,6 +186,7 @@ export declare namespace SdkGenerator {
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
         guardProcessEnvAccess: boolean;
+        websocketHandlerMode: "replace" | "accumulate";
         generateReactQueryHooks: boolean;
     }
 }
@@ -507,7 +509,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             enableInlineTypes: config.enableInlineTypes,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            caseConverter
+            caseConverter,
+            useBigInt: config.useBigInt
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -583,6 +586,7 @@ export class SdkGenerator {
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
             allowUserAgentAppInfo: config.allowUserAgentAppInfo,
+            guardProcessEnvAccess: config.guardProcessEnvAccess,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
@@ -591,7 +595,8 @@ export class SdkGenerator {
             intermediateRepresentation,
             retainOriginalCasing: config.retainOriginalCasing,
             omitUndefined: config.omitUndefined,
-            skipResponseValidation: config.skipResponseValidation
+            skipResponseValidation: config.skipResponseValidation,
+            websocketHandlerMode: config.websocketHandlerMode
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -659,7 +664,8 @@ export class SdkGenerator {
             linter: config.linter,
             autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
             idempotencyKeyHeaderName:
-                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
+                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key",
+            esModulePackage: config.esmOnly || config.outputEsm
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -836,6 +842,7 @@ export class SdkGenerator {
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  esmOnly: this.config.esmOnly,
                   outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
@@ -991,6 +998,9 @@ export class SdkGenerator {
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            if (this.typeResolver.isXmlDependentType(typeDeclaration)) {
+                continue;
+            }
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {

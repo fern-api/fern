@@ -1,5 +1,5 @@
 import { GeneratorConfig } from "@fern-api/base-generator";
-import type { CargoPackageIdentity } from "./patchCargoToml.js";
+import type { CargoDependencySpec, CargoDependencyValue, CargoPackageIdentity } from "./patchCargoToml.js";
 
 /**
  * User-supplied configuration the CLI generator reads from
@@ -86,6 +86,30 @@ export interface FernCliCustomConfig {
     packageIdentity?: CargoPackageIdentity;
 
     /**
+     * Additional crates to declare in the generated root `Cargo.toml`'s
+     * `[dependencies]`, keyed by crate name. Intended for code kept in
+     * `.fernignore` (custom command handlers, custom auth) that needs
+     * crates the CLI runtime itself does not ship.
+     *
+     * Each value is either a version requirement string (`"1.16"`) or a
+     * full dependency table (`{ version, features, optional,
+     * defaultFeatures, package, path, git, branch, rev, registry }`),
+     * mirroring the Rust SDK generator's `extraDependencies`.
+     *
+     * A name that collides with a crate the CLI runtime already depends
+     * on is rejected: the bundled feature sets are load-bearing for the
+     * vendored `src/` tree, so they are not overridable from config.
+     *
+     * The shipped `Cargo.lock` is not re-resolved at generation time (no
+     * cargo or network in the generator), so the first `cargo build`
+     * after generation adds the new crates to the lockfile.
+     */
+    extraDependencies?: Record<string, CargoDependencyValue>;
+
+    /** Same as {@link extraDependencies}, for `[dev-dependencies]`. */
+    extraDevDependencies?: Record<string, CargoDependencyValue>;
+
+    /**
      * Split the generated `<binaryName>-types` crate into one crate per API,
      * behind a facade crate that keeps the original name and re-exports them.
      *
@@ -102,6 +126,31 @@ export interface FernCliCustomConfig {
     splitTypeCrates?: boolean;
 
     /**
+     * Named profiles: a `profiles` subcommand group, a global
+     * `--profile` / `-p` flag, and profile-sourced defaults for
+     * credentials, parameters, server variables, base URL, and output
+     * format.
+     *
+     * A profile is a named bundle of request context resolved once per
+     * invocation. It adds no new transport — it is a source of defaults
+     * for mechanisms that already accept them (the keyring account an
+     * `AuthCredentialSource::Keyring` reads, a `clap::Arg`'s
+     * `default_value`, `servers[].variables` substitution).
+     *
+     * Precedence per value is: explicit flag, then environment variable,
+     * then profile, then the spec's own default. Environment variables
+     * sit above profiles so a CI pipeline is never silently overridden by
+     * a developer's stored profile.
+     *
+     * Absent — i.e. **off** — by default. Adding a top-level subcommand
+     * to every existing generated CLI is a surface change, and per the
+     * repo's breaking-changes policy it must not arrive unannounced. With
+     * this block absent, output is byte-identical to a generation without
+     * it.
+     */
+    profiles?: FernCliProfilesConfig;
+
+    /**
      * Opt-in binary distribution channels layered on top of the GitHub
      * Release archives every generated CLI already ships.
      *
@@ -114,6 +163,45 @@ export interface FernCliCustomConfig {
      * when the generator writes to local files.
      */
     distribution?: FernCliDistributionConfig;
+}
+
+/**
+ * Configuration for the `profiles` feature.
+ */
+export interface FernCliProfilesConfig {
+    /**
+     * Whether to emit the profiles surface. Defaults to `false`, so a
+     * `profiles:` block present but not enabled is a no-op — which is
+     * what lets a consumer stage the config change ahead of the flip.
+     */
+    enabled?: boolean;
+
+    /**
+     * Name of the top-level subcommand group. Defaults to `profiles`.
+     *
+     * Configurable because an API may already own that noun as a
+     * resource. The SDK folds the built-in leaves into a spec-owned group
+     * of the same name rather than colliding with it, so renaming is a
+     * preference rather than a requirement — but `tenants` or
+     * `accounts` may read better for a given API.
+     */
+    commandName?: string;
+
+    /**
+     * Dotted command path of an operation that revokes a profile's remote
+     * credential, e.g. `iam.keys.remove`.
+     *
+     * When set, `profiles remove` grows a `--revoke` flag that calls it
+     * before deleting the profile locally. Unset — the default — and the
+     * flag is not registered at all, so the CLI never advertises a
+     * capability it does not have.
+     *
+     * Named here rather than derived because the framework cannot know
+     * which operation deletes a key. It is invoked with the profile's
+     * stored `parameters` as its arguments, so any parameter it requires
+     * has to be on the profile (`profiles create --set <name>=<value>`).
+     */
+    revokeOperation?: string;
 }
 
 /**
@@ -382,11 +470,182 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.splitTypeCrates = obj.splitTypeCrates;
     }
+    if ("profiles" in obj && obj.profiles !== undefined) {
+        result.profiles = validateProfiles(obj.profiles);
+    }
     if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
         result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
     }
+    if ("extraDependencies" in obj && obj.extraDependencies !== undefined) {
+        result.extraDependencies = validateDependencyMap(obj.extraDependencies, "customConfig.extraDependencies");
+    }
+    if ("extraDevDependencies" in obj && obj.extraDevDependencies !== undefined) {
+        result.extraDevDependencies = validateDependencyMap(
+            obj.extraDevDependencies,
+            "customConfig.extraDevDependencies",
+            { allowOptional: false }
+        );
+    }
     if ("distribution" in obj && obj.distribution !== undefined) {
         result.distribution = validateDistribution(obj.distribution);
+    }
+    return result;
+}
+
+const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;
+const DEPENDENCY_SPEC_BOOLEAN_FIELDS = ["optional", "defaultFeatures"] as const;
+const DEPENDENCY_SPEC_FIELDS: ReadonlySet<string> = new Set([
+    ...DEPENDENCY_SPEC_STRING_FIELDS,
+    ...DEPENDENCY_SPEC_BOOLEAN_FIELDS,
+    "features"
+]);
+
+function isStringArray(value: unknown): value is string[] {
+    return Array.isArray(value) && value.every((entry) => typeof entry === "string");
+}
+
+function validateDependencyMap(
+    raw: unknown,
+    path: string,
+    options: { allowOptional: boolean } = { allowOptional: true }
+): Record<string, CargoDependencyValue> {
+    const obj = asConfigObject(raw, path);
+    const result: Record<string, CargoDependencyValue> = {};
+    for (const [name, value] of Object.entries(obj)) {
+        if (!CRATE_NAME_PATTERN.test(name)) {
+            throw new Error(
+                `Invalid ${path}: "${name}" is not a valid cargo crate name. ` +
+                    "It must start with a letter and contain only [A-Za-z0-9_-]."
+            );
+        }
+        if (typeof value === "string") {
+            if (value.length === 0) {
+                throw new Error(`Invalid ${path}.${name}: version requirement must not be empty.`);
+            }
+            result[name] = value;
+            continue;
+        }
+        const spec = validateDependencySpec(value, `${path}.${name}`);
+        if (!options.allowOptional && spec.optional === true) {
+            throw new Error(`Invalid ${path}.${name}.optional: cargo does not allow optional dev-dependencies.`);
+        }
+        result[name] = spec;
+    }
+    return result;
+}
+
+function validateDependencySpec(raw: unknown, path: string): CargoDependencySpec {
+    if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
+        throw new Error(
+            `Invalid ${path}: expected a version string or a dependency table, got ${Array.isArray(raw) ? "array" : typeof raw}.`
+        );
+    }
+    const obj = raw as Record<string, unknown>;
+    const result: CargoDependencySpec = {};
+    for (const field of DEPENDENCY_SPEC_STRING_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (typeof value !== "string") {
+            throw new Error(`Invalid ${path}.${field}: expected a string, got ${typeof value}.`);
+        }
+        result[field] = value;
+    }
+    for (const field of DEPENDENCY_SPEC_BOOLEAN_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (typeof value !== "boolean") {
+            throw new Error(`Invalid ${path}.${field}: expected a boolean, got ${typeof value}.`);
+        }
+        result[field] = value;
+    }
+    if (obj.features !== undefined) {
+        if (!isStringArray(obj.features)) {
+            throw new Error(`Invalid ${path}.features: expected an array of strings.`);
+        }
+        result.features = obj.features;
+    }
+    const unknownKeys = Object.keys(obj).filter((key) => !DEPENDENCY_SPEC_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid ${path}: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                `Supported fields: ${[...DEPENDENCY_SPEC_FIELDS].map((key) => `\`${key}\``).join(", ")}.`
+        );
+    }
+    if (result.version == null && result.path == null && result.git == null) {
+        throw new Error(`Invalid ${path}: a dependency table needs at least one of \`version\`, \`path\`, or \`git\`.`);
+    }
+    return result;
+}
+
+/**
+ * Names the generated CLI already registers as top-level subcommands. A
+ * `commandName` matching one of these would fold the profiles built-ins
+ * into an unrelated group, so it is rejected at the boundary.
+ *
+ * `profiles` itself is absent because it is the default and must stay
+ * selectable.
+ */
+const RESERVED_PROFILES_COMMAND_NAMES: ReadonlySet<string> = new Set([
+    "auth",
+    "completion",
+    "man",
+    "errors",
+    "generate-skills",
+    "help"
+]);
+
+function validateProfiles(raw: unknown): FernCliProfilesConfig {
+    const obj = asConfigObject(raw, "customConfig.profiles");
+    const result: FernCliProfilesConfig = {};
+    if (obj.enabled !== undefined) {
+        if (typeof obj.enabled !== "boolean") {
+            throw new Error(`Invalid customConfig.profiles.enabled: expected a boolean, got ${typeof obj.enabled}.`);
+        }
+        result.enabled = obj.enabled;
+    }
+    if (obj.revokeOperation !== undefined) {
+        if (typeof obj.revokeOperation !== "string") {
+            throw new Error(
+                `Invalid customConfig.profiles.revokeOperation: expected a string, got ${typeof obj.revokeOperation}.`
+            );
+        }
+        // Dotted command path. Interpolated into a Rust string literal and
+        // split on `.` at runtime, so anything else would produce a path
+        // that silently matches no operation.
+        if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(obj.revokeOperation)) {
+            throw new Error(
+                `Invalid customConfig.profiles.revokeOperation: "${obj.revokeOperation}" is not a ` +
+                    'dotted command path. Use the form "<resource>.<method>" (e.g. "iam.keys.remove").'
+            );
+        }
+        result.revokeOperation = obj.revokeOperation;
+    }
+    if (obj.commandName !== undefined) {
+        if (typeof obj.commandName !== "string") {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: expected a string, got ${typeof obj.commandName}.`
+            );
+        }
+        // The value is interpolated into a Rust string literal in main.rs and
+        // becomes a clap subcommand name, so it has to be a safe kebab
+        // identifier — the same constraint `rootGroup` carries.
+        if (!/^[a-z][a-z0-9-]*$/.test(obj.commandName)) {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: "${obj.commandName}" is not a valid ` +
+                    "subcommand name. It must start with a lowercase letter and contain only [a-z0-9-]."
+            );
+        }
+        if (RESERVED_PROFILES_COMMAND_NAMES.has(obj.commandName)) {
+            throw new Error(
+                `Invalid customConfig.profiles.commandName: "${obj.commandName}" is already a built-in ` +
+                    'command group on every generated CLI. Choose a different name (e.g. "tenants").'
+            );
+        }
+        result.commandName = obj.commandName;
     }
     return result;
 }

@@ -237,6 +237,10 @@ export const AIChatDatasource = AIChatWebsiteDatasource;
 
 export const PageDescriptionSource = z.enum(["description", "subtitle"]);
 
+export const EmbeddingConfig = z.object({
+    "allowed-origins": z.array(z.string())
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -249,7 +253,8 @@ export const AIChatConfig = z.object({
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
     datasources: z.array(AIChatDatasource).optional(),
-    "mask-pii": z.boolean().optional()
+    "mask-pii": z.boolean().optional(),
+    disclaimer: z.string().optional()
 });
 
 // ===== Font schemas =====
@@ -295,6 +300,10 @@ export const ThemeConfig = z.object({
 
 // ===== Layout schemas =====
 
+export const BreadcrumbsConfig = z.object({
+    "current-page": z.boolean().optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
@@ -312,7 +321,8 @@ export const LayoutConfig = z.object({
     "changelog-layout": ChangelogLayout.optional(),
     "api-reference-layout": ApiReferenceLayout.optional(),
     "api-reference-expand-properties": z.boolean().optional(),
-    "show-nav-availability-badges": z.boolean().optional()
+    "show-nav-availability-badges": z.boolean().optional(),
+    breadcrumbs: BreadcrumbsConfig.optional()
 });
 
 // ===== Settings =====
@@ -336,7 +346,8 @@ export const DocsSettingsConfig = z.object({
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
-    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    embedding: EmbeddingConfig.optional()
 });
 
 // ===== Colors =====
@@ -812,10 +823,21 @@ export const ApiReferencePackageConfiguration: z.ZodType<unknown> = z.lazy(() =>
 
 // ===== API Reference Configuration =====
 
+export const ApiSpecType = z.enum(["openapi", "asyncapi", "graphql"]);
+
+export const ApiSpecConfiguration = z.object({
+    type: ApiSpecType,
+    path: z.string(),
+    namespace: z.string().optional(),
+    overlays: z.string().optional(),
+    overrides: z.array(z.string()).optional()
+});
+
 export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         api: z.string(),
         "api-name": z.string().optional(),
+        specs: z.array(ApiSpecConfiguration).optional(),
         openrpc: z.string().optional(),
         audiences: Audience.optional(),
         "display-errors": z.boolean().optional(),

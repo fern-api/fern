@@ -69,7 +69,7 @@ export function convertTypeDeclaration({
             name: declaredTypeName,
             shape: convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
-            encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
+            encoding: convertTypeDeclarationEncoding({ typeDeclaration, typeName, source }),
             source,
             userProvidedExamples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
@@ -112,7 +112,12 @@ export function convertType({
 }): Type {
     return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
-        object: (object) => convertObjectTypeDeclaration({ object, file }),
+        object: (object) =>
+            convertObjectTypeDeclaration({
+                object,
+                file,
+                withinXmlElement: isXmlEncodedTypeDeclaration(typeDeclaration)
+            }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
         enum: (enum_) => Type.enum(convertEnumTypeDeclaration({ _enum: enum_, file }))
@@ -161,38 +166,58 @@ function convertTypeDeclarationSource({
 
 function convertTypeDeclarationEncoding({
     typeDeclaration,
+    typeName,
     source
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
+    typeName: string;
     source: Source | undefined;
 }): Encoding {
     if (typeof typeDeclaration !== "string" && typeDeclaration.encoding != null) {
-        return convertEncoding(typeDeclaration.encoding);
+        return convertEncoding({ encodingSchema: typeDeclaration.encoding, typeName });
     }
     return convertSourceToEncoding(source);
 }
 
-function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
-    return encodingSchema.proto != null
-        ? {
-              json: undefined,
-              proto: {}
-          }
-        : {
-              json: {},
-              proto: undefined
-          };
+function convertEncoding({
+    encodingSchema,
+    typeName
+}: {
+    encodingSchema: RawSchemas.EncodingSchema;
+    typeName: string;
+}): Encoding {
+    if (encodingSchema.proto != null) {
+        return { json: undefined, proto: {}, xml: undefined };
+    }
+    if (encodingSchema.xml != null) {
+        return {
+            json: undefined,
+            proto: undefined,
+            xml: {
+                name: encodingSchema.xml.name ?? typeName,
+                namespace: encodingSchema.xml.namespace,
+                prefix: encodingSchema.xml.prefix
+            }
+        };
+    }
+    return { json: {}, proto: undefined, xml: undefined };
+}
+
+export function isXmlEncodedTypeDeclaration(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean {
+    return typeof typeDeclaration !== "string" && typeDeclaration.encoding?.xml != null;
 }
 
 function convertSourceToEncoding(source: Source | undefined): Encoding {
     return source != null && source.type === "proto"
         ? {
               json: undefined,
-              proto: {}
+              proto: {},
+              xml: undefined
           }
         : {
               json: {},
-              proto: undefined
+              proto: undefined,
+              xml: undefined
           };
 }
 function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean | undefined {

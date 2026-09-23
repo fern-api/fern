@@ -18,6 +18,7 @@ import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties.js";
 import { convertAvailability } from "./convertAvailability.js";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas.js";
+import { getXmlPropertyEncoding } from "./convertXml.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedPropertyName } from "./utils/getSchemaName.js";
@@ -76,6 +77,10 @@ export function convertObject({
     maxProperties: number | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
+    const requiredAcrossAllOf = collectRequiredAcrossAllOf({ allOf, context });
+    for (const key of allRequired) {
+        requiredAcrossAllOf.add(key);
+    }
     const propertiesToConvert = { ...getNonIgnoredProperties({ properties, breadcrumbs, context }) };
     let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
@@ -205,7 +210,19 @@ export function convertObject({
                     }
                     mergedProperties[key] = merged;
                 }
-                mergedAllOfElement = { ...allOfElement, properties: mergedProperties };
+                // `required` is the union across all allOf branches: a property required by
+                // a sibling branch stays required when this branch redeclares it.
+                const mergedRequired = new Set(allOfElement.required ?? []);
+                for (const key of Object.keys(mergedProperties)) {
+                    if (requiredAcrossAllOf.has(key)) {
+                        mergedRequired.add(key);
+                    }
+                }
+                mergedAllOfElement = {
+                    ...allOfElement,
+                    properties: mergedProperties,
+                    required: mergedRequired.size > 0 ? [...mergedRequired] : allOfElement.required
+                };
             }
 
             // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
@@ -316,7 +333,7 @@ export function convertObject({
                 resolvedPropertySchema.writeOnly;
 
             const isRequired =
-                allRequired.includes(propertyName) && (!readonly || context.options.respectReadonlySchemas);
+                requiredAcrossAllOf.has(propertyName) && (!readonly || context.options.respectReadonlySchemas);
             const isPropertyOptional = !isRequired;
 
             const propertyNameOverride = getExtension<string | undefined>(
@@ -354,7 +371,11 @@ export function convertObject({
                 generatedName,
                 availability,
                 readonly,
-                writeonly
+                writeonly,
+                xml:
+                    encoding?.type === "xml"
+                        ? getXmlPropertyEncoding({ propertySchema, resolvedPropertySchema })
+                        : undefined
             };
         }
     );
@@ -505,6 +526,39 @@ export function wrapObject({
         });
     }
     return result;
+}
+
+function collectRequiredAcrossAllOf({
+    allOf,
+    context,
+    visited = new Set()
+}: {
+    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: SchemaParserContext;
+    visited?: Set<string>;
+}): Set<string> {
+    const required = new Set<string>();
+    for (const allOfElement of allOf) {
+        let resolved: OpenAPIV3.SchemaObject;
+        if (isReferenceObject(allOfElement)) {
+            if (visited.has(allOfElement.$ref)) {
+                continue;
+            }
+            visited.add(allOfElement.$ref);
+            resolved = context.resolveSchemaReference(allOfElement);
+        } else {
+            resolved = allOfElement;
+        }
+        for (const key of resolved.required ?? []) {
+            required.add(key);
+        }
+        if (resolved.allOf != null) {
+            for (const key of collectRequiredAcrossAllOf({ allOf: resolved.allOf, context, visited })) {
+                required.add(key);
+            }
+        }
+    }
+    return required;
 }
 
 function getNonIgnoredProperties({

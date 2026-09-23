@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "Production server",
     "environments": {
       "_visit": [Function],
@@ -170,6 +171,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -197,6 +199,7 @@
               "type": "named",
               "typeId": "DocumentUploadEventEventType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -228,6 +231,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -267,6 +271,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -306,6 +311,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -337,6 +343,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -388,6 +395,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -412,6 +420,7 @@
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -445,6 +454,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -592,6 +602,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -623,6 +634,7 @@
                 "type": "named",
                 "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -690,6 +702,7 @@
                 },
                 "type": "container",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -725,6 +738,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -780,6 +794,7 @@
                 },
                 "type": "container",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -808,6 +823,7 @@
                 },
                 "type": "primitive",
               },
+              "xml": undefined,
             },
             {
               "_visit": [Function],
@@ -845,6 +861,7 @@
                 },
                 "type": "container",
               },
+              "xml": undefined,
             },
           ],
           "v2Examples": {

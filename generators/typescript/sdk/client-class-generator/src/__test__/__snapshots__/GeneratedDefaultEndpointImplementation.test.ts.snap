@@ -91,7 +91,7 @@ exports[`GeneratedDefaultEndpointImplementation > invokeFetcherAndReturnResponse
 return _response.body;"
 `;
 
-exports[`GeneratedDefaultEndpointImplementation > maybeLeverageInvocation > returns pagination leverage code when pagination and generatePaginatedClients are both set 1`] = `
+exports[`GeneratedDefaultEndpointImplementation > maybeLeverageInvocation > returns pagination leverage code when pagination is set, regardless of generatePaginatedClients 1`] = `
 "const pageableResponse = result;
 for await (const item of pageableResponse) {
     console.log(item);
@@ -99,7 +99,7 @@ for await (const item of pageableResponse) {
 // Or you can manually iterate page-by-page
 let page = result;
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 // You can also access the underlying response
 const response = page.response;"

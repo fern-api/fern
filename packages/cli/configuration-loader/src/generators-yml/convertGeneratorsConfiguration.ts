@@ -79,6 +79,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     ignoreTags: undefined,
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
+    respectOperationIdWordBoundaries: undefined,
     namespacedErrors: undefined
 };
 
@@ -195,6 +196,7 @@ export function parseOpenApiDefinitionSettingsSchema(
         ignoreTags: settings?.["ignore-tags"],
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
+        respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
         namespacedErrors: settings?.["namespaced-errors"]
     };
 }
@@ -414,7 +416,8 @@ async function parseAPIConfigurationToApiLocations(
             apiDefinitions.push({
                 schema: {
                     type: "oss",
-                    path: asyncapi
+                    path: asyncapi,
+                    sourceType: "asyncapi"
                 },
                 origin: apiOrigin,
                 overrides: undefined,
@@ -475,7 +478,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: specPath
+                    path: specPath,
+                    sourceType: "asyncapi"
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
@@ -658,6 +662,37 @@ async function convertGroup({
     };
 }
 
+/**
+ * Separates an optional `@sha256:...` digest from an image name.
+ *
+ * Pinning by digest is how an immutable deployment is expressed: a tag can be repointed, a digest
+ * cannot. The digest is carried on the image reference while the generator name stays clean, because
+ * the name is also what IR version resolution is keyed on.
+ */
+export function splitImageDigest(
+    imageName: string,
+    context: TaskContext
+): { name: string; digest: string | undefined } {
+    const atIndex = imageName.indexOf("@");
+    if (atIndex === -1) {
+        return { name: imageName, digest: undefined };
+    }
+
+    const name = imageName.slice(0, atIndex);
+    const digest = imageName.slice(atIndex + 1);
+
+    // Rejected rather than passed through: an unusable digest that reaches the container runtime
+    // fails with a runtime error that does not name generators.yml as the cause.
+    if (!/^sha256:[0-9a-f]{64}$/.test(digest)) {
+        context.failAndThrow(
+            `Invalid image digest "${digest}" in generators.yml. ` +
+                "A digest must look like sha256: followed by 64 lowercase hex characters."
+        );
+    }
+
+    return { name, digest };
+}
+
 function getGeneratorNameAndImage(
     generator: generatorsYml.GeneratorInvocationSchema,
     context: TaskContext
@@ -670,19 +705,29 @@ function getGeneratorNameAndImage(
         // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
         // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
         // org should not appear in custom registry paths.
-        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        //
+        // A digest is split off before normalization: it belongs to the image reference, not to the
+        // generator identity, and IR version resolution must still see a clean name.
+        const { name: imageNameWithoutDigest, digest } = splitImageDigest(generator.image.name, context);
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(imageNameWithoutDigest, context);
         const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
         return {
             normalizedName: normalizedImageName,
-            containerImage: `${generator.image.registry}/${correctedImageName}`
+            containerImage: `${generator.image.registry}/${correctedImageName}${digest != null ? `@${digest}` : ""}`
         };
     }
-    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization.
+    //
+    // The digest is split off here too, and for the same reason as above: `normalizedName` is what
+    // IR version resolution and the on-prem adapter cutover check are keyed on, and both match
+    // exactly. A digest left glued to the name would miss every lookup, so a pinned adapter image
+    // would run while being handed Fern's `GeneratorConfig` instead of SDK Config IR.
+    const { name: nameWithoutDigest, digest } = splitImageDigest(generator.name, context);
+    const correctedName = correctIncorrectDockerOrgWithWarning(nameWithoutDigest, context);
     const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
     return {
         normalizedName,
-        containerImage: undefined
+        containerImage: digest != null ? `${normalizedName}@${digest}` : undefined
     };
 }
 
@@ -744,6 +789,7 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        fernHostedOutput: generator.output?.location === "fern-hosted" ? { slug: generator.output.slug } : undefined,
         absolutePathToLocalSnippets:
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
@@ -969,6 +1015,7 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
+        case "fern-hosted":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
             });
@@ -1095,6 +1142,11 @@ function getGithubPublishInfo(
         case "local-file-system":
             throw new CliError({
                 message: "Cannot use local-file-system with github publishing",
+                code: CliError.Code.ConfigError
+            });
+        case "fern-hosted":
+            throw new CliError({
+                message: "Cannot use fern-hosted with github publishing",
                 code: CliError.Code.ConfigError
             });
         case "npm":

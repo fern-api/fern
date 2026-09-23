@@ -11,7 +11,7 @@ import com.seed.packageYml.types.EchoRequest;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedPackageYmlClient {
+public class AsyncSeedPackageYmlClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedPackageYmlClient rawClient;
@@ -41,6 +41,15 @@ public class AsyncSeedPackageYmlClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedPackageYmlClientBuilder builder() {

@@ -9,14 +9,20 @@ import {
     findGeneratorLineNumber,
     GeneratorOccurrenceTracker,
     getOutputRepoUrl,
+    isSdkGenApiOnly,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
+import { mapFernGroupToSdkConfig } from "../sdk-migrate/mapFernGroupToSdkConfig.js";
 import { createFernSourceArchiveResolver } from "./createFernSourceArchiveResolver.js";
+import {
+    assignFernHostedOutputDirectories,
+    deployFernHostedOutputs,
+    removeFernHostedOutputDirectories
+} from "./fernHostedOutputs.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { PackMode, packLocalOutputForGroup } from "./packLocalOutput.js";
@@ -139,6 +145,7 @@ export async function generateWorkspace({
     // `findGeneratorLineNumber`) to compute recordSkipped line anchors. Sequential resolution
     // is intentional — the config errors inside must still abort the whole run deterministically,
     // before any generation work starts.
+    const temporaryDirectories: AbsoluteFilePath[] = [];
     const runnableGroups: Array<{ resolvedGroupName: string; group: generatorsYml.GeneratorGroup }> = [];
     for (const resolvedGroupName of resolvedGroupNames) {
         const runnable = await resolveRunnableGroup({
@@ -155,8 +162,18 @@ export async function generateWorkspace({
             generatorsYmlAbsolutePath
         });
         if (runnable != null) {
-            runnableGroups.push({ resolvedGroupName, group: runnable });
+            const assignment = await assignFernHostedOutputDirectories(runnable);
+            temporaryDirectories.push(...assignment.temporaryDirectories);
+            runnableGroups.push({ resolvedGroupName, group: assignment.group });
         }
+    }
+
+    if (dynamicIrOnly && runnableGroups.some(({ group }) => group.generators.some((g) => g.fernHostedOutput != null))) {
+        return context.failAndThrow(
+            "--dynamic-ir-only cannot be combined with output.location: fern-hosted",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 
     // Run generation for each runnable group in parallel. Each becomes an interactive subtask
@@ -165,6 +182,15 @@ export async function generateWorkspace({
         runnableGroups.map(({ resolvedGroupName, group }) =>
             context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
                 if (useLocalDocker) {
+                    const unsupported = group.generators.find((generator) => isSdkGenApiOnly(generator.name));
+                    if (unsupported != null) {
+                        groupContext.failAndThrow(
+                            `${unsupported.name} does not support --local. ` +
+                                "Remove --local to run this generator through the remote pipeline.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
                     await runLocalGenerationForWorkspace({
                         token,
                         projectConfig,
@@ -227,6 +253,7 @@ export async function generateWorkspace({
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz,
                         sdkConfigV1,
+                        mapFernGroupToSdkConfig,
                         generateFullProject: pack
                     });
                 }
@@ -240,9 +267,19 @@ export async function generateWorkspace({
                         version
                     });
                 }
+                await deployFernHostedOutputs({
+                    group,
+                    workspace,
+                    organization,
+                    cliVersion: workspace.cliVersion,
+                    token,
+                    absolutePathToPreview,
+                    requireEnvVars,
+                    context: groupContext
+                });
             })
         )
-    );
+    ).finally(() => removeFernHostedOutputDirectories(temporaryDirectories, context.logger));
 }
 
 /**

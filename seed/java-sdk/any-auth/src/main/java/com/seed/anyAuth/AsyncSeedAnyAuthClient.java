@@ -9,7 +9,7 @@ import com.seed.anyAuth.resources.auth.AsyncAuthClient;
 import com.seed.anyAuth.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedAnyAuthClient {
+public class AsyncSeedAnyAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -28,6 +28,15 @@ public class AsyncSeedAnyAuthClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

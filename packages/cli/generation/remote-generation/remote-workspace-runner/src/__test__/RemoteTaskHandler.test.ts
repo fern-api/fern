@@ -1,16 +1,45 @@
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { Readable } from "node:stream";
 import type { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { PipelineResult, ReplayStepResult } from "@fern-api/generator-cli/pipeline";
 import { CONSOLE_LOGGER, type Logger } from "@fern-api/logger";
 import type { InteractiveTaskContext, PosthogEvent, TaskResult } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import axios from "axios";
 import { describe, expect, it, vi } from "vitest";
 
 import {
+    downloadArchiveForTask,
     extractVersionFromLogMessage,
     FIDDLE_PIPELINE_RESULT_LOG_REGEX,
     RemoteTaskHandler,
     tryParseReplayResult
 } from "../RemoteTaskHandler.js";
+
+describe("downloadArchiveForTask", () => {
+    it("persists the remote ZIP without extracting it", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-archive-"));
+        const destination = AbsoluteFilePath.of(join(directory, "nested", "sdk.zip"));
+        const info = vi.fn();
+        vi.spyOn(axios, "get").mockResolvedValue({ data: Readable.from([Buffer.from("zip-bytes")]) } as never);
+
+        try {
+            await downloadArchiveForTask({
+                s3PreSignedReadUrl: "https://example.test/sdk.zip",
+                absolutePathToLocalOutput: destination,
+                context: { logger: { info } } as never
+            });
+
+            expect(await readFile(destination, "utf-8")).toBe("zip-bytes");
+            expect(info).toHaveBeenCalledWith(expect.stringContaining(destination));
+        } finally {
+            await rm(directory, { recursive: true, force: true });
+        }
+    });
+});
 
 /**
  * Snapshot test for the Fiddle log-format coupling. If Fiddle ever changes the

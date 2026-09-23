@@ -401,6 +401,10 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
+                const wantsRawSpecs =
+                    workspace instanceof OSSWorkspace &&
+                    generatorWantsSpecs(generatorInvocation.name, generatorInvocation.version);
+
                 const {
                     shouldCommit,
                     autoVersioningCommitMessage,
@@ -427,8 +431,8 @@ export async function runLocalGenerationForWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
                     writeUnitTests: true,
-                    generateOauthClients: orgBody?.oauthClientEnabled ?? false,
-                    generatePaginatedClients: orgBody?.paginationEnabled ?? false,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? true,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? true,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
@@ -441,10 +445,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
                     disableTelemetry,
-                    rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
-                            ? workspace.allSpecs
-                            : undefined
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

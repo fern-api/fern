@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: TwiML-style XML encoding
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Response:
+      type: object
+      description: Root TwiML element.
+      xml:
+        name: Response
+      properties:
+        children:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Say"
+              - $ref: "#/components/schemas/Dial"
+    Say:
+      type: object
+      xml:
+        name: Say
+      properties:
+        message:
+          type: string
+          x-fern-xml-text: true
+        voice:
+          type: string
+          xml:
+            attribute: true
+        loop:
+          type: integer
+          xml:
+            attribute: true
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/Break"
+    Break:
+      type: object
+      xml:
+        name: break
+      properties:
+        strength:
+          type: string
+          enum: [none, x-weak, weak, medium, strong, x-strong]
+          xml:
+            attribute: true
+        time:
+          type: string
+          xml:
+            attribute: true
+    Dial:
+      type: object
+      xml:
+        name: Dial
+        namespace: https://www.twilio.com/twiml
+        prefix: tw
+      properties:
+        number:
+          type: string
+          x-fern-xml-text: true
+        status_callback_event:
+          type: array
+          items:
+            type: string
+          xml:
+            name: statusCallbackEvent
+            attribute: true
+          x-fern-xml-list-separator: " "
+        numbers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Number"
+          xml:
+            name: Numbers
+            wrapped: true
+    Number:
+      type: object
+      xml:
+        name: Number
+      properties:
+        phone_number:
+          type: string
+          x-fern-xml-text: true
+        send_digits:
+          type: string
+          xml:
+            name: sendDigits
+            attribute: true
+    Pause:
+      type: object
+      description: XML element without an explicit xml.name; falls back to the schema name.
+      xml: {}
+      properties:
+        length:
+          type: integer
+          xml:
+            attribute: true
+    PlainObject:
+      type: object
+      description: Not XML-encoded; properties must not carry xml metadata.
+      properties:
+        id:
+          type: string

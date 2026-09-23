@@ -1,0 +1,9 @@
+name: simple-api
+
+base-url-env: MY_API_BASE_URL
+
+default-environment: staging
+
+environments:
+  staging: staging.fern.com
+  prod: prod.fern.com

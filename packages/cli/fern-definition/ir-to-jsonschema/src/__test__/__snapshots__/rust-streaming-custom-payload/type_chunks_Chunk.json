@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "integer"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "index",
+    "text"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

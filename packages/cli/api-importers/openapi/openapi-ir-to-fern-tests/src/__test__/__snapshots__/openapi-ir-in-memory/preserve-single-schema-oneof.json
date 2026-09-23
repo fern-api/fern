@@ -94,6 +94,7 @@
     "ignoreTags": false,
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
+    "respectOperationIdWordBoundaries": false,
     "namespacedErrors": false
   }
 }

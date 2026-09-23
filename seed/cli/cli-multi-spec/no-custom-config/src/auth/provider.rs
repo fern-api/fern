@@ -5,6 +5,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use crate::auth::credential::CredentialSlots;
 use crate::error::CliError;
 
 /// Per-request context the executor passes to providers. Maps directly to
@@ -112,6 +113,14 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.has_credentials()
     }
 
+    /// Whether this provider can authenticate from credentials the user stored
+    /// (keyring), as opposed to ambient env/flag sources. Composition wrappers
+    /// use it to prefer stored credentials when a profile is named with
+    /// `--profile`.
+    fn has_stored_credentials(&self) -> bool {
+        false
+    }
+
     /// Human-readable hints about where this provider reads its credentials
     /// from. Used by the friendly auth-error path to tell the user which
     /// env var / CLI flag / file to set.
@@ -134,6 +143,17 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.credential_hints()
     }
 
+    /// The credential slots this provider reads, for `auth status`.
+    ///
+    /// See [`CredentialSlots`] for the required/alternative split.
+    /// Providers registered as
+    /// [`SchemeBinding::Custom`](crate::auth::SchemeBinding::Custom) are
+    /// otherwise opaque to the status surface; overriding this lets it
+    /// enumerate their env vars like a builtin bearer/basic binding.
+    fn credential_slots(&self) -> CredentialSlots {
+        CredentialSlots::default()
+    }
+
     /// Apply the scheme to `request`. Implementations should be a no-op if
     /// they can't satisfy the request (e.g., no env var set), so wrappers can
     /// fall through. Hard errors (malformed token bytes) are surfaced via
@@ -143,6 +163,20 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         request: reqwest::RequestBuilder,
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError>;
+
+    /// Field names `auth login --with-token` should collect for this
+    /// provider, stored together as one JSON keyring entry.
+    ///
+    /// `None` — the default — means the scheme takes a single opaque value,
+    /// which is how bearer and API-key paste works today.
+    ///
+    /// `Some([...])` is for schemes whose credential is several values:
+    /// OAuth2 client credentials returns `["client_id", "client_secret"]`.
+    /// One entry rather than one per field because the OS keychain prompts
+    /// per item, and a multi-part credential is still one credential.
+    fn credential_fields(&self) -> Option<Vec<&'static str>> {
+        None
+    }
 
     /// Post-construction hook: inject the on-disk token cache for
     /// cross-invocation persistence. Called by [`CliApp`] in

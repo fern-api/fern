@@ -123,6 +123,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "https://api.example.com/v1",
     "environments": {
       "_visit": [Function],
@@ -511,6 +512,7 @@ Examples should use the first available auth scheme (admin).
               "type": "named",
               "typeId": "ResourceRequestType",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -540,6 +542,7 @@ Examples should use the first available auth scheme (admin).
               "type": "named",
               "typeId": "ResourceRequestAmount",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -571,6 +574,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -645,6 +649,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -760,6 +765,7 @@ Examples should use the first available auth scheme (admin).
               },
               "type": "primitive",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

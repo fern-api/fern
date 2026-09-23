@@ -1,0 +1,4 @@
+- summary: |
+    Honor the org-level whitelabel setting (`readmeConfig.whiteLabel`) and the `apiName`/`disabledSections` (IR `disabledFeatures`) readme
+    config options when generating README.md. Previously the "Built with Fern" badge was always emitted.
+  type: fix

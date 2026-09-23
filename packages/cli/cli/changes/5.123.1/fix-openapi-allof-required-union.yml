@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The OpenAPI importer now unions `required` across all `allOf` branches. Previously, when a child
+    `allOf` branch redeclared a property that a parent branch marked as required (without listing it
+    in its own `required`), the property was imported as optional. Required nullable properties are
+    now correctly represented as `nullable` in the IR rather than `optional`.
+  type: fix

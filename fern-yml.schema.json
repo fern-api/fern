@@ -1867,6 +1867,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -1916,6 +1919,9 @@
             },
             "mask-pii": {
               "type": "boolean"
+            },
+            "disclaimer": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -2925,6 +2931,15 @@
             },
             "show-nav-availability-badges": {
               "type": "boolean"
+            },
+            "breadcrumbs": {
+              "type": "object",
+              "properties": {
+                "current-page": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -3013,6 +3028,21 @@
                 "flat",
                 "grouped"
               ]
+            },
+            "embedding": {
+              "type": "object",
+              "properties": {
+                "allowed-origins": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "allowed-origins"
+              ],
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -4073,6 +4103,9 @@
                       "respect-per-spec-base-path": {
                         "type": "boolean"
                       },
+                      "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
                       "namespaced-errors": {
                         "type": "boolean"
                       }
@@ -4669,6 +4702,9 @@
                           "type": "boolean"
                         },
                         "respect-per-spec-base-path": {
+                          "type": "boolean"
+                        },
+                        "respect-operation-id-word-boundaries": {
                           "type": "boolean"
                         },
                         "namespaced-errors": {
@@ -5320,6 +5356,42 @@
             },
             "api-name": {
               "type": "string"
+            },
+            "specs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openapi",
+                      "asyncapi",
+                      "graphql"
+                    ]
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": "string"
+                  },
+                  "overlays": {
+                    "type": "string"
+                  },
+                  "overrides": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "path"
+                ],
+                "additionalProperties": false
+              }
             },
             "openrpc": {
               "type": "string"

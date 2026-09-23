@@ -8,7 +8,7 @@ import com.seed.unionQueryParameters.core.Suppliers;
 import com.seed.unionQueryParameters.resources.events.EventsClient;
 import java.util.function.Supplier;
 
-public class SeedUnionQueryParametersClient {
+public class SeedUnionQueryParametersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<EventsClient> eventsClient;
@@ -20,6 +20,15 @@ public class SeedUnionQueryParametersClient {
 
     public EventsClient events() {
         return this.eventsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedUnionQueryParametersClientBuilder builder() {

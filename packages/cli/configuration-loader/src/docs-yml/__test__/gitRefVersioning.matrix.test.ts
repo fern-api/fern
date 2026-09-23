@@ -1,3 +1,4 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { execFileSync } from "child_process";
@@ -8,6 +9,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { materializeGitRef } from "../git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "../git-versions/resolveRefContentRoot.js";
+import { parseDocsConfiguration } from "../parseDocsConfiguration.js";
 
 const context = createMockTaskContext();
 
@@ -49,8 +51,9 @@ function fernFolder(repoRoot: string): AbsoluteFilePath {
 const DOCS_WITH_VERSION_PATH = "instances: []\nversions:\n  - display-name: old\n    path: ./versions/v2.yml\n";
 const VERSION_FILE = "navigation:\n  - section: V2\n    contents:\n      - page: P2\n        path: ./pages/v2.mdx\n";
 const DOCS_WITH_TOP_NAV =
-    "instances: []\nnavigation:\n  - section: V1\n    contents:\n      - page: P1\n        path: ./pages/v1.mdx\n";
+    "instances: []\nnavigation:\n  - section: V1\n    contents:\n      - page: P1\n        path: ./pages/v1.mdx\n      - api: API reference\n        api-name: versioned\n        specs:\n          - type: openapi\n            path: ./openapi.yml\n";
 const DOCS_WITH_NEITHER = "instances: []\n";
+const OPENAPI = "openapi: 3.0.0\ninfo:\n  title: Versioned API\n  version: 1.0.0\npaths: {}\n";
 
 describe("git-ref versioning: Git LFS", () => {
     let workdir: string;
@@ -145,6 +148,7 @@ describe("git-ref versioning matrix", () => {
         git(origin, "checkout", "-b", "tmp-v1");
         await write(origin, "fern/docs.yml", DOCS_WITH_TOP_NAV);
         await write(origin, "fern/pages/v1.mdx", "# v1\n");
+        await write(origin, "fern/openapi.yml", OPENAPI);
         lightTagSha = await commitAll(origin, "v1 content");
         git(origin, "tag", "demo-v1.0.0");
 
@@ -342,10 +346,47 @@ describe("git-ref versioning matrix", () => {
     });
 
     it("[content root: top-level navigation] selects docs.yml navigation", async () => {
+        expect(git(clone, "show", "demo-v1.0.0:fern/docs.yml")).toBe(DOCS_WITH_TOP_NAV.trim());
         const m = await materializeGitRef({ ref: "demo-v1.0.0", absolutePathToFernFolder: fernFolder(clone), context });
+        expect(await readFile(pathJoin(m.absolutePathToFernFolder, "docs.yml"), "utf-8")).toBe(DOCS_WITH_TOP_NAV);
         const root = await resolveRefContentRoot({ materialized: m, context });
         expect(root.absoluteFilepathToConfig.endsWith("docs.yml")).toBe(true);
         expect(root.navigation).toBeDefined();
+    });
+
+    it("[direct specs] resolves paths inside the materialized ref", async () => {
+        const rawDocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
+            instances: [],
+            versions: [{ "display-name": "1.0", ref: "demo-v1.0.0" }]
+        });
+        const currentFernFolder = fernFolder(clone);
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: currentFernFolder,
+            absoluteFilepathToDocsConfig: join(currentFernFolder, RelativeFilePath.of("docs.yml")),
+            context
+        });
+
+        if (parsed.navigation.type !== "versioned") {
+            throw new Error("Expected versioned navigation");
+        }
+        const version = parsed.navigation.versions[0];
+        if (version?.contentSource == null || version.navigation.type !== "untabbed") {
+            throw new Error("Expected ref-backed untabbed navigation");
+        }
+        const apiSection = version.navigation.items
+            .flatMap((item) => (item.type === "section" ? item.contents : [item]))
+            .find((item) => item.type === "apiSection");
+        if (apiSection?.type !== "apiSection") {
+            throw new Error("Expected an API section from the ref");
+        }
+
+        expect(apiSection.specs?.[0]?.absolutePath).toBe(
+            join(version.contentSource.absolutePathToFernFolder, RelativeFilePath.of("openapi.yml"))
+        );
+        expect(apiSection.specs?.[0]?.absolutePath).not.toBe(
+            join(currentFernFolder, RelativeFilePath.of("openapi.yml"))
+        );
     });
 
     it("[content root: neither] throws an actionable error naming the ref", async () => {

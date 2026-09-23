@@ -28,6 +28,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "https://api.example.com/v1",
     "environments": {
       "_visit": [Function],
@@ -689,6 +690,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -728,6 +730,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -767,6 +770,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

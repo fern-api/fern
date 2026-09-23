@@ -17,7 +17,7 @@ import com.seed.javaRequiredBodyOptionalHeaders.types.UserData;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
+public class AsyncSeedJavaRequiredBodyOptionalHeadersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaRequiredBodyOptionalHeadersClient rawClient;
@@ -193,6 +193,15 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<User> createUserInlined(CreateUserInlinedRequest request, RequestOptions requestOptions) {
         return this.rawClient.createUserInlined(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaRequiredBodyOptionalHeadersClientBuilder builder() {

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, readFile } from "fs/promises";
+import { cp, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
@@ -54,6 +54,16 @@ describe("fern sdk migrate", () => {
             schemaVersion: "sdk-config/v1",
             source: { specs: [{ path: "./openapi.yml" }] }
         });
+        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+            {
+                navigation: [
+                    {
+                        api: "API reference",
+                        specs: [{ type: "openapi", path: "./openapi.yml" }]
+                    }
+                ]
+            }
+        );
         expect(await readFile(generators, "utf-8")).toBe(originalGenerators);
 
         const legacyGeneration = await runFernCli(
@@ -69,6 +79,36 @@ describe("fern sdk migrate", () => {
         const generationOutput = `${legacyGeneration.stdout}\n${legacyGeneration.stderr}`;
         expect(generationOutput).toContain("'missing' is not a valid group or alias");
         expect(generationOutput).not.toContain("SDK Config");
+        await temporaryDirectory.cleanup();
+    });
+
+    it("preserves AsyncAPI source types in sdk-config.yml and docs.yml", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+        const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
+        const generators = await readFile(generatorsPath, "utf-8");
+        await writeFile(generatorsPath, generators.replace("- openapi: ./openapi.yml", "- asyncapi: ./asyncapi.yml"));
+
+        const result = await runFernCli(["sdk", "migrate", "--api", "default", "--output", "-"], {
+            cwd: directory,
+            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            signal
+        });
+
+        expect(yaml.load(result.stdout)).toMatchObject({
+            source: { specs: [{ type: "asyncapi", path: "./fern/asyncapi.yml" }] }
+        });
+        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+            {
+                navigation: [
+                    {
+                        api: "API reference",
+                        specs: [{ type: "asyncapi", path: "./asyncapi.yml" }]
+                    }
+                ]
+            }
+        );
         await temporaryDirectory.cleanup();
     });
 
@@ -152,10 +192,75 @@ describe("fern sdk migrate", () => {
             }
         );
 
-        expect((yaml.load(result.stdout) as { targets: unknown[] }).targets).toMatchObject([
-            { language: "typescript", generatorVersion: "3.63.3" },
-            { language: "python", generatorVersion: "4.3.10" }
-        ]);
+        const targets = (yaml.load(result.stdout) as { targets: Array<Record<string, unknown>> }).targets;
+        expect(targets).toMatchObject([{ language: "typescript" }, { language: "python" }]);
+        expect(targets).toHaveLength(2);
+        expect(targets.every((target) => !("generatorVersion" in target))).toBe(true);
+        await temporaryDirectory.cleanup();
+    });
+
+    it("preserves portable settings across a multi-language SDK-only migration", async ({ signal }) => {
+        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+        await cp(
+            join(directory, RelativeFilePath.of("portable-settings-generators.yml")),
+            join(directory, RelativeFilePath.of("fern/generators.yml"))
+        );
+        // Source import settings have no docs.yml equivalent, so keep this fixture scoped to SDK migration.
+        await rm(join(directory, RelativeFilePath.of("fern/docs.yml")));
+
+        const result = await runFernCli(
+            ["sdk", "migrate", "--group", "ts-sdk", "--group", "php-sdk", "--group", "python-sdk", "--output", "-"],
+            {
+                cwd: directory,
+                env: { FERN_NO_VERSION_REDIRECTION: "true" },
+                signal
+            }
+        );
+
+        expect(result.stderr).not.toContain("FERN_CONFIG_FIELD_UNSUPPORTED");
+        expect(yaml.load(result.stdout)).toMatchObject({
+            source: {
+                apiImportSettings: {
+                    ignoreTags: true,
+                    disambiguateRequestNames: false
+                }
+            },
+            targets: [
+                {
+                    language: "typescript",
+                    package: {
+                        description: "Example SDK for Node.js.",
+                        authors: [{ name: "Example SDKs", email: "sdk@example.com", url: "https://example.com" }]
+                    },
+                    generation: { httpClient: { name: "fetch" } },
+                    docs: {
+                        readme: { customSections: [{ title: "Node.js", content: "Run npm install." }] }
+                    }
+                },
+                {
+                    language: "php",
+                    package: {
+                        packageName: "acme/example-sdk",
+                        description: "Example SDK for PHP.",
+                        authors: [{ name: "Example SDKs", email: "sdk@example.com", url: "https://example.com" }],
+                        license: { type: "MIT" }
+                    },
+                    docs: {
+                        readme: { customSections: [{ title: "PHP", content: "Run composer require." }] }
+                    }
+                },
+                {
+                    language: "python",
+                    client: { responseValidation: false },
+                    generation: { additionalInitExports: [{ from: "types", imports: ["ApiError"] }] },
+                    docs: {
+                        readme: { customSections: [{ title: "Python", content: "Run pip install." }] }
+                    }
+                }
+            ]
+        });
         await temporaryDirectory.cleanup();
     });
 

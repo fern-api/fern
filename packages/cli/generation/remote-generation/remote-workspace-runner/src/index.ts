@@ -1,6 +1,16 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
-export type { FernSdkConfigV1Payload } from "./fernSdkGenApi.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
+export type {
+    FernSdkConfigV1Payload,
+    FernSdkGenApiPackageConfig,
+    FernSdkGenApiRequestedOutput
+} from "./fernSdkGenApi.js";
+export {
+    createFernSdkGenApiRequest,
+    getFernSdkGenApiLanguage,
+    isFernSdkGenApiEnabled,
+    isSdkGenApiOnly,
+    synthesizesSdkConfig
+} from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,
@@ -10,6 +20,13 @@ export type {
 } from "./fernSdkGenApiSourceArchive.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+export { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
+export {
+    formatSdkConfigMappingDiagnostic,
+    type MapFernGroupToSdkConfig,
+    prepareFernSdkGenApiSdkConfigPayload,
+    type SdkConfigMappingResult
+} from "./prepareFernSdkGenApiSdkConfigPayload.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";
 export type {
@@ -18,5 +35,15 @@ export type {
     RemoteGeneratorRunRecorder
 } from "./RemoteGeneratorRunRecorder.js";
 export type { FernSourceArchiveRequest, FernSourceArchiveResolution } from "./runRemoteGenerationForAPIWorkspace.js";
-export { runRemoteGenerationForAPIWorkspace } from "./runRemoteGenerationForAPIWorkspace.js";
+export {
+    prepareFernSdkGenApiRoutes,
+    runRemoteGenerationForAPIWorkspace
+} from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";
+export {
+    FERN_GENERATOR_LATEST_VERSION,
+    isGeneratorVersionForUnpinnedRoute,
+    isSdkConfigUnpinnedGeneratorVersion,
+    resolveSdkConfigGeneratorVersion,
+    SDK_CONFIG_UNPINNED_GENERATOR_VERSION
+} from "./sdkConfigGeneratorVersion.js";

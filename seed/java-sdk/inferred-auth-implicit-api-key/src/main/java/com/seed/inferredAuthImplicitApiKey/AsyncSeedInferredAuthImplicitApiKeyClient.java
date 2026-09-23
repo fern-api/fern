@@ -11,7 +11,7 @@ import com.seed.inferredAuthImplicitApiKey.resources.nestednoauth.AsyncNestedNoA
 import com.seed.inferredAuthImplicitApiKey.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedInferredAuthImplicitApiKeyClient {
+public class AsyncSeedInferredAuthImplicitApiKeyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -44,6 +44,15 @@ public class AsyncSeedInferredAuthImplicitApiKeyClient {
 
     public AsyncSimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedInferredAuthImplicitApiKeyClientBuilder builder() {

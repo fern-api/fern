@@ -194,6 +194,14 @@ fixtures:
     - outputFolder: dedupe-union-base-properties
       customConfig:
         dedupeUnionBaseProperties: true
+  file-download:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  openapi-pdf-download:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null
@@ -331,6 +339,7 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableRequestBodyPagination: true
+        enableNestedRequestBodyPagination: true
   go-pagination-offset-item-index:
     - outputFolder: .
       customConfig:
@@ -365,6 +374,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  go-xml-twiml:
+    - outputFolder: .
+      customConfig: null
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:

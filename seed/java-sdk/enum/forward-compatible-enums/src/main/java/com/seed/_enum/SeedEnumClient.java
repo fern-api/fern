@@ -12,7 +12,7 @@ import com.seed._enum.resources.pathparam.PathParamClient;
 import com.seed._enum.resources.queryparam.QueryParamClient;
 import java.util.function.Supplier;
 
-public class SeedEnumClient {
+public class SeedEnumClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<HeadersClient> headersClient;
@@ -52,6 +52,15 @@ public class SeedEnumClient {
 
     public QueryParamClient queryParam() {
         return this.queryParamClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedEnumClientBuilder builder() {

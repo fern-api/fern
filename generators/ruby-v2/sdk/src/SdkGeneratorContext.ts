@@ -370,6 +370,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // lockstep and never ship a dangling require.
             ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
 
+            // XML
+            ...(this.hasXmlTypes()
+                ? [AsIsFiles.XmlElement, AsIsFiles.XmlUtils, AsIsFiles.XmlSerializable, AsIsFiles.TestXmlElement]
+                : []),
+
             // Multipart
             AsIsFiles.MultipartEncoder,
             AsIsFiles.MultipartFormDataPart,
@@ -401,7 +406,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.TestTypeUtils,
 
             // HTTP tests
-            AsIsFiles.TestHttpRawClient
+            AsIsFiles.TestHttpRawClient,
+
+            // Multipart tests
+            AsIsFiles.TestMultipartFormData
         ];
 
         if (this.hasHmacWebhookSignatureVerification()) {

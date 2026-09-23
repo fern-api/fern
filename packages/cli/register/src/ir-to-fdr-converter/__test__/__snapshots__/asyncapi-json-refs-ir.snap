@@ -17,6 +17,7 @@
   },
   "dynamic": undefined,
   "environments": {
+    "baseUrlEnvVar": undefined,
     "defaultEnvironment": "production",
     "environments": {
       "_visit": [Function],
@@ -309,6 +310,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -344,6 +346,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -376,6 +379,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",
@@ -449,6 +453,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -488,6 +493,7 @@
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

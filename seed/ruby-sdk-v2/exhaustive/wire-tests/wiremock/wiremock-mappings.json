@@ -218,6 +218,37 @@
       }
     },
     {
+      "id": "7d75fe3d-8ea8-48fa-bbd1-5f14125c8510",
+      "name": "getAndReturnMapOfIntegerToObject - default",
+      "request": {
+        "urlPathTemplate": "/container/map-integer-to-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"1\": {\n    \"string\": \"string\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7d75fe3d-8ea8-48fa-bbd1-5f14125c8510",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e5271904-de0a-425f-940d-d6f6bde34755",
       "name": "getAndReturnOptional - default",
       "request": {
@@ -1995,6 +2026,6 @@
     }
   ],
   "meta": {
-    "total": 61
+    "total": 62
   }
 }

@@ -11,6 +11,7 @@ export * from "./UnionWithDiscriminant.js";
 export * from "./UnionWithDuplicatePrimitive.js";
 export * from "./UnionWithDuplicateTypes.js";
 export * from "./UnionWithDuplicativeDiscriminants.js";
+export * from "./UnionWithGlobalNameCollisions.js";
 export * from "./UnionWithLiteral.js";
 export * from "./UnionWithMultipleNoProperties.js";
 export * from "./UnionWithNoProperties.js";

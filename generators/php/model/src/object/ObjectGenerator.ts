@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { XmlObjectGenerator } from "./XmlObjectGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -20,10 +21,14 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
     }
 
     public doGenerate(): PhpFile {
+        const xml = this.typeDeclaration.encoding?.xml;
         const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            parentClassReference: this.context.getJsonSerializableTypeClassReference(),
+            parentClassReference:
+                xml != null
+                    ? this.context.getXmlSerializableTypeClassReference()
+                    : this.context.getJsonSerializableTypeClassReference(),
             traits: this.objectDeclaration.extends.map((declaredTypeName) =>
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
@@ -45,7 +50,13 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             }
             clazz.addField(field);
         }
-        clazz.addMethod(this.context.getToStringMethod());
+        if (xml != null) {
+            new XmlObjectGenerator(this.context, this.typeDeclaration, this.objectDeclaration, xml).addXmlMembers(
+                clazz
+            );
+        } else {
+            clazz.addMethod(this.context.getToStringMethod());
+        }
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),

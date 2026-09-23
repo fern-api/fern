@@ -93,7 +93,8 @@
             "pathParameters": [],
             "encoding": {
                 "json": {},
-                "proto": null
+                "proto": null,
+                "xml": null
             },
             "transport": {
                 "type": "http"
@@ -279,7 +280,8 @@
                             "unsafeName": "Token",
                             "safeName": "Token"
                         }
-                    }
+                    },
+                    "wrapperProperty": null
                 },
                 "declaration": {
                     "name": {

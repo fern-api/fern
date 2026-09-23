@@ -9,7 +9,7 @@ import com.seed.api.resources.identity.IdentityClient;
 import com.seed.api.resources.plants.PlantsClient;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<IdentityClient> identityClient;
@@ -28,6 +28,15 @@ public class SeedApiClient {
 
     public PlantsClient plants() {
         return this.plantsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**
