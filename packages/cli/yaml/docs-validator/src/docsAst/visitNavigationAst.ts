@@ -31,6 +31,7 @@ export declare namespace visitNavigationAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         apiWorkspaces: AbstractAPIWorkspace<unknown>[];
         context: TaskContext;
+        readTimer: FileReadTimer;
     }
 }
 
@@ -66,10 +67,10 @@ export async function visitNavigationAst({
     visitor,
     absoluteFilepathToConfiguration,
     context,
-    nodePath
+    nodePath,
+    readTimer
 }: visitNavigationAst.Args): Promise<void> {
     context.logger.debug(`Starting navigation validation with concurrency limit: ${VALIDATION_CONCURRENCY}`);
-    const readTimer = new FileReadTimer();
 
     if (navigationConfigIsTabbed(navigation)) {
         await asyncPool(VALIDATION_CONCURRENCY, navigation, async (tab, tabIdx) => {
@@ -126,8 +127,6 @@ export async function visitNavigationAst({
             });
         });
     }
-
-    readTimer.logSummary(context.logger, "markdown");
 }
 async function visitNavigationItem({
     absolutePathToFernFolder,

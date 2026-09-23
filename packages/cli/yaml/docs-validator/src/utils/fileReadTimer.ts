@@ -33,7 +33,11 @@ export class FileReadTimer {
             return;
         }
         const sorted = [...this.timings].sort((a, b) => a.durationMs - b.durationMs);
-        const median = sorted[Math.floor(sorted.length / 2)]?.durationMs ?? 0;
+        const middle = Math.floor(sorted.length / 2);
+        const median =
+            sorted.length % 2 === 0
+                ? ((sorted[middle - 1]?.durationMs ?? 0) + (sorted[middle]?.durationMs ?? 0)) / 2
+                : (sorted[middle]?.durationMs ?? 0);
         const totalBytes = this.timings.reduce((sum, t) => sum + t.bytes, 0);
         const wallMs = performance.now() - this.startedAt;
         logger.debug(
