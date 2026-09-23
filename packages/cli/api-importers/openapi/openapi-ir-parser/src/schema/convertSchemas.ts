@@ -1756,41 +1756,18 @@ function maybeInjectDescriptionOrGroupName(
     return schema;
 }
 
-// Resolved discriminator mapping targets, keyed by the base schema they belong to. The guard
-// below runs for every single-element allOf in the document, and a union's variants each ask
-// the same question of the same base, so without this the work is quadratic in the number of
-// variants. Keyed on the object rather than the $ref string so that two documents in one
-// process cannot collide, and weak so it does not outlive the parse.
+// Resolved discriminator mapping targets per base schema, so the variants of one union do not
+// each re-resolve the whole mapping. Weak, so it does not outlive the parse.
 const discriminatedVariantsByBase = new WeakMap<OpenAPIV3.SchemaObject, ReadonlySet<OpenAPIV3.SchemaObject>>();
 
 // isVariantOfDiscriminatedBase returns true if `schema` is one of the variants named in the
-// discriminator mapping of the schema that `element` references.
-//
-// `Variant: {allOf: [$ref Base]}` where `Base` declares a discriminator that maps back to
-// `Variant` is a subtype of that base, not an alias for it. Short-circuiting it would declare
-// `Variant: Base`, making the variant refer to the union it belongs to. The IR generator only
-// emits a variant as `samePropertiesAsObject` when the referenced type is an object, so an
-// aliased variant degrades to `singleProperty` and every generator then expects the payload
-// under a `value` key that the wire format does not have.
-//
-// The mapping check is what keeps this narrow. A single-reference allOf that is *not* a
-// variant - most commonly `{allOf: [$ref X], nullable: true}` used to attach `nullable` to a
-// reference - still short-circuits to a reference to X, as it should.
-//
-// `{allOf: [$ref Base, {type: object}]}` never reached the short-circuit and already converts
-// to an object, so this only brings the two spellings of the same subtype into agreement.
-//
-// Membership is by object identity. `resolveSchemaReference` indexes into the parsed document
-// and returns the stored object, and `convertSchemaObject` does not copy `schema` on any path
-// that reaches an allOf - the one `{...schema}` it performs is inside a `type: "string"`
-// branch that returns first - so the resolved variant and the schema being converted are the
-// same instance. Sibling keys alongside `allOf` (`description`, `title`) do not disturb that;
-// the fixture covers both. If the invariant ever breaks, the guard returns false and the
-// short-circuit reappears, which the fixture would catch.
-//
-// An unresolvable mapping target - a reference into another document, which this resolver
-// cannot follow - yields a fresh `x-fern-type: unknown` sentinel rather than an error, so it
-// never matches and simply leaves the short-circuit in place for that variant.
+// discriminator mapping of the schema that `element` references. Such a variant is a subtype of
+// the base, not an alias: short-circuiting it would make it an alias of its own union, which the
+// IR then emits as a `singleProperty` variant. Requiring a mapping entry keeps this narrow, so
+// `{allOf: [$ref X], nullable: true}` still collapses to a reference to X.
+// Membership is by object identity: `resolveSchemaReference` returns the stored document object,
+// and `convertSchemaObject` does not copy `schema` on any path that reaches an allOf. An
+// unresolvable mapping target never matches and leaves the short-circuit in place.
 function isVariantOfDiscriminatedBase({
     schema,
     element,
@@ -1816,8 +1793,7 @@ function isVariantOfDiscriminatedBase({
             const $ref = target.startsWith("#/") ? target : `${SCHEMA_REFERENCE_PREFIX}${target}`;
             resolved.add(context.resolveSchemaReference({ $ref }));
         }
-        variants = resolved;
-        discriminatedVariantsByBase.set(base, resolved);
+        discriminatedVariantsByBase.set(base, (variants = resolved));
     }
     return variants.has(schema);
 }
