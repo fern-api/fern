@@ -91,20 +91,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             : undefined;
                     const effectiveDefault = clientDefault ?? typeDefault?.value;
 
-                    if (!queryParam.allowMultiple && this.isMapType(queryParam.valueType)) {
+                    if (
+                        !queryParam.allowMultiple &&
+                        queryParam.explode !== false &&
+                        this.isMapType(queryParam.valueType)
+                    ) {
                         // An object query parameter is exploded: every entry becomes its own
                         // parameter, keyed by the property name alone. Assigning the map under
                         // the parameter's own wire name instead leaves the http layer to invent
                         // a format for it (URI.encode_www_form stringifies it with Hash#to_s).
-                        if (effectiveDefault != null) {
-                            writer.writeLine(
-                                `params.fetch(:${snakeCaseName}, ${effectiveDefault})&.each { |k, v| ${queryParameterBagName}[k.to_s] = v }`
-                            );
-                        } else {
-                            writer.writeLine(
-                                `params[:${snakeCaseName}]&.each { |k, v| ${queryParameterBagName}[k.to_s] = v } if params.key?(:${snakeCaseName})`
-                            );
-                        }
+                        // A map has no client or type default, so there is no default to apply.
+                        writer.writeLine(
+                            `params[:${snakeCaseName}]&.each { |k, v| ${queryParameterBagName}[k.to_s] = v }`
+                        );
                     } else if (effectiveDefault != null) {
                         writer.writeLine(
                             `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${effectiveDefault})`
@@ -124,7 +123,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     /**
-     * Whether a type reference is a map, unwrapping optional and nullable.
+     * Whether a type reference is a map, unwrapping optional, nullable and aliases.
      */
     private isMapType(typeReference: FernIr.TypeReference): boolean {
         return typeReference._visit({
@@ -137,7 +136,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return container.type === "map";
             },
-            named: () => false,
+            named: (named) => {
+                const shape = this.context.getTypeDeclarationOrThrow(named.typeId).shape;
+                return shape.type === "alias" && this.isMapType(shape.aliasOf);
+            },
             primitive: () => false,
             unknown: () => false,
             _other: () => false

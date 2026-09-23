@@ -105,7 +105,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         // A map query parameter is exploded: every entry becomes its own parameter, keyed by
         // the property name alone. Handing the map to Add() instead json encodes the whole
         // thing into a single parameter.
-        if (this.isMapType(query.valueType) && !query.allowMultiple) {
+        if (this.isMapType(query.valueType) && !query.allowMultiple && query.explode !== false) {
             writer.write(`.AddExploded("", ${queryParameterReference})`);
         } else if (isComplexType && !query.allowMultiple) {
             writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
@@ -115,7 +115,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     /**
-     * Determines if a type reference is a map, unwrapping optional and nullable.
+     * Determines if a type reference is a map, unwrapping optional, nullable and aliases.
      */
     private isMapType(typeReference: TypeReference): boolean {
         return typeReference._visit({
@@ -128,7 +128,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return container.type === "map";
             },
-            named: () => false,
+            named: (named) => {
+                const shape = this.context.model.dereferenceType(named.typeId).typeDeclaration.shape;
+                return shape.type === "alias" && this.isMapType(shape.aliasOf);
+            },
             primitive: () => false,
             unknown: () => false,
             _other: () => false
