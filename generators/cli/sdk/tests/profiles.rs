@@ -1300,6 +1300,22 @@ fn show_inspects_a_named_profile_without_selecting_it() {
 }
 
 #[test]
+fn show_and_current_report_the_oauth_client_id() {
+    // The client id is public (RFC 6749 §2.2) and already lands in `list`;
+    // the single-profile views must answer "which client is this?" too.
+    let sandbox = Sandbox::new();
+    sandbox.run(&[
+        "profiles", "create", "prod", "--oauth-client-id", "public-client-id", "--use",
+    ]);
+
+    let shown = json(&sandbox.run(&["profiles", "show", "prod", "--format", "json"]));
+    assert_eq!(shown["oauth_client_id"], "public-client-id", "{shown:#?}");
+
+    let current = json(&sandbox.run(&["profiles", "current", "--format", "json"]));
+    assert_eq!(current["oauth_client_id"], "public-client-id", "{current:#?}");
+}
+
+#[test]
 fn show_marks_the_active_profile_and_reports_inheritance() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "parent", "--use"]);
