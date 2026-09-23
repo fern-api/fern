@@ -80,7 +80,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
-    namespacedErrors: undefined
+    namespacedErrors: undefined,
+    errorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -197,7 +198,8 @@ export function parseOpenApiDefinitionSettingsSchema(
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
-        namespacedErrors: settings?.["namespaced-errors"]
+        namespacedErrors: settings?.["namespaced-errors"],
+        errorResponses: settings?.["error-responses"]
     };
 }
 

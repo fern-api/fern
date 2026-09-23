@@ -142,6 +142,23 @@ describe("convertOpenApiSpecSettings", () => {
         expect(result.settings.resolveAliases).toEqual({ enabled: true });
     });
 
+    it("converts nested error-responses settings", () => {
+        const result = convertOpenApiSpecSettings({
+            "error-responses": {
+                schema: "errors/problem_details.yml",
+                name: "ProblemDetails",
+                "apply-to": "untyped",
+                ensure: [{ "status-code": 422, methods: ["post", "put"] }, { "status-code": 401 }]
+            }
+        });
+        expect(result.settings.errorResponses).toEqual({
+            schema: "errors/problem_details.yml",
+            name: "ProblemDetails",
+            applyTo: "untyped",
+            ensure: [{ statusCode: 422, methods: ["post", "put"] }, { statusCode: 401 }]
+        });
+    });
+
     it("handles a realistic xai openapi spec settings block", () => {
         const result = convertOpenApiSpecSettings({
             "only-include-referenced-schemas": true,
