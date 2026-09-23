@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.96.3
+  changelogEntry:
+    - summary: |
+        Wire tests for paginated endpoints whose page property is nested in the request body (e.g.
+        `$request.options.offset` or `$request.options.pagination.cursor`) no longer fail on `getNextPage()`.
+        The generated pager creates the parent object (`options`) when the example omits it, and the mock
+        server's `jsonBody` matcher treated that new parent as an unexpected field even though the nested leaf
+        was listed in `ignoredFields`, so the second request never matched the mock and failed with a
+        connection-refused error. The matcher now ignores a parent object that is absent from the expected body
+        when every leaf inside it is an ignored field.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
 - version: 3.96.2
   changelogEntry:
     - summary: |
