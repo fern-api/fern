@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, cast
 
+from fern_python.codegen.license_detector import SPDX_CLASSIFIERS
 from fern_python.version import get_matching_python_versions
 
 from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
@@ -42,6 +43,7 @@ class PyPIClassifierMetadataGenerator:
     def create_classifiers(
         python_version: str,
         license_: Optional[LicenseConfig] = None,
+        detected_spdx_license: Optional[str] = None,
     ) -> List[str]:
         """
         Generate the complete list of PyPI classifiers for pyproject.toml.
@@ -49,6 +51,7 @@ class PyPIClassifierMetadataGenerator:
         Args:
             python_version: A version constraint string like "^3.8", ">=3.9", etc.
             license_: Optional license configuration.
+            detected_spdx_license: SPDX id detected from a custom license file, if any.
 
         Returns:
             A complete list of classifier strings.
@@ -60,6 +63,8 @@ class PyPIClassifierMetadataGenerator:
         ]
 
         license_classifier = PyPIClassifierMetadataGenerator._get_license_classifier(license_)
+        if license_classifier is None and detected_spdx_license is not None:
+            license_classifier = SPDX_CLASSIFIERS.get(detected_spdx_license)
         if license_classifier is not None:
             classifiers.append(license_classifier)
 

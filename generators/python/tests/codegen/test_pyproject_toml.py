@@ -181,6 +181,41 @@ class TestPoetryCoreValidation:
             assert poetry.package.name == "test-package"
             assert poetry.package.license_files == ("LICENSE",)
 
+    def test_recognized_custom_license_adds_expression_and_classifier(self) -> None:
+        """A custom LICENSE containing Apache-2.0 text yields license + license-files + classifier."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "LICENSE").write_text(
+                "                                 Apache License\n"
+                "                           Version 2.0, January 2004\n"
+                "                        http://www.apache.org/licenses/\n"
+            )
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.custom(CustomLicense(filename="LICENSE")),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            project_table = content.split("[tool.poetry]")[0]
+            assert 'license = "Apache-2.0"' in project_table
+            assert 'license-files = ["LICENSE"]' in project_table
+            assert "License :: OSI Approved :: Apache Software License" in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.license_expression == "Apache-2.0"
+            assert poetry.package.license_files == ("LICENSE",)
+
     def test_basic_license_written_to_project_table(self) -> None:
         """Test that MIT/Apache are declared as a PEP 639 license expression in [project]."""
         with tempfile.TemporaryDirectory() as tmpdir:

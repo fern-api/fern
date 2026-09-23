@@ -13,6 +13,7 @@ from fern_python.codegen.ast.dependency.dependency import (
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.license_detector import DOCKER_LICENSE_PATH, detect_spdx_license_from_file
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 from fern.generator_exec import (
@@ -50,6 +51,8 @@ class PyProjectToml:
         mypy_exclude: Optional[List[str]] = None,
     ):
         self._name = name
+        self._license = license_
+        self._detected_spdx_license = PyProjectToml._detect_custom_license(license_, path)
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
@@ -57,6 +60,7 @@ class PyProjectToml:
             classifiers=PyPIClassifierMetadataGenerator.create_classifiers(
                 python_version=python_version,
                 license_=license_,
+                detected_spdx_license=self._detected_spdx_license,
             ),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
@@ -68,7 +72,17 @@ class PyProjectToml:
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
         self._mypy_exclude = mypy_exclude
-        self._license = license_
+
+    @staticmethod
+    def _detect_custom_license(license_: Optional[LicenseConfig], path: str) -> Optional[str]:
+        """SPDX id recognized from the custom license file, mirroring the Java generator's heuristics."""
+        if license_ is None:
+            return None
+        license_union = license_.get_as_union()
+        if license_union.type != "custom":
+            return None
+        filename = cast(CustomLicense, license_union).filename
+        return detect_spdx_license_from_file(os.path.join(path, filename), DOCKER_LICENSE_PATH)
 
     def _get_project_license(self) -> str:
         """PEP 639 license metadata for the [project] table."""
@@ -85,7 +99,10 @@ class PyProjectToml:
         if license_union.type == "custom":
             filename = cast(CustomLicense, license_union).filename
             escaped = filename.replace("\\", "\\\\").replace('"', '\\"')
-            return f'license-files = ["{escaped}"]\n'
+            expression = (
+                f'license = "{self._detected_spdx_license}"\n' if self._detected_spdx_license is not None else ""
+            )
+            return f'{expression}license-files = ["{escaped}"]\n'
         return ""
 
     def write(self) -> None:
