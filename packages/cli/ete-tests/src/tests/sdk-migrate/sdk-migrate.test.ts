@@ -44,7 +44,7 @@ describe("fern sdk migrate", () => {
         const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
         const originalGenerators = await readFile(generators, "utf-8");
 
-        await runFernCli(["sdk", "migrate", "--api", "default"], {
+        const migration = await runFernCli(["sdk", "migrate", "--api", "default"], {
             cwd: directory,
             env: { FERN_NO_VERSION_REDIRECTION: "true" },
             signal
@@ -65,6 +65,9 @@ describe("fern sdk migrate", () => {
             }
         );
         expect(await readFile(generators, "utf-8")).toBe(originalGenerators);
+        expect(migration.stderr).toContain(
+            "Next: review the migrated file, then pass its path to fern generate --sdk-config."
+        );
 
         const legacyGeneration = await runFernCli(
             ["generate", "--api", "default", "--group", "missing", "--local", "--no-prompt"],
@@ -270,7 +273,7 @@ describe("fern sdk migrate", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         const result = await runFernCli(
-            ["sdk", "migrate", "--group", "typescript-only", "--group", "npm", "--output", "-"],
+            ["sdk", "migrate", "--group", "typescript-only", "--group", "maven", "--output", "-"],
             {
                 cwd: directory,
                 env: { FERN_NO_VERSION_REDIRECTION: "true" },
@@ -281,7 +284,7 @@ describe("fern sdk migrate", () => {
 
         expect(result.exitCode).not.toBe(0);
         expect(result.stdout).toBe("");
-        expect(result.stderr).toContain("resolve to different API schemas");
+        expect(result.stderr).toContain("resolve to different API sources, schemas, import settings, or audiences");
         await temporaryDirectory.cleanup();
     });
 
