@@ -1,6 +1,6 @@
 import { logViolations } from "@fern-api/api-workspace-validator";
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { validateDocsWorkspace } from "@fern-api/docs-validator";
+import { getRuleNamesConfiguredAsErrors, validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -103,6 +103,14 @@ export async function validateDocsWorkspaceWithoutExiting({
         logBreadcrumbs: false,
         elapsedMillis
     });
+
+    const rulesConfiguredAsErrors = getRuleNamesConfiguredAsErrors(workspace.config.check);
+    hasErrors =
+        hasErrors ||
+        violations.some(
+            (violation) =>
+                violation.severity === "error" && violation.name != null && rulesConfiguredAsErrors.has(violation.name)
+        );
 
     if (errorOnBrokenLinks) {
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
