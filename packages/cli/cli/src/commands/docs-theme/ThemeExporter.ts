@@ -1,10 +1,10 @@
 import { docsYml } from "@fern-api/configuration";
+import { getProductSlug } from "@fern-api/docs-resolver";
 import { isURL } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { kebabCase } from "lodash-es";
 import path from "path";
 
 export class ThemeExporter {
@@ -65,11 +65,10 @@ function toExternalProduct(product: unknown, siteUrl: string): unknown {
     }
     const { path: _path, slug, versions: _versions, announcement: _announcement, ...rest } = product;
     const displayName = rest["display-name"];
-    const productSlug =
-        typeof slug === "string" ? slug : typeof displayName === "string" ? kebabCase(displayName) : undefined;
-    if (productSlug == null) {
+    if (typeof displayName !== "string") {
         return product;
     }
+    const productSlug = getProductSlug({ slug: typeof slug === "string" ? slug : undefined, displayName });
     const base = siteUrl.replace(/^https?:\/\//i, "").replace(/\/+$/, "");
     return { ...rest, href: `https://${base}/${productSlug}` };
 }

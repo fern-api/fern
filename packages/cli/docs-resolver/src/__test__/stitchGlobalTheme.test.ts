@@ -361,6 +361,7 @@ describe("getPathWithinSite", () => {
 
     it("returns [] for the site root and undefined for other hosts or sibling basepaths", () => {
         expect(getPathWithinSite("https://docs.example.com/repo-2", ["docs.example.com/repo-2"])).toEqual([]);
+        expect(getPathWithinSite("https://docs.example.com/repo-2/?utm=1", ["docs.example.com/repo-2"])).toEqual([]);
         expect(getPathWithinSite("https://other.example.com/x", ["docs.example.com/repo-2"])).toBeUndefined();
         expect(getPathWithinSite("https://docs.example.com/repo-20/x", ["docs.example.com/repo-2"])).toBeUndefined();
     });

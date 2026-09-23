@@ -314,10 +314,7 @@ export function normalizeSiteUrl(value: string): string {
  * against `docs.example.com/repo-2` yields `["product-b"]`.
  */
 export function getPathWithinSite(href: string, siteUrls: string[]): string[] | undefined {
-    const [normalizedHref] = normalizeSiteUrl(href).split(/[?#]/, 1);
-    if (normalizedHref == null) {
-        return undefined;
-    }
+    const normalizedHref = normalizeSiteUrl(href.split(/[?#]/)[0] ?? "");
     // Longest site first so `docs.example.com/repo-2` wins over `docs.example.com`.
     const sites = siteUrls
         .map(normalizeSiteUrl)
@@ -335,6 +332,11 @@ export function getPathWithinSite(href: string, siteUrls: string[]): string[] | 
         }
     }
     return undefined;
+}
+
+/** Slug an internal product publishes under; must agree with `DocsDefinitionResolver.toProductNode`. */
+export function getProductSlug({ slug, displayName }: { slug: string | undefined; displayName: string }): string {
+    return slug ?? kebabCase(displayName);
 }
 
 /**
@@ -377,7 +379,8 @@ export function mergeThemeProducts({
             productSlug != null
                 ? takeLocal(
                       (product) =>
-                          isInternalProduct(product) && (product.slug ?? kebabCase(product.displayName)) === productSlug
+                          isInternalProduct(product) &&
+                          getProductSlug({ slug: product.slug, displayName: product.displayName }) === productSlug
                   )
                 : takeLocal(
                       (product) =>
