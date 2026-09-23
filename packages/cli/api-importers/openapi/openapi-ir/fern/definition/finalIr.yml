@@ -135,6 +135,9 @@ types:
       - commons.WithName
       - commons.WithSource
     properties:
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: True when this error was declared with a 4XX or 5XX wildcard response.
       schema: optional<Schema>
       examples: optional<list<ErrorExample>>
       namespace:
@@ -425,9 +428,10 @@ types:
       request: optional<Request>
       response: optional<Response>
       errors:
-        type: map<commons.StatusCode, HttpError>
+        type: map<commons.ErrorStatusCodeKey, HttpError>
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
+          Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       servers: list<HttpEndpointServer>
       examples: list<EndpointExample>

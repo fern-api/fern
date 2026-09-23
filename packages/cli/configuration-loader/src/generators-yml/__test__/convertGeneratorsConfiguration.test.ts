@@ -553,6 +553,30 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
         });
 
+        it("api-level error-responses are inherited by every spec", async () => {
+            const context = createMockTaskContext();
+            const errorResponses = {
+                schema: "errors/problem_details.yml",
+                name: "ServiceError",
+                "apply-to": "all" as const,
+                ensure: [{ "status-code": 422, methods: ["post" as const] }]
+            };
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        settings: { "error-responses": errorResponses },
+                        specs: [{ openapi: "path/to/spec1.yml" }, { openapi: "path/to/spec2.yml" }]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.errorResponses).toEqual(errorResponses);
+            expect(converted.api.definitions[1]?.settings?.errorResponses).toEqual(errorResponses);
+        });
+
         it("spec settings override api-level settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({

@@ -195,7 +195,9 @@ async function createSpec({
             overrides: {
                 ...settings,
                 useTitlesAsName: settings.titleAsSchemaName,
-                shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames
+                shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
+                shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,
+                asyncApiNaming: settings.asyncApiMessageNaming
             }
         }),
         source: {

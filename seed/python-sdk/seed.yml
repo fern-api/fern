@@ -189,6 +189,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license
     - customConfig:
         runtime_version: true
       outputFolder: runtime-version
@@ -543,6 +546,9 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-file-upload-array-content-type:
+    - customConfig: null
+      outputFolder: no-custom-config
   python-optional-request-body:
     - customConfig: null
       outputFolder: no-custom-config

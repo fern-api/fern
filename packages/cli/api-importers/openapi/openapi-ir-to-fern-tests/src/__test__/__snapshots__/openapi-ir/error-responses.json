@@ -1,0 +1,1353 @@
+{
+  "specVersion": "1.0",
+  "title": "Messages",
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    },
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listMessages",
+      "tags": [
+        "messages",
+        "Messages"
+      ],
+      "namespace": "messages",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListMessagesRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "value": {
+            "generatedName": "ListMessagesResponseItem",
+            "schema": "Message",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListMessagesResponse",
+          "namespace": "messages",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "messages"
+            }
+          ],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "messages.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/messages",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "sid": {
+                      "value": {
+                        "value": "sid",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "body": {
+                      "value": {
+                        "value": "body",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "messages.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createMessage",
+      "tags": [
+        "messages",
+        "Messages"
+      ],
+      "namespace": "messages",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateMessageRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateMessageRequest",
+          "schema": "Message",
+          "namespace": "messages",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "messages.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Created",
+        "schema": {
+          "generatedName": "CreateMessageResponse",
+          "schema": "Message",
+          "namespace": "messages",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "messages.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Bad Request",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Unprocessable Entity",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "429": {
+          "generatedName": "TooManyRequestsError",
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Too many requests",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/messages",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "sid": {
+                "value": {
+                  "value": "sid",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "body": {
+                "value": {
+                  "value": "body",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "sid": {
+                  "value": {
+                    "value": "sid",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "body": {
+                  "value": {
+                    "value": "body",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "messages.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "deleteMessage",
+      "tags": [
+        "messages",
+        "Messages"
+      ],
+      "namespace": "messages",
+      "pathParameters": [
+        {
+          "name": "sid",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteMessageRequestSid",
+            "namespace": "messages",
+            "groupName": [
+              {
+                "type": "namespace",
+                "name": "messages"
+              }
+            ],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteMessageRequest",
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "schema": "ServiceErrorResponse",
+            "namespace": "messages",
+            "source": {
+              "file": "messages.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Not Found",
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "DELETE",
+      "path": "/messages/{sid}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "sid",
+              "value": {
+                "value": {
+                  "value": "sid",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "messages.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createCall",
+      "tags": [
+        "calls",
+        "Calls"
+      ],
+      "namespace": "calls",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateCallRequest",
+      "response": {
+        "description": "Created",
+        "schema": {
+          "generatedName": "CreateCallResponse",
+          "schema": "Call",
+          "namespace": "calls",
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "calls.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {
+        "403": {
+          "generatedName": "ForbiddenError",
+          "schema": {
+            "generatedName": "ForbiddenErrorBody",
+            "schema": "CallsProblem",
+            "namespace": "calls",
+            "source": {
+              "file": "calls.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Forbidden",
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "409": {
+          "generatedName": "ConflictError",
+          "schema": {
+            "generatedName": "ConflictErrorBody",
+            "schema": "CallError",
+            "namespace": "calls",
+            "source": {
+              "file": "calls.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Conflict",
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "schema": "CallsProblem",
+            "namespace": "calls",
+            "source": {
+              "file": "calls.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Internal Server Error",
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {
+                  "type": {
+                    "value": {
+                      "value": "type",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "title": {
+                    "value": {
+                      "value": "title",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": 1,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/calls",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "sid": {
+                  "value": {
+                    "value": "sid",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "calls.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "messages": {
+        "Message": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "messageSid",
+              "key": "sid",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "MessageSid",
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "messageBody",
+              "key": "body",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "MessageBody",
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Message",
+          "namespace": "messages",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "messages"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "ServiceErrorResponse": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseType",
+              "key": "type",
+              "schema": {
+                "description": "A URI reference that identifies the problem type.",
+                "schema": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "generatedName": "ServiceErrorResponseType",
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseTitle",
+              "key": "title",
+              "schema": {
+                "description": "A short, human-readable summary of the problem type.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ServiceErrorResponseTitle",
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseStatus",
+              "key": "status",
+              "schema": {
+                "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "ServiceErrorResponseStatus",
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseDetail",
+              "key": "detail",
+              "schema": {
+                "generatedName": "ServiceErrorResponseDetail",
+                "description": "A human-readable explanation specific to this occurrence of the problem.",
+                "value": {
+                  "description": "A human-readable explanation specific to this occurrence of the problem.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ServiceErrorResponseDetail",
+                  "namespace": "messages",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "messages"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseInstance",
+              "key": "instance",
+              "schema": {
+                "generatedName": "ServiceErrorResponseInstance",
+                "description": "A URI reference that identifies the specific occurrence of the problem.",
+                "value": {
+                  "description": "A URI reference that identifies the specific occurrence of the problem.",
+                  "schema": {
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "generatedName": "ServiceErrorResponseInstance",
+                  "namespace": "messages",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "messages"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseCode",
+              "key": "code",
+              "schema": {
+                "generatedName": "ServiceErrorResponseCode",
+                "description": "Service-specific error code.",
+                "value": {
+                  "description": "Service-specific error code.",
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ServiceErrorResponseCode",
+                  "namespace": "messages",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "messages"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "serviceErrorResponseErrors",
+              "key": "errors",
+              "schema": {
+                "generatedName": "ServiceErrorResponseErrors",
+                "description": "Field-level validation failures.",
+                "value": {
+                  "description": "Field-level validation failures.",
+                  "value": {
+                    "allOf": [],
+                    "properties": [
+                      {
+                        "conflict": {},
+                        "generatedName": "serviceErrorResponseErrorsItemField",
+                        "key": "field",
+                        "schema": {
+                          "generatedName": "ServiceErrorResponseErrorsItemField",
+                          "value": {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ServiceErrorResponseErrorsItemField",
+                            "namespace": "messages",
+                            "groupName": [
+                              {
+                                "type": "namespace",
+                                "name": "messages"
+                              }
+                            ],
+                            "type": "primitive"
+                          },
+                          "namespace": "messages",
+                          "groupName": [
+                            {
+                              "type": "namespace",
+                              "name": "messages"
+                            }
+                          ],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      },
+                      {
+                        "conflict": {},
+                        "generatedName": "serviceErrorResponseErrorsItemMessage",
+                        "key": "message",
+                        "schema": {
+                          "generatedName": "ServiceErrorResponseErrorsItemMessage",
+                          "value": {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ServiceErrorResponseErrorsItemMessage",
+                            "namespace": "messages",
+                            "groupName": [
+                              {
+                                "type": "namespace",
+                                "name": "messages"
+                              }
+                            ],
+                            "type": "primitive"
+                          },
+                          "namespace": "messages",
+                          "groupName": [
+                            {
+                              "type": "namespace",
+                              "name": "messages"
+                            }
+                          ],
+                          "type": "optional"
+                        },
+                        "audiences": []
+                      }
+                    ],
+                    "allOfPropertyConflicts": [],
+                    "generatedName": "ServiceErrorResponseErrorsItem",
+                    "namespace": "messages",
+                    "groupName": [
+                      {
+                        "type": "namespace",
+                        "name": "messages"
+                      }
+                    ],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "messages.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "generatedName": "ServiceErrorResponseErrors",
+                  "namespace": "messages",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "messages"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "namespace": "messages",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "messages"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "RFC 9457 Problem Details returned for every error response.",
+          "generatedName": "ServiceErrorResponse",
+          "namespace": "messages",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "messages"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "messages.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      },
+      "calls": {
+        "Call": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "callSid",
+              "key": "sid",
+              "schema": {
+                "generatedName": "CallSid",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CallSid",
+                  "namespace": "calls",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "calls"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "Call",
+          "namespace": "calls",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "calls"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "CallError": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "callErrorCode",
+              "key": "code",
+              "schema": {
+                "generatedName": "CallErrorCode",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "CallErrorCode",
+                  "namespace": "calls",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "calls"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "callErrorMessage",
+              "key": "message",
+              "schema": {
+                "generatedName": "CallErrorMessage",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CallErrorMessage",
+                  "namespace": "calls",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "calls"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CallError",
+          "namespace": "calls",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "calls"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "CallsProblem": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "callsProblemType",
+              "key": "type",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CallsProblemType",
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "callsProblemTitle",
+              "key": "title",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CallsProblemTitle",
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "callsProblemStatus",
+              "key": "status",
+              "schema": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "CallsProblemStatus",
+                "namespace": "calls",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "calls"
+                  }
+                ],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CallsProblem",
+          "title": "CallsProblem",
+          "namespace": "calls",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "calls"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "calls.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -1,0 +1,563 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Payment Schedules",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getPaymentSchedule",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPaymentScheduleRequest",
+      "response": {
+        "description": "The payment schedule",
+        "schema": {
+          "generatedName": "GetPaymentScheduleResponse",
+          "value": {
+            "generatedName": "GetPaymentScheduleResponse",
+            "schema": "ExternalPaymentScheduleGet",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "type": "nullable"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/payment_initiation/payment/get",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "adjusted_start_date": {
+                  "value": {
+                    "value": "2023-01-15",
+                    "type": "date"
+                  },
+                  "type": "primitive"
+                },
+                "end_date": {
+                  "value": {
+                    "value": "2023-01-15",
+                    "type": "date"
+                  },
+                  "type": "primitive"
+                },
+                "interval": {
+                  "value": "WEEKLY",
+                  "type": "enum"
+                },
+                "interval_execution_day": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "start_date": {
+                  "value": {
+                    "value": "2023-01-15",
+                    "type": "date"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createPaymentSchedule",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreatePaymentScheduleRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreatePaymentScheduleRequest",
+          "schema": "ExternalPaymentScheduleRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/payment_initiation/payment/create",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "start_date": {
+                "value": {
+                  "value": "2023-01-15",
+                  "type": "date"
+                },
+                "type": "primitive"
+              },
+              "interval": {
+                "value": "WEEKLY",
+                "type": "enum"
+              },
+              "interval_execution_day": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "PaymentScheduleInterval": {
+        "generatedName": "PaymentScheduleInterval",
+        "values": [
+          {
+            "generatedName": "WEEKLY",
+            "value": "WEEKLY",
+            "casing": {}
+          },
+          {
+            "generatedName": "MONTHLY",
+            "value": "MONTHLY",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "ExternalPaymentScheduleBase": {
+        "generatedName": "ExternalPaymentScheduleBase",
+        "title": "ExternalPaymentScheduleBase",
+        "value": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseInterval",
+              "key": "interval",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseInterval",
+                "value": {
+                  "generatedName": "ExternalPaymentScheduleBaseInterval",
+                  "schema": "PaymentScheduleInterval",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseIntervalExecutionDay",
+              "key": "interval_execution_day",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseIntervalExecutionDay",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ExternalPaymentScheduleBaseIntervalExecutionDay",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseStartDate",
+              "key": "start_date",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseStartDate",
+                "value": {
+                  "schema": {
+                    "type": "date"
+                  },
+                  "generatedName": "ExternalPaymentScheduleBaseStartDate",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseEndDate",
+              "key": "end_date",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseEndDate",
+                "value": {
+                  "generatedName": "ExternalPaymentScheduleBaseEndDate",
+                  "value": {
+                    "schema": {
+                      "type": "date"
+                    },
+                    "generatedName": "ExternalPaymentScheduleBaseEndDate",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseAdjustedStartDate",
+              "key": "adjusted_start_date",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseAdjustedStartDate",
+                "value": {
+                  "generatedName": "ExternalPaymentScheduleBaseAdjustedStartDate",
+                  "value": {
+                    "schema": {
+                      "type": "date"
+                    },
+                    "generatedName": "ExternalPaymentScheduleBaseAdjustedStartDate",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "externalPaymentScheduleBaseDescription",
+              "key": "description",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseDescription",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ExternalPaymentScheduleBaseDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ExternalPaymentScheduleBase",
+          "title": "ExternalPaymentScheduleBase",
+          "groupName": [],
+          "additionalProperties": true,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "ExternalPaymentScheduleGet": {
+        "generatedName": "ExternalPaymentScheduleGet",
+        "title": "ExternalPaymentScheduleGet",
+        "value": {
+          "allOf": [
+            {
+              "generatedName": "ExternalPaymentScheduleBase",
+              "schema": "ExternalPaymentScheduleBase",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "properties": [
+            {
+              "conflict": {
+                "ExternalPaymentScheduleBase": {
+                  "differentSchema": true
+                }
+              },
+              "generatedName": "externalPaymentScheduleGetAdjustedStartDate",
+              "key": "adjusted_start_date",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseAdjustedStartDate",
+                "value": {
+                  "schema": {
+                    "type": "date"
+                  },
+                  "generatedName": "ExternalPaymentScheduleBaseAdjustedStartDate",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {
+                "ExternalPaymentScheduleBase": {
+                  "differentSchema": true
+                }
+              },
+              "generatedName": "externalPaymentScheduleGetEndDate",
+              "key": "end_date",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseEndDate",
+                "value": {
+                  "schema": {
+                    "type": "date"
+                  },
+                  "generatedName": "ExternalPaymentScheduleBaseEndDate",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {
+                "ExternalPaymentScheduleBase": {
+                  "differentSchema": true
+                }
+              },
+              "generatedName": "externalPaymentScheduleGetInterval",
+              "key": "interval",
+              "schema": {
+                "generatedName": "ExternalPaymentScheduleBaseInterval",
+                "schema": "PaymentScheduleInterval",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {
+                "ExternalPaymentScheduleBase": {
+                  "differentSchema": true
+                }
+              },
+              "generatedName": "externalPaymentScheduleGetIntervalExecutionDay",
+              "key": "interval_execution_day",
+              "schema": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "ExternalPaymentScheduleBaseIntervalExecutionDay",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {
+                "ExternalPaymentScheduleBase": {
+                  "differentSchema": true
+                }
+              },
+              "generatedName": "externalPaymentScheduleGetStartDate",
+              "key": "start_date",
+              "schema": {
+                "schema": {
+                  "type": "date"
+                },
+                "generatedName": "ExternalPaymentScheduleBaseStartDate",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ExternalPaymentScheduleGet",
+          "title": "ExternalPaymentScheduleGet",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "ExternalPaymentScheduleRequest": {
+        "allOf": [
+          {
+            "generatedName": "ExternalPaymentScheduleBase",
+            "schema": "ExternalPaymentScheduleBase",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "ExternalPaymentScheduleBase": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "externalPaymentScheduleRequestStartDate",
+            "key": "start_date",
+            "schema": {
+              "schema": {
+                "type": "date"
+              },
+              "generatedName": "ExternalPaymentScheduleBaseStartDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {
+              "ExternalPaymentScheduleBase": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "externalPaymentScheduleRequestInterval",
+            "key": "interval",
+            "schema": {
+              "generatedName": "ExternalPaymentScheduleBaseInterval",
+              "schema": "PaymentScheduleInterval",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {
+              "ExternalPaymentScheduleBase": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "externalPaymentScheduleRequestIntervalExecutionDay",
+            "key": "interval_execution_day",
+            "schema": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ExternalPaymentScheduleBaseIntervalExecutionDay",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ExternalPaymentScheduleRequest",
+        "title": "ExternalPaymentScheduleRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 
-from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
+from fern.generator_exec import BasicLicense, CustomLicense, LicenseConfig, LicenseId
 
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.version import PythonVersion
@@ -84,6 +84,13 @@ class TestLicenseClassifiers:
         classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
 
         assert classifiers[-1] == PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS[LicenseId.APACHE_2]
+
+    def test_custom_license_has_no_classifier(self) -> None:
+        """Test custom license file does not produce a license classifier."""
+        license_config = LicenseConfig.factory.custom(CustomLicense(filename="LICENSE"))
+        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
+
+        assert not any(c.startswith("License ::") for c in classifiers)
 
     def test_license_with_version_constraint(self) -> None:
         """Test full output with license and version constraint."""

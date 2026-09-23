@@ -447,6 +447,9 @@ function projectFernApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // generators.yml exposes one preference for literal unions. Fern's authoritative settings adapter expands
+    // that field into both importer flags, so migration must emit both to preserve existing generation behavior.
+    // There is no independently configurable discriminatedUnionV2 field in the generators.yml schema.
     const projected = {
         respectNullableSchemas: settings.respectNullableSchemas,
         titleAsSchemaName: settings.shouldUseTitleAsName,
@@ -461,6 +464,12 @@ function projectFernApiImportSettings(
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
         ignoreTags: settings.ignoreTags,
         disambiguateRequestNames: settings.disambiguateRequestNames,
+        respectReadonlySchemas: settings.respectReadonlySchemas,
+        discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        resolveSchemaCollisions: settings.resolveSchemaCollisions,
+        asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
     };
     const defined = Object.fromEntries(Object.entries(projected).filter(([, value]) => value !== undefined));
@@ -473,6 +482,8 @@ function projectRawApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // Keep this raw projection aligned with getAPIDefinitionSettings, which intentionally maps
+    // prefer-undiscriminated-unions-with-literals to both importer flags.
     return {
         ...(settings["respect-nullable-schemas"] == null
             ? {}
@@ -513,6 +524,19 @@ function projectRawApiImportSettings(
         ...(settings["disambiguate-request-names"] == null
             ? {}
             : { disambiguateRequestNames: settings["disambiguate-request-names"] }),
+        ...(settings["respect-readonly-schemas"] == null
+            ? {}
+            : { respectReadonlySchemas: settings["respect-readonly-schemas"] }),
+        ...(settings["prefer-undiscriminated-unions-with-literals"] == null
+            ? {}
+            : {
+                  discriminatedUnionV2: settings["prefer-undiscriminated-unions-with-literals"],
+                  undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
+              }),
+        ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["resolve-schema-collisions"] == null
+            ? {}
+            : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),
         ...(settings["default-integer-format"] == null
             ? {}
             : { defaultIntegerFormat: settings["default-integer-format"] })

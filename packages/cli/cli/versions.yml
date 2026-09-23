@@ -1,4 +1,87 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.134.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI `error-responses` setting now replaces a pre-existing `components.schemas` entry of
+        the same `name` when nothing references it anymore once the 4xx/5xx responses have been rewritten
+        (the common case: a legacy error body under `apply-to: all`), so specs that ship their own
+        `TwilioServiceErrorResponse`-style schema no longer need a per-spec overlay to remove it first.
+        If the legacy schema is still referenced (a 2xx body, another schema, `apply-to: untyped`), the
+        error now lists the offending JSON Pointers.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.134.0
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI `allOf` required-ness when a branch lists a property in `required` that is defined
+        only by another (parent) branch. The property is now required on the composed type, so a
+        `nullable: true` property becomes required-nullable and round-trips `null` in generated SDKs.
+        Multi-level `allOf` chains are handled; properties required in no branch stay optional.
+      type: fix
+    - summary: |
+        When an OpenAPI `allOf` parent is inlined into a type or request body because of a property
+        conflict, the inlined properties now keep their metadata (`readOnly` filtering on write
+        request bodies, `x-fern-property-name`, `x-fern-audiences`, `deprecated`, access, and XML
+        encoding) instead of being copied as bare type references.
+      type: fix
+    - summary: |
+        Fix `fern check` reporting duplicate properties when an OpenAPI schema with a `nullable: true`
+        `allOf` parent lists parent-defined properties in its own top-level `required`. The nullable
+        parent is now inlined (instead of being kept in `extends` alongside the redeclared property).
+      type: fix
+    - summary: |
+        The OpenAPI importer used for SDK generation now honors `4XX` and `5XX` wildcard error
+        responses instead of silently dropping them. Wildcards are imported as `ClientRequestError`
+        (covers 400-499) and `ServerError` (covers 500-599), and a concrete status code declared
+        alongside a wildcard always takes precedence. Fern Definition `errors` now accept
+        `status-code: 4XX` / `status-code: 5XX` as well.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.133.0
+  changelogEntry:
+    - summary: |
+        The CLI now sends an `X-Fern-Agent` header on every FDR, Venus and Fiddle request
+        (and tags its own telemetry events with `agent`) when run from a coding agent
+        (Claude Code, Cursor, Codex, Devin, Gemini CLI), so agent-driven usage such as
+        docs publishes can be measured separately from human usage.
+      type: internal
+    - summary: |
+        `fern init --docs` now produces a project that builds with no further edits. When no API
+        definition exists in the fern folder, it scaffolds `pages/welcome.mdx` and points the
+        navigation at it instead of emitting an `api:` item with nothing to render. `fern check`
+        also reports a new `api-section-has-definition` error when an `api:` navigation item does
+        not resolve to any API definition, instead of passing and then failing at build time.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.132.0
+  changelogEntry:
+    - summary: |
+        Add an `error-responses` OpenAPI setting that applies a single error body schema (e.g. RFC 9457
+        Problem Details) to the 4xx/5xx responses of every operation in a spec, so per-spec overlays are no
+        longer needed to type error responses.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                error-responses:
+                  schema: errors/problem_details.yml   # file path or inline schema
+                  name: ProblemDetails                 # generated type name (defaults to the schema title)
+                  apply-to: all                        # `all` (default) or `untyped`
+                  ensure:
+                    - status-code: 422
+                      methods: [post, put, patch]
+        ```
+
+        `apply-to: all` replaces the body of every error response; `untyped` only fills in responses that
+        declare no body schema. `ensure` adds the listed status codes to operations that do not declare them.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
 - version: 5.131.3
   changelogEntry:
     - summary: |

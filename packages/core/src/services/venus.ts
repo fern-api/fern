@@ -1,5 +1,7 @@
 import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 
+import { getCodingAgentHeaders } from "../codingAgent.js";
+
 export function createVenusService({
     environment = process.env.DEFAULT_VENUS_ORIGIN ?? "https://venus.buildwithfern.com",
     token,
@@ -12,6 +14,6 @@ export function createVenusService({
     return new FernVenusApiClient({
         environment,
         token,
-        headers
+        headers: { ...getCodingAgentHeaders(), ...headers }
     });
 }

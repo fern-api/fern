@@ -654,6 +654,76 @@ types:
           namespace while endpoints and other types stay at the root.
           Defaults to false.
         default: false
+      error-responses:
+        type: optional<OpenAPIErrorResponsesSchema>
+        docs: |
+          Standardize the body of every 4xx/5xx response on a single schema (for example an
+          RFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a
+          per-spec overlay that rewrites each error response by hand.
+
+  OpenAPIErrorResponsesSchema:
+    properties:
+      schema:
+        type: OpenAPIErrorResponsesSchemaSource
+        docs: |
+          The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file
+          (relative to this generators.yml) or an inline schema object. It is registered under
+          `components.schemas` and every affected response references it. Any `$ref` inside the
+          schema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to.
+      name:
+        type: optional<string>
+        docs: |
+          Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.
+          If the spec already defines a different schema under this name, it is replaced as long as
+          nothing references it once the error responses have been rewritten (e.g. a legacy error
+          body only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails.
+      apply-to:
+        type: optional<OpenAPIErrorResponsesApplyTo>
+        docs: |
+          `all` replaces the body of every 4xx/5xx response with the configured schema.
+          `untyped` only fills in 4xx/5xx responses that declare no body schema, leaving existing
+          typed error responses untouched.
+          Defaults to `all`.
+        default: all
+      ensure:
+        type: optional<list<OpenAPIErrorResponsesEnsureSchema>>
+        docs: |
+          Error responses to add to operations that do not already declare them
+          (e.g. a `422` on every `post`, `put` and `patch`).
+
+  OpenAPIErrorResponsesSchemaSource:
+    discriminated: false
+    union:
+      - string
+      - map<string, unknown>
+
+  OpenAPIErrorResponsesApplyTo:
+    enum:
+      - all
+      - untyped
+
+  OpenAPIErrorResponsesEnsureSchema:
+    properties:
+      status-code:
+        type: integer
+        docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
+      methods:
+        type: optional<list<OpenAPIErrorResponsesHttpMethod>>
+        docs: HTTP methods whose operations receive the response. Defaults to all methods.
+
+  OpenAPIErrorResponsesHttpMethod:
+    enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      - trace
 
   ResolveAliases:
     discriminated: false
