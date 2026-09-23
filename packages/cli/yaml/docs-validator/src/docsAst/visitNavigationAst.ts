@@ -16,7 +16,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir, stat } from "fs/promises";
 import path from "path";
 import { asyncPool } from "../utils/asyncPool.js";
-import { FileReadTimer } from "../utils/fileReadTimer.js";
+import { ReadFile } from "../utils/fileReadTimer.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";
 
@@ -31,7 +31,7 @@ export declare namespace visitNavigationAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         apiWorkspaces: AbstractAPIWorkspace<unknown>[];
         context: TaskContext;
-        readTimer: FileReadTimer;
+        readFile: ReadFile;
     }
 }
 
@@ -68,7 +68,7 @@ export async function visitNavigationAst({
     absoluteFilepathToConfiguration,
     context,
     nodePath,
-    readTimer
+    readFile
 }: visitNavigationAst.Args): Promise<void> {
     context.logger.debug(`Starting navigation validation with concurrency limit: ${VALIDATION_CONCURRENCY}`);
 
@@ -87,7 +87,7 @@ export async function visitNavigationAst({
                             absoluteFilepathToConfiguration,
                             apiWorkspaces,
                             context,
-                            readTimer
+                            readFile
                         });
                     }
                 );
@@ -108,7 +108,7 @@ export async function visitNavigationAst({
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
                         context,
-                        readTimer
+                        readFile
                     });
                 });
             }
@@ -123,7 +123,7 @@ export async function visitNavigationAst({
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
                 context,
-                readTimer
+                readFile
             });
         });
     }
@@ -136,7 +136,7 @@ async function visitNavigationItem({
     absoluteFilepathToConfiguration,
     apiWorkspaces,
     context,
-    readTimer
+    readFile
 }: {
     absolutePathToFernFolder: AbsoluteFilePath;
     navigationItem: docsYml.RawSchemas.NavigationItem;
@@ -145,7 +145,7 @@ async function visitNavigationItem({
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
-    readTimer: FileReadTimer;
+    readFile: ReadFile;
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
@@ -213,7 +213,7 @@ async function visitNavigationItem({
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
                         context,
-                        readTimer
+                        readFile
                     });
                 })
             );
@@ -238,7 +238,7 @@ async function visitNavigationItem({
                 context.logger.trace(`Processing large markdown file: ${markdownPath} (${fileSizeMB.toFixed(2)} MB)`);
             }
 
-            const content = await readTimer.read(absoluteFilepath);
+            const content = await readFile(absoluteFilepath);
 
             const title = getNavigationItemTitle(navigationItem);
             await visitor.markdownPage?.(
@@ -309,7 +309,7 @@ async function visitNavigationItem({
                 visitor,
                 nodePath: [...nodePath, "folder"],
                 context,
-                readTimer
+                readFile
             });
         }
     }
@@ -327,7 +327,7 @@ async function visitNavigationItem({
 
             await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
                 const absoluteFilepath = resolve(changelogDir, file);
-                const content = await readTimer.read(absoluteFilepath);
+                const content = await readFile(absoluteFilepath);
                 context.logger.trace(`Validating changelog file: ${file}`);
 
                 await visitor.markdownPage?.(
@@ -363,14 +363,14 @@ async function visitFolderMarkdownFiles({
     visitor,
     nodePath,
     context,
-    readTimer
+    readFile
 }: {
     directoryPath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     context: TaskContext;
-    readTimer: FileReadTimer;
+    readFile: ReadFile;
 }): Promise<void> {
     const entries = await readdir(directoryPath, { withFileTypes: true });
 
@@ -394,7 +394,7 @@ async function visitFolderMarkdownFiles({
             );
         }
 
-        const content = await readTimer.read(absoluteFilepath);
+        const content = await readFile(absoluteFilepath);
         const title = path.basename(file.name, path.extname(file.name));
 
         await visitor.markdownPage?.(
@@ -435,7 +435,7 @@ async function visitFolderMarkdownFiles({
             visitor,
             nodePath: [...nodePath, subdir.name],
             context,
-            readTimer
+            readFile
         });
     });
 }
