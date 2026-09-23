@@ -149,13 +149,13 @@ class UserClient
         $query['nestedUser'] = $request->getNestedUser();
         $query['excludeUser'] = $request->getExcludeUser();
         $query['filter'] = $request->getFilter();
-        if ($request->getOptionalDeadline() != null) {
+        if ($request->getOptionalDeadline() !== null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->getOptionalDeadline());
         }
-        if ($request->getOptionalString() != null) {
+        if ($request->getOptionalString() !== null) {
             $query['optionalString'] = $request->getOptionalString();
         }
-        if ($request->getOptionalUser() != null) {
+        if ($request->getOptionalUser() !== null) {
             $query['optionalUser'] = $request->getOptionalUser();
         }
         try {

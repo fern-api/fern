@@ -74,7 +74,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${QUERY_PARAMETER_BAG_NAME}['${getWireValue(query.name)}'] = ${queryParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} !== null`));
                         this.writeQueryParameter(writer, query);
                         writer.endControlFlow();
                     }
@@ -117,7 +117,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${headerParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} !== null`));
                         this.writeHeader(writer, header);
                         writer.endControlFlow();
                     }
@@ -134,7 +134,36 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
+        const parameter = this.context.accessRequestProperty({
+            requestParameterName: this.requestParameterName,
+            propertyName: header.name
+        });
+        const dereferenced = this.context.dereferenceOptional(header.valueType);
+        if (dereferenced.type === "primitive") {
+            switch (dereferenced.primitive.v1) {
+                case FernIr.PrimitiveTypeV1.Boolean:
+                    // PHP coerces booleans to "1"/"" in string context, so serialize the header
+                    // value explicitly as "true"/"false".
+                    writer.writeTextStatement(`${parameter} ? 'true' : 'false'`);
+                    return;
+                case FernIr.PrimitiveTypeV1.Integer:
+                case FernIr.PrimitiveTypeV1.Long:
+                case FernIr.PrimitiveTypeV1.Uint:
+                case FernIr.PrimitiveTypeV1.Uint64:
+                case FernIr.PrimitiveTypeV1.Float:
+                case FernIr.PrimitiveTypeV1.Double:
+                case FernIr.PrimitiveTypeV1.BigInteger:
+                    // Headers must be strings, so cast numeric values explicitly.
+                    writer.writeTextStatement(`(string)${parameter}`);
+                    return;
+            }
+        }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
+    }
+
+    private isBoolean(reference: FernIr.TypeReference): boolean {
+        const dereferenced = this.context.dereferenceOptional(reference);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 
     private writeMultipartBodyParameter({
@@ -155,7 +184,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isOptional = this.context.isOptional(propType);
 
         if (isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             propType = this.context.dereferenceOptional(propType);
         }
 
@@ -206,6 +235,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
         paramRef: string,
         typeReference: FernIr.TypeReference
     ): php.AstNode {
+        if (this.isBoolean(typeReference)) {
+            // PHP coerces booleans to "1"/"" in string context, so serialize the part
+            // value explicitly as "true"/"false".
+            return php.codeblock(`(${paramRef} ? 'true' : 'false')`);
+        }
         if (this.context.isJsonEncodable(typeReference)) {
             return php.invokeMethod({
                 method: "encode",
@@ -422,7 +456,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             propertyName: file.key
         });
         if (file.isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             this.writeMultipartPart({ writer, paramRef, property: FernIr.FileProperty.file(file) });
             writer.endControlFlow();
         } else {
@@ -436,7 +470,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 requestParameterName: this.sdkRequest.requestParameterName,
                 propertyName: fileArray.key
             });
-            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            writer.controlFlow("if", php.codeblock(`${ref} !== null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });
             writer.endControlFlow();
         } else {

@@ -93,10 +93,10 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null) {
+        if ($token !== null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-        if ($xRandomHeader != null) {
+        if ($xRandomHeader !== null) {
             $defaultHeaders['X-Random-Header'] = $xRandomHeader;
         }
 

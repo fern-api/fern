@@ -710,16 +710,16 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getPerPage() != null) {
+        if ($request->getPerPage() !== null) {
             $query['per_page'] = $request->getPerPage();
         }
-        if ($request->getOrder() != null) {
+        if ($request->getOrder() !== null) {
             $query['order'] = $request->getOrder();
         }
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {
@@ -770,7 +770,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getCursor() != null) {
+        if ($request->getCursor() !== null) {
             $query['cursor'] = $request->getCursor();
         }
         try {
@@ -919,16 +919,16 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getPerPage() != null) {
+        if ($request->getPerPage() !== null) {
             $query['per_page'] = $request->getPerPage();
         }
-        if ($request->getOrder() != null) {
+        if ($request->getOrder() !== null) {
             $query['order'] = $request->getOrder();
         }
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {
@@ -979,16 +979,16 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getPerPage() != null) {
+        if ($request->getPerPage() !== null) {
             $query['per_page'] = $request->getPerPage();
         }
-        if ($request->getOrder() != null) {
+        if ($request->getOrder() !== null) {
             $query['order'] = $request->getOrder();
         }
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {
@@ -1086,13 +1086,13 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getLimit() != null) {
+        if ($request->getLimit() !== null) {
             $query['limit'] = $request->getLimit();
         }
-        if ($request->getOrder() != null) {
+        if ($request->getOrder() !== null) {
             $query['order'] = $request->getOrder();
         }
         try {
@@ -1143,13 +1143,13 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getLimit() != null) {
+        if ($request->getLimit() !== null) {
             $query['limit'] = $request->getLimit();
         }
-        if ($request->getOrder() != null) {
+        if ($request->getOrder() !== null) {
             $query['order'] = $request->getOrder();
         }
         try {
@@ -1200,7 +1200,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getCursor() != null) {
+        if ($request->getCursor() !== null) {
             $query['cursor'] = $request->getCursor();
         }
         try {
@@ -1251,7 +1251,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getCursor() != null) {
+        if ($request->getCursor() !== null) {
             $query['cursor'] = $request->getCursor();
         }
         try {
@@ -1302,7 +1302,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {
@@ -1353,7 +1353,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {
@@ -1404,7 +1404,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getOffset() != null) {
+        if ($request->getOffset() !== null) {
             $query['offset'] = $request->getOffset();
         }
         try {
@@ -1455,7 +1455,7 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
         try {
@@ -1506,13 +1506,13 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getPage() != null) {
+        if ($request->getPage() !== null) {
             $query['page'] = $request->getPage();
         }
-        if ($request->getPerPage() != null) {
+        if ($request->getPerPage() !== null) {
             $query['per_page'] = $request->getPerPage();
         }
-        if ($request->getStartingAfter() != null) {
+        if ($request->getStartingAfter() !== null) {
             $query['starting_after'] = $request->getStartingAfter();
         }
         try {

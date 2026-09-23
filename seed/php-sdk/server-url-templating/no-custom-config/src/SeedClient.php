@@ -62,7 +62,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($region != null || $serverUrlEnvironment != null) {
+        if ($region !== null || $serverUrlEnvironment !== null) {
             if ($environment == null || $environment == Environments::RegionalApiServer()) {
                 $region ??= 'us-east-1';
                 $serverUrlEnvironment ??= 'prod';

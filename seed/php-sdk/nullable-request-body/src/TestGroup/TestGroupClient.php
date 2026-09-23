@@ -80,10 +80,10 @@ class TestGroupClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->queryParamObject != null) {
+        if ($request->queryParamObject !== null) {
             $query['query_param_object'] = $request->queryParamObject;
         }
-        if ($request->queryParamInteger != null) {
+        if ($request->queryParamInteger !== null) {
             $query['query_param_integer'] = $request->queryParamInteger;
         }
         try {

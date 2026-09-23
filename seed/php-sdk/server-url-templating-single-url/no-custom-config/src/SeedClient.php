@@ -55,7 +55,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($region != null || $serverUrlEnvironment != null) {
+        if ($region !== null || $serverUrlEnvironment !== null) {
             $baseUrl = $this->options['baseUrl'] ?? null;
             if ($baseUrl == null || $baseUrl === Environments::RegionalApiServer->value) {
                 $region ??= 'us-east-1';

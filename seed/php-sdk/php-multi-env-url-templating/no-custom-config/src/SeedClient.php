@@ -62,7 +62,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($region != null) {
+        if ($region !== null) {
             if ($environment == null || $environment == Environments::Production() || $environment == Environments::Staging() || $environment == Environments::Development()) {
                 if ($environment == Environments::Staging()) {
                     $environment = Environments::custom(

@@ -77,10 +77,10 @@ class HeadersClient
         $headers = [];
         $headers['operand'] = $request->operand;
         $headers['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
+        if ($request->maybeOperand !== null) {
             $headers['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null) {
+        if ($request->maybeOperandOrColor !== null) {
             $headers['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {

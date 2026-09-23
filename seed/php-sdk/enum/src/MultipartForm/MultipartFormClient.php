@@ -65,13 +65,13 @@ class MultipartFormClient
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->add(name: 'color', value: $request->color);
-        if ($request->maybeColor != null) {
+        if ($request->maybeColor !== null) {
             $body->add(name: 'maybeColor', value: $request->maybeColor);
         }
         foreach ($request->colorList as $element) {
             $body->add(name: 'colorList', value: $element);
         }
-        if ($request->maybeColorList != null) {
+        if ($request->maybeColorList !== null) {
             foreach ($request->maybeColorList as $element) {
                 $body->add(name: 'maybeColorList', value: $element);
             }

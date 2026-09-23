@@ -95,7 +95,7 @@ class SeedClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->query != null) {
+        if ($request->query !== null) {
             $query['query'] = $request->query;
         }
         try {

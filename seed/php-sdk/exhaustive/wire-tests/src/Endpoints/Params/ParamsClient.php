@@ -590,7 +590,7 @@ class ParamsClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['_fields'] = $request->fields;
         }
         try {
@@ -644,7 +644,7 @@ class ParamsClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['_fields'] = $request->fields;
         }
         try {

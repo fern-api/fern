@@ -82,10 +82,10 @@ class EventsClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->eventType != null) {
+        if ($request->eventType !== null) {
             $query['event_type'] = JsonSerializer::serializeUnion($request->eventType, new Union('string', ['string']));
         }
-        if ($request->tags != null) {
+        if ($request->tags !== null) {
             $query['tags'] = JsonSerializer::serializeUnion($request->tags, new Union('string', ['string']));
         }
         try {

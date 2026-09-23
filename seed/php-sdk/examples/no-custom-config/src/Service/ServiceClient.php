@@ -213,10 +213,10 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->shallow != null) {
+        if ($request->shallow !== null) {
             $query['shallow'] = $request->shallow;
         }
-        if ($request->tag != null) {
+        if ($request->tag !== null) {
             $query['tag'] = $request->tag;
         }
         $headers = [];

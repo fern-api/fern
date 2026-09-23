@@ -97,10 +97,10 @@ class UsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
-        if ($request->startingAfter != null) {
+        if ($request->startingAfter !== null) {
             $query['starting_after'] = $request->startingAfter;
         }
         try {

@@ -321,13 +321,13 @@ class UserClient
         $query['filter'] = $request->filter;
         $query['longParam'] = $request->longParam;
         $query['bigIntParam'] = $request->bigIntParam;
-        if ($request->optionalDeadline != null) {
+        if ($request->optionalDeadline !== null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
-        if ($request->optionalString != null) {
+        if ($request->optionalString !== null) {
             $query['optionalString'] = $request->optionalString;
         }
-        if ($request->optionalUser != null) {
+        if ($request->optionalUser !== null) {
             $query['optionalUser'] = $request->optionalUser;
         }
         try {

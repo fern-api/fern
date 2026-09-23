@@ -49,7 +49,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => self::getPlatformUserAgent(strtolower(PHP_OS), php_uname('m'), PHP_VERSION),
         ];
-        if ($token != null) {
+        if ($token !== null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
 

@@ -51,7 +51,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => self::appendAppInfoToUserAgent('seed/seed/0.0.1', $options['appInfo'] ?? null),
         ];
-        if ($token != null) {
+        if ($token !== null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
 

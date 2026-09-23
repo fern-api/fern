@@ -90,13 +90,13 @@ class OauthClient
         $query['client_id'] = $request->clientId;
         $query['redirect_uri'] = $request->redirectUri;
         $query['code_challenge'] = $request->codeChallenge;
-        if ($request->codeChallengeMethod != null) {
+        if ($request->codeChallengeMethod !== null) {
             $query['code_challenge_method'] = $request->codeChallengeMethod;
         }
-        if ($request->scope != null) {
+        if ($request->scope !== null) {
             $query['scope'] = $request->scope;
         }
-        if ($request->state != null) {
+        if ($request->state !== null) {
             $query['state'] = $request->state;
         }
         try {

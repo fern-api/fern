@@ -289,16 +289,16 @@ class NullableOptionalClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
-        if ($request->offset != null) {
+        if ($request->offset !== null) {
             $query['offset'] = $request->offset;
         }
-        if ($request->includeDeleted != null) {
+        if ($request->includeDeleted !== null) {
             $query['includeDeleted'] = $request->includeDeleted;
         }
-        if ($request->sortBy != null) {
+        if ($request->sortBy !== null) {
             $query['sortBy'] = $request->sortBy;
         }
         try {
@@ -365,10 +365,10 @@ class NullableOptionalClient
         $query = [];
         $query['query'] = $request->query;
         $query['department'] = $request->department;
-        if ($request->role != null) {
+        if ($request->role !== null) {
             $query['role'] = $request->role;
         }
-        if ($request->isActive != null) {
+        if ($request->isActive !== null) {
             $query['isActive'] = $request->isActive;
         }
         try {
@@ -837,10 +837,10 @@ class NullableOptionalClient
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['role'] = $request->role;
-        if ($request->status != null) {
+        if ($request->status !== null) {
             $query['status'] = $request->status;
         }
-        if ($request->secondaryRole != null) {
+        if ($request->secondaryRole !== null) {
             $query['secondaryRole'] = $request->secondaryRole;
         }
         try {

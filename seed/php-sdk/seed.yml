@@ -54,6 +54,10 @@ fixtures:
   php-xml-twiml:
     - outputFolder: .
       customConfig: null
+  php-optional-falsy-values:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null

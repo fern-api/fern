@@ -94,7 +94,7 @@ class PlaylistClient
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['datetime'] = JsonSerializer::serializeDateTime($request->datetime);
-        if ($request->optionalDatetime != null) {
+        if ($request->optionalDatetime !== null) {
             $query['optionalDatetime'] = JsonSerializer::serializeDateTime($request->optionalDatetime);
         }
         try {
@@ -170,10 +170,10 @@ class PlaylistClient
         $query['otherField'] = $request->otherField;
         $query['multiLineDocs'] = $request->multiLineDocs;
         $query['multipleField'] = $request->multipleField;
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
-        if ($request->optionalMultipleField != null) {
+        if ($request->optionalMultipleField !== null) {
             $query['optionalMultipleField'] = $request->optionalMultipleField;
         }
         try {

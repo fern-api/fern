@@ -434,7 +434,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             if (param.header != null && (!endpointSecurity || param.isGlobalHeader)) {
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        typeReference: param.typeReference
+                    })
                 });
             }
         }
@@ -452,7 +456,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        typeReference: param.typeReference
+                    })
                 });
             }
         }
@@ -609,10 +617,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             anyAuthMultiScheme ||
                             (param.isGlobalHeader && param.isOptional && param.clientDefault == null))
                     ) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
-                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                            this.getHeaderValue({
+                                prefix: param.header.prefix,
+                                parameterName: param.name,
+                                typeReference: param.typeReference
+                            })
                         );
                         writer.endControlFlow();
                     }
@@ -992,7 +1004,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
         const environments = config.environments;
 
-        const anyProvided = serverVariableOptions.map((option) => `$${option.optionName} != null`).join(" || ");
+        const anyProvided = serverVariableOptions.map((option) => `$${option.optionName} !== null`).join(" || ");
         const writeMissingDefaultGuards = (): void => {
             for (const option of serverVariableOptions) {
                 if (option.variable.default == null) {
@@ -1487,11 +1499,37 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getHeaderValue({
         prefix,
-        parameterName
+        parameterName,
+        typeReference
     }: {
         prefix: string | undefined;
         parameterName: string;
+        typeReference?: FernIr.TypeReference;
     }): php.CodeBlock {
+        if (typeReference != null) {
+            const dereferenced = this.context.dereferenceOptional(typeReference);
+            if (dereferenced.type === "primitive") {
+                switch (dereferenced.primitive.v1) {
+                    case FernIr.PrimitiveTypeV1.Boolean: {
+                        // PHP coerces booleans to "1"/"" in string context, so serialize the header
+                        // value explicitly as "true"/"false".
+                        const serialized = `$${parameterName} ? 'true' : 'false'`;
+                        return php.codeblock(prefix != null ? `"${prefix} " . (${serialized})` : `(${serialized})`);
+                    }
+                    case FernIr.PrimitiveTypeV1.Integer:
+                    case FernIr.PrimitiveTypeV1.Long:
+                    case FernIr.PrimitiveTypeV1.Uint:
+                    case FernIr.PrimitiveTypeV1.Uint64:
+                    case FernIr.PrimitiveTypeV1.Float:
+                    case FernIr.PrimitiveTypeV1.Double:
+                    case FernIr.PrimitiveTypeV1.BigInteger:
+                        // Headers must be strings, so cast numeric values explicitly.
+                        return php.codeblock(
+                            prefix != null ? `"${prefix} " . (string)$${parameterName}` : `(string)$${parameterName}`
+                        );
+                }
+            }
+        }
         return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`);
     }
 
