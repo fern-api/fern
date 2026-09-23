@@ -30,12 +30,7 @@ export class RootClientInterfaceGenerator extends FileGenerator<PhpFile, SdkCust
                 interface_.addMethods(signatures);
             }
             if (service.endpoints.length > 0) {
-                interface_.addMethod(
-                    getWithRawResponseSignature({
-                        context: this.context,
-                        rawClassReference: this.context.getRawRootClientClassReference()
-                    })
-                );
+                interface_.addMethod(getWithRawResponseSignature(this.context.getRawRootClientClassReference()));
             }
         }
 

@@ -19,10 +19,12 @@ import { getRetriesDisabledStatement } from "../utils/retriesDisabled.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
 
-interface DecodedJsonResponse {
-    /** The statement that assigns or returns the deserialized body. */
+/**
+ * A json deserialization statement, and whether it carries a phpstan ignore because its helper
+ * answers a type looser than the declared one (the raw return then needs the same ignore).
+ */
+export interface DecodedJsonResponse {
     code: php.CodeBlock;
-    /** Whether that statement already suppresses a type mismatch phpstan would report. */
     carriesPhpstanIgnore: boolean;
 }
 
@@ -44,7 +46,6 @@ const HEADER_BAG_NAME = "$headers";
 // Not `$body`: a multipart or file-upload endpoint already has a local `$body` for the
 // request body it is sending.
 const BODY_VARIABLE_NAME = "$responseBody";
-const HTTP_RESPONSE_FACTORY_METHOD_NAME = "from";
 
 export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
@@ -60,7 +61,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: FernIr.ServiceId;
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
-        /** Emit the raw client's variant of this endpoint, returning `HttpResponse<T>`. */
         raw?: boolean;
     }): php.Method[] {
         // A raw client has one method per endpoint, whatever the endpoint's pagination: a pager
@@ -912,11 +912,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         writer.write("return ");
         writer.writeNode(
-            php.invokeMethod({
-                on: this.context.getHttpResponseClassReference(),
-                method: HTTP_RESPONSE_FACTORY_METHOD_NAME,
-                arguments_: [value ?? php.codeblock("null"), php.codeblock(RESPONSE_VARIABLE_NAME)],
-                static_: true
+            php.instantiateClass({
+                classReference: this.context.getHttpResponseClassReference(),
+                arguments_: [value ?? php.codeblock("null"), php.codeblock(RESPONSE_VARIABLE_NAME)]
             })
         );
         writer.writeLine(phpstanIgnore ? "; // @phpstan-ignore-line" : ";");
@@ -1160,12 +1158,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    /**
-     * The statement that deserializes a json response, and whether it carries a phpstan ignore
-     * because the helper it routes to answers a type looser than the declared one. Both come out
-     * of the one switch, so a new loosely typed helper cannot be added to half of it.
-     */
-    private decodeJsonResponse(return_: php.Type | undefined): DecodedJsonResponse {
+    public decodeJsonResponse(return_: php.Type | undefined): DecodedJsonResponse {
         if (return_ == null) {
             return { code: php.codeblock(""), carriesPhpstanIgnore: false };
         }
@@ -1181,14 +1174,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     carriesPhpstanIgnore: false
                 };
             case "array":
-            case "map":
+            case "map": {
+                const type = return_.underlyingType();
                 return {
-                    code: this.decodeJsonResponseForArray({
-                        arguments_,
-                        type: return_.underlyingType()
-                    }),
-                    carriesPhpstanIgnore: true
+                    code: this.decodeJsonResponseForArray({ arguments_, type }),
+                    carriesPhpstanIgnore: !this.context.isMixedArray(type)
                 };
+            }
             case "int":
             case "float":
             case "string":
@@ -1364,10 +1356,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer,
             raw,
             value: php.codeblock(BODY_VARIABLE_NAME),
-            // Some deserializer helpers are loosely typed - `JsonDecoder::decodeArray` answers
-            // `array`, an enum answers `string` - which is why the plain client's return carries an
-            // ignore. Wrapping moves that same mismatch onto the raw client's return, so the ignore
-            // moves with it.
             phpstanIgnore: decoded.carriesPhpstanIgnore
         });
     }

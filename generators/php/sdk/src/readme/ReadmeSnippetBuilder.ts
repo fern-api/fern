@@ -5,6 +5,7 @@ import { php } from "@fern-api/php-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { WITH_RAW_RESPONSE_METHOD_NAME } from "../raw-client/withRawResponse.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Auth placeholder fields (e.g. tokenPlaceholder, headerPlaceholder) are available
@@ -400,7 +401,7 @@ foreach ($items->getPages() as $page) {
     private getRawMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.context.getAccessFromRootClient(
             endpoint.fernFilepath
-        )}->${this.context.getWithRawResponseMethodName()}()->${this.context.getEndpointMethodName(endpoint.endpoint)}`;
+        )}->${WITH_RAW_RESPONSE_METHOD_NAME}()->${this.context.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
     private buildEnvironmentsSnippets(): string[] {

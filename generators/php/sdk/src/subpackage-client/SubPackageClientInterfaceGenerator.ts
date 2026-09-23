@@ -61,10 +61,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
             }
             if (this.service.endpoints.length > 0) {
                 interface_.addMethod(
-                    getWithRawResponseSignature({
-                        context: this.context,
-                        rawClassReference: this.context.getRawSubpackageClassReference(this.subpackage)
-                    })
+                    getWithRawResponseSignature(this.context.getRawSubpackageClassReference(this.subpackage))
                 );
             }
         }

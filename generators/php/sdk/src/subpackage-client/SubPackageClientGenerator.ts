@@ -4,7 +4,7 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { getWithRawResponseMethod, RAW_CLIENT_FIELD_NAME } from "../raw-client/withRawResponse.js";
+import { addEndpointClientFields, getWithRawResponseMethod } from "../raw-client/withRawResponse.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -41,44 +41,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 : undefined
         });
 
-        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
-
-        class_.addField(
-            php.field({
-                name: `$${this.context.getClientOptionsName()}`,
-                access: "private",
-                type: this.context.getClientOptionsType(),
-                docs: "@phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator"
-            })
-        );
-        class_.addField(this.context.rawClient.getField());
-
-        if (isMultiUrl) {
-            class_.addField(
-                php.field({
-                    name: "$environment",
-                    access: "private",
-                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
-                })
-            );
-        }
-
-        // Under ENDPOINT_SECURITY, the shared RoutingAuthProvider is threaded down from the
-        // root client so this subclient's endpoints can route their own auth headers.
-        if (this.context.isEndpointSecurity()) {
-            class_.addField(
-                php.field({
-                    name: "$routingAuthProvider",
-                    access: "private",
-                    // Nullable so the token providers' internal auth client (whose token
-                    // endpoint is unauthenticated) can be constructed without one.
-                    type: php.Type.optional(php.Type.reference(this.context.getRoutingAuthProviderClassReference())),
-                    // Read in endpoint methods (via HttpEndpointGenerator) and passed to nested
-                    // subclients; unused only in subclients with no authenticated endpoints.
-                    docs: "@phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients"
-                })
-            );
-        }
+        addEndpointClientFields({ class_, context: this.context });
 
         const subpackages = this.getSubpackages();
         class_.addConstructor(this.getConstructorMethod({ subpackages }));
@@ -96,21 +59,10 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 class_.addMethods(methods);
             }
             if (this.service.endpoints.length > 0) {
-                class_.addField(
-                    php.field({
-                        name: `$${RAW_CLIENT_FIELD_NAME}`,
-                        access: "private",
-                        type: php.Type.optional(
-                            php.Type.reference(this.context.getRawSubpackageClassReference(this.subpackage))
-                        ),
-                        initializer: php.codeblock("null")
-                    })
-                );
                 class_.addMethod(
                     getWithRawResponseMethod({
                         context: this.context,
-                        rawClassReference: this.context.getRawSubpackageClassReference(this.subpackage),
-                        isMultiUrl
+                        rawClassReference: this.context.getRawSubpackageClassReference(this.subpackage)
                     })
                 );
             }

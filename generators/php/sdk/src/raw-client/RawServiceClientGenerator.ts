@@ -5,7 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { getRawClientConstructor } from "./rawClientConstructor.js";
+import { addEndpointClientFields, getRawClientConstructor } from "./withRawResponse.js";
 
 export declare namespace RawServiceClientGenerator {
     interface Args {
@@ -55,40 +55,8 @@ export class RawServiceClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             docs: `Endpoints of the ${plainClientName}, returning the response metadata alongside the deserialized body.`
         });
 
-        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
-
-        class_.addField(
-            php.field({
-                name: `$${this.context.getClientOptionsName()}`,
-                access: "private",
-                type: this.context.getClientOptionsType(),
-                docs: "@phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator"
-            })
-        );
-        class_.addField(this.context.rawClient.getField());
-
-        if (isMultiUrl) {
-            class_.addField(
-                php.field({
-                    name: "$environment",
-                    access: "private",
-                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
-                })
-            );
-        }
-
-        if (this.context.isEndpointSecurity()) {
-            class_.addField(
-                php.field({
-                    name: "$routingAuthProvider",
-                    access: "private",
-                    type: php.Type.optional(php.Type.reference(this.context.getRoutingAuthProviderClassReference())),
-                    docs: "@phpstan-ignore-next-line Property is read in endpoint methods"
-                })
-            );
-        }
-
-        class_.addConstructor(getRawClientConstructor({ context: this.context, isMultiUrl }));
+        addEndpointClientFields({ class_, context: this.context });
+        class_.addConstructor(getRawClientConstructor(this.context));
 
         for (const endpoint of this.service.endpoints) {
             class_.addMethods(

@@ -97,13 +97,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getRawRootClientClassName(): string {
-        return `Raw${this.getRootClientClassName()}`;
-    }
-
     public getRawRootClientClassReference(): php.ClassReference {
         return php.classReference({
-            name: this.getRawRootClientClassName(),
+            name: `Raw${this.getRootClientClassName()}`,
             namespace: this.getRootNamespace()
         });
     }
@@ -118,11 +114,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             namespace: this.getCoreClientNamespace(),
             generics: bodyType != null ? [bodyType] : undefined
         });
-    }
-
-    /** The method that hands a caller the raw counterpart of this client. */
-    public getWithRawResponseMethodName(): string {
-        return "withRawResponse";
     }
 
     public getRootClientInterfaceClassName(): string {

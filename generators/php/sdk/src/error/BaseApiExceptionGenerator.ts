@@ -103,15 +103,15 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
                     type: php.Type.string()
                 })
             ],
-            return_: php.Type.optional(php.Type.string()),
-            docs: 'Returns one response header, matched case insensitively as http requires, with its values joined by ", "; null when the response did not carry it.',
+            return_: php.Type.string(),
+            docs: 'Returns one response header, matched case insensitively, with its values joined by ", "; an empty string when the response did not carry it, as in psr-7.',
             body: php.codeblock((writer) => {
                 writer.controlFlow("foreach", php.codeblock("$this->headers as $header => $values"));
                 writer.controlFlow("if", php.codeblock("strcasecmp($header, $name) === 0"));
                 writer.writeTextStatement("return implode(', ', $values)");
                 writer.endControlFlow();
                 writer.endControlFlow();
-                writer.writeTextStatement("return null");
+                writer.writeTextStatement("return ''");
             })
         });
     }
