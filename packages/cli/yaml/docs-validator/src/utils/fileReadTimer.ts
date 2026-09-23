@@ -24,7 +24,7 @@ export class FileReadTimer {
     public async read(path: string): Promise<string> {
         const start = performance.now();
         const content = await readFile(path, "utf8");
-        this.timings.push({ path, durationMs: performance.now() - start, bytes: content.length });
+        this.timings.push({ path, durationMs: performance.now() - start, bytes: Buffer.byteLength(content, "utf8") });
         return content;
     }
 
