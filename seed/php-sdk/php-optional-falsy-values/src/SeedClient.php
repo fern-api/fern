@@ -11,6 +11,9 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Requests\CountAuditLogsRequest;
+use Seed\Requests\UploadAuditLogRequest;
+use Seed\Core\Multipart\MultipartFormData;
+use Seed\Core\Multipart\MultipartApiRequest;
 
 class SeedClient
 {
@@ -72,6 +75,7 @@ class SeedClient
      *         'includeResolved' => false,
      *         'filter' => '0',
      *         'xMaxResults' => 0,
+     *         'xIncludeResolved' => false,
      *     ]),
      * );
      * ```
@@ -104,6 +108,9 @@ class SeedClient
         $headers = [];
         if ($request->xMaxResults !== null) {
             $headers['X-Max-Results'] = $request->xMaxResults;
+        }
+        if ($request->xIncludeResolved !== null) {
+            $headers['X-Include-Resolved'] = $request->xIncludeResolved ? 'true' : 'false';
         }
         try {
             $response = $this->client->sendRequest(
@@ -168,6 +175,62 @@ class SeedClient
                     path: "/audit-logs/count",
                     method: HttpMethod::GET,
                     query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Upload an audit log file, optionally flagging it as resolved.
+     *
+     * Example:
+     * ```php
+     * $client->uploadAuditLog(
+     *     new UploadAuditLogRequest([
+     *         'file' => File::createFromString("example_file", "example_file"),
+     *         'resolved' => false,
+     *     ]),
+     * );
+     * ```
+     *
+     * @param UploadAuditLogRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function uploadAuditLog(UploadAuditLogRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        if ($request->resolved !== null) {
+            $body->add(name: 'resolved', value: ($request->resolved ? 'true' : 'false'));
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/audit-logs/upload",
+                    method: HttpMethod::POST,
+                    body: $body,
                 ),
                 $options,
             );

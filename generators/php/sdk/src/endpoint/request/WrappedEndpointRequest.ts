@@ -134,7 +134,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
+        if (this.isBoolean(header.valueType)) {
+            // PHP coerces booleans to "1"/"" in string context, so serialize the header
+            // value explicitly as "true"/"false".
+            writer.writeTextStatement(
+                `${this.context.accessRequestProperty({
+                    requestParameterName: this.requestParameterName,
+                    propertyName: header.name
+                })} ? 'true' : 'false'`
+            );
+            return;
+        }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
+    }
+
+    private isBoolean(reference: FernIr.TypeReference): boolean {
+        const dereferenced = this.context.dereferenceOptional(reference);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 
     private writeMultipartBodyParameter({
@@ -206,6 +222,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
         paramRef: string,
         typeReference: FernIr.TypeReference
     ): php.AstNode {
+        if (this.isBoolean(typeReference)) {
+            // PHP coerces booleans to "1"/"" in string context, so serialize the part
+            // value explicitly as "true"/"false".
+            return php.codeblock(`(${paramRef} ? 'true' : 'false')`);
+        }
         if (this.context.isJsonEncodable(typeReference)) {
             return php.invokeMethod({
                 method: "encode",

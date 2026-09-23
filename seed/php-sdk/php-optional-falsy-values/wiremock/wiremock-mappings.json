@@ -69,9 +69,35 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "2d91f2fe-9757-4fc7-a9f0-a761c330b3dc",
+      "name": "uploadAuditLog - default",
+      "request": {
+        "urlPathTemplate": "/audit-logs/upload",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2d91f2fe-9757-4fc7-a9f0-a761c330b3dc",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 3
   }
 }

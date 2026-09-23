@@ -6,6 +6,8 @@ use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Requests\ListAuditLogsRequest;
 use Seed\Requests\CountAuditLogsRequest;
+use Seed\Requests\UploadAuditLogRequest;
+use Seed\Utils\File;
 
 class WireTest extends WireMockTestCase
 {
@@ -16,8 +18,7 @@ class WireTest extends WireMockTestCase
 
     /**
      */
-    public function testListAuditLogs(): void
-    {
+    public function testListAuditLogs(): void {
         $testId = 'list_audit_logs.0';
         $this->client->listAuditLogs(
             new ListAuditLogsRequest([
@@ -25,6 +26,7 @@ class WireTest extends WireMockTestCase
                 'includeResolved' => false,
                 'filter' => '0',
                 'xMaxResults' => 0,
+                'xIncludeResolved' => false,
             ]),
             [
                 'headers' => [
@@ -43,8 +45,7 @@ class WireTest extends WireMockTestCase
 
     /**
      */
-    public function testCountAuditLogs(): void
-    {
+    public function testCountAuditLogs(): void {
         $testId = 'count_audit_logs.0';
         $this->client->countAuditLogs(
             new CountAuditLogsRequest([
@@ -67,8 +68,31 @@ class WireTest extends WireMockTestCase
 
     /**
      */
-    protected function setUp(): void
-    {
+    public function testUploadAuditLog(): void {
+        $testId = 'upload_audit_log.0';
+        $this->client->uploadAuditLog(
+            new UploadAuditLogRequest([
+                'file' => File::createFromString("example_file", "example_file"),
+                'resolved' => false,
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'upload_audit_log.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/audit-logs/upload",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
         parent::setUp();
         $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
         $this->client = new SeedClient(

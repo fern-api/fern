@@ -27,11 +27,17 @@ class ListAuditLogsRequest extends JsonSerializableType
     public ?int $xMaxResults;
 
     /**
+     * @var ?bool $xIncludeResolved
+     */
+    public ?bool $xIncludeResolved;
+
+    /**
      * @param array{
      *   offset?: ?int,
      *   includeResolved?: ?bool,
      *   filter?: ?string,
      *   xMaxResults?: ?int,
+     *   xIncludeResolved?: ?bool,
      * } $values
      */
     public function __construct(
@@ -41,5 +47,6 @@ class ListAuditLogsRequest extends JsonSerializableType
         $this->includeResolved = $values['includeResolved'] ?? null;
         $this->filter = $values['filter'] ?? null;
         $this->xMaxResults = $values['xMaxResults'] ?? null;
+        $this->xIncludeResolved = $values['xIncludeResolved'] ?? null;
     }
 }

@@ -434,7 +434,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             if (param.header != null && (!endpointSecurity || param.isGlobalHeader)) {
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        typeReference: param.typeReference
+                    })
                 });
             }
         }
@@ -452,7 +456,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        typeReference: param.typeReference
+                    })
                 });
             }
         }
@@ -612,7 +620,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
-                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                            this.getHeaderValue({
+                                prefix: param.header.prefix,
+                                parameterName: param.name,
+                                typeReference: param.typeReference
+                            })
                         );
                         writer.endControlFlow();
                     }
@@ -1487,12 +1499,25 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getHeaderValue({
         prefix,
-        parameterName
+        parameterName,
+        typeReference
     }: {
         prefix: string | undefined;
         parameterName: string;
+        typeReference?: FernIr.TypeReference;
     }): php.CodeBlock {
+        if (typeReference != null && this.isBooleanHeader(typeReference)) {
+            // PHP coerces booleans to "1"/"" in string context, so serialize the header
+            // value explicitly as "true"/"false".
+            const serialized = `$${parameterName} ? 'true' : 'false'`;
+            return php.codeblock(prefix != null ? `"${prefix} " . (${serialized})` : `(${serialized})`);
+        }
         return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`);
+    }
+
+    private isBooleanHeader(typeReference: FernIr.TypeReference): boolean {
+        const dereferenced = this.context.dereferenceOptional(typeReference);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 
     private getAuthParameterTypeReference({

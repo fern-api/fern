@@ -32,6 +32,7 @@ $client->listAuditLogs(
         'includeResolved' => false,
         'filter' => '0',
         'xMaxResults' => 0,
+        'xIncludeResolved' => false,
     ]),
 );
 ```
@@ -73,6 +74,14 @@ $client->listAuditLogs(
 <dd>
 
 **$xMaxResults:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$xIncludeResolved:** `?bool` 
     
 </dd>
 </dl>
@@ -132,6 +141,50 @@ $client->countAuditLogs(
 
 **$resolvedOnly:** `?bool` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;uploadAuditLog($request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload an audit log file, optionally flagging it as resolved.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->uploadAuditLog(
+    new UploadAuditLogRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+        'resolved' => false,
+    ]),
+);
+```
 </dd>
 </dl>
 </dd>
