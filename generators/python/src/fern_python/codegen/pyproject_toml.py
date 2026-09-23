@@ -17,6 +17,7 @@ from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGe
 
 from fern.generator_exec import (
     BasicLicense,
+    CustomLicense,
     GithubOutputMode,
     LicenseConfig,
     LicenseId,
@@ -68,6 +69,16 @@ class PyProjectToml:
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
         self._mypy_exclude = mypy_exclude
+        self._license = license_
+
+    def _get_project_license(self) -> str:
+        if self._license is None:
+            return ""
+        license_union = self._license.get_as_union()
+        if license_union.type != "custom":
+            return ""
+        filename = cast(CustomLicense, license_union).filename
+        return f'license = {{ file = "{filename}" }}\n'
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -84,7 +95,7 @@ class PyProjectToml:
         content = f"""[project]
 name = "{self._name}"
 dynamic = ["version"]
-
+{self._get_project_license()}
 """
 
         for block in blocks:
@@ -148,7 +159,6 @@ name = "{self.name}"'''
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on its side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:

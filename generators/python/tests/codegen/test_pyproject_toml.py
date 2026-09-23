@@ -5,11 +5,14 @@ from pathlib import Path
 
 from poetry.core.factory import Factory
 
+from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.codegen.pyproject_toml import (
     PyProjectToml,
     PyProjectTomlPackageConfig,
 )
+
+from fern.generator_exec import CustomLicense, LicenseConfig
 
 
 class TestPoetryBlock:
@@ -150,3 +153,34 @@ class TestPoetryCoreValidation:
 
             assert poetry.package.name == "test-package"
             assert str(poetry.package.version) == "1.0.0"
+
+    def test_custom_license_written_to_project_table(self) -> None:
+        """Test that a custom license is declared via `license = { file = ... }` and validated by poetry-core."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "LICENSE").write_text("Example Corporation License\n")
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.custom(CustomLicense(filename="LICENSE")),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            assert 'license = { file = "LICENSE" }' in content
+            assert '"License :: Other/Proprietary License"' in content
+            assert 'license = "MIT"' not in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.name == "test-package"
+            assert poetry.package.license is not None
+            assert "Example Corporation License" in poetry.package.license.id

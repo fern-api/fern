@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Custom licenses (`metadata.license: { custom: "./LICENSE" }`) are now declared in the
+    generated `pyproject.toml`: the `[project]` table gets `license = { file = "LICENSE" }` and the
+    `License :: Other/Proprietary License` classifier is added, matching the existing behavior for
+    `MIT` and `Apache-2.0`.
+  type: feat
