@@ -490,6 +490,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: [
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.reconnect();`,
                 "",
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("open", this.handleOpen);`,
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("close", this.handleClose);`,
+                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.removeEventListener("error", this.handleError);`,
+                "",
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", this.handleOpen);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("close", this.handleClose);`,
@@ -499,7 +504,8 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             ],
             docs: [
                 {
-                    description: "Connect to the websocket and register event handlers."
+                    description:
+                        "Connect to the websocket and register event handlers. Safe to call multiple times: listeners are de-duplicated so each event is forwarded exactly once."
                 }
             ]
         };
