@@ -119,6 +119,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     // otherwise entities removed from the headers would leave stale pages behind.
     mkdirSync(dirname(outputDir), { recursive: true });
     const stagingDir = mkdtempSync(join(dirname(outputDir), ".library-docs-"));
+    const backupDir = `${stagingDir}.previous`;
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
         const writer = new MdxFileWriter(stagingDir);
@@ -156,14 +157,14 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
         const result = writer.result();
-        swapIntoPlace(stagingDir, outputDir, `${stagingDir}.previous`);
+        swapIntoPlace(stagingDir, outputDir, backupDir);
+        rmSync(backupDir, { recursive: true, force: true });
         return {
             writtenFiles: result.writtenFiles.map((file) => join(outputDir, relative(stagingDir, file))),
             pageCount: result.pageCount
         };
     } finally {
         rmSync(stagingDir, { recursive: true, force: true });
-        rmSync(`${stagingDir}.previous`, { recursive: true, force: true });
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
         setTypedefSyntax("cpp");
@@ -173,7 +174,9 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 /**
  * Replace `target` with `staged` without a window where neither exists: the previous
  * tree is renamed aside to `backup` (same filesystem), the staged tree renamed in, and
- * the backup restored if that fails.
+ * the backup restored if that fails. On success the caller owns `backup` and may delete
+ * it; if even the restore fails, `backup` is left in place as the only copy of the
+ * previous pages and the thrown error names it.
  */
 function swapIntoPlace(staged: string, target: string, backup: string): void {
     const hadPrevious = existsSync(target);
@@ -184,10 +187,21 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
         renameSync(staged, target);
     } catch (error) {
         if (hadPrevious) {
-            renameSync(backup, target);
+            try {
+                renameSync(backup, target);
+            } catch (restoreError) {
+                throw new Error(
+                    `Failed to replace ${target} and could not restore the previous pages; they were kept at ${backup}. ` +
+                        `Replace error: ${errorMessage(error)}. Restore error: ${errorMessage(restoreError)}`
+                );
+            }
         }
         throw error;
     }
+}
+
+function errorMessage(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
 }
 
 /**
