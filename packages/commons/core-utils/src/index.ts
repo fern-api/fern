@@ -3,7 +3,8 @@ export { addPrefixToString } from "./addPrefixToString.js";
 export {
     type AnyOfConstraintSchemaLike,
     anyOfIsPresenceConstraint,
-    isPresenceConstraintBranch
+    isPresenceConstraintBranch,
+    oneOfIsPresenceConstraint
 } from "./anyOfPresenceConstraint.js";
 export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay.js";
 export {

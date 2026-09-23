@@ -177,16 +177,43 @@ export function isPresenceConstraintBranch(branch: unknown, siblingProperties: R
  * union and allOf paths.
  */
 export function anyOfIsPresenceConstraint(schema: AnyOfConstraintSchemaLike): boolean {
-    const anyOf = schema.anyOf;
-    if (!Array.isArray(anyOf) || anyOf.length === 0) {
+    if (schema.oneOf != null) {
         return false;
     }
-    if (schema.oneOf != null || schema.allOf != null) {
+    return isPresenceConstraintOver(schema, schema.anyOf);
+}
+
+/**
+ * True when the schema's `oneOf` is a presence constraint over its own sibling
+ * `properties` rather than a set of variants:
+ *
+ *     type: object
+ *     properties: { domain: {...}, phone: {...} }
+ *     oneOf:
+ *       - { required: [domain] }
+ *       - { required: [phone] }
+ *
+ * This spells "exactly one of domain, phone" over the declared object. The
+ * branches carry no shape of their own, so converting them to a union yields
+ * variants that drop every sibling property.
+ */
+export function oneOfIsPresenceConstraint(schema: AnyOfConstraintSchemaLike): boolean {
+    if (schema.anyOf != null) {
+        return false;
+    }
+    return isPresenceConstraintOver(schema, schema.oneOf);
+}
+
+function isPresenceConstraintOver(schema: AnyOfConstraintSchemaLike, branches: unknown): boolean {
+    if (!Array.isArray(branches) || branches.length === 0) {
+        return false;
+    }
+    if (schema.allOf != null) {
         return false;
     }
     if (!isRecord(schema.properties) || Object.keys(schema.properties).length === 0) {
         return false;
     }
     const siblingProperties = schema.properties;
-    return anyOf.every((branch) => isPresenceConstraintBranch(branch, siblingProperties));
+    return branches.every((branch) => isPresenceConstraintBranch(branch, siblingProperties));
 }

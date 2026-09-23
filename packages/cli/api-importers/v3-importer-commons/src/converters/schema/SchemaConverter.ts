@@ -1,4 +1,4 @@
-import { anyOfIsPresenceConstraint } from "@fern-api/core-utils";
+import { anyOfIsPresenceConstraint, oneOfIsPresenceConstraint } from "@fern-api/core-utils";
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
@@ -118,6 +118,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const maybeConvertedSiblingAnyOfConstraint = this.tryConvertSiblingAnyOfConstraint();
         if (maybeConvertedSiblingAnyOfConstraint != null) {
             return maybeConvertedSiblingAnyOfConstraint;
+        }
+
+        const maybeConvertedSiblingOneOfConstraint = this.tryConvertSiblingOneOfConstraint();
+        if (maybeConvertedSiblingOneOfConstraint != null) {
+            return maybeConvertedSiblingOneOfConstraint;
         }
 
         const maybeConvertedOneOfAnyOfSchema = this.tryConvertOneOfAnyOfSchema();
@@ -591,6 +596,35 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             schema: schemaWithoutAnyOf,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        }).convert();
+    }
+
+    /**
+     * A `oneOf` whose branches only mark sibling `properties` as required, e.g.
+     * `oneOf: [{ required: [domain] }, { required: [phone] }]`, is an "exactly one
+     * of" constraint over the declared object rather than a set of variants. The
+     * branches carry no shape of their own, so converting them to a union would
+     * drop every sibling property. See oneOfIsPresenceConstraint.
+     */
+    private tryConvertSiblingOneOfConstraint(): SchemaConverter.Output | undefined {
+        if (!oneOfIsPresenceConstraint(this.schema)) {
+            return undefined;
+        }
+
+        this.context.logger.debug(
+            `Treating the oneOf at ${this.breadcrumbs.join(".")} as an "exactly one of" constraint ` +
+                `over its sibling properties rather than a union, and converting the schema as an object.`
+        );
+
+        const { oneOf: _constraint, ...schemaWithoutOneOf } = this.schema;
+        return new SchemaConverter({
+            id: this.id,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: schemaWithoutOneOf,
             inlined: this.inlined,
             nameOverride: this.nameOverride,
             visitedRefs: this.visitedRefs
