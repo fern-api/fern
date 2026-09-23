@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/ast"
@@ -2255,7 +2256,7 @@ func (f *fileWriter) WriteClient(
 					errorDeclaration := f.errors[responseError.Error.ErrorId]
 					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
 					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P(f.errorCodesKey(errorDeclaration), ": func(apiError *core.APIError) error {")
 					f.P("return &", errorType, "{")
 					f.P("APIError: apiError,")
 					f.P("}")
@@ -3958,6 +3959,34 @@ func (f *fileWriter) WriteEnvironments(environmentsConfig *common.EnvironmentsCo
 	return environmentsToEnvironmentsVariable(environmentsConfig, f, useCore)
 }
 
+// writeErrorStatusCodeAssignment sets the error's StatusCode in UnmarshalJSON.
+// Wildcard errors (4XX/5XX) keep the status code of the actual response,
+// which the error decoder already populated on the embedded *core.APIError.
+func (f *fileWriter) writeErrorStatusCodeAssignment(receiver string, errorDeclaration *ir.ErrorDeclaration) {
+	if isWildcardStatusCode(errorDeclaration) {
+		return
+	}
+	f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+}
+
+// isWildcardStatusCode returns true if the error was declared with a 4XX or 5XX wildcard.
+func isWildcardStatusCode(errorDeclaration *ir.ErrorDeclaration) bool {
+	return errorDeclaration.IsWildcardStatusCode != nil && *errorDeclaration.IsWildcardStatusCode
+}
+
+// errorCodesKey returns the ErrorCodes map key for the given error: the literal
+// status code, or the internal wildcard constant for 4XX/5XX wildcard errors.
+func (f *fileWriter) errorCodesKey(errorDeclaration *ir.ErrorDeclaration) string {
+	if !isWildcardStatusCode(errorDeclaration) {
+		return strconv.Itoa(errorDeclaration.StatusCode)
+	}
+	internalAlias := f.scope.AddImport(path.Join(f.baseImportPath, "internal"))
+	if errorDeclaration.StatusCode >= 500 {
+		return internalAlias + ".ServerErrorWildcard"
+	}
+	return internalAlias + ".ClientErrorWildcard"
+}
+
 // WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	// Generate the error type declaration.
@@ -3974,7 +4003,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 		f.P("}")
 		f.P()
 		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
-		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 		f.P("return nil")
 		f.P("}")
 		f.P()
@@ -4001,7 +4030,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
 	if isOptional {
 		f.P("if len(data) == 0 {")
-		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 		f.P("return nil")
 		f.P("}")
 	}
@@ -4015,7 +4044,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 		f.P(`return fmt.Errorf("expected literal %q, but found %q", `, literal, ", body)")
 		f.P("}")
 	}
-	f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+	f.writeErrorStatusCodeAssignment(receiver, errorDeclaration)
 	f.P(receiver, ".Body = body")
 	f.P("return nil")
 	f.P("}")

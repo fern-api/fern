@@ -3450,6 +3450,17 @@
       ],
       "additionalProperties": false
     },
+    "errors.ErrorStatusCodeSchema": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "A concrete HTTP status code (e.g. 404), or a wildcard status code pattern\n(\"4XX\" or \"5XX\") that matches every status code in that class not covered\nby a concrete error on the same endpoint."
+    },
     "errors.ErrorDeclarationSchema": {
       "type": "object",
       "properties": {
@@ -3464,7 +3475,7 @@
           ]
         },
         "status-code": {
-          "type": "integer"
+          "$ref": "#/definitions/errors.ErrorStatusCodeSchema"
         },
         "type": {
           "oneOf": [

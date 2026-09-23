@@ -395,6 +395,7 @@ export function generateIr({
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
+                    isWildcardStatusCode: error.isWildcardStatusCode,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
