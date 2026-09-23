@@ -26,8 +26,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TransactionsGetResponse"
+  /plants:
+    post:
+      summary: Create a plant
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantCreate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantDetails"
 components:
   schemas:
+    PlantMetadata:
+      type: object
+      description: |
+        Parent with a readOnly property and property-level metadata. Inlined into
+        `PlantCreate` (request body) and `PlantDetails` (response type) because the
+        child requires `nickname`; the metadata must survive and `created_at` must
+        stay out of the write request body.
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        nickname:
+          type: string
+          nullable: true
+        legacy_tag:
+          type: string
+          x-fern-property-name: legacyTag
+          x-fern-audiences:
+            - internal
+          deprecated: true
+    PlantCreate:
+      allOf:
+        - $ref: "#/components/schemas/PlantMetadata"
+        - type: object
+          properties:
+            species:
+              type: string
+          required:
+            - nickname
+            - species
+    PlantDetails:
+      allOf:
+        - $ref: "#/components/schemas/PlantMetadata"
+        - type: object
+          properties:
+            id:
+              type: string
+          required:
+            - id
+            - nickname
     TransactionsGetRequest:
       type: object
       properties:

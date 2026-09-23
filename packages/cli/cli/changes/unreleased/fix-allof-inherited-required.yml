@@ -6,3 +6,9 @@
     `nullable: true` property becomes required-nullable and round-trips `null` in generated SDKs.
     Multi-level `allOf` chains are handled; properties required in no branch stay optional.
   type: fix
+- summary: |
+    When an OpenAPI `allOf` parent is inlined into a type or request body because of a property
+    conflict, the inlined properties now keep their metadata (`readOnly` filtering on write
+    request bodies, `x-fern-property-name`, `x-fern-audiences`, `deprecated`, access, and XML
+    encoding) instead of being copied as bare type references.
+  type: fix

@@ -59,3 +59,28 @@ func (c *Client) GetTransactions(
 	}
 	return response.Body, nil
 }
+
+// Example:
+//
+//	request := &fern.PlantCreate{
+//	    Species: "species",
+//	}
+//	client.CreatePlant(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreatePlant(
+	ctx context.Context,
+	request *fern.PlantCreate,
+	opts ...option.RequestOption,
+) (*fern.PlantDetails, error) {
+	response, err := c.WithRawResponse.CreatePlant(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

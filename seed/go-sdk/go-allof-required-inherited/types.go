@@ -11,6 +11,72 @@ import (
 )
 
 var (
+	plantCreateFieldNickname  = big.NewInt(1 << 0)
+	plantCreateFieldSpecies   = big.NewInt(1 << 1)
+	plantCreateFieldLegacyTag = big.NewInt(1 << 2)
+)
+
+type PlantCreate struct {
+	Nickname  *string `json:"nickname,omitempty" url:"-"`
+	Species   string  `json:"species" url:"-"`
+	LegacyTag *string `json:"legacy_tag,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PlantCreate) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantCreate) SetNickname(nickname *string) {
+	p.Nickname = nickname
+	p.require(plantCreateFieldNickname)
+}
+
+// SetSpecies sets the Species field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantCreate) SetSpecies(species string) {
+	p.Species = species
+	p.require(plantCreateFieldSpecies)
+}
+
+// SetLegacyTag sets the LegacyTag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantCreate) SetLegacyTag(legacyTag *string) {
+	p.LegacyTag = legacyTag
+	p.require(plantCreateFieldLegacyTag)
+}
+
+func (p *PlantCreate) UnmarshalJSON(data []byte) error {
+	type unmarshaler PlantCreate
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PlantCreate(body)
+	return nil
+}
+
+func (p *PlantCreate) MarshalJSON() ([]byte, error) {
+	type embed PlantCreate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	transactionsGetRequestFieldAccessToken = big.NewInt(1 << 0)
 )
 
@@ -313,6 +379,290 @@ func (p *PlantBase) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PlantBase) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	plantDetailsFieldNickname  = big.NewInt(1 << 0)
+	plantDetailsFieldID        = big.NewInt(1 << 1)
+	plantDetailsFieldCreatedAt = big.NewInt(1 << 2)
+	plantDetailsFieldLegacyTag = big.NewInt(1 << 3)
+)
+
+// plantDetailsRequiredNullableFields maps the wire names of PlantDetails's required, nullable fields to their field bits.
+var plantDetailsRequiredNullableFields = map[string]*big.Int{
+	"nickname": plantDetailsFieldNickname,
+}
+
+type PlantDetails struct {
+	Nickname  *string    `json:"nickname,omitempty" url:"nickname,omitempty"`
+	ID        string     `json:"id" url:"id"`
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	LegacyTag *string    `json:"legacy_tag,omitempty" url:"legacy_tag,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PlantDetails) GetNickname() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Nickname
+}
+
+func (p *PlantDetails) GetID() string {
+	if p == nil {
+		return ""
+	}
+	return p.ID
+}
+
+func (p *PlantDetails) GetCreatedAt() *time.Time {
+	if p == nil {
+		return nil
+	}
+	return p.CreatedAt
+}
+
+func (p *PlantDetails) GetLegacyTag() *string {
+	if p == nil {
+		return nil
+	}
+	return p.LegacyTag
+}
+
+func (p *PlantDetails) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PlantDetails) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantDetails) SetNickname(nickname *string) {
+	p.Nickname = nickname
+	p.require(plantDetailsFieldNickname)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantDetails) SetID(id string) {
+	p.ID = id
+	p.require(plantDetailsFieldID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantDetails) SetCreatedAt(createdAt *time.Time) {
+	p.CreatedAt = createdAt
+	p.require(plantDetailsFieldCreatedAt)
+}
+
+// SetLegacyTag sets the LegacyTag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantDetails) SetLegacyTag(legacyTag *string) {
+	p.LegacyTag = legacyTag
+	p.require(plantDetailsFieldLegacyTag)
+}
+
+func (p *PlantDetails) UnmarshalJSON(data []byte) error {
+	type embed PlantDetails
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PlantDetails(unmarshaler.embed)
+	p.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantDetailsRequiredNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		p.require(presentFields)
+	}
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PlantDetails) MarshalJSON() ([]byte, error) {
+	type embed PlantDetails
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		CreatedAt: internal.NewOptionalDateTime(p.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PlantDetails) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+// Parent with a readOnly property and property-level metadata. Inlined into
+// `PlantCreate` (request body) and `PlantDetails` (response type) because the
+// child requires `nickname`; the metadata must survive and `created_at` must
+// stay out of the write request body.
+var (
+	plantMetadataFieldCreatedAt = big.NewInt(1 << 0)
+	plantMetadataFieldNickname  = big.NewInt(1 << 1)
+	plantMetadataFieldLegacyTag = big.NewInt(1 << 2)
+)
+
+type PlantMetadata struct {
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	Nickname  *string    `json:"nickname,omitempty" url:"nickname,omitempty"`
+	LegacyTag *string    `json:"legacy_tag,omitempty" url:"legacy_tag,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PlantMetadata) GetCreatedAt() *time.Time {
+	if p == nil {
+		return nil
+	}
+	return p.CreatedAt
+}
+
+func (p *PlantMetadata) GetNickname() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Nickname
+}
+
+func (p *PlantMetadata) GetLegacyTag() *string {
+	if p == nil {
+		return nil
+	}
+	return p.LegacyTag
+}
+
+func (p *PlantMetadata) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PlantMetadata) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantMetadata) SetCreatedAt(createdAt *time.Time) {
+	p.CreatedAt = createdAt
+	p.require(plantMetadataFieldCreatedAt)
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantMetadata) SetNickname(nickname *string) {
+	p.Nickname = nickname
+	p.require(plantMetadataFieldNickname)
+}
+
+// SetLegacyTag sets the LegacyTag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantMetadata) SetLegacyTag(legacyTag *string) {
+	p.LegacyTag = legacyTag
+	p.require(plantMetadataFieldLegacyTag)
+}
+
+func (p *PlantMetadata) UnmarshalJSON(data []byte) error {
+	type embed PlantMetadata
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PlantMetadata(unmarshaler.embed)
+	p.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PlantMetadata) MarshalJSON() ([]byte, error) {
+	type embed PlantMetadata
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		CreatedAt: internal.NewOptionalDateTime(p.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PlantMetadata) String() string {
 	if p == nil {
 		return "<nil>"
 	}
