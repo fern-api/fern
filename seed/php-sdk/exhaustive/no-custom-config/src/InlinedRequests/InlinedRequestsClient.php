@@ -165,7 +165,7 @@ class InlinedRequestsClient
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
-        if ($request->xCustomHeader != null) {
+        if ($request->xCustomHeader !== null) {
             $headers['X-Custom-Header'] = $request->xCustomHeader;
         }
         try {

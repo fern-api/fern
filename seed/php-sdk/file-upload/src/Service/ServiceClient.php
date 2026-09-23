@@ -79,7 +79,7 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->maybeString != null) {
+        if ($request->maybeString !== null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
         }
         $body->add(name: 'integer', value: $request->integer);
@@ -87,18 +87,18 @@ class ServiceClient
         foreach ($request->fileList as $file) {
             $body->addPart($file->toMultipartFormDataPart('file_list'));
         }
-        if ($request->maybeFile != null) {
+        if ($request->maybeFile !== null) {
             $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
         }
-        if ($request->maybeFileList != null) {
+        if ($request->maybeFileList !== null) {
             foreach ($request->maybeFileList as $file) {
                 $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
             }
         }
-        if ($request->maybeInteger != null) {
+        if ($request->maybeInteger !== null) {
             $body->add(name: 'maybe_integer', value: $request->maybeInteger);
         }
-        if ($request->optionalListOfStrings != null) {
+        if ($request->optionalListOfStrings !== null) {
             foreach ($request->optionalListOfStrings as $element) {
                 $body->add(name: 'optional_list_of_strings', value: $element);
             }
@@ -106,13 +106,13 @@ class ServiceClient
         foreach ($request->listOfObjects as $element) {
             $body->add(name: 'list_of_objects', value: $element->toJson());
         }
-        if ($request->optionalMetadata != null) {
+        if ($request->optionalMetadata !== null) {
             $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
-        if ($request->optionalObjectType != null) {
+        if ($request->optionalObjectType !== null) {
             $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
         }
-        if ($request->optionalId != null) {
+        if ($request->optionalId !== null) {
             $body->add(name: 'optional_id', value: $request->optionalId);
         }
         $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
@@ -214,13 +214,13 @@ class ServiceClient
         $query = [];
         $query['integer'] = $request->integer;
         $query['listOfStrings'] = $request->listOfStrings;
-        if ($request->maybeString != null) {
+        if ($request->maybeString !== null) {
             $query['maybeString'] = $request->maybeString;
         }
-        if ($request->maybeInteger != null) {
+        if ($request->maybeInteger !== null) {
             $query['maybeInteger'] = $request->maybeInteger;
         }
-        if ($request->optionalListOfStrings != null) {
+        if ($request->optionalListOfStrings !== null) {
             $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
         $body = new MultipartFormData();
@@ -266,10 +266,10 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->maybeString != null) {
+        if ($request->maybeString !== null) {
             $query['maybeString'] = $request->maybeString;
         }
-        if ($request->maybeInteger != null) {
+        if ($request->maybeInteger !== null) {
             $query['maybeInteger'] = $request->maybeInteger;
         }
         $body = new MultipartFormData();
@@ -327,7 +327,7 @@ class ServiceClient
             value: $request->bar->toJson(),
             contentType: 'application/json',
         );
-        if ($request->fooBar != null) {
+        if ($request->fooBar !== null) {
             $body->add(
                 name: 'foo_bar',
                 value: $request->fooBar->toJson(),
@@ -422,7 +422,7 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->maybeString != null) {
+        if ($request->maybeString !== null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
         }
         $body->add(name: 'integer', value: $request->integer);
@@ -430,18 +430,18 @@ class ServiceClient
         foreach ($request->fileList as $file) {
             $body->addPart($file->toMultipartFormDataPart('file_list'));
         }
-        if ($request->maybeFile != null) {
+        if ($request->maybeFile !== null) {
             $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
         }
-        if ($request->maybeFileList != null) {
+        if ($request->maybeFileList !== null) {
             foreach ($request->maybeFileList as $file) {
                 $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
             }
         }
-        if ($request->maybeInteger != null) {
+        if ($request->maybeInteger !== null) {
             $body->add(name: 'maybe_integer', value: $request->maybeInteger);
         }
-        if ($request->optionalListOfStrings != null) {
+        if ($request->optionalListOfStrings !== null) {
             foreach ($request->optionalListOfStrings as $element) {
                 $body->add(name: 'optional_list_of_strings', value: $element);
             }
@@ -449,13 +449,13 @@ class ServiceClient
         foreach ($request->listOfObjects as $element) {
             $body->add(name: 'list_of_objects', value: $element->toJson());
         }
-        if ($request->optionalMetadata != null) {
+        if ($request->optionalMetadata !== null) {
             $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
-        if ($request->optionalObjectType != null) {
+        if ($request->optionalObjectType !== null) {
             $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
         }
-        if ($request->optionalId != null) {
+        if ($request->optionalId !== null) {
             $body->add(name: 'optional_id', value: $request->optionalId);
         }
         foreach ($request->listOfObjectsWithOptionals as $element) {
@@ -518,7 +518,7 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->imageFile != null) {
+        if ($request->imageFile !== null) {
             $body->addPart(
                 $request->imageFile->toMultipartFormDataPart(
                     name: 'image_file',
@@ -526,7 +526,7 @@ class ServiceClient
                 ),
             );
         }
-        if ($request->request != null) {
+        if ($request->request !== null) {
             $body->add(
                 name: 'request',
                 value: JsonEncoder::encode($request->request),
@@ -630,7 +630,7 @@ class ServiceClient
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
-        if ($request->json != null) {
+        if ($request->json !== null) {
             $body->add(name: 'json', value: $request->json->toJson());
         }
         try {
@@ -692,7 +692,7 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->imageFile != null) {
+        if ($request->imageFile !== null) {
             $body->addPart(
                 $request->imageFile->toMultipartFormDataPart(
                     name: 'image_file',
@@ -796,13 +796,13 @@ class ServiceClient
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
-        if ($request->modelType != null) {
+        if ($request->modelType !== null) {
             $body->add(name: 'model_type', value: $request->modelType);
         }
-        if ($request->openEnum != null) {
+        if ($request->openEnum !== null) {
             $body->add(name: 'open_enum', value: $request->openEnum);
         }
-        if ($request->maybeName != null) {
+        if ($request->maybeName !== null) {
             $body->add(name: 'maybe_name', value: $request->maybeName);
         }
         try {

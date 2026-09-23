@@ -81,7 +81,7 @@ class CatalogClient
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->add(name: 'request', value: $request->request->toJson());
-        if ($request->imageFile != null) {
+        if ($request->imageFile !== null) {
             $body->addPart($request->imageFile->toMultipartFormDataPart('image_file'));
         }
         try {

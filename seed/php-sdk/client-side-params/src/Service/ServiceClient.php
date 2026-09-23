@@ -106,10 +106,10 @@ class ServiceClient
         $query['sort'] = $request->sort;
         $query['order'] = $request->order;
         $query['include_totals'] = $request->includeTotals;
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
-        if ($request->search != null) {
+        if ($request->search !== null) {
             $query['search'] = $request->search;
         }
         try {
@@ -311,28 +311,28 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage !== null) {
             $query['per_page'] = $request->perPage;
         }
-        if ($request->includeTotals != null) {
+        if ($request->includeTotals !== null) {
             $query['include_totals'] = $request->includeTotals;
         }
-        if ($request->sort != null) {
+        if ($request->sort !== null) {
             $query['sort'] = $request->sort;
         }
-        if ($request->connection != null) {
+        if ($request->connection !== null) {
             $query['connection'] = $request->connection;
         }
-        if ($request->q != null) {
+        if ($request->q !== null) {
             $query['q'] = $request->q;
         }
-        if ($request->searchEngine != null) {
+        if ($request->searchEngine !== null) {
             $query['search_engine'] = $request->searchEngine;
         }
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
         try {
@@ -397,10 +397,10 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields !== null) {
             $query['include_fields'] = $request->includeFields;
         }
         try {
@@ -662,13 +662,13 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->strategy != null) {
+        if ($request->strategy !== null) {
             $query['strategy'] = $request->strategy;
         }
-        if ($request->name != null) {
+        if ($request->name !== null) {
             $query['name'] = $request->name;
         }
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
         try {
@@ -732,7 +732,7 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
         try {
@@ -804,28 +804,28 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields !== null) {
             $query['include_fields'] = $request->includeFields;
         }
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage !== null) {
             $query['per_page'] = $request->perPage;
         }
-        if ($request->includeTotals != null) {
+        if ($request->includeTotals !== null) {
             $query['include_totals'] = $request->includeTotals;
         }
-        if ($request->isGlobal != null) {
+        if ($request->isGlobal !== null) {
             $query['is_global'] = $request->isGlobal;
         }
-        if ($request->isFirstParty != null) {
+        if ($request->isFirstParty !== null) {
             $query['is_first_party'] = $request->isFirstParty;
         }
-        if ($request->appType != null) {
+        if ($request->appType !== null) {
             $query['app_type'] = $request->appType;
         }
         try {
@@ -890,10 +890,10 @@ class ServiceClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields !== null) {
             $query['include_fields'] = $request->includeFields;
         }
         try {

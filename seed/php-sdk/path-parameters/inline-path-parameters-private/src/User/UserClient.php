@@ -265,7 +265,7 @@ class UserClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getLimit() != null) {
+        if ($request->getLimit() !== null) {
             $query['limit'] = $request->getLimit();
         }
         try {

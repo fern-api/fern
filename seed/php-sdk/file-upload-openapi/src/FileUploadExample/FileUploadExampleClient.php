@@ -80,7 +80,7 @@ class FileUploadExampleClient
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->add(name: 'name', value: $request->name);
-        if ($request->file != null) {
+        if ($request->file !== null) {
             $body->addPart($request->file->toMultipartFormDataPart('file'));
         }
         try {

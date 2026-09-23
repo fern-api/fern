@@ -137,7 +137,7 @@ class VendorClient
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
-        if ($request->idempotencyKey != null) {
+        if ($request->idempotencyKey !== null) {
             $headers['idempotency_key'] = $request->idempotencyKey;
         }
         try {

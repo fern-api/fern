@@ -174,37 +174,37 @@ class SeedClient
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;
         $query['neighborRequired'] = JsonSerializer::serializeUnion($request->neighborRequired, new Union(User::class, NestedUser::class, 'string', 'integer'));
-        if ($request->userList != null) {
+        if ($request->userList !== null) {
             $query['userList'] = $request->userList;
         }
-        if ($request->optionalDeadline != null) {
+        if ($request->optionalDeadline !== null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
-        if ($request->keyValue != null) {
+        if ($request->keyValue !== null) {
             $query['keyValue'] = $request->keyValue;
         }
-        if ($request->optionalString != null) {
+        if ($request->optionalString !== null) {
             $query['optionalString'] = $request->optionalString;
         }
-        if ($request->nestedUser != null) {
+        if ($request->nestedUser !== null) {
             $query['nestedUser'] = $request->nestedUser;
         }
-        if ($request->optionalUser != null) {
+        if ($request->optionalUser !== null) {
             $query['optionalUser'] = $request->optionalUser;
         }
-        if ($request->excludeUser != null) {
+        if ($request->excludeUser !== null) {
             $query['excludeUser'] = $request->excludeUser;
         }
-        if ($request->filter != null) {
+        if ($request->filter !== null) {
             $query['filter'] = $request->filter;
         }
-        if ($request->tags != null) {
+        if ($request->tags !== null) {
             $query['tags'] = $request->tags;
         }
-        if ($request->optionalTags != null) {
+        if ($request->optionalTags !== null) {
             $query['optionalTags'] = $request->optionalTags;
         }
-        if ($request->neighbor != null) {
+        if ($request->neighbor !== null) {
             $query['neighbor'] = JsonSerializer::serializeUnion($request->neighbor, new Union(User::class, NestedUser::class, 'string', 'integer'));
         }
         try {

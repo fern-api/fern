@@ -117,7 +117,7 @@ class ServiceClient
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['model'] = $request->model;
-        if ($request->language != null) {
+        if ($request->language !== null) {
             $query['language'] = $request->language;
         }
         try {

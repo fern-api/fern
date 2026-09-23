@@ -87,16 +87,16 @@ class SeedClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->filterAssignedTo != null) {
+        if ($request->filterAssignedTo !== null) {
             $query['assigned_to'] = $request->filterAssignedTo;
         }
-        if ($request->filterIsComplete != null) {
+        if ($request->filterIsComplete !== null) {
             $query['is_complete'] = $request->filterIsComplete;
         }
-        if ($request->filterDate != null) {
+        if ($request->filterDate !== null) {
             $query['date'] = $request->filterDate;
         }
-        if ($request->fields != null) {
+        if ($request->fields !== null) {
             $query['_fields'] = $request->fields;
         }
         try {

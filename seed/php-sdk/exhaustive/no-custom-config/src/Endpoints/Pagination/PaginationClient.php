@@ -111,10 +111,10 @@ class PaginationClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->cursor != null) {
+        if ($request->cursor !== null) {
             $query['cursor'] = $request->cursor;
         }
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
         try {

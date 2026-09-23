@@ -78,7 +78,7 @@ class FooClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->optionalString != null) {
+        if ($request->optionalString !== null) {
             $query['optionalString'] = $request->optionalString;
         }
         try {

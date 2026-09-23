@@ -547,16 +547,16 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage !== null) {
             $query['per_page'] = $request->perPage;
         }
-        if ($request->order != null) {
+        if ($request->order !== null) {
             $query['order'] = $request->order;
         }
-        if ($request->startingAfter != null) {
+        if ($request->startingAfter !== null) {
             $query['starting_after'] = $request->startingAfter;
         }
         try {
@@ -607,7 +607,7 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->cursor != null) {
+        if ($request->cursor !== null) {
             $query['cursor'] = $request->cursor;
         }
         try {
@@ -705,16 +705,16 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage !== null) {
             $query['per_page'] = $request->perPage;
         }
-        if ($request->order != null) {
+        if ($request->order !== null) {
             $query['order'] = $request->order;
         }
-        if ($request->startingAfter != null) {
+        if ($request->startingAfter !== null) {
             $query['starting_after'] = $request->startingAfter;
         }
         try {
@@ -765,16 +765,16 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage !== null) {
             $query['per_page'] = $request->perPage;
         }
-        if ($request->order != null) {
+        if ($request->order !== null) {
             $query['order'] = $request->order;
         }
-        if ($request->startingAfter != null) {
+        if ($request->startingAfter !== null) {
             $query['starting_after'] = $request->startingAfter;
         }
         try {
@@ -872,13 +872,13 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
-        if ($request->order != null) {
+        if ($request->order !== null) {
             $query['order'] = $request->order;
         }
         try {
@@ -929,13 +929,13 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page !== null) {
             $query['page'] = $request->page;
         }
-        if ($request->limit != null) {
+        if ($request->limit !== null) {
             $query['limit'] = $request->limit;
         }
-        if ($request->order != null) {
+        if ($request->order !== null) {
             $query['order'] = $request->order;
         }
         try {
@@ -986,7 +986,7 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->cursor != null) {
+        if ($request->cursor !== null) {
             $query['cursor'] = $request->cursor;
         }
         try {
@@ -1037,7 +1037,7 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->cursor != null) {
+        if ($request->cursor !== null) {
             $query['cursor'] = $request->cursor;
         }
         try {
@@ -1088,7 +1088,7 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->startingAfter != null) {
+        if ($request->startingAfter !== null) {
             $query['starting_after'] = $request->startingAfter;
         }
         try {
@@ -1139,7 +1139,7 @@ class InlineUsersClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->offset != null) {
+        if ($request->offset !== null) {
             $query['offset'] = $request->offset;
         }
         try {

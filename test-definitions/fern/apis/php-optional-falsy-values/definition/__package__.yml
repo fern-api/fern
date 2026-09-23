@@ -1,0 +1,39 @@
+# The generated client used to guard optional values with a loose `!= null`, which in PHP
+# drops valid falsy values: `0 != null`, `"0" != null` and `false != null` all evaluate to
+# false. These endpoints pin that optional query parameters and headers with value 0,
+# "0" or false are sent on the wire, and that only null is omitted.
+service:
+  base-path: /audit-logs
+  auth: false
+  endpoints:
+    listAuditLogs:
+      docs: List audit logs, starting from an optional zero offset.
+      method: GET
+      path: ""
+      request:
+        name: ListAuditLogsRequest
+        headers:
+          X-Max-Results: optional<integer>
+        query-parameters:
+          offset: optional<integer>
+          includeResolved: optional<boolean>
+          filter: optional<string>
+      examples:
+        - headers:
+            X-Max-Results: 0
+          query-parameters:
+            offset: 0
+            includeResolved: false
+            filter: "0"
+
+    countAuditLogs:
+      docs: Count audit logs, optionally restricting to resolved entries.
+      method: GET
+      path: /count
+      request:
+        name: CountAuditLogsRequest
+        query-parameters:
+          resolvedOnly: optional<boolean>
+      examples:
+        - query-parameters:
+            resolvedOnly: false

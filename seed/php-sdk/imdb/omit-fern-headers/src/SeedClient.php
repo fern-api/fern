@@ -45,7 +45,7 @@ class SeedClient
     ) {
         $defaultHeaders = [
         ];
-        if ($token != null) {
+        if ($token !== null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
 

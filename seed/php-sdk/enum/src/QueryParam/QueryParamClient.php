@@ -77,10 +77,10 @@ class QueryParamClient
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
+        if ($request->maybeOperand !== null) {
             $query['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null) {
+        if ($request->maybeOperandOrColor !== null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
@@ -146,10 +146,10 @@ class QueryParamClient
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
+        if ($request->maybeOperand !== null) {
             $query['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null) {
+        if ($request->maybeOperandOrColor !== null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {

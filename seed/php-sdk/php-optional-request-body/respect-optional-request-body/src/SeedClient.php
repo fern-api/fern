@@ -217,7 +217,7 @@ class SeedClient
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
-        if ($request->xIdempotencyKey != null) {
+        if ($request->xIdempotencyKey !== null) {
             $headers['X-Idempotency-Key'] = $request->xIdempotencyKey;
         }
         try {

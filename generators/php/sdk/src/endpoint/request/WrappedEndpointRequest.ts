@@ -74,7 +74,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${QUERY_PARAMETER_BAG_NAME}['${getWireValue(query.name)}'] = ${queryParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} !== null`));
                         this.writeQueryParameter(writer, query);
                         writer.endControlFlow();
                     }
@@ -117,7 +117,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${headerParameterReference} ?? '${escaped}'`
                         );
                     } else {
-                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
+                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} !== null`));
                         this.writeHeader(writer, header);
                         writer.endControlFlow();
                     }
@@ -155,7 +155,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isOptional = this.context.isOptional(propType);
 
         if (isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             propType = this.context.dereferenceOptional(propType);
         }
 
@@ -422,7 +422,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             propertyName: file.key
         });
         if (file.isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} !== null`));
             this.writeMultipartPart({ writer, paramRef, property: FernIr.FileProperty.file(file) });
             writer.endControlFlow();
         } else {
@@ -436,7 +436,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 requestParameterName: this.sdkRequest.requestParameterName,
                 propertyName: fileArray.key
             });
-            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            writer.controlFlow("if", php.codeblock(`${ref} !== null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });
             writer.endControlFlow();
         } else {

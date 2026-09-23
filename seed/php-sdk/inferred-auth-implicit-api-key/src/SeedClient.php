@@ -73,7 +73,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($apiKey != null) {
+        if ($apiKey !== null) {
             $defaultHeaders['X-Api-Key'] = $apiKey;
         }
 

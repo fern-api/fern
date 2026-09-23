@@ -89,19 +89,19 @@ class NullableClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->usernames != null) {
+        if ($request->usernames !== null) {
             $query['usernames'] = $request->usernames;
         }
-        if ($request->avatar != null) {
+        if ($request->avatar !== null) {
             $query['avatar'] = $request->avatar;
         }
-        if ($request->activated != null) {
+        if ($request->activated !== null) {
             $query['activated'] = $request->activated;
         }
-        if ($request->tags != null) {
+        if ($request->tags !== null) {
             $query['tags'] = $request->tags;
         }
-        if ($request->extra != null) {
+        if ($request->extra !== null) {
             $query['extra'] = $request->extra;
         }
         try {

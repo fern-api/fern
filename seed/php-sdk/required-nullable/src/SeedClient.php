@@ -93,10 +93,10 @@ class SeedClient
         $query = [];
         $query['required_baz'] = $request->requiredBaz;
         $query['required_nullable_baz'] = $request->requiredNullableBaz;
-        if ($request->optionalBaz != null) {
+        if ($request->optionalBaz !== null) {
             $query['optional_baz'] = $request->optionalBaz;
         }
-        if ($request->optionalNullableBaz != null) {
+        if ($request->optionalNullableBaz !== null) {
             $query['optional_nullable_baz'] = $request->optionalNullableBaz;
         }
         try {
