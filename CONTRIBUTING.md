@@ -250,3 +250,5 @@ Below are some examples of using the command.
 ## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
+
+<!-- test: draft PR smoke check -->
