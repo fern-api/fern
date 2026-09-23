@@ -135,10 +135,7 @@ impl QueryBuilder {
                 Ok(serde_json::Value::Object(entries)) => {
                     push_exploded_entries(&mut self.params, None, entries);
                 }
-                Ok(_) => {
-                    // Not an object after all - keep the single-parameter behavior.
-                    return self.serialize(key, Some(v));
-                }
+                Ok(_) => return self.serialize(key, Some(v)),
                 Err(_) => {}
             }
         }
@@ -199,7 +196,8 @@ impl QueryBuilder {
 }
 
 /// Flatten a JSON object into query parameters: top level entries are keyed by their own
-/// name, nested objects get bracket notation, and null entries are skipped.
+/// name, nested objects get bracket notation, arrays repeat the name once per item, and
+/// null entries are skipped.
 fn push_exploded_entries(
     params: &mut Vec<(String, String)>,
     scope: Option<&str>,
@@ -210,14 +208,21 @@ fn push_exploded_entries(
             Some(scope) => format!("{}[{}]", scope, key),
             None => key,
         };
-        match value {
-            serde_json::Value::Null => {}
-            serde_json::Value::Object(nested) => {
-                push_exploded_entries(params, Some(&name), nested)
+        push_exploded_value(params, name, value);
+    }
+}
+
+fn push_exploded_value(params: &mut Vec<(String, String)>, name: String, value: serde_json::Value) {
+    match value {
+        serde_json::Value::Null => {}
+        serde_json::Value::Object(nested) => push_exploded_entries(params, Some(&name), nested),
+        serde_json::Value::Array(items) => {
+            for item in items {
+                push_exploded_value(params, name.clone(), item);
             }
-            serde_json::Value::String(string) => params.push((name, string)),
-            other => params.push((name, other.to_string())),
         }
+        serde_json::Value::String(string) => params.push((name, string)),
+        other => params.push((name, other.to_string())),
     }
 }
 
@@ -480,6 +485,7 @@ mod tests {
             "count": 25,
             "flag": true,
             "nested": { "a": "b" },
+            "tags": ["x", "y"],
             "gone": null
         });
         let result = QueryBuilder::new()
@@ -491,6 +497,8 @@ mod tests {
                 ("count".to_string(), "25".to_string()),
                 ("flag".to_string(), "true".to_string()),
                 ("nested[a]".to_string(), "b".to_string()),
+                ("tags".to_string(), "x".to_string()),
+                ("tags".to_string(), "y".to_string()),
                 ("tld".to_string(), "com".to_string()),
             ])
         );

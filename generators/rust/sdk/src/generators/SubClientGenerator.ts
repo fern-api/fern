@@ -1464,9 +1464,6 @@ export class SubClientGenerator {
                         }
                         return this.getQueryBuilderMethodForType(innerType);
                     },
-                    // A map query parameter is exploded: every entry becomes its own
-                    // parameter, keyed by the property name alone. serialize() would json
-                    // encode the whole map into a single parameter instead.
                     map: () => "serialize_exploded",
                     set: () => "serialize",
                     list: () => "serialize",
