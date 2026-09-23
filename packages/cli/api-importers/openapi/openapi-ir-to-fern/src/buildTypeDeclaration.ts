@@ -199,13 +199,8 @@ export function buildObjectTypeDeclaration({
             variant
         });
     }
-    const propertiesToSetToUnknown: Set<string> = new Set<string>();
-
     for (const allOfPropertyConflict of schema.allOfPropertyConflicts) {
         allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
-        if (allOfPropertyConflict.conflictingTypeSignatures) {
-            propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
-        }
     }
 
     const extendedSchemas: string[] = [];
@@ -235,10 +230,6 @@ export function buildObjectTypeDeclaration({
                 continue;
             }
             if (shouldSkipReadonly && propertyToInline.readonly) {
-                continue;
-            }
-            if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                properties[propertyToInline.key] = "unknown";
                 continue;
             }
             properties[propertyToInline.key] = buildObjectPropertyDefinition({
