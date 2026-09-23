@@ -1720,6 +1720,7 @@ class EndpointFunctionGenerator:
                     if self._should_comma_join_query_parameter(query_parameter)
                     else self._get_query_parameter_reference(query_parameter)
                 ),
+                get_exploded_map_query_parameter(self._context, query_parameter),
             )
             for query_parameter in endpoint.query_parameters
         ]
@@ -1729,9 +1730,12 @@ class EndpointFunctionGenerator:
 
         def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
-            for _, (query_param_key, query_param_value) in enumerate(query_parameters):
-                writer.write(f'"{query_param_key}": ')
-                writer.write_node(query_param_value)
+            for query_param_key, query_param_value, exploded_map in query_parameters:
+                if exploded_map is not None:
+                    exploded_map.write(writer, query_param_value)
+                else:
+                    writer.write(f'"{query_param_key}": ')
+                    writer.write_node(query_param_value)
                 writer.write(", ")
             writer.write_line("}")
 
@@ -2644,6 +2648,66 @@ def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
 
 def get_parameter_name(name: Union[str, ir_types.Name]) -> str:
     return resolve_name(name).snake_case.safe_name
+
+
+def get_exploded_map_query_parameter(
+    context: SdkGeneratorContext, query_parameter: ir_types.QueryParameter
+) -> Optional["ExplodedMapQueryParameter"]:
+    """
+    A map query parameter with `explode: true` (the OpenAPI default for `style: form`) is exploded:
+    every entry becomes its own parameter, keyed by the property name alone. Optional, nullable and
+    aliases are unwrapped. A declared object, an `allowMultiple` map and `explode: false` keep the
+    existing encoding, and get None.
+    """
+    if query_parameter.allow_multiple or query_parameter.explode is False:
+        return None
+    may_be_none = False
+    type_reference = query_parameter.value_type
+    while True:
+        union = type_reference.get_as_union()
+        container: Optional[ir_types.ContainerType] = None
+        if union.type == "container":
+            container = union.container
+        elif union.type == "named":
+            shape = context.pydantic_generator_context.get_declaration_for_type_id(union.type_id).shape.get_as_union()
+            if shape.type != "alias":
+                return None
+            resolved = shape.resolved_type.get_as_union()
+            if resolved.type != "container":
+                return None
+            container = resolved.container
+        if container is None:
+            return None
+        container_union = container.get_as_union()
+        if container_union.type == "optional":
+            may_be_none = True
+            type_reference = container_union.optional
+        elif container_union.type == "nullable":
+            may_be_none = True
+            type_reference = container_union.nullable
+        elif container_union.type == "map":
+            return ExplodedMapQueryParameter(
+                parameter_name=get_parameter_name(get_name_from_wire_value(query_parameter.name)),
+                may_be_none=may_be_none,
+            )
+        else:
+            return None
+
+
+@dataclass
+class ExplodedMapQueryParameter:
+    parameter_name: str
+    may_be_none: bool
+
+    def write(self, writer: AST.NodeWriter, value: AST.Expression) -> None:
+        """Spreads the map into the query dict, so every entry is a parameter of its own."""
+        if not self.may_be_none:
+            writer.write("**")
+            writer.write_node(value)
+            return
+        writer.write("**(")
+        writer.write_node(value)
+        writer.write(f" if {self.parameter_name} is not None else {{}})")
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
