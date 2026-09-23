@@ -34,7 +34,11 @@ export const OpenApiErrorResponsesSchema = z.object({
      */
     schema: z.union([z.string(), z.record(z.string(), z.unknown())]),
 
-    /** Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`. */
+    /**
+     * Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.
+     * A different pre-existing schema of the same name is replaced if nothing references it once
+     * the error responses have been rewritten; otherwise `fern check` fails.
+     */
     name: z.string().optional(),
 
     /**

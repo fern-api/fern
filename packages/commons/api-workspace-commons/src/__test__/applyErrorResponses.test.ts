@@ -123,10 +123,70 @@ describe("applyErrorResponses", () => {
         expect(() =>
             applyErrorResponses({
                 document: createDocument(),
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError", "apply-to": "untyped" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow(
+            'components.schemas already contains a different schema named "LegacyError" that is still referenced from ' +
+                "#/paths/~1items/post/responses/400/content/application~1json/schema"
+        );
+    });
+
+    it("replaces a same-named legacy schema once every reference to it has been rewritten", () => {
+        const withSharedResponse = createDocument();
+        withSharedResponse.components = {
+            ...withSharedResponse.components,
+            responses: {
+                ...withSharedResponse.components?.responses,
+                Conflict: {
+                    description: "Conflict",
+                    content: { "application/json": { schema: { $ref: "#/components/schemas/LegacyError" } } }
+                }
+            }
+        };
+        getOperation(withSharedResponse, "post").responses["409"] = { $ref: "#/components/responses/Conflict" };
+
+        const document = applyErrorResponses({
+            document: withSharedResponse,
+            errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+            schema: PROBLEM_DETAILS
+        });
+
+        expect(document.components?.schemas?.LegacyError).toEqual(PROBLEM_DETAILS);
+        const legacyRef = { $ref: "#/components/schemas/LegacyError" };
+        expect(getResponse(document, "post", "400").content?.["application/json"]?.schema).toEqual(legacyRef);
+        expect(getResponse(document, "post", "409").content?.["application/json"]?.schema).toEqual(legacyRef);
+    });
+
+    it("rejects replacing a same-named legacy schema that is still referenced elsewhere", () => {
+        const fromSuccessResponse = createDocument();
+        getOperation(fromSuccessResponse, "get").responses["200"] = {
+            description: "OK",
+            content: { "application/json": { schema: { $ref: "#/components/schemas/LegacyError" } } }
+        };
+        expect(() =>
+            applyErrorResponses({
+                document: fromSuccessResponse,
                 errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
                 schema: PROBLEM_DETAILS
             })
-        ).toThrow('components.schemas already contains a different schema named "LegacyError"');
+        ).toThrow("still referenced from #/paths/~1items/get/responses/200/content/application~1json/schema");
+
+        const fromOtherSchema = createDocument();
+        fromOtherSchema.components = {
+            ...fromOtherSchema.components,
+            schemas: {
+                ...fromOtherSchema.components?.schemas,
+                Wrapper: { type: "object", properties: { error: { $ref: "#/components/schemas/LegacyError" } } }
+            }
+        };
+        expect(() =>
+            applyErrorResponses({
+                document: fromOtherSchema,
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("still referenced from #/components/schemas/Wrapper/properties/error");
     });
 
     it("escapes JSON pointer characters in the component name", () => {

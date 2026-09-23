@@ -55,7 +55,9 @@ export interface ApplyErrorResponsesArgs {
  *
  * - The schema is registered under `components.schemas[name]` and referenced from each response,
  *   so it converts to one shared Fern type (unless `schema` is itself a `$ref`, which is used as-is).
- *   Any `$ref` inside the schema must be a local `#/...` pointer into `document`.
+ *   Any `$ref` inside the schema must be a local `#/...` pointer into `document`. A pre-existing
+ *   schema of the same name is replaced if, once the error responses have been rewritten, nothing
+ *   in the document references it anymore; otherwise it is an error.
  * - `apply-to: all` replaces the body of every error response; `untyped` only fills in
  *   error responses that declare no body schema.
  * - `ensure` adds the listed status codes to operations (filtered by method) that do not declare them.
@@ -85,7 +87,7 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
             );
         }
     }
-    const errorSchemaRef = registerErrorSchema({ document, schema, name: errorResponses.name });
+    const errorSchemaRef = getErrorSchemaRef({ schema, name: errorResponses.name });
 
     for (const pathItem of Object.values(document.paths)) {
         if (pathItem == null) {
@@ -129,40 +131,138 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
         }
     }
 
+    if (!isReferenceObject(schema)) {
+        registerErrorSchema({ document, schema, name: errorResponses.name, errorSchemaRef });
+    }
+
     return document;
 }
 
-function registerErrorSchema({
-    document,
+function getErrorSchemaName({ schema, name }: { schema: OpenAPIV3.SchemaObject; name: string | undefined }): string {
+    return name ?? schema.title ?? DEFAULT_ERROR_RESPONSE_TYPE_NAME;
+}
+
+/**
+ * The single `$ref` object inserted into every rewritten response. Sharing one instance lets
+ * `registerErrorSchema` tell the references it inserted apart from pre-existing ones of the same name.
+ */
+function getErrorSchemaRef({
     schema,
     name
 }: {
-    document: OpenAPIV3.Document;
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
     name: string | undefined;
 }): OpenAPIV3.ReferenceObject {
     if (isReferenceObject(schema)) {
         return schema;
     }
-    const schemaName = name ?? schema.title ?? DEFAULT_ERROR_RESPONSE_TYPE_NAME;
+    return { $ref: `#/components/schemas/${escapeJsonPointerSegment(getErrorSchemaName({ schema, name }))}` };
+}
+
+function registerErrorSchema({
+    document,
+    schema,
+    name,
+    errorSchemaRef
+}: {
+    document: OpenAPIV3.Document;
+    schema: OpenAPIV3.SchemaObject;
+    name: string | undefined;
+    errorSchemaRef: OpenAPIV3.ReferenceObject;
+}): void {
+    const schemaName = getErrorSchemaName({ schema, name });
     const components: OpenAPIV3.ComponentsObject = document.components ?? {};
     document.components = components;
     const schemas = components.schemas ?? {};
     components.schemas = schemas;
     const existing = schemas[schemaName];
     if (existing != null && !isEqual(existing, schema)) {
-        throw new Error(
-            `error-responses: components.schemas already contains a different schema named "${schemaName}". ` +
-                `Set error-responses.name to an unused name, or reference the existing schema with ` +
-                `\`schema: { $ref: "#/components/schemas/${schemaName}" }\`.`
-        );
+        const remainingRefs = findRemainingRefsToLegacySchema({ document, schemaName, errorSchemaRef });
+        if (remainingRefs.length > 0) {
+            throw new Error(
+                `error-responses: components.schemas already contains a different schema named "${schemaName}" ` +
+                    `that is still referenced from ${remainingRefs.join(", ")}. ` +
+                    `Set error-responses.name to an unused name, or reference the existing schema with ` +
+                    `\`schema: { $ref: "#/components/schemas/${schemaName}" }\`.`
+            );
+        }
     }
     schemas[schemaName] = schema;
-    return { $ref: `#/components/schemas/${escapeJsonPointerSegment(schemaName)}` };
+}
+
+/**
+ * JSON Pointers of every `$ref` to `components.schemas[schemaName]` that `applyErrorResponses` did
+ * not insert itself. The legacy schema body and shared `components.responses` entries that are no
+ * longer referenced from anywhere (their error uses were inlined as copies) are not counted.
+ */
+function findRemainingRefsToLegacySchema({
+    document,
+    schemaName,
+    errorSchemaRef
+}: {
+    document: OpenAPIV3.Document;
+    schemaName: string;
+    errorSchemaRef: OpenAPIV3.ReferenceObject;
+}): string[] {
+    const referencedResponseNames = new Set<string>();
+    const responsesPrefix = "#/components/responses/";
+    walkRefs(document, ({ ref }) => {
+        if (ref.$ref.startsWith(responsesPrefix)) {
+            referencedResponseNames.add(unescapeJsonPointerSegment(ref.$ref.slice(responsesPrefix.length)));
+        }
+    });
+
+    const remaining: string[] = [];
+    walkRefs(document, ({ ref, path }) => {
+        if (ref === errorSchemaRef || ref.$ref !== errorSchemaRef.$ref) {
+            return;
+        }
+        const [components, section, entryName] = path;
+        if (components === "components" && section === "schemas" && entryName === schemaName) {
+            return;
+        }
+        if (
+            components === "components" &&
+            section === "responses" &&
+            entryName != null &&
+            !referencedResponseNames.has(entryName)
+        ) {
+            return;
+        }
+        remaining.push(`#/${path.map(escapeJsonPointerSegment).join("/")}`);
+    });
+    return remaining;
+}
+
+function walkRefs(
+    value: unknown,
+    visit: (found: { ref: OpenAPIV3.ReferenceObject; path: string[] }) => void,
+    path: string[] = []
+): void {
+    if (Array.isArray(value)) {
+        value.forEach((entry, index) => {
+            walkRefs(entry, visit, [...path, index.toString()]);
+        });
+        return;
+    }
+    if (!isRecord(value)) {
+        return;
+    }
+    if (isReferenceObject(value) && typeof value.$ref === "string") {
+        visit({ ref: value, path });
+        return;
+    }
+    for (const [key, entry] of Object.entries(value)) {
+        walkRefs(entry, visit, [...path, key]);
+    }
 }
 
 function escapeJsonPointerSegment(segment: string): string {
     return segment.replaceAll("~", "~0").replaceAll("/", "~1");
+}
+
+function unescapeJsonPointerSegment(segment: string): string {
+    return segment.replaceAll("~1", "/").replaceAll("~0", "~");
 }
 
 function collectNonLocalRefs(value: unknown, found: string[] = []): string[] {
