@@ -1704,7 +1704,7 @@ export class SubClientGenerator {
                     _other: () => paramName
                 }),
             // An `unknown` path parameter is typed `serde_json::Value`, whose `Display` prints
-            // JSON: a string value keeps its quotes, so the path becomes `/users/"abc"`. Use the
+            // JSON: a string value keeps its quotes, so the path becomes `/resources/"abc"`. Use the
             // string content directly and fall back to the JSON encoding for the other variants
             // (numbers and booleans print bare, which is what a path expects).
             unknown: () =>

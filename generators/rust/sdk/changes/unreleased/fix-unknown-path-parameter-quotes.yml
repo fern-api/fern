@@ -3,7 +3,7 @@
 - summary: |
     An `unknown`-typed path parameter is now placed into the path without its JSON quotes,
     so a string value `abc` requests `/resources/abc` instead of `/resources/%22abc%22`.
-    Path parameters typed as an alias (including alias chains and aliases of `unknown`)
-    now interpolate the wrapped value; the alias newtype has no `Display`, so such an
-    SDK previously failed to compile.
+    A path parameter typed as an alias of `unknown` or as an alias chain now interpolates
+    the wrapped value; the alias newtype has no `Display`, so such an SDK previously
+    failed to compile.
   type: fix
