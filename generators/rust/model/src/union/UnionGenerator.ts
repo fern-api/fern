@@ -474,6 +474,24 @@ export class UnionGenerator {
         }
     }
 
+    /**
+     * Writes the constructor for a variant that has no own properties. It takes the union's
+     * base properties, if any, since they are typed on every variant.
+     */
+    private generateConstructorWithoutOwnProperties(
+        writer: rust.Writer,
+        constructorName: string,
+        variantName: string
+    ): void {
+        const baseParams = this.getBasePropertyParams();
+        const baseFields = this.getBasePropertyFieldAssignments();
+        writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
+            writer.writeLine(
+                baseFields.length > 0 ? `Self::${variantName} { ${baseFields.join(", ")} }` : `Self::${variantName} {}`
+            );
+        });
+    }
+
     private generateBaseProperties(writer: rust.Writer): void {
         // Find the typeId for this union to detect recursive fields
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
@@ -615,20 +633,7 @@ export class UnionGenerator {
 
         unionType.shape._visit({
             noProperties: () => {
-                const baseParams = this.getBasePropertyParams();
-                if (baseParams.length > 0) {
-                    // Base properties are typed on every variant, so the constructor
-                    // must accept them even without own properties.
-                    writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
-                        const baseFields = this.getBasePropertyFieldAssignments();
-                        writer.writeLine(`Self::${variantName} { ${baseFields.join(", ")} }`);
-                    });
-                } else {
-                    // Empty constructor: pub fn variant_name() -> Self { Self::VariantName {} }
-                    writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
-                        writer.writeLine(`Self::${variantName} {}`);
-                    });
-                }
+                this.generateConstructorWithoutOwnProperties(writer, constructorName, variantName);
             },
             singleProperty: (singleProperty) => {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
@@ -657,18 +662,7 @@ export class UnionGenerator {
                     if (referencedType?.shape.type === "object") {
                         const properties = referencedType.shape.properties;
                         if (properties.length === 0) {
-                            // Empty inlined type: no parameters needed
-                            const baseParams = this.getBasePropertyParams();
-                            if (baseParams.length > 0) {
-                                writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
-                                    const baseFields = this.getBasePropertyFieldAssignments();
-                                    writer.writeLine(`Self::${variantName} { ${baseFields.join(", ")} }`);
-                                });
-                            } else {
-                                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
-                                    writer.writeLine(`Self::${variantName} {}`);
-                                });
-                            }
+                            this.generateConstructorWithoutOwnProperties(writer, constructorName, variantName);
                         } else {
                             // Constructor takes required fields as parameters, optional fields default to None
                             const requiredParams: string[] = [];
