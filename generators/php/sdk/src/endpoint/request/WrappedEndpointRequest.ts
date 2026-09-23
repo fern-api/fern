@@ -128,16 +128,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private writeQueryParameter(writer: php.Writer, query: FernIr.QueryParameter): void {
-        if (this.isMapType(query.valueType)) {
+        if (!query.allowMultiple && query.explode !== false && this.isMapType(query.valueType)) {
             // An object query parameter is exploded: every entry becomes its own parameter,
             // keyed by the property name alone. Assigning the map under the parameter's own
-            // wire name instead leaves the http layer to invent a format for it.
+            // wire name instead leaves the http layer to invent a format for it. array_replace
+            // keeps numeric keys such as "2023", which array_merge would renumber.
             const reference = this.context.accessRequestProperty({
                 requestParameterName: this.requestParameterName,
                 propertyName: query.name
             });
             writer.writeTextStatement(
-                `${QUERY_PARAMETER_BAG_NAME} = array_merge(${QUERY_PARAMETER_BAG_NAME}, ${reference})`
+                `${QUERY_PARAMETER_BAG_NAME} = array_replace(${QUERY_PARAMETER_BAG_NAME}, ${reference})`
             );
             return;
         }
@@ -146,7 +147,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     /**
-     * Whether a type reference is a map, unwrapping optional and nullable.
+     * Whether a type reference is a map, unwrapping optional, nullable and aliases.
      */
     private isMapType(typeReference: FernIr.TypeReference): boolean {
         return typeReference._visit({
@@ -159,7 +160,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return container.type === "map";
             },
-            named: () => false,
+            named: (named) => {
+                const shape = this.context.getTypeDeclarationOrThrow(named.typeId).shape;
+                return shape.type === "alias" && this.isMapType(shape.aliasOf);
+            },
             primitive: () => false,
             unknown: () => false,
             _other: () => false
