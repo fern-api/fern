@@ -608,9 +608,21 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
      * of" constraint over the declared object rather than a set of variants. The
      * branches carry no shape of their own, so converting them to a union would
      * drop every sibling property. See oneOfIsPresenceConstraint.
+     *
+     * An explicit `x-fern-discriminated: true` keeps the union. The recursion
+     * below terminates because the predicate guarantees no `allOf`/`anyOf`
+     * remain, so the stripped schema cannot re-enter this branch.
      */
     private tryConvertSiblingOneOfConstraint(): SchemaConverter.Output | undefined {
         if (!oneOfIsPresenceConstraint(this.schema)) {
+            return undefined;
+        }
+        const isDiscriminated = new Extensions.FernDiscriminatedExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.schema
+        }).convert();
+        if (isDiscriminated === true) {
             return undefined;
         }
 
