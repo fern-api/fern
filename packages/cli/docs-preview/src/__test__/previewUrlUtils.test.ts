@@ -1,40 +1,52 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { buildPreviewDomain, isPreviewUrl, PREVIEW_URL_PATTERN, sanitizePreviewId } from "../previewUrlUtils.js";
+import {
+    buildPreviewDomain,
+    getDocsDomainSuffix,
+    getPreviewUrlPattern,
+    isPreviewUrl,
+    sanitizePreviewId
+} from "../previewUrlUtils.js";
+
+const DEV_SUFFIX = "docs.dev.buildwithfern.com";
+
+afterEach(() => {
+    vi.unstubAllEnvs();
+});
 
 describe("Preview URL Validation", () => {
-    describe("PREVIEW_URL_PATTERN regex", () => {
+    describe("getPreviewUrlPattern regex", () => {
         it("should match simple alphanumeric hash", () => {
-            expect(PREVIEW_URL_PATTERN.test("acme-preview-abc123.docs.buildwithfern.com")).toBe(true);
+            expect(getPreviewUrlPattern().test("acme-preview-abc123.docs.buildwithfern.com")).toBe(true);
         });
 
         it("should match UUID-style hash with hyphens", () => {
             expect(
-                PREVIEW_URL_PATTERN.test(
+                getPreviewUrlPattern().test(
                     "audiences-api-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com"
                 )
             ).toBe(true);
         });
 
         it("should match org name with hyphens", () => {
-            expect(PREVIEW_URL_PATTERN.test("my-company-api-preview-abc123.docs.buildwithfern.com")).toBe(true);
+            expect(getPreviewUrlPattern().test("my-company-api-preview-abc123.docs.buildwithfern.com")).toBe(true);
         });
 
         it("should be case insensitive", () => {
-            expect(PREVIEW_URL_PATTERN.test("ACME-PREVIEW-ABC123.DOCS.BUILDWITHFERN.COM")).toBe(true);
-            expect(PREVIEW_URL_PATTERN.test("Acme-Preview-Abc123.Docs.BuildWithFern.Com")).toBe(true);
+            expect(getPreviewUrlPattern().test("ACME-PREVIEW-ABC123.DOCS.BUILDWITHFERN.COM")).toBe(true);
+            expect(getPreviewUrlPattern().test("Acme-Preview-Abc123.Docs.BuildWithFern.Com")).toBe(true);
         });
 
         it("should not match non-preview URLs", () => {
-            expect(PREVIEW_URL_PATTERN.test("acme.docs.buildwithfern.com")).toBe(false);
+            expect(getPreviewUrlPattern().test("acme.docs.buildwithfern.com")).toBe(false);
         });
 
         it("should not match URLs without the correct domain", () => {
-            expect(PREVIEW_URL_PATTERN.test("acme-preview-abc123.example.com")).toBe(false);
+            expect(getPreviewUrlPattern().test("acme-preview-abc123.example.com")).toBe(false);
         });
 
         it("should not match URLs with extra subdomains", () => {
-            expect(PREVIEW_URL_PATTERN.test("sub.acme-preview-abc123.docs.buildwithfern.com")).toBe(false);
+            expect(getPreviewUrlPattern().test("sub.acme-preview-abc123.docs.buildwithfern.com")).toBe(false);
         });
     });
 
@@ -213,5 +225,90 @@ describe("buildPreviewDomain", () => {
         const id = "a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z";
         const result = buildPreviewDomain({ orgId: "acme", previewId: id });
         expect(result).not.toMatch(/-\.docs\.buildwithfern\.com$/);
+    });
+
+    describe("DOCS_DOMAIN_SUFFIX", () => {
+        it("defaults to the production suffix when unset", () => {
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", undefined);
+
+            expect(getDocsDomainSuffix()).toBe("docs.buildwithfern.com");
+        });
+
+        it("falls back to the production suffix when set to an empty or blank value", () => {
+            for (const blank of ["", "   "]) {
+                vi.stubEnv("DOCS_DOMAIN_SUFFIX", blank);
+                expect(getDocsDomainSuffix()).toBe("docs.buildwithfern.com");
+            }
+        });
+
+        it("tolerates a leading or trailing dot", () => {
+            for (const value of [`.${DEV_SUFFIX}`, `${DEV_SUFFIX}.`, `.${DEV_SUFFIX}.`]) {
+                vi.stubEnv("DOCS_DOMAIN_SUFFIX", value);
+                expect(getDocsDomainSuffix()).toBe(DEV_SUFFIX);
+            }
+        });
+
+        /**
+         * The whole point of the variable: FDR generates preview hosts off its own
+         * `DOMAIN_SUFFIX`, so a CLI pointed at the dev registry has to predict and
+         * validate `.docs.dev.` hosts rather than production ones.
+         */
+        it("accepts dev preview hosts when pointed at dev", () => {
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", DEV_SUFFIX);
+
+            expect(isPreviewUrl(`acme-preview-abc123.${DEV_SUFFIX}`)).toBe(true);
+            expect(isPreviewUrl(`https://acme-preview-abc123.${DEV_SUFFIX}`)).toBe(true);
+            expect(isPreviewUrl(`https://acme-preview-abc123.${DEV_SUFFIX}/welcome`)).toBe(true);
+            expect(isPreviewUrl(`audiences-api-preview-9b2b47f0-c44b-4338-b579-46872f33404a.${DEV_SUFFIX}`)).toBe(true);
+            expect(isPreviewUrl(`ACME-PREVIEW-ABC123.${DEV_SUFFIX.toUpperCase()}`)).toBe(true);
+        });
+
+        it("builds dev preview domains when pointed at dev", () => {
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", DEV_SUFFIX);
+
+            expect(buildPreviewDomain({ orgId: "acme", previewId: "mr-2" })).toBe(`acme-preview-mr-2.${DEV_SUFFIX}`);
+        });
+
+        /**
+         * A prod-configured CLI must not resolve dev hosts, and vice versa —
+         * otherwise `delete` would compute a host in one environment and be handed
+         * a URL from the other.
+         */
+        it("does not accept the other environment's hosts", () => {
+            expect(isPreviewUrl(`acme-preview-abc123.${DEV_SUFFIX}`)).toBe(false);
+
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", DEV_SUFFIX);
+            expect(isPreviewUrl("acme-preview-abc123.docs.buildwithfern.com")).toBe(false);
+        });
+
+        it("does not accept unrelated environment subdomains", () => {
+            expect(isPreviewUrl("acme-preview-abc123.docs.staging.buildwithfern.com")).toBe(false);
+            expect(isPreviewUrl("acme-preview-abc123.dev.buildwithfern.com")).toBe(false);
+        });
+
+        it("does not accept a non-preview host on the dev suffix", () => {
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", DEV_SUFFIX);
+
+            expect(isPreviewUrl(`acme.${DEV_SUFFIX}`)).toBe(false);
+        });
+
+        /**
+         * The suffix is interpolated into a RegExp, so its dots have to be escaped.
+         * Unescaped, `.` would match any character and `docsXbuildwithfern%com`
+         * would validate as a preview host.
+         */
+        it("treats dots in the suffix as literal dots", () => {
+            expect(isPreviewUrl("acme-preview-abc123.docsXbuildwithfernYcom")).toBe(false);
+
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", DEV_SUFFIX);
+            expect(isPreviewUrl("acme-preview-abc123.docsXdevXbuildwithfernYcom")).toBe(false);
+        });
+
+        it("does not let a regex metacharacter in the suffix widen the match", () => {
+            vi.stubEnv("DOCS_DOMAIN_SUFFIX", "docs.example.com|evil.com");
+
+            expect(isPreviewUrl("acme-preview-abc123.evil.com")).toBe(false);
+            expect(isPreviewUrl("acme-preview-abc123.docs.example.com|evil.com")).toBe(true);
+        });
     });
 });
