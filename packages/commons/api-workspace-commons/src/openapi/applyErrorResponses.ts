@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { cloneDeep, isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 
 export const DEFAULT_ERROR_RESPONSE_TYPE_NAME = "ProblemDetails";
@@ -54,19 +55,36 @@ export interface ApplyErrorResponsesArgs {
  *
  * - The schema is registered under `components.schemas[name]` and referenced from each response,
  *   so it converts to one shared Fern type (unless `schema` is itself a `$ref`, which is used as-is).
+ *   Any `$ref` inside the schema must be a local `#/...` pointer into `document`.
  * - `apply-to: all` replaces the body of every error response; `untyped` only fills in
  *   error responses that declare no body schema.
  * - `ensure` adds the listed status codes to operations (filtered by method) that do not declare them.
  *
  * Descriptions, headers and non-error responses are left untouched. Examples are kept unless they
- * belonged to a body schema that gets replaced. Mutates and returns `document`.
+ * belonged to a body schema that gets replaced. Error responses that reference a shared
+ * `#/components/responses/...` entry are inlined as a modified copy so the shared entry (which may
+ * also back non-error responses) is never mutated. Mutates and returns `document`.
  */
 export function applyErrorResponses({ document, errorResponses, schema }: ApplyErrorResponsesArgs): OpenAPIV3.Document {
     if (!isOpenApiSchema(schema)) {
         throw new Error("error-responses.schema must be an OpenAPI schema object or a $ref");
     }
+    const nonLocalRefs = collectNonLocalRefs(schema);
+    if (nonLocalRefs.length > 0) {
+        throw new Error(
+            `error-responses.schema may only contain local "#/..." references into the OpenAPI document. ` +
+                `Found: ${nonLocalRefs.join(", ")}`
+        );
+    }
     const applyTo = errorResponses["apply-to"] ?? "all";
     const ensure = errorResponses.ensure ?? [];
+    for (const rule of ensure) {
+        if (!isErrorStatusCode(rule["status-code"].toString())) {
+            throw new Error(
+                `error-responses.ensure.status-code must be between 400 and 599, got ${rule["status-code"]}`
+            );
+        }
+    }
     const errorSchemaRef = registerErrorSchema({ document, schema, name: errorResponses.name });
 
     for (const pathItem of Object.values(document.paths)) {
@@ -90,7 +108,9 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
                     continue;
                 }
                 if (applyTo === "all" || !hasBodySchema(resolved)) {
-                    setErrorBody({ response: resolved, errorSchemaRef });
+                    const target = isReferenceObject(response) ? cloneDeep(resolved) : resolved;
+                    setErrorBody({ response: target, errorSchemaRef });
+                    responses[statusCode] = target;
                 }
             }
 
@@ -129,13 +149,45 @@ function registerErrorSchema({
     document.components = components;
     const schemas = components.schemas ?? {};
     components.schemas = schemas;
+    const existing = schemas[schemaName];
+    if (existing != null && !isEqual(existing, schema)) {
+        throw new Error(
+            `error-responses: components.schemas already contains a different schema named "${schemaName}". ` +
+                `Set error-responses.name to an unused name, or reference the existing schema with ` +
+                `\`schema: { $ref: "#/components/schemas/${schemaName}" }\`.`
+        );
+    }
     schemas[schemaName] = schema;
-    return { $ref: `#/components/schemas/${schemaName}` };
+    return { $ref: `#/components/schemas/${escapeJsonPointerSegment(schemaName)}` };
+}
+
+function escapeJsonPointerSegment(segment: string): string {
+    return segment.replaceAll("~", "~0").replaceAll("/", "~1");
+}
+
+function collectNonLocalRefs(value: unknown, found: string[] = []): string[] {
+    if (Array.isArray(value)) {
+        for (const entry of value) {
+            collectNonLocalRefs(entry, found);
+        }
+    } else if (isRecord(value)) {
+        for (const [key, entry] of Object.entries(value)) {
+            if (key === "$ref" && typeof entry === "string" && !entry.startsWith("#/")) {
+                found.push(entry);
+            } else {
+                collectNonLocalRefs(entry, found);
+            }
+        }
+    }
+    return found;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /**
- * Follows a local `#/components/responses/...` reference so shared error responses are rewritten
- * in place (and therefore for every operation that references them).
+ * Follows a local `#/components/responses/...` reference to the shared response object.
  */
 function resolveResponse({
     document,

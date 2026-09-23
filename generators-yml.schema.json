@@ -2524,7 +2524,7 @@
       "properties": {
         "schema": {
           "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchemaSource",
-          "description": "The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file\n(relative to this generators.yml) or an inline schema object. It is registered under\n`components.schemas` and every affected response references it."
+          "description": "The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file\n(relative to this generators.yml) or an inline schema object. It is registered under\n`components.schemas` and every affected response references it. Any `$ref` inside the\nschema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to."
         },
         "name": {
           "oneOf": [

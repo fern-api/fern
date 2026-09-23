@@ -22,6 +22,7 @@ function createDocument(): OpenAPIV3.Document {
                 get: {
                     responses: {
                         "200": { description: "OK" },
+                        "204": { $ref: "#/components/responses/TooManyRequests" },
                         "401": { description: "Unauthorized" },
                         "429": { $ref: "#/components/responses/TooManyRequests" }
                     }
@@ -91,20 +92,74 @@ describe("applyErrorResponses", () => {
         expect(getResponse(document, "post", "201")).toEqual({ description: "Created" });
     });
 
-    it("rewrites shared component responses in place", () => {
+    it("inlines a modified copy of shared component responses without mutating the component", () => {
         const document = applyErrorResponses({
             document: createDocument(),
             errorResponses: { schema: PROBLEM_DETAILS },
             schema: PROBLEM_DETAILS
         });
 
-        expect(getOperation(document, "get").responses["429"]).toEqual({
-            $ref: "#/components/responses/TooManyRequests"
-        });
-        expect(document.components?.responses?.TooManyRequests).toEqual({
+        expect(getResponse(document, "get", "429")).toEqual({
             description: "Too many requests",
             content: { "application/json": { schema: PROBLEM_DETAILS_REF } }
         });
+        expect(getOperation(document, "get").responses["204"]).toEqual({
+            $ref: "#/components/responses/TooManyRequests"
+        });
+        expect(document.components?.responses?.TooManyRequests).toEqual({ description: "Too many requests" });
+    });
+
+    it("reuses an identical existing component schema and rejects a conflicting one", () => {
+        const identical = createDocument();
+        identical.components = { ...identical.components, schemas: { ProblemDetails: { ...PROBLEM_DETAILS } } };
+        expect(() =>
+            applyErrorResponses({
+                document: identical,
+                errorResponses: { schema: PROBLEM_DETAILS },
+                schema: PROBLEM_DETAILS
+            })
+        ).not.toThrow();
+
+        expect(() =>
+            applyErrorResponses({
+                document: createDocument(),
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow('components.schemas already contains a different schema named "LegacyError"');
+    });
+
+    it("escapes JSON pointer characters in the component name", () => {
+        const document = applyErrorResponses({
+            document: createDocument(),
+            errorResponses: { schema: PROBLEM_DETAILS, name: "errors/Problem~Details" },
+            schema: PROBLEM_DETAILS
+        });
+
+        expect(document.components?.schemas?.["errors/Problem~Details"]).toEqual(PROBLEM_DETAILS);
+        expect(getResponse(document, "get", "401").content?.["application/json"]?.schema).toEqual({
+            $ref: "#/components/schemas/errors~1Problem~0Details"
+        });
+    });
+
+    it("rejects schemas with non-local $refs", () => {
+        const schema = {
+            type: "object",
+            properties: { detail: { $ref: "./common.yml#/components/schemas/Detail" } }
+        };
+        expect(() => applyErrorResponses({ document: createDocument(), errorResponses: { schema }, schema })).toThrow(
+            "./common.yml#/components/schemas/Detail"
+        );
+    });
+
+    it("rejects ensure rules with non-error status codes", () => {
+        expect(() =>
+            applyErrorResponses({
+                document: createDocument(),
+                errorResponses: { schema: PROBLEM_DETAILS, ensure: [{ "status-code": 200 }] },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("error-responses.ensure.status-code must be between 400 and 599, got 200");
     });
 
     it("replaces typed errors and drops their stale examples (apply-to: all)", () => {

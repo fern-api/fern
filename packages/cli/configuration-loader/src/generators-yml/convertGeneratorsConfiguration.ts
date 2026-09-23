@@ -237,8 +237,15 @@ export function parseBaseApiDefinitionSettingsSchema(
         pathParameterOrder: settings?.["path-parameter-order"],
         resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
         inferForwardCompatible: settings?.["infer-forward-compatible"],
-        coerceConstsTo: settings?.["coerce-consts-to"]
+        coerceConstsTo: settings?.["coerce-consts-to"],
+        errorResponses: hasErrorResponsesSetting(settings) ? settings["error-responses"] : undefined
     };
+}
+
+function hasErrorResponsesSetting(
+    settings: AnySpecSettingsSchema | undefined
+): settings is generatorsYml.OpenApiSettingsSchema {
+    return settings != null && "error-responses" in settings;
 }
 
 function parseRemoveDiscriminantsFromSchemas(

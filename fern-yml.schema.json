@@ -4143,8 +4143,8 @@
                               "properties": {
                                 "statusCode": {
                                   "type": "integer",
-                                  "minimum": -9007199254740991,
-                                  "maximum": 9007199254740991
+                                  "minimum": 400,
+                                  "maximum": 599
                                 },
                                 "methods": {
                                   "type": "array",
@@ -4810,8 +4810,8 @@
                                 "properties": {
                                   "statusCode": {
                                     "type": "integer",
-                                    "minimum": -9007199254740991,
-                                    "maximum": 9007199254740991
+                                    "minimum": 400,
+                                    "maximum": 599
                                   },
                                   "methods": {
                                     "type": "array",

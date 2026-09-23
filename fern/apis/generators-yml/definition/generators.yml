@@ -668,7 +668,8 @@ types:
         docs: |
           The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file
           (relative to this generators.yml) or an inline schema object. It is registered under
-          `components.schemas` and every affected response references it.
+          `components.schemas` and every affected response references it. Any `$ref` inside the
+          schema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to.
       name:
         type: optional<string>
         docs: |
@@ -703,6 +704,9 @@ types:
       status-code:
         type: integer
         docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
       methods:
         type: optional<list<OpenAPIErrorResponsesHttpMethod>>
         docs: HTTP methods whose operations receive the response. Defaults to all methods.

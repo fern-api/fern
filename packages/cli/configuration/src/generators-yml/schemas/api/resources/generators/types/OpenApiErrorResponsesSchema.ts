@@ -6,7 +6,8 @@ export interface OpenApiErrorResponsesSchema {
     /**
      * The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file
      * (relative to this generators.yml) or an inline schema object. It is registered under
-     * `components.schemas` and every affected response references it.
+     * `components.schemas` and every affected response references it. Any `$ref` inside the
+     * schema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to.
      */
     schema: GeneratorsYml.OpenApiErrorResponsesSchemaSource;
     /** Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`. */
