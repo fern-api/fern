@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add `fern mcp deploy <bundle-dir> [--slug <slug>] [--org <org>]`, which deploys an
+    Add `fern mcp deploy <bundle-dir> [--slug <slug>] [--org <org>] [--generator-version <v>]`, which deploys an
     already-generated `fernapi/fern-mcp-server` bundle to Fern's hosted MCP platform and
     prints the server URL. This is the same deploy step `fern generate` runs for
     `output: { location: fern-hosted }`, exposed standalone so a bundle downloaded as a

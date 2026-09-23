@@ -1733,6 +1733,11 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                             alias: "org",
                             type: "string",
                             description: "The organization to deploy to. Defaults to the one in `fern.config.json`."
+                        })
+                        .option("generator-version", {
+                            type: "string",
+                            description:
+                                "Version of fernapi/fern-mcp-server that produced the bundle, recorded as deploy provenance."
                         }),
                 async (argv) => {
                     cliContext.instrumentPostHogEvent({ command: "fern mcp deploy" });
@@ -1752,7 +1757,7 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                             slug: argv.slug,
                             token: token.value,
                             generatorName: "fernapi/fern-mcp-server",
-                            generatorVersion: "unknown",
+                            generatorVersion: argv.generatorVersion ?? "unknown",
                             cliVersion: cliContext.environment.packageVersion,
                             config: undefined,
                             git: undefined,
