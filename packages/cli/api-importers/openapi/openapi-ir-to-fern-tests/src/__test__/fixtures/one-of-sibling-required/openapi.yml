@@ -44,6 +44,10 @@ paths:
                   $ref: "#/components/schemas/OneOfBranchNarrowsProperty"
                 addsProperty:
                   $ref: "#/components/schemas/OneOfBranchAddsProperty"
+                singleBranch:
+                  $ref: "#/components/schemas/OneOfSingleBranch"
+                withNot:
+                  $ref: "#/components/schemas/OneOfBranchWithNot"
       responses:
         "204":
           description: Accepted.
@@ -145,4 +149,34 @@ components:
             b:
               type: boolean
           required:
+            - b
+
+    # A single presence branch is just a required list; `a` must stay required.
+    OneOfSingleBranch:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required:
+            - a
+
+    # A branch carrying any other constraint keyword is not a presence
+    # constraint and must remain a union.
+    OneOfBranchWithNot:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required:
+            - a
+          not:
+            required:
+              - b
+        - required:
             - b

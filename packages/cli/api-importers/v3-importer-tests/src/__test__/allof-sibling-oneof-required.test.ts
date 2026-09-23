@@ -107,10 +107,11 @@ describe("sibling oneOf of required-only branches", () => {
             "url"
         ]);
 
-        // Presence is enforced by the oneOf, not by the declared object, so
-        // every constrained property is optional.
+        // `url` is required by every branch so it stays required; the rest are
+        // only required by some branch and become optional.
+        const alwaysRequired = new Set(["key", "url"]);
         for (const property of inboundAddRouteRequest?.shape.properties ?? []) {
-            expect(property.valueType._type).toBe(property.name === "key" ? "primitive" : "container");
+            expect(property.valueType._type).toBe(alwaysRequired.has(property.name) ? "primitive" : "container");
         }
     }, 60_000);
 
@@ -128,5 +129,23 @@ describe("sibling oneOf of required-only branches", () => {
         const shape = findType(ir, "Shape");
         expect(shape?.shape._type).toBe("undiscriminatedUnion");
         expect(shape?.shape.members).toHaveLength(2);
+    }, 60_000);
+
+    it("keeps a single-branch constraint's properties required", async () => {
+        const ir = await loadIr("allof-sibling-oneof-required");
+
+        const single = findType(ir, "SingleBranch");
+        expect(single?.shape._type).toBe("object");
+        expect((single?.shape.properties ?? []).map((p) => [p.name, p.valueType._type])).toEqual([
+            ["a", "primitive"],
+            ["b", "container"]
+        ]);
+    }, 60_000);
+
+    it("keeps a oneOf as a union when a branch has other constraints or is explicitly discriminated", async () => {
+        const ir = await loadIr("allof-sibling-oneof-required");
+
+        expect(findType(ir, "WithNot")?.shape._type).toBe("undiscriminatedUnion");
+        expect(findType(ir, "ExplicitlyDiscriminated")?.shape._type).toBe("undiscriminatedUnion");
     }, 60_000);
 });

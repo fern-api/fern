@@ -113,6 +113,13 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              },
+              "url": {
+                "value": {
+                  "value": "url",
+                  "type": "string"
+                },
+                "type": "primitive"
               }
             },
             "type": "object"
@@ -185,6 +192,44 @@
                 "value": {
                   "generatedName": "PostShapesRequestAddsProperty",
                   "schema": "OneOfBranchAddsProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestSingleBranch",
+              "key": "singleBranch",
+              "schema": {
+                "generatedName": "PostShapesRequestSingleBranch",
+                "value": {
+                  "generatedName": "PostShapesRequestSingleBranch",
+                  "schema": "OneOfSingleBranch",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestWithNot",
+              "key": "withNot",
+              "schema": {
+                "generatedName": "PostShapesRequestWithNot",
+                "value": {
+                  "generatedName": "PostShapesRequestWithNot",
+                  "schema": "OneOfBranchWithNot",
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
@@ -413,18 +458,13 @@
             "generatedName": "inboundAddRouteRequestUrl",
             "key": "url",
             "schema": {
-              "generatedName": "InboundAddRouteRequestUrl",
-              "value": {
-                "schema": {
-                  "format": "uri",
-                  "type": "string"
-                },
-                "generatedName": "InboundAddRouteRequestUrl",
-                "groupName": [],
-                "type": "primitive"
+              "schema": {
+                "format": "uri",
+                "type": "string"
               },
+              "generatedName": "InboundAddRouteRequestUrl",
               "groupName": [],
-              "type": "optional"
+              "type": "primitive"
             },
             "audiences": []
           }
@@ -665,6 +705,106 @@
                 "type": "openapi"
               },
               "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "OneOfSingleBranch": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "oneOfSingleBranchA",
+            "key": "a",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "OneOfSingleBranchA",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "oneOfSingleBranchB",
+            "key": "b",
+            "schema": {
+              "generatedName": "OneOfSingleBranchB",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OneOfSingleBranchB",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OneOfSingleBranch",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OneOfBranchWithNot": {
+        "value": {
+          "generatedName": "OneOfBranchWithNot",
+          "commonProperties": [
+            {
+              "key": "a",
+              "schema": {
+                "generatedName": "OneOfBranchWithNotA",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchWithNotA",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            },
+            {
+              "key": "b",
+              "schema": {
+                "generatedName": "OneOfBranchWithNotB",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchWithNotB",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            }
+          ],
+          "schemas": [
+            {
+              "generatedName": "OneOfBranchWithNotOne",
+              "groupName": [],
+              "type": "unknown"
             }
           ],
           "groupName": [],

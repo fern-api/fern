@@ -4,7 +4,8 @@ export {
     type AnyOfConstraintSchemaLike,
     anyOfIsPresenceConstraint,
     isPresenceConstraintBranch,
-    oneOfIsPresenceConstraint
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
 } from "./anyOfPresenceConstraint.js";
 export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay.js";
 export {

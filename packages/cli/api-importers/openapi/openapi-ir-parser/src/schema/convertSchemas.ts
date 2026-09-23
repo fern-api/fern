@@ -1,4 +1,8 @@
-import { anyOfIsPresenceConstraint, oneOfIsPresenceConstraint } from "@fern-api/core-utils";
+import {
+    anyOfIsPresenceConstraint,
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
+} from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     type Availability,
@@ -951,7 +955,11 @@ export function convertSchemaObject(
                 `Treating the oneOf at ${breadcrumbs.join(".")} as an "exactly one of" constraint over its ` +
                     `sibling properties rather than a union, and converting the schema as an object.`
             );
+            const alwaysRequired = requiredByPresenceConstraint(schema);
             const { oneOf: _constraint, ...schemaWithoutOneOf } = schema;
+            if (alwaysRequired.length > 0) {
+                schemaWithoutOneOf.required = [...new Set([...(schemaWithoutOneOf.required ?? []), ...alwaysRequired])];
+            }
             const convertedSchema = convertSchema(
                 schemaWithoutOneOf,
                 wrapAsOptional,

@@ -1,4 +1,8 @@
-import { anyOfIsPresenceConstraint, oneOfIsPresenceConstraint } from "@fern-api/core-utils";
+import {
+    anyOfIsPresenceConstraint,
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
+} from "@fern-api/core-utils";
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
@@ -330,7 +334,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     continue;
                 }
 
-                resolvedElements.push(schemaToMerge);
+                resolvedElements.push(withPresenceConstraintRequired(schemaToMerge));
             }
 
             // If a circular reference was detected, fall back to the ObjectSchemaConverter path
@@ -631,7 +635,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 `over its sibling properties rather than a union, and converting the schema as an object.`
         );
 
+        const alwaysRequired = requiredByPresenceConstraint(this.schema);
         const { oneOf: _constraint, ...schemaWithoutOneOf } = this.schema;
+        if (alwaysRequired.length > 0) {
+            schemaWithoutOneOf.required = [...new Set([...(schemaWithoutOneOf.required ?? []), ...alwaysRequired])];
+        }
         return new SchemaConverter({
             id: this.id,
             context: this.context,
@@ -950,4 +958,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         // because they are too verbose and not actionable for users
         return convertedExample;
     }
+}
+
+/**
+ * An `allOf` member's `oneOf`/`anyOf` is not carried into the merged schema, so
+ * the properties its presence constraint requires unconditionally are lifted
+ * into the member's `required` first.
+ */
+function withPresenceConstraintRequired(schema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject {
+    const alwaysRequired = requiredByPresenceConstraint(schema);
+    if (alwaysRequired.length === 0) {
+        return schema;
+    }
+    return { ...schema, required: [...new Set([...(schema.required ?? []), ...alwaysRequired])] };
 }

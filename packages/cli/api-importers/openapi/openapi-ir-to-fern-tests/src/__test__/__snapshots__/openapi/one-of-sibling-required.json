@@ -16,6 +16,7 @@
                 {
                   "request": {
                     "key": "key",
+                    "url": "url",
                   },
                 },
               ],
@@ -32,7 +33,7 @@
                     "pattern": "optional<string>",
                     "phone": "optional<string>",
                     "url": {
-                      "type": "optional<string>",
+                      "type": "string",
                       "validation": {
                         "format": "uri",
                         "maxLength": undefined,
@@ -108,6 +109,8 @@
                     "addsProperty": "optional<OneOfBranchAddsProperty>",
                     "contact": "optional<Contact>",
                     "narrowsProperty": "optional<OneOfBranchNarrowsProperty>",
+                    "singleBranch": "optional<OneOfSingleBranch>",
+                    "withNot": "optional<OneOfBranchWithNot>",
                   },
                 },
                 "content-type": "application/json",
@@ -228,6 +231,33 @@
               "openapi": "../openapi.yml",
             },
           },
+          "OneOfBranchWithNot": {
+            "base-properties": {
+              "a": "optional<string>",
+              "b": "optional<string>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "unknown",
+            ],
+          },
+          "OneOfSingleBranch": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "a": "string",
+              "b": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "service:
@@ -268,7 +298,7 @@
             phone: optional<string>
             pattern: optional<string>
             url:
-              type: optional<string>
+              type: string
               validation:
                 format: uri
           extends:
@@ -277,6 +307,7 @@
       examples:
         - request:
             key: key
+            url: url
     PostShapes:
       path: /shapes
       method: POST
@@ -289,6 +320,8 @@
             contact: optional<Contact>
             narrowsProperty: optional<OneOfBranchNarrowsProperty>
             addsProperty: optional<OneOfBranchAddsProperty>
+            singleBranch: optional<OneOfSingleBranch>
+            withNot: optional<OneOfBranchWithNot>
         content-type: application/json
       examples:
         - request: {}
@@ -353,6 +386,21 @@ types:
     union:
       - unknown
       - OneOfBranchAddsPropertyB
+    source:
+      openapi: ../openapi.yml
+  OneOfSingleBranch:
+    properties:
+      a: string
+      b: optional<string>
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchWithNot:
+    discriminated: false
+    base-properties:
+      a: optional<string>
+      b: optional<string>
+    union:
+      - unknown
     source:
       openapi: ../openapi.yml
 ",
