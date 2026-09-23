@@ -134,16 +134,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
-        if (this.isBoolean(header.valueType)) {
-            // PHP coerces booleans to "1"/"" in string context, so serialize the header
-            // value explicitly as "true"/"false".
-            writer.writeTextStatement(
-                `${this.context.accessRequestProperty({
-                    requestParameterName: this.requestParameterName,
-                    propertyName: header.name
-                })} ? 'true' : 'false'`
-            );
-            return;
+        const parameter = this.context.accessRequestProperty({
+            requestParameterName: this.requestParameterName,
+            propertyName: header.name
+        });
+        const dereferenced = this.context.dereferenceOptional(header.valueType);
+        if (dereferenced.type === "primitive") {
+            switch (dereferenced.primitive.v1) {
+                case FernIr.PrimitiveTypeV1.Boolean:
+                    // PHP coerces booleans to "1"/"" in string context, so serialize the header
+                    // value explicitly as "true"/"false".
+                    writer.writeTextStatement(`${parameter} ? 'true' : 'false'`);
+                    return;
+                case FernIr.PrimitiveTypeV1.Integer:
+                case FernIr.PrimitiveTypeV1.Long:
+                case FernIr.PrimitiveTypeV1.Uint:
+                case FernIr.PrimitiveTypeV1.Uint64:
+                case FernIr.PrimitiveTypeV1.Float:
+                case FernIr.PrimitiveTypeV1.Double:
+                case FernIr.PrimitiveTypeV1.BigInteger:
+                    // Headers must be strings, so cast numeric values explicitly.
+                    writer.writeTextStatement(`(string)${parameter}`);
+                    return;
+            }
         }
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
     }

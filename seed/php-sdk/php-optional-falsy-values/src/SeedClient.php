@@ -107,7 +107,7 @@ class SeedClient
         }
         $headers = [];
         if ($request->xMaxResults !== null) {
-            $headers['X-Max-Results'] = $request->xMaxResults;
+            $headers['X-Max-Results'] = (string)$request->xMaxResults;
         }
         if ($request->xIncludeResolved !== null) {
             $headers['X-Include-Resolved'] = $request->xIncludeResolved ? 'true' : 'false';

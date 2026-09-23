@@ -1506,18 +1506,31 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         parameterName: string;
         typeReference?: FernIr.TypeReference;
     }): php.CodeBlock {
-        if (typeReference != null && this.isBooleanHeader(typeReference)) {
-            // PHP coerces booleans to "1"/"" in string context, so serialize the header
-            // value explicitly as "true"/"false".
-            const serialized = `$${parameterName} ? 'true' : 'false'`;
-            return php.codeblock(prefix != null ? `"${prefix} " . (${serialized})` : `(${serialized})`);
+        if (typeReference != null) {
+            const dereferenced = this.context.dereferenceOptional(typeReference);
+            if (dereferenced.type === "primitive") {
+                switch (dereferenced.primitive.v1) {
+                    case FernIr.PrimitiveTypeV1.Boolean: {
+                        // PHP coerces booleans to "1"/"" in string context, so serialize the header
+                        // value explicitly as "true"/"false".
+                        const serialized = `$${parameterName} ? 'true' : 'false'`;
+                        return php.codeblock(prefix != null ? `"${prefix} " . (${serialized})` : `(${serialized})`);
+                    }
+                    case FernIr.PrimitiveTypeV1.Integer:
+                    case FernIr.PrimitiveTypeV1.Long:
+                    case FernIr.PrimitiveTypeV1.Uint:
+                    case FernIr.PrimitiveTypeV1.Uint64:
+                    case FernIr.PrimitiveTypeV1.Float:
+                    case FernIr.PrimitiveTypeV1.Double:
+                    case FernIr.PrimitiveTypeV1.BigInteger:
+                        // Headers must be strings, so cast numeric values explicitly.
+                        return php.codeblock(
+                            prefix != null ? `"${prefix} " . (string)$${parameterName}` : `(string)$${parameterName}`
+                        );
+                }
+            }
         }
         return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`);
-    }
-
-    private isBooleanHeader(typeReference: FernIr.TypeReference): boolean {
-        const dereferenced = this.context.dereferenceOptional(typeReference);
-        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 
     private getAuthParameterTypeReference({
