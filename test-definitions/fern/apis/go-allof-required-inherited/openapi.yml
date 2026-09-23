@@ -43,6 +43,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PlantDetails"
+  /payment_schedules:
+    post:
+      summary: Create a payment schedule
+      operationId: createPaymentSchedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalPaymentScheduleRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalPaymentScheduleGet"
 components:
   schemas:
     PlantMetadata:
@@ -196,3 +213,54 @@ components:
           required:
             - external_ref
             - species
+    PaymentScheduleInterval:
+      type: string
+      enum:
+        - WEEKLY
+        - MONTHLY
+    ExternalPaymentScheduleBase:
+      description: |
+        Nullable parent with `additionalProperties`; nothing is required here.
+      type: object
+      additionalProperties: true
+      nullable: true
+      properties:
+        interval:
+          $ref: "#/components/schemas/PaymentScheduleInterval"
+        interval_execution_day:
+          type: integer
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        adjusted_start_date:
+          type: string
+          format: date
+          nullable: true
+        description:
+          type: string
+    ExternalPaymentScheduleGet:
+      description: |
+        Nullable schema whose `required` sits at the top level (not inside a branch),
+        with an empty `type: object` branch, naming only parent-defined properties.
+      nullable: true
+      allOf:
+        - $ref: "#/components/schemas/ExternalPaymentScheduleBase"
+        - type: object
+      required:
+        - adjusted_start_date
+        - end_date
+        - interval
+        - interval_execution_day
+        - start_date
+    ExternalPaymentScheduleRequest:
+      allOf:
+        - $ref: "#/components/schemas/ExternalPaymentScheduleBase"
+        - type: object
+      required:
+        - start_date
+        - interval
+        - interval_execution_day

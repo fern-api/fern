@@ -1597,6 +1597,542 @@
             "extends": null,
             "additionalProperties": false,
             "deferredUnionBaseProperties": null
+        },
+        "type_:PaymentScheduleInterval": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PaymentScheduleInterval",
+                    "camelCase": {
+                        "unsafeName": "paymentScheduleInterval",
+                        "safeName": "paymentScheduleInterval"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment_schedule_interval",
+                        "safeName": "payment_schedule_interval"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT_SCHEDULE_INTERVAL",
+                        "safeName": "PAYMENT_SCHEDULE_INTERVAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PaymentScheduleInterval",
+                        "safeName": "PaymentScheduleInterval"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "WEEKLY",
+                    "name": {
+                        "originalName": "WEEKLY",
+                        "camelCase": {
+                            "unsafeName": "weekly",
+                            "safeName": "weekly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "weekly",
+                            "safeName": "weekly"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WEEKLY",
+                            "safeName": "WEEKLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Weekly",
+                            "safeName": "Weekly"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "MONTHLY",
+                    "name": {
+                        "originalName": "MONTHLY",
+                        "camelCase": {
+                            "unsafeName": "monthly",
+                            "safeName": "monthly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "monthly",
+                            "safeName": "monthly"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MONTHLY",
+                            "safeName": "MONTHLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Monthly",
+                            "safeName": "Monthly"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:ExternalPaymentScheduleBase": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ExternalPaymentScheduleBase",
+                    "camelCase": {
+                        "unsafeName": "externalPaymentScheduleBase",
+                        "safeName": "externalPaymentScheduleBase"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "external_payment_schedule_base",
+                        "safeName": "external_payment_schedule_base"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EXTERNAL_PAYMENT_SCHEDULE_BASE",
+                        "safeName": "EXTERNAL_PAYMENT_SCHEDULE_BASE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ExternalPaymentScheduleBase",
+                        "safeName": "ExternalPaymentScheduleBase"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "interval",
+                        "name": {
+                            "originalName": "interval",
+                            "camelCase": {
+                                "unsafeName": "interval",
+                                "safeName": "interval"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "interval",
+                                "safeName": "interval"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INTERVAL",
+                                "safeName": "INTERVAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Interval",
+                                "safeName": "Interval"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:PaymentScheduleInterval"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "interval_execution_day",
+                        "name": {
+                            "originalName": "interval_execution_day",
+                            "camelCase": {
+                                "unsafeName": "intervalExecutionDay",
+                                "safeName": "intervalExecutionDay"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "interval_execution_day",
+                                "safeName": "interval_execution_day"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INTERVAL_EXECUTION_DAY",
+                                "safeName": "INTERVAL_EXECUTION_DAY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IntervalExecutionDay",
+                                "safeName": "IntervalExecutionDay"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "start_date",
+                        "name": {
+                            "originalName": "start_date",
+                            "camelCase": {
+                                "unsafeName": "startDate",
+                                "safeName": "startDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "start_date",
+                                "safeName": "start_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "START_DATE",
+                                "safeName": "START_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StartDate",
+                                "safeName": "StartDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "end_date",
+                        "name": {
+                            "originalName": "end_date",
+                            "camelCase": {
+                                "unsafeName": "endDate",
+                                "safeName": "endDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "end_date",
+                                "safeName": "end_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "END_DATE",
+                                "safeName": "END_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EndDate",
+                                "safeName": "EndDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "DATE"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "adjusted_start_date",
+                        "name": {
+                            "originalName": "adjusted_start_date",
+                            "camelCase": {
+                                "unsafeName": "adjustedStartDate",
+                                "safeName": "adjustedStartDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "adjusted_start_date",
+                                "safeName": "adjusted_start_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ADJUSTED_START_DATE",
+                                "safeName": "ADJUSTED_START_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AdjustedStartDate",
+                                "safeName": "AdjustedStartDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "DATE"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": true,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:ExternalPaymentScheduleGet": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ExternalPaymentScheduleGet",
+                    "camelCase": {
+                        "unsafeName": "externalPaymentScheduleGet",
+                        "safeName": "externalPaymentScheduleGet"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "external_payment_schedule_get",
+                        "safeName": "external_payment_schedule_get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EXTERNAL_PAYMENT_SCHEDULE_GET",
+                        "safeName": "EXTERNAL_PAYMENT_SCHEDULE_GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ExternalPaymentScheduleGet",
+                        "safeName": "ExternalPaymentScheduleGet"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "adjusted_start_date",
+                        "name": {
+                            "originalName": "adjusted_start_date",
+                            "camelCase": {
+                                "unsafeName": "adjustedStartDate",
+                                "safeName": "adjustedStartDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "adjusted_start_date",
+                                "safeName": "adjusted_start_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ADJUSTED_START_DATE",
+                                "safeName": "ADJUSTED_START_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AdjustedStartDate",
+                                "safeName": "AdjustedStartDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "end_date",
+                        "name": {
+                            "originalName": "end_date",
+                            "camelCase": {
+                                "unsafeName": "endDate",
+                                "safeName": "endDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "end_date",
+                                "safeName": "end_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "END_DATE",
+                                "safeName": "END_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EndDate",
+                                "safeName": "EndDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "interval",
+                        "name": {
+                            "originalName": "interval",
+                            "camelCase": {
+                                "unsafeName": "interval",
+                                "safeName": "interval"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "interval",
+                                "safeName": "interval"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INTERVAL",
+                                "safeName": "INTERVAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Interval",
+                                "safeName": "Interval"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:PaymentScheduleInterval"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "interval_execution_day",
+                        "name": {
+                            "originalName": "interval_execution_day",
+                            "camelCase": {
+                                "unsafeName": "intervalExecutionDay",
+                                "safeName": "intervalExecutionDay"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "interval_execution_day",
+                                "safeName": "interval_execution_day"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INTERVAL_EXECUTION_DAY",
+                                "safeName": "INTERVAL_EXECUTION_DAY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IntervalExecutionDay",
+                                "safeName": "IntervalExecutionDay"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "start_date",
+                        "name": {
+                            "originalName": "start_date",
+                            "camelCase": {
+                                "unsafeName": "startDate",
+                                "safeName": "startDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "start_date",
+                                "safeName": "start_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "START_DATE",
+                                "safeName": "START_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StartDate",
+                                "safeName": "StartDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DATE"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1858,6 +2394,279 @@
                                     "pascalCase": {
                                         "unsafeName": "LegacyTag",
                                         "safeName": "LegacyTag"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createPaymentSchedule": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createPaymentSchedule",
+                    "camelCase": {
+                        "unsafeName": "createPaymentSchedule",
+                        "safeName": "createPaymentSchedule"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_payment_schedule",
+                        "safeName": "create_payment_schedule"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_PAYMENT_SCHEDULE",
+                        "safeName": "CREATE_PAYMENT_SCHEDULE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreatePaymentSchedule",
+                        "safeName": "CreatePaymentSchedule"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/payment_schedules"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ExternalPaymentScheduleRequest",
+                        "camelCase": {
+                            "unsafeName": "externalPaymentScheduleRequest",
+                            "safeName": "externalPaymentScheduleRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "external_payment_schedule_request",
+                            "safeName": "external_payment_schedule_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXTERNAL_PAYMENT_SCHEDULE_REQUEST",
+                            "safeName": "EXTERNAL_PAYMENT_SCHEDULE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ExternalPaymentScheduleRequest",
+                            "safeName": "ExternalPaymentScheduleRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "start_date",
+                                "name": {
+                                    "originalName": "start_date",
+                                    "camelCase": {
+                                        "unsafeName": "startDate",
+                                        "safeName": "startDate"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "start_date",
+                                        "safeName": "start_date"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "START_DATE",
+                                        "safeName": "START_DATE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "StartDate",
+                                        "safeName": "StartDate"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "DATE"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "interval",
+                                "name": {
+                                    "originalName": "interval",
+                                    "camelCase": {
+                                        "unsafeName": "interval",
+                                        "safeName": "interval"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "interval",
+                                        "safeName": "interval"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INTERVAL",
+                                        "safeName": "INTERVAL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Interval",
+                                        "safeName": "Interval"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_:PaymentScheduleInterval"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "interval_execution_day",
+                                "name": {
+                                    "originalName": "interval_execution_day",
+                                    "camelCase": {
+                                        "unsafeName": "intervalExecutionDay",
+                                        "safeName": "intervalExecutionDay"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "interval_execution_day",
+                                        "safeName": "interval_execution_day"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INTERVAL_EXECUTION_DAY",
+                                        "safeName": "INTERVAL_EXECUTION_DAY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IntervalExecutionDay",
+                                        "safeName": "IntervalExecutionDay"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "end_date",
+                                "name": {
+                                    "originalName": "end_date",
+                                    "camelCase": {
+                                        "unsafeName": "endDate",
+                                        "safeName": "endDate"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "end_date",
+                                        "safeName": "end_date"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "END_DATE",
+                                        "safeName": "END_DATE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "EndDate",
+                                        "safeName": "EndDate"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "DATE"
+                                    }
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "adjusted_start_date",
+                                "name": {
+                                    "originalName": "adjusted_start_date",
+                                    "camelCase": {
+                                        "unsafeName": "adjustedStartDate",
+                                        "safeName": "adjustedStartDate"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "adjusted_start_date",
+                                        "safeName": "adjusted_start_date"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ADJUSTED_START_DATE",
+                                        "safeName": "ADJUSTED_START_DATE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "AdjustedStartDate",
+                                        "safeName": "AdjustedStartDate"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "DATE"
+                                    }
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "description",
+                                "name": {
+                                    "originalName": "description",
+                                    "camelCase": {
+                                        "unsafeName": "description",
+                                        "safeName": "description"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "description",
+                                        "safeName": "description"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DESCRIPTION",
+                                        "safeName": "DESCRIPTION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Description",
+                                        "safeName": "Description"
                                     }
                                 }
                             },

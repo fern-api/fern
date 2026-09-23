@@ -107,3 +107,93 @@ client.CreatePlant(
 </dl>
 </details>
 
+<details><summary><code>client.CreatePaymentSchedule(request) -> *fern.ExternalPaymentScheduleGet</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ExternalPaymentScheduleRequest{
+    StartDate: fern.MustParseDate(
+        "2023-01-15",
+    ),
+    Interval: fern.PaymentScheduleIntervalWeekly,
+    IntervalExecutionDay: 1,
+}
+client.CreatePaymentSchedule(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startDate:** `time.Time` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interval:** `*fern.PaymentScheduleInterval` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intervalExecutionDay:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endDate:** `*time.Time` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**adjustedStartDate:** `*time.Time` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

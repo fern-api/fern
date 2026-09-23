@@ -12,3 +12,8 @@
     request bodies, `x-fern-property-name`, `x-fern-audiences`, `deprecated`, access, and XML
     encoding) instead of being copied as bare type references.
   type: fix
+- summary: |
+    Fix `fern check` reporting duplicate properties when an OpenAPI schema with a `nullable: true`
+    `allOf` parent lists parent-defined properties in its own top-level `required`. The nullable
+    parent is now inlined (instead of being kept in `extends` alongside the redeclared property).
+  type: fix

@@ -328,11 +328,12 @@ export function getAllParentSchemasToInline({
     if (schema == null) {
         return [];
     }
-    if (schema.type === "reference") {
-        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace });
+    const unwrapped = schema.type === "nullable" ? schema.value : schema;
+    if (unwrapped.type === "reference") {
+        return getAllParentSchemasToInline({ property, schemaId: unwrapped.schema, context, namespace });
     }
-    if (schema.type === "object") {
-        const { properties, allOf } = getProperties(context, schemaId, namespace);
+    if (unwrapped.type === "object") {
+        const { properties, allOf } = getPropertiesFromSchema(context, unwrapped, namespace);
         const hasProperty = properties.some((p) => {
             return p.key === property;
         });

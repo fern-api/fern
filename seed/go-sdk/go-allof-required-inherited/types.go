@@ -11,6 +11,105 @@ import (
 )
 
 var (
+	externalPaymentScheduleRequestFieldStartDate            = big.NewInt(1 << 0)
+	externalPaymentScheduleRequestFieldInterval             = big.NewInt(1 << 1)
+	externalPaymentScheduleRequestFieldIntervalExecutionDay = big.NewInt(1 << 2)
+	externalPaymentScheduleRequestFieldEndDate              = big.NewInt(1 << 3)
+	externalPaymentScheduleRequestFieldAdjustedStartDate    = big.NewInt(1 << 4)
+	externalPaymentScheduleRequestFieldDescription          = big.NewInt(1 << 5)
+)
+
+type ExternalPaymentScheduleRequest struct {
+	StartDate            time.Time               `json:"start_date" url:"-" format:"date"`
+	Interval             PaymentScheduleInterval `json:"interval" url:"-"`
+	IntervalExecutionDay int                     `json:"interval_execution_day" url:"-"`
+	EndDate              *time.Time              `json:"end_date,omitempty" url:"-" format:"date"`
+	AdjustedStartDate    *time.Time              `json:"adjusted_start_date,omitempty" url:"-" format:"date"`
+	Description          *string                 `json:"description,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (e *ExternalPaymentScheduleRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
+	}
+	next.Or(next, field)
+	e.explicitFields = next
+}
+
+// SetStartDate sets the StartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetStartDate(startDate time.Time) {
+	e.StartDate = startDate
+	e.require(externalPaymentScheduleRequestFieldStartDate)
+}
+
+// SetInterval sets the Interval field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetInterval(interval PaymentScheduleInterval) {
+	e.Interval = interval
+	e.require(externalPaymentScheduleRequestFieldInterval)
+}
+
+// SetIntervalExecutionDay sets the IntervalExecutionDay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetIntervalExecutionDay(intervalExecutionDay int) {
+	e.IntervalExecutionDay = intervalExecutionDay
+	e.require(externalPaymentScheduleRequestFieldIntervalExecutionDay)
+}
+
+// SetEndDate sets the EndDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetEndDate(endDate *time.Time) {
+	e.EndDate = endDate
+	e.require(externalPaymentScheduleRequestFieldEndDate)
+}
+
+// SetAdjustedStartDate sets the AdjustedStartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetAdjustedStartDate(adjustedStartDate *time.Time) {
+	e.AdjustedStartDate = adjustedStartDate
+	e.require(externalPaymentScheduleRequestFieldAdjustedStartDate)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleRequest) SetDescription(description *string) {
+	e.Description = description
+	e.require(externalPaymentScheduleRequestFieldDescription)
+}
+
+func (e *ExternalPaymentScheduleRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExternalPaymentScheduleRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*e = ExternalPaymentScheduleRequest(body)
+	return nil
+}
+
+func (e *ExternalPaymentScheduleRequest) MarshalJSON() ([]byte, error) {
+	type embed ExternalPaymentScheduleRequest
+	var marshaler = struct {
+		embed
+		StartDate         *internal.Date `json:"start_date"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+	}{
+		embed:             embed(*e),
+		StartDate:         internal.NewDate(e.StartDate),
+		EndDate:           internal.NewOptionalDate(e.EndDate),
+		AdjustedStartDate: internal.NewOptionalDate(e.AdjustedStartDate),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	plantCreateFieldNickname  = big.NewInt(1 << 0)
 	plantCreateFieldSpecies   = big.NewInt(1 << 1)
 	plantCreateFieldLegacyTag = big.NewInt(1 << 2)
@@ -122,6 +221,387 @@ func (t *TransactionsGetRequest) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+// Nullable parent with `additionalProperties`; nothing is required here.
+var (
+	externalPaymentScheduleBaseFieldInterval             = big.NewInt(1 << 0)
+	externalPaymentScheduleBaseFieldIntervalExecutionDay = big.NewInt(1 << 1)
+	externalPaymentScheduleBaseFieldStartDate            = big.NewInt(1 << 2)
+	externalPaymentScheduleBaseFieldEndDate              = big.NewInt(1 << 3)
+	externalPaymentScheduleBaseFieldAdjustedStartDate    = big.NewInt(1 << 4)
+	externalPaymentScheduleBaseFieldDescription          = big.NewInt(1 << 5)
+)
+
+type ExternalPaymentScheduleBase struct {
+	Interval             *PaymentScheduleInterval `json:"interval,omitempty" url:"interval,omitempty"`
+	IntervalExecutionDay *int                     `json:"interval_execution_day,omitempty" url:"interval_execution_day,omitempty"`
+	StartDate            *time.Time               `json:"start_date,omitempty" url:"start_date,omitempty" format:"date"`
+	EndDate              *time.Time               `json:"end_date,omitempty" url:"end_date,omitempty" format:"date"`
+	AdjustedStartDate    *time.Time               `json:"adjusted_start_date,omitempty" url:"adjusted_start_date,omitempty" format:"date"`
+	Description          *string                  `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (e *ExternalPaymentScheduleBase) GetInterval() *PaymentScheduleInterval {
+	if e == nil {
+		return nil
+	}
+	return e.Interval
+}
+
+func (e *ExternalPaymentScheduleBase) GetIntervalExecutionDay() *int {
+	if e == nil {
+		return nil
+	}
+	return e.IntervalExecutionDay
+}
+
+func (e *ExternalPaymentScheduleBase) GetStartDate() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.StartDate
+}
+
+func (e *ExternalPaymentScheduleBase) GetEndDate() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.EndDate
+}
+
+func (e *ExternalPaymentScheduleBase) GetAdjustedStartDate() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.AdjustedStartDate
+}
+
+func (e *ExternalPaymentScheduleBase) GetDescription() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Description
+}
+
+func (e *ExternalPaymentScheduleBase) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.ExtraProperties
+}
+
+func (e *ExternalPaymentScheduleBase) require(field *big.Int) {
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
+	}
+	next.Or(next, field)
+	e.explicitFields = next
+}
+
+// SetInterval sets the Interval field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetInterval(interval *PaymentScheduleInterval) {
+	e.Interval = interval
+	e.require(externalPaymentScheduleBaseFieldInterval)
+}
+
+// SetIntervalExecutionDay sets the IntervalExecutionDay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetIntervalExecutionDay(intervalExecutionDay *int) {
+	e.IntervalExecutionDay = intervalExecutionDay
+	e.require(externalPaymentScheduleBaseFieldIntervalExecutionDay)
+}
+
+// SetStartDate sets the StartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetStartDate(startDate *time.Time) {
+	e.StartDate = startDate
+	e.require(externalPaymentScheduleBaseFieldStartDate)
+}
+
+// SetEndDate sets the EndDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetEndDate(endDate *time.Time) {
+	e.EndDate = endDate
+	e.require(externalPaymentScheduleBaseFieldEndDate)
+}
+
+// SetAdjustedStartDate sets the AdjustedStartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetAdjustedStartDate(adjustedStartDate *time.Time) {
+	e.AdjustedStartDate = adjustedStartDate
+	e.require(externalPaymentScheduleBaseFieldAdjustedStartDate)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleBase) SetDescription(description *string) {
+	e.Description = description
+	e.require(externalPaymentScheduleBaseFieldDescription)
+}
+
+func (e *ExternalPaymentScheduleBase) UnmarshalJSON(data []byte) error {
+	type embed ExternalPaymentScheduleBase
+	var unmarshaler = struct {
+		embed
+		StartDate         *internal.Date `json:"start_date,omitempty"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*e = ExternalPaymentScheduleBase(unmarshaler.embed)
+	e.StartDate = unmarshaler.StartDate.TimePtr()
+	e.EndDate = unmarshaler.EndDate.TimePtr()
+	e.AdjustedStartDate = unmarshaler.AdjustedStartDate.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.ExtraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExternalPaymentScheduleBase) MarshalJSON() ([]byte, error) {
+	type embed ExternalPaymentScheduleBase
+	var marshaler = struct {
+		embed
+		StartDate         *internal.Date `json:"start_date,omitempty"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+	}{
+		embed:             embed(*e),
+		StartDate:         internal.NewOptionalDate(e.StartDate),
+		EndDate:           internal.NewOptionalDate(e.EndDate),
+		AdjustedStartDate: internal.NewOptionalDate(e.AdjustedStartDate),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, e.ExtraProperties)
+}
+
+func (e *ExternalPaymentScheduleBase) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// Nullable schema whose `required` sits at the top level (not inside a branch),
+// with an empty `type: object` branch, naming only parent-defined properties.
+var (
+	externalPaymentScheduleGetFieldAdjustedStartDate    = big.NewInt(1 << 0)
+	externalPaymentScheduleGetFieldEndDate              = big.NewInt(1 << 1)
+	externalPaymentScheduleGetFieldInterval             = big.NewInt(1 << 2)
+	externalPaymentScheduleGetFieldIntervalExecutionDay = big.NewInt(1 << 3)
+	externalPaymentScheduleGetFieldStartDate            = big.NewInt(1 << 4)
+	externalPaymentScheduleGetFieldDescription          = big.NewInt(1 << 5)
+)
+
+// externalPaymentScheduleGetRequiredNullableFields maps the wire names of ExternalPaymentScheduleGet's required, nullable fields to their field bits.
+var externalPaymentScheduleGetRequiredNullableFields = map[string]*big.Int{
+	"adjusted_start_date": externalPaymentScheduleGetFieldAdjustedStartDate,
+	"end_date":            externalPaymentScheduleGetFieldEndDate,
+}
+
+type ExternalPaymentScheduleGet struct {
+	AdjustedStartDate    *time.Time              `json:"adjusted_start_date,omitempty" url:"adjusted_start_date,omitempty" format:"date"`
+	EndDate              *time.Time              `json:"end_date,omitempty" url:"end_date,omitempty" format:"date"`
+	Interval             PaymentScheduleInterval `json:"interval" url:"interval"`
+	IntervalExecutionDay int                     `json:"interval_execution_day" url:"interval_execution_day"`
+	StartDate            time.Time               `json:"start_date" url:"start_date" format:"date"`
+	Description          *string                 `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ExternalPaymentScheduleGet) GetAdjustedStartDate() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.AdjustedStartDate
+}
+
+func (e *ExternalPaymentScheduleGet) GetEndDate() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.EndDate
+}
+
+func (e *ExternalPaymentScheduleGet) GetInterval() PaymentScheduleInterval {
+	if e == nil {
+		return ""
+	}
+	return e.Interval
+}
+
+func (e *ExternalPaymentScheduleGet) GetIntervalExecutionDay() int {
+	if e == nil {
+		return 0
+	}
+	return e.IntervalExecutionDay
+}
+
+func (e *ExternalPaymentScheduleGet) GetStartDate() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.StartDate
+}
+
+func (e *ExternalPaymentScheduleGet) GetDescription() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Description
+}
+
+func (e *ExternalPaymentScheduleGet) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExternalPaymentScheduleGet) require(field *big.Int) {
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
+	}
+	next.Or(next, field)
+	e.explicitFields = next
+}
+
+// SetAdjustedStartDate sets the AdjustedStartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetAdjustedStartDate(adjustedStartDate *time.Time) {
+	e.AdjustedStartDate = adjustedStartDate
+	e.require(externalPaymentScheduleGetFieldAdjustedStartDate)
+}
+
+// SetEndDate sets the EndDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetEndDate(endDate *time.Time) {
+	e.EndDate = endDate
+	e.require(externalPaymentScheduleGetFieldEndDate)
+}
+
+// SetInterval sets the Interval field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetInterval(interval PaymentScheduleInterval) {
+	e.Interval = interval
+	e.require(externalPaymentScheduleGetFieldInterval)
+}
+
+// SetIntervalExecutionDay sets the IntervalExecutionDay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetIntervalExecutionDay(intervalExecutionDay int) {
+	e.IntervalExecutionDay = intervalExecutionDay
+	e.require(externalPaymentScheduleGetFieldIntervalExecutionDay)
+}
+
+// SetStartDate sets the StartDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetStartDate(startDate time.Time) {
+	e.StartDate = startDate
+	e.require(externalPaymentScheduleGetFieldStartDate)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExternalPaymentScheduleGet) SetDescription(description *string) {
+	e.Description = description
+	e.require(externalPaymentScheduleGetFieldDescription)
+}
+
+func (e *ExternalPaymentScheduleGet) UnmarshalJSON(data []byte) error {
+	type embed ExternalPaymentScheduleGet
+	var unmarshaler = struct {
+		embed
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		StartDate         *internal.Date `json:"start_date"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*e = ExternalPaymentScheduleGet(unmarshaler.embed)
+	e.AdjustedStartDate = unmarshaler.AdjustedStartDate.TimePtr()
+	e.EndDate = unmarshaler.EndDate.TimePtr()
+	e.StartDate = unmarshaler.StartDate.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, externalPaymentScheduleGetRequiredNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		e.require(presentFields)
+	}
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExternalPaymentScheduleGet) MarshalJSON() ([]byte, error) {
+	type embed ExternalPaymentScheduleGet
+	var marshaler = struct {
+		embed
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		StartDate         *internal.Date `json:"start_date"`
+	}{
+		embed:             embed(*e),
+		AdjustedStartDate: internal.NewOptionalDate(e.AdjustedStartDate),
+		EndDate:           internal.NewOptionalDate(e.EndDate),
+		StartDate:         internal.NewDate(e.StartDate),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ExternalPaymentScheduleGet) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 var (
@@ -240,6 +720,28 @@ func (i *Identifiable) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
+}
+
+type PaymentScheduleInterval string
+
+const (
+	PaymentScheduleIntervalWeekly  PaymentScheduleInterval = "WEEKLY"
+	PaymentScheduleIntervalMonthly PaymentScheduleInterval = "MONTHLY"
+)
+
+func NewPaymentScheduleIntervalFromString(s string) (PaymentScheduleInterval, error) {
+	switch s {
+	case "WEEKLY":
+		return PaymentScheduleIntervalWeekly, nil
+	case "MONTHLY":
+		return PaymentScheduleIntervalMonthly, nil
+	}
+	var t PaymentScheduleInterval
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PaymentScheduleInterval) Ptr() *PaymentScheduleInterval {
+	return &p
 }
 
 // Middle of a three-level allOf chain; defines nothing required.

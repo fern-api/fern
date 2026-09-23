@@ -10,6 +10,246 @@ import (
 	time "time"
 )
 
+func TestSettersExternalPaymentScheduleRequest(t *testing.T) {
+	t.Run("SetStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueStartDate time.Time
+		obj.SetStartDate(fernTestValueStartDate)
+		assert.Equal(t, fernTestValueStartDate, obj.StartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetInterval", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueInterval PaymentScheduleInterval
+		obj.SetInterval(fernTestValueInterval)
+		assert.Equal(t, fernTestValueInterval, obj.Interval)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIntervalExecutionDay", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueIntervalExecutionDay int
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+		assert.Equal(t, fernTestValueIntervalExecutionDay, obj.IntervalExecutionDay)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEndDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueEndDate *time.Time
+		obj.SetEndDate(fernTestValueEndDate)
+		assert.Equal(t, fernTestValueEndDate, obj.EndDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAdjustedStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueAdjustedStartDate *time.Time
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+		assert.Equal(t, fernTestValueAdjustedStartDate, obj.AdjustedStartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDescription", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueDescription *string
+		obj.SetDescription(fernTestValueDescription)
+		assert.Equal(t, fernTestValueDescription, obj.Description)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitExternalPaymentScheduleRequest(t *testing.T) {
+	t.Run("SetStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueStartDate time.Time
+
+		// Act
+		obj.SetStartDate(fernTestValueStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetInterval_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueInterval PaymentScheduleInterval
+
+		// Act
+		obj.SetInterval(fernTestValueInterval)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIntervalExecutionDay_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueIntervalExecutionDay int
+
+		// Act
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEndDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueEndDate *time.Time
+
+		// Act
+		obj.SetEndDate(fernTestValueEndDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAdjustedStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueAdjustedStartDate *time.Time
+
+		// Act
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDescription_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleRequest{}
+		var fernTestValueDescription *string
+
+		// Act
+		obj.SetDescription(fernTestValueDescription)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersPlantCreate(t *testing.T) {
 	t.Run("SetNickname", func(t *testing.T) {
 		obj := &PlantCreate{}
@@ -153,6 +393,858 @@ func TestSettersMarkExplicitTransactionsGetRequest(t *testing.T) {
 
 		// Act
 		obj.SetAccessToken(fernTestValueAccessToken)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("SetInterval", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueInterval *PaymentScheduleInterval
+		obj.SetInterval(fernTestValueInterval)
+		assert.Equal(t, fernTestValueInterval, obj.Interval)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIntervalExecutionDay", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueIntervalExecutionDay *int
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+		assert.Equal(t, fernTestValueIntervalExecutionDay, obj.IntervalExecutionDay)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueStartDate *time.Time
+		obj.SetStartDate(fernTestValueStartDate)
+		assert.Equal(t, fernTestValueStartDate, obj.StartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEndDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueEndDate *time.Time
+		obj.SetEndDate(fernTestValueEndDate)
+		assert.Equal(t, fernTestValueEndDate, obj.EndDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAdjustedStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueAdjustedStartDate *time.Time
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+		assert.Equal(t, fernTestValueAdjustedStartDate, obj.AdjustedStartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDescription", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueDescription *string
+		obj.SetDescription(fernTestValueDescription)
+		assert.Equal(t, fernTestValueDescription, obj.Description)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("GetInterval", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *PaymentScheduleInterval
+		obj.Interval = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetInterval(), "getter should return the property value")
+	})
+
+	t.Run("GetInterval_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.Interval = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetInterval(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetInterval_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetInterval() // Should return zero value
+	})
+
+	t.Run("GetIntervalExecutionDay", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *int
+		obj.IntervalExecutionDay = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIntervalExecutionDay(), "getter should return the property value")
+	})
+
+	t.Run("GetIntervalExecutionDay_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.IntervalExecutionDay = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetIntervalExecutionDay(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetIntervalExecutionDay_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIntervalExecutionDay() // Should return zero value
+	})
+
+	t.Run("GetStartDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *time.Time
+		obj.StartDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStartDate(), "getter should return the property value")
+	})
+
+	t.Run("GetStartDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.StartDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetStartDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetStartDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStartDate() // Should return zero value
+	})
+
+	t.Run("GetEndDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *time.Time
+		obj.EndDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEndDate(), "getter should return the property value")
+	})
+
+	t.Run("GetEndDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.EndDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetEndDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetEndDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEndDate() // Should return zero value
+	})
+
+	t.Run("GetAdjustedStartDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *time.Time
+		obj.AdjustedStartDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAdjustedStartDate(), "getter should return the property value")
+	})
+
+	t.Run("GetAdjustedStartDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.AdjustedStartDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAdjustedStartDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAdjustedStartDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAdjustedStartDate() // Should return zero value
+	})
+
+	t.Run("GetDescription", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var expected *string
+		obj.Description = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDescription(), "getter should return the property value")
+	})
+
+	t.Run("GetDescription_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		obj.Description = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDescription(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDescription_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDescription() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("SetInterval_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueInterval *PaymentScheduleInterval
+
+		// Act
+		obj.SetInterval(fernTestValueInterval)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIntervalExecutionDay_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueIntervalExecutionDay *int
+
+		// Act
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueStartDate *time.Time
+
+		// Act
+		obj.SetStartDate(fernTestValueStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEndDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueEndDate *time.Time
+
+		// Act
+		obj.SetEndDate(fernTestValueEndDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAdjustedStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueAdjustedStartDate *time.Time
+
+		// Act
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDescription_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+		var fernTestValueDescription *string
+
+		// Act
+		obj.SetDescription(fernTestValueDescription)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("SetAdjustedStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueAdjustedStartDate *time.Time
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+		assert.Equal(t, fernTestValueAdjustedStartDate, obj.AdjustedStartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEndDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueEndDate *time.Time
+		obj.SetEndDate(fernTestValueEndDate)
+		assert.Equal(t, fernTestValueEndDate, obj.EndDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetInterval", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueInterval PaymentScheduleInterval
+		obj.SetInterval(fernTestValueInterval)
+		assert.Equal(t, fernTestValueInterval, obj.Interval)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIntervalExecutionDay", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueIntervalExecutionDay int
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+		assert.Equal(t, fernTestValueIntervalExecutionDay, obj.IntervalExecutionDay)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetStartDate", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueStartDate time.Time
+		obj.SetStartDate(fernTestValueStartDate)
+		assert.Equal(t, fernTestValueStartDate, obj.StartDate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDescription", func(t *testing.T) {
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueDescription *string
+		obj.SetDescription(fernTestValueDescription)
+		assert.Equal(t, fernTestValueDescription, obj.Description)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("GetAdjustedStartDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected *time.Time
+		obj.AdjustedStartDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAdjustedStartDate(), "getter should return the property value")
+	})
+
+	t.Run("GetAdjustedStartDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		obj.AdjustedStartDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAdjustedStartDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAdjustedStartDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAdjustedStartDate() // Should return zero value
+	})
+
+	t.Run("GetEndDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected *time.Time
+		obj.EndDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEndDate(), "getter should return the property value")
+	})
+
+	t.Run("GetEndDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		obj.EndDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetEndDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetEndDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEndDate() // Should return zero value
+	})
+
+	t.Run("GetInterval", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected PaymentScheduleInterval
+		obj.Interval = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetInterval(), "getter should return the property value")
+	})
+
+	t.Run("GetInterval_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetInterval() // Should return zero value
+	})
+
+	t.Run("GetIntervalExecutionDay", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected int
+		obj.IntervalExecutionDay = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIntervalExecutionDay(), "getter should return the property value")
+	})
+
+	t.Run("GetIntervalExecutionDay_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIntervalExecutionDay() // Should return zero value
+	})
+
+	t.Run("GetStartDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected time.Time
+		obj.StartDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStartDate(), "getter should return the property value")
+	})
+
+	t.Run("GetStartDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStartDate() // Should return zero value
+	})
+
+	t.Run("GetDescription", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var expected *string
+		obj.Description = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDescription(), "getter should return the property value")
+	})
+
+	t.Run("GetDescription_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		obj.Description = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDescription(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDescription_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDescription() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("SetAdjustedStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueAdjustedStartDate *time.Time
+
+		// Act
+		obj.SetAdjustedStartDate(fernTestValueAdjustedStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEndDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueEndDate *time.Time
+
+		// Act
+		obj.SetEndDate(fernTestValueEndDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetInterval_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueInterval PaymentScheduleInterval
+
+		// Act
+		obj.SetInterval(fernTestValueInterval)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIntervalExecutionDay_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueIntervalExecutionDay int
+
+		// Act
+		obj.SetIntervalExecutionDay(fernTestValueIntervalExecutionDay)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetStartDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueStartDate time.Time
+
+		// Act
+		obj.SetStartDate(fernTestValueStartDate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDescription_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+		var fernTestValueDescription *string
+
+		// Act
+		obj.SetDescription(fernTestValueDescription)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3030,6 +4122,72 @@ func TestSettersMarkExplicitTransactionsGetResponse(t *testing.T) {
 
 }
 
+func TestJSONMarshalingExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleBase{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ExternalPaymentScheduleBase
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleBase
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleBase
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExternalPaymentScheduleGet{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ExternalPaymentScheduleGet
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleGet
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleGet
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingIdentifiable(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -3294,6 +4452,50 @@ func TestJSONMarshalingTransactionsGetResponse(t *testing.T) {
 	})
 }
 
+func TestRequiredNullableRoundTripExternalPaymentScheduleGet(t *testing.T) {
+	requiredNullableKeys := []string{
+		"adjusted_start_date",
+		"end_date",
+	}
+	marshalToMap := func(t *testing.T, obj *ExternalPaymentScheduleGet) map[string]json.RawMessage {
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		var result map[string]json.RawMessage
+		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
+		return result
+	}
+
+	t.Run("NullPreserved", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleGet
+		require.NoError(t, json.Unmarshal([]byte(`{"adjusted_start_date":null,"end_date":null}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range requiredNullableKeys {
+			value, ok := result[key]
+			require.True(t, ok, "required nullable field %q received as null should be present in the output", key)
+			assert.Equal(t, "null", string(value), "required nullable field %q received as null should be null in the output", key)
+		}
+	})
+
+	t.Run("AbsentStaysAbsent", func(t *testing.T) {
+		t.Parallel()
+		var obj ExternalPaymentScheduleGet
+		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range requiredNullableKeys {
+			assert.NotContains(t, result, key, "required nullable field %q absent from the input should be absent from the output", key)
+		}
+	})
+
+	t.Run("FreshValueOmits", func(t *testing.T) {
+		t.Parallel()
+		result := marshalToMap(t, &ExternalPaymentScheduleGet{})
+		for _, key := range requiredNullableKeys {
+			assert.NotContains(t, result, key, "required nullable field %q should be omitted from a freshly constructed value", key)
+		}
+	})
+}
+
 func TestRequiredNullableRoundTripPlantDetails(t *testing.T) {
 	requiredNullableKeys := []string{
 		"nickname",
@@ -3471,6 +4673,38 @@ func TestRequiredNullableRoundTripTransactionBase(t *testing.T) {
 	})
 }
 
+func TestStringExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ExternalPaymentScheduleBase{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ExternalPaymentScheduleGet{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringIdentifiable(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -3596,6 +4830,81 @@ func TestStringTransactionsGetResponse(t *testing.T) {
 		var obj *TransactionsGetResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumPaymentScheduleInterval(t *testing.T) {
+	t.Run("NewFromString_WEEKLY", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPaymentScheduleIntervalFromString("WEEKLY")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PaymentScheduleInterval("WEEKLY"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_MONTHLY", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPaymentScheduleIntervalFromString("MONTHLY")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PaymentScheduleInterval("MONTHLY"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPaymentScheduleIntervalFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPaymentScheduleIntervalFromString("WEEKLY")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestExtraPropertiesExternalPaymentScheduleBase(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ExternalPaymentScheduleBase{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleBase
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesExternalPaymentScheduleGet(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ExternalPaymentScheduleGet{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExternalPaymentScheduleGet
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 

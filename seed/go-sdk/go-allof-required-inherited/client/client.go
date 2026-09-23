@@ -84,3 +84,32 @@ func (c *Client) CreatePlant(
 	}
 	return response.Body, nil
 }
+
+// Example:
+//
+//	request := &fern.ExternalPaymentScheduleRequest{
+//	    StartDate: fern.MustParseDate(
+//	        "2023-01-15",
+//	    ),
+//	    Interval: fern.PaymentScheduleIntervalWeekly,
+//	    IntervalExecutionDay: 1,
+//	}
+//	client.CreatePaymentSchedule(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreatePaymentSchedule(
+	ctx context.Context,
+	request *fern.ExternalPaymentScheduleRequest,
+	opts ...option.RequestOption,
+) (*fern.ExternalPaymentScheduleGet, error) {
+	response, err := c.WithRawResponse.CreatePaymentSchedule(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
