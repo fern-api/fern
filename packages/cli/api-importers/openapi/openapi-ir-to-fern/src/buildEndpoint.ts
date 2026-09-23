@@ -463,7 +463,7 @@ export function buildEndpoint({
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode)
+            "status-code": httpError.isWildcardStatusCode === true ? statusCode : parseInt(statusCode)
         };
 
         const errorNamespace = getErrorNamespace({
@@ -491,7 +491,7 @@ export function buildEndpoint({
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: context.isErrorUnknownSchema({
-                statusCode: parseInt(statusCode),
+                statusCode,
                 namespace: httpError.namespace
             })
                 ? { ...errorDeclaration, type: "unknown" }

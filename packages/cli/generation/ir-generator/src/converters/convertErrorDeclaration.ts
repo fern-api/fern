@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { parseErrorStatusCode, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ErrorDeclaration, FernIr } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
@@ -46,6 +46,13 @@ export function convertErrorDeclaration({
         }
     }
 
+    const parsedStatusCode = parseErrorStatusCode(errorDeclaration["status-code"]);
+    if (parsedStatusCode == null) {
+        throw new Error(
+            `Error ${errorName} has an invalid status-code "${errorDeclaration["status-code"]}". Expected an integer, "4XX", or "5XX".`
+        );
+    }
+
     return {
         name: parseErrorName({
             errorName,
@@ -56,8 +63,8 @@ export function convertErrorDeclaration({
             name: errorName
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
-        statusCode: errorDeclaration["status-code"],
-        isWildcardStatusCode: undefined,
+        statusCode: parsedStatusCode.statusCode,
+        isWildcardStatusCode: parsedStatusCode.isWildcard ? true : undefined,
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
         v2Examples: undefined,

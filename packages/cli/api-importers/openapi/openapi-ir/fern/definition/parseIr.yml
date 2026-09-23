@@ -62,9 +62,10 @@ types:
       request: optional<RequestWithExample>
       response: optional<ResponseWithExample>
       errors:
-        type: map<commons.StatusCode, HttpErrorWithExample>
+        type: map<commons.ErrorStatusCodeKey, HttpErrorWithExample>
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
+          Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       servers: list<finalIr.HttpEndpointServer>
       examples:
@@ -126,7 +127,14 @@ types:
       - commons.WithName
       - commons.WithSource
     properties:
-      statusCode: commons.StatusCode
+      statusCode:
+        type: commons.StatusCode
+        docs: |
+          The concrete status code, or the first status code of the range for a
+          wildcard (400 for 4XX, 500 for 5XX).
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: True when this error was declared with a 4XX or 5XX wildcard response.
       schema: SchemaWithExample
       fullExamples: optional<list<NamedFullExample>>
       namespace:
