@@ -6,9 +6,21 @@ exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameter
 };"
 `;
 
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > does not spread an allowMultiple map<string, string> when the flag is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    m: Array.isArray(m) ? m.map(item => item.toString()) : m.toString()
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > explodes map<string, MyObject> through the serde layer when the flag is disabled 1`] = `
 "const _queryParams: Record<string, unknown> = {
     ...serializers.record.jsonOrThrow(metadata)
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > deepObjectMapQueryParameters with non-primitive map values > explodes optional<map<string, MyObject>> behind a null guard when the flag is disabled 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    ...(metadata != null ? serializers.record.jsonOrThrow(metadata) : metadata)
 };"
 `;
 

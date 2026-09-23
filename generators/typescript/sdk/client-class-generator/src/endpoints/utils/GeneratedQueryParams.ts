@@ -48,16 +48,20 @@ export class GeneratedQueryParams {
             // becomes its own parameter, keyed by the property name alone. Spreading the map into
             // _queryParams does that; assigning it under its own wire name would json encode the
             // whole thing instead. With `deepObjectMapQueryParameters` enabled the parameter keeps
-            // the deepObject path through the query builder, and `explode: false` keeps its
-            // existing comma-joined path.
+            // the deepObject path through the query builder, `explode: false` keeps its existing
+            // comma-joined path, and an `allowMultiple` map (a map or a list of maps) is left alone.
             if (
                 !context.deepObjectMapQueryParameters &&
+                !queryParameter.allowMultiple &&
                 queryParameter.explode !== false &&
                 this.getMapType(queryParameter.valueType, context) != null
             ) {
+                const mapValue = this.getMapValueExpression({ queryParameter, referenceToQueryParameter, context });
                 properties.push(
                     ts.factory.createSpreadAssignment(
-                        this.getExplodedMapExpression({ queryParameter, referenceToQueryParameter, context })
+                        ts.isConditionalExpression(mapValue)
+                            ? ts.factory.createParenthesizedExpression(mapValue)
+                            : mapValue
                     )
                 );
                 continue;
@@ -269,33 +273,7 @@ export class GeneratedQueryParams {
         }
 
         if (this.isDeepObjectMap(queryParameter.valueType, context, queryParameter.explode)) {
-            if (context.includeSerdeLayer && this.mapNeedsSerde(queryParameter.valueType, context)) {
-                const serializerCall = context.typeSchema
-                    .getSchemaOfTypeReference(queryParameter.valueType)
-                    .jsonOrThrow(referenceToQueryParameter, {
-                        allowUnrecognizedEnumValues: true,
-                        allowUnrecognizedUnionMembers: true,
-                        unrecognizedObjectKeys: "passthrough",
-                        skipValidation: false,
-                        breadcrumbsPrefix: ["request", paramName],
-                        omitUndefined: context.omitUndefined
-                    });
-                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
-                    return ts.factory.createConditionalExpression(
-                        ts.factory.createBinaryExpression(
-                            referenceToQueryParameter,
-                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                            ts.factory.createNull()
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                        serializerCall,
-                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                        referenceToQueryParameter
-                    );
-                }
-                return serializerCall;
-            }
-            return referenceToQueryParameter;
+            return this.getMapValueExpression({ queryParameter, referenceToQueryParameter, context });
         }
 
         return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
@@ -585,12 +563,11 @@ export class GeneratedQueryParams {
     }
 
     /**
-     * The expression an exploded map query parameter is spread from. When the serde layer must
-     * transform the map's values first (wire-cased object keys, dates, enums, ...), the map is run
-     * through its generated schema like the deepObject path does; otherwise the reference is spread
-     * as is. An absent optional map spreads an empty object.
+     * A map query parameter's value: run through its generated schema when the serde layer must
+     * transform the values first (wire-cased object keys, dates, enums, ...), the reference as is
+     * otherwise. Both the deepObject path and the exploded spread use it.
      */
-    private getExplodedMapExpression({
+    private getMapValueExpression({
         queryParameter,
         referenceToQueryParameter,
         context
@@ -599,47 +576,37 @@ export class GeneratedQueryParams {
         referenceToQueryParameter: ts.Expression;
         context: FileContext;
     }): ts.Expression {
-        const optional = this.isOptional(queryParameter.valueType);
-        if (context.includeSerdeLayer && this.mapNeedsSerde(queryParameter.valueType, context)) {
-            const paramName = context.retainOriginalCasing
-                ? getOriginalName(queryParameter.name)
-                : context.case.camelUnsafe(queryParameter.name);
-            const serializerCall = context.typeSchema
-                .getSchemaOfTypeReference(queryParameter.valueType)
-                .jsonOrThrow(referenceToQueryParameter, {
-                    allowUnrecognizedEnumValues: true,
-                    allowUnrecognizedUnionMembers: true,
-                    unrecognizedObjectKeys: "passthrough",
-                    skipValidation: false,
-                    breadcrumbsPrefix: ["request", paramName],
-                    omitUndefined: context.omitUndefined
-                });
-            if (!optional) {
-                return serializerCall;
-            }
-            return ts.factory.createParenthesizedExpression(
-                ts.factory.createConditionalExpression(
-                    ts.factory.createBinaryExpression(
-                        referenceToQueryParameter,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                    serializerCall,
-                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                    ts.factory.createObjectLiteralExpression([], false)
-                )
-            );
-        }
-        if (!optional) {
+        if (!context.includeSerdeLayer || !this.mapNeedsSerde(queryParameter.valueType, context)) {
             return referenceToQueryParameter;
         }
-        return ts.factory.createParenthesizedExpression(
+        const serializerCall = context.typeSchema
+            .getSchemaOfTypeReference(queryParameter.valueType)
+            .jsonOrThrow(referenceToQueryParameter, {
+                allowUnrecognizedEnumValues: true,
+                allowUnrecognizedUnionMembers: true,
+                unrecognizedObjectKeys: "passthrough",
+                skipValidation: false,
+                breadcrumbsPrefix: [
+                    "request",
+                    context.retainOriginalCasing
+                        ? getOriginalName(queryParameter.name)
+                        : context.case.camelUnsafe(queryParameter.name)
+                ],
+                omitUndefined: context.omitUndefined
+            });
+        if (!this.isOptional(queryParameter.valueType) && queryParameter.clientDefault == null) {
+            return serializerCall;
+        }
+        return ts.factory.createConditionalExpression(
             ts.factory.createBinaryExpression(
                 referenceToQueryParameter,
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                ts.factory.createObjectLiteralExpression([], false)
-            )
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                ts.factory.createNull()
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            serializerCall,
+            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+            referenceToQueryParameter
         );
     }
 

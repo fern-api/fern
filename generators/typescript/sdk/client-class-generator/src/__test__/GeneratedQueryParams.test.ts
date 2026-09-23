@@ -549,6 +549,16 @@ describe("GeneratedQueryParams", () => {
                 expect(text).toMatchSnapshot();
             });
 
+            it("explodes optional<map<string, MyObject>> behind a null guard when the flag is disabled", () => {
+                const text = generate(
+                    "metadata",
+                    FernIr.TypeReference.container(FernIr.ContainerType.optional(mapOf(myObjectType))),
+                    { includeSerdeLayer: true, deepObjectMapQueryParameters: false }
+                );
+                expect(text).toContain("...(metadata != null ? serializers.record.jsonOrThrow(metadata) : metadata)");
+                expect(text).toMatchSnapshot();
+            });
+
             it("serializes map<string, datetime> via the serde layer", () => {
                 const text = generate("timestamps", mapOf(dateTimeType), { includeSerdeLayer: true });
                 expect(text).toContain("serializers.record.jsonOrThrow(timestamps)");
@@ -637,6 +647,23 @@ describe("GeneratedQueryParams", () => {
                 // branch must too, otherwise the same param encodes two different ways.
                 expect(text).not.toContain("toString");
                 expect(text).not.toContain("jsonOrThrow");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("does not spread an allowMultiple map<string, string> when the flag is disabled", () => {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: false
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter("m", mapOf(stringType), { allowMultiple: true })],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                // The value may be a list of maps: spreading it would put its indexes on the wire.
+                expect(text).not.toContain("...m");
                 expect(text).toMatchSnapshot();
             });
 
