@@ -173,7 +173,8 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 
 /**
  * Replace `target` with `staged` without a window where neither exists: the previous
- * tree is renamed aside to `backup` (same filesystem), the staged tree renamed in, and
+ * tree is renamed aside to `backup` (same filesystem), its `.fern/` metadata (the
+ * persisted library IR written before page generation) carried over, the staged tree renamed in, and
  * the backup restored if that fails. On success the caller owns `backup` and may delete
  * it; if even the restore fails, `backup` is left in place as the only copy of the
  * previous pages and the thrown error names it.
@@ -182,12 +183,19 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
     const hadPrevious = existsSync(target);
     if (hadPrevious) {
         renameSync(target, backup);
+        const previousMetadata = join(backup, METADATA_DIR);
+        if (existsSync(previousMetadata)) {
+            renameSync(previousMetadata, join(staged, METADATA_DIR));
+        }
     }
     try {
         renameSync(staged, target);
     } catch (error) {
         if (hadPrevious) {
             try {
+                if (existsSync(join(staged, METADATA_DIR))) {
+                    renameSync(join(staged, METADATA_DIR), join(backup, METADATA_DIR));
+                }
                 renameSync(backup, target);
             } catch (restoreError) {
                 throw new Error(
@@ -199,6 +207,8 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
         throw error;
     }
 }
+
+const METADATA_DIR = ".fern";
 
 function errorMessage(error: unknown): string {
     return error instanceof Error ? error.message : String(error);
