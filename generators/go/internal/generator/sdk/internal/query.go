@@ -198,9 +198,14 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 		}
 
 		if sv.Kind() == reflect.Map {
-			// An object query parameter is exploded: every entry becomes its own
-			// parameter, keyed by the property name alone. An empty scope says so.
-			if err := reflectMap(values, sv, ""); err != nil {
+			// A top-level map query parameter is exploded: every entry becomes its own
+			// parameter, keyed by the property name alone. An empty scope says so. A map
+			// inside a declared object keeps its bracketed prefix.
+			mapScope := name
+			if scope == "" {
+				mapScope = ""
+			}
+			if err := reflectMap(values, sv, mapScope); err != nil {
 				return err
 			}
 			continue

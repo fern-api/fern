@@ -236,6 +236,26 @@ func TestQueryValues(t *testing.T) {
 		assert.Equal(t, "inner%5Bfoo%5D=bar", values.Encode())
 	})
 
+	t.Run("map inside a declared object keeps its prefix", func(t *testing.T) {
+		// Only a map that is itself the query parameter is exploded. A map held by a
+		// declared object stays bracketed under that object's name.
+		type user struct {
+			Tags map[string]interface{} `json:"tags" url:"tags"`
+		}
+		type request struct {
+			User   *user                  `json:"user" url:"user"`
+			Filter map[string]interface{} `json:"filter" url:"filter"`
+		}
+		values, err := QueryValues(
+			&request{
+				User:   &user{Tags: map[string]interface{}{"a": "b"}},
+				Filter: map[string]interface{}{"c": "d"},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "c=d&user%5Btags%5D%5Ba%5D=b", values.Encode())
+	})
+
 	t.Run("nested map array", func(t *testing.T) {
 		type request struct {
 			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
