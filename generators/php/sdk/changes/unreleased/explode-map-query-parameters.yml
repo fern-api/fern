@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A query parameter typed as a map (an OpenAPI `type: object` with `additionalProperties`) is now
+    exploded, as the OpenAPI defaults `style: form, explode: true` require: every entry is sent as its own
+    parameter (`?category=books&createdDate%3Agte=2023-01-01`). It used to be sent as
+    `?filter=books&filter=2023-01-01`, which dropped the keys. This changes the wire format of such
+    parameters. Declared objects, `allowMultiple` parameters and `explode: false` keep their current
+    encoding.
+  type: fix
