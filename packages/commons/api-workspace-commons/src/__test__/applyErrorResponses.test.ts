@@ -158,6 +158,79 @@ describe("applyErrorResponses", () => {
         expect(getResponse(document, "post", "409").content?.["application/json"]?.schema).toEqual(legacyRef);
     });
 
+    it("ignores legacy references inside unreachable shared responses, even through response chains", () => {
+        const withDeadChain = createDocument();
+        withDeadChain.components = {
+            ...withDeadChain.components,
+            responses: {
+                ...withDeadChain.components?.responses,
+                DeadAlias: { $ref: "#/components/responses/DeadTarget" },
+                DeadTarget: {
+                    description: "Unused",
+                    content: { "application/json": { schema: { $ref: "#/components/schemas/LegacyError" } } }
+                }
+            }
+        };
+
+        const document = applyErrorResponses({
+            document: withDeadChain,
+            errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+            schema: PROBLEM_DETAILS
+        });
+
+        expect(document.components?.schemas?.LegacyError).toEqual(PROBLEM_DETAILS);
+    });
+
+    it("rejects replacing a legacy schema referenced from a reachable shared response", () => {
+        const throughNestedPointer = createDocument();
+        throughNestedPointer.components = {
+            ...throughNestedPointer.components,
+            responses: {
+                ...throughNestedPointer.components?.responses,
+                Legacy: {
+                    description: "Legacy",
+                    content: { "application/json": { schema: { $ref: "#/components/schemas/LegacyError" } } }
+                }
+            }
+        };
+        getOperation(throughNestedPointer, "get").responses["200"] = {
+            description: "OK",
+            content: {
+                "application/json": {
+                    schema: { $ref: "#/components/responses/Legacy/content/application~1json/schema" }
+                }
+            }
+        };
+        expect(() =>
+            applyErrorResponses({
+                document: throughNestedPointer,
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("still referenced from #/components/responses/Legacy/content/application~1json/schema");
+
+        const throughResponseChain = createDocument();
+        throughResponseChain.components = {
+            ...throughResponseChain.components,
+            responses: {
+                ...throughResponseChain.components?.responses,
+                Alias: { $ref: "#/components/responses/Legacy" },
+                Legacy: {
+                    description: "Legacy",
+                    content: { "application/json": { schema: { $ref: "#/components/schemas/LegacyError" } } }
+                }
+            }
+        };
+        getOperation(throughResponseChain, "get").responses["200"] = { $ref: "#/components/responses/Alias" };
+        expect(() =>
+            applyErrorResponses({
+                document: throughResponseChain,
+                errorResponses: { schema: PROBLEM_DETAILS, name: "LegacyError" },
+                schema: PROBLEM_DETAILS
+            })
+        ).toThrow("still referenced from #/components/responses/Legacy/content/application~1json/schema");
+    });
+
     it("rejects replacing a same-named legacy schema that is still referenced elsewhere", () => {
         const fromSuccessResponse = createDocument();
         getOperation(fromSuccessResponse, "get").responses["200"] = {

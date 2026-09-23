@@ -213,11 +213,13 @@ function registerErrorSchema({
 
 /**
  * JSON Pointers of every `$ref` to `components.schemas[schemaName]` other than the ones
- * `applyErrorResponses` inserted itself (`insertedRefPointers`). Two locations are not counted:
- * the legacy schema's own body, and shared `components.responses` entries nothing references
- * anymore. Such entries are dead from the parser's point of view (only entries reached through a
- * `$ref` are converted) and are typically dead precisely because every error use was inlined as a
- * copy; they are left in place and simply resolve to the new schema.
+ * `applyErrorResponses` inserted itself (`insertedRefPointers`) and the legacy schema's own body.
+ *
+ * Shared `components.responses` entries are only scanned when they are reachable: referenced
+ * (directly or through a nested pointer) from outside `components.responses`, or transitively
+ * from another reachable entry. The parser only converts responses reached through a `$ref`, so
+ * unreachable entries are dead — typically because every error use was inlined as a copy — and
+ * are left in place, where they simply resolve to the new schema.
  */
 function findRemainingRefsToLegacySchema({
     document,
@@ -230,30 +232,47 @@ function findRemainingRefsToLegacySchema({
     errorSchemaRef: OpenAPIV3.ReferenceObject;
     insertedRefPointers: ReadonlySet<string>;
 }): string[] {
-    const referencedResponseNames = new Set<string>();
-    const responsesPrefix = "#/components/responses/";
-    const candidates: string[][] = [];
-    walkRefs(document, ({ ref, path }) => {
-        if (ref.startsWith(responsesPrefix)) {
-            referencedResponseNames.add(unescapeJsonPointerSegment(ref.slice(responsesPrefix.length)));
-        }
-        if (ref === errorSchemaRef.$ref && !insertedRefPointers.has(toJsonPointer(path))) {
-            candidates.push(path);
-        }
-    });
+    const { responses: sharedResponses, ...componentsWithoutResponses } = document.components ?? {};
+    const reachableResponseNames = new Set<string>();
+    const pendingResponseNames: string[] = [];
+    const remaining: string[] = [];
 
-    return candidates
-        .filter((path) => {
-            const [components, section, entryName] = path;
-            if (components !== "components" || entryName == null) {
-                return true;
-            }
-            if (section === "schemas" && entryName === schemaName) {
-                return false;
-            }
-            return !(section === "responses" && !referencedResponseNames.has(entryName));
-        })
-        .map(toJsonPointer);
+    const visit = ({ ref, path }: { ref: string; path: string[] }): void => {
+        const responseName = getReferencedResponseComponentName(ref);
+        if (responseName != null && !reachableResponseNames.has(responseName)) {
+            reachableResponseNames.add(responseName);
+            pendingResponseNames.push(responseName);
+        }
+        if (ref !== errorSchemaRef.$ref) {
+            return;
+        }
+        const pointer = toJsonPointer(path);
+        const [components, section, entryName] = path;
+        const isOwnDeclaration = components === "components" && section === "schemas" && entryName === schemaName;
+        if (!isOwnDeclaration && !insertedRefPointers.has(pointer)) {
+            remaining.push(pointer);
+        }
+    };
+
+    walkRefs({ ...document, components: componentsWithoutResponses }, visit);
+    for (let name = pendingResponseNames.pop(); name != null; name = pendingResponseNames.pop()) {
+        walkRefs(sharedResponses?.[name], visit, ["components", "responses", name]);
+    }
+    return remaining;
+}
+
+const RESPONSE_COMPONENTS_PREFIX = "#/components/responses/";
+
+/**
+ * Name of the `components.responses` entry a local `$ref` points into, whether it targets the
+ * entry itself or something nested inside it (e.g. `.../responses/Legacy/content/application~1json/schema`).
+ */
+function getReferencedResponseComponentName(ref: string): string | undefined {
+    if (!ref.startsWith(RESPONSE_COMPONENTS_PREFIX)) {
+        return undefined;
+    }
+    const [firstSegment] = ref.slice(RESPONSE_COMPONENTS_PREFIX.length).split("/");
+    return firstSegment == null || firstSegment === "" ? undefined : unescapeJsonPointerSegment(firstSegment);
 }
 
 /**
