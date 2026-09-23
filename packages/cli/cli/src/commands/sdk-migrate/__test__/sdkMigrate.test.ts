@@ -679,7 +679,7 @@ describe("SDK Config migration", () => {
 });
 
 describe("SDK Config migration target selection", () => {
-    it("uses the configured default group", async () => {
+    it("uses the configured default group in a non-interactive terminal", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";
         const selected = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
@@ -790,9 +790,7 @@ describe("SDK Config migration target selection", () => {
     it("explains same-language conflicts in the interactive selector", async () => {
         const localPython = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         localPython.groupName = "python-local";
-        const publishedPython = createGroup([
-            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
-        ]);
+        const publishedPython = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         publishedPython.groupName = "python-published";
         const cliContext = createCliContext(true);
         vi.mocked(cliContext.checkboxPrompt).mockResolvedValue([localPython]);

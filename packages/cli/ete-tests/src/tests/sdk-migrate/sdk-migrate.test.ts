@@ -65,7 +65,9 @@ describe("fern sdk migrate", () => {
             }
         );
         expect(await readFile(generators, "utf-8")).toBe(originalGenerators);
-        expect(migration.stderr).toContain("Next: review the migrated file, then run fern generate --sdk-config");
+        expect(migration.stderr).toContain(
+            "Next: review the migrated file, then pass its path to fern generate --sdk-config."
+        );
 
         const legacyGeneration = await runFernCli(
             ["generate", "--api", "default", "--group", "missing", "--local", "--no-prompt"],

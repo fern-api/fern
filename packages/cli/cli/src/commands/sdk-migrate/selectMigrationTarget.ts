@@ -220,7 +220,9 @@ function validateUniqueTargetLanguages(groups: generatorsYml.GeneratorGroup[]): 
     const summary = conflicts
         .map(([language, selectedGroups]) => `${language} (${summarizeValues(selectedGroups)})`)
         .join("; ");
-    const hasConflictWithinGroup = conflicts.some(([, selectedGroups]) => new Set(selectedGroups).size < selectedGroups.length);
+    const hasConflictWithinGroup = conflicts.some(
+        ([, selectedGroups]) => new Set(selectedGroups).size < selectedGroups.length
+    );
     const hasConflictAcrossGroups = conflicts.some(([, selectedGroups]) => new Set(selectedGroups).size > 1);
     const guidance = [
         ...(hasConflictWithinGroup

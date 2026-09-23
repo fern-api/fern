@@ -101,9 +101,7 @@ export async function sdkMigrate({
         );
     }
     if (outputPath != null) {
-        cliContext.stderr.info(
-            `Next: review the migrated file, then run fern generate --sdk-config ${JSON.stringify(outputPath.toString())}`
-        );
+        cliContext.stderr.info("Next: review the migrated file, then pass its path to fern generate --sdk-config.");
     }
 }
 
