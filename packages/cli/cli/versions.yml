@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.133.0
+  changelogEntry:
+    - summary: |
+        The CLI now sends an `X-Fern-Agent` header on every FDR, Venus and Fiddle request
+        (and tags its own telemetry events with `agent`) when run from a coding agent
+        (Claude Code, Cursor, Codex, Devin, Gemini CLI), so agent-driven usage such as
+        docs publishes can be measured separately from human usage.
+      type: internal
+    - summary: |
+        `fern init --docs` now produces a project that builds with no further edits. When no API
+        definition exists in the fern folder, it scaffolds `pages/welcome.mdx` and points the
+        navigation at it instead of emitting an `api:` item with nothing to render. `fern check`
+        also reports a new `api-section-has-definition` error when an `api:` navigation item does
+        not resolve to any API definition, instead of passing and then failing at build time.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
 - version: 5.132.0
   changelogEntry:
     - summary: |
