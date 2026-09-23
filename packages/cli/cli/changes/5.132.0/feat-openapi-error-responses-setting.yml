@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an `error-responses` OpenAPI setting that applies a single error body schema (e.g. RFC 9457
+    Problem Details) to the 4xx/5xx responses of every operation in a spec, so per-spec overlays are no
+    longer needed to type error responses.
+
+    ```yaml
+    api:
+      specs:
+        - openapi: openapi.yml
+          settings:
+            error-responses:
+              schema: errors/problem_details.yml   # file path or inline schema
+              name: ProblemDetails                 # generated type name (defaults to the schema title)
+              apply-to: all                        # `all` (default) or `untyped`
+              ensure:
+                - status-code: 422
+                  methods: [post, put, patch]
+    ```
+
+    `apply-to: all` replaces the body of every error response; `untyped` only fills in responses that
+    declare no body schema. `ensure` adds the listed status codes to operations that do not declare them.
+  type: feat

@@ -6,6 +6,18 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
+          "ClientRequestError": {
+            "docs": "Client error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": "4XX",
+            "type": "ClientRequestErrorBody",
+          },
           "NotFoundError": {
             "docs": "Not found",
             "examples": [
@@ -17,6 +29,18 @@
             ],
             "status-code": 404,
             "type": "unknown",
+          },
+          "ServerError": {
+            "docs": "Server error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": "5XX",
+            "type": "ServerErrorBody",
           },
         },
         "service": {
@@ -113,6 +137,10 @@
             "getItems": {
               "auth": undefined,
               "docs": undefined,
+              "errors": [
+                "ClientRequestError",
+                "ServerError",
+              ],
               "examples": [
                 {},
               ],
@@ -183,6 +211,16 @@
           },
         },
         "types": {
+          "ClientRequestErrorBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "error": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ExportDataResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -234,6 +272,16 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ServerErrorBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "error": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -252,6 +300,16 @@
       data: optional<list<map<string, unknown>>>
     source:
       openapi: ../openapi.yml
+  ClientRequestErrorBody:
+    properties:
+      error: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ServerErrorBody:
+    properties:
+      error: optional<string>
+    source:
+      openapi: ../openapi.yml
   GetUsersResponseItem:
     properties:
       id: optional<string>
@@ -268,6 +326,18 @@ errors:
     status-code: 404
     type: unknown
     docs: Not found
+    examples:
+      - value: {}
+  ClientRequestError:
+    status-code: 4XX
+    type: ClientRequestErrorBody
+    docs: Client error
+    examples:
+      - value: {}
+  ServerError:
+    status-code: 5XX
+    type: ServerErrorBody
+    docs: Server error
     examples:
       - value: {}
 service:
@@ -318,6 +388,9 @@ service:
       method: GET
       source:
         openapi: ../openapi.yml
+      errors:
+        - ClientRequestError
+        - ServerError
       examples:
         - {}
     getUsers:

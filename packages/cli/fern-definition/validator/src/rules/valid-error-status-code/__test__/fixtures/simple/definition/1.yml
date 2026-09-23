@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+errors:
+  Concrete:
+    status-code: 404
+  ClientWildcard:
+    status-code: 4XX
+  ServerWildcard:
+    status-code: "5xx"
+  Invalid:
+    status-code: 4XY

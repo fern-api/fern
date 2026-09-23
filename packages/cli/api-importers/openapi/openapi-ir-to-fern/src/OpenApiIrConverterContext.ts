@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { Logger } from "@fern-api/logger";
 import {
+    ErrorStatusCodeKey,
     HttpMethod,
     isSchemaEqual,
     ObjectSchema,
@@ -112,8 +113,7 @@ export class OpenApiIrConverterContext {
         const schemaByErrorKey: Record<string, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
             for (const endpoint of ir.endpoints) {
-                for (const [statusCodeString, error] of Object.entries(endpoint.errors)) {
-                    const statusCode = parseInt(statusCodeString);
+                for (const [statusCode, error] of Object.entries(endpoint.errors)) {
                     const key = getErrorKey({ statusCode, namespace: error.namespace });
                     const existingSchema = schemaByErrorKey[key];
                     if (existingSchema == null && error.schema != null) {
@@ -181,7 +181,7 @@ export class OpenApiIrConverterContext {
         statusCode,
         namespace
     }: {
-        statusCode: number;
+        statusCode: ErrorStatusCodeKey;
         namespace: string | undefined;
     }): boolean {
         return this.unknownSchema.has(getErrorKey({ statusCode, namespace }));
@@ -405,6 +405,12 @@ export class OpenApiIrConverterContext {
     }
 }
 
-function getErrorKey({ statusCode, namespace }: { statusCode: number; namespace: string | undefined }): string {
+function getErrorKey({
+    statusCode,
+    namespace
+}: {
+    statusCode: ErrorStatusCodeKey;
+    namespace: string | undefined;
+}): string {
     return namespace != null ? `${namespace}:${statusCode}` : `${statusCode}`;
 }

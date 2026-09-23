@@ -80,7 +80,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
-    namespacedErrors: undefined
+    namespacedErrors: undefined,
+    errorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -197,7 +198,8 @@ export function parseOpenApiDefinitionSettingsSchema(
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
-        namespacedErrors: settings?.["namespaced-errors"]
+        namespacedErrors: settings?.["namespaced-errors"],
+        errorResponses: settings?.["error-responses"]
     };
 }
 
@@ -235,8 +237,15 @@ export function parseBaseApiDefinitionSettingsSchema(
         pathParameterOrder: settings?.["path-parameter-order"],
         resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
         inferForwardCompatible: settings?.["infer-forward-compatible"],
-        coerceConstsTo: settings?.["coerce-consts-to"]
+        coerceConstsTo: settings?.["coerce-consts-to"],
+        errorResponses: hasErrorResponsesSetting(settings) ? settings["error-responses"] : undefined
     };
+}
+
+function hasErrorResponsesSetting(
+    settings: AnySpecSettingsSchema | undefined
+): settings is generatorsYml.OpenApiSettingsSchema {
+    return settings != null && "error-responses" in settings;
 }
 
 function parseRemoveDiscriminantsFromSchemas(

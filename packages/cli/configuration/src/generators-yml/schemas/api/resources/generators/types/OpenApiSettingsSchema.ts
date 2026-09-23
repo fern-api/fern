@@ -130,4 +130,10 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to false.
      */
     "namespaced-errors"?: boolean;
+    /**
+     * Standardize the body of every 4xx/5xx response on a single schema (for example an
+     * RFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a
+     * per-spec overlay that rewrites each error response by hand.
+     */
+    "error-responses"?: GeneratorsYml.OpenApiErrorResponsesSchema;
 }

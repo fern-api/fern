@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern init --docs` now produces a project that builds with no further edits. When no API
+    definition exists in the fern folder, it scaffolds `pages/welcome.mdx` and points the
+    navigation at it instead of emitting an `api:` item with nothing to render. `fern check`
+    also reports a new `api-section-has-definition` error when an `api:` navigation item does
+    not resolve to any API definition, instead of passing and then failing at build time.
+  type: fix

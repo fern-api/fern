@@ -1,3 +1,8 @@
+export {
+    type ApplyErrorResponsesArgs,
+    applyErrorResponses,
+    DEFAULT_ERROR_RESPONSE_TYPE_NAME
+} from "./applyErrorResponses.js";
 export { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "./BaseOpenAPIWorkspace.js";
 export { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "./constants.js";
 export {

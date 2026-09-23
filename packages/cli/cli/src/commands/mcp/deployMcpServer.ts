@@ -1,3 +1,4 @@
+import { getCodingAgentHeaders } from "@fern-api/core";
 import { getDashboardBaseUrl } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -561,7 +562,8 @@ async function postDeploy({
     // Deployer identity headers, sent exactly as docs publishing sends them.
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        ...getCodingAgentHeaders()
     };
     if (cliVersion != null) {
         headers["X-CLI-Version"] = cliVersion;

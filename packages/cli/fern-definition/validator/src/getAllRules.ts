@@ -31,6 +31,7 @@ import { ValidBasePathRule } from "./rules/valid-base-path/index.js";
 import { ValidBaseUrlEnvRule } from "./rules/valid-base-url-env/index.js";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment/index.js";
 import { ValidEndpointPathRule } from "./rules/valid-endpoint-path/index.js";
+import { ValidErrorStatusCodeRule } from "./rules/valid-error-status-code/index.js";
 import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call/index.js";
 import { ValidExampleErrorRule } from "./rules/valid-example-error/index.js";
 import { ValidExampleTypeRule } from "./rules/valid-example-type/index.js";
@@ -67,6 +68,7 @@ export function getAllRules(): Rule[] {
         NoMissingErrorDiscriminantRule,
         ValidExampleTypeRule,
         NoErrorStatusCodeConflictRule,
+        ValidErrorStatusCodeRule,
         NoMissingAuthRule,
         NoMissingRequestNameRule,
         NoConflictingEndpointParametersRule,

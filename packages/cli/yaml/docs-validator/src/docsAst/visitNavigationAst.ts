@@ -33,6 +33,31 @@ export declare namespace visitNavigationAst {
     }
 }
 
+/**
+ * Mirrors how the docs resolver picks the API workspace for an `api:` section:
+ * an explicit `api-name` must match a workspace; otherwise a single loaded workspace is used.
+ * Additionally accepts an unnamed workspace among several so validation never flags more than the build would.
+ */
+function getApiWorkspaceForApiSection({
+    apiSection,
+    apiWorkspaces
+}: {
+    apiSection: docsYml.RawSchemas.ApiReferenceConfiguration;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+}): AbstractAPIWorkspace<unknown> | undefined {
+    if (apiSection.apiName != null) {
+        return apiWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
+    }
+    if (apiWorkspaces.length === 1) {
+        return apiWorkspaces[0];
+    }
+    return apiWorkspaces.find((workspace) => workspace.workspaceName == null);
+}
+
+function apiSectionHasInlineSpecs(apiSection: docsYml.RawSchemas.ApiReferenceConfiguration): boolean {
+    return apiSection.specs != null && apiSection.specs.length > 0;
+}
+
 export async function visitNavigationAst({
     absolutePathToFernFolder,
     navigation,
@@ -251,13 +276,21 @@ async function visitNavigationItem({
     }
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = getApiWorkspaceForApiSection({ apiSection: navigationItem, apiWorkspaces });
         if (workspace != null) {
             await visitor.apiSection?.(
                 {
                     config: navigationItem,
                     workspace,
                     context
+                },
+                [...nodePath, "api"]
+            );
+        } else if (!apiSectionHasInlineSpecs(navigationItem)) {
+            await visitor.unresolvedApiSection?.(
+                {
+                    config: navigationItem,
+                    apiWorkspaces
                 },
                 [...nodePath, "api"]
             );
