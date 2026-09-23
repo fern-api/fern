@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Custom licenses (`metadata.license: { custom: "./LICENSE" }`) are now declared in the
-    generated `pyproject.toml` via `license = { file = "LICENSE" }` in the `[project]` table,
-    complementing the existing `license = "MIT"` / `"Apache-2.0"` support.
+    License metadata is now emitted in the `[project]` table of the generated `pyproject.toml`
+    following PEP 639: `metadata.license: "MIT"` / `"Apache-2.0"` produce `license = "<SPDX>"`,
+    and `metadata.license: { custom: "./LICENSE" }` produces `license-files = ["LICENSE"]`.
   type: feat

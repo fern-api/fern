@@ -12,7 +12,7 @@ from fern_python.codegen.pyproject_toml import (
     PyProjectTomlPackageConfig,
 )
 
-from fern.generator_exec import CustomLicense, LicenseConfig
+from fern.generator_exec import BasicLicense, CustomLicense, LicenseConfig, LicenseId
 
 
 class TestPoetryBlock:
@@ -31,7 +31,6 @@ class TestPoetryBlock:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
 
     def test_classifiers_reflect_version_constraint(self) -> None:
@@ -44,7 +43,6 @@ class TestPoetryBlock:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
         output = block.to_string()
 
@@ -123,7 +121,6 @@ class TestPoetryCoreValidation:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
 
         deps_block = PyProjectToml.DependenciesBlock(
@@ -155,7 +152,7 @@ class TestPoetryCoreValidation:
             assert str(poetry.package.version) == "1.0.0"
 
     def test_custom_license_written_to_project_table(self) -> None:
-        """Test that a custom license is declared via `license = { file = ... }` and validated by poetry-core."""
+        """Test that a custom license is declared via PEP 639 `license-files` and validated by poetry-core."""
         with tempfile.TemporaryDirectory() as tmpdir:
             package_dir = Path(tmpdir) / "src" / "test_package"
             package_dir.mkdir(parents=True)
@@ -176,11 +173,39 @@ class TestPoetryCoreValidation:
             ).write()
 
             content = (Path(tmpdir) / "pyproject.toml").read_text()
-            assert 'license = { file = "LICENSE" }' in content
+            assert 'license-files = ["LICENSE"]' in content
             assert "License ::" not in content
-            assert 'license = "MIT"' not in content
+            assert "license = " not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))
             assert poetry.package.name == "test-package"
-            assert poetry.package.license is not None
-            assert "Example Corporation License" in poetry.package.license.id
+            assert poetry.package.license_files == ("LICENSE",)
+
+    def test_basic_license_written_to_project_table(self) -> None:
+        """Test that MIT/Apache are declared as a PEP 639 license expression in [project]."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.basic(BasicLicense(id=LicenseId.MIT)),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            project_table = content.split("[tool.poetry]")[0]
+            assert 'license = "MIT"' in project_table
+            assert content.count('license = "MIT"') == 1
+            assert "License :: OSI Approved :: MIT License" in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.license_expression == "MIT"
