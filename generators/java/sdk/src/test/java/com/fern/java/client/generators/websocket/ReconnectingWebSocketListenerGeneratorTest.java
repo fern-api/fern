@@ -257,6 +257,20 @@ public class ReconnectingWebSocketListenerGeneratorTest {
                 .contains("webSocket.close(code == 1005 ? 1000 : code, reason)");
     }
 
+    @Test
+    void generatedSource_connectFailureMessagesCloseTheirParentheses() {
+        String normalized = generatedSource.replaceAll("\\s+", " ");
+        assertThat(normalized)
+                .contains("\"WebSocket connection timeout after \" + 4000 + \" milliseconds\" "
+                        + "+ (retryCount.get() > 0 ? \" (retry attempt #\" + retryCount.get() + \")\" "
+                        + ": \" (initial connection attempt)\")")
+                .contains("\"WebSocket connection interrupted\" "
+                        + "+ (retryCount.get() > 0 ? \" during retry attempt #\" + retryCount.get() "
+                        + ": \" during initial connection\")")
+                .contains("retryCount.get() > 0 ? \"WebSocket connection failed during retry attempt #\" "
+                        + "+ retryCount.get() : \"WebSocket connection failed during initial attempt\"");
+    }
+
     private static ListenerHarness newListener(Supplier<WebSocket> supplier, IntPredicate reconnectPolicy)
             throws Exception {
         return (ListenerHarness)

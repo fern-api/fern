@@ -1,0 +1,4 @@
+- summary: |
+    Fix the generated `ReconnectingWebSocketListener` connection-timeout message, which was missing the
+    closing parenthesis after the retry attempt number (e.g. `... milliseconds (retry attempt #2`).
+  type: fix
