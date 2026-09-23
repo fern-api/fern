@@ -6563,6 +6563,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       axios:
         specifier: 'catalog:'
         version: 1.16.0
