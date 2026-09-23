@@ -2535,7 +2535,7 @@
               "type": "null"
             }
           ],
-          "description": "Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`."
+          "description": "Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.\nIf the spec already defines a different schema under this name, it is replaced as long as\nnothing references it once the error responses have been rewritten (e.g. a legacy error\nbody only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails."
         },
         "apply-to": {
           "oneOf": [
