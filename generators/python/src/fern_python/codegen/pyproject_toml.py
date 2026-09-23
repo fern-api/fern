@@ -78,7 +78,8 @@ class PyProjectToml:
         if license_union.type != "custom":
             return ""
         filename = cast(CustomLicense, license_union).filename
-        return f'license = {{ file = "{filename}" }}\n'
+        escaped = filename.replace("\\", "\\\\").replace('"', '\\"')
+        return f'license = {{ file = "{escaped}" }}\n'
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
