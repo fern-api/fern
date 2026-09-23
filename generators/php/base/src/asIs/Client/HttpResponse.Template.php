@@ -23,19 +23,27 @@ class HttpResponse
     private mixed $body;
 
     /**
+     * @var int $statusCode
+     */
+    private int $statusCode;
+
+    /**
      * @var array<string, string[]> $headers
      */
     private array $headers;
 
     /**
      * @param T $body
+     * @param int $statusCode
      * @param array<string, string[]> $headers
      */
     public function __construct(
         mixed $body,
+        int $statusCode,
         array $headers,
     ) {
         $this->body = $body;
+        $this->statusCode = $statusCode;
         $this->headers = $headers;
     }
 
@@ -47,7 +55,7 @@ class HttpResponse
      */
     public static function from(mixed $body, ResponseInterface $response): HttpResponse
     {
-        return new self($body, $response->getHeaders());
+        return new self($body, $response->getStatusCode(), $response->getHeaders());
     }
 
     /**
@@ -58,6 +66,20 @@ class HttpResponse
     public function getBody(): mixed
     {
         return $this->body;
+    }
+
+    /**
+     * The http status code the api answered with.
+     *
+     * Two successful statuses can mean different things - 202 says the request was accepted and
+     * is still running where 200 says it is done, and 201 says something was created - and the
+     * body does not always say which happened.
+     *
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
     }
 
     /**

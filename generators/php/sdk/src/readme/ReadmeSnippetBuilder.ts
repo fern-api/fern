@@ -121,6 +121,7 @@ try {
             this.writeCode(`
 $response = ${this.getRawMethodCall(rawResponseEndpoint)}(...);
 
+echo $response->getStatusCode() . "\\n";
 echo $response->getHeaderLine('X-Request-Id') . "\\n";
 $data = $response->getBody(); // the value the non-raw client returns
 `)
