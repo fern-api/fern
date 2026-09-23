@@ -645,7 +645,7 @@ describe("loadSdkConfigV1", () => {
         });
     });
 
-    it("uses target indexes for default duplicate-language ZIP filenames", async () => {
+    it("uses per-language indexes for default duplicate-language ZIP filenames", async () => {
         const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-"));
         temporaryDirectories.push(directory);
         const configPath = join(directory, "sdk-config.yml");
@@ -662,6 +662,7 @@ describe("loadSdkConfigV1", () => {
                 generation: {},
                 targets: [
                     { language: "typescript", output: { delivery: "zip" } },
+                    { language: "python", output: { delivery: "zip" } },
                     { language: "typescript", output: { delivery: "zip" } }
                 ]
             })
@@ -671,6 +672,7 @@ describe("loadSdkConfigV1", () => {
 
         expect(loaded.payload.targets.map((target) => target.absolutePathToLocalOutputArchive)).toEqual([
             join(directory, "generated", "typescript-0.zip"),
+            join(directory, "generated", "python.zip"),
             join(directory, "generated", "typescript-1.zip")
         ]);
     });

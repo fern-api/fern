@@ -1697,9 +1697,7 @@ async function finishFernSdkGenApiTarget(
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation): number | undefined {
-    return "sdkConfigTargetIndex" in generatorInvocation && typeof generatorInvocation.sdkConfigTargetIndex === "number"
-        ? generatorInvocation.sdkConfigTargetIndex
-        : undefined;
+    return generatorInvocation.sdkConfigTargetIndex;
 }
 
 function mapFernSdkGenApiPublishTarget(

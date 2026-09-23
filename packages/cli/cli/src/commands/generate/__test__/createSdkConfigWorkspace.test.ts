@@ -173,7 +173,7 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
-    it("uses target indexes for default duplicate-language files directories", async () => {
+    it("uses per-language indexes for default duplicate-language files directories", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
         await writeFile(
@@ -203,30 +203,41 @@ describe("createSdkConfigWorkspace", () => {
             generation: {},
             targets: [{ language: "typescript", output: { delivery: "files" } }]
         });
+        const middleConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "python", output: { delivery: "files" } }]
+        });
         const firstTarget = firstConfig.targets[0];
         const secondTarget = secondConfig.targets[0];
-        if (firstTarget == null || secondTarget == null) {
+        const middleTarget = middleConfig.targets[0];
+        if (firstTarget == null || secondTarget == null || middleTarget == null) {
             throw new Error("Expected individually validated SDK Config targets");
         }
 
         const { workspace, cleanup } = await createSdkConfigWorkspace({
             sdkConfig: {
                 ...firstConfig,
-                targets: [firstTarget, secondTarget]
+                targets: [firstTarget, middleTarget, secondTarget]
             },
             absolutePathToConfig: path.join(directory, "sdk-config.yml"),
             cliVersion: "0.0.0",
             context: createMockTaskContext()
         });
 
-        expect(
-            workspace.generatorsConfiguration?.groups[0]?.generators.map(
-                (generator) => generator.absolutePathToLocalOutput
-            )
-        ).toEqual([
+        const generators = workspace.generatorsConfiguration?.groups[0]?.generators;
+        expect(generators?.map((generator) => generator.absolutePathToLocalOutput)).toEqual([
             path.join(directory, "generated", "typescript-0"),
+            path.join(directory, "generated", "python"),
             path.join(directory, "generated", "typescript-1")
         ]);
+        expect(generators?.map((generator) => generator.sdkConfigTargetIndex)).toEqual([0, 1, 2]);
         await cleanup();
     });
 

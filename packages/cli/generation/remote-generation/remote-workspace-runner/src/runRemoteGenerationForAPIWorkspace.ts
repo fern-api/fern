@@ -528,9 +528,7 @@ export function prepareFernSdkGenApiRoutes({
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation, fallback: number): number {
-    return "sdkConfigTargetIndex" in generatorInvocation && typeof generatorInvocation.sdkConfigTargetIndex === "number"
-        ? generatorInvocation.sdkConfigTargetIndex
-        : fallback;
+    return generatorInvocation.sdkConfigTargetIndex ?? fallback;
 }
 
 function getFernSdkGenApiUnsupportedOutput({

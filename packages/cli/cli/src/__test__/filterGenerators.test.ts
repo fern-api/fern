@@ -88,7 +88,7 @@ describe("filterGenerators", () => {
 
             expect(result.ok).toBe(true);
             if (result.ok) {
-                expect(result.generators[0]).toMatchObject({ sdkConfigTargetIndex: 2 });
+                expect(result.generators[0]?.sdkConfigTargetIndex).toBe(2);
             }
         });
 

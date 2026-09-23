@@ -11,7 +11,7 @@ import { validateFernSdkGenApiPublishTargets } from "@fern-api/remote-workspace-
 import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 
-import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
+import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import {
     resolveSdkConfigPublishCredential,
@@ -52,7 +52,7 @@ export async function loadSdkConfigV1(
         if (document.targets.length !== credentials.length || parsed.targets.length !== credentials.length) {
             throw new Error("SDK Config v1 target count changed during validation");
         }
-        const duplicateLanguages = getDuplicateTargetLanguages(parsed.targets);
+        const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(parsed.targets);
         const selectedTargetIndexes = getSelectedTargetIndexes(parsed, selection, isPreview);
         const payload: FernSdkConfigV1Payload = {
             sdkName: parsed.sdkName,
@@ -68,6 +68,7 @@ export async function loadSdkConfigV1(
                     throw new Error(`SDK Config v1 target ${index} is missing after validation`);
                 }
                 const output = target.output ?? parsed.output;
+                const duplicateTargetLanguageIndex = duplicateTargetLanguageIndexes[index];
                 return {
                     body: Buffer.from(`${JSON.stringify({ ...document, targets: [documentTarget] })}\n`),
                     language: target.language,
@@ -84,7 +85,7 @@ export async function loadSdkConfigV1(
                                   resolve(
                                       dirname(absolutePath),
                                       output.fileName ??
-                                          `generated/${target.language}${duplicateLanguages.has(target.language) ? `-${index}` : ""}.zip`
+                                          `generated/${target.language}${duplicateTargetLanguageIndex == null ? "" : `-${duplicateTargetLanguageIndex}`}.zip`
                                   )
                               )
                           }

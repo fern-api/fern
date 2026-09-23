@@ -10,7 +10,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
-import { getDuplicateTargetLanguages } from "./getDuplicateTargetLanguages.js";
+import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 
 const SDK_CONFIG_GROUP = "sdk-config";
@@ -44,7 +44,7 @@ export async function createSdkConfigWorkspace({
         for (const spec of sdkConfig.source.specs) {
             specs.push(await createSpec({ spec, sdkConfig, configDirectory, context, temporaryDirectories }));
         }
-        const duplicateLanguages = getDuplicateTargetLanguages(sdkConfig.targets);
+        const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(sdkConfig.targets);
         const group: generatorsYml.GeneratorGroup = {
             groupName: SDK_CONFIG_GROUP,
             audiences:
@@ -67,7 +67,7 @@ export async function createSdkConfigWorkspace({
                     output: target.output ?? sdkConfig.output,
                     configDirectory,
                     sdkConfigTargetIndex: targetIndex,
-                    hasDuplicateLanguage: duplicateLanguages.has(target.language)
+                    duplicateTargetLanguageIndex: duplicateTargetLanguageIndexes[targetIndex]
                 });
             }),
             reviewers: undefined
@@ -108,7 +108,7 @@ function createGeneratorInvocation({
     output,
     configDirectory,
     sdkConfigTargetIndex,
-    hasDuplicateLanguage
+    duplicateTargetLanguageIndex
 }: {
     name: string;
     version: string;
@@ -116,8 +116,8 @@ function createGeneratorInvocation({
     output: SdkConfigV1["output"];
     configDirectory: string;
     sdkConfigTargetIndex: number;
-    hasDuplicateLanguage: boolean;
-}): generatorsYml.GeneratorInvocation & { sdkConfigTargetIndex: number } {
+    duplicateTargetLanguageIndex: number | undefined;
+}): generatorsYml.GeneratorInvocation {
     return {
         name,
         sdkConfigTargetIndex,
@@ -135,7 +135,7 @@ function createGeneratorInvocation({
                       path.resolve(
                           configDirectory,
                           output.path ??
-                              `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}${hasDuplicateLanguage ? `-${sdkConfigTargetIndex}` : ""}`
+                              `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}${duplicateTargetLanguageIndex == null ? "" : `-${duplicateTargetLanguageIndex}`}`
                       )
                   )
                 : undefined,
