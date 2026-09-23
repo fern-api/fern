@@ -456,14 +456,60 @@ describe("mergeThemeProducts", () => {
         ).toEqual(themeProducts);
     });
 
-    it("leaves a site-root theme entry external when the site has several products", () => {
-        // Ambiguous — nothing in the href says which of the two was meant.
+    it("resolves a site-root theme entry by display name when the site has several products", () => {
+        const soil = { displayName: "Soil", path: "products/soil.yml" };
+        const compost = { displayName: "Compost", path: "products/compost.yml" };
+        const result = mergeThemeProducts({
+            localProducts: [soil, compost],
+            themeProducts: [{ displayName: "Soil", href: "https://docs.example.com/dirt" }],
+            siteUrls: ["docs.example.com/dirt"]
+        });
+        // The named product is adopted; the one the theme does not list is appended.
+        expect(result).toEqual([soil, compost]);
+    });
+
+    it("compares display names ignoring case and surrounding whitespace", () => {
+        const soil = { displayName: "Soil  Basics ", path: "products/soil.yml" };
+        const other = { displayName: "Compost", path: "products/compost.yml" };
+        const result = mergeThemeProducts({
+            localProducts: [soil, other],
+            themeProducts: [{ displayName: "soil basics", href: "https://docs.example.com/dirt" }],
+            siteUrls: ["docs.example.com/dirt"]
+        });
+        expect(result).toEqual([soil, other]);
+    });
+
+    it("leaves a site-root theme entry external when several products and no name matches", () => {
         const a = { displayName: "Soil", path: "products/soil.yml" };
         const b = { displayName: "Compost", path: "products/compost.yml" };
-        const themeProducts = [{ displayName: "Soil", href: "https://docs.example.com/soil" }];
+        const themeProducts = [{ displayName: "Mulch", href: "https://docs.example.com/dirt" }];
         expect(
-            mergeThemeProducts({ localProducts: [a, b], themeProducts, siteUrls: ["docs.example.com/soil"] })
+            mergeThemeProducts({ localProducts: [a, b], themeProducts, siteUrls: ["docs.example.com/dirt"] })
         ).toEqual([...themeProducts, a, b]);
+    });
+
+    it("still falls back to the sole internal product when the name does not match", () => {
+        // A single-product repo keeps working even if the theme labels it differently.
+        const soil = { displayName: "Soil", path: "products/soil.yml" };
+        const result = mergeThemeProducts({
+            localProducts: [soil],
+            themeProducts: [{ displayName: "Dirt", href: "https://docs.example.com/dirt" }],
+            siteUrls: ["docs.example.com/dirt"]
+        });
+        expect(result).toEqual([soil]);
+    });
+
+    it("does not let display-name matching override an explicit product URL", () => {
+        // href names product-b, so product-b wins even though another product shares
+        // the theme entry's display name.
+        const wrongName = { displayName: "Soil", path: "products/a.yml", slug: "product-a" };
+        const byUrl = { displayName: "Compost", path: "products/b.yml", slug: "product-b" };
+        const result = mergeThemeProducts({
+            localProducts: [wrongName, byUrl],
+            themeProducts: [{ displayName: "Soil", href: "https://docs.example.com/dirt/product-b" }],
+            siteUrls: ["docs.example.com/dirt"]
+        });
+        expect(result).toEqual([byUrl, wrongName]);
     });
 
     it("matches slugs case-insensitively", () => {

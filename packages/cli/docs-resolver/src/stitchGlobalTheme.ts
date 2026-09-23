@@ -335,6 +335,11 @@ export function getPathWithinSite(href: string, siteUrls: string[]): string[] | 
     return undefined;
 }
 
+/** Display names are compared loosely, since theme and repo spell them by hand. */
+function normalizeDisplayName(value: string): string {
+    return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
 /** Slug an internal product publishes under; must agree with `DocsDefinitionResolver.toProductNode`. */
 export function getProductSlug({ slug, displayName }: { slug: string | undefined; displayName: string }): string {
     return slug ?? kebabCase(displayName);
@@ -350,10 +355,10 @@ export function getProductSlug({ slug, displayName }: { slug: string | undefined
  * appended so nothing is lost. Theme ordering wins.
  *
  * A theme entry may also point at this site's root rather than at
- * `<root>/<product-slug>` — the natural thing to hand-write for a sibling repo
- * that serves a single product. That is still this site, so its own internal
- * product is adopted when there is exactly one. A site with no products of its
- * own keeps the entry as an external self-link.
+ * `<root>/<product-slug>` — the natural thing to hand-write for a sibling repo.
+ * That is still this site, so the entry resolves to the local internal product
+ * with the same display name, or to the only internal product when the site has
+ * just one. A site with no matching product keeps the entry as an external link.
  */
 export function mergeThemeProducts({
     localProducts,
@@ -402,10 +407,17 @@ export function mergeThemeProducts({
                     getProductSlug({ slug: product.slug, displayName: product.displayName }).toLowerCase() === target
             );
         } else if (pathWithinSite != null) {
-            // Points at this site's root. Adopt this site's own internal product, but
-            // only when there is exactly one — with several we cannot tell which was
-            // meant, and with none there is nothing to adopt.
-            localMatch = remaining.filter(isInternalProduct).length === 1 ? takeLocal(isInternalProduct) : undefined;
+            // Points at this site's root, which names the site rather than any one of its
+            // products. The display name is what ties the two sides together — whoever
+            // listed this repo in the theme wrote the same name the repo gives the product
+            // — so match on that first, then fall back to the sole internal product when
+            // the site only has one. With neither, the entry stays a link.
+            const themeDisplayName = normalizeDisplayName(themeProduct.displayName);
+            localMatch =
+                takeLocal(
+                    (product) =>
+                        isInternalProduct(product) && normalizeDisplayName(product.displayName) === themeDisplayName
+                ) ?? (remaining.filter(isInternalProduct).length === 1 ? takeLocal(isInternalProduct) : undefined);
         } else {
             localMatch = takeLocal(
                 (product) => !isInternalProduct(product) && normalizeSiteUrl(product.href) === normalizedHref

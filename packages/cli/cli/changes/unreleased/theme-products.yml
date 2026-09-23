@@ -6,6 +6,7 @@
     the current site are swapped for the local internal product (so in-site navigation and highlighting keep working),
     products from other repos stay external links, and local products missing from the theme are appended. A theme
     entry may point either at a product URL (`https://host/repo/product`) or at the site root
-    (`https://host/repo`), which resolves to that site's own product when it has exactly one. This lets a
-    multi-repo setup show every product in every site's product switcher.
+    (`https://host/repo`), which resolves to the local product sharing the entry's display name, or to the
+    only product when the site has just one. This lets a multi-repo setup show every product in every
+    site's product switcher.
   type: feat
