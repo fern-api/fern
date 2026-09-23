@@ -746,6 +746,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
                 })
+                .option("anonymous", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Publish docs without logging in. Prints a claim link; the site must be claimed within 1 hour or it expires."
+                })
                 .option("group", {
                     type: "string",
                     array: true,
@@ -923,6 +929,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     code: CliError.Code.ConfigError
                 });
             }
+            if (argv.anonymous && argv.docs == null) {
+                return cliContext.failWithoutThrowing("The --anonymous flag can only be used with --docs.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+            if (argv.anonymous && argv.preview) {
+                return cliContext.failWithoutThrowing(
+                    "The --anonymous flag cannot be used with --preview.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing(
                     "The --skip-upload flag can only be used with --preview.",
@@ -1081,7 +1099,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    anonymous: argv.anonymous
                 });
             }
             // default to loading api workspace to preserve legacy behavior

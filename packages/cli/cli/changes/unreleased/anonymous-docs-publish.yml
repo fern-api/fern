@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern generate --docs --anonymous` to publish a docs site without logging in.
+    The CLI prints a claim link; the site can be claimed into an organization from the
+    dashboard within 1 hour of publishing.
+  type: feat

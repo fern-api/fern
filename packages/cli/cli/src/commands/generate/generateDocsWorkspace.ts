@@ -5,7 +5,7 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { basename } from "@fern-api/fs-utils";
-import { askToLogin } from "@fern-api/login";
+import { askToLogin, getDashboardBaseUrl } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
@@ -14,6 +14,7 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { type AnonymousDocsSite, createAnonymousDocsSite } from "./createAnonymousDocsSite.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
@@ -75,7 +76,8 @@ export async function generateDocsWorkspace({
     strictBrokenLinks,
     disableTemplates,
     noPrompt,
-    skipUpload
+    skipUpload,
+    anonymous = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -88,6 +90,7 @@ export async function generateDocsWorkspace({
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
+    anonymous?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -98,7 +101,7 @@ export async function generateDocsWorkspace({
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
-    if (!preview && !isCI() && !noPrompt) {
+    if (!preview && !anonymous && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
         const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
 
@@ -113,7 +116,19 @@ export async function generateDocsWorkspace({
     }
 
     let token: FernToken | null = null;
-    if (hasFdrOriginOverride) {
+    let anonymousSite: AnonymousDocsSite | undefined;
+    if (anonymous) {
+        anonymousSite = await cliContext.runTask(async (context) => {
+            try {
+                return await createAnonymousDocsSite();
+            } catch (error) {
+                return context.failAndThrow("Failed to create an anonymous docs site.", error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+        });
+        token = { type: "organization", value: anonymousSite.token };
+    } else if (hasFdrOriginOverride) {
         const fernToken = await getToken();
         if (!fernToken) {
             cliContext.failAndThrow(
@@ -164,9 +179,11 @@ export async function generateDocsWorkspace({
         }
     }
 
+    const organization = anonymousSite?.orgId ?? project.config.organization;
+
     cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: "fern generate --docs"
+        orgId: organization,
+        command: anonymous ? "fern generate --docs --anonymous" : "fern generate --docs"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -216,7 +233,8 @@ export async function generateDocsWorkspace({
 
         const generationStart = performance.now();
         await runRemoteGenerationForDocsWorkspace({
-            organization: project.config.organization,
+            organization,
+            domainOverride: anonymousSite?.domain,
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
             docsWorkspace,
@@ -233,7 +251,32 @@ export async function generateDocsWorkspace({
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
+
+        if (anonymousSite != null) {
+            logAnonymousClaimInstructions(context.logger, anonymousSite);
+        }
     });
+}
+
+function logAnonymousClaimInstructions(logger: { info: (message: string) => void }, site: AnonymousDocsSite): void {
+    const claimUrl = `${getDashboardBaseUrl().replace(/\/$/, "")}/claim/${site.claimCode}`;
+    const expiresAt = new Date(site.expiresAt);
+    const minutesLeft = Math.max(0, Math.round((expiresAt.getTime() - Date.now()) / 60_000));
+    logger.info(
+        [
+            "",
+            chalk.green("Your docs are live (anonymously):"),
+            `  ${chalk.cyan(`https://${site.domain}`)}`,
+            "",
+            chalk.yellow(
+                `Claim this site within ${minutesLeft} minutes to keep it (expires ${expiresAt.toLocaleTimeString()}):`
+            ),
+            `  ${chalk.cyan(claimUrl)}`,
+            chalk.dim(`  claim code: ${site.claimCode}`),
+            "",
+            chalk.dim("Unclaimed sites can no longer be republished after the claim window closes.")
+        ].join("\n")
+    );
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
