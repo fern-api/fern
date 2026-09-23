@@ -299,10 +299,11 @@ function isInternalProduct(value: docsYml.RawSchemas.ProductConfig): value is do
     return "path" in value && typeof value.path === "string";
 }
 
-/** Lower-cased `host/path` with scheme and trailing slash stripped, e.g. `docs.example.com/repo-2`. */
+/** Lower-cased `host/path` with scheme, query/hash and trailing slash stripped, e.g. `docs.example.com/repo-2`. */
 export function normalizeSiteUrl(value: string): string {
     return value
         .trim()
+        .replace(/[?#].*$/, "")
         .replace(/^https?:\/\//i, "")
         .replace(/\/+$/, "")
         .toLowerCase();
@@ -314,7 +315,7 @@ export function normalizeSiteUrl(value: string): string {
  * against `docs.example.com/repo-2` yields `["product-b"]`.
  */
 export function getPathWithinSite(href: string, siteUrls: string[]): string[] | undefined {
-    const normalizedHref = normalizeSiteUrl(href.split(/[?#]/)[0] ?? "");
+    const normalizedHref = normalizeSiteUrl(href);
     // Longest site first so `docs.example.com/repo-2` wins over `docs.example.com`.
     const sites = siteUrls
         .map(normalizeSiteUrl)

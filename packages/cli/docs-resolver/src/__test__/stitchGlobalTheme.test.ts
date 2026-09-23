@@ -404,7 +404,7 @@ describe("mergeThemeProducts", () => {
     });
 
     it("prefers the local external product when hrefs match, so local-only fields survive", () => {
-        const localSoil = { displayName: "Soil", href: "https://docs.example.com/soil/", subtitle: "Dirt" };
+        const localSoil = { displayName: "Soil", href: "https://docs.example.com/soil/?ref=local", subtitle: "Dirt" };
         const result = mergeThemeProducts({
             localProducts: [localSoil],
             themeProducts: [{ displayName: "Soil", href: "https://docs.example.com/soil" }],

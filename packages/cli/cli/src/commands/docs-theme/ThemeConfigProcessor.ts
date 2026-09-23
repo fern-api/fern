@@ -22,6 +22,25 @@ function posixBindPath(gitRoot: string, absolutePath: string): string {
     return [repoName, ...relative.split(path.sep)].join("/");
 }
 
+interface ProductRecord extends Record<string, unknown> {
+    icon?: string;
+    image?: string;
+}
+
+function isProductRecord(value: unknown): value is ProductRecord {
+    return (
+        typeof value === "object" &&
+        value != null &&
+        (!("icon" in value) || value.icon == null || typeof value.icon === "string") &&
+        (!("image" in value) || value.image == null || typeof value.image === "string")
+    );
+}
+
+// Product icons are either a file (`icons/billing.svg`) or a Font Awesome name (`fa-solid fa-star`).
+function isLocalProductIcon(icon: string | undefined): icon is string {
+    return icon != null && !isURL(icon) && /\.[a-z0-9]+$/i.test(icon);
+}
+
 export interface ProcessedThemeConfig {
     config: Record<string, unknown>;
     filesUploaded: number;
@@ -147,6 +166,17 @@ export class ThemeConfigProcessor {
             }
         }
 
+        if (Array.isArray(raw.products)) {
+            for (const product of raw.products) {
+                if (isProductRecord(product)) {
+                    if (isLocalProductIcon(product.icon)) {
+                        collect(product.icon);
+                    }
+                    collect(product.image);
+                }
+            }
+        }
+
         return paths;
     }
 
@@ -245,6 +275,21 @@ export class ThemeConfigProcessor {
                 }
             }
             cfg.metadata = meta;
+        }
+
+        if (Array.isArray(cfg.products)) {
+            cfg.products = await Promise.all(
+                cfg.products.map(async (product) => {
+                    if (!isProductRecord(product)) {
+                        return product;
+                    }
+                    return {
+                        ...product,
+                        icon: isLocalProductIcon(product.icon) ? await field(product.icon) : product.icon,
+                        image: await field(product.image)
+                    };
+                })
+            );
         }
 
         return { config: cfg, filesUploaded };
