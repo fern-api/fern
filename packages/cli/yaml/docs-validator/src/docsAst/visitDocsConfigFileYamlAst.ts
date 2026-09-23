@@ -6,12 +6,11 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-
+import { FileReadTimer } from "../utils/fileReadTimer.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { validateProductConfigFileSchema } from "./validateProductConfig.js";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
 import { visitFilepath } from "./visitFilepath.js";
-import { FileReadTimer } from "../utils/fileReadTimer.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 
 export declare namespace visitDocsConfigFileYamlAst {
