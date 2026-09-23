@@ -116,13 +116,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `HEADER_AUTH_CLI_BASE_URL` | Override the API base URL |
-| `HEADER_AUTH_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `HEADER_AUTH_CLI_INSECURE=1` | Skip TLS verification (debugging only) |
-| `HEADER_AUTH_CLI_PROXY` | HTTP(S) proxy URL |
-| `HEADER_AUTH_CLI_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `HEADER_AUTH_CLI_BASE_URL` | Override the API base URL | yes |
+| `HEADER_AUTH_CLI_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `HEADER_AUTH_CLI_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `HEADER_AUTH_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `HEADER_AUTH_CLI_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `HEADER_AUTH_CLI_PROXY` | HTTP(S) proxy URL | no |
+| `HEADER_AUTH_CLI_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `HEADER_AUTH_CLI_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `header-auth-cli profiles set <profile> HEADER_AUTH_CLI_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

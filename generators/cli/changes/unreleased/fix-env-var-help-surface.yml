@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate the "Environment variables" section of `--help` and the README from a
+    single shared list instead of a hand-written string. `<PREFIX>_RETRIES`,
+    `<PREFIX>_OUTPUT`, `<PREFIX>_CONNECT_TIMEOUT_SECS` and `<PREFIX>_LOG` are now
+    documented, variables that can be stored per profile are marked `[profile]`, and
+    `profiles set` explains that transport settings such as `<PREFIX>_TIMEOUT_SECS`
+    are process-wide and must be exported in the environment instead of suggesting
+    an unrelated key.
+  type: fix

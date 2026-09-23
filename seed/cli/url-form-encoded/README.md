@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `URL_FORM_ENCODED_API_BASE_URL` | Override the API base URL |
-| `URL_FORM_ENCODED_API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `URL_FORM_ENCODED_API_INSECURE=1` | Skip TLS verification (debugging only) |
-| `URL_FORM_ENCODED_API_PROXY` | HTTP(S) proxy URL |
-| `URL_FORM_ENCODED_API_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `URL_FORM_ENCODED_API_BASE_URL` | Override the API base URL | yes |
+| `URL_FORM_ENCODED_API_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `URL_FORM_ENCODED_API_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `URL_FORM_ENCODED_API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `URL_FORM_ENCODED_API_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `URL_FORM_ENCODED_API_PROXY` | HTTP(S) proxy URL | no |
+| `URL_FORM_ENCODED_API_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `URL_FORM_ENCODED_API_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `url-form-encoded-api profiles set <profile> URL_FORM_ENCODED_API_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 
