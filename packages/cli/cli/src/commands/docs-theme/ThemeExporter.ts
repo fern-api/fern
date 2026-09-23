@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { kebabCase } from "lodash-es";
 import path from "path";
 
 export class ThemeExporter {
@@ -26,6 +27,19 @@ export class ThemeExporter {
                 themeConfig[k] = v;
             }
         }
+        if (Array.isArray(themeConfig.products)) {
+            const instance = this.docsWorkspace.config.instances[0];
+            const customDomain = Array.isArray(instance?.customDomain)
+                ? instance.customDomain[0]
+                : instance?.customDomain;
+            const siteUrl = customDomain ?? instance?.url;
+            if (siteUrl == null) {
+                context.logger.warn("docs.yml has no instances; skipping `products` in the exported theme.");
+                delete themeConfig.products;
+            } else {
+                themeConfig.products = themeConfig.products.map((product) => toExternalProduct(product, siteUrl));
+            }
+        }
 
         await mkdir(outDir, { recursive: true });
         const assetsDir = path.join(outDir, "assets");
@@ -37,6 +51,27 @@ export class ThemeExporter {
 
         context.logger.info(`Theme exported to ${outDir}/theme.yml`);
     }
+}
+
+// Internal products (`path`) only resolve inside their own repo. In a theme every
+// product is an absolute link, so rewrite them to the URL they publish to.
+function isInternalProductRecord(value: unknown): value is Record<string, unknown> & { path: string } {
+    return typeof value === "object" && value != null && "path" in value && typeof value.path === "string";
+}
+
+function toExternalProduct(product: unknown, siteUrl: string): unknown {
+    if (!isInternalProductRecord(product)) {
+        return product;
+    }
+    const { path: _path, slug, versions: _versions, announcement: _announcement, ...rest } = product;
+    const displayName = rest["display-name"];
+    const productSlug =
+        typeof slug === "string" ? slug : typeof displayName === "string" ? kebabCase(displayName) : undefined;
+    if (productSlug == null) {
+        return product;
+    }
+    const base = siteUrl.replace(/^https?:\/\//i, "").replace(/\/+$/, "");
+    return { ...rest, href: `https://${base}/${productSlug}` };
 }
 
 async function copyLocalFiles(obj: unknown, sourceDir: string, assetsDir: string): Promise<unknown> {

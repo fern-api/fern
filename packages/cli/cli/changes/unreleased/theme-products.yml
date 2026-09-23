@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `products` can now be part of a global theme. `fern docs theme export` rewrites internal products to absolute
+    links, and at publish time each site merges the theme's product list with its own: theme entries that point into
+    the current site are swapped for the local internal product (so in-site navigation and highlighting keep working),
+    products from other repos stay external links, and local products missing from the theme are appended. This lets a
+    multi-repo setup show every product in every site's product switcher.
+  type: feat

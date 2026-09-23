@@ -7,6 +7,7 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { createHash, randomUUID } from "crypto";
 import { chmod, lstat, mkdir, rename, unlink, writeFile } from "fs/promises";
+import { kebabCase } from "lodash-es";
 import mime from "mime-types";
 import { tmpdir } from "os";
 import path from "path";
@@ -216,6 +217,16 @@ export async function resolveThemeFileUrls(
         })
     );
 
+    // products — icon/image may be uploaded assets
+    if (Array.isArray(cfg.products)) {
+        for (const product of cfg.products) {
+            if (isPlainObject(product)) {
+                product.icon = await maybeDownload(product.icon);
+                product.image = await maybeDownload(product.image);
+            }
+        }
+    }
+
     // header / footer (compiled component files)
     cfg.header = await maybeDownload(cfg.header);
     cfg.footer = await maybeDownload(cfg.footer);
@@ -278,7 +289,112 @@ function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknow
     return deepNormalizeKeys(raw) as Record<string, unknown>;
 }
 
-export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
+// Theme products are always external (absolute href); a `path` cannot resolve
+// outside the repo that owns it.
+function isThemeProduct(value: unknown): value is docsYml.RawSchemas.ExternalProduct {
+    return isPlainObject(value) && typeof value.href === "string" && typeof value.displayName === "string";
+}
+
+function isInternalProduct(value: docsYml.RawSchemas.ProductConfig): value is docsYml.RawSchemas.InternalProduct {
+    return "path" in value && typeof value.path === "string";
+}
+
+/** Lower-cased `host/path` with scheme and trailing slash stripped, e.g. `docs.example.com/repo-2`. */
+export function normalizeSiteUrl(value: string): string {
+    return value
+        .trim()
+        .replace(/^https?:\/\//i, "")
+        .replace(/\/+$/, "")
+        .toLowerCase();
+}
+
+/**
+ * Returns the path segments of `href` below one of `siteUrls`, or undefined when
+ * `href` does not point into any of them. `https://docs.example.com/repo-2/product-b`
+ * against `docs.example.com/repo-2` yields `["product-b"]`.
+ */
+export function getPathWithinSite(href: string, siteUrls: string[]): string[] | undefined {
+    const [normalizedHref] = normalizeSiteUrl(href).split(/[?#]/, 1);
+    if (normalizedHref == null) {
+        return undefined;
+    }
+    // Longest site first so `docs.example.com/repo-2` wins over `docs.example.com`.
+    const sites = siteUrls
+        .map(normalizeSiteUrl)
+        .filter((site) => site !== "")
+        .sort((a, b) => b.length - a.length);
+    for (const site of sites) {
+        if (normalizedHref === site) {
+            return [];
+        }
+        if (normalizedHref.startsWith(`${site}/`)) {
+            return normalizedHref
+                .slice(site.length + 1)
+                .split("/")
+                .filter(Boolean);
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Builds the product switcher for a site from a theme-owned product catalog.
+ *
+ * Theme products are absolute URLs. Each theme entry that points into this site
+ * (one of `siteUrls`) is swapped for the matching local internal product, so the
+ * switcher keeps real in-site navigation and highlights the current product; other
+ * theme entries stay external links. Local products not listed in the theme are
+ * appended so nothing is lost. Theme ordering wins.
+ */
+export function mergeThemeProducts({
+    localProducts,
+    themeProducts,
+    siteUrls
+}: {
+    localProducts: docsYml.RawSchemas.ProductConfig[] | undefined;
+    themeProducts: unknown;
+    siteUrls: string[];
+}): docsYml.RawSchemas.ProductConfig[] | undefined {
+    if (!Array.isArray(themeProducts)) {
+        return localProducts;
+    }
+    const remaining = [...(localProducts ?? [])];
+    const takeLocal = (
+        predicate: (product: docsYml.RawSchemas.ProductConfig) => boolean
+    ): docsYml.RawSchemas.ProductConfig | undefined => {
+        const index = remaining.findIndex(predicate);
+        return index === -1 ? undefined : remaining.splice(index, 1)[0];
+    };
+
+    const merged: docsYml.RawSchemas.ProductConfig[] = [];
+    for (const themeProduct of themeProducts) {
+        if (!isThemeProduct(themeProduct)) {
+            continue;
+        }
+        const pathWithinSite = getPathWithinSite(themeProduct.href, siteUrls);
+        const productSlug = pathWithinSite?.[0];
+        const localMatch =
+            productSlug != null
+                ? takeLocal(
+                      (product) =>
+                          isInternalProduct(product) && (product.slug ?? kebabCase(product.displayName)) === productSlug
+                  )
+                : takeLocal(
+                      (product) =>
+                          !isInternalProduct(product) &&
+                          normalizeSiteUrl(product.href) === normalizeSiteUrl(themeProduct.href)
+                  );
+        merged.push(localMatch ?? themeProduct);
+    }
+    merged.push(...remaining);
+    return merged;
+}
+
+export function mergeThemeOverride(
+    local: RawDocsConfig,
+    themeOverride: Record<string, unknown>,
+    siteUrls: string[] = getSiteUrls(local)
+): RawDocsConfig {
     const normalized = normalizeThemeKeys(themeOverride);
     const localRecord = local as unknown as Record<string, unknown>;
     const merged: Record<string, unknown> = { ...localRecord };
@@ -290,7 +406,13 @@ export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<s
         const themeHasValue = themeValue !== undefined && themeValue !== null;
         const localHasValue = localValue !== undefined && localValue !== null;
 
-        if (policy === "global") {
+        if (key === "products") {
+            merged[key] = mergeThemeProducts({
+                localProducts: local.products,
+                themeProducts: themeValue,
+                siteUrls
+            });
+        } else if (policy === "global") {
             // Theme wins when present, otherwise keep the local value.
             // Object fields are deep-merged so local-only sub-fields survive.
             if (themeHasValue) {
@@ -312,12 +434,32 @@ export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<s
     return merged as unknown as RawDocsConfig;
 }
 
+/** Every URL this docs.yml publishes to: instance URLs plus their custom domains. */
+export function getSiteUrls(config: RawDocsConfig): string[] {
+    const urls: string[] = [];
+    for (const instance of config.instances ?? []) {
+        urls.push(instance.url);
+        if (typeof instance.customDomain === "string") {
+            urls.push(instance.customDomain);
+        } else if (Array.isArray(instance.customDomain)) {
+            urls.push(...instance.customDomain);
+        }
+    }
+    return urls;
+}
+
 interface StitchGlobalThemeArgs {
     docsWorkspace: DocsWorkspace;
     organization: string;
     fdrOrigin: string;
     token: string;
     taskContext: TaskContext;
+    /**
+     * URLs of the site being published (domain plus custom domains), in addition to
+     * the instance URLs declared in docs.yml. Theme products whose href points into
+     * one of these are treated as this site's own products.
+     */
+    siteUrls?: string[];
 }
 
 /**
@@ -333,7 +475,8 @@ export async function stitchGlobalTheme({
     organization,
     fdrOrigin,
     token,
-    taskContext
+    taskContext,
+    siteUrls
 }: StitchGlobalThemeArgs): Promise<DocsWorkspace> {
     const themeName = docsWorkspace.config.globalTheme;
     if (themeName == null) {
@@ -448,7 +591,10 @@ export async function stitchGlobalTheme({
         return docsWorkspace; // unreachable — TS needs this for definite-assignment of resolvedConfig
     }
 
-    const mergedRawConfig = mergeThemeOverride(docsWorkspace.config, resolvedConfig);
+    const mergedRawConfig = mergeThemeOverride(docsWorkspace.config, resolvedConfig, [
+        ...(siteUrls ?? []),
+        ...getSiteUrls(docsWorkspace.config)
+    ]);
 
     taskContext.logger.info(`Applied global theme "${themeName}" — ${AbsoluteFilePath.of(tmpDirPath)}`);
     const stitchedPath = path.join(tmpDirPath, "stitched-docs.yml.json");

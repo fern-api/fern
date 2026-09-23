@@ -23,7 +23,10 @@ export const THEME_FIELD_POLICIES = {
     footerLinks: "global",
     aiSearch: "global",
     announcement: "global",
-    metadata: "global"
+    metadata: "global",
+    // Merged by URL rather than by policy: theme entries matching this site's
+    // own URL are swapped for the local internal product (see mergeThemeProducts).
+    products: "global"
 } as const satisfies Record<string, ThemeFieldPolicy>;
 
 export type ThemeEligibleField = keyof typeof THEME_FIELD_POLICIES;

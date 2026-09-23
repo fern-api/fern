@@ -11,9 +11,12 @@ import {
     ensureGlobalThemeAssetDirectory,
     filenameFromUrl,
     getGlobalThemeAssetDirectoryPath,
+    getPathWithinSite,
+    getSiteUrls,
     isPresignedUrl,
     isRemoteUrl,
     mergeThemeOverride,
+    mergeThemeProducts,
     parseFilenameFromDisposition,
     resolveThemeFileUrls,
     stitchGlobalTheme
@@ -292,6 +295,151 @@ describe("mergeThemeOverride", () => {
         const result = mergeThemeOverride(local, { favicon: "f.ico" }) as unknown as Record<string, unknown>;
         expect(result.title).toBe("My Docs");
         expect(result.tabs).toEqual([{ tab: "API" }]);
+    });
+
+    it("merges theme products against the instance URLs declared in docs.yml", () => {
+        const local = {
+            instances: [{ url: "acme.docs.buildwithfern.com/seeds", customDomain: "docs.example.com/seeds" }],
+            products: [{ displayName: "Sunflower", path: "products/sunflower.yml" }]
+        } as never;
+        const result = mergeThemeOverride(local, {
+            products: [
+                { "display-name": "Soil", href: "https://docs.example.com/soil" },
+                { "display-name": "Sunflower", href: "https://docs.example.com/seeds/sunflower" }
+            ]
+        }) as unknown as Record<string, unknown>;
+        expect(result.products).toEqual([
+            { displayName: "Soil", href: "https://docs.example.com/soil" },
+            { displayName: "Sunflower", path: "products/sunflower.yml" }
+        ]);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// getSiteUrls / getPathWithinSite
+// ---------------------------------------------------------------------------
+
+describe("getSiteUrls", () => {
+    it("collects instance urls and custom domains (string or list)", () => {
+        const config = {
+            instances: [
+                { url: "acme.docs.buildwithfern.com", customDomain: "docs.example.com" },
+                { url: "acme.docs.buildwithfern.com/staging", customDomain: ["a.example.com", "b.example.com"] },
+                { url: "acme.docs.buildwithfern.com/plain" }
+            ]
+        } as never;
+        expect(getSiteUrls(config)).toEqual([
+            "acme.docs.buildwithfern.com",
+            "docs.example.com",
+            "acme.docs.buildwithfern.com/staging",
+            "a.example.com",
+            "b.example.com",
+            "acme.docs.buildwithfern.com/plain"
+        ]);
+    });
+
+    it("returns an empty list when there are no instances", () => {
+        expect(getSiteUrls({} as never)).toEqual([]);
+    });
+});
+
+describe("getPathWithinSite", () => {
+    it("returns the segments below a matching site, ignoring scheme, case, trailing slash and query", () => {
+        expect(
+            getPathWithinSite("https://Docs.Example.com/repo-2/product-b/?utm=1", ["docs.example.com/repo-2"])
+        ).toEqual(["product-b"]);
+    });
+
+    it("prefers the longest matching site", () => {
+        expect(
+            getPathWithinSite("https://docs.example.com/repo-2/product-b", [
+                "docs.example.com",
+                "docs.example.com/repo-2"
+            ])
+        ).toEqual(["product-b"]);
+    });
+
+    it("returns [] for the site root and undefined for other hosts or sibling basepaths", () => {
+        expect(getPathWithinSite("https://docs.example.com/repo-2", ["docs.example.com/repo-2"])).toEqual([]);
+        expect(getPathWithinSite("https://other.example.com/x", ["docs.example.com/repo-2"])).toBeUndefined();
+        expect(getPathWithinSite("https://docs.example.com/repo-20/x", ["docs.example.com/repo-2"])).toBeUndefined();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// mergeThemeProducts
+// ---------------------------------------------------------------------------
+
+describe("mergeThemeProducts", () => {
+    const siteUrls = ["docs.example.com/seeds"];
+    const sunflower = { displayName: "Sunflower", path: "products/sunflower.yml", slug: "sunflower" };
+    const tulip = { displayName: "Tulip Bulbs", path: "products/tulip.yml" };
+    const localProducts = [sunflower, tulip];
+
+    it("returns local products untouched when the theme has no products", () => {
+        expect(mergeThemeProducts({ localProducts, themeProducts: undefined, siteUrls })).toBe(localProducts);
+    });
+
+    it("swaps theme entries pointing into this site for the local internal product, keeping theme order", () => {
+        const result = mergeThemeProducts({
+            localProducts,
+            themeProducts: [
+                { displayName: "Tulip Bulbs", href: "https://docs.example.com/seeds/tulip-bulbs" },
+                { displayName: "Soil", href: "https://docs.example.com/soil" },
+                { displayName: "Sunflower", href: "https://docs.example.com/seeds/sunflower" }
+            ],
+            siteUrls
+        });
+        expect(result).toEqual([tulip, { displayName: "Soil", href: "https://docs.example.com/soil" }, sunflower]);
+    });
+
+    it("appends local products missing from the theme", () => {
+        const result = mergeThemeProducts({
+            localProducts,
+            themeProducts: [{ displayName: "Soil", href: "https://docs.example.com/soil" }],
+            siteUrls
+        });
+        expect(result).toEqual([{ displayName: "Soil", href: "https://docs.example.com/soil" }, sunflower, tulip]);
+    });
+
+    it("prefers the local external product when hrefs match, so local-only fields survive", () => {
+        const localSoil = { displayName: "Soil", href: "https://docs.example.com/soil/", subtitle: "Dirt" };
+        const result = mergeThemeProducts({
+            localProducts: [localSoil],
+            themeProducts: [{ displayName: "Soil", href: "https://docs.example.com/soil" }],
+            siteUrls
+        });
+        expect(result).toEqual([localSoil]);
+    });
+
+    it("keeps a theme entry pointing into this site as a link when no local product has that slug", () => {
+        const result = mergeThemeProducts({
+            localProducts,
+            themeProducts: [{ displayName: "Compost", href: "https://docs.example.com/seeds/compost" }],
+            siteUrls
+        });
+        expect(result).toEqual([
+            { displayName: "Compost", href: "https://docs.example.com/seeds/compost" },
+            sunflower,
+            tulip
+        ]);
+    });
+
+    it("gives a repo with no products of its own an all-external switcher", () => {
+        const themeProducts = [
+            { displayName: "Soil", href: "https://docs.example.com/soil" },
+            { displayName: "Sunflower", href: "https://docs.example.com/seeds/sunflower" }
+        ];
+        expect(mergeThemeProducts({ localProducts: undefined, themeProducts, siteUrls })).toEqual(themeProducts);
+    });
+
+    it("skips malformed theme entries", () => {
+        const result = mergeThemeProducts({
+            localProducts: undefined,
+            themeProducts: [{ displayName: "No href" }, "nope", { displayName: "Soil", href: "https://x.com/soil" }],
+            siteUrls
+        });
+        expect(result).toEqual([{ displayName: "Soil", href: "https://x.com/soil" }]);
     });
 });
 

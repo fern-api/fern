@@ -326,7 +326,8 @@ export async function publishDocs({
             organization,
             fdrOrigin,
             token: token.value,
-            taskContext: context
+            taskContext: context,
+            siteUrls: [domain, ...customDomains]
         });
 
         // Translated API definitions are registered to FDR after the base definition
