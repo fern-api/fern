@@ -8,7 +8,7 @@ import com.seed.queryParameters.core.Suppliers;
 import com.seed.queryParameters.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedQueryParametersClient {
+public class AsyncSeedQueryParametersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUserClient> userClient;
@@ -20,6 +20,15 @@ public class AsyncSeedQueryParametersClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedQueryParametersClientBuilder builder() {

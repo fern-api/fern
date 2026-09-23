@@ -121,6 +121,7 @@ export class FernDefinitionConverter {
         settings?: BaseOpenAPIWorkspace.Settings;
         absoluteFilePath?: AbsoluteFilePath;
     }): FernDefinition {
+        const globalHeaderOverrides = this.buildHeaderOverrides(settings?.headers);
         const definition = convert({
             taskContext: context,
             ir,
@@ -133,10 +134,10 @@ export class FernDefinitionConverter {
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }
                     : undefined,
-            globalHeaderOverrides: this.buildHeaderOverrides(settings?.headers)
+            globalHeaderOverrides
         });
 
-        return {
+        const fernDefinition: FernDefinition = {
             absoluteFilePath: absoluteFilePath ?? this.args.absoluteFilePath,
             rootApiFile: {
                 defaultUrl: definition.rootApiFile["default-url"],
@@ -159,5 +160,12 @@ export class FernDefinitionConverter {
             importedDefinitions: {},
             specVersion: ir.specVersion ?? undefined
         };
+        Object.defineProperty(fernDefinition, "sourceDerivedGlobalHeaderNames", {
+            configurable: true,
+            enumerable: false,
+            value: (ir.globalHeaders ?? []).map((header) => header.header),
+            writable: true
+        });
+        return fernDefinition;
     }
 }

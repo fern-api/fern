@@ -8,7 +8,7 @@ import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.types.MyUnion;
 import java.util.List;
 
-public class SeedUndiscriminatedUnionWithResponsePropertyClient {
+public class SeedUndiscriminatedUnionWithResponsePropertyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedUndiscriminatedUnionWithResponsePropertyClient rawClient;
@@ -39,6 +39,15 @@ public class SeedUndiscriminatedUnionWithResponsePropertyClient {
 
     public List<MyUnion> listUnions(RequestOptions requestOptions) {
         return this.rawClient.listUnions(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedUndiscriminatedUnionWithResponsePropertyClientBuilder builder() {

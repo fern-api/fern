@@ -37,6 +37,7 @@ func (f *fileWriter) WriteType(
 		includeRawJSON:               includeRawJSON,
 		gettersPassByValue:           f.gettersPassByValue,
 		dedupeUnionBaseProperties:    f.dedupeUnionBaseProperties,
+		xml:                          typeDeclaration.Encoding.GetXml(),
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -55,6 +56,9 @@ type typeVisitor struct {
 	alwaysSendRequiredProperties bool
 	gettersPassByValue           bool
 	dedupeUnionBaseProperties    bool
+
+	// xml is set if the type is xml-encoded.
+	xml *ir.XmlEncoding
 }
 
 // Compile-time assertion.
@@ -218,10 +222,27 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	if t.includeRawJSON {
 		t.writer.P("rawJSON json.RawMessage")
 	}
+	if t.xml != nil {
+		t.writer.P()
+		t.writer.P("// ", xmlExtraAttributesField, " holds XML attributes not declared in the API definition.")
+		t.writer.P(xmlExtraAttributesField, " map[string]string `json:\"-\" url:\"-\"`")
+		t.writer.P("// ", xmlExtraChildrenField, " holds XML child elements not declared in the API definition.")
+		t.writer.P(xmlExtraChildrenField, " []core.XmlNode `json:\"-\" url:\"-\"`")
+	}
 	t.writer.P("}")
 	t.writer.P()
 
 	receiver := typeNameToReceiver(t.typeName)
+
+	if t.xml != nil {
+		fieldNames := make(map[string]struct{}, len(propertyNames))
+		for _, propertyName := range propertyNames {
+			fieldNames[propertyName] = struct{}{}
+		}
+		if err := t.writeXmlObjectMethods(object, t.xml, fieldNames); err != nil {
+			return err
+		}
+	}
 
 	// Implement the getter methods.
 	typeFields := t.getTypeFieldsForObject(object)
@@ -1308,7 +1329,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		})
 	}
 
-	return nil
+	return t.writeXmlUnionMethods(union)
 }
 
 // undiscriminatedUnionTypeReferenceVisitor retrieves the string representation of type references

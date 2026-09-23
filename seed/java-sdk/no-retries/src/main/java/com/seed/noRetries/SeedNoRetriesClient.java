@@ -8,7 +8,7 @@ import com.seed.noRetries.core.Suppliers;
 import com.seed.noRetries.resources.retries.RetriesClient;
 import java.util.function.Supplier;
 
-public class SeedNoRetriesClient {
+public class SeedNoRetriesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<RetriesClient> retriesClient;
@@ -20,6 +20,15 @@ public class SeedNoRetriesClient {
 
     public RetriesClient retries() {
         return this.retriesClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedNoRetriesClientBuilder builder() {

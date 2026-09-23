@@ -1,6 +1,7 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ICustomConfig;
@@ -44,7 +45,12 @@ public final class ObjectTypeSpecGenerator {
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
     private final boolean useBuilderConstructor;
+    private final Optional<ClassName> additionalChildrenItemType;
 
+    /**
+     * @param additionalChildrenItemType when present, the object also carries a {@code List} of this type holding child
+     *     elements not described by the API (used by xml-encoded types).
+     */
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
             ClassName generatedObjectMapperClassName,
@@ -56,8 +62,10 @@ public final class ObjectTypeSpecGenerator {
             boolean supportAdditionalProperties,
             ICustomConfig.JsonInclude jsonInclude,
             Boolean disableRequiredPropertyBuilderChecks,
-            boolean builderNotNullChecks) {
+            boolean builderNotNullChecks,
+            Optional<ClassName> additionalChildrenItemType) {
         this.objectClassName = objectClassName;
+        this.additionalChildrenItemType = additionalChildrenItemType;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.nullableClassName = nullableClassName;
         this.interfaces = interfaces;
@@ -77,6 +85,9 @@ public final class ObjectTypeSpecGenerator {
                 .sum();
         if (supportAdditionalProperties) {
             // Map<String, Object> is a reference type, takes one slot
+            paramSlots += 1;
+        }
+        if (additionalChildrenItemType.isPresent()) {
             paramSlots += 1;
         }
         this.useBuilderConstructor = paramSlots > MAX_CONSTRUCTOR_PARAM_SLOTS;
@@ -111,6 +122,17 @@ public final class ObjectTypeSpecGenerator {
                     .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                     .build());
             typeSpecBuilder.addMethod(getAdditionalPropertiesMethodSpec());
+        }
+        if (additionalChildrenItemType.isPresent()) {
+            typeSpecBuilder.addField(FieldSpec.builder(getAdditionalChildrenType(), getAdditionalChildrenFieldName())
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .build());
+            typeSpecBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalChildrenGetterName())
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(getAdditionalChildrenType())
+                    .addAnnotation(JsonIgnore.class)
+                    .addStatement("return this.$L", getAdditionalChildrenFieldName())
+                    .build());
         }
 
         equalsMethod.getEqualToMethodSpec().ifPresent(typeSpecBuilder::addMethod);
@@ -180,6 +202,11 @@ public final class ObjectTypeSpecGenerator {
             constructorBuilder.addStatement(
                     "this.$L = $L", additionalPropertiesFieldName, additionalPropertiesFieldName);
         }
+        if (additionalChildrenItemType.isPresent()) {
+            String fieldName = getAdditionalChildrenFieldName();
+            constructorBuilder.addParameter(getAdditionalChildrenType(), fieldName);
+            constructorBuilder.addStatement("this.$L = $L", fieldName, fieldName);
+        }
         return constructorBuilder.build();
     }
 
@@ -203,7 +230,59 @@ public final class ObjectTypeSpecGenerator {
             constructorBuilder.addStatement(
                     "this.$L = builder.$L", additionalPropertiesFieldName, additionalPropertiesFieldName);
         }
+        if (additionalChildrenItemType.isPresent()) {
+            String fieldName = getAdditionalChildrenFieldName();
+            constructorBuilder.addStatement("this.$L = builder.$L", fieldName, fieldName);
+        }
         return constructorBuilder.build();
+    }
+
+    /** Whether the object is constructed from its {@code Builder} rather than from one parameter per field. */
+    public boolean usesBuilderConstructor() {
+        return useBuilderConstructor;
+    }
+
+    public Optional<String> getAdditionalChildrenFieldNameIfSupported() {
+        return additionalChildrenItemType.isPresent()
+                ? Optional.of(getAdditionalChildrenFieldName())
+                : Optional.empty();
+    }
+
+    public Optional<String> getAdditionalChildrenGetterNameIfSupported() {
+        return additionalChildrenItemType.isPresent()
+                ? Optional.of(getAdditionalChildrenGetterName())
+                : Optional.empty();
+    }
+
+    private TypeName getAdditionalChildrenType() {
+        return ParameterizedTypeName.get(ClassName.get(List.class), additionalChildrenItemType.get());
+    }
+
+    private boolean hasPropertyNamed(String camelCaseKey) {
+        return allEnrichedProperties.stream()
+                .anyMatch(enrichedObjectProperty ->
+                        enrichedObjectProperty.camelCaseKey().equals(camelCaseKey));
+    }
+
+    private String getAdditionalChildrenFieldName() {
+        return hasPropertyNamed(BuilderGenerator.ADDITIONAL_CHILDREN_NAME)
+                ? "_" + BuilderGenerator.ADDITIONAL_CHILDREN_NAME
+                : BuilderGenerator.ADDITIONAL_CHILDREN_NAME;
+    }
+
+    private String getAdditionalChildrenGetterName() {
+        return hasPropertyNamed(BuilderGenerator.ADDITIONAL_CHILDREN_NAME)
+                ? "_getAdditionalChildren"
+                : "getAdditionalChildren";
+    }
+
+    /** The properties in constructor-parameter order (inherited interface properties first). */
+    public List<EnrichedObjectProperty> getAllEnrichedProperties() {
+        return allEnrichedProperties;
+    }
+
+    public Optional<String> getAdditionalPropertiesFieldNameIfSupported() {
+        return supportAdditionalProperties ? Optional.of(getAdditionalPropertiesFieldName()) : Optional.empty();
     }
 
     private String getAdditionalPropertiesFieldName() {
@@ -282,7 +361,8 @@ public final class ObjectTypeSpecGenerator {
                 supportAdditionalProperties,
                 disableRequiredPropertyBuilderChecks,
                 builderNotNullChecks,
-                useBuilderConstructor);
+                useBuilderConstructor,
+                additionalChildrenItemType);
         return builderGenerator.generate();
     }
 }

@@ -8,7 +8,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.types.AstNode;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -31,6 +31,15 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<AstNode> createAst(AstNode request, RequestOptions requestOptions) {
         return this.rawClient.createAst(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

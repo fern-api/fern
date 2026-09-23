@@ -9,7 +9,7 @@ import com.seed.api.resources.conversations.ConversationsClient;
 import com.seed.api.resources.users.UsersClient;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ConversationsClient> conversationsClient;
@@ -28,6 +28,15 @@ public class SeedApiClient {
 
     public UsersClient users() {
         return this.usersClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

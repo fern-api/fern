@@ -11,7 +11,7 @@ import com.seed.api.requests.UpdateMessageRequest;
 import com.seed.api.types.Account;
 import com.seed.api.types.Message;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -72,6 +72,15 @@ public class SeedApiClient {
 
     public Account fetchAccount(String accountSid, FetchAccountRequest request, RequestOptions requestOptions) {
         return this.rawClient.fetchAccount(accountSid, request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

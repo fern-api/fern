@@ -1,0 +1,16 @@
+# JSON-chunk streaming endpoint whose only reference to a generated type is the payload.
+types:
+  Chunk:
+    properties:
+      index: integer
+      text: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      path: /chunks
+      method: GET
+      response-stream:
+        type: Chunk

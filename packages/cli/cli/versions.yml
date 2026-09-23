@@ -1,4 +1,70 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.131.3
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 5.131.2
+  changelogEntry:
+    - summary: |
+        Route generators.yml `version: latest` through sdk-gen-api as an unpinned Fern generator request.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 5.131.1
+  changelogEntry:
+    - summary: |
+        Preserve omitted SDK Config generator versions so sdk-gen-api can resolve the latest generator server-side.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.131.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.current-page` docs.yml setting. When set to true,
+        the current page is appended to the breadcrumb trail above the page title as a
+        non-clickable item. Defaults to false.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.130.0
+  changelogEntry:
+    - summary: |
+        Add `output: { location: fern-hosted, slug: <slug> }` to `generators.yml` for
+        `fernapi/fern-mcp-server`. `fern generate` builds the MCP server through sdk-gen-api,
+        deploys it to Fern's hosted MCP platform, and prints the server URL. `slug` is optional
+        (default `mcp`) and supports `${ENV_VAR}` substitution.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.129.0
+  changelogEntry:
+    - summary: |
+        Add `settings.embedding.allowed-origins` to docs.yml. Origins listed there may embed the
+        docs site in an iframe (they are appended to the `frame-ancestors` directive of the
+        Content-Security-Policy header). By default only the site itself may frame it.
+      type: feat
+  createdAt: "2026-09-18"
+  irVersion: 67
+- version: 5.128.4
+  changelogEntry:
+    - summary: |
+        Preserve portable API import settings, package metadata, README sections, response validation, and language-specific settings when migrating generators.yml to SDK Config.
+      type: fix
+  createdAt: "2026-09-18"
+  irVersion: 67
+- version: 5.128.3
+  changelogEntry:
+    - summary: |
+        Register error-status endpoint examples carrying the error response headers' example values
+        (e.g. a 429's `Retry-After`), so docs render them when `show-headers-in-examples` is enabled.
+      type: fix
+  createdAt: "2026-09-17"
+  irVersion: 67
 - version: 5.128.2
   changelogEntry:
     - summary: |

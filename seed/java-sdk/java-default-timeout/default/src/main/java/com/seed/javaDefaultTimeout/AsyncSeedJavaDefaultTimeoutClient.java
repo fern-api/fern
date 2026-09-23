@@ -8,7 +8,7 @@ import com.seed.javaDefaultTimeout.core.RequestOptions;
 import com.seed.javaDefaultTimeout.types.User;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaDefaultTimeoutClient {
+public class AsyncSeedJavaDefaultTimeoutClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaDefaultTimeoutClient rawClient;
@@ -31,6 +31,15 @@ public class AsyncSeedJavaDefaultTimeoutClient {
 
     public CompletableFuture<User> getUser(RequestOptions requestOptions) {
         return this.rawClient.getUser(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaDefaultTimeoutClientBuilder builder() {

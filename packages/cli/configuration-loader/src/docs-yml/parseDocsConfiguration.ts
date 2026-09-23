@@ -271,7 +271,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
-        settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -549,10 +549,18 @@ function convertThemeConfig(
 }
 
 function convertSettingsConfig(
-    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined,
+    context: TaskContext
 ): docsYml.ParsedDocsConfiguration["settings"] {
     if (settings == null) {
         return undefined;
+    }
+
+    if (settings.embedding != null) {
+        const embeddingErrors = docsYml.getEmbeddingOriginErrors(settings.embedding.allowedOrigins);
+        if (embeddingErrors.length > 0) {
+            context.failAndThrow(embeddingErrors.join("\n"));
+        }
     }
 
     // The legacy `default-search-filters` setting is preserved as an alias for
@@ -579,6 +587,7 @@ function convertSettingsConfig(
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding,
         showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
@@ -693,6 +702,11 @@ function convertLayoutConfig(
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when `breadcrumbs.current-page` is true the current page is appended to
+        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }

@@ -1529,11 +1529,13 @@ func (d *DoubleValidationRules) String() string {
 var (
 	encodingFieldJson  = big.NewInt(1 << 0)
 	encodingFieldProto = big.NewInt(1 << 1)
+	encodingFieldXml   = big.NewInt(1 << 2)
 )
 
 type Encoding struct {
 	Json  *JsonEncoding  `json:"json,omitempty" url:"json,omitempty"`
 	Proto *ProtoEncoding `json:"proto,omitempty" url:"proto,omitempty"`
+	Xml   *XmlEncoding   `json:"xml,omitempty" url:"xml,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1553,6 +1555,13 @@ func (e *Encoding) GetProto() *ProtoEncoding {
 		return nil
 	}
 	return e.Proto
+}
+
+func (e *Encoding) GetXml() *XmlEncoding {
+	if e == nil {
+		return nil
+	}
+	return e.Xml
 }
 
 func (e *Encoding) GetExtraProperties() map[string]interface{} {
@@ -1578,6 +1587,13 @@ func (e *Encoding) SetJson(json *JsonEncoding) {
 func (e *Encoding) SetProto(proto *ProtoEncoding) {
 	e.Proto = proto
 	e.require(encodingFieldProto)
+}
+
+// SetXml sets the Xml field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Encoding) SetXml(xml *XmlEncoding) {
+	e.Xml = xml
+	e.require(encodingFieldXml)
 }
 
 func (e *Encoding) UnmarshalJSON(data []byte) error {
@@ -5687,6 +5703,7 @@ var (
 	objectPropertyFieldValueType      = big.NewInt(1 << 3)
 	objectPropertyFieldPropertyAccess = big.NewInt(1 << 4)
 	objectPropertyFieldV2Examples     = big.NewInt(1 << 5)
+	objectPropertyFieldXml            = big.NewInt(1 << 6)
 )
 
 type ObjectProperty struct {
@@ -5696,11 +5713,19 @@ type ObjectProperty struct {
 	ValueType      *TypeReference               `json:"valueType" url:"valueType"`
 	PropertyAccess *common.ObjectPropertyAccess `json:"propertyAccess,omitempty" url:"propertyAccess,omitempty"`
 	V2Examples     *V2SchemaExamples            `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	Xml            *XmlPropertyEncoding         `json:"xml,omitempty" url:"xml,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *ObjectProperty) GetXml() *XmlPropertyEncoding {
+	if o == nil {
+		return nil
+	}
+	return o.Xml
 }
 
 func (o *ObjectProperty) GetDocs() *string {
@@ -5796,6 +5821,13 @@ func (o *ObjectProperty) SetPropertyAccess(propertyAccess *common.ObjectProperty
 func (o *ObjectProperty) SetV2Examples(v2Examples *V2SchemaExamples) {
 	o.V2Examples = v2Examples
 	o.require(objectPropertyFieldV2Examples)
+}
+
+// SetXml sets the Xml field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectProperty) SetXml(xml *XmlPropertyEncoding) {
+	o.Xml = xml
+	o.require(objectPropertyFieldXml)
 }
 
 func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
@@ -8529,4 +8561,256 @@ func (u *UuidType) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	xmlEncodingFieldName      = big.NewInt(1 << 0)
+	xmlEncodingFieldNamespace = big.NewInt(1 << 1)
+	xmlEncodingFieldPrefix    = big.NewInt(1 << 2)
+)
+
+// The XML element name and namespace of an xml-encoded type.
+type XmlEncoding struct {
+	Name      string  `json:"name" url:"name"`
+	Namespace *string `json:"namespace,omitempty" url:"namespace,omitempty"`
+	Prefix    *string `json:"prefix,omitempty" url:"prefix,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+}
+
+func (x *XmlEncoding) GetName() string {
+	if x == nil {
+		return ""
+	}
+	return x.Name
+}
+
+func (x *XmlEncoding) GetNamespace() *string {
+	if x == nil {
+		return nil
+	}
+	return x.Namespace
+}
+
+func (x *XmlEncoding) GetPrefix() *string {
+	if x == nil {
+		return nil
+	}
+	return x.Prefix
+}
+
+func (x *XmlEncoding) GetExtraProperties() map[string]interface{} {
+	return x.extraProperties
+}
+
+func (x *XmlEncoding) require(field *big.Int) {
+	if x.explicitFields == nil {
+		x.explicitFields = big.NewInt(0)
+	}
+	x.explicitFields.Or(x.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlEncoding) SetName(name string) {
+	x.Name = name
+	x.require(xmlEncodingFieldName)
+}
+
+// SetNamespace sets the Namespace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlEncoding) SetNamespace(namespace *string) {
+	x.Namespace = namespace
+	x.require(xmlEncodingFieldNamespace)
+}
+
+// SetPrefix sets the Prefix field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlEncoding) SetPrefix(prefix *string) {
+	x.Prefix = prefix
+	x.require(xmlEncodingFieldPrefix)
+}
+
+func (x *XmlEncoding) UnmarshalJSON(data []byte) error {
+	type unmarshaler XmlEncoding
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*x = XmlEncoding(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *x)
+	if err != nil {
+		return err
+	}
+	x.extraProperties = extraProperties
+	return nil
+}
+
+func (x *XmlEncoding) MarshalJSON() ([]byte, error) {
+	type embed XmlEncoding
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*x),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, x.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (x *XmlEncoding) String() string {
+	if value, err := internal.StringifyJSON(x); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", x)
+}
+
+var (
+	xmlPropertyEncodingFieldKind          = big.NewInt(1 << 0)
+	xmlPropertyEncodingFieldName          = big.NewInt(1 << 1)
+	xmlPropertyEncodingFieldWrapped       = big.NewInt(1 << 2)
+	xmlPropertyEncodingFieldListSeparator = big.NewInt(1 << 3)
+)
+
+// How a property of an xml-encoded type is represented in XML.
+type XmlPropertyEncoding struct {
+	Kind XmlPropertyKind `json:"kind" url:"kind"`
+	// The XML name; defaults to the property's wire value.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// For lists of child elements, whether the items are wrapped in a container element.
+	Wrapped *bool `json:"wrapped,omitempty" url:"wrapped,omitempty"`
+	// For lists serialized as a single attribute or text value, the item separator.
+	ListSeparator *string `json:"listSeparator,omitempty" url:"listSeparator,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+}
+
+func (x *XmlPropertyEncoding) GetKind() XmlPropertyKind {
+	if x == nil {
+		return ""
+	}
+	return x.Kind
+}
+
+func (x *XmlPropertyEncoding) GetName() *string {
+	if x == nil {
+		return nil
+	}
+	return x.Name
+}
+
+func (x *XmlPropertyEncoding) GetWrapped() *bool {
+	if x == nil {
+		return nil
+	}
+	return x.Wrapped
+}
+
+func (x *XmlPropertyEncoding) GetListSeparator() *string {
+	if x == nil {
+		return nil
+	}
+	return x.ListSeparator
+}
+
+func (x *XmlPropertyEncoding) GetExtraProperties() map[string]interface{} {
+	return x.extraProperties
+}
+
+func (x *XmlPropertyEncoding) require(field *big.Int) {
+	if x.explicitFields == nil {
+		x.explicitFields = big.NewInt(0)
+	}
+	x.explicitFields.Or(x.explicitFields, field)
+}
+
+// SetKind sets the Kind field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlPropertyEncoding) SetKind(kind XmlPropertyKind) {
+	x.Kind = kind
+	x.require(xmlPropertyEncodingFieldKind)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlPropertyEncoding) SetName(name *string) {
+	x.Name = name
+	x.require(xmlPropertyEncodingFieldName)
+}
+
+// SetWrapped sets the Wrapped field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlPropertyEncoding) SetWrapped(wrapped *bool) {
+	x.Wrapped = wrapped
+	x.require(xmlPropertyEncodingFieldWrapped)
+}
+
+// SetListSeparator sets the ListSeparator field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *XmlPropertyEncoding) SetListSeparator(listSeparator *string) {
+	x.ListSeparator = listSeparator
+	x.require(xmlPropertyEncodingFieldListSeparator)
+}
+
+func (x *XmlPropertyEncoding) UnmarshalJSON(data []byte) error {
+	type unmarshaler XmlPropertyEncoding
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*x = XmlPropertyEncoding(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *x)
+	if err != nil {
+		return err
+	}
+	x.extraProperties = extraProperties
+	return nil
+}
+
+func (x *XmlPropertyEncoding) MarshalJSON() ([]byte, error) {
+	type embed XmlPropertyEncoding
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*x),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, x.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (x *XmlPropertyEncoding) String() string {
+	if value, err := internal.StringifyJSON(x); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", x)
+}
+
+type XmlPropertyKind string
+
+const (
+	XmlPropertyKindAttribute XmlPropertyKind = "ATTRIBUTE"
+	XmlPropertyKindText      XmlPropertyKind = "TEXT"
+	XmlPropertyKindElement   XmlPropertyKind = "ELEMENT"
+)
+
+func NewXmlPropertyKindFromString(s string) (XmlPropertyKind, error) {
+	switch s {
+	case "ATTRIBUTE":
+		return XmlPropertyKindAttribute, nil
+	case "TEXT":
+		return XmlPropertyKindText, nil
+	case "ELEMENT":
+		return XmlPropertyKindElement, nil
+	}
+	var t XmlPropertyKind
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (x XmlPropertyKind) Ptr() *XmlPropertyKind {
+	return &x
 }

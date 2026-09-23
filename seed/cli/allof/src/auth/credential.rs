@@ -236,6 +236,37 @@ impl AuthCredentialSource {
         Ok(value)
     }
 
+    /// True when a keyring-backed rung of this source currently holds a value —
+    /// i.e. the credential is one the user stored (`auth login` /
+    /// `profiles set`), not one supplied by env, flag, file or literal.
+    ///
+    /// Lossy by the same rule as [`resolve`](Self::resolve), which it is built
+    /// on: an unreadable keychain (a denied macOS prompt) is indistinguishable
+    /// from an empty account, so both answer `false`. For the `--profile`
+    /// preference pass that means a denial falls through to an ambient
+    /// env-backed scheme instead of surfacing the keychain error — the same
+    /// outcome the pre-preference `has_credentials()` probe produced, since it
+    /// is equally `resolve`-based. Making selection report the distinction
+    /// needs a fallible predicate on
+    /// [`AuthProvider`](crate::auth::AuthProvider); until then the error does
+    /// still surface whenever the stored scheme *is* the one selected, because
+    /// `apply` resolves through [`try_resolve`](Self::try_resolve).
+    pub fn has_stored_value(&self) -> bool {
+        match self {
+            AuthCredentialSource::Keyring { .. }
+            | AuthCredentialSource::KeyringField { .. } => self.resolve().is_some(),
+            AuthCredentialSource::Chain(sources) => {
+                sources.iter().any(|source| source.has_stored_value())
+            }
+            AuthCredentialSource::Env(_)
+            | AuthCredentialSource::Cli(_)
+            | AuthCredentialSource::File(_)
+            | AuthCredentialSource::Literal(_)
+            | AuthCredentialSource::Closure(_, _)
+            | AuthCredentialSource::Missing => false,
+        }
+    }
+
     /// The environment-variable name backing this source, if it is an
     /// [`Env`](Self::Env) source. Returns `None` for every other variant.
     ///
@@ -904,6 +935,50 @@ mod tests {
 
         let s = AuthCredentialSource::keyring("svc", "nothing-here");
         assert_eq!(resolved(&s), None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_is_true_for_populated_keyring_entry() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "OAuth2", "stashed-token").unwrap();
+        set_active_store(mock);
+
+        assert!(AuthCredentialSource::keyring("svc", "OAuth2").has_stored_value());
+    }
+
+    #[test]
+    fn has_stored_value_is_false_for_env_source() {
+        assert!(!AuthCredentialSource::from_env("AUTH_TOKEN").has_stored_value());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_finds_keyring_entry_inside_chain() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "OAuth2", "stashed-token").unwrap();
+        set_active_store(mock);
+
+        let source = AuthCredentialSource::any([
+            AuthCredentialSource::from_env("AUTH_TOKEN"),
+            AuthCredentialSource::keyring("svc", "OAuth2"),
+        ]);
+        assert!(source.has_stored_value());
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn has_stored_value_is_false_for_empty_keyring_chain() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(Arc::new(MockKeyringStore::new()));
+
+        let source = AuthCredentialSource::any([
+            AuthCredentialSource::from_env("AUTH_TOKEN"),
+            AuthCredentialSource::keyring("svc", "OAuth2"),
+        ]);
+        assert!(!source.has_stored_value());
     }
 
     /// A store that fails every read, standing in for a denied OS keychain

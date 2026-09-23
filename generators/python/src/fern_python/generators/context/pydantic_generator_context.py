@@ -15,6 +15,10 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 
+def has_xml_types(ir: ir_types.IntermediateRepresentation) -> bool:
+    return any(type_.encoding is not None and type_.encoding.xml is not None for type_ in ir.types.values())
+
+
 class PydanticGeneratorContext(ABC):
     def __init__(
         self,
@@ -37,6 +41,7 @@ class PydanticGeneratorContext(ABC):
             use_typeddict_requests=use_typeddict_requests,
             use_pydantic_field_aliases=use_pydantic_field_aliases,
             pydantic_compatibility=pydantic_compatibility,
+            has_xml_types=has_xml_types(ir),
         )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer

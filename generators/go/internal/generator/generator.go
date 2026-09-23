@@ -409,6 +409,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExplicitFieldsTestFile(g.coordinator))
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
+	if hasXmlTypes(ir) {
+		files = append(files, newXmlFile(g.coordinator))
+		files = append(files, newXmlTestFile(g.coordinator))
+	}
 	// Then handle mode-specific generation tasks.
 	switch mode {
 	case ModeClient:
@@ -1463,6 +1467,32 @@ func newClientTestFile(
 	content := replaceClientTestConstructorName(clientTestFile, clientNameOverride, exportedClientNameOverride, clientConstructorNameOverride)
 	f.WriteRaw(content)
 	return f.File()
+}
+
+// hasXmlTypes returns true if any type in the IR is xml-encoded.
+func hasXmlTypes(ir *fernir.IntermediateRepresentation) bool {
+	for _, typeDeclaration := range ir.Types {
+		if typeDeclaration.Encoding.GetXml() != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func newXmlFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/xml.go",
+		[]byte(xmlFile),
+	)
+}
+
+func newXmlTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/xml_test.go",
+		[]byte(xmlTestFile),
+	)
 }
 
 func newApiErrorFile(coordinator *coordinator.Client) *File {

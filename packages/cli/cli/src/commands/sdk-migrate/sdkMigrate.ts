@@ -55,7 +55,11 @@ export async function sdkMigrate({
             group,
             source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: sourceBaseDirectory }),
             clientPathParameterStyle: resolveMigrationPathParameterStyle(sourceSpecs),
-            sourceDerivedApiFields: identifySourceDerivedApiFields({ workspace, groups })
+            sourceDerivedApiFields: identifySourceDerivedApiFields({
+                workspace,
+                groups,
+                definition: fernWorkspace.definition
+            })
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {

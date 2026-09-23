@@ -9,7 +9,7 @@ import com.seed.api.requests.UploadDocumentRequest;
 import com.seed.api.types.UploadDocumentResponse;
 import java.io.InputStream;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -56,6 +56,15 @@ public class SeedApiClient {
 
     public UploadDocumentResponse uploadPdfDocument(byte[] request, RequestOptions requestOptions) {
         return this.rawClient.uploadPdfDocument(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

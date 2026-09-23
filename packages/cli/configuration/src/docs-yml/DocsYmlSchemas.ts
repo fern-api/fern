@@ -237,6 +237,10 @@ export const AIChatDatasource = AIChatWebsiteDatasource;
 
 export const PageDescriptionSource = z.enum(["description", "subtitle"]);
 
+export const EmbeddingConfig = z.object({
+    "allowed-origins": z.array(z.string())
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -296,6 +300,10 @@ export const ThemeConfig = z.object({
 
 // ===== Layout schemas =====
 
+export const BreadcrumbsConfig = z.object({
+    "current-page": z.boolean().optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
@@ -313,7 +321,8 @@ export const LayoutConfig = z.object({
     "changelog-layout": ChangelogLayout.optional(),
     "api-reference-layout": ApiReferenceLayout.optional(),
     "api-reference-expand-properties": z.boolean().optional(),
-    "show-nav-availability-badges": z.boolean().optional()
+    "show-nav-availability-badges": z.boolean().optional(),
+    breadcrumbs: BreadcrumbsConfig.optional()
 });
 
 // ===== Settings =====
@@ -337,7 +346,8 @@ export const DocsSettingsConfig = z.object({
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
-    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    embedding: EmbeddingConfig.optional()
 });
 
 // ===== Colors =====

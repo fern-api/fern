@@ -8,7 +8,7 @@ import com.seed.httpHead.core.Suppliers;
 import com.seed.httpHead.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedHttpHeadClient {
+public class AsyncSeedHttpHeadClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUserClient> userClient;
@@ -20,6 +20,15 @@ public class AsyncSeedHttpHeadClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedHttpHeadClientBuilder builder() {

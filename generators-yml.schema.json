@@ -4328,6 +4328,7 @@
             "pypi",
             "postman",
             "local-file-system",
+            "fern-hosted",
             "nuget",
             "rubygems",
             "crates"
@@ -4527,6 +4528,27 @@
           "required": [
             "location",
             "path"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
+              "const": "fern-hosted"
+            },
+            "slug": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to \"mcp\"."
+            }
+          },
+          "required": [
+            "location"
           ]
         },
         {

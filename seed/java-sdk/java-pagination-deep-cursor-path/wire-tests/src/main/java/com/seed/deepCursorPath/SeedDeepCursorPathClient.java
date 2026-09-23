@@ -8,7 +8,7 @@ import com.seed.deepCursorPath.core.Suppliers;
 import com.seed.deepCursorPath.resources.deepcursorpath.DeepCursorPathClient;
 import java.util.function.Supplier;
 
-public class SeedDeepCursorPathClient {
+public class SeedDeepCursorPathClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<DeepCursorPathClient> deepCursorPathClient;
@@ -20,6 +20,15 @@ public class SeedDeepCursorPathClient {
 
     public DeepCursorPathClient deepCursorPath() {
         return this.deepCursorPathClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedDeepCursorPathClientBuilder builder() {

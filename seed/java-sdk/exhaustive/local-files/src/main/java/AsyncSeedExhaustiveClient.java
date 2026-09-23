@@ -11,9 +11,11 @@ import com.fern.sdk.resources.inlinedrequests.AsyncInlinedRequestsClient;
 import com.fern.sdk.resources.noauth.AsyncNoAuthClient;
 import com.fern.sdk.resources.noreqbody.AsyncNoReqBodyClient;
 import com.fern.sdk.resources.reqwithheaders.AsyncReqWithHeadersClient;
+import java.lang.AutoCloseable;
+import java.lang.Override;
 import java.util.function.Supplier;
 
-public class AsyncSeedExhaustiveClient {
+public class AsyncSeedExhaustiveClient implements AutoCloseable {
   protected final ClientOptions clientOptions;
 
   protected final Supplier<AsyncEndpointsClient> endpointsClient;
@@ -53,6 +55,15 @@ public class AsyncSeedExhaustiveClient {
 
   public AsyncReqWithHeadersClient reqWithHeaders() {
     return this.reqWithHeadersClient.get();
+  }
+
+  /**
+   * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+   * and is not released.
+   */
+  @Override
+  public void close() {
+    this.clientOptions.close();
   }
 
   public static AsyncSeedExhaustiveClientBuilder builder() {

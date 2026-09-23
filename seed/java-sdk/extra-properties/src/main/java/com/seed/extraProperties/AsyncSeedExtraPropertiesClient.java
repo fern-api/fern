@@ -8,7 +8,7 @@ import com.seed.extraProperties.core.Suppliers;
 import com.seed.extraProperties.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedExtraPropertiesClient {
+public class AsyncSeedExtraPropertiesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUserClient> userClient;
@@ -20,6 +20,15 @@ public class AsyncSeedExtraPropertiesClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedExtraPropertiesClientBuilder builder() {

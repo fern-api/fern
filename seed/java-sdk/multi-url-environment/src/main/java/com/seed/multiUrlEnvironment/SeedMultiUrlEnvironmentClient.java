@@ -9,7 +9,7 @@ import com.seed.multiUrlEnvironment.resources.ec2.Ec2Client;
 import com.seed.multiUrlEnvironment.resources.s3.S3Client;
 import java.util.function.Supplier;
 
-public class SeedMultiUrlEnvironmentClient {
+public class SeedMultiUrlEnvironmentClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<Ec2Client> ec2Client;
@@ -28,6 +28,15 @@ public class SeedMultiUrlEnvironmentClient {
 
     public S3Client s3() {
         return this.s3Client.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedMultiUrlEnvironmentClientBuilder builder() {
