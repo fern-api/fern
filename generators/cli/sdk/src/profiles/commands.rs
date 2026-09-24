@@ -1428,6 +1428,11 @@ fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliEr
 
     let prefix = format!("{}_", crate::text::env_var_prefix(ctx.cli_name));
     if let Some(rest) = key.strip_prefix(&prefix) {
+        // The configured suffix flag names this env var; it is checked first
+        // so a custom flag name is routed the way the user configured it.
+        if format!("_{rest}") == crate::user_agent::suffix_env_segment() {
+            return Ok(SetTarget::UserAgentSuffix);
+        }
         match rest {
             "RETRIES" => return Ok(SetTarget::Retries),
             "BASE_URL" => return Ok(SetTarget::BaseUrl),
@@ -1436,9 +1441,6 @@ fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliEr
             "PROXY" => return Ok(SetTarget::Proxy),
             "CA_BUNDLE" => return Ok(SetTarget::CaBundle),
             "INSECURE" => return Ok(SetTarget::Insecure),
-            _ if format!("_{rest}") == crate::user_agent::suffix_env_segment() => {
-                return Ok(SetTarget::UserAgentSuffix)
-            }
             _ => {
                 // `<PREFIX>_<SERVER_VAR>` — the env rung a server variable
                 // already reads, so the spelling is one the user has seen.
@@ -1586,16 +1588,24 @@ fn handle_set(
                 notes.push(format!("{key} \u{2192} format"));
             }
             SetTarget::TimeoutSecs => {
-                let parsed: u64 = value.parse().map_err(|_| {
-                    CliError::Validation(format!(
-                        "`{key}` expects a non-negative integer, got `{value}`"
-                    ))
-                })?;
+                let parsed: u64 = value
+                    .parse()
+                    .ok()
+                    .filter(|n| i64::try_from(*n).is_ok())
+                    .ok_or_else(|| {
+                        CliError::Validation(format!(
+                            "`{key}` expects a non-negative integer no larger than {}, got `{value}`",
+                            i64::MAX
+                        ))
+                    })?;
                 entry.transport.timeout_secs = Some(parsed);
                 notes.push(format!("{key} \u{2192} timeout_secs"));
             }
             SetTarget::Proxy => {
                 crate::output::reject_dangerous_chars(&value, &key)?;
+                reqwest::Proxy::all(&value).map_err(|e| {
+                    CliError::Validation(format!("`{key}` is not a valid proxy URL: {e}"))
+                })?;
                 entry.transport.proxy = Some(value);
                 notes.push(format!("{key} \u{2192} proxy"));
             }
@@ -1618,7 +1628,13 @@ fn handle_set(
                 notes.push(format!("{key} \u{2192} insecure"));
             }
             SetTarget::UserAgentSuffix => {
-                entry.transport.user_agent_suffix = Some(value);
+                let trimmed = value.trim().to_string();
+                if trimmed.is_empty() || reqwest::header::HeaderValue::from_str(&trimmed).is_err() {
+                    return Err(CliError::Validation(format!(
+                        "`{key}` must be a non-empty product token valid as HTTP header content, got `{value}`"
+                    )));
+                }
+                entry.transport.user_agent_suffix = Some(trimmed);
                 notes.push(format!("{key} \u{2192} user_agent_suffix"));
             }
             SetTarget::ServerVariable(variable) => {
