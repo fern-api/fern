@@ -555,9 +555,12 @@ fn insecure_source(prefix: &str, profile: &crate::profiles::TransportSettings) -
     if first_env(keys.iter()).is_some() {
         return None;
     }
-    (profile.insecure == Some(true))
-        .then(|| crate::profiles::active_name().map(|name| format!("profile `{name}`")))
-        .flatten()
+    profile.insecure.unwrap_or(false).then(|| {
+        match crate::profiles::active_name() {
+            Some(name) => format!("profile `{name}`"),
+            None => "active profile".to_string(),
+        }
+    })
 }
 
 /// Print the insecure-mode warning at most once per (binary, process).

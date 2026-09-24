@@ -404,7 +404,7 @@ fn map_field(table: &dyn toml_edit::TableLike, key: &str) -> BTreeMap<String, St
 fn u64_field(table: &dyn toml_edit::TableLike, key: &str) -> Option<u64> {
     let value = table.get(key)?;
     match value.as_integer() {
-        Some(n) if n >= 0 => Some(n as u64),
+        Some(n) if n >= 0 => u64::try_from(n).ok(),
         _ => {
             tracing::warn!(
                 key,
