@@ -57,7 +57,8 @@ export async function generateAPIWorkspaces({
     automation,
     pack,
     packMode,
-    packOnly
+    packOnly,
+    includePrivate
 }: {
     project: Project;
     cliContext: CliContext;
@@ -99,6 +100,8 @@ export async function generateAPIWorkspaces({
     packMode?: PackMode;
     /** Keep only the fern-dist/ artifact in the output directory, removing the generated SDK source. */
     packOnly?: boolean;
+    /** Include `x-twilio.libraryVisibility: private` OpenAPI elements in the generated SDK (`--private`). */
+    includePrivate?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
     let sdkConfigV1: FernSdkConfigV1Payload | undefined;
@@ -257,7 +260,8 @@ export async function generateAPIWorkspaces({
                         automation,
                         pack,
                         packMode,
-                        packOnly
+                        packOnly,
+                        includePrivate
                     });
                 });
             })

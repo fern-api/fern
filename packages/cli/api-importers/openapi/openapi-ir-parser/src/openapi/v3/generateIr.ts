@@ -48,6 +48,7 @@ import { getFernVersion } from "./extensions/getFernVersion.js";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
 import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
+import { getSkippedLibraryVisibility } from "./extensions/getLibraryVisibility.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
@@ -203,6 +204,16 @@ export function generateIr({
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
                     if (ignoreSchema != null && ignoreSchema) {
+                        return [];
+                    }
+                    const skippedVisibility = getSkippedLibraryVisibility({
+                        objects: [schema],
+                        logger: context.logger,
+                        options,
+                        breadcrumbs: ["components", "schemas", key]
+                    });
+                    if (skippedVisibility != null) {
+                        context.logger.debug(`Schema ${key} has libraryVisibility "${skippedVisibility}". Skipping.`);
                         return [];
                     }
                     if (ERROR_NAMES.has(key)) {

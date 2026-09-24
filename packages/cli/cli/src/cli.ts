@@ -912,6 +912,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` in the generated SDK. By default only `public` elements are generated; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -1058,7 +1064,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
-                    packOnly: argv.packageOnly
+                    packOnly: argv.packageOnly,
+                    includePrivate: argv.private
                 });
             }
             if (argv.docs != null) {
@@ -1126,7 +1133,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
-                packOnly: argv.packageOnly
+                packOnly: argv.packageOnly,
+                includePrivate: argv.private
             });
         }
     );
