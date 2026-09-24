@@ -1,4 +1,4 @@
-import { FernDefinition, ParsedFernFile } from "@fern-api/api-workspace-commons";
+import { FernDefinition, ParsedFernFile, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { entries, keys } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
@@ -19,6 +19,7 @@ export declare namespace processPackageMarkers {
         didSucceed: true;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
         importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
+        specs: Spec[];
     }
 
     export interface FailedResult {
@@ -49,6 +50,7 @@ export async function processPackageMarkers({
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
+    const specsByNamespace: Record<RelativeFilePath, Spec[]> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -86,13 +88,17 @@ export async function processPackageMarkers({
                             loadAPIWorkspace
                         });
                         if (loadDependencyResult.didSucceed) {
-                            importedDefinitions[dirname(pathOfPackageMarker)] = {
+                            const namespace = dirname(pathOfPackageMarker);
+                            importedDefinitions[namespace] = {
                                 definition: loadDependencyResult.definition,
                                 url:
                                     typeof packageMarker.contents.export === "object"
                                         ? packageMarker.contents.export.url
                                         : undefined
                             };
+                            specsByNamespace[namespace] = loadDependencyResult.specs.map((spec) =>
+                                withNamespace(spec, namespace)
+                            );
                         } else {
                             failures[pathOfPackageMarker] = loadDependencyResult.failure;
                         }
@@ -111,7 +117,18 @@ export async function processPackageMarkers({
         return {
             didSucceed: true,
             packageMarkers,
-            importedDefinitions
+            importedDefinitions,
+            specs: flattenSpecsInNamespaceOrder(specsByNamespace)
         };
     }
+}
+
+function withNamespace(spec: Spec, namespace: string): Spec {
+    return spec.type === "protobuf" ? spec : { ...spec, namespace };
+}
+
+function flattenSpecsInNamespaceOrder(specsByNamespace: Record<RelativeFilePath, Spec[]>): Spec[] {
+    return keys(specsByNamespace)
+        .sort()
+        .flatMap((namespace) => specsByNamespace[namespace] ?? []);
 }
