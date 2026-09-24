@@ -68,6 +68,7 @@
     "objectQueryParameters": true,
     "shouldUseUndiscriminatedUnionsWithLiterals": false,
     "shouldUseIdiomaticRequestNames": true,
+    "libraryVisibility": "all",
     "asyncApiNaming": "v1",
     "useBytesForBinaryResponse": false,
     "respectForwardCompatibleEnums": false,
