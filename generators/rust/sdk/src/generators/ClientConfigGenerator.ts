@@ -178,7 +178,7 @@ export class ClientConfigGenerator {
     private generateDefaultImpl() {
         const userAgent = `${this.context.case.pascalSafe(this.context.ir.apiName)} Rust SDK`;
         const environmentEnumName = this.context.getEnvironmentEnumName();
-        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
+        const hasDefaultEnvironment = this.hasDefaultEnvironment();
 
         // Platform headers for Fern SDK identification
         const sdkName = this.context.getCrateName();
@@ -306,7 +306,7 @@ export class ClientConfigGenerator {
      */
     private generateServiceUrlImpl(): string {
         const environmentEnumName = this.context.getEnvironmentEnumName();
-        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
+        const hasDefaultEnvironment = this.hasDefaultEnvironment();
         const knownUrls = this.environmentGenerator
             .getMultiUrlGetterMethodNames()
             .map((getter) => `environment.${getter}()`);
@@ -325,6 +325,11 @@ export class ClientConfigGenerator {
     /// \`environment\`'s URLs (or the default environment's URL that \`Default\` fills in),
     /// every request goes there. Otherwise the request goes to the environment's URL for its
     /// service, which \`url_for\` picks (\`|environment| environment.<service>_url()\`).
+    ///
+    /// The decision is by value, since \`base_url\` is a plain \`String\` that \`Default\` fills
+    /// in: a \`base_url\` equal to one of the environment's URLs cannot be told apart from the
+    /// default and routes per service. To send every request to one of those URLs, set
+    /// \`environment\` to \`None\`.
     pub fn service_url<'a>(&'a self, url_for: impl FnOnce(&'a ${environmentEnumName}) -> &'a str) -> &'a str {
         match &self.environment {
             Some(environment) if !self.overrides_environment(environment) => url_for(environment),
@@ -339,6 +344,10 @@ export class ClientConfigGenerator {
             .contains(&self.base_url.as_str())
     }
 }`;
+    }
+
+    private hasDefaultEnvironment(): boolean {
+        return this.context.ir.environments?.defaultEnvironment != null;
     }
 
     private buildOAuthTokenExchangeExpr(exchange: OAuthTokenExchange): string {

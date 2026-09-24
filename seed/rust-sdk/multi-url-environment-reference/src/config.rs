@@ -60,6 +60,11 @@ impl ClientConfig {
     /// `environment`'s URLs (or the default environment's URL that `Default` fills in),
     /// every request goes there. Otherwise the request goes to the environment's URL for its
     /// service, which `url_for` picks (`|environment| environment.<service>_url()`).
+    ///
+    /// The decision is by value, since `base_url` is a plain `String` that `Default` fills
+    /// in: a `base_url` equal to one of the environment's URLs cannot be told apart from the
+    /// default and routes per service. To send every request to one of those URLs, set
+    /// `environment` to `None`.
     pub fn service_url<'a>(&'a self, url_for: impl FnOnce(&'a Environment) -> &'a str) -> &'a str {
         match &self.environment {
             Some(environment) if !self.overrides_environment(environment) => url_for(environment),
