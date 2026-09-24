@@ -516,6 +516,160 @@ public class RetriesTests
     }
 
     [Test]
+    public async SystemTask SendRequestAsync_ShouldReturnLastResponse_WhenRetryAttemptTimesOut()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryTimeout")
+            .WillSetStateTo("Slow")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Rate limited"));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryTimeout")
+            .WhenStateIs("Slow")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(200)
+                    .WithBody("Success")
+                    .WithDelay(TimeSpan.FromSeconds(5))
+            );
+
+        var rawClient = new RawClient(
+            new ClientOptions
+            {
+                HttpClient = _httpClient,
+                MaxRetries = 1,
+                Timeout = TimeSpan.FromMilliseconds(500),
+            }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new SeedNoRetries.Core.EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(429));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo("Rate limited"));
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldApplyTimeoutPerAttempt()
+    {
+        // Three attempts of 600ms each exceed a 1s budget shared across the whole
+        // retry loop, but each individual attempt completes well within it.
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("PerAttemptTimeout")
+            .WillSetStateTo("Second")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithDelay(TimeSpan.FromMilliseconds(600))
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("PerAttemptTimeout")
+            .WhenStateIs("Second")
+            .WillSetStateTo("Third")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithDelay(TimeSpan.FromMilliseconds(600))
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("PerAttemptTimeout")
+            .WhenStateIs("Third")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(200)
+                    .WithBody("Success")
+                    .WithDelay(TimeSpan.FromMilliseconds(600))
+            );
+
+        var rawClient = new RawClient(
+            new ClientOptions
+            {
+                HttpClient = _httpClient,
+                MaxRetries = 2,
+                Timeout = TimeSpan.FromSeconds(1),
+            }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new SeedNoRetries.Core.EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(3));
+        }
+    }
+
+    [Test]
+    public void SendRequestAsync_ShouldThrow_WhenFirstAttemptTimesOut()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(200)
+                    .WithBody("Success")
+                    .WithDelay(TimeSpan.FromSeconds(5))
+            );
+
+        var rawClient = new RawClient(
+            new ClientOptions
+            {
+                HttpClient = _httpClient,
+                MaxRetries = 1,
+                Timeout = TimeSpan.FromMilliseconds(200),
+            }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new SeedNoRetries.Core.EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await rawClient.SendRequestAsync(request)
+        );
+    }
+
+    [Test]
     public async SystemTask SendRequestAsync_ShouldNotRetry_WhenRetriesDisabledForEndpoint()
     {
         _server

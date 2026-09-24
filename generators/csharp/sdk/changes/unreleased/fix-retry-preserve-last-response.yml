@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `RawClient` now applies the configured timeout to each retry attempt individually instead of
+    sharing a single budget across all attempts and backoff delays. If a retry attempt fails after
+    an earlier attempt already received an API response (e.g. a 429), that response is returned
+    instead of a generic cancellation error.
+  type: fix
