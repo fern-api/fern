@@ -1,4 +1,10 @@
-import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernDefinition,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -161,7 +167,7 @@ describe("SDK Config migration", () => {
             follow_redirects_by_default: true,
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
         };
 
@@ -180,7 +186,7 @@ describe("SDK Config migration", () => {
             followRedirectsByDefault: true,
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
         });
         expect(result.diagnostics).toEqual([]);
@@ -521,11 +527,34 @@ describe("SDK Config migration", () => {
             shouldUseUndiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "./problem.yml",
+                name: "ProblemDetails"
+            }
         } as generatorsYml.APIDefinitionSettings;
+        const loadedSpec = createWorkspaceOpenApiSpec("Sample", absoluteFilepath);
+        if (loadedSpec.type !== "openapi") {
+            throw new Error("Expected an OpenAPI spec");
+        }
+        loadedSpec.settings = getOpenAPISettings({
+            overrides: {
+                errorResponses: {
+                    schema: "/tmp/fern/problem.yml",
+                    name: "ProblemDetails"
+                }
+            }
+        });
         const workspace = {
             absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
-            allSpecs: [createWorkspaceOpenApiSpec("Sample", absoluteFilepath)],
+            allSpecs: [loadedSpec],
             generatorsConfiguration: {
                 api: {
                     type: "multiNamespace",
@@ -548,8 +577,23 @@ describe("SDK Config migration", () => {
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml",
+                name: "ProblemDetails"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("projects generator-level source import settings into SDK Config", () => {
@@ -563,7 +607,11 @@ describe("SDK Config migration", () => {
                         "respect-readonly-schemas": true,
                         "prefer-undiscriminated-unions-with-literals": true,
                         "inline-all-of-schemas": true,
-                        "resolve-schema-collisions": true
+                        "resolve-schema-collisions": true,
+                        "type-dates-as-strings": true,
+                        "error-responses": {
+                            schema: "./problem.yml"
+                        }
                     }
                 }
             ]
@@ -582,8 +630,16 @@ describe("SDK Config migration", () => {
             discriminatedUnionV2: true,
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
-            resolveSchemaCollisions: true
+            resolveSchemaCollisions: true,
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
