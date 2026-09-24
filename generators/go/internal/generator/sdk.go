@@ -4308,6 +4308,16 @@ func (f *fileWriter) WriteRequestType(
 		} else {
 			f.P("var body ", referenceType)
 		}
+	} else if len(requestBody.dates) > 0 {
+		f.P("type embed ", typeName)
+		f.P("var body = struct{")
+		f.P("embed")
+		for _, date := range requestBody.dates {
+			f.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+		}
+		f.P("}{")
+		f.P("embed: embed(*", receiver, "),")
+		f.P("}")
 	} else {
 		f.P("type unmarshaler ", typeName)
 		f.P("var body unmarshaler")
@@ -4326,6 +4336,12 @@ func (f *fileWriter) WriteRequestType(
 			bodyValue = "&body"
 		}
 		f.P(receiver, ".", bodyField, " = ", bodyValue)
+	} else if len(requestBody.dates) > 0 {
+		f.P("*", receiver, " = ", typeName, "(body.embed)")
+		for _, date := range requestBody.dates {
+			fieldName := date.Name.Name.PascalCase.UnsafeName
+			f.P(receiver, ".", fieldName, " = ", date.unmarshaledValue("body."+fieldName))
+		}
 	} else {
 		f.P("*", receiver, " = ", typeName, "(body)")
 	}
