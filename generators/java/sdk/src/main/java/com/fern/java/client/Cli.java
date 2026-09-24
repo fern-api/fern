@@ -428,6 +428,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                                     corePackageName);
             this.addGeneratedFile(reconnectingListenerGenerator.generateListener());
 
+            com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator webSocketLifecycleTestGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketLifecycleTestGenerator(context);
+            this.addGeneratedFile(webSocketLifecycleTestGenerator.generateFile());
+
             // Generate shared WebSocket types in core package
             com.fern.java.client.generators.websocket.DisconnectReasonGenerator disconnectReasonGenerator =
                     new com.fern.java.client.generators.websocket.DisconnectReasonGenerator(corePackageName);

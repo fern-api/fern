@@ -51,7 +51,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -67,6 +70,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
     private static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
+
+    public static final String CLOSED_MESSAGE = "root client has been closed";
 
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
@@ -93,6 +98,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     // client is still recognized as caller-owned, and so Builder.from(...) can carry ownership forward.
     private static final FieldSpec OWNS_HTTP_CLIENT_FIELD = FieldSpec.builder(
                     TypeName.BOOLEAN, "ownsHttpClient", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec CLOSED_FIELD = FieldSpec.builder(
+                    AtomicBoolean.class, "closed", Modifier.PRIVATE, Modifier.FINAL)
+            .initializer("new $T(false)", AtomicBoolean.class)
+            .build();
+
+    // Live WebSocket clients created from these options; closed before the shared OkHttp dispatcher is shut down.
+    private static final FieldSpec OPEN_WEB_SOCKETS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(Set.class, AutoCloseable.class),
+                    "openWebSockets",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .initializer("$T.newKeySet()", ConcurrentHashMap.class)
             .build();
 
     private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
@@ -783,6 +802,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(OWNS_HTTP_CLIENT_FIELD)
+                .addField(CLOSED_FIELD)
+                .addField(OPEN_WEB_SOCKETS_FIELD)
                 .addField(TIMEOUT_FIELD)
                 .addField(MAX_RETRIES_FIELD)
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
@@ -923,13 +944,56 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 + "In-flight calls are not cancelled or awaited, and any request issued after this method\n"
                                 + "returns fails with a {@code RejectedExecutionException}. Options derived from this one via\n"
                                 + "{@code Builder.from(...)} share the same dispatcher and connection pool, so closing either\n"
-                                + "releases them for both. Calling this method more than once has no further effect.\n",
+                                + "releases them for both. Calling this method more than once has no further effect.\n"
+                                + "<p>\n"
+                                + "WebSocket clients created from this client that are still connected are disconnected\n"
+                                + "first (whether or not the OkHttpClient is owned), so they stop reconnecting before the\n"
+                                + "dispatcher goes away. Any WebSocket connect or reconnect attempted afterwards fails with\n"
+                                + "an {@code IllegalStateException} explaining that the client has been closed.\n",
                         OKHTTP_CLIENT_FIELD.name)
+                .beginControlFlow("if (!this.$L.compareAndSet(false, true))", CLOSED_FIELD.name)
+                .addStatement("return")
+                .endControlFlow()
+                .beginControlFlow("for ($T webSocket : this.$L)", AutoCloseable.class, OPEN_WEB_SOCKETS_FIELD.name)
+                .beginControlFlow("try")
+                .addStatement("webSocket.close()")
+                .nextControlFlow("catch ($T e)", Exception.class)
+                .addComment("best effort; keep closing the remaining sockets and the HTTP client")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("this.$L.clear()", OPEN_WEB_SOCKETS_FIELD.name)
                 .beginControlFlow("if (!this.$L)", OWNS_HTTP_CLIENT_FIELD.name)
                 .addStatement("return")
                 .endControlFlow()
                 .addStatement("this.$L.dispatcher().executorService().shutdown()", OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L.connectionPool().evictAll()", OKHTTP_CLIENT_FIELD.name)
+                .build();
+
+        MethodSpec isClosedMethod = MethodSpec.methodBuilder("isClosed")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.BOOLEAN)
+                .addJavadoc("Returns whether {@link #close()} has been called on this client.\n")
+                .addStatement("return this.$L.get()", CLOSED_FIELD.name)
+                .build();
+
+        MethodSpec registerWebSocketMethod = MethodSpec.methodBuilder("registerWebSocket")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(AutoCloseable.class, "webSocket")
+                .addJavadoc("Tracks a connected WebSocket client so that {@link #close()} disconnects it.\n"
+                        + "\n"
+                        + "@throws IllegalStateException if this client has already been closed\n")
+                .addStatement("this.$L.add(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
+                .beginControlFlow("if (this.$L.get())", CLOSED_FIELD.name)
+                .addStatement("this.$L.remove(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
+                .addStatement("throw new $T($S)", IllegalStateException.class, CLOSED_MESSAGE)
+                .endControlFlow()
+                .build();
+
+        MethodSpec unregisterWebSocketMethod = MethodSpec.methodBuilder("unregisterWebSocket")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(AutoCloseable.class, "webSocket")
+                .addJavadoc("Stops tracking a WebSocket client that has been disconnected.\n")
+                .addStatement("this.$L.remove(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
                 .build();
 
         clientOptionsBuilder
@@ -940,7 +1004,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(initialRetryDelayMillisGetter)
                 .addMethod(maxRetryDelayMillisGetter)
                 .addMethod(retryJitterFactorGetter)
-                .addMethod(closeMethod);
+                .addMethod(closeMethod)
+                .addMethod(isClosedMethod)
+                .addMethod(registerWebSocketMethod)
+                .addMethod(unregisterWebSocketMethod);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {

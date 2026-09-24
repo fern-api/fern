@@ -24,6 +24,7 @@ import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
@@ -144,6 +145,8 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                     .addJavadoc("@param options connection options including query parameters\n");
         }
 
+        builder.addStatement("$N.registerWebSocket(this)", clientOptionsField);
+
         // Build WebSocket URL
         builder.addStatement("$N = new $T(1)", connectionLatchField, CountDownLatch.class);
         builder.addStatement(
@@ -246,6 +249,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         // Create the connection supplier lambda
         builder.addCode(
                 "this.$N = new $T(reconnectOpts, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
+        builder.beginControlFlow("    if ($N.isClosed())", clientOptionsField);
+        builder.addStatement(
+                "throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE);
+        builder.endControlFlow();
         builder.beginControlFlow("    if ($N.webSocketFactory().isPresent())", clientOptionsField);
         builder.addStatement(
                 "return $N.webSocketFactory().get().create(request, this.$N)",
@@ -255,7 +262,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.beginControlFlow("    else");
         builder.addStatement("return $N.newWebSocket(request, this.$N)", okHttpClientField, reconnectingListenerField);
         builder.endControlFlow();
-        builder.addCode("}) {\n");
+        builder.addCode("}, $N::isClosed) {\n", clientOptionsField);
 
         // Override abstract methods to handle lifecycle events
         builder.addCode("    @Override\n");
@@ -438,7 +445,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         return MethodSpec.methodBuilder("disconnect")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Disconnects the WebSocket connection and releases resources.\n")
+                .addStatement("$N.unregisterWebSocket(this)", clientOptionsField)
+                .beginControlFlow("if ($N != null)", reconnectingListenerField)
                 .addStatement("$N.disconnect()", reconnectingListenerField)
+                .endControlFlow()
                 .beginControlFlow("if ($N != null)", timeoutExecutorField)
                 .addStatement("$N.shutdownNow()", timeoutExecutorField)
                 .addStatement("$N = null", timeoutExecutorField)
