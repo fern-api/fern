@@ -1,6 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { ConjureWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import type { Spec } from "@fern-api/api-workspace-commons";
+import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import {
     createGroupedSpecsTarGzArchiveSettled,
     validateSdkConfigImportSettings
@@ -84,6 +85,75 @@ describe("createFernSourceArchiveResolver", () => {
             message:
                 "Generator index 3 (fernapi/fern-typescript-sdk) requires a source archive, but workspace type conjure does not expose source specs"
         });
+    });
+
+    it("builds an archive from a composed workspace's namespaced dependency specs", async () => {
+        const context = createMockTaskContext();
+        const generatorInvocation = makeGenerator();
+        const eviSpec: Spec = {
+            type: "openapi",
+            absoluteFilepath: AbsoluteFilePath.of("/hume/empathic-voice-interface/evi-openapi.json"),
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            source: {
+                type: "openapi",
+                file: AbsoluteFilePath.of("/hume/empathic-voice-interface/evi-openapi.json")
+            },
+            namespace: "empathic-voice"
+        };
+        const ttsSpec: Spec = {
+            type: "openapi",
+            absoluteFilepath: AbsoluteFilePath.of("/hume/tts/tts-openapi.json"),
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            source: { type: "openapi", file: AbsoluteFilePath.of("/hume/tts/tts-openapi.json") },
+            namespace: "tts"
+        };
+        const workspace = new LazyFernWorkspace({
+            context,
+            generatorsConfiguration: undefined,
+            workspaceName: "unioned",
+            cliVersion: "0.0.0",
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/unioned")
+        });
+        vi.spyOn(workspace, "getAllSpecsForGenerator").mockResolvedValue([eviSpec, ttsSpec]);
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [generatorInvocation],
+            reviewers: undefined
+        };
+        const request: FernSourceArchiveRequest = {
+            generatorIndex: 0,
+            sdkConfigTargetIndex: 0,
+            generatorInvocation,
+            sdkGenApiRoute: {
+                generatorId: generatorInvocation.name,
+                language: "typescript",
+                requestedVersion: generatorInvocation.version,
+                cutoverVersion: "4.0.0",
+                configKind: "sdk-config-v1",
+                payloadKind: "sdk-config-v1"
+            }
+        };
+        vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockResolvedValue({
+            archive: {
+                buffer: Buffer.alloc(0),
+                manifest: { specs: [] },
+                specIndexesByGeneratorIndex: new Map([[0, [0, 1]]])
+            },
+            errorsByGeneratorIndex: new Map()
+        });
+
+        const resolution = await createFernSourceArchiveResolver({ workspace, context, group })([request]);
+
+        expect(resolution.errors).toEqual(new Map());
+        expect(resolution.sourceArchives.get(0)).toMatchObject({ specIndexes: [0, 1] });
+        expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
+            expect.objectContaining({
+                generatorSelections: [{ generatorIndex: 0, specs: [eviSpec, ttsSpec] }]
+            })
+        );
     });
 
     it("preserves the preparation error when archive outcomes violate the invariant", async () => {

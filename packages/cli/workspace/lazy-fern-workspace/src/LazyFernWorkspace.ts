@@ -1,4 +1,4 @@
-import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { AbstractAPIWorkspace, FernDefinition, FernWorkspace, type Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -24,6 +24,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
     public type: string = "fern";
     private context: TaskContext;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
+    private specsFromDependencies: Record<string, Spec[]> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;
 
     constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
@@ -125,9 +126,35 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             });
 
             this.fernWorkspaces[key] = workspace;
+            this.specsFromDependencies[key] = processPackageMarkersResult.specs;
         }
 
         return workspace;
+    }
+
+    public async getSourceSpecs(): Promise<Spec[]> {
+        const settings = undefined;
+        await this.toFernWorkspace({ context: this.context }, settings);
+        const specs = this.specsFromDependencies[hash(settings ?? {})] ?? [];
+        if (specs.length === 0) {
+            throw new CliError({
+                message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes no spec-bearing dependencies, so it exposes no source specs`,
+                code: CliError.Code.ResolutionError
+            });
+        }
+        return specs;
+    }
+
+    public async getAllSpecsForGenerator(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
+    ): Promise<Spec[]> {
+        if (specsOverride != null) {
+            throw new CliError({
+                message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes its specs through dependencies.yml, which cannot be combined with a generator-level specs override`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return this.getSourceSpecs();
     }
 
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {

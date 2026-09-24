@@ -655,6 +655,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
+    public async getSourceSpecs(): Promise<Spec[]> {
+        return this.allSpecs;
+    }
+
     public async getAllSpecsForGenerator(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
     ): Promise<Spec[]> {
