@@ -13,6 +13,8 @@ import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/
 const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MAX_SLUG_LENGTH = 30;
 const MAX_MODULES = 20;
+/** Server-side constraint on tool names, mirrored here for a friendly pre-flight message. */
+const TOOL_NAME_REGEX = /^[a-zA-Z0-9_-]{1,64}$/;
 
 /** Slug used when generators.yml sets no `output.slug`; the server is then served at https://<org>.fernmcp.dev/mcp. */
 const DEFAULT_SLUG = "mcp";
@@ -413,6 +415,40 @@ export function getSlugValidationError(value: string, label: string): string | u
     return undefined;
 }
 
+interface ToolEntry {
+    name: string;
+    method?: unknown;
+    path?: unknown;
+    operationId?: unknown;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
+}
+
+function isToolEntry(value: unknown): value is ToolEntry {
+    return isRecord(value) && typeof value.name === "string";
+}
+
+export function getToolNameValidationErrors(metadata: unknown): string[] {
+    if (!isRecord(metadata) || !Array.isArray(metadata.tools)) {
+        return [];
+    }
+
+    return metadata.tools.flatMap((tool): string[] => {
+        if (!isToolEntry(tool) || TOOL_NAME_REGEX.test(tool.name)) {
+            return [];
+        }
+        const hint =
+            typeof tool.method === "string" && typeof tool.path === "string"
+                ? `  It was derived from ${tool.method} ${tool.path}; give that operation a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.`
+                : "  Rename it with a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.";
+        return [
+            `Tool name "${tool.name}" (${tool.name.length} characters) is not allowed: tool names must match ^[a-zA-Z0-9_-]{1,64}$.\n${hint}`
+        ];
+    });
+}
+
 function validateBeforeDeploy({
     orgId,
     slug,
@@ -433,7 +469,8 @@ function validateBeforeDeploy({
             : undefined,
         !bundle.modules.some((module) => module.name === bundle.mainModule)
             ? `The server bundle's entry module ("${bundle.mainModule}" per wrangler.jsonc) is not a file in the bundle.`
-            : undefined
+            : undefined,
+        ...getToolNameValidationErrors(bundle.metadata)
     ].filter((error) => error != null);
     if (errors.length > 0) {
         context.failAndThrow(errors.join("\n"), undefined, { code: CliError.Code.ConfigError });
@@ -477,7 +514,7 @@ async function uploadContent({
 
     if (!checkRes.ok) {
         const errorBody = await checkRes.text();
-        const detail = parseErrorDetail(errorBody) ?? errorBody;
+        const detail = describeServerError(errorBody);
         context.failAndThrow(`Upload check failed for ${file.name}: HTTP ${checkRes.status} — ${detail}`, undefined, {
             code: CliError.Code.NetworkError
         });
@@ -527,6 +564,33 @@ async function uploadContent({
 /** Server error payloads can be objects; String() would print "[object Object]". */
 function stringifyServerError(error: unknown): string {
     return typeof error === "string" ? error : (JSON.stringify(error) ?? String(error));
+}
+
+function describeServerError(body: string): string {
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(body);
+    } catch {
+        return body;
+    }
+
+    const headline = parseErrorDetail(body) ?? body;
+    if (!isRecord(parsed) || !isRecord(parsed.data) || !Array.isArray(parsed.data.issues)) {
+        return headline;
+    }
+
+    const issues = parsed.data.issues.flatMap((issue): string[] => {
+        if (!isRecord(issue) || typeof issue.message !== "string") {
+            return [];
+        }
+        const path =
+            Array.isArray(issue.path) &&
+            issue.path.every((part): part is string | number => typeof part === "string" || typeof part === "number")
+                ? `[${issue.path.join(".")}] `
+                : "";
+        return [`  - ${path}${issue.message}`];
+    });
+    return issues.length > 0 ? `${headline}\n${issues.join("\n")}` : headline;
 }
 
 async function postDeploy({
@@ -616,7 +680,7 @@ async function postDeploy({
 
     if (!res.ok) {
         const body = await res.text();
-        const detail = parseErrorDetail(body) ?? body;
+        const detail = describeServerError(body);
         return context.failAndThrow(`${detail}\n${STILL_SERVING_LINE}`, undefined, {
             code: CliError.Code.NetworkError
         });
