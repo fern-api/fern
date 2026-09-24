@@ -137,6 +137,13 @@ if (
     process.exit(result.status ?? 1);
 }
 
+// libuv sizes its threadpool (async fs, zlib, dns) lazily on first use, so
+// this takes effect as long as it runs before any async I/O. The default of 4
+// is a bottleneck for the highly concurrent file reads in docs validation.
+if (process.env.UV_THREADPOOL_SIZE == null) {
+    process.env.UV_THREADPOOL_SIZE = "8";
+}
+
 void runCli();
 
 async function runCli() {
