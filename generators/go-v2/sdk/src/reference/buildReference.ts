@@ -161,12 +161,14 @@ function getReturnValue({
 
 function getGoTypeString({
     context,
-    typeReference
+    typeReference,
+    enumsAsValues = false
 }: {
     context: SdkGeneratorContext;
     typeReference: FernIr.TypeReference;
+    enumsAsValues?: boolean;
 }): string {
-    const goType = context.goTypeMapper.convert({ reference: typeReference });
+    const goType = context.goTypeMapper.convert({ reference: typeReference, enumsAsValues });
     return getSimpleTypeName(goType, context);
 }
 
@@ -185,7 +187,7 @@ function getRequestFieldTypeString({
     context: SdkGeneratorContext;
     typeReference: FernIr.TypeReference;
 }): string {
-    return getSimpleTypeName(context.goTypeMapper.convert({ reference: typeReference, enumsAsValues: true }), context);
+    return getGoTypeString({ context, typeReference, enumsAsValues: true });
 }
 
 function getSimpleTypeName(goType: go.Type, context: SdkGeneratorContext): string {
