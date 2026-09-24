@@ -25,8 +25,22 @@ describe("getGoModulePathForVersion", () => {
         expect(getGoModulePathForVersion(`${modulePath}/v2`, "2.3.0")).toBe(`${modulePath}/v2`);
     });
 
+    it("appends the new major even when the module path ends in a different /vN, like the generator", () => {
+        expect(getGoModulePathForVersion(`${modulePath}/v2`, "3.0.0")).toBe(`${modulePath}/v2/v3`);
+    });
+
     it("returns the module path as-is when the version is missing or unparseable", () => {
         expect(getGoModulePathForVersion(modulePath, undefined)).toBe(modulePath);
         expect(getGoModulePathForVersion(modulePath, "latest")).toBe(modulePath);
+        expect(getGoModulePathForVersion(modulePath, "2.invalid")).toBe(modulePath);
+        expect(getGoModulePathForVersion(modulePath, "2.0.0.1")).toBe(modulePath);
+        expect(getGoModulePathForVersion(modulePath, "02.0.0")).toBe(modulePath);
+        expect(getGoModulePathForVersion(modulePath, "2.0.0-01")).toBe(modulePath);
+    });
+
+    it("accepts the short forms and build metadata Go's semver package accepts", () => {
+        expect(getGoModulePathForVersion(modulePath, "2.0")).toBe(`${modulePath}/v2`);
+        expect(getGoModulePathForVersion(modulePath, "2.0.0+build.7")).toBe(`${modulePath}/v2`);
+        expect(getGoModulePathForVersion(modulePath, "2.0.0-beta.1+build")).toBe(`${modulePath}/v2`);
     });
 });
