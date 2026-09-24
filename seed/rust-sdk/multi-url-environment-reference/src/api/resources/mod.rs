@@ -25,25 +25,22 @@ impl ApiClient {
             items: {
                 let mut cfg = config.clone();
                 cfg.base_url = cfg
-                    .environment
-                    .as_ref()
-                    .map_or_else(|| cfg.base_url.clone(), |env| env.base_url().to_string());
+                    .service_url(|environment| environment.base_url())
+                    .to_string();
                 ItemsClient::new(cfg)?
             },
             auth: {
                 let mut cfg = config.clone();
                 cfg.base_url = cfg
-                    .environment
-                    .as_ref()
-                    .map_or_else(|| cfg.base_url.clone(), |env| env.auth_url().to_string());
+                    .service_url(|environment| environment.auth_url())
+                    .to_string();
                 AuthClient::new(cfg)?
             },
             files: {
                 let mut cfg = config.clone();
                 cfg.base_url = cfg
-                    .environment
-                    .as_ref()
-                    .map_or_else(|| cfg.base_url.clone(), |env| env.upload_url().to_string());
+                    .service_url(|environment| environment.upload_url())
+                    .to_string();
                 FilesClient::new(cfg)?
             },
         })
