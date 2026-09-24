@@ -37,7 +37,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-_APACHE_2_TEXT = """
+_APACHE_2_TEXT = """\
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
