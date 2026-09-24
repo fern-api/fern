@@ -1,0 +1,7 @@
+- summary: |
+    Add `api.settings.webhook-signature` to `generators.yml`. Declares an API-wide webhook
+    signature scheme (same shape as a webhook `signature` block) once, outside the API
+    definition, and compiles it into `sdkConfig.webhookSignatureVerification` in the IR so
+    every SDK generator emits the shared webhook verification helper without any webhooks or
+    `x-fern-*` extensions in the spec.
+  type: feat

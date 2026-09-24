@@ -1,0 +1,394 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "specVersion": "1.0.0",
+    "apiName": "api",
+    "apiDisplayName": "File Upload Array Content Type",
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null,
+                "xml": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.upload",
+                    "name": "upload",
+                    "displayName": null,
+                    "subtitle": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/upload",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "upload",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "fileUpload",
+                        "name": "UploadRequest",
+                        "properties": [
+                            {
+                                "type": "file",
+                                "value": {
+                                    "type": "fileArray",
+                                    "key": "file",
+                                    "isOptional": false,
+                                    "contentType": "image/jpeg",
+                                    "docs": null
+                                }
+                            },
+                            {
+                                "type": "file",
+                                "value": {
+                                    "type": "fileArray",
+                                    "key": "optional_files",
+                                    "isOptional": true,
+                                    "contentType": "application/pdf",
+                                    "docs": null
+                                }
+                            },
+                            {
+                                "type": "file",
+                                "value": {
+                                    "type": "file",
+                                    "key": "single_file",
+                                    "isOptional": false,
+                                    "contentType": "application/octet-stream",
+                                    "docs": null
+                                }
+                            }
+                        ],
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": "multipart/form-data"
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": "UploadRequest",
+                            "bodyKey": "body",
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "6d60be92",
+                                "name": null,
+                                "url": "/upload",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [],
+                                    "extraProperties": null,
+                                    "jsonExample": {}
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": "errorInstanceId"
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "globalParameters": null,
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_.upload": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "upload",
+                        "camelCase": {
+                            "unsafeName": "upload",
+                            "safeName": "upload"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload",
+                            "safeName": "upload"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD",
+                            "safeName": "UPLOAD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Upload",
+                            "safeName": "Upload"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/upload"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "UploadRequest",
+                            "camelCase": {
+                                "unsafeName": "uploadRequest",
+                                "safeName": "uploadRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "upload_request",
+                                "safeName": "upload_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPLOAD_REQUEST",
+                                "safeName": "UPLOAD_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UploadRequest",
+                                "safeName": "UploadRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "fileUpload",
+                        "properties": [
+                            {
+                                "type": "fileArray",
+                                "wireValue": "file",
+                                "name": {
+                                    "originalName": "file",
+                                    "camelCase": {
+                                        "unsafeName": "file",
+                                        "safeName": "file"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "file",
+                                        "safeName": "file"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILE",
+                                        "safeName": "FILE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "File",
+                                        "safeName": "File"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "fileArray",
+                                "wireValue": "optional_files",
+                                "name": {
+                                    "originalName": "optional_files",
+                                    "camelCase": {
+                                        "unsafeName": "optionalFiles",
+                                        "safeName": "optionalFiles"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "optional_files",
+                                        "safeName": "optional_files"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPTIONAL_FILES",
+                                        "safeName": "OPTIONAL_FILES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "OptionalFiles",
+                                        "safeName": "OptionalFiles"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "file",
+                                "wireValue": "single_file",
+                                "name": {
+                                    "originalName": "single_file",
+                                    "camelCase": {
+                                        "unsafeName": "singleFile",
+                                        "safeName": "singleFile"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "single_file",
+                                        "safeName": "single_file"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SINGLE_FILE",
+                                        "safeName": "SINGLE_FILE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "SingleFile",
+                                        "safeName": "SingleFile"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": null,
+        "variables": null,
+        "globalParameters": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
+    },
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": "service_",
+        "types": [],
+        "errors": [],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

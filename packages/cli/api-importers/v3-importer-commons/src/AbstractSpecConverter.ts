@@ -85,6 +85,7 @@ export abstract class AbstractSpecConverter<
                 hasStreamingEndpoints: false,
                 isAuthMandatory: true,
                 idempotencyKeyGeneration: undefined,
+                webhookSignatureVerification: undefined,
                 platformHeaders: {
                     language: "",
                     sdkName: "",

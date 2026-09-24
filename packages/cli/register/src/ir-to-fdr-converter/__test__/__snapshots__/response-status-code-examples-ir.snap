@@ -242,6 +242,7 @@
       "sdkVersion": "",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {

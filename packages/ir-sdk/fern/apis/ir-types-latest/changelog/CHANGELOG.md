@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.28.0] - 2026-09-24
+
+- Add `SdkConfig.webhookSignatureVerification` (optional `webhooks.WebhookSignatureVerification`):
+  an API-wide webhook signature scheme populated from `api.settings.webhook-signature` in
+  `generators.yml`. Lets generators emit the shared webhook verification helper without any
+  webhooks or `x-fern-*` extensions in the spec, and serves as the default scheme for modeled
+  webhooks that do not declare their own.
+
 ## [v67.27.0] - 2026-09-15
 
 - Add optional `wrapperProperty` to dynamic auth schemes so snippet generators can nest
