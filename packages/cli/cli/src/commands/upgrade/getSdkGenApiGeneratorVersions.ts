@@ -1,8 +1,4 @@
-import {
-    getFernSdkGenApiLanguage,
-    getFernSdkGenApiOrigin,
-    isFernSdkGenApiEnabled
-} from "@fern-api/remote-workspace-runner";
+import { getFernSdkGenApiLanguage, getFernSdkGenApiOrigin } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import semver from "semver";
 
@@ -54,22 +50,31 @@ export async function getSdkGenApiGeneratorVersions({
         return {};
     }
 
-    const endpoint = new URL("internal/generator-versions/discover", `${origin}/`);
-    const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-            targets: [
-                {
-                    targetId: "generator",
-                    generatorId,
-                    language,
-                    currentVersion,
-                    includeMajor
-                }
-            ]
-        })
-    });
+    const endpoint = new URL("internal/generator-versions/discover", `${origin.replace(/\/+$/, "")}/`);
+    let response: Response;
+    try {
+        response = await fetch(endpoint, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+                targets: [
+                    {
+                        targetId: "generator",
+                        generatorId,
+                        language,
+                        currentVersion,
+                        includeMajor
+                    }
+                ]
+            })
+        });
+    } catch (error) {
+        throw new Error(
+            `SDK Gen API version discovery failed for ${generatorId}@${currentVersion} because the API could not be reached. ` +
+                "Verify FERN_SDK_GEN_API_ORIGIN and the selected environment.",
+            { cause: error }
+        );
+    }
     if (!response.ok) {
         throw new Error(
             `SDK Gen API version discovery failed for ${generatorId}@${currentVersion} ` +
@@ -90,10 +95,6 @@ export async function getSdkGenApiGeneratorVersions({
         compatibleVersion: result.compatibleVersion,
         withheldMajorVersion: result.withheldMajorVersion
     };
-}
-
-export function isSdkGenApiUpgradeEnabled(): boolean {
-    return isFernSdkGenApiEnabled();
 }
 
 function parseDiscoveryResult(body: unknown): DiscoveryResult | UnavailableResult {

@@ -460,7 +460,7 @@ groups:
         const { loadAndRunMigrations } = await import("../migrations");
         vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
         vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
-        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com/control-plane");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com/control-plane/");
         const fetchMock = vi.fn().mockResolvedValue({
             ok: true,
             json: async () => ({
@@ -511,6 +511,23 @@ groups:
                 latestMajorVersion: "1.2.0"
             }
         ]);
+    });
+
+    it("adds SDK Gen API context to network errors", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("connection refused")));
+        const { getSdkGenApiGeneratorVersions } = await import("../getSdkGenApiGeneratorVersions.js");
+
+        await expect(
+            getSdkGenApiGeneratorVersions({
+                generatorId: "fernapi/fern-go-sdk",
+                currentVersion: "0.30.0",
+                includeMajor: false,
+                context: mockContext
+            })
+        ).rejects.toThrow(
+            "SDK Gen API version discovery failed for fernapi/fern-go-sdk@0.30.0 because the API could not be reached"
+        );
     });
 
     it("reports unresolved SDK Gen API coordinates without falling back to FDR", async () => {

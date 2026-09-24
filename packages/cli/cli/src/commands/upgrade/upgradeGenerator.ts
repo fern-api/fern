@@ -7,6 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
@@ -17,8 +18,8 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { getSdkGenApiGeneratorVersions } from "./getSdkGenApiGeneratorVersions.js";
 import { loadAndRunMigrations } from "./migrations/index.js";
-import { getSdkGenApiGeneratorVersions, isSdkGenApiUpgradeEnabled } from "./getSdkGenApiGeneratorVersions.js";
 
 interface SkippedMajorUpgrade {
     generatorName: string;
@@ -222,9 +223,10 @@ export async function loadAndUpdateGenerators({
             }
 
             const currentGeneratorVersion = generator.get("version") as string;
-            const useSdkGenApi = isSdkGenApiUpgradeEnabled();
+            const useSdkGenApi = isFernSdkGenApiEnabled();
             const sdkGenApiVersions = useSdkGenApi
                 ? await getSdkGenApiGeneratorVersions({
+                      // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
                       generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
                       currentVersion: currentGeneratorVersion,
                       includeMajor,
