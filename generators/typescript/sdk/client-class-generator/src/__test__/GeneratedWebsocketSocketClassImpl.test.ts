@@ -213,6 +213,8 @@ function instantiateGeneratedSocket(mode: WebsocketHandlerMode): RuntimeHarness 
                 }
             }
         },
+        hasEventListener: <K extends keyof FakeSocketListeners>(event: K, listener: FakeSocketListeners[K][number]) =>
+            (listeners[event] as Array<FakeSocketListeners[K][number]>).includes(listener),
         reconnect: () => undefined,
         close: () => undefined
     };
