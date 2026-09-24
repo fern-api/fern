@@ -60,6 +60,7 @@ import { VariableResolverImpl } from "./resolvers/VariableResolver.js";
 import { addUnionBasePropertyDedupeToIr } from "./union-base-properties/computeUnionBasePropertyDedupe.js";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience.js";
+import { getGoModulePathForVersion } from "./utils/getGoModulePathForVersion.js";
 import { getIrGenerationSettings } from "./utils/getIrGenerationSettings.js";
 import { parseErrorName } from "./utils/parseErrorName.js";
 
@@ -595,6 +596,11 @@ export function generateIntermediateRepresentation({
         return wireValue.toLowerCase() === "user-agent";
     });
 
+    const userAgentPackageName =
+        generationLanguage === "go" && packageName != null
+            ? getGoModulePathForVersion(packageName, version)
+            : packageName;
+
     const sdkConfig: SdkConfig = {
         isAuthMandatory,
         hasStreamingEndpoints,
@@ -616,7 +622,7 @@ export function generateIntermediateRepresentation({
                 if (userAgentTemplate != null && version != null) {
                     const vars: Record<string, string> = {
                         version,
-                        packageName: packageName ?? "",
+                        packageName: userAgentPackageName ?? "",
                         language: generationLanguage ?? "",
                         generatorVersion: generationMetadata?.generatorVersion ?? "",
                         organization: organization ?? "",
@@ -625,8 +631,8 @@ export function generateIntermediateRepresentation({
                     const value = userAgentTemplate.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? "");
                     return { header: "User-Agent" as const, value };
                 }
-                if (version != null && packageName != null) {
-                    return { header: "User-Agent" as const, value: `${packageName}/${version}` };
+                if (version != null && userAgentPackageName != null) {
+                    return { header: "User-Agent" as const, value: `${userAgentPackageName}/${version}` };
                 }
                 return undefined;
             })()
