@@ -156,6 +156,22 @@ describe("parse honors x-twilio.libraryVisibility", () => {
                     responses: { "200": { description: "ok" } }
                 }
             },
+            "/keyed/{id}": {
+                get: {
+                    operationId: "getKeyed",
+                    ...twilio("public"),
+                    parameters: [
+                        {
+                            name: "id",
+                            in: "path",
+                            required: true,
+                            schema: { type: "integer" },
+                            ...twilio("hidden")
+                        }
+                    ],
+                    responses: { "200": { description: "ok" } }
+                }
+            },
             "/path-private": {
                 ...twilio("private"),
                 get: {
@@ -221,24 +237,29 @@ describe("parse honors x-twilio.libraryVisibility", () => {
             .find((endpoint) => endpoint.path === "/path-private" && endpoint.method === "POST")
             ?.queryParameters.map((param) => param.name)
             .sort();
+        const keyedPathParams = ir.endpoints
+            .find((endpoint) => endpoint.path === "/keyed/{id}")
+            ?.pathParameters.map((param) => `${param.name}:${param.schema.type}`);
         const schemas = Object.keys(ir.groupedSchemas.rootSchemas).sort();
         const account = ir.groupedSchemas.rootSchemas.Account;
         const accountProperties =
             account?.type === "object" ? account.properties.map((property) => property.key).sort() : undefined;
-        return { endpoints, queryParams, schemas, accountProperties };
+        return { endpoints, queryParams, keyedPathParams, schemas, accountProperties };
     }
 
     it("public (fern generate): keeps only public elements; untagged inherit info-level private", () => {
         const result = parseWith("public");
-        expect(result.endpoints).toEqual(["/path-private", "/public"]);
+        expect(result.endpoints).toEqual(["/keyed/{id}", "/path-private", "/public"]);
         expect(result.queryParams).toEqual(["shown"]);
+        expect(result.keyedPathParams).toEqual(["id:primitive"]);
         expect(result.schemas).toEqual(["Account", "UntaggedThing"]);
         expect(result.accountProperties).toEqual(["sid"]);
     });
 
     it("private (fern generate --private): keeps public + private, drops hidden", () => {
         const result = parseWith("private");
-        expect(result.endpoints).toEqual(["/path-private", "/path-private", "/public", "/untagged"]);
+        expect(result.endpoints).toEqual(["/keyed/{id}", "/path-private", "/path-private", "/public", "/untagged"]);
+        expect(result.keyedPathParams).toEqual(["id:primitive"]);
         expect(result.queryParams).toEqual(["secret", "shown"]);
         expect(result.schemas).toEqual(["Account", "PrivateThing", "UntaggedThing"]);
         expect(result.accountProperties).toEqual(["internal_flags", "sid"]);
@@ -246,7 +267,15 @@ describe("parse honors x-twilio.libraryVisibility", () => {
 
     it("all: no filtering", () => {
         const result = parseWith("all");
-        expect(result.endpoints).toEqual(["/hidden", "/path-private", "/path-private", "/public", "/untagged"]);
+        expect(result.endpoints).toEqual([
+            "/hidden",
+            "/keyed/{id}",
+            "/path-private",
+            "/path-private",
+            "/public",
+            "/untagged"
+        ]);
+        expect(result.keyedPathParams).toEqual(["id:primitive"]);
         expect(result.queryParams).toEqual(["gone", "secret", "shown"]);
         expect(result.schemas).toEqual(["Account", "HiddenThing", "PrivateThing", "UntaggedThing"]);
         expect(result.accountProperties).toEqual(["debug", "internal_flags", "sid"]);

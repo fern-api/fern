@@ -71,10 +71,16 @@ export function convertParameters({
             breadcrumbs: [`${httpMethod.toUpperCase()} ${path}`, resolvedParameter.name]
         });
         if (skippedVisibility != null) {
-            context.logger.debug(
-                `${httpMethod.toUpperCase()} ${path} has parameter "${resolvedParameter.name}" with libraryVisibility "${skippedVisibility}". Skipping.`
-            );
-            continue;
+            if (resolvedParameter.in === "path") {
+                context.logger.warn(
+                    `${httpMethod.toUpperCase()} ${path} has path parameter "${resolvedParameter.name}" with libraryVisibility "${skippedVisibility}". Path parameters cannot be excluded because they are required to build the URL; keeping it.`
+                );
+            } else {
+                context.logger.debug(
+                    `${httpMethod.toUpperCase()} ${path} has parameter "${resolvedParameter.name}" with libraryVisibility "${skippedVisibility}". Skipping.`
+                );
+                continue;
+            }
         }
 
         const isRequired = resolvedParameter.required ?? false;
