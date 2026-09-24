@@ -6706,6 +6706,65 @@
         "minimal"
       ]
     },
+    "docs.SiteSwitcherThemeConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Render the site switcher. Defaults to false."
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
+        },
+        "hide": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to omit, including any sites nested beneath them."
+        },
+        "labels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display label overrides keyed by basepath."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.BodyThemeConfig": {
       "type": "string",
       "enum": [
@@ -6874,6 +6933,17 @@
               "type": "null"
             }
           ]
+        },
+        "site-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SiteSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
         }
       },
       "additionalProperties": false

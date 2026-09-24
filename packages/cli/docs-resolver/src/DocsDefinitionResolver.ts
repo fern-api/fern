@@ -1125,7 +1125,8 @@ export class DocsDefinitionResolver {
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
                           "product-switcher": this.parsedDocsConfig.theme
-                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"],
+                          "site-switcher": this.parsedDocsConfig.theme.siteSwitcher
                       }
                     : undefined,
             // deprecated
