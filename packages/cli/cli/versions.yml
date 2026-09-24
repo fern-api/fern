@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.137.2
+  changelogEntry:
+    - summary: |
+        Preserve API import settings that affect documentation when `fern sdk migrate` decouples docs.yml from generators.yml.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 5.137.1
   changelogEntry:
     - summary: |
