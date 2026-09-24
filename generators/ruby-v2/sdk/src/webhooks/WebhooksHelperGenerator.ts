@@ -168,6 +168,13 @@ export class WebhooksHelperGenerator {
                           headerName: getWireValue(config.timestamp.headerName),
                           format: config.timestamp.format,
                           tolerance: config.timestamp.tolerance ?? null
+                      },
+            notificationUrlNormalization:
+                config.notificationUrlNormalization == null
+                    ? null
+                    : {
+                          portVariants: config.notificationUrlNormalization.portVariants,
+                          legacyQueryEncoding: config.notificationUrlNormalization.legacyQueryEncoding
                       }
         });
     }

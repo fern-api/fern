@@ -1722,7 +1722,22 @@ export class SdkGenerator {
                         components: verification.payloadFormat.components,
                         delimiter: verification.payloadFormat.delimiter,
                         bodySort: verification.payloadFormat.bodySort
-                    }
+                    },
+                    bodyHashBinding:
+                        verification.bodyHashBinding == null
+                            ? null
+                            : {
+                                  algorithm: verification.bodyHashBinding.algorithm,
+                                  encoding: verification.bodyHashBinding.encoding,
+                                  location: verification.bodyHashBinding.location
+                              },
+                    notificationUrlNormalization:
+                        verification.notificationUrlNormalization == null
+                            ? null
+                            : {
+                                  portVariants: verification.notificationUrlNormalization.portVariants,
+                                  legacyQueryEncoding: verification.notificationUrlNormalization.legacyQueryEncoding
+                              }
                 });
             case "asymmetric": {
                 const keySource =
