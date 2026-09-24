@@ -111,6 +111,49 @@ fn the_command_tree_builds_when_the_spec_declares_a_server_variable() {
 
 #[test]
 #[serial]
+fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
+    with_temp_home(|| {
+        let (code, output) = run(&["regional", "--help"]);
+        assert_eq!(code, 0, "{output}");
+        let footer = output
+            .split("Environment variables:")
+            .nth(1)
+            .unwrap_or_else(|| panic!("no env footer in:\n{output}"));
+
+        // Spec-derived server variable, plus the profile-storable knobs the
+        // `profiles set` error already advertises — all marked `*`.
+        for var in [
+            "REGIONAL_REGION*",
+            "REGIONAL_BASE_URL*",
+            "REGIONAL_OUTPUT*",
+            "REGIONAL_RETRIES*",
+        ] {
+            assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
+        }
+        // Runtime-only knobs are listed without the marker.
+        for var in [
+            "REGIONAL_PROFILE ",
+            "REGIONAL_TIMEOUT_SECS ",
+            "REGIONAL_PROXY ",
+            "REGIONAL_CA_BUNDLE ",
+            "REGIONAL_INSECURE=1 ",
+        ] {
+            assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
+        }
+        assert!(
+            footer.contains("regional profiles set <name> VAR=value"),
+            "{footer}"
+        );
+        assert_eq!(
+            output.matches("Environment variables:").count(),
+            1,
+            "{output}"
+        );
+    });
+}
+
+#[test]
+#[serial]
 fn a_server_variables_own_flag_sets_it_on_create() {
     // `profiles create au --region au1` — the spelling a user already knows
     // from ordinary commands, read from the propagated global rather than a

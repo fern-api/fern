@@ -2157,7 +2157,7 @@ impl CliApp {
                 .collect();
             Some(format!("Global parameters:\n{}", rows.join("\n")))
         };
-        let env_footer = super::commands::after_help_footer(&doc.name);
+        let env_footer = super::commands::after_help_footer(&doc.name, doc);
         // `build_cli` already sets the env-var footer, so appending it
         // unconditionally renders the block twice on the root `--help`.
         let base_footer = match existing_after_help {

@@ -115,22 +115,91 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// computed dynamically from bindings by `CliApp::run_async` and
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
-pub fn after_help_footer(binary_name: &str) -> String {
-    let prefix = binary_name.to_uppercase().replace('-', "_");
+///
+/// Rows marked `*` are the settings `profiles set` also accepts, so the
+/// footer and that command's validation error describe the same surface.
+/// Server variables come from the spec (`servers[].variables`), which is
+/// where `<PREFIX>_REGION`-style vars originate.
+pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
+    let prefix = crate::text::env_var_prefix(binary_name);
     // The suffix flag/env names default to `--user-agent-suffix` /
     // `<NAME>_USER_AGENT_SUFFIX` but can be renamed at generation time.
     let ua_env = format!("{prefix}{}", crate::user_agent::suffix_env_segment());
     let ua_flag = crate::user_agent::suffix_flag();
-    format!(
-        "Environment variables:\n  \
-         {prefix}_BASE_URL             Override the API base URL\n  \
-         {prefix}_CA_BUNDLE            Path to PEM file with extra trust roots (or SSL_CERT_FILE)\n  \
-         {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
-         {prefix}_PROXY                HTTP(S) proxy URL\n  \
-         {prefix}_TIMEOUT_SECS         Total request timeout\n  \
-         {ua_env}    Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)\n\n\
+
+    let mut rows: Vec<(String, bool, String)> = vec![
+        (
+            format!("{prefix}_PROFILE"),
+            false,
+            "Named profile to run under (-p/--profile wins)".into(),
+        ),
+        (
+            format!("{prefix}_BASE_URL"),
+            true,
+            "Override the API base URL (--base-url wins)".into(),
+        ),
+        (
+            format!("{prefix}_OUTPUT"),
+            true,
+            "Default output format (--format wins)".into(),
+        ),
+        (
+            format!("{prefix}_RETRIES"),
+            true,
+            "Retry attempts for failed requests (--retries wins)".into(),
+        ),
+    ];
+    for var in crate::openapi::app::collect_spec_server_variables(doc) {
+        rows.push((
+            format!("{prefix}_{}", crate::text::to_screaming_snake(&var.name)),
+            true,
+            format!(
+                "Value for the {{{}}} URL template variable (--{} wins)",
+                var.name,
+                crate::text::to_kebab_flag(&var.name)
+            ),
+        ));
+    }
+    rows.extend([
+        (
+            format!("{prefix}_CA_BUNDLE"),
+            false,
+            "Path to PEM file with extra trust roots (or SSL_CERT_FILE)".into(),
+        ),
+        (
+            format!("{prefix}_INSECURE=1"),
+            false,
+            "Skip TLS verification (debugging only)".into(),
+        ),
+        (format!("{prefix}_PROXY"), false, "HTTP(S) proxy URL".into()),
+        (
+            format!("{prefix}_TIMEOUT_SECS"),
+            false,
+            "Total request timeout".into(),
+        ),
+        (
+            ua_env,
+            false,
+            format!("Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)"),
+        ),
+    ]);
+
+    let width = rows
+        .iter()
+        .map(|(name, _, _)| name.chars().count() + 1)
+        .max()
+        .unwrap_or(0);
+    let mut out = String::from("Environment variables:\n");
+    for (name, on_profile, help) in &rows {
+        let marker = if *on_profile { "*" } else { " " };
+        let pad = width.saturating_sub(name.chars().count() + 1);
+        out.push_str(&format!("  {name}{marker}{:pad$}  {help}\n", ""));
+    }
+    out.push_str(&format!(
+        "\n* can also be stored per profile: `{binary_name} profiles set <name> VAR=value`.\n\
          Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
-    )
+    ));
+    out
 }
 
 /// Builds the full CLI command tree from an API description.
@@ -139,7 +208,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .title
         .clone()
         .unwrap_or_else(|| format!("{} CLI", doc.name));
-    let after_help = after_help_footer(&doc.name);
+    let after_help = after_help_footer(&doc.name, doc);
     let mut root = Command::new(doc.name.clone())
         .about(about_text)
         .after_help(after_help)
