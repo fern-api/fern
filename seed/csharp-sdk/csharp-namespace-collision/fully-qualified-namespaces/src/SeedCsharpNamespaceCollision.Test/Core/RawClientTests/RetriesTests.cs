@@ -564,8 +564,13 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldApplyTimeoutPerAttempt()
     {
-        // Three attempts of 1.2s each exceed a 3s budget shared across the whole
+        // Three attempts of 2s each exceed a 5s budget shared across the whole
         // retry loop, but each individual attempt completes well within it.
+        _server
+            .Given(WireMockRequest.Create().WithPath("/warmup").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200));
+        await _httpClient.GetAsync("/warmup");
+
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
             .InScenario("PerAttemptTimeout")
@@ -574,7 +579,7 @@ public class RetriesTests
                 WireMockResponse
                     .Create()
                     .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromMilliseconds(1200))
+                    .WithDelay(TimeSpan.FromSeconds(2))
             );
 
         _server
@@ -586,7 +591,7 @@ public class RetriesTests
                 WireMockResponse
                     .Create()
                     .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromMilliseconds(1200))
+                    .WithDelay(TimeSpan.FromSeconds(2))
             );
 
         _server
@@ -598,7 +603,7 @@ public class RetriesTests
                     .Create()
                     .WithStatusCode(200)
                     .WithBody("Success")
-                    .WithDelay(TimeSpan.FromMilliseconds(1200))
+                    .WithDelay(TimeSpan.FromSeconds(2))
             );
 
         var rawClient = new RawClient(
@@ -606,7 +611,7 @@ public class RetriesTests
             {
                 HttpClient = _httpClient,
                 MaxRetries = 2,
-                Timeout = TimeSpan.FromSeconds(3),
+                Timeout = TimeSpan.FromSeconds(5),
             }
         )
         {
@@ -627,7 +632,7 @@ public class RetriesTests
         using (Assert.EnterMultipleScope())
         {
             Assert.That(content, Is.EqualTo("Success"));
-            Assert.That(_server.LogEntries, Has.Count.EqualTo(3));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(4));
         }
     }
 
