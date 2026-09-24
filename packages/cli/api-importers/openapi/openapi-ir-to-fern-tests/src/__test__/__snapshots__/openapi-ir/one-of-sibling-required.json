@@ -1,0 +1,828 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Test spec for a oneOf that only marks sibling properties as required.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "ListInboundRoutes",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListInboundRoutesRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ListInboundRoutesRequest",
+          "schema": "InboundRoutesRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/inbound/routes",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "key": {
+                "value": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "AddInboundRoute",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "AddInboundRouteRequest",
+      "request": {
+        "schema": {
+          "generatedName": "AddInboundRouteRequest",
+          "schema": "InboundAddRouteRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/inbound/add-route",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "key": {
+                "value": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "url": {
+                "value": {
+                  "value": "url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "PostShapes",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostShapesRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestContact",
+              "key": "contact",
+              "schema": {
+                "generatedName": "PostShapesRequestContact",
+                "value": {
+                  "generatedName": "PostShapesRequestContact",
+                  "schema": "Contact",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestNarrowsProperty",
+              "key": "narrowsProperty",
+              "schema": {
+                "generatedName": "PostShapesRequestNarrowsProperty",
+                "value": {
+                  "generatedName": "PostShapesRequestNarrowsProperty",
+                  "schema": "OneOfBranchNarrowsProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestAddsProperty",
+              "key": "addsProperty",
+              "schema": {
+                "generatedName": "PostShapesRequestAddsProperty",
+                "value": {
+                  "generatedName": "PostShapesRequestAddsProperty",
+                  "schema": "OneOfBranchAddsProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestSingleBranch",
+              "key": "singleBranch",
+              "schema": {
+                "generatedName": "PostShapesRequestSingleBranch",
+                "value": {
+                  "generatedName": "PostShapesRequestSingleBranch",
+                  "schema": "OneOfSingleBranch",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postShapesRequestWithNot",
+              "key": "withNot",
+              "schema": {
+                "generatedName": "PostShapesRequestWithNot",
+                "value": {
+                  "generatedName": "PostShapesRequestWithNot",
+                  "schema": "OneOfBranchWithNot",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostShapesRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/shapes",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ApiKey": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiKeyKey",
+            "key": "key",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiKeyKey",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiKey",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InboundRoutesRequest": {
+        "allOf": [
+          {
+            "generatedName": "ApiKey",
+            "schema": "ApiKey",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "inboundRoutesRequestDomain",
+            "key": "domain",
+            "schema": {
+              "generatedName": "InboundRoutesRequestDomain",
+              "description": "The domain to list routes for.",
+              "value": {
+                "description": "The domain to list routes for.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InboundRoutesRequestDomain",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "inboundRoutesRequestPhone",
+            "key": "phone",
+            "schema": {
+              "generatedName": "InboundRoutesRequestPhone",
+              "description": "The phone number to list routes for.",
+              "value": {
+                "description": "The phone number to list routes for.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InboundRoutesRequestPhone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InboundRoutesRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InboundAddRouteRequest": {
+        "allOf": [
+          {
+            "generatedName": "ApiKey",
+            "schema": "ApiKey",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "inboundAddRouteRequestDomain",
+            "key": "domain",
+            "schema": {
+              "generatedName": "InboundAddRouteRequestDomain",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InboundAddRouteRequestDomain",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "inboundAddRouteRequestPhone",
+            "key": "phone",
+            "schema": {
+              "generatedName": "InboundAddRouteRequestPhone",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InboundAddRouteRequestPhone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "inboundAddRouteRequestPattern",
+            "key": "pattern",
+            "schema": {
+              "generatedName": "InboundAddRouteRequestPattern",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InboundAddRouteRequestPattern",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "inboundAddRouteRequestUrl",
+            "key": "url",
+            "schema": {
+              "schema": {
+                "format": "uri",
+                "type": "string"
+              },
+              "generatedName": "InboundAddRouteRequestUrl",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InboundAddRouteRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Contact": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "contactEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "ContactEmail",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ContactEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "contactPhone",
+            "key": "phone",
+            "schema": {
+              "generatedName": "ContactPhone",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ContactPhone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Contact",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OneOfBranchNarrowsProperty": {
+        "value": {
+          "generatedName": "OneOfBranchNarrowsProperty",
+          "commonProperties": [
+            {
+              "key": "kind",
+              "schema": {
+                "generatedName": "OneOfBranchNarrowsPropertyKind",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchNarrowsPropertyKind",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            },
+            {
+              "key": "value",
+              "schema": {
+                "generatedName": "OneOfBranchNarrowsPropertyValue",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchNarrowsPropertyValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            }
+          ],
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "oneOfBranchNarrowsPropertyZeroKind",
+                  "key": "kind",
+                  "schema": {
+                    "generatedName": "OneOfBranchNarrowsPropertyZeroKind",
+                    "values": [
+                      {
+                        "generatedName": "a",
+                        "value": "a",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "OneOfBranchNarrowsPropertyZero",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "oneOfBranchNarrowsPropertyOneKind",
+                  "key": "kind",
+                  "schema": {
+                    "generatedName": "OneOfBranchNarrowsPropertyOneKind",
+                    "values": [
+                      {
+                        "generatedName": "b",
+                        "value": "b",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "OneOfBranchNarrowsPropertyOne",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "OneOfBranchAddsProperty": {
+        "value": {
+          "generatedName": "OneOfBranchAddsProperty",
+          "commonProperties": [
+            {
+              "key": "a",
+              "schema": {
+                "generatedName": "OneOfBranchAddsPropertyA",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "OneOfBranchAddsPropertyA",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            }
+          ],
+          "schemas": [
+            {
+              "generatedName": "OneOfBranchAddsPropertyZero",
+              "groupName": [],
+              "type": "unknown"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "oneOfBranchAddsPropertyBB",
+                  "key": "b",
+                  "schema": {
+                    "schema": {
+                      "type": "boolean"
+                    },
+                    "generatedName": "OneOfBranchAddsPropertyBB",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "OneOfBranchAddsPropertyB",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "OneOfSingleBranch": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "oneOfSingleBranchA",
+            "key": "a",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "OneOfSingleBranchA",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "oneOfSingleBranchB",
+            "key": "b",
+            "schema": {
+              "generatedName": "OneOfSingleBranchB",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OneOfSingleBranchB",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OneOfSingleBranch",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OneOfBranchWithNot": {
+        "value": {
+          "generatedName": "OneOfBranchWithNot",
+          "commonProperties": [
+            {
+              "key": "a",
+              "schema": {
+                "generatedName": "OneOfBranchWithNotA",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchWithNotA",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            },
+            {
+              "key": "b",
+              "schema": {
+                "generatedName": "OneOfBranchWithNotB",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OneOfBranchWithNotB",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              }
+            }
+          ],
+          "schemas": [
+            {
+              "generatedName": "OneOfBranchWithNotOne",
+              "groupName": [],
+              "type": "unknown"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
