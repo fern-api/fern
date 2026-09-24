@@ -124,10 +124,38 @@ async function downloadToTemp(url: string, tmpDir: string, index: number): Promi
             return `theme_asset_${index}${ext}`;
         })();
 
-    const dest = path.join(tmpDir, filename);
+    const dest = await uniqueDestination(tmpDir, sanitizeFilename(filename, index));
     const buf = Buffer.from(await res.arrayBuffer());
     await writeFileAtomically(dest, buf);
     return dest;
+}
+
+// Filenames come from server-controlled headers/URLs: keep only the basename so
+// a `../` segment can never escape the target directory.
+function sanitizeFilename(filename: string, index: number): string {
+    const base = path.basename(filename.replace(/\\/g, "/"));
+    return base === "" || base === "." || base === ".." ? `theme_asset_${index}` : base;
+}
+
+// Distinct assets may share a basename (e.g. dark/logo.svg and light/logo.svg);
+// suffix on collision so one download doesn't overwrite another.
+async function uniqueDestination(dir: string, filename: string): Promise<string> {
+    const ext = path.extname(filename);
+    const stem = filename.slice(0, filename.length - ext.length);
+    let candidate = path.join(dir, filename);
+    for (let n = 1; await pathExists(candidate); n++) {
+        candidate = path.join(dir, `${stem}-${n}${ext}`);
+    }
+    return candidate;
+}
+
+async function pathExists(p: string): Promise<boolean> {
+    try {
+        await lstat(p);
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 export async function resolveThemeFileUrls(
@@ -200,6 +228,9 @@ export async function resolveThemeFileUrls(
     const jsList: unknown[] = Array.isArray(rawJs) ? rawJs : rawJs != null ? [rawJs] : [];
     cfg.js = await Promise.all(
         jsList.map(async (entry) => {
+            if (typeof entry === "string") {
+                return maybeDownload(entry);
+            }
             if (entry == null || typeof entry !== "object") {
                 return entry;
             }
