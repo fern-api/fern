@@ -1,6 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
@@ -66,7 +67,17 @@ async function resolvePreviewUrlsFromId({
     }));
 
     const previewHostname = buildPreviewDomain({ orgId: projectConfig.organization, previewId });
-    const instanceUrls = docsWorkspace?.config.instances.map((instance) => instance.url) ?? [];
+    // Mirror preview publishing (runRemoteGenerationForDocsWorkspace): templated
+    // instance urls are expanded before the basepath is registered.
+    const instanceUrls = await cliContext.runTask((context) =>
+        (docsWorkspace?.config.instances ?? []).map((instance) =>
+            replaceEnvVariables(
+                instance.url,
+                { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
+                { substituteAsEmpty: !docsWorkspace?.config.settings?.substituteEnvVars }
+            )
+        )
+    );
     return resolvePreviewUrlsForInstances({ previewHostname, instanceUrls });
 }
 
