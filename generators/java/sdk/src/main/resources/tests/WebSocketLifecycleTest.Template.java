@@ -184,8 +184,8 @@ public final class WebSocketLifecycleTest {
         AtomicInteger supplierCalls = new AtomicInteger();
         RecordingListener listener = new RecordingListener(
                 ReconnectingWebSocketListener.ReconnectOptions.builder()
-                        .minReconnectionDelayMs(300)
-                        .maxReconnectionDelayMs(300)
+                        .minReconnectionDelayMs(50)
+                        .maxReconnectionDelayMs(50)
                         .maxRetries(10)
                         .build(),
                 () -> {
@@ -195,12 +195,17 @@ public final class WebSocketLifecycleTest {
                 },
                 clientOptions::isClosed);
 
-        // First attempt fails and schedules a reconnect 300ms out; close the client before it fires.
+        // First attempt fails and schedules a reconnect 50ms out; close the client before it fires.
         listener.connect();
         Assertions.assertTrue(firstAttempt.await(5, TimeUnit.SECONDS));
         clientOptions.close();
 
-        Thread.sleep(1000);
+        // Poll for several multiples of the reconnect delay: a bug would show up as an extra supplier
+        // call well within this budget, so most runs don't have to burn the full wait.
+        long deadline = System.currentTimeMillis() + 500;
+        while (System.currentTimeMillis() < deadline && supplierCalls.get() == 1) {
+            Thread.sleep(20);
+        }
         Assertions.assertEquals(1, supplierCalls.get(), "no reconnect attempt may run after close");
         for (Throwable failure : listener.failures()) {
             Assertions.assertFalse(

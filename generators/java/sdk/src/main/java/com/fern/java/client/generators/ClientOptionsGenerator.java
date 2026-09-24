@@ -954,7 +954,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .beginControlFlow("if (!this.$L.compareAndSet(false, true))", CLOSED_FIELD.name)
                 .addStatement("return")
                 .endControlFlow()
-                .beginControlFlow("for ($T webSocket : this.$L)", AutoCloseable.class, OPEN_WEB_SOCKETS_FIELD.name)
+                // Snapshot first: a socket's close() unregisters itself from openWebSockets, which would mutate
+                // the set while it is being iterated.
+                .beginControlFlow(
+                        "for ($T webSocket : new $T<>(this.$L))",
+                        AutoCloseable.class,
+                        ArrayList.class,
+                        OPEN_WEB_SOCKETS_FIELD.name)
                 .beginControlFlow("try")
                 .addStatement("webSocket.close()")
                 .nextControlFlow("catch ($T e)", Exception.class)
@@ -982,6 +988,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addJavadoc("Tracks a connected WebSocket client so that {@link #close()} disconnects it.\n"
                         + "\n"
                         + "@throws IllegalStateException if this client has already been closed\n")
+                // Add before checking closed (not check-then-add): otherwise a close() that runs between the
+                // check and the add would never see this socket. Adding first only costs an extra add/remove
+                // when close() wins the race, which we undo below.
                 .addStatement("this.$L.add(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
                 .beginControlFlow("if (this.$L.get())", CLOSED_FIELD.name)
                 .addStatement("this.$L.remove(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)

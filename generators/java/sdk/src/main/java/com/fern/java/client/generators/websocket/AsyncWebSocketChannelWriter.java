@@ -149,8 +149,6 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                     .addJavadoc("@param options connection options including query parameters\n");
         }
 
-        builder.addStatement("$N.registerWebSocket(this)", clientOptionsField);
-
         // Build WebSocket URL
         builder.addStatement("$N = new $T<>()", connectionFutureField, CompletableFuture.class);
         builder.addStatement(
@@ -254,8 +252,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.addCode(
                 "this.$N = new $T(reconnectOpts, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
         builder.beginControlFlow("    if ($N.isClosed())", clientOptionsField);
-        builder.addStatement(
-                "throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE);
+        builder.addStatement("throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE);
         builder.endControlFlow();
         builder.beginControlFlow("    if ($N.webSocketFactory().isPresent())", clientOptionsField);
         builder.addStatement(
@@ -326,6 +323,11 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         builder.endControlFlow();
         builder.addCode("    }\n");
         builder.addStatement("}");
+
+        // Register only once the listener is fully built, right before triggering the connection: registering
+        // earlier (e.g. before URL/request validation, which can throw) would track a channel that never
+        // reached a real connection attempt.
+        builder.addStatement("$N.registerWebSocket(this)", clientOptionsField);
 
         // Trigger connection
         builder.addStatement("$N.connect()", reconnectingListenerField);

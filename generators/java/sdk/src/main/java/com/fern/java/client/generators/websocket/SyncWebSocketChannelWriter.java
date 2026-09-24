@@ -145,8 +145,6 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                     .addJavadoc("@param options connection options including query parameters\n");
         }
 
-        builder.addStatement("$N.registerWebSocket(this)", clientOptionsField);
-
         // Build WebSocket URL
         builder.addStatement("$N = new $T(1)", connectionLatchField, CountDownLatch.class);
         builder.addStatement(
@@ -250,8 +248,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.addCode(
                 "this.$N = new $T(reconnectOpts, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
         builder.beginControlFlow("    if ($N.isClosed())", clientOptionsField);
-        builder.addStatement(
-                "throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE);
+        builder.addStatement("throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE);
         builder.endControlFlow();
         builder.beginControlFlow("    if ($N.webSocketFactory().isPresent())", clientOptionsField);
         builder.addStatement(
@@ -306,6 +303,9 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.beginControlFlow("        if ($N != null)", onErrorHandlerField);
         builder.addStatement("            $N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class);
         builder.endControlFlow();
+        // Unblocks a caller awaiting connectionLatch (e.g. connect() called right as the client is closed,
+        // which fails synchronously through this callback) instead of leaving it to time out after 10s.
+        builder.addStatement("        $N.countDown()", connectionLatchField);
         builder.addCode("    }\n\n");
 
         builder.addCode("    @Override\n");
@@ -321,6 +321,11 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.endControlFlow();
         builder.addCode("    }\n");
         builder.addStatement("}");
+
+        // Register only once the listener is fully built, right before triggering the connection: registering
+        // earlier (e.g. before URL/request validation, which can throw) would track a channel that never
+        // reached a real connection attempt.
+        builder.addStatement("$N.registerWebSocket(this)", clientOptionsField);
 
         // Trigger connection
         builder.addStatement("$N.connect()", reconnectingListenerField);

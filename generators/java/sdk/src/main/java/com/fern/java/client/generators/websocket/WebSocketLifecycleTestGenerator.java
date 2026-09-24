@@ -10,9 +10,9 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Generates a unit test for the WebSocket lifecycle in the core package: closing ClientOptions disconnects
- * tracked WebSocket clients before the OkHttp dispatcher is shut down, and connect/reconnect attempts after
- * close fail with a clear IllegalStateException instead of OkHttp's executor-rejected error.
+ * Generates a unit test for the WebSocket lifecycle in the core package: closing ClientOptions disconnects tracked
+ * WebSocket clients before the OkHttp dispatcher is shut down, and connect/reconnect attempts after close fail with a
+ * clear IllegalStateException instead of OkHttp's executor-rejected error.
  */
 public class WebSocketLifecycleTestGenerator extends AbstractFileGenerator {
 

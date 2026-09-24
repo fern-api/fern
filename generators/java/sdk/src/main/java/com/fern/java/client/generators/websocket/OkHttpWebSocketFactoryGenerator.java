@@ -103,8 +103,7 @@ public class OkHttpWebSocketFactoryGenerator {
                         .build())
                 .addJavadoc("@throws IllegalStateException if the owning client has been closed\n")
                 .beginControlFlow("if ($N.getAsBoolean())", CLOSED_CHECK_FIELD)
-                .addStatement(
-                        "throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE)
+                .addStatement("throw new $T($S)", IllegalStateException.class, ClientOptionsGenerator.CLOSED_MESSAGE)
                 .endControlFlow()
                 .addStatement("return $N.newWebSocket(request, listener)", OKHTTP_CLIENT_FIELD)
                 .build();
