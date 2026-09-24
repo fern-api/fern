@@ -1,0 +1,5 @@
+- summary: |
+    When SDK Config v1 cannot preserve OpenAPI import settings, the error now lists every unsupported
+    setting across all specs instead of stopping at the first, and names the generators.yml key that
+    produced each one.
+  type: fix

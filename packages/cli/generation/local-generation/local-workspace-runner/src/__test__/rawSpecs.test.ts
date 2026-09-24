@@ -543,6 +543,33 @@ describe("collectRawSpecs", () => {
         );
     });
 
+    it("reports every unsupported import setting with its generators.yml key", () => {
+        const first = {
+            ...openApiSpec(path.join(sourceDir, "api", "first.yaml")),
+            settings: getOpenAPISettings({
+                overrides: { shouldInferDiscriminatedUnionBaseProperties: true, respectOptionalRequestBody: true }
+            })
+        };
+        const second = {
+            ...openApiSpec(path.join(sourceDir, "api", "second.yaml")),
+            settings: getOpenAPISettings({ overrides: { preserveSingleSchemaOneOf: true } })
+        };
+
+        let message = "";
+        try {
+            validateSdkConfigImportSettings([first, second]);
+        } catch (error) {
+            message = error instanceof Error ? error.message : String(error);
+        }
+
+        expect(message).toContain(
+            "shouldInferDiscriminatedUnionBaseProperties=true (generators.yml: infer-discriminated-union-base-properties)"
+        );
+        expect(message).toContain("respectOptionalRequestBody=true (generators.yml: respect-optional-request-body)");
+        expect(message).toContain("preserveSingleSchemaOneOf=true (generators.yml: preserve-single-schema-oneof)");
+        expect(message).toContain("Remove those settings");
+    });
+
     it("merges overrides into the resolved OpenAPI spec", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
