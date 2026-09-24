@@ -198,6 +198,18 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
             "REGIONAL_INSECURE=maybe",
         ]);
         assert_ne!(code, 0, "{output}");
+        for bad in [
+            "REGIONAL_TIMEOUT_SECS=9223372036854775808",
+            "REGIONAL_PROXY=not a proxy",
+            "REGIONAL_USER_AGENT_SUFFIX=  ",
+            "REGIONAL_USER_AGENT_SUFFIX=bad\u{7f}token",
+        ] {
+            let (code, output) = run(&["regional", "profiles", "set", "corp", bad]);
+            assert_ne!(code, 0, "`{bad}` should be rejected:\n{output}");
+        }
+        let (code, output) = run(&["regional", "profiles", "show", "corp", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        assert!(output.contains("\"timeout_secs\": 45"), "rejected values must not clobber:\n{output}");
     });
 }
 
