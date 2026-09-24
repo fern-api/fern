@@ -13,6 +13,7 @@ import java.util.Random;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class RetryInterceptor implements Interceptor {
 
@@ -78,13 +79,23 @@ public class RetryInterceptor implements Interceptor {
         ExponentialBackoff backoff = new ExponentialBackoff(maxRetries);
         Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
+            response = bufferResponse(response);
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
             } catch (InterruptedException e) {
+                response.close();
                 throw new IOException("Interrupted while trying request", e);
             }
+            Response nextResponse;
+            try {
+                nextResponse = chain.proceed(chain.request());
+            } catch (IOException e) {
+                // A retry attempt failed (e.g. the call timeout expired mid-retry). The transport error is
+                // intentionally dropped: the response already received from the API is more actionable.
+                return response;
+            }
             response.close();
-            response = chain.proceed(chain.request());
+            response = nextResponse;
             if (shouldRetry(response.code())) {
                 nextBackoff = backoff.nextBackoff(response);
             } else {
@@ -93,6 +104,27 @@ public class RetryInterceptor implements Interceptor {
         }
 
         return response;
+    }
+
+    /**
+     * Reads the body into memory so the response stays usable after the underlying connection
+     * is released or cancelled by a later attempt.
+     */
+    private static Response bufferResponse(Response response) {
+        ResponseBody body = response.body();
+        if (body == null) {
+            return response;
+        }
+        try {
+            byte[] bytes = body.bytes();
+            Response buffered = response.newBuilder()
+                    .body(ResponseBody.create(bytes, body.contentType()))
+                    .build();
+            response.close();
+            return buffered;
+        } catch (IOException e) {
+            return response;
+        }
     }
 
     /**
