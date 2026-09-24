@@ -7,6 +7,12 @@ import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 export declare namespace GoTypeMapper {
     interface Args {
         reference: FernIr.TypeReference;
+        /**
+         * Render enums as values (`Enum`) rather than pointers (`*Enum`). This matches
+         * the convention of the v1 Go generator, which emits the request and model
+         * structs that the v2 generator documents and references.
+         */
+        enumsAsValues?: boolean;
     }
 }
 
@@ -17,14 +23,15 @@ export class GoTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference }: GoTypeMapper.Args): go.Type {
+    public convert({ reference, enumsAsValues = false }: GoTypeMapper.Args): go.Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
-                    container: reference.container
+                    container: reference.container,
+                    enumsAsValues
                 });
             case "named":
-                return this.convertNamed({ named: reference });
+                return this.convertNamed({ named: reference, enumsAsValues });
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
@@ -41,21 +48,27 @@ export class GoTypeMapper {
         });
     }
 
-    private convertContainer({ container }: { container: FernIr.ContainerType }): go.Type {
+    private convertContainer({
+        container,
+        enumsAsValues
+    }: {
+        container: FernIr.ContainerType;
+        enumsAsValues: boolean;
+    }): go.Type {
         switch (container.type) {
             case "list":
-                return go.Type.slice(this.convert({ reference: container.list }));
+                return go.Type.slice(this.convert({ reference: container.list, enumsAsValues }));
             case "map": {
-                const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType });
+                const key = this.convert({ reference: container.keyType, enumsAsValues });
+                const value = this.convert({ reference: container.valueType, enumsAsValues });
                 return go.Type.map(key, value);
             }
             case "set":
-                return go.Type.slice(this.convert({ reference: container.set }));
+                return go.Type.slice(this.convert({ reference: container.set, enumsAsValues }));
             case "optional":
-                return this.convertOptionalOrNullable(container.optional);
+                return this.convertOptionalOrNullable(container.optional, enumsAsValues);
             case "nullable":
-                return this.convertOptionalOrNullable(container.nullable);
+                return this.convertOptionalOrNullable(container.nullable, enumsAsValues);
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -63,11 +76,11 @@ export class GoTypeMapper {
         }
     }
 
-    private convertOptionalOrNullable(innerReference: FernIr.TypeReference): go.Type {
+    private convertOptionalOrNullable(innerReference: FernIr.TypeReference, enumsAsValues: boolean): go.Type {
         if (this.isPointerAliasReference(innerReference)) {
-            return this.convert({ reference: innerReference });
+            return this.convert({ reference: innerReference, enumsAsValues });
         }
-        return go.Type.optional(this.convert({ reference: innerReference }));
+        return go.Type.optional(this.convert({ reference: innerReference, enumsAsValues }));
     }
 
     /**
@@ -156,13 +169,23 @@ export class GoTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: FernIr.DeclaredTypeName }): go.Type {
+    private convertNamed({
+        named,
+        enumsAsValues
+    }: {
+        named: FernIr.DeclaredTypeName;
+        enumsAsValues: boolean;
+    }): go.Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
                 return go.Type.reference(this.convertToTypeReference(named));
-            case "object":
             case "enum":
+                if (enumsAsValues) {
+                    return go.Type.reference(this.convertToTypeReference(named));
+                }
+                return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)));
+            case "object":
             case "union":
             case "undiscriminatedUnion":
                 return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)));

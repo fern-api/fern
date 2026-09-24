@@ -29,3 +29,10 @@ func (n *NotFoundError) MarshalJSON() ([]byte, error) {
 func (n *NotFoundError) Unwrap() error {
 	return n.APIError
 }
+
+func (n *NotFoundError) GetBody() string {
+	if n == nil {
+		return ""
+	}
+	return n.Body
+}

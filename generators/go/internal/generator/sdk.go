@@ -4071,6 +4071,14 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("}")
 	f.P()
 
+	f.P("func (", receiver, "*", typeName, ") GetBody() ", value, " {")
+	f.P("if ", receiver, " == nil {")
+	f.P("return ", zeroValueForTypeReference(errorDeclaration.Type, f.types))
+	f.P("}")
+	f.P("return ", receiver, ".Body")
+	f.P("}")
+	f.P()
+
 	return nil
 }
 

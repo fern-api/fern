@@ -60,7 +60,7 @@ client.Create(
 <dl>
 <dd>
 
-**shape:** `*fern.Shape` 
+**shape:** `fern.Shape` 
     
 </dd>
 </dl>
