@@ -47,6 +47,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
     // Field for reconnecting listener
     private final FieldSpec reconnectingListenerField;
 
+    // Captures a post-close connect failure so connect() can rethrow it once connectionLatch is released; not
+    // used for ordinary (non-closed) failures, which still rely on the 10s timeout to allow a retry to succeed.
+    private final FieldSpec closedFailureField;
+
     public SyncWebSocketChannelWriter(
             WebSocketChannel websocketChannel,
             ClientGeneratorContext clientGeneratorContext,
@@ -79,6 +83,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                         "reconnectingListener",
                         Modifier.PRIVATE)
                 .build();
+
+        this.closedFailureField = FieldSpec.builder(
+                        IllegalStateException.class, "closedFailure", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
     }
 
     @Override
@@ -86,6 +94,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         super.addFields(classBuilder);
         classBuilder.addField(connectionLatchField);
         classBuilder.addField(reconnectingListenerField);
+        classBuilder.addField(closedFailureField);
     }
 
     @Override
@@ -147,6 +156,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
         // Build WebSocket URL
         builder.addStatement("$N = new $T(1)", connectionLatchField, CountDownLatch.class);
+        builder.addStatement("$N = null", closedFailureField);
         builder.addStatement(
                 "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
@@ -303,9 +313,17 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.beginControlFlow("        if ($N != null)", onErrorHandlerField);
         builder.addStatement("            $N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class);
         builder.endControlFlow();
-        // Unblocks a caller awaiting connectionLatch (e.g. connect() called right as the client is closed,
-        // which fails synchronously through this callback) instead of leaving it to time out after 10s.
-        builder.addStatement("        $N.countDown()", connectionLatchField);
+        // A post-close failure (root client has been closed) can never be resolved by a retry, so unblock a
+        // caller awaiting connectionLatch immediately instead of leaving it to the 10s timeout - connect()
+        // rethrows closedFailure below once it does. Any other failure leaves the latch alone: connect() keeps
+        // waiting up to 10s in case a reconnect succeeds in the meantime, exactly as before this fix.
+        builder.beginControlFlow(
+                "        if (t instanceof $T && $S.equals(t.getMessage()))",
+                IllegalStateException.class,
+                ClientOptionsGenerator.CLOSED_MESSAGE);
+        builder.addStatement("            $N = ($T) t", closedFailureField, IllegalStateException.class);
+        builder.addStatement("            $N.countDown()", connectionLatchField);
+        builder.endControlFlow();
         builder.addCode("    }\n\n");
 
         builder.addCode("    @Override\n");
@@ -342,6 +360,12 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         builder.addStatement("$N.disconnect()", reconnectingListenerField);
         builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
         builder.addStatement("throw new $T($S, e)", RuntimeException.class, "WebSocket connection interrupted");
+        builder.endControlFlow();
+
+        // The latch can also be released by a post-close failure (see onWebSocketFailure above); surface that
+        // clear error to the caller instead of returning as if the connection had succeeded.
+        builder.beginControlFlow("if ($N != null)", closedFailureField);
+        builder.addStatement("throw $N", closedFailureField);
         builder.endControlFlow();
 
         return builder.build();

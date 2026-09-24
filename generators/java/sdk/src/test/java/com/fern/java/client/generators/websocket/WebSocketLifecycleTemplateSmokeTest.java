@@ -41,29 +41,26 @@ public class WebSocketLifecycleTemplateSmokeTest {
 
     private static final String CLIENT_OPTIONS_STAND_IN = "package " + CORE_PACKAGE + ";\n"
             + "import java.util.List;\n"
-            + "import java.util.Map;\n"
             + "import java.util.Set;\n"
             + "import java.util.ArrayList;\n"
             + "import java.util.concurrent.ConcurrentHashMap;\n"
             + "import java.util.concurrent.atomic.AtomicBoolean;\n"
             + "public final class ClientOptions {\n"
             + "  public static final String CLOSED_MESSAGE = \"root client has been closed\";\n"
-            // Mirrors the real fix: keyed by the shared OkHttpClient instance (identity), not per-ClientOptions,
-            // so Builder.from(...) siblings that copy the same httpClient see the same close().
-            + "  private static final Map<okhttp3.OkHttpClient, AtomicBoolean> CLOSED_BY_CLIENT = new"
-            + " ConcurrentHashMap<>();\n"
-            + "  private static final Map<okhttp3.OkHttpClient, Set<AutoCloseable>> OPEN_WEB_SOCKETS_BY_CLIENT ="
-            + " new ConcurrentHashMap<>();\n"
             + "  private final okhttp3.OkHttpClient okHttpClient;\n"
             + "  private final boolean ownsHttpClient;\n"
             + "  private final AtomicBoolean closed;\n"
             + "  private final Set<AutoCloseable> openWebSockets;\n"
-            + "  private ClientOptions(okhttp3.OkHttpClient okHttpClient, boolean ownsHttpClient) {\n"
+            // Mirrors the real fix: closed/openWebSockets are constructor parameters, not self-initialized, so
+            // Builder.from(...) can forward the SAME instances into a derived sibling. An ordinary builder() (or
+            // one seeded only via Builder.httpClient(shared)) never shares them, even with another ClientOptions
+            // wrapping the identical httpClient - only explicit from(...) lineage shares lifecycle state.
+            + "  private ClientOptions(okhttp3.OkHttpClient okHttpClient, boolean ownsHttpClient, AtomicBoolean"
+            + " closed, Set<AutoCloseable> openWebSockets) {\n"
             + "    this.okHttpClient = okHttpClient;\n"
             + "    this.ownsHttpClient = ownsHttpClient;\n"
-            + "    this.closed = CLOSED_BY_CLIENT.computeIfAbsent(okHttpClient, unused -> new AtomicBoolean(false));\n"
-            + "    this.openWebSockets = OPEN_WEB_SOCKETS_BY_CLIENT.computeIfAbsent(okHttpClient, unused ->"
-            + " ConcurrentHashMap.newKeySet());\n"
+            + "    this.closed = closed;\n"
+            + "    this.openWebSockets = openWebSockets;\n"
             + "  }\n"
             + "  public okhttp3.OkHttpClient httpClient() { return okHttpClient; }\n"
             + "  public boolean isClosed() { return closed.get(); }\n"
@@ -86,14 +83,30 @@ public class WebSocketLifecycleTemplateSmokeTest {
             + "    okHttpClient.connectionPool().evictAll();\n"
             + "  }\n"
             + "  public static Builder builder() { return new Builder(); }\n"
+            + "  public static Builder from(ClientOptions clientOptions) {\n"
+            + "    Builder builder = new Builder();\n"
+            + "    builder.httpClient = clientOptions.okHttpClient;\n"
+            + "    builder.ownsHttpClient = clientOptions.ownsHttpClient;\n"
+            + "    builder.closed = clientOptions.closed;\n"
+            + "    builder.openWebSockets = clientOptions.openWebSockets;\n"
+            + "    return builder;\n"
+            + "  }\n"
             + "  public static final class Builder {\n"
             + "    private okhttp3.OkHttpClient httpClient;\n"
-            + "    public Builder httpClient(okhttp3.OkHttpClient httpClient) { this.httpClient = httpClient; return"
-            + " this; }\n"
+            + "    private boolean ownsHttpClient = true;\n"
+            + "    private AtomicBoolean closed;\n"
+            + "    private Set<AutoCloseable> openWebSockets;\n"
+            + "    public Builder httpClient(okhttp3.OkHttpClient httpClient) {\n"
+            + "      this.httpClient = httpClient;\n"
+            + "      this.ownsHttpClient = httpClient == null;\n"
+            + "      return this;\n"
+            + "    }\n"
             + "    public ClientOptions build() {\n"
-            + "      boolean owns = httpClient == null;\n"
             + "      okhttp3.OkHttpClient client = httpClient != null ? httpClient : new okhttp3.OkHttpClient();\n"
-            + "      return new ClientOptions(client, owns);\n"
+            + "      AtomicBoolean closedToUse = this.closed != null ? this.closed : new AtomicBoolean(false);\n"
+            + "      Set<AutoCloseable> openWebSocketsToUse = this.openWebSockets != null ? this.openWebSockets :"
+            + " ConcurrentHashMap.newKeySet();\n"
+            + "      return new ClientOptions(client, ownsHttpClient, closedToUse, openWebSocketsToUse);\n"
             + "    }\n"
             + "  }\n"
             + "}\n";
@@ -168,27 +181,25 @@ public class WebSocketLifecycleTemplateSmokeTest {
      * Regression test for Devin Review's "derived clients reconnect against closed dispatcher" finding:
      * ClientOptions.Builder.from(...) copies the httpClient reference into a sibling, but (before the fix) each
      * ClientOptions had its own fresh closed flag and openWebSockets set, so closing one sibling shut down their shared
-     * dispatcher while the other sibling's sockets stayed "open" and kept trying to reconnect against it. Simulates two
-     * siblings sharing one httpClient (as Builder.from(...) produces) against the CLIENT_OPTIONS_STAND_IN, which
-     * mirrors the real fix's CLOSED_BY_CLIENT/OPEN_WEB_SOCKETS_BY_CLIENT sharing.
+     * dispatcher while the other sibling's sockets stayed "open" and kept trying to reconnect against it. Builds a
+     * sibling via Builder.from(...) (the actual lineage that shares an owned OkHttpClient) against the
+     * CLIENT_OPTIONS_STAND_IN, which mirrors the corrected fix: closed/openWebSockets forwarded through from(...), not
+     * shared by raw OkHttpClient identity (a follow-up Devin Review flagged: sharing by identity leaked every
+     * constructed OkHttpClient for the JVM's lifetime and over-shared state between unrelated ClientOptions that merely
+     * passed the same caller-supplied httpClient to Builder.httpClient(...)).
      */
     @Test
-    void closingOneSiblingClosesTheOtherSiblingsSocketsToo() throws Exception {
+    void closingASiblingClosesItsFromDerivedSiblingsSocketsToo() throws Exception {
         ClassLoader loader = compile(Map.of(CORE_PACKAGE + ".ClientOptions", CLIENT_OPTIONS_STAND_IN));
         Class<?> clientOptionsClass = loader.loadClass(CORE_PACKAGE + ".ClientOptions");
-        Object builder = clientOptionsClass.getMethod("builder").invoke(null);
-        Class<?> builderClass = builder.getClass();
 
-        okhttp3.OkHttpClient sharedHttpClient = new okhttp3.OkHttpClient();
-        Object siblingA =
-                builderClass.getMethod("httpClient", okhttp3.OkHttpClient.class).invoke(builder, sharedHttpClient);
-        Object optionsA = builderClass.getMethod("build").invoke(siblingA);
+        Object builderA = clientOptionsClass.getMethod("builder").invoke(null);
+        Object optionsA = builderA.getClass().getMethod("build").invoke(builderA);
 
-        Object builder2 = clientOptionsClass.getMethod("builder").invoke(null);
-        Object siblingB = builder2.getClass()
-                .getMethod("httpClient", okhttp3.OkHttpClient.class)
-                .invoke(builder2, sharedHttpClient);
-        Object optionsB = siblingB.getClass().getMethod("build").invoke(siblingB);
+        // B is derived FROM A - the actual lineage that shares an owned OkHttpClient/dispatcher.
+        Object builderB =
+                clientOptionsClass.getMethod("from", clientOptionsClass).invoke(null, optionsA);
+        Object optionsB = builderB.getClass().getMethod("build").invoke(builderB);
 
         AtomicBoolean bSocketClosed = new AtomicBoolean(false);
         AutoCloseable bSocket = () -> bSocketClosed.set(true);
@@ -198,12 +209,55 @@ public class WebSocketLifecycleTemplateSmokeTest {
         optionsA.getClass().getMethod("close").invoke(optionsA);
 
         assertThat((boolean) optionsB.getClass().getMethod("isClosed").invoke(optionsB))
-                .as("closing A must be visible on sibling B, which shares the same httpClient")
+                .as("closing A must be visible on its from(...)-derived sibling B")
                 .isTrue();
         assertThat(bSocketClosed.get())
                 .as("A's close() must have disconnected B's tracked socket too, before it can reconnect against"
                         + " the (now shared-and-shutdown) dispatcher")
                 .isTrue();
+    }
+
+    /**
+     * Companion to the test above, covering Devin Review's second finding: two ClientOptions that merely pass the SAME
+     * caller-supplied httpClient to Builder.httpClient(...) - the documented pattern where the caller retains lifecycle
+     * ownership and close() is a no-op - must stay independent. They are NOT related via from(...), so closing one must
+     * not affect the other at all, unlike the raw-OkHttpClient-identity sharing this PR briefly had.
+     */
+    @Test
+    void independentClientsSharingOnlyACallerSuppliedHttpClientStayIndependent() throws Exception {
+        ClassLoader loader = compile(Map.of(CORE_PACKAGE + ".ClientOptions", CLIENT_OPTIONS_STAND_IN));
+        Class<?> clientOptionsClass = loader.loadClass(CORE_PACKAGE + ".ClientOptions");
+        Class<?> builderClass =
+                clientOptionsClass.getMethod("builder").invoke(null).getClass();
+
+        okhttp3.OkHttpClient sharedHttpClient = new okhttp3.OkHttpClient();
+        Object builderA = clientOptionsClass.getMethod("builder").invoke(null);
+        Object optionsA = builderClass
+                .getMethod("build")
+                .invoke(builderClass
+                        .getMethod("httpClient", okhttp3.OkHttpClient.class)
+                        .invoke(builderA, sharedHttpClient));
+
+        Object builderB = clientOptionsClass.getMethod("builder").invoke(null);
+        Object optionsB = builderClass
+                .getMethod("build")
+                .invoke(builderClass
+                        .getMethod("httpClient", okhttp3.OkHttpClient.class)
+                        .invoke(builderB, sharedHttpClient));
+
+        AtomicBoolean bSocketClosed = new AtomicBoolean(false);
+        AutoCloseable bSocket = () -> bSocketClosed.set(true);
+        optionsB.getClass().getMethod("registerWebSocket", AutoCloseable.class).invoke(optionsB, bSocket);
+
+        optionsA.getClass().getMethod("close").invoke(optionsA);
+
+        assertThat((boolean) optionsB.getClass().getMethod("isClosed").invoke(optionsB))
+                .as("A and B were never derived from one another via from(...); closing A must not affect B just"
+                        + " because they happen to share a caller-supplied httpClient")
+                .isFalse();
+        assertThat(bSocketClosed.get())
+                .as("B's socket must stay untouched by A's close()")
+                .isFalse();
     }
 
     private static ClassLoader compile(Map<String, String> sources) throws Exception {
