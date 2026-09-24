@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.135.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs theme download --name <name> [--org <org>] [--output <dir>]`, which fetches an
+        org-level theme from Fern's cloud and writes it as a local theme directory (theme.yml plus its
+        logo/font/css/js assets with relative paths). The inverse of `fern docs theme upload`; useful for
+        vendoring a theme into a self-hosted docs image so `global-theme` resolves without network access.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 5.134.3
   changelogEntry:
     - summary: |
