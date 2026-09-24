@@ -41,7 +41,7 @@ This SDK allows you to configure different environments or custom URLs for API r
 require "seed"
 
 seed = Seed::Client.new(
-    base_url: Seed::Environment::PRODUCTION
+    environment: Seed::Environment::PRODUCTION
 )
 ```
 
