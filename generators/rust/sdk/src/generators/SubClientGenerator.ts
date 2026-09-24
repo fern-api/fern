@@ -1007,10 +1007,8 @@ export class SubClientGenerator {
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
-            // Multi-URL: resolve base URL at call time from environment
-            const baseUrlResolution =
-                `let base_url = self.http_client.config().environment.as_ref()\n` +
-                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            // Multi-URL: resolve the URL at call time; an explicit base_url wins over the environment
+            const baseUrlResolution = `let base_url = self.http_client.config().service_url(|environment| environment.${urlMethodName}());\n`;
             body = `${requestOptionsPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;

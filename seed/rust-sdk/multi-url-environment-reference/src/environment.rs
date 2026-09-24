@@ -6,11 +6,24 @@ pub struct ProductionUrls {
     pub auth: String,
     pub upload: String,
 }
+impl Default for ProductionUrls {
+    fn default() -> Self {
+        Self {
+            base: "https://api.example.com/2.0".to_string(),
+            auth: "https://auth.example.com/oauth2".to_string(),
+            upload: "https://upload.example.com/2.0".to_string(),
+        }
+    }
+}
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Environment {
     Production(ProductionUrls),
 }
 impl Environment {
+    pub fn production() -> Self {
+        Self::Production(ProductionUrls::default())
+    }
+
     pub fn url(&self) -> &str {
         match self {
             Self::Production(urls) => &urls.base,
@@ -37,10 +50,6 @@ impl Environment {
 }
 impl Default for Environment {
     fn default() -> Self {
-        Self::Production(ProductionUrls {
-            base: "https://api.example.com/2.0".to_string(),
-            auth: "https://auth.example.com/oauth2".to_string(),
-            upload: "https://upload.example.com/2.0".to_string(),
-        })
+        Self::Production(ProductionUrls::default())
     }
 }

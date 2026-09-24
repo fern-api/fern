@@ -5,6 +5,7 @@ import { CodeBlock, Expression, rust, Statement, UseStatement, Writer } from "@f
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -849,8 +850,8 @@ let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName(
         }
 
         const environmentEnumName = this.context.customConfig.environmentEnumName || "Environment";
-        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
-        if (defaultEnvName == null) {
+        const defaultEnvironment = this.getDefaultEnvironment(envConfig);
+        if (defaultEnvironment == null) {
             return [];
         }
 
@@ -867,7 +868,7 @@ let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName(
         writer.write(`let config = ClientConfig {`);
         writer.newLine();
         writer.indent();
-        writer.write(`base_url: ${environmentEnumName}::${defaultEnvName}.url().to_string(),`);
+        writer.write(this.buildEnvironmentConfigField(environmentEnumName, defaultEnvironment));
         writer.newLine();
         writer.write(`..Default::default()`);
         writer.newLine();
@@ -879,18 +880,31 @@ let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName(
         return [this.writeCode(writer.toString().trim())];
     }
 
-    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            if (defaultEnv != null) {
-                return this.context.case.pascalSafe(defaultEnv.name);
+    /**
+     * A multi-URL environment is selected through `environment`, whose constructor carries every
+     * URL; `base_url` there is an override of all of them, and `Environment::Production.url()` does
+     * not compile against a tuple variant.
+     */
+    private buildEnvironmentConfigField(
+        environmentEnumName: string,
+        environment: FernIr.SingleBaseUrlEnvironment | FernIr.MultipleBaseUrlsEnvironment
+    ): string {
+        if (this.context.hasMultipleBaseUrls()) {
+            const selector = new EnvironmentGenerator({ context: this.context }).getMultiUrlEnvironmentSelector(
+                environment.id
+            );
+            if (selector != null) {
+                return `environment: Some(${selector}),`;
             }
         }
-        const firstName = envs[0]?.name;
-        return firstName != null ? this.context.case.pascalSafe(firstName) : undefined;
+        return `base_url: ${environmentEnumName}::${this.context.case.pascalSafe(environment.name)}.url().to_string(),`;
+    }
+
+    private getDefaultEnvironment(
+        envConfig: FernIr.EnvironmentsConfig
+    ): FernIr.SingleBaseUrlEnvironment | FernIr.MultipleBaseUrlsEnvironment | undefined {
+        const envs = envConfig.environments.environments;
+        return envs.find((e) => e.id === envConfig.defaultEnvironment) ?? envs[0];
     }
 
     private writeCode(code: string): string {
