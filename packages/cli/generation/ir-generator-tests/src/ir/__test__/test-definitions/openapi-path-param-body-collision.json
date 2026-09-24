@@ -1157,6 +1157,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

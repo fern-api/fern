@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+    - summary: |
+        Fix the generated `ReconnectingWebSocketListener` connection-timeout message, which was missing the
+        closing parenthesis after the retry attempt number (e.g. `... milliseconds (retry attempt #2`).
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        `RetryInterceptor` no longer discards an API response it has already received (e.g. a 429)
+        when a later retry attempt fails, such as when the call timeout expires mid-retry. The
+        previous response is buffered and returned instead of surfacing a generic `IOException`.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 4.21.1
   changelogEntry:
     - summary: |

@@ -28,6 +28,10 @@ function overridesCustomizer(obj: unknown, src: unknown): unknown {
     if (!Array.isArray(obj) || !Array.isArray(src)) {
         return undefined;
     }
+    if (src.length === 0) {
+        // an explicitly empty array (e.g. `security: []`) clears the original
+        return [];
+    }
     if (!src.every((element) => typeof element === "object") || !obj.every((element) => typeof element === "object")) {
         // nested arrays of primitives are replaced
         return [...src];

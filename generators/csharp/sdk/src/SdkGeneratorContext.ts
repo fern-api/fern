@@ -151,6 +151,9 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public hasWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         return Object.values(this.ir.webhookGroups).some((webhookGroup) =>
             webhookGroup.some(
                 (webhook) => webhook.signatureVerification != null && webhook.signatureVerification.type === "hmac"

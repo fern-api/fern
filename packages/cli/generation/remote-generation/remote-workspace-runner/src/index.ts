@@ -1,4 +1,5 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
+export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
 export type {
     FernSdkConfigV1Payload,
     FernSdkGenApiPackageConfig,
@@ -9,7 +10,10 @@ export {
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
-    synthesizesSdkConfig
+    synthesizesSdkConfig,
+    validateFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishCredentialSources,
+    validateFernSdkGenApiPublishTargets
 } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,

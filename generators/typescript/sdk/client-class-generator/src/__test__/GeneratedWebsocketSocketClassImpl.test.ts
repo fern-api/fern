@@ -177,10 +177,13 @@ interface FakeSocketListeners {
 interface RuntimeSocket {
     on: (event: keyof FakeSocketListeners, callback: (...args: never[]) => void) => void;
     off: (event: keyof FakeSocketListeners, callback: (...args: never[]) => void) => void;
+    connect: () => RuntimeSocket;
+    close: () => void;
 }
 
 interface RuntimeHarness {
     socket: RuntimeSocket;
+    listeners: FakeSocketListeners;
     emit: <K extends keyof FakeSocketListeners>(event: K, ...args: Parameters<FakeSocketListeners[K][number]>) => void;
 }
 
@@ -199,7 +202,21 @@ function instantiateGeneratedSocket(mode: WebsocketHandlerMode): RuntimeHarness 
         addEventListener: <K extends keyof FakeSocketListeners>(event: K, listener: FakeSocketListeners[K][number]) => {
             (listeners[event] as Array<FakeSocketListeners[K][number]>).push(listener);
         },
-        removeEventListener: () => undefined
+        removeEventListener: <K extends keyof FakeSocketListeners>(
+            event: K,
+            listener: FakeSocketListeners[K][number]
+        ) => {
+            const registered = listeners[event] as Array<FakeSocketListeners[K][number]>;
+            for (let i = registered.length - 1; i >= 0; i--) {
+                if (registered[i] === listener) {
+                    registered.splice(i, 1);
+                }
+            }
+        },
+        hasEventListener: <K extends keyof FakeSocketListeners>(event: K, listener: FakeSocketListeners[K][number]) =>
+            (listeners[event] as Array<FakeSocketListeners[K][number]>).includes(listener),
+        reconnect: () => undefined,
+        close: () => undefined
     };
 
     const exports: { ChatSocket?: new (args: { socket: unknown }) => RuntimeSocket } = {};
@@ -212,8 +229,9 @@ function instantiateGeneratedSocket(mode: WebsocketHandlerMode): RuntimeHarness 
 
     return {
         socket,
+        listeners,
         emit: (event, ...args) => {
-            for (const listener of listeners[event]) {
+            for (const listener of [...listeners[event]]) {
                 (listener as (...a: unknown[]) => void)(...args);
             }
         }
@@ -551,6 +569,42 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             emit("close", {});
 
             expect(calls).toEqual(["open", "message:hi", "error:boom", "close"]);
+        });
+
+        it("registers each forwarding listener exactly once after new Socket(...).connect()", () => {
+            const { socket, listeners, emit } = instantiateGeneratedSocket(mode);
+            socket.connect();
+
+            expect(listeners.open).toHaveLength(1);
+            expect(listeners.message).toHaveLength(1);
+            expect(listeners.close).toHaveLength(1);
+            expect(listeners.error).toHaveLength(1);
+
+            const calls: string[] = [];
+            socket.on("message", ((message: { text: string }) => calls.push(message.text)) as never);
+            emit("message", { data: JSON.stringify({ text: "hi" }) });
+            expect(calls).toEqual(["hi"]);
+        });
+
+        it("connect() is idempotent and re-registers listeners after close()", () => {
+            const { socket, listeners } = instantiateGeneratedSocket(mode);
+            socket.connect().connect();
+            expect(listeners.open).toHaveLength(1);
+            expect(listeners.message).toHaveLength(1);
+            expect(listeners.close).toHaveLength(1);
+            expect(listeners.error).toHaveLength(1);
+
+            socket.close();
+            expect(listeners.open).toHaveLength(0);
+            expect(listeners.message).toHaveLength(0);
+            expect(listeners.close).toHaveLength(0);
+            expect(listeners.error).toHaveLength(0);
+
+            socket.connect();
+            expect(listeners.open).toHaveLength(1);
+            expect(listeners.message).toHaveLength(1);
+            expect(listeners.close).toHaveLength(1);
+            expect(listeners.error).toHaveLength(1);
         });
 
         it("off() detaches a registered handler", () => {

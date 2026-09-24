@@ -395,6 +395,27 @@ types:
           ```
           A generator's own `config.auto-generate-idempotency-key` overrides this
           value for that generator.
+      webhook-signature:
+        type: optional<unknown>
+        docs: |
+          Webhook signature scheme for the whole API, declared once here instead of in the
+          API definition. Every generator in this API emits a shared webhook verification
+          helper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when
+          the spec models no webhooks. Uses the same shape as a webhook's `signature` block
+          in a Fern definition:
+          ```yaml
+          api:
+            settings:
+              webhook-signature:
+                type: hmac
+                header: X-Twilio-Signature
+                algorithm: sha1
+                encoding: base64
+                payload-format:
+                  components: [notification-url, body]
+                  delimiter: ""
+                  body-sort: alphabetical
+          ```
 
   APIConfigurationV2SpecsSchema:
     discriminated: false

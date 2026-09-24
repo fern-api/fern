@@ -106,6 +106,10 @@ export async function convertGeneratorsConfiguration({
         apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
             ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
             : undefined;
+    const globalWebhookSignature =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["webhook-signature"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -125,6 +129,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               globalIdempotencyKeyGeneration,
+                              globalWebhookSignature,
                               readme,
                               context
                           })
@@ -633,6 +638,7 @@ async function convertGroup({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -643,6 +649,7 @@ async function convertGroup({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -663,6 +670,7 @@ async function convertGroup({
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
                     globalIdempotencyKeyGeneration,
+                    globalWebhookSignature,
                     readme,
                     context
                 })
@@ -750,6 +758,7 @@ async function convertGenerator({
     maybeRootAutomation,
     maybeGroupAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -762,6 +771,7 @@ async function convertGenerator({
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
@@ -773,6 +783,7 @@ async function convertGenerator({
     return {
         raw: generator,
         idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
+        webhookSignatureConfig: globalWebhookSignature,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,

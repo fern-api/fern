@@ -1,4 +1,84 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.137.2
+  changelogEntry:
+    - summary: |
+        Preserve API import settings that affect documentation when `fern sdk migrate` decouples docs.yml from generators.yml.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.137.1
+  changelogEntry:
+    - summary: |
+        An explicitly empty array in an OpenAPI overrides file (e.g. `security: []` to opt an
+        endpoint out of global auth) now replaces the original array instead of being ignored.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.137.0
+  changelogEntry:
+    - summary: |
+        Add `api.settings.webhook-signature` to `generators.yml`. Declares an API-wide webhook
+        signature scheme (same shape as a webhook `signature` block) once, outside the API
+        definition, and compiles it into `sdkConfig.webhookSignatureVerification` in the IR so
+        every SDK generator emits the shared webhook verification helper without any webhooks or
+        `x-fern-*` extensions in the spec.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.136.0
+  changelogEntry:
+    - summary: |
+        Support secure SDK Config v1 direct publishing to npm, Maven, PyPI, and crates.io through sdk-gen-api.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.135.1
+  changelogEntry:
+    - summary: |
+        Hosted MCP deploys now fail fast, before uploading anything, when a generated tool name is longer than 64 characters or contains disallowed characters, and suggest an `x-fern-mcp-name` overlay for the operation (method + path). Deploy errors from the registry now include each validation issue instead of only the headline message.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.135.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs theme download --name <name> [--org <org>] [--output <dir>]`, which fetches an
+        org-level theme from Fern's cloud and writes it as a local theme directory (theme.yml plus its
+        logo/font/css/js assets with relative paths). The inverse of `fern docs theme upload`; useful for
+        vendoring a theme into a self-hosted docs image so `global-theme` resolves without network access.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.134.3
+  changelogEntry:
+    - summary: |
+        Docs validation no longer logs a "Slow file read" debug line for every markdown page when many
+        files are read concurrently (the timing included threadpool queue time, not disk speed). It now
+        logs one summary per validation run and only flags reads that are outliers relative to the batch.
+      type: fix
+    - summary: |
+        The CLI now defaults `UV_THREADPOOL_SIZE` to 8 (from Node's default of 4) so concurrent file
+        reads spend less time queued behind the libuv threadpool. Set the variable explicitly to override.
+      type: fix
+    - summary: |
+        The OpenAPI importer no longer drops the `properties` of a schema whose sibling
+        `oneOf` only lists which of those properties must be present (for example
+        `oneOf: [{ required: [domain] }, { required: [phone] }]`). Such a `oneOf` is an
+        "exactly one of" constraint over the declared object, not a set of variants, so
+        the schema is now converted as an object with every declared property preserved.
+        This also applies when the schema is an inline member of an `allOf`.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.134.2
+  changelogEntry:
+    - summary: |
+        Fix environments defined in `generators.yml` disappearing from docs (`GET ///path`, empty Try It base URL)
+        when an `api:` navigation block uses `audiences:`. Environments that don't declare audiences are now
+        retained under audience filtering, matching the Fern Definition behavior.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 5.134.1
   changelogEntry:
     - summary: |

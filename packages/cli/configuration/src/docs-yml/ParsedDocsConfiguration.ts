@@ -6,6 +6,7 @@ import {
     AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
+    ApiSpecImportSettings,
     Availability,
     DocsInstance,
     EmbeddingConfig,
@@ -496,6 +497,7 @@ export interface ParsedApiSpecConfiguration {
     namespace: string | undefined;
     absoluteOverlayPaths: AbsoluteFilePath[];
     absoluteOverridePaths: AbsoluteFilePath[];
+    settings: ApiSpecImportSettings | undefined;
 }
 
 export type ApiSpecType = "openapi" | "asyncapi" | "graphql";

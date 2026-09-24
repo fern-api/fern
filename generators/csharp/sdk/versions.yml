@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.85.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.84.3
+  changelogEntry:
+    - summary: |
+        `RawClient` now applies the configured `Timeout` to each retry attempt individually instead of
+        sharing a single budget across all attempts and backoff delays. Note that `Timeout` therefore no
+        longer bounds the total duration of a call that is retried; the worst case is roughly
+        `Timeout * (MaxRetries + 1)` plus backoff. If a retry attempt fails after an earlier attempt
+        already received an API response (e.g. a 429), that response is returned instead of a generic
+        cancellation error.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 2.84.2
   changelogEntry:
     - summary: |

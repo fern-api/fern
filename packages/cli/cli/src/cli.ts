@@ -65,6 +65,7 @@ import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibrary
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
+import { downloadDocsTheme } from "./commands/docs-theme/downloadDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
@@ -135,6 +136,13 @@ if (
         process.kill(process.pid, result.signal);
     }
     process.exit(result.status ?? 1);
+}
+
+// libuv sizes its threadpool (async fs, zlib, dns) lazily on first use, so
+// this takes effect as long as it runs before any async I/O. The default of 4
+// is a bottleneck for the highly concurrent file reads in docs validation.
+if (process.env.UV_THREADPOOL_SIZE == null) {
+    process.env.UV_THREADPOOL_SIZE = "8";
 }
 
 void runCli();
@@ -1998,6 +2006,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
         addDocsThemeDeleteCommand(yargs, cliContext);
+        addDocsThemeDownloadCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
@@ -2027,6 +2036,39 @@ function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
             await deleteDocsTheme({ cliContext, name: argv.name, force: argv.force });
+        }
+    );
+}
+
+function addDocsThemeDownloadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "download",
+        "Download a theme from Fern's cloud into a local theme directory (theme.yml + assets)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to write the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme download --name dark", "Download the theme named 'dark' to ./fern/theme")
+                .example(
+                    "$0 docs theme download --name dark --output ./themes/dark",
+                    "Download to a custom directory, e.g. to vendor into a self-hosted image"
+                ),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme download" });
+            await downloadDocsTheme({ cliContext, name: argv.name, org: argv.org, output: argv.output });
         }
     );
 }

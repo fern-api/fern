@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import {
     AIChatConfig,
+    ApiSpecImportSettings,
     DocsConfiguration,
     ProductFileConfig,
     ThemeConfig,
@@ -81,6 +82,20 @@ describe("DocsYmlSchemas", () => {
             labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
         });
         expect(ThemeConfig.parse({})["site-switcher"]).toBeUndefined();
+    });
+
+    it("validates ensured API error response status codes", () => {
+        const settings = (statusCode: number) => ({
+            "error-responses": {
+                schema: { type: "object" },
+                ensure: [{ "status-code": statusCode }]
+            }
+        });
+
+        expect(ApiSpecImportSettings.safeParse(settings(400)).success).toBe(true);
+        expect(ApiSpecImportSettings.safeParse(settings(599)).success).toBe(true);
+        expect(ApiSpecImportSettings.safeParse(settings(399)).success).toBe(false);
+        expect(ApiSpecImportSettings.safeParse(settings(600)).success).toBe(false);
     });
 
     it("should preserve explicitly configured check rule severities", () => {

@@ -55,6 +55,9 @@ const FIXTURES: Fixture[] = [
         name: "webhooks"
     },
     {
+        name: "api-webhook-signature"
+    },
+    {
         name: "response-property"
     }
 ];

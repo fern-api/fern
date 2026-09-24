@@ -226,13 +226,14 @@ public class ReconnectingWebSocketListenerGenerator {
                 .beginControlFlow("catch ($T e)", TimeoutException.class)
                 .addStatement("connectionFuture.cancel(true)")
                 .addStatement(
-                        "$T timeoutError = new $T($S + $L + $S + (retryCount.get() > 0 ? $S + retryCount.get() : $S))",
+                        "$T timeoutError = new $T($S + $L + $S + (retryCount.get() > 0 ? $S + retryCount.get() + $S : $S))",
                         TimeoutException.class,
                         TimeoutException.class,
                         "WebSocket connection timeout after ",
                         CONNECTION_TIMEOUT_MS,
                         " milliseconds",
                         " (retry attempt #",
+                        ")",
                         " (initial connection attempt)")
                 .addStatement("onWebSocketFailure(null, timeoutError, null)")
                 .beginControlFlow("if (shouldReconnect.get())")

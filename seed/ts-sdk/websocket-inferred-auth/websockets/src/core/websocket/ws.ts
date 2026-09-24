@@ -289,6 +289,21 @@ export class ReconnectingWebSocket {
         }
     }
 
+    /**
+     * Returns whether the given listener is registered for the event type
+     */
+    public hasEventListener<T extends keyof Events.WebSocketEventListenerMap>(
+        type: T,
+        listener: Events.WebSocketEventListenerMap[T],
+    ): boolean {
+        const listeners = this._listeners[type];
+        if (!listeners) {
+            return false;
+        }
+        // @ts-ignore
+        return listeners.some((l) => l === listener);
+    }
+
     public dispatchEvent(event: Event) {
         const listeners = this._listeners[event.type as keyof Events.WebSocketEventListenerMap];
         if (listeners) {

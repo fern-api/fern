@@ -490,16 +490,25 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: [
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.reconnect();`,
                 "",
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", this.handleOpen);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("close", this.handleClose);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", this.handleError);`,
-                "",
+                ...(
+                    [
+                        ["open", "this.handleOpen"],
+                        [GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME, "this.handleMessage"],
+                        ["close", "this.handleClose"],
+                        ["error", "this.handleError"]
+                    ] as const
+                ).map(
+                    ([event, handler]) =>
+                        `if (!this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.hasEventListener("${event}", ${handler})) {\n` +
+                        `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${event}", ${handler});\n` +
+                        `}`
+                ),
                 "return this;"
             ],
             docs: [
                 {
-                    description: "Connect to the websocket and register event handlers."
+                    description:
+                        "Connect to the websocket and register event handlers. Safe to call multiple times: each handler is only registered if it is not already attached."
                 }
             ]
         };

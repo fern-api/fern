@@ -1,4 +1,10 @@
-import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernDefinition,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -71,6 +77,72 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.generation).toBeUndefined();
     });
 
+    it("preserves exact publish credential environment expressions and omits literal secrets", () => {
+        const safe = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        safe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://registry.npmjs.org",
+                packageName: "@acme/sdk",
+                token: "${NPM_TOKEN}"
+            })
+        );
+        const unsafe = createGenerator("fernapi/fern-python-sdk", "python", "4.0.0");
+        unsafe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.pypiOverride({
+                registryUrl: "https://upload.pypi.org/legacy/",
+                coordinate: "acme-sdk",
+                username: "__token__",
+                password: "literal-secret"
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([safe, unsafe]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("username");
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE" })
+            ])
+        );
+    });
+
+    it("preserves Maven signing expressions only when the complete signature is safe", () => {
+        const generator = createGenerator("fernapi/fern-java-sdk", "java", "3.0.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://central.sonatype.com",
+                coordinate: "com.acme:sdk",
+                username: "${MAVEN_USERNAME}",
+                password: "${MAVEN_PASSWORD}",
+                signature: {
+                    keyId: "${MAVEN_KEY_ID}",
+                    password: "literal-signing-secret",
+                    secretKey: "${MAVEN_SECRET_KEY}"
+                }
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({
+            username: "${MAVEN_USERNAME}",
+            password: "${MAVEN_PASSWORD}"
+        });
+        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("signature");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
+    });
+
     it("preserves API-level path parameter behavior in the customer SDK Config", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -95,7 +167,7 @@ describe("SDK Config migration", () => {
             follow_redirects_by_default: true,
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
         };
 
@@ -114,7 +186,7 @@ describe("SDK Config migration", () => {
             followRedirectsByDefault: true,
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
         });
         expect(result.diagnostics).toEqual([]);
@@ -455,11 +527,34 @@ describe("SDK Config migration", () => {
             shouldUseUndiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "./problem.yml",
+                name: "ProblemDetails"
+            }
         } as generatorsYml.APIDefinitionSettings;
+        const loadedSpec = createWorkspaceOpenApiSpec("Sample", absoluteFilepath);
+        if (loadedSpec.type !== "openapi") {
+            throw new Error("Expected an OpenAPI spec");
+        }
+        loadedSpec.settings = getOpenAPISettings({
+            overrides: {
+                errorResponses: {
+                    schema: "/tmp/fern/problem.yml",
+                    name: "ProblemDetails"
+                }
+            }
+        });
         const workspace = {
             absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
-            allSpecs: [createWorkspaceOpenApiSpec("Sample", absoluteFilepath)],
+            allSpecs: [loadedSpec],
             generatorsConfiguration: {
                 api: {
                     type: "multiNamespace",
@@ -482,8 +577,23 @@ describe("SDK Config migration", () => {
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml",
+                name: "ProblemDetails"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("projects generator-level source import settings into SDK Config", () => {
@@ -497,7 +607,11 @@ describe("SDK Config migration", () => {
                         "respect-readonly-schemas": true,
                         "prefer-undiscriminated-unions-with-literals": true,
                         "inline-all-of-schemas": true,
-                        "resolve-schema-collisions": true
+                        "resolve-schema-collisions": true,
+                        "type-dates-as-strings": true,
+                        "error-responses": {
+                            schema: "./problem.yml"
+                        }
                     }
                 }
             ]
@@ -516,8 +630,16 @@ describe("SDK Config migration", () => {
             discriminatedUnionV2: true,
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
-            resolveSchemaCollisions: true
+            resolveSchemaCollisions: true,
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {

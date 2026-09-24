@@ -1270,7 +1270,18 @@ export class DocsDefinitionResolver {
                 absoluteFilepath: spec.absolutePath,
                 absoluteFilepathToOverrides: spec.absoluteOverridePaths,
                 absoluteFilepathToOverlays: spec.absoluteOverlayPaths[0],
-                settings: getOpenAPISettings(),
+                settings: getOpenAPISettings({
+                    options: {
+                        typeDatesAsStrings: spec.settings?.typeDatesAsStrings,
+                        useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
+                        respectParameterContent: spec.settings?.respectParameterContent,
+                        respectOperationIdWordBoundaries: spec.settings?.respectOperationIdWordBoundaries,
+                        inferForwardCompatible: spec.settings?.inferForwardCompatible,
+                        preserveOneOfInAllOf: spec.settings?.preserveOneOfInAllOf,
+                        anyOfSiblingPropertiesAsObject: spec.settings?.anyOfSiblingPropertiesAsObject,
+                        errorResponses: toOpenApiErrorResponses(spec.settings?.errorResponses)
+                    }
+                }),
                 source: {
                     // AsyncAPI uses the OpenAPISpec container because OSSWorkspace converts
                     // both formats into the same IR. source.type selects the actual parser.
@@ -3112,6 +3123,27 @@ export class DocsDefinitionResolver {
         };
         resolveLinksInObject(ir, markdownFilesToPathName, metadata);
     }
+}
+
+function toOpenApiErrorResponses(
+    errorResponses: docsYml.RawSchemas.ApiSpecErrorResponses | undefined
+): NonNullable<ReturnType<typeof getOpenAPISettings>["errorResponses"]> | undefined {
+    if (errorResponses == null) {
+        return undefined;
+    }
+    return {
+        schema: errorResponses.schema,
+        ...(errorResponses.name == null ? {} : { name: errorResponses.name }),
+        ...(errorResponses.applyTo == null ? {} : { "apply-to": errorResponses.applyTo }),
+        ...(errorResponses.ensure == null
+            ? {}
+            : {
+                  ensure: errorResponses.ensure.map((entry) => ({
+                      "status-code": entry.statusCode,
+                      ...(entry.methods == null ? {} : { methods: entry.methods })
+                  }))
+              })
+    };
 }
 
 function createEditThisPageUrl(

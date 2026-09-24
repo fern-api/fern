@@ -189,6 +189,43 @@ describe("mergeWithOverrides", () => {
         });
     });
 
+    it("should replace an existing array with an explicitly empty override", () => {
+        const data = {
+            paths: {
+                "/plants/token": {
+                    post: {
+                        security: [{ PlantOAuth: [] }],
+                        parameters: [{ name: "x-plant-id", in: "header" }]
+                    }
+                }
+            }
+        };
+
+        const overrides = {
+            paths: {
+                "/plants/token": {
+                    post: {
+                        security: [],
+                        parameters: []
+                    }
+                }
+            }
+        };
+
+        const result = mergeWithOverrides({ data, overrides });
+
+        expect(result).toEqual({
+            paths: {
+                "/plants/token": {
+                    post: {
+                        security: [],
+                        parameters: []
+                    }
+                }
+            }
+        });
+    });
+
     it("should handle nested object merging", () => {
         const data = {
             config: {

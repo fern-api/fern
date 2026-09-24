@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 # Mirrors the detection heuristics used by the Java generator (GeneratedBuildGradle).
 # Each entry is (required lowercase substrings, SPDX identifier); first match wins.
@@ -17,17 +17,6 @@ _LICENSE_PATTERNS: List[Tuple[Tuple[str, ...], str]] = [
     (("mozilla public license", "2.0"), "MPL-2.0"),
     (("isc license",), "ISC"),
 ]
-
-SPDX_CLASSIFIERS: Dict[str, str] = {
-    "Apache-2.0": "License :: OSI Approved :: Apache Software License",
-    "MIT": "License :: OSI Approved :: MIT License",
-    "BSD-3-Clause": "License :: OSI Approved :: BSD License",
-    "BSD-2-Clause": "License :: OSI Approved :: BSD License",
-    "GPL-3.0-only": "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "GPL-2.0-only": "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-    "MPL-2.0": "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
-    "ISC": "License :: OSI Approved :: ISC License (ISCL)",
-}
 
 DOCKER_LICENSE_PATH = "/tmp/LICENSE"
 

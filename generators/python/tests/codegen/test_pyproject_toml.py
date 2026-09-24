@@ -181,8 +181,8 @@ class TestPoetryCoreValidation:
             assert poetry.package.name == "test-package"
             assert poetry.package.license_files == ("LICENSE",)
 
-    def test_recognized_custom_license_adds_expression_and_classifier(self) -> None:
-        """A custom LICENSE containing Apache-2.0 text yields license + license-files + classifier."""
+    def test_recognized_custom_license_adds_expression(self) -> None:
+        """A custom LICENSE containing Apache-2.0 text yields license + license-files, no deprecated classifier."""
         with tempfile.TemporaryDirectory() as tmpdir:
             package_dir = Path(tmpdir) / "src" / "test_package"
             package_dir.mkdir(parents=True)
@@ -210,7 +210,7 @@ class TestPoetryCoreValidation:
             project_table = content.split("[tool.poetry]")[0]
             assert 'license = "Apache-2.0"' in project_table
             assert 'license-files = ["LICENSE"]' in project_table
-            assert "License :: OSI Approved :: Apache Software License" in content
+            assert "License ::" not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))
             assert poetry.package.license_expression == "Apache-2.0"
@@ -223,6 +223,7 @@ class TestPoetryCoreValidation:
             package_dir.mkdir(parents=True)
             (package_dir / "__init__.py").write_text("")
             (Path(tmpdir) / "README.md").write_text("")
+            (Path(tmpdir) / "LICENSE").write_text("MIT License\n")
 
             PyProjectToml(
                 name="test-package",
@@ -239,8 +240,10 @@ class TestPoetryCoreValidation:
             content = (Path(tmpdir) / "pyproject.toml").read_text()
             project_table = content.split("[tool.poetry]")[0]
             assert 'license = "MIT"' in project_table
+            assert 'license-files = ["LICENSE"]' in project_table
             assert content.count('license = "MIT"') == 1
-            assert "License :: OSI Approved :: MIT License" in content
+            assert "License ::" not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))
             assert poetry.package.license_expression == "MIT"
+            assert poetry.package.license_files == ("LICENSE",)

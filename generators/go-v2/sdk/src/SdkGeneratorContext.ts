@@ -973,6 +973,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
@@ -984,6 +987,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasWebhookBodyHashBinding(): boolean {
+        const apiWide = this.ir.sdkConfig.webhookSignatureVerification;
+        if (apiWide?.type === "hmac" && apiWide.bodyHashBinding != null) {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;
