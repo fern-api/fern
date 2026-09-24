@@ -1,39 +1,22 @@
 """Tests for pypi_classifier_creator module."""
 
-from typing import List, Optional
-
-from fern.generator_exec import BasicLicense, CustomLicense, LicenseConfig, LicenseId
+from typing import List
 
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.version import PythonVersion
 
 
-def create_license_config(license_id: LicenseId) -> LicenseConfig:
-    """Create a LicenseConfig for testing."""
-    return LicenseConfig.factory.basic(BasicLicense(id=license_id))
-
-
-def build_expected_classifiers(
-    versions: List[PythonVersion],
-    license_id: Optional[LicenseId] = None,
-) -> List[str]:
+def build_expected_classifiers(versions: List[PythonVersion]) -> List[str]:
     """Build expected classifier list using the class constants."""
     python_classifiers = list(PyPIClassifierMetadataGenerator.PYTHON_BASE_CLASSIFIERS)
     for v in versions:
         python_classifiers.append(f"Programming Language :: Python :: {v.spec.to_string()}")
 
-    classifiers = (
+    return (
         list(PyPIClassifierMetadataGenerator.CLASSIFIERS_PREFIX)
         + python_classifiers
         + list(PyPIClassifierMetadataGenerator.CLASSIFIERS_SUFFIX)
     )
-
-    if license_id is not None:
-        license_classifier = PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS.get(license_id)
-        if license_classifier is not None:
-            classifiers.append(license_classifier)
-
-    return classifiers
 
 
 class TestCreateClassifiers:
@@ -59,49 +42,11 @@ class TestCreateClassifiers:
         expected = build_expected_classifiers(PythonVersion.all())
         assert classifiers == expected
 
-    def test_no_license_classifier_when_none(self) -> None:
-        """Test no license classifier when license is None."""
-        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", None)
-
-        # Should not contain any license classifier
-        license_classifiers = [c for c in classifiers if c.startswith("License ::")]
-        assert len(license_classifiers) == 0
-
-
-class TestLicenseClassifiers:
-    """Tests for license classifier generation."""
-
-    def test_mit_license(self) -> None:
-        """Test MIT license classifier is appended."""
-        license_config = create_license_config(LicenseId.MIT)
-        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
-
-        assert classifiers[-1] == PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS[LicenseId.MIT]
-
-    def test_apache_2_license(self) -> None:
-        """Test Apache-2 license classifier is appended."""
-        license_config = create_license_config(LicenseId.APACHE_2)
-        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
-
-        assert classifiers[-1] == PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS[LicenseId.APACHE_2]
-
-    def test_custom_license_has_no_classifier(self) -> None:
-        """Test custom license file does not produce a license classifier."""
-        license_config = LicenseConfig.factory.custom(CustomLicense(filename="LICENSE"))
-        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10", license_config)
+    def test_never_emits_deprecated_license_classifiers(self) -> None:
+        """PEP 639 deprecates `License ::` classifiers; the license lives in `[project] license`."""
+        classifiers = PyPIClassifierMetadataGenerator.create_classifiers("~3.10")
 
         assert not any(c.startswith("License ::") for c in classifiers)
-
-    def test_license_with_version_constraint(self) -> None:
-        """Test full output with license and version constraint."""
-        license_config = create_license_config(LicenseId.MIT)
-        classifiers = PyPIClassifierMetadataGenerator.create_classifiers(">=3.9,<3.12", license_config)
-
-        expected = build_expected_classifiers(
-            [PythonVersion.PY3_9, PythonVersion.PY3_10, PythonVersion.PY3_11],
-            license_id=LicenseId.MIT,
-        )
-        assert classifiers == expected
 
 
 class TestClassifierIntegrity:

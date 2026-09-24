@@ -22,10 +22,19 @@ from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
 from fern_python.codegen import AST
+from fern_python.codegen.license_texts import LICENSE_FILENAME, get_license_text
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 from fern_python.codegen.requirements_txt import RequirementsTxt
 
-from fern.generator_exec import GeneratorUpdate, GithubOutputMode, LicenseConfig, LogLevel, LogUpdate, PypiMetadata
+from fern.generator_exec import (
+    BasicLicense,
+    GeneratorUpdate,
+    GithubOutputMode,
+    LicenseConfig,
+    LogLevel,
+    LogUpdate,
+    PypiMetadata,
+)
 
 if TYPE_CHECKING:
     from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -332,8 +341,7 @@ class Project:
                 with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
                     f.write("")
 
-            # copy LICENSE file if custom license is specified
-            self._copy_license_file()
+            self._write_license_file()
 
     def _create_package_path_init_files(self) -> None:
         """
@@ -376,10 +384,21 @@ __all__ = ["{next_part}"]
 
             current_path = os.path.join(current_path, part)
 
-    def _copy_license_file(self) -> None:
-        """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""
+    def _get_copyright_holder(self) -> Optional[str]:
+        if self._pypi_metadata is not None and self._pypi_metadata.authors:
+            return ", ".join(author.name for author in self._pypi_metadata.authors)
+        return self._project_config.package_name if self._project_config is not None else None
+
+    def _write_license_file(self) -> None:
+        """Write LICENSE for inline licenses, or copy the custom file from /tmp/LICENSE for local generation."""
         if self.license_ is not None:
             license_union = self.license_.get_as_union()
+            if license_union.type == "basic":
+                holder = self._get_copyright_holder()
+                license_text = get_license_text(typing.cast(BasicLicense, license_union).id, holder)
+                if license_text is not None:
+                    with open(os.path.join(self._root_filepath, LICENSE_FILENAME), "w") as f:
+                        f.write(license_text)
             if license_union.type == "custom":
                 # In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
                 # For remote generation, Fiddle handles writing the LICENSE file after generation

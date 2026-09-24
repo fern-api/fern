@@ -773,6 +773,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -783,4 +784,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2445710`;
+exports[`dependencies > file dependencies 1`] = `2445756`;

@@ -14,6 +14,7 @@ from fern_python.codegen.ast.dependency.dependency import (
 )
 from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.license_detector import DOCKER_LICENSE_PATH, detect_spdx_license_from_file
+from fern_python.codegen.license_texts import LICENSE_FILENAME, SPDX_IDS
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 from fern.generator_exec import (
@@ -21,7 +22,6 @@ from fern.generator_exec import (
     CustomLicense,
     GithubOutputMode,
     LicenseConfig,
-    LicenseId,
     PypiMetadata,
 )
 
@@ -57,11 +57,7 @@ class PyProjectToml:
             name=name,
             version=version,
             package=package,
-            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(
-                python_version=python_version,
-                license_=license_,
-                detected_spdx_license=self._detected_spdx_license,
-            ),
+            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(python_version=python_version),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
         )
@@ -90,12 +86,10 @@ class PyProjectToml:
             return ""
         license_union = self._license.get_as_union()
         if license_union.type == "basic":
-            license_id = cast(BasicLicense, license_union).id
-            if license_id == LicenseId.MIT:
-                return 'license = "MIT"\n'
-            if license_id == LicenseId.APACHE_2:
-                return 'license = "Apache-2.0"\n'
-            return ""
+            spdx_id = SPDX_IDS.get(cast(BasicLicense, license_union).id)
+            if spdx_id is None:
+                return ""
+            return f'license = "{spdx_id}"\nlicense-files = ["{LICENSE_FILENAME}"]\n'
         if license_union.type == "custom":
             filename = cast(CustomLicense, license_union).filename
             escaped = filename.replace("\\", "\\\\").replace('"', '\\"')

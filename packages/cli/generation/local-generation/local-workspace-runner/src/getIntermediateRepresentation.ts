@@ -5,7 +5,8 @@ import {
     getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
-    getUserAgentTemplateFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
@@ -72,6 +73,7 @@ export async function getIntermediateRepresentation({
             packageName,
             userAgentTemplate: resolvedUserAgentTemplate,
             idempotencyKeyGeneration,
+            webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
             organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),

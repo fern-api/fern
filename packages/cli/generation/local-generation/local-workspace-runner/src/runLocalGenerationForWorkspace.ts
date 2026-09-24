@@ -9,6 +9,7 @@ import {
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
     getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig,
     LibraryVisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -216,6 +217,7 @@ export async function runLocalGenerationForWorkspace({
                     packageName,
                     userAgentTemplate,
                     idempotencyKeyGeneration,
+                    webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
                     organization: projectConfig.organization,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),

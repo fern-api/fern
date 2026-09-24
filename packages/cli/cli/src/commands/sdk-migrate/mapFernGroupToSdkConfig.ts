@@ -53,10 +53,193 @@ export function mapFernGroupToSdkConfig({
                       pathParameterStyle: clientPathParameterStyle
                   }
               };
+    const validated = validateSdkConfigV1(sdkConfig);
+    const migrationCredentials = group.generators.map((generator, index) =>
+        migratePublishCredentials(generator.outputMode, index)
+    );
     return {
-        diagnostics: [...apiProjection.diagnostics, ...mapped.unsupportedFields],
-        sdkConfig: validateSdkConfigV1(sdkConfig)
+        diagnostics: [
+            ...apiProjection.diagnostics,
+            ...mapped.unsupportedFields.filter((diagnostic) => !isPublishCredentialDiagnostic(diagnostic)),
+            ...migrationCredentials.flatMap((result) => result.diagnostics)
+        ],
+        sdkConfig: {
+            ...validated,
+            targets: validated.targets.map((target, index) => {
+                const credentials = migrationCredentials[index]?.credentials;
+                if (target.output?.publish == null) {
+                    return target;
+                }
+                const publish = sanitizeMigratedPublishIntent(target.output.publish);
+                return {
+                    ...target,
+                    output: {
+                        ...target.output,
+                        publish: { ...publish, ...credentials }
+                    }
+                };
+            })
+        }
     };
+}
+
+function sanitizeMigratedPublishIntent<
+    Publish extends {
+        registry: string;
+        credentials?: unknown;
+        token?: unknown;
+        username?: unknown;
+        password?: unknown;
+        signature?: unknown;
+    }
+>(value: Publish): Omit<Publish, "credentials" | "token" | "username" | "password" | "signature"> {
+    const {
+        credentials: _credentials,
+        token: _token,
+        username: _username,
+        password: _password,
+        signature: _signature,
+        ...intent
+    } = value;
+    return intent;
+}
+
+interface MigratedPublishCredentials {
+    credentials?: Record<string, unknown>;
+    diagnostics: FernConfigMappingDiagnostic[];
+}
+
+function migratePublishCredentials(outputMode: unknown, targetIndex: number): MigratedPublishCredentials {
+    if (!isRecord(outputMode)) {
+        return { diagnostics: [] };
+    }
+    const output = getPublishCredentialOutput(outputMode);
+    if (output == null) {
+        return { diagnostics: [] };
+    }
+    const diagnostics: FernConfigMappingDiagnostic[] = [];
+    const credentials = migrateCredentialObject(output.registry, output.value, diagnostics, targetIndex);
+    return {
+        ...(Object.keys(credentials).length === 0 ? {} : { credentials }),
+        diagnostics
+    };
+}
+
+function getPublishCredentialOutput(
+    outputMode: Record<string, unknown>
+): { registry: "npm" | "pypi" | "maven" | "crates"; value: Record<string, unknown> } | undefined {
+    if (outputMode.type === "publishV2" && isRecord(outputMode.publishV2)) {
+        const publish = outputMode.publishV2;
+        switch (publish.type) {
+            case "npmOverride":
+                return isRecord(publish.npmOverride) ? { registry: "npm", value: publish.npmOverride } : undefined;
+            case "pypiOverride":
+                return isRecord(publish.pypiOverride) ? { registry: "pypi", value: publish.pypiOverride } : undefined;
+            case "mavenOverride":
+                return isRecord(publish.mavenOverride)
+                    ? { registry: "maven", value: publish.mavenOverride }
+                    : undefined;
+            case "cratesOverride":
+                return isRecord(publish.cratesOverride)
+                    ? { registry: "crates", value: publish.cratesOverride }
+                    : undefined;
+        }
+    }
+    if (outputMode.type === "publish" && isRecord(outputMode.registryOverrides)) {
+        if (isRecord(outputMode.registryOverrides.npm)) {
+            return { registry: "npm", value: outputMode.registryOverrides.npm };
+        }
+        if (isRecord(outputMode.registryOverrides.maven)) {
+            return { registry: "maven", value: outputMode.registryOverrides.maven };
+        }
+    }
+    return undefined;
+}
+
+function migrateCredentialObject(
+    registry: "npm" | "pypi" | "maven" | "crates",
+    value: Record<string, unknown>,
+    diagnostics: FernConfigMappingDiagnostic[],
+    targetIndex: number
+): Record<string, unknown> {
+    if (registry === "npm" || registry === "crates") {
+        const token = migrateCredentialValue(registry, "token", value.token, diagnostics, targetIndex);
+        return token == null ? {} : { token };
+    }
+    const username = migrateCredentialValue(registry, "username", value.username, diagnostics, targetIndex);
+    const password = migrateCredentialValue(registry, "password", value.password, diagnostics, targetIndex);
+    const credentials = {
+        ...(username == null ? {} : { username }),
+        ...(password == null ? {} : { password })
+    };
+    if (registry !== "maven" || value.signature == null) {
+        return credentials;
+    }
+    if (!isRecord(value.signature)) {
+        diagnostics.push(credentialMigrationDiagnostic(registry, "signature", targetIndex));
+        return credentials;
+    }
+    const signatureValue = value.signature;
+    const signatureFields: Array<"keyId" | "password" | "secretKey"> = ["keyId", "password", "secretKey"];
+    const signature = Object.fromEntries(
+        signatureFields.flatMap((field) => {
+            const migrated = exactEnvironmentExpression(signatureValue[field]);
+            return migrated == null ? [] : [[field, migrated]];
+        })
+    );
+    if (Object.keys(signature).length !== signatureFields.length) {
+        diagnostics.push(credentialMigrationDiagnostic(registry, "signature", targetIndex));
+        return credentials;
+    }
+    return { ...credentials, signature };
+}
+
+function migrateCredentialValue(
+    registry: string,
+    field: string,
+    value: unknown,
+    diagnostics: FernConfigMappingDiagnostic[],
+    targetIndex: number
+): string | undefined {
+    if (value == null || (typeof value === "string" && value.trim().length === 0)) {
+        return undefined;
+    }
+    const expression = exactEnvironmentExpression(value);
+    if (expression != null) {
+        return expression;
+    }
+    diagnostics.push(credentialMigrationDiagnostic(registry, field, targetIndex));
+    return undefined;
+}
+
+function exactEnvironmentExpression(value: unknown): string | undefined {
+    return typeof value === "string" && /^\$\{\w+\}$/.test(value) ? value : undefined;
+}
+
+function credentialMigrationDiagnostic(
+    registry: string,
+    field: string,
+    targetIndex: number
+): FernConfigMappingDiagnostic {
+    return {
+        code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
+        severity: "warning",
+        path: ["targets", targetIndex.toString(), "output", "publish", field],
+        reason: `The ${registry} ${field} credential is not an exact environment-variable expression and was omitted to prevent writing a resolved secret.`,
+        sdkConfigPath: ["targets", targetIndex.toString(), "output", "publish", field],
+        suggestedAction: `Configure targets.${targetIndex}.output.publish.${field} with an environment variable such as \${REGISTRY_CREDENTIAL}.`
+    };
+}
+
+function isPublishCredentialDiagnostic(diagnostic: FernConfigMappingDiagnostic): boolean {
+    const path = diagnostic.path.filter((segment): segment is string => typeof segment === "string");
+    return (
+        path.includes("output") &&
+        path.includes("publish") &&
+        path.some((segment) =>
+            ["token", "username", "password", "signature", "secretKey", "keyId", "credentials"].includes(segment)
+        )
+    );
 }
 
 export function mapFernDefinitionToSdkConfigApi(

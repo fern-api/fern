@@ -195,6 +195,7 @@ export interface GeneratorInvocation {
     /** Resolved automation configuration (generator → group → root → default true). */
     automation: ResolvedAutomationConfig;
     name: string;
+    sdkConfigTargetIndex?: number;
     /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
     containerImage: string | undefined;
     irVersionOverride: string | undefined;
@@ -207,6 +208,12 @@ export interface GeneratorInvocation {
      * into the IR downstream.
      */
     idempotencyKeyGenerationConfig?: unknown;
+    /**
+     * Raw `api.settings.webhook-signature` value from generators.yml: an API-wide webhook
+     * signature scheme in the same shape as a Fern-definition webhook `signature` block.
+     * Validated and normalized into the IR (`SdkConfig.webhookSignatureVerification`) downstream.
+     */
+    webhookSignatureConfig?: unknown;
     // Note this also includes a reviewers block for PR mode, it's from fiddle
     // and the same schema
     outputMode: FernFiddle.remoteGen.OutputMode;

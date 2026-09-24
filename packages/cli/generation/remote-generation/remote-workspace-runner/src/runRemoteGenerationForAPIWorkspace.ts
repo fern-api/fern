@@ -27,6 +27,7 @@ import {
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
+    validateFernSdkGenApiPublishTargets,
     validateFernSdkGenApiTargetCount
 } from "./fernSdkGenApi.js";
 import {
@@ -54,6 +55,7 @@ export interface RemoteGenerationForAPIWorkspaceResponse {
 
 export interface FernSourceArchiveRequest {
     generatorIndex: number;
+    sdkConfigTargetIndex?: number;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     sdkGenApiRoute: GenerationConfigRoute | undefined;
 }
@@ -193,6 +195,7 @@ export async function runRemoteGenerationForAPIWorkspace({
         effectiveOccurrenceTracker.recordOccurrences(generatorGroup.generators);
     }
     const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
+    const isSdkPreview = isPreview ?? absolutePathToPreview != null;
     // Select every target route before starting any per-target work. A bad target therefore cannot
     // race a sibling into remote registration or generation.
     const routePreparation = prepareFernSdkGenApiRoutes({
@@ -200,7 +203,7 @@ export async function runRemoteGenerationForAPIWorkspace({
         enabled: isFernSdkGenApiEnabled(),
         sdkConfigV1,
         requireEnvVars,
-        isPreview: isPreview ?? absolutePathToPreview != null,
+        isPreview: isSdkPreview,
         verify,
         skipIfNoDiff,
         autoMerge
@@ -211,9 +214,24 @@ export async function runRemoteGenerationForAPIWorkspace({
     if (automation == null) {
         throwFirstPreflightError(routeErrors, generatorGroup.generators);
     }
+    if (!isSdkPreview) {
+        validateFernSdkGenApiPublishTargets(
+            routePreparation.flatMap(({ sdkConfigTargetIndex }) => {
+                const target = sdkConfigTargetIndex == null ? undefined : sdkConfigV1?.targets[sdkConfigTargetIndex];
+                return target == null ? [] : [target];
+            })
+        );
+    }
     const sourceRequests = resolvedGenerators.flatMap((generatorInvocation, generatorIndex) =>
         routePreparation[generatorIndex]?.error == null
-            ? [{ generatorIndex, generatorInvocation, sdkGenApiRoute: sdkGenApiRoutes[generatorIndex] }]
+            ? [
+                  {
+                      generatorIndex,
+                      sdkConfigTargetIndex: routePreparation[generatorIndex]?.sdkConfigTargetIndex,
+                      generatorInvocation,
+                      sdkGenApiRoute: sdkGenApiRoutes[generatorIndex]
+                  }
+              ]
             : []
     );
     let sourceResolution: FernSourceArchiveResolution = { sourceArchives: new Map(), errors: new Map() };
@@ -246,7 +264,11 @@ export async function runRemoteGenerationForAPIWorkspace({
         sdkGenApiCandidateIndexes.size > 1 ? new FernSdkGenApiBatch(sdkGenApiCandidateIndexes.size) : undefined;
     const sdkGenApiPreparationBatch =
         sdkGenApiCandidateIndexes.size > 0
-            ? new FernSdkGenApiPreparationBatch([...sdkGenApiCandidateIndexes].map(String))
+            ? new FernSdkGenApiPreparationBatch(
+                  [...sdkGenApiCandidateIndexes].map((index) =>
+                      (routePreparation[index]?.sdkConfigTargetIndex ?? index).toString()
+                  )
+              )
             : undefined;
 
     const results = await Promise.all(
@@ -296,7 +318,9 @@ export async function runRemoteGenerationForAPIWorkspace({
                         ? sdkGenApiPreparationBatch
                         : undefined,
                     sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
-                    sdkGenApiTargetIdSeed: generatorIndex.toString(),
+                    sdkGenApiTargetIdSeed: (
+                        routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
+                    ).toString(),
                     generateFullProject,
                     libraryVisibility,
                     mapFernGroupToSdkConfig,
@@ -372,9 +396,11 @@ export function prepareFernSdkGenApiRoutes({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
     error: unknown;
+    sdkConfigTargetIndex?: number;
 }> {
-    return generators.map((generatorInvocation) => {
+    return generators.map((generatorInvocation, generatorIndex) => {
         let resolved = generatorInvocation;
+        const sdkConfigTargetIndex = getSdkConfigTargetIndex(generatorInvocation, generatorIndex);
         try {
             resolved = replaceEnvVariables(
                 generatorInvocation,
@@ -389,9 +415,7 @@ export function prepareFernSdkGenApiRoutes({
             );
             const configuredLanguage = getFernSdkGenApiLanguage(resolved.name);
             const configuredTarget =
-                configuredLanguage == null
-                    ? undefined
-                    : sdkConfigV1?.targets.find((target) => target.language === configuredLanguage);
+                configuredLanguage == null ? undefined : sdkConfigV1?.targets[sdkConfigTargetIndex];
             if (sdkConfigV1 != null && configuredLanguage == null) {
                 throw new Error(
                     `SDK Config v1 generation only supports Fern SDK generators routed through sdk-gen-api; the selected group contains ${resolved.name}`
@@ -399,6 +423,14 @@ export function prepareFernSdkGenApiRoutes({
             }
             if (sdkConfigV1 != null && configuredTarget == null) {
                 throw new Error(`SDK Config v1 does not contain a target for ${configuredLanguage}`);
+            }
+            if (configuredTarget != null && configuredTarget.language !== configuredLanguage) {
+                throw new Error(
+                    `SDK Config v1 target ${sdkConfigTargetIndex} language ${configuredTarget.language} does not match ${configuredLanguage}`
+                );
+            }
+            if (!isPreview && configuredTarget != null) {
+                validateFernSdkGenApiPublishTargets([configuredTarget]);
             }
             if (sdkConfigV1 == null && isSdkConfigUnpinnedGeneratorVersion(resolved.version)) {
                 throw new Error(
@@ -455,7 +487,7 @@ export function prepareFernSdkGenApiRoutes({
                     resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
                 );
             }
-            if (route != null) {
+            if (route != null && sdkConfigV1 == null) {
                 try {
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
                 } catch (error) {
@@ -482,7 +514,8 @@ export function prepareFernSdkGenApiRoutes({
             return {
                 generatorInvocation: resolved,
                 route,
-                error: undefined
+                error: undefined,
+                ...(sdkConfigV1 == null ? {} : { sdkConfigTargetIndex })
             };
         } catch (error) {
             const routeError =
@@ -492,9 +525,18 @@ export function prepareFernSdkGenApiRoutes({
                           code: CliError.Code.ConfigError
                       })
                     : error;
-            return { generatorInvocation: resolved, route: undefined, error: routeError };
+            return {
+                generatorInvocation: resolved,
+                route: undefined,
+                error: routeError,
+                ...(sdkConfigV1 == null ? {} : { sdkConfigTargetIndex })
+            };
         }
     });
+}
+
+function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation, fallback: number): number {
+    return generatorInvocation.sdkConfigTargetIndex ?? fallback;
 }
 
 function getFernSdkGenApiUnsupportedOutput({

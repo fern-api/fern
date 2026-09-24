@@ -123,7 +123,7 @@ export async function generateAPIWorkspaces({
             );
         }
         try {
-            const loaded = await loadSdkConfigV1(sdkConfigPath);
+            const loaded = await loadSdkConfigV1(sdkConfigPath, preview, { generatorName, generatorIndex });
             sdkConfigV1 = loaded.payload;
             const createdWorkspace = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({

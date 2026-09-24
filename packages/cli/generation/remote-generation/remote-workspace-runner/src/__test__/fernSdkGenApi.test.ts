@@ -24,7 +24,9 @@ import {
     preflightFernSdkGenApiBuild,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
-    selectFernSdkGenApiRoute
+    selectFernSdkGenApiRoute,
+    validateFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishCredentialSources
 } from "../fernSdkGenApi.js";
 import {
     type FernSdkGenApiSourceArchive,
@@ -52,13 +54,14 @@ vi.mock("@fern-api/core", async (importOriginal) => ({
     getIrVersionForGenerator: migrationMocks.getIrVersionForGenerator
 }));
 
-vi.mock("@fern-api/ir-migrations", async (importOriginal) => ({
-    ...(await importOriginal<typeof import("@fern-api/ir-migrations")>()),
+vi.mock("@fern-api/ir-migrations", () => ({
     migrateIntermediateRepresentationForGenerator: migrationMocks.migrateForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator: migrationMocks.migrateToVersionForGenerator
 }));
 
 beforeEach(() => {
+    contextLogger.debug.mockReset();
+    contextLogger.info.mockReset();
     migrationMocks.getIrVersionForGenerator.mockReset().mockResolvedValue(undefined);
     migrationMocks.migrateForGenerator.mockReset().mockImplementation(({ intermediateRepresentation }) =>
         Promise.resolve({
@@ -96,8 +99,9 @@ function invocation(overrides: Record<string, unknown> = {}): generatorsYml.Gene
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
+const contextLogger = { debug: vi.fn(), info: vi.fn() };
 const context = {
-    logger: { debug: vi.fn(), info: vi.fn() },
+    logger: contextLogger,
     failAndThrow: (message: string) => {
         throw new Error(message);
     }
@@ -115,16 +119,15 @@ function sdkConfigPayload(body: string): FernSdkGenApiPayload {
 }
 
 function sdkConfigV1(
-    target: FernSdkConfigV1Payload["targets"][number] = {
+    target: Omit<FernSdkConfigV1Payload["targets"][number], "body"> & { body?: Buffer } = {
         language: "typescript",
         generatorVersion: "4.0.0"
     }
 ): FernSdkConfigV1Payload {
     return {
-        body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
         sdkName: "petstore",
         sdkVersion: "1.2.3",
-        targets: [target]
+        targets: [{ body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'), ...target }]
     };
 }
 
@@ -428,7 +431,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route).toBeUndefined();
         expect(result?.error).toHaveProperty(
             "message",
-            expect.stringContaining("does not contain a target for typescript")
+            expect.stringContaining("target 0 language python does not match typescript")
         );
     });
 
@@ -1089,7 +1092,12 @@ describe("isEligibleForFernSdkGenApi", () => {
                 })
             ],
             enabled: true,
-            sdkConfigV1: sdkConfigV1(),
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: { type: "publish", publish: { registry: "npm", url: registryUrl } },
+                publishCredential: { registry: "npm", token: "npm-secret" }
+            }),
             requireEnvVars: true,
             isPreview: false
         });
@@ -1523,6 +1531,91 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         expect(request.targets.map((target) => target.language)).toEqual(["typescript", "python", "typescript"]);
         expect(new Set(request.targets.map((target) => target.targetId)).size).toBe(3);
+    });
+
+    it("correlates normalized SDK Config credentials with duplicate-language targets", () => {
+        const invocations = [invocation(), invocation()];
+        const targets = invocations.map((generatorInvocation, index) => ({
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            targetIdSeed: index.toString(),
+            payload: sdkConfigPayload(
+                JSON.stringify({
+                    schemaVersion: "sdk-config/v1",
+                    targets: [{ language: "typescript", output: { delivery: "files", publish: { registry: "npm" } } }]
+                })
+            ),
+            requestedOutput: {
+                type: "publish" as const,
+                publish: {
+                    registry: "npm" as const,
+                    url: index === 0 ? "https://npm.buildwithfern.com" : "https://registry.npmjs.org"
+                }
+            }
+        }));
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets
+        });
+
+        const credentials = createFernSdkGenApiPublishCredentials(request, invocations, [
+            { registry: "npm", token: "first-secret" },
+            { registry: "npm", token: "second-secret" }
+        ]);
+
+        expect(credentials?.targets).toEqual([
+            { targetId: request.targets[0]?.targetId, registry: "npm", token: "first-secret" },
+            { targetId: request.targets[1]?.targetId, registry: "npm", token: "second-secret" }
+        ]);
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "publish",
+            publish: { registry: "npm", url: "https://npm.buildwithfern.com" }
+        });
+        expect(JSON.stringify(request)).not.toContain("first-secret");
+        expect(JSON.stringify(request)).not.toContain("second-secret");
+    });
+
+    it("validates normalized SDK Config credentials with shared direct-publish rules", () => {
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource(
+                { registry: "pypi", username: "user", password: "secret" },
+                "https://pypi.buildwithfern.com"
+            )
+        ).not.toThrow();
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })).toThrow(
+            "requires password"
+        );
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource({
+                registry: "maven",
+                username: "user",
+                password: "secret",
+                signature: { keyId: "key", password: "signing-secret" }
+            })
+        ).toThrow("requires signature.secretKey");
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "npm", token: "OIDC" })).toThrow(
+            "does not support OIDC"
+        );
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "nuget" })).toThrow(
+            "does not support direct nuget"
+        );
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource(
+                { registry: "npm", token: "secret" },
+                "https://user:password@npm.example.com"
+            )
+        ).toThrow("must use HTTPS and must not contain user information");
+    });
+
+    it("applies the shared credential document size limit to normalized SDK Config credentials", () => {
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSources(
+                Array.from({ length: 4 }, () => ({ registry: "npm", token: "x".repeat(16 * 1024) }) as const)
+            )
+        ).toThrow("exceeding the 64 KiB limit");
     });
 
     it("keeps idempotency stable for equal archive bytes and changes it with request inputs", () => {
@@ -2095,7 +2188,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: expectedRequest.targets[0]?.targetId,
                         status: "succeeded",
-                        logs: [],
+                        logs: [{ level: "error", message: "Publisher exposed npm-secret" }],
                         result: {
                             artifactUrl: "https://example.test/sdk.zip",
                             actualVersion: "1.2.4"
@@ -2396,11 +2489,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: request.targets[0]?.targetId,
                         status: "failed",
-                        logs: [],
+                        logs: [{ level: "error", message: "Publisher exposed npm-secret" }],
                         publication: {
                             status: "failure",
                             publishTarget: { type: "npm", identifier: "@acme/sdk" },
-                            error: { code: "publish_failed", message: "SDK publish failed" }
+                            error: { code: "publish_failed", message: "SDK publish failed with npm-secret" }
                         }
                     }
                 ]
@@ -2420,7 +2513,8 @@ describe("isEligibleForFernSdkGenApi", () => {
                 absolutePathToPreview: undefined,
                 context
             })
-        ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed");
+        ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed with [REDACTED]");
+        expect(contextLogger.info).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
     it("stops polling when the build fails before a target reaches a terminal state", async () => {

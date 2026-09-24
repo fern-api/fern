@@ -2,7 +2,7 @@ import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
-import { isGeneric } from "@fern-api/fern-definition-schema";
+import { isGeneric, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     dynamic,
     FernIr,
@@ -39,7 +39,7 @@ import { convertErrorDeclaration } from "./converters/convertErrorDeclaration.js
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy.js";
 import { convertGlobalParameters } from "./converters/convertGlobalParameters.js";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig.js";
-import { convertWebhookGroup } from "./converters/convertWebhookGroup.js";
+import { convertWebhookGroup, convertWebhookSignatureSchema } from "./converters/convertWebhookGroup.js";
 import {
     convertHttpHeader,
     convertHttpService,
@@ -89,6 +89,14 @@ export declare namespace generateIntermediateRepresentation {
          * `auto-generate-idempotency-key` generator config so every generator reads it from IR.
          */
         idempotencyKeyGeneration?: FernIr.IdempotencyKeyGeneration;
+        /**
+         * API-wide webhook signature scheme from `api.settings.webhook-signature` in generators.yml.
+         * Converted into `sdkConfig.webhookSignatureVerification` so generators emit the shared
+         * verification helper without any webhooks declared in the API definition. Also the
+         * fallback scheme for modeled webhooks that declare none (webhook `signature` and the
+         * definition-file `webhook-signature` take precedence).
+         */
+        webhookSignature?: RawSchemas.WebhookSignatureSchema;
         /** Organization name from fern.config.json, used for {organization} in user-agent template. */
         organization?: string;
         version: string | undefined;
@@ -113,6 +121,7 @@ export function generateIntermediateRepresentation({
     packageName,
     userAgentTemplate,
     idempotencyKeyGeneration,
+    webhookSignature,
     organization,
     version,
     context,
@@ -392,7 +401,7 @@ export function generateIntermediateRepresentation({
                     typeResolver,
                     exampleResolver,
                     workspace,
-                    defaultSignature: file.definitionFile["webhook-signature"]
+                    defaultSignature: file.definitionFile["webhook-signature"] ?? webhookSignature
                 });
 
                 const webhooksByOriginalName: Record<string, Webhook> = {};
@@ -592,6 +601,10 @@ export function generateIntermediateRepresentation({
         hasPaginatedEndpoints,
         hasFileDownloadEndpoints,
         idempotencyKeyGeneration,
+        webhookSignatureVerification: convertWebhookSignatureSchema({
+            signature: webhookSignature,
+            file: rootApiFileContext
+        }),
         platformHeaders: {
             language: "X-Fern-Language",
             sdkName: "X-Fern-SDK-Name",
