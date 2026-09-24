@@ -408,6 +408,33 @@ describe("EnvironmentGenerator", () => {
             expect(generator.getMultiUrlEnvironmentSelector("UrlId")).toBe("Environment::Url(UrlUrls::default())");
         });
 
+        it("should not give an environment named Default a constructor that shadows Default::default", () => {
+            const baseUrls = [createEnvironmentBaseUrl("api", "api")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment("Production", { api: "https://api.example.com" }),
+                createMultipleBaseUrlsEnvironment("Default", { api: "https://default.example.com" })
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const contents = generator.generate()?.fileContents ?? "";
+            expect(contents).toContain("pub fn production() -> Self");
+            expect(contents).not.toContain("pub fn default() -> Self");
+            expect(contents).toContain("impl Default for DefaultUrls");
+            expect(contents).toContain("impl Default for Environment {\n    fn default() -> Self {\n    Self::Production(ProductionUrls::default())");
+            expect(generator.getMultiUrlEnvironmentSelector("DefaultId")).toBe(
+                "Environment::Default(DefaultUrls::default())"
+            );
+        });
+
         it("should generate multiple URLs environment with mixed protocols", async () => {
             const baseUrls = [
                 createEnvironmentBaseUrl("api", "api"),

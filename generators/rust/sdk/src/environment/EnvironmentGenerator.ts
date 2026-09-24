@@ -25,6 +25,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 /** The default URL getter method name, used for single-URL environments or the primary URL */
 export const DEFAULT_URL_METHOD = "url";
 
+/** `Default::default()`; an inherent method of that name on the enum would take precedence over it */
+const DEFAULT_TRAIT_METHOD = "default";
+
 export declare namespace EnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
@@ -326,8 +329,10 @@ export class EnvironmentGenerator {
 
     /**
      * One constructor per environment (`Environment::staging()`), built from that environment's
-     * `<Env>Urls::default()`. An environment whose snake_case name would collide with a URL getter
-     * gets no constructor; `Environment::<Env>(<Env>Urls::default())` still selects it.
+     * `<Env>Urls::default()`. An environment whose snake_case name would collide with a URL getter,
+     * or with `default` (an inherent `default()` would shadow `Default::default()` for every
+     * `Environment::default()` call), gets no constructor; `Environment::<Env>(<Env>Urls::default())`
+     * still selects it.
      */
     private createEnvironmentConstructors(config: FernIr.MultipleBaseUrlsEnvironments): Method[] {
         return config.environments.flatMap((env) => {
@@ -352,11 +357,12 @@ export class EnvironmentGenerator {
         config: FernIr.MultipleBaseUrlsEnvironments
     ): string | undefined {
         const name = this.context.case.snakeSafe(env.name);
-        const urlGetters = [
+        const reserved = [
             DEFAULT_URL_METHOD,
+            DEFAULT_TRAIT_METHOD,
             ...config.baseUrls.map((baseUrl) => this.getUrlMethodNameForBaseUrl(baseUrl))
         ];
-        return urlGetters.includes(name) ? undefined : name;
+        return reserved.includes(name) ? undefined : name;
     }
 
     private variantOverDefaultUrls(env: FernIr.MultipleBaseUrlsEnvironment): string {
