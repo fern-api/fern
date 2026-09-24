@@ -1,12 +1,12 @@
 import { FernToken } from "@fern-api/auth";
-import { getFernDirectory } from "@fern-api/configuration-loader";
+import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
+import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
-import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 
 /**
  * A preview is published at the same basepath as the docs.yml instance it was
@@ -60,13 +60,13 @@ async function resolvePreviewUrlsFromId({
         );
     }
 
-    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
+    const { projectConfig, docsWorkspace } = await cliContext.runTask(async (context) => ({
+        projectConfig: await loadProjectConfig({ directory: fernDirectory, context }),
+        docsWorkspace: await loadDocsWorkspace({ fernDirectory, context })
+    }));
 
-    const previewHostname = buildPreviewDomain({ orgId: project.config.organization, previewId });
-    const instanceUrls = project.docsWorkspaces?.config.instances.map((instance) => instance.url) ?? [];
+    const previewHostname = buildPreviewDomain({ orgId: projectConfig.organization, previewId });
+    const instanceUrls = docsWorkspace?.config.instances.map((instance) => instance.url) ?? [];
     return resolvePreviewUrlsForInstances({ previewHostname, instanceUrls });
 }
 
@@ -153,8 +153,11 @@ export async function deleteDocsPreview({
         const notFound: string[] = [];
         let deletedCount = 0;
 
+        const logAttempt = (message: string) =>
+            resolvedUrls.length > 1 ? context.logger.debug(message) : context.logger.info(message);
+
         for (const resolvedUrl of resolvedUrls) {
-            context.logger.info(`Deleting preview site: ${resolvedUrl}`);
+            logAttempt(`Deleting preview site: ${resolvedUrl}`);
             try {
                 await fdr.docs.v2.write.deleteDocsSite({
                     url: resolvedUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
