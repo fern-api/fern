@@ -92,8 +92,8 @@ public class RetryInterceptor implements Interceptor {
             try {
                 nextResponse = chain.proceed(chain.request());
             } catch (IOException e) {
-                // A retry attempt failed (e.g. the call timeout expired mid-retry); the response
-                // already received from the API is more actionable than the transport error.
+                // A retry attempt failed (e.g. the call timeout expired mid-retry). The transport error is
+                // intentionally dropped: the response already received from the API is more actionable.
                 return response;
             }
             response.close();
@@ -119,9 +119,11 @@ public class RetryInterceptor implements Interceptor {
         }
         try {
             byte[] bytes = body.bytes();
-            return response.newBuilder()
+            Response buffered = response.newBuilder()
                     .body(ResponseBody.create(bytes, body.contentType()))
                     .build();
+            response.close();
+            return buffered;
         } catch (IOException e) {
             return response;
         }

@@ -580,7 +580,7 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldApplyTimeoutPerAttempt()
     {
-        // Three attempts of 600ms each exceed a 1s budget shared across the whole
+        // Three attempts of 400ms each exceed a 1s budget shared across the whole
         // retry loop, but each individual attempt completes well within it.
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
@@ -590,7 +590,7 @@ public class RetriesTests
                 WireMockResponse
                     .Create()
                     .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromMilliseconds(600))
+                    .WithDelay(TimeSpan.FromMilliseconds(400))
             );
 
         _server
@@ -602,7 +602,7 @@ public class RetriesTests
                 WireMockResponse
                     .Create()
                     .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromMilliseconds(600))
+                    .WithDelay(TimeSpan.FromMilliseconds(400))
             );
 
         _server
@@ -614,7 +614,7 @@ public class RetriesTests
                     .Create()
                     .WithStatusCode(200)
                     .WithBody("Success")
-                    .WithDelay(TimeSpan.FromMilliseconds(600))
+                    .WithDelay(TimeSpan.FromMilliseconds(400))
             );
 
         var rawClient = new RawClient(

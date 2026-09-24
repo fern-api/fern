@@ -32,6 +32,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Optional;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -41,13 +42,14 @@ import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Compiles the emitted {@code RetryInterceptor} and drives it through a fake {@link Interceptor.Chain} to pin down
- * how it behaves when a retry attempt fails after the API has already answered.
+ * Compiles the emitted {@code RetryInterceptor} and drives it through a fake {@link Interceptor.Chain} to pin down how
+ * it behaves when a retry attempt fails after the API has already answered.
  */
 class RetryInterceptorTest {
 
@@ -56,12 +58,15 @@ class RetryInterceptorTest {
     private static final Request REQUEST =
             new Request.Builder().url("https://api.example.com/test").build();
 
+    private static URLClassLoader classLoader;
     private static Class<?> interceptorClass;
 
     @BeforeAll
     static void compileEmittedInterceptor(@TempDir Path tempDir) throws Exception {
         String contents;
-        try (InputStream is = RetryInterceptorGenerator.class.getResourceAsStream("/RetryInterceptor.java")) {
+        try (InputStream is = Objects.requireNonNull(
+                RetryInterceptorGenerator.class.getResourceAsStream("/RetryInterceptor.java"),
+                "/RetryInterceptor.java resource not found")) {
             contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
         contents = "package " + PACKAGE + ";\n\n"
@@ -92,12 +97,19 @@ class RetryInterceptorTest {
                 classesDir.toAbsolutePath().toString(),
                 sourceFile.toAbsolutePath().toString());
         if (exitCode != 0) {
-            throw new IllegalStateException("Failed to compile emitted RetryInterceptor:\n"
-                    + diagnostics.toString(StandardCharsets.UTF_8));
+            throw new IllegalStateException(
+                    "Failed to compile emitted RetryInterceptor:\n" + diagnostics.toString(StandardCharsets.UTF_8));
         }
-        URLClassLoader classLoader = new URLClassLoader(
-                new URL[] {classesDir.toUri().toURL()}, RetryInterceptorTest.class.getClassLoader());
+        classLoader =
+                new URLClassLoader(new URL[] {classesDir.toUri().toURL()}, RetryInterceptorTest.class.getClassLoader());
         interceptorClass = classLoader.loadClass(PACKAGE + "." + CLASS_NAME);
+    }
+
+    @AfterAll
+    static void closeClassLoader() throws IOException {
+        if (classLoader != null) {
+            classLoader.close();
+        }
     }
 
     private static Interceptor newInterceptor(int maxRetries) throws Exception {
