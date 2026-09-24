@@ -3,7 +3,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
+import { ENVIRONMENTS_FEATURE_ID, ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -70,7 +70,7 @@ export class ReadmeConfigBuilder {
         context: SdkGeneratorContext;
         feature: FernGeneratorCli.FeatureSpec;
     }): string | undefined {
-        if (feature.id === ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID && context.isMultipleBaseUrlsEnvironment()) {
+        if (feature.id === ENVIRONMENTS_FEATURE_ID && context.isMultipleBaseUrlsEnvironment()) {
             return [
                 "You can choose between different environments by passing one of the predefined `Environments` to the",
                 "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",

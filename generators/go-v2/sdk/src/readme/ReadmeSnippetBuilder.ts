@@ -12,10 +12,12 @@ interface EndpointWithFilepath {
     fernFilepath: FernIr.FernFilepath;
 }
 
+export const ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
-    public static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = ENVIRONMENTS_FEATURE_ID;
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
     private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
