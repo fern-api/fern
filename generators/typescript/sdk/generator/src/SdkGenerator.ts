@@ -1757,6 +1757,15 @@ export class SdkGenerator {
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
 
+        // The API-wide scheme (api.settings.webhook-signature) is always the default helper,
+        // even when the definition models no webhooks.
+        const apiWideConfig = this.intermediateRepresentation.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig != null) {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(this.intermediateRepresentation.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification == null) {
@@ -1780,12 +1789,14 @@ export class SdkGenerator {
         }
 
         // Pick the most frequent config as the default (ties broken by insertion order)
-        let defaultEntry: WebhookVerificationEntry | undefined;
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
         let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        if (defaultEntry == null) {
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
