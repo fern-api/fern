@@ -251,7 +251,11 @@ impl HttpConfig {
     fn user_agent_suffix(&self) -> Option<String> {
         let raw = match &self.user_agent_suffix_override {
             Some(s) => Some(s.to_string()),
-            None => first_env([scoped(&self.prefix, &crate::user_agent::suffix_env_segment())]),
+            None => first_env([scoped(
+                &self.prefix,
+                &crate::user_agent::suffix_env_segment(),
+            )])
+            .or_else(|| crate::profiles::transport().user_agent_suffix),
         };
         raw.map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
@@ -275,13 +279,10 @@ impl HttpConfig {
     /// network calls.
     pub fn resolve(&self) -> Result<ResolvedTlsConfig, CliError> {
         let prefix = &self.prefix;
+        let profile = crate::profiles::transport();
 
         let mut extra_root_certs_pem: Vec<Vec<u8>> = self.extra_root_certs_pem.clone();
-        if let Some(path) = first_env([
-            scoped(prefix, "_CA_BUNDLE"),
-            scoped(prefix, "_EXTRA_CA_CERTS"),
-            "SSL_CERT_FILE".to_string(),
-        ]) {
+        if let Some(path) = ca_bundle_path(prefix, &profile) {
             let pem = std::fs::read(&path).map_err(|e| {
                 CliError::Other(anyhow::anyhow!(
                     "failed to read CA bundle from {path}: {e}"
@@ -295,27 +296,27 @@ impl HttpConfig {
             extra_root_certs_pem.push(pem);
         }
 
-        let insecure_skip_verify = if let Some(active_key) = first_env_truthy([
-            scoped(prefix, "_INSECURE"),
-            scoped(prefix, "_INSECURE_SKIP_VERIFY"),
-        ]) {
+        let insecure_skip_verify = if let Some(active_key) = insecure_source(prefix, &profile) {
             warn_insecure_once(&self.name, &active_key);
             true
         } else {
             false
         };
 
-        let proxy = first_env([scoped(prefix, "_PROXY")]).map(|url| {
-            // Mirror the reqwest path's bypass-list resolution: <PREFIX>_NO_PROXY
-            // wins when set, otherwise fall back to the standard NO_PROXY env.
-            let no_proxy = first_env([scoped(prefix, "_NO_PROXY")])
-                .or_else(|| first_env(["NO_PROXY".to_string()]));
-            ResolvedProxy { url, no_proxy }
-        });
+        let proxy = first_env([scoped(prefix, "_PROXY")])
+            .or_else(|| profile.proxy.clone())
+            .map(|url| {
+                // Mirror the reqwest path's bypass-list resolution: <PREFIX>_NO_PROXY
+                // wins when set, otherwise fall back to the standard NO_PROXY env.
+                let no_proxy = first_env([scoped(prefix, "_NO_PROXY")])
+                    .or_else(|| first_env(["NO_PROXY".to_string()]));
+                ResolvedProxy { url, no_proxy }
+            });
 
-        let connect_timeout = parse_secs(&scoped(prefix, "_CONNECT_TIMEOUT_SECS"))
-            .map(Duration::from_secs);
+        let connect_timeout =
+            parse_secs(&scoped(prefix, "_CONNECT_TIMEOUT_SECS")).map(Duration::from_secs);
         let request_timeout = parse_secs(&scoped(prefix, "_TIMEOUT_SECS"))
+            .or(profile.timeout_secs)
             .map(Duration::from_secs);
 
         Ok(ResolvedTlsConfig {
@@ -332,6 +333,7 @@ impl HttpConfig {
     /// compile-time roots were captured when this config was built.
     pub fn build_client(&self) -> Result<reqwest::Client, CliError> {
         let prefix = &self.prefix;
+        let profile = crate::profiles::transport();
 
         let mut builder = reqwest::Client::builder();
         let user_agent = self.user_agent();
@@ -346,12 +348,8 @@ impl HttpConfig {
             builder = builder.add_root_certificate(cert.clone());
         }
 
-        // --- Runtime trust roots from env ---
-        if let Some(path) = first_env([
-            scoped(prefix, "_CA_BUNDLE"),
-            scoped(prefix, "_EXTRA_CA_CERTS"),
-            "SSL_CERT_FILE".to_string(),
-        ]) {
+        // --- Runtime trust roots from env / profile ---
+        if let Some(path) = ca_bundle_path(prefix, &profile) {
             let pem = std::fs::read(&path).map_err(|e| {
                 CliError::Other(anyhow::anyhow!(
                     "failed to read CA bundle from {path}: {e}"
@@ -364,10 +362,7 @@ impl HttpConfig {
         }
 
         // --- Insecure mode (opt-in, loud) ---
-        if let Some(active_key) = first_env_truthy([
-            scoped(prefix, "_INSECURE"),
-            scoped(prefix, "_INSECURE_SKIP_VERIFY"),
-        ]) {
+        if let Some(active_key) = insecure_source(prefix, &profile) {
             warn_insecure_once(&self.name, &active_key);
             builder = builder
                 .danger_accept_invalid_certs(true)
@@ -443,10 +438,9 @@ impl HttpConfig {
         // Standalone `<PREFIX>_NO_PROXY` (without `<PREFIX>_PROXY`) is *not*
         // honored — it would have ambiguous semantics (override which proxy?).
         let proxy_key = scoped(prefix, "_PROXY");
-        if let Some(url) = first_env([proxy_key.clone()]) {
-            let mut proxy = reqwest::Proxy::all(&url).map_err(|e| {
-                CliError::Other(anyhow::anyhow!("invalid {proxy_key}={url}: {e}"))
-            })?;
+        if let Some(url) = first_env([proxy_key.clone()]).or_else(|| profile.proxy.clone()) {
+            let mut proxy = reqwest::Proxy::all(&url)
+                .map_err(|e| CliError::Other(anyhow::anyhow!("invalid {proxy_key}={url}: {e}")))?;
             if let Some(list) = first_env([scoped(prefix, "_NO_PROXY")]) {
                 if let Some(np) = reqwest::NoProxy::from_string(&list) {
                     proxy = proxy.no_proxy(Some(np));
@@ -458,7 +452,7 @@ impl HttpConfig {
         }
 
         // --- Timeouts ---
-        if let Some(secs) = parse_secs(&scoped(prefix, "_TIMEOUT_SECS")) {
+        if let Some(secs) = parse_secs(&scoped(prefix, "_TIMEOUT_SECS")).or(profile.timeout_secs) {
             builder = builder.timeout(std::time::Duration::from_secs(secs));
         }
         if let Some(secs) = parse_secs(&scoped(prefix, "_CONNECT_TIMEOUT_SECS")) {
@@ -533,6 +527,37 @@ fn looks_like_tls_failure(err: &reqwest::Error) -> bool {
     // `{:#}` prints the full source chain — TLS errors are usually wrapped
     // several layers deep, with the actual word appearing near the bottom.
     format!("{err:#}").to_lowercase().contains("certificate")
+}
+
+/// CA bundle path: scoped env vars, then the generic `SSL_CERT_FILE`, then
+/// the active profile's `ca_bundle`.
+fn ca_bundle_path(prefix: &str, profile: &crate::profiles::TransportSettings) -> Option<String> {
+    first_env([
+        scoped(prefix, "_CA_BUNDLE"),
+        scoped(prefix, "_EXTRA_CA_CERTS"),
+        "SSL_CERT_FILE".to_string(),
+    ])
+    .or_else(|| profile.ca_bundle.clone())
+}
+
+/// What turned insecure mode on — the env var name, or the profile — so the
+/// warning can say which. `None` when TLS verification stays on.
+fn insecure_source(prefix: &str, profile: &crate::profiles::TransportSettings) -> Option<String> {
+    let keys = [
+        scoped(prefix, "_INSECURE"),
+        scoped(prefix, "_INSECURE_SKIP_VERIFY"),
+    ];
+    if let Some(key) = first_env_truthy(keys.iter()) {
+        return Some(key);
+    }
+    // An explicit falsy env value (`_INSECURE=0`) is still a decision, and
+    // it outranks the profile like every other env var does.
+    if first_env(keys.iter()).is_some() {
+        return None;
+    }
+    (profile.insecure == Some(true))
+        .then(|| crate::profiles::active_name().map(|name| format!("profile `{name}`")))
+        .flatten()
 }
 
 /// Print the insecure-mode warning at most once per (binary, process).
@@ -1035,6 +1060,78 @@ mod tests {
             cfg.user_agent(),
             format!("elevenlabs-cli/{}", env!("CARGO_PKG_VERSION")),
         );
+    }
+
+    fn install_transport_profile(transport: crate::profiles::TransportSettings) {
+        crate::profiles::install_for_tests(Some(crate::profiles::ResolvedProfile {
+            name: "corp".to_string(),
+            transport,
+            ..Default::default()
+        }));
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn profile_transport_settings_fill_in_when_env_is_unset() {
+        let mut env = isolated_env_guard();
+        for k in [
+            "ELEVENLABS_TIMEOUT_SECS",
+            "ELEVENLABS_PROXY",
+            "ELEVENLABS_INSECURE",
+            "ELEVENLABS_USER_AGENT_SUFFIX",
+        ] {
+            env.unset(k);
+        }
+        install_transport_profile(crate::profiles::TransportSettings {
+            timeout_secs: Some(45),
+            proxy: Some("http://proxy.corp:3128".to_string()),
+            ca_bundle: None,
+            insecure: Some(true),
+            user_agent_suffix: Some("my-app/1.0".to_string()),
+        });
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        let resolved = cfg.resolve().unwrap();
+        let ua = cfg.user_agent();
+        crate::profiles::install_for_tests(None);
+
+        assert_eq!(resolved.request_timeout, Some(Duration::from_secs(45)));
+        assert_eq!(
+            resolved.proxy.as_ref().map(|p| p.url.as_str()),
+            Some("http://proxy.corp:3128")
+        );
+        assert!(resolved.insecure_skip_verify);
+        assert!(ua.ends_with(" my-app/1.0"), "{ua}");
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn env_beats_profile_transport_settings() {
+        let mut env = isolated_env_guard();
+        env.set("ELEVENLABS_TIMEOUT_SECS", "5");
+        env.set("ELEVENLABS_PROXY", "http://env-proxy:8080");
+        env.set("ELEVENLABS_INSECURE", "0");
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "env-app/2.0");
+        install_transport_profile(crate::profiles::TransportSettings {
+            timeout_secs: Some(45),
+            proxy: Some("http://proxy.corp:3128".to_string()),
+            ca_bundle: None,
+            insecure: Some(true),
+            user_agent_suffix: Some("my-app/1.0".to_string()),
+        });
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        let resolved = cfg.resolve().unwrap();
+        let ua = cfg.user_agent();
+        crate::profiles::install_for_tests(None);
+
+        assert_eq!(resolved.request_timeout, Some(Duration::from_secs(5)));
+        assert_eq!(
+            resolved.proxy.as_ref().map(|p| p.url.as_str()),
+            Some("http://env-proxy:8080")
+        );
+        // A falsy env value still counts as "set": the profile's `true`
+        // must not switch verification off behind the user's back.
+        assert!(!resolved.insecure_skip_verify);
+        assert!(ua.ends_with(" env-app/2.0"), "{ua}");
     }
 
     #[test]
