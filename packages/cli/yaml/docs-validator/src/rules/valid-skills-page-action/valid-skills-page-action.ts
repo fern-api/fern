@@ -29,6 +29,13 @@ export function validateSkillsPageAction(
 
     const violations: RuleViolation[] = [];
 
+    if (skills.path != null && skills.path.trim().length === 0) {
+        violations.push({
+            severity: "error",
+            message: "page-actions.options.skills.path must not be empty."
+        });
+    }
+
     if (skills.installCommand != null) {
         const installCommands =
             typeof skills.installCommand === "string" ? [skills.installCommand] : skills.installCommand;

@@ -5630,6 +5630,15 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
+      mdast-util-from-markdown:
+        specifier: 'catalog:'
+        version: 2.0.3
+      mdast-util-gfm:
+        specifier: 'catalog:'
+        version: 3.1.0
+      micromark-extension-gfm:
+        specifier: 'catalog:'
+        version: 3.0.0
       mime-types:
         specifier: 'catalog:'
         version: 2.1.35
@@ -5639,6 +5648,9 @@ importers:
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
+      unist-util-visit:
+        specifier: 'catalog:'
+        version: 5.1.0
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -5652,6 +5664,9 @@ importers:
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
+      '@types/mdast':
+        specifier: 'catalog:'
+        version: 4.0.4
       '@types/mime-types':
         specifier: 'catalog:'
         version: 2.1.4
