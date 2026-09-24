@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ApiSpecImportSettings } from "./ApiSpecImportSettings.js";
 import { ApiSpecType } from "./ApiSpecType.js";
 
 export const ApiSpecConfiguration: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const ApiSpecConfiguration: core.serialization.ObjectSchema<
     namespace: core.serialization.string().optional(),
     overlays: core.serialization.string().optional(),
     overrides: core.serialization.list(core.serialization.string()).optional(),
+    settings: ApiSpecImportSettings.optional(),
 });
 
 export declare namespace ApiSpecConfiguration {
@@ -23,5 +25,6 @@ export declare namespace ApiSpecConfiguration {
         namespace?: string | null;
         overlays?: string | null;
         overrides?: string[] | null;
+        settings?: ApiSpecImportSettings.Raw | null;
     }
 }

@@ -1519,7 +1519,27 @@ async function convertNavigationItem({
                 absoluteOverlayPaths:
                     spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
                 absoluteOverridePaths:
-                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? [],
+                settings:
+                    spec.settings == null
+                        ? undefined
+                        : {
+                              ...spec.settings,
+                              ...(spec.settings.errorResponses == null
+                                  ? {}
+                                  : {
+                                        errorResponses: {
+                                            ...spec.settings.errorResponses,
+                                            schema:
+                                                typeof spec.settings.errorResponses.schema === "string"
+                                                    ? resolveFilepath(
+                                                          spec.settings.errorResponses.schema,
+                                                          absolutePathToConfig
+                                                      )
+                                                    : spec.settings.errorResponses.schema
+                                        }
+                                    })
+                          }
             })),
             audiences:
                 rawConfig.audiences != null

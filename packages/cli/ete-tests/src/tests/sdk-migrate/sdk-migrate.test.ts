@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, readFile, rm, writeFile } from "fs/promises";
+import { cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
@@ -202,7 +202,7 @@ describe("fern sdk migrate", () => {
         await temporaryDirectory.cleanup();
     });
 
-    it("preserves portable settings across a multi-language SDK-only migration", async ({ signal }) => {
+    it("preserves portable settings and completes docs migration", async ({ signal }) => {
         const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
         await cp(FIXTURES_DIR, directory, { recursive: true });
@@ -210,9 +210,6 @@ describe("fern sdk migrate", () => {
             join(directory, RelativeFilePath.of("portable-settings-generators.yml")),
             join(directory, RelativeFilePath.of("fern/generators.yml"))
         );
-        // Source import settings have no docs.yml equivalent, so keep this fixture scoped to SDK migration.
-        await rm(join(directory, RelativeFilePath.of("fern/docs.yml")));
-
         const result = await runFernCli(
             ["sdk", "migrate", "--group", "ts-sdk", "--group", "php-sdk", "--group", "python-sdk", "--output", "-"],
             {
@@ -223,6 +220,7 @@ describe("fern sdk migrate", () => {
         );
 
         expect(result.stderr).not.toContain("FERN_CONFIG_FIELD_UNSUPPORTED");
+        expect(result.stderr).not.toContain("FERN_DOCS_IMPORT_SETTINGS_UNSUPPORTED");
         expect(yaml.load(result.stdout)).toMatchObject({
             source: {
                 apiImportSettings: {
@@ -264,6 +262,11 @@ describe("fern sdk migrate", () => {
                 }
             ]
         });
+        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+            {
+                navigation: [{ api: "API reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }]
+            }
+        );
         await temporaryDirectory.cleanup();
     });
 
