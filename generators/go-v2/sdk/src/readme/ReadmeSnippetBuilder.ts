@@ -12,10 +12,24 @@ interface EndpointWithFilepath {
     fernFilepath: FernIr.FernFilepath;
 }
 
+export const ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+
+/**
+ * features.yml describes environments in terms of `option.WithBaseURL`, which takes the
+ * string a single-URL environment constant is. A multi-URL environment is a struct with one
+ * URL per service, and the client takes it through `option.WithEnvironment`.
+ */
+export const MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION = [
+    "You can choose between different environments by passing one of the predefined `Environments` to the",
+    "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",
+    "`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in",
+    "test environments.",
+    ""
+].join("\n");
+
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
     private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
@@ -26,6 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
+    private readonly rootClientConstructorName: string;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -47,7 +62,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.context.getRootPackageName();
-        this.rootPackageClientName = this.getRootPackageClientName();
+        this.rootPackageClientName = this.context.getRootClientPackageName();
+        this.rootClientConstructorName = this.context.getClientConstructorName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -69,7 +85,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
             [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
                 renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
             },
@@ -203,10 +219,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithBaseURL(${this.getBaseUrlOptionValue()}),
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
+                ${this.getEnvironmentOption()},
             )
         `);
+    }
+
+    /**
+     * A multi-URL environment is a struct carrying one URL per service, which the generated
+     * client takes through `option.WithEnvironment`; `option.WithBaseURL` takes a string, so it
+     * fits a single-URL environment constant or a custom URL only.
+     */
+    private getEnvironmentOption(): string {
+        const environment = this.getEnvironmentBaseUrlReference();
+        if (environment != null && this.context.isMultipleBaseUrlsEnvironment()) {
+            return `option.WithEnvironment(${environment})`;
+        }
+        return `option.WithBaseURL(${environment ?? '"https://example.com"'})`;
     }
 
     private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
@@ -258,7 +287,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const requestOption = authOptions[0] ?? "option.WithMaxAttempts(1)";
         const lines: string[] = [
             "// Specify default options applied on every request.",
-            `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(`,
+            `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(`,
             ...clientOptions.map((option) => `${this.indent(option)},`),
             ")",
             "",
@@ -338,7 +367,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.WithMaxAttempts(1),
             )
 
@@ -475,7 +504,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderOAuthSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
             // Option 1: Use client credentials (SDK will handle token fetching and refresh)
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.WithClientCredentials(
                     "${this.getOAuthClientIdPlaceholder()}",
                     "${this.getOAuthClientSecretPlaceholder()}",
@@ -483,7 +512,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             )
 
             // Option 2: Use a pre-fetched token directly
-            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.${this.rootClientConstructorName}(
                 option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder({ defaultValue: "<YOUR_ACCESS_TOKEN>" })}"),
             )
         `);
@@ -601,10 +630,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private getBaseUrlOptionValue(): string {
-        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
-    }
-
     private getEnvironmentBaseUrlReference(): string | undefined {
         const defaultEnvironmentId = this.getDefaultEnvironmentId();
 
@@ -620,10 +645,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return `${this.rootPackageName}.Environments.${this.context.caseConverter.pascalUnsafe(defaultEnvironment.name)}`;
-    }
-
-    private getRootPackageClientName(): string {
-        return "client";
     }
 
     private writeCode(s: string): string {
