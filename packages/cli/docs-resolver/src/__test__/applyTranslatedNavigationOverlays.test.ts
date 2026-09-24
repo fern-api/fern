@@ -556,7 +556,206 @@ describe("applyTranslatedNavigationOverlays", () => {
         const origTab = (origTabbed[0]?.children as Array<Record<string, unknown>>)[0];
         expect(origTab?.title).toBe("Documentation");
     });
+
+    it("applies tab display-name override to changelog tabs", () => {
+        const root = {
+            type: "root",
+            child: {
+                type: "unversioned",
+                child: {
+                    type: "tabbed",
+                    children: [
+                        {
+                            type: "tab",
+                            title: "Guides",
+                            slug: "guides",
+                            child: { type: "sidebarRoot", children: [] }
+                        },
+                        {
+                            type: "changelog",
+                            title: "Changelog",
+                            slug: "changelog",
+                            children: []
+                        }
+                    ]
+                }
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: {
+                guides: { displayName: "ガイド", slug: undefined },
+                changelog: { displayName: "変更履歴", slug: undefined }
+            }
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+        const tabs = getTabbedChildren(result);
+        expect(tabs[0]?.title).toBe("ガイド");
+        expect(tabs[1]?.title).toBe("変更履歴");
+    });
+
+    it("does not shift positional matching after a sibling matched by explicit slug", () => {
+        const root = sidebarRootFixture([
+            { type: "page", title: "Intro", slug: "guides/intro", pageId: "intro.mdx" },
+            { type: "page", title: "After Intro", slug: "guides/after-intro", pageId: "after.mdx" },
+            { type: "page", title: "Third Page", slug: "guides/third-page", pageId: "third.mdx" }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                { type: "page", title: "イントロ", slug: "intro" },
+                { type: "page", title: "イントロの後", slug: undefined },
+                { type: "page", title: "三番目", slug: undefined }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        expect(children.map((c) => c.title)).toEqual(["イントロ", "イントロの後", "三番目"]);
+    });
+
+    it("matches multi-segment explicit overlay slugs by their last segment", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "section",
+                title: "Customization",
+                slug: "guides/customization",
+                children: [{ type: "page", title: "Voice", slug: "guides/customization/voice", pageId: "voice.mdx" }]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "section",
+                    title: "カスタマイズ",
+                    slug: "customization",
+                    contents: [{ type: "page", title: "音声", slug: "customization/voice" }]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        expect(children[0]?.title).toBe("カスタマイズ");
+        expect((children[0]?.children as Array<Record<string, unknown>>)[0]?.title).toBe("音声");
+    });
+
+    it("applies link title overrides positionally", () => {
+        const root = sidebarRootFixture([
+            { type: "page", title: "Intro", slug: "guides/intro", pageId: "intro.mdx" },
+            { type: "link", title: "Voice Agents", url: "https://example.com/agents" },
+            { type: "link", title: "Blog", url: "https://example.com/blog" }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                { type: "page", title: "イントロ", slug: undefined },
+                { type: "link", title: "音声エージェント" },
+                { type: "link", title: "ブログ" }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        expect(children.map((c) => c.title)).toEqual(["イントロ", "音声エージェント", "ブログ"]);
+        expect(children[1]?.url).toBe("https://example.com/agents");
+    });
+
+    it("applies api reference, package and endpoint title overrides", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "apiReference",
+                title: "Agents API",
+                slug: "api-reference/agents-api",
+                children: [
+                    {
+                        type: "apiPackage",
+                        title: "Agents",
+                        slug: "api-reference/agents-api/agents",
+                        children: [
+                            {
+                                type: "endpoint",
+                                title: "Create agent",
+                                slug: "api-reference/agents-api/agents/create-agent",
+                                method: "POST"
+                            },
+                            {
+                                type: "endpoint",
+                                title: "List agents",
+                                slug: "api-reference/agents-api/agents/list-agents",
+                                method: "GET"
+                            }
+                        ]
+                    },
+                    { type: "link", title: "Status", url: "https://status.example.com" }
+                ]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "apiReference",
+                    title: "エージェントAPI",
+                    slug: undefined,
+                    layout: [
+                        {
+                            type: "apiPackage",
+                            packageName: "agents",
+                            title: "エージェントのエンドポイント",
+                            slug: undefined,
+                            contents: [
+                                {
+                                    type: "endpoint",
+                                    endpoint: "GET /agents",
+                                    title: "エージェント一覧",
+                                    slug: "list-agents"
+                                },
+                                {
+                                    type: "endpoint",
+                                    endpoint: "POST /agents",
+                                    title: "エージェント作成",
+                                    slug: undefined
+                                }
+                            ]
+                        },
+                        { type: "link", title: "ステータス" }
+                    ]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        const api = children[0] as Record<string, unknown>;
+        expect(api.title).toBe("エージェントAPI");
+        const apiChildren = api.children as Array<Record<string, unknown>>;
+        expect(apiChildren[0]?.title).toBe("エージェントのエンドポイント");
+        expect(apiChildren[1]?.title).toBe("ステータス");
+        const endpoints = apiChildren[0]?.children as Array<Record<string, unknown>>;
+        expect(endpoints.map((e) => e.title)).toEqual(["エージェント作成", "エージェント一覧"]);
+    });
 });
+
+function sidebarRootFixture(children: unknown[]): unknown {
+    return {
+        type: "root",
+        child: {
+            type: "unversioned",
+            child: { type: "sidebarRoot", children }
+        }
+    };
+}
+
+function getSidebarChildren(result: FernNavigation.V1.RootNode | undefined): Array<Record<string, unknown>> {
+    const unversioned = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+    const sidebarRoot = unversioned.child as Record<string, unknown>;
+    return sidebarRoot.children as Array<Record<string, unknown>>;
+}
+
+function getTabbedChildren(result: FernNavigation.V1.RootNode | undefined): Array<Record<string, unknown>> {
+    const unversioned = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+    const tabbed = unversioned.child as Record<string, unknown>;
+    return tabbed.children as Array<Record<string, unknown>>;
+}
 
 describe("getTranslatedAnnouncement", () => {
     it("returns undefined when no announcement override", () => {

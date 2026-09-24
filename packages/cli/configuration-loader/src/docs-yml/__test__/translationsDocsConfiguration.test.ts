@@ -223,6 +223,67 @@ describe("parseDocsConfiguration — translation navigation overlay docs.yml loc
         expect(parsed.translationNavigationOverlays?.["fr"]?.announcement?.message).toBe("Bienvenue");
     });
 
+    it("should parse link, api, api package and endpoint navigation overlay items", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const jaDir = path.join(tmpDir, "translations", "ja");
+        await mkdir(jaDir, { recursive: true });
+        await writeFile(
+            path.join(jaDir, "docs.yml"),
+            [
+                "navigation:",
+                "  - tab: guides",
+                "    layout:",
+                "      - link: 音声エージェント",
+                "      - api: エージェントAPI",
+                "        layout:",
+                "          - agents:",
+                "              title: エージェントのエンドポイント",
+                "              contents:",
+                "                - endpoint: POST /agents",
+                "                  title: エージェント作成",
+                "          - link: ステータス"
+            ].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "ja" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const tab = parsed.translationNavigationOverlays?.["ja"]?.navigation?.[0];
+        expect(tab?.type).toBe("tab");
+        const layout = tab?.type === "tab" ? tab.layout : undefined;
+        expect(layout).toEqual([
+            { type: "link", title: "音声エージェント" },
+            {
+                type: "apiReference",
+                title: "エージェントAPI",
+                slug: undefined,
+                layout: [
+                    {
+                        type: "apiPackage",
+                        packageName: "agents",
+                        title: "エージェントのエンドポイント",
+                        slug: undefined,
+                        contents: [
+                            { type: "endpoint", endpoint: "POST /agents", title: "エージェント作成", slug: undefined }
+                        ]
+                    },
+                    { type: "link", title: "ステータス" }
+                ]
+            }
+        ]);
+    });
+
     it("should fall back to translations/<lang>/fern/docs.yml when the canonical location is missing", async () => {
         const fernDir = tmpDir as AbsoluteFilePath;
         const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
