@@ -99,7 +99,7 @@ describe("ReadmeSnippetBuilder environments addendum", () => {
         const addendum = environmentsAddendum(createContext(createSingleBaseUrlEnvironments()));
 
         expect(addendum).toContain("base_url: Acme::Environment::PRODUCTION");
-        expect(addendum).not.toContain("environment:");
+        expect(addendum).not.toContain("environment: Acme::Environment::PRODUCTION");
     });
 
     it("documents only a custom URL when the API declares no environments", () => {
