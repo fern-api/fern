@@ -12,26 +12,20 @@ import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sd
 import path from "path";
 
 const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
-const DOCS_IMPORT_SETTING_KEYS = new Set([
-    "typeDatesAsStrings",
-    "useBytesForBinaryResponse",
-    "respectParameterContent",
-    "respectOperationIdWordBoundaries",
-    "inferForwardCompatible",
-    "preserveOneOfInAllOf",
-    "anyOfSiblingPropertiesAsObject",
-    "errorResponses"
-]);
-const RAW_DOCS_IMPORT_SETTING_KEYS = new Set([
-    "type-dates-as-strings",
-    "use-bytes-for-binary-response",
-    "respect-parameter-content",
-    "respect-operation-id-word-boundaries",
-    "infer-forward-compatible",
-    "preserve-one-of-in-all-of",
-    "any-of-sibling-properties-as-object",
-    "error-responses"
-]);
+const DOCS_IMPORT_SETTING_KEY_PAIRS = [
+    ["typeDatesAsStrings", "type-dates-as-strings"],
+    ["useBytesForBinaryResponse", "use-bytes-for-binary-response"],
+    ["respectParameterContent", "respect-parameter-content"],
+    ["respectOperationIdWordBoundaries", "respect-operation-id-word-boundaries"],
+    ["inferForwardCompatible", "infer-forward-compatible"],
+    ["preserveOneOfInAllOf", "preserve-one-of-in-all-of"],
+    ["anyOfSiblingPropertiesAsObject", "any-of-sibling-properties-as-object"],
+    ["errorResponses", "error-responses"]
+] as const satisfies ReadonlyArray<
+    readonly [keyof generatorsYml.APIDefinitionSettings, keyof generatorsYml.OpenApiSettingsSchema]
+>;
+const DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([key]) => key));
+const RAW_DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([, key]) => key));
 
 export interface ResolvedMigrationSourceSpec {
     absolutePath: string;
@@ -278,7 +272,7 @@ function resolveWorkspaceSpec(
                 absoluteOverlayPaths: spec.absoluteFilepathToOverlays == null ? [] : [spec.absoluteFilepathToOverlays],
                 absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
                 apiImportSettings: projectFernApiImportSettings(settings),
-                docsImportSettings: projectFernDocsImportSettings(settings),
+                docsImportSettings: projectFernDocsImportSettings(settings, spec.settings?.errorResponses),
                 hasLegacyOnlyDocsImportSettings: hasSettingsOutsideDocsAllowlist(settings, DOCS_IMPORT_SETTING_KEYS),
                 ...(spec.source.type !== "openapi"
                     ? {}
@@ -458,7 +452,8 @@ function hasSettingsOutsideDocsAllowlist(settings: object | undefined, allowlist
 }
 
 function projectFernDocsImportSettings(
-    settings: generatorsYml.APIDefinitionSettings | undefined
+    settings: generatorsYml.APIDefinitionSettings | undefined,
+    resolvedErrorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined
 ): docsYml.RawSchemas.ApiSpecImportSettings | undefined {
     if (settings == null) {
         return undefined;
@@ -471,7 +466,7 @@ function projectFernDocsImportSettings(
         inferForwardCompatible: settings.inferForwardCompatible,
         preserveOneOfInAllOf: settings.preserveOneOfInAllOf,
         anyOfSiblingPropertiesAsObject: settings.anyOfSiblingPropertiesAsObject,
-        errorResponses: projectDocsErrorResponses(settings.errorResponses)
+        errorResponses: projectDocsErrorResponses(resolvedErrorResponses ?? settings.errorResponses)
     });
 }
 

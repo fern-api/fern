@@ -297,12 +297,17 @@ describe("migrateDocsConfiguration", () => {
         await writeFile(docsPath, rootDocs);
         await writeFile(versionPath, "navigation:\n  - api: API reference\n");
 
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.docsImportSettings = {
+            errorResponses: { schema: join(temporaryDirectory, "specs", "problem.yml") }
+        };
+
         await expect(
             migrateDocsConfiguration({
                 docsPath,
                 workspaceName: "payments",
                 isOnlyApiWorkspace: true,
-                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+                sourceSpecs: [sourceSpec]
             })
         ).resolves.toBe(1);
 
@@ -311,7 +316,13 @@ describe("migrateDocsConfiguration", () => {
             navigation: [
                 {
                     api: "API reference",
-                    specs: [{ type: "openapi", path: "../../specs/openapi.yml" }]
+                    specs: [
+                        {
+                            type: "openapi",
+                            path: "../../specs/openapi.yml",
+                            settings: { "error-responses": { schema: "../../specs/problem.yml" } }
+                        }
+                    ]
                 }
             ]
         });
@@ -324,12 +335,17 @@ describe("migrateDocsConfiguration", () => {
         await writeFile(docsPath, rootDocs);
         await writeFile(productPath, "navigation:\n  - api: API reference\n");
 
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.docsImportSettings = {
+            errorResponses: { schema: join(temporaryDirectory, "specs", "problem.yml") }
+        };
+
         await expect(
             migrateDocsConfiguration({
                 docsPath,
                 workspaceName: "payments",
                 isOnlyApiWorkspace: true,
-                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+                sourceSpecs: [sourceSpec]
             })
         ).resolves.toBe(1);
 
@@ -338,7 +354,13 @@ describe("migrateDocsConfiguration", () => {
             navigation: [
                 {
                     api: "API reference",
-                    specs: [{ type: "openapi", path: "../../specs/openapi.yml" }]
+                    specs: [
+                        {
+                            type: "openapi",
+                            path: "../../specs/openapi.yml",
+                            settings: { "error-responses": { schema: "../../specs/problem.yml" } }
+                        }
+                    ]
                 }
             ]
         });

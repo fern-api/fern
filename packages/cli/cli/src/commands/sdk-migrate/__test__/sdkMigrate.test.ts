@@ -1,4 +1,10 @@
-import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernDefinition,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -530,13 +536,25 @@ describe("SDK Config migration", () => {
             preserveOneOfInAllOf: true,
             anyOfSiblingPropertiesAsObject: true,
             errorResponses: {
-                schema: { type: "object" },
+                schema: "./problem.yml",
                 name: "ProblemDetails"
             }
         } as generatorsYml.APIDefinitionSettings;
+        const loadedSpec = createWorkspaceOpenApiSpec("Sample", absoluteFilepath);
+        if (loadedSpec.type !== "openapi") {
+            throw new Error("Expected an OpenAPI spec");
+        }
+        loadedSpec.settings = getOpenAPISettings({
+            overrides: {
+                errorResponses: {
+                    schema: "/tmp/fern/problem.yml",
+                    name: "ProblemDetails"
+                }
+            }
+        });
         const workspace = {
             absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
-            allSpecs: [createWorkspaceOpenApiSpec("Sample", absoluteFilepath)],
+            allSpecs: [loadedSpec],
             generatorsConfiguration: {
                 api: {
                     type: "multiNamespace",
@@ -571,7 +589,7 @@ describe("SDK Config migration", () => {
             preserveOneOfInAllOf: true,
             anyOfSiblingPropertiesAsObject: true,
             errorResponses: {
-                schema: { type: "object" },
+                schema: "/tmp/fern/problem.yml",
                 name: "ProblemDetails"
             }
         });
