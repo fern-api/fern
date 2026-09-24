@@ -7,7 +7,7 @@ export function validateCspStyleHash(hash: string): string | undefined {
     if (CSP_HASH_SOURCE_REGEX.test(hash)) {
         return undefined;
     }
-    if (/^'.*'$/.test(hash)) {
+    if (/^["'].*["']$/.test(hash)) {
         return `Hash ${JSON.stringify(hash)} must not be quoted. Write it as sha256-<base64>`;
     }
     return `Hash ${JSON.stringify(hash)} is not a valid CSP hash source. Expected sha256-, sha384- or sha512- followed by the base64 digest, e.g. sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=`;

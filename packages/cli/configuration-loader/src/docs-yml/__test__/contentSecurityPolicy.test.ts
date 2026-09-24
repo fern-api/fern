@@ -84,5 +84,6 @@ describe("validateCspStyleHash", () => {
 
     it("tells the user to drop quotes", () => {
         expect(docsYml.validateCspStyleHash(`'${SHA256}'`)).toContain("must not be quoted");
+        expect(docsYml.validateCspStyleHash(`"${SHA256}"`)).toContain("must not be quoted");
     });
 });
