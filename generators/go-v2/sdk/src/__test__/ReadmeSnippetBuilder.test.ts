@@ -97,11 +97,9 @@ function createContext({
     } as unknown as SdkGeneratorContext;
 }
 
-function environmentsSnippet(context: SdkGeneratorContext): string {
+function environmentsSnippets(context: SdkGeneratorContext): string[] {
     const builder = new ReadmeSnippetBuilder({ context, endpointSnippets: createEndpointSnippets() });
-    const snippets = builder.buildReadmeSnippetsByFeatureId()[ENVIRONMENTS_FEATURE_ID];
-    expect(snippets).toHaveLength(1);
-    return snippets?.[0] ?? "";
+    return builder.buildReadmeSnippetsByFeatureId()[ENVIRONMENTS_FEATURE_ID] ?? [];
 }
 
 const FEATURES_YML_DESCRIPTION =
@@ -126,8 +124,10 @@ describe("ReadmeSnippetBuilder environments", () => {
             clientConstructorName: "NewAcme"
         });
 
-        const snippet = environmentsSnippet(context);
+        const snippets = environmentsSnippets(context);
 
+        expect(snippets).toHaveLength(1);
+        const snippet = snippets[0];
         expect(snippet).toContain("client := client.NewAcme(");
         expect(snippet).toContain("option.WithEnvironment(acme.Environments.Production),");
         expect(snippet).not.toContain("WithBaseURL");
@@ -139,7 +139,7 @@ describe("ReadmeSnippetBuilder environments", () => {
             clientConstructorName: "NewClient"
         });
 
-        const snippet = environmentsSnippet(context);
+        const snippet = environmentsSnippets(context)[0];
 
         expect(snippet).toContain("client := client.NewClient(");
         expect(snippet).toContain("option.WithBaseURL(acme.Environments.Production),");
@@ -148,7 +148,7 @@ describe("ReadmeSnippetBuilder environments", () => {
     it("falls back to an example URL when the API declares no environments", () => {
         const context = createContext({ environments: undefined, clientConstructorName: "NewClient" });
 
-        expect(environmentsSnippet(context)).toContain('option.WithBaseURL("https://example.com"),');
+        expect(environmentsSnippets(context)[0]).toContain('option.WithBaseURL("https://example.com"),');
     });
 
     it("describes multi-URL environments in terms of option.WithEnvironment and keeps the features.yml text otherwise", () => {
