@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: openapi-wildcard-errors
+  version: 1.0.0
+  description: |
+    Tests that 4XX/5XX wildcard error responses produce typed errors.
+    Every operation declares a "200" plus 4XX/5XX wildcards that point at
+    one shared error schema. getItem additionally declares a concrete 404,
+    which must take precedence over the 4XX wildcard.
+servers:
+  - url: https://api.example.com
+paths:
+  /items:
+    post:
+      operationId: createItem
+      tags:
+        - Items
+      summary: Create an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateItemRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /items/{item_id}:
+    get:
+      operationId: getItem
+      tags:
+        - Items
+      summary: Get an item
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "404":
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemNotFound"
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+components:
+  schemas:
+    CreateItemRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    Item:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    ItemNotFound:
+      type: object
+      required:
+        - item_id
+      properties:
+        item_id:
+          type: string
+    ApiError:
+      type: object
+      description: The shared error body returned for every 4XX and 5XX status.
+      required:
+        - error_type
+        - error_code
+        - error_message
+      properties:
+        error_type:
+          type: string
+        error_code:
+          type: string
+        error_message:
+          type: string
+        request_id:
+          type: string

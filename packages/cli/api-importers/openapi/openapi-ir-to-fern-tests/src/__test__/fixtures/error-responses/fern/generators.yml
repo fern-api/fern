@@ -1,0 +1,29 @@
+api:
+  specs:
+    - openapi: messages.yml
+      namespace: messages
+      settings:
+        error-responses:
+          schema: errors/problem_details.yml
+          name: ServiceErrorResponse
+          apply-to: all
+          ensure:
+            - status-code: 422
+              methods: [post, put, patch]
+    - openapi: calls.yml
+      namespace: calls
+      settings:
+        error-responses:
+          apply-to: untyped
+          schema:
+            type: object
+            title: CallsProblem
+            properties:
+              type:
+                type: string
+              title:
+                type: string
+              status:
+                type: integer
+            required: [type, title, status]
+groups: {}

@@ -1,0 +1,5 @@
+- summary: |
+    Fix multipart requests where a `list<file>` property declares a `content-type`. The generated
+    client now applies `core.with_content_type` to each file in the list instead of passing the
+    whole list to a single call, which failed mypy and would have sent the list as one part.
+  type: fix

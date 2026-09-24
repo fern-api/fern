@@ -209,6 +209,13 @@ export interface ParseOpenAPIOptions {
      * the extension are unaffected. Defaults to false.
      */
     namespacedErrors: boolean;
+
+    /**
+     * Standardizes every 4xx/5xx response body on a single configured schema (e.g. RFC 9457 Problem
+     * Details) and optionally adds missing error responses. Applied by the workspace loader to the
+     * OpenAPI document before it reaches either parser. Undefined disables it.
+     */
+    errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -256,7 +263,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectParameterContent: false,
     respectPerSpecBasePath: false,
     respectOperationIdWordBoundaries: false,
-    namespacedErrors: false
+    namespacedErrors: false,
+    errorResponses: undefined
 };
 
 function mergeOptions<T extends object>(params: {

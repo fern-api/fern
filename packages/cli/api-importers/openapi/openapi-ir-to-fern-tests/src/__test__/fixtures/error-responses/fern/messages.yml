@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: Messages
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /messages:
+    get:
+      operationId: listMessages
+      tags:
+        - Messages
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+        "401":
+          description: Unauthorized
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+    post:
+      operationId: createMessage
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceErrorResponse"
+              example:
+                code: 20001
+                message: Body is required
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+  /messages/{sid}:
+    delete:
+      operationId: deleteMessage
+      tags:
+        - Messages
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                type: string
+components:
+  responses:
+    TooManyRequests:
+      description: Too many requests
+  schemas:
+    Message:
+      type: object
+      properties:
+        sid:
+          type: string
+        body:
+          type: string
+      required:
+        - sid
+        - body
+    ServiceErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

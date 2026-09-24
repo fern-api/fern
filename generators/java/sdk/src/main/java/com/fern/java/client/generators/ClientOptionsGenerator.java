@@ -88,6 +88,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    // True unless the caller supplied their own OkHttpClient via Builder.httpClient(...); tracked (rather than
+    // re-derived from httpClient == null) so that build()'s caller.newBuilder()...build() copy of a caller-supplied
+    // client is still recognized as caller-owned, and so Builder.from(...) can carry ownership forward.
+    private static final FieldSpec OWNS_HTTP_CLIENT_FIELD = FieldSpec.builder(
+                    TypeName.BOOLEAN, "ownsHttpClient", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
     private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
                     TypeName.INT, "timeout", Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -668,6 +675,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
                         .build())
+                .addParameter(ParameterSpec.builder(OWNS_HTTP_CLIENT_FIELD.type, OWNS_HTTP_CLIENT_FIELD.name)
+                        .build())
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
@@ -729,6 +738,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         constructorBuilder
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L = $L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
                 .addStatement(
@@ -772,6 +782,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADERS_FIELD)
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
+                .addField(OWNS_HTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
                 .addField(MAX_RETRIES_FIELD)
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
@@ -901,6 +912,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
         MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
 
+        MethodSpec closeMethod = MethodSpec.methodBuilder("close")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(
+                        "Releases resources owned by this client. Only shuts down the underlying OkHttpClient's\n"
+                                + "dispatcher executor and evicts its connection pool when this client created that\n"
+                                + "OkHttpClient itself; an OkHttpClient supplied via $L is left running, since the\n"
+                                + "caller owns its lifecycle.\n"
+                                + "<p>\n"
+                                + "In-flight calls are not cancelled or awaited, and any request issued after this method\n"
+                                + "returns fails with a {@code RejectedExecutionException}. Options derived from this one via\n"
+                                + "{@code Builder.from(...)} share the same dispatcher and connection pool, so closing either\n"
+                                + "releases them for both. Calling this method more than once has no further effect.\n",
+                        OKHTTP_CLIENT_FIELD.name)
+                .beginControlFlow("if (!this.$L)", OWNS_HTTP_CLIENT_FIELD.name)
+                .addStatement("return")
+                .endControlFlow()
+                .addStatement("this.$L.dispatcher().executorService().shutdown()", OKHTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L.connectionPool().evictAll()", OKHTTP_CLIENT_FIELD.name)
+                .build();
+
         clientOptionsBuilder
                 .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
@@ -908,7 +939,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(maxRetriesGetter)
                 .addMethod(initialRetryDelayMillisGetter)
                 .addMethod(maxRetryDelayMillisGetter)
-                .addMethod(retryJitterFactorGetter);
+                .addMethod(retryJitterFactorGetter)
+                .addMethod(closeMethod);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -1139,6 +1171,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer(CodeBlock.builder().add("null").build())
                         .build())
+                .addField(FieldSpec.builder(TypeName.BOOLEAN, OWNS_HTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
+                        .initializer("true")
+                        .build())
                 .addField(FieldSpec.builder(loggingField.type, loggingField.name, Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
                         .build());
@@ -1249,9 +1284,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:\n"
+                                        + "$L() will not shut down its dispatcher executor or evict its connection pool.\n",
+                                "close")
                         .returns(builderClassName)
                         .addParameter(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                        .addStatement("this.$L = $L == null", OWNS_HTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
                         .build());
 
@@ -1609,6 +1649,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         Optional.class,
                         TIMEOUT_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name)
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
@@ -1695,7 +1736,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Build return string with all optional fields
         StringBuilder returnStringBuilder = new StringBuilder();
-        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
+        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.");
+        returnStringBuilder.append(OWNS_HTTP_CLIENT_FIELD.name);
+        returnStringBuilder.append(", this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);

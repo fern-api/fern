@@ -29,10 +29,10 @@ function definition(): FernDefinition {
     };
 }
 
-function mcpInvocation(): generatorsYml.GeneratorInvocation {
+function mcpInvocation(version = "0.1.0"): generatorsYml.GeneratorInvocation {
     return {
         name: "fernapi/fern-mcp-server",
-        version: "0.1.0",
+        version,
         language: "mcp",
         config: { serverName: "weather" },
         keywords: [],
@@ -43,13 +43,21 @@ function mcpInvocation(): generatorsYml.GeneratorInvocation {
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
-function archive(specIndexes: number[]): FernSdkGenApiSourceArchive {
+function archive(
+    specIndexes: number[],
+    apiImportSettings?: FernSdkGenApiSourceArchive["manifest"]["specs"][number]["apiImportSettings"]
+): FernSdkGenApiSourceArchive {
     return {
         buffer: Buffer.alloc(0),
         specIndexes,
         manifest: {
             specs: [
-                { type: "openapi", specPath: "/fern/specs/openapi_0.json", namespace: "weather" },
+                {
+                    type: "openapi",
+                    specPath: "/fern/specs/openapi_0.json",
+                    namespace: "weather",
+                    apiImportSettings
+                },
                 { type: "protobuf", specPath: "/fern/specs/proto" }
             ]
         }
@@ -110,6 +118,44 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
                 }
             })
         );
+    });
+
+    it("synthesizes an unpinned MCP payload without serializing latest", () => {
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation("latest"),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(payload.payloadKind).toBe("sdk-config-v1");
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            targets: [{ language: "mcp" }]
+        });
+        expect(payload.body.toString("utf8")).not.toContain('"latest"');
+    });
+
+    it("preserves supported import settings in the SDK Config payload", () => {
+        const apiImportSettings = {
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2" as const
+        };
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: archive([0], apiImportSettings),
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            source: { specs: [{ apiImportSettings }] }
+        });
     });
 
     it("refuses source types SDK Config generation cannot represent", () => {

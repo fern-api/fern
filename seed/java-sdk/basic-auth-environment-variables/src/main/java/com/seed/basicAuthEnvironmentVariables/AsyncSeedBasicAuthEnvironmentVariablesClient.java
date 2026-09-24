@@ -8,7 +8,7 @@ import com.seed.basicAuthEnvironmentVariables.core.Suppliers;
 import com.seed.basicAuthEnvironmentVariables.resources.basicauth.AsyncBasicAuthClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedBasicAuthEnvironmentVariablesClient {
+public class AsyncSeedBasicAuthEnvironmentVariablesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncBasicAuthClient> basicAuthClient;
@@ -20,6 +20,15 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClient {
 
     public AsyncBasicAuthClient basicAuth() {
         return this.basicAuthClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedBasicAuthEnvironmentVariablesClientBuilder builder() {

@@ -55,7 +55,11 @@ export async function sdkMigrate({
             group,
             source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: sourceBaseDirectory }),
             clientPathParameterStyle: resolveMigrationPathParameterStyle(sourceSpecs),
-            sourceDerivedApiFields: identifySourceDerivedApiFields({ workspace, groups })
+            sourceDerivedApiFields: identifySourceDerivedApiFields({
+                workspace,
+                groups,
+                definition: fernWorkspace.definition
+            })
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
@@ -95,6 +99,9 @@ export async function sdkMigrate({
         cliContext.stderr.info(
             `Updated ${updatedDocsSections} API reference section${updatedDocsSections === 1 ? "" : "s"} across the docs configuration rooted at ${project.docsWorkspaces?.absoluteFilepathToDocsConfig}`
         );
+    }
+    if (outputPath != null) {
+        cliContext.stderr.info("Next: review the migrated file, then pass its path to fern generate --sdk-config.");
     }
 }
 

@@ -7,7 +7,7 @@ import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.RequestOptions;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedAliasClient {
+public class AsyncSeedAliasClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedAliasClient rawClient;
@@ -30,6 +30,15 @@ public class AsyncSeedAliasClient {
 
     public CompletableFuture<Void> get(String typeId, RequestOptions requestOptions) {
         return this.rawClient.get(typeId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedAliasClientBuilder builder() {

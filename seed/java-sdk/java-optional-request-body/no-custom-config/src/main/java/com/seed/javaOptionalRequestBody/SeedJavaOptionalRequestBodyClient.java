@@ -11,7 +11,7 @@ import com.seed.javaOptionalRequestBody.types.Refund;
 import com.seed.javaOptionalRequestBody.types.RefundRequest;
 import java.util.List;
 
-public class SeedJavaOptionalRequestBodyClient {
+public class SeedJavaOptionalRequestBodyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedJavaOptionalRequestBodyClient rawClient;
@@ -152,6 +152,15 @@ public class SeedJavaOptionalRequestBodyClient {
      */
     public Refund requiredRefund(String id, RefundRequest request, RequestOptions requestOptions) {
         return this.rawClient.requiredRefund(id, request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaOptionalRequestBodyClientBuilder builder() {

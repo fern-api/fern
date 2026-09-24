@@ -8,7 +8,7 @@ import com.seed.javaIdempotencyHeadersFileUpload.core.Suppliers;
 import com.seed.javaIdempotencyHeadersFileUpload.resources.service.AsyncServiceClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedJavaIdempotencyHeadersFileUploadClient {
+public class AsyncSeedJavaIdempotencyHeadersFileUploadClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class AsyncSeedJavaIdempotencyHeadersFileUploadClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaIdempotencyHeadersFileUploadClientBuilder builder() {

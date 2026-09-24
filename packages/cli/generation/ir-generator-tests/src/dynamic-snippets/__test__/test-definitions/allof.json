@@ -98,6 +98,125 @@
                 }
             ]
         },
+        "type_:PlantBaseWateringFrequency": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PlantBaseWateringFrequency",
+                    "camelCase": {
+                        "unsafeName": "plantBaseWateringFrequency",
+                        "safeName": "plantBaseWateringFrequency"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plant_base_watering_frequency",
+                        "safeName": "plant_base_watering_frequency"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLANT_BASE_WATERING_FREQUENCY",
+                        "safeName": "PLANT_BASE_WATERING_FREQUENCY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PlantBaseWateringFrequency",
+                        "safeName": "PlantBaseWateringFrequency"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "daily",
+                    "name": {
+                        "originalName": "daily",
+                        "camelCase": {
+                            "unsafeName": "daily",
+                            "safeName": "daily"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "daily",
+                            "safeName": "daily"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DAILY",
+                            "safeName": "DAILY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Daily",
+                            "safeName": "Daily"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "weekly",
+                    "name": {
+                        "originalName": "weekly",
+                        "camelCase": {
+                            "unsafeName": "weekly",
+                            "safeName": "weekly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "weekly",
+                            "safeName": "weekly"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WEEKLY",
+                            "safeName": "WEEKLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Weekly",
+                            "safeName": "Weekly"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "biweekly",
+                    "name": {
+                        "originalName": "biweekly",
+                        "camelCase": {
+                            "unsafeName": "biweekly",
+                            "safeName": "biweekly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "biweekly",
+                            "safeName": "biweekly"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BIWEEKLY",
+                            "safeName": "BIWEEKLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Biweekly",
+                            "safeName": "Biweekly"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "monthly",
+                    "name": {
+                        "originalName": "monthly",
+                        "camelCase": {
+                            "unsafeName": "monthly",
+                            "safeName": "monthly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "monthly",
+                            "safeName": "monthly"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MONTHLY",
+                            "safeName": "MONTHLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Monthly",
+                            "safeName": "Monthly"
+                        }
+                    }
+                }
+            ]
+        },
         "type_:PlantPostSunExposure": {
             "type": "enum",
             "declaration": {
@@ -2495,125 +2614,6 @@
             "additionalProperties": false,
             "deferredUnionBaseProperties": null
         },
-        "type_:PlantBaseWateringFrequency": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "PlantBaseWateringFrequency",
-                    "camelCase": {
-                        "unsafeName": "plantBaseWateringFrequency",
-                        "safeName": "plantBaseWateringFrequency"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "plant_base_watering_frequency",
-                        "safeName": "plant_base_watering_frequency"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PLANT_BASE_WATERING_FREQUENCY",
-                        "safeName": "PLANT_BASE_WATERING_FREQUENCY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PlantBaseWateringFrequency",
-                        "safeName": "PlantBaseWateringFrequency"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "daily",
-                    "name": {
-                        "originalName": "daily",
-                        "camelCase": {
-                            "unsafeName": "daily",
-                            "safeName": "daily"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "daily",
-                            "safeName": "daily"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DAILY",
-                            "safeName": "DAILY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Daily",
-                            "safeName": "Daily"
-                        }
-                    }
-                },
-                {
-                    "wireValue": "weekly",
-                    "name": {
-                        "originalName": "weekly",
-                        "camelCase": {
-                            "unsafeName": "weekly",
-                            "safeName": "weekly"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "weekly",
-                            "safeName": "weekly"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "WEEKLY",
-                            "safeName": "WEEKLY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Weekly",
-                            "safeName": "Weekly"
-                        }
-                    }
-                },
-                {
-                    "wireValue": "biweekly",
-                    "name": {
-                        "originalName": "biweekly",
-                        "camelCase": {
-                            "unsafeName": "biweekly",
-                            "safeName": "biweekly"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "biweekly",
-                            "safeName": "biweekly"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BIWEEKLY",
-                            "safeName": "BIWEEKLY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Biweekly",
-                            "safeName": "Biweekly"
-                        }
-                    }
-                },
-                {
-                    "wireValue": "monthly",
-                    "name": {
-                        "originalName": "monthly",
-                        "camelCase": {
-                            "unsafeName": "monthly",
-                            "safeName": "monthly"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "monthly",
-                            "safeName": "monthly"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "MONTHLY",
-                            "safeName": "MONTHLY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Monthly",
-                            "safeName": "Monthly"
-                        }
-                    }
-                }
-            ]
-        },
         "type_:PlantBase": {
             "type": "object",
             "declaration": {
@@ -3001,72 +3001,6 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "treeSpecies",
-                        "name": {
-                            "originalName": "treeSpecies",
-                            "camelCase": {
-                                "unsafeName": "treeSpecies",
-                                "safeName": "treeSpecies"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "tree_species",
-                                "safeName": "tree_species"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TREE_SPECIES",
-                                "safeName": "TREE_SPECIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "TreeSpecies",
-                                "safeName": "TreeSpecies"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "heightInFeet",
-                        "name": {
-                            "originalName": "heightInFeet",
-                            "camelCase": {
-                                "unsafeName": "heightInFeet",
-                                "safeName": "heightInFeet"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "height_in_feet",
-                                "safeName": "height_in_feet"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "HEIGHT_IN_FEET",
-                                "safeName": "HEIGHT_IN_FEET"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "HeightInFeet",
-                                "safeName": "HeightInFeet"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "DOUBLE"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
                         "wireValue": "id",
                         "name": {
                             "originalName": "id",
@@ -3156,6 +3090,72 @@
                         "value": {
                             "type": "primitive",
                             "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "treeSpecies",
+                        "name": {
+                            "originalName": "treeSpecies",
+                            "camelCase": {
+                                "unsafeName": "treeSpecies",
+                                "safeName": "treeSpecies"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tree_species",
+                                "safeName": "tree_species"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TREE_SPECIES",
+                                "safeName": "TREE_SPECIES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TreeSpecies",
+                                "safeName": "TreeSpecies"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "heightInFeet",
+                        "name": {
+                            "originalName": "heightInFeet",
+                            "camelCase": {
+                                "unsafeName": "heightInFeet",
+                                "safeName": "heightInFeet"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "height_in_feet",
+                                "safeName": "height_in_feet"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEIGHT_IN_FEET",
+                                "safeName": "HEIGHT_IN_FEET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "HeightInFeet",
+                                "safeName": "HeightInFeet"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
                         }
                     },
                     "propertyAccess": null,
@@ -3200,72 +3200,6 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "treeSpecies",
-                        "name": {
-                            "originalName": "treeSpecies",
-                            "camelCase": {
-                                "unsafeName": "treeSpecies",
-                                "safeName": "treeSpecies"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "tree_species",
-                                "safeName": "tree_species"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TREE_SPECIES",
-                                "safeName": "TREE_SPECIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "TreeSpecies",
-                                "safeName": "TreeSpecies"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "heightInFeet",
-                        "name": {
-                            "originalName": "heightInFeet",
-                            "camelCase": {
-                                "unsafeName": "heightInFeet",
-                                "safeName": "heightInFeet"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "height_in_feet",
-                                "safeName": "height_in_feet"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "HEIGHT_IN_FEET",
-                                "safeName": "HEIGHT_IN_FEET"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "HeightInFeet",
-                                "safeName": "HeightInFeet"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "DOUBLE"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
                         "wireValue": "id",
                         "name": {
                             "originalName": "id",
@@ -3318,10 +3252,103 @@
                         }
                     },
                     "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "treeSpecies",
+                        "name": {
+                            "originalName": "treeSpecies",
+                            "camelCase": {
+                                "unsafeName": "treeSpecies",
+                                "safeName": "treeSpecies"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tree_species",
+                                "safeName": "tree_species"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TREE_SPECIES",
+                                "safeName": "TREE_SPECIES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TreeSpecies",
+                                "safeName": "TreeSpecies"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "plantedDate",
+                        "name": {
+                            "originalName": "plantedDate",
+                            "camelCase": {
+                                "unsafeName": "plantedDate",
+                                "safeName": "plantedDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "planted_date",
+                                "safeName": "planted_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTED_DATE",
+                                "safeName": "PLANTED_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PlantedDate",
+                                "safeName": "PlantedDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
                         "type": "optional",
                         "value": {
                             "type": "primitive",
-                            "value": "STRING"
+                            "value": "DATE"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "heightInFeet",
+                        "name": {
+                            "originalName": "heightInFeet",
+                            "camelCase": {
+                                "unsafeName": "heightInFeet",
+                                "safeName": "heightInFeet"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "height_in_feet",
+                                "safeName": "height_in_feet"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEIGHT_IN_FEET",
+                                "safeName": "HEIGHT_IN_FEET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "HeightInFeet",
+                                "safeName": "HeightInFeet"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DOUBLE"
                         }
                     },
                     "propertyAccess": null,
@@ -3359,43 +3386,10 @@
                     },
                     "propertyAccess": null,
                     "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "plantedDate",
-                        "name": {
-                            "originalName": "plantedDate",
-                            "camelCase": {
-                                "unsafeName": "plantedDate",
-                                "safeName": "plantedDate"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "planted_date",
-                                "safeName": "planted_date"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PLANTED_DATE",
-                                "safeName": "PLANTED_DATE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "PlantedDate",
-                                "safeName": "PlantedDate"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "DATE"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
                 }
             ],
             "extends": [
-                "type_:TreeBase"
+                "type_:TreeIdentifiable"
             ],
             "additionalProperties": false,
             "deferredUnionBaseProperties": null
@@ -3846,72 +3840,6 @@
                     "value": [
                         {
                             "name": {
-                                "wireValue": "commonName",
-                                "name": {
-                                    "originalName": "commonName",
-                                    "camelCase": {
-                                        "unsafeName": "commonName",
-                                        "safeName": "commonName"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "common_name",
-                                        "safeName": "common_name"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "COMMON_NAME",
-                                        "safeName": "COMMON_NAME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "CommonName",
-                                        "safeName": "CommonName"
-                                    }
-                                }
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "wireValue": "wateringFrequency",
-                                "name": {
-                                    "originalName": "wateringFrequency",
-                                    "camelCase": {
-                                        "unsafeName": "wateringFrequency",
-                                        "safeName": "wateringFrequency"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "watering_frequency",
-                                        "safeName": "watering_frequency"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "WATERING_FREQUENCY",
-                                        "safeName": "WATERING_FREQUENCY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "WateringFrequency",
-                                        "safeName": "WateringFrequency"
-                                    }
-                                }
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:PlantBaseWateringFrequency"
-                                }
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
                                 "wireValue": "species",
                                 "name": {
                                     "originalName": "species",
@@ -3996,6 +3924,66 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "commonName",
+                                "name": {
+                                    "originalName": "commonName",
+                                    "camelCase": {
+                                        "unsafeName": "commonName",
+                                        "safeName": "commonName"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "common_name",
+                                        "safeName": "common_name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "COMMON_NAME",
+                                        "safeName": "COMMON_NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "CommonName",
+                                        "safeName": "CommonName"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "wateringFrequency",
+                                "name": {
+                                    "originalName": "wateringFrequency",
+                                    "camelCase": {
+                                        "unsafeName": "wateringFrequency",
+                                        "safeName": "wateringFrequency"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "watering_frequency",
+                                        "safeName": "watering_frequency"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "WATERING_FREQUENCY",
+                                        "safeName": "WATERING_FREQUENCY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "WateringFrequency",
+                                        "safeName": "WateringFrequency"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_:PlantBaseWateringFrequency"
                             },
                             "propertyAccess": null,
                             "variable": null

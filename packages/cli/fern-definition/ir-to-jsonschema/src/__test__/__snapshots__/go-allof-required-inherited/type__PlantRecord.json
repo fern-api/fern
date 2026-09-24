@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "external_ref": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "species": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "planted_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "watering_frequency": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "note": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "external_ref",
+    "species",
+    "id"
+  ],
+  "additionalProperties": false,
+  "description": "Grandchild requiring `external_ref` (defined on the grandparent) and\n`species` (defined on the parent). `note` and `watering_frequency` stay optional.",
+  "definitions": {}
+}

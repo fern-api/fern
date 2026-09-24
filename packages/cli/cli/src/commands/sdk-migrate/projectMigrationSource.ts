@@ -1,5 +1,6 @@
 import {
     type AbstractAPIWorkspace,
+    type FernDefinition,
     type FernWorkspace,
     getOpenAPISettings,
     type IdentifiableSource,
@@ -29,17 +30,20 @@ export interface ResolvedMigrationSourceSpec {
 export interface SourceDerivedApiFields {
     auth: boolean;
     environments: boolean;
+    headerNames: string[];
 }
 
 export function identifySourceDerivedApiFields({
     workspace,
-    groups
+    groups,
+    definition
 }: {
     workspace: AbstractAPIWorkspace<unknown>;
     groups: generatorsYml.GeneratorGroup[];
+    definition: FernDefinition;
 }): SourceDerivedApiFields {
     if (workspace.type !== "oss") {
-        return { auth: false, environments: false };
+        return { auth: false, environments: false, headerNames: [] };
     }
 
     const api = workspace.generatorsConfiguration?.api;
@@ -52,10 +56,24 @@ export function identifySourceDerivedApiFields({
             )
         );
     const hasConfiguredEnvironments = api?.environments != null || api?.["default-environment"] != null;
+    const hasConfiguredHeaders =
+        api?.headers != null ||
+        groups.some((group) => group.generators.some((generator) => generator.apiOverride?.headers != null));
+    // OSS conversion always defines this non-enumerable metadata. If it is absent, a clone or spread discarded the
+    // provenance, so fail explicitly instead of silently duplicating source-derived headers again.
+    const sourceDerivedGlobalHeaderNames = definition.sourceDerivedGlobalHeaderNames;
+    if (!hasConfiguredHeaders && sourceDerivedGlobalHeaderNames == null) {
+        throw new CliError({
+            message:
+                "Could not determine global-header provenance for the resolved API definition. Reload the workspace before running fern sdk migrate.",
+            code: CliError.Code.InternalError
+        });
+    }
 
     return {
         auth: !hasConfiguredAuth,
-        environments: !hasConfiguredEnvironments
+        environments: !hasConfiguredEnvironments,
+        headerNames: hasConfiguredHeaders ? [] : (sourceDerivedGlobalHeaderNames ?? [])
     };
 }
 
@@ -429,6 +447,9 @@ function projectFernApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // generators.yml exposes one preference for literal unions. Fern's authoritative settings adapter expands
+    // that field into both importer flags, so migration must emit both to preserve existing generation behavior.
+    // There is no independently configurable discriminatedUnionV2 field in the generators.yml schema.
     const projected = {
         respectNullableSchemas: settings.respectNullableSchemas,
         titleAsSchemaName: settings.shouldUseTitleAsName,
@@ -443,6 +464,12 @@ function projectFernApiImportSettings(
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
         ignoreTags: settings.ignoreTags,
         disambiguateRequestNames: settings.disambiguateRequestNames,
+        respectReadonlySchemas: settings.respectReadonlySchemas,
+        discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        resolveSchemaCollisions: settings.resolveSchemaCollisions,
+        asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
     };
     const defined = Object.fromEntries(Object.entries(projected).filter(([, value]) => value !== undefined));
@@ -455,6 +482,8 @@ function projectRawApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // Keep this raw projection aligned with getAPIDefinitionSettings, which intentionally maps
+    // prefer-undiscriminated-unions-with-literals to both importer flags.
     return {
         ...(settings["respect-nullable-schemas"] == null
             ? {}
@@ -495,6 +524,19 @@ function projectRawApiImportSettings(
         ...(settings["disambiguate-request-names"] == null
             ? {}
             : { disambiguateRequestNames: settings["disambiguate-request-names"] }),
+        ...(settings["respect-readonly-schemas"] == null
+            ? {}
+            : { respectReadonlySchemas: settings["respect-readonly-schemas"] }),
+        ...(settings["prefer-undiscriminated-unions-with-literals"] == null
+            ? {}
+            : {
+                  discriminatedUnionV2: settings["prefer-undiscriminated-unions-with-literals"],
+                  undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
+              }),
+        ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["resolve-schema-collisions"] == null
+            ? {}
+            : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),
         ...(settings["default-integer-format"] == null
             ? {}
             : { defaultIntegerFormat: settings["default-integer-format"] })

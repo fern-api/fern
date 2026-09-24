@@ -2805,13 +2805,14 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create an SDK Config v1 file from one or more resolved Fern SDK groups",
+        "Create one SDK Config v1 file from one or more compatible Fern SDK groups",
         (yargs) =>
             yargs
                 .option("group", {
                     type: "string",
                     array: true,
-                    description: "An SDK group to migrate; repeat to consolidate compatible groups"
+                    description:
+                        "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
                 })
                 .option("api", {
                     type: "string",

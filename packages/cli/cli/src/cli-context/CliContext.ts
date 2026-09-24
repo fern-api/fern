@@ -16,7 +16,7 @@ import {
 } from "@fern-api/task-context";
 
 import { Workspace } from "@fern-api/workspace-loader";
-import { input, select } from "@inquirer/prompts";
+import { checkbox, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import {
@@ -482,6 +482,44 @@ export class CliContext {
             });
         } catch (error) {
             // User pressed Ctrl+C
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.logger.info("\nCancelled by user.");
+                throw new TaskAbortSignal();
+            }
+            throw error;
+        }
+    }
+
+    public async checkboxPrompt<T>({
+        message,
+        choices,
+        required = false,
+        validate
+    }: {
+        message: string;
+        choices: Array<{ name: string; value: T; short?: string; checked?: boolean }>;
+        required?: boolean;
+        validate?: (values: T[]) => boolean | string | Promise<boolean | string>;
+    }): Promise<T[]> {
+        try {
+            return await checkbox({
+                message,
+                choices,
+                required,
+                validate:
+                    validate == null
+                        ? undefined
+                        : (selectedChoices) => validate(selectedChoices.map((choice) => choice.value)),
+                theme: {
+                    prefix: chalk.yellow("?"),
+                    style: {
+                        answer: (text: string) => chalk.cyan(text),
+                        message: (text: string) => chalk.bold(text),
+                        highlight: (text: string) => chalk.cyan(text)
+                    }
+                }
+            });
+        } catch (error) {
             if ((error as Error)?.name === "ExitPromptError") {
                 this.logger.info("\nCancelled by user.");
                 throw new TaskAbortSignal();

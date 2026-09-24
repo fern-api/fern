@@ -2452,6 +2452,122 @@
         "uint64"
       ]
     },
+    "generators.OpenAPIErrorResponsesSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "generators.OpenAPIErrorResponsesApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesEnsureSchema": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "HTTP methods whose operations receive the response. Defaults to all methods."
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "generators.OpenAPIErrorResponsesSchema": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchemaSource",
+          "description": "The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file\n(relative to this generators.yml) or an inline schema object. It is registered under\n`components.schemas` and every affected response references it. Any `$ref` inside the\nschema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to."
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.\nIf the spec already defines a different schema under this name, it is replaced as long as\nnothing references it once the error responses have been rewritten (e.g. a legacy error\nbody only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails."
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`all` replaces the body of every 4xx/5xx response with the configured schema.\n`untyped` only fills in 4xx/5xx responses that declare no body schema, leaving existing\ntyped error responses untouched.\nDefaults to `all`."
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesEnsureSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Error responses to add to operations that do not already declare them\n(e.g. a `422` on every `post`, `put` and `patch`)."
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -2914,6 +3030,17 @@
             }
           ],
           "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
         }
       },
       "additionalProperties": false
@@ -3651,6 +3778,17 @@
             }
           ],
           "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
         },
         "respect-nullable-schemas": {
           "oneOf": [

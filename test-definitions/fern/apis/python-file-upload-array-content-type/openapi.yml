@@ -1,0 +1,41 @@
+openapi: 3.1.0
+info:
+  title: File Upload Array Content Type
+  version: 1.0.0
+paths:
+  /upload:
+    post:
+      operationId: upload
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                optional_files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                single_file:
+                  type: string
+                  format: binary
+              required:
+                - file
+                - single_file
+            encoding:
+              file:
+                contentType: image/jpeg
+              optional_files:
+                contentType: application/pdf
+              single_file:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: OK

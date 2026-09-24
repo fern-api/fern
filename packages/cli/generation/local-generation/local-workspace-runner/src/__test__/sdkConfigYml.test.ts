@@ -172,6 +172,55 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         }
     });
 
+    it("carries the expanded import and Python generation settings into SDK Config IR", async () => {
+        const sdkConfig = await loadFixture(`
+schemaVersion: sdk-config/v1
+sdkName: Sample SDK
+source:
+  apiImportSettings:
+    respectReadonlySchemas: true
+    discriminatedUnionV2: true
+    undiscriminatedUnionsWithLiterals: true
+    inlineAllOfSchemas: true
+    resolveSchemaCollisions: true
+    asyncApiMessageNaming: v2
+  specs:
+    - id: sample-api
+      type: openapi
+      path: ./openapi.yml
+targets:
+  - language: python
+    output:
+      delivery: files
+    generation:
+      followRedirectsByDefault: true
+      defaultBytesStreamChunkSize: 1024
+      recursionLimit: 10000
+      extras:
+        audio:
+          - audio-runtime
+`);
+        const built = build(sdkConfig, { language: "python", generatorName: "fernapi/fern-python-sdk" });
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.apiImportSettings).toEqual({
+                respectReadonlySchemas: true,
+                discriminatedUnionV2: true,
+                undiscriminatedUnionsWithLiterals: true,
+                inlineAllOfSchemas: true,
+                resolveSchemaCollisions: true,
+                asyncApiMessageNaming: "v2"
+            });
+            expect(built.sdkConfigIr.generation.language?.python).toMatchObject({
+                followRedirectsByDefault: true,
+                defaultBytesStreamChunkSize: 1024,
+                recursionLimit: 10_000,
+                extras: { audio: ["audio-runtime"] }
+            });
+        }
+    });
+
     // `docs` merges key by key, the same as `client` and `package`. Replacing the root wholesale
     // would make setting one target-level docs key silently drop every root-level one.
     it("merges a target's docs over the root rather than replacing it", async () => {

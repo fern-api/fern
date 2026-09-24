@@ -1,0 +1,142 @@
+types:
+  User:
+    properties:
+      name: string
+      id: integer
+
+  ListUsersResponse:
+    properties:
+      total_count: integer
+      data: list<User>
+
+  ListUsersCursorResponse:
+    properties:
+      next_cursor: optional<string>
+      data: list<User>
+
+  PageOptions:
+    properties:
+      offset: optional<integer>
+      count: optional<integer>
+
+  CursorOptions:
+    properties:
+      cursor: optional<string>
+
+  NestedCursorOptions:
+    properties:
+      pagination: optional<CursorOptions>
+
+service:
+  auth: false
+  base-path: /users
+  display-name: Users
+  endpoints:
+    # The page property lives inside an optional object that the example omits entirely.
+    # getNextPage() creates the parent object, so the wire test's request body matcher
+    # must tolerate the newly-present parent as well as the changed leaf value.
+    listWithNestedOffset:
+      pagination:
+        offset: $request.options.offset
+        results: $response.data
+      method: POST
+      path: /nested-offset
+      request:
+        name: ListUsersNestedOffsetRequest
+        body:
+          properties:
+            filter: string
+            options: optional<PageOptions>
+      response: ListUsersResponse
+      examples:
+        - name: ParentOmitted
+          request:
+            filter: active
+          response:
+            body:
+              total_count: 10
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+
+    listWithNestedOffsetAndStep:
+      pagination:
+        offset: $request.options.offset
+        step: $request.options.count
+        results: $response.data
+      method: POST
+      path: /nested-offset-step
+      request:
+        name: ListUsersNestedOffsetStepRequest
+        body:
+          properties:
+            filter: string
+            options: optional<PageOptions>
+      response: ListUsersResponse
+      examples:
+        - name: ParentPresent
+          request:
+            filter: active
+            options:
+              offset: 0
+              count: 2
+          response:
+            body:
+              total_count: 10
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+
+    listWithNestedCursor:
+      pagination:
+        cursor: $request.options.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /nested-cursor
+      request:
+        name: ListUsersNestedCursorRequest
+        body:
+          properties:
+            filter: string
+            options: optional<CursorOptions>
+      response: ListUsersCursorResponse
+      examples:
+        - name: ParentOmitted
+          request:
+            filter: active
+          response:
+            body:
+              next_cursor: "next"
+              data:
+                - name: "Alice"
+                  id: 1
+
+    listWithDeeplyNestedCursor:
+      pagination:
+        cursor: $request.options.pagination.cursor
+        next_cursor: $response.next_cursor
+        results: $response.data
+      method: POST
+      path: /deeply-nested-cursor
+      request:
+        name: ListUsersDeeplyNestedCursorRequest
+        body:
+          properties:
+            filter: string
+            options: optional<NestedCursorOptions>
+      response: ListUsersCursorResponse
+      examples:
+        - name: ParentOmitted
+          request:
+            filter: active
+          response:
+            body:
+              next_cursor: "next"
+              data:
+                - name: "Alice"
+                  id: 1

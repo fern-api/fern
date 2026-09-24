@@ -463,6 +463,129 @@
                 "type": "json"
             },
             "examples": null
+        },
+        "endpoint_simple.getSomething": {
+            "auth": {
+                "type": "oauth",
+                "clientId": {
+                    "originalName": "clientId",
+                    "camelCase": {
+                        "unsafeName": "clientID",
+                        "safeName": "clientID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_id",
+                        "safeName": "client_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_ID",
+                        "safeName": "CLIENT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientID",
+                        "safeName": "ClientID"
+                    }
+                },
+                "clientSecret": {
+                    "originalName": "clientSecret",
+                    "camelCase": {
+                        "unsafeName": "clientSecret",
+                        "safeName": "clientSecret"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_secret",
+                        "safeName": "client_secret"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_SECRET",
+                        "safeName": "CLIENT_SECRET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientSecret",
+                        "safeName": "ClientSecret"
+                    }
+                },
+                "customProperties": null,
+                "wrapperProperty": null
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getSomething",
+                    "camelCase": {
+                        "unsafeName": "getSomething",
+                        "safeName": "getSomething"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_something",
+                        "safeName": "get_something"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SOMETHING",
+                        "safeName": "GET_SOMETHING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSomething",
+                        "safeName": "GetSomething"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "simple",
+                            "camelCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SIMPLE",
+                                "safeName": "SIMPLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Simple",
+                                "safeName": "Simple"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "simple",
+                        "camelCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SIMPLE",
+                            "safeName": "SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Simple",
+                            "safeName": "Simple"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/get-something"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],

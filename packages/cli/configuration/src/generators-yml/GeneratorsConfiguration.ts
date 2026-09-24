@@ -10,6 +10,7 @@ import {
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
+    OpenApiErrorResponsesSchema,
     OpenApiFilterSchema,
     ReadmeSchema,
     RemoveDiscriminantsFromSchemas
@@ -108,6 +109,7 @@ export interface APIDefinitionSettings {
     respectPerSpecBasePath: boolean | undefined;
     respectOperationIdWordBoundaries: boolean | undefined;
     namespacedErrors: boolean | undefined;
+    errorResponses: OpenApiErrorResponsesSchema | undefined;
 }
 
 export interface GitSource {

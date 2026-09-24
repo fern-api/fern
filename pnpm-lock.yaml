@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.53
-      version: 0.9.53
+      specifier: 0.10.1
+      version: 0.10.1
     '@fern-api/venus-api-sdk':
       specifier: 5.0.0
       version: 5.0.0
@@ -109,8 +109,8 @@ catalogs:
       specifier: ^1.14.9
       version: 1.14.9
     '@postman/sdk-config':
-      specifier: 0.3.4
-      version: 0.3.4
+      specifier: 0.3.5
+      version: 0.3.5
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -633,7 +633,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.53
+        version: 0.10.1
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.1.3
@@ -702,7 +702,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.53
+        version: 0.10.1
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2511,7 +2511,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.53
+        version: 0.10.1
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -4139,6 +4139,12 @@ importers:
       '@fern-api/browser-compatible-fern-workspace':
         specifier: workspace:*
         version: link:../../../workspace/browser-compatible-fern-workspace
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../../fern-definition/schema
+      '@fern-api/fern-definition-validator':
+        specifier: workspace:*
+        version: link:../../../fern-definition/validator
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -4542,7 +4548,7 @@ importers:
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.3.4
+        version: 0.3.5
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -6250,7 +6256,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.3.4
+        version: 0.3.5
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6434,7 +6440,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.3.4
+        version: 0.3.5
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6563,6 +6569,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -8086,8 +8095,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/logging-execa
       '@fern-api/replay':
-        specifier: 0.19.2
-        version: 0.19.2
+        specifier: 0.19.3
+        version: 0.19.3
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -9594,12 +9603,17 @@ packages:
   '@fern-api/fdr-sdk@1.2.122-10cd6e7ad7':
     resolution: {integrity: sha512-WhlQjYc63t5UFq42mr84+ye6YEsDdcwYVx/i58LTVIqzCO7L9akpHcv8ZWYAhVhSr3ybbM2THBmTzLlLhpL6Hg==}
 
-  '@fern-api/generator-cli@0.9.53':
-    resolution: {integrity: sha512-737p5KbB8DZQFhU3JhW6hvI2If2O8ySDUb4bWXB1OzFT/dhAqSxhCDpAp9vrQH53ldtEEzAYqR44yAxw/0wUgA==}
+  '@fern-api/generator-cli@0.10.1':
+    resolution: {integrity: sha512-y9RpKc1udPnSLRGJk2zR5JAdnwtX0EXvBEVkGLyBApEuEcqt2R8ghWG7Ddophch4SGdsRCZdJJJUmwdTGf+DLQ==}
     hasBin: true
 
   '@fern-api/replay@0.19.2':
     resolution: {integrity: sha512-mpdjoVRI6Jjr96AUgPD2zZt6E92YE5hqd5erEvyO9rjjma5wy1sioqvKlkQFow0UPH1aeiNIVrAuu+2Az73e8w==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.19.3':
+    resolution: {integrity: sha512-YPD3Yt2J/lEuEIE1hOsBZv+84nwCeVbIxzFVDdQwE4XhnyZ3MD0lUWw3LaKS+PmpnPcw9VddXBYuE35qxGLIfg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -10469,8 +10483,8 @@ packages:
   '@posthog/types@1.376.0':
     resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
 
-  '@postman/sdk-config@0.3.4':
-    resolution: {integrity: sha512-kWEnWcDcbiaouRwSQSxbz7065WGKjCq1+mIVJIWLUu746+tvqaJovm0mRMv6sZX1JZb3v0sgHL3Fgqy8XYc2hA==}
+  '@postman/sdk-config@0.3.5':
+    resolution: {integrity: sha512-xYxVwH2brvS/Y5fxuKH/EF9nwFRRipBmCqPeinkwCr3ukIUZqpEKOG0b4uNP/zmPJgy07s5m9Ks2LjE3YcpAMw==}
     engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
@@ -16594,7 +16608,7 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.53':
+  '@fern-api/generator-cli@0.10.1':
     dependencies:
       '@boundaryml/baml': 0.219.0
       '@fern-api/replay': 0.19.2
@@ -16609,6 +16623,14 @@ snapshots:
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
+      simple-git: 3.36.0
+      yaml: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@fern-api/replay@0.19.3':
+    dependencies:
+      minimatch: 10.2.5
       simple-git: 3.36.0
       yaml: 2.8.3
     transitivePeerDependencies:
@@ -17586,7 +17608,7 @@ snapshots:
 
   '@posthog/types@1.376.0': {}
 
-  '@postman/sdk-config@0.3.4':
+  '@postman/sdk-config@0.3.5':
     dependencies:
       semver: 7.8.4
       zod: 4.3.6

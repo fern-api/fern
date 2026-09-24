@@ -2,7 +2,6 @@
 //!
 //! This module provides the client implementations for all available services.
 
-use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 

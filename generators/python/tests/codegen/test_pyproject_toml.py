@@ -5,11 +5,14 @@ from pathlib import Path
 
 from poetry.core.factory import Factory
 
+from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.codegen.pyproject_toml import (
     PyProjectToml,
     PyProjectTomlPackageConfig,
 )
+
+from fern.generator_exec import BasicLicense, CustomLicense, LicenseConfig, LicenseId
 
 
 class TestPoetryBlock:
@@ -28,7 +31,6 @@ class TestPoetryBlock:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
 
     def test_classifiers_reflect_version_constraint(self) -> None:
@@ -41,7 +43,6 @@ class TestPoetryBlock:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
         output = block.to_string()
 
@@ -120,7 +121,6 @@ class TestPoetryCoreValidation:
             classifiers=classifiers,
             pypi_metadata=None,
             github_output_mode=None,
-            license_=None,
         )
 
         deps_block = PyProjectToml.DependenciesBlock(
@@ -150,3 +150,97 @@ class TestPoetryCoreValidation:
 
             assert poetry.package.name == "test-package"
             assert str(poetry.package.version) == "1.0.0"
+
+    def test_custom_license_written_to_project_table(self) -> None:
+        """Test that a custom license is declared via PEP 639 `license-files` and validated by poetry-core."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "LICENSE").write_text("Example Corporation License\n")
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.custom(CustomLicense(filename="LICENSE")),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            assert 'license-files = ["LICENSE"]' in content
+            assert "License ::" not in content
+            assert "license = " not in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.name == "test-package"
+            assert poetry.package.license_files == ("LICENSE",)
+
+    def test_recognized_custom_license_adds_expression_and_classifier(self) -> None:
+        """A custom LICENSE containing Apache-2.0 text yields license + license-files + classifier."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "LICENSE").write_text(
+                "                                 Apache License\n"
+                "                           Version 2.0, January 2004\n"
+                "                        http://www.apache.org/licenses/\n"
+            )
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.custom(CustomLicense(filename="LICENSE")),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            project_table = content.split("[tool.poetry]")[0]
+            assert 'license = "Apache-2.0"' in project_table
+            assert 'license-files = ["LICENSE"]' in project_table
+            assert "License :: OSI Approved :: Apache Software License" in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.license_expression == "Apache-2.0"
+            assert poetry.package.license_files == ("LICENSE",)
+
+    def test_basic_license_written_to_project_table(self) -> None:
+        """Test that MIT/Apache are declared as a PEP 639 license expression in [project]."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            package_dir = Path(tmpdir) / "src" / "test_package"
+            package_dir.mkdir(parents=True)
+            (package_dir / "__init__.py").write_text("")
+            (Path(tmpdir) / "README.md").write_text("")
+
+            PyProjectToml(
+                name="test-package",
+                version="1.0.0",
+                package=PyProjectTomlPackageConfig(include="test_package", _from="src"),
+                path=tmpdir,
+                dependency_manager=DependencyManager(),
+                python_version="^3.10",
+                pypi_metadata=None,
+                github_output_mode=None,
+                license_=LicenseConfig.factory.basic(BasicLicense(id=LicenseId.MIT)),
+            ).write()
+
+            content = (Path(tmpdir) / "pyproject.toml").read_text()
+            project_table = content.split("[tool.poetry]")[0]
+            assert 'license = "MIT"' in project_table
+            assert content.count('license = "MIT"') == 1
+            assert "License :: OSI Approved :: MIT License" in content
+
+            poetry = Factory().create_poetry(Path(tmpdir))
+            assert poetry.package.license_expression == "MIT"

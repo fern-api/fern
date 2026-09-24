@@ -5,11 +5,20 @@ package com.seed.webhooks;
 
 import com.seed.webhooks.core.ClientOptions;
 
-public class AsyncSeedWebhooksClient {
+public class AsyncSeedWebhooksClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public AsyncSeedWebhooksClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedWebhooksClientBuilder builder() {

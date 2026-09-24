@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
-import { isNullish, type Sourced } from "@fern-api/source";
+import { isNullish, type Sourced, SourcedString } from "@fern-api/source";
 import { CliError } from "@fern-api/task-context";
 import { type ReferenceResolver, ValidationIssue } from "@fern-api/yaml-loader";
 import type { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
@@ -319,9 +319,47 @@ export class ApiDefinitionConverter {
             result.namespace = spec.namespace;
         }
         if (spec.settings != null) {
-            result.settings = spec.settings;
+            result.settings = await this.resolveOpenApiSettingsPaths({
+                absoluteFernYmlPath,
+                settings: spec.settings,
+                sourced: sourced.settings
+            });
         }
         return result;
+    }
+
+    /**
+     * `errorResponses.schema` may point at a file; resolve it relative to fern.yml so the
+     * workspace loader can read it regardless of the current working directory.
+     */
+    private async resolveOpenApiSettingsPaths({
+        absoluteFernYmlPath,
+        settings,
+        sourced
+    }: {
+        absoluteFernYmlPath: AbsoluteFilePath;
+        settings: schemas.OpenApiSettingsSchema;
+        sourced: Sourced<schemas.OpenApiSpecSchema>["settings"];
+    }): Promise<schemas.OpenApiSettingsSchema> {
+        const errorResponses = settings.errorResponses;
+        if (errorResponses == null || typeof errorResponses.schema !== "string" || isNullish(sourced)) {
+            return settings;
+        }
+        const sourcedErrorResponses = sourced.errorResponses;
+        if (isNullish(sourcedErrorResponses) || !(sourcedErrorResponses.schema instanceof SourcedString)) {
+            return settings;
+        }
+        return {
+            ...settings,
+            errorResponses: {
+                ...errorResponses,
+                schema: await this.resolvePath({
+                    absoluteFernYmlPath,
+                    path: errorResponses.schema,
+                    sourced: sourcedErrorResponses.schema
+                })
+            }
+        };
     }
 
     private async convertAsyncApiSpec({
