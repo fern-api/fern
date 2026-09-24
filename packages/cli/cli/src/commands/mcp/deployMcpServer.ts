@@ -439,15 +439,26 @@ export function getToolNameValidationErrors(metadata: unknown): string[] {
         if (!isToolEntry(tool) || TOOL_NAME_REGEX.test(tool.name)) {
             return [];
         }
+        const suggested = suggestToolName(tool.name);
+        const message =
+            tool.name.length > MAX_TOOL_NAME_LENGTH
+                ? `Tool name "${tool.name}" is ${tool.name.length} characters; MCP tool names must be 1-${MAX_TOOL_NAME_LENGTH} characters of letters, digits, "_" or "-".`
+                : `Tool name "${tool.name}" contains unsupported characters; MCP tool names must be 1-${MAX_TOOL_NAME_LENGTH} characters of letters, digits, "_" or "-".`;
         const hint =
             typeof tool.method === "string" && typeof tool.path === "string"
-                ? `  It was derived from ${tool.method} ${tool.path}; give that operation a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.`
-                : "  Rename it with a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.";
-        const lengthSuffix = tool.name.length > MAX_TOOL_NAME_LENGTH ? ` (${tool.name.length} characters)` : "";
-        return [
-            `Tool name "${tool.name}"${lengthSuffix} is not allowed: tool names must match ^[a-zA-Z0-9_-]{1,64}$.\n${hint}`
-        ];
+                ? `  Set x-fern-mcp-name on ${tool.method} ${tool.path}, e.g. in an overlay:\n    - target: "$.paths['${tool.path}'].${tool.method.toLowerCase()}"\n      update:\n        x-fern-mcp-name: ${suggested}`
+                : `  Set x-fern-mcp-name on the operation in your OpenAPI spec (or an overlay), e.g. x-fern-mcp-name: ${suggested}`;
+        return [`${message}\n${hint}`];
     });
+}
+
+export function suggestToolName(name: string): string {
+    const sanitized = name.replace(/[^a-zA-Z0-9_-]+/g, "_");
+    const truncated = sanitized.length > MAX_TOOL_NAME_LENGTH ? sanitized.slice(0, MAX_TOOL_NAME_LENGTH) : sanitized;
+    const boundary =
+        sanitized.length > MAX_TOOL_NAME_LENGTH ? Math.max(truncated.lastIndexOf("_"), truncated.lastIndexOf("-")) : -1;
+    const suggested = boundary >= 0 ? truncated.slice(0, boundary) : truncated;
+    return suggested.replace(/[_-]+$/, "") || "tool";
 }
 
 function validateBeforeDeploy({

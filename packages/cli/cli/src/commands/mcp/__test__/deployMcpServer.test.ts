@@ -13,7 +13,8 @@ import {
     getSlugValidationError,
     getToolNameValidationErrors,
     isDeployableModuleFile,
-    normalizeJsonc
+    normalizeJsonc,
+    suggestToolName
 } from "../deployMcpServer.js";
 
 describe("normalizeJsonc", () => {
@@ -87,18 +88,55 @@ describe("getToolNameValidationErrors", () => {
             tools: [{ name, method: "GET", path: "/attachments/{id}" }]
         });
 
-        expect(error).toContain(`Tool name "${name}" (70 characters) is not allowed`);
-        expect(error).toContain("1,64");
-        expect(error).toContain("It was derived from GET /attachments/{id}");
-        expect(error).toContain("operationId");
+        expect(error).toContain(
+            `Tool name "${name}" is 70 characters; MCP tool names must be 1-64 characters of letters, digits, "_" or "-".`
+        );
+        expect(error).toContain(`$.paths['/attachments/{id}'].get`);
+        expect(error).toContain("x-fern-mcp-name: x");
     });
 
     it("flags names containing disallowed characters", () => {
         const [error] = getToolNameValidationErrors({ tools: [{ name: "get.pet" }] });
 
-        expect(error).toContain('Tool name "get.pet"');
-        expect(error).toContain("1,64");
-        expect(error).not.toContain("characters");
+        expect(error).toContain(
+            'Tool name "get.pet" contains unsupported characters; MCP tool names must be 1-64 characters of letters, digits, "_" or "-".'
+        );
+        expect(error).toContain("x-fern-mcp-name: get_pet");
+    });
+
+    it("suggests an x-fern-mcp-name overlay for an operation", () => {
+        const [error] = getToolNameValidationErrors({
+            tools: [
+                {
+                    name: "get_attachment_point_attribute_mappings_attachment_point_form_type_id",
+                    method: "GET",
+                    path: "/AttachmentPoint/AttributeMappings/{attachmentPointFormTypeId}"
+                }
+            ]
+        });
+
+        expect(error).toContain("$.paths['/AttachmentPoint/AttributeMappings/{attachmentPointFormTypeId}'].get");
+        expect(error).toContain("x-fern-mcp-name: get_attachment_point_attribute_mappings_attachment_point_form");
+    });
+});
+
+describe("suggestToolName", () => {
+    it("truncates the real overlong example at a separator", () => {
+        expect(suggestToolName("get_attachment_point_attribute_mappings_attachment_point_form_type_id")).toBe(
+            "get_attachment_point_attribute_mappings_attachment_point_form"
+        );
+    });
+
+    it("replaces unsupported characters", () => {
+        expect(suggestToolName("get.pet")).toBe("get_pet");
+    });
+
+    it("hard cuts names without separators", () => {
+        expect(suggestToolName("x".repeat(70))).toBe("x".repeat(64));
+    });
+
+    it("falls back to tool when sanitization is empty", () => {
+        expect(suggestToolName(".")).toBe("tool");
     });
 });
 
@@ -502,7 +540,7 @@ describe("deployHostedMcpServer", () => {
         expect(requests).toHaveLength(0);
         const errorText = loggedMessages(logger.error).join("\n");
         expect(errorText).toContain(toolName);
-        expect(errorText).toContain("operationId");
+        expect(errorText).toContain("x-fern-mcp-name");
     });
 
     it("sends the CLI version, CI source, and deployer identity headers when known", async () => {
