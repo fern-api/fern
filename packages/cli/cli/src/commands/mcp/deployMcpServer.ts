@@ -14,6 +14,7 @@ const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MAX_SLUG_LENGTH = 30;
 const MAX_MODULES = 20;
 /** Server-side constraint on tool names, mirrored here for a friendly pre-flight message. */
+const MAX_TOOL_NAME_LENGTH = 64;
 const TOOL_NAME_REGEX = /^[a-zA-Z0-9_-]{1,64}$/;
 
 /** Slug used when generators.yml sets no `output.slug`; the server is then served at https://<org>.fernmcp.dev/mcp. */
@@ -419,7 +420,6 @@ interface ToolEntry {
     name: string;
     method?: unknown;
     path?: unknown;
-    operationId?: unknown;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -443,8 +443,9 @@ export function getToolNameValidationErrors(metadata: unknown): string[] {
             typeof tool.method === "string" && typeof tool.path === "string"
                 ? `  It was derived from ${tool.method} ${tool.path}; give that operation a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.`
                 : "  Rename it with a shorter operationId (or x-fern-sdk-method-name) in the spec or an overlay.";
+        const lengthSuffix = tool.name.length > MAX_TOOL_NAME_LENGTH ? ` (${tool.name.length} characters)` : "";
         return [
-            `Tool name "${tool.name}" (${tool.name.length} characters) is not allowed: tool names must match ^[a-zA-Z0-9_-]{1,64}$.\n${hint}`
+            `Tool name "${tool.name}"${lengthSuffix} is not allowed: tool names must match ^[a-zA-Z0-9_-]{1,64}$.\n${hint}`
         ];
     });
 }

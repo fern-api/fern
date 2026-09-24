@@ -98,6 +98,7 @@ describe("getToolNameValidationErrors", () => {
 
         expect(error).toContain('Tool name "get.pet"');
         expect(error).toContain("1,64");
+        expect(error).not.toContain("characters");
     });
 });
 
