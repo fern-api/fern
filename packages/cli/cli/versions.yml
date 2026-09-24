@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.134.2
+  changelogEntry:
+    - summary: |
+        Fix environments defined in `generators.yml` disappearing from docs (`GET ///path`, empty Try It base URL)
+        when an `api:` navigation block uses `audiences:`. Environments that don't declare audiences are now
+        retained under audience filtering, matching the Fern Definition behavior.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 5.134.1
   changelogEntry:
     - summary: |
