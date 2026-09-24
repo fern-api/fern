@@ -120,6 +120,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         }
 
         const grouped = new Map<string, WebhookVerificationEntry>();
+
+        // The API-wide scheme (api.settings.webhook-signature) is always the default helper,
+        // even when the definition models no webhooks.
+        const apiWideConfig = context.ir.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig != null && apiWideConfig.type === "hmac") {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeWebhookVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(context.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;
@@ -141,12 +151,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         }
 
         // Pick the most frequent config as the default (ties broken by insertion order).
-        let defaultEntry: WebhookVerificationEntry | undefined;
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
         let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        if (defaultEntry == null) {
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
@@ -210,7 +222,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 delimiter: verification.payloadFormat.delimiter,
                 bodySort: verification.payloadFormat.bodySort
             },
-            bodyHashBinding: verification.bodyHashBinding ?? null
+            bodyHashBinding: verification.bodyHashBinding ?? null,
+            notificationUrlNormalization: verification.notificationUrlNormalization ?? null
         });
     }
 

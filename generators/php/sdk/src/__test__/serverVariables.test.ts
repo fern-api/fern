@@ -32,6 +32,7 @@ const ENVIRONMENT: FernIr.ServerVariable = {
 function multipleBaseUrlsConfig(): FernIr.EnvironmentsConfig {
     return {
         defaultEnvironment: "RegionalApiServer",
+        baseUrlEnvVar: undefined,
         environments: FernIr.Environments.multipleBaseUrls({
             baseUrls: [
                 { id: "base", name: "base" },
@@ -101,6 +102,7 @@ describe("getServerVariableOptions", () => {
     it("reads variables from single base URL environments", () => {
         const config: FernIr.EnvironmentsConfig = {
             defaultEnvironment: undefined,
+            baseUrlEnvVar: undefined,
             environments: FernIr.Environments.singleBaseUrl({
                 environments: [
                     {
@@ -135,6 +137,7 @@ describe("getServerVariableOptions", () => {
         };
         const config: FernIr.EnvironmentsConfig = {
             defaultEnvironment: "default",
+            baseUrlEnvVar: undefined,
             environments: FernIr.Environments.singleBaseUrl({
                 environments: [
                     {
