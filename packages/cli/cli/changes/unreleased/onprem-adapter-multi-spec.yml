@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Pass every mounted OpenAPI and AsyncAPI spec to Postman on-prem adapter images that declare they
+    consume all of them, instead of refusing every multi-spec workspace. The CLI reads the
+    `com.postman.sdk-gen.adapter.multi-spec` OCI label off the image it is about to run -- the same
+    reference the run uses, including a digest pin or a registry override -- and only then puts more
+    than one spec in the SDK Config IR, in workspace order with namespaces intact. An image without
+    the label, with the label set to anything but `"true"`, or one that cannot be inspected keeps the
+    existing refusal, since an older adapter resolves only the first spec and can exit zero while
+    doing it. Single-spec workspaces are unchanged and skip the inspection entirely.
+  type: fix

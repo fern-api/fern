@@ -1,3 +1,4 @@
+import { basename } from "node:path";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
 import type { RawSpecsManifest, RawSpecsManifestEntry } from "../rawSpecs.js";
@@ -21,20 +22,54 @@ const ON_PREM_SPEC_TYPE_BY_FERN_TYPE: Partial<Record<RawSpecsManifestEntry["type
 
 export declare namespace collectOnPremSourceSpecs {
     type Result = { success: true; specs: [SourceSpec, ...SourceSpec[]] } | { success: false; message: string };
+
+    interface Context {
+        generatorName: string;
+        /**
+         * Whether the image being run generates from every spec rather than only `source.specs[0]`.
+         *
+         * Defaults to `false`, which is what every image published before the capability label did.
+         */
+        supportsMultiSpec?: boolean;
+    }
+}
+
+/**
+ * A stable, unique identity for one spec, for the adapter's composition diagnostics.
+ *
+ * The filename is the most legible thing to see in an error, but it is not unique on its own -- a
+ * manifest can carry `v1/openapi.yml` and `v2/openapi.yml`, which is exactly the multi-spec case
+ * this identity exists to disambiguate. The namespace qualifies it where there is one, and a
+ * manifest index breaks whatever ties remain, so no two specs in a run ever share an id. Set on
+ * every run, single- or multi-spec, so diagnostics do not change shape with the spec count.
+ */
+function sourceSpecIds(entries: RawSpecsManifestEntry[]): string[] {
+    const candidates = entries.map((entry) => {
+        const name = basename(entry.specPath);
+        return entry.namespace != null ? `${entry.namespace}/${name}` : name;
+    });
+    const occurrences = new Map<string, number>();
+    for (const candidate of candidates) {
+        occurrences.set(candidate, (occurrences.get(candidate) ?? 0) + 1);
+    }
+    return candidates.map((candidate, index) =>
+        (occurrences.get(candidate) ?? 0) > 1 ? `${candidate}#${index}` : candidate
+    );
 }
 
 /**
  * Projects the pre-processed raw specs manifest onto the IR's source specs, in the coordinates the
  * adapter will see.
  *
- * Rejects what the adapter cannot consume rather than passing it through. The container reads
- * `source.specs[0]` and ignores the rest (`requirePrimarySpec`), so a multi-spec workspace would
- * otherwise generate an SDK covering one spec and exit zero -- a silently wrong SDK, which is worse
- * than a refusal naming the specs involved.
+ * Rejects what the adapter cannot consume rather than passing it through. An image that reads
+ * `source.specs[0]` and ignores the rest (`requirePrimarySpec`) would otherwise turn a multi-spec
+ * workspace into an SDK covering one spec that exits zero -- a silently wrong SDK, which is worse
+ * than a refusal naming the specs involved. An image that declares it consumes all of them gets all
+ * of them, in manifest order.
  */
 export function collectOnPremSourceSpecs(
     manifest: RawSpecsManifest | undefined,
-    context: { generatorName: string }
+    context: collectOnPremSourceSpecs.Context
 ): collectOnPremSourceSpecs.Result {
     const entries = manifest?.specs ?? [];
     if (entries.length === 0) {
@@ -58,23 +93,27 @@ export function collectOnPremSourceSpecs(
         };
     }
 
-    if (entries.length > 1) {
+    if (entries.length > 1 && !context.supportsMultiSpec) {
         const described = entries.map((entry) => entry.specPath).join(", ");
         return {
             success: false,
             message:
-                `Generator "${context.generatorName}" received ${entries.length} API specs (${described}), and the ` +
-                "Postman adapter generates from a single spec. Generating would silently cover only the first one. " +
-                "Reduce the workspace to one spec for this generator."
+                `Generator "${context.generatorName}" received ${entries.length} API specs (${described}), and this ` +
+                "image has not declared multi-spec support. Older adapters resolve only the first spec. " +
+                "Upgrade the generator to an image that declares multi-spec support, or reduce the " +
+                "workspace to one spec for this generator."
         };
     }
 
+    const ids = sourceSpecIds(entries);
     const specs = entries.map(
-        (entry): SourceSpec => ({
+        (entry, index): SourceSpec => ({
+            id: ids[index] ?? basename(entry.specPath),
             specUrl: entry.specPath,
             // Checked above; the filter guarantees a mapping exists for every remaining entry.
             specType: ON_PREM_SPEC_TYPE_BY_FERN_TYPE[entry.type] as SourceSpecType,
-            ...(entry.namespace != null ? { namespace: entry.namespace } : {})
+            ...(entry.namespace != null ? { namespace: entry.namespace } : {}),
+            ...(entry.apiImportSettings != null ? { apiImportSettings: entry.apiImportSettings } : {})
         })
     );
 

@@ -1,14 +1,15 @@
 import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
-import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import YAML from "yaml";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
@@ -20,6 +21,7 @@ import {
     resolveMigrationSourceSpecs,
     serializeMigrationSource
 } from "../projectMigrationSource.js";
+import { sdkMigrate } from "../sdkMigrate.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
 import { writeOutputFile } from "../writeOutputFile.js";
 
@@ -1001,6 +1003,124 @@ describe("SDK Config migration group consolidation", () => {
     });
 });
 
+describe("SDK Config migration command", () => {
+    let temporaryDirectory: string;
+    let fernDirectory: string;
+    let docsPath: AbsoluteFilePath;
+    let sdkConfigPath: AbsoluteFilePath;
+
+    beforeEach(async () => {
+        temporaryDirectory = await mkdtemp(join(tmpdir(), "fern-sdk-migrate-command-"));
+        fernDirectory = join(temporaryDirectory, "fern");
+        await mkdir(fernDirectory);
+        docsPath = AbsoluteFilePath.of(join(fernDirectory, "docs.yml"));
+        sdkConfigPath = AbsoluteFilePath.of(join(fernDirectory, "sdk-config.yml"));
+    });
+
+    afterEach(async () => {
+        await rm(temporaryDirectory, { force: true, recursive: true });
+    });
+
+    it("creates the SDK Config and migrates the associated docs API section", async () => {
+        await writeFile(docsPath, "instances: []\nnavigation:\n  - api: API reference\n");
+
+        await runSdkMigrate({ fernDirectory, docsPath });
+
+        expect(await readFile(sdkConfigPath, "utf8")).toContain("schemaVersion: sdk-config/v1");
+        expect(YAML.parse(await readFile(docsPath, "utf8"))).toMatchObject({
+            navigation: [
+                {
+                    api: "API reference",
+                    specs: [{ type: "openapi", path: "../specs/openapi.yml", namespace: "payments" }]
+                }
+            ]
+        });
+    });
+
+    it("rejects custom API import settings before creating the SDK Config", async () => {
+        const originalDocs = "instances: []\nnavigation:\n  - api: API reference\n";
+        await writeFile(docsPath, originalDocs);
+
+        await expect(runSdkMigrate({ fernDirectory, docsPath, customApiSettings: true })).rejects.toSatisfy(
+            (error) => error instanceof CliError && error.message.includes("cannot preserve custom API import settings")
+        );
+
+        expect.soft(await doesPathExist(sdkConfigPath)).toBe(false);
+        expect.soft(await readFile(docsPath, "utf8")).toBe(originalDocs);
+    });
+
+    it("rejects a malformed referenced version file before creating the SDK Config or updating any docs file", async () => {
+        const originalDocs = [
+            "instances: []",
+            "versions:",
+            "  - display-name: v1",
+            "    path: ./versions/v1.yml",
+            "  - display-name: v2",
+            "    path: ./versions/v2.yml",
+            ""
+        ].join("\n");
+        const originalFirstVersion = "navigation:\n  - api: API reference\n";
+        const originalSecondVersion = "navigation:\n  - api: API reference\n\t\tbroken: true\n";
+        const firstVersionPath = join(fernDirectory, "versions", "v1.yml");
+        const secondVersionPath = join(fernDirectory, "versions", "v2.yml");
+        await mkdir(join(fernDirectory, "versions"));
+        await writeFile(docsPath, originalDocs);
+        await writeFile(firstVersionPath, originalFirstVersion);
+        await writeFile(secondVersionPath, originalSecondVersion);
+
+        await expect(runSdkMigrate({ fernDirectory, docsPath })).rejects.toSatisfy(
+            (error) => error instanceof CliError && error.message.includes("Tabs are not allowed as indentation")
+        );
+
+        expect.soft(await doesPathExist(sdkConfigPath)).toBe(false);
+        expect.soft(await readFile(docsPath, "utf8")).toBe(originalDocs);
+        expect.soft(await readFile(firstVersionPath, "utf8")).toBe(originalFirstVersion);
+        expect.soft(await readFile(secondVersionPath, "utf8")).toBe(originalSecondVersion);
+    });
+});
+
+async function runSdkMigrate({
+    fernDirectory,
+    docsPath,
+    customApiSettings = false
+}: {
+    fernDirectory: string;
+    docsPath: AbsoluteFilePath;
+    customApiSettings?: boolean;
+}): Promise<void> {
+    const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
+    const specPath = AbsoluteFilePath.of(join(fernDirectory, "..", "specs", "openapi.yml"));
+    const workspace = {
+        workspaceName: "payments",
+        absoluteFilePath: AbsoluteFilePath.of(fernDirectory),
+        allSpecs: [createWorkspaceOpenApiSpec("payments", specPath)],
+        generatorsConfiguration: {
+            defaultGroup: undefined,
+            groupAliases: {},
+            groups: [group],
+            api: customApiSettings
+                ? {
+                      type: "multiNamespace",
+                      definitions: {
+                          payments: [createConfiguredOpenApiDefinition("../specs/openapi.yml", true, undefined)]
+                      },
+                      rootDefinitions: undefined
+                  }
+                : undefined
+        },
+        toFernWorkspace: vi.fn(async () => ({ definition: createDefinition(), sources: [] }))
+    } as unknown as AbstractAPIWorkspace<unknown>;
+
+    await sdkMigrate({
+        project: {
+            apiWorkspaces: [workspace],
+            docsWorkspaces: { absoluteFilepathToDocsConfig: docsPath }
+        } as unknown as Project,
+        cliContext: createTaskCliContext(),
+        args: { force: false, strict: false }
+    });
+}
+
 function createDefinition(sourceDerivedGlobalHeaderNames: string[] = []): FernDefinition {
     const definition: FernDefinition = {
         absoluteFilePath: AbsoluteFilePath.of("/tmp/fern/definition"),
@@ -1171,7 +1291,11 @@ function createLoadableWorkspace(
 
 function createTaskCliContext(): CliContext {
     return {
-        runTask: vi.fn(async (task: (context: never) => unknown) => task({} as never))
+        isTTY: false,
+        selectPrompt: vi.fn(),
+        runTask: vi.fn(async (task: (context: never) => unknown) => task({} as never)),
+        writeTextToStdout: vi.fn(),
+        stderr: { info: vi.fn(), warn: vi.fn() }
     } as unknown as CliContext;
 }
 

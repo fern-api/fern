@@ -2,7 +2,7 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { buildSdkConfigIrFromSdkConfig } from "../postman/buildSdkConfigIrFromSdkConfig.js";
 import { loadSdkConfig } from "../postman/loadSdkConfig.js";
 import { collectOnPremSourceSpecs } from "../postman/onPremSourceSpecs.js";
@@ -45,6 +45,14 @@ targets:
 
 const OPENAPI_MANIFEST: RawSpecsManifest = {
     specs: [{ type: "openapi", specPath: "/fern/specs/openapi.yml" }]
+};
+
+/** Declaration order is significant: the adapter receives the specs in it. */
+const MIXED_MANIFEST: RawSpecsManifest = {
+    specs: [
+        { type: "openapi", specPath: "/fern/specs/movies.json", namespace: "movies" },
+        { type: "asyncapi", specPath: "/fern/specs/events.json", namespace: "events" }
+    ]
 };
 
 async function withFernDirectory(
@@ -280,6 +288,71 @@ targets:
         }
     });
 
+    it("carries every spec into the IR in order, namespaces intact, when the image supports them", async () => {
+        const built = build(await loadFixture(), { rawSpecsManifest: MIXED_MANIFEST, supportsMultiSpec: true });
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.specs).toEqual([
+                {
+                    id: "movies/movies.json",
+                    specUrl: "/fern/specs/movies.json",
+                    specType: "openapi",
+                    namespace: "movies"
+                },
+                {
+                    id: "events/events.json",
+                    specUrl: "/fern/specs/events.json",
+                    specType: "asyncapi",
+                    namespace: "events"
+                }
+            ]);
+        }
+    });
+
+    it("preserves distinct per-source import settings alongside root defaults", async () => {
+        const config = await loadFixture();
+        const built = build(
+            {
+                ...config,
+                source: { ...config.source, apiImportSettings: { defaultIntegerFormat: "int64" } }
+            },
+            {
+                supportsMultiSpec: true,
+                rawSpecsManifest: {
+                    specs: [
+                        {
+                            type: "openapi",
+                            specPath: "/fern/specs/openapi0.json",
+                            apiImportSettings: { defaultIntegerFormat: "int32" }
+                        },
+                        {
+                            type: "openapi",
+                            specPath: "/fern/specs/openapi1.json",
+                            apiImportSettings: { defaultIntegerFormat: "uint64" }
+                        }
+                    ]
+                }
+            }
+        );
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.apiImportSettings?.defaultIntegerFormat).toBe("int64");
+            expect(built.sdkConfigIr.source.specs.map((spec) => spec.apiImportSettings?.defaultIntegerFormat)).toEqual([
+                "int32",
+                "uint64"
+            ]);
+            expect(built.sdkConfigIr.source.specs.map((spec) => spec.id)).toEqual(["openapi0.json", "openapi1.json"]);
+        }
+    });
+
+    it("refuses the same workspace when the image has not declared the capability", async () => {
+        const built = build(await loadFixture(), { rawSpecsManifest: MIXED_MANIFEST });
+        expect(built.success).toBe(false);
+        if (!built.success) {
+            expect(built.message).toContain("2 API specs");
+        }
+    });
+
     it("refuses a language the document has no target for", async () => {
         const built = build(await loadFixture(), { language: "go", generatorName: "fernapi/fern-go-sdk" });
         expect(built.success).toBe(false);
@@ -297,7 +370,7 @@ describe("collectOnPremSourceSpecs", () => {
         const collected = collectOnPremSourceSpecs(OPENAPI_MANIFEST, context);
         expect(collected).toEqual({
             success: true,
-            specs: [{ specUrl: "/fern/specs/openapi.yml", specType: "openapi" }]
+            specs: [{ id: "openapi.yml", specUrl: "/fern/specs/openapi.yml", specType: "openapi" }]
         });
     });
 
@@ -316,6 +389,66 @@ describe("collectOnPremSourceSpecs", () => {
         expect(collected.success).toBe(false);
         if (!collected.success) {
             expect(collected.message).toContain("movies.yml, /fern/specs/users.yml");
+        }
+    });
+
+    it("passes every spec to an image that declares it consumes them all", () => {
+        const collected = collectOnPremSourceSpecs(MIXED_MANIFEST, { ...context, supportsMultiSpec: true });
+        expect(collected).toEqual({
+            success: true,
+            specs: [
+                {
+                    id: "movies/movies.json",
+                    specUrl: "/fern/specs/movies.json",
+                    specType: "openapi",
+                    namespace: "movies"
+                },
+                {
+                    id: "events/events.json",
+                    specUrl: "/fern/specs/events.json",
+                    specType: "asyncapi",
+                    namespace: "events"
+                }
+            ]
+        });
+    });
+
+    // Composition diagnostics name a spec by its id, so two specs sharing a filename have to stay
+    // distinguishable -- the case where the diagnostic matters most.
+    it("disambiguates specs whose filenames collide", () => {
+        const collected = collectOnPremSourceSpecs(
+            {
+                specs: [
+                    { type: "openapi", specPath: "/fern/specs/v1/openapi.yml", namespace: "v1" },
+                    { type: "openapi", specPath: "/fern/specs/v2/openapi.yml", namespace: "v2" },
+                    { type: "openapi", specPath: "/fern/specs/a/openapi.yml" },
+                    { type: "openapi", specPath: "/fern/specs/b/openapi.yml" }
+                ]
+            },
+            { ...context, supportsMultiSpec: true }
+        );
+        expect(collected.success).toBe(true);
+        if (collected.success) {
+            const ids = collected.specs.map((spec) => spec.id);
+            expect(ids).toEqual(["v1/openapi.yml", "v2/openapi.yml", "openapi.yml#2", "openapi.yml#3"]);
+            expect(new Set(ids).size).toBe(ids.length);
+        }
+    });
+
+    // The capability says the image reads every spec, not that it grew a GraphQL importer.
+    it("still refuses a spec type the adapter cannot consume when the image takes several", () => {
+        const collected = collectOnPremSourceSpecs(
+            {
+                specs: [
+                    { type: "openapi", specPath: "/fern/specs/movies.json" },
+                    { type: "graphql", specPath: "/fern/specs/schema.graphql" }
+                ]
+            },
+            { ...context, supportsMultiSpec: true }
+        );
+        expect(collected.success).toBe(false);
+        if (!collected.success) {
+            expect(collected.message).toContain("schema.graphql (graphql)");
         }
     });
 
@@ -374,6 +507,64 @@ describe("resolveSdkConfigIr", () => {
                     sourceOrigin: "fern"
                 });
             }
+        });
+    });
+
+    // Every version of the adapter generates from a lone spec, so inspecting the image could only
+    // spend a subprocess to learn nothing.
+    it("does not ask the image about multi-spec support when the workspace has one spec", async () => {
+        const supportsMultiSpec = vi.fn().mockResolvedValue(true);
+        await withFernDirectory({ "sdk-config.yml": SDK_CONFIG_YML }, async (absolutePathToFernConfig) => {
+            const resolved = await resolveSdkConfigIr({
+                generatorInvocation: generatorInvocation(),
+                absolutePathToFernConfig,
+                organization: "abbey",
+                outputPath: "/fern/output",
+                rawSpecsManifest: OPENAPI_MANIFEST,
+                supportsMultiSpec
+            });
+            expect(resolved.success).toBe(true);
+            expect(supportsMultiSpec).not.toHaveBeenCalled();
+        });
+    });
+
+    it.each([
+        { label: "supports them", supported: true, expectedSuccess: true },
+        { label: "does not", supported: false, expectedSuccess: false }
+    ])("asks the image about a multi-spec workspace and honours that it $label", async (scenario) => {
+        const supportsMultiSpec = vi.fn().mockResolvedValue(scenario.supported);
+        await withFernDirectory({ "sdk-config.yml": SDK_CONFIG_YML }, async (absolutePathToFernConfig) => {
+            const resolved = await resolveSdkConfigIr({
+                generatorInvocation: generatorInvocation(),
+                absolutePathToFernConfig,
+                organization: "abbey",
+                outputPath: "/fern/output",
+                rawSpecsManifest: MIXED_MANIFEST,
+                supportsMultiSpec
+            });
+            expect(supportsMultiSpec).toHaveBeenCalledTimes(1);
+            expect(resolved.success).toBe(scenario.expectedSuccess);
+            if (resolved.success) {
+                expect(resolved.sdkConfigIr.source.specs.map((spec) => spec.specUrl)).toEqual([
+                    "/fern/specs/movies.json",
+                    "/fern/specs/events.json"
+                ]);
+            }
+        });
+    });
+
+    // An environment with no capability method at all, which is what the native and reusable-container
+    // routes are, has to land on a refusal rather than on an unchecked pass.
+    it("keeps the single-spec contract for a multi-spec workspace when nothing can answer", async () => {
+        await withFernDirectory({ "sdk-config.yml": SDK_CONFIG_YML }, async (absolutePathToFernConfig) => {
+            const resolved = await resolveSdkConfigIr({
+                generatorInvocation: generatorInvocation(),
+                absolutePathToFernConfig,
+                organization: "abbey",
+                outputPath: "/fern/output",
+                rawSpecsManifest: MIXED_MANIFEST
+            });
+            expect(resolved.success).toBe(false);
         });
     });
 });
