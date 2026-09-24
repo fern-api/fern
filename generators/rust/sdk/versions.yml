@@ -1,24 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 0.47.12
-  changelogEntry:
-    - summary: |
-        In a multi-URL environment an explicit `base_url` now wins over the default environment.
-        `ClientConfig::default()` set both `base_url` and `environment`, and every endpoint let the
-        environment win, so `ClientConfig { base_url: "https://sandbox…", ..Default::default() }`
-        silently sent every request to the default (production) environment. Requests now go to
-        `base_url` whenever it is anything other than one of the configured environment's URLs (or
-        the default environment's URL that `Default` fills in); otherwise each request goes to the
-        environment's URL for its service, as before. `ClientConfig::service_url` carries the rule.
-      type: fix
-    - summary: |
-        Every multi-URL environment now embeds its URLs: `impl Default for <Env>Urls` per
-        environment and a constructor per environment (`Environment::staging()`), so selecting a
-        non-default environment no longer means retyping URLs from `generators.yml`. The README
-        environments snippet of a multi-URL SDK sets `environment` through that constructor instead
-        of `Environment::Production.url()`, which does not compile against a tuple variant.
-      type: feat
-  createdAt: "2026-09-24"
-  irVersion: 67
 - version: 0.47.11
   changelogEntry:
     - summary: |

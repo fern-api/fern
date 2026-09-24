@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    In a multi-URL environment an explicit `base_url` now wins over the default environment.
+    `ClientConfig::default()` set both `base_url` and `environment`, and every endpoint let the
+    environment win, so `ClientConfig { base_url: "https://sandbox…", ..Default::default() }`
+    silently sent every request to the default (production) environment. Requests now go to
+    `base_url` whenever it is anything other than one of the configured environment's URLs (or
+    the default environment's URL that `Default` fills in); otherwise each request goes to the
+    environment's URL for its service, as before. `ClientConfig::service_url` carries the rule.
+  type: fix
