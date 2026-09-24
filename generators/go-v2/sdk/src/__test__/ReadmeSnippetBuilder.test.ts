@@ -4,7 +4,11 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { ReadmeConfigBuilder } from "../readme/ReadmeConfigBuilder.js";
-import { ENVIRONMENTS_FEATURE_ID, ReadmeSnippetBuilder } from "../readme/ReadmeSnippetBuilder.js";
+import {
+    ENVIRONMENTS_FEATURE_ID,
+    MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION,
+    ReadmeSnippetBuilder
+} from "../readme/ReadmeSnippetBuilder.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
@@ -159,8 +163,7 @@ describe("ReadmeSnippetBuilder environments", () => {
             createContext({ environments: createSingleBaseUrlEnvironments(), clientConstructorName: "NewClient" })
         );
 
-        expect(multi?.description).toContain("`option.WithEnvironment` option");
-        expect(multi?.description).toContain("`option.WithBaseURL` points every request");
+        expect(multi?.description).toBe(MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION);
         expect(multi?.snippets?.[0]).toContain("option.WithEnvironment(acme.Environments.Production),");
         expect(single?.description).toBe(FEATURES_YML_DESCRIPTION);
     });

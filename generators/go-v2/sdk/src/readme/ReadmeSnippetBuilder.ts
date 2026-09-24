@@ -14,10 +14,22 @@ interface EndpointWithFilepath {
 
 export const ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
+/**
+ * features.yml describes environments in terms of `option.WithBaseURL`, which takes the
+ * string a single-URL environment constant is. A multi-URL environment is a struct with one
+ * URL per service, and the client takes it through `option.WithEnvironment`.
+ */
+export const MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION = [
+    "You can choose between different environments by passing one of the predefined `Environments` to the",
+    "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",
+    "`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in",
+    "test environments.",
+    ""
+].join("\n");
+
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = ENVIRONMENTS_FEATURE_ID;
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
     private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
@@ -73,7 +85,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
-            [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
             [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
                 renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
             },

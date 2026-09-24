@@ -3,7 +3,11 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { ENVIRONMENTS_FEATURE_ID, ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
+import {
+    ENVIRONMENTS_FEATURE_ID,
+    MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION,
+    ReadmeSnippetBuilder
+} from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -58,11 +62,6 @@ export class ReadmeConfigBuilder {
         };
     }
 
-    /**
-     * features.yml describes environments in terms of `option.WithBaseURL`, which takes the
-     * string a single-URL environment constant is. A multi-URL environment is a struct with one
-     * URL per service, and the client takes it through `option.WithEnvironment`.
-     */
     private getFeatureDescription({
         context,
         feature
@@ -71,13 +70,7 @@ export class ReadmeConfigBuilder {
         feature: FernGeneratorCli.FeatureSpec;
     }): string | undefined {
         if (feature.id === ENVIRONMENTS_FEATURE_ID && context.isMultipleBaseUrlsEnvironment()) {
-            return [
-                "You can choose between different environments by passing one of the predefined `Environments` to the",
-                "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",
-                "`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in",
-                "test environments.",
-                ""
-            ].join("\n");
+            return MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION;
         }
         return feature.description;
     }
