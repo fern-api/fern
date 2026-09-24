@@ -12,6 +12,7 @@ export const SiteSwitcherThemeConfig: core.serialization.ObjectSchema<
     order: core.serialization.list(core.serialization.string()).optional(),
     hide: core.serialization.list(core.serialization.string()).optional(),
     labels: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+    showProducts: core.serialization.property("show-products", core.serialization.boolean().optional()),
 });
 
 export declare namespace SiteSwitcherThemeConfig {
@@ -20,5 +21,6 @@ export declare namespace SiteSwitcherThemeConfig {
         order?: string[] | null;
         hide?: string[] | null;
         labels?: Record<string, string> | null;
+        "show-products"?: boolean | null;
     }
 }

@@ -104,7 +104,8 @@ export const SiteSwitcherThemeConfig = z.object({
     enabled: z.boolean().optional(),
     order: z.array(z.string()).optional(),
     hide: z.array(z.string()).optional(),
-    labels: z.record(z.string(), z.string()).optional()
+    labels: z.record(z.string(), z.string()).optional(),
+    "show-products": z.boolean().optional()
 });
 
 export const FooterNavThemeConfig = z.enum(["default", "minimal"]);

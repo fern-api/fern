@@ -9,4 +9,6 @@ export interface SiteSwitcherThemeConfig {
     hide?: string[];
     /** Display label overrides keyed by basepath. */
     labels?: Record<string, string>;
+    /** List each site's products indented beneath it. Defaults to false. */
+    showProducts?: boolean;
 }

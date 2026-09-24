@@ -1227,6 +1227,9 @@ types:
       labels:
         type: optional<map<string, string>>
         docs: Display label overrides keyed by basepath.
+      show-products:
+        type: optional<boolean>
+        docs: List each site's products indented beneath it. Defaults to false.
 
   ProductSwitcherThemeConfig:
     enum:
