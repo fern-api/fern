@@ -1126,7 +1126,7 @@ export class DocsDefinitionResolver {
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
                           "product-switcher": this.parsedDocsConfig.theme
                               .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"],
-                          "site-switcher": this.parsedDocsConfig.theme.siteSwitcher
+                          "site-switcher": convertThemeSiteSwitcher(this.parsedDocsConfig.theme.siteSwitcher)
                       }
                     : undefined,
             // deprecated
@@ -3172,6 +3172,21 @@ export function convertThemeTabs(
         style: tabs.style,
         alignment: tabs.alignment?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["alignment"],
         placement: tabs.placement?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["placement"]
+    };
+}
+
+export function convertThemeSiteSwitcher(
+    siteSwitcher: docsYml.RawSchemas.SiteSwitcherThemeConfig | undefined
+): DocsV1Write.DocsThemeConfig["site-switcher"] | undefined {
+    if (siteSwitcher == null) {
+        return undefined;
+    }
+    return {
+        enabled: siteSwitcher.enabled,
+        order: siteSwitcher.order,
+        hide: siteSwitcher.hide,
+        labels: siteSwitcher.labels,
+        "show-products": siteSwitcher.showProducts
     };
 }
 

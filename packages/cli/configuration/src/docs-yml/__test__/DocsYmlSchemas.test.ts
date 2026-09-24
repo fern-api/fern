@@ -72,14 +72,16 @@ describe("DocsYmlSchemas", () => {
                 enabled: true,
                 order: ["/dynamo", "/nemo"],
                 hide: ["/internal"],
-                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+                "show-products": true
             }
         });
         expect(parsed["site-switcher"]).toEqual({
             enabled: true,
             order: ["/dynamo", "/nemo"],
             hide: ["/internal"],
-            labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+            labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+            "show-products": true
         });
         expect(ThemeConfig.parse({})["site-switcher"]).toBeUndefined();
     });

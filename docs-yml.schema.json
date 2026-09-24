@@ -6915,65 +6915,6 @@
         "minimal"
       ]
     },
-    "docs.SiteSwitcherThemeConfig": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Render the site switcher. Defaults to false."
-        },
-        "order": {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
-        },
-        "hide": {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Basepaths to omit, including any sites nested beneath them."
-        },
-        "labels": {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Display label overrides keyed by basepath."
-        }
-      },
-      "additionalProperties": false
-    },
     "docs.BodyThemeConfig": {
       "type": "string",
       "enum": [
@@ -7069,6 +7010,76 @@
         "toggle",
         "tabs"
       ]
+    },
+    "docs.SiteSwitcherThemeConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Render the site switcher. Defaults to false."
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
+        },
+        "hide": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to omit, including any sites nested beneath them."
+        },
+        "labels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display label overrides keyed by basepath."
+        },
+        "show-products": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List each site's products indented beneath it. Defaults to false."
+        }
+      },
+      "additionalProperties": false
     },
     "docs.ThemeConfig": {
       "type": "object",
