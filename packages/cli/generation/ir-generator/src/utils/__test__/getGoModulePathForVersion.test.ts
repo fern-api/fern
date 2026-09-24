@@ -17,6 +17,8 @@ describe("getGoModulePathForVersion", () => {
         expect(getGoModulePathForVersion(modulePath, "v2.0.0")).toBe(`${modulePath}/v2`);
         expect(getGoModulePathForVersion(modulePath, "3.1.0-rc.1")).toBe(`${modulePath}/v3`);
         expect(getGoModulePathForVersion(modulePath, "12.0.0")).toBe(`${modulePath}/v12`);
+        expect(getGoModulePathForVersion(modulePath, "2")).toBe(`${modulePath}/v2`);
+        expect(getGoModulePathForVersion(modulePath, "v2")).toBe(`${modulePath}/v2`);
     });
 
     it("does not double a suffix the module path already carries", () => {

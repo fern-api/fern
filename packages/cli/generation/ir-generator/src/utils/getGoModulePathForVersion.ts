@@ -1,4 +1,4 @@
-const MAJOR_VERSION_REGEX = /^v?(\d+)\./;
+const MAJOR_VERSION_REGEX = /^v?(\d+)(?:[.\-+]|$)/;
 const MAJOR_VERSION_SUFFIX_REGEX = /\/v\d+$/;
 
 /**
