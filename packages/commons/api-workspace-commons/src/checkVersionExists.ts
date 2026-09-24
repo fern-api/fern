@@ -1,5 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import type { HttpMethod, IdempotencyKeyGeneration } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 /**
@@ -187,6 +188,34 @@ export function resolveIdempotencyKeyGeneration(value: unknown): IdempotencyKeyG
         };
     }
     return undefined;
+}
+
+/**
+ * Resolves the API-wide webhook signature scheme (`api.settings.webhook-signature` in
+ * generators.yml) stamped onto the invocation at configuration-load time. The raw value uses the
+ * same shape as a Fern-definition webhook `signature` block; it is validated here and converted
+ * into the IR (`SdkConfig.webhookSignatureVerification`) by the IR generator so every language
+ * emits the same verification helper. Fails loudly on a malformed value rather than silently
+ * generating an SDK without verification.
+ */
+export function getWebhookSignatureFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    context: TaskContext
+): RawSchemas.WebhookSignatureSchema | undefined {
+    const value = generatorInvocation.webhookSignatureConfig;
+    if (value == null) {
+        return undefined;
+    }
+    const parsed = RawSchemas.serialization.WebhookSignatureSchema.parse(value, {
+        unrecognizedObjectKeys: "fail"
+    });
+    if (!parsed.ok) {
+        const details = parsed.errors
+            .map((error) => `${error.path.join(".") || "<root>"}: ${error.message}`)
+            .join("; ");
+        return context.failAndThrow(`Invalid api.settings.webhook-signature in generators.yml: ${details}`);
+    }
+    return parsed.value;
 }
 
 /** Config keys consumed by the CLI and not forwarded to generators. */

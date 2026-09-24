@@ -3981,6 +3981,24 @@
             }
           ],
           "description": "Enable idempotency-key auto-generation for every generator in this API, so it\ndoes not have to be set on each generator's `config`. When enabled, generators\nauto-generate an idempotency key header on retry-unsafe (POST/PUT) requests\nunless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\napi:\n  settings:\n    auto-generate-idempotency-key: true\n    # or\n    auto-generate-idempotency-key:\n      header-name: \"Idempotency-Key\"\n      methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nvalue for that generator."
+        },
+        "webhook-signature": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Webhook signature scheme for the whole API, declared once here instead of in the\nAPI definition. Every generator in this API emits a shared webhook verification\nhelper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when\nthe spec models no webhooks. Uses the same shape as a webhook's `signature` block\nin a Fern definition:\n```yaml\napi:\n  settings:\n    webhook-signature:\n      type: hmac\n      header: X-Twilio-Signature\n      algorithm: sha1\n      encoding: base64\n      payload-format:\n        components: [notification-url, body]\n        delimiter: \"\"\n        body-sort: alphabetical\n```"
         }
       },
       "additionalProperties": false,

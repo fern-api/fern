@@ -8,7 +8,8 @@ import {
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
-    getUserAgentTemplateFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -254,6 +255,7 @@ export async function runRemoteGenerationForGenerator({
         packageName,
         userAgentTemplate,
         idempotencyKeyGeneration,
+        webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, interactiveTaskContext),
         organization,
         version: effectiveIrVersion,
         context: interactiveTaskContext,
