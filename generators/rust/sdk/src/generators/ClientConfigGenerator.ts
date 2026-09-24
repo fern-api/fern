@@ -306,16 +306,13 @@ export class ClientConfigGenerator {
      */
     private generateServiceUrlImpl(): string {
         const environmentEnumName = this.context.getEnvironmentEnumName();
-        const hasDefaultEnvironment = this.hasDefaultEnvironment();
         const knownUrls = this.environmentGenerator
             .getMultiUrlGetterMethodNames()
             .map((getter) => `environment.${getter}()`);
-        if (hasDefaultEnvironment) {
-            knownUrls.push("default_environment.url()");
+        const defaultEnvironmentUrl = this.environmentGenerator.getMultiUrlDefaultEnvironmentUrl();
+        if (defaultEnvironmentUrl != null) {
+            knownUrls.push(JSON.stringify(defaultEnvironmentUrl));
         }
-        const defaultEnvironmentBinding = hasDefaultEnvironment
-            ? `\n        let default_environment = ${environmentEnumName}::default();`
-            : "";
         const knownUrlsList = knownUrls.map((url) => `\n                ${url},`).join("");
 
         return `impl ClientConfig {
@@ -337,7 +334,7 @@ export class ClientConfigGenerator {
         }
     }
 
-    fn overrides_environment(&self, environment: &${environmentEnumName}) -> bool {${defaultEnvironmentBinding}
+    fn overrides_environment(&self, environment: &${environmentEnumName}) -> bool {
         !self.base_url.is_empty()
             && ![${knownUrlsList}
             ]

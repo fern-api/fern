@@ -95,6 +95,26 @@ export class EnvironmentGenerator {
         });
     }
 
+    /**
+     * The URL `Environment::default().url()` returns for a multi-URL enum, as a literal: the
+     * primary URL of the configured default environment. Undefined for single-URL environments
+     * or when no default environment is configured.
+     */
+    public getMultiUrlDefaultEnvironmentUrl(): string | undefined {
+        const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
+        if (defaultEnvironmentId == null) {
+            return undefined;
+        }
+        return this.visitMultipleBaseUrls((config) => {
+            const defaultEnv = config.environments.find((env) => env.id === defaultEnvironmentId);
+            const primaryBaseUrl = config.baseUrls[0];
+            if (defaultEnv == null || primaryBaseUrl == null) {
+                return undefined;
+            }
+            return defaultEnv.urls[primaryBaseUrl.id];
+        });
+    }
+
     public generate(): RustFile | null {
         const environmentsConfig = this.context.ir.environments;
         if (!environmentsConfig?.environments) {

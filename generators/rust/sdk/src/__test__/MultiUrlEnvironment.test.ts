@@ -149,7 +149,8 @@ describe("multi-URL environments", () => {
             );
             expect(contents).toContain("environment.api_url(),");
             expect(contents).toContain("environment.auth_url(),");
-            expect(contents).toContain("default_environment.url(),");
+            expect(contents).toContain(`"https://api.example.com",`);
+            expect(contents).not.toContain("Environment::default().url(),");
             expect(contents).toContain("environment: Some(Environment::default())");
             await expect(contents).toMatchFileSnapshot("snapshots/client-config-multi-url.rs");
         });

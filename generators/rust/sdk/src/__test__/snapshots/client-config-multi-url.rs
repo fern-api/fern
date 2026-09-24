@@ -73,12 +73,11 @@ impl ClientConfig {
     }
 
     fn overrides_environment(&self, environment: &Environment) -> bool {
-        let default_environment = Environment::default();
         !self.base_url.is_empty()
             && ![
                 environment.api_url(),
                 environment.auth_url(),
-                default_environment.url(),
+                "https://api.example.com",
             ]
             .contains(&self.base_url.as_str())
     }

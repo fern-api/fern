@@ -76,12 +76,11 @@ impl ClientConfig {
     }
 
     fn overrides_environment(&self, environment: &Environment) -> bool {
-        let default_environment = Environment::default();
         !self.base_url.is_empty()
             && ![
                 environment.rest_url(),
                 environment.wss_url(),
-                default_environment.url(),
+                "https://api.production.com",
             ]
             .contains(&self.base_url.as_str())
     }

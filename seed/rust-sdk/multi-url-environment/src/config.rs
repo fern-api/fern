@@ -76,12 +76,11 @@ impl ClientConfig {
     }
 
     fn overrides_environment(&self, environment: &Environment) -> bool {
-        let default_environment = Environment::default();
         !self.base_url.is_empty()
             && ![
                 environment.ec2_url(),
                 environment.s3_url(),
-                default_environment.url(),
+                "https://ec2.aws.com",
             ]
             .contains(&self.base_url.as_str())
     }
