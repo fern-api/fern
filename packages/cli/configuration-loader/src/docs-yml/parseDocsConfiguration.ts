@@ -563,6 +563,11 @@ function convertSettingsConfig(
         }
     }
 
+    const cspErrors = docsYml.getContentSecurityPolicyErrors(settings.contentSecurityPolicy?.styleHashes);
+    if (cspErrors.length > 0) {
+        context.failAndThrow(cspErrors.join("\n"));
+    }
+
     // The legacy `default-search-filters` setting is preserved as an alias for
     // `search.default-filter-by-current-product`. Either one enables the behavior.
     const defaultFilterByCurrentProduct =
@@ -588,6 +593,7 @@ function convertSettingsConfig(
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
+        contentSecurityPolicy: settings.contentSecurityPolicy,
         showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }

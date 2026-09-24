@@ -6492,6 +6492,37 @@
         "grouped"
       ]
     },
+    "docs.ContentSecurityPolicyConfig": {
+      "type": "object",
+      "properties": {
+        "style-hashes": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "CSP hash sources (`sha256-…`, `sha384-…` or `sha512-…`) for inline `<style>` elements that your\ncustom JavaScript or third-party widgets insert, e.g. `sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=`.\nSetting this key (even to an empty list) enforces a strict `style-src` without `'unsafe-inline'` on\nevery page, including pages with custom JavaScript or integrations. Inline styles whose hash is not\nlisted are blocked. Up to 16 hashes."
+        },
+        "allow-eval": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether `script-src` includes `'unsafe-eval'`. By default it is included only on sites with custom\nJavaScript or Google Tag Manager. Set to `false` to drop it everywhere; scripts that call `eval` or\n`new Function` (e.g. GTM Custom HTML tags) will then fail."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.EmbeddingConfig": {
       "type": "object",
       "properties": {
@@ -6673,6 +6704,17 @@
             }
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
+        },
+        "content-security-policy": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ContentSecurityPolicyConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Opt-ins that tighten the Content-Security-Policy header of your docs site."
         },
         "embedding": {
           "oneOf": [

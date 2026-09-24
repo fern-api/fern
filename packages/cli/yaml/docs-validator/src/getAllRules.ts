@@ -10,6 +10,7 @@ import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
+import { ValidContentSecurityPolicyRule } from "./rules/valid-content-security-policy/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidEmbeddingOriginsRule } from "./rules/valid-embedding-origins/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
@@ -42,6 +43,7 @@ const allRules = [
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     ValidEmbeddingOriginsRule, // Validate settings.embedding.allowed-origins are well-formed CSP frame-ancestors sources
+    ValidContentSecurityPolicyRule, // Validate settings.content-security-policy.style-hashes are well-formed CSP hash sources
     NoCircularRedirectsRule, // Detect circular redirect chains
     ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect

@@ -69,10 +69,11 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations and embedding fields.
+// DocsV1Write.DocsConfig includes the translations, embedding and contentSecurityPolicy fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
     embedding: { allowedOrigins: string[] } | undefined;
+    contentSecurityPolicy: { styleHashes?: string[]; allowEval?: boolean } | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -1114,6 +1115,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.settings?.embedding != null
                     ? { allowedOrigins: this.parsedDocsConfig.settings.embedding.allowedOrigins }
                     : undefined,
+            contentSecurityPolicy: this.convertContentSecurityPolicy(),
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -2897,6 +2899,17 @@ export class DocsDefinitionResolver {
                 };
             });
         }
+    }
+
+    private convertContentSecurityPolicy(): DocsConfigWithTranslations["contentSecurityPolicy"] {
+        const contentSecurityPolicy = this.parsedDocsConfig.settings?.contentSecurityPolicy;
+        if (contentSecurityPolicy == null) {
+            return undefined;
+        }
+        return {
+            styleHashes: contentSecurityPolicy.styleHashes ?? undefined,
+            allowEval: contentSecurityPolicy.allowEval ?? undefined
+        };
     }
 
     private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {

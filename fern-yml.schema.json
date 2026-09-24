@@ -3043,6 +3043,21 @@
                 "allowed-origins"
               ],
               "additionalProperties": false
+            },
+            "content-security-policy": {
+              "type": "object",
+              "properties": {
+                "style-hashes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "allow-eval": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false

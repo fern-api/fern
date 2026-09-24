@@ -241,6 +241,11 @@ export const EmbeddingConfig = z.object({
     "allowed-origins": z.array(z.string())
 });
 
+export const ContentSecurityPolicyConfig = z.object({
+    "style-hashes": z.array(z.string()).optional(),
+    "allow-eval": z.boolean().optional()
+});
+
 export const AgentsConfig = z.object({
     "page-directive": z.string().optional(),
     "page-description-source": PageDescriptionSource.optional(),
@@ -347,7 +352,8 @@ export const DocsSettingsConfig = z.object({
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
     "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
-    embedding: EmbeddingConfig.optional()
+    embedding: EmbeddingConfig.optional(),
+    "content-security-policy": ContentSecurityPolicyConfig.optional()
 });
 
 // ===== Colors =====

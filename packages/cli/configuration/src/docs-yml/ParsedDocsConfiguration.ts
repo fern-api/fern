@@ -7,6 +7,7 @@ import {
     AiChatConfig,
     AnnouncementConfig,
     Availability,
+    ContentSecurityPolicyConfig,
     DocsInstance,
     EmbeddingConfig,
     ExperimentalConfig,
@@ -49,6 +50,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
     embedding: EmbeddingConfig | undefined;
+    contentSecurityPolicy: ContentSecurityPolicyConfig | undefined;
     showHeadersInExamples: boolean | undefined;
     search:
         | {
