@@ -1364,8 +1364,30 @@ enum SetTarget {
     Retries,
     BaseUrl,
     Format,
+    TimeoutSecs,
+    Proxy,
+    CaBundle,
+    Insecure,
+    UserAgentSuffix,
     ServerVariable(String),
     Parameter(String),
+}
+
+/// `<PREFIX>_<suffix>` suffixes of the fixed (non-spec) profile-storable env
+/// vars, in the order `--help` and the `set` error list them. The user-agent
+/// one is generation-configurable, hence computed.
+pub fn fixed_profile_env_suffixes() -> Vec<String> {
+    let ua = crate::user_agent::suffix_env_segment();
+    vec![
+        "BASE_URL".to_string(),
+        "CA_BUNDLE".to_string(),
+        "INSECURE".to_string(),
+        "OUTPUT".to_string(),
+        "PROXY".to_string(),
+        "RETRIES".to_string(),
+        "TIMEOUT_SECS".to_string(),
+        ua.trim_start_matches('_').to_string(),
+    ]
 }
 
 /// Every (scheme, field) pair that reads `var`.
@@ -1410,6 +1432,13 @@ fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliEr
             "RETRIES" => return Ok(SetTarget::Retries),
             "BASE_URL" => return Ok(SetTarget::BaseUrl),
             "OUTPUT" => return Ok(SetTarget::Format),
+            "TIMEOUT_SECS" => return Ok(SetTarget::TimeoutSecs),
+            "PROXY" => return Ok(SetTarget::Proxy),
+            "CA_BUNDLE" => return Ok(SetTarget::CaBundle),
+            "INSECURE" => return Ok(SetTarget::Insecure),
+            _ if format!("_{rest}") == crate::user_agent::suffix_env_segment() => {
+                return Ok(SetTarget::UserAgentSuffix)
+            }
             _ => {
                 // `<PREFIX>_<SERVER_VAR>` — the env rung a server variable
                 // already reads, so the spelling is one the user has seen.
@@ -1447,7 +1476,7 @@ fn unsettable_key(key: &str, ctx: &ProfilesContext<'_>) -> CliError {
             &(scheme.clone(), binding.clone()),
         )));
     }
-    for suffix in ["RETRIES", "BASE_URL", "OUTPUT"] {
+    for suffix in fixed_profile_env_suffixes() {
         known.push(format!("{prefix}_{suffix}"));
     }
     for variable in &ctx.vocabulary.server_variables {
@@ -1555,6 +1584,42 @@ fn handle_set(
             SetTarget::Format => {
                 entry.format = Some(value);
                 notes.push(format!("{key} \u{2192} format"));
+            }
+            SetTarget::TimeoutSecs => {
+                let parsed: u64 = value.parse().map_err(|_| {
+                    CliError::Validation(format!(
+                        "`{key}` expects a non-negative integer, got `{value}`"
+                    ))
+                })?;
+                entry.transport.timeout_secs = Some(parsed);
+                notes.push(format!("{key} \u{2192} timeout_secs"));
+            }
+            SetTarget::Proxy => {
+                crate::output::reject_dangerous_chars(&value, &key)?;
+                entry.transport.proxy = Some(value);
+                notes.push(format!("{key} \u{2192} proxy"));
+            }
+            SetTarget::CaBundle => {
+                crate::output::reject_dangerous_chars(&value, &key)?;
+                entry.transport.ca_bundle = Some(value);
+                notes.push(format!("{key} \u{2192} ca_bundle"));
+            }
+            SetTarget::Insecure => {
+                let parsed = match value.to_ascii_lowercase().as_str() {
+                    "1" | "true" | "yes" | "on" => true,
+                    "0" | "false" | "no" | "off" => false,
+                    _ => {
+                        return Err(CliError::Validation(format!(
+                            "`{key}` expects a boolean (1/0, true/false), got `{value}`"
+                        )))
+                    }
+                };
+                entry.transport.insecure = Some(parsed);
+                notes.push(format!("{key} \u{2192} insecure"));
+            }
+            SetTarget::UserAgentSuffix => {
+                entry.transport.user_agent_suffix = Some(value);
+                notes.push(format!("{key} \u{2192} user_agent_suffix"));
             }
             SetTarget::ServerVariable(variable) => {
                 entry.server_variables.insert(variable.clone(), value);
@@ -1874,6 +1939,22 @@ fn resolved_profile_fields(
     }
     if let Some(format) = &profile.format {
         map.insert("format".into(), format.clone().into());
+    }
+    let transport = &profile.transport;
+    if let Some(secs) = transport.timeout_secs {
+        map.insert("timeout_secs".into(), secs.into());
+    }
+    if let Some(proxy) = &transport.proxy {
+        map.insert("proxy".into(), proxy.clone().into());
+    }
+    if let Some(path) = &transport.ca_bundle {
+        map.insert("ca_bundle".into(), path.clone().into());
+    }
+    if let Some(insecure) = transport.insecure {
+        map.insert("insecure".into(), insecure.into());
+    }
+    if let Some(suffix) = &transport.user_agent_suffix {
+        map.insert("user_agent_suffix".into(), suffix.clone().into());
     }
     insert_map(&mut map, "parameters", &profile.parameters);
     insert_map(&mut map, "server_variables", &profile.server_variables);

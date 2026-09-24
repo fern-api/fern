@@ -120,26 +120,24 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             .nth(1)
             .unwrap_or_else(|| panic!("no env footer in:\n{output}"));
 
-        // Spec-derived server variable, plus the profile-storable knobs the
-        // `profiles set` error already advertises — all marked `*`.
+        // Spec-derived server variable, plus every knob the `profiles set`
+        // error advertises — all marked `*`.
         for var in [
             "REGIONAL_REGION*",
             "REGIONAL_BASE_URL*",
             "REGIONAL_OUTPUT*",
             "REGIONAL_RETRIES*",
+            "REGIONAL_TIMEOUT_SECS*",
+            "REGIONAL_PROXY*",
+            "REGIONAL_CA_BUNDLE*",
+            "REGIONAL_INSECURE=1*",
+            "REGIONAL_USER_AGENT_SUFFIX*",
         ] {
             assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
         }
-        // Runtime-only knobs are listed without the marker.
-        for var in [
-            "REGIONAL_PROFILE ",
-            "REGIONAL_TIMEOUT_SECS ",
-            "REGIONAL_PROXY ",
-            "REGIONAL_CA_BUNDLE ",
-            "REGIONAL_INSECURE=1 ",
-        ] {
-            assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
-        }
+        // `_PROFILE` selects the profile, so it is the one var that is not
+        // itself a profile field.
+        assert!(footer.contains("REGIONAL_PROFILE "), "{footer}");
         assert!(
             footer.lines().any(|line| line
                 == "  REGIONAL_REGION*             Value for the {region} URL template variable (--region wins)"),
@@ -154,6 +152,70 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             1,
             "{output}"
         );
+    });
+}
+
+#[test]
+#[serial]
+fn transport_knobs_are_settable_and_shown_on_a_profile() {
+    with_temp_home(|| {
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_TIMEOUT_SECS=45",
+            "REGIONAL_PROXY=http://proxy.corp:3128",
+            "REGIONAL_CA_BUNDLE=/etc/ssl/corp.pem",
+            "REGIONAL_INSECURE=true",
+            "REGIONAL_USER_AGENT_SUFFIX=my-app/1.0",
+        ]);
+        assert_eq!(code, 0, "{output}");
+
+        let (code, output) = run(&["regional", "profiles", "show", "corp", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let shown: serde_json::Value = serde_json::from_str(output.trim()).expect("json");
+        assert_eq!(shown["timeout_secs"], 45);
+        assert_eq!(shown["proxy"], "http://proxy.corp:3128");
+        assert_eq!(shown["ca_bundle"], "/etc/ssl/corp.pem");
+        assert_eq!(shown["insecure"], true);
+        assert_eq!(shown["user_agent_suffix"], "my-app/1.0");
+
+        // Bad values are refused rather than stored inert.
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_TIMEOUT_SECS=soon",
+        ]);
+        assert_ne!(code, 0, "{output}");
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_INSECURE=maybe",
+        ]);
+        assert_ne!(code, 0, "{output}");
+    });
+}
+
+#[test]
+#[serial]
+fn an_unknown_prefixed_key_lists_the_transport_knobs_as_settable() {
+    with_temp_home(|| {
+        let (code, output) = run(&["regional", "profiles", "set", "corp", "REGIONAL_TIMEOUT=45"]);
+        assert_ne!(code, 0, "{output}");
+        for var in [
+            "REGIONAL_TIMEOUT_SECS",
+            "REGIONAL_PROXY",
+            "REGIONAL_CA_BUNDLE",
+            "REGIONAL_INSECURE",
+            "REGIONAL_USER_AGENT_SUFFIX",
+        ] {
+            assert!(output.contains(var), "missing `{var}` in:\n{output}");
+        }
     });
 }
 

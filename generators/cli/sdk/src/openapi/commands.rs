@@ -116,8 +116,10 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
 ///
-/// Rows marked `*` are the settings `profiles set` also accepts, so the
-/// footer and that command's validation error describe the same surface.
+/// Rows marked `*` are the settings `profiles set` also accepts (see
+/// `profiles::commands::fixed_profile_env_suffixes`), so the footer and that
+/// command's validation error describe the same surface. Only `_PROFILE`
+/// itself is env/flag-only.
 /// Server variables come from the spec (`servers[].variables`), which is
 /// where `<PREFIX>_REGION`-style vars originate.
 pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
@@ -167,23 +169,23 @@ pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
     rows.extend([
         (
             format!("{prefix}_CA_BUNDLE"),
-            false,
+            true,
             "Path to PEM file with extra trust roots (or SSL_CERT_FILE)".into(),
         ),
         (
             format!("{prefix}_INSECURE=1"),
-            false,
+            true,
             "Skip TLS verification (debugging only)".into(),
         ),
-        (format!("{prefix}_PROXY"), false, "HTTP(S) proxy URL".into()),
+        (format!("{prefix}_PROXY"), true, "HTTP(S) proxy URL".into()),
         (
             format!("{prefix}_TIMEOUT_SECS"),
-            false,
+            true,
             "Total request timeout".into(),
         ),
         (
             ua_env,
-            false,
+            true,
             format!("Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)"),
         ),
     ]);
