@@ -82,7 +82,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
-                    const docs = operation.description ?? this.resolveMessageDocs(message);
+                    const docs = this.resolveMessageDocs(message) ?? operation.description;
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
                         docs
@@ -278,14 +278,27 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     }
 
     private resolveMessageDocs(message: OpenAPIV3.ReferenceObject): string | undefined {
-        const resolved = this.context.resolveReference<AsyncAPIV3.ChannelMessage>({
-            reference: message,
-            breadcrumbs: this.breadcrumbs
-        });
-        if (!resolved.resolved) {
-            return undefined;
+        let current: OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage = message;
+        const seen = new Set<string>();
+        while (this.context.isReferenceObject(current)) {
+            if (seen.has(current.$ref)) {
+                return undefined;
+            }
+            seen.add(current.$ref);
+            const resolved:
+                | { resolved: true; value: OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage }
+                | { resolved: false } = this.context.resolveReference<
+                OpenAPIV3.ReferenceObject | AsyncAPIV3.ChannelMessage
+            >({
+                reference: current,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (!resolved.resolved) {
+                return undefined;
+            }
+            current = resolved.value;
         }
-        return resolved.value.description ?? resolved.value.summary;
+        return current.description ?? current.summary;
     }
 
     private resolveChannelServersFromReference(servers: OpenAPIV3.ReferenceObject[]): string | undefined {
