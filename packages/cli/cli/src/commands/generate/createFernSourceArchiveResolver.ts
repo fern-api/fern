@@ -55,12 +55,8 @@ export function createFernSourceArchiveResolver({
                 }
                 const specs = await workspace.getAllSpecsForGenerator(request.generatorInvocation.apiOverride?.specs);
                 if (request.sdkGenApiRoute.payloadKind === "sdk-config-v1") {
-                    const configTarget = sdkConfigV1?.targets.find(
-                        (target) => target.language === request.sdkGenApiRoute?.language
-                    );
                     validateSdkConfigImportSettings(specs, {
-                        clientPathParameterStyle:
-                            configTarget?.clientPathParameterStyle ?? sdkConfigV1?.clientPathParameterStyle
+                        clientPathParameterStyle: getClientPathParameterStyle(request, sdkConfigV1)
                     });
                 }
                 return specs;
@@ -141,6 +137,19 @@ export function createFernSourceArchiveResolver({
         }
         return { sourceArchives, errors };
     };
+}
+
+function getClientPathParameterStyle(
+    request: FernSourceArchiveRequest,
+    sdkConfigV1: FernSdkConfigV1Payload | undefined
+): "inline" | "wrapped" | "language-default" | undefined {
+    if (request.sdkConfigTargetIndex == null) {
+        return sdkConfigV1?.clientPathParameterStyle;
+    }
+    return (
+        sdkConfigV1?.targets[request.sdkConfigTargetIndex]?.clientPathParameterStyle ??
+        sdkConfigV1?.clientPathParameterStyle
+    );
 }
 
 function requestRequiresSourceArchive(request: FernSourceArchiveRequest): boolean {

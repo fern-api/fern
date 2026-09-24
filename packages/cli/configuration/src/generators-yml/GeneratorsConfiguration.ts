@@ -195,6 +195,7 @@ export interface GeneratorInvocation {
     /** Resolved automation configuration (generator → group → root → default true). */
     automation: ResolvedAutomationConfig;
     name: string;
+    sdkConfigTargetIndex?: number;
     /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
     containerImage: string | undefined;
     irVersionOverride: string | undefined;
