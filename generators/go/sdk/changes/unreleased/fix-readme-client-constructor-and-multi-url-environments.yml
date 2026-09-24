@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated README's client snippets use the configured client constructor (`clientName`,
+    `exportedClientName`, `clientConstructorName`) instead of always writing `client.NewClient`,
+    and the Environments section of a multi-URL SDK passes the environment through
+    `option.WithEnvironment` instead of `option.WithBaseURL`, which takes a string and does not
+    compile against an environment struct.
+  type: fix

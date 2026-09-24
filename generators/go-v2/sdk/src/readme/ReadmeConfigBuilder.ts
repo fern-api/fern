@@ -35,7 +35,7 @@ export class ReadmeConfigBuilder {
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
-                description: feature.description,
+                description: this.getFeatureDescription({ context, feature }),
                 addendum: addendumsByFeatureId[feature.id] ?? feature.addendum,
                 snippets: snippetsForFeature,
                 snippetsAreOptional: false
@@ -56,6 +56,30 @@ export class ReadmeConfigBuilder {
             customSections: getCustomSections(context),
             features
         };
+    }
+
+    /**
+     * features.yml describes environments in terms of `option.WithBaseURL`, which takes the
+     * string a single-URL environment constant is. A multi-URL environment is a struct with one
+     * URL per service, and the client takes it through `option.WithEnvironment`.
+     */
+    private getFeatureDescription({
+        context,
+        feature
+    }: {
+        context: SdkGeneratorContext;
+        feature: FernGeneratorCli.FeatureSpec;
+    }): string | undefined {
+        if (feature.id === ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID && context.isMultipleBaseUrlsEnvironment()) {
+            return [
+                "You can choose between different environments by passing one of the predefined `Environments` to the",
+                "`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.",
+                "`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in",
+                "test environments.",
+                ""
+            ].join("\n");
+        }
+        return feature.description;
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
