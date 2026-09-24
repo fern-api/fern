@@ -137,6 +137,13 @@ if (
     process.exit(result.status ?? 1);
 }
 
+// libuv sizes its threadpool (async fs, zlib, dns) lazily on first use, so
+// this takes effect as long as it runs before any async I/O. The default of 4
+// is a bottleneck for the highly concurrent file reads in docs validation.
+if (process.env.UV_THREADPOOL_SIZE == null) {
+    process.env.UV_THREADPOOL_SIZE = "8";
+}
+
 void runCli();
 
 async function runCli() {
@@ -2805,13 +2812,14 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create an SDK Config v1 file from one or more resolved Fern SDK groups",
+        "Create one SDK Config v1 file from one or more compatible Fern SDK groups",
         (yargs) =>
             yargs
                 .option("group", {
                     type: "string",
                     array: true,
-                    description: "An SDK group to migrate; repeat to consolidate compatible groups"
+                    description:
+                        "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
                 })
                 .option("api", {
                     type: "string",

@@ -1,4 +1,8 @@
-import { anyOfIsPresenceConstraint } from "@fern-api/core-utils";
+import {
+    anyOfIsPresenceConstraint,
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
+} from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     type Availability,
@@ -940,6 +944,34 @@ export function convertSchemaObject(
         }
 
         const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
+
+        // A oneOf whose branches only mark sibling properties as required (e.g.
+        // `oneOf: [{ required: [domain] }, { required: [phone] }]`) is an "exactly one
+        // of" constraint over the declared object, not a set of variants. Converting
+        // it as a union produces shapeless variants and drops every sibling property.
+        // See oneOfIsPresenceConstraint.
+        if (isDiscriminated !== true && oneOfIsPresenceConstraint(schema)) {
+            context.logger.debug(
+                `Treating the oneOf at ${breadcrumbs.join(".")} as an "exactly one of" constraint over its ` +
+                    `sibling properties rather than a union, and converting the schema as an object.`
+            );
+            const alwaysRequired = requiredByPresenceConstraint(schema);
+            const { oneOf: _constraint, ...schemaWithoutOneOf } = schema;
+            if (alwaysRequired.length > 0) {
+                schemaWithoutOneOf.required = [...new Set([...(schemaWithoutOneOf.required ?? []), ...alwaysRequired])];
+            }
+            const convertedSchema = convertSchema(
+                schemaWithoutOneOf,
+                wrapAsOptional,
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                source,
+                namespace,
+                referencedAsRequest
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
+        }
 
         // handle oneOf with IS_DISCRIMINATED extension
         if (schema.oneOf != null && schema.oneOf.length > 0) {
