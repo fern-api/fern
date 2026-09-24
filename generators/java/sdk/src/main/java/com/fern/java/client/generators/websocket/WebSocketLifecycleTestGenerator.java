@@ -33,7 +33,7 @@ public class WebSocketLifecycleTestGenerator extends AbstractFileGenerator {
                     .testFile(true)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read WebSocketLifecycleTest.Template.java");
+            throw new RuntimeException("Failed to read WebSocketLifecycleTest.Template.java", e);
         }
     }
 }
