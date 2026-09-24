@@ -23,8 +23,8 @@ export declare namespace LazyFernWorkspace {
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public type: string = "fern";
     private context: TaskContext;
+    public allSpecs: Spec[] = [];
     private fernWorkspaces: Record<string, FernWorkspace> = {};
-    private specsFromDependencies: Record<string, Spec[]> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;
 
     constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
@@ -122,20 +122,19 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                 workspaceName: this.workspaceName,
                 definition,
                 cliVersion: this.cliVersion,
-                sources: []
+                sources: processPackageMarkersResult.sources
             });
 
             this.fernWorkspaces[key] = workspace;
-            this.specsFromDependencies[key] = processPackageMarkersResult.specs;
+            this.allSpecs = processPackageMarkersResult.specs;
         }
 
         return workspace;
     }
 
     public async getSourceSpecs(): Promise<Spec[]> {
-        const settings = undefined;
-        await this.toFernWorkspace({ context: this.context }, settings);
-        const specs = this.specsFromDependencies[hash(settings ?? {})] ?? [];
+        await this.toFernWorkspace({ context: this.context });
+        const specs = this.allSpecs;
         if (specs.length === 0) {
             throw new CliError({
                 message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes no spec-bearing dependencies, so it exposes no source specs`,

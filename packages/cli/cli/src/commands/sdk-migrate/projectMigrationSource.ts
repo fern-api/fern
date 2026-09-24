@@ -255,7 +255,7 @@ function hoistSharedApiImportSettings(specs: SdkConfigV1SourceSpec[]): SdkConfig
 function hasSpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
     allSpecs: Spec[];
 } {
-    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs);
+    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs) && workspace.allSpecs.length > 0;
 }
 
 function resolveWorkspaceSpec(

@@ -1,4 +1,4 @@
-import { FernDefinition, FernWorkspace, type Spec } from "@fern-api/api-workspace-commons";
+import { FernDefinition, FernWorkspace, type IdentifiableSource, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, extractErrorMessage, noop, visitObject } from "@fern-api/core-utils";
@@ -30,6 +30,7 @@ export declare namespace loadDependency {
         didSucceed: true;
         definition: FernDefinition;
         specs: Spec[];
+        sources: IdentifiableSource[];
     }
 
     export interface FailedResult {
@@ -57,6 +58,7 @@ export async function loadDependency({
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let specs: Spec[] = [];
+    let sources: IdentifiableSource[] = [];
     let failure: WorkspaceLoader.DependencyFailure = {
         type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
         dependencyName
@@ -93,6 +95,7 @@ export async function loadDependency({
                         });
                         definition = loaded?.definition;
                         specs = loaded?.specs ?? [];
+                        sources = loaded?.sources ?? [];
                         return;
                     }
                     default:
@@ -103,7 +106,7 @@ export async function loadDependency({
     }
 
     if (definition != null) {
-        return { didSucceed: true, definition, specs };
+        return { didSucceed: true, definition, specs, sources };
     } else {
         return { didSucceed: false, failure };
     }
@@ -137,7 +140,7 @@ async function validateLocalDependencyAndGetDefinition({
     context: TaskContext;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
-}): Promise<{ definition: FernDefinition; specs: Spec[] } | undefined> {
+}): Promise<{ definition: FernDefinition; specs: Spec[]; sources: IdentifiableSource[] } | undefined> {
     if (loadAPIWorkspace == null) {
         context.failWithoutThrowing("Failed to load api definition", undefined, {
             code: CliError.Code.ResolutionError
@@ -171,11 +174,11 @@ async function validateLocalDependencyAndGetDefinition({
     );
     context.logger.info("Loaded...");
 
-    return { definition, specs: getSpecsExposedByWorkspace(dependencyWorkspace) };
-}
-
-function getSpecsExposedByWorkspace(workspace: WorkspaceLoader.SuccessfulResult["workspace"]): Spec[] {
-    return workspace instanceof OSSWorkspace ? workspace.allSpecs : [];
+    return {
+        definition,
+        specs: dependencyWorkspace instanceof OSSWorkspace ? dependencyWorkspace.allSpecs : [],
+        sources: dependencyWorkspace instanceof OSSWorkspace ? dependencyWorkspace.sources : []
+    };
 }
 
 async function validateVersionedDependencyAndGetDefinition({

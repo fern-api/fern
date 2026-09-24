@@ -1,4 +1,4 @@
-import { FernDefinition, ParsedFernFile, type Spec } from "@fern-api/api-workspace-commons";
+import { FernDefinition, type IdentifiableSource, ParsedFernFile, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { entries, keys } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
@@ -20,6 +20,7 @@ export declare namespace processPackageMarkers {
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
         importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
         specs: Spec[];
+        sources: IdentifiableSource[];
     }
 
     export interface FailedResult {
@@ -51,6 +52,7 @@ export async function processPackageMarkers({
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
     const specsByNamespace: Record<RelativeFilePath, Spec[]> = {};
+    const sourcesByNamespace: Record<RelativeFilePath, IdentifiableSource[]> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -99,6 +101,7 @@ export async function processPackageMarkers({
                             specsByNamespace[namespace] = loadDependencyResult.specs.map((spec) =>
                                 withNamespace(spec, namespace)
                             );
+                            sourcesByNamespace[namespace] = loadDependencyResult.sources;
                         } else {
                             failures[pathOfPackageMarker] = loadDependencyResult.failure;
                         }
@@ -118,7 +121,8 @@ export async function processPackageMarkers({
             didSucceed: true,
             packageMarkers,
             importedDefinitions,
-            specs: flattenSpecsInNamespaceOrder(specsByNamespace)
+            specs: flattenInNamespaceOrder(specsByNamespace),
+            sources: flattenInNamespaceOrder(sourcesByNamespace)
         };
     }
 }
@@ -127,8 +131,8 @@ function withNamespace(spec: Spec, namespace: string): Spec {
     return spec.type === "protobuf" ? spec : { ...spec, namespace };
 }
 
-function flattenSpecsInNamespaceOrder(specsByNamespace: Record<RelativeFilePath, Spec[]>): Spec[] {
-    return keys(specsByNamespace)
+function flattenInNamespaceOrder<T>(byNamespace: Record<RelativeFilePath, T[]>): T[] {
+    return keys(byNamespace)
         .sort()
-        .flatMap((namespace) => specsByNamespace[namespace] ?? []);
+        .flatMap((namespace) => byNamespace[namespace] ?? []);
 }

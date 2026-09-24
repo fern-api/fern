@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
 
 import { mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
+import { resolveMigrationSourceSpecs } from "../projectMigrationSource.js";
 
 const CLI_VERSION = "0.0.0";
 const COMPOSED_WORKSPACE = join(
@@ -40,7 +41,7 @@ function openApiSpec(absoluteFilepath: string): OpenAPISpec {
     };
 }
 
-async function composedWorkspaceDefinition() {
+async function composedWorkspace(): Promise<LazyFernWorkspace> {
     const specsByDirectoryName: Record<string, Spec[]> = {
         "empathic-voice-interface": [
             openApiSpec(join(COMPOSED_WORKSPACE, RelativeFilePath.of("../empathic-voice-interface/evi-openapi.json")))
@@ -71,6 +72,11 @@ async function composedWorkspaceDefinition() {
             };
         }
     });
+    return workspace;
+}
+
+async function composedWorkspaceDefinition() {
+    const workspace = await composedWorkspace();
     const fernWorkspace = await workspace.toFernWorkspace({ context: createTaskContextRunningInteractiveTasks() });
     return fernWorkspace.definition;
 }
@@ -145,6 +151,24 @@ describe("SDK Config from a composed workspace", () => {
                     { name: "tts", url: "wss://api.hume.ai/v0/tts" }
                 ]
             }
+        ]);
+    });
+
+    it("resolves migration source specs namespaced by dependency, with AsyncAPI detected as such", async () => {
+        const workspace = await composedWorkspace();
+        const fernWorkspace = await workspace.toFernWorkspace({
+            context: createTaskContextRunningInteractiveTasks()
+        });
+
+        const specs = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace,
+            generator: typescriptGenerator()
+        });
+
+        expect(specs.map((spec) => [spec.namespace, spec.type])).toEqual([
+            ["empathic-voice", "openapi"],
+            ["tts", "openapi"]
         ]);
     });
 });
