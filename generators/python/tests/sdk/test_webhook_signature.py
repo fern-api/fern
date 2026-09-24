@@ -534,7 +534,11 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
             self.name = name
             self.signature_verification = ir_types.WebhookSignatureVerification.factory.hmac(config)
 
+    class _FakeSdkConfig:
+        webhook_signature_verification = None
+
     class _FakeIr:
+        sdk_config = _FakeSdkConfig()
         webhook_groups = {
             "group": [
                 _FakeWebhook(_webhook_name("SmsSent"), config_a),
@@ -583,3 +587,51 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
     ):
         matching = [path for path, body in written_files.items() if f"class {class_name}:" in body]
         assert matching == [f"webhooks/{expected_module}.py"], (class_name, matching)
+
+
+def test_api_wide_config_generates_default_helper_without_webhooks() -> None:
+    """
+    `api.settings.webhook-signature` (IR sdk_config.webhook_signature_verification) must produce the
+    shared WebhooksHelper even when the definition models zero webhooks.
+    """
+    import fern.ir.resources as ir_types
+
+    from fern_python.generators.sdk.webhooks_helper_generator import (
+        WEBHOOKS_HELPER_FILE_NAME,
+        WebhooksHelperGenerator,
+    )
+
+    class _FakeSdkConfig:
+        webhook_signature_verification = ir_types.WebhookSignatureVerification.factory.hmac(_hmac_config())
+
+    class _FakeIr:
+        sdk_config = _FakeSdkConfig()
+        webhook_groups: typing.Dict[str, typing.List[typing.Any]] = {}
+
+    class _FakeContext:
+        ir = _FakeIr()
+
+    written_files: typing.Dict[str, str] = {}
+    root_init_exports: typing.List[str] = []
+
+    class _FakeProject:
+        def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
+            parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
+            return "/".join(parts)
+
+        def add_file(self, filepath: str, contents: str) -> None:
+            written_files[filepath] = contents
+
+        def register_export_in_project(self, filepath_in_project: typing.Any, exports: typing.Set[str]) -> None:
+            pass
+
+        def add_init_exports(self, path: typing.Any, exports: typing.Any) -> None:
+            for export in exports:
+                root_init_exports.extend(export.imports)
+
+    generator = WebhooksHelperGenerator(context=_FakeContext(), project=_FakeProject())  # type: ignore[arg-type]
+    generator.generate()
+
+    assert list(written_files.keys()) == [f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
+    assert "class WebhooksHelper:" in written_files[f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
+    assert root_init_exports == ["WebhooksHelper"]

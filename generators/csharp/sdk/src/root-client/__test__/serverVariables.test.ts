@@ -39,6 +39,7 @@ function multipleBaseUrls(
 ): FernIr.EnvironmentsConfig {
     return {
         defaultEnvironment: "prod",
+        baseUrlEnvVar: undefined,
         environments: FernIr.Environments.multipleBaseUrls({
             baseUrls: [
                 { id: "base", name: "base" },
@@ -63,6 +64,7 @@ function multipleBaseUrls(
 function singleBaseUrl(urlVariables: FernIr.ServerVariable[], urlTemplate?: string): FernIr.EnvironmentsConfig {
     return {
         defaultEnvironment: "prod",
+        baseUrlEnvVar: undefined,
         environments: FernIr.Environments.singleBaseUrl({
             environments: [
                 {

@@ -16,6 +16,7 @@ interface WebhookVerificationEntry {
 interface WebhooksHelperGeneratorContext {
     readonly ir: {
         webhookGroups: Record<FernIr.WebhookGroupId, Array<Pick<FernIr.Webhook, "name" | "signatureVerification">>>;
+        sdkConfig: Pick<FernIr.SdkConfig, "webhookSignatureVerification">;
     };
     readonly customConfig: BasePhpCustomConfigSchema;
     readonly case: {
@@ -53,6 +54,15 @@ export class WebhooksHelperGenerator {
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
 
+        // The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        // default WebhooksHelper, even when the definition models no webhooks.
+        const apiWideConfig = this.context.ir.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig?.type === "hmac") {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(this.context.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;
@@ -81,12 +91,14 @@ export class WebhooksHelperGenerator {
             }
         }
 
-        let defaultEntry: WebhookVerificationEntry | undefined;
-        let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                defaultEntry = entry;
-                maxCount = entry.webhookNames.length;
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
+        if (defaultEntry == null) {
+            let maxCount = 0;
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    defaultEntry = entry;
+                    maxCount = entry.webhookNames.length;
+                }
             }
         }
 

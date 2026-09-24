@@ -84,7 +84,7 @@ const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API De
 
 interface WebhookVerificationEntry {
     config: FernIr.WebhookSignatureVerification;
-    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+    webhookNames: FernIr.WebhookName[];
 }
 
 export interface ResolvedNaming {
@@ -1829,6 +1829,9 @@ export class SdkGenerator {
         // Generate named override helpers
         for (const overrideEntry of overrideEntries) {
             const [firstWebhookName] = overrideEntry.webhookNames;
+            if (firstWebhookName == null) {
+                continue;
+            }
             const className = `${this.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
             const overrideReferencer = new WebhooksHelperDeclarationReferencer({
                 containingDirectory: [],
