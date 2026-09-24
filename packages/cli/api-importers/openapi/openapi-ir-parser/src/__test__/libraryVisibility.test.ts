@@ -251,4 +251,49 @@ describe("parse honors x-twilio.libraryVisibility", () => {
         expect(result.schemas).toEqual(["Account", "HiddenThing", "PrivateThing", "UntaggedThing"]);
         expect(result.accountProperties).toEqual(["debug", "internal_flags", "sid"]);
     });
+
+    it("warns when an included element references a schema excluded by visibility", () => {
+        const logger = createLogger();
+        const dangling: OpenAPIV3.Document = {
+            openapi: "3.0.0",
+            info: { title: "Dangling", version: "1.0.0" },
+            paths: {
+                "/public": {
+                    get: {
+                        operationId: "getPublic",
+                        responses: {
+                            "200": {
+                                description: "ok",
+                                content: {
+                                    "application/json": { schema: { $ref: "#/components/schemas/PrivateThing" } }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            components: {
+                schemas: {
+                    PrivateThing: { type: "object", ...twilio("private"), properties: { id: { type: "string" } } }
+                }
+            }
+        };
+        const ir = parse({
+            context: { logger } as unknown as TaskContext,
+            documents: [
+                {
+                    type: "openapi",
+                    value: dangling,
+                    source: Source.openapi({ file: "test.yml" }),
+                    settings: { ...DEFAULT_PARSE_OPENAPI_SETTINGS }
+                }
+            ],
+            options: { libraryVisibility: "public" }
+        });
+        expect(ir.endpoints).toHaveLength(1);
+        expect(Object.keys(ir.groupedSchemas.rootSchemas)).toEqual([]);
+        expect(logger.warn).toHaveBeenCalledWith(
+            expect.stringContaining('Schema PrivateThing has libraryVisibility "private" and was excluded')
+        );
+    });
 });

@@ -43,7 +43,7 @@ export function getLibraryVisibility({
     }
     if (!isLibraryVisibility(value)) {
         logger.warn(
-            `${breadcrumbs.join(".")} has an unrecognized ${TwilioOpenAPIExtension.TWILIO}.libraryVisibility value "${String(value)}"; expected one of ${LIBRARY_VISIBILITY_VALUES.join(", ")}. Treating as public.`
+            `${breadcrumbs.join(".")} has an unrecognized ${TwilioOpenAPIExtension.TWILIO}.libraryVisibility value "${String(value)}"; expected one of ${LIBRARY_VISIBILITY_VALUES.join(", ")}. Ignoring it; the visibility inherited from the enclosing path item or info object (or "public") applies.`
         );
         return undefined;
     }
