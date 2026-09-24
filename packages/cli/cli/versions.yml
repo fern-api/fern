@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.136.0
+  changelogEntry:
+    - summary: |
+        Support secure SDK Config v1 direct publishing to npm, Maven, PyPI, and crates.io through sdk-gen-api.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 5.135.1
   changelogEntry:
     - summary: |
