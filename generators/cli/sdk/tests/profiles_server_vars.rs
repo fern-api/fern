@@ -141,6 +141,11 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
         }
         assert!(
+            footer.lines().any(|line| line
+                == "  REGIONAL_REGION*             Value for the {region} URL template variable (--region wins)"),
+            "{footer}"
+        );
+        assert!(
             footer.contains("regional profiles set <name> VAR=value"),
             "{footer}"
         );

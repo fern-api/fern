@@ -150,8 +150,12 @@ pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
         ),
     ];
     for var in crate::openapi::app::collect_spec_server_variables(doc) {
+        let name = format!("{prefix}_{}", crate::text::to_screaming_snake(&var.name));
+        if rows.iter().any(|(existing, _, _)| *existing == name) {
+            continue;
+        }
         rows.push((
-            format!("{prefix}_{}", crate::text::to_screaming_snake(&var.name)),
+            name,
             true,
             format!(
                 "Value for the {{{}}} URL template variable (--{} wins)",
