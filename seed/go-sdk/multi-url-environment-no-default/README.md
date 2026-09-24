@@ -55,12 +55,14 @@ func do() {
 
 ## Environments
 
-You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
-URL, which is particularly useful in test environments.
+You can choose between different environments by passing one of the predefined `Environments` to the
+`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.
+`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in
+test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(multiurlenvironmentnodefault.Environments.Production),
+    option.WithEnvironment(multiurlenvironmentnodefault.Environments.Production),
 )
 ```
 

@@ -298,7 +298,7 @@ You can choose between different environments by using the `option.WithBaseURL` 
 URL, which is particularly useful in test environments.
 
 ```go
-client := client.NewClient(
+client := client.New(
     option.WithBaseURL(examples.Environments.Production),
 )
 ```
@@ -333,7 +333,7 @@ specified on the client so that they're applied on every request, or for an indi
 
 ```go
 // Specify default options applied on every request.
-client := client.NewClient(
+client := client.New(
     option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
@@ -392,7 +392,7 @@ over the default exponential backoff.
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
-client := client.NewClient(
+client := client.New(
     option.WithMaxAttempts(1),
 )
 
