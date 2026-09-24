@@ -14,6 +14,10 @@ import (
 // newRequestTypeEndpointForTest builds an IR endpoint whose wrapped request
 // has an inlined body with the given properties.
 func newRequestTypeEndpointForTest(wrapperName string, properties []*ir.InlinedRequestBodyProperty) *ir.HttpEndpoint {
+	return newRequestTypeEndpointWithExtraPropertiesForTest(wrapperName, properties, false)
+}
+
+func newRequestTypeEndpointWithExtraPropertiesForTest(wrapperName string, properties []*ir.InlinedRequestBodyProperty, extraProperties bool) *ir.HttpEndpoint {
 	name := func(s string) *common.Name {
 		return &common.Name{
 			OriginalName: s,
@@ -35,8 +39,9 @@ func newRequestTypeEndpointForTest(wrapperName string, properties []*ir.InlinedR
 		RequestBody: &ir.HttpRequestBody{
 			Type: "inlinedRequestBody",
 			InlinedRequestBody: &ir.InlinedRequestBody{
-				Name:       name(wrapperName),
-				Properties: properties,
+				Name:            name(wrapperName),
+				Properties:      properties,
+				ExtraProperties: extraProperties,
 			},
 		},
 	}
@@ -186,6 +191,18 @@ func TestRequestTypeDateRoundTrip(t *testing.T) {
 		),
 	)
 
+	extraSrc := requestTypeSourceForTest(
+		t,
+		newRequestTypeEndpointWithExtraPropertiesForTest(
+			"TransactionsSearchRequest",
+			[]*ir.InlinedRequestBodyProperty{
+				newInlinedRequestBodyPropertyForTest("start_date", "StartDate", dateTypeForTest),
+				newInlinedRequestBodyPropertyForTest("end_date", "EndDate", optionalDateTypeForTest),
+			},
+			true,
+		),
+	)
+
 	const mainSource = `package main
 
 import (
@@ -196,6 +213,20 @@ import (
 )
 
 func main() {
+	var search TransactionsSearchRequest
+	if err := json.Unmarshal([]byte(` + "`" + `{"start_date":"2026-01-02","end_date":"2026-01-03","unknown":"x"}` + "`" + `), &search); err != nil {
+		fmt.Println("extra-properties unmarshal:", err)
+		os.Exit(1)
+	}
+	if got := search.StartDate.Format("2006-01-02"); got != "2026-01-02" || search.EndDate == nil {
+		fmt.Printf("extra-properties dates: %+v\n", search)
+		os.Exit(1)
+	}
+	if extra := search.ExtraProperties; len(extra) != 1 || extra["unknown"] != "x" {
+		fmt.Printf("date keys leaked into extra properties: %v\n", extra)
+		os.Exit(1)
+	}
+
 	var req TransactionsGetRequest
 	if err := json.Unmarshal([]byte(` + "`" + `{"start_date":"2026-01-02","created_at":"2026-01-02T03:04:05.123456789Z"}` + "`" + `), &req); err != nil {
 		fmt.Println("date-only unmarshal:", err)
@@ -255,6 +286,8 @@ func main() {
 	files := map[string]string{
 		"go.mod":               "module github.com/acme/test\n\ngo 1.18\n",
 		"requests.go":          src,
+		"requests_extra.go":    extraSrc,
+		"internal/extra.go":    extraPropertiesFile,
 		"main.go":              mainSource,
 		"internal/time.go":     timeFile,
 		"internal/explicit.go": explicitFieldsFile,
