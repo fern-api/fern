@@ -3,11 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from fern_python.codegen.license_detector import (
-    SPDX_CLASSIFIERS,
-    detect_spdx_license,
-    detect_spdx_license_from_file,
-)
+from fern_python.codegen.license_detector import detect_spdx_license, detect_spdx_license_from_file
 
 
 @pytest.mark.parametrize(
@@ -27,11 +23,6 @@ from fern_python.codegen.license_detector import (
 )
 def test_detect_spdx_license(content: str, expected: str | None) -> None:
     assert detect_spdx_license(content) == expected
-
-
-def test_every_detected_license_has_a_classifier() -> None:
-    for spdx_id in ("Apache-2.0", "MIT", "BSD-3-Clause", "BSD-2-Clause", "GPL-3.0-only", "GPL-2.0-only", "MPL-2.0", "ISC"):
-        assert spdx_id in SPDX_CLASSIFIERS
 
 
 def test_detect_from_file_uses_first_existing_path() -> None:

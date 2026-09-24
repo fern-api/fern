@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, cast
+from typing import List
 
-from fern_python.codegen.license_detector import SPDX_CLASSIFIERS
 from fern_python.version import get_matching_python_versions
-
-from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
 
 
 class PyPIClassifierMetadataGenerator:
@@ -33,42 +30,23 @@ class PyPIClassifierMetadataGenerator:
         "Programming Language :: Python :: 3",
     ]
 
-    # Mapping from LicenseId to PyPI classifier string
-    LICENSE_CLASSIFIERS: Dict[LicenseId, str] = {
-        LicenseId.MIT: "License :: OSI Approved :: MIT License",
-        LicenseId.APACHE_2: "License :: OSI Approved :: Apache Software License",
-    }
-
     @staticmethod
-    def create_classifiers(
-        python_version: str,
-        license_: Optional[LicenseConfig] = None,
-        detected_spdx_license: Optional[str] = None,
-    ) -> List[str]:
+    def create_classifiers(python_version: str) -> List[str]:
         """
         Generate the complete list of PyPI classifiers for pyproject.toml.
+        License is declared via the PEP 639 `[project] license` expression, not a classifier.
 
         Args:
             python_version: A version constraint string like "^3.8", ">=3.9", etc.
-            license_: Optional license configuration.
-            detected_spdx_license: SPDX id detected from a custom license file, if any.
 
         Returns:
             A complete list of classifier strings.
         """
-        classifiers: List[str] = [
+        return [
             *PyPIClassifierMetadataGenerator.CLASSIFIERS_PREFIX,
             *PyPIClassifierMetadataGenerator._create_python_programming_language_classifiers(python_version),
             *PyPIClassifierMetadataGenerator.CLASSIFIERS_SUFFIX,
         ]
-
-        license_classifier = PyPIClassifierMetadataGenerator._get_license_classifier(license_)
-        if license_classifier is None and detected_spdx_license is not None:
-            license_classifier = SPDX_CLASSIFIERS.get(detected_spdx_license)
-        if license_classifier is not None:
-            classifiers.append(license_classifier)
-
-        return classifiers
 
     @staticmethod
     def _create_python_programming_language_classifiers(python_version_constraint: str) -> List[str]:
@@ -81,16 +59,3 @@ class PyPIClassifierMetadataGenerator:
             classifiers.append(f"Programming Language :: Python :: {py_version.spec.to_string()}")
 
         return classifiers
-
-    @staticmethod
-    def _get_license_classifier(license_: Optional[LicenseConfig]) -> Optional[str]:
-        """Get the license classifier string if applicable."""
-        if license_ is None:
-            return None
-
-        license_union = license_.get_as_union()
-        if license_union.type != "basic":
-            return None
-
-        license_id = cast(BasicLicense, license_union).id
-        return PyPIClassifierMetadataGenerator.LICENSE_CLASSIFIERS.get(license_id)
