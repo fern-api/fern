@@ -1,4 +1,4 @@
-import type { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import type { HttpMethod, IdempotencyKeyGeneration } from "@fern-api/ir-sdk";
@@ -202,7 +202,28 @@ export function getWebhookSignatureFromGeneratorConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation,
     context: TaskContext
 ): RawSchemas.WebhookSignatureSchema | undefined {
-    const value = generatorInvocation.webhookSignatureConfig;
+    return parseWebhookSignatureSetting(generatorInvocation.webhookSignatureConfig, context);
+}
+
+/**
+ * Resolves `api.settings.webhook-signature` straight from a loaded generators.yml, for code paths
+ * that are not tied to a generator invocation (e.g. `fern generate-ir`).
+ */
+export function getWebhookSignatureFromGeneratorsConfiguration(
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined,
+    context: TaskContext
+): RawSchemas.WebhookSignatureSchema | undefined {
+    const api = generatorsConfiguration?.rawConfiguration.api;
+    if (api == null || !generatorsYml.isApiConfigurationV2Schema(api)) {
+        return undefined;
+    }
+    return parseWebhookSignatureSetting(api.settings?.["webhook-signature"], context);
+}
+
+function parseWebhookSignatureSetting(
+    value: unknown,
+    context: TaskContext
+): RawSchemas.WebhookSignatureSchema | undefined {
     if (value == null) {
         return undefined;
     }

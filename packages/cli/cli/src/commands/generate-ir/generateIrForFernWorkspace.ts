@@ -2,6 +2,7 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -15,7 +16,8 @@ export async function generateIrForFernWorkspace({
     disableExamples,
     audiences,
     readme,
-    disableDynamicExamples
+    disableDynamicExamples,
+    webhookSignature
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -26,6 +28,7 @@ export async function generateIrForFernWorkspace({
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
     disableDynamicExamples: boolean;
+    webhookSignature?: RawSchemas.WebhookSignatureSchema;
 }): Promise<IntermediateRepresentation> {
     await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
     return generateIntermediateRepresentation({
@@ -40,6 +43,7 @@ export async function generateIrForFernWorkspace({
         packageName: undefined,
         context,
         sourceResolver: new SourceResolverImpl(context, workspace),
-        disableDynamicExamples
+        disableDynamicExamples,
+        webhookSignature
     });
 }

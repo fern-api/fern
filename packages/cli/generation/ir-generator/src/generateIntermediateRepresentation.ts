@@ -92,7 +92,9 @@ export declare namespace generateIntermediateRepresentation {
         /**
          * API-wide webhook signature scheme from `api.settings.webhook-signature` in generators.yml.
          * Converted into `sdkConfig.webhookSignatureVerification` so generators emit the shared
-         * verification helper without any webhooks declared in the API definition.
+         * verification helper without any webhooks declared in the API definition. Also the
+         * fallback scheme for modeled webhooks that declare none (webhook `signature` and the
+         * definition-file `webhook-signature` take precedence).
          */
         webhookSignature?: RawSchemas.WebhookSignatureSchema;
         /** Organization name from fern.config.json, used for {organization} in user-agent template. */
@@ -399,7 +401,7 @@ export function generateIntermediateRepresentation({
                     typeResolver,
                     exampleResolver,
                     workspace,
-                    defaultSignature: file.definitionFile["webhook-signature"]
+                    defaultSignature: file.definitionFile["webhook-signature"] ?? webhookSignature
                 });
 
                 const webhooksByOriginalName: Record<string, Webhook> = {};
