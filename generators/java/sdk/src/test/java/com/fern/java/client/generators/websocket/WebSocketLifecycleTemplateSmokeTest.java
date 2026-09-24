@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.tools.FileObject;
 import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
@@ -40,19 +41,29 @@ public class WebSocketLifecycleTemplateSmokeTest {
 
     private static final String CLIENT_OPTIONS_STAND_IN = "package " + CORE_PACKAGE + ";\n"
             + "import java.util.List;\n"
+            + "import java.util.Map;\n"
             + "import java.util.Set;\n"
             + "import java.util.ArrayList;\n"
             + "import java.util.concurrent.ConcurrentHashMap;\n"
             + "import java.util.concurrent.atomic.AtomicBoolean;\n"
             + "public final class ClientOptions {\n"
             + "  public static final String CLOSED_MESSAGE = \"root client has been closed\";\n"
+            // Mirrors the real fix: keyed by the shared OkHttpClient instance (identity), not per-ClientOptions,
+            // so Builder.from(...) siblings that copy the same httpClient see the same close().
+            + "  private static final Map<okhttp3.OkHttpClient, AtomicBoolean> CLOSED_BY_CLIENT = new"
+            + " ConcurrentHashMap<>();\n"
+            + "  private static final Map<okhttp3.OkHttpClient, Set<AutoCloseable>> OPEN_WEB_SOCKETS_BY_CLIENT ="
+            + " new ConcurrentHashMap<>();\n"
             + "  private final okhttp3.OkHttpClient okHttpClient;\n"
             + "  private final boolean ownsHttpClient;\n"
-            + "  private final AtomicBoolean closed = new AtomicBoolean(false);\n"
-            + "  private final Set<AutoCloseable> openWebSockets = ConcurrentHashMap.newKeySet();\n"
+            + "  private final AtomicBoolean closed;\n"
+            + "  private final Set<AutoCloseable> openWebSockets;\n"
             + "  private ClientOptions(okhttp3.OkHttpClient okHttpClient, boolean ownsHttpClient) {\n"
             + "    this.okHttpClient = okHttpClient;\n"
             + "    this.ownsHttpClient = ownsHttpClient;\n"
+            + "    this.closed = CLOSED_BY_CLIENT.computeIfAbsent(okHttpClient, unused -> new AtomicBoolean(false));\n"
+            + "    this.openWebSockets = OPEN_WEB_SOCKETS_BY_CLIENT.computeIfAbsent(okHttpClient, unused ->"
+            + " ConcurrentHashMap.newKeySet());\n"
             + "  }\n"
             + "  public okhttp3.OkHttpClient httpClient() { return okHttpClient; }\n"
             + "  public boolean isClosed() { return closed.get(); }\n"
@@ -151,6 +162,48 @@ public class WebSocketLifecycleTemplateSmokeTest {
         assertThat(failures)
                 .as("all @Test methods in the generated WebSocketLifecycleTest.Template.java must pass; ran: %s", ran)
                 .isEmpty();
+    }
+
+    /**
+     * Regression test for Devin Review's "derived clients reconnect against closed dispatcher" finding:
+     * ClientOptions.Builder.from(...) copies the httpClient reference into a sibling, but (before the fix) each
+     * ClientOptions had its own fresh closed flag and openWebSockets set, so closing one sibling shut down their shared
+     * dispatcher while the other sibling's sockets stayed "open" and kept trying to reconnect against it. Simulates two
+     * siblings sharing one httpClient (as Builder.from(...) produces) against the CLIENT_OPTIONS_STAND_IN, which
+     * mirrors the real fix's CLOSED_BY_CLIENT/OPEN_WEB_SOCKETS_BY_CLIENT sharing.
+     */
+    @Test
+    void closingOneSiblingClosesTheOtherSiblingsSocketsToo() throws Exception {
+        ClassLoader loader = compile(Map.of(CORE_PACKAGE + ".ClientOptions", CLIENT_OPTIONS_STAND_IN));
+        Class<?> clientOptionsClass = loader.loadClass(CORE_PACKAGE + ".ClientOptions");
+        Object builder = clientOptionsClass.getMethod("builder").invoke(null);
+        Class<?> builderClass = builder.getClass();
+
+        okhttp3.OkHttpClient sharedHttpClient = new okhttp3.OkHttpClient();
+        Object siblingA =
+                builderClass.getMethod("httpClient", okhttp3.OkHttpClient.class).invoke(builder, sharedHttpClient);
+        Object optionsA = builderClass.getMethod("build").invoke(siblingA);
+
+        Object builder2 = clientOptionsClass.getMethod("builder").invoke(null);
+        Object siblingB = builder2.getClass()
+                .getMethod("httpClient", okhttp3.OkHttpClient.class)
+                .invoke(builder2, sharedHttpClient);
+        Object optionsB = siblingB.getClass().getMethod("build").invoke(siblingB);
+
+        AtomicBoolean bSocketClosed = new AtomicBoolean(false);
+        AutoCloseable bSocket = () -> bSocketClosed.set(true);
+        optionsB.getClass().getMethod("registerWebSocket", AutoCloseable.class).invoke(optionsB, bSocket);
+
+        // Close A only; B never had close() called on it directly.
+        optionsA.getClass().getMethod("close").invoke(optionsA);
+
+        assertThat((boolean) optionsB.getClass().getMethod("isClosed").invoke(optionsB))
+                .as("closing A must be visible on sibling B, which shares the same httpClient")
+                .isTrue();
+        assertThat(bSocketClosed.get())
+                .as("A's close() must have disconnected B's tracked socket too, before it can reconnect against"
+                        + " the (now shared-and-shutdown) dispatcher")
+                .isTrue();
     }
 
     private static ClassLoader compile(Map<String, String> sources) throws Exception {

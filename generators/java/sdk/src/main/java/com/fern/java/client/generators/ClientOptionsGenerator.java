@@ -100,18 +100,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.BOOLEAN, "ownsHttpClient", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    // Keyed by the shared OkHttpClient instance (identity equals/hashCode, same as Object's default) rather than
+    // per-ClientOptions, so options derived via Builder.from(...) - which copy the httpClient reference but would
+    // otherwise get their own fresh closed flag and socket set - see the same close() as their source instead of
+    // reconnecting against a dispatcher a sibling already shut down.
+    private static final FieldSpec CLOSED_BY_CLIENT_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(OkHttpClient.class),
+                            ClassName.get(AtomicBoolean.class)),
+                    "CLOSED_BY_CLIENT",
+                    Modifier.PRIVATE,
+                    Modifier.STATIC,
+                    Modifier.FINAL)
+            .initializer("new $T<>()", ConcurrentHashMap.class)
+            .build();
+
+    private static final FieldSpec OPEN_WEB_SOCKETS_BY_CLIENT_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(OkHttpClient.class),
+                            ParameterizedTypeName.get(Set.class, AutoCloseable.class)),
+                    "OPEN_WEB_SOCKETS_BY_CLIENT",
+                    Modifier.PRIVATE,
+                    Modifier.STATIC,
+                    Modifier.FINAL)
+            .initializer("new $T<>()", ConcurrentHashMap.class)
+            .build();
+
     private static final FieldSpec CLOSED_FIELD = FieldSpec.builder(
                     AtomicBoolean.class, "closed", Modifier.PRIVATE, Modifier.FINAL)
-            .initializer("new $T(false)", AtomicBoolean.class)
             .build();
 
     // Live WebSocket clients created from these options; closed before the shared OkHttp dispatcher is shut down.
+    // Shared across every ClientOptions wrapping the same OkHttpClient (see CLOSED_BY_CLIENT above).
     private static final FieldSpec OPEN_WEB_SOCKETS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Set.class, AutoCloseable.class),
                     "openWebSockets",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
-            .initializer("$T.newKeySet()", ConcurrentHashMap.class)
             .build();
 
     private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
@@ -758,6 +785,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name)
+                .addStatement(
+                        "this.$L = $L.computeIfAbsent($L, unused -> new $T(false))",
+                        CLOSED_FIELD.name,
+                        CLOSED_BY_CLIENT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.name,
+                        AtomicBoolean.class)
+                .addStatement(
+                        "this.$L = $L.computeIfAbsent($L, unused -> $T.newKeySet())",
+                        OPEN_WEB_SOCKETS_FIELD.name,
+                        OPEN_WEB_SOCKETS_BY_CLIENT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.name,
+                        ConcurrentHashMap.class)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
                 .addStatement(
@@ -802,6 +841,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(OWNS_HTTP_CLIENT_FIELD)
+                .addField(CLOSED_BY_CLIENT_FIELD)
+                .addField(OPEN_WEB_SOCKETS_BY_CLIENT_FIELD)
                 .addField(CLOSED_FIELD)
                 .addField(OPEN_WEB_SOCKETS_FIELD)
                 .addField(TIMEOUT_FIELD)
