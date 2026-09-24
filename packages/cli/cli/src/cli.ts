@@ -2241,7 +2241,8 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 })
                 .option("id", {
                     type: "string",
-                    description: "The preview ID to delete. Resolves the URL from the organization in fern.config.json."
+                    description:
+                        "The preview ID to delete. Resolves the URL from the organization in fern.config.json and the instance basepaths in docs.yml."
                 })
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
