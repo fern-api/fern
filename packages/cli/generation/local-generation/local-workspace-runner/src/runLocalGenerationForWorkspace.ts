@@ -10,7 +10,7 @@ import {
     getPackageNameFromGeneratorConfig,
     getUserAgentTemplateFromGeneratorConfig,
     getWebhookSignatureFromGeneratorConfig,
-    LibraryVisibilityFilter
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
@@ -115,7 +115,7 @@ export async function runLocalGenerationForWorkspace({
      * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
      * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
      */
-    libraryVisibility?: LibraryVisibilityFilter;
+    libraryVisibility?: VisibilityFilter;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.

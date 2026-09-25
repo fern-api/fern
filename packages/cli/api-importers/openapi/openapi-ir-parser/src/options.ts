@@ -1,6 +1,13 @@
 import { generatorsYml } from "@fern-api/configuration";
 
-export type LibraryVisibilityFilter = "all" | "public" | "private";
+/**
+ * Which `x-twilio.*Visibility` tiers to keep.
+ * - `all`: no filtering.
+ * - `public`: keep only `public` elements.
+ * - `private`: keep `public` and `private` elements.
+ * `hidden` elements are never kept when filtering is enabled.
+ */
+export type VisibilityFilter = "all" | "public" | "private";
 
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
@@ -50,13 +57,17 @@ export interface ParseOpenAPIOptions {
 
     /**
      * Filters elements by their `x-twilio.libraryVisibility` (operation -> path item -> info, then
-     * schema/property/parameter level).
-     * - `all`: no filtering (default; used by everything except SDK generation).
-     * - `public`: keep only `public` elements (`fern generate`).
-     * - `private`: keep `public` and `private` elements (`fern generate --private`).
-     * Elements marked `hidden` are never kept when filtering is enabled.
+     * schema/property/parameter level). Defaults to `all`; SDK generation uses `public`
+     * (`fern generate`) or `private` (`fern generate --private`).
      */
-    libraryVisibility: LibraryVisibilityFilter;
+    libraryVisibility: VisibilityFilter;
+
+    /**
+     * Filters elements by their `x-twilio.docsVisibility`, with the same resolution rules as
+     * `libraryVisibility`. Defaults to `all`; docs generation uses `public`
+     * (`fern generate --docs`, `fern docs dev`) or `private` (`--private`).
+     */
+    docsVisibility: VisibilityFilter;
 
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
@@ -247,6 +258,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldUseIdiomaticRequestNames: true,
     filter: undefined,
     libraryVisibility: "all",
+    docsVisibility: "all",
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
     defaultFormParameterEncoding: "json",

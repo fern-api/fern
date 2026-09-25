@@ -48,8 +48,8 @@ import { getFernVersion } from "./extensions/getFernVersion.js";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
 import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
-import { getSkippedLibraryVisibility, LibraryVisibility } from "./extensions/getLibraryVisibility.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { applyTwilioVisibility } from "./extensions/twilioVisibility.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
@@ -68,6 +68,7 @@ export function generateIr({
     source: Source;
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
+    openApi = applyTwilioVisibility({ document: openApi, options, logger: taskContext.logger });
     openApi = runResolutions({ openapi: openApi });
 
     // Reset title collision tracker for this document processing
@@ -197,7 +198,6 @@ export function generateIr({
         }
     });
 
-    const schemasSkippedForVisibility = new Map<string, LibraryVisibility>();
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
             .map(([key, schema]) => {
@@ -205,17 +205,6 @@ export function generateIr({
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
                     if (ignoreSchema != null && ignoreSchema) {
-                        return [];
-                    }
-                    const skippedVisibility = getSkippedLibraryVisibility({
-                        objects: [schema],
-                        logger: context.logger,
-                        options,
-                        breadcrumbs: ["components", "schemas", key]
-                    });
-                    if (skippedVisibility != null) {
-                        context.logger.debug(`Schema ${key} has libraryVisibility "${skippedVisibility}". Skipping.`);
-                        schemasSkippedForVisibility.set(key, skippedVisibility);
                         return [];
                     }
                     if (ERROR_NAMES.has(key)) {
@@ -238,15 +227,6 @@ export function generateIr({
             })
             .filter((entry) => entry.length > 0)
     );
-
-    const referencedSchemaIds = context.getReferencedSchemas();
-    for (const [key, visibility] of schemasSkippedForVisibility) {
-        if (referencedSchemaIds.has(key)) {
-            context.logger.warn(
-                `Schema ${key} has libraryVisibility "${visibility}" and was excluded from generation, but it is referenced by an included element. References to it will be generated as "unknown".`
-            );
-        }
-    }
 
     // Remove discriminants from discriminated unions since Fern handles this in the IR.
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context, source);

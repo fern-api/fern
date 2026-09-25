@@ -1,4 +1,4 @@
-import { LibraryVisibilityFilter } from "@fern-api/api-workspace-commons";
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
@@ -128,7 +128,7 @@ export async function generateWorkspace({
     }
 
     const { ai, replay } = workspace.generatorsConfiguration;
-    const libraryVisibility: LibraryVisibilityFilter = includePrivate ? "private" : "public";
+    const libraryVisibility: VisibilityFilter = includePrivate ? "private" : "public";
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {

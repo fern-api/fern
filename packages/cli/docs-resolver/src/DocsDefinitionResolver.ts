@@ -3,7 +3,8 @@ import {
     getOpenAPISettings,
     groupGraphQLSpecsByNamespace,
     type OpenAPISpec,
-    type Spec
+    type Spec,
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
@@ -171,6 +172,11 @@ export interface DocsDefinitionResolverArgs {
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
     /**
+     * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
+     * Defaults to `public`; `--private` passes `private`.
+     */
+    docsVisibility?: VisibilityFilter;
+    /**
      * When true, also builds per-locale translated API IRs from OpenAPI specs under
      * `translations/<locale>/apis/<apiName>/`, exposed via
      * {@link DocsDefinitionResolver.getTranslatedApiSpecs}. Defaults to false to avoid
@@ -202,6 +208,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
     private buildRefVersions: boolean;
     private cliVersion?: string;
@@ -226,6 +233,7 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
+        docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
         buildRefVersions = true,
         cliVersion,
@@ -240,6 +248,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
         this.buildRefVersions = buildRefVersions;
         this.cliVersion = cliVersion;
@@ -500,7 +509,8 @@ export class DocsDefinitionResolver {
                                 detectGlobalHeaders: false,
                                 preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true
+                                respectReadonlySchemas: true,
+                                docsVisibility: this.docsVisibility
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -1325,13 +1335,16 @@ export class DocsDefinitionResolver {
             }
 
             try {
-                const translatedIr = await translatedWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                const translatedIr = await translatedWorkspace.getIntermediateRepresentation(
+                    {
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    },
+                    { docsVisibility: this.docsVisibility }
+                );
                 result.set(locale, translatedIr);
                 this.taskContext.logger.debug(
                     `Built translated API definition for locale "${locale}" (api: ${
@@ -1930,13 +1943,16 @@ export class DocsDefinitionResolver {
         if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
                 openapiWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                ir = await openapiWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                ir = await openapiWorkspace.getIntermediateRepresentation(
+                    {
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    },
+                    { docsVisibility: this.docsVisibility }
+                );
             } catch (error) {
                 openapiError = error;
             }
@@ -1989,7 +2005,8 @@ export class DocsDefinitionResolver {
                     enableUniqueErrorsPerEndpoint: true,
                     detectGlobalHeaders: false,
                     objectQueryParameters: true,
-                    preserveSchemaIds: true
+                    preserveSchemaIds: true,
+                    docsVisibility: this.docsVisibility
                 }
             );
             ir = generateIntermediateRepresentation({
@@ -2022,7 +2039,8 @@ export class DocsDefinitionResolver {
                         enableUniqueErrorsPerEndpoint: true,
                         detectGlobalHeaders: false,
                         objectQueryParameters: true,
-                        preserveSchemaIds: true
+                        preserveSchemaIds: true,
+                        docsVisibility: this.docsVisibility
                     }
                 );
             } catch (error) {

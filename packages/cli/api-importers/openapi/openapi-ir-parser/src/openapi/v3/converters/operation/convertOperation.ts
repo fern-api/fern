@@ -19,7 +19,6 @@ import {
     getFernStreamingExtension,
     getOperationLevelResumable
 } from "../../extensions/getFernStreamingExtension.js";
-import { getSkippedLibraryVisibility } from "../../extensions/getLibraryVisibility.js";
 import { getFernPaginationExtension } from "../../extensions/getPaginationExtension.js";
 import { OperationContext, PathItemContext } from "../contexts.js";
 import { hasTextEventStream } from "../endpoint/getApplicationJsonSchema.js";
@@ -71,19 +70,6 @@ export function convertOperation({
     if (shouldIgnore != null && shouldIgnore) {
         context.logger.debug(
             `${pathItemContext.method.toUpperCase()} ${pathItemContext.path} is marked with x-fern-ignore. Skipping.`
-        );
-        return undefined;
-    }
-
-    const skippedVisibility = getSkippedLibraryVisibility({
-        objects: [operation, pathItemContext.pathItem, pathItemContext.document.info],
-        logger: context.logger,
-        options: context.options,
-        breadcrumbs: [`${pathItemContext.method.toUpperCase()} ${pathItemContext.path}`]
-    });
-    if (skippedVisibility != null) {
-        context.logger.debug(
-            `${pathItemContext.method.toUpperCase()} ${pathItemContext.path} has libraryVisibility "${skippedVisibility}". Skipping.`
         );
         return undefined;
     }

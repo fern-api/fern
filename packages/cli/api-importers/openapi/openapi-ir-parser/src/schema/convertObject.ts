@@ -15,7 +15,6 @@ import type { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
-import { getSkippedLibraryVisibility } from "../openapi/v3/extensions/getLibraryVisibility.js";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties.js";
 import { convertAvailability } from "./convertAvailability.js";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas.js";
@@ -697,21 +696,8 @@ function getNonIgnoredProperties({
                 context.logger.debug(
                     `Property ${breadcrumbs.join(".")}.${key} is marked with x-fern-ignore. Skipping.`
                 );
-                return false;
             }
-            const skippedVisibility = getSkippedLibraryVisibility({
-                objects: [propertySchema],
-                logger: context.logger,
-                options: context.options,
-                breadcrumbs: [...breadcrumbs, key]
-            });
-            if (skippedVisibility != null) {
-                context.logger.debug(
-                    `Property ${breadcrumbs.join(".")}.${key} has libraryVisibility "${skippedVisibility}". Skipping.`
-                );
-                return false;
-            }
-            return true;
+            return !shouldIgnore;
         })
     );
 }

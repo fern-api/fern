@@ -18,7 +18,6 @@ import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js"
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
-import { getSkippedLibraryVisibility } from "../../extensions/getLibraryVisibility.js";
 import { getParameterName } from "../../extensions/getParameterName.js";
 import { getVariableReference } from "../../extensions/getVariableReference.js";
 import { findApplicationJsonRequest } from "./getApplicationJsonSchema.js";
@@ -62,25 +61,6 @@ export function convertParameters({
                 `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
             );
             continue;
-        }
-
-        const skippedVisibility = getSkippedLibraryVisibility({
-            objects: [parameter, resolvedParameter],
-            logger: context.logger,
-            options: context.options,
-            breadcrumbs: [`${httpMethod.toUpperCase()} ${path}`, resolvedParameter.name]
-        });
-        if (skippedVisibility != null) {
-            if (resolvedParameter.in === "path") {
-                context.logger.warn(
-                    `${httpMethod.toUpperCase()} ${path} has path parameter "${resolvedParameter.name}" with libraryVisibility "${skippedVisibility}". Path parameters cannot be excluded because they are required to build the URL; keeping it.`
-                );
-            } else {
-                context.logger.debug(
-                    `${httpMethod.toUpperCase()} ${path} has parameter "${resolvedParameter.name}" with libraryVisibility "${skippedVisibility}". Skipping.`
-                );
-                continue;
-            }
         }
 
         const isRequired = resolvedParameter.required ?? false;

@@ -8,7 +8,8 @@ export const TwilioOpenAPIExtension = {
      *     libraryVisibility: public | private | hidden
      *     docsVisibility: public | private | hidden
      *
-     * `libraryVisibility` controls whether an element is part of the generated SDK surface.
+     * `libraryVisibility` controls whether an element is part of the generated SDK surface and
+     * `docsVisibility` whether it appears in the generated API reference docs.
      */
     TWILIO: "x-twilio"
 } as const;

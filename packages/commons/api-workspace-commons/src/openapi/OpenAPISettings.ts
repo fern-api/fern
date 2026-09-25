@@ -1,7 +1,7 @@
-import { getParseOptions, LibraryVisibilityFilter, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { getParseOptions, ParseOpenAPIOptions, VisibilityFilter } from "@fern-api/openapi-ir-parser";
 import { ConvertOpenAPIOptions, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
 
-export type { LibraryVisibilityFilter };
+export type { VisibilityFilter };
 
 export type OpenAPISettings = ParseOpenAPIOptions & ConvertOpenAPIOptions;
 

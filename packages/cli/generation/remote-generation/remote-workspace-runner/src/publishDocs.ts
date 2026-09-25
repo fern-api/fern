@@ -1,3 +1,4 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
@@ -210,6 +211,7 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
+    docsVisibility,
     docsUrl,
     cliVersion,
     ciSource,
@@ -233,6 +235,8 @@ export async function publishDocs({
     withAiExamples?: boolean;
     excludeApis?: boolean;
     targetAudiences?: string[];
+    /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
+    docsVisibility?: VisibilityFilter;
     docsUrl?: string;
     cliVersion?: string;
     ciSource?: CISource;
@@ -809,7 +813,8 @@ export async function publishDocs({
             },
             registerApi: registerApiToFdr,
             buildTranslatedApiDefinitions,
-            targetAudiences
+            targetAudiences,
+            docsVisibility
         });
 
         context.logger.info("Resolving docs definition...");

@@ -1,4 +1,4 @@
-import { LibraryVisibilityFilter } from "@fern-api/api-workspace-commons";
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
 import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
@@ -177,7 +177,7 @@ export async function runRemoteGenerationForAPIWorkspace({
      * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
      * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
      */
-    libraryVisibility?: LibraryVisibilityFilter;
+    libraryVisibility?: VisibilityFilter;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -715,7 +715,7 @@ async function generateOne({
     sdkGenApiBatch: FernSdkGenApiBatch | undefined;
     sdkGenApiTargetIdSeed: string;
     generateFullProject: boolean | undefined;
-    libraryVisibility: LibraryVisibilityFilter | undefined;
+    libraryVisibility: VisibilityFilter | undefined;
     mapFernGroupToSdkConfig: MapFernGroupToSdkConfig | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
