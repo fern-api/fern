@@ -84,6 +84,7 @@ import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAP
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { deployHostedMcpServer } from "./commands/mcp/deployMcpServer.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
@@ -117,6 +118,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
+import { detectCISource, detectDeployerAuthor } from "./utils/environment.js";
 import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
@@ -1715,6 +1717,60 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         await installMcpServer({
                             clients: argv.client as McpClient[] | undefined,
                             organization: argv.organization ?? (await getOrganization(cliContext)),
+                            context
+                        });
+                    });
+                }
+            )
+            .command(
+                "deploy <bundle>",
+                "Deploy a generated MCP server bundle to Fern's hosted MCP platform",
+                (deployYargs) =>
+                    deployYargs
+                        .positional("bundle", {
+                            type: "string",
+                            demandOption: true,
+                            description:
+                                "Directory containing the generated server bundle (metadata.json, wrangler.jsonc, modules)"
+                        })
+                        .option("slug", {
+                            type: "string",
+                            description: "URL slug for the server. Defaults to `mcp`."
+                        })
+                        .option("organization", {
+                            alias: "org",
+                            type: "string",
+                            description: "The organization to deploy to. Defaults to the one in `fern.config.json`."
+                        })
+                        .option("generator-version", {
+                            type: "string",
+                            description:
+                                "Version of fernapi/fern-mcp-server that produced the bundle, recorded as deploy provenance."
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern mcp deploy" });
+                    const organization = argv.organization ?? (await getOrganization(cliContext));
+                    if (organization == null) {
+                        return cliContext.failAndThrow(
+                            "Could not determine the organization. Pass --organization or run from a Fern project.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                    const token = await cliContext.runTask((context) => askToLogin(context));
+                    await cliContext.runTask(async (context) => {
+                        await deployHostedMcpServer({
+                            bundleDir: argv.bundle,
+                            organization,
+                            slug: argv.slug,
+                            token: token.value,
+                            generatorName: "fernapi/fern-mcp-server",
+                            generatorVersion: argv.generatorVersion ?? "unknown",
+                            cliVersion: cliContext.environment.packageVersion,
+                            config: undefined,
+                            git: undefined,
+                            ciSource: detectCISource(),
+                            deployerAuthor: detectDeployerAuthor(),
                             context
                         });
                     });
