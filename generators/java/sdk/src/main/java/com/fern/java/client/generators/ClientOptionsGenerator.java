@@ -51,7 +51,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -67,6 +70,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
     private static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
+
+    public static final String CLOSED_MESSAGE = "root client has been closed";
 
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
@@ -93,6 +98,25 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     // client is still recognized as caller-owned, and so Builder.from(...) can carry ownership forward.
     private static final FieldSpec OWNS_HTTP_CLIENT_FIELD = FieldSpec.builder(
                     TypeName.BOOLEAN, "ownsHttpClient", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec CLOSED_FIELD = FieldSpec.builder(
+                    AtomicBoolean.class, "closed", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
+    // Live WebSocket clients created from these options; closed before the shared OkHttp dispatcher is shut down.
+    // Passed through the constructor (see closed above) rather than self-initialized, so that Builder.from(...) -
+    // which already copies the httpClient reference into a sibling - can forward the SAME closed/openWebSockets
+    // instances too, letting the sibling see the source's close() instead of getting its own fresh (never-closed)
+    // state and reconnecting against a dispatcher the source already shut down. Deliberately not shared by
+    // OkHttpClient identity via a static registry: that would also entangle independent ClientOptions instances
+    // that merely happen to share a caller-supplied httpClient (an explicitly supported, documented pattern where
+    // close() is a no-op), and would leak an entry per constructed OkHttpClient for the life of the JVM.
+    private static final FieldSpec OPEN_WEB_SOCKETS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(Set.class, AutoCloseable.class),
+                    "openWebSockets",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
             .build();
 
     private static final FieldSpec TIMEOUT_FIELD = FieldSpec.builder(
@@ -677,6 +701,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addParameter(ParameterSpec.builder(OWNS_HTTP_CLIENT_FIELD.type, OWNS_HTTP_CLIENT_FIELD.name)
                         .build())
+                .addParameter(ParameterSpec.builder(CLOSED_FIELD.type, CLOSED_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(OPEN_WEB_SOCKETS_FIELD.type, OPEN_WEB_SOCKETS_FIELD.name)
+                        .build())
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
@@ -739,6 +767,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name)
+                .addStatement("this.$L = $L", CLOSED_FIELD.name, CLOSED_FIELD.name)
+                .addStatement("this.$L = $L", OPEN_WEB_SOCKETS_FIELD.name, OPEN_WEB_SOCKETS_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
                 .addStatement(
@@ -783,6 +813,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(OWNS_HTTP_CLIENT_FIELD)
+                .addField(CLOSED_FIELD)
+                .addField(OPEN_WEB_SOCKETS_FIELD)
                 .addField(TIMEOUT_FIELD)
                 .addField(MAX_RETRIES_FIELD)
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
@@ -923,13 +955,65 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 + "In-flight calls are not cancelled or awaited, and any request issued after this method\n"
                                 + "returns fails with a {@code RejectedExecutionException}. Options derived from this one via\n"
                                 + "{@code Builder.from(...)} share the same dispatcher and connection pool, so closing either\n"
-                                + "releases them for both. Calling this method more than once has no further effect.\n",
+                                + "releases them for both. Calling this method more than once has no further effect.\n"
+                                + "<p>\n"
+                                + "WebSocket clients created from this client that are still connected are disconnected\n"
+                                + "first (whether or not the OkHttpClient is owned), so they stop reconnecting before the\n"
+                                + "dispatcher goes away. Any WebSocket connect or reconnect attempted afterwards fails with\n"
+                                + "an {@code IllegalStateException} explaining that the client has been closed.\n",
                         OKHTTP_CLIENT_FIELD.name)
+                .beginControlFlow("if (!this.$L.compareAndSet(false, true))", CLOSED_FIELD.name)
+                .addStatement("return")
+                .endControlFlow()
+                // Snapshot first: a socket's close() unregisters itself from openWebSockets, which would mutate
+                // the set while it is being iterated.
+                .beginControlFlow(
+                        "for ($T webSocket : new $T<>(this.$L))",
+                        AutoCloseable.class,
+                        ArrayList.class,
+                        OPEN_WEB_SOCKETS_FIELD.name)
+                .beginControlFlow("try")
+                .addStatement("webSocket.close()")
+                .nextControlFlow("catch ($T e)", Exception.class)
+                .addComment("best effort; keep closing the remaining sockets and the HTTP client")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement("this.$L.clear()", OPEN_WEB_SOCKETS_FIELD.name)
                 .beginControlFlow("if (!this.$L)", OWNS_HTTP_CLIENT_FIELD.name)
                 .addStatement("return")
                 .endControlFlow()
                 .addStatement("this.$L.dispatcher().executorService().shutdown()", OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L.connectionPool().evictAll()", OKHTTP_CLIENT_FIELD.name)
+                .build();
+
+        MethodSpec isClosedMethod = MethodSpec.methodBuilder("isClosed")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.BOOLEAN)
+                .addJavadoc("Returns whether {@link #close()} has been called on this client.\n")
+                .addStatement("return this.$L.get()", CLOSED_FIELD.name)
+                .build();
+
+        MethodSpec registerWebSocketMethod = MethodSpec.methodBuilder("registerWebSocket")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(AutoCloseable.class, "webSocket")
+                .addJavadoc("Tracks a connected WebSocket client so that {@link #close()} disconnects it.\n"
+                        + "\n"
+                        + "@throws IllegalStateException if this client has already been closed\n")
+                // Add before checking closed (not check-then-add): otherwise a close() that runs between the
+                // check and the add would never see this socket. Adding first only costs an extra add/remove
+                // when close() wins the race, which we undo below.
+                .addStatement("this.$L.add(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
+                .beginControlFlow("if (this.$L.get())", CLOSED_FIELD.name)
+                .addStatement("this.$L.remove(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
+                .addStatement("throw new $T($S)", IllegalStateException.class, CLOSED_MESSAGE)
+                .endControlFlow()
+                .build();
+
+        MethodSpec unregisterWebSocketMethod = MethodSpec.methodBuilder("unregisterWebSocket")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(AutoCloseable.class, "webSocket")
+                .addJavadoc("Stops tracking a WebSocket client that has been disconnected.\n")
+                .addStatement("this.$L.remove(webSocket)", OPEN_WEB_SOCKETS_FIELD.name)
                 .build();
 
         clientOptionsBuilder
@@ -940,7 +1024,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(initialRetryDelayMillisGetter)
                 .addMethod(maxRetryDelayMillisGetter)
                 .addMethod(retryJitterFactorGetter)
-                .addMethod(closeMethod);
+                .addMethod(closeMethod)
+                .addMethod(isClosedMethod)
+                .addMethod(registerWebSocketMethod)
+                .addMethod(unregisterWebSocketMethod);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -1173,6 +1260,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addField(FieldSpec.builder(TypeName.BOOLEAN, OWNS_HTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer("true")
+                        .build())
+                // Left null unless from(...) forwards a source ClientOptions' own instances: build() creates a
+                // fresh closed flag and socket set when null, so an ordinary builder() (or one seeded only via
+                // Builder.httpClient(...) with no from(...)) never shares state with an unrelated ClientOptions
+                // that happens to wrap the same caller-supplied httpClient.
+                .addField(FieldSpec.builder(CLOSED_FIELD.type, CLOSED_FIELD.name, Modifier.PRIVATE)
+                        .build())
+                .addField(FieldSpec.builder(OPEN_WEB_SOCKETS_FIELD.type, OPEN_WEB_SOCKETS_FIELD.name, Modifier.PRIVATE)
                         .build())
                 .addField(FieldSpec.builder(loggingField.type, loggingField.name, Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
@@ -1650,6 +1745,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TIMEOUT_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L", OWNS_HTTP_CLIENT_FIELD.name, OWNS_HTTP_CLIENT_FIELD.name)
+                // Forward the SAME closed flag and socket set (not copies), so this derived sibling shares
+                // close() with its source instead of getting fresh, independent lifecycle state.
+                .addStatement("builder.$L = clientOptions.$L", CLOSED_FIELD.name, CLOSED_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L", OPEN_WEB_SOCKETS_FIELD.name, OPEN_WEB_SOCKETS_FIELD.name)
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
@@ -1738,7 +1837,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         StringBuilder returnStringBuilder = new StringBuilder();
         returnStringBuilder.append("return new $T($L, $L, $L, $L, this.");
         returnStringBuilder.append(OWNS_HTTP_CLIENT_FIELD.name);
-        returnStringBuilder.append(", this.timeout.get(), this.");
+        returnStringBuilder.append(", closedToUse, openWebSocketsToUse, this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
@@ -1852,6 +1951,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TIMEOUT_FIELD.name,
                         Optional.class,
                         OKHTTP_CLIENT_FIELD.name)
+                .addCode("\n");
+
+        // A from(...)-derived builder carries the source's own closed flag and socket set (see from() above), so
+        // this build() shares them; an ordinary builder() gets fresh ones here rather than in a field initializer,
+        // so two independent ClientOptions never share state just because they happen to wrap the same
+        // caller-supplied httpClient.
+        builder.addStatement(
+                        "$T $L = this.$L != null ? this.$L : new $T(false)",
+                        CLOSED_FIELD.type,
+                        "closedToUse",
+                        CLOSED_FIELD.name,
+                        CLOSED_FIELD.name,
+                        AtomicBoolean.class)
+                .addStatement(
+                        "$T $L = this.$L != null ? this.$L : $T.newKeySet()",
+                        OPEN_WEB_SOCKETS_FIELD.type,
+                        "openWebSocketsToUse",
+                        OPEN_WEB_SOCKETS_FIELD.name,
+                        OPEN_WEB_SOCKETS_FIELD.name,
+                        ConcurrentHashMap.class)
                 .addCode("\n");
 
         if (variableFields.isEmpty() && apiPathParamFields.isEmpty()) {

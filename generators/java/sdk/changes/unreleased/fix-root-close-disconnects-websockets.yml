@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Closing the root client (or `ClientOptions.close()`) now disconnects any WebSocket clients that are still
+    connected before the SDK-owned OkHttp dispatcher is shut down, so they stop reconnecting cleanly instead of
+    failing asynchronously with `InterruptedIOException: executor rejected`. `ClientOptions` exposes `isClosed()`;
+    WebSocket connect/reconnect attempts made after close, as well as `OkHttpWebSocketFactory.create(...)` when
+    constructed with a closed-check, fail fast with `IllegalStateException("root client has been closed")`.
+  type: fix
