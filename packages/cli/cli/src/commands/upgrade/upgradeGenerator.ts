@@ -7,6 +7,8 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import { isVersionAhead } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
@@ -16,6 +18,7 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { getSdkGenApiGeneratorVersions } from "./getSdkGenApiGeneratorVersions.js";
 import { loadAndRunMigrations } from "./migrations/index.js";
 
 interface SkippedMajorUpgrade {
@@ -220,21 +223,35 @@ export async function loadAndUpdateGenerators({
             }
 
             const currentGeneratorVersion = generator.get("version") as string;
+            const useSdkGenApi = isFernSdkGenApiEnabled();
+            const sdkGenApiVersions = useSdkGenApi
+                ? await getSdkGenApiGeneratorVersions({
+                      // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
+                      generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
+                      currentVersion: currentGeneratorVersion,
+                      includeMajor,
+                      channel,
+                      context
+                  })
+                : undefined;
+            const latestVersion = useSdkGenApi
+                ? sdkGenApiVersions?.compatibleVersion
+                : await getLatestGeneratorVersion({
+                      generatorName: normalizedGeneratorName,
+                      cliVersion,
+                      currentGeneratorVersion,
+                      channel,
+                      includeMajor,
+                      context
+                  });
 
-            const latestVersion = await getLatestGeneratorVersion({
-                generatorName: normalizedGeneratorName,
-                cliVersion,
-                currentGeneratorVersion,
-                channel,
-                includeMajor,
-                context
-            });
-
-            // Use the latest version if available, otherwise use the current version
-            const versionToUse = latestVersion ?? currentGeneratorVersion;
+            const upgradeAvailable = latestVersion != null && isVersionAhead(latestVersion, currentGeneratorVersion);
+            const candidateIsOlder =
+                latestVersion != null && !upgradeAvailable && isVersionAhead(currentGeneratorVersion, latestVersion);
+            const versionToUse = upgradeAvailable ? latestVersion : currentGeneratorVersion;
 
             if (latestVersion != null) {
-                if (latestVersion !== currentGeneratorVersion) {
+                if (upgradeAvailable) {
                     context.logger.debug(
                         chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
                     );
@@ -292,6 +309,12 @@ export async function loadAndUpdateGenerators({
                         migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
                         migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
+                } else if (candidateIsOlder) {
+                    const backend = useSdkGenApi ? "SDK Gen API" : "FDR";
+                    context.logger.warn(
+                        `Ignoring stale ${backend} candidate ${latestVersion} for ${generatorName}; ` +
+                            `the configured version ${currentGeneratorVersion} is newer.`
+                    );
                 } else {
                     // Generator is already on the latest version
                     context.logger.debug(
@@ -306,14 +329,16 @@ export async function loadAndUpdateGenerators({
             }
 
             if (!includeMajor) {
-                const latestMajorVersion = await getLatestGeneratorVersion({
-                    generatorName: normalizedGeneratorName,
-                    cliVersion,
-                    currentGeneratorVersion: versionToUse,
-                    channel,
-                    includeMajor: true,
-                    context
-                });
+                const latestMajorVersion = useSdkGenApi
+                    ? sdkGenApiVersions?.withheldMajorVersion
+                    : await getLatestGeneratorVersion({
+                          generatorName: normalizedGeneratorName,
+                          cliVersion,
+                          currentGeneratorVersion: versionToUse,
+                          channel,
+                          includeMajor: true,
+                          context
+                      });
 
                 if (latestMajorVersion != null) {
                     const currentParsed = semver.parse(versionToUse);

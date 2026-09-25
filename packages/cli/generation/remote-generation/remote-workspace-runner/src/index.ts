@@ -8,6 +8,7 @@ export type {
 export {
     createFernSdkGenApiRequest,
     getFernSdkGenApiLanguage,
+    getFernSdkGenApiOrigin,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
     synthesizesSdkConfig,
