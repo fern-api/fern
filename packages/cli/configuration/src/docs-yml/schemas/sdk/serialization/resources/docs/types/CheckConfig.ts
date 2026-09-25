@@ -8,10 +8,12 @@ import { CheckRulesConfig } from "./CheckRulesConfig.js";
 export const CheckConfig: core.serialization.ObjectSchema<serializers.CheckConfig.Raw, FernDocsConfig.CheckConfig> =
     core.serialization.object({
         rules: CheckRulesConfig.optional(),
+        publishFailsOnError: core.serialization.property("publish-fails-on-error", core.serialization.boolean().optional()),
     });
 
 export declare namespace CheckConfig {
     export interface Raw {
         rules?: CheckRulesConfig.Raw | null;
+        "publish-fails-on-error"?: boolean | null;
     }
 }

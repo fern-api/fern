@@ -5587,6 +5587,17 @@
               "type": "null"
             }
           ]
+        },
+        "publish-fails-on-error": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, `fern generate --docs` fails (and does not publish) if any rule configured\nas `error` in `rules` reports a violation, matching the behavior of `fern check`.\nDefault is false."
         }
       },
       "additionalProperties": false,

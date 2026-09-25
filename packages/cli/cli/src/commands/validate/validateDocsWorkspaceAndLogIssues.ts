@@ -104,13 +104,17 @@ export async function validateDocsWorkspaceWithoutExiting({
         elapsedMillis
     });
 
-    const rulesConfiguredAsErrors = getRuleNamesConfiguredAsErrors(workspace.config.check);
-    hasErrors =
-        hasErrors ||
-        violations.some(
-            (violation) =>
-                violation.severity === "error" && violation.name != null && rulesConfiguredAsErrors.has(violation.name)
-        );
+    if (workspace.config.check?.publishFailsOnError === true) {
+        const rulesConfiguredAsErrors = getRuleNamesConfiguredAsErrors(workspace.config.check);
+        hasErrors =
+            hasErrors ||
+            violations.some(
+                (violation) =>
+                    violation.severity === "error" &&
+                    violation.name != null &&
+                    rulesConfiguredAsErrors.has(violation.name)
+            );
+    }
 
     if (errorOnBrokenLinks) {
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");

@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    `fern generate --docs` now fails when a rule configured as `error` in `docs.yml` `check.rules`
+    Add `check.publish-fails-on-error` to `docs.yml`. When set to `true`, `fern generate --docs`
+    fails (and does not publish) if a rule configured as `error` in `check.rules`
     (e.g. `broken-links: error`) reports a violation, matching the behavior of `fern check`.
-    Previously the violation was logged but docs were still published.
-  type: fix
+    Defaults to `false`, preserving the existing behavior of logging the violation and publishing.
+  type: feat

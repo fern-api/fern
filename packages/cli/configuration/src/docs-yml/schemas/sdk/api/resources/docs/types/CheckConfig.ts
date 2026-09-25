@@ -8,4 +8,10 @@ import type * as FernDocsConfig from "../../../index.js";
  */
 export interface CheckConfig {
     rules?: FernDocsConfig.CheckRulesConfig;
+    /**
+     * When true, `fern generate --docs` fails (and does not publish) if any rule configured
+     * as `error` in `rules` reports a violation, matching the behavior of `fern check`.
+     * Default is false.
+     */
+    publishFailsOnError?: boolean;
 }
