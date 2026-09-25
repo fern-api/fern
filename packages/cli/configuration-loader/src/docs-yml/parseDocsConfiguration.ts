@@ -2765,6 +2765,66 @@ function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOv
             result.push(pageOverlay);
             continue;
         }
+
+        // A link item: { link: "Label", href: "..." }
+        if (typeof obj.link === "string") {
+            const linkOverlay: docsYml.NavigationItemOverlay.Link = {
+                type: "link",
+                title: obj.link
+            };
+            result.push(linkOverlay);
+            continue;
+        }
+
+        // An API reference item: { api: "Title", layout: [...] }
+        if (typeof obj.api === "string") {
+            const apiOverlay: docsYml.NavigationItemOverlay.ApiReference = {
+                type: "apiReference",
+                title: obj.api,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined,
+                layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined
+            };
+            result.push(apiOverlay);
+            continue;
+        }
+
+        // An endpoint item inside an api layout: { endpoint: "POST /path", title: "..." }
+        if (typeof obj.endpoint === "string") {
+            const endpointOverlay: docsYml.NavigationItemOverlay.Endpoint = {
+                type: "endpoint",
+                endpoint: obj.endpoint,
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            };
+            result.push(endpointOverlay);
+            continue;
+        }
+
+        // A package item inside an api layout: { <package-name>: { title: "...", contents: [...] } }
+        const entries = Object.entries(obj);
+        if (entries.length === 1 && entries[0] != null) {
+            const [packageName, value] = entries[0];
+            if (isPlainObject(value)) {
+                const pkg = value as Record<string, unknown>;
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: typeof pkg.title === "string" ? pkg.title : undefined,
+                    slug: typeof pkg.slug === "string" ? pkg.slug : undefined,
+                    contents: Array.isArray(pkg.contents) ? parseNavigationItemOverlays(pkg.contents) : undefined
+                };
+                result.push(packageOverlay);
+            } else if (Array.isArray(value)) {
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: undefined,
+                    slug: undefined,
+                    contents: parseNavigationItemOverlays(value)
+                };
+                result.push(packageOverlay);
+            }
+        }
     }
     return result;
 }

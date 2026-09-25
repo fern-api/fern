@@ -1,0 +1,13 @@
+- summary: |
+    Fix several gaps in docs translation navigation overlays: the `display-name`
+    of a changelog tab is now applied; overlays can now translate `link` labels,
+    `api` reference titles, API package titles and endpoint titles (via the api
+    node's `layout`); positional matching of sections/pages no longer shifts after
+    a sibling that was matched by an explicit slug; and multi-segment explicit
+    overlay slugs (e.g. `customization/voice`) now match.
+  type: fix
+- summary: |
+    Translated OpenAPI specs now fall back to the v2 parser when the v3 parser
+    fails, matching the default-locale API build, instead of falling back to the
+    untranslated API definition.
+  type: fix

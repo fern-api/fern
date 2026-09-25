@@ -1325,6 +1325,7 @@ export class DocsDefinitionResolver {
         const { defaultLocale, translations } = translationsConfig;
         const fernFolder = this.docsWorkspace.absoluteFilePath;
         const result = new Map<string, IntermediateRepresentation>();
+        const useV3Parser = this.shouldUseOpenApiParserV3();
 
         for (const locale of translations) {
             if (locale === defaultLocale) {
@@ -1337,13 +1338,27 @@ export class DocsDefinitionResolver {
             }
 
             try {
-                const translatedIr = await translatedWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                let translatedIr: IntermediateRepresentation | undefined;
+                if (useV3Parser) {
+                    try {
+                        translatedIr = await translatedWorkspace.getIntermediateRepresentation({
+                            context: this.taskContext,
+                            audiences: item.audiences,
+                            enableUniqueErrorsPerEndpoint: true,
+                            generateV1Examples: false,
+                            logWarnings: false
+                        });
+                    } catch (error) {
+                        this.taskContext.logger.debug(
+                            `v3 parser failed for translated API definition (locale "${locale}"): ${extractErrorMessage(
+                                error
+                            )}. Falling back to the v2 parser.`
+                        );
+                    }
+                }
+                if (translatedIr == null) {
+                    translatedIr = await this.buildIrWithFernWorkspace(translatedWorkspace, item.audiences);
+                }
                 result.set(locale, translatedIr);
                 this.taskContext.logger.debug(
                     `Built translated API definition for locale "${locale}" (api: ${
@@ -1362,6 +1377,59 @@ export class DocsDefinitionResolver {
         }
 
         return result.size > 0 ? result : undefined;
+    }
+
+    private shouldUseOpenApiParserV3(): boolean {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        return openapiParserV3 == null || openapiParserV3;
+    }
+
+    private async toFernWorkspaceForDocs(apiWorkspace: AbstractAPIWorkspace<unknown>): Promise<FernWorkspace> {
+        return apiWorkspace.toFernWorkspace(
+            { context: this.taskContext },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true
+            }
+        );
+    }
+
+    private generateIrFromFernWorkspace(
+        workspace: FernWorkspace,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): IntermediateRepresentation {
+        return generateIntermediateRepresentation({
+            workspace,
+            audiences,
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false,
+            exampleGeneration: {
+                disabled: false,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context: this.taskContext,
+            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+        });
+    }
+
+    /**
+     * The v2 ("Fern workspace") parser path: converts the API workspace to a Fern
+     * definition and generates the IR from it. Used when the v3 OpenAPI parser is
+     * disabled or fails.
+     */
+    private async buildIrWithFernWorkspace(
+        apiWorkspace: AbstractAPIWorkspace<unknown>,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): Promise<IntermediateRepresentation> {
+        const workspace = await this.toFernWorkspaceForDocs(apiWorkspace);
+        return this.generateIrFromFernWorkspace(workspace, audiences);
     }
 
     /**
@@ -1936,8 +2004,7 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
-        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        const useV3Parser = this.shouldUseOpenApiParserV3();
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
@@ -1993,49 +2060,17 @@ export class DocsDefinitionResolver {
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await (
+            workspace = await this.toFernWorkspaceForDocs(
                 directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-            ).toFernWorkspace(
-                { context: this.taskContext },
-                {
-                    enableUniqueErrorsPerEndpoint: true,
-                    detectGlobalHeaders: false,
-                    objectQueryParameters: true,
-                    preserveSchemaIds: true
-                }
             );
-            ir = generateIntermediateRepresentation({
-                workspace,
-                audiences: item.audiences,
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false,
-                exampleGeneration: {
-                    disabled: false,
-                    skipAutogenerationIfManualExamplesExist: true,
-                    skipErrorAutogenerationIfManualErrorExamplesExist: true
-                },
-                readme: undefined,
-                version: undefined,
-                packageName: undefined,
-                context: this.taskContext,
-                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-            });
+            ir = this.generateIrFromFernWorkspace(workspace, item.audiences);
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
             // access to the resolved API source file paths.
             try {
-                workspace = await (
+                workspace = await this.toFernWorkspaceForDocs(
                     directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-                ).toFernWorkspace(
-                    { context: this.taskContext },
-                    {
-                        enableUniqueErrorsPerEndpoint: true,
-                        detectGlobalHeaders: false,
-                        objectQueryParameters: true,
-                        preserveSchemaIds: true
-                    }
                 );
             } catch (error) {
                 // If we can't load the workspace, log a warning but continue
