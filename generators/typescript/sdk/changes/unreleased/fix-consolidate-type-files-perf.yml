@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a performance cliff when `consolidateTypeFiles: true` is used on large APIs. Types in a
+    consolidated file are now added in a single pass instead of one ts-morph manipulation per type,
+    which previously re-parsed the growing file each time (quadratic). A 3,000-type API drops from
+    ~3 minutes to ~18 seconds of generation time, with identical output.
+  type: fix
