@@ -98,8 +98,10 @@ public class RetryInterceptor implements Interceptor {
             try {
                 nextResponse = chain.proceed(chain.request());
             } catch (IOException e) {
-                // A retry attempt failed (e.g. the call timeout expired mid-retry). The transport error is
-                // intentionally dropped: the response already received from the API is more actionable.
+                // A retry attempt failed with a transport error (connection reset, unreachable host, ...). The
+                // error is intentionally dropped: the response already received from the API is more actionable.
+                // Note that a call-timeout expiry or an explicit cancel() also ends up here, but OkHttp then
+                // discards whatever the interceptor chain returns and reports the cancellation itself.
                 return response;
             }
             response.close();
