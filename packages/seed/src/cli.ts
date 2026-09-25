@@ -1007,9 +1007,7 @@ function addPublishCommands(cli: Argv) {
                         .check((argv) => {
                             const selectedReleaseFlags = [argv.dev, argv.beta, argv.preProd].filter(Boolean).length;
                             if (selectedReleaseFlags > 1) {
-                                throw new Error(
-                                    "Arguments --dev, --beta, and --pre-prod are mutually exclusive"
-                                );
+                                throw new Error("Arguments --dev, --beta, and --pre-prod are mutually exclusive");
                             }
                             // Either version or changelog and previousChangelog must be provided
                             if (!argv.ver && !(argv.changelog && argv.previousChangelog)) {
