@@ -49,6 +49,7 @@ import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
 import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { applyTwilioVisibility } from "./extensions/twilioVisibility.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
@@ -67,6 +68,7 @@ export function generateIr({
     source: Source;
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
+    openApi = applyTwilioVisibility({ document: openApi, options, logger: taskContext.logger });
     openApi = runResolutions({ openapi: openApi });
 
     // Reset title collision tracker for this document processing

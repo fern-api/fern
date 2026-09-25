@@ -315,19 +315,22 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
      * @internal
      * @owner dsinghvi
      */
-    public async getIntermediateRepresentation({
-        context,
-        audiences,
-        enableUniqueErrorsPerEndpoint,
-        generateV1Examples,
-        logWarnings
-    }: {
-        context: TaskContext;
-        audiences: Audiences;
-        enableUniqueErrorsPerEndpoint: boolean;
-        generateV1Examples: boolean;
-        logWarnings: boolean;
-    }): Promise<IntermediateRepresentation> {
+    public async getIntermediateRepresentation(
+        {
+            context,
+            audiences,
+            enableUniqueErrorsPerEndpoint,
+            generateV1Examples,
+            logWarnings
+        }: {
+            context: TaskContext;
+            audiences: Audiences;
+            enableUniqueErrorsPerEndpoint: boolean;
+            generateV1Examples: boolean;
+            logWarnings: boolean;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<IntermediateRepresentation> {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
@@ -394,7 +397,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
-                        settings: getOpenAPISettings({ options: document.settings }),
+                        settings: getOpenAPISettings({ options: document.settings, overrides: settings }),
                         documentBaseDir: dirname(absoluteFilepathToSpec)
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });

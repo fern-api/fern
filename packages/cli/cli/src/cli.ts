@@ -912,6 +912,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -1058,7 +1064,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
-                    packOnly: argv.packageOnly
+                    packOnly: argv.packageOnly,
+                    includePrivate: argv.private
                 });
             }
             if (argv.docs != null) {
@@ -1089,7 +1096,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    includePrivate: argv.private
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1126,7 +1134,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
-                packOnly: argv.packageOnly
+                packOnly: argv.packageOnly,
+                includePrivate: argv.private
             });
         }
     );
@@ -2353,6 +2362,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description: "Force re-download of the docs preview bundle by deleting the cached bundle"
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2398,7 +2413,8 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
                 backendPort,
-                forceDownload: argv.forceDownload
+                forceDownload: argv.forceDownload,
+                includePrivate: argv.private
             });
         }
     );

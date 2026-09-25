@@ -1,3 +1,4 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
 import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
@@ -98,6 +99,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     getSpecsTarGzBuffer,
     sdkConfigV1,
     generateFullProject,
+    libraryVisibility,
     mapFernGroupToSdkConfig
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -171,6 +173,11 @@ export async function runRemoteGenerationForAPIWorkspace({
      * Set by `fern generate --pack` so the emitted SDK can be built into a package artifact.
      */
     generateFullProject?: boolean;
+    /**
+     * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
+     * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
+     */
+    libraryVisibility?: VisibilityFilter;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -315,6 +322,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                         routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
                     ).toString(),
                     generateFullProject,
+                    libraryVisibility,
                     mapFernGroupToSdkConfig,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
@@ -661,6 +669,7 @@ async function generateOne({
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
     generateFullProject,
+    libraryVisibility,
     mapFernGroupToSdkConfig,
     onSnippetsProduced
 }: {
@@ -706,6 +715,7 @@ async function generateOne({
     sdkGenApiBatch: FernSdkGenApiBatch | undefined;
     sdkGenApiTargetIdSeed: string;
     generateFullProject: boolean | undefined;
+    libraryVisibility: VisibilityFilter | undefined;
     mapFernGroupToSdkConfig: MapFernGroupToSdkConfig | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
@@ -715,7 +725,10 @@ async function generateOne({
         if (sdkGenApiPreflightError != null) {
             throw sdkGenApiPreflightError;
         }
-        const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(resolvedGeneratorInvocation);
+        const settings = {
+            ...getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(resolvedGeneratorInvocation),
+            libraryVisibility
+        };
 
         const fernWorkspace = await workspace.toFernWorkspace(
             { context },
