@@ -43,11 +43,17 @@ export function compareGeneratorVersions({
     candidateVersion: string;
     currentVersion: string;
 }): GeneratorVersionComparison {
+    if (!isValidGeneratorVersion(candidateVersion) || !isValidGeneratorVersion(currentVersion)) {
+        throw new CliError({
+            message:
+                `Cannot compare versions for generator "${generatorId}": configured version ` +
+                `"${currentVersion}", candidate version "${candidateVersion}". ` +
+                "Use valid semantic versions such as 1.2.3.",
+            code: CliError.Code.VersionError
+        });
+    }
     try {
         if (candidateVersion === currentVersion) {
-            if (candidateVersion !== "latest") {
-                parseVersion(candidateVersion);
-            }
             return 0;
         }
         if (isVersionAhead(candidateVersion, currentVersion)) {
@@ -67,6 +73,18 @@ export function compareGeneratorVersions({
                 "Use valid semantic versions such as 1.2.3.",
             code: CliError.Code.VersionError
         });
+    }
+}
+
+function isValidGeneratorVersion(version: string): boolean {
+    if (version === "latest" || semver.valid(version) != null) {
+        return true;
+    }
+    try {
+        parseVersion(version);
+        return true;
+    } catch {
+        return false;
     }
 }
 

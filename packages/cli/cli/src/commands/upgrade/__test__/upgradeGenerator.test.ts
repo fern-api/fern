@@ -758,6 +758,7 @@ groups:
     it.each([
         ["configured", "not-a-version", "1.2.3"],
         ["candidate", "1.2.3", "not-a-version"],
+        ["candidate with latest configured", "latest", "not-a-version"],
         ["equal malformed", "not-a-version", "not-a-version"]
     ])("fails actionably for malformed %s version", async (_kind, currentVersion, candidateVersion) => {
         const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: ${currentVersion}\n`;
