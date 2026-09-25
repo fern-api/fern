@@ -1011,9 +1011,10 @@ fn handle_list<W: Write>(
         rows.push(serde_json::Value::Object(row));
     }
 
-    // The `[env]` pseudo-row: env credentials outrank every profile, so a
-    // listing that omitted them would answer "which account am I about to
-    // hit?" wrongly whenever one is exported. This is a rendering of what
+    // The `[env]` pseudo-row: env credentials are what an unprofiled run
+    // (or a profile with nothing stored) authenticates with, so a listing
+    // that omitted them would answer "which account am I about to hit?"
+    // wrongly whenever one is exported. This is a rendering of what
     // `auth status` already detects, not new detection.
     if let Some(row) = env_pseudo_row(ctx) {
         rows.push(row);
@@ -1283,27 +1284,9 @@ fn warn_about_near_miss_env_vars(ctx: &ProfilesContext<'_>) {
     }
 }
 
-/// Whether environment variables alone fully satisfy at least one scheme.
-///
-/// Distinguishes "env is what will be sent" from "env supplies one half of a
-/// two-value credential and nothing authenticates". Both states involve env
-/// vars outranking the keyring; only the first is an override.
-fn env_satisfies_a_scheme(ctx: &ProfilesContext<'_>) -> bool {
-    ctx.auth_bindings.iter().any(|(scheme, binding)| {
-        let slots = login::expand_slots(scheme, binding, ctx.login_flows, ctx.cli_name);
-        !slots.required.is_empty()
-            && slots.required.iter().all(|slot| {
-                slot.iter().any(|source| {
-                    matches!(source, AuthCredentialSource::Env(_)) && source.resolve().is_some()
-                })
-            })
-    })
-}
-
 /// A synthetic `[env]` row when environment variables currently supply a
-/// credential — which wins over an *ambiently* selected profile
-/// (`<BIN>_PROFILE`, `profiles use`) but not over an explicitly named
-/// `--profile`, whose stored credentials outrank it.
+/// credential — which is what an unprofiled invocation authenticates with,
+/// and what a selected profile falls back to when it has nothing stored.
 fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     let mut sources: Vec<String> = Vec::new();
     for (scheme, binding) in ctx.auth_bindings {
@@ -1339,18 +1322,14 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     Some(serde_json::Value::Object(row))
 }
 
-/// The `[env]` row's note. It states a precedence rule, so it has to track the
-/// one the request path actually applies: under an explicitly named
-/// `--profile`, that profile's stored credentials are preferred when a scheme
-/// is chosen, and telling the reader env "overrides" them would be exactly
-/// backwards. This row is what a user diagnosing a precedence surprise reads
-/// first, so a stale claim here costs more than it looks.
+/// The `[env]` row's note. It states a precedence rule, so it has to match
+/// the one the request path applies (`outranks_env`): a selected profile's
+/// stored credential is preferred however the profile was chosen, and env
+/// fills in only when the profile has none. This row is what a user
+/// diagnosing a precedence surprise reads first, so a stale claim here costs
+/// more than it looks.
 fn env_row_note() -> &'static str {
-    if crate::profiles::outranks_env() {
-        "supplies the credential, but the named profile's stored one is preferred"
-    } else {
-        "supplies the credential; overrides the active profile's stored one"
-    }
+    "supplies the credential when no profile is selected or the selected profile has none stored"
 }
 
 // ── set ─────────────────────────────────────────────────────────────────
@@ -2055,22 +2034,15 @@ fn handle_current<W: Write>(
             let profile = &selection.profile;
             let mut map = resolved_profile_fields(profile, ctx);
             // `selected_by`, not `source`: this answers *why* this profile is in
-            // play, and the answer changes precedence — only a profile named
-            // with the flag outranks credential env vars (`outranks_env`).
+            // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
             if let Some(env_row) = env_pseudo_row(ctx) {
-                // Only claim an *override* when the env vars actually satisfy
-                // a scheme. With one half of a two-value credential set, the
-                // variable is consulted and does outrank the keyring for that
-                // field — but nothing authenticates, so saying "overridden by
-                // env" while `auth status` reports `logged_in: false` reads as
-                // a contradiction. Report the partial case as partial.
-                let key = if env_satisfies_a_scheme(ctx) {
-                    "credential_overridden_by_env"
-                } else {
-                    "credential_partially_shadowed_by_env"
-                };
-                map.insert(key.into(), env_row["variables"].clone());
+                // Exported credential env vars never override a selected
+                // profile's stored credential; they are consulted only for the
+                // fields the profile has nothing stored for. Name them so a
+                // user can tell where a credential came from when the profile
+                // is not logged in.
+                map.insert("credential_env_fallback".into(), env_row["variables"].clone());
             }
             serde_json::Value::Object(map)
         }
@@ -2137,33 +2109,14 @@ mod tests {
 
     // ── [env] row note ──────────────────────────────────────────────────
 
-    /// The note asserts who wins, so it must flip with the selection source.
-    /// Saying env "overrides" a profile the request path actually prefers is
-    /// the exact wrong turn for someone debugging a precedence surprise.
+    /// The note asserts who wins. Saying env "overrides" a profile the
+    /// request path actually prefers is the exact wrong turn for someone
+    /// debugging a precedence surprise.
     #[test]
-    #[serial_test::serial]
-    fn env_row_note_tracks_selection_source() {
-        use crate::auth::test_helpers::GlobalAuthStateGuard;
-        use crate::profiles::SelectionSource;
-
-        {
-            let mut guard = GlobalAuthStateGuard::new();
-            guard.install_profile("prod", SelectionSource::Flag);
-            assert!(
-                env_row_note().contains("named profile's stored one is preferred"),
-                "got: {}",
-                env_row_note()
-            );
-        }
-        {
-            let mut guard = GlobalAuthStateGuard::new();
-            guard.install_profile("prod", SelectionSource::Active);
-            assert!(
-                env_row_note().contains("overrides the active profile"),
-                "got: {}",
-                env_row_note()
-            );
-        }
+    fn env_row_note_never_claims_to_override_a_profile() {
+        let note = env_row_note();
+        assert!(!note.contains("overrides"), "got: {note}");
+        assert!(note.contains("no profile is selected"), "got: {note}");
     }
 
     // ── name validation ─────────────────────────────────────────────────

@@ -384,9 +384,9 @@ fn the_profile_flag_beats_the_profile_env_var() {
 }
 
 #[test]
-fn base_url_env_var_beats_the_profile() {
-    // CI exports the env var; a developer's stored profile must not
-    // redirect the pipeline.
+fn the_active_profile_base_url_beats_the_env_var() {
+    // A selected profile's stored value wins however it was selected; the
+    // env var only fills in when the profile has none.
     let sandbox = Sandbox::new();
     sandbox.run(&[
         "profiles", "create", "prod", "--base-url", "https://profile.example", "--use",
@@ -403,7 +403,7 @@ fn base_url_env_var_beats_the_profile() {
         &["users", "list", "--dry-run", "--format", "json"],
         &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
     );
-    assert_eq!(json(&from_env)["url"], "https://env.example/users");
+    assert_eq!(json(&from_env)["url"], "https://profile.example/users");
 
     // And the flag beats both.
     let from_flag = sandbox.run_with_env(
@@ -416,7 +416,7 @@ fn base_url_env_var_beats_the_profile() {
     assert_eq!(json(&from_flag)["url"], "https://flag.example/users");
 }
 
-// ── `-p` outranks env; ambient profiles do not ──────────────────────────
+// ── A selected profile outranks env, however it was selected ────────────
 
 /// The credential sources `auth status` reports for the first scheme, in
 /// resolution order.
@@ -430,31 +430,26 @@ fn credential_source_order(output: &Output) -> Vec<String> {
 }
 
 #[test]
-fn an_explicit_profile_flag_reorders_the_credential_chain_above_env() {
-    // Twilio's shipping CLI documents `-p` > env vars > active profile, and
-    // it is the rule every other flag here follows: explicit beats ambient.
-    // Env used to beat *every* profile, however it was chosen.
+fn a_selected_profile_reorders_the_credential_chain_above_env() {
+    // Whether the profile is active or named with `-p`, its keyring entry
+    // is consulted before the env var; env stays a rung, just a lower one.
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod", "--use"]);
 
-    // Ambient (active) — the env var is consulted first.
-    let ambient = credential_source_order(&sandbox.run(&["auth", "status", "--format", "json"]));
-    assert!(
-        ambient[0].contains("env var"),
-        "an ambient profile must not displace env: {ambient:?}",
-    );
-
-    // Explicit `-p` — the profile's keyring entry moves to the front.
+    let active = credential_source_order(&sandbox.run(&["auth", "status", "--format", "json"]));
     let explicit =
         credential_source_order(&sandbox.run(&["auth", "status", "--format", "json", "-p", "prod"]));
-    assert!(
-        explicit[0].contains("keyring entry") && explicit[0].contains("#prod"),
-        "-p should put the profile's credential first: {explicit:?}",
-    );
-    assert!(
-        explicit.iter().any(|s| s.contains("env var")),
-        "the env var must still be a rung, just a lower one: {explicit:?}",
-    );
+    for (label, order) in [("active", &active), ("-p", &explicit)] {
+        assert!(
+            order[0].contains("keyring entry") && order[0].contains("#prod"),
+            "{label}: the profile's credential should come first: {order:?}",
+        );
+        assert!(
+            order.iter().any(|s| s.contains("env var")),
+            "{label}: the env var must still be a rung: {order:?}",
+        );
+    }
+    assert_eq!(active, explicit, "selection mechanism must not change the order");
 }
 
 #[test]
@@ -473,19 +468,12 @@ fn an_explicit_profile_flag_outranks_the_base_url_env_var() {
 }
 
 #[test]
-fn an_ambient_profile_still_loses_to_the_base_url_env_var() {
-    // The CI-safety half: a profile chosen days ago must not override the
-    // environment the pipeline is running in.
+fn a_profile_selected_by_env_var_also_outranks_the_base_url_env_var() {
+    // `<BIN>_PROFILE` selects a profile just like `-p` and `profiles use`
+    // do, and the selected profile's stored base URL wins the same way.
     let sandbox = Sandbox::new();
-    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example", "--use"]);
+    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example"]);
 
-    let active = sandbox.run_with_env(
-        &["users", "list", "--dry-run", "--format", "json"],
-        &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
-    );
-    assert_eq!(json(&active)["url"], "https://env.example/users");
-
-    // Same for a profile selected through <BIN>_PROFILE — also ambient.
     let via_env = sandbox.run_with_env(
         &["users", "list", "--dry-run", "--format", "json"],
         &[
@@ -493,7 +481,18 @@ fn an_ambient_profile_still_loses_to_the_base_url_env_var() {
             ("OPENAPI_FIXTURE_BASE_URL", "https://env.example"),
         ],
     );
-    assert_eq!(json(&via_env)["url"], "https://env.example/users");
+    assert_eq!(json(&via_env)["url"], "https://profile.example/users");
+
+    // A profile that stores no base URL falls back to the env var.
+    sandbox.run(&["profiles", "create", "bare"]);
+    let fallback = sandbox.run_with_env(
+        &["users", "list", "--dry-run", "--format", "json"],
+        &[
+            ("OPENAPI_FIXTURE_PROFILE", "bare"),
+            ("OPENAPI_FIXTURE_BASE_URL", "https://env.example"),
+        ],
+    );
+    assert_eq!(json(&fallback)["url"], "https://env.example/users");
 }
 
 #[test]
@@ -543,14 +542,14 @@ fn an_sdk_variable_follows_the_same_precedence_ladder() {
     sandbox.run(&["profiles", "create", "prod", "--set", "gardenId=g-profile", "--use"]);
     let url = |o: &Output| json(o)["url"].as_str().unwrap_or_default().to_string();
 
-    // Ambient profile loses to the env var…
-    let ambient = sandbox.run_with_env(
+    // The active profile beats the env var…
+    let active = sandbox.run_with_env(
         &["zones", "list", "--dry-run", "--format", "json"],
         &[("GARDEN_ID", "g-env")],
     );
-    assert!(url(&ambient).contains("/gardens/g-env/"), "{}", url(&ambient));
+    assert!(url(&active).contains("/gardens/g-profile/"), "{}", url(&active));
 
-    // …but an explicitly named profile beats it…
+    // …so does an explicitly named one…
     let explicit = sandbox.run_with_env(
         &["zones", "list", "--dry-run", "--format", "json", "-p", "prod"],
         &[("GARDEN_ID", "g-env")],
@@ -662,15 +661,15 @@ fn a_profile_default_format_applies_when_nothing_else_asks() {
         stdout(&output),
     );
 
-    // And the env var still outranks it.
+    // The active profile's format beats the env var.
     let from_env = sandbox.run_with_env(
         &["users", "list", "--dry-run"],
         &[("OPENAPI_FIXTURE_OUTPUT", "json")],
     );
     assert_ok(&from_env, "users list with OPENAPI_FIXTURE_OUTPUT=json");
     assert!(
-        serde_json::from_str::<serde_json::Value>(&stdout(&from_env)).is_ok(),
-        "the env var must outrank the profile: {}",
+        serde_json::from_str::<serde_json::Value>(&stdout(&from_env)).is_err(),
+        "the profile must outrank the env var: {}",
         stdout(&from_env),
     );
 }
