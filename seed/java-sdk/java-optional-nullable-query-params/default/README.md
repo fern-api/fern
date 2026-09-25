@@ -59,6 +59,7 @@ import com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryPar
 import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
 import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
 import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
@@ -70,25 +71,13 @@ public class Example {
             SearchRequest
                 .builder()
                 .query(
-                    OptionalNullable.of("")
+                    OptionalNullable.of("query")
                 )
-                .limit(
-                    OptionalNullable.of(1)
+                .sortOrders(
+                    Arrays.asList(SortOrder.ASC, SortOrder.DESC)
                 )
-                .includeArchived(
-                    OptionalNullable.of(true)
-                )
-                .sortOrder(
-                    OptionalNullable.of(SortOrder.ASC)
-                )
-                .optionalWithoutDefault(
-                    OptionalNullable.of("optionalWithoutDefault")
-                )
-                .regularOptional(
-                    OptionalNullable.of("default-value")
-                )
-                .regularOptionalNoDefault(
-                    OptionalNullable.of("regularOptionalNoDefault")
+                .tags(
+                    Arrays.asList("tag1", "tag2")
                 )
                 .build()
         );
