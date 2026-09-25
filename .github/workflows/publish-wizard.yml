@@ -1,0 +1,84 @@
+name: Publish Fern Wizard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/wizard/versions.yml"
+
+env:
+  DO_NOT_TRACK: "1"
+  PACKAGE_NAME: "@fern-api/wizard"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      has_new_version: ${{ steps.get_version.outputs.has_new_version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Get version
+        id: get_version
+        run: |
+          pnpm seed:build
+
+          if git show "${{ github.event.before }}:packages/wizard/versions.yml" > /tmp/previous_versions.yml 2>/dev/null; then
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/wizard/versions.yml \
+              --previous-path /tmp/previous_versions.yml \
+              --format json)
+            rm -f /tmp/previous_versions.yml
+          else
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/wizard/versions.yml \
+              --format json)
+          fi
+
+          version=$(echo "$result" | jq -r '.version')
+          has_new=$(echo "$result" | jq -r '.has_new_version')
+
+          echo "Version: ${version}"
+          echo "Has new version: ${has_new}"
+          echo "has_new_version=${has_new}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+
+  publish-wizard:
+    needs: check-version
+    if: needs.check-version.outputs.has_new_version == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build wizard
+        run: pnpm turbo run dist:cli --filter=${{ env.PACKAGE_NAME }} -- ${{ needs.check-version.outputs.version }}
+
+      - name: Test
+        run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
+      - name: Publish wizard
+        run: |
+          cd packages/wizard/dist
+          pnpm publish --provenance --access public --tag latest --no-git-checks

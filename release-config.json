@@ -73,6 +73,12 @@
       "versionsFile": "packages/generator-cli/versions.yml",
       "changelogFolder": "packages/generator-cli/changes",
       "softwareDirectory": "packages/generator-cli"
+    },
+    "wizard": {
+      "name": "Fern Setup Wizard",
+      "versionsFile": "packages/wizard/versions.yml",
+      "changelogFolder": "packages/wizard/changes",
+      "softwareDirectory": "packages/wizard"
     }
   }
 }

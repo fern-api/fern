@@ -1,0 +1,44 @@
+{
+  "name": "@fern-api/wizard",
+  "version": "0.0.0",
+  "description": "Fern setup wizard for APIs, SDKs, docs, and coding agents",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/wizard"
+  },
+  "type": "commonjs",
+  "main": "lib/cli.js",
+  "types": "lib/cli.d.ts",
+  "source": "src/cli.ts",
+  "bin": {
+    "fern-wizard": "bin/cli"
+  },
+  "files": ["bin", "dist", "lib"],
+  "license": "MIT",
+  "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "chalk": "catalog:",
+    "inquirer": "^9.2.15",
+    "yargs": "^17.4.1",
+    "yaml": "catalog:"
+  },
+  "scripts": {
+    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "compile": "tsc --project tsconfig.build.json",
+    "dist:cli": "node build.mjs",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "lint:eslint": "eslint --max-warnings 0 src",
+    "format": "biome check --write src",
+    "depcheck": "knip --config ../../knip.json --no-config-hints"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/inquirer": "catalog:",
+    "@types/node": "^22.0.0",
+    "@types/yargs": "^17.0.32",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

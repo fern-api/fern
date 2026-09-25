@@ -18,6 +18,7 @@ on:
       - "generators/typescript/sdk/changes/**"
       - "generators/cli/changes/**"
       - "packages/generator-cli/changes/**"
+      - "packages/wizard/changes/**"
   workflow_dispatch:
     inputs:
       software:
@@ -40,6 +41,7 @@ on:
           - typescript
           - cli-generator
           - generator-cli
+          - wizard
 
 # Prevent concurrent release runs to avoid git conflicts.
 # NOTE: cancel-in-progress: false protects the running job, but GitHub still
