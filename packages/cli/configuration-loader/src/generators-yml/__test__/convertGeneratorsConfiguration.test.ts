@@ -638,6 +638,52 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.api.definitions[0]?.settings?.coerceEnumsToLiterals).toBe(true);
         });
 
+        it("api-level remove-discriminants-from-schemas is inherited by openapi and asyncapi specs", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        settings: {
+                            "remove-discriminants-from-schemas": "never"
+                        },
+                        specs: [
+                            { openapi: "path/to/spec.yml" },
+                            { openapi: "path/to/other-spec.yml", settings: { "title-as-schema-name": true } },
+                            { asyncapi: "path/to/asyncapi.yml" }
+                        ]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(
+                converted.api.definitions.map((definition) => definition.settings?.removeDiscriminantsFromSchemas)
+            ).toEqual(["never", "never", "never"]);
+        });
+
+        it("spec-level remove-discriminants-from-schemas overrides the api-level value", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        settings: {
+                            "remove-discriminants-from-schemas": "never"
+                        },
+                        specs: [
+                            { openapi: "path/to/spec.yml", settings: { "remove-discriminants-from-schemas": "always" } }
+                        ]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.removeDiscriminantsFromSchemas).toBe("always");
+        });
+
         it("empty spec settings preserve api-level settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({

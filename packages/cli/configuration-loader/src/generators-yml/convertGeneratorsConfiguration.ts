@@ -256,7 +256,12 @@ function hasErrorResponsesSetting(
 function parseRemoveDiscriminantsFromSchemas(
     option: string | undefined
 ): generatorsYml.RemoveDiscriminantsFromSchemas | undefined {
-    if (option == null || option === "always") {
+    // Left undefined when unset so that mergeSettings keeps the api-level value; the importer
+    // defaults to "always".
+    if (option == null) {
+        return undefined;
+    }
+    if (option === "always") {
         return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
     } else if (option === "never") {
         return generatorsYml.RemoveDiscriminantsFromSchemas.Never;

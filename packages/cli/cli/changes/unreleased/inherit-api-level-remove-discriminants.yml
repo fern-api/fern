@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `remove-discriminants-from-schemas` set under `api.settings` in generators.yml now reaches every
+    OpenAPI and AsyncAPI spec. Previously each spec silently reset it to `always` unless the spec set it again.
+  type: fix
