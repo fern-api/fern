@@ -1,0 +1,60 @@
+# A path parameter with no usable type information imports as `unknown` (an OpenAPI
+# parameter whose schema carries constraints such as `pattern` but no `type` is the
+# common source). The generated client must still place the runtime value into the
+# path unquoted: `serde_json::Value`'s `Display` prints JSON, so interpolating the
+# value directly turns `GET /resources/abc` into `GET /resources/"abc"`.
+#
+# The same holds when the parameter is a named alias of `unknown` (a reusable
+# parameter schema imports this way), including through an alias chain. The alias
+# newtype has no `Display` at all, so interpolating it directly does not compile.
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    get:
+      path: /resources/{resourceId}
+      method: GET
+      path-parameters:
+        resourceId: unknown
+      response: Resource
+      examples:
+        - path-parameters:
+            resourceId: "abc"
+          response:
+            body:
+              id: "abc"
+              name: "resource"
+    getByAlias:
+      path: /aliased-resources/{resourceId}
+      method: GET
+      path-parameters:
+        resourceId: ResourceId
+      response: Resource
+      examples:
+        - path-parameters:
+            resourceId: "abc"
+          response:
+            body:
+              id: "abc"
+              name: "resource"
+    getByAliasChain:
+      path: /chained-resources/{resourceId}
+      method: GET
+      path-parameters:
+        resourceId: ResourceKey
+      response: Resource
+      examples:
+        - path-parameters:
+            resourceId: "abc"
+          response:
+            body:
+              id: "abc"
+              name: "resource"
+
+types:
+  ResourceId: unknown
+  ResourceKey: ResourceId
+  Resource:
+    properties:
+      id: string
+      name: string
