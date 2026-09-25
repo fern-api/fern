@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated error types that carry a body now expose a nil-safe `GetBody()` accessor that
+    returns the same type as the `Body` field. This lets callers handle every status-specific
+    error through a single interface-based `errors.As`, e.g.
+    `type bodyProvider interface{ GetBody() *ErrorBody }`. Errors without a body are unchanged.
+  type: feat
+- summary: |
+    `reference.md` now documents enum-typed query parameters, headers, and inlined request body
+    properties (including lists of enums) with the same value types used on the generated request
+    structs (e.g. `[]acme.CountryCode` instead of `[]*acme.CountryCode`).
+  type: fix
