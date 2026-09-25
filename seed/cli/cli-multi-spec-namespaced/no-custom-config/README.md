@@ -116,13 +116,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `ACME_VERSIONED_BASE_URL` | Override the API base URL |
-| `ACME_VERSIONED_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `ACME_VERSIONED_INSECURE=1` | Skip TLS verification (debugging only) |
-| `ACME_VERSIONED_PROXY` | HTTP(S) proxy URL |
-| `ACME_VERSIONED_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `ACME_VERSIONED_BASE_URL` | Override the API base URL | yes |
+| `ACME_VERSIONED_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `ACME_VERSIONED_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `ACME_VERSIONED_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `ACME_VERSIONED_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `ACME_VERSIONED_PROXY` | HTTP(S) proxy URL | no |
+| `ACME_VERSIONED_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `ACME_VERSIONED_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `acme-versioned profiles set <profile> ACME_VERSIONED_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

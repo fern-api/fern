@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_BASE_URL` | Override the API base URL |
-| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_INSECURE=1` | Skip TLS verification (debugging only) |
-| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_PROXY` | HTTP(S) proxy URL |
-| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_BASE_URL` | Override the API base URL | yes |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_PROXY` | HTTP(S) proxy URL | no |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `server-url-templating-api-single-base-url profiles set <profile> SERVER_URL_TEMPLATING_API_SINGLE_BASE_URL_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

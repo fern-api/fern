@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `OPTIONAL_REFERENCED_REQUEST_BODIES_BASE_URL` | Override the API base URL |
-| `OPTIONAL_REFERENCED_REQUEST_BODIES_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `OPTIONAL_REFERENCED_REQUEST_BODIES_INSECURE=1` | Skip TLS verification (debugging only) |
-| `OPTIONAL_REFERENCED_REQUEST_BODIES_PROXY` | HTTP(S) proxy URL |
-| `OPTIONAL_REFERENCED_REQUEST_BODIES_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_BASE_URL` | Override the API base URL | yes |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_PROXY` | HTTP(S) proxy URL | no |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `OPTIONAL_REFERENCED_REQUEST_BODIES_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `optional-referenced-request-bodies profiles set <profile> OPTIONAL_REFERENCED_REQUEST_BODIES_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

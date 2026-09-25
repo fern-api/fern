@@ -115,13 +115,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `LOGIN_FLOW_BASE_URL` | Override the API base URL |
-| `LOGIN_FLOW_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `LOGIN_FLOW_INSECURE=1` | Skip TLS verification (debugging only) |
-| `LOGIN_FLOW_PROXY` | HTTP(S) proxy URL |
-| `LOGIN_FLOW_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `LOGIN_FLOW_BASE_URL` | Override the API base URL | yes |
+| `LOGIN_FLOW_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `LOGIN_FLOW_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `LOGIN_FLOW_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `LOGIN_FLOW_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `LOGIN_FLOW_PROXY` | HTTP(S) proxy URL | no |
+| `LOGIN_FLOW_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `LOGIN_FLOW_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `login-flow profiles set <profile> LOGIN_FLOW_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 
