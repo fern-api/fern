@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.27.1
+  changelogEntry:
+    - summary: |
+        Cap generated request-wrapper filenames (`lib/<gem>/<service>/types/*_request.rb`) at
+        100 characters, matching the existing cap on type filenames, so `gem build` no longer
+        fails with `Gem::Package::TooLongFileName` for endpoints with long path-derived names
+        (e.g. operations without an `operationId`). Over-long names are truncated with a short
+        deterministic hash appended; the Ruby class name is unchanged.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 1.27.0
   changelogEntry:
     - summary: |
