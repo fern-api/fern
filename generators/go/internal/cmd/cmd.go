@@ -26,7 +26,7 @@ const (
 	// an import path or module path configuration. This is included to help
 	// the user understand how to improve the import paths used in the
 	// generated SDK.
-	localFileGenerationDocsLink = "https://github.com/fern-api/fern-go#local-file-generation"
+	localFileGenerationDocsLink = "https://github.com/fern-api/fern/blob/main/generators/go/README.md#using-local-file-generation"
 
 	// defaultModulePath is used as the default go.mod path used in the generated
 	// SDK.
