@@ -219,7 +219,9 @@ export class ServersConverter extends AbstractConverter<
         let url = server.url;
         for (const [variableName, variable] of Object.entries(server.variables)) {
             if (variable.default != null) {
-                url = url.replace(`{${variableName}}`, encodeURIComponent(variable.default));
+                // encodeURI (not encodeURIComponent) keeps the `:` and `/` of a default that holds
+                // a whole host or a multi-segment path.
+                url = url.replaceAll(`{${variableName}}`, encodeURI(variable.default));
             }
         }
         return url;

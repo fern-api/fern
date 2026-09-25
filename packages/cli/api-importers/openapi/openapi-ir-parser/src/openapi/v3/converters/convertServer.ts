@@ -58,8 +58,10 @@ function getServerUrl({
         })
     );
 
+    // encodeURI (not encodeURIComponent) keeps the `:` and `/` of a default that holds a whole
+    // host or a multi-segment path.
     for (const [variable, value] of Object.entries(valuesToSubstitute)) {
-        url = url.replace(`{${variable}}`, encodeURIComponent(value));
+        url = url.replaceAll(`{${variable}}`, encodeURI(value));
     }
 
     return url;
