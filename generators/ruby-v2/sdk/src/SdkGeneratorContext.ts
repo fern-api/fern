@@ -66,6 +66,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return this.buildTypeFileName(typeDeclaration.name.name);
     }
 
+    public getFileNameForRequestWrapper(wrapper: FernIr.SdkRequestWrapper): string {
+        return this.buildTypeFileName(wrapper.wrapperName);
+    }
+
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
         return Object.values(this.ir.types);
     }

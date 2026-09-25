@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.62.1
+  changelogEntry:
+    - summary: |
+        Point the "Neither an import path nor a module path was specified" warning at the
+        Go generator README in the fern monorepo; the old `fern-api/fern-go` link now 404s.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 1.62.0
   changelogEntry:
     - summary: |

@@ -9,6 +9,7 @@ import { LanguageSwitcherThemeConfig } from "./LanguageSwitcherThemeConfig.js";
 import { PageActionsThemeConfig } from "./PageActionsThemeConfig.js";
 import { ProductSwitcherThemeConfig } from "./ProductSwitcherThemeConfig.js";
 import { SidebarThemeConfig } from "./SidebarThemeConfig.js";
+import { SiteSwitcherThemeConfig } from "./SiteSwitcherThemeConfig.js";
 import { TabsThemeConfig } from "./TabsThemeConfig.js";
 
 export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfig.Raw, FernDocsConfig.ThemeConfig> =
@@ -20,6 +21,7 @@ export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfi
         footerNav: core.serialization.property("footer-nav", FooterNavThemeConfig.optional()),
         languageSwitcher: core.serialization.property("language-switcher", LanguageSwitcherThemeConfig.optional()),
         productSwitcher: core.serialization.property("product-switcher", ProductSwitcherThemeConfig.optional()),
+        siteSwitcher: core.serialization.property("site-switcher", SiteSwitcherThemeConfig.optional()),
     });
 
 export declare namespace ThemeConfig {
@@ -31,5 +33,6 @@ export declare namespace ThemeConfig {
         "footer-nav"?: FooterNavThemeConfig.Raw | null;
         "language-switcher"?: LanguageSwitcherThemeConfig.Raw | null;
         "product-switcher"?: ProductSwitcherThemeConfig.Raw | null;
+        "site-switcher"?: SiteSwitcherThemeConfig.Raw | null;
     }
 }

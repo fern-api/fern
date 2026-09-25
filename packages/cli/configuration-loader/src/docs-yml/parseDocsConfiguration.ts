@@ -544,7 +544,8 @@ function convertThemeConfig(
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        productSwitcher: theme.productSwitcher ?? "default",
+        siteSwitcher: theme.siteSwitcher
     };
 }
 

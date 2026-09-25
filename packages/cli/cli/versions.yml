@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.138.0
+  changelogEntry:
+    - summary: |
+        Add `theme.site-switcher` to docs.yml and global themes. When enabled, docs sites
+        published to the same domain under different basepaths are listed in a header
+        site switcher; `order`, `hide`, `labels`, and `show-products` control presentation.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 5.137.2
   changelogEntry:
     - summary: |

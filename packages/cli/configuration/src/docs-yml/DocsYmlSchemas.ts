@@ -100,6 +100,14 @@ export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
+export const SiteSwitcherThemeConfig = z.object({
+    enabled: z.boolean().optional(),
+    order: z.array(z.string()).optional(),
+    hide: z.array(z.string()).optional(),
+    labels: z.record(z.string(), z.string()).optional(),
+    "show-products": z.boolean().optional()
+});
+
 export const FooterNavThemeConfig = z.enum(["default", "minimal"]);
 
 export const TabsThemeConfig = z.enum(["default", "bubble"]);
@@ -295,7 +303,8 @@ export const ThemeConfig = z.object({
     "page-actions": PageActionsThemeConfig.optional(),
     "footer-nav": FooterNavThemeConfig.optional(),
     "language-switcher": LanguageSwitcherThemeConfig.optional(),
-    "product-switcher": ProductSwitcherThemeConfig.optional()
+    "product-switcher": ProductSwitcherThemeConfig.optional(),
+    "site-switcher": SiteSwitcherThemeConfig.optional()
 });
 
 // ===== Layout schemas =====
