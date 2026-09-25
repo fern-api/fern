@@ -63,6 +63,7 @@ export type MessageV3 = ChannelMessage | OpenAPIV3.ReferenceObject;
 
 export interface ChannelMessage {
     name?: string;
+    summary?: string;
     description?: string;
     payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }

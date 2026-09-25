@@ -4391,8 +4391,10 @@
               "inline": false,
               "type": "named"
             },
+            "docs": "Message with marked data information.",
             "type": "reference"
-          }
+          },
+          "docs": "Message with marked data information."
         },
         {
           "type": "send",
@@ -4410,8 +4412,10 @@
               "inline": false,
               "type": "named"
             },
+            "docs": "Message with marked data information.",
             "type": "reference"
-          }
+          },
+          "docs": "Message with marked data information."
         }
       ],
       "examples": [

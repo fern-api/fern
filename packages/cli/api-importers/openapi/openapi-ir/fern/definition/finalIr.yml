@@ -209,6 +209,7 @@ types:
     properties:
       name: string
       displayName: optional<string>
+      description: optional<string>
       origin: WebsocketMessageOrigin
       body: Schema
       methodName: optional<string>
