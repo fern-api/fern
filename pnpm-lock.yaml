@@ -5591,6 +5591,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../commons/logging-execa

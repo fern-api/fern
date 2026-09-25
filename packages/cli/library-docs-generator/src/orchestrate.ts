@@ -10,6 +10,7 @@ import chalk from "chalk";
 import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
+import { LIBRARY_IR_SCHEMA_VERSION, writeLibraryIr } from "./symbols/libraryIrFile.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
 const POLL_INTERVAL_MS = 3000;
@@ -36,6 +37,7 @@ export interface LibraryDocsClient {
             title?: string | null;
             slug?: string | null;
             doxyfileContent?: string | null;
+            includeUndocumentedMacros?: boolean | null;
         } | null;
     }): Promise<{ jobId: string }>;
     getLibraryDocsGenerationStatus(input: { jobId: string }): Promise<{
@@ -258,6 +260,13 @@ async function generateSingleLibrary({
             code: CliError.Code.ConfigError
         });
     }
+    if (config.config?.includeUndocumentedMacros != null && config.lang !== "cpp") {
+        throw new CliError({
+            message: `Library '${name}': 'include-undocumented-macros' config is only valid for lang: cpp`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
@@ -284,9 +293,28 @@ async function generateSingleLibrary({
 
     let ir: unknown;
     if (local) {
-        ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
+        ir = await generateIrLocally({
+            context,
+            name,
+            config,
+            docsDirectoryPath,
+            language,
+            doxyfileContent,
+            includeUndocumentedMacros,
+            wrapStep
+        });
     } else if (client != null) {
-        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep });
+        ir = await generateIrRemotely({
+            client,
+            name,
+            config,
+            language,
+            orgId,
+            doxyfileContent,
+            includeUndocumentedMacros,
+            wrapStep,
+            context
+        });
     } else {
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
@@ -296,8 +324,19 @@ async function generateSingleLibrary({
         });
     }
 
+    const generatePages = config.output.pages ?? true;
+
     if (language === "CPP") {
         const cppIr = ir as CppLibraryDocsIr;
+        const irPath = await writeLibraryIr({
+            outputDir: resolvedOutputPath,
+            persisted: { schemaVersion: LIBRARY_IR_SCHEMA_VERSION, lang: "cpp", library: name, ir: cppIr }
+        });
+        context.logger.debug(`Library '${name}': persisted IR to ${irPath}`);
+        if (!generatePages) {
+            logPagesSkipped(context, name, irPath);
+            return;
+        }
         const result = generateCpp({
             ir: cppIr,
             outputDir: resolvedOutputPath,
@@ -313,6 +352,15 @@ async function generateSingleLibrary({
         );
     } else {
         const pythonIr = ir as FdrAPI.libraryDocs.PythonLibraryDocsIr;
+        const irPath = await writeLibraryIr({
+            outputDir: resolvedOutputPath,
+            persisted: { schemaVersion: LIBRARY_IR_SCHEMA_VERSION, lang: "python", library: name, ir: pythonIr }
+        });
+        context.logger.debug(`Library '${name}': persisted IR to ${irPath}`);
+        if (!generatePages) {
+            logPagesSkipped(context, name, irPath);
+            return;
+        }
         const generateResult = generate({
             ir: pythonIr,
             outputDir: resolvedOutputPath,
@@ -323,6 +371,12 @@ async function generateSingleLibrary({
             chalk.green(`Library '${name}': generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`)
         );
     }
+}
+
+function logPagesSkipped(context: TaskContext, name: string, irPath: AbsoluteFilePath): void {
+    context.logger.info(
+        chalk.green(`Library '${name}': persisted IR to ${irPath} (output.pages is false, skipped generated pages)`)
+    );
 }
 
 /**
@@ -336,7 +390,9 @@ async function generateIrRemotely({
     language,
     orgId,
     doxyfileContent,
-    wrapStep
+    includeUndocumentedMacros,
+    wrapStep,
+    context
 }: {
     client: LibraryDocsClient;
     name: string;
@@ -344,7 +400,9 @@ async function generateIrRemotely({
     language: LibraryLanguage;
     orgId: string;
     doxyfileContent: string | undefined;
+    includeUndocumentedMacros: boolean | undefined;
     wrapStep: StepWrapper;
+    context: TaskContext;
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
         throw new CliError({
@@ -364,7 +422,8 @@ async function generateIrRemotely({
                 language,
                 packagePath: gitInput.subpath,
                 ref: gitInput.ref,
-                doxyfileContent
+                doxyfileContent,
+                includeUndocumentedMacros
             })
     });
 
@@ -375,7 +434,7 @@ async function generateIrRemotely({
 
     return wrapStep({
         message: `Library '${name}': downloading generated IR`,
-        operation: () => downloadIr(client, jobId, name, language)
+        operation: () => downloadIr(client, jobId, name, language, context)
     });
 }
 
@@ -391,6 +450,7 @@ async function generateIrLocally({
     docsDirectoryPath,
     language,
     doxyfileContent,
+    includeUndocumentedMacros,
     wrapStep
 }: {
     context: TaskContext;
@@ -399,6 +459,7 @@ async function generateIrLocally({
     docsDirectoryPath: AbsoluteFilePath;
     language: LibraryLanguage;
     doxyfileContent: string | undefined;
+    includeUndocumentedMacros: boolean | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
     let sourcePath: AbsoluteFilePath;
@@ -423,17 +484,19 @@ async function generateIrLocally({
             packagePath: gitInput.subpath,
             sourceUrl: gitInput.git,
             branch: gitInput.ref,
-            doxyfileContent
+            doxyfileContent,
+            includeUndocumentedMacros
         };
     } else {
         sourcePath = resolve(docsDirectoryPath, config.input.path);
-        parserConfig = { doxyfileContent };
+        parserConfig = { doxyfileContent, includeUndocumentedMacros };
     }
 
-    const ir = await wrapStep({
+    const result = await wrapStep({
         message: `Library '${name}': parsing library source locally`,
         operation: () => runLocalParser({ context, sourcePath, language, config: parserConfig })
     });
+    const ir = unwrapParserResult(result, name, context);
     validateLibraryIr(ir, language, name);
     return ir;
 }
@@ -448,6 +511,7 @@ async function startGeneration(
         packagePath?: string;
         ref?: string;
         doxyfileContent?: string;
+        includeUndocumentedMacros?: boolean;
     }
 ): Promise<string> {
     try {
@@ -461,7 +525,8 @@ async function startGeneration(
                 packagePath: opts.packagePath,
                 title: opts.name,
                 slug: opts.name,
-                doxyfileContent: opts.doxyfileContent
+                doxyfileContent: opts.doxyfileContent,
+                includeUndocumentedMacros: opts.includeUndocumentedMacros
             }
         });
         return result.jobId;
@@ -521,7 +586,8 @@ async function downloadIr(
     client: LibraryDocsClient,
     jobId: string,
     libraryName: string,
-    language: LibraryLanguage
+    language: LibraryLanguage,
+    context: TaskContext
 ): Promise<unknown> {
     let resultUrl: string;
     try {
@@ -542,12 +608,35 @@ async function downloadIr(
         });
     }
 
-    const irWrapper = (await irFetchResponse.json()) as { ir?: unknown };
-    const ir = irWrapper.ir;
+    const ir = unwrapParserResult(await irFetchResponse.json(), libraryName, context);
 
     validateLibraryIr(ir, language, libraryName);
 
     return ir;
+}
+
+/**
+ * Parsers write `{ ir, metadata, warnings? }`. Warnings are non-fatal problems
+ * (e.g. a Cython module that could not be parsed and was left out) that the
+ * user should see in the CLI output rather than only in server logs.
+ */
+export function unwrapParserResult(result: unknown, libraryName: string, context: TaskContext): unknown {
+    if (result == null || typeof result !== "object") {
+        // Let `validateLibraryIr` produce the library-specific "invalid IR" error.
+        return undefined;
+    }
+    if (hasWarnings(result)) {
+        for (const warning of result.warnings) {
+            if (typeof warning === "string") {
+                context.logger.warn(`Library '${libraryName}': ${warning}`);
+            }
+        }
+    }
+    return "ir" in result ? result.ir : undefined;
+}
+
+function hasWarnings(result: object): result is { warnings: unknown[] } {
+    return "warnings" in result && Array.isArray(result.warnings);
 }
 
 /**

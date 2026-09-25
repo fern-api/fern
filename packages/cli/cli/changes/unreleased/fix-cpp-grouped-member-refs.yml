@@ -1,0 +1,6 @@
+- summary: |
+    C/C++ library docs: `\ref`, `@see`, `@return` and auto-linked references to functions,
+    typedefs and enums documented inside a Doxygen `\defgroup` now render as links to the
+    generated pages. Previously these group-scoped references were emitted as plain text
+    because their `group__*` refids could not be decoded.
+  type: fix

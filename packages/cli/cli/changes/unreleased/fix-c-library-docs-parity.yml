@@ -1,0 +1,6 @@
+- summary: |
+    C/C++ library docs: function-pointer typedef pages now list their documented
+    parameters, `@param[in]`/`[out]`/`[in,out]` directions are shown on parameter
+    fields, Doxygen `@verbatim` blocks render as preformatted code, and plain-C
+    libraries use `typedef` declaration syntax instead of C++ `using`.
+  type: fix

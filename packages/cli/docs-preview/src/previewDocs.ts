@@ -2,14 +2,17 @@ import { getUserToken } from "@fern-api/auth";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
+    type LibrarySymbolRenderer,
     parseImagePaths,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import {
+    createDocsLibrarySymbolRenderer,
     DocsDefinitionResolver,
     filterOssWorkspaces,
     stitchGlobalTheme,
@@ -158,6 +161,11 @@ export interface PreviewDocsResult {
      */
     markdownFilesToPathName: Record<AbsoluteFilePath, string>;
     /**
+     * Renders `<LibrarySymbol />` tags from the IR persisted by `fern docs md generate`,
+     * shared with translated pages so each library's IR is loaded once.
+     */
+    renderLibrarySymbol: LibrarySymbolRenderer;
+    /**
      * Per-locale translated API definitions, keyed by locale then by the base
      * `apiDefinitionId` (shared with the default-locale definition) so they can be
      * spliced into a per-locale docs definition's `apis` without touching the nav tree.
@@ -195,6 +203,13 @@ export async function getPreviewDocsDefinition({
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
         let navAffectingChange = false;
+        const renderLibrarySymbol =
+            previousPreviewResult?.renderLibrarySymbol ??
+            createDocsLibrarySymbolRenderer({
+                libraries: docsWorkspace.config.libraries,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                onWarning: (message) => context.logger.warn(message)
+            });
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
@@ -253,8 +268,15 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            const markdownReplacedMdAndCode = transformAtPrefixImports({
+            const markdownReplacedSymbols = await replaceLibrarySymbols({
                 markdown: markdownReplacedCode,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context,
+                renderSymbol: renderLibrarySymbol
+            });
+
+            const markdownReplacedMdAndCode = transformAtPrefixImports({
+                markdown: markdownReplacedSymbols,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
@@ -302,7 +324,7 @@ export async function getPreviewDocsDefinition({
                 finalMarkdown = replaceImagePathsAndUrls(
                     markdownWithAbsPaths,
                     fileIdsMap,
-                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    previousPreviewResult?.markdownFilesToPathName ?? {},
                     {
                         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                         absolutePathToMarkdownFile: absoluteFilePath
@@ -333,6 +355,7 @@ export async function getPreviewDocsDefinition({
                 collectedFileIds: previousPreviewResult.collectedFileIds,
                 docsWorkspacePath: previousPreviewResult.docsWorkspacePath,
                 markdownFilesToPathName: previousPreviewResult.markdownFilesToPathName,
+                renderLibrarySymbol: previousPreviewResult.renderLibrarySymbol,
                 translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
             };
         }
@@ -463,6 +486,7 @@ export async function getPreviewDocsDefinition({
         collectedFileIds,
         docsWorkspacePath: docsWorkspace.absoluteFilePath,
         markdownFilesToPathName,
+        renderLibrarySymbol: resolver.getLibrarySymbolRenderer(),
         translatedApiDefinitions
     };
 }

@@ -6,6 +6,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -819,7 +820,8 @@ export async function runAppPreviewServer({
             translatedApiDefinitions,
             collectedFileIds,
             docsWorkspacePath,
-            markdownFilesToPathName
+            markdownFilesToPathName,
+            renderLibrarySymbol
         } = result;
 
         const hasTranslatedPages = translationPages != null && Object.keys(translationPages).length > 0;
@@ -899,9 +901,16 @@ export async function runAppPreviewServer({
                             fileLoader: localeAwareFileLoader
                         });
 
+                        const symbolsResolved = await replaceLibrarySymbols({
+                            markdown: codeResolved,
+                            absolutePathToMarkdownFile,
+                            context,
+                            renderSymbol: renderLibrarySymbol
+                        });
+
                         // Transform @/ prefix imports to relative paths
                         const importsResolved = transformAtPrefixImports({
-                            markdown: codeResolved,
+                            markdown: symbolsResolved,
                             absolutePathToFernFolder: docsWorkspacePath,
                             absolutePathToMarkdownFile,
                             context

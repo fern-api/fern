@@ -10,7 +10,9 @@ import type {
     CppFunctionIr,
     CppGroupIr,
     CppLibraryDocsIr,
+    CppMacroIr,
     CppNamespaceIr,
+    CppTypedefIr,
     IrMetadata
 } from "../types/CppLibraryDocsIr.js";
 
@@ -124,6 +126,16 @@ function makeGroup(overrides: Partial<CppGroupIr>): CppGroupIr {
         typedefs: [],
         variables: [],
         subgroups: [],
+        ...overrides
+    };
+}
+
+function makeMacro(overrides: Partial<CppMacroIr>): CppMacroIr {
+    return {
+        name: "LIB_SUCCESS",
+        path: "LIB_SUCCESS",
+        initializer: "0",
+        docstring: makeDocstring({ summary: [{ type: "text", text: "Success status code." }] }),
         ...overrides
     };
 }
@@ -409,6 +421,213 @@ describe("generateCpp()", () => {
         expect(subgroupPage).toContain("- [`cub::Tune`](../../functions/tune)");
     });
 
+    it("generates macro pages for documented #defines and links them from group pages", () => {
+        const success = makeMacro({});
+        const max = makeMacro({
+            name: "LIB_MAX",
+            path: "LIB_MAX",
+            parameters: ["a", "b"],
+            initializer: "((a) > (b) ? (a) : (b))",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Larger of two values." }],
+                params: [
+                    { name: "a", description: [{ type: "text", text: "first value" }], direction: undefined },
+                    { name: "b", description: [{ type: "text", text: "second value" }], direction: undefined }
+                ]
+            })
+        });
+        const ir = makeIr(makeNamespace({ macros: [success, max] }), { packageName: "lib" }, [
+            makeGroup({ id: "group__status", name: "status", title: "Status", macros: [success] })
+        ]);
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/LIB_SUCCESS.mdx");
+        expect(relativePaths).toContain("macros/LIB_MAX.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const successPage = readFileSync(join(tmpDir, "macros/LIB_SUCCESS.mdx"), "utf-8");
+        expect(successPage).toContain("title: LIB_SUCCESS");
+        expect(successPage).toContain("#define LIB_SUCCESS 0");
+        expect(successPage).not.toContain("**Parameters**");
+
+        const maxPage = readFileSync(join(tmpDir, "macros/LIB_MAX.mdx"), "utf-8");
+        expect(maxPage).toContain("#define LIB_MAX(a, b) ((a) > (b) ? (a) : (b))");
+        expect(maxPage).toContain("**Parameters**");
+        expect(maxPage).toContain('<ParamField path="a">\nFirst value\n</ParamField>');
+        expect(maxPage).not.toContain('type=""');
+
+        const groupPage = readFileSync(join(tmpDir, "groups/status/index.mdx"), "utf-8");
+        expect(groupPage).toContain("## Macros");
+        expect(groupPage).toContain("- [`LIB_SUCCESS`](../macros/libsuccess)");
+
+        // Root-scoped (plain C) libraries have no child namespace, but still get indexes
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toContain("title: lib API Reference");
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("Macros at global scope.");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
+        expect(macroIndex).toContain("- [`LIB_MAX`](macros/libmax)");
+    });
+
+    it("gives slug-equivalent macro names distinct pages and URLs", () => {
+        const upper = makeMacro({ name: "ALWAYS_INLINE", path: "ALWAYS_INLINE" });
+        const lower = makeMacro({ name: "__always_inline", path: "__always_inline" });
+        const ir = makeIr(makeNamespace({ macros: [lower, upper] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/ALWAYS_INLINE.mdx");
+        expect(relativePaths).toContain("macros/__always_inline-2.mdx");
+        expect(relativePaths).not.toContain("macros/__always_inline.mdx");
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`ALWAYS_INLINE`](macros/alwaysinline)");
+        expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
+    });
+
+    it("gives slug-equivalent group names distinct folders and URLs", () => {
+        const m1 = makeMacro({ name: "GPU_A", path: "GPU_A" });
+        const m2 = makeMacro({ name: "GPU_B", path: "GPU_B" });
+        const ir = makeIr(makeNamespace({ macros: [m1, m2] }), { packageName: "lib" }, [
+            makeGroup({ id: "group__DOCA__GPUNETIO", name: "DOCA_GPUNETIO", title: "GPUNetIO Engine", macros: [m1] }),
+            makeGroup({ id: "group__DOCAGPUNETIO", name: "DOCAGPUNETIO", title: "GPUNetIO engine", macros: [m2] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        expect(readFileSync(join(tmpDir, "groups/DOCAGPUNETIO/index.mdx"), "utf-8")).toContain("GPU_B");
+        expect(readFileSync(join(tmpDir, "groups/DOCA_GPUNETIO-2/index.mdx"), "utf-8")).toContain("GPU_A");
+        const groupsIndex = readFileSync(join(tmpDir, "groups/index.mdx"), "utf-8");
+        expect(groupsIndex).toContain("](groups/docagpunetio)");
+        expect(groupsIndex).toContain("](groups/docagpunetio-2)");
+    });
+
+    it("does not let an entity named `index` overwrite the category index page", () => {
+        const indexFn = makeFunction({ name: "index", path: "index" });
+        const ir = makeIr(makeNamespace({ functions: [indexFn] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/index-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/index-2.mdx"), "utf-8")).toContain("title: index");
+        const functionIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(functionIndex).toContain("- [`index`](functions/index-2)");
+    });
+
+    it("lists root-scoped macros in the library index when the library is a named namespace", () => {
+        const ir = makeIr(
+            makeNamespace({
+                macros: [makeMacro({})],
+                namespaces: [
+                    makeNamespace({
+                        name: "cub",
+                        path: "cub",
+                        classes: [makeClass({ name: "BlockScan", path: "cub::BlockScan" })]
+                    })
+                ]
+            }),
+            { packageName: "cub" }
+        );
+
+        const result = generateCpp({ ir, outputDir: tmpDir, slug: "reference/cub" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/LIB_SUCCESS.mdx");
+        expect(relativePaths).toContain("macros/index.mdx");
+        expect(relativePaths).toContain("classes/BlockScan.mdx");
+        expect(result.pageCount).toBe(relativePaths.length);
+
+        const libraryIndex = readFileSync(join(tmpDir, "index.mdx"), "utf-8");
+        expect(libraryIndex).toMatch(/- \[Classes\]\([\w-]+\/classes\)/);
+        expect(libraryIndex).toMatch(/- \[Macros\]\([\w-]+\/macros\)/);
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`LIB_SUCCESS`](macros/libsuccess)");
+    });
+
+    // cspell:ignore doca argp DOCA ARGP docaargpcmdcreate docaerrort edeb refid
+    it("links member refs whose Doxygen refid is group-scoped (C-style grouped APIs)", () => {
+        // Members documented inside a `\defgroup` get `group__<name>_1ga<hash>` refids, which
+        // carry no qualified name. The ref text is the only handle on the target page.
+        const errorRef = {
+            type: "ref" as const,
+            text: "doca_error_t",
+            refid: "group__DOCA__ARGP_1ga709800305e1197db067f30025480b7c5",
+            kindref: "member"
+        };
+        const createRef = {
+            type: "ref" as const,
+            text: "doca_argp_cmd_create()",
+            refid: "group__DOCA__ARGP_1ga178dab841edeb905479c8197edb019a2",
+            kindref: "member"
+        };
+        const errorTypedef: CppTypedefIr = {
+            name: "doca_error_t",
+            path: "doca_error_t",
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Error code." }] })
+        };
+        const create = makeFunction({ name: "doca_argp_cmd_create", path: "doca_argp_cmd_create" });
+        const setDescription = makeFunction({
+            name: "doca_argp_cmd_set_description",
+            path: "doca_argp_cmd_set_description",
+            parameters: [
+                {
+                    name: "cmd",
+                    typeInfo: {
+                        parts: ["struct doca_argp_cmd *"],
+                        display: "struct doca_argp_cmd *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: undefined
+                }
+            ],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Set command description." }],
+                params: [
+                    {
+                        name: "cmd",
+                        description: [{ type: "text", text: "command created with " }, createRef],
+                        direction: undefined
+                    }
+                ],
+                returns: [{ type: "text", text: "DOCA_SUCCESS on success, see " }, errorRef],
+                seeAlso: [[{ ...createRef, text: "doca_argp_cmd_create" }]]
+            })
+        });
+
+        const ir = makeIr(
+            makeNamespace({ functions: [create, setDescription], typedefs: [errorTypedef] }),
+            { packageName: "doca" },
+            [
+                makeGroup({
+                    id: "group__DOCA__ARGP",
+                    name: "DOCA_ARGP",
+                    title: "DOCA ARGP",
+                    functions: [create, setDescription],
+                    typedefs: [errorTypedef]
+                })
+            ]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "doca" });
+
+        const page = readFileSync(join(tmpDir, "functions/doca_argp_cmd_set_description.mdx"), "utf-8");
+        expect(page).toContain("**Returns:** DOCA_SUCCESS on success, see [doca_error_t](../typedefs/docaerrort)");
+        expect(page).toContain("Command created with [doca_argp_cmd_create()](docaargpcmdcreate)");
+        expect(page).toContain("[doca_argp_cmd_create](docaargpcmdcreate)");
+        expect(page).not.toMatch(/\]\([^)]*\.mdx\)/);
+    });
+
     it("writes no group pages when the IR has no groups with members", () => {
         const ir = makeIr(
             makeNamespace({
@@ -555,5 +774,385 @@ describe("generateCpp()", () => {
         expect(result.writtenFiles.filter((file) => file.includes("/groups/")).length).toBe(3);
         expect(existsSync(join(tmpDir, "groups/scan/nested/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "groups/scan/nested/scan"))).toBe(false);
+    });
+    it("renders plain-C typedefs with C syntax, callback params, directions and verbatim blocks", () => {
+        const callback: CppTypedefIr = {
+            name: "lib_callback",
+            path: "lib_callback",
+            typeInfo: {
+                parts: ["void(*)(const float *solution, void *user_data)"],
+                display: "void(*)(const float *solution, void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Solution callback." }],
+                params: [
+                    { name: "solution", description: [{ type: "text", text: "the solution" }], direction: "in" },
+                    { name: "user_data", description: [{ type: "text", text: "opaque pointer" }], direction: "inout" }
+                ]
+            })
+        };
+        const handle: CppTypedefIr = {
+            name: "lib_handle",
+            path: "lib_handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Opaque handle." }] })
+        };
+        const create = makeFunction({
+            name: "lib_create",
+            path: "lib_create",
+            parameters: [
+                {
+                    name: "out",
+                    typeInfo: {
+                        parts: ["lib_handle *"],
+                        display: "lib_handle *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: "out"
+                }
+            ],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Create a problem of the form" }],
+                description: [
+                    { type: "verbatim", content: "\n  minimize c^T x\n  subject to A x <= b\n", format: undefined }
+                ],
+                params: [
+                    { name: "out", description: [{ type: "text", text: "- the created handle" }], direction: "out" }
+                ]
+            })
+        });
+        const point = makeClass({ name: "point", path: "point", kind: "struct" });
+        const ir = makeIr(makeNamespace({ typedefs: [callback, handle], functions: [create], classes: [point] }), {
+            packageName: "lib"
+        });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/lib_callback.mdx"), "utf-8");
+        expect(callbackPage).toContain("typedef void (*lib_callback)(const float *solution, void *user_data);");
+        expect(callbackPage).not.toContain("using lib_callback");
+        expect(callbackPage).toContain("**Parameters**");
+        expect(callbackPage).toContain('<ParamField path="solution" type="const float *">\n**[in]** The solution');
+        expect(callbackPage).toContain('<ParamField path="user_data" type="void *">\n**[in,out]** Opaque pointer');
+
+        const handlePage = readFileSync(join(tmpDir, "typedefs/lib_handle.mdx"), "utf-8");
+        expect(handlePage).toContain("typedef void *lib_handle;");
+
+        const createPage = readFileSync(join(tmpDir, "functions/lib_create.mdx"), "utf-8");
+        expect(createPage).toContain("**[out]** The created handle");
+        expect(createPage).toContain("```text showLineNumbers={false}\n  minimize c^T x\n  subject to A x <= b\n```");
+    });
+
+    it("links typedef names inside function and callback signatures", () => {
+        const floatType: CppTypedefIr = {
+            name: "lib_float",
+            path: "lib_float",
+            typeInfo: { parts: ["float"], display: "float", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const handle: CppTypedefIr = {
+            name: "lib_handle",
+            path: "lib_handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const callback: CppTypedefIr = {
+            name: "lib_callback",
+            path: "lib_callback",
+            typeInfo: {
+                parts: ["void(*", ")(const lib_float *solution, lib_handle handle, void *user_data)"],
+                display: "void(*)(const lib_float *solution, lib_handle handle, void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: undefined
+        };
+        const create = makeFunction({
+            name: "lib_create",
+            path: "lib_create",
+            signature: "lib_float lib_create(lib_handle *out)",
+            returnType: {
+                parts: [{ text: "lib_float", refid: "lib_8h_1a1", kindref: "member" }],
+                display: "lib_float",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            parameters: [
+                {
+                    name: "out",
+                    typeInfo: {
+                        parts: [{ text: "lib_handle", refid: "lib_8h_1a2", kindref: "member" }, " *"],
+                        display: "lib_handle *",
+                        resolvedPath: undefined,
+                        basePath: undefined
+                    },
+                    defaultValue: undefined,
+                    arraySuffix: undefined,
+                    direction: undefined
+                }
+            ]
+        });
+        const ir = makeIr(makeNamespace({ typedefs: [floatType, handle, callback], functions: [create] }), {
+            packageName: "lib"
+        });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const createPage = readFileSync(join(tmpDir, "functions/lib_create.mdx"), "utf-8");
+        expect(createPage).toContain(
+            '<CodeBlock links={{"lib_handle": "../typedefs/libhandle", "lib_float": "../typedefs/libfloat"}}>'
+        );
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/lib_callback.mdx"), "utf-8");
+        expect(callbackPage).toContain('<CodeBlock links={{"lib_float": "libfloat", "lib_handle": "libhandle"}}>');
+        expect(callbackPage).toContain(
+            "typedef void (*lib_callback)(const lib_float *solution, lib_handle handle, void *user_data);"
+        );
+
+        // A typedef never links to itself, and plain underlying types stay a bare fence.
+        const handlePage = readFileSync(join(tmpDir, "typedefs/lib_handle.mdx"), "utf-8");
+        expect(handlePage).not.toContain("links=");
+    });
+
+    it("keeps C++ `using` syntax when a struct carries C++-only features", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const withFriend = makeClass({
+            name: "S",
+            path: "S",
+            kind: "struct",
+            friendFunctions: [makeFunction({ name: "f", path: "f" })]
+        });
+        const ir = makeIr(makeNamespace({ typedefs: [handle], classes: [withFriend] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/Handle.mdx"), "utf-8");
+        expect(page).toContain("using Handle = void *;");
+        expect(page).not.toContain("typedef void *Handle;");
+    });
+
+    it("keeps C++ `using` syntax when the root scope carries C++-only members", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const cppOnlyRoots: Array<Partial<CppNamespaceIr>> = [
+            {
+                enums: [
+                    {
+                        name: "Mode",
+                        path: "Mode",
+                        isScoped: true,
+                        underlyingType: undefined,
+                        values: [],
+                        docstring: undefined
+                    }
+                ]
+            },
+            {
+                variables: [
+                    {
+                        name: "kMax",
+                        path: "kMax",
+                        typeInfo: undefined,
+                        initializer: "3",
+                        templateParams: [],
+                        isStatic: false,
+                        isConstexpr: true,
+                        isMutable: false,
+                        docstring: undefined
+                    }
+                ]
+            },
+            { functions: [makeFunction({ name: "f", path: "f", isNoexcept: true })] }
+        ];
+        for (const root of cppOnlyRoots) {
+            const dir = mkdtempSync(join(tmpdir(), "cpp-plain-c-"));
+            generateCpp({
+                ir: makeIr(makeNamespace({ typedefs: [handle], ...root }), { packageName: "lib" }),
+                outputDir: dir,
+                slug: "reference/lib"
+            });
+            const page = readFileSync(join(dir, "typedefs/Handle.mdx"), "utf-8");
+            expect(page).toContain("using Handle = void *;");
+            rmSync(dir, { recursive: true, force: true });
+        }
+    });
+
+    it("documents parameters of a callback typedef that are themselves function pointers", () => {
+        const callback: CppTypedefIr = {
+            name: "lib_run_cb",
+            path: "lib_run_cb",
+            typeInfo: {
+                parts: ["void(*", ")(void (*on_done)(int status), void *user_data)"],
+                display: "void(*)(void (*on_done)(int status), void *user_data)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Run callback." }],
+                params: [
+                    {
+                        name: "on_done",
+                        description: [{ type: "text", text: "Invoked on completion." }],
+                        direction: undefined
+                    },
+                    {
+                        name: "user_data",
+                        description: [{ type: "text", text: "Opaque pointer." }],
+                        direction: undefined
+                    }
+                ]
+            })
+        };
+        const ir = makeIr(makeNamespace({ typedefs: [callback] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/lib_run_cb.mdx"), "utf-8");
+        expect(page).toContain("**Parameters**");
+        expect(page).toContain('<ParamField path="on_done" type="void (*)(int status)">');
+        expect(page).toContain("Invoked on completion.");
+        expect(page).toContain('<ParamField path="user_data" type="void *">');
+    });
+
+    it("resolves unqualified group-scoped member refs relative to the current page's namespace", () => {
+        const errorTypedef: CppTypedefIr = {
+            name: "error_t",
+            path: "acme::error_t",
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: "Error code." }] })
+        };
+        const open = makeFunction({
+            name: "open",
+            path: "acme::open",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Open." }],
+                returns: [
+                    { type: "text", text: "see " },
+                    { type: "ref", text: "error_t", refid: "group__ACME_1ga1", kindref: "member" }
+                ]
+            })
+        });
+        const acme = makeNamespace({
+            name: "acme",
+            path: "acme",
+            functions: [open],
+            typedefs: [errorTypedef]
+        });
+        const ir = makeIr(makeNamespace({ namespaces: [acme] }), { packageName: "acme" }, [
+            makeGroup({ id: "group__ACME", name: "ACME", title: "ACME", functions: [open], typedefs: [errorTypedef] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "acme" });
+
+        const page = readFileSync(join(tmpDir, "functions/open.mdx"), "utf-8");
+        expect(page).toContain("**Returns:** see [error_t](../typedefs/errort)");
+    });
+
+    it("prefers the enclosing namespace over a same-named global symbol for unqualified refs", () => {
+        const makeErrorTypedef = (path: string): CppTypedefIr => ({
+            name: "error_t",
+            path,
+            typeInfo: undefined,
+            templateParams: [],
+            docstring: makeDocstring({ summary: [{ type: "text", text: path }] })
+        });
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "acme::Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const callback: CppTypedefIr = {
+            name: "Callback",
+            path: "acme::Callback",
+            typeInfo: {
+                parts: ["void(*)(Handle value)"],
+                display: "void(*)(Handle value)",
+                resolvedPath: undefined,
+                basePath: undefined
+            },
+            templateParams: [],
+            docstring: undefined
+        };
+        const open = makeFunction({
+            name: "open",
+            path: "acme::open",
+            docstring: makeDocstring({
+                summary: [{ type: "text", text: "Open." }],
+                returns: [
+                    { type: "text", text: "see " },
+                    { type: "ref", text: "error_t", refid: "group__ACME_1ga1", kindref: "member" }
+                ]
+            })
+        });
+        const acme = makeNamespace({
+            name: "acme",
+            path: "acme",
+            functions: [open],
+            typedefs: [makeErrorTypedef("acme::error_t"), handle, callback]
+        });
+        const ir = makeIr(
+            makeNamespace({ typedefs: [makeErrorTypedef("error_t")], namespaces: [acme] }),
+            { packageName: "acme" },
+            [makeGroup({ id: "group__ACME", name: "ACME", title: "ACME", functions: [open] })]
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "acme" });
+
+        const typedefPages = readdirSync(join(tmpDir, "typedefs"));
+        const acmeErrorPage = typedefPages.find(
+            (f) =>
+                f.startsWith("error_t") && readFileSync(join(tmpDir, "typedefs", f), "utf-8").includes("acme::error_t")
+        );
+        expect(acmeErrorPage).toBeDefined();
+        const acmeErrorSlug = (acmeErrorPage ?? "").replace(/\.mdx$/, "").replace("_", "");
+        const openPage = readFileSync(join(tmpDir, "functions/open.mdx"), "utf-8");
+        expect(openPage).toContain(`**Returns:** see [error_t](../typedefs/${acmeErrorSlug})`);
+
+        const callbackPage = readFileSync(join(tmpDir, "typedefs/Callback.mdx"), "utf-8");
+        expect(callbackPage).toContain('<CodeBlock links={{"Handle": "handle"}}>');
+    });
+
+    it("ignores the empty `std` namespace Doxygen emits for C headers", () => {
+        const handle: CppTypedefIr = {
+            name: "Handle",
+            path: "Handle",
+            typeInfo: { parts: ["void *"], display: "void *", resolvedPath: undefined, basePath: undefined },
+            templateParams: [],
+            docstring: undefined
+        };
+        const ir = makeIr(
+            makeNamespace({ typedefs: [handle], namespaces: [makeNamespace({ name: "std", path: "std" })] }),
+            { packageName: "lib" }
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const page = readFileSync(join(tmpDir, "typedefs/Handle.mdx"), "utf-8");
+        expect(page).toContain("typedef void *Handle;");
     });
 });

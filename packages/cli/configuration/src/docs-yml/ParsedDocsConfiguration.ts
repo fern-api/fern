@@ -608,6 +608,8 @@ export interface ParsedLibraryConfiguration {
     output: {
         /** The output directory where MDX files will be generated */
         path: string;
+        /** Whether to write auto-generated pages and navigation (default true) */
+        pages: boolean;
     };
     /** The programming language of the library source code */
     lang: LibraryLanguage;

@@ -1,3 +1,6 @@
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
@@ -214,7 +217,7 @@ describe("runLibraryDocsGeneration", () => {
     });
 
     it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
-        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
 
         await expect(
             runLibraryDocsGeneration({
@@ -302,6 +305,124 @@ describe("runLibraryDocsGeneration", () => {
                 packagePath: "packages/sdk"
             })
         );
+    });
+
+    it("remote mode: forwards include-undocumented-macros for cpp libraries", async () => {
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-macros" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }],
+            irResponse: { ir: mockCppIr }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+
+        const promise = runLibraryDocsGeneration({
+            libraries: { "c-api": { ...cppConfig(), config: { includeUndocumentedMacros: true } } },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext()
+        });
+        await vi.advanceTimersByTimeAsync(3000);
+        await promise;
+
+        expect((startCalls[0] as { config: unknown }).config).toEqual(
+            expect.objectContaining({ includeUndocumentedMacros: true })
+        );
+    });
+
+    it("rejects include-undocumented-macros for non-cpp libraries", async () => {
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "my-sdk": { ...pythonConfig(), config: { includeUndocumentedMacros: true } } },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                tokenValue: "tok",
+                context: makeContext()
+            })
+        ).rejects.toThrow("'include-undocumented-macros' config is only valid for lang: cpp");
+    });
+
+    it("local mode: forwards include-undocumented-macros to the local parser", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockCppIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "c-api": {
+                    input: { path: "./src" },
+                    output: { path: "./docs" },
+                    lang: "cpp",
+                    config: { includeUndocumentedMacros: true }
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true
+        });
+
+        expect(LocalParserRunner.runLocalParser).toHaveBeenCalledWith(
+            expect.objectContaining({
+                language: "CPP",
+                config: expect.objectContaining({ includeUndocumentedMacros: true })
+            })
+        );
+    });
+
+    it("local mode: surfaces parser warnings (e.g. skipped Cython modules) in the CLI log", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({
+            ir: mockPythonIr,
+            warnings: ["Skipping Cython module bad.pyx: bad.pyx:2:15: Expected ')'"]
+        });
+        const logger = makeLogger();
+
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: {
+                    "my-sdk": {
+                        input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                        output: { path: "./docs" },
+                        lang: "python"
+                    }
+                },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                context: makeContext(logger),
+                local: true
+            })
+        ).resolves.toEqual({ successful: 1 });
+
+        expect(logger.warn).toHaveBeenCalledWith(
+            "Library 'my-sdk': Skipping Cython module bad.pyx: bad.pyx:2:15: Expected ')'"
+        );
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(expect.objectContaining({ ir: mockPythonIr }));
+    });
+
+    it("remote mode: surfaces parser warnings from the downloaded result", async () => {
+        const { mockFn } = makeMockFetch({
+            startResponse: { body: { jobId: "job-warn" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }],
+            irResponse: { ir: mockPythonIr, warnings: ["Skipping Cython module bad.pyx: syntax error"] }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+        const logger = makeLogger();
+
+        const promise = runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { git: "https://github.com/acme/sdk" },
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext(logger)
+        });
+        await vi.runAllTimersAsync();
+        await expect(promise).resolves.toEqual({ successful: 1 });
+
+        expect(logger.warn).toHaveBeenCalledWith("Library 'my-sdk': Skipping Cython module bad.pyx: syntax error");
     });
 
     it("sends the bearer token in the auth header", async () => {
@@ -395,6 +516,76 @@ describe("runLibraryDocsGeneration", () => {
         expect(CppDocsGenerator.generateCpp).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockCppIr, slug: "cpp-lib" })
         );
+    });
+
+    describe("IR persistence", () => {
+        let tmpDocsDir: string;
+
+        beforeEach(() => {
+            tmpDocsDir = mkdtempSync(join(tmpdir(), "orchestrate-ir-"));
+        });
+
+        afterEach(() => {
+            rmSync(tmpDocsDir, { recursive: true, force: true });
+        });
+
+        it("persists the fetched IR to <output.path>/.fern/library-ir.json before generating pages", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-ir" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }]
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+
+            const promise = runLibraryDocsGeneration({
+                libraries: { "my-sdk": pythonConfig() },
+                docsDirectoryPath: AbsoluteFilePath.of(tmpDocsDir),
+                orgId: "org",
+                tokenValue: "tok",
+                context: makeContext()
+            });
+            await vi.advanceTimersByTimeAsync(3000);
+            await promise;
+
+            const irPath = join(tmpDocsDir, "docs", ".fern", "library-ir.json");
+            expect(existsSync(irPath)).toBe(true);
+            expect(JSON.parse(readFileSync(irPath, "utf-8"))).toEqual({
+                schemaVersion: 1,
+                lang: "python",
+                library: "my-sdk",
+                ir: mockPythonIr
+            });
+            expect(PythonDocsGenerator.generate).toHaveBeenCalledTimes(1);
+        });
+
+        it("output.pages: false persists the IR but skips generated pages (cpp)", async () => {
+            const { mockFn } = makeMockFetch({
+                startResponse: { body: { jobId: "job-np" } },
+                statusResponses: [{ body: makeStatus("COMPLETED") }],
+                irResponse: { ir: mockCppIr }
+            });
+            globalThis.fetch = mockFn as unknown as typeof fetch;
+            const context = makeContext();
+
+            const promise = runLibraryDocsGeneration({
+                libraries: {
+                    "cpp-lib": { ...cppConfig(), output: { path: "./cpp-docs", pages: false } }
+                },
+                docsDirectoryPath: AbsoluteFilePath.of(tmpDocsDir),
+                orgId: "org",
+                tokenValue: "tok",
+                context
+            });
+            await vi.advanceTimersByTimeAsync(3000);
+            await expect(promise).resolves.toEqual({ successful: 1 });
+
+            const irPath = join(tmpDocsDir, "cpp-docs", ".fern", "library-ir.json");
+            const persisted = JSON.parse(readFileSync(irPath, "utf-8"));
+            expect(persisted.lang).toBe("cpp");
+            expect(persisted.ir).toEqual(mockCppIr);
+            expect(CppDocsGenerator.generateCpp).not.toHaveBeenCalled();
+            expect(PythonDocsGenerator.generate).not.toHaveBeenCalled();
+            expect(context.logger.info).toHaveBeenCalledWith(expect.stringContaining("output.pages is false"));
+        });
     });
 
     it("respects the library filter — only the named library is generated", async () => {
