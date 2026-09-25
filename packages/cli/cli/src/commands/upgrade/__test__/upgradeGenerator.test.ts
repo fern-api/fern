@@ -7,6 +7,7 @@ import { join } from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
+import { compareGeneratorVersions } from "../getSdkGenApiGeneratorVersions.js";
 import { loadAndUpdateGenerators, upgradeGenerator } from "../upgradeGenerator.js";
 
 const sdkGenApiHelpers = vi.hoisted(() => ({
@@ -87,6 +88,22 @@ describe("upgradeGenerator - YAML formatting preservation", () => {
                 throw new Error(message);
             })
         } as unknown as TaskContext;
+    });
+
+    it.each([
+        ["1.2.3-1-gabc", "1.2.3", 1],
+        ["1.2.3", "1.2.3-1-gabc", -1],
+        ["2.0.0", "latest", -1],
+        ["latest", "2.0.0", 1],
+        ["latest", "latest", 0]
+    ])("compares generator version %s against %s", (candidateVersion, currentVersion, expected) => {
+        expect(
+            compareGeneratorVersions({
+                generatorId: "fernapi/fern-typescript-sdk",
+                candidateVersion,
+                currentVersion
+            })
+        ).toBe(expected);
     });
 
     it("should preserve YAML comments when applying migrations", async () => {

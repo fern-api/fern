@@ -13,8 +13,8 @@ import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
-import { upgrade } from "../../upgrade/upgrade.js";
 import { createSdkGenApiTokenProvider } from "../../upgrade/getSdkGenApiGeneratorVersions.js";
+import { upgrade } from "../../upgrade/upgrade.js";
 import { loadAndUpdateGenerators } from "../../upgrade/upgradeGenerator.js";
 
 const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";

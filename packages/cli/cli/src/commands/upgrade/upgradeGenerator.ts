@@ -20,8 +20,8 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import {
     compareGeneratorVersions,
     createSdkGenApiTokenProvider,
-    getSdkGenApiGeneratorVersions,
-    GetSdkGenApiToken
+    GetSdkGenApiToken,
+    getSdkGenApiGeneratorVersions
 } from "./getSdkGenApiGeneratorVersions.js";
 import { loadAndRunMigrations } from "./migrations/index.js";
 

@@ -1,6 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
 import { getFernSdkGenApiLanguage, getFernSdkGenApiOrigin } from "@fern-api/remote-workspace-runner";
+import { isVersionAhead, parseVersion } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import semver from "semver";
 
@@ -42,9 +43,23 @@ export function compareGeneratorVersions({
     candidateVersion: string;
     currentVersion: string;
 }): GeneratorVersionComparison {
-    const candidateSemver = semver.valid(candidateVersion);
-    const currentSemver = semver.valid(currentVersion);
-    if (candidateSemver == null || currentSemver == null) {
+    try {
+        if (candidateVersion === currentVersion) {
+            if (candidateVersion !== "latest") {
+                parseVersion(candidateVersion);
+            }
+            return 0;
+        }
+        if (isVersionAhead(candidateVersion, currentVersion)) {
+            return 1;
+        }
+        return isVersionAhead(currentVersion, candidateVersion) ? -1 : 0;
+    } catch {
+        const candidateSemver = semver.valid(candidateVersion);
+        const currentSemver = semver.valid(currentVersion);
+        if (candidateSemver != null && currentSemver != null) {
+            return Math.sign(semver.compare(candidateSemver, currentSemver)) as GeneratorVersionComparison;
+        }
         throw new CliError({
             message:
                 `Cannot compare versions for generator "${generatorId}": configured version ` +
@@ -53,7 +68,6 @@ export function compareGeneratorVersions({
             code: CliError.Code.VersionError
         });
     }
-    return Math.sign(semver.compare(candidateSemver, currentSemver)) as GeneratorVersionComparison;
 }
 
 export async function getSdkGenApiGeneratorVersions({
