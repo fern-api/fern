@@ -1113,20 +1113,24 @@ pub fn inject_oauth2_caches(cli_name: &str, bindings: &mut [(String, SchemeBindi
 ///
 /// Normally it goes *last*, preserving ADR-0008's order (CLI flag > env >
 /// keyring > file). But when a profile is in play — however it was selected —
-/// it goes *first*: the profile's stored credential is what the user chose
-/// for that tenant, and env only fills in when nothing is stored. See
-/// [`crate::profiles::outranks_env`].
+/// it goes directly *below the CLI flag rungs* and above everything else:
+/// an explicit flag still wins, the profile's stored credential is what the
+/// user chose for that tenant, and env only fills in when nothing is stored.
+/// See [`crate::profiles::outranks_env`].
 fn splice_keyring(
     existing: AuthCredentialSource,
     keyring: AuthCredentialSource,
 ) -> AuthCredentialSource {
     if crate::profiles::outranks_env() {
+        let is_flag = |s: &AuthCredentialSource| matches!(s, AuthCredentialSource::Cli(_));
         return match existing {
             AuthCredentialSource::Chain(mut sources) => {
-                sources.insert(0, keyring);
+                let at = sources.iter().take_while(|s| is_flag(s)).count();
+                sources.insert(at, keyring);
                 AuthCredentialSource::Chain(sources)
             }
             AuthCredentialSource::Missing => keyring,
+            flag if is_flag(&flag) => AuthCredentialSource::Chain(vec![flag, keyring]),
             single => AuthCredentialSource::Chain(vec![keyring, single]),
         };
     }
@@ -1345,6 +1349,43 @@ mod tests {
 
     #[test]
     #[serial]
+    fn inject_keyring_under_a_profile_sits_below_the_flag_and_above_env() {
+        let mut bindings = vec![(
+            "scheme1".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::any([
+                AuthCredentialSource::cli("api-token"),
+                AuthCredentialSource::from_env("MY_TOKEN"),
+            ])),
+        )];
+        with_profile(Some("prod"), || {
+            inject_keyring_sources("cli", &mut bindings)
+        });
+        match &bindings[0].1 {
+            SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
+                assert_eq!(sources.len(), 3);
+                assert!(matches!(sources[0], AuthCredentialSource::Cli(_)));
+                assert!(matches!(sources[1], AuthCredentialSource::Keyring { .. }));
+                assert!(matches!(sources[2], AuthCredentialSource::Env(_)));
+            }
+            _ => panic!("expected Chain([Cli, Keyring, Env])"),
+        }
+
+        let mut single = vec![(
+            "scheme1".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::cli("api-token")),
+        )];
+        with_profile(Some("prod"), || inject_keyring_sources("cli", &mut single));
+        match &single[0].1 {
+            SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
+                assert!(matches!(sources[0], AuthCredentialSource::Cli(_)));
+                assert!(matches!(sources[1], AuthCredentialSource::Keyring { .. }));
+            }
+            _ => panic!("expected Chain([Cli, Keyring])"),
+        }
+    }
+
+    #[test]
+    #[serial]
     fn inject_keyring_promotes_missing_to_keyring_alone() {
         let mut bindings = vec![(
             "scheme1".to_string(),
@@ -1499,6 +1540,7 @@ mod tests {
         assert!(slots.required.is_empty());
         assert_eq!(slots.alternatives.len(), 1);
         match &slots.alternatives[0] {
+
             AuthCredentialSource::Keyring { service, account } => {
                 assert_eq!(service, "my-cli");
                 assert_eq!(account, "OAuth2");
@@ -1539,7 +1581,6 @@ mod tests {
             matches!(&slots.required[1][..], [AuthCredentialSource::Env(e)] if e == "OAUTH_CLIENT_SECRET")
         );
     }
-
 
     #[test]
     #[serial]
