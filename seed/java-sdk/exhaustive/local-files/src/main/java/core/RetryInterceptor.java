@@ -11,10 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Random;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.AsyncTimeout;
+import okio.Timeout;
 
 public class RetryInterceptor implements Interceptor {
 
@@ -82,12 +85,14 @@ public class RetryInterceptor implements Interceptor {
         Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
             response = bufferResponse(response);
+            Optional<AsyncTimeout> callTimeout = suspendCallTimeout(chain);
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
             } catch (InterruptedException e) {
                 response.close();
                 throw new IOException("Interrupted while trying request", e);
             }
+            callTimeout.ifPresent(AsyncTimeout::enter);
             Response nextResponse;
             try {
                 nextResponse = chain.proceed(chain.request());
@@ -106,6 +111,26 @@ public class RetryInterceptor implements Interceptor {
         }
 
         return response;
+    }
+
+    /**
+     * Pauses the OkHttp call timeout so that it applies to each attempt individually rather than to the whole
+     * retry loop: the backoff wait (e.g. a {@code Retry-After} the size of the call timeout) does not consume the
+     * budget of the next attempt, and each attempt starts with a fresh budget once {@link AsyncTimeout#enter()}
+     * is called again.
+     */
+    private static Optional<AsyncTimeout> suspendCallTimeout(Chain chain) {
+        Call call = chain.call();
+        if (call == null) {
+            return Optional.empty();
+        }
+        Timeout timeout = call.timeout();
+        if (!(timeout instanceof AsyncTimeout)) {
+            return Optional.empty();
+        }
+        AsyncTimeout callTimeout = (AsyncTimeout) timeout;
+        callTimeout.exit();
+        return Optional.of(callTimeout);
     }
 
     /**

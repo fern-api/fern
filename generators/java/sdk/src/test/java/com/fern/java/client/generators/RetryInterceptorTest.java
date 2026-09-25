@@ -24,9 +24,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.sun.net.httpserver.HttpServer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
@@ -34,10 +37,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -113,9 +119,13 @@ class RetryInterceptorTest {
     }
 
     private static Interceptor newInterceptor(int maxRetries) throws Exception {
+        return newInterceptor(maxRetries, 1L);
+    }
+
+    private static Interceptor newInterceptor(int maxRetries, long maxRetryDelayMillis) throws Exception {
         return (Interceptor) interceptorClass
                 .getConstructor(int.class, Optional.class, Optional.class, Optional.class)
-                .newInstance(maxRetries, Optional.of(1L), Optional.of(1L), Optional.of(0.0));
+                .newInstance(maxRetries, Optional.of(1L), Optional.of(maxRetryDelayMillis), Optional.of(0.0));
     }
 
     private static Response response(int code, String body) {
@@ -192,5 +202,50 @@ class RetryInterceptorTest {
         assertThatThrownBy(() -> newInterceptor(3).intercept(chain))
                 .isInstanceOf(IOException.class)
                 .hasMessage("Canceled");
+    }
+
+    /**
+     * The server asks for a {@code Retry-After} wait that is longer than the client's call timeout. With a single
+     * timeout across the whole retry loop the call is cancelled while sleeping and OkHttp throws before the retry ever
+     * runs; the timeout must instead apply to each attempt on its own.
+     */
+    @Test
+    void callTimeoutAppliesPerAttemptNotAcrossRetryAfterWait() throws Exception {
+        AtomicInteger requests = new AtomicInteger();
+        HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        server.createContext("/test", exchange -> {
+            byte[] body;
+            if (requests.incrementAndGet() == 1) {
+                body = "Rate limited".getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().add("Retry-After", "2");
+                exchange.sendResponseHeaders(429, body.length);
+            } else {
+                body = "Success".getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(200, body.length);
+            }
+            try (OutputStream out = exchange.getResponseBody()) {
+                out.write(body);
+            }
+        });
+        server.start();
+        try {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .callTimeout(1500, TimeUnit.MILLISECONDS)
+                    .addInterceptor(newInterceptor(3, 60_000L))
+                    .build();
+            Request request = new Request.Builder()
+                    .url("http://127.0.0.1:" + server.getAddress().getPort() + "/test")
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                assertThat(response.code()).isEqualTo(200);
+                assertThat(response.body().string()).isEqualTo("Success");
+            }
+            assertThat(requests.get()).isEqualTo(2);
+            client.dispatcher().executorService().shutdown();
+            client.connectionPool().evictAll();
+        } finally {
+            server.stop(0);
+        }
     }
 }
