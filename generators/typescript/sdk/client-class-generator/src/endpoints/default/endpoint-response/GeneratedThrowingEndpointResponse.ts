@@ -1,6 +1,7 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    createNumericLiteralSafe,
     getElementTypeFromArrayType,
     getFullPathForEndpoint,
     getTextOfTsNode,
@@ -280,7 +281,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
 
         // initializeOffset uses the offset property if set
-        const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
+        const pagePropertyDefault = this.getDefaultPaginationValue({
+            type: offset.page.property.valueType,
+            context
+        });
         const pagePropertyPathForSet = context.type.generateSetterForRequestPropertyAsString({
             property: offset.page
         });
@@ -306,7 +310,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             pagePropertyAccess,
                             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                            ts.factory.createNumericLiteral(pagePropertyDefault)
+                            pagePropertyDefault
                         )
                     )
                 ],
@@ -660,22 +664,70 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         };
     }
 
-    private getDefaultPaginationValue({ type }: { type: FernIr.TypeReference }): string {
-        let defaultValue: string | undefined;
+    private getDefaultPaginationValue({
+        type,
+        context
+    }: {
+        type: FernIr.TypeReference;
+        context: FileContext;
+    }): ts.Expression {
+        const useBigInt = (context.config.customConfig as { useBigInt?: boolean } | undefined)?.useBigInt;
+        let defaultValue: ts.Expression | undefined;
 
         FernIr.TypeReference._visit(type, {
             primitive: (primitiveType) => {
                 const maybeV2Scheme = primitiveType.v2;
                 if (maybeV2Scheme != null) {
-                    defaultValue = FernIr.PrimitiveTypeV2._visit(maybeV2Scheme, {
-                        integer: (it) => (it.default != null ? String(it.default) : undefined),
-                        double: () => undefined,
-                        string: () => undefined,
-                        boolean: () => undefined,
-                        long: () => undefined,
-                        bigInteger: () => undefined,
-                        uint: () => undefined,
-                        uint64: () => undefined,
+                    defaultValue = FernIr.PrimitiveTypeV2._visit<ts.Expression | undefined>(maybeV2Scheme, {
+                        integer: (it) => (it.default != null ? createNumericLiteralSafe(it.default) : undefined),
+                        double: (it) => (it.default != null ? createNumericLiteralSafe(it.default) : undefined),
+                        string: (it) => (it.default != null ? ts.factory.createStringLiteral(it.default) : undefined),
+                        boolean: (it) =>
+                            it.default != null
+                                ? it.default
+                                    ? ts.factory.createTrue()
+                                    : ts.factory.createFalse()
+                                : undefined,
+                        long: (it) => {
+                            if (it.default != null) {
+                                if (useBigInt) {
+                                    return ts.factory.createCallExpression(
+                                        ts.factory.createIdentifier("BigInt"),
+                                        undefined,
+                                        [ts.factory.createStringLiteral(it.default.toString())]
+                                    );
+                                }
+                                return createNumericLiteralSafe(it.default);
+                            }
+                            return undefined;
+                        },
+                        bigInteger: (it) => {
+                            if (it.default != null) {
+                                if (useBigInt) {
+                                    return ts.factory.createCallExpression(
+                                        ts.factory.createIdentifier("BigInt"),
+                                        undefined,
+                                        [ts.factory.createStringLiteral(it.default)]
+                                    );
+                                }
+                                return createNumericLiteralSafe(it.default);
+                            }
+                            return undefined;
+                        },
+                        uint: (it) => (it.default != null ? createNumericLiteralSafe(it.default) : undefined),
+                        uint64: (it) => {
+                            if (it.default != null) {
+                                if (useBigInt) {
+                                    return ts.factory.createCallExpression(
+                                        ts.factory.createIdentifier("BigInt"),
+                                        undefined,
+                                        [ts.factory.createStringLiteral(it.default.toString())]
+                                    );
+                                }
+                                return createNumericLiteralSafe(it.default);
+                            }
+                            return undefined;
+                        },
                         date: () => undefined,
                         dateTime: () => undefined,
                         dateTimeRfc2822: () => undefined,
@@ -691,8 +743,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     literal: () => undefined,
                     list: () => undefined,
                     set: () => undefined,
-                    nullable: (nullableType) => this.getDefaultPaginationValue({ type: nullableType }),
-                    optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType }),
+                    nullable: (nullableType) => this.getDefaultPaginationValue({ type: nullableType, context }),
+                    optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType, context }),
                     map: () => undefined,
                     _other: () => undefined
                 });
@@ -702,7 +754,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             _other: () => undefined
         });
 
-        return defaultValue != null ? defaultValue : "1";
+        return defaultValue != null ? defaultValue : ts.factory.createNumericLiteral("1");
     }
 
     public getResponseVariableName(): string {
