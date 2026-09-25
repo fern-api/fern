@@ -251,11 +251,15 @@ impl HttpConfig {
     fn user_agent_suffix(&self) -> Option<String> {
         let raw = match &self.user_agent_suffix_override {
             Some(s) => Some(s.to_string()),
-            None => first_env([scoped(
-                &self.prefix,
-                &crate::user_agent::suffix_env_segment(),
-            )])
-            .or_else(|| crate::profiles::transport().user_agent_suffix),
+            None => crate::profiles::transport_pick(
+                crate::profiles::transport().user_agent_suffix,
+                || {
+                    first_env([scoped(
+                        &self.prefix,
+                        &crate::user_agent::suffix_env_segment(),
+                    )])
+                },
+            ),
         };
         raw.map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
@@ -303,21 +307,23 @@ impl HttpConfig {
             false
         };
 
-        let proxy = first_env([scoped(prefix, "_PROXY")])
-            .or_else(|| profile.proxy.clone())
-            .map(|url| {
-                // Mirror the reqwest path's bypass-list resolution: <PREFIX>_NO_PROXY
-                // wins when set, otherwise fall back to the standard NO_PROXY env.
-                let no_proxy = first_env([scoped(prefix, "_NO_PROXY")])
-                    .or_else(|| first_env(["NO_PROXY".to_string()]));
-                ResolvedProxy { url, no_proxy }
-            });
+        let proxy = crate::profiles::transport_pick(profile.proxy.clone(), || {
+            first_env([scoped(prefix, "_PROXY")])
+        })
+        .map(|url| {
+            // Mirror the reqwest path's bypass-list resolution: <PREFIX>_NO_PROXY
+            // wins when set, otherwise fall back to the standard NO_PROXY env.
+            let no_proxy = first_env([scoped(prefix, "_NO_PROXY")])
+                .or_else(|| first_env(["NO_PROXY".to_string()]));
+            ResolvedProxy { url, no_proxy }
+        });
 
         let connect_timeout =
             parse_secs(&scoped(prefix, "_CONNECT_TIMEOUT_SECS")).map(Duration::from_secs);
-        let request_timeout = parse_secs(&scoped(prefix, "_TIMEOUT_SECS"))
-            .or(profile.timeout_secs)
-            .map(Duration::from_secs);
+        let request_timeout = crate::profiles::transport_pick(profile.timeout_secs, || {
+            parse_secs(&scoped(prefix, "_TIMEOUT_SECS"))
+        })
+        .map(Duration::from_secs);
 
         Ok(ResolvedTlsConfig {
             extra_root_certs_pem,
@@ -438,7 +444,9 @@ impl HttpConfig {
         // Standalone `<PREFIX>_NO_PROXY` (without `<PREFIX>_PROXY`) is *not*
         // honored — it would have ambiguous semantics (override which proxy?).
         let proxy_key = scoped(prefix, "_PROXY");
-        if let Some(url) = first_env([proxy_key.clone()]).or_else(|| profile.proxy.clone()) {
+        if let Some(url) = crate::profiles::transport_pick(profile.proxy.clone(), || {
+            first_env([proxy_key.clone()])
+        }) {
             let mut proxy = reqwest::Proxy::all(&url)
                 .map_err(|e| CliError::Other(anyhow::anyhow!("invalid {proxy_key}={url}: {e}")))?;
             if let Some(list) = first_env([scoped(prefix, "_NO_PROXY")]) {
@@ -452,7 +460,9 @@ impl HttpConfig {
         }
 
         // --- Timeouts ---
-        if let Some(secs) = parse_secs(&scoped(prefix, "_TIMEOUT_SECS")).or(profile.timeout_secs) {
+        if let Some(secs) = crate::profiles::transport_pick(profile.timeout_secs, || {
+            parse_secs(&scoped(prefix, "_TIMEOUT_SECS"))
+        }) {
             builder = builder.timeout(std::time::Duration::from_secs(secs));
         }
         if let Some(secs) = parse_secs(&scoped(prefix, "_CONNECT_TIMEOUT_SECS")) {
@@ -529,15 +539,16 @@ fn looks_like_tls_failure(err: &reqwest::Error) -> bool {
     format!("{err:#}").to_lowercase().contains("certificate")
 }
 
-/// CA bundle path: scoped env vars, then the generic `SSL_CERT_FILE`, then
-/// the active profile's `ca_bundle`.
+/// CA bundle path: the profile's `ca_bundle` vs. the scoped env vars /
+/// generic `SSL_CERT_FILE`, ordered by [`crate::profiles::transport_pick`].
 fn ca_bundle_path(prefix: &str, profile: &crate::profiles::TransportSettings) -> Option<String> {
-    first_env([
-        scoped(prefix, "_CA_BUNDLE"),
-        scoped(prefix, "_EXTRA_CA_CERTS"),
-        "SSL_CERT_FILE".to_string(),
-    ])
-    .or_else(|| profile.ca_bundle.clone())
+    crate::profiles::transport_pick(profile.ca_bundle.clone(), || {
+        first_env([
+            scoped(prefix, "_CA_BUNDLE"),
+            scoped(prefix, "_EXTRA_CA_CERTS"),
+            "SSL_CERT_FILE".to_string(),
+        ])
+    })
 }
 
 /// What turned insecure mode on — the env var name, or the profile — so the
@@ -547,20 +558,17 @@ fn insecure_source(prefix: &str, profile: &crate::profiles::TransportSettings) -
         scoped(prefix, "_INSECURE"),
         scoped(prefix, "_INSECURE_SKIP_VERIFY"),
     ];
-    if let Some(key) = first_env_truthy(keys.iter()) {
-        return Some(key);
-    }
-    // An explicit falsy env value (`_INSECURE=0`) is still a decision, and
-    // it outranks the profile like every other env var does.
-    if first_env(keys.iter()).is_some() {
-        return None;
-    }
-    profile.insecure.unwrap_or(false).then(|| {
-        match crate::profiles::active_name() {
+    // Both sides are a *decision* (an explicit `insecure = false` or
+    // `<PREFIX>_INSECURE=0` counts as set), so pick the winning side first
+    // and only then ask whether it turned insecure mode on.
+    let from_profile = profile.insecure.map(|on| {
+        on.then(|| match crate::profiles::active_name() {
             Some(name) => format!("profile `{name}`"),
             None => "active profile".to_string(),
-        }
-    })
+        })
+    });
+    let from_env = || first_env(keys.iter()).map(|_| first_env_truthy(keys.iter()));
+    crate::profiles::transport_pick(from_profile, from_env).flatten()
 }
 
 /// Print the insecure-mode warning at most once per (binary, process).
@@ -1066,11 +1074,21 @@ mod tests {
     }
 
     fn install_transport_profile(transport: crate::profiles::TransportSettings) {
-        crate::profiles::install_for_tests(Some(crate::profiles::ResolvedProfile {
-            name: "corp".to_string(),
-            transport,
-            ..Default::default()
-        }));
+        install_transport_profile_from(transport, crate::profiles::SelectionSource::Active);
+    }
+
+    fn install_transport_profile_from(
+        transport: crate::profiles::TransportSettings,
+        source: crate::profiles::SelectionSource,
+    ) {
+        crate::profiles::install_for_tests_from(
+            Some(crate::profiles::ResolvedProfile {
+                name: "corp".to_string(),
+                transport,
+                ..Default::default()
+            }),
+            source,
+        );
     }
 
     #[test]
@@ -1108,33 +1126,72 @@ mod tests {
 
     #[test]
     #[serial_test::serial]
-    fn env_beats_profile_transport_settings() {
+    fn a_profile_beats_env_transport_settings_however_it_was_selected() {
+        // Unlike ADR-0011's rule for other fields, the transport settings of
+        // an *ambient* profile (active / <BIN>_PROFILE) win over env too.
+        for source in [
+            crate::profiles::SelectionSource::Active,
+            crate::profiles::SelectionSource::Env,
+            crate::profiles::SelectionSource::Flag,
+        ] {
+            let mut env = isolated_env_guard();
+            env.set("ELEVENLABS_TIMEOUT_SECS", "10");
+            env.set("ELEVENLABS_PROXY", "http://env-proxy:8080");
+            env.set("ELEVENLABS_INSECURE", "1");
+            env.set("ELEVENLABS_USER_AGENT_SUFFIX", "env-app/2.0");
+            install_transport_profile_from(
+                crate::profiles::TransportSettings {
+                    timeout_secs: Some(5),
+                    proxy: Some("http://proxy.corp:3128".to_string()),
+                    ca_bundle: None,
+                    insecure: Some(false),
+                    user_agent_suffix: Some("my-app/1.0".to_string()),
+                },
+                source,
+            );
+            let cfg = HttpConfig::new("elevenlabs").unwrap();
+            let resolved = cfg.resolve().unwrap();
+            let ua = cfg.user_agent();
+            crate::profiles::install_for_tests(None);
+
+            assert_eq!(
+                resolved.request_timeout,
+                Some(Duration::from_secs(5)),
+                "{source:?}"
+            );
+            assert_eq!(
+                resolved.proxy.as_ref().map(|p| p.url.as_str()),
+                Some("http://proxy.corp:3128"),
+                "{source:?}"
+            );
+            // An explicit `insecure = false` on the profile is a decision too:
+            // it keeps verification on even with the global env var exported.
+            assert!(!resolved.insecure_skip_verify, "{source:?}");
+            assert!(ua.ends_with(" my-app/1.0"), "{source:?}: {ua}");
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn env_fills_in_transport_settings_the_profile_leaves_unset() {
         let mut env = isolated_env_guard();
-        env.set("ELEVENLABS_TIMEOUT_SECS", "5");
-        env.set("ELEVENLABS_PROXY", "http://env-proxy:8080");
+        env.set("ELEVENLABS_TIMEOUT_SECS", "10");
         env.set("ELEVENLABS_INSECURE", "0");
-        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "env-app/2.0");
+        env.unset("ELEVENLABS_PROXY");
         install_transport_profile(crate::profiles::TransportSettings {
-            timeout_secs: Some(45),
             proxy: Some("http://proxy.corp:3128".to_string()),
-            ca_bundle: None,
-            insecure: Some(true),
-            user_agent_suffix: Some("my-app/1.0".to_string()),
+            ..Default::default()
         });
-        let cfg = HttpConfig::new("elevenlabs").unwrap();
-        let resolved = cfg.resolve().unwrap();
-        let ua = cfg.user_agent();
+        let resolved = HttpConfig::new("elevenlabs").unwrap().resolve().unwrap();
         crate::profiles::install_for_tests(None);
 
-        assert_eq!(resolved.request_timeout, Some(Duration::from_secs(5)));
+        assert_eq!(resolved.request_timeout, Some(Duration::from_secs(10)));
+        // A falsy env value is still a decision when the profile has none.
+        assert!(!resolved.insecure_skip_verify);
         assert_eq!(
             resolved.proxy.as_ref().map(|p| p.url.as_str()),
-            Some("http://env-proxy:8080")
+            Some("http://proxy.corp:3128")
         );
-        // A falsy env value still counts as "set": the profile's `true`
-        // must not switch verification off behind the user's back.
-        assert!(!resolved.insecure_skip_verify);
-        assert!(ua.ends_with(" env-app/2.0"), "{ua}");
     }
 
     #[test]
