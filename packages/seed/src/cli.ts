@@ -999,9 +999,15 @@ function addPublishCommands(cli: Argv) {
                             default: false,
                             demandOption: false
                         })
+                        .option("pre-prod", {
+                            type: "boolean",
+                            default: false,
+                            demandOption: false
+                        })
                         .check((argv) => {
-                            if (argv.beta && argv.dev) {
-                                throw new Error("Arguments --beta and --dev are mutually exclusive");
+                            const selectedReleaseFlags = [argv.dev, argv.beta, argv.preProd].filter(Boolean).length;
+                            if (selectedReleaseFlags > 1) {
+                                throw new Error("Arguments --dev, --beta, and --pre-prod are mutually exclusive");
                             }
                             // Either version or changelog and previousChangelog must be provided
                             if (!argv.ver && !(argv.changelog && argv.previousChangelog)) {
@@ -1028,7 +1034,8 @@ function addPublishCommands(cli: Argv) {
                               },
                         context,
                         isDevRelease: argv.dev,
-                        isBetaRelease: argv.beta
+                        isBetaRelease: argv.beta,
+                        isPreProdRelease: argv.preProd
                     });
                 }
             )
