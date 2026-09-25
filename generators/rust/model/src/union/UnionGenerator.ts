@@ -304,9 +304,7 @@ export class UnionGenerator {
         // Generate variant based on its shape
         unionType.shape._visit({
             noProperties: () => {
-                // Use empty struct variant {} instead of unit variant for forward compatibility
-                // with #[non_exhaustive], fields can be added later without breaking changes
-                writer.writeLine(`    ${variantName} {},`);
+                this.generateVariantWithoutOwnProperties(writer, variantName);
             },
             singleProperty: (singleProperty) => {
                 // Check if this field creates a recursive reference
@@ -361,8 +359,7 @@ export class UnionGenerator {
                     if (referencedType?.shape.type === "object") {
                         const properties = referencedType.shape.properties;
                         if (properties.length === 0) {
-                            // Empty type: generate empty struct variant
-                            writer.writeLine(`    ${variantName} {},`);
+                            this.generateVariantWithoutOwnProperties(writer, variantName);
                         } else {
                             // Inline fields directly into the variant
                             writer.writeLine(`    ${variantName} {`);
@@ -456,6 +453,42 @@ export class UnionGenerator {
             });
 
             writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
+        });
+    }
+
+    /**
+     * Writes a variant that has no own properties: a noProperties variant, or an inlined
+     * referenced object with an empty property list.
+     */
+    private generateVariantWithoutOwnProperties(writer: rust.Writer, variantName: string): void {
+        if (this.unionTypeDeclaration.baseProperties.length > 0) {
+            // Base properties are typed on every variant (getters and constructors
+            // reference them), so they must be present even without own properties.
+            writer.writeLine(`    ${variantName} {`);
+            this.generateBaseProperties(writer);
+            writer.writeLine(`    },`);
+        } else {
+            // Use empty struct variant {} instead of unit variant for forward compatibility
+            // with #[non_exhaustive], fields can be added later without breaking changes
+            writer.writeLine(`    ${variantName} {},`);
+        }
+    }
+
+    /**
+     * Writes the constructor for a variant that has no own properties. It takes the union's
+     * base properties, if any, since they are typed on every variant.
+     */
+    private generateConstructorWithoutOwnProperties(
+        writer: rust.Writer,
+        constructorName: string,
+        variantName: string
+    ): void {
+        const baseParams = this.getBasePropertyParams();
+        const baseFields = this.getBasePropertyFieldAssignments();
+        writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
+            writer.writeLine(
+                baseFields.length > 0 ? `Self::${variantName} { ${baseFields.join(", ")} }` : `Self::${variantName} {}`
+            );
         });
     }
 
@@ -600,10 +633,7 @@ export class UnionGenerator {
 
         unionType.shape._visit({
             noProperties: () => {
-                // Empty constructor: pub fn variant_name() -> Self { Self::VariantName {} }
-                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
-                    writer.writeLine(`Self::${variantName} {}`);
-                });
+                this.generateConstructorWithoutOwnProperties(writer, constructorName, variantName);
             },
             singleProperty: (singleProperty) => {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
@@ -632,18 +662,7 @@ export class UnionGenerator {
                     if (referencedType?.shape.type === "object") {
                         const properties = referencedType.shape.properties;
                         if (properties.length === 0) {
-                            // Empty inlined type: no parameters needed
-                            const baseParams = this.getBasePropertyParams();
-                            if (baseParams.length > 0) {
-                                writer.writeBlock(`pub fn ${constructorName}(${baseParams.join(", ")}) -> Self`, () => {
-                                    const baseFields = this.getBasePropertyFieldAssignments();
-                                    writer.writeLine(`Self::${variantName} { ${baseFields.join(", ")} }`);
-                                });
-                            } else {
-                                writer.writeBlock(`pub fn ${constructorName}() -> Self`, () => {
-                                    writer.writeLine(`Self::${variantName} {}`);
-                                });
-                            }
+                            this.generateConstructorWithoutOwnProperties(writer, constructorName, variantName);
                         } else {
                             // Constructor takes required fields as parameters, optional fields default to None
                             const requiredParams: string[] = [];

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "processingError",
+        "validationError",
+        "timeoutError"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "processingError"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "validationError"
+        },
+        "field": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "field"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "timeoutError"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {}
+}
