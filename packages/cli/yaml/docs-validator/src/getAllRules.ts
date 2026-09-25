@@ -11,7 +11,6 @@ import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
-import { ValidEmbeddingOriginsRule } from "./rules/valid-embedding-origins/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url/index.js";
@@ -41,7 +40,6 @@ const allRules = [
     ValidVersionRefRule, // Reject a version entry that declares both 'ref' and 'path'
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
-    ValidEmbeddingOriginsRule, // Validate settings.embedding.allowed-origins are well-formed CSP frame-ancestors sources
     NoCircularRedirectsRule, // Detect circular redirect chains
     ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect

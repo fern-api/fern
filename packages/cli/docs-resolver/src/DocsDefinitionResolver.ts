@@ -69,10 +69,9 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations and embedding fields.
+// DocsV1Write.DocsConfig includes the translations field.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
-    embedding: { allowedOrigins: string[] } | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -1110,10 +1109,6 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
-            embedding:
-                this.parsedDocsConfig.settings?.embedding != null
-                    ? { allowedOrigins: this.parsedDocsConfig.settings.embedding.allowedOrigins }
-                    : undefined,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
