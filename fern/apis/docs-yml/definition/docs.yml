@@ -1206,6 +1206,30 @@ types:
       footer-nav: optional<FooterNavThemeConfig>
       language-switcher: optional<LanguageSwitcherThemeConfig>
       product-switcher: optional<ProductSwitcherThemeConfig>
+      site-switcher:
+        type: optional<SiteSwitcherThemeConfig>
+        docs: |
+          Header switcher listing the other docs sites published to the same
+          domain under different basepaths. Membership is discovered
+          automatically at publish time; this only controls presentation.
+
+  SiteSwitcherThemeConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Render the site switcher. Defaults to false.
+      order:
+        type: optional<list<string>>
+        docs: Basepaths to pin first, in this order. Remaining sites follow alphabetically.
+      hide:
+        type: optional<list<string>>
+        docs: Basepaths to omit, including any sites nested beneath them.
+      labels:
+        type: optional<map<string, string>>
+        docs: Display label overrides keyed by basepath.
+      show-products:
+        type: optional<boolean>
+        docs: List each site's products indented beneath it. Defaults to false.
 
   ProductSwitcherThemeConfig:
     enum:
