@@ -6,6 +6,7 @@ import {
     ApiSpecImportSettings,
     DocsConfiguration,
     ProductFileConfig,
+    ThemeConfig,
     VersionFileConfig
 } from "../DocsYmlSchemas.js";
 
@@ -63,6 +64,26 @@ describe("DocsYmlSchemas", () => {
     it("AIChatConfig preserves an explicit mask-pii opt-in", () => {
         expect(AIChatConfig.parse({ "mask-pii": true })["mask-pii"]).toBe(true);
         expect(AIChatConfig.parse({ "mask-pii": false })["mask-pii"]).toBe(false);
+    });
+
+    it("ThemeConfig accepts site-switcher presentation options", () => {
+        const parsed = ThemeConfig.parse({
+            "site-switcher": {
+                enabled: true,
+                order: ["/dynamo", "/nemo"],
+                hide: ["/internal"],
+                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+                "show-products": true
+            }
+        });
+        expect(parsed["site-switcher"]).toEqual({
+            enabled: true,
+            order: ["/dynamo", "/nemo"],
+            hide: ["/internal"],
+            labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+            "show-products": true
+        });
+        expect(ThemeConfig.parse({})["site-switcher"]).toBeUndefined();
     });
 
     it("validates ensured API error response status codes", () => {

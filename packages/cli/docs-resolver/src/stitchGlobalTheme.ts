@@ -285,20 +285,24 @@ function kebabToCamel(str: string): string {
     return str.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
 }
 
+// Records whose keys are user data (e.g. basepaths), not schema property names.
+const USER_KEYED_RECORD_PATHS: ReadonlySet<string> = new Set(["theme.siteSwitcher.labels"]);
+
 // Recursively convert kebab-case object keys to camelCase. The theme config
 // from FDR uses kebab-case at every nesting level, but DocsConfiguration
 // (the Fern SDK parsed type) expects camelCase throughout.
-function deepNormalizeKeys(value: unknown): unknown {
+function deepNormalizeKeys(value: unknown, path = ""): unknown {
     if (value == null || typeof value !== "object") {
         return value;
     }
     if (Array.isArray(value)) {
-        return value.map(deepNormalizeKeys);
+        return value.map((item) => deepNormalizeKeys(item, path));
     }
+    const preserveKeys = USER_KEYED_RECORD_PATHS.has(path);
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-        const camel = kebabToCamel(k);
-        out[camel] = deepNormalizeKeys(v);
+        const key = preserveKeys ? k : kebabToCamel(k);
+        out[key] = deepNormalizeKeys(v, path === "" ? key : `${path}.${key}`);
     }
     return out;
 }

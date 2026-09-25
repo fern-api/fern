@@ -83,12 +83,22 @@ func (e *ExternalPaymentScheduleRequest) SetDescription(description *string) {
 }
 
 func (e *ExternalPaymentScheduleRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExternalPaymentScheduleRequest
-	var body unmarshaler
+	type embed ExternalPaymentScheduleRequest
+	var body = struct {
+		embed
+		StartDate         *internal.Date `json:"start_date"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+	}{
+		embed: embed(*e),
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*e = ExternalPaymentScheduleRequest(body)
+	*e = ExternalPaymentScheduleRequest(body.embed)
+	e.StartDate = body.StartDate.Time()
+	e.EndDate = body.EndDate.TimePtr()
+	e.AdjustedStartDate = body.AdjustedStartDate.TimePtr()
 	return nil
 }
 

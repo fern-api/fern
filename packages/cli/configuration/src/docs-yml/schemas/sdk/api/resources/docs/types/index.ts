@@ -131,6 +131,7 @@ export * from "./SearchSettingsConfig.js";
 export * from "./SectionConfiguration.js";
 export * from "./SegmentConfig.js";
 export * from "./SidebarThemeConfig.js";
+export * from "./SiteSwitcherThemeConfig.js";
 export * from "./SkillEntry.js";
 export * from "./SkillsInstallCommand.js";
 export * from "./SkillsPageActionConfig.js";

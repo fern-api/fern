@@ -29,3 +29,10 @@ func (p *PropertyBasedErrorTest) MarshalJSON() ([]byte, error) {
 func (p *PropertyBasedErrorTest) Unwrap() error {
 	return p.APIError
 }
+
+func (p *PropertyBasedErrorTest) GetBody() *PropertyBasedErrorTestBody {
+	if p == nil {
+		return nil
+	}
+	return p.Body
+}

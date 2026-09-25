@@ -1,0 +1,4 @@
+- summary: |
+    Add a pre-prod CLI build target that uses Postman-hosted production sdk-gen service origins
+    (sdk-gen.postman.co and related service domains) ahead of DNS cutover.
+  type: chore
