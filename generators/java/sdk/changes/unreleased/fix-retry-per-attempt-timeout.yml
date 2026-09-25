@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `RetryInterceptor` now applies the client `timeout` to each attempt individually instead of to the
+    whole retry loop. Previously a `Retry-After` wait as long as the timeout (e.g. `Retry-After: 60`
+    with the default 60s timeout) cancelled the call during the backoff sleep and surfaced
+    `IOException: Canceled` instead of retrying or returning the received 429. The call timeout is
+    paused while waiting for the backoff and restarted for each retry attempt, so a call that retries
+    may now take up to `timeout * (maxRetries + 1)` plus the backoff waits.
+  type: fix
