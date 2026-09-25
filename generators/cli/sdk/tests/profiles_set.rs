@@ -203,27 +203,36 @@ fn a_malformed_assignment_explains_the_expected_shape() {
 #[serial]
 fn env_credentials_are_reported_as_fallback_never_as_an_override() {
     // A selected profile's stored credential beats exported env vars, so
-    // `current` must not claim env "overrides" it; it names the vars as the
-    // fallback consulted where the profile has nothing stored.
+    // `current` must not claim env "overrides" it. The vars are named as the
+    // fallback only when the profile has no credential stored — when it
+    // does, they are never consulted and the field is omitted.
     with_clean_env(|| {
-        run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SID=AC1", "MULTI_AUTH_TOKEN=t"]);
-        run(&["multi", "profiles", "use", "prod"]);
-
-        let (_, none) = run(&["multi", "profiles", "current", "--format", "json"]);
-        let parsed: serde_json::Value = serde_json::from_str(&none).expect("json");
-        assert!(parsed.get("credential_env_fallback").is_none(), "{none}");
+        let current = || -> serde_json::Value {
+            let (_, out) = run(&["multi", "profiles", "current", "--format", "json"]);
+            serde_json::from_str(&out).expect("json")
+        };
+        run(&["multi", "profiles", "create", "bare", "--use"]);
+        assert!(current().get("credential_env_fallback").is_none(), "{}", current());
 
         std::env::set_var("MULTI_ACCOUNT_SID", "AC-env");
         std::env::set_var("MULTI_AUTH_TOKEN", "t-env");
-        let (_, full) = run(&["multi", "profiles", "current", "--format", "json"]);
+        let bare = current();
+        assert!(bare.get("credential_overridden_by_env").is_none(), "{bare}");
+        assert_eq!(
+            bare["credential_env_fallback"],
+            "MULTI_ACCOUNT_SID, MULTI_AUTH_TOKEN",
+            "{bare}"
+        );
+
+        run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SID=AC1", "MULTI_AUTH_TOKEN=t"]);
+        run(&["multi", "profiles", "use", "prod"]);
+        let stored = current();
         std::env::remove_var("MULTI_ACCOUNT_SID");
         std::env::remove_var("MULTI_AUTH_TOKEN");
-        let parsed: serde_json::Value = serde_json::from_str(&full).expect("json");
-        assert!(parsed.get("credential_overridden_by_env").is_none(), "{full}");
-        assert_eq!(
-            parsed["credential_env_fallback"],
-            "MULTI_ACCOUNT_SID, MULTI_AUTH_TOKEN",
-            "{full}"
+        assert!(
+            stored.get("credential_env_fallback").is_none(),
+            "the stored credential wins, so env is not a fallback: {stored}"
         );
+        assert!(stored.get("credential_overridden_by_env").is_none(), "{stored}");
     });
 }
