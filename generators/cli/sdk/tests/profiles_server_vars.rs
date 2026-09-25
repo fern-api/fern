@@ -444,12 +444,58 @@ fn the_env_var_beats_the_spec_default() {
 
 #[test]
 #[serial]
+fn the_env_var_fills_in_when_the_selected_profile_has_no_server_variable() {
+    // Profile-first is not env-blind: a selected profile that stores no
+    // region leaves the env var in charge, and that env choice must still
+    // count as pinned so no default URL displaces it.
+    with_temp_home(|| {
+        let (code, output) = run(&["regional", "profiles", "create", "bare", "--use"]);
+        assert_eq!(code, 0, "{output}");
+        with_env("au1", || {
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://au1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn an_off_enum_env_value_does_not_block_a_profile_that_stores_the_variable() {
+    // The profile's value wins, so a stale or mistyped export must not make
+    // clap reject the invocation before the profile is consulted.
+    with_temp_home(|| {
+        create_region_profile("au1");
+        with_env("nope1", || {
+            let (code, output) = run(&[
+                "regional",
+                "messages",
+                "list",
+                "--dry-run",
+                "--format",
+                "json",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://au1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
 fn an_off_enum_env_value_is_rejected_like_a_flag_value() {
     // The env rung goes through the same `PossibleValuesParser`, so a typo in
     // the env var fails loudly rather than reaching the URL.
     with_temp_home(|| {
         with_env("nope1", || {
-            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            let (code, output) = run(&[
+                "regional",
+                "messages",
+                "list",
+                "--dry-run",
+                "--format",
+                "json",
+            ]);
             assert_ne!(code, 0, "an off-enum env value must be rejected: {output}");
         });
     });
