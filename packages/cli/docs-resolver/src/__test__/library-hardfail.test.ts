@@ -1,3 +1,4 @@
+import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -13,7 +14,7 @@ const context = createMockTaskContext();
  * exercise the three missing-output cases and assert resolution still succeeds.
  */
 describe("library section missing output", () => {
-    async function resolveFixture(fixture: string): Promise<void> {
+    async function resolveFixture(fixture: string): Promise<DocsV1Write.DocsDefinition> {
         const docsWorkspace = await loadDocsWorkspace({
             fernDirectory: resolve(AbsoluteFilePath.of(__dirname), `fixtures/library-hardfail/${fixture}/fern`),
             context
@@ -30,18 +31,23 @@ describe("library section missing output", () => {
             uploadFiles: async () => [],
             registerApi: async () => ""
         });
-        await resolver.resolve();
+        return await resolver.resolve();
     }
 
     it("warns and skips when the library is not configured in libraries", async () => {
-        await expect(resolveFixture("missing-config")).resolves.toBeUndefined();
+        await expect(resolveFixture("missing-config")).resolves.toBeDefined();
     });
 
     it("warns and skips when the library has no generated output (missing _navigation.yml)", async () => {
-        await expect(resolveFixture("missing-nav")).resolves.toBeUndefined();
+        await expect(resolveFixture("missing-nav")).resolves.toBeDefined();
     });
 
     it("warns and skips a referenced generated page whose MDX is missing", async () => {
-        await expect(resolveFixture("missing-mdx")).resolves.toBeUndefined();
+        await expect(resolveFixture("missing-mdx")).resolves.toBeDefined();
+    });
+
+    it("keeps the root page as section overview when the navigation has no public children", async () => {
+        const definition = await resolveFixture("empty-nav");
+        expect(Object.keys(definition.pages)).toContain("static/guardrails/guardrails-python-sdk/guardrails.mdx");
     });
 });

@@ -746,6 +746,19 @@ describe("replaceImagePaths", () => {
         `);
     });
 
+    it("should resolve .mdx paths inside a CodeBlock links attribute", () => {
+        const page =
+            '<CodeBlock links={{"pkg.Foo": "../other/page.mdx#pkg-Foo", "pkg.Bar": "#pkg-Bar", "Missing": "../missing.mdx"}}>\ncode\n</CodeBlock>';
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain(
+            'links={{"pkg.Foo":"/other/page#pkg-Foo","pkg.Bar":"#pkg-Bar","Missing":"../missing.mdx"}}'
+        );
+        expect(result).toContain("code\n</CodeBlock>");
+    });
+
     it("should preserve anchors when replacing markdown link hrefs", () => {
         const page = "[link text](../other/page.mdx#some-heading)";
         const markdownFilesToPathName = {
