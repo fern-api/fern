@@ -1,0 +1,6 @@
+- summary: |
+    `profiles show` and `profiles current` now print the full stored account
+    identifier (e.g. the complete Twilio Account SID) instead of the truncated
+    form used in the `profiles list` table, and include the profile's
+    `oauth_client_id` when one is set.
+  type: fix

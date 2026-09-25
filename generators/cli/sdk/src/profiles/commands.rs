@@ -979,7 +979,7 @@ fn handle_list<W: Write>(
                 // The identifier, when we can read it — that is the question a
                 // listing should answer. See `stored_account`.
                 if let Some(account) = stored_account(ctx, credential) {
-                    row.insert("account".into(), account.into());
+                    row.insert("account".into(), truncate_account(&account).into());
                 }
                 // The *slot* only when it is not this profile's own. Emitting
                 // it unconditionally printed `prod -> prod` on every row: true,
@@ -1220,15 +1220,16 @@ fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String>
             .ok()
             .and_then(|v| v.get("username")?.as_str().map(str::to_string));
         if let Some(username) = username.filter(|u| !u.is_empty()) {
-            return Some(truncate_account(&username));
+            return Some(username);
         }
     }
     None
 }
 
-/// Shorten a long identifier for a table cell, keeping the leading characters
-/// that distinguish accounts (`AC1234…`). Twilio SIDs are 34 characters, which
-/// would dominate the row.
+/// Shorten a long identifier for a `list` table cell, keeping the leading
+/// characters that distinguish accounts (`AC1234…`). Twilio SIDs are 34
+/// characters, which would dominate the row. `show` and `current` print the
+/// full value: one profile at a time, and the point is to read it.
 fn truncate_account(value: &str) -> String {
     const KEEP: usize = 10;
     if value.chars().count() <= KEEP + 1 {
@@ -1865,6 +1866,9 @@ fn resolved_profile_fields(
         if credential != &profile.name {
             map.insert("credentials_from".into(), credential.clone().into());
         }
+    }
+    if let Some(client_id) = &profile.oauth_client_id {
+        map.insert("oauth_client_id".into(), client_id.clone().into());
     }
     if let Some(base_url) = &profile.base_url {
         map.insert("base_url".into(), base_url.clone().into());
