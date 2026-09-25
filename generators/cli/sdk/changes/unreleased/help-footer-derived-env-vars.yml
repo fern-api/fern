@@ -1,0 +1,9 @@
+- summary: |
+    The root `--help` "Environment variables" footer is now derived from the
+    spec instead of a static string: it lists `<PREFIX>_PROFILE`,
+    `<PREFIX>_OUTPUT`, `<PREFIX>_RETRIES`, and one `<PREFIX>_<VAR>` entry per
+    `servers[].variables` (e.g. `TWILIO_CLI_REGION`), alongside the existing
+    runtime-only knobs. Entries that `profiles set` can also persist are
+    marked with `*`, so the footer and that command's validation error
+    describe the same surface.
+  type: fix
