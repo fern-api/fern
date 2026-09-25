@@ -392,9 +392,9 @@ fn the_flag_beats_the_env_var() {
 
 #[test]
 #[serial]
-fn the_env_var_beats_an_activated_profile() {
-    // `flag > env > profile > spec default`. The profile here was activated
-    // with `profiles use`, which does *not* outrank env.
+fn an_activated_profile_beats_the_env_var() {
+    // `flag > profile > env > spec default`. The profile here was activated
+    // with `profiles use`, which outranks env just like `-p` does.
     with_temp_home(|| {
         create_region_profile("au1");
         with_env("us1", || {
@@ -403,8 +403,8 @@ fn the_env_var_beats_an_activated_profile() {
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(
-                output.contains("https://us1.api.example.com"),
-                "env must outrank an activated profile: {output}",
+                output.contains("https://au1.api.example.com"),
+                "an activated profile must outrank env: {output}",
             );
         });
     });
@@ -413,8 +413,8 @@ fn the_env_var_beats_an_activated_profile() {
 #[test]
 #[serial]
 fn an_explicitly_named_profile_beats_the_env_var() {
-    // The one inversion: naming a profile with `-p` is a deliberate per-call
-    // act, so it outranks ambient env. Mirrors `outranks_env`.
+    // Same rule under `-p`: a selected profile outranks env. Mirrors
+    // `outranks_env`.
     with_temp_home(|| {
         create_region_profile("au1");
         with_env("us1", || {

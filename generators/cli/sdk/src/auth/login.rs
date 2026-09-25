@@ -1112,11 +1112,9 @@ pub fn inject_oauth2_caches(cli_name: &str, bindings: &mut [(String, SchemeBindi
 /// the right precedence.
 ///
 /// Normally it goes *last*, preserving ADR-0008's order (CLI flag > env >
-/// keyring > file). But when the profile was named explicitly with `-p`, it
-/// goes *first*: `-p prod` is the most specific statement of intent this
-/// invocation has, and every other explicit flag already beats the
-/// environment. An ambient profile still loses to env, so a CI job's
-/// exported credentials stay authoritative. See
+/// keyring > file). But when a profile is in play — however it was selected —
+/// it goes *first*: the profile's stored credential is what the user chose
+/// for that tenant, and env only fills in when nothing is stored. See
 /// [`crate::profiles::outranks_env`].
 fn splice_keyring(
     existing: AuthCredentialSource,
@@ -1267,14 +1265,14 @@ mod tests {
             match &bindings[0].1 {
                 SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => assert!(
                     matches!(
-                        sources[1],
+                        sources[0],
                         AuthCredentialSource::Keyring { ref account, .. }
                             if account == "OAuth2#acme"
                     ),
                     "{:?}",
-                    describe_source(&sources[1]),
+                    describe_source(&sources[0]),
                 ),
-                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+                _ => panic!("expected Token(Chain([Keyring, Env]))"),
             }
         });
     }
@@ -1282,8 +1280,8 @@ mod tests {
     #[test]
     #[serial]
     fn the_profile_does_not_add_a_rung_to_the_credential_chain() {
-        // It only selects which account the existing keyring rung reads, so
-        // ADR-0008's precedence (CLI > env > keyring > file) is untouched.
+        // It selects which account the keyring rung reads and moves that rung
+        // ahead of env; it never adds a rung of its own.
         with_profile(Some("acme"), || {
             let mut bindings = vec![(
                 "OAuth2".to_string(),
@@ -1293,9 +1291,10 @@ mod tests {
             match &bindings[0].1 {
                 SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
                     assert_eq!(sources.len(), 2, "{sources:?}", sources = sources.len());
-                    assert!(matches!(sources[0], AuthCredentialSource::Env(_)));
+                    assert!(matches!(sources[0], AuthCredentialSource::Keyring { .. }));
+                    assert!(matches!(sources[1], AuthCredentialSource::Env(_)));
                 }
-                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+                _ => panic!("expected Token(Chain([Keyring, Env]))"),
             }
         });
     }

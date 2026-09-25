@@ -1,0 +1,13 @@
+- summary: |
+    A selected profile now takes precedence over environment variables for every
+    value it stores — credentials, `<PREFIX>_BASE_URL`, `<PREFIX>_OUTPUT`,
+    `<PREFIX>_RETRIES`, server variables such as `<PREFIX>_REGION`, spec
+    parameter defaults, and the transport settings — however the profile was
+    selected (`-p/--profile`, `<PREFIX>_PROFILE`, or `profiles use`). Env vars
+    fill in only what the profile leaves unset; explicit flags still win, and
+    invocations with no profile selected are unchanged. Previously only `-p`
+    outranked env, so an active profile's stored values were silently ignored
+    whenever the same variable was exported. `profiles current` now reports
+    exported credential vars as `credential_env_fallback` instead of
+    `credential_overridden_by_env` / `credential_partially_shadowed_by_env`.
+  type: break

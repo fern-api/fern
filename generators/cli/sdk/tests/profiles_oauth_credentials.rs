@@ -181,25 +181,31 @@ fn two_profiles_hold_independent_client_credentials() {
 
 #[test]
 #[serial]
-fn env_vars_still_win_over_a_stored_credential() {
-    // Ambient precedence is unchanged: env above an active profile.
+fn a_selected_profiles_stored_credential_wins_over_env_vars() {
+    // The active profile's keyring entry outranks exported env vars, the
+    // same as it does under `-p`; `auth status` reports that order.
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         store("prod", "stored-id", "stored-secret");
         std::env::set_var("OA_CLIENT_ID", "env-id");
         std::env::set_var("OA_CLIENT_SECRET", "env-secret");
 
-        let active: Vec<String> = status(None)["sources"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .filter(|s| s["state"] == "active")
-            .map(|s| s["source"].as_str().unwrap().to_string())
-            .collect();
-        assert!(
-            active.iter().all(|s| s.contains("env var")),
-            "env should win for an ambient profile: {active:?}",
-        );
+        let winners = |profile: Option<&str>| -> Vec<String> {
+            status(profile)["sources"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|s| s["state"] == "active")
+                .map(|s| s["source"].as_str().unwrap().to_string())
+                .collect()
+        };
+        for (label, active) in [("active", winners(None)), ("-p", winners(Some("prod")))] {
+            assert_eq!(active.len(), 2, "{label}: {active:?}");
+            assert!(
+                active.iter().all(|s| s.contains("keyring")),
+                "{label}: the profile's stored credential should win: {active:?}",
+            );
+        }
     });
 }
 

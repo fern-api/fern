@@ -1127,8 +1127,8 @@ mod tests {
     #[test]
     #[serial_test::serial]
     fn a_profile_beats_env_transport_settings_however_it_was_selected() {
-        // Unlike ADR-0011's rule for other fields, the transport settings of
-        // an *ambient* profile (active / <BIN>_PROFILE) win over env too.
+        // Like every other profile field, transport settings win over env
+        // whether the profile is active, `<BIN>_PROFILE`, or `-p`.
         for source in [
             crate::profiles::SelectionSource::Active,
             crate::profiles::SelectionSource::Env,

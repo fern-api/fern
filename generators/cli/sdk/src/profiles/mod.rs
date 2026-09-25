@@ -212,21 +212,15 @@ pub fn oauth_client_id() -> Option<String> {
 }
 
 /// The profile's transport settings (timeout, proxy, CA bundle, insecure,
-/// user-agent suffix). Unlike every other profile field these sit *above*
-/// the matching `<NAME>_*` env var however the profile was selected — see
-/// [`transport_pick`].
+/// user-agent suffix), or the empty set when running unprofiled.
 pub fn transport() -> TransportSettings {
     active().map(|p| p.transport.clone()).unwrap_or_default()
 }
 
 /// Pick between a profile's stored transport value and the env var's: the
-/// profile wins whenever it has a value, regardless of [`outranks_env`], and
-/// the env var fills in only what the profile leaves unset.
-///
-/// This is a deliberate departure from ADR-0011's ambient-profile-below-env
-/// rule. Transport settings describe how to *reach* the tenant a profile
-/// names (its proxy, trust roots, timeout), so a user who stored them on the
-/// profile expects them to apply whenever that profile is in play.
+/// profile wins whenever it has a value and the env var fills in only what
+/// the profile leaves unset — the same rule [`outranks_env`] applies to every
+/// other profile field (a `Some` here implies a profile is in play).
 pub fn transport_pick<T>(profile: Option<T>, env: impl FnOnce() -> Option<T>) -> Option<T> {
     profile.or_else(env)
 }

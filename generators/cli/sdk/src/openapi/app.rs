@@ -1909,8 +1909,8 @@ impl CliApp {
             //
             // clap resolves CommandLine > EnvVariable > DefaultValue, and
             // `apply_server_vars` treats anything but `DefaultValue` as
-            // caller-pinned — except under `-p`, where `outranks_env` demotes
-            // env so the explicitly named profile wins.
+            // caller-pinned — except when a profile is in play, where
+            // `outranks_env` demotes env so the profile's value wins.
             arg = arg.env(format!(
                 "{}_{}",
                 crate::text::env_var_prefix(&self.name),
@@ -2224,8 +2224,8 @@ impl CliApp {
             // `CommandLine` / `EnvVariable` mean the caller pinned this
             // variable; `DefaultValue` means clap fell back to the spec's
             // `default`, which the profile outranks.
-            // An explicitly named profile outranks the variable's env var, so
-            // only a command-line value counts as "pinned" in that case.
+            // A selected profile outranks the variable's env var, so only a
+            // command-line value counts as "pinned" in that case.
             //
             // `value_source` panics on an unregistered id exactly as
             // `get_one` does, and a variable whose flag was skipped (built-in

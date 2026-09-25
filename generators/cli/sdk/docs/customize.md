@@ -155,12 +155,12 @@ no global state, so parallel invocations cannot race:
 for tenant in prod acme; do acme messages list -p "$tenant" --format json; done
 ```
 
-CI keeps using environment variables and ignores profiles entirely.
+CI with no profile selected keeps using environment variables exactly as before.
 
-**Precedence per value** is `explicit flag → environment variable → profile →
-the spec's own default`. Environment variables sit above profiles deliberately,
-so a pipeline that exports them is never silently overridden by a profile a
-developer stored on the same machine.
+**Precedence per value** is `explicit flag → selected profile → environment
+variable → the spec's own default`. Whenever a profile is in play — `-p`,
+`<NAME>_PROFILE`, or the active one from `profiles use` — its stored values
+win; environment variables fill in only what the profile leaves unset.
 
 **The quickest way in is `profiles set`,** which takes the names you already
 use — no scheme names, no stdin piping:
@@ -215,7 +215,7 @@ stored and silently ignored.
 
 **Retries are per profile.** `--retries <N>` counts attempts *after* the first,
 so `--retries 0` is the same as `--no-retry`. It overrides `x-fern-retries` for
-the operation and resolves `flag > <PREFIX>_RETRIES > profile > spec`:
+the operation and resolves `flag > profile > <PREFIX>_RETRIES > spec`:
 
 ```bash
 acme profiles create flaky-sandbox --retries 6
@@ -267,11 +267,9 @@ column. `CREDENTIALS_FROM` appears only when a profile borrows another's
 credential. Add `--format json` for the machine-readable form.
 
 **When environment variables are in play,** `profiles current` says so.
-A *complete* env credential outranks an ambient profile's stored one and is
-reported as `credential_overridden_by_env`; env vars supplying only part of a
-multi-value credential are reported as `credential_partially_shadowed_by_env`,
-because nothing authenticates in that state and calling it an override would
-contradict `auth status`. `profiles list` also warns about a variable that is
+Credential env vars never override a selected profile's stored credential;
+they are consulted only for what the profile has not stored, and are listed as
+`credential_env_fallback`. `profiles list` also warns about a variable that is
 set, closely resembles one this CLI reads, and is not read:
 
 ```
