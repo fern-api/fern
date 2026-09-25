@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now fails (and does not publish) when a rule configured as `error` in
+    `docs.yml` `check.rules` (e.g. `broken-links: error`) reports a violation, matching the behavior
+    of `fern check`. Set `check.publish-fails-on-error: false` to opt out and keep publishing
+    while only logging the violation.
+  type: feat

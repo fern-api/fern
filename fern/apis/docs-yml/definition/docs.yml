@@ -232,6 +232,12 @@ types:
       Each rule can be set to `warn` (non-blocking) or `error` (blocking).
     properties:
       rules: optional<CheckRulesConfig>
+      publish-fails-on-error:
+        type: optional<boolean>
+        docs: |
+          When true (the default), `fern generate --docs` fails (and does not publish) if any rule configured
+          as `error` in `rules` reports a violation, matching the behavior of `fern check`.
+          Set to false to log violations and publish anyway.
 
   DocsConfiguration:
     properties:
