@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A query parameter typed as a map (an OpenAPI `type: object` with `additionalProperties`) was silently
+    dropped from the request: the runtime turned it into an empty value, and empty values never reach the
+    url. It is now exploded, as the OpenAPI defaults `style: form, explode: true` require: every entry is
+    sent as its own parameter (`?category=books&createdDate%3Agte=2023-01-01`), nested objects bracketed
+    and arrays repeating the key. Every other query parameter is unchanged.
+  type: fix

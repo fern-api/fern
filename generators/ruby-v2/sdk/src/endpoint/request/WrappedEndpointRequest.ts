@@ -91,7 +91,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             : undefined;
                     const effectiveDefault = clientDefault ?? typeDefault?.value;
 
-                    if (effectiveDefault != null) {
+                    if (
+                        !queryParam.allowMultiple &&
+                        queryParam.explode !== false &&
+                        this.isMapType(queryParam.valueType)
+                    ) {
+                        // An object query parameter is exploded: every entry becomes its own
+                        // parameter, keyed by the property name alone. Assigning the map under
+                        // the parameter's own wire name instead leaves the http layer to invent
+                        // a format for it (URI.encode_www_form stringifies it with Hash#to_s).
+                        // A map has no client or type default, so there is no default to apply.
+                        writer.writeLine(
+                            `params[:${snakeCaseName}]&.each { |k, v| ${queryParameterBagName}[k.to_s] = v }`
+                        );
+                    } else if (effectiveDefault != null) {
                         writer.writeLine(
                             `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${effectiveDefault})`
                         );
@@ -107,6 +120,30 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }),
             queryParameterBagReference: queryParameterBagName
         };
+    }
+
+    /**
+     * Whether a type reference is a map, unwrapping optional, nullable and aliases.
+     */
+    private isMapType(typeReference: FernIr.TypeReference): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                if (container.type === "optional") {
+                    return this.isMapType(container.optional);
+                }
+                if (container.type === "nullable") {
+                    return this.isMapType(container.nullable);
+                }
+                return container.type === "map";
+            },
+            named: (named) => {
+                const shape = this.context.getTypeDeclarationOrThrow(named.typeId).shape;
+                return shape.type === "alias" && this.isMapType(shape.aliasOf);
+            },
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
