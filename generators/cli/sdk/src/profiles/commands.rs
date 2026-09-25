@@ -1227,6 +1227,22 @@ fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String>
     None
 }
 
+/// Whether any scheme has a keyring entry under this profile's credential
+/// slot. A locked or failing keyring counts as "nothing stored", mirroring
+/// [`stored_account`]: reporting must never block on the keychain.
+fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::ResolvedProfile) -> bool {
+    let Some(credential) = &profile.credential else {
+        return false;
+    };
+    ctx.auth_bindings.iter().any(|(scheme, _)| {
+        let account = super::keyring_account_for(scheme, credential);
+        matches!(
+            crate::auth::keyring_store::active_store().get(ctx.cli_name, &account),
+            Ok(Some(_))
+        )
+    })
+}
+
 /// Shorten a long identifier for a table cell, keeping the leading characters
 /// that distinguish accounts (`AC1234…`). Twilio SIDs are 34 characters, which
 /// would dominate the row.
@@ -2036,13 +2052,14 @@ fn handle_current<W: Write>(
             // `selected_by`, not `source`: this answers *why* this profile is in
             // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
-            if let Some(env_row) = env_pseudo_row(ctx) {
-                // Exported credential env vars never override a selected
-                // profile's stored credential; they are consulted only for the
-                // fields the profile has nothing stored for. Name them so a
-                // user can tell where a credential came from when the profile
-                // is not logged in.
-                map.insert("credential_env_fallback".into(), env_row["variables"].clone());
+            // Exported credential env vars never override a selected
+            // profile's stored credential; they are consulted only when the
+            // profile has none stored. Name them only in that case, so the
+            // field never contradicts `auth status` when the keyring wins.
+            if !profile_stores_a_credential(ctx, profile) {
+                if let Some(env_row) = env_pseudo_row(ctx) {
+                    map.insert("credential_env_fallback".into(), env_row["variables"].clone());
+                }
             }
             serde_json::Value::Object(map)
         }
