@@ -5597,7 +5597,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, `fern generate --docs` fails (and does not publish) if any rule configured\nas `error` in `rules` reports a violation, matching the behavior of `fern check`.\nDefault is false."
+          "description": "When true (the default), `fern generate --docs` fails (and does not publish) if any rule configured\nas `error` in `rules` reports a violation, matching the behavior of `fern check`.\nSet to false to log violations and publish anyway."
         }
       },
       "additionalProperties": false,

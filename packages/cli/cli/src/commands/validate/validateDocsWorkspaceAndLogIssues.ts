@@ -104,7 +104,7 @@ export async function validateDocsWorkspaceWithoutExiting({
         elapsedMillis
     });
 
-    if (workspace.config.check?.publishFailsOnError === true) {
+    if (workspace.config.check?.publishFailsOnError !== false) {
         const rulesConfiguredAsErrors = getRuleNamesConfiguredAsErrors(workspace.config.check);
         hasErrors =
             hasErrors ||
