@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: oneOf example discriminator
+  version: 1.0.0
+paths:
+  /metadata:
+    post:
+      operationId: getMetadata
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Metadata"
+              examples:
+                file:
+                  value:
+                    .tag: file
+                    id: "id:file"
+                    name: Prime_Numbers.txt
+                    size: 7212
+                    sharing_info:
+                      read_only: true
+                      parent_shared_folder_id: "84528192421"
+                folder:
+                  value:
+                    .tag: folder
+                    id: "id:folder"
+                    name: math
+                    sharing_info:
+                      read_only: false
+                      parent_shared_folder_id: "84528192421"
+                deleted:
+                  value:
+                    .tag: deleted
+                    name: old.txt
+components:
+  schemas:
+    # Variants are $refs and use `.tag` as a de facto discriminator (single-value enum)
+    # without a formal `discriminator:` block, mirroring Dropbox's Stone-generated specs.
+    Metadata:
+      oneOf:
+        - $ref: "#/components/schemas/Metadata.file"
+        - $ref: "#/components/schemas/Metadata.folder"
+        - $ref: "#/components/schemas/Metadata.deleted"
+    Metadata.file:
+      allOf:
+        - type: object
+          required: [".tag"]
+          properties:
+            .tag:
+              type: string
+              enum: [file]
+        - $ref: "#/components/schemas/FileMetadata"
+    Metadata.folder:
+      allOf:
+        - type: object
+          required: [".tag"]
+          properties:
+            .tag:
+              type: string
+              enum: [folder]
+        - $ref: "#/components/schemas/FolderMetadata"
+    Metadata.deleted:
+      allOf:
+        - type: object
+          required: [".tag"]
+          properties:
+            .tag:
+              type: string
+              enum: [deleted]
+        - $ref: "#/components/schemas/DeletedMetadata"
+    FileMetadata:
+      type: object
+      required: [id, name, size]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        size:
+          type: integer
+        sharing_info:
+          anyOf:
+            - $ref: "#/components/schemas/SharingInfo"
+            - type: "null"
+    FolderMetadata:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sharing_info:
+          anyOf:
+            - $ref: "#/components/schemas/SharingInfo"
+            - type: "null"
+    DeletedMetadata:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+    SharingInfo:
+      type: object
+      required: [read_only]
+      properties:
+        read_only:
+          type: boolean
+        parent_shared_folder_id:
+          anyOf:
+            # $ref -> $ref chain
+            - $ref: "#/components/schemas/SharedFolderId"
+            - type: "null"
+    SharedFolderId:
+      $ref: "#/components/schemas/NamespaceId"
+    NamespaceId:
+      type: string
+      pattern: "[-_0-9a-zA-Z:]+"

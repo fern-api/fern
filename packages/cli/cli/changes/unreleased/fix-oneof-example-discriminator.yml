@@ -1,0 +1,7 @@
+- summary: |
+    Fix user-specified OpenAPI examples for `oneOf` schemas being coerced into the first variant.
+    The variant is now selected by the example's discriminator value, using the explicit
+    `discriminator` object when present and otherwise inferring it from properties each variant
+    pins to a single `const`/`enum` value (for example Dropbox's `.tag`). Also resolves
+    `$ref` -> `$ref` chains when validating examples.
+  type: fix
