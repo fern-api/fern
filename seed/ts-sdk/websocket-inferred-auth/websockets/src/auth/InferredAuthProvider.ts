@@ -19,8 +19,10 @@ export class InferredAuthProvider implements core.AuthProvider {
 
     public async getAuthRequest({
         endpointMetadata,
+        forceRefresh,
     }: {
         endpointMetadata?: core.EndpointMetadata;
+        forceRefresh?: boolean;
     } = {}): Promise<core.AuthRequest> {
         return await this.getAuthRequestFromTokenEndpoint();
     }

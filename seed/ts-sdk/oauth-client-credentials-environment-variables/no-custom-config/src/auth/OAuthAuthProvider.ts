@@ -75,10 +75,12 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
     public async getAuthRequest({
         endpointMetadata,
+        forceRefresh,
     }: {
         endpointMetadata?: core.EndpointMetadata;
+        forceRefresh?: boolean;
     } = {}): Promise<core.AuthRequest> {
-        const token = await this.getToken({ endpointMetadata });
+        const token = await this.getToken({ endpointMetadata, forceRefresh });
 
         return {
             headers: {
@@ -87,8 +89,14 @@ export class OAuthAuthProvider implements core.AuthProvider {
         };
     }
 
-    private async getToken({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {
-        if (this.accessToken && this.expiresAt > new Date()) {
+    private async getToken({
+        endpointMetadata,
+        forceRefresh,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+        forceRefresh?: boolean;
+    } = {}): Promise<string> {
+        if (!forceRefresh && this.accessToken && this.expiresAt > new Date()) {
             return this.accessToken;
         }
         // If a refresh is already in progress, return the existing promise

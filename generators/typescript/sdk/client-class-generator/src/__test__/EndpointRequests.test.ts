@@ -332,6 +332,7 @@ function createMockSdkClientClass(): any {
         getGenerateEndpointMetadata: () => false,
         getAutoGenerateIdempotencyKey: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
+        getReferenceToRefreshAuthHeaders: () => undefined,
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata"),
         getEnvironment: () => undefined
     };

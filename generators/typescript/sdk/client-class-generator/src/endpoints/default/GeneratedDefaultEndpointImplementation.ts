@@ -866,6 +866,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
         }
 
+        const refreshAuthHeaders = this.generatedSdkClientClass.getReferenceToRefreshAuthHeaders({
+            context,
+            endpoint: this.endpoint
+        });
+        if (refreshAuthHeaders != null) {
+            fetcherArgs.refreshAuthHeaders = refreshAuthHeaders;
+        }
+
         if (this.endpoint.response?.body?.type === "text") {
             fetcherArgs.responseType = ts.factory.createStringLiteral("text");
         }
@@ -980,7 +988,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            refreshAuthHeaders: this.generatedSdkClientClass.getReferenceToRefreshAuthHeaders({
+                context,
+                endpoint: this.endpoint
+            })
         };
 
         if (this.endpoint.response?.body?.type === "text") {

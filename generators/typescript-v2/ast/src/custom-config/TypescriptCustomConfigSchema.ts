@@ -149,7 +149,11 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // internal - license name extracted from custom license file
     _fernLicenseName: z.optional(z.string()),
     maxRetries: z.optional(z.number().int().min(0)),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    // When true, a 401 or 403 response forces the auth provider to refresh its credentials
+    // (e.g. re-fetch an OAuth token that was revoked before its expiry) and the request is
+    // retried. Refresh attempts share the same `maxRetries` budget and backoff as other retries.
+    "refresh-on-failed-auth": z.optional(z.boolean())
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;

@@ -91,6 +91,16 @@ function getHeaders(args) {
         return newHeaders;
     });
 }
+function getRefreshAuth(refreshAuthHeaders, headers) {
+    if (refreshAuthHeaders == null) {
+        return undefined;
+    }
+    return () => __awaiter(this, void 0, void 0, function* () {
+        for (const [key, value] of Object.entries(yield refreshAuthHeaders())) {
+            headers.set(key, value);
+        }
+    });
+}
 export function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
@@ -121,7 +131,7 @@ export function fetcherImpl(args) {
         try {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
                 return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
-            }), args.maxRetries);
+            }), args.maxRetries, { refreshAuth: getRefreshAuth(args.refreshAuthHeaders, headers) });
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
                     const metadata = {
