@@ -48,6 +48,13 @@ export interface IrSummary {
      * generated README.
      */
     whiteLabel: boolean;
+    /**
+     * The webhooks the API sends, keyed by group id. Lowered into the
+     * `webhook invoke` manifest so developers can emulate deliveries locally.
+     */
+    webhookGroups: Record<string, FernIr.WebhookGroup>;
+    /** All type declarations, used to synthesize placeholder webhook payloads. */
+    types: Record<string, FernIr.TypeDeclaration>;
 }
 
 /**
@@ -78,7 +85,9 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         headers: ir.headers,
         services: ir.services,
         environments: ir.environments,
-        whiteLabel: ir.readmeConfig?.whiteLabel ?? false
+        whiteLabel: ir.readmeConfig?.whiteLabel ?? false,
+        webhookGroups: ir.webhookGroups,
+        types: ir.types
     };
 }
 

@@ -26,6 +26,7 @@ import {
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import type { TypePartitionCrate } from "./splitTypesCrates.js";
+import { buildWebhookManifest, defaultWebhookSecretEnv } from "./webhooks.js";
 import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
 import { type LicenseConfigLike, writeLicense } from "./writeLicense.js";
@@ -178,7 +179,12 @@ export async function runPipeline(args: {
         // A strategy only composes bound schemes, so skip deriving one when
         // there are none — `copySpecs` would drop it anyway, and this keeps
         // unauthenticated CLIs off the mapping entirely.
-        authStrategy: authBindings.length > 0 ? authStrategyVariant(ir.auth) : undefined
+        authStrategy: authBindings.length > 0 ? authStrategyVariant(ir.auth) : undefined,
+        webhookManifest: buildWebhookManifest({
+            webhookGroups: ir.webhookGroups,
+            types: ir.types,
+            secretEnv: customConfig.webhookSecretEnv ?? defaultWebhookSecretEnv(binaryName)
+        })
     });
     await writeGitignore(outputDir);
 

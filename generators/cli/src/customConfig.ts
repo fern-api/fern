@@ -59,6 +59,17 @@ export interface FernCliCustomConfig {
     userAgentSuffixFlag?: string;
 
     /**
+     * Environment variable `webhook invoke` reads for the shared secret used
+     * to sign emulated webhook deliveries (when `--secret` is not passed).
+     *
+     * Defaults to `<BINARY>_WEBHOOK_SECRET`. Providers whose API auth token
+     * doubles as the webhook signing key set this to that token's variable,
+     * e.g. `webhookSecretEnv: TWILIO_AUTH_TOKEN`. Must match
+     * `^[A-Z][A-Z0-9_]*$`.
+     */
+    webhookSecretEnv?: string;
+
+    /**
      * When true, the generator emits an automated wire-test suite alongside
      * the CLI: `wiremock/wire-test-cases.json` (one case per endpoint
      * example) and `tests/wire_test.rs` (a generic harness that stands up an
@@ -453,6 +464,20 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
+    }
+    if ("webhookSecretEnv" in obj && obj.webhookSecretEnv !== undefined) {
+        if (typeof obj.webhookSecretEnv !== "string") {
+            throw new Error(
+                `Invalid customConfig.webhookSecretEnv: expected a string, got ${typeof obj.webhookSecretEnv}.`
+            );
+        }
+        if (!/^[A-Z][A-Z0-9_]*$/.test(obj.webhookSecretEnv)) {
+            throw new Error(
+                `Invalid customConfig.webhookSecretEnv: "${obj.webhookSecretEnv}" is not a valid environment ` +
+                    "variable name. Must match ^[A-Z][A-Z0-9_]*$."
+            );
+        }
+        result.webhookSecretEnv = obj.webhookSecretEnv;
     }
     if ("generateWireTests" in obj && obj.generateWireTests !== undefined) {
         if (typeof obj.generateWireTests !== "boolean") {
