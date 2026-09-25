@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Video API
+  version: 1.0.0
+tags:
+  - name: Video
+paths:
+  /egress:
+    get:
+      operationId: listEgressStreams
+      summary: List egress streams
+      tags:
+        - Video
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EgressStream"
+    post:
+      operationId: createEgressStream
+      summary: Create egress stream
+      tags:
+        - Video
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    EgressStream:
+      type: object
+      properties:
+        id:
+          type: string
