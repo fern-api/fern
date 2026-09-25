@@ -6,12 +6,14 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
+import { createSdkGenApiTokenProvider } from "../../upgrade/getSdkGenApiGeneratorVersions.js";
 import { upgrade } from "../../upgrade/upgrade.js";
 import { loadAndUpdateGenerators } from "../../upgrade/upgradeGenerator.js";
 
@@ -207,6 +209,7 @@ async function upgradeGeneratorsForAllWorkspaces({
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
+    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -219,7 +222,9 @@ async function upgradeGeneratorsForAllWorkspaces({
                     includeMajor,
                     skipAutoreleaseDisabled: false,
                     channel: undefined,
-                    cliVersion: cliContext.environment.packageVersion
+                    cliVersion: cliContext.environment.packageVersion,
+                    organization: project.config.organization,
+                    getSdkGenApiToken
                 });
 
                 const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({

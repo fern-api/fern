@@ -1,6 +1,11 @@
+import { FernToken } from "@fern-api/auth";
+import { askToLogin } from "@fern-api/login";
 import { getFernSdkGenApiLanguage, getFernSdkGenApiOrigin } from "@fern-api/remote-workspace-runner";
-import { TaskContext } from "@fern-api/task-context";
+import { isVersionAhead, parseVersion } from "@fern-api/semver-utils";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import semver from "semver";
+
+import { CliContext } from "../../cli-context/CliContext.js";
 
 interface GeneratorVersions {
     compatibleVersion?: string;
@@ -18,17 +23,86 @@ interface UnavailableResult {
     reason: "IDENTITY_UNAVAILABLE" | "LANGUAGE_MISMATCH" | "VERSION_UNAVAILABLE";
 }
 
+export type GeneratorVersionComparison = -1 | 0 | 1;
+export type GetSdkGenApiToken = () => Promise<FernToken>;
+
+export function createSdkGenApiTokenProvider(cliContext: CliContext): GetSdkGenApiToken {
+    let token: Promise<FernToken> | undefined;
+    return () => {
+        token ??= cliContext.runTask((context) => askToLogin(context));
+        return token;
+    };
+}
+
+export function compareGeneratorVersions({
+    generatorId,
+    candidateVersion,
+    currentVersion
+}: {
+    generatorId: string;
+    candidateVersion: string;
+    currentVersion: string;
+}): GeneratorVersionComparison {
+    if (!isValidGeneratorVersion(candidateVersion) || !isValidGeneratorVersion(currentVersion)) {
+        throw new CliError({
+            message:
+                `Cannot compare versions for generator "${generatorId}": configured version ` +
+                `"${currentVersion}", candidate version "${candidateVersion}". ` +
+                "Use valid semantic versions such as 1.2.3.",
+            code: CliError.Code.VersionError
+        });
+    }
+    try {
+        if (candidateVersion === currentVersion) {
+            return 0;
+        }
+        if (isVersionAhead(candidateVersion, currentVersion)) {
+            return 1;
+        }
+        return isVersionAhead(currentVersion, candidateVersion) ? -1 : 0;
+    } catch {
+        const candidateSemver = semver.valid(candidateVersion);
+        const currentSemver = semver.valid(currentVersion);
+        if (candidateSemver != null && currentSemver != null) {
+            return Math.sign(semver.compare(candidateSemver, currentSemver)) as GeneratorVersionComparison;
+        }
+        throw new CliError({
+            message:
+                `Cannot compare versions for generator "${generatorId}": configured version ` +
+                `"${currentVersion}", candidate version "${candidateVersion}". ` +
+                "Use valid semantic versions such as 1.2.3.",
+            code: CliError.Code.VersionError
+        });
+    }
+}
+
+function isValidGeneratorVersion(version: string): boolean {
+    if (version === "latest" || semver.valid(version) != null) {
+        return true;
+    }
+    try {
+        parseVersion(version);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 export async function getSdkGenApiGeneratorVersions({
     generatorId,
     currentVersion,
     includeMajor,
     channel,
+    organization,
+    getToken,
     context
 }: {
     generatorId: string;
     currentVersion: string;
     includeMajor: boolean;
     channel?: string;
+    organization: string;
+    getToken: GetSdkGenApiToken;
     context: TaskContext;
 }): Promise<GeneratorVersions> {
     if (channel != null) {
@@ -49,13 +123,18 @@ export async function getSdkGenApiGeneratorVersions({
         );
         return {};
     }
+    const token = await getToken();
 
-    const endpoint = new URL("internal/generator-versions/discover", `${origin.replace(/\/+$/, "")}/`);
+    const endpoint = new URL("v1/fern/generator-versions/discover", `${origin.replace(/\/+$/, "")}/`);
     let response: Response;
     try {
         response = await fetch(endpoint, {
             method: "POST",
-            headers: { "content-type": "application/json" },
+            headers: {
+                Authorization: `Bearer ${token.value}`,
+                "X-Fern-Organization-Id": organization,
+                "content-type": "application/json"
+            },
             body: JSON.stringify({
                 targets: [
                     {
@@ -145,7 +224,12 @@ function optionalExactSemver(value: Record<string, unknown>, key: string): strin
     }
     const version = value[key];
     if (typeof version !== "string" || semver.valid(version) !== version) {
-        throw new Error("SDK Gen API returned an invalid generator version");
+        throw new CliError({
+            message:
+                `SDK Gen API returned invalid ${key} ${JSON.stringify(version)}. ` +
+                "Expected an exact semantic version such as 1.2.3.",
+            code: CliError.Code.VersionError
+        });
     }
     return version;
 }
