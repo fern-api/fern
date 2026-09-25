@@ -17,7 +17,7 @@ export interface CompoundMeta {
     /** Repository this belongs to (e.g., "CUB", "Thrust", "libcudacxx") */
     repo: string;
     /** What kind of compound this is */
-    compoundKind: "class" | "concept" | "function" | "enum" | "typedef" | "variable";
+    compoundKind: "class" | "concept" | "function" | "enum" | "typedef" | "variable" | "macro";
     /** Namespace path segments (e.g., ["cub"] or ["cuda", "mr"]) */
     namespacePath: string[];
     /** Frontmatter description override */
@@ -49,6 +49,22 @@ export function clearEntityRegistry(): void {
 
 export function setCurrentPageSlugPath(slugPath: string | undefined): void {
     currentPageSlugPath = slugPath;
+}
+
+/**
+ * Declaration syntax used when rendering typedef signatures: `using X = T;`
+ * for C++ libraries, `typedef T X;` for plain-C libraries.
+ */
+export type TypedefSyntax = "cpp" | "c";
+
+let typedefSyntax: TypedefSyntax = "cpp";
+
+export function setTypedefSyntax(syntax: TypedefSyntax): void {
+    typedefSyntax = syntax;
+}
+
+export function getTypedefSyntax(): TypedefSyntax {
+    return typedefSyntax;
 }
 
 /**
