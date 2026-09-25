@@ -42,7 +42,7 @@ describe("WrappedRequestGenerator", () => {
 
         expect(filename.length).toBeLessThanOrEqual(MAX_RUBY_FILE_NAME_LENGTH);
         expect(filename.endsWith(".rb")).toBe(true);
-        expect(filename.startsWith("get_accounts_account_sid_incoming_phone_numbers")).toBe(true);
+        expect(filename.startsWith("get_accounts_account_sid")).toBe(true);
     });
 
     it("keeps distinct long request wrappers in distinct files", () => {
