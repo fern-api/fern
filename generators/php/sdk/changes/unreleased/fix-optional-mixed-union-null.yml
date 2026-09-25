@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Stop appending `|null` to optional unions that contain `mixed`. Such unions are written as
+    `mixed`, which already includes `null`, and PHP 8.0+ rejects `mixed|null` with
+    "Type mixed can only be used as a standalone type" when the class is loaded. This affected
+    optional request bodies whose type is an undiscriminated union with an `unknown` member.
+  type: fix
