@@ -37,5 +37,5 @@ publishPreProd:
   command:
     - pnpm install
     - pnpm turbo run dist:cli:pre-prod --filter @fern-api/cli -- $VERSION
-    - pnpm --filter @fern-api/cli publish:cli:pre-prod --access public --tag latest
+    - pnpm --filter @fern-api/cli publish:cli:pre-prod --access public --tag pre-prod
     - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/pre-prod/
