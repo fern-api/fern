@@ -1908,14 +1908,18 @@ impl CliApp {
             // additive later; narrowing from it would not.
             //
             // clap resolves CommandLine > EnvVariable > DefaultValue, and
-            // `apply_server_vars` treats anything but `DefaultValue` as
-            // caller-pinned — except under `-p`, where `outranks_env` demotes
-            // env so the explicitly named profile wins.
-            arg = arg.env(format!(
-                "{}_{}",
-                crate::text::env_var_prefix(&self.name),
-                screaming
-            ));
+            // `apply_server_vars` slots the selected profile's value between
+            // the first two. When the profile stores this variable the env
+            // rung is not registered at all: env could never win, and clap
+            // would otherwise reject the invocation on an exported value
+            // outside the enum before the profile's value is ever consulted.
+            if crate::profiles::server_variable(&var.name).is_none() {
+                arg = arg.env(format!(
+                    "{}_{}",
+                    crate::text::env_var_prefix(&self.name),
+                    screaming
+                ));
+            }
             if let Some(default) = &var.default {
                 arg = arg.default_value(default.clone());
             }
@@ -2221,40 +2225,33 @@ impl CliApp {
             // skipped (built-in collision) is not a registered arg id, and
             // `get_one` panics on unknown ids.
             let clap_value = matches.try_get_one::<String>(name).ok().flatten();
-            // `CommandLine` / `EnvVariable` mean the caller pinned this
-            // variable; `DefaultValue` means clap fell back to the spec's
-            // `default`, which the profile outranks.
-            // An explicitly named profile outranks the variable's env var, so
-            // only a command-line value counts as "pinned" in that case.
+            // Ladder: command line > selected profile > env var > spec
+            // default. The first three all count as "pinned": without that,
+            // `apply_default_server_urls` would prefer `x-fern-default-url`
+            // and quietly discard the server the caller or profile selected.
             //
             // `value_source` panics on an unregistered id exactly as
             // `get_one` does, and a variable whose flag was skipped (built-in
             // collision) has no arg — so it is only consulted once
             // `try_get_one` has confirmed the arg exists.
-            let pinned_by_caller = clap_value.is_some() && {
-                let source = matches.value_source(name);
-                if crate::profiles::outranks_env() {
-                    source == Some(clap::parser::ValueSource::CommandLine)
-                } else {
-                    source != Some(clap::parser::ValueSource::DefaultValue)
-                }
-            };
-
-            if pinned_by_caller {
+            let source = clap_value.and_then(|_| matches.value_source(name));
+            if source == Some(clap::parser::ValueSource::CommandLine) {
                 caller_pinned_any = true;
-                subs.insert(name.clone(), clap_value.expect("pinned implies present").clone());
+                subs.insert(
+                    name.clone(),
+                    clap_value.expect("source implies present").clone(),
+                );
                 continue;
             }
-            // Profile sits above the spec default. It also counts as pinning:
-            // without that, `apply_default_server_urls` would prefer
-            // `x-fern-default-url` and quietly discard the region the profile
-            // just selected.
             if let Some(value) = crate::profiles::server_variable(name) {
                 caller_pinned_any = true;
                 subs.insert(name.clone(), value);
                 continue;
             }
             if let Some(value) = clap_value {
+                if source == Some(clap::parser::ValueSource::EnvVariable) {
+                    caller_pinned_any = true;
+                }
                 subs.insert(name.clone(), value.clone());
             }
         }
@@ -2836,10 +2833,10 @@ impl AppContext {
     }
 }
 
-
 /// First non-empty per-operation `root_url` in the resource tree, visiting
 /// resources and methods in sorted-name order so the answer is stable across
 /// runs (the trees are `HashMap`s).
+
 fn first_method_root_url(
     resources: &std::collections::HashMap<String, RestResource>,
 ) -> Option<String> {

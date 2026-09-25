@@ -11,6 +11,7 @@
 //! | `server_variables` | `server_var(...)` substitution |
 //! | `base_url`         | [`crate::cli_args::resolve_base_url_override`] |
 //! | `format`           | [`crate::formatter::OutputPipeline`] |
+//! | `transport`        | [`crate::http::HttpConfig`]'s env-var fallbacks |
 //!
 //! That is what keeps the feature tractable *and* generic: nothing about
 //! auth, HTTP, retries, or command construction changes.
@@ -60,11 +61,13 @@ pub mod selection;
 pub mod store;
 
 pub use selection::{
-    active, active_source, collides_with_profile_flag, install_for_tests,
-    install_for_tests_from, outranks_env, reserve_profile_flag, resolve_selection, Selection,
-    SelectionSource,
+    active, active_source, collides_with_profile_flag, install_for_tests, install_for_tests_from,
+    outranks_env, reserve_profile_flag, resolve_selection, Selection, SelectionSource,
 };
-pub use store::{ProfileEntry, ProfileStore, ResolvedProfile, PROFILES_FILENAME, PROFILES_VERSION};
+pub use store::{
+    ProfileEntry, ProfileStore, ResolvedProfile, TransportSettings, PROFILES_FILENAME,
+    PROFILES_VERSION,
+};
 
 /// Generator-supplied configuration for the profiles feature.
 ///
@@ -206,6 +209,20 @@ pub fn retries() -> Option<u32> {
 
 pub fn oauth_client_id() -> Option<String> {
     active()?.oauth_client_id.clone()
+}
+
+/// The profile's transport settings (timeout, proxy, CA bundle, insecure,
+/// user-agent suffix), or the empty set when running unprofiled.
+pub fn transport() -> TransportSettings {
+    active().map(|p| p.transport.clone()).unwrap_or_default()
+}
+
+/// Pick between a profile's stored transport value and the env var's: the
+/// profile wins whenever it has a value and the env var fills in only what
+/// the profile leaves unset — the same rule [`outranks_env`] applies to every
+/// other profile field (a `Some` here implies a profile is in play).
+pub fn transport_pick<T>(profile: Option<T>, env: impl FnOnce() -> Option<T>) -> Option<T> {
+    profile.or_else(env)
 }
 
 /// The active profile's name, for `auth status` and diagnostics.

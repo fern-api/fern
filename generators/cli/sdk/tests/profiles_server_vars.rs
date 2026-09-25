@@ -120,26 +120,24 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             .nth(1)
             .unwrap_or_else(|| panic!("no env footer in:\n{output}"));
 
-        // Spec-derived server variable, plus the profile-storable knobs the
-        // `profiles set` error already advertises — all marked `*`.
+        // Spec-derived server variable, plus every knob the `profiles set`
+        // error advertises — all marked `*`.
         for var in [
             "REGIONAL_REGION*",
             "REGIONAL_BASE_URL*",
             "REGIONAL_OUTPUT*",
             "REGIONAL_RETRIES*",
+            "REGIONAL_TIMEOUT_SECS*",
+            "REGIONAL_PROXY*",
+            "REGIONAL_CA_BUNDLE*",
+            "REGIONAL_INSECURE=1*",
+            "REGIONAL_USER_AGENT_SUFFIX*",
         ] {
             assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
         }
-        // Runtime-only knobs are listed without the marker.
-        for var in [
-            "REGIONAL_PROFILE ",
-            "REGIONAL_TIMEOUT_SECS ",
-            "REGIONAL_PROXY ",
-            "REGIONAL_CA_BUNDLE ",
-            "REGIONAL_INSECURE=1 ",
-        ] {
-            assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
-        }
+        // `_PROFILE` selects the profile, so it is the one var that is not
+        // itself a profile field.
+        assert!(footer.contains("REGIONAL_PROFILE "), "{footer}");
         assert!(
             footer.lines().any(|line| line
                 == "  REGIONAL_REGION*             Value for the {region} URL template variable (--region wins)"),
@@ -154,6 +152,82 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             1,
             "{output}"
         );
+    });
+}
+
+#[test]
+#[serial]
+fn transport_knobs_are_settable_and_shown_on_a_profile() {
+    with_temp_home(|| {
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_TIMEOUT_SECS=45",
+            "REGIONAL_PROXY=http://proxy.corp:3128",
+            "REGIONAL_CA_BUNDLE=/etc/ssl/corp.pem",
+            "REGIONAL_INSECURE=true",
+            "REGIONAL_USER_AGENT_SUFFIX=my-app/1.0",
+        ]);
+        assert_eq!(code, 0, "{output}");
+
+        let (code, output) = run(&["regional", "profiles", "show", "corp", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let shown: serde_json::Value = serde_json::from_str(output.trim()).expect("json");
+        assert_eq!(shown["timeout_secs"], 45);
+        assert_eq!(shown["proxy"], "http://proxy.corp:3128");
+        assert_eq!(shown["ca_bundle"], "/etc/ssl/corp.pem");
+        assert_eq!(shown["insecure"], true);
+        assert_eq!(shown["user_agent_suffix"], "my-app/1.0");
+
+        // Bad values are refused rather than stored inert.
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_TIMEOUT_SECS=soon",
+        ]);
+        assert_ne!(code, 0, "{output}");
+        let (code, output) = run(&[
+            "regional",
+            "profiles",
+            "set",
+            "corp",
+            "REGIONAL_INSECURE=maybe",
+        ]);
+        assert_ne!(code, 0, "{output}");
+        for bad in [
+            "REGIONAL_TIMEOUT_SECS=9223372036854775808",
+            "REGIONAL_PROXY=not a proxy",
+            "REGIONAL_USER_AGENT_SUFFIX=  ",
+            "REGIONAL_USER_AGENT_SUFFIX=bad\u{7f}token",
+        ] {
+            let (code, output) = run(&["regional", "profiles", "set", "corp", bad]);
+            assert_ne!(code, 0, "`{bad}` should be rejected:\n{output}");
+        }
+        let (code, output) = run(&["regional", "profiles", "show", "corp", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        assert!(output.contains("\"timeout_secs\": 45"), "rejected values must not clobber:\n{output}");
+    });
+}
+
+#[test]
+#[serial]
+fn an_unknown_prefixed_key_lists_the_transport_knobs_as_settable() {
+    with_temp_home(|| {
+        let (code, output) = run(&["regional", "profiles", "set", "corp", "REGIONAL_TIMEOUT=45"]);
+        assert_ne!(code, 0, "{output}");
+        for var in [
+            "REGIONAL_TIMEOUT_SECS",
+            "REGIONAL_PROXY",
+            "REGIONAL_CA_BUNDLE",
+            "REGIONAL_INSECURE",
+            "REGIONAL_USER_AGENT_SUFFIX",
+        ] {
+            assert!(output.contains(var), "missing `{var}` in:\n{output}");
+        }
     });
 }
 
@@ -318,9 +392,9 @@ fn the_flag_beats_the_env_var() {
 
 #[test]
 #[serial]
-fn the_env_var_beats_an_activated_profile() {
-    // `flag > env > profile > spec default`. The profile here was activated
-    // with `profiles use`, which does *not* outrank env.
+fn an_activated_profile_beats_the_env_var() {
+    // `flag > profile > env > spec default`. The profile here was activated
+    // with `profiles use`, which outranks env just like `-p` does.
     with_temp_home(|| {
         create_region_profile("au1");
         with_env("us1", || {
@@ -329,8 +403,8 @@ fn the_env_var_beats_an_activated_profile() {
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(
-                output.contains("https://us1.api.example.com"),
-                "env must outrank an activated profile: {output}",
+                output.contains("https://au1.api.example.com"),
+                "an activated profile must outrank env: {output}",
             );
         });
     });
@@ -339,8 +413,8 @@ fn the_env_var_beats_an_activated_profile() {
 #[test]
 #[serial]
 fn an_explicitly_named_profile_beats_the_env_var() {
-    // The one inversion: naming a profile with `-p` is a deliberate per-call
-    // act, so it outranks ambient env. Mirrors `outranks_env`.
+    // Same rule under `-p`: a selected profile outranks env. Mirrors
+    // `outranks_env`.
     with_temp_home(|| {
         create_region_profile("au1");
         with_env("us1", || {
@@ -370,12 +444,58 @@ fn the_env_var_beats_the_spec_default() {
 
 #[test]
 #[serial]
+fn the_env_var_fills_in_when_the_selected_profile_has_no_server_variable() {
+    // Profile-first is not env-blind: a selected profile that stores no
+    // region leaves the env var in charge, and that env choice must still
+    // count as pinned so no default URL displaces it.
+    with_temp_home(|| {
+        let (code, output) = run(&["regional", "profiles", "create", "bare", "--use"]);
+        assert_eq!(code, 0, "{output}");
+        with_env("au1", || {
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://au1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
+fn an_off_enum_env_value_does_not_block_a_profile_that_stores_the_variable() {
+    // The profile's value wins, so a stale or mistyped export must not make
+    // clap reject the invocation before the profile is consulted.
+    with_temp_home(|| {
+        create_region_profile("au1");
+        with_env("nope1", || {
+            let (code, output) = run(&[
+                "regional",
+                "messages",
+                "list",
+                "--dry-run",
+                "--format",
+                "json",
+            ]);
+            assert_eq!(code, 0, "{output}");
+            assert!(output.contains("https://au1.api.example.com"), "{output}");
+        });
+    });
+}
+
+#[test]
+#[serial]
 fn an_off_enum_env_value_is_rejected_like_a_flag_value() {
     // The env rung goes through the same `PossibleValuesParser`, so a typo in
     // the env var fails loudly rather than reaching the URL.
     with_temp_home(|| {
         with_env("nope1", || {
-            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
+            let (code, output) = run(&[
+                "regional",
+                "messages",
+                "list",
+                "--dry-run",
+                "--format",
+                "json",
+            ]);
             assert_ne!(code, 0, "an off-enum env value must be rejected: {output}");
         });
     });

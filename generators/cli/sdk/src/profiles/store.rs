@@ -90,6 +90,46 @@ pub struct ProfileEntry {
     pub parameters: BTreeMap<String, String>,
     /// Default values for `servers[].variables` entries.
     pub server_variables: BTreeMap<String, String>,
+    /// Transport settings that the `<NAME>_TIMEOUT_SECS` / `_PROXY` /
+    /// `_CA_BUNDLE` / `_INSECURE` / user-agent-suffix env vars otherwise
+    /// supply. Env still wins; these fill in when it is unset.
+    pub transport: TransportSettings,
+}
+
+/// Per-profile defaults for the transport knobs [`crate::http::HttpConfig`]
+/// reads from env. Each field mirrors one `<NAME>_*` variable.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct TransportSettings {
+    pub timeout_secs: Option<u64>,
+    pub proxy: Option<String>,
+    pub ca_bundle: Option<String>,
+    pub insecure: Option<bool>,
+    pub user_agent_suffix: Option<String>,
+}
+
+impl TransportSettings {
+    pub fn is_empty(&self) -> bool {
+        *self == Self::default()
+    }
+
+    /// Fold `other` over `self`: every field `other` sets wins.
+    fn overlay(&mut self, other: &Self) {
+        if other.timeout_secs.is_some() {
+            self.timeout_secs = other.timeout_secs;
+        }
+        if other.proxy.is_some() {
+            self.proxy = other.proxy.clone();
+        }
+        if other.ca_bundle.is_some() {
+            self.ca_bundle = other.ca_bundle.clone();
+        }
+        if other.insecure.is_some() {
+            self.insecure = other.insecure;
+        }
+        if other.user_agent_suffix.is_some() {
+            self.user_agent_suffix = other.user_agent_suffix.clone();
+        }
+    }
 }
 
 /// A parsed `profiles.toml`, plus the document it came from so writes can
@@ -172,6 +212,13 @@ impl ProfileStore {
             format: str_field(table, "format"),
             parameters: map_field(table, "parameters"),
             server_variables: map_field(table, "server_variables"),
+            transport: TransportSettings {
+                timeout_secs: u64_field(table, "timeout_secs"),
+                proxy: str_field(table, "proxy"),
+                ca_bundle: str_field(table, "ca_bundle"),
+                insecure: bool_field(table, "insecure"),
+                user_agent_suffix: str_field(table, "user_agent_suffix"),
+            },
         })
     }
 
@@ -231,6 +278,15 @@ impl ProfileStore {
         set_str(table, "format", entry.format.as_deref());
         set_map(table, "parameters", &entry.parameters);
         set_map(table, "server_variables", &entry.server_variables);
+        set_u64(table, "timeout_secs", entry.transport.timeout_secs);
+        set_str(table, "proxy", entry.transport.proxy.as_deref());
+        set_str(table, "ca_bundle", entry.transport.ca_bundle.as_deref());
+        set_bool(table, "insecure", entry.transport.insecure);
+        set_str(
+            table,
+            "user_agent_suffix",
+            entry.transport.user_agent_suffix.as_deref(),
+        );
     }
 
     /// Remove a profile. Returns `true` when one was there. Clears `active`
@@ -345,6 +401,49 @@ fn map_field(table: &dyn toml_edit::TableLike, key: &str) -> BTreeMap<String, St
     out
 }
 
+fn u64_field(table: &dyn toml_edit::TableLike, key: &str) -> Option<u64> {
+    let value = table.get(key)?;
+    match value.as_integer() {
+        Some(n) if n >= 0 => u64::try_from(n).ok(),
+        _ => {
+            tracing::warn!(
+                key,
+                "profiles.toml: expected a non-negative integer; ignoring this key",
+            );
+            None
+        }
+    }
+}
+
+fn bool_field(table: &dyn toml_edit::TableLike, key: &str) -> Option<bool> {
+    let value = table.get(key)?;
+    match value.as_bool() {
+        Some(b) => Some(b),
+        None => {
+            tracing::warn!(key, "profiles.toml: expected a boolean; ignoring this key");
+            None
+        }
+    }
+}
+
+fn set_u64(table: &mut Table, key: &str, value: Option<u64>) {
+    match value.and_then(|v| i64::try_from(v).ok()) {
+        Some(v) => table[key] = toml_edit::value(v),
+        None => {
+            table.remove(key);
+        }
+    }
+}
+
+fn set_bool(table: &mut Table, key: &str, value: Option<bool>) {
+    match value {
+        Some(v) => table[key] = toml_edit::value(v),
+        None => {
+            table.remove(key);
+        }
+    }
+}
+
 fn set_u32(table: &mut Table, key: &str, value: Option<u32>) {
     match value {
         Some(v) => table[key] = toml_edit::value(i64::from(v)),
@@ -379,8 +478,8 @@ fn set_map(table: &mut Table, key: &str, values: &BTreeMap<String, String>) {
 
 /// Resolve `name` against the store, folding in its `parent` chain.
 ///
-/// Inherited: `credential`, `oauth_client_id`, `base_url`, `retries`, `server_variables`,
-/// and `parameters` (per key, child wins). **Not** inherited: `format`. A
+/// Inherited: `credential`, `oauth_client_id`, `base_url`, `retries`, `transport`
+/// (per field), `server_variables`, and `parameters` (per key, child wins). **Not** inherited: `format`. A
 /// subaccount profile borrowing its parent's credentials is the point of the
 /// feature; silently borrowing its rendering is not — `--format` belongs to
 /// the invocation, and inheriting it makes a script's output shape depend on
@@ -445,12 +544,10 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
         if entry.retries.is_some() {
             resolved.retries = entry.retries;
         }
-        resolved.parameters.extend(
-            entry
-                .parameters
-                .iter()
-                .map(|(k, v)| (k.clone(), v.clone())),
-        );
+        resolved.transport.overlay(&entry.transport);
+        resolved
+            .parameters
+            .extend(entry.parameters.iter().map(|(k, v)| (k.clone(), v.clone())));
         resolved.server_variables.extend(
             entry
                 .server_variables
@@ -499,6 +596,9 @@ pub struct ResolvedProfile {
     pub format: Option<String>,
     pub parameters: BTreeMap<String, String>,
     pub server_variables: BTreeMap<String, String>,
+    /// Inherited like `retries`: transport describes the network the
+    /// profile talks to, which a subaccount shares with its parent.
+    pub transport: TransportSettings,
 }
 
 /// The error for a named-but-absent profile. Deliberately *not* a fallthrough
@@ -722,6 +822,13 @@ AccountSid = "AC99"
                 ("edge".to_string(), "sydney".to_string()),
             ]
             .into(),
+            transport: TransportSettings {
+                timeout_secs: Some(30),
+                proxy: Some("http://proxy.internal:3128".to_string()),
+                ca_bundle: Some("/etc/ssl/corp.pem".to_string()),
+                insecure: Some(true),
+                user_agent_suffix: Some("my-app/1.0".to_string()),
+            },
         };
         store.upsert(&entry);
         store.save().unwrap();

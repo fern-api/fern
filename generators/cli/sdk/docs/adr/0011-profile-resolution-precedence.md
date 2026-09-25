@@ -1,6 +1,6 @@
 # ADR-0011: Profile resolution precedence
 
-**Status:** Accepted — 2026-09-04
+**Status:** Accepted — 2026-09-04. Amended 2026-09-25: a selected profile now outranks env however it was selected (see *Which value, per field*).
 **Context:** Multi-tenant CLIs need a way to say "run this against that account" without retyping a tenant flag on every command, exporting env vars, or maintaining shell wrappers. Twilio's subaccount model is the forcing function; the feature has to be equally correct for a CLI with no subaccounts, no regions, and a single bearer token.
 
 Supersedes nothing. **Extends [ADR-0008](0008-credential-precedence-and-storage-fallback.md)** — read that first: this document adds a *selector* to its priority-3 rung, not a fifth rung.
@@ -36,25 +36,20 @@ The one exception: the `profiles` group itself runs unprofiled. Otherwise a stal
 ### Which value, per field
 
 ```
-explicit flag  →  env var  →  profile  →  spec default (x-fern-default)
+explicit flag  →  selected profile  →  env var  →  spec default (x-fern-default)
 ```
 
-**An *ambient* profile sits below env.** A CI pipeline that exports `<NAME>_API_KEY` or `<NAME>_BASE_URL` must never be silently overridden by a profile a developer stored on the same machine. This is the same reasoning ADR-0008 used to put env above the keyring, applied one layer up, and it is the single decision future contributors are most likely to get wrong.
+**A selected profile sits above env, however it was selected.** A profile is the bundle of settings the user stored *for that tenant*; once it is in play — by `-p`, by `<NAME>_PROFILE`, or as the active profile from `profiles use` — every value it carries applies, and the shell-exported global fills in only what the profile leaves unset. The user-facing rule is one sentence: *if the profile sets it, the profile's value is used; otherwise the global one is.* The three selection mechanisms behave identically, so switching from `-p prod` to `profiles use prod` never changes what a command does.
 
-**An *explicitly named* profile sits above env.** `-p prod` is the most specific statement of intent this invocation has, and every other explicit flag in the CLI already beats the environment; the value it carries has to inherit that. The distinction is explicit-vs-ambient, not profile-vs-env:
-
-```text
--p prod            explicit — typed for this invocation
-<NAME>_API_KEY     ambient  — the shell, container, or CI job
-active profile     ambient  — a default chosen days ago
-<NAME>_PROFILE     ambient  — shell-wide, so it selects like `active`
-```
-
-That split preserves the CI property (the *saved default* cannot override a pipeline's environment) while honoring an explicit request (a script naming `-p prod` means prod). It is also the ordering Twilio's shipping CLI documents. `SelectionSource` records how the profile was chosen, and `profiles::outranks_env()` is the single predicate every resolution point consults.
+**No profile means no change.** With nothing selected the env var is the only override rung, exactly as before profiles existed. A CI job that wants env to be authoritative simply does not select a profile — and a `profiles.toml` a developer left on a shared machine only matters if that job also opts in with `<NAME>_PROFILE` or an `active` pointer in the CLI's config directory.
 
 **Profile sits above spec defaults.** Otherwise a profile could never change a parameter the spec defaults, which is most of the interesting ones.
 
-The clap implementation falls out of this for free: clap resolves `CommandLine` > `EnvVariable` > `DefaultValue`, so installing the profile's value as the arg's `default_value` — in place of the spec default — *is* the documented order, with no new arg plumbing.
+`SelectionSource` still records how the profile was chosen — `profiles current` reports it as `selected_by` — but it no longer affects precedence. `profiles::outranks_env()` is the single predicate every resolution point consults, and it is true whenever a profile is in play.
+
+The clap implementation: clap resolves `CommandLine` > `EnvVariable` > `DefaultValue`, so the profile's value is installed as the arg's `default_value` in place of the spec default, and the arg's env var is *not* registered when the profile carries a value — so the flag still wins, the profile beats env, and env still fills in when the profile is silent.
+
+*History.* The original decision (2026-09-04) put an *ambient* profile (`active`, `<NAME>_PROFILE`) below env and only an explicit `-p` above it, to keep a pipeline's exported globals from being redirected by a stored default. In practice the split was the single thing users most often got wrong: the same profile gave different answers depending on how it was selected, and `profiles show` reported values a command then ignored. The uniform rule replaces it.
 
 ### Credentials: a selector, not a rung
 
@@ -103,11 +98,11 @@ A profile with no explicit `credential` anywhere in its chain keys its keyring s
 
 ### The `[env]` pseudo-profile
 
-`profiles list` shows a synthetic `[env]` row when environment variables currently supply a credential, because those outrank every profile. A listing that omitted them would answer "which account am I about to hit?" wrongly whenever one is exported. It is a rendering of what `auth status` already detects, not new detection.
+`profiles list` shows a synthetic `[env]` row when environment variables currently supply a credential, because those are what an unprofiled invocation — or a selected profile with nothing stored — authenticates with. A listing that omitted them would answer "which account am I about to hit?" wrongly whenever one is exported. `profiles current` lists the same variables as `credential_env_fallback`. It is a rendering of what `auth status` already detects, not new detection.
 
 ### Server-variable env vars
 
-The `flag → env → profile → spec default` chain above needs an env rung to exist at each
+The `flag → profile → env → spec default` chain above needs an env rung to exist at each
 resolution point. Server variables had none — `--region` was flag-or-spec-default only — so a
 profile could set a region but a shell session could not, and the chain had a hole in the middle.
 Each spec server variable now also reads `<PREFIX>_<VARIABLE>`, where `<PREFIX>` is the binary
@@ -123,7 +118,7 @@ it would break anyone relying on it.
 
 clap resolves `CommandLine > EnvVariable > DefaultValue`, and `apply_server_vars` treats any
 source but `DefaultValue` as caller-pinned — so the rung slots in without touching the resolution
-logic. Under `-p`, `outranks_env()` demotes env so the explicitly named profile still wins.
+logic. When a profile carries the variable, `outranks_env()` demotes env so the profile still wins.
 
 ### Setting state by the name the user knows
 
@@ -187,7 +182,8 @@ Off unless `CliApp::profiles(...)` is called, wired from `config.profiles.enable
 
 ## Alternatives considered
 
-- **Profile above env.** Matches the "I selected this tenant, it should win" instinct. Rejected for the reason ADR-0008 rejected keyring-above-env: it silently overrides CI secrets from a developer's machine, and the CI footgun is worse than the shadow footgun because it is silent and remote.
+- **Ambient profile below env, explicit `-p` above it** (the original decision). Kept a pipeline's exported globals safe from a stored default, but made one profile resolve differently depending on how it was selected, and made `profiles show` report values a command then ignored. Replaced by the uniform rule; the CI property survives in weaker form — a job that selects no profile is unaffected.
+- **Env above every profile.** The ADR-0008 instinct applied one layer up. Rejected: it makes `profiles set` inert for any value the shell also exports, which is exactly the case profiles exist for.
 - **Threading `Option<&ResolvedProfile>` through the call graph** instead of a process-global. The eight consumers are reached through four different call graphs, several as `&self` methods on already-built structures; threading would touch ~30 signatures to carry one value that is constant for the process's lifetime. The global mirrors `keyring_store::active_store()`, which exists for the same reason.
 - **Secrets in `profiles.toml`.** Simpler, and it is what a lot of tooling does. Rejected outright: the keyring already exists, and a plaintext multi-tenant credential file is a strictly worse artifact than the one `auth login` writes today.
 - **Flattening `parent` on write.** Cheaper to read, and no cycle detection needed. Rejected: editing the parent would then not propagate, which is the main reason to have `parent` at all.
@@ -201,11 +197,12 @@ Off unless `CliApp::profiles(...)` is called, wired from `config.profiles.enable
 1. The parameter that used to be typed on every command stops being typed, which is the win customers actually feel.
 2. Two tenants can hold separate credentials for one auth scheme — and separate OAuth tokens against one token endpoint, which was broken before this change regardless of profiles.
 3. The stateless form (`-p` per invocation) mutates no global state, so parallel and agent-driven invocations cannot race.
-4. CI is unaffected: it keeps using env vars and ignores profiles entirely.
+4. CI that selects no profile is unaffected: it keeps using env vars exactly as before.
+5. One rule for every field and every selection mechanism: what `profiles show` prints is what the command uses.
 
 **Negative.**
 
-1. **A profile is invisible state that changes what a command does.** `profiles current` and the `auth status` profile line are the mitigation; `profiles list`'s `[env]` row covers the "profile selected but env wins" case specifically.
+1. **A profile is invisible state that changes what a command does** — and an active one now also beats exported env vars. `profiles current` and the `auth status` profile line are the mitigation; a job that must be driven by env alone should not select a profile.
 2. **`-p` is now a reserved short flag.** Safe today because spec-derived parameter args are `.long()`-only, but a future change that gives parameters short forms has to keep out of `-p`.
 3. **A profile can store a value that is valid for one operation and invalid for another.** Write-time validation unions the accepted values across operations, so it catches typos but cannot catch this; the affected command fails at clap-parse time naming a flag the caller did not pass.
 4. **One more file in the config directory** for users to know about when clearing CLI state.

@@ -1,0 +1,12 @@
+- summary: |
+    Profiles can now store the transport settings that were previously
+    env/flag-only: `profiles set <name> <PREFIX>_TIMEOUT_SECS=…`,
+    `<PREFIX>_PROXY=…`, `<PREFIX>_CA_BUNDLE=…`, `<PREFIX>_INSECURE=…`, and
+    `<PREFIX>_USER_AGENT_SUFFIX=…` persist to `profiles.toml` (inherited
+    through `parent`, shown by `profiles show`/`current`). For these five the
+    profile's stored value wins over the shell-exported global whenever a
+    profile is in play — `-p`, `<PREFIX>_PROFILE`, or `profiles use` alike
+    (flag > profile > env var > default); the env var only fills in what the
+    profile leaves unset. The root `--help` footer marks these five as
+    profile-storable.
+  type: feat
