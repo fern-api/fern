@@ -20,6 +20,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -30,6 +31,7 @@ import {
     resolveOAuthEndpointReferences
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
+import { NopSourceResolver } from "@fern-api/source-resolver";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
@@ -525,10 +527,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         if (mergedIr === undefined) {
-            throw new CliError({
-                message: "Failed to generate intermediate representation",
-                code: CliError.Code.IrConversionError
-            });
+            // GraphQL specs are converted directly to FDR (see `processGraphQLSpecs`) and never
+            // contribute to the IR, so a GraphQL-only workspace legitimately yields an empty IR.
+            // Any other spec type reaching here failed to load, and must still surface as an error
+            // rather than silently dropping its endpoints.
+            if (this.allSpecs.length > 0 && this.allSpecs.every((spec) => spec.type === "graphql")) {
+                mergedIr = await this.generateEmptyIntermediateRepresentation({ context, audiences });
+            } else {
+                throw new CliError({
+                    message: "Failed to generate intermediate representation: no API documents were loaded",
+                    code: CliError.Code.IrConversionError
+                });
+            }
         }
 
         // Resolve OAuth endpoint references after all specs have been merged,
@@ -538,6 +548,41 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         return mergedIr;
+    }
+
+    private async generateEmptyIntermediateRepresentation({
+        context,
+        audiences
+    }: {
+        context: TaskContext;
+        audiences: Audiences;
+    }): Promise<IntermediateRepresentation> {
+        const fernWorkspace = await this.toFernWorkspace(
+            { context },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true
+            }
+        );
+        return generateIntermediateRepresentation({
+            workspace: fernWorkspace,
+            audiences,
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false,
+            exampleGeneration: {
+                disabled: false,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context,
+            sourceResolver: new NopSourceResolver()
+        });
     }
 
     private async generateAllProtobufIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
