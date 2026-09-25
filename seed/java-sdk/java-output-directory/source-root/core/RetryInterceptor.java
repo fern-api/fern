@@ -91,8 +91,9 @@ public class RetryInterceptor implements Interceptor {
             } catch (InterruptedException e) {
                 response.close();
                 throw new IOException("Interrupted while trying request", e);
+            } finally {
+                callTimeout.ifPresent(AsyncTimeout::enter);
             }
-            callTimeout.ifPresent(AsyncTimeout::enter);
             Response nextResponse;
             try {
                 nextResponse = chain.proceed(chain.request());
@@ -118,6 +119,10 @@ public class RetryInterceptor implements Interceptor {
      * retry loop: the backoff wait (e.g. a {@code Retry-After} the size of the call timeout) does not consume the
      * budget of the next attempt, and each attempt starts with a fresh budget once {@link AsyncTimeout#enter()}
      * is called again.
+     *
+     * <p>{@link AsyncTimeout#exit()} and {@link AsyncTimeout#enter()} must stay strictly paired: {@code exit()} on
+     * a timeout that is not armed is a no-op, but {@code enter()} on one that is already armed throws
+     * {@code IllegalStateException}. Every caller must re-enter the returned timeout exactly once, on all paths.
      */
     private static Optional<AsyncTimeout> suspendCallTimeout(Chain chain) {
         Call call = chain.call();
