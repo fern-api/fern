@@ -15,6 +15,8 @@ export interface RootType1 {
     /** lorem ipsum */
     fooList: RootType1.FooList.Item[];
     /** lorem ipsum */
+    fooListMap: Record<string, RootType1.FooListMap.Item[]>;
+    /** lorem ipsum */
     fooSet: RootType1.FooSet.Item[];
     /** lorem ipsum */
     ref: SeedObject.ReferenceType;
@@ -75,6 +77,18 @@ export namespace RootType1 {
     export type FooList = FooList.Item[];
 
     export namespace FooList {
+        /**
+         * lorem ipsum
+         */
+        export interface Item {
+            /** lorem ipsum */
+            foo: string;
+            /** lorem ipsum */
+            ref: SeedObject.ReferenceType;
+        }
+    }
+
+    export namespace FooListMap {
         /**
          * lorem ipsum
          */

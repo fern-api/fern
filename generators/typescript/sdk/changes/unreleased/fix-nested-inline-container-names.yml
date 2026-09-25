@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Inline object declarations nested inside map values now use the same generated name as their references.
+  type: fix
