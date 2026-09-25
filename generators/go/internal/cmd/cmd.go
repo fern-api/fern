@@ -113,7 +113,29 @@ func Run(usage string, fn GeneratorFunc) {
 }
 
 func run(fn GeneratorFunc) (retErr error) {
-	config, err := newConfig(os.Args[1])
+	generatorConfig, err := readConfig(os.Args[1])
+	if err != nil {
+		return err
+	}
+	coordinatorURL, coordinatorTaskID := coordinatorInfoFromConfig(generatorConfig)
+	coordinator := coordinator.NewClient(coordinatorURL, coordinatorTaskID)
+	if err := coordinator.Init(); err != nil {
+		return err
+	}
+	defer func() {
+		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
+		if retErr != nil {
+			// The generator returned an error, so we send an error update to the coordinator.
+			exitStatusUpdate = generatorexec.NewExitStatusUpdateFromError(
+				&generatorexec.ErrorExitStatusUpdate{
+					Message: retErr.Error(),
+				},
+			)
+		}
+		retErr = multierr.Append(retErr, coordinator.Exit(exitStatusUpdate))
+	}()
+
+	config, err := newConfig(generatorConfig)
 	if err != nil {
 		return err
 	}
@@ -121,11 +143,6 @@ func run(fn GeneratorFunc) (retErr error) {
 	// Normalize the version by adding 'v' prefix if missing (Go convention)
 	if config.Version != "" && !strings.HasPrefix(config.Version, "v") {
 		config.Version = "v" + config.Version
-	}
-
-	coordinator := coordinator.NewClient(config.CoordinatorURL, config.CoordinatorTaskID)
-	if err := coordinator.Init(); err != nil {
-		return err
 	}
 	// If the Module configuration is specified, use the module's path as the import path.
 	if config.Module != nil {
@@ -164,18 +181,6 @@ func run(fn GeneratorFunc) (retErr error) {
 		config.ImportPath = maybeAppendVersionSuffix(config.ImportPath, suffix)
 		config.Module.Path = maybeAppendVersionSuffix(config.Module.Path, suffix)
 	}
-	defer func() {
-		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
-		if retErr != nil {
-			// The generator returned an error, so we send an error update to the coordinator.
-			exitStatusUpdate = generatorexec.NewExitStatusUpdateFromError(
-				&generatorexec.ErrorExitStatusUpdate{
-					Message: retErr.Error(),
-				},
-			)
-		}
-		retErr = multierr.Append(retErr, coordinator.Exit(exitStatusUpdate))
-	}()
 	files, mode, err := fn(config, coordinator)
 	if err != nil {
 		return err
@@ -196,12 +201,16 @@ func run(fn GeneratorFunc) (retErr error) {
 	return nil
 }
 
-// newConfig returns the *Config found at the given configFilename.
-func newConfig(configFilename string) (*Config, error) {
-	config, err := readConfig(configFilename)
-	if err != nil {
-		return nil, err
+// coordinatorInfoFromConfig returns the coordinator URL and task ID, if any.
+func coordinatorInfoFromConfig(config *generatorexec.GeneratorConfig) (coordinatorURL string, coordinatorTaskID string) {
+	if config.Environment != nil && config.Environment.Remote != nil {
+		return config.Environment.Remote.CoordinatorUrlV2, config.Environment.Remote.Id
 	}
+	return "", ""
+}
+
+// newConfig returns the *Config derived from the given generator configuration.
+func newConfig(config *generatorexec.GeneratorConfig) (*Config, error) {
 	customConfig, err := customConfigFromConfig(config)
 	if err != nil {
 		return nil, err
@@ -219,14 +228,7 @@ func newConfig(configFilename string) (*Config, error) {
 		return nil, err
 	}
 
-	var (
-		coordinatorURL    string
-		coordinatorTaskID string
-	)
-	if config.Environment != nil && config.Environment.Remote != nil {
-		coordinatorURL = config.Environment.Remote.CoordinatorUrlV2
-		coordinatorTaskID = config.Environment.Remote.Id
-	}
+	coordinatorURL, coordinatorTaskID := coordinatorInfoFromConfig(config)
 
 	var snippetFilepath string
 	if config.Output != nil && config.Output.SnippetFilepath != nil {
@@ -442,10 +444,12 @@ func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, 
 	switch outputConfigMode := c.Output.Mode; outputConfigMode.Type {
 	case "github":
 		return writer.NewGithubConfig(c.Output.Path, outputConfigMode.Github.RepoUrl)
-	case "downloadFiles":
+	case "downloadFiles", "publish":
+		// Go has no package registry; published SDKs are consumed straight from
+		// the output directory, so publish is written to disk like downloadFiles.
 		return writer.NewLocalConfig(c.Output.Path)
 	default:
-		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
+		return nil, fmt.Errorf("unrecognized output configuration mode: %q", outputConfigMode.Type)
 	}
 }
 
