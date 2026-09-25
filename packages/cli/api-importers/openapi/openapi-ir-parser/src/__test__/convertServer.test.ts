@@ -29,4 +29,22 @@ describe("convertServer", () => {
             }).url
         ).toBe("https://us-east-1.api.example.com/us-east-1");
     });
+
+    it("escapes query and fragment delimiters in a path segment default", () => {
+        expect(
+            convertServer({
+                url: "https://api.example.com/{tenant}/v1",
+                variables: { tenant: { default: "foo?bar#baz" } }
+            }).url
+        ).toBe("https://api.example.com/foo%3Fbar%23baz/v1");
+    });
+
+    it("does not read dollar sequences in a default as replacement patterns", () => {
+        expect(
+            convertServer({
+                url: "https://api.example.com/{tenant}",
+                variables: { tenant: { default: "a$&b$$c" } }
+            }).url
+        ).toBe("https://api.example.com/a$&b$$c");
+    });
 });

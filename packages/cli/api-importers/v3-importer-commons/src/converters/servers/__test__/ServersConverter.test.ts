@@ -86,4 +86,28 @@ describe("ServersConverter", () => {
             ])
         ).toEqual(["https://us-east-1.api.example.com/us-east-1"]);
     });
+
+    it("escapes query and fragment delimiters in a path segment default", () => {
+        expect(
+            convertServerUrls([
+                {
+                    url: "https://api.example.com/{tenant}/v1",
+                    description: "Production",
+                    variables: { tenant: { default: "foo?bar#baz" } }
+                }
+            ])
+        ).toEqual(["https://api.example.com/foo%3Fbar%23baz/v1"]);
+    });
+
+    it("does not read dollar sequences in a default as replacement patterns", () => {
+        expect(
+            convertServerUrls([
+                {
+                    url: "https://api.example.com/{tenant}",
+                    description: "Production",
+                    variables: { tenant: { default: "a$&b$$c" } }
+                }
+            ])
+        ).toEqual(["https://api.example.com/a$&b$$c"]);
+    });
 });
