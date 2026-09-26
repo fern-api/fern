@@ -263,6 +263,12 @@ export interface AutoVersionStepResult extends StepResult {
     prDescription?: string;
     /** One-sentence justification for WHY the version bump was chosen. */
     versionBumpReason?: string;
+    /**
+     * Set when FAI analysis could not be obtained (request failed, diff over the size cap)
+     * and the step fell back to a PATCH bump. The bump level may be wrong; GithubStep
+     * surfaces this in the PR body and never automerges such a PR.
+     */
+    analysisWarning?: string;
     /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
     commitSha?: string;
 }

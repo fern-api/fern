@@ -266,6 +266,7 @@ export class GithubStep extends BaseStep {
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        enrichedBody = appendAutoVersionWarning(enrichedBody, resolved.analysisWarning);
         enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
         if (isUpdatingExistingPR && existingPR != null) {
@@ -575,6 +576,8 @@ export interface ResolvedPrFields {
     versionBump: string | undefined;
     hasBreakingChanges: boolean;
     breakingChangesSummary: string | undefined;
+    /** Why autoversion fell back to PATCH without an FAI analysis, if it did. */
+    analysisWarning: string | undefined;
 }
 
 /**
@@ -609,8 +612,29 @@ export function resolvePrFields(
         newVersion: config.newVersion ?? autoVersion?.version,
         versionBump: config.versionBump ?? autoVersion?.versionBump,
         hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
-        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription
+        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription,
+        analysisWarning: autoVersion?.analysisWarning
     };
+}
+
+/**
+ * Appends a visible notice when autoversion shipped a fallback PATCH bump because the
+ * FAI analysis was unavailable. Rendered in every mode (not just automation) so the
+ * reviewer knows the version and changelog need a manual check.
+ * Exported for testing.
+ */
+export function appendAutoVersionWarning(body: string, analysisWarning: string | undefined): string {
+    if (analysisWarning == null || analysisWarning.trim().length === 0) {
+        return body;
+    }
+    return (
+        body +
+        "\n\n---\n\n## ⚠️ Version bump not verified\n\n" +
+        "Automatic version analysis was unavailable for this generation, so a **PATCH** bump was applied " +
+        "by default and no changelog entry was written. If this change is breaking or adds features, " +
+        "adjust the version and changelog before merging.\n\n" +
+        `Reason: \`${analysisWarning.trim()}\``
+    );
 }
 
 /**
@@ -654,10 +678,16 @@ export function enrichPrBodyForAutomation(
  */
 export function shouldEnableAutomerge(
     config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
-    breaking: { hasBreakingChanges?: boolean } = {}
+    breaking: { hasBreakingChanges?: boolean; analysisWarning?: string } = {}
 ): boolean {
     const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
-    return config.automationMode === true && config.autoMerge === true && hasBreakingChanges !== true;
+    const analysisUnavailable = breaking.analysisWarning != null && breaking.analysisWarning.length > 0;
+    return (
+        config.automationMode === true &&
+        config.autoMerge === true &&
+        hasBreakingChanges !== true &&
+        !analysisUnavailable
+    );
 }
 
 /**
