@@ -59,7 +59,9 @@ function getServerUrl({
     );
 
     for (const [variable, value] of Object.entries(valuesToSubstitute)) {
-        url = url.replace(`{${variable}}`, encodeURIComponent(value));
+        const encodedValue = encodeServerVariableValue(value);
+        // A replacer function, so `$&` and friends in a default are not read as replacement patterns.
+        url = url.replaceAll(`{${variable}}`, () => encodedValue);
     }
 
     return url;
@@ -107,4 +109,12 @@ function getServerName(
     }
 
     return undefined;
+}
+
+/**
+ * Keeps the `:` and `/` of a default that holds a whole host or a multi-segment path, but escapes
+ * `?` and `#` so a value used as a path segment cannot turn the rest of the URL into a query or fragment.
+ */
+function encodeServerVariableValue(value: string): string {
+    return encodeURI(value).replace(/[?#]/g, (character) => encodeURIComponent(character));
 }
