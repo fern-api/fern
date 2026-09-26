@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.22.3
+  changelogEntry:
+    - summary: |
+        Honor `package-prefix` and `package-layout` for `local-file-system` output when the CLI
+        requests a full project (e.g. `--generate-tests`, `--package`, or self-hosted SDKs).
+        Previously these were dropped when converting the local-file-system config, so the root
+        package fell back to `com.<org>.<api>` instead of the configured prefix. Full-project local
+        output now also writes sources at their full package path (`src/main/java/com/acme/...`)
+        instead of stripping the prefix from the directory.
+      type: fix
+  createdAt: "2026-09-26"
+  irVersion: 67
 - version: 4.22.2
   changelogEntry:
     - summary: |
