@@ -21,12 +21,12 @@ describe("Type", () => {
         });
 
         it("does not append null to a union containing mixed in docblocks", () => {
-            expect(render(Type.optional(Type.union([Type.mixed()])), { comment: true })).not.toContain("null");
+            expect(render(Type.optional(Type.union([Type.mixed()])), { comment: true })).toBe("(\n *    mixed\n * )");
         });
 
         it("appends null to a union without mixed in docblocks", () => {
-            expect(render(Type.optional(Type.union([Type.string(), Type.int()])), { comment: true })).toMatch(
-                /\)\|null$/
+            expect(render(Type.optional(Type.union([Type.string(), Type.int()])), { comment: true })).toBe(
+                "(\n *    string\n *   |int\n * )|null"
             );
         });
     });
