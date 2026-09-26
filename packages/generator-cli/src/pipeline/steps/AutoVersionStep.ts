@@ -238,7 +238,8 @@ export class AutoVersionStep extends BaseStep {
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                reason: "FAI returned NO_CHANGE"
+                reason: "FAI returned NO_CHANGE",
+                analysisWarning
             });
         }
 
@@ -338,7 +339,8 @@ export class AutoVersionStep extends BaseStep {
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                reason: "FAI returned NO_CHANGE"
+                reason: "FAI returned NO_CHANGE",
+                analysisWarning
             });
         }
 
@@ -398,8 +400,22 @@ export class AutoVersionStep extends BaseStep {
                         `${label}: FAI analysis of the full diff failed (${String(error)}); retrying in ${cappedChunks.length} chunks.`
                     );
                     logSplit();
+                    const chunked = await this.analyzeChunksViaFaiService(
+                        cappedChunks,
+                        language,
+                        previousVersion,
+                        label
+                    );
+                    const warnings = [chunked.analysisWarning];
+                    if (skippedChunks > 0) {
+                        warnings.push(
+                            `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                        );
+                    }
+                    const analysisWarning = warnings.filter(hasText).join("; ");
                     return {
-                        analysis: await this.analyzeChunksViaFaiService(cappedChunks, language, previousVersion, label)
+                        analysis: chunked.analysis,
+                        analysisWarning: analysisWarning.length > 0 ? analysisWarning : undefined
                     };
                 }
             }
@@ -432,8 +448,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
 
         // `previousVersion` flows into the same `bash -c` + single-quoted sed
         // expression that `handleFirstGeneration` guards against with
@@ -463,7 +480,8 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             versionBump: "NO_CHANGE",
             commitMessage,
-            commitSha
+            commitSha,
+            analysisWarning
         };
     }
 
@@ -517,8 +535,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
 
         if (!isValidSemver(previousVersion)) {
             const errorMessage =
@@ -540,7 +559,8 @@ export class AutoVersionStep extends BaseStep {
             version: previousVersion,
             previousVersion,
             versionBump: "NO_CHANGE",
-            commitMessage
+            commitMessage,
+            analysisWarning
         };
     }
 
@@ -1048,16 +1068,17 @@ export class AutoVersionStep extends BaseStep {
 
     /**
      * Chunked retry for the hosted FAI path. Each chunk is analyzed independently;
-     * chunks whose request fails are skipped with a warning as long as at least one
-     * chunk succeeds. Results are aggregated with the same max-bump rule as the BAML
-     * path; entries are joined rather than consolidated (no hosted rollup endpoint).
+     * chunks whose request fails are skipped as long as at least one chunk succeeds,
+     * and the partial coverage is reported via `analysisWarning` so the PR is flagged
+     * and never automerged. Results are aggregated with the same max-bump rule as the
+     * BAML path; entries are joined rather than consolidated (no hosted rollup endpoint).
      */
     private async analyzeChunksViaFaiService(
         chunks: string[],
         language: string,
         previousVersion: string,
         label: string
-    ): Promise<FAIAnalysis | null> {
+    ): Promise<{ analysis: FAIAnalysis | null; analysisWarning?: string }> {
         const chunkAnalyses: ChunkAnalysis[] = [];
         let attemptedChunks = 0;
         let failedChunks = 0;
@@ -1087,8 +1108,12 @@ export class AutoVersionStep extends BaseStep {
         if (failedChunks > 0 && failedChunks === attemptedChunks) {
             throw new Error(`all ${attemptedChunks} FAI chunk requests failed; last error: ${String(lastError)}`);
         }
+        const analysisWarning =
+            failedChunks > 0
+                ? `${failedChunks} of ${attemptedChunks} FAI chunk requests failed; last error: ${String(lastError)}`
+                : undefined;
         if (chunkAnalyses.length === 0) {
-            return null;
+            return { analysis: null, analysisWarning };
         }
         const { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry } =
             aggregateChunkAnalyses(chunkAnalyses);
@@ -1097,20 +1122,21 @@ export class AutoVersionStep extends BaseStep {
                 `${label}: no chunk produced a changelog entry for the ${bestBump} bump; using its version bump reason instead.`
             );
         }
-        if (failedChunks > 0) {
-            this.logger.warn(
-                `${label}: ${failedChunks}/${chunks.length} chunks failed; the ${bestBump} bump is based on the remaining chunks.`
-            );
+        if (analysisWarning != null) {
+            this.logger.warn(`${label}: ${analysisWarning}; the ${bestBump} bump is based on the remaining chunks.`);
         }
         const prDescriptions = chunkAnalyses
             .filter((analysis) => analysis.versionBump === bestBump && hasText(analysis.prDescription))
             .map((analysis) => analysis.prDescription?.trim() ?? "");
         return {
-            versionBump: bestBump,
-            message: bestMessage,
-            changelogEntry: changelogEntries.length > 0 ? changelogEntries.join("\n\n") : undefined,
-            prDescription: prDescriptions.length > 0 ? prDescriptions.join("\n\n") : undefined,
-            versionBumpReason: bestVersionBumpReason
+            analysis: {
+                versionBump: bestBump,
+                message: bestMessage,
+                changelogEntry: changelogEntries.length > 0 ? changelogEntries.join("\n\n") : undefined,
+                prDescription: prDescriptions.length > 0 ? prDescriptions.join("\n\n") : undefined,
+                versionBumpReason: bestVersionBumpReason
+            },
+            analysisWarning
         };
     }
 

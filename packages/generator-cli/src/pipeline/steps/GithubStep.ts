@@ -618,9 +618,10 @@ export function resolvePrFields(
 }
 
 /**
- * Appends a visible notice when autoversion shipped a fallback PATCH bump because the
- * FAI analysis was unavailable. Rendered in every mode (not just automation) so the
- * reviewer knows the version and changelog need a manual check.
+ * Appends a visible notice when autoversion could not fully analyze the diff (FAI
+ * unavailable → PATCH fallback, or only part of the diff was analyzed). Rendered in
+ * every mode (not just automation) so the reviewer knows the version and changelog
+ * need a manual check.
  * Exported for testing.
  */
 export function appendAutoVersionWarning(body: string, analysisWarning: string | undefined): string {
@@ -634,9 +635,9 @@ export function appendAutoVersionWarning(body: string, analysisWarning: string |
     return (
         body +
         "\n\n---\n\n## ⚠️ Version bump not verified\n\n" +
-        "Automatic version analysis was unavailable for this generation, so a **PATCH** bump was applied " +
-        "by default and no changelog entry was written. If this change is breaking or adds features, " +
-        "adjust the version and changelog before merging.\n\n" +
+        "Automatic version analysis was unavailable or incomplete for this generation, so the version bump " +
+        "and changelog may understate the changes (a **PATCH** bump with no changelog is applied when no analysis " +
+        "is available). If this change is breaking or adds features, adjust the version and changelog before merging.\n\n" +
         `Reason: \`${reason}\``
     );
 }

@@ -183,7 +183,7 @@ describe("autoVersion analysisWarning (FAI unavailable, PATCH fallback)", () => 
         const body = appendAutoVersionWarning("## SDK regeneration", fallbackAutoVersion.analysisWarning);
         expect(body).toContain("## SDK regeneration");
         expect(body).toContain("Version bump not verified");
-        expect(body).toContain("**PATCH** bump was applied by default");
+        expect(body).toContain("Automatic version analysis was unavailable or incomplete");
         expect(body).toContain("status 502");
     });
 

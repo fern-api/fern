@@ -25,6 +25,7 @@ vi.mock("@fern-api/cli-ai", () => ({
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
+import { MAX_AI_DIFF_BYTES, MAX_CHUNKS } from "../autoversion/VersionUtils";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep";
 import type { AutoVersionStepConfig, PipelineContext } from "../pipeline/types";
@@ -82,6 +83,8 @@ async function setupTwoGenerations(
         featureFile?: { path: string; content: string };
         /** Optional bytes of filler content to inflate the diff for chunking tests. */
         fillerKB?: number;
+        /** Number of separate filler files to spread `fillerKB` across (default 1); chunkDiff never splits a file. */
+        fillerFiles?: number;
     } = {}
 ): Promise<TwoGenerations> {
     const previousVersion = opts.previousVersion ?? "1.0.0";
@@ -120,8 +123,13 @@ async function setupTwoGenerations(
         writeFileSync(featurePath, opts.featureFile.content);
     }
     if (opts.fillerKB && opts.fillerKB > 0) {
-        const filler = "// filler line keeps cleanDiffForAI happy\n".repeat(opts.fillerKB * 20);
-        writeFileSync(join(repoPath, "src/filler.ts"), filler);
+        const fillerFiles = opts.fillerFiles ?? 1;
+        const filler = "// filler line keeps cleanDiffForAI happy\n".repeat(
+            Math.ceil((opts.fillerKB * 20) / fillerFiles)
+        );
+        for (let i = 0; i < fillerFiles; i++) {
+            writeFileSync(join(repoPath, `src/filler${i === 0 ? "" : i}.ts`), filler);
+        }
     }
     gitExec(["add", "."], repoPath);
     gitExec(["commit", "-m", "[fern-generated] Current SDK (placeholder)"], repoPath);
@@ -1169,7 +1177,7 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(readFileSync(join(repo.repoPath, "changelog.md"), "utf-8")).toContain("## [3.0.0]");
     });
 
-    it("tolerates individual chunk failures as long as one chunk succeeds", async () => {
+    it("tolerates individual chunk failures as long as one chunk succeeds, but flags the partial coverage", async () => {
         mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
             if (mockFetch.mock.calls.length === 1) {
                 return failedResponse;
@@ -1191,7 +1199,28 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.versionBump).toBe("MINOR");
         expect(result.version).toBe("2.1.0");
         expect(result.changelogEntry).toContain("bigFeature()");
-        expect(result.analysisWarning).toBeUndefined();
+        expect(result.analysisWarning).toMatch(/\d+ of \d+ FAI chunk requests failed/);
+    });
+
+    it("flags a NO_CHANGE result when some chunks failed and the rest reported NO_CHANGE", async () => {
+        mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            if (body.diff.includes("bigFeature")) {
+                return failedResponse;
+            }
+            return okResponse({ message: "chore: nothing", version_bump: "NO_CHANGE" });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("NO_CHANGE");
+        expect(result.version).toBe("2.0.0");
+        expect(result.analysisWarning).toMatch(/FAI chunk requests failed/);
     });
 
     it("falls back to PATCH with analysisWarning when every chunk request fails too", async () => {
@@ -1208,6 +1237,32 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.changelogEntry).toBeUndefined();
         expect(result.analysisWarning).toContain("FAI analysis failed");
         expect(result.analysisWarning).toContain("chunk requests failed");
+    });
+
+    it("flags chunks dropped by the chunk cap during the chunked retry", async () => {
+        await repo.cleanup();
+        repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: {
+                path: "src/bigFeature.ts",
+                content: "export function bigFeature() {}\n"
+            },
+            fillerKB: (MAX_CHUNKS + 5) * (MAX_AI_DIFF_BYTES / 1024),
+            fillerFiles: MAX_CHUNKS + 5
+        });
+        mockFetch.mockImplementation(async () => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            return okResponse({ message: "chore: regen", version_bump: "PATCH" });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch).toHaveBeenCalledTimes(MAX_CHUNKS + 1);
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks were not analyzed \(capped at \d+\)/);
     });
 });
 
