@@ -1059,6 +1059,7 @@ export class AutoVersionStep extends BaseStep {
         label: string
     ): Promise<FAIAnalysis | null> {
         const chunkAnalyses: ChunkAnalysis[] = [];
+        let attemptedChunks = 0;
         let failedChunks = 0;
         let lastError: unknown;
         for (let i = 0; i < chunks.length; i++) {
@@ -1066,6 +1067,7 @@ export class AutoVersionStep extends BaseStep {
             if (!chunk) {
                 continue;
             }
+            attemptedChunks++;
             let analysis: FAIAnalysis | null;
             try {
                 analysis = await this.analyzeViaFaiService(chunk, language, previousVersion);
@@ -1082,8 +1084,8 @@ export class AutoVersionStep extends BaseStep {
             }
             chunkAnalyses.push(analysis);
         }
-        if (failedChunks === chunks.length) {
-            throw new Error(`all ${chunks.length} FAI chunk requests failed; last error: ${String(lastError)}`);
+        if (failedChunks > 0 && failedChunks === attemptedChunks) {
+            throw new Error(`all ${attemptedChunks} FAI chunk requests failed; last error: ${String(lastError)}`);
         }
         if (chunkAnalyses.length === 0) {
             return null;
@@ -1208,6 +1210,7 @@ interface ChunkAnalysis {
     versionBump: string;
     message: string;
     changelogEntry?: string;
+    /** Only populated on the hosted-FAI chunk path; the BAML path gets its PR description from ConsolidateChangelog. */
     prDescription?: string;
     versionBumpReason?: string;
 }
