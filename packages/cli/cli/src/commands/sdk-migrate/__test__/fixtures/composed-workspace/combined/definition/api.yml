@@ -4,16 +4,16 @@ error-discrimination:
 auth: HeaderAuthScheme
 auth-schemes:
   HeaderAuthScheme:
-    header: X-Hume-Api-Key
+    header: X-Api-Key
     name: apiKey
     type: optional<string>
-    env: HUME_API_KEY
+    env: API_KEY
 default-environment: prod
 default-url: Base
 environments:
   prod:
     urls:
-      Base: https://api.hume.ai/
-      evi: wss://api.hume.ai/v0/evi
-      tts: wss://api.hume.ai/v0/tts
-      stream: wss://api.hume.ai/v0/stream
+      Base: https://api.example.com/
+      users: wss://api.example.com/v1/users
+      payments: wss://api.example.com/v1/payments
+      stream: wss://api.example.com/v1/stream

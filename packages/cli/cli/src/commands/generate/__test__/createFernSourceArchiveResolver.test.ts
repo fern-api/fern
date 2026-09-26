@@ -90,33 +90,33 @@ describe("createFernSourceArchiveResolver", () => {
     it("builds an archive from a composed workspace's namespaced dependency specs", async () => {
         const context = createMockTaskContext();
         const generatorInvocation = makeGenerator();
-        const eviSpec: Spec = {
+        const usersSpec: Spec = {
             type: "openapi",
-            absoluteFilepath: AbsoluteFilePath.of("/hume/empathic-voice-interface/evi-openapi.json"),
+            absoluteFilepath: AbsoluteFilePath.of("/apis/users-api/users-openapi.json"),
             absoluteFilepathToOverrides: undefined,
             absoluteFilepathToOverlays: undefined,
             source: {
                 type: "openapi",
-                file: AbsoluteFilePath.of("/hume/empathic-voice-interface/evi-openapi.json")
+                file: AbsoluteFilePath.of("/apis/users-api/users-openapi.json")
             },
-            namespace: "empathic-voice"
+            namespace: "users"
         };
-        const ttsSpec: Spec = {
+        const paymentsSpec: Spec = {
             type: "openapi",
-            absoluteFilepath: AbsoluteFilePath.of("/hume/tts/tts-openapi.json"),
+            absoluteFilepath: AbsoluteFilePath.of("/apis/payments-api/payments-openapi.json"),
             absoluteFilepathToOverrides: undefined,
             absoluteFilepathToOverlays: undefined,
-            source: { type: "openapi", file: AbsoluteFilePath.of("/hume/tts/tts-openapi.json") },
-            namespace: "tts"
+            source: { type: "openapi", file: AbsoluteFilePath.of("/apis/payments-api/payments-openapi.json") },
+            namespace: "payments"
         };
         const workspace = new LazyFernWorkspace({
             context,
             generatorsConfiguration: undefined,
-            workspaceName: "unioned",
+            workspaceName: "combined",
             cliVersion: "0.0.0",
-            absoluteFilePath: AbsoluteFilePath.of("/tmp/unioned")
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/combined")
         });
-        vi.spyOn(workspace, "getAllSpecsForGenerator").mockResolvedValue([eviSpec, ttsSpec]);
+        vi.spyOn(workspace, "getAllSpecsForGenerator").mockResolvedValue([usersSpec, paymentsSpec]);
         const group: generatorsYml.GeneratorGroup = {
             groupName: "test",
             audiences: { type: "all" },
@@ -151,7 +151,7 @@ describe("createFernSourceArchiveResolver", () => {
         expect(resolution.sourceArchives.get(0)).toMatchObject({ specIndexes: [0, 1] });
         expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
             expect.objectContaining({
-                generatorSelections: [{ generatorIndex: 0, specs: [eviSpec, ttsSpec] }]
+                generatorSelections: [{ generatorIndex: 0, specs: [usersSpec, paymentsSpec] }]
             })
         );
     });

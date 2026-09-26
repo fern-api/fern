@@ -16,7 +16,7 @@ import { resolveMigrationSourceSpecs } from "../projectMigrationSource.js";
 const CLI_VERSION = "0.0.0";
 const COMPOSED_WORKSPACE = join(
     AbsoluteFilePath.of(path.dirname(fileURLToPath(import.meta.url))),
-    RelativeFilePath.of("fixtures/composed-workspace/unioned")
+    RelativeFilePath.of("fixtures/composed-workspace/combined")
 );
 
 function createTaskContextRunningInteractiveTasks(): TaskContext {
@@ -43,15 +43,15 @@ function openApiSpec(absoluteFilepath: string): OpenAPISpec {
 
 async function composedWorkspace(): Promise<LazyFernWorkspace> {
     const specsByDirectoryName: Record<string, Spec[]> = {
-        "empathic-voice-interface": [
-            openApiSpec(join(COMPOSED_WORKSPACE, RelativeFilePath.of("../empathic-voice-interface/evi-openapi.json")))
-        ],
-        tts: [openApiSpec(join(COMPOSED_WORKSPACE, RelativeFilePath.of("../tts/tts-openapi.json")))]
+        "users-api": [openApiSpec(join(COMPOSED_WORKSPACE, RelativeFilePath.of("../users-api/users-openapi.json")))],
+        "payments-api": [
+            openApiSpec(join(COMPOSED_WORKSPACE, RelativeFilePath.of("../payments-api/payments-openapi.json")))
+        ]
     };
     const workspace = new LazyFernWorkspace({
         absoluteFilePath: COMPOSED_WORKSPACE,
         generatorsConfiguration: undefined,
-        workspaceName: "unioned",
+        workspaceName: "combined",
         cliVersion: CLI_VERSION,
         context: createTaskContextRunningInteractiveTasks(),
         loadAPIWorkspace: async ({ absolutePathToWorkspace }) => {
@@ -113,7 +113,7 @@ describe("SDK Config from a composed workspace", () => {
                 generators: [typescriptGenerator()],
                 reviewers: undefined
             },
-            source: { specs: [{ id: "evi", type: "openapi", path: "evi-openapi.json" }] }
+            source: { specs: [{ id: "users", type: "openapi", path: "users-openapi.json" }] }
         });
 
         expect(result.sdkConfig.api?.auth?.schemes).toEqual([
@@ -121,8 +121,8 @@ describe("SDK Config from a composed workspace", () => {
                 type: "api-key",
                 id: "HeaderAuthScheme",
                 location: "header",
-                name: "X-Hume-Api-Key",
-                environmentVariable: "HUME_API_KEY"
+                name: "X-Api-Key",
+                environmentVariable: "API_KEY"
             }
         ]);
     });
@@ -136,7 +136,7 @@ describe("SDK Config from a composed workspace", () => {
                 generators: [typescriptGenerator()],
                 reviewers: undefined
             },
-            source: { specs: [{ id: "evi", type: "openapi", path: "evi-openapi.json" }] }
+            source: { specs: [{ id: "users", type: "openapi", path: "users-openapi.json" }] }
         });
 
         expect(result.sdkConfig.api?.defaultEnvironment).toBe("prod");
@@ -145,10 +145,10 @@ describe("SDK Config from a composed workspace", () => {
             {
                 name: "prod",
                 urls: [
-                    { name: "Base", url: "https://api.hume.ai/" },
-                    { name: "evi", url: "wss://api.hume.ai/v0/evi" },
-                    { name: "stream", url: "wss://api.hume.ai/v0/stream" },
-                    { name: "tts", url: "wss://api.hume.ai/v0/tts" }
+                    { name: "Base", url: "https://api.example.com/" },
+                    { name: "payments", url: "wss://api.example.com/v1/payments" },
+                    { name: "stream", url: "wss://api.example.com/v1/stream" },
+                    { name: "users", url: "wss://api.example.com/v1/users" }
                 ]
             }
         ]);
@@ -167,8 +167,8 @@ describe("SDK Config from a composed workspace", () => {
         });
 
         expect(specs.map((spec) => [spec.namespace, spec.type])).toEqual([
-            ["empathic-voice", "openapi"],
-            ["tts", "openapi"]
+            ["payments", "openapi"],
+            ["users", "openapi"]
         ]);
     });
 });

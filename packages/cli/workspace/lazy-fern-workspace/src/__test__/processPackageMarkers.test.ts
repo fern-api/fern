@@ -92,9 +92,9 @@ function localDependencies(dependencies: Record<string, string>): dependenciesYm
 }
 
 describe("processPackageMarkers", () => {
-    const evi = openApiSpec("/hume/empathic-voice-interface/evi-openapi.json");
-    const eviAsync = openApiSpec("/hume/empathic-voice-interface/evi-asyncapi.json");
-    const tts = openApiSpec("/hume/tts/tts-openapi.json");
+    const users = openApiSpec("/apis/users-api/users-openapi.json");
+    const usersAsync = openApiSpec("/apis/users-api/users-asyncapi.json");
+    const payments = openApiSpec("/apis/payments-api/payments-openapi.json");
 
     function loadWorkspacesFrom(specsByPath: Record<string, Spec[]>): LoadAPIWorkspace {
         return async ({ absolutePathToWorkspace }) => {
@@ -109,18 +109,18 @@ describe("processPackageMarkers", () => {
     it("carries every dependency's specs, namespaced by its package marker directory", async () => {
         const result = await processPackageMarkers({
             dependenciesConfiguration: localDependencies({
-                "empathic-voice": "/hume/empathic-voice-interface",
-                tts: "/hume/tts"
+                users: "/apis/users-api",
+                payments: "/apis/payments-api"
             }),
             structuralValidationResult: structuralValidationResult({
-                "empathic-voice/__package__.yml": exportingPackageMarker("empathic-voice"),
-                "tts/__package__.yml": exportingPackageMarker("tts")
+                "users/__package__.yml": exportingPackageMarker("users"),
+                "payments/__package__.yml": exportingPackageMarker("payments")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
             loadAPIWorkspace: loadWorkspacesFrom({
-                "/hume/empathic-voice-interface": [evi, eviAsync],
-                "/hume/tts": [tts]
+                "/apis/users-api": [users, usersAsync],
+                "/apis/payments-api": [payments]
             })
         });
 
@@ -129,25 +129,25 @@ describe("processPackageMarkers", () => {
         }
 
         expect(result.specs.map((spec) => [namespaceOf(spec), specFilename(spec)])).toEqual([
-            ["empathic-voice", "evi-openapi.json"],
-            ["empathic-voice", "evi-asyncapi.json"],
-            ["tts", "tts-openapi.json"]
+            ["payments", "payments-openapi.json"],
+            ["users", "users-openapi.json"],
+            ["users", "users-asyncapi.json"]
         ]);
     });
 
     it("reports a dependency that already namespaced its own specs, rather than overwriting it", async () => {
         const result = await processPackageMarkers({
-            dependenciesConfiguration: localDependencies({ "empathic-voice": "/hume/empathic-voice-interface" }),
+            dependenciesConfiguration: localDependencies({ users: "/apis/users-api" }),
             structuralValidationResult: structuralValidationResult({
-                "empathic-voice/__package__.yml": exportingPackageMarker("empathic-voice")
+                "users/__package__.yml": exportingPackageMarker("users")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
             loadAPIWorkspace: loadWorkspacesFrom({
-                "/hume/empathic-voice-interface": [
-                    { ...evi, namespace: "chat" },
-                    { ...eviAsync, namespace: "chat" },
-                    { ...tts, namespace: "batch" }
+                "/apis/users-api": [
+                    { ...users, namespace: "profiles" },
+                    { ...usersAsync, namespace: "profiles" },
+                    { ...payments, namespace: "accounts" }
                 ]
             })
         });
@@ -157,20 +157,20 @@ describe("processPackageMarkers", () => {
         }
 
         expect(result.namespaceCollisions).toEqual([
-            { compositionNamespace: "empathic-voice", dependencyNamespace: "batch" },
-            { compositionNamespace: "empathic-voice", dependencyNamespace: "chat" }
+            { compositionNamespace: "users", dependencyNamespace: "accounts" },
+            { compositionNamespace: "users", dependencyNamespace: "profiles" }
         ]);
     });
 
     it("reports no collision when the dependency's specs are unnamespaced", async () => {
         const result = await processPackageMarkers({
-            dependenciesConfiguration: localDependencies({ tts: "/hume/tts" }),
+            dependenciesConfiguration: localDependencies({ payments: "/apis/payments-api" }),
             structuralValidationResult: structuralValidationResult({
-                "tts/__package__.yml": exportingPackageMarker("tts")
+                "payments/__package__.yml": exportingPackageMarker("payments")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
-            loadAPIWorkspace: loadWorkspacesFrom({ "/hume/tts": [tts] })
+            loadAPIWorkspace: loadWorkspacesFrom({ "/apis/payments-api": [payments] })
         });
 
         if (!result.didSucceed) {
@@ -184,18 +184,18 @@ describe("processPackageMarkers", () => {
     it("names the composed dependencies that carried no specs", async () => {
         const result = await processPackageMarkers({
             dependenciesConfiguration: localDependencies({
-                "empathic-voice": "/hume/empathic-voice-interface",
-                tts: "/hume/tts"
+                users: "/apis/users-api",
+                payments: "/apis/payments-api"
             }),
             structuralValidationResult: structuralValidationResult({
-                "empathic-voice/__package__.yml": exportingPackageMarker("empathic-voice"),
-                "tts/__package__.yml": exportingPackageMarker("tts")
+                "users/__package__.yml": exportingPackageMarker("users"),
+                "payments/__package__.yml": exportingPackageMarker("payments")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
             loadAPIWorkspace: loadWorkspacesFrom({
-                "/hume/empathic-voice-interface": [evi],
-                "/hume/tts": []
+                "/apis/users-api": [users],
+                "/apis/payments-api": []
             })
         });
 
@@ -203,25 +203,25 @@ describe("processPackageMarkers", () => {
             throw new Error(`Expected package markers to process, got failures: ${JSON.stringify(result.failures)}`);
         }
 
-        expect(result.namespacesWithoutSpecs).toEqual(["tts"]);
+        expect(result.namespacesWithoutSpecs).toEqual(["payments"]);
     });
 
     it("namespaces by directory, not by the dependency name the marker exports", async () => {
         const result = await processPackageMarkers({
-            dependenciesConfiguration: localDependencies({ "evi-dependency": "/hume/empathic-voice-interface" }),
+            dependenciesConfiguration: localDependencies({ "users-dependency": "/apis/users-api" }),
             structuralValidationResult: structuralValidationResult({
-                "empathic-voice/__package__.yml": exportingPackageMarker("evi-dependency")
+                "users/__package__.yml": exportingPackageMarker("users-dependency")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
-            loadAPIWorkspace: loadWorkspacesFrom({ "/hume/empathic-voice-interface": [evi] })
+            loadAPIWorkspace: loadWorkspacesFrom({ "/apis/users-api": [users] })
         });
 
         if (!result.didSucceed) {
             throw new Error(`Expected package markers to process, got failures: ${JSON.stringify(result.failures)}`);
         }
 
-        expect(result.specs.map(namespaceOf)).toEqual(["empathic-voice"]);
+        expect(result.specs.map(namespaceOf)).toEqual(["users"]);
     });
 
     it("yields no specs when the composing workspace has no exporting package markers", async () => {
@@ -242,13 +242,13 @@ describe("processPackageMarkers", () => {
 
     it("yields no specs when a dependency workspace carries none", async () => {
         const result = await processPackageMarkers({
-            dependenciesConfiguration: localDependencies({ tts: "/hume/tts" }),
+            dependenciesConfiguration: localDependencies({ payments: "/apis/payments-api" }),
             structuralValidationResult: structuralValidationResult({
-                "tts/__package__.yml": exportingPackageMarker("tts")
+                "payments/__package__.yml": exportingPackageMarker("payments")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,
-            loadAPIWorkspace: loadWorkspacesFrom({ "/hume/tts": [] })
+            loadAPIWorkspace: loadWorkspacesFrom({ "/apis/payments-api": [] })
         });
 
         if (!result.didSucceed) {
@@ -262,7 +262,7 @@ describe("processPackageMarkers", () => {
         const result = await processPackageMarkers({
             dependenciesConfiguration: localDependencies({}),
             structuralValidationResult: structuralValidationResult({
-                "tts/__package__.yml": exportingPackageMarker("tts")
+                "payments/__package__.yml": exportingPackageMarker("payments")
             }),
             context: createTaskContextRunningInteractiveTasks(),
             cliVersion: CLI_VERSION,

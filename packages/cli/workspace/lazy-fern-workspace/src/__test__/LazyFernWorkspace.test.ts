@@ -15,7 +15,7 @@ const FIXTURES = join(
     AbsoluteFilePath.of(path.dirname(fileURLToPath(import.meta.url))),
     RelativeFilePath.of("fixtures")
 );
-const COMPOSED_WORKSPACE = join(FIXTURES, RelativeFilePath.of("composed-workspace/unioned"));
+const COMPOSED_WORKSPACE = join(FIXTURES, RelativeFilePath.of("composed-workspace/combined"));
 
 function createTaskContextRunningInteractiveTasks(): TaskContext {
     const context = createMockTaskContext();
@@ -73,7 +73,7 @@ function composedWorkspace(loadAPIWorkspace: LoadAPIWorkspace): LazyFernWorkspac
     return new LazyFernWorkspace({
         absoluteFilePath: COMPOSED_WORKSPACE,
         generatorsConfiguration: undefined,
-        workspaceName: "unioned",
+        workspaceName: "combined",
         cliVersion: CLI_VERSION,
         context: createTaskContextRunningInteractiveTasks(),
         loadAPIWorkspace
@@ -81,36 +81,40 @@ function composedWorkspace(loadAPIWorkspace: LoadAPIWorkspace): LazyFernWorkspac
 }
 
 describe("LazyFernWorkspace source specs", () => {
-    const evi = openApiSpec("/hume/empathic-voice-interface/evi-openapi.json");
-    const eviAsync = openApiSpec("/hume/empathic-voice-interface/evi-asyncapi.json");
-    const tts = openApiSpec("/hume/tts/tts-openapi.json");
+    const users = openApiSpec("/apis/users-api/users-openapi.json");
+    const usersAsync = openApiSpec("/apis/users-api/users-asyncapi.json");
+    const payments = openApiSpec("/apis/payments-api/payments-openapi.json");
 
     it("exposes each dependency's specs namespaced by the package marker directory", async () => {
         const workspace = composedWorkspace(
             loadWorkspacesExposing({
-                "empathic-voice-interface": [evi, eviAsync],
-                tts: [tts]
+                "users-api": [users, usersAsync],
+                "payments-api": [payments]
             })
         );
 
         const specs = await workspace.getSourceSpecs();
 
         expect(specs.map((spec) => [namespaceOf(spec), filenameOf(spec)])).toEqual([
-            ["empathic-voice", "evi-openapi.json"],
-            ["empathic-voice", "evi-asyncapi.json"],
-            ["tts", "tts-openapi.json"]
+            ["payments", "payments-openapi.json"],
+            ["users", "users-openapi.json"],
+            ["users", "users-asyncapi.json"]
         ]);
     });
 
     it("is discoverable through the source-spec capability the archive resolver checks", async () => {
         const { exposesSourceSpecs } = await import("@fern-api/api-workspace-commons");
-        const workspace = composedWorkspace(loadWorkspacesExposing({ "empathic-voice-interface": [evi], tts: [tts] }));
+        const workspace = composedWorkspace(
+            loadWorkspacesExposing({ "users-api": [users], "payments-api": [payments] })
+        );
 
         expect(exposesSourceSpecs(workspace)).toBe(true);
     });
 
     it("rejects a generator-level specs override, which composition cannot honour", async () => {
-        const workspace = composedWorkspace(loadWorkspacesExposing({ "empathic-voice-interface": [evi], tts: [tts] }));
+        const workspace = composedWorkspace(
+            loadWorkspacesExposing({ "users-api": [users], "payments-api": [payments] })
+        );
 
         await expect(workspace.getAllSpecsForGenerator([{ openapi: "other.json" }])).rejects.toThrow(
             /cannot be combined with a generator-level specs override/
@@ -118,7 +122,7 @@ describe("LazyFernWorkspace source specs", () => {
     });
 
     it("fails rather than yielding an empty archive when no dependency carries specs", async () => {
-        const workspace = composedWorkspace(loadWorkspacesExposing({ "empathic-voice-interface": [], tts: [] }));
+        const workspace = composedWorkspace(loadWorkspacesExposing({ "users-api": [], "payments-api": [] }));
 
         await expect(workspace.getSourceSpecs()).rejects.toThrow(/exposes no source specs/);
     });
@@ -126,27 +130,27 @@ describe("LazyFernWorkspace source specs", () => {
     it("rejects a dependency whose own specs are already namespaced, which composition cannot nest", async () => {
         const workspace = composedWorkspace(
             loadWorkspacesExposing({
-                "empathic-voice-interface": [{ ...evi, namespace: "chat" }],
-                tts: [tts]
+                "users-api": [{ ...users, namespace: "profiles" }],
+                "payments-api": [payments]
             })
         );
 
         await expect(workspace.getSourceSpecs()).rejects.toThrow(
-            /composes 'empathic-voice', whose own specs are already namespaced as 'chat'/
+            /composes 'users', whose own specs are already namespaced as 'profiles'/
         );
     });
 
     it("rejects a partial composition rather than omitting the dependency that carries no specs", async () => {
-        const workspace = composedWorkspace(loadWorkspacesExposing({ "empathic-voice-interface": [evi], tts: [] }));
+        const workspace = composedWorkspace(loadWorkspacesExposing({ "users-api": [users], "payments-api": [] }));
 
-        await expect(workspace.getSourceSpecs()).rejects.toThrow(/composes 'tts', which exposes no source specs/);
+        await expect(workspace.getSourceSpecs()).rejects.toThrow(/composes 'payments', which exposes no source specs/);
     });
 
     it("returns the same specs on a second call, from the cached composition", async () => {
         let loads = 0;
         const workspace = composedWorkspace(async (args) => {
             loads += 1;
-            return loadWorkspacesExposing({ "empathic-voice-interface": [evi], tts: [tts] })(args);
+            return loadWorkspacesExposing({ "users-api": [users], "payments-api": [payments] })(args);
         });
 
         const first = await workspace.getSourceSpecs();
