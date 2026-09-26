@@ -1,6 +1,6 @@
-use crate::Environment;
-use std::collections::HashMap;
-use std::time::Duration;
+use std::collections::{HashMap};
+use std::time::{Duration};
+use crate::{Environment};
 
 #[derive(Debug, Clone)]
 pub struct ClientConfig {
@@ -30,31 +30,28 @@ pub struct ClientConfig {
 }
 impl Default for ClientConfig {
     fn default() -> Self {
-        Self {
-            base_url: Environment::default().url().to_string(),
-            api_key: None,
-            token: None,
-            username: None,
-            password: None,
-            client_id: None,
-            client_secret: None,
-            oauth_token_endpoint: None,
-            oauth_token_exchange: None,
-            timeout: Duration::from_secs(60),
-            max_retries: 3,
-            custom_headers: HashMap::from([
-                ("X-Fern-Language".to_string(), "Rust".to_string()),
-                (
-                    "X-Fern-SDK-Name".to_string(),
-                    "seed_websocket_multi_url".to_string(),
-                ),
-                ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
-            ]),
-            user_agent: "WebsocketMultiUrl Rust SDK".to_string(),
-            reqwest_client: None,
-            environment: Some(Environment::default()),
-        }
+    Self {
+        base_url: Environment::default().url().to_string(),
+        api_key: None,
+        token: None,
+        username: None,
+        password: None,
+        client_id: None,
+        client_secret: None,
+        oauth_token_endpoint: None,
+        oauth_token_exchange: None,
+        timeout: Duration::from_secs(60),
+        max_retries: 3,
+        custom_headers: HashMap::from([
+            ("X-Fern-Language".to_string(), "Rust".to_string()),
+            ("X-Fern-SDK-Name".to_string(), "test_api".to_string()),
+            ("X-Fern-SDK-Version".to_string(), "0.1.0".to_string()),
+        ]),
+        user_agent: "TestAPI Rust SDK".to_string(),
+        reqwest_client: None,
+        environment: Some(Environment::default())
     }
+}
 }
 impl ClientConfig {
     /// Resolves the URL a request goes to.
@@ -79,8 +76,8 @@ impl ClientConfig {
         let default_environment = Environment::default();
         !self.base_url.is_empty()
             && ![
-                environment.rest_url(),
-                environment.wss_url(),
+                environment.api_url(),
+                environment.auth_url(),
                 default_environment.url(),
             ]
             .contains(&self.base_url.as_str())
