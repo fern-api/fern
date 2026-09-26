@@ -22,9 +22,11 @@ export declare namespace LazyFernWorkspace {
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public type: string = "fern";
+    public readonly exposesSourceSpecs = true;
     private context: TaskContext;
     public allSpecs: Spec[] = [];
     private fernWorkspaces: Record<string, FernWorkspace> = {};
+    private composedSpecs: Record<string, ComposedSpecs> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;
 
     constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
@@ -47,7 +49,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
         generatorOverrides?: generatorsYml.OverridesSchema
     ): Promise<FernWorkspace> {
-        const key = hash(settings ?? {});
+        const key = this.cacheKey(settings);
         let workspace = this.fernWorkspaces[key];
 
         if (workspace == null) {
@@ -126,6 +128,11 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             });
 
             this.fernWorkspaces[key] = workspace;
+            this.composedSpecs[key] = {
+                specs: processPackageMarkersResult.specs,
+                namespaceCollisions: processPackageMarkersResult.namespaceCollisions,
+                namespacesWithoutSpecs: processPackageMarkersResult.namespacesWithoutSpecs
+            };
             this.allSpecs = processPackageMarkersResult.specs;
         }
 
@@ -134,11 +141,26 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
     public async getSourceSpecs(): Promise<Spec[]> {
         await this.toFernWorkspace({ context: this.context });
-        const specs = this.allSpecs;
+        const composed = this.composedSpecs[this.cacheKey(undefined)];
+        const specs = composed?.specs ?? [];
         if (specs.length === 0) {
             throw new CliError({
                 message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes no spec-bearing dependencies, so it exposes no source specs`,
                 code: CliError.Code.ResolutionError
+            });
+        }
+        const collision = composed?.namespaceCollisions[0];
+        if (collision != null) {
+            throw new CliError({
+                message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes '${collision.compositionNamespace}', whose own specs are already namespaced as '${collision.dependencyNamespace}'. Composition assigns one namespace per dependency and cannot nest a second one; flatten the dependency's generators.yml to a single namespace.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const namespaceWithoutSpecs = composed?.namespacesWithoutSpecs[0];
+        if (namespaceWithoutSpecs != null) {
+            throw new CliError({
+                message: `Workspace ${this.workspaceName ?? this.absoluteFilePath} composes '${namespaceWithoutSpecs}', which exposes no source specs. A source archive built from the remaining dependencies would omit it, so every composed dependency must be a local spec-bearing workspace.`,
+                code: CliError.Code.ConfigError
             });
         }
         return specs;
@@ -159,4 +181,14 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {
         return [this.absoluteFilePath];
     }
+
+    private cacheKey(settings: OSSWorkspace.Settings | undefined): string {
+        return hash(settings ?? {});
+    }
+}
+
+interface ComposedSpecs {
+    specs: Spec[];
+    namespaceCollisions: processPackageMarkers.NamespaceCollision[];
+    namespacesWithoutSpecs: RelativeFilePath[];
 }

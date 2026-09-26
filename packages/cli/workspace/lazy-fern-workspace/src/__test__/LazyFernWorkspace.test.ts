@@ -123,6 +123,25 @@ describe("LazyFernWorkspace source specs", () => {
         await expect(workspace.getSourceSpecs()).rejects.toThrow(/exposes no source specs/);
     });
 
+    it("rejects a dependency whose own specs are already namespaced, which composition cannot nest", async () => {
+        const workspace = composedWorkspace(
+            loadWorkspacesExposing({
+                "empathic-voice-interface": [{ ...evi, namespace: "chat" }],
+                tts: [tts]
+            })
+        );
+
+        await expect(workspace.getSourceSpecs()).rejects.toThrow(
+            /composes 'empathic-voice', whose own specs are already namespaced as 'chat'/
+        );
+    });
+
+    it("rejects a partial composition rather than omitting the dependency that carries no specs", async () => {
+        const workspace = composedWorkspace(loadWorkspacesExposing({ "empathic-voice-interface": [evi], tts: [] }));
+
+        await expect(workspace.getSourceSpecs()).rejects.toThrow(/composes 'tts', which exposes no source specs/);
+    });
+
     it("returns the same specs on a second call, from the cached composition", async () => {
         let loads = 0;
         const workspace = composedWorkspace(async (args) => {
@@ -131,9 +150,10 @@ describe("LazyFernWorkspace source specs", () => {
         });
 
         const first = await workspace.getSourceSpecs();
+        const loadsAfterFirstCall = loads;
         const second = await workspace.getSourceSpecs();
 
         expect(second).toEqual(first);
-        expect(loads).toBe(2);
+        expect(loads).toBe(loadsAfterFirstCall);
     });
 });

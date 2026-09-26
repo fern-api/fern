@@ -135,6 +135,77 @@ describe("processPackageMarkers", () => {
         ]);
     });
 
+    it("reports a dependency that already namespaced its own specs, rather than overwriting it", async () => {
+        const result = await processPackageMarkers({
+            dependenciesConfiguration: localDependencies({ "empathic-voice": "/hume/empathic-voice-interface" }),
+            structuralValidationResult: structuralValidationResult({
+                "empathic-voice/__package__.yml": exportingPackageMarker("empathic-voice")
+            }),
+            context: createTaskContextRunningInteractiveTasks(),
+            cliVersion: CLI_VERSION,
+            loadAPIWorkspace: loadWorkspacesFrom({
+                "/hume/empathic-voice-interface": [
+                    { ...evi, namespace: "chat" },
+                    { ...eviAsync, namespace: "chat" },
+                    { ...tts, namespace: "batch" }
+                ]
+            })
+        });
+
+        if (!result.didSucceed) {
+            throw new Error(`Expected package markers to process, got failures: ${JSON.stringify(result.failures)}`);
+        }
+
+        expect(result.namespaceCollisions).toEqual([
+            { compositionNamespace: "empathic-voice", dependencyNamespace: "batch" },
+            { compositionNamespace: "empathic-voice", dependencyNamespace: "chat" }
+        ]);
+    });
+
+    it("reports no collision when the dependency's specs are unnamespaced", async () => {
+        const result = await processPackageMarkers({
+            dependenciesConfiguration: localDependencies({ tts: "/hume/tts" }),
+            structuralValidationResult: structuralValidationResult({
+                "tts/__package__.yml": exportingPackageMarker("tts")
+            }),
+            context: createTaskContextRunningInteractiveTasks(),
+            cliVersion: CLI_VERSION,
+            loadAPIWorkspace: loadWorkspacesFrom({ "/hume/tts": [tts] })
+        });
+
+        if (!result.didSucceed) {
+            throw new Error(`Expected package markers to process, got failures: ${JSON.stringify(result.failures)}`);
+        }
+
+        expect(result.namespaceCollisions).toEqual([]);
+        expect(result.namespacesWithoutSpecs).toEqual([]);
+    });
+
+    it("names the composed dependencies that carried no specs", async () => {
+        const result = await processPackageMarkers({
+            dependenciesConfiguration: localDependencies({
+                "empathic-voice": "/hume/empathic-voice-interface",
+                tts: "/hume/tts"
+            }),
+            structuralValidationResult: structuralValidationResult({
+                "empathic-voice/__package__.yml": exportingPackageMarker("empathic-voice"),
+                "tts/__package__.yml": exportingPackageMarker("tts")
+            }),
+            context: createTaskContextRunningInteractiveTasks(),
+            cliVersion: CLI_VERSION,
+            loadAPIWorkspace: loadWorkspacesFrom({
+                "/hume/empathic-voice-interface": [evi],
+                "/hume/tts": []
+            })
+        });
+
+        if (!result.didSucceed) {
+            throw new Error(`Expected package markers to process, got failures: ${JSON.stringify(result.failures)}`);
+        }
+
+        expect(result.namespacesWithoutSpecs).toEqual(["tts"]);
+    });
+
     it("namespaces by directory, not by the dependency name the marker exports", async () => {
         const result = await processPackageMarkers({
             dependenciesConfiguration: localDependencies({ "evi-dependency": "/hume/empathic-voice-interface" }),

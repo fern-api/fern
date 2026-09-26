@@ -104,6 +104,7 @@ function convertRemoveDiscriminantsFromSchemas(
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
+    public readonly exposesSourceSpecs = true;
     public allSpecs: Spec[];
     public specs: (OpenAPISpec | ProtobufSpec)[];
     public sources: IdentifiableSource[];

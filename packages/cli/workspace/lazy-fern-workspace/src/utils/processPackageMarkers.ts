@@ -21,6 +21,13 @@ export declare namespace processPackageMarkers {
         importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
         specs: Spec[];
         sources: IdentifiableSource[];
+        namespaceCollisions: NamespaceCollision[];
+        namespacesWithoutSpecs: RelativeFilePath[];
+    }
+
+    export interface NamespaceCollision {
+        compositionNamespace: RelativeFilePath;
+        dependencyNamespace: string;
     }
 
     export interface FailedResult {
@@ -53,6 +60,7 @@ export async function processPackageMarkers({
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
     const specsByNamespace: Record<RelativeFilePath, Spec[]> = {};
     const sourcesByNamespace: Record<RelativeFilePath, IdentifiableSource[]> = {};
+    const namespaceCollisions: processPackageMarkers.NamespaceCollision[] = [];
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -98,6 +106,9 @@ export async function processPackageMarkers({
                                         ? packageMarker.contents.export.url
                                         : undefined
                             };
+                            namespaceCollisions.push(
+                                ...collectNamespaceCollisions(loadDependencyResult.specs, namespace)
+                            );
                             specsByNamespace[namespace] = loadDependencyResult.specs.map((spec) =>
                                 withNamespace(spec, namespace)
                             );
@@ -122,9 +133,26 @@ export async function processPackageMarkers({
             packageMarkers,
             importedDefinitions,
             specs: flattenInNamespaceOrder(specsByNamespace),
-            sources: flattenInNamespaceOrder(sourcesByNamespace)
+            sources: flattenInNamespaceOrder(sourcesByNamespace),
+            namespaceCollisions,
+            namespacesWithoutSpecs: keys(specsByNamespace)
+                .filter((namespace) => (specsByNamespace[namespace] ?? []).length === 0)
+                .sort()
         };
     }
+}
+
+function collectNamespaceCollisions(
+    specs: Spec[],
+    compositionNamespace: RelativeFilePath
+): processPackageMarkers.NamespaceCollision[] {
+    const dependencyNamespaces = new Set(
+        specs.flatMap((spec) => (spec.type !== "protobuf" && spec.namespace != null ? [spec.namespace] : []))
+    );
+    return [...dependencyNamespaces].sort().map((dependencyNamespace) => ({
+        compositionNamespace,
+        dependencyNamespace
+    }));
 }
 
 function withNamespace(spec: Spec, namespace: string): Spec {
