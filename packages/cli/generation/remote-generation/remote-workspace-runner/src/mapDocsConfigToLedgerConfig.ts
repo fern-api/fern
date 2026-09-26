@@ -2,10 +2,14 @@ import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
-// TODO: Drop the `embedding` shim once the published @fern-api/fdr-sdk
-// DocsConfig / LedgerConfig types include it.
+// TODO: Drop the `embedding` and `contentSecurityPolicy` shims once the published
+// @fern-api/fdr-sdk DocsConfig / LedgerConfig types include them.
 type EmbeddingConfig = { allowedOrigins: string[] };
-type DocsConfig = DocsV1Write.DocsConfig & { embedding?: EmbeddingConfig };
+type ContentSecurityPolicyConfig = { styleHashes?: string[]; allowEval?: boolean };
+type DocsConfig = DocsV1Write.DocsConfig & {
+    embedding?: EmbeddingConfig;
+    contentSecurityPolicy?: ContentSecurityPolicyConfig;
+};
 
 /**
  * Resolve a FileId reference produced by the classic docs publish flow
@@ -280,6 +284,7 @@ export function mapDocsConfigToLedgerConfig({
 }): LedgerConfig & {
     editThisPageGithub?: { owner: string; repo: string; branch: string; host: string };
     embedding?: EmbeddingConfig;
+    contentSecurityPolicy?: ContentSecurityPolicyConfig;
 } {
     return {
         title: docsConfig.title,
@@ -307,6 +312,7 @@ export function mapDocsConfigToLedgerConfig({
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
         embedding: docsConfig.embedding,
+        contentSecurityPolicy: docsConfig.contentSecurityPolicy,
         editThisPageGithub:
             editThisPage?.github != null
                 ? {

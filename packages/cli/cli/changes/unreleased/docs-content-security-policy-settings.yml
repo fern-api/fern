@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `settings.content-security-policy` to `docs.yml`. `style-hashes` lists the CSP hashes of inline
+    `<style>` elements that custom JavaScript or widgets insert, and opts the site into a strict
+    `style-src` without `'unsafe-inline'`. `allow-eval: false` drops `'unsafe-eval'` from `script-src`
+    even when custom JavaScript or Google Tag Manager is configured. Malformed hashes are rejected when `docs.yml` is loaded.
+  type: feat
