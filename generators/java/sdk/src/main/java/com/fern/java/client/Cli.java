@@ -179,6 +179,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             JavaSdkDownloadFilesCustomConfig customConfig) {
         JavaSdkCustomConfig sdkCustomConfig = JavaSdkCustomConfig.builder()
                 .wrappedAliases(customConfig.wrappedAliases())
+                .packagePrefix(customConfig.packagePrefix())
+                .packageLayout(customConfig.packageLayout())
                 .clientClassName(customConfig.clientClassName())
                 .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
                 .baseExceptionClassName(customConfig.baseExceptionClassName())
