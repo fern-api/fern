@@ -1142,7 +1142,10 @@ export class AutoVersionStep extends BaseStep {
         });
         if (!response.ok) {
             const body = await response.text().catch(() => "");
-            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
+            if (body.length > 0) {
+                this.logger.debug(`AutoVersionStep: FAI analyze-commit-diff response body: ${body.slice(0, 500)}`);
+            }
+            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}`);
         }
         const parsed: unknown = await response.json();
         if (!isFaiAnalyzeResponse(parsed)) {

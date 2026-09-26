@@ -627,13 +627,17 @@ export function appendAutoVersionWarning(body: string, analysisWarning: string |
     if (analysisWarning == null || analysisWarning.trim().length === 0) {
         return body;
     }
+    const reason = analysisWarning
+        .replace(/[`\s]+/g, " ")
+        .trim()
+        .slice(0, 300);
     return (
         body +
         "\n\n---\n\n## ⚠️ Version bump not verified\n\n" +
         "Automatic version analysis was unavailable for this generation, so a **PATCH** bump was applied " +
         "by default and no changelog entry was written. If this change is breaking or adds features, " +
         "adjust the version and changelog before merging.\n\n" +
-        `Reason: \`${analysisWarning.trim()}\``
+        `Reason: \`${reason}\``
     );
 }
 

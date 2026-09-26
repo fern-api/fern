@@ -169,7 +169,7 @@ describe("autoVersion analysisWarning (FAI unavailable, PATCH fallback)", () => 
         previousVersion: "8.0.0",
         versionBump: "PATCH",
         commitMessage: "SDK regeneration",
-        analysisWarning: "FAI analysis failed (Error: FAI analyze-commit-diff failed with status 502: upstream timeout)"
+        analysisWarning: "FAI analysis failed (Error: FAI analyze-commit-diff failed with status 502)"
     };
 
     it("resolvePrFields carries analysisWarning through from the autoVersion result", () => {
@@ -185,6 +185,13 @@ describe("autoVersion analysisWarning (FAI unavailable, PATCH fallback)", () => 
         expect(body).toContain("Version bump not verified");
         expect(body).toContain("**PATCH** bump was applied by default");
         expect(body).toContain("status 502");
+    });
+
+    it("appendAutoVersionWarning neutralizes backticks and newlines in the reason", () => {
+        const body = appendAutoVersionWarning("body", "line one\n```injected``` line two");
+        expect(body).toContain("Reason: `line one injected line two`");
+        expect(body).not.toContain("```");
+        expect(body.match(/`/g)?.length).toBe(2);
     });
 
     it("appendAutoVersionWarning leaves the body untouched without a warning", () => {
