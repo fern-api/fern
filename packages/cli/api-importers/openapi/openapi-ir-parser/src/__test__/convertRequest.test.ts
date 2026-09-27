@@ -92,6 +92,31 @@ describe("convertToSingleRequest", () => {
         }
     });
 
+    it("falls through a schema-less form-urlencoded entry to another media type that declares a schema", () => {
+        const context = createContext(document, source);
+        const result = convertToSingleRequest({
+            content: {
+                "application/x-www-form-urlencoded": {},
+                "text/plain": {
+                    schema: { type: "string" }
+                }
+            },
+            description: undefined,
+            document,
+            context,
+            requestBreadcrumbs: ["Echo"],
+            source,
+            namespace: undefined,
+            bodyRequired: undefined
+        });
+
+        expect(result).toBeDefined();
+        expect(result?.type).toBe("json");
+        if (result?.type === "json") {
+            expect(result.contentType).toBe("text/plain");
+        }
+    });
+
     it("still returns undefined when no recognized media type declares a schema", () => {
         const context = createContext(document, source);
         const result = convertToSingleRequest({
