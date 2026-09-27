@@ -1,3 +1,4 @@
+import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import {
     createGroupedSpecsTarGzArchiveSettled,
@@ -12,7 +13,6 @@ import {
 } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
 
 export function createFernSourceArchiveResolver({
     workspace,
