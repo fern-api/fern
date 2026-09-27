@@ -146,6 +146,19 @@ function multipartRequestHasFile(
     );
 }
 
+function findRequestWithSchema({
+    content
+}: {
+    content: Record<string, OpenAPIV3.MediaTypeObject>;
+}): [string, OpenAPIV3.MediaTypeObject] | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        if (mediaTypeObject.schema != null) {
+            return [mediaType, mediaTypeObject];
+        }
+    }
+    return undefined;
+}
+
 export function convertToSingleRequest({
     content,
     description,
@@ -239,6 +252,38 @@ export function convertToSingleRequest({
             namespace,
             bodyRequired
         });
+    }
+
+    // convert any other media type that declares a schema (e.g. text/plain) so the
+    // request body is not dropped; the declared content type is preserved and the
+    // downstream Fern definition / final IR carry it on the request body reference
+    const otherRequest = findRequestWithSchema({ content });
+    if (otherRequest) {
+        const [mediaType, mediaTypeObject] = otherRequest;
+        const schema = mediaTypeObject.schema;
+        if (schema != null) {
+            const requestSchema = convertSchema(
+                schema,
+                false,
+                false,
+                context,
+                requestBreadcrumbs,
+                source,
+                namespace,
+                true
+            );
+            return RequestWithExample.json({
+                description: undefined,
+                schema: requestSchema,
+                contentType: mediaType,
+                required: bodyRequired,
+                fullExamples: getExamples(mediaTypeObject, context),
+                additionalProperties:
+                    !isReferenceObject(schema) && isAdditionalPropertiesAny(schema.additionalProperties, context.options),
+                source,
+                sdkMethodName: getRequestSdkMethodName({ mediaTypeObject })
+            });
+        }
     }
     return undefined;
 }
