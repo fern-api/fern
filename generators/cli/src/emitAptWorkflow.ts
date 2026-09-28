@@ -150,7 +150,8 @@ ${preflightNeed}    runs-on: "ubuntu-22.04"
           TAG="\${GITHUB_REF_NAME}"
           # Tags may be prefixed (\`my-app/1.2.3\`, \`releases/v1.2.3\`). A
           # semver prerelease \`-rc.1\` becomes \`~rc.1\` so it sorts before
-          # the final release, as Debian versioning requires.
+          # the final release, as Debian versioning requires. Every \`-\` is
+          # read as semver, so Debian revisions (\`v1.2.3-1\`) are unsupported.
           VERSION="\${TAG##*/}"
           VERSION="\${VERSION#v}"
           VERSION="\${VERSION//-/\\~}"

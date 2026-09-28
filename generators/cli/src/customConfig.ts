@@ -375,7 +375,8 @@ export const DEFAULT_APT_BRANCH = "gh-pages";
 /**
  * The URL the APT repository is served from: the configured `url`, else
  * the GitHub Pages URL for `repository`. A `<owner>.github.io` repository
- * is a user/organization site, served from the domain root.
+ * is a user/organization site, served from the domain root. Pages hosts
+ * are lowercase, but project paths keep the repository's case.
  */
 export function aptRepositoryUrl(apt: FernCliAptConfig): string {
     if (apt.url != null) {
