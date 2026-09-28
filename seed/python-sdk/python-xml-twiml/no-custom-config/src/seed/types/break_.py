@@ -21,8 +21,20 @@ from .break_strength import BreakStrength
 
 
 class Break(UniversalBaseModel):
-    strength: typing.Optional[BreakStrength] = None
-    time: typing.Optional[str] = None
+    """
+    Adding a Pause in <Say>
+    """
+
+    strength: typing.Optional[BreakStrength] = pydantic.Field(default=None)
+    """
+    Set a pause based on strength
+    """
+
+    time: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+    """
+
     _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:

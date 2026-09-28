@@ -51,6 +51,16 @@ class Number(UniversalBaseModel):
         send_digits: typing.Optional[str] = None,
         **extra_attributes: str,
     ) -> None:
+        """
+        Parameters
+        ----------
+        phone_number : typing.Optional[str]
+
+        send_digits : typing.Optional[str]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
         super().__init__(**dict(phone_number=phone_number, send_digits=send_digits), **extra_attributes)
 
     @classmethod
