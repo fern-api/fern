@@ -97,16 +97,11 @@ class Response extends XmlSerializableType
      *   |string
      *   |null
      * ) $message The <Say> to add, or its text content (Message to say).
-     * $attributes: Properties of the new <Say> (ignored when a Say is given).
-     * - `voice`: Voice to use
-     * - `loop`: Times to loop message
-     * - `children`: Nested TwiML elements, rendered in order.
-     *
      * @param array{
      *   voice?: ?string,
      *   loop?: ?int,
      *   children?: ?array<Break_>,
-     * } $attributes
+     * } $attributes Properties of the new <Say> (ignored when a Say is given).
      * @return Say
      */
     public function say(Say|string|null $message = null, array $attributes = []): Say

@@ -7,7 +7,7 @@ export { ClassReference } from "./ClassReference.js";
 export { CodeBlock } from "./CodeBlock.js";
 export { SELF, STATIC } from "./core/Constant.js";
 export { Writer } from "./core/Writer.js";
-export { DataClass, getFieldKeyDocs } from "./DataClass.js";
+export { DataClass, getFieldKeyDocs, normalizeDocs } from "./DataClass.js";
 export { Enum } from "./Enum.js";
 export { Field } from "./Field.js";
 export { Interface } from "./Interface.js";

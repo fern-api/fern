@@ -817,12 +817,12 @@ export class XmlObjectGenerator {
             });
         const allAttributesOptional = attributeEntries.every((entry) => entry.optional);
         const attributesType = php.Type.typeDict(attributeEntries, { multiline: true });
-        const withKeyDocs = (parameterName: string, docs: string): string =>
-            php.getFieldKeyDocs({
-                header: `$${parameterName}: ${docs}`,
-                fields: attributeEntries.map((entry) => ({ name: entry.key, docs: entry.docs }))
-            }) ?? docs;
-        const textDocs = textProperty?.docs?.trim();
+        // attributeEntries backs both `attributesType` and the array shape of the `$child` union below,
+        // so the same per-key bullets apply to either parameter.
+        const attributeKeyDocs = php.getFieldKeyDocs(
+            attributeEntries.map((entry) => ({ name: entry.key, docs: entry.docs }))
+        );
+        const textDocs = php.normalizeDocs(textProperty?.docs);
 
         const parameters: php.Parameter[] = [];
         const childParamName = textFieldName ?? "child";
@@ -837,8 +837,8 @@ export class XmlObjectGenerator {
                     type: textType,
                     initializer: textIsOptional ? php.codeblock("null") : undefined,
                     docs:
-                        textDocs != null && textDocs !== ""
-                            ? `The <${childXmlName}> to add, or its text content (${textDocs.split(/\r?\n/).join(" ")}).`
+                        textDocs != null
+                            ? `The <${childXmlName}> to add, or its text content (${textDocs}).`
                             : `The <${childXmlName}> to add, or its text content.`
                 })
             );
@@ -847,10 +847,8 @@ export class XmlObjectGenerator {
                     name: "attributes",
                     type: allAttributesOptional ? attributesType : php.Type.optional(attributesType),
                     initializer: php.codeblock(allAttributesOptional ? "[]" : "null"),
-                    docs: withKeyDocs(
-                        "attributes",
-                        `Properties of the new <${childXmlName}> (ignored when a ${childClass.name} is given).`
-                    )
+                    docs: `Properties of the new <${childXmlName}> (ignored when a ${childClass.name} is given).`,
+                    detailDocs: attributeKeyDocs
                 })
             );
         } else {
@@ -859,10 +857,8 @@ export class XmlObjectGenerator {
                     name: childParamName,
                     type: php.Type.union([php.Type.reference(childClass), attributesType]),
                     initializer: allAttributesOptional ? php.codeblock("[]") : undefined,
-                    docs: withKeyDocs(
-                        childParamName,
-                        `The <${childXmlName}> to add, or the properties to construct it with.`
-                    )
+                    docs: `The <${childXmlName}> to add, or the properties to construct it with.`,
+                    detailDocs: attributeKeyDocs
                 })
             );
         }

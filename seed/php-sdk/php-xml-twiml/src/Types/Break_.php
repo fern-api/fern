@@ -26,14 +26,12 @@ class Break_ extends XmlSerializableType
     public ?string $time;
 
     /**
-     * $values keys:
-     * - `strength`: Set a pause based on strength
-     * - `time`: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
-     *
      * @param array{
      *   strength?: ?value-of<BreakStrength>,
      *   time?: ?string,
      * } $values
+     *   - `strength`: Set a pause based on strength
+     *   - `time`: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
      */
     public function __construct(
         array $values = [],

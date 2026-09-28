@@ -107,31 +107,26 @@ export class DataClass extends AstNode {
                     }
                 ),
                 initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined,
-                docs: this.documentConstructorKeys
-                    ? getFieldKeyDocs({ header: `$${CONSTRUCTOR_PARAMETER_NAME} keys:`, fields: orderedFields })
-                    : undefined
+                detailDocs: this.documentConstructorKeys ? getFieldKeyDocs(orderedFields) : undefined
             })
         ];
     }
 }
 
-export function getFieldKeyDocs({
-    header,
-    fields
-}: {
-    header: string;
-    fields: { name: string; docs?: string }[];
-}): string | undefined {
-    const lines = fields.flatMap((field) => {
-        const docs = field.docs?.trim();
-        if (docs == null || docs === "") {
-            return [];
-        }
-        return [`- \`${field.name}\`: ${docs.split(/\r?\n/).join(" ")}`];
-    });
-    if (lines.length === 0) {
+/* Collapses docs to a single trimmed line; undefined when empty. */
+export function normalizeDocs(docs: string | undefined): string | undefined {
+    const trimmed = docs?.trim();
+    if (trimmed == null || trimmed === "") {
         return undefined;
     }
-    // Multi-line tag docs are rendered above the @param line by Comment.writeTag.
-    return [header, ...lines].join("\n");
+    return trimmed.split(/\r?\n/).join(" ");
+}
+
+/* One `- \`key\`: docs` bullet per documented field, for use as a tag's detailDocs. */
+export function getFieldKeyDocs(fields: { name: string; docs?: string }[]): string[] | undefined {
+    const lines = fields.flatMap((field) => {
+        const docs = normalizeDocs(field.docs);
+        return docs != null ? [`- \`${field.name}\`: ${docs}`] : [];
+    });
+    return lines.length > 0 ? lines : undefined;
 }

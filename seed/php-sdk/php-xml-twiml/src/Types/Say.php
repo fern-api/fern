@@ -39,18 +39,16 @@ class Say extends XmlSerializableType
     public ?array $children;
 
     /**
-     * $values keys:
-     * - `message`: Message to say
-     * - `voice`: Voice to use
-     * - `loop`: Times to loop message
-     * - `children`: Nested TwiML elements, rendered in order.
-     *
      * @param array{
      *   message?: ?string,
      *   voice?: ?string,
      *   loop?: ?int,
      *   children?: ?array<Break_>,
      * } $values
+     *   - `message`: Message to say
+     *   - `voice`: Voice to use
+     *   - `loop`: Times to loop message
+     *   - `children`: Nested TwiML elements, rendered in order.
      */
     public function __construct(
         array $values = [],
@@ -115,17 +113,13 @@ class Say extends XmlSerializableType
      *
      * Adding a Pause in <Say>
      *
-     * $child: The <break> to add, or the properties to construct it with.
-     * - `strength`: Set a pause based on strength
-     * - `time`: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
-     *
      * @param (
      *    Break_
      *   |array{
      *   strength?: ?value-of<BreakStrength>,
      *   time?: ?string,
      * }
-     * ) $child
+     * ) $child The <break> to add, or the properties to construct it with.
      * @return Break_
      */
     public function break(Break_|array $child = []): Break_
