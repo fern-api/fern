@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.139.4
+  changelogEntry:
+    - summary: |
+        `fern export` now emits `anyOf` (instead of `oneOf`) for undiscriminated unions. Undiscriminated
+        union members can overlap (e.g. a set of string literals alongside `string`), so `oneOf` caused
+        strict JSON Schema validators to reject values that matched more than one member.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
 - version: 5.139.3
   changelogEntry:
     - summary: |
