@@ -725,7 +725,7 @@ func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlPropert
 // child type's description when it has one.
 func (t *typeVisitor) writeXmlBuilderDocs(name string, xmlName string, docs *string) {
 	t.writer.P("// ", name, " appends a <", xmlName, "> child element and returns the ", t.typeName, ".")
-	if docs != nil && len(*docs) > 0 {
+	if docs != nil && strings.TrimSpace(*docs) != "" {
 		t.writer.P("//")
 		t.writer.WriteDocs(docs)
 	}
