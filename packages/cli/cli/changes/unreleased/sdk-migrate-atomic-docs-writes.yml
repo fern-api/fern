@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Discover docs configuration problems in `fern sdk migrate` before anything is written, so a
+    failure no longer leaves a half-migrated project behind. The command now reads, parses, and
+    serializes every docs file it intends to touch -- the root docs configuration plus each
+    referenced version and product file -- in memory before it creates `sdk-config.yml`, and applies
+    the docs edits only after the SDK Config write succeeds. Previously each docs file was written as
+    it was visited, so an unparseable version file or an unsupported spec type discovered on a later
+    file left the earlier ones rewritten while the command exited non-zero. The errors themselves are
+    unchanged, and the existing `--force` protection on an existing `sdk-config.yml` still applies
+    before any docs file is touched.
+  type: fix

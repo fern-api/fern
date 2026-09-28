@@ -8,19 +8,34 @@ import YAML, { isMap, isScalar, isSeq, type Node, type YAMLMap } from "yaml";
 import type { ResolvedMigrationSourceSpec } from "./projectMigrationSource.js";
 import { writeOutputFile } from "./writeOutputFile.js";
 
-export async function migrateDocsConfiguration({
-    docsPath,
-    workspaceName,
-    isOnlyApiWorkspace,
-    sourceSpecs
-}: {
+export interface DocsMigrationRequest {
     docsPath: AbsoluteFilePath | undefined;
     workspaceName: string | undefined;
     isOnlyApiWorkspace: boolean;
     sourceSpecs: ResolvedMigrationSourceSpec[];
-}): Promise<number> {
+}
+
+export interface DocsMigrationPlan {
+    updatedSections: number;
+    writes: Array<{ configurationPath: AbsoluteFilePath; contents: string }>;
+}
+
+/**
+ * Reads, parses, and serializes every docs configuration the migration touches, writing none of them.
+ *
+ * Every refusal this migration can raise -- an unparseable referenced version or product file, a
+ * spec type a direct `docs.yml` spec cannot express, a settings block that fails serialization --
+ * must be raised from here, before the first byte is written.
+ */
+export async function prepareDocsMigration({
+    docsPath,
+    workspaceName,
+    isOnlyApiWorkspace,
+    sourceSpecs
+}: DocsMigrationRequest): Promise<DocsMigrationPlan> {
+    const plan: DocsMigrationPlan = { updatedSections: 0, writes: [] };
     if (docsPath == null || !(await doesPathExist(docsPath))) {
-        return 0;
+        return plan;
     }
 
     const rootDocument = await loadDocument(docsPath);
@@ -35,18 +50,35 @@ export async function migrateDocsConfiguration({
         docsPath,
         ...collectReferencedNavigationPaths(rootDocument, dirname(docsPath).toString())
     ];
-    let updatedSections = 0;
     for (const [index, configurationPath] of configurationPaths.entries()) {
         const document = index === 0 ? rootDocument : await loadDocument(configurationPath);
-        updatedSections += await migrateDocument({
+        const updatedSections = migrateDocument({
             document,
             configurationPath,
             workspaceName,
             isOnlyApiWorkspace,
             sourceSpecs
         });
+        if (updatedSections === 0) {
+            continue;
+        }
+        const yaml = document.toString({ lineWidth: 0 });
+        plan.updatedSections += updatedSections;
+        plan.writes.push({ configurationPath, contents: yaml.endsWith("\n") ? yaml : `${yaml}\n` });
     }
-    return updatedSections;
+    return plan;
+}
+
+export async function applyDocsMigration(plan: DocsMigrationPlan): Promise<void> {
+    for (const { configurationPath, contents } of plan.writes) {
+        await writeOutputFile(configurationPath, contents, true);
+    }
+}
+
+export async function migrateDocsConfiguration(request: DocsMigrationRequest): Promise<number> {
+    const plan = await prepareDocsMigration(request);
+    await applyDocsMigration(plan);
+    return plan.updatedSections;
 }
 
 async function loadDocument(configurationPath: AbsoluteFilePath): Promise<YAML.Document.Parsed> {
@@ -60,7 +92,7 @@ async function loadDocument(configurationPath: AbsoluteFilePath): Promise<YAML.D
     return document;
 }
 
-async function migrateDocument({
+function migrateDocument({
     document,
     configurationPath,
     workspaceName,
@@ -72,7 +104,7 @@ async function migrateDocument({
     workspaceName: string | undefined;
     isOnlyApiWorkspace: boolean;
     sourceSpecs: ResolvedMigrationSourceSpec[];
-}): Promise<number> {
+}): number {
     const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
     visitNode(document.contents, (map) => {
@@ -93,12 +125,6 @@ async function migrateDocument({
         );
         updatedSections++;
     });
-
-    if (updatedSections === 0) {
-        return 0;
-    }
-    const yaml = document.toString({ lineWidth: 0 });
-    await writeOutputFile(configurationPath, yaml.endsWith("\n") ? yaml : `${yaml}\n`, true);
     return updatedSections;
 }
 

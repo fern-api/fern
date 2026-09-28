@@ -328,6 +328,35 @@ describe("migrateDocsConfiguration", () => {
         });
     });
 
+    it("leaves every docs file untouched when a later referenced configuration cannot be parsed", async () => {
+        await mkdir(join(temporaryDirectory, "fern", "versions"));
+        const versionPath = join(temporaryDirectory, "fern", "versions", "v1.yml");
+        const rootDocs = [
+            "instances: []",
+            "navigation:",
+            "  - api: API reference",
+            "versions:",
+            "  - display-name: v1",
+            "    path: ./versions/v1.yml",
+            ""
+        ].join("\n");
+        await writeFile(docsPath, rootDocs);
+        await writeFile(versionPath, "navigation: [\n");
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: "payments",
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+            })
+        ).rejects.toThrow("Could not update");
+
+        // The root is migrated before the version file is read, so writing as each document was
+        // visited left this file rewritten while the command exited non-zero.
+        expect(await readFile(docsPath, "utf8")).toBe(rootDocs);
+    });
+
     it("updates API sections in referenced product files", async () => {
         await mkdir(join(temporaryDirectory, "fern", "products"));
         const productPath = join(temporaryDirectory, "fern", "products", "payments.yml");
