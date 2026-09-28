@@ -210,6 +210,7 @@ class TestPoetryCoreValidation:
             project_table = content.split("[tool.poetry]")[0]
             assert 'license = "Apache-2.0"' in project_table
             assert 'license-files = ["LICENSE"]' in project_table
+            assert 'license = "Apache-2.0"' in content.split("[tool.poetry]")[1]
             assert "License ::" not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))
@@ -241,7 +242,8 @@ class TestPoetryCoreValidation:
             project_table = content.split("[tool.poetry]")[0]
             assert 'license = "MIT"' in project_table
             assert 'license-files = ["LICENSE"]' in project_table
-            assert content.count('license = "MIT"') == 1
+            poetry_table = content.split("[tool.poetry]")[1].split("[tool.poetry.dependencies]")[0]
+            assert 'license = "MIT"' in poetry_table
             assert "License ::" not in content
 
             poetry = Factory().create_poetry(Path(tmpdir))
