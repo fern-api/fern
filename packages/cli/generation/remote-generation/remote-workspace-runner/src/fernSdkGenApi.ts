@@ -379,6 +379,15 @@ function mapGithubOutput({
     };
 }
 
+function applyGithubOptionsToRequestedOutput(
+    requestedOutput: FernSdkGenApiRequestedOutput,
+    githubOptions: FernSdkGenApiGithubOptions | undefined
+): FernSdkGenApiRequestedOutput {
+    return requestedOutput.type === "github" && githubOptions != null
+        ? { ...requestedOutput, ...githubOptions }
+        : requestedOutput;
+}
+
 function mapGithubReviewers(
     reviewers: FernFiddle.GithubPullRequestReviewer[] | undefined
 ): { teams?: string[]; users?: string[] } | undefined {
@@ -2033,6 +2042,10 @@ export function createFernSdkGenApiBatchRequest({
                 throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
             }
             const output = mapFernSdkGenApiOutput(generatorInvocation, githubOptions);
+            const targetRequestedOutput = applyGithubOptionsToRequestedOutput(
+                requestedOutput ?? output.requestedOutput,
+                githubOptions
+            );
             // SDK Config is the package configuration authority. Legacy output-derived package
             // identity must not overwrite a customer-edited SDK Config document.
             const packageConfig = payload.payloadKind === "fern-runtime-bundle" ? output.package : payload.package;
@@ -2080,7 +2093,7 @@ export function createFernSdkGenApiBatchRequest({
                           }
                         : {})
                 },
-                requestedOutput: requestedOutput ?? output.requestedOutput
+                requestedOutput: targetRequestedOutput
             };
         }
     );

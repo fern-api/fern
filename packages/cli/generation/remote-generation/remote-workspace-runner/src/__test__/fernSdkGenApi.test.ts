@@ -696,6 +696,41 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toBeUndefined();
     });
 
+    it("keeps non-GitHub verification on Fiddle for legacy targets", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "3.999.999" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("allows SDK Config GitHub verification through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode: "pull-request"
+                }
+            }),
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
+        expect(result?.route?.payloadKind).toBe("sdk-config-v1");
+        expect(result?.error).toBeUndefined();
+    });
+
     it("renders an omitted SDK Config generator version as unpinned in diagnostics", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
@@ -3116,6 +3151,11 @@ describe("fernapi/fern-mcp-server target", () => {
                 repository: "acme/sdk",
                 mode: "pull-request",
                 publish: { registry: "npm" }
+            },
+            githubOptions: {
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
 
@@ -3125,7 +3165,10 @@ describe("fernapi/fern-mcp-server target", () => {
                 type: "github",
                 repository: "acme/sdk",
                 mode: "pull-request",
-                publish: { registry: "npm" }
+                publish: { registry: "npm" },
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
     });

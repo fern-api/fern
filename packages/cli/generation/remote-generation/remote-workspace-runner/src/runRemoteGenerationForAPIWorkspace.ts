@@ -19,11 +19,13 @@ import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
+    type FernSdkGenApiRequestedOutput,
     FernSdkGenApiPreparationBatch,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
+    mapFernSdkGenApiOutput,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
@@ -511,6 +513,10 @@ export function prepareFernSdkGenApiRoutes({
                 }
             }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
+                generatorInvocation: resolved,
+                requestedOutput: configuredTarget?.requestedOutput,
+                verify,
+                skipIfNoDiff,
                 autoMerge
             });
             if (route != null && unsupportedOutput != null) {
@@ -555,11 +561,26 @@ function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInv
 }
 
 function getFernSdkGenApiUnsupportedOutput({
+    generatorInvocation,
+    requestedOutput,
+    verify,
+    skipIfNoDiff,
     autoMerge
 }: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
     autoMerge?: boolean;
 }): string | undefined {
+    const resolvedRequestedOutput = requestedOutput ?? mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     const unsupported: string[] = [];
+    if (verify === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("verify=true is not implemented by sdk-gen-api for non-GitHub output");
+    }
+    if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
+    }
     if (autoMerge === true) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
     }
