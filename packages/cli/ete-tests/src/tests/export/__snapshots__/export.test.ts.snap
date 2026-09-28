@@ -147,7 +147,7 @@ components:
         schemas:
                 UndiscriminatedUnion:
                         title: UndiscriminatedUnion
-                        oneOf:
+                        anyOf:
                                 -
                                         type: string
                                 -
@@ -543,7 +543,7 @@ exports[`overrides > simple --indent 8 2`] = `
                 "schemas": {
                         "UndiscriminatedUnion": {
                                 "title": "UndiscriminatedUnion",
-                                "oneOf": [
+                                "anyOf": [
                                         {
                                                 "type": "string"
                                         },
@@ -928,7 +928,7 @@ components:
   schemas:
     UndiscriminatedUnion:
       title: UndiscriminatedUnion
-      oneOf:
+      anyOf:
         - type: string
         - type: array
           items:
@@ -1307,7 +1307,7 @@ exports[`overrides > simple 2`] = `
     "schemas": {
       "UndiscriminatedUnion": {
         "title": "UndiscriminatedUnion",
-        "oneOf": [
+        "anyOf": [
           {
             "type": "string"
           },
