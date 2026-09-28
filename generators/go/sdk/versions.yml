@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.64.0
+  changelogEntry:
+    - summary: |
+        Object type descriptions are now written directly above the `type X struct` declaration
+        so `go doc` and editors attach them to the type. Previously the comment landed above the
+        internal field-bitmask `var (...)` block emitted before the struct.
+      type: fix
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`,
+        `dial.AddNumber(...)`) now name the appended element and include the child type's
+        description in their doc comment.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 1.63.0
   changelogEntry:
     - summary: |
