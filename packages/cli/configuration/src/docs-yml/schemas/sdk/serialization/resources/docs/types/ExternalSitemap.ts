@@ -5,8 +5,10 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ExternalSitemapConfig } from "./ExternalSitemapConfig.js";
 
-export const ExternalSitemap: core.serialization.Schema<serializers.ExternalSitemap.Raw, FernDocsConfig.ExternalSitemap> =
-    core.serialization.undiscriminatedUnion([core.serialization.string(), ExternalSitemapConfig]);
+export const ExternalSitemap: core.serialization.Schema<
+    serializers.ExternalSitemap.Raw,
+    FernDocsConfig.ExternalSitemap
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), ExternalSitemapConfig]);
 
 export declare namespace ExternalSitemap {
     export type Raw = string | ExternalSitemapConfig.Raw;
