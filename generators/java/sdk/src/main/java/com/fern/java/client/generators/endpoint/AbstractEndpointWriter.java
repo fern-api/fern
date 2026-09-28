@@ -25,10 +25,10 @@ import com.fern.ir.model.ir.IdempotencyKeyGeneration;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
+import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
@@ -628,8 +628,9 @@ public abstract class AbstractEndpointWriter {
 
                     boolean hasBodyProperties = fileUpload.getProperties().stream()
                             .anyMatch(property -> property.getBodyProperty().isPresent());
-                    String fileParameterName = WrappedRequestEndpointWriterVariableNameContext
-                            .getFilePropertyParameterName(clientGeneratorContext, fileProperty);
+                    String fileParameterName =
+                            WrappedRequestEndpointWriterVariableNameContext.getFilePropertyParameterName(
+                                    clientGeneratorContext, fileProperty);
                     boolean fileParameterIsStandalone = additionalParameters.stream()
                             .anyMatch(parameterSpec -> parameterSpec.name.equals(fileParameterName));
                     Optional<ParameterSpec> requestParameterSpec = variables.requestParameterSpec();
@@ -688,8 +689,7 @@ public abstract class AbstractEndpointWriter {
                             multipartPartsBuilder.beginControlFlow("try");
                             for (GeneratedWrappedRequest.FileUploadProperty fileUploadProperty :
                                     fileUploadBodyGetters.get().properties()) {
-                                if (fileUploadProperty
-                                        instanceof GeneratedWrappedRequest.JsonFileUploadProperty) {
+                                if (fileUploadProperty instanceof GeneratedWrappedRequest.JsonFileUploadProperty) {
                                     WrappedRequestEndpointWriter.addJsonFileUploadFormDataParts(
                                             clientGeneratorContext,
                                             generatedObjectMapper,
