@@ -15,7 +15,7 @@ module Seed
       #
       # <Say> TwiML Verb
       #
-      # @param message [String, Say, nil] the text content (Message to say)
+      # @param message [String, Say, nil] the text content: Message to say
       # @param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes
       # @option attributes [String, nil] :voice Voice to use
       # @option attributes [Integer, nil] :loop Times to loop message

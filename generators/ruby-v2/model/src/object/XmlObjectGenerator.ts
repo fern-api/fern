@@ -471,7 +471,10 @@ export class XmlObjectGenerator {
         const childDocs = this.normalizeDocs(childType.docs);
         const textDocs = this.normalizeDocs(textProperty?.docs);
         const attributeOptionDocs = childProperties
-            .filter((childProperty) => childProperty !== textProperty)
+            .filter(
+                (childProperty) =>
+                    textProperty == null || getWireValue(childProperty.name) !== getWireValue(textProperty.name)
+            )
             .map((childProperty) => {
                 const name = this.context.caseConverter.snakeSafe(childProperty.name);
                 const type = this.yardType(childProperty.valueType);
@@ -487,7 +490,7 @@ export class XmlObjectGenerator {
                 ...(textField != null
                     ? [
                           `@param ${textField} [String, ${childClass.name}, nil] the text content${
-                              textDocs != null ? ` (${textDocs})` : ""
+                              textDocs != null ? `: ${textDocs}` : ""
                           }`
                       ]
                     : []),
