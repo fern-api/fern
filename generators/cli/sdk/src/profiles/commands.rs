@@ -975,12 +975,20 @@ fn handle_list<W: Write>(
             row.insert("parent".into(), parent.clone().into());
         }
         if let Some(resolved) = &resolved {
+            // The identifier, when we can read it — that is the question a
+            // listing should answer. A profile authenticates as one thing:
+            // the stored basic-auth username (see `stored_account`) or, for
+            // an OAuth grant, its client id. One column, whichever applies;
+            // `show` spells out which is which.
+            let account = resolved
+                .credential
+                .as_ref()
+                .and_then(|credential| stored_account(ctx, credential))
+                .or_else(|| resolved.oauth_client_id.clone());
+            if let Some(account) = account {
+                row.insert("account".into(), truncate_account(&account).into());
+            }
             if let Some(credential) = &resolved.credential {
-                // The identifier, when we can read it — that is the question a
-                // listing should answer. See `stored_account`.
-                if let Some(account) = stored_account(ctx, credential) {
-                    row.insert("account".into(), truncate_account(&account).into());
-                }
                 // The *slot* only when it is not this profile's own. Emitting
                 // it unconditionally printed `prod -> prod` on every row: true,
                 // redundant, and it crowded out the columns that carry
@@ -988,9 +996,6 @@ fn handle_list<W: Write>(
                 if credential != &entry.name {
                     row.insert("credentials_from".into(), credential.clone().into());
                 }
-            }
-            if let Some(client_id) = &resolved.oauth_client_id {
-                row.insert("oauth_client_id".into(), client_id.clone().into());
             }
             if let Some(base_url) = &resolved.base_url {
                 row.insert("base_url".into(), base_url.clone().into());

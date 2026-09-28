@@ -1301,8 +1301,8 @@ fn show_inspects_a_named_profile_without_selecting_it() {
 
 #[test]
 fn show_and_current_report_the_oauth_client_id() {
-    // The client id is public (RFC 6749 §2.2) and already lands in `list`;
-    // the single-profile views must answer "which client is this?" too.
+    // The client id is public (RFC 6749 §2.2); the single-profile views must
+    // answer "which client is this?" by name.
     let sandbox = Sandbox::new();
     sandbox.run(&[
         "profiles", "create", "prod", "--oauth-client-id", "public-client-id", "--use",
@@ -1313,6 +1313,25 @@ fn show_and_current_report_the_oauth_client_id() {
 
     let current = json(&sandbox.run(&["profiles", "current", "--format", "json"]));
     assert_eq!(current["oauth_client_id"], "public-client-id", "{current:#?}");
+}
+
+#[test]
+fn list_folds_the_oauth_client_id_into_the_account_column() {
+    // A profile authenticates as one thing, so `list` has one identifier
+    // column: the stored basic-auth username when there is one, else the
+    // OAuth client id. Two mostly-empty columns told the reader less.
+    let sandbox = Sandbox::new();
+    sandbox.run(&[
+        "profiles", "create", "oauth", "--oauth-client-id", "OQpublicclientid1234567890",
+    ]);
+
+    let rows = json(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    let row = rows
+        .as_array()
+        .and_then(|rows| rows.iter().find(|r| r["profile"] == "oauth"))
+        .unwrap_or_else(|| panic!("{rows:#?}"));
+    assert_eq!(row["account"], "OQpubliccl\u{2026}", "{row:#?}");
+    assert!(row.get("oauth_client_id").is_none(), "{row:#?}");
 }
 
 #[test]
