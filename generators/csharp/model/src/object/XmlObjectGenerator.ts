@@ -738,7 +738,7 @@ export class XmlObjectGenerator {
             for (const parameter of documented) {
                 writer.writePrefix();
                 writer.write(`<param name="${parameter.name}">`);
-                writer.writeWithEscaping(parameter.docs.trim().split("\n").join(" "));
+                writer.writeWithEscaping(parameter.docs.trim().split(/\r?\n/).join(" "));
                 writer.write("</param>");
                 writer.writeNewLineIfLastLineNot();
             }
