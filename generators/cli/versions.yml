@@ -1,4 +1,57 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        The root `--help` "Environment variables" footer is now derived from the
+        spec instead of a static string: it lists `<PREFIX>_PROFILE`,
+        `<PREFIX>_OUTPUT`, `<PREFIX>_RETRIES`, and one `<PREFIX>_<VAR>` entry per
+        `servers[].variables` (e.g. `TWILIO_CLI_REGION`), alongside the existing
+        runtime-only knobs. Which of these `profiles set` can persist is
+        documented by that command, not the footer.
+      type: fix
+    - summary: |
+        A selected profile now takes precedence over environment variables for every
+        value it stores — credentials, `<PREFIX>_BASE_URL`, `<PREFIX>_OUTPUT`,
+        `<PREFIX>_RETRIES`, server variables such as `<PREFIX>_REGION`, spec
+        parameter defaults, and the transport settings — however the profile was
+        selected (`-p/--profile`, `<PREFIX>_PROFILE`, or `profiles use`). Env vars
+        fill in only what the profile leaves unset; explicit flags still win, and
+        invocations with no profile selected are unchanged. Previously only `-p`
+        outranked env, so an active profile's stored values were silently ignored
+        whenever the same variable was exported. `profiles current` now reports
+        exported credential vars as `credential_env_fallback` instead of
+        `credential_overridden_by_env` / `credential_partially_shadowed_by_env`.
+        `profiles set`, `profiles create --from-env`, `profiles use`, and a
+        profile-scoped `auth login` no longer warn that an exported credential
+        will shadow the stored one, since it no longer does.
+      type: feat
+    - summary: |
+        Profiles can now store the transport settings that were previously
+        env/flag-only: `profiles set <name> <PREFIX>_TIMEOUT_SECS=…`,
+        `<PREFIX>_PROXY=…`, `<PREFIX>_CA_BUNDLE=…`, `<PREFIX>_INSECURE=…`, and
+        `<PREFIX>_USER_AGENT_SUFFIX=…` persist to `profiles.toml` (inherited
+        through `parent`, shown by `profiles show`/`current`). For these five the
+        profile's stored value wins over the shell-exported global whenever a
+        profile is in play — `-p`, `<PREFIX>_PROFILE`, or `profiles use` alike
+        (flag > profile > env var > default); the env var only fills in what the
+        profile leaves unset.
+      type: feat
+    - summary: |
+        `profiles show` and `profiles current` now print the full stored account
+        identifier (e.g. the complete Twilio Account SID) instead of the truncated
+        form used in the `profiles list` table, and include the profile's
+        `oauth_client_id` when one is set. `profiles list` folds the OAuth client
+        id into the `ACCOUNT` column (shown when the profile stores no basic-auth
+        account) instead of a separate `OAUTH_CLIENT_ID` column.
+      type: fix
+    - summary: |
+        `profiles show` and `profiles current` human output now lists fields in a
+        fixed order (`profile`, `active`/`selected_by`, `account`/`oauth_client_id`,
+        then settings) instead of alphabetically, so the identifier sits in the
+        same place for basic-auth and OAuth profiles.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
 - version: 0.43.0
   changelogEntry:
     - summary: |
