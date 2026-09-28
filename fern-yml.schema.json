@@ -1769,19 +1769,10 @@
                     "type": "object",
                     "properties": {
                       "url": {
-                        "type": "string",
-                        "description": "Absolute URL of the external sitemap (`sitemap.xml` or sitemap index)."
+                        "type": "string"
                       },
                       "locale": {
-                        "oneOf": [
-                          {
-                            "type": "string"
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ],
-                        "description": "Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the\nsite's default language or one of its `translations`. Overrides per-URL language detection."
+                        "type": "string"
                       }
                     },
                     "required": [

@@ -3054,16 +3054,17 @@ export class DocsDefinitionResolver {
     private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
         const settings = this.parsedDocsConfig.settings;
         const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
-        if (externalSitemaps == null || externalSitemaps.length === 0) {
-            return settings as DocsV1Write.DocsConfig["settings"];
+        const search =
+            externalSitemaps == null || externalSitemaps.length === 0
+                ? settings?.search
+                : { ...settings?.search, externalSitemaps };
+        if (settings == null && search == null) {
+            return undefined;
         }
         return {
             ...settings,
-            search: {
-                ...settings?.search,
-                externalSitemaps
-            }
-        } as DocsV1Write.DocsConfig["settings"];
+            search: search as NonNullable<DocsV1Write.DocsConfig["settings"]>["search"]
+        };
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {

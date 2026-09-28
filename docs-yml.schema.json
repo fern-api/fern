@@ -1206,7 +1206,7 @@
               "type": "null"
             }
           ],
-          "description": "A git ref\u2014branch, tag, or commit SHA\u2014whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable."
+          "description": "A git ref—branch, tag, or commit SHA—whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable."
         },
         "slug": {
           "oneOf": [
@@ -4880,7 +4880,7 @@
               "type": "null"
             }
           ],
-          "description": "Enables the \"Install skills\" page action and configures its modal. Presence of this key\nenables the action; omit it and the action is hidden. An empty object (`skills: {}`) is\nvalid and enables the action with all defaults \u2014 the right minimal config for sites that\nserve a `/.well-known` skills manifest, where the docs site generates the\n`npx skills add https://<domain>` command and fetches the live skill list itself."
+          "description": "Enables the \"Install skills\" page action and configures its modal. Presence of this key\nenables the action; omit it and the action is hidden. An empty object (`skills: {}`) is\nvalid and enables the action with all defaults — the right minimal config for sites that\nserve a `/.well-known` skills manifest, where the docs site generates the\n`npx skills add https://<domain>` command and fetches the live skill list itself."
         }
       },
       "additionalProperties": false
