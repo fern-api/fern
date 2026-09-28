@@ -115,12 +115,14 @@ ${preflightNeed}    runs-on: "ubuntu-22.04"
             exit 1
           fi
           printf '%s\\n' "\${SIGNING_KEY}" | gpg --batch --import
-          FINGERPRINT=\$(gpg --batch --list-secret-keys --with-colons | awk -F: '/^fpr:/ { print \$10; exit }')
-          MAINTAINER=\$(gpg --batch --list-secret-keys --with-colons | awk -F: '/^uid:/ { print \$10; exit }')
-          if [ -z "\${FINGERPRINT}" ]; then
-            echo "::error::${signingKeySecret} did not contain a GPG secret key."
+          # Primary-key fingerprints only; subkey fpr lines follow ssb.
+          FINGERPRINTS=\$(gpg --batch --list-secret-keys --with-colons | awk -F: '/^sec:/ { primary = 1; next } primary && /^fpr:/ { print \$10; primary = 0 }')
+          if [ "\$(printf '%s' "\${FINGERPRINTS}" | grep -c .)" != 1 ]; then
+            echo "::error::${signingKeySecret} must contain exactly one GPG secret key."
             exit 1
           fi
+          FINGERPRINT="\${FINGERPRINTS}"
+          MAINTAINER=\$(gpg --batch --list-secret-keys --with-colons "\${FINGERPRINT}" | awk -F: '/^uid:/ { print \$10; exit }')
 
           GPG_ARGS=(--batch --yes --local-user "\${FINGERPRINT}")
           if [ -n "\${SIGNING_KEY_PASSPHRASE:-}" ]; then
@@ -237,11 +239,19 @@ ${tokenStep}      - name: Check out the APT repository
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # The branch is created on first publish, holding only the
           # repository tree.
-          if git fetch --depth 1 origin "\${BRANCH}" 2>/dev/null; then
+          # Exit code 2 means the branch does not exist; anything else
+          # non-zero is a transport or auth failure and must not orphan it.
+          BRANCH_STATUS=0
+          git ls-remote --exit-code --heads origin "\${BRANCH}" > /dev/null || BRANCH_STATUS=\$?
+          if [ "\${BRANCH_STATUS}" = 0 ]; then
+            git fetch --depth 1 origin "\${BRANCH}"
             git checkout -B "\${BRANCH}" FETCH_HEAD
-          else
+          elif [ "\${BRANCH_STATUS}" = 2 ]; then
             git checkout --orphan "\${BRANCH}"
             git rm -rf --quiet . || true
+          else
+            echo "::error::Could not read \${BRANCH} from the APT repository (git ls-remote exited \${BRANCH_STATUS})."
+            exit 1
           fi
 
           POOL="${poolDir}"
@@ -255,12 +265,22 @@ ${tokenStep}      - name: Check out the APT repository
               ADDED=1
             fi
           done
-          if [ "\${ADDED}" = 0 ]; then
-            echo "\${PACKAGE} \${VERSION} is already published; nothing to commit."
-            exit 0
+          DIST="dists/${SUITE}"
+          # Skip only when the signed index already lists every package, so a
+          # pool that got ahead of its metadata is re-indexed.
+          if [ "\${ADDED}" = 0 ] && [ -f "\${DIST}/InRelease" ]; then
+            INDEXED=1
+            for deb in "\${RUNNER_TEMP}"/debs/*.deb; do
+              NAME="\$(basename "\${deb}" .deb)"
+              ARCH="\${NAME##*_}"
+              grep -qxF "Filename: \${POOL}/\${NAME}.deb" "\${DIST}/${COMPONENT}/binary-\${ARCH}/Packages" 2>/dev/null || INDEXED=0
+            done
+            if [ "\${INDEXED}" = 1 ]; then
+              echo "\${PACKAGE} \${VERSION} is already published; nothing to commit."
+              exit 0
+            fi
           fi
 
-          DIST="dists/${SUITE}"
           for pair in ${archTargets}; do
             ARCH="\${pair%%:*}"
             mkdir -p "\${DIST}/${COMPONENT}/binary-\${ARCH}"

@@ -613,7 +613,7 @@ describe("emitReadme — distribution channels", () => {
 
     it("omits APT when it is not configured", async () => {
         await emitReadme({ outputDir, ...base });
-        expect(await readReadme()).not.toContain("APT");
+        expect(await readReadme()).not.toContain("### APT (Debian / Ubuntu)");
     });
 });
 

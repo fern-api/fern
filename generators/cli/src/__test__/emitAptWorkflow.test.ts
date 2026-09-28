@@ -63,6 +63,9 @@ function debianVersionFor(tag: string): string {
     );
     const start = run.indexOf('TAG="${GITHUB_REF_NAME}"');
     const end = run.indexOf('OUT="${RUNNER_TEMP}/debs"');
+    if (start < 0 || end <= start) {
+        throw new Error("could not locate the version normalization in the emitted script");
+    }
     const script = `set -euo pipefail\n${run.slice(start, end)}\nprintf '%s' "\${VERSION}"`;
     return execFileSync("bash", ["-c", script], { env: { GITHUB_REF_NAME: tag }, encoding: "utf-8" });
 }
@@ -182,6 +185,31 @@ describe("constructAptJobYaml", () => {
         expect(run).toContain('--detach-sign --output "${DIST}/Release.gpg"');
         expect(run).toContain("> gpg.key");
         expect(run).toContain("touch .nojekyll");
+    });
+
+    it("requires exactly one secret key and takes the maintainer from it", () => {
+        const run = stepRun(parseJob(constructAptJobYaml(BASE_ARGS)), "Import the signing key");
+        expect(run).toContain("must contain exactly one GPG secret key");
+        expect(run).toContain('--list-secret-keys --with-colons "${FINGERPRINT}"');
+    });
+
+    it("orphans the branch only when it does not exist", () => {
+        const run = stepRun(
+            parseJob(constructAptJobYaml(BASE_ARGS)),
+            "Add the packages and sign the repository metadata"
+        );
+        expect(run).toContain('git ls-remote --exit-code --heads origin "${BRANCH}"');
+        expect(run).toContain('elif [ "${BRANCH_STATUS}" = 2 ]; then\n  git checkout --orphan "${BRANCH}"');
+        expect(run).toContain("Could not read ${BRANCH} from the APT repository");
+    });
+
+    it("skips publishing only when the index already lists every package", () => {
+        const run = stepRun(
+            parseJob(constructAptJobYaml(BASE_ARGS)),
+            "Add the packages and sign the repository metadata"
+        );
+        expect(run).toContain('grep -qxF "Filename: ${POOL}/${NAME}.deb"');
+        expect(run.indexOf("is already published")).toBeLessThan(run.indexOf("apt-ftparchive --arch"));
     });
 
     it("emits bash that parses", () => {
