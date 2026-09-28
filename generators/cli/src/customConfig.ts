@@ -137,10 +137,10 @@ export interface FernCliCustomConfig {
      * `AuthCredentialSource::Keyring` reads, a `clap::Arg`'s
      * `default_value`, `servers[].variables` substitution).
      *
-     * Precedence per value is: explicit flag, then environment variable,
-     * then profile, then the spec's own default. Environment variables
-     * sit above profiles so a CI pipeline is never silently overridden by
-     * a developer's stored profile.
+     * Precedence per value is: explicit flag, then the selected profile,
+     * then environment variable, then the spec's own default. Environment
+     * variables fill in only what the selected profile leaves unset; with
+     * no profile selected they are read exactly as before.
      *
      * Absent — i.e. **off** — by default. Adding a top-level subcommand
      * to every existing generated CLI is a surface change, and per the
