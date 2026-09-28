@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Message to say"
     },
     "voice": {
       "oneOf": [
@@ -19,7 +20,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Voice to use"
     },
     "loop": {
       "oneOf": [
@@ -29,7 +31,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Times to loop message"
     },
     "children": {
       "oneOf": [
@@ -42,10 +45,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Nested TwiML elements, rendered in order."
     }
   },
   "additionalProperties": false,
+  "description": "<Say> TwiML Verb",
   "definitions": {
     "BreakStrength": {
       "type": "string",
@@ -56,7 +61,8 @@
         "medium",
         "strong",
         "x-strong"
-      ]
+      ],
+      "description": "Set a pause based on strength"
     },
     "Break": {
       "type": "object",
@@ -69,7 +75,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set a pause based on strength"
         },
         "time": {
           "oneOf": [
@@ -79,10 +86,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set a pause to a specific length of time in seconds or milliseconds"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Adding a Pause in <Say>"
     }
   }
 }

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Inline documentation on XML-encoded (TwiML) types: each `field` carries its property
+        description as a comment, and fluent child methods document the child type, the text
+        parameter's description, and every attribute via `@option attributes` entries.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 1.27.1
   changelogEntry:
     - summary: |

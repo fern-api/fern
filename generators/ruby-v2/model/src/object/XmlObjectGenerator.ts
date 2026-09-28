@@ -464,15 +464,35 @@ export class XmlObjectGenerator {
                   )
                 : undefined;
         const textField = textProperty != null ? this.context.caseConverter.snakeSafe(textProperty.name) : undefined;
+        const childProperties =
+            childType.shape.type === "object"
+                ? [...(childType.shape.extendedProperties ?? []), ...childType.shape.properties]
+                : [];
+        const childDocs = this.normalizeDocs(childType.docs);
+        const textDocs = this.normalizeDocs(textProperty?.docs);
+        const attributeOptionDocs = childProperties
+            .filter((childProperty) => childProperty !== textProperty)
+            .map((childProperty) => {
+                const name = this.context.caseConverter.snakeSafe(childProperty.name);
+                const type = this.yardType(childProperty.valueType);
+                const docs = this.normalizeDocs(childProperty.docs);
+                return `@option attributes [${type}] :${name}${docs != null ? ` ${docs}` : ""}`;
+            });
 
         return ruby.codeblock((writer) => {
             const docs = [
                 `Appends a <${xmlName}> child element and returns it. Pass an existing ${childClass.name} to append it as-is.`,
+                ...(childDocs != null ? ["", childDocs] : []),
                 "",
                 ...(textField != null
-                    ? [`@param ${textField} [String, ${childClass.name}, nil] the text content`]
+                    ? [
+                          `@param ${textField} [String, ${childClass.name}, nil] the text content${
+                              textDocs != null ? ` (${textDocs})` : ""
+                          }`
+                      ]
                     : []),
                 `@param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes`,
+                ...attributeOptionDocs,
                 `@return [${childClass.name}]`
             ];
             ruby.comment({ docs: docs.join("\n") }).write(writer);
@@ -499,6 +519,24 @@ export class XmlObjectGenerator {
             writer.dedent();
             writer.write("end");
         });
+    }
+
+    private normalizeDocs(docs: string | undefined): string | undefined {
+        const trimmed = docs?.trim();
+        if (trimmed == null || trimmed === "") {
+            return undefined;
+        }
+        return trimmed.split(/\r?\n/).join(" ");
+    }
+
+    private yardType(reference: FernIr.TypeReference): string {
+        const typeString = this.context.typeMapper
+            .convert({ reference })
+            .typeDefinitionToString({ customConfig: this.context.customConfig });
+        return typeString
+            .replace(/\s*\|\s*/g, ", ")
+            .replace(/\bbool\b/g, "Boolean")
+            .replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
     }
 
     private rubyString(value: string): string {
