@@ -369,8 +369,10 @@ jobs:
               if [ -n "${ASSET_NAME}" ]; then
                 break
               fi
-              echo "Release assets not listable yet (attempt ${attempt}/6); retrying..."
-              sleep 10
+              if [ "${attempt}" -lt 6 ]; then
+                echo "Release assets not listable yet (attempt ${attempt}/6); retrying..."
+                sleep 10
+              fi
             done
             if [ -z "${ASSET_NAME}" ]; then
               echo "::error::No asset ending in ${SUFFIX} on release ${TAG}. Check the build-local-artifacts leg for that target."
@@ -381,7 +383,7 @@ jobs:
             mkdir -p "${DOWNLOAD}" "${CONTEXT}/${ARCH}"
             gh release download "${TAG}" --repo "${GITHUB_REPOSITORY}" --pattern "${ASSET_NAME}" --dir "${DOWNLOAD}"
             tar -xzf "${DOWNLOAD}/${ASSET_NAME}" -C "${DOWNLOAD}"
-            BINARY=$(find "${DOWNLOAD}" -type f -name "query-parameters-api" | head -n1)
+            BINARY=$(find "${DOWNLOAD}" -type f -perm -u+x -name "query-parameters-api" | head -n1)
             if [ -z "${BINARY}" ]; then
               echo "::error::${ASSET_NAME} does not contain a query-parameters-api executable."
               exit 1
@@ -402,7 +404,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          VERSION="${GITHUB_REF_NAME#v}"
+          # Tags may be prefixed (`my-app/1.2.3`, `releases/v1.2.3`), and an
+          # image tag cannot contain `/` or `+`.
+          VERSION="${GITHUB_REF_NAME##*/}"
+          VERSION="${VERSION#v}"
+          VERSION="${VERSION//+/-}"
           TAGS="${IMAGE}:${VERSION}"
           if [ "${IS_PRERELEASE}" != "true" ]; then
             TAGS="${TAGS},${IMAGE}:latest"

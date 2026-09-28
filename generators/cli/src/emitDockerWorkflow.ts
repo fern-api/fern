@@ -107,8 +107,10 @@ ${permissions}    env:
               if [ -n "\${ASSET_NAME}" ]; then
                 break
               fi
-              echo "Release assets not listable yet (attempt \${attempt}/${LOOKUP_ATTEMPTS}); retrying..."
-              sleep ${LOOKUP_INTERVAL_SECONDS}
+              if [ "\${attempt}" -lt ${LOOKUP_ATTEMPTS} ]; then
+                echo "Release assets not listable yet (attempt \${attempt}/${LOOKUP_ATTEMPTS}); retrying..."
+                sleep ${LOOKUP_INTERVAL_SECONDS}
+              fi
             done
             if [ -z "\${ASSET_NAME}" ]; then
               echo "::error::No asset ending in \${SUFFIX} on release \${TAG}. Check the build-local-artifacts leg for that target."
@@ -119,7 +121,7 @@ ${permissions}    env:
             mkdir -p "\${DOWNLOAD}" "\${CONTEXT}/\${ARCH}"
             gh release download "\${TAG}" --repo "\${GITHUB_REPOSITORY}" --pattern "\${ASSET_NAME}" --dir "\${DOWNLOAD}"
             tar -xzf "\${DOWNLOAD}/\${ASSET_NAME}" -C "\${DOWNLOAD}"
-            BINARY=\$(find "\${DOWNLOAD}" -type f -name "${binaryName}" | head -n1)
+            BINARY=\$(find "\${DOWNLOAD}" -type f -perm -u+x -name "${binaryName}" | head -n1)
             if [ -z "\${BINARY}" ]; then
               echo "::error::\${ASSET_NAME} does not contain a ${binaryName} executable."
               exit 1
@@ -140,7 +142,11 @@ ${permissions}    env:
         run: |
           set -euo pipefail
 
-          VERSION="\${GITHUB_REF_NAME#v}"
+          # Tags may be prefixed (\`my-app/1.2.3\`, \`releases/v1.2.3\`), and an
+          # image tag cannot contain \`/\` or \`+\`.
+          VERSION="\${GITHUB_REF_NAME##*/}"
+          VERSION="\${VERSION#v}"
+          VERSION="\${VERSION//+/-}"
           TAGS="\${IMAGE}:\${VERSION}"
           if [ "\${IS_PRERELEASE}" != "true" ]; then
             TAGS="\${TAGS},\${IMAGE}:latest"

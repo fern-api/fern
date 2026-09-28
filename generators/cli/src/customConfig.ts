@@ -756,7 +756,9 @@ function validateScoop(raw: unknown): FernCliScoopConfig {
  * the OCI distribution spec's repository-name grammar (lowercase
  * components separated by `/`); the host must contain a `.` or a port,
  * or be `localhost`, which is how Docker itself tells a host apart from a
- * Docker Hub namespace.
+ * Docker Hub namespace. The three host alternatives are: a dotted name with
+ * an optional port, `localhost`, and a single-label name with a required
+ * port (in-cluster registries such as `registry:5000`).
  */
 const DOCKER_IMAGE_PATTERN =
     /^(?:[a-z0-9-]+(?:\.[a-z0-9-]+)+(?::[0-9]+)?|localhost(?::[0-9]+)?|[a-z0-9-]+:[0-9]+)(?:\/[a-z0-9]+(?:(?:[._]|__|-+)[a-z0-9]+)*)+$/;

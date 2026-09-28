@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import yaml from "js-yaml";
 import { describe, expect, it } from "vitest";
 import { constructDockerJobYaml, constructReleaseWorkflowYaml } from "../index.js";
@@ -63,12 +64,28 @@ describe("constructDockerJobYaml", () => {
         expect(tags?.run).toContain('TAGS="${TAGS},${IMAGE}:latest"');
     });
 
+    it.each([
+        ["v1.2.3", "1.2.3"],
+        ["1.2.3", "1.2.3"],
+        ["my-app/1.2.3", "1.2.3"],
+        ["releases/v1.2.3-rc.1", "1.2.3-rc.1"],
+        ["v1.2.3+build.5", "1.2.3-build.5"]
+    ])("derives a valid image tag from git tag %s", (refName, expected) => {
+        const job = parseJob(constructDockerJobYaml(BASE_ARGS));
+        const run = job.steps.find((s) => s.name === "Compute image tags")?.run ?? "";
+        const script = run.slice(0, run.indexOf('TAGS="${IMAGE}'));
+        const version = execFileSync("bash", ["-c", `${script}\necho -n "\${VERSION}"`], {
+            env: { GITHUB_REF_NAME: refName }
+        }).toString();
+        expect(version).toBe(expected);
+    });
+
     it("builds a multi-arch image from the musl archives", () => {
         const job = parseJob(constructDockerJobYaml(BASE_ARGS));
         const assemble = job.steps[0]?.run ?? "";
         expect(assemble).toContain("amd64:x86_64-unknown-linux-musl");
         expect(assemble).toContain("arm64:aarch64-unknown-linux-musl");
-        expect(assemble).toContain('find "${DOWNLOAD}" -type f -name "acme-cli"');
+        expect(assemble).toContain('find "${DOWNLOAD}" -type f -perm -u+x -name "acme-cli"');
         expect(stepUsing(job, "docker/build-push-action").with?.platforms).toBe("linux/amd64,linux/arm64");
     });
 
