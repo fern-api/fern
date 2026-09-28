@@ -18,18 +18,21 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.AuthScope;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.ir.IdempotencyKeyGeneration;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
+import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.NameUtils;
@@ -623,25 +626,38 @@ public abstract class AbstractEndpointWriter {
                         }
                     });
 
-                    if (isSingleFile) {
-                        com.fern.ir.model.commons.NameAndWireValue filePropertyKey =
-                                fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
+                    boolean hasBodyProperties = fileUpload.getProperties().stream()
+                            .anyMatch(property -> property.getBodyProperty().isPresent());
+                    String fileParameterName = WrappedRequestEndpointWriterVariableNameContext
+                            .getFilePropertyParameterName(clientGeneratorContext, fileProperty);
+                    boolean fileParameterIsStandalone = additionalParameters.stream()
+                            .anyMatch(parameterSpec -> parameterSpec.name.equals(fileParameterName));
+                    Optional<ParameterSpec> requestParameterSpec = variables.requestParameterSpec();
+                    Optional<GeneratedWrappedRequest.FileUploadRequestBodyGetters> fileUploadBodyGetters =
+                            variables.fileUploadRequestBodyGetters();
+                    // Companion multipart fields are serialized from the request object, which only
+                    // works when the file is a standalone parameter that the stream replaces (i.e. it
+                    // is not inlined into the request object) so the request remains available.
+                    boolean canStreamBodyProperties = hasBodyProperties
+                            && fileParameterIsStandalone
+                            && fileUploadBodyGetters.isPresent()
+                            && requestParameterSpec.isPresent();
+
+                    if (isSingleFile && (!hasBodyProperties || canStreamBodyProperties)) {
+                        NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
                         String wireKey = filePropertyKey.getWireValue();
 
-                        // Filter out both the request body parameter and the file parameter
-                        List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
+                        // The streamed file always replaces the file parameter; the request parameter
+                        // stays on the signature only when companion form fields are read from it.
+                        List<ParameterSpec> additionalParamsForStreamOverloads = additionalParameters.stream()
                                 .filter(parameterSpec -> {
-                                    // Exclude the request body parameter
-                                    if (variables.sdkRequest().isPresent()
-                                            && parameterSpec.name.equals(NameUtils.toName(variables
-                                                            .sdkRequest()
-                                                            .get()
-                                                            .getRequestParameterName())
-                                                    .getCamelCase()
-                                                    .getUnsafeName())) {
+                                    if (parameterSpec.name.equals(fileParameterName)
+                                            || parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
                                         return false;
                                     }
-                                    if (parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
+                                    if (!canStreamBodyProperties
+                                            && requestParameterSpec.isPresent()
+                                            && parameterSpec.name.equals(requestParameterSpec.get().name)) {
                                         return false;
                                     }
                                     return true;
@@ -665,10 +681,56 @@ public abstract class AbstractEndpointWriter {
                         ParameterSpec mediaTypeParam = ParameterSpec.builder(mediaTypeClassName, "mediaType")
                                 .build();
 
+                        CodeBlock multipartParts;
+                        if (canStreamBodyProperties) {
+                            String requestParameterName = requestParameterSpec.get().name;
+                            CodeBlock.Builder multipartPartsBuilder = CodeBlock.builder();
+                            multipartPartsBuilder.beginControlFlow("try");
+                            for (GeneratedWrappedRequest.FileUploadProperty fileUploadProperty :
+                                    fileUploadBodyGetters.get().properties()) {
+                                if (fileUploadProperty
+                                        instanceof GeneratedWrappedRequest.JsonFileUploadProperty) {
+                                    WrappedRequestEndpointWriter.addJsonFileUploadFormDataParts(
+                                            clientGeneratorContext,
+                                            generatedObjectMapper,
+                                            variables.getMultipartBodyPropertiesName(),
+                                            requestParameterName,
+                                            (GeneratedWrappedRequest.JsonFileUploadProperty) fileUploadProperty,
+                                            multipartPartsBuilder);
+                                } else if (fileUploadProperty
+                                        instanceof GeneratedWrappedRequest.FilePropertyContainer) {
+                                    String partWireKey = ((GeneratedWrappedRequest.FilePropertyContainer)
+                                                    fileUploadProperty)
+                                            .fileProperty()
+                                            .visit(new GetFilePropertyKey())
+                                            .getWireValue();
+                                    multipartPartsBuilder.addStatement(
+                                            "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                            variables.getMultipartBodyPropertiesName(),
+                                            partWireKey,
+                                            filenameParam);
+                                }
+                            }
+                            multipartPartsBuilder
+                                    .endControlFlow()
+                                    .beginControlFlow("catch($T e)", Exception.class)
+                                    .addStatement("throw new $T(e)", RuntimeException.class)
+                                    .endControlFlow();
+                            multipartParts = multipartPartsBuilder.build();
+                        } else {
+                            multipartParts = CodeBlock.builder()
+                                    .addStatement(
+                                            "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                            variables.getMultipartBodyPropertiesName(),
+                                            wireKey,
+                                            filenameParam)
+                                    .build();
+                        }
+
                         MethodSpec.Builder baseMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                                 .addModifiers(Modifier.PUBLIC)
                                 .addParameters(variables.pathParameters)
-                                .addParameters(additionalParamsWithoutBody)
+                                .addParameters(additionalParamsForStreamOverloads)
                                 .addParameter(streamParam)
                                 .addParameter(filenameParam)
                                 .returns(endpointWithRequestOptions.returnType);
@@ -687,11 +749,7 @@ public abstract class AbstractEndpointWriter {
                                         variables.getMultipartBodyPropertiesName(),
                                         multipartBodyClassName.nestedClass("Builder"),
                                         multipartBodyClassName)
-                                .addStatement(
-                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                        variables.getMultipartBodyPropertiesName(),
-                                        wireKey,
-                                        filenameParam)
+                                .add(multipartParts)
                                 .addStatement(
                                         "$T $L = $L.build()",
                                         requestBodyClassName,
@@ -743,7 +801,7 @@ public abstract class AbstractEndpointWriter {
                                         endpointWithRequestOptions.name)
                                 .addModifiers(Modifier.PUBLIC)
                                 .addParameters(variables.pathParameters)
-                                .addParameters(additionalParamsWithoutBody)
+                                .addParameters(additionalParamsForStreamOverloads)
                                 .addParameter(streamParam)
                                 .addParameter(filenameParam)
                                 .addParameter(mediaTypeParam)
@@ -764,11 +822,7 @@ public abstract class AbstractEndpointWriter {
                                         variables.getMultipartBodyPropertiesName(),
                                         multipartBodyClassName.nestedClass("Builder"),
                                         multipartBodyClassName)
-                                .addStatement(
-                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                        variables.getMultipartBodyPropertiesName(),
-                                        wireKey,
-                                        filenameParam)
+                                .add(multipartParts)
                                 .addStatement(
                                         "$T $L = $L.build()",
                                         requestBodyClassName,
@@ -821,7 +875,7 @@ public abstract class AbstractEndpointWriter {
                                         endpointWithRequestOptions.name)
                                 .addModifiers(Modifier.PUBLIC)
                                 .addParameters(variables.pathParameters)
-                                .addParameters(additionalParamsWithoutBody)
+                                .addParameters(additionalParamsForStreamOverloads)
                                 .addParameter(streamParam)
                                 .addParameter(filenameParam)
                                 .addParameter(requestOptionsParameterSpec())
@@ -841,11 +895,7 @@ public abstract class AbstractEndpointWriter {
                                         variables.getMultipartBodyPropertiesName(),
                                         multipartBodyClassName.nestedClass("Builder"),
                                         multipartBodyClassName)
-                                .addStatement(
-                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                        variables.getMultipartBodyPropertiesName(),
-                                        wireKey,
-                                        filenameParam)
+                                .add(multipartParts)
                                 .addStatement(
                                         "$T $L = $L.build()",
                                         requestBodyClassName,
@@ -887,7 +937,7 @@ public abstract class AbstractEndpointWriter {
                         MethodSpec.Builder withBothBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                                 .addModifiers(Modifier.PUBLIC)
                                 .addParameters(variables.pathParameters)
-                                .addParameters(additionalParamsWithoutBody)
+                                .addParameters(additionalParamsForStreamOverloads)
                                 .addParameter(streamParam)
                                 .addParameter(filenameParam)
                                 .addParameter(mediaTypeParam)
@@ -909,11 +959,7 @@ public abstract class AbstractEndpointWriter {
                                         variables.getMultipartBodyPropertiesName(),
                                         multipartBodyClassName.nestedClass("Builder"),
                                         multipartBodyClassName)
-                                .addStatement(
-                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                        variables.getMultipartBodyPropertiesName(),
-                                        wireKey,
-                                        filenameParam)
+                                .add(multipartParts)
                                 .addStatement(
                                         "$T $L = $L.build()",
                                         requestBodyClassName,
