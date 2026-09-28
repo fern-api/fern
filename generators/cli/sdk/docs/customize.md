@@ -260,8 +260,8 @@ tenant-sub   AC12345678…  us1     2        sierra-prod
 ```
 
 `ACCOUNT` is the identifier behind the stored credential — the username half of
-a basic credential — truncated, and absent for schemes that have no username
-(bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
+a basic credential, or the OAuth client id when that is all the profile has —
+and absent for schemes that have no username (bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
 what your profiles actually set, so a CLI with no regions shows no `REGION`
 column. `CREDENTIALS_FROM` appears only when a profile borrows another's
 credential. Add `--format json` for the machine-readable form.
