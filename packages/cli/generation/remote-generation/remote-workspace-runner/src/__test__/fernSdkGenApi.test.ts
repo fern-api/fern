@@ -669,7 +669,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
-    it("routes GitHub push delivery through sdk-gen-api when enabled", () => {
+    it("routes GitHub push delivery with registry publication through sdk-gen-api when enabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
                 invocation({
@@ -678,7 +678,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                         FernFiddle.GithubOutputModeV2.push({
                             owner: "acme",
                             repo: "sdk",
-                            branch: "main"
+                            branch: "main",
+                            publishInfo: FernFiddle.GithubPublishInfo.npm({
+                                registryUrl: "https://registry.npmjs.org",
+                                packageName: "@acme/sdk"
+                            })
                         })
                     )
                 })

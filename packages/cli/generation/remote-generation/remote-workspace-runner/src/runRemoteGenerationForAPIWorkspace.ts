@@ -208,6 +208,13 @@ export async function runRemoteGenerationForAPIWorkspace({
         skipIfNoDiff,
         autoMerge
     });
+    for (const result of routePreparation) {
+        if (result.fallbackReason != null) {
+            context.logger.debug(
+                `${result.generatorInvocation.name} ${result.generatorInvocation.version} is falling back to Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
+            );
+        }
+    }
     const sdkGenApiRoutes = routePreparation.map((result) => result.route);
     const resolvedGenerators = routePreparation.map((result) => result.generatorInvocation);
     const routeErrors = routePreparation.map((result) => result.error);
@@ -396,6 +403,7 @@ export function prepareFernSdkGenApiRoutes({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
     error: unknown;
+    fallbackReason?: string;
     sdkConfigTargetIndex?: number;
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
@@ -492,7 +500,12 @@ export function prepareFernSdkGenApiRoutes({
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
                 } catch (error) {
                     if (route.configKind === "legacy-fern") {
-                        return { generatorInvocation: resolved, route: undefined, error: undefined };
+                        return {
+                            generatorInvocation: resolved,
+                            route: undefined,
+                            error: undefined,
+                            fallbackReason: extractErrorMessage(error)
+                        };
                     }
                     throw error;
                 }
@@ -502,7 +515,12 @@ export function prepareFernSdkGenApiRoutes({
             });
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
-                    return { generatorInvocation: resolved, route: undefined, error: undefined };
+                    return {
+                        generatorInvocation: resolved,
+                        route: undefined,
+                        error: undefined,
+                        fallbackReason: unsupportedOutput
+                    };
                 }
                 throw new Error(
                     `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
