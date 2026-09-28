@@ -393,10 +393,9 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
              invocation. Select one for a single command with `--profile <name>` \
              (`-p`), for a shell with the <NAME>_PROFILE environment variable, or \
              persistently with `profiles use <name>`.\n\n\
-             Precedence per value is: explicit flag, then environment variable, \
-             then profile, then the spec's own default. Environment variables sit \
-             above profiles so a CI pipeline is never silently overridden by a \
-             developer's stored profile.",
+             Precedence per value is: explicit flag, then the selected profile, \
+             then environment variable, then the spec's own default. Environment \
+             variables fill in only what the selected profile leaves unset.",
         )
         .arg_required_else_help(true)
         .subcommand(create)
