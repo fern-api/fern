@@ -452,8 +452,8 @@ func TestCallGuardrailContextCanceledDuringUnfinishedResponseBodyReturnsError(t 
 			}
 		}),
 	)
-	defer server.Close()
-	defer close(release)
+	t.Cleanup(server.Close)
+	t.Cleanup(func() { close(release) })
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
