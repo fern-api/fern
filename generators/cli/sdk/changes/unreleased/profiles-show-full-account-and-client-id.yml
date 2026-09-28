@@ -6,3 +6,9 @@
     id into the `ACCOUNT` column (shown when the profile stores no basic-auth
     account) instead of a separate `OAUTH_CLIENT_ID` column.
   type: fix
+- summary: |
+    `profiles show` and `profiles current` human output now lists fields in a
+    fixed order (`profile`, `active`/`selected_by`, `account`/`oauth_client_id`,
+    then settings) instead of alphabetically, so the identifier sits in the
+    same place for basic-auth and OAuth profiles.
+  type: fix

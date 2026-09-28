@@ -1156,6 +1156,51 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
     out
 }
 
+/// Render one profile (`show` / `current`) as a fixed-order `key  value`
+/// list: who it is (`profile`, `active`, `selected_by`), what it
+/// authenticates as (`account`, `oauth_client_id`), then the settings,
+/// then prose. The generic formatter orders by JSON key, which put
+/// `account` above `active` for a basic-auth profile but `oauth_client_id`
+/// below it for an OAuth one — the same question answered in two layouts.
+fn render_profile_fields(fields: &serde_json::Value) -> String {
+    const ORDER: &[&str] = &[
+        "profile",
+        "active",
+        "selected_by",
+        "account",
+        "oauth_client_id",
+        "credentials_from",
+        "parent",
+        "base_url",
+        "retries",
+        "format",
+    ];
+    fn rank(key: &str) -> usize {
+        if let Some(index) = ORDER.iter().position(|candidate| *candidate == key) {
+            return index;
+        }
+        match key {
+            "note" | "error" => ORDER.len() + 2,
+            _ if key.starts_with("credential_") => ORDER.len() + 1,
+            _ => ORDER.len(),
+        }
+    }
+
+    let mut pairs = flatten_row(fields);
+    pairs.sort_by(|(a, _), (b, _)| rank(a).cmp(&rank(b)).then_with(|| a.cmp(b)));
+    let width = pairs
+        .iter()
+        .map(|(k, _)| k.chars().count())
+        .max()
+        .unwrap_or(0);
+    let mut out = String::new();
+    for (key, value) in &pairs {
+        out.push_str(format!("{key:<width$}  {value}").trim_end());
+        out.push('\n');
+    }
+    out
+}
+
 /// Flatten one row to `(dotted.key, cell)` pairs, so `parameters.AccountSid`
 /// becomes a column the same way the generic table formatter would.
 fn flatten_row(row: &serde_json::Value) -> Vec<(String, String)> {
@@ -1942,9 +1987,14 @@ fn handle_show<W: Write>(
     // inspecting.
     map.insert("active".into(), (store.active() == Some(name.as_str())).into());
 
-    pipeline
-        .emit(out, &serde_json::Value::Object(map), false, true)
-        .map_err(|e| CliError::Other(e.into()))?;
+    let payload = serde_json::Value::Object(map);
+    if pipeline.format.is_machine_readable() {
+        pipeline
+            .emit(out, &payload, false, true)
+            .map_err(|e| CliError::Other(e.into()))?;
+    } else {
+        write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
+    }
     Ok(())
 }
 
@@ -2002,9 +2052,7 @@ fn handle_current<W: Write>(
     let mut stderr = std::io::stderr();
     match selected {
         Some(_) => {
-            pipeline
-                .emit(out, &payload, false, true)
-                .map_err(|e| CliError::Other(e.into()))?;
+            write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
         }
         None => {
             let _ = writeln!(

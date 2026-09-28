@@ -1335,6 +1335,25 @@ fn list_folds_the_oauth_client_id_into_the_account_column() {
 }
 
 #[test]
+fn show_prints_identity_fields_in_a_fixed_order() {
+    // `profile`, `active`, then whichever identifier the profile has — the
+    // same layout whether that identifier is a basic-auth account or an
+    // OAuth client id, rather than alphabetical key order.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "oauth", "--oauth-client-id", "public-client-id"]);
+    sandbox.run(&["profiles", "set", "oauth", "OPENAPI_FIXTURE_RETRIES=3"]);
+
+    let output = sandbox.run(&["profiles", "show", "oauth", "--human"]);
+    assert_ok(&output, "profiles show");
+    let text = stdout(&output);
+    let keys: Vec<&str> = text
+        .lines()
+        .filter_map(|line| line.split_whitespace().next())
+        .collect();
+    assert_eq!(keys, ["profile", "active", "oauth_client_id", "retries"], "{text}");
+}
+
+#[test]
 fn show_marks_the_active_profile_and_reports_inheritance() {
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "parent", "--use"]);
