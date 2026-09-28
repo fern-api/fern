@@ -105,7 +105,11 @@ public record Response : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Say&gt;</c> child element and returns this instance for chaining.
+    /// <para>
+    /// &lt;Say&gt; TwiML Verb
+    /// </para>
     /// </summary>
+    /// <param name="say">The <c>&lt;Say&gt;</c> element to add.</param>
     public Response Say(Say say)
     {
         Children = XmlUtils.Append<OneOf<Say, Dial, Pause, Hangup>>(Children, say);
@@ -114,7 +118,13 @@ public record Response : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Say&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// &lt;Say&gt; TwiML Verb
+    /// </para>
     /// </summary>
+    /// <param name="message">Message to say</param>
+    /// <param name="voice">Voice to use</param>
+    /// <param name="loop">Times to loop message</param>
     public Response Say(string? message = null, string? voice = null, int? loop = null)
     {
         return Say(
@@ -130,6 +140,7 @@ public record Response : IJsonOnDeserialized, IXmlNode
     /// <summary>
     /// Adds a <c>&lt;Dial&gt;</c> child element and returns this instance for chaining.
     /// </summary>
+    /// <param name="dial">The <c>&lt;Dial&gt;</c> element to add.</param>
     public Response Dial(Dial dial)
     {
         Children = XmlUtils.Append<OneOf<Say, Dial, Pause, Hangup>>(Children, dial);
@@ -157,7 +168,11 @@ public record Response : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element and returns this instance for chaining.
+    /// <para>
+    /// XML element without an explicit xml.name; falls back to the schema name.
+    /// </para>
     /// </summary>
+    /// <param name="pause">The <c>&lt;Pause&gt;</c> element to add.</param>
     public Response Pause(Pause pause)
     {
         Children = XmlUtils.Append<OneOf<Say, Dial, Pause, Hangup>>(Children, pause);
@@ -166,6 +181,9 @@ public record Response : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// XML element without an explicit xml.name; falls back to the schema name.
+    /// </para>
     /// </summary>
     public Response Pause(int? length = null)
     {
@@ -175,6 +193,7 @@ public record Response : IJsonOnDeserialized, IXmlNode
     /// <summary>
     /// Adds a <c>&lt;Hangup&gt;</c> child element and returns this instance for chaining.
     /// </summary>
+    /// <param name="hangup">The <c>&lt;Hangup&gt;</c> element to add.</param>
     public Response Hangup(Hangup hangup)
     {
         Children = XmlUtils.Append<OneOf<Say, Dial, Pause, Hangup>>(Children, hangup);

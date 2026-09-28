@@ -5,6 +5,9 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+/// <summary>
+/// Adding a Pause in &lt;Say&gt;
+/// </summary>
 [Serializable]
 public record Break : IJsonOnDeserialized, IXmlNode
 {
@@ -12,9 +15,15 @@ public record Break : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Set a pause based on strength
+    /// </summary>
     [JsonPropertyName("strength")]
     public BreakStrength? Strength { get; set; }
 
+    /// <summary>
+    /// Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+    /// </summary>
     [JsonPropertyName("time")]
     public string? Time { get; set; }
 
