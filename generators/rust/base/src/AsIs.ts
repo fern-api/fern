@@ -77,6 +77,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "oauth_token_provider.rs"
     },
+    WebhookSignature: {
+        relativePathToDir: "src/core",
+        filename: "webhook_signature.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"
