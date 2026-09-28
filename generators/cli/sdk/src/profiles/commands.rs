@@ -775,14 +775,6 @@ fn handle_create(
                 active_store().backend_label(),
             )),
         );
-        // The same warning `auth login --with-token` emits, and for a sharper
-        // reason: `--from-env` *reads* the env var, so without this the user
-        // is told the capture succeeded and never learns that the variable
-        // they captured from will keep winning over the copy they just made.
-        login::warn_if_env_shadows(
-            &mut stderr,
-            &login::shadowing_env_vars(ctx.cli_name, &scheme, ctx.auth_bindings),
-        );
     }
 
     store.upsert(&entry);
@@ -1742,13 +1734,6 @@ fn handle_set(
             credential_schemes.join(", "),
         );
     }
-    if !credential_schemes.is_empty() {
-        let candidates: Vec<String> = credential_schemes
-            .iter()
-            .flat_map(|scheme| login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings))
-            .collect();
-        login::warn_if_env_shadows(&mut stderr, &candidates);
-    }
     Ok(())
 }
 
@@ -1803,9 +1788,10 @@ fn handle_use(
     Ok(())
 }
 
-/// Warn when `<BIN>_PROFILE` or credential env vars will win over the
-/// profile the user just selected — the "I switched but nothing changed"
-/// footgun, same shape as `auth login`'s shadow warning (ADR-0008).
+/// Warn when `<BIN>_PROFILE` will win over the profile the user just
+/// selected — the "I switched but nothing changed" footgun. Credential env
+/// vars need no warning: a selected profile's stored credential outranks
+/// them (ADR-0011).
 fn warn_if_env_overrides<W: Write>(out: &mut W, ctx: &ProfilesContext<'_>) {
     let env_var = selection::profile_env_var(ctx.cli_name);
     if std::env::var(&env_var).is_ok_and(|v| !v.trim().is_empty()) {
@@ -1816,18 +1802,6 @@ fn warn_if_env_overrides<W: Write>(out: &mut W, ctx: &ProfilesContext<'_>) {
                 "⚠ Warning: `{env_var}` is set; it selects the profile regardless of \
                  this setting. Unset it to use the active profile."
             )),
-        );
-        return;
-    }
-    if env_pseudo_row(ctx).is_some() {
-        let _ = writeln!(
-            out,
-            "{}",
-            login::yellow(
-                "⚠ Warning: credential environment variables are set; they take \
-                 precedence over this profile's stored credential. Run `auth status` \
-                 to see which."
-            ),
         );
     }
 }

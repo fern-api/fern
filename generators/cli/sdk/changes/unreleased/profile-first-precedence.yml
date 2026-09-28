@@ -10,4 +10,7 @@
     whenever the same variable was exported. `profiles current` now reports
     exported credential vars as `credential_env_fallback` instead of
     `credential_overridden_by_env` / `credential_partially_shadowed_by_env`.
+    `profiles set`, `profiles create --from-env`, `profiles use`, and a
+    profile-scoped `auth login` no longer warn that an exported credential
+    will shadow the stored one, since it no longer does.
   type: break

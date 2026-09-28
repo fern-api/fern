@@ -996,8 +996,13 @@ pub fn shadowing_env_vars(
 }
 
 /// Warn when any of `candidates` is set and would outrank the keyring entry
-/// just written. Get `candidates` from [`shadowing_env_vars`].
+/// just written. Get `candidates` from [`shadowing_env_vars`]. Only the
+/// unscoped entry can be shadowed: a credential stored under a profile
+/// outranks env whenever that profile is selected (ADR-0011).
 pub(crate) fn warn_if_env_shadows<W: Write>(out: &mut W, candidates: &[String]) {
+    if crate::profiles::active_name().is_some() {
+        return;
+    }
     for name in candidates {
         if let Ok(v) = std::env::var(name) {
             if !v.trim().is_empty() {

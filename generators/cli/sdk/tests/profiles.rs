@@ -814,22 +814,17 @@ fn a_malformed_profiles_file_does_not_brick_the_cli() {
 }
 
 #[test]
-fn capturing_from_env_warns_that_the_source_var_still_shadows_it() {
-    // `--from-env` reads the variable, so without the warning the user is
-    // told the capture succeeded and never learns that the very variable
-    // they captured from keeps winning over the copy. `auth login
-    // --with-token` and `profiles use` both warn; this path must too.
+fn capturing_from_env_does_not_warn_about_shadowing() {
+    // The copy lives under the profile, and a selected profile's credential
+    // outranks the env var it was captured from (ADR-0011) — so the old
+    // "will shadow" warning would be false.
     let sandbox = Sandbox::new();
     let output = sandbox.run_with_env(
         &["profiles", "create", "captured", "--from-env"],
         &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
     );
     assert_ok(&output, "profiles create --from-env");
-    assert!(
-        stderr(&output).contains("will shadow the keyring entry"),
-        "expected a shadow warning on stderr, got: {}",
-        stderr(&output),
-    );
+    assert!(!stderr(&output).contains("shadow"), "{}", stderr(&output));
 }
 
 #[test]
