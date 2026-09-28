@@ -498,9 +498,6 @@ export function prepareFernSdkGenApiRoutes({
                 }
             }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
-                generatorInvocation: resolved,
-                verify,
-                skipIfNoDiff,
                 autoMerge
             });
             if (route != null && unsupportedOutput != null) {
@@ -540,32 +537,11 @@ function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInv
 }
 
 function getFernSdkGenApiUnsupportedOutput({
-    generatorInvocation,
-    verify,
-    skipIfNoDiff,
     autoMerge
 }: {
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-    verify?: boolean;
-    skipIfNoDiff?: boolean;
     autoMerge?: boolean;
 }): string | undefined {
     const unsupported: string[] = [];
-    if (
-        generatorInvocation.outputMode.type !== "downloadFiles" &&
-        generatorInvocation.outputMode.type !== "publish" &&
-        generatorInvocation.outputMode.type !== "publishV2"
-    ) {
-        unsupported.push(
-            `${generatorInvocation.outputMode.type} delivery requires Fern-managed GitHub or registry credentials that sdk-gen-api cannot resolve`
-        );
-    }
-    if (verify === true) {
-        unsupported.push("verify=true is not implemented by sdk-gen-api");
-    }
-    if (skipIfNoDiff === true) {
-        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api");
-    }
     if (autoMerge === true) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
     }

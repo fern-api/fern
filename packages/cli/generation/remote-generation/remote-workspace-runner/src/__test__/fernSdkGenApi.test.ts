@@ -669,7 +669,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
-    it("keeps pre-cutover GitHub delivery on Fiddle", () => {
+    it("routes GitHub push delivery through sdk-gen-api when enabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
                 invocation({
@@ -688,7 +688,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             isPreview: false
         });
 
-        expect(result?.route).toBeUndefined();
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
         expect(result?.error).toBeUndefined();
     });
 
@@ -699,7 +699,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
-            verify: true
+            autoMerge: true
         });
 
         expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
@@ -707,18 +707,6 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it.each([
-        [
-            "GitHub delivery",
-            {
-                outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner: "acme",
-                        repo: "sdk",
-                        branch: "main"
-                    })
-                )
-            }
-        ],
         [
             "registry publication",
             {
@@ -976,6 +964,41 @@ describe("isEligibleForFernSdkGenApi", () => {
                 })
             ).toBe(true);
         }
+    });
+
+    it("includes sdk-gen-api GitHub output options in the wire request", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: "acme",
+                        repo: "sdk",
+                        branch: "main"
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle),
+            githubOptions: {
+                replay: { enabled: true },
+                verify: true,
+                skipIfNoDiff: true
+            }
+        });
+
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            branch: "main",
+            mode: "push",
+            replay: { enabled: true },
+            verify: true,
+            skipIfNoDiff: true
+        });
     });
 
     it.each([

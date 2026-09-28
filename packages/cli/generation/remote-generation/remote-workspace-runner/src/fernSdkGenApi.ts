@@ -82,9 +82,19 @@ export interface FernSdkGenApiPackageConfig {
     artifactId?: string;
 }
 
+export interface FernSdkGenApiReplayConfig {
+    enabled: boolean;
+}
+
+export interface FernSdkGenApiGithubOptions {
+    replay?: FernSdkGenApiReplayConfig;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+}
+
 export type FernSdkGenApiRequestedOutput =
     | { type: "download" }
-    | {
+    | ({
           type: "github";
           repository: string;
           host?: string;
@@ -92,7 +102,7 @@ export type FernSdkGenApiRequestedOutput =
           mode?: "release" | "pull-request" | "push";
           reviewers?: { teams?: string[]; users?: string[] };
           publish?: FernSdkGenApiPublishConfig;
-      }
+      } & FernSdkGenApiGithubOptions)
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
 
 export function resolveSdkConfigRequestedOutput(
@@ -285,7 +295,8 @@ interface FernSdkGenApiOutputMapping {
  * those references belongs to the downstream distribution workstream.
  */
 export function mapFernSdkGenApiOutput(
-    generatorInvocation: generatorsYml.GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    githubOptions?: FernSdkGenApiGithubOptions
 ): FernSdkGenApiOutputMapping {
     const outputMode = generatorInvocation.outputMode;
     switch (outputMode.type) {
@@ -297,7 +308,8 @@ export function mapFernSdkGenApiOutput(
                 repo: outputMode.repo,
                 branch: outputMode.branch,
                 mode: outputMode.makePr === true ? "pull-request" : "release",
-                publishInfo: outputMode.publishInfo
+                publishInfo: outputMode.publishInfo,
+                githubOptions
             });
         case "githubV2": {
             const github = outputMode.githubV2;
@@ -308,7 +320,8 @@ export function mapFernSdkGenApiOutput(
                 branch: github.branch,
                 mode: github.type === "pullRequest" ? "pull-request" : github.type === "push" ? "push" : "release",
                 reviewers: github.type === "pullRequest" ? mapGithubReviewers(github.reviewers) : undefined,
-                publishInfo: github.publishInfo
+                publishInfo: github.publishInfo,
+                githubOptions
             });
         }
         case "publishV2": {
@@ -335,7 +348,8 @@ function mapGithubOutput({
     branch,
     mode,
     reviewers,
-    publishInfo
+    publishInfo,
+    githubOptions
 }: {
     owner: string;
     repo: string;
@@ -344,6 +358,7 @@ function mapGithubOutput({
     mode: "release" | "pull-request" | "push";
     reviewers?: { teams?: string[]; users?: string[] };
     publishInfo?: FernFiddle.GithubPublishInfo;
+    githubOptions?: FernSdkGenApiGithubOptions;
 }): FernSdkGenApiOutputMapping {
     const publication = publishInfo != null ? mapGithubPublishInfo(publishInfo) : undefined;
     // TODO: Before broadly enabling this route, require downstream credential resolution to bind
@@ -357,7 +372,8 @@ function mapGithubOutput({
             ...(branch != null ? { branch } : {}),
             mode,
             ...(reviewers != null ? { reviewers } : {}),
-            ...(publication != null ? { publish: publication.publish } : {})
+            ...(publication != null ? { publish: publication.publish } : {}),
+            ...githubOptions
         }
     };
 }
@@ -798,6 +814,7 @@ export interface FernSdkGenApiBuildParameters {
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
     publishCredential?: FernSdkGenApiPublishCredentialSource;
+    githubOptions?: FernSdkGenApiGithubOptions;
     absolutePathToLocalOutputArchive?: AbsoluteFilePath;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
@@ -1078,7 +1095,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             audiences: participant.audiences,
             payload: participant.payload,
             requestedOutput: participant.requestedOutput,
-            publishCredential: participant.publishCredential
+            publishCredential: participant.publishCredential,
+            githubOptions: participant.githubOptions
         }))
     });
     const credentials = createFernSdkGenApiPublishCredentials(
@@ -1791,7 +1809,8 @@ export function createFernSdkGenApiRequest({
     specsTarGzBuffer,
     payload,
     requestedOutput,
-    publishCredential
+    publishCredential,
+    githubOptions
 }: {
     apiName: string;
     organization: string;
@@ -1805,6 +1824,7 @@ export function createFernSdkGenApiRequest({
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
     publishCredential?: FernSdkGenApiPublishCredentialSource;
+    githubOptions?: FernSdkGenApiGithubOptions;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
@@ -1820,7 +1840,8 @@ export function createFernSdkGenApiRequest({
                 apiVersion,
                 payload,
                 requestedOutput,
-                publishCredential
+                publishCredential,
+                githubOptions
             }
         ]
     });
@@ -1849,6 +1870,7 @@ export function createFernSdkGenApiBatchRequest({
         payload: FernSdkGenApiPayload;
         requestedOutput?: FernSdkGenApiRequestedOutput;
         publishCredential?: FernSdkGenApiPublishCredentialSource;
+        githubOptions?: FernSdkGenApiGithubOptions;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -1877,7 +1899,8 @@ export function createFernSdkGenApiBatchRequest({
                 targetIdSeed,
                 audiences,
                 payload,
-                requestedOutput
+                requestedOutput,
+                githubOptions
             },
             index
         ) => {
@@ -1885,7 +1908,7 @@ export function createFernSdkGenApiBatchRequest({
             if (language == null) {
                 throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
             }
-            const output = mapFernSdkGenApiOutput(generatorInvocation);
+            const output = mapFernSdkGenApiOutput(generatorInvocation, githubOptions);
             // SDK Config is the package configuration authority. Legacy output-derived package
             // identity must not overwrite a customer-edited SDK Config document.
             const packageConfig = payload.payloadKind === "fern-runtime-bundle" ? output.package : payload.package;
