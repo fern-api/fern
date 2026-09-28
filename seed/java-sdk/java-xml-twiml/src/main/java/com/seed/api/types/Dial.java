@@ -255,7 +255,9 @@ public final class Dial implements XmlSerializable {
         }
 
         /**
-         * Appends a <Number> child element.
+         * Appends a &lt;Number&gt; child element.
+         * @param number the &lt;Number&gt; element to append
+         * @return this builder
          */
         public Builder addNumber(Number number) {
             List<Number> updated = new ArrayList<>(this.numbers.orElseGet(Collections::emptyList));

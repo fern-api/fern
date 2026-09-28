@@ -104,7 +104,7 @@ export function resolveMigrationSourceSpecs({
     if (generator.apiOverride?.specs != null) {
         return resolveGeneratorSpecOverrides(workspace.absoluteFilePath, generator.apiOverride.specs);
     }
-    if (hasSpecs(workspace)) {
+    if (hasNonEmptySpecs(workspace)) {
         const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
         return workspace.allSpecs.map((spec) => {
             const configuredDefinition = findConfiguredDefinition(
@@ -252,10 +252,10 @@ function hoistSharedApiImportSettings(specs: SdkConfigV1SourceSpec[]): SdkConfig
     };
 }
 
-function hasSpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
+function hasNonEmptySpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
     allSpecs: Spec[];
 } {
-    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs);
+    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs) && workspace.allSpecs.length > 0;
 }
 
 function resolveWorkspaceSpec(

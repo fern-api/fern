@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.Optional;
 import org.w3c.dom.Element;
 
+/**
+ * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Pause.Builder.class)
 public final class Pause implements XmlSerializable {

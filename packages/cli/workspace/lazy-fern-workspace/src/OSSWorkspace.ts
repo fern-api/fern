@@ -104,6 +104,7 @@ function convertRemoveDiscriminantsFromSchemas(
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
+    public readonly exposesSourceSpecs = true;
     public allSpecs: Spec[];
     public specs: (OpenAPISpec | ProtobufSpec)[];
     public sources: IdentifiableSource[];
@@ -653,6 +654,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cliVersion: this.cliVersion,
             sources: this.sources
         });
+    }
+
+    public async getSourceSpecs(): Promise<Spec[]> {
+        return this.allSpecs;
     }
 
     public async getAllSpecsForGenerator(
