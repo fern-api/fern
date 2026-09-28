@@ -16,6 +16,8 @@ const CONSTRUCTOR_PARAMETER_NAME = "values";
 export declare namespace DataClass {
     interface Args extends Class.Args {
         constructorAccess?: Access;
+        /* Whether to render each documented field as a bullet above the constructor's `$values` @param */
+        documentConstructorKeys?: boolean;
     }
 }
 
@@ -23,13 +25,24 @@ export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     private readonly constructorAccess: Access;
+    private readonly documentConstructorKeys: boolean;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
+    constructor({
+        name,
+        namespace,
+        abstract,
+        docs,
+        parentClassReference,
+        traits,
+        constructorAccess,
+        documentConstructorKeys
+    }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.constructorAccess = constructorAccess ?? "public";
+        this.documentConstructorKeys = documentConstructorKeys ?? false;
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
@@ -93,8 +106,27 @@ export class DataClass extends AstNode {
                         multiline: true
                     }
                 ),
-                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined
+                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined,
+                detailDocs: this.documentConstructorKeys ? getFieldKeyDocs(orderedFields) : undefined
             })
         ];
     }
+}
+
+/* Collapses docs to a single trimmed line; undefined when empty. */
+export function normalizeDocs(docs: string | undefined): string | undefined {
+    const trimmed = docs?.trim();
+    if (trimmed == null || trimmed === "") {
+        return undefined;
+    }
+    return trimmed.split(/\r?\n/).join(" ");
+}
+
+/* One `- \`key\`: docs` bullet per documented field, for use as a tag's detailDocs. */
+export function getFieldKeyDocs(fields: { name: string; docs?: string }[]): string[] | undefined {
+    const lines = fields.flatMap((field) => {
+        const docs = normalizeDocs(field.docs);
+        return docs != null ? [`- \`${field.name}\`: ${docs}`] : [];
+    });
+    return lines.length > 0 ? lines : undefined;
 }

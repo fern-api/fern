@@ -811,11 +811,18 @@ export class XmlObjectGenerator {
                 return {
                     key: this.context.getPropertyName(child.name),
                     valueType: type,
-                    optional: type.isOptional()
+                    optional: type.isOptional(),
+                    docs: child.docs
                 };
             });
         const allAttributesOptional = attributeEntries.every((entry) => entry.optional);
         const attributesType = php.Type.typeDict(attributeEntries, { multiline: true });
+        // attributeEntries backs both `attributesType` and the array shape of the `$child` union below,
+        // so the same per-key bullets apply to either parameter.
+        const attributeKeyDocs = php.getFieldKeyDocs(
+            attributeEntries.map((entry) => ({ name: entry.key, docs: entry.docs }))
+        );
+        const textDocs = php.normalizeDocs(textProperty?.docs);
 
         const parameters: php.Parameter[] = [];
         const childParamName = textFieldName ?? "child";
@@ -829,7 +836,10 @@ export class XmlObjectGenerator {
                     name: childParamName,
                     type: textType,
                     initializer: textIsOptional ? php.codeblock("null") : undefined,
-                    docs: `The <${childXmlName}> to add, or its text content.`
+                    docs:
+                        textDocs != null
+                            ? `The <${childXmlName}> to add, or its text content (${textDocs}).`
+                            : `The <${childXmlName}> to add, or its text content.`
                 })
             );
             parameters.push(
@@ -837,7 +847,8 @@ export class XmlObjectGenerator {
                     name: "attributes",
                     type: allAttributesOptional ? attributesType : php.Type.optional(attributesType),
                     initializer: php.codeblock(allAttributesOptional ? "[]" : "null"),
-                    docs: `Properties of the new <${childXmlName}> (ignored when a ${childClass.name} is given).`
+                    docs: `Properties of the new <${childXmlName}> (ignored when a ${childClass.name} is given).`,
+                    detailDocs: attributeKeyDocs
                 })
             );
         } else {
@@ -846,7 +857,8 @@ export class XmlObjectGenerator {
                     name: childParamName,
                     type: php.Type.union([php.Type.reference(childClass), attributesType]),
                     initializer: allAttributesOptional ? php.codeblock("[]") : undefined,
-                    docs: `The <${childXmlName}> to add, or the properties to construct it with.`
+                    docs: `The <${childXmlName}> to add, or the properties to construct it with.`,
+                    detailDocs: attributeKeyDocs
                 })
             );
         }
@@ -857,7 +869,10 @@ export class XmlObjectGenerator {
             access: "public",
             parameters,
             return_: php.Type.reference(childClass),
-            docs: `Adds a <${childXmlName}> child element and returns it (for nesting further children).`,
+            docs: this.childBuilderDocs({
+                summary: `Adds a <${childXmlName}> child element and returns it (for nesting further children).`,
+                childType
+            }),
             body: php.codeblock((writer) => {
                 const constructorArgs =
                     textProperty != null
@@ -903,6 +918,14 @@ export class XmlObjectGenerator {
                 writer.writeLine(`return $${childParamName}Element;`);
             })
         });
+    }
+
+    private childBuilderDocs({ summary, childType }: { summary: string; childType: FernIr.TypeDeclaration }): string {
+        const childDocs = childType.docs?.trim();
+        if (childDocs == null || childDocs === "") {
+            return summary;
+        }
+        return `${summary}\n\n${childDocs}`;
     }
 
     private isOptionalTypeReference(typeReference: FernIr.TypeReference): boolean {
