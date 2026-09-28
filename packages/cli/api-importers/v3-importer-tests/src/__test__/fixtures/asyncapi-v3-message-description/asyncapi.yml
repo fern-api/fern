@@ -1,0 +1,71 @@
+asyncapi: 3.0.0
+info:
+  title: Plant Events
+  version: 1.0.0
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+channels:
+  plantEvents:
+    address: /plants/events
+    messages:
+      subscribeRequest:
+        $ref: "#/components/messages/SubscribeRequest"
+      plantCreated:
+        $ref: "#/components/messages/PlantCreated"
+      plantUpdated:
+        $ref: "#/components/messages/PlantUpdated"
+      plantDeleted:
+        $ref: "#/components/messages/PlantDeleted"
+operations:
+  subscribe:
+    action: send
+    description: Send a subscription request to filter events.
+    channel:
+      $ref: "#/channels/plantEvents"
+    messages:
+      - $ref: "#/channels/plantEvents/messages/subscribeRequest"
+  receivePlantEvents:
+    action: receive
+    description: Receive plant lifecycle events from the server.
+    channel:
+      $ref: "#/channels/plantEvents"
+    messages:
+      - $ref: "#/channels/plantEvents/messages/plantCreated"
+      - $ref: "#/channels/plantEvents/messages/plantUpdated"
+      - $ref: "#/channels/plantEvents/messages/plantDeleted"
+components:
+  messages:
+    SubscribeRequest:
+      summary: Subscribe to plant event types.
+      description: Send this message after connecting to choose which event types to receive.
+      payload:
+        $ref: "#/components/schemas/SubscribeRequest"
+    PlantCreated:
+      summary: A new plant was added.
+      description: Emitted whenever a plant is created.
+      payload:
+        $ref: "#/components/schemas/PlantEvent"
+    PlantUpdated:
+      summary: An existing plant was modified.
+      payload:
+        $ref: "#/components/schemas/PlantEvent"
+    PlantDeleted:
+      payload:
+        $ref: "#/components/schemas/PlantEvent"
+  schemas:
+    SubscribeRequest:
+      type: object
+      properties:
+        eventTypes:
+          type: array
+          items:
+            type: string
+    PlantEvent:
+      type: object
+      properties:
+        plantId:
+          type: string
+        name:
+          type: string
