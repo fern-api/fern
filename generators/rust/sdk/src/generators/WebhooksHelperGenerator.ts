@@ -380,10 +380,14 @@ export class WebhooksHelperGenerator {
                 break;
             case "ISO8601":
             default:
-                lines.push(
-                    "let timestamp_ms: i64 = match chrono::DateTime::parse_from_rfc3339(timestamp_header) {"
-                );
-                lines.push(`${INDENT}Ok(parsed) => parsed.timestamp_millis(),`);
+                lines.push("let timestamp_ms: i64 = match chrono::DateTime::parse_from_rfc3339(timestamp_header)");
+                lines.push(`${INDENT}.map(|parsed| parsed.timestamp_millis())`);
+                lines.push(`${INDENT}.or_else(|_| {`);
+                lines.push(`${INDENT}${INDENT}chrono::NaiveDateTime::parse_from_str(timestamp_header, "%Y-%m-%dT%H:%M:%S%.f")`);
+                lines.push(`${INDENT}${INDENT}${INDENT}.map(|naive| naive.and_utc().timestamp_millis())`);
+                lines.push(`${INDENT}})`);
+                lines.push("{");
+                lines.push(`${INDENT}Ok(millis) => millis,`);
                 lines.push(`${INDENT}Err(_) => return false,`);
                 lines.push("};");
                 break;

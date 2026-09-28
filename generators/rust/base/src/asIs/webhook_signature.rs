@@ -128,18 +128,8 @@ fn encode(bytes: &[u8], encoding: WebhookEncoding) -> String {
     match encoding {
         WebhookEncoding::Hex => bytes.iter().map(|b| format!("{:02x}", b)).collect(),
         WebhookEncoding::Base64 => {
-            const TABLE: &[u8; 64] =
-                b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            let mut out = String::with_capacity(bytes.len().div_ceil(3) * 4);
-            for chunk in bytes.chunks(3) {
-                let b = [chunk[0], *chunk.get(1).unwrap_or(&0), *chunk.get(2).unwrap_or(&0)];
-                let n = (u32::from(b[0]) << 16) | (u32::from(b[1]) << 8) | u32::from(b[2]);
-                out.push(TABLE[((n >> 18) & 63) as usize] as char);
-                out.push(TABLE[((n >> 12) & 63) as usize] as char);
-                out.push(if chunk.len() > 1 { TABLE[((n >> 6) & 63) as usize] as char } else { '=' });
-                out.push(if chunk.len() > 2 { TABLE[(n & 63) as usize] as char } else { '=' });
-            }
-            out
+            use base64::Engine;
+            base64::engine::general_purpose::STANDARD.encode(bytes)
         }
     }
 }
@@ -316,6 +306,7 @@ pub fn notification_url_candidates(
         push(form.clone());
     }
     if legacy_query_encoding {
+        push(with_legacy_querystring(url));
         for form in &port_forms {
             push(with_legacy_querystring(form));
         }
@@ -419,8 +410,8 @@ mod tests {
             vec![
                 "https://mycompany.com:1234/myapp.php?foo=a%20b".to_string(),
                 "https://mycompany.com/myapp.php?foo=a%20b".to_string(),
-                "https://mycompany.com/myapp.php?foo=a+b".to_string(),
                 "https://mycompany.com:1234/myapp.php?foo=a+b".to_string(),
+                "https://mycompany.com/myapp.php?foo=a+b".to_string(),
             ]
         );
 

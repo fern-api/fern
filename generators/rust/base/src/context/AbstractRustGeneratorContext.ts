@@ -168,6 +168,7 @@ export abstract class AbstractRustGeneratorContext<
         if (configs.length === 0) {
             return;
         }
+        this.dependencyManager.add("base64", "0.22");
         this.dependencyManager.add("hmac", "0.12");
         this.dependencyManager.add("sha1", "0.10");
         this.dependencyManager.add("sha2", "0.10");
@@ -175,7 +176,7 @@ export abstract class AbstractRustGeneratorContext<
         const needsIso8601 = configs.some(
             (config) => config.timestamp != null && config.timestamp.format === "ISO8601"
         );
-        if (needsIso8601 && !this.usesDateTime()) {
+        if (needsIso8601) {
             this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
         }
     }
