@@ -79,7 +79,7 @@ Interactive flows (PKCE, device-code) needed no cache change: they persist throu
 
 `~/.config/<bin>/profiles.toml` — the same directory as `auth-keyring.json` and `credentials.json`, so a user clearing CLI state has one place to look. Written through the same `oauth_common::atomic_write` (0600, temp-file-then-rename).
 
-**No secrets in the file, ever.** `credential = "<account>"` is a key into the existing `KeyringStore`. `oauth_client_id` is in the file because a client id is public by construction (RFC 6749 §2.2) and `profiles list` should be able to show it without unlocking the keychain; the client *secret* goes to the keychain under the profile-namespaced account.
+**No secrets in the file, ever.** `credential = "<account>"` is a key into the existing `KeyringStore`. `oauth_client_id` is in the file because a client id is public by construction (RFC 6749 §2.2) and `profiles list` should be able to show it (in the `ACCOUNT` column, when no basic-auth account is stored) without unlocking the keychain; the client *secret* goes to the keychain under the profile-namespaced account.
 
 `toml_edit` rather than serde round-tripping, so an older binary reading a file a newer one wrote does not delete the fields it does not understand — nor the comments the user wrote. `version = 1` is stamped on new files and never downgraded.
 

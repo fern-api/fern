@@ -291,6 +291,30 @@ fn list_shows_the_stored_account_not_the_slot_name() {
 
 #[test]
 #[serial]
+fn show_prints_the_full_stored_account() {
+    // `list` truncates so the column fits; `show` is one profile at a time
+    // and the point of asking is to read the whole identifier.
+    with_clean_env(|_home| {
+        std::env::set_var("BSC_USERNAME", "AC56534d6b579feeba83f0563ca7fa7075");
+        std::env::set_var("BSC_PASSWORD", "prodtok");
+        run(&["bsc", "profiles", "create", "prod", "--from-env", "--use"]);
+        std::env::remove_var("BSC_USERNAME");
+        std::env::remove_var("BSC_PASSWORD");
+
+        let (code, output) = run(&["bsc", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let shown: serde_json::Value = serde_json::from_str(&output).expect("json");
+        assert_eq!(shown["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{shown:#?}");
+
+        let (code, output) = run(&["bsc", "profiles", "current", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let current: serde_json::Value = serde_json::from_str(&output).expect("json");
+        assert_eq!(current["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{current:#?}");
+    });
+}
+
+#[test]
+#[serial]
 fn a_profile_with_nothing_stored_has_no_account_column() {
     // The column must disappear rather than render an empty cell or error,
     // and a locked keychain has to degrade the same way.
