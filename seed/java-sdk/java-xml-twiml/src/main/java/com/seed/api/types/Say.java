@@ -28,6 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>&lt;Say&gt; TwiML Verb</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Say.Builder.class)
 public final class Say implements XmlSerializable {
@@ -58,21 +61,33 @@ public final class Say implements XmlSerializable {
         this.additionalChildren = additionalChildren;
     }
 
+    /**
+     * @return Message to say
+     */
     @JsonProperty("message")
     public Optional<String> getMessage() {
         return message;
     }
 
+    /**
+     * @return Voice to use
+     */
     @JsonProperty("voice")
     public Optional<String> getVoice() {
         return voice;
     }
 
+    /**
+     * @return Times to loop message
+     */
     @JsonProperty("loop")
     public Optional<Integer> getLoop() {
         return loop;
     }
 
+    /**
+     * @return Nested TwiML elements, rendered in order.
+     */
     @JsonProperty("children")
     public Optional<List<Break>> getChildren() {
         return children;
@@ -178,45 +193,69 @@ public final class Say implements XmlSerializable {
             return this;
         }
 
+        /**
+         * <p>Message to say</p>
+         */
         @JsonSetter(value = "message", nulls = Nulls.SKIP)
         public Builder message(Optional<String> message) {
             this.message = message;
             return this;
         }
 
+        /**
+         * <p>Message to say</p>
+         */
         public Builder message(String message) {
             this.message = Optional.ofNullable(message);
             return this;
         }
 
+        /**
+         * <p>Voice to use</p>
+         */
         @JsonSetter(value = "voice", nulls = Nulls.SKIP)
         public Builder voice(Optional<String> voice) {
             this.voice = voice;
             return this;
         }
 
+        /**
+         * <p>Voice to use</p>
+         */
         public Builder voice(String voice) {
             this.voice = Optional.ofNullable(voice);
             return this;
         }
 
+        /**
+         * <p>Times to loop message</p>
+         */
         @JsonSetter(value = "loop", nulls = Nulls.SKIP)
         public Builder loop(Optional<Integer> loop) {
             this.loop = loop;
             return this;
         }
 
+        /**
+         * <p>Times to loop message</p>
+         */
         public Builder loop(Integer loop) {
             this.loop = Optional.ofNullable(loop);
             return this;
         }
 
+        /**
+         * <p>Nested TwiML elements, rendered in order.</p>
+         */
         @JsonSetter(value = "children", nulls = Nulls.SKIP)
         public Builder children(Optional<List<Break>> children) {
             this.children = children;
             return this;
         }
 
+        /**
+         * <p>Nested TwiML elements, rendered in order.</p>
+         */
         public Builder children(List<Break> children) {
             this.children = Optional.ofNullable(children);
             return this;
@@ -251,6 +290,9 @@ public final class Say implements XmlSerializable {
 
         /**
          * Appends a <break> child element.
+         * <p>Adding a Pause in &lt;Say&gt;</p>
+         * @param _break the <break> element to append
+         * @return this builder
          */
         public Builder break_(Break _break) {
             List<Break> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));

@@ -28,6 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Wide.Builder.class)
 public final class Wide implements XmlSerializable {
@@ -6861,6 +6864,9 @@ public final class Wide implements XmlSerializable {
 
         /**
          * Appends a <Pause> child element.
+         * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+         * @param pause the <Pause> element to append
+         * @return this builder
          */
         public Builder pause(Pause pause) {
             List<Pause> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));

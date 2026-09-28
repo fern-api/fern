@@ -28,6 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>Root TwiML element.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response implements XmlSerializable {
@@ -173,6 +176,9 @@ public final class Response implements XmlSerializable {
 
         /**
          * Appends a <Say> child element.
+         * <p>&lt;Say&gt; TwiML Verb</p>
+         * @param say the <Say> element to append
+         * @return this builder
          */
         public Builder say(Say say) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -183,6 +189,8 @@ public final class Response implements XmlSerializable {
 
         /**
          * Appends a <Dial> child element.
+         * @param dial the <Dial> element to append
+         * @return this builder
          */
         public Builder dial(Dial dial) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -193,6 +201,9 @@ public final class Response implements XmlSerializable {
 
         /**
          * Appends a <Pause> child element.
+         * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+         * @param pause the <Pause> element to append
+         * @return this builder
          */
         public Builder pause(Pause pause) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -203,6 +214,8 @@ public final class Response implements XmlSerializable {
 
         /**
          * Appends a <Hangup> child element.
+         * @param hangup the <Hangup> element to append
+         * @return this builder
          */
         public Builder hangup(Hangup hangup) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));

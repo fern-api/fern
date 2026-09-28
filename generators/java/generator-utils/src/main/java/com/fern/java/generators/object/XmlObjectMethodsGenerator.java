@@ -9,6 +9,7 @@ import com.fern.ir.model.types.XmlPropertyEncoding;
 import com.fern.ir.model.types.XmlPropertyKind;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.XmlCoreGenerator;
+import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
 import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.XmlTypeUtils;
@@ -53,7 +54,9 @@ public final class XmlObjectMethodsGenerator {
     private final ClassName objectClassName;
     private final XmlEncoding xmlEncoding;
     private final boolean isRoot;
+    private final Optional<String> typeDocs;
     private final List<EnrichedObjectProperty> properties;
+    private final Map<String, String> propertyDocsByFieldName;
     private final Optional<String> additionalPropertiesFieldName;
     private final String additionalChildrenFieldName;
     private final String additionalChildrenGetterName;
@@ -82,9 +85,16 @@ public final class XmlObjectMethodsGenerator {
         this.objectClassName = objectClassName;
         this.xmlEncoding = xmlEncoding;
         this.isRoot = XmlTypeUtils.isRootElement(typeDeclarations, typeId);
+        this.typeDocs = Optional.ofNullable(typeDeclarations.get(typeId)).flatMap(TypeDeclaration::getDocs);
         this.properties = properties.stream()
                 .filter(property -> property.fieldSpec().isPresent())
                 .collect(Collectors.toList());
+        this.propertyDocsByFieldName = this.properties.stream()
+                .filter(property -> property.docs().isPresent())
+                .collect(Collectors.toMap(
+                        property -> property.fieldSpec().get().name,
+                        property -> property.docs().get(),
+                        (a, b) -> a));
         this.additionalPropertiesFieldName = additionalPropertiesFieldName;
         this.xmlWriterClassName = XmlCoreGenerator.getXmlWriterClassName(generatorContext);
         this.xmlReaderClassName = XmlCoreGenerator.getXmlReaderClassName(generatorContext);
@@ -98,12 +108,15 @@ public final class XmlObjectMethodsGenerator {
                 .addMethod(generateToXmlWithDeclaration())
                 .addMethod(generateFromXmlString(objectClassName))
                 .addMethod(generateFromXmlElement());
+        if (typeSpec.javadoc.isEmpty() && typeDocs.isPresent()) {
+            builder.addJavadoc(JavaDocUtils.render(typeDocs.get()));
+        }
         List<MethodSpec> childBuilderMethods = generateChildBuilderMethods(typeSpec);
         boolean hasFinalStage =
                 typeSpec.typeSpecs.stream().anyMatch(nested -> nested.name.equals(FINAL_STAGE_INTERFACE_NAME));
         builder.typeSpecs.clear();
         for (TypeSpec nested : typeSpec.typeSpecs) {
-            TypeSpec updated = withChildBuilderMethods(nested, childBuilderMethods, hasFinalStage);
+            TypeSpec updated = withChildBuilderMethods(withSetterJavadocs(nested), childBuilderMethods, hasFinalStage);
             if (nested.name.equals(BUILDER_CLASS_NAME)) {
                 updated = updated.toBuilder()
                         .addMethod(generateFromXmlString(builderClassName))
@@ -395,6 +408,12 @@ public final class XmlObjectMethodsGenerator {
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(variant.typeName, variant.parameterName)
                         .returns(objectClassName.nestedClass(BUILDER_CLASS_NAME));
+                if (variant.docs.isPresent()) {
+                    method.addJavadoc(JavaDocUtils.render(variant.docs.get()));
+                }
+                method.addJavadoc(JavaDocUtils.getParameterJavadoc(
+                        variant.parameterName, "the <" + variant.elementName + "> element to append"));
+                method.addJavadoc(JavaDocUtils.getReturnDocs("this builder"));
                 if (shape.optional) {
                     method.addStatement(
                                     "$T<$T> updated = new $T<>(this.$L.orElseGet($T::emptyList))",
@@ -412,6 +431,34 @@ public final class XmlObjectMethodsGenerator {
             }
         }
         return methods;
+    }
+
+    /**
+     * Copies the property description onto builder setters that were generated without one (the non-Optional
+     * overloads), so every way of setting an attribute shows its documentation.
+     */
+    private TypeSpec withSetterJavadocs(TypeSpec nested) {
+        if (nested.methodSpecs.stream().noneMatch(this::isUndocumentedSetter)) {
+            return nested;
+        }
+        TypeSpec.Builder builder = nested.toBuilder();
+        builder.methodSpecs.clear();
+        for (MethodSpec method : nested.methodSpecs) {
+            if (!isUndocumentedSetter(method)) {
+                builder.addMethod(method);
+                continue;
+            }
+            builder.addMethod(method.toBuilder()
+                    .addJavadoc(JavaDocUtils.render(propertyDocsByFieldName.get(method.name)))
+                    .build());
+        }
+        return builder.build();
+    }
+
+    private boolean isUndocumentedSetter(MethodSpec method) {
+        return method.javadoc.isEmpty()
+                && method.parameters.size() == 1
+                && propertyDocsByFieldName.containsKey(method.name);
     }
 
     private static TypeSpec withChildBuilderMethods(TypeSpec nested, List<MethodSpec> methods, boolean hasFinalStage) {
@@ -449,11 +496,13 @@ public final class XmlObjectMethodsGenerator {
         private final String pascalCaseName;
         private final String parameterName;
         private final boolean isUnionMember;
+        private final Optional<String> docs;
 
         private ChildVariant(
                 TypeName typeName, String elementName, TypeDeclaration declaration, boolean isUnionMember) {
             this.typeName = typeName;
             this.elementName = elementName;
+            this.docs = declaration.getDocs();
             this.camelCaseName = NameUtils.toName(declaration.getName().getName())
                     .getCamelCase()
                     .getSafeName();
