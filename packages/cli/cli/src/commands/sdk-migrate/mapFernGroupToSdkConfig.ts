@@ -22,12 +22,14 @@ export function mapFernGroupToSdkConfig({
     fernWorkspace,
     group,
     source,
+    replay,
     clientPathParameterStyle,
     sourceDerivedApiFields
 }: {
     fernWorkspace: Pick<FernWorkspace, "definition">;
     group: generatorsYml.GeneratorGroup;
     source: SdkConfigV1SourceConfig;
+    replay?: generatorsYml.ReplayConfigSchema;
     clientPathParameterStyle?: "inline" | "wrapped";
     sourceDerivedApiFields?: SourceDerivedApiFields;
 }): MappingResult {
@@ -35,6 +37,7 @@ export function mapFernGroupToSdkConfig({
     const input: FernResolvedGeneratorGroupInput = {
         apiName: fernWorkspace.definition.rootApiFile.contents.name,
         source,
+        ...(replay == null ? {} : { replay }),
         api: apiProjection.api,
         group: {
             name: group.groupName,

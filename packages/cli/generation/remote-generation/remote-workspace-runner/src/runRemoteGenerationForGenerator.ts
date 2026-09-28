@@ -368,6 +368,7 @@ export async function runRemoteGenerationForGenerator({
                     workspace,
                     generatorInvocation: candidate.generatorInvocation,
                     audiences,
+                    replay,
                     sourceArchive: sdkGenApiSourceArchive,
                     mapFernGroupToSdkConfig
                 });

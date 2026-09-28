@@ -404,6 +404,9 @@ describe("loadSdkConfigV1", () => {
             package: {},
             docs: {},
             generation: {},
+            // Replay configuration should round-trip through the JSON transport unchanged so
+            // sdk-gen-api and other consumers can honor it.
+            replay: { enabled: true },
             targets: [
                 {
                     language: "typescript",

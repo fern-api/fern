@@ -143,6 +143,17 @@ describe("SDK Config migration", () => {
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
     });
 
+    it("maps top-level replay configuration into SDK Config", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            replay: { enabled: true }
+        });
+
+        expect(result.sdkConfig.replay).toEqual({ enabled: true });
+    });
+
     it("preserves API-level path parameter behavior in the customer SDK Config", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },

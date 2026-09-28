@@ -54,6 +54,7 @@ export async function sdkMigrate({
             fernWorkspace,
             group,
             source: serializeMigrationSource({ specs: sourceSpecs, workingDirectory: sourceBaseDirectory }),
+            replay: workspace.generatorsConfiguration?.replay,
             clientPathParameterStyle: resolveMigrationPathParameterStyle(sourceSpecs),
             sourceDerivedApiFields: identifySourceDerivedApiFields({
                 workspace,
