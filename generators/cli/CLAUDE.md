@@ -109,7 +109,7 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`; adds the Homebrew installer/publish-job/tap keys when `customConfig.distribution.homebrew` is set. |
 | [`src/emitScoopWorkflow.ts`](src/emitScoopWorkflow.ts) | Renders the `publish-scoop` job appended to `release.yml`. cargo-dist has no Scoop support, so this channel is hand-written: resolve the win64 archive off the release, hash it, render the manifest, commit to the bucket repo. |
-| [`src/emitAptWorkflow.ts`](src/emitAptWorkflow.ts) | Renders the `publish-apt` job appended to `release.yml`: `dpkg-deb` the two musl archives, add them to the `pool/` of a GitHub Pages branch, regenerate `Packages`/`Release` with `apt-ftparchive`, sign `InRelease`/`Release.gpg`. |
+| [`src/emitLinuxPackagesWorkflow.ts`](src/emitLinuxPackagesWorkflow.ts) | Renders the `publish-linux-packages` job appended to `release.yml`: package the two musl archives as `.deb` (`dpkg-deb`) and/or signed `.rpm` (`rpmbuild` + `rpmsign`), add them to a GitHub Pages branch, regenerate `deb/` metadata with `apt-ftparchive` and `rpm/repodata` with `createrepo_c`, sign `InRelease`/`Release.gpg`/`repomd.xml.asc`. |
 | [`src/githubAppToken.ts`](src/githubAppToken.ts) | Renders the `actions/create-github-app-token` step (the one place `owner`/`repositories` are derived from a repo slug, shared by both publish jobs) and the `preflight-distribution` credential-check job. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
 | [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`, `distribution`, `profiles`. |
@@ -234,13 +234,14 @@ config:
     scoop:
       bucket: acme/scoop-bucket     # required, "<owner>/<repo>"
       tokenEnvironmentVariable: SCOOP_BUCKET_TOKEN   # optional, default
-    apt:
-      repository: acme/apt          # required, "<owner>/<repo>"
+    linuxPackages:
+      repository: acme/packages     # required, "<owner>/<repo>"
+      formats: [deb, rpm]           # optional, default both
       branch: gh-pages              # optional, default
-      url: https://apt.acme.com     # optional, defaults to the Pages URL
-      signingKeyEnvironmentVariable: APT_SIGNING_KEY # optional, default
-      signingKeyPassphraseEnvironmentVariable: APT_SIGNING_KEY_PASSPHRASE # optional
-      tokenEnvironmentVariable: APT_REPOSITORY_TOKEN # optional, default
+      url: https://packages.acme.com # optional, defaults to the Pages URL
+      signingKeyEnvironmentVariable: LINUX_PACKAGES_SIGNING_KEY # optional, default
+      signingKeyPassphraseEnvironmentVariable: LINUX_PACKAGES_SIGNING_KEY_PASSPHRASE # optional
+      tokenEnvironmentVariable: LINUX_PACKAGES_TOKEN # optional, default
 ```
 
 ### Push authentication
@@ -318,29 +319,45 @@ because a job in `ci.yml` cannot `needs:` a job in `release.yml`. And a
 retry cost ~12 minutes of unrelated build and test before an 8-second
 publish. `needs: host` removes all three.
 
-### APT repository
+### Linux package repository
 
-`publish-apt` turns a branch of a customer-owned GitHub repository into a
-complete static APT repository (`dists/stable/main`, `pool/main`,
-`gpg.key`), served by GitHub Pages or anything that mirrors the branch.
-The GPG key is the customer's: the job imports it from an Actions secret,
-signs with it, and publishes its public half as `gpg.key`. The package's
-`Maintainer:` is the key's first UID, so no extra config is needed.
+`publish-linux-packages` turns a branch of a customer-owned GitHub
+repository into a static APT and DNF/YUM repository, served by GitHub
+Pages or anything that mirrors the branch:
 
-- **musl, not glibc.** The static binaries install on any Debian/Ubuntu
-  release, so the package has no `Depends:`.
-- **xz, not zstd.** Ubuntu's `dpkg-deb` defaults to zstd, which apt on
-  Debian 11 and older cannot unpack.
-- **Append-only pool.** Every version stays, so `apt install pkg=<ver>`
-  pins and downgrades. A `.deb` already in the pool is never rebuilt, so
-  re-runs are a no-op and published checksums never change.
+```
+gpg.key                      public half of the signing key
+deb/dists/stable/…           Packages, signed InRelease / Release.gpg
+deb/pool/main/<l>/<pkg>/     every published .deb
+rpm/packages/                every published .rpm, each signed
+rpm/repodata/                createrepo_c metadata, signed repomd.xml.asc
+rpm/<pkg>.repo               drop-in for /etc/yum.repos.d
+```
+
+`formats` picks `deb`, `rpm` or both (default). One GPG key signs
+everything: the job imports it from an Actions secret, requires exactly one
+secret key, and publishes its public half as `gpg.key`. The `.deb`
+`Maintainer:` and `.rpm` `Packager:` are the key's first UID.
+
+- **musl, not glibc.** The static binaries install on any distribution
+  release, so neither package declares dependencies (`AutoReqProv: no`).
+- **Prebuilt RPMs.** `rpmbuild --target` packages the already-built
+  binary; strip/debuginfo passes are disabled since the host cannot strip
+  aarch64 binaries. Ubuntu's rpm macros name a `gpg2` it doesn't ship,
+  so `rpmsign` gets `__gpg` explicitly.
+- **xz/gzip, not zstd.** Ubuntu's `dpkg-deb` and rpm default to zstd,
+  which apt on Debian 11 and yum on EL7 cannot read; repodata is gzip.
+- **Append-only.** Every version stays, so users can pin and downgrade. A
+  package already published is never rebuilt, so re-runs are a no-op and
+  checksums never change. Re-runs regenerate metadata only if an index is
+  missing a package or a signature file is gone.
 - **Versions.** The tag loses any `…/` prefix and a leading `v`; `-`
-  becomes `~` so `1.2.3~rc.1` sorts before `1.2.3`. Prereleases are
-  skipped unless `publish_prereleases`, because the one `stable` suite is
-  what `apt upgrade` reads.
+  becomes `~` so `1.2.3~rc.1` sorts before `1.2.3` in both dpkg and rpm.
+  RPM `Release:` is always `1`. Prereleases are skipped unless
+  `publish_prereleases`, because there is one release channel.
 - **Auth.** Uses the same `resolveChannelAuth` ladder as Homebrew and
-  Scoop (`APT_REPOSITORY_TOKEN` by default), so a shared GitHub App also
-  covers the APT repository.
+  Scoop (`LINUX_PACKAGES_TOKEN` by default), so a shared GitHub App also
+  covers the package repository.
 
 `emitReleaseWorkflow.ts` keeps **one** cargo-dist template ending after
 the `host` job; publish jobs and the terminal `announce` job are appended

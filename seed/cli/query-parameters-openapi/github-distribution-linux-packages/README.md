@@ -35,9 +35,16 @@ powershell -ExecutionPolicy ByPass -c "irm https://github.com/query-parameters-o
 ### APT (Debian / Ubuntu)
 
 ```bash
-curl -fsSL https://acme.github.io/apt/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/query-parameters-api-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/query-parameters-api-archive-keyring.gpg] https://acme.github.io/apt stable main" | sudo tee /etc/apt/sources.list.d/query-parameters-api.list
+curl -fsSL https://acme.github.io/packages/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/query-parameters-api-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/query-parameters-api-archive-keyring.gpg] https://acme.github.io/packages/deb stable main" | sudo tee /etc/apt/sources.list.d/query-parameters-api.list
 sudo apt update && sudo apt install query-parameters-api
+```
+
+### DNF / YUM (Fedora / RHEL / Amazon Linux)
+
+```bash
+sudo curl -fsSL -o /etc/yum.repos.d/query-parameters-api.repo https://acme.github.io/packages/rpm/query-parameters-api.repo
+sudo dnf install query-parameters-api
 ```
 
 ### Build from source

@@ -332,36 +332,37 @@ jobs:
             gh release create "${{ needs.plan.outputs.tag }}" --target "$RELEASE_COMMIT" $PRERELEASE_FLAG --title "$ANNOUNCEMENT_TITLE" --notes-file "$RUNNER_TEMP/notes.txt" artifacts/*
           fi
 
-  publish-apt:
+  publish-linux-packages:
     needs:
       - plan
       - host
     runs-on: "ubuntu-22.04"
     # The same prerelease gate as the Homebrew and Scoop jobs: the repository
-    # has a single `stable` suite, so an RC published here would be what
-    # `apt upgrade` installs.
+    # has a single release channel, so an RC published here would be what
+    # `apt upgrade` / `dnf upgrade` installs.
     if: ${{ !fromJson(needs.plan.outputs.val).announcement_is_prerelease || fromJson(needs.plan.outputs.val).publish_prereleases }}
     env:
       PACKAGE: "query-parameters-api"
       BRANCH: "gh-pages"
+      REPOSITORY_URL: "https://acme.github.io/packages"
     steps:
       - name: Import the signing key
         id: key
         env:
-          SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+          SIGNING_KEY: ${{ secrets.LINUX_PACKAGES_SIGNING_KEY }}
         shell: bash
         run: |
           set -euo pipefail
 
           if [ -z "${SIGNING_KEY}" ]; then
-            echo "::error::The APT_SIGNING_KEY secret is empty or unset. Store the ASCII-armored GPG private key that signs the APT repository under that name."
+            echo "::error::The LINUX_PACKAGES_SIGNING_KEY secret is empty or unset. Store the ASCII-armored GPG private key that signs the package repository under that name."
             exit 1
           fi
           printf '%s\n' "${SIGNING_KEY}" | gpg --batch --import
           # Primary-key fingerprints only; subkey fpr lines follow ssb.
           FINGERPRINTS=$(gpg --batch --list-secret-keys --with-colons | awk -F: '/^sec:/ { primary = 1; next } primary && /^fpr:/ { print $10; primary = 0 }')
           if [ "$(printf '%s' "${FINGERPRINTS}" | grep -c .)" != 1 ]; then
-            echo "::error::APT_SIGNING_KEY must contain exactly one GPG secret key."
+            echo "::error::LINUX_PACKAGES_SIGNING_KEY must contain exactly one GPG secret key."
             exit 1
           fi
           FINGERPRINT="${FINGERPRINTS}"
@@ -369,7 +370,7 @@ jobs:
 
           GPG_ARGS=(--batch --yes --local-user "${FINGERPRINT}")
           if [ -n "${SIGNING_KEY_PASSPHRASE:-}" ]; then
-            PASSPHRASE_FILE="${RUNNER_TEMP}/apt-signing-passphrase"
+            PASSPHRASE_FILE="${RUNNER_TEMP}/signing-passphrase"
             (umask 077 && printf '%s' "${SIGNING_KEY_PASSPHRASE}" > "${PASSPHRASE_FILE}")
             GPG_ARGS+=(--pinentry-mode loopback --passphrase-file "${PASSPHRASE_FILE}")
           fi
@@ -381,11 +382,12 @@ jobs:
             echo "maintainer=${MAINTAINER:-query-parameters-api}"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Build the .deb packages from the musl release archives
-        id: debs
+      - name: Build the packages from the musl release archives
+        id: packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAINTAINER: ${{ steps.key.outputs.maintainer }}
+          FINGERPRINT: ${{ steps.key.outputs.fingerprint }}
         shell: bash
         run: |
           set -euo pipefail
@@ -393,21 +395,27 @@ jobs:
           TAG="${GITHUB_REF_NAME}"
           # Tags may be prefixed (`my-app/1.2.3`, `releases/v1.2.3`). A
           # semver prerelease `-rc.1` becomes `~rc.1` so it sorts before
-          # the final release, as Debian versioning requires. Every `-` is
-          # read as semver, so Debian revisions (`v1.2.3-1`) are unsupported.
+          # the final release, as both Debian and RPM versioning require.
+          # Every `-` is read as semver, so Debian revisions (`v1.2.3-1`)
+          # are unsupported.
           VERSION="${TAG##*/}"
           VERSION="${VERSION#v}"
           VERSION="${VERSION//-/\~}"
           if ! [[ "${VERSION}" =~ ^[0-9][A-Za-z0-9.+~]*$ ]]; then
-            echo "::error::Cannot derive a Debian version from tag ${TAG}."
+            echo "::error::Cannot derive a package version from tag ${TAG}."
             exit 1
           fi
-          OUT="${RUNNER_TEMP}/debs"
+          OUT="${RUNNER_TEMP}/packages"
           mkdir -p "${OUT}"
+          if ! command -v rpmbuild > /dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y rpm
+          fi
 
-          for pair in amd64:x86_64-unknown-linux-musl arm64:aarch64-unknown-linux-musl; do
-            ARCH="${pair%%:*}"
-            SUFFIX="-${pair#*:}.tar.gz"
+          for triple in amd64:x86_64:x86_64-unknown-linux-musl arm64:aarch64:aarch64-unknown-linux-musl; do
+            DEB_ARCH="${triple%%:*}"
+            REST="${triple#*:}"
+            RPM_ARCH="${REST%%:*}"
+            SUFFIX="-${REST#*:}.tar.gz"
 
             ASSET_NAME=""
             for attempt in $(seq 1 6); do
@@ -426,7 +434,7 @@ jobs:
               exit 1
             fi
 
-            DOWNLOAD="${RUNNER_TEMP}/apt-download/${ARCH}"
+            DOWNLOAD="${RUNNER_TEMP}/download/${DEB_ARCH}"
             mkdir -p "${DOWNLOAD}"
             gh release download "${TAG}" --repo "${GITHUB_REPOSITORY}" --pattern "${ASSET_NAME}" --dir "${DOWNLOAD}"
             tar -xzf "${DOWNLOAD}/${ASSET_NAME}" -C "${DOWNLOAD}"
@@ -436,50 +444,96 @@ jobs:
               exit 1
             fi
 
-            ROOT="${RUNNER_TEMP}/apt-root/${ARCH}"
+            ROOT="${RUNNER_TEMP}/deb-root/${DEB_ARCH}"
             mkdir -p "${ROOT}/DEBIAN" "${ROOT}/usr/bin"
             install -m 0755 "${BINARY}" "${ROOT}/usr/bin/query-parameters-api"
             {
               echo "Package: ${PACKAGE}"
               echo "Version: ${VERSION}"
-              echo "Architecture: ${ARCH}"
+              echo "Architecture: ${DEB_ARCH}"
               echo "Maintainer: ${MAINTAINER}"
               echo "Installed-Size: $(du -sk "${ROOT}/usr" | cut -f1)"
               echo "Section: utils"
               echo "Priority: optional"
-            echo 'Homepage: https://github.com/query-parameters-openapi/fern'
+              echo 'Homepage: https://github.com/query-parameters-openapi/fern'
               echo 'Description: CLI for the Query Parameters API'
             } > "${ROOT}/DEBIAN/control"
 
             # xz, not dpkg's zstd default on Ubuntu: apt on Debian 11 and
             # older cannot unpack zstd members.
-            dpkg-deb -Zxz --root-owner-group --build "${ROOT}" "${OUT}/${PACKAGE}_${VERSION}_${ARCH}.deb"
+            dpkg-deb -Zxz --root-owner-group --build "${ROOT}" "${OUT}/${PACKAGE}_${VERSION}_${DEB_ARCH}.deb"
+
+            TOP="${RUNNER_TEMP}/rpmbuild/${RPM_ARCH}"
+            mkdir -p "${TOP}/SOURCES" "${TOP}/SPECS"
+            install -m 0755 "${BINARY}" "${TOP}/SOURCES/query-parameters-api"
+            {
+              echo "Name: ${PACKAGE}"
+              echo "Version: ${VERSION}"
+              echo "Release: 1"
+              echo 'Summary: CLI for the Query Parameters API'
+              echo 'License: LicenseRef-Unspecified'
+              echo 'URL: https://github.com/query-parameters-openapi/fern'
+              echo "Packager: ${MAINTAINER//\%/%%}"
+              echo "Source0: query-parameters-api"
+              echo "AutoReqProv: no"
+              echo
+              echo "%description"
+              echo 'CLI for the Query Parameters API'
+              echo
+              echo "%install"
+              echo "install -D -m 0755 %{SOURCE0} %{buildroot}/usr/bin/query-parameters-api"
+              echo
+              echo "%files"
+              echo "/usr/bin/query-parameters-api"
+            } > "${TOP}/SPECS/${PACKAGE}.spec"
+
+            # The binary is prebuilt for the target, so skip the host's
+            # strip/debuginfo passes. xz, not zstd, so yum on EL7 can read it.
+            rpmbuild -bb --quiet --target "${RPM_ARCH}" \
+              --define "_topdir ${TOP}" \
+              --define "debug_package %{nil}" \
+              --define "__os_install_post %{nil}" \
+              --define "_build_id_links none" \
+              --define "_binary_payload w9.xzdio" \
+              "${TOP}/SPECS/${PACKAGE}.spec"
+            cp "${TOP}/RPMS/${RPM_ARCH}/${PACKAGE}-${VERSION}-1.${RPM_ARCH}.rpm" "${OUT}/"
           done
+
+          # dnf checks each package's own signature (gpgcheck) as well as
+          # the signed repository metadata (repo_gpgcheck).
+          # Ubuntu's rpm macros point %__gpg at a gpg2 binary it does not ship.
+          rpmsign --addsign \
+            --define "__gpg $(command -v gpg)" \
+            --define "_gpg_name ${FINGERPRINT}" \
+            "${OUT}"/*.rpm
 
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
-      - name: Check out the APT repository
+      - name: Check out the package repository
         uses: actions/checkout@v6
         with:
-          repository: "acme/apt"
-          token: ${{ secrets.APT_REPOSITORY_TOKEN }}
-          path: apt-repo
+          repository: "acme/packages"
+          token: ${{ secrets.LINUX_PACKAGES_TOKEN }}
+          path: linux-repo
           # Credentials must persist — the last step pushes the branch back.
           persist-credentials: true
 
       - name: Add the packages and sign the repository metadata
         env:
-          VERSION: ${{ steps.debs.outputs.version }}
+          VERSION: ${{ steps.packages.outputs.version }}
           FINGERPRINT: ${{ steps.key.outputs.fingerprint }}
         shell: bash
         run: |
           set -euo pipefail
 
-          if ! command -v apt-ftparchive > /dev/null 2>&1; then
-            sudo apt-get update && sudo apt-get install -y apt-utils
+          TOOLS=()
+          command -v apt-ftparchive > /dev/null 2>&1 || TOOLS+=(apt-utils)
+          command -v createrepo_c > /dev/null 2>&1 || TOOLS+=(createrepo-c)
+          if [ "${#TOOLS[@]}" -gt 0 ]; then
+            sudo apt-get update && sudo apt-get install -y "${TOOLS[@]}"
           fi
 
-          cd apt-repo
+          cd linux-repo
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # The branch is created on first publish, holding only the
@@ -495,63 +549,96 @@ jobs:
             git checkout --orphan "${BRANCH}"
             git rm -rf --quiet . || true
           else
-            echo "::error::Could not read ${BRANCH} from the APT repository (git ls-remote exited ${BRANCH_STATUS})."
+            echo "::error::Could not read ${BRANCH} from the package repository (git ls-remote exited ${BRANCH_STATUS})."
             exit 1
           fi
 
-          POOL="pool/main/q/query-parameters-api"
-          mkdir -p "${POOL}"
+          PACKAGES="${RUNNER_TEMP}/packages"
           ADDED=0
-          for deb in "${RUNNER_TEMP}"/debs/*.deb; do
-            if [ -e "${POOL}/$(basename "${deb}")" ]; then
-              echo "$(basename "${deb}") is already in the pool; keeping the published file."
+          # Skip only when the signed indexes already list every package, so
+          # a pool that got ahead of its metadata is re-indexed.
+          INDEXED=1
+
+          DEB_POOL="pool/main/q/query-parameters-api"
+          mkdir -p "deb/${DEB_POOL}"
+          for deb in "${PACKAGES}"/*.deb; do
+            NAME="$(basename "${deb}" .deb)"
+            if [ -e "deb/${DEB_POOL}/${NAME}.deb" ]; then
+              echo "${NAME}.deb is already in the pool; keeping the published file."
             else
-              cp "${deb}" "${POOL}/"
+              cp "${deb}" "deb/${DEB_POOL}/"
               ADDED=1
             fi
+            ARCH="${NAME##*_}"
+            grep -qxF "Filename: ${DEB_POOL}/${NAME}.deb" "deb/dists/stable/main/binary-${ARCH}/Packages" 2>/dev/null || INDEXED=0
           done
-          DIST="dists/stable"
-          # Skip only when the signed index already lists every package, so a
-          # pool that got ahead of its metadata is re-indexed.
-          if [ "${ADDED}" = 0 ] && [ -f "${DIST}/InRelease" ]; then
-            INDEXED=1
-            for deb in "${RUNNER_TEMP}"/debs/*.deb; do
-              NAME="$(basename "${deb}" .deb)"
-              ARCH="${NAME##*_}"
-              grep -qxF "Filename: ${POOL}/${NAME}.deb" "${DIST}/main/binary-${ARCH}/Packages" 2>/dev/null || INDEXED=0
-            done
-            if [ "${INDEXED}" = 1 ]; then
-              echo "${PACKAGE} ${VERSION} is already published; nothing to commit."
-              exit 0
+          [ -f "deb/dists/stable/InRelease" ] || INDEXED=0
+
+          mkdir -p rpm/packages
+          PRIMARY=$(find rpm/repodata -name '*-primary.xml.gz' 2> /dev/null | head -n1 || true)
+          for rpm in "${PACKAGES}"/*.rpm; do
+            NAME="$(basename "${rpm}")"
+            if [ -e "rpm/packages/${NAME}" ]; then
+              echo "${NAME} is already published; keeping the published file."
+            else
+              cp "${rpm}" rpm/packages/
+              ADDED=1
             fi
-          fi
-
-          for pair in amd64:x86_64-unknown-linux-musl arm64:aarch64-unknown-linux-musl; do
-            ARCH="${pair%%:*}"
-            mkdir -p "${DIST}/main/binary-${ARCH}"
-            apt-ftparchive --arch "${ARCH}" packages "pool/main" > "${DIST}/main/binary-${ARCH}/Packages"
-            gzip -9nkf "${DIST}/main/binary-${ARCH}/Packages"
+            # Not `grep -q`: exiting early would fail the pipe under pipefail.
+            if [ -z "${PRIMARY}" ] || ! gzip -dc "${PRIMARY}" | grep -F "href=\"packages/${NAME}\"" > /dev/null; then
+              INDEXED=0
+            fi
           done
-
-          # Removed first so the new Release does not hash its own
-          # predecessors.
-          rm -f "${DIST}/Release" "${DIST}/InRelease" "${DIST}/Release.gpg"
-          apt-ftparchive \
-            -o APT::FTPArchive::Release::Origin="${PACKAGE}" \
-            -o APT::FTPArchive::Release::Label="${PACKAGE}" \
-            -o APT::FTPArchive::Release::Suite="stable" \
-            -o APT::FTPArchive::Release::Codename="stable" \
-            -o APT::FTPArchive::Release::Architectures="amd64 arm64" \
-            -o APT::FTPArchive::Release::Components="main" \
-            release "${DIST}" > "${RUNNER_TEMP}/Release"
-          mv "${RUNNER_TEMP}/Release" "${DIST}/Release"
+          [ -f rpm/repodata/repomd.xml.asc ] || INDEXED=0
+          if [ "${ADDED}" = 0 ] && [ "${INDEXED}" = 1 ]; then
+            echo "${PACKAGE} ${VERSION} is already published; nothing to commit."
+            exit 0
+          fi
 
           GPG_ARGS=(--batch --yes --local-user "${FINGERPRINT}")
           if [ -n "${SIGNING_KEY_PASSPHRASE:-}" ]; then
-            GPG_ARGS+=(--pinentry-mode loopback --passphrase-file "${RUNNER_TEMP}/apt-signing-passphrase")
+            GPG_ARGS+=(--pinentry-mode loopback --passphrase-file "${RUNNER_TEMP}/signing-passphrase")
           fi
-          gpg "${GPG_ARGS[@]}" --clearsign --output "${DIST}/InRelease" "${DIST}/Release"
-          gpg "${GPG_ARGS[@]}" --armor --detach-sign --output "${DIST}/Release.gpg" "${DIST}/Release"
+
+          (
+            cd deb
+            DIST="dists/stable"
+            for ARCH in amd64 arm64; do
+              mkdir -p "${DIST}/main/binary-${ARCH}"
+              apt-ftparchive --arch "${ARCH}" packages "pool/main" > "${DIST}/main/binary-${ARCH}/Packages"
+              gzip -9nkf "${DIST}/main/binary-${ARCH}/Packages"
+            done
+
+            # Removed first so the new Release does not hash its own
+            # predecessors.
+            rm -f "${DIST}/Release" "${DIST}/InRelease" "${DIST}/Release.gpg"
+            apt-ftparchive \
+              -o APT::FTPArchive::Release::Origin="${PACKAGE}" \
+              -o APT::FTPArchive::Release::Label="${PACKAGE}" \
+              -o APT::FTPArchive::Release::Suite="stable" \
+              -o APT::FTPArchive::Release::Codename="stable" \
+              -o APT::FTPArchive::Release::Architectures="amd64 arm64" \
+              -o APT::FTPArchive::Release::Components="main" \
+              release "${DIST}" > "${RUNNER_TEMP}/Release"
+            mv "${RUNNER_TEMP}/Release" "${DIST}/Release"
+            gpg "${GPG_ARGS[@]}" --clearsign --output "${DIST}/InRelease" "${DIST}/Release"
+            gpg "${GPG_ARGS[@]}" --armor --detach-sign --output "${DIST}/Release.gpg" "${DIST}/Release"
+          )
+
+          # gzip, not zstd: yum on EL7 cannot read zstd repodata.
+          createrepo_c --quiet --update --general-compress-type gz rpm
+          rm -f rpm/repodata/repomd.xml.asc
+          gpg "${GPG_ARGS[@]}" --armor --detach-sign --output rpm/repodata/repomd.xml.asc rpm/repodata/repomd.xml
+          {
+            echo "[${PACKAGE}]"
+            echo "name=${PACKAGE}"
+            echo "baseurl=${REPOSITORY_URL}/rpm"
+            echo "enabled=1"
+            echo "gpgcheck=1"
+            echo "repo_gpgcheck=1"
+            echo "gpgkey=${REPOSITORY_URL}/gpg.key"
+          } > "rpm/${PACKAGE}.repo"
+
           gpg --batch --armor --export "${FINGERPRINT}" > gpg.key
           # GitHub Pages must serve the tree verbatim.
           touch .nojekyll
@@ -564,7 +651,7 @@ jobs:
     needs:
       - plan
       - host
-      - publish-apt
+      - publish-linux-packages
     # use "always() && ..." to allow us to wait for all publish jobs while
     # still allowing individual publish jobs to skip themselves (for prereleases).
     # "host" however must run to completion, no skipping allowed!

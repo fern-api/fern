@@ -589,31 +589,51 @@ describe("emitReadme — distribution channels", () => {
         expect(readme.indexOf("### Shell (macOS / Linux)")).toBeLessThan(readme.indexOf("### Homebrew"));
         expect(readme.indexOf("### Scoop (Windows)")).toBeLessThan(readme.indexOf("### Build from source"));
     });
-    it("renders the signed APT setup from the GitHub Pages URL", async () => {
-        await emitReadme({ outputDir, ...base, distribution: { apt: { repository: "acme/apt" } } });
+    it("renders APT and DNF setup from the GitHub Pages URL", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { linuxPackages: { repository: "acme/packages" } } });
         const readme = await readReadme();
         expect(readme).toContain("### APT (Debian / Ubuntu)");
         expect(readme).toContain(
-            "curl -fsSL https://acme.github.io/apt/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/acme-cli-archive-keyring.gpg"
+            "curl -fsSL https://acme.github.io/packages/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/acme-cli-archive-keyring.gpg"
         );
         expect(readme).toContain(
-            'echo "deb [signed-by=/usr/share/keyrings/acme-cli-archive-keyring.gpg] https://acme.github.io/apt stable main"'
+            'echo "deb [signed-by=/usr/share/keyrings/acme-cli-archive-keyring.gpg] https://acme.github.io/packages/deb stable main"'
         );
         expect(readme).toContain("sudo apt update && sudo apt install acme-cli");
+        expect(readme).toContain("### DNF / YUM (Fedora / RHEL / Amazon Linux)");
+        expect(readme).toContain(
+            "sudo curl -fsSL -o /etc/yum.repos.d/acme-cli.repo https://acme.github.io/packages/rpm/acme-cli.repo"
+        );
+        expect(readme).toContain("sudo dnf install acme-cli");
     });
 
-    it("uses a configured APT url", async () => {
+    it("uses a configured url", async () => {
         await emitReadme({
             outputDir,
             ...base,
-            distribution: { apt: { repository: "acme/apt", url: "https://apt.acme.com" } }
+            distribution: { linuxPackages: { repository: "acme/packages", url: "https://packages.acme.com" } }
         });
-        expect(await readReadme()).toContain("https://apt.acme.com stable main");
+        const readme = await readReadme();
+        expect(readme).toContain("https://packages.acme.com/deb stable main");
+        expect(readme).toContain("https://packages.acme.com/rpm/acme-cli.repo");
     });
 
-    it("omits APT when it is not configured", async () => {
+    it("renders only the configured formats", async () => {
+        await emitReadme({
+            outputDir,
+            ...base,
+            distribution: { linuxPackages: { repository: "acme/packages", formats: ["rpm"] } }
+        });
+        const readme = await readReadme();
+        expect(readme).not.toContain("### APT (Debian / Ubuntu)");
+        expect(readme).toContain("### DNF / YUM (Fedora / RHEL / Amazon Linux)");
+    });
+
+    it("omits Linux packages when they are not configured", async () => {
         await emitReadme({ outputDir, ...base });
-        expect(await readReadme()).not.toContain("### APT (Debian / Ubuntu)");
+        const readme = await readReadme();
+        expect(readme).not.toContain("### APT (Debian / Ubuntu)");
+        expect(readme).not.toContain("### DNF / YUM (Fedora / RHEL / Amazon Linux)");
     });
 });
 

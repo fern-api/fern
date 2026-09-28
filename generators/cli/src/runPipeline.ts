@@ -338,12 +338,13 @@ export async function runPipeline(args: {
                               defaultCrateDescription(ir.apiDisplayName ?? binaryName)
                       }
                     : undefined,
-            apt:
-                distribution?.apt != null
+            linuxPackages:
+                distribution?.linuxPackages != null
                     ? {
                           binaryName,
-                          apt: distribution.apt,
+                          linuxPackages: distribution.linuxPackages,
                           repoUrl: outputConfig.repoUrl,
+                          license: customConfig.packageIdentity?.license,
                           description:
                               customConfig.packageIdentity?.description ??
                               defaultCrateDescription(ir.apiDisplayName ?? binaryName)
