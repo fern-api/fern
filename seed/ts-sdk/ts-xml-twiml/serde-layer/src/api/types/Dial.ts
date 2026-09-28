@@ -119,7 +119,11 @@ export namespace Dial {
             return this;
         }
 
-        /** Adds a `<Number>` child and returns its builder. */
+        /**
+         * Adds a `<Number>` child and returns its builder.
+         * @param fields initial `<Number>` attributes and children
+         * @returns the `SeedApi.Number.Builder` appended to this element
+         */
         addNumber(fields?: Partial<SeedApi.Number.Fields>): SeedApi.Number.Builder {
             const builder = new SeedApi.Number.Builder(fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];

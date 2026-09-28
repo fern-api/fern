@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.98.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now carry inline documentation on their user-facing builder API: every
+        `Builder` setter gets the property description, and child methods (`say.addBreak(...)`, `response.say(...)`)
+        document the child element plus `@param`/`@returns`.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 3.97.1
   changelogEntry:
     - summary: |

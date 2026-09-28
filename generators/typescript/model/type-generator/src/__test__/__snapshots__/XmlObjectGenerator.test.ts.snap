@@ -100,14 +100,22 @@ export namespace Collections {
             return this;
         }
 
-        /** Adds a \`<break>\` child and returns its builder. */
+        /**
+         * Adds a \`<break>\` child and returns its builder.
+         * @param fields initial \`<break>\` attributes and children
+         * @returns the \`Break.Builder\` appended to this element
+         */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.breaks = [...(this.elements.breaks ?? []), builder];
             return builder;
         }
 
-        /** Adds a \`<break>\` child (replacing any existing one) and returns its builder. */
+        /**
+         * Adds a \`<break>\` child (replacing any existing one) and returns its builder.
+         * @param fields initial \`<break>\` attributes and children
+         * @returns the \`Break.Builder\` appended to this element
+         */
         addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.pause = builder;
@@ -227,7 +235,11 @@ export namespace Dial {
             return this;
         }
 
-        /** Adds a \`<Number>\` child and returns its builder. */
+        /**
+         * Adds a \`<Number>\` child and returns its builder.
+         * @param fields initial \`<Number>\` attributes and children
+         * @returns the \`Number.Builder\` appended to this element
+         */
         addNumber(fields?: Partial<Number.Fields>): Number.Builder {
             const builder = new Number.Builder(fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];
@@ -353,7 +365,11 @@ export namespace Say {
             return this;
         }
 
-        /** Adds a \`<break>\` child and returns its builder. */
+        /**
+         * Adds a \`<break>\` child and returns its builder.
+         * @param fields initial \`<break>\` attributes and children
+         * @returns the \`Break.Builder\` appended to this element
+         */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
@@ -479,7 +495,11 @@ export namespace Say {
             return this;
         }
 
-        /** Adds a \`<break>\` child and returns its builder. */
+        /**
+         * Adds a \`<break>\` child and returns its builder.
+         * @param fields initial \`<break>\` attributes and children
+         * @returns the \`Break.Builder\` appended to this element
+         */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
