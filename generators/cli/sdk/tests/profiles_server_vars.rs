@@ -140,17 +140,10 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
                 == "  REGIONAL_REGION             Value for the {region} URL template variable (--region wins)"),
             "{footer}"
         );
-        // The legend names the vars `profiles set` rejects, rather than
-        // marking the ones it accepts.
-        assert!(
-            footer.contains(
-                "All of the above except REGIONAL_PROFILE, REGIONAL_CA_BUNDLE, REGIONAL_INSECURE, \
-                 REGIONAL_PROXY, REGIONAL_TIMEOUT_SECS and REGIONAL_USER_AGENT_SUFFIX can also be \
-                 stored per profile:\n  regional profiles set <name> VAR=value"
-            ),
-            "{footer}"
-        );
+        // Profile storability is documented by `profiles set --help`, not
+        // here: no markers, no legend.
         assert!(!footer.contains('*'), "{footer}");
+        assert!(!footer.contains("stored per profile"), "{footer}");
         assert_eq!(
             output.matches("Environment variables:").count(),
             1,
