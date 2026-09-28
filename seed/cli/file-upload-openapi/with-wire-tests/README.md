@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `API_BASE_URL` | Override the API base URL |
-| `API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `API_INSECURE=1` | Skip TLS verification (debugging only) |
-| `API_PROXY` | HTTP(S) proxy URL |
-| `API_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `API_BASE_URL` | Override the API base URL | yes |
+| `API_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `API_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `API_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `API_PROXY` | HTTP(S) proxy URL | no |
+| `API_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `API_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `api profiles set <profile> API_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

@@ -116,13 +116,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `PROFILES_CLI_BASE_URL` | Override the API base URL |
-| `PROFILES_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `PROFILES_CLI_INSECURE=1` | Skip TLS verification (debugging only) |
-| `PROFILES_CLI_PROXY` | HTTP(S) proxy URL |
-| `PROFILES_CLI_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `PROFILES_CLI_BASE_URL` | Override the API base URL | yes |
+| `PROFILES_CLI_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `PROFILES_CLI_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `PROFILES_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `PROFILES_CLI_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `PROFILES_CLI_PROXY` | HTTP(S) proxy URL | no |
+| `PROFILES_CLI_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `PROFILES_CLI_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `profiles-cli profiles set <profile> PROFILES_CLI_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

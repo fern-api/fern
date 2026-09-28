@@ -1406,6 +1406,7 @@ fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliEr
 
     let prefix = format!("{}_", crate::text::env_var_prefix(ctx.cli_name));
     if let Some(rest) = key.strip_prefix(&prefix) {
+        // Keep in step with `env_surface::PROFILE_SUFFIXES`.
         match rest {
             "RETRIES" => return Ok(SetTarget::Retries),
             "BASE_URL" => return Ok(SetTarget::BaseUrl),
@@ -1447,21 +1448,37 @@ fn unsettable_key(key: &str, ctx: &ProfilesContext<'_>) -> CliError {
             &(scheme.clone(), binding.clone()),
         )));
     }
-    for suffix in ["RETRIES", "BASE_URL", "OUTPUT"] {
-        known.push(format!("{prefix}_{suffix}"));
-    }
+    known.extend(crate::env_surface::profile_settable_env_vars(ctx.cli_name));
     for variable in &ctx.vocabulary.server_variables {
         known.push(format!("{prefix}_{}", crate::text::to_screaming_snake(variable)));
     }
     known.sort();
     known.dedup();
 
-    let suggestion = crate::text::nearest(key, known.iter().cloned())
-        .or_else(|| crate::text::nearest(key, ctx.vocabulary.parameter_labels().iter().cloned()))
-        .map(|hit| format!(" Did you mean `{hit}`?"))
-        .unwrap_or_default();
+    let is_global_only = crate::env_surface::runtime_env_vars(ctx.cli_name)
+        .iter()
+        .any(|v| {
+            v.scope == crate::env_surface::EnvScope::Global
+                && v.name.split('=').next() == Some(key)
+        });
+    let global_only = if is_global_only {
+        format!(
+            " `{key}` applies to the whole process and is read from the environment \
+             only — export it in your shell instead."
+        )
+    } else {
+        String::new()
+    };
+    let suggestion = if is_global_only {
+        String::new()
+    } else {
+        crate::text::nearest(key, known.iter().cloned())
+            .or_else(|| crate::text::nearest(key, ctx.vocabulary.parameter_labels().iter().cloned()))
+            .map(|hit| format!(" Did you mean `{hit}`?"))
+            .unwrap_or_default()
+    };
     CliError::Validation(format!(
-        "`{key}` is not something this CLI can store on a profile.{suggestion} \
+        "`{key}` is not something this CLI can store on a profile.{global_only}{suggestion} \
          Settable environment variables: {}. API parameters are settable by their \
          spec name — run `--schema` to list them.",
         known.join(", "),
@@ -2026,6 +2043,44 @@ mod tests {
             ),
         ]);
         vocabulary
+    }
+
+    fn ctx<'a>(vocabulary: &'a Vocabulary) -> ProfilesContext<'a> {
+        ProfilesContext {
+            cli_name: "twilio-cli",
+            bindings: &[],
+            revoke_op_path: None,
+            command_name: "profiles",
+            auth_bindings: &[],
+            login_flows: &[],
+            vocabulary,
+        }
+    }
+
+    #[test]
+    fn classify_accepts_every_profile_settable_runtime_var() {
+        let vocabulary = vocabulary();
+        let ctx = ctx(&vocabulary);
+        for name in crate::env_surface::profile_settable_env_vars("twilio-cli") {
+            assert!(classify_key(&name, &ctx).is_ok(), "{name} should classify");
+        }
+        assert!(matches!(
+            classify_key("TWILIO_CLI_RETRIES", &ctx),
+            Ok(SetTarget::Retries)
+        ));
+    }
+
+    #[test]
+    fn global_only_runtime_var_is_explained_not_suggested() {
+        let vocabulary = vocabulary();
+        let ctx = ctx(&vocabulary);
+        let err = classify_key("TWILIO_CLI_TIMEOUT_SECS", &ctx)
+            .err()
+            .expect("timeout is not profile-settable")
+            .to_string();
+        assert!(err.contains("read from the environment only"), "{err}");
+        assert!(!err.contains("Did you mean"), "{err}");
+        assert!(err.contains("TWILIO_CLI_RETRIES"), "{err}");
     }
 
     fn create_matches(args: &[&str]) -> ArgMatches {

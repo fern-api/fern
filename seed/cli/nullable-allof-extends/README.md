@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `NULLABLE_ALLOF_EXTENDS_TEST_BASE_URL` | Override the API base URL |
-| `NULLABLE_ALLOF_EXTENDS_TEST_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `NULLABLE_ALLOF_EXTENDS_TEST_INSECURE=1` | Skip TLS verification (debugging only) |
-| `NULLABLE_ALLOF_EXTENDS_TEST_PROXY` | HTTP(S) proxy URL |
-| `NULLABLE_ALLOF_EXTENDS_TEST_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `NULLABLE_ALLOF_EXTENDS_TEST_BASE_URL` | Override the API base URL | yes |
+| `NULLABLE_ALLOF_EXTENDS_TEST_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `NULLABLE_ALLOF_EXTENDS_TEST_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `NULLABLE_ALLOF_EXTENDS_TEST_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `NULLABLE_ALLOF_EXTENDS_TEST_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `NULLABLE_ALLOF_EXTENDS_TEST_PROXY` | HTTP(S) proxy URL | no |
+| `NULLABLE_ALLOF_EXTENDS_TEST_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `NULLABLE_ALLOF_EXTENDS_TEST_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `nullable-allof-extends-test profiles set <profile> NULLABLE_ALLOF_EXTENDS_TEST_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

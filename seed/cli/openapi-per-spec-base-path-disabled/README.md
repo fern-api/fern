@@ -117,13 +117,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `OAUTH_API_BASE_URL` | Override the API base URL |
-| `OAUTH_API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `OAUTH_API_INSECURE=1` | Skip TLS verification (debugging only) |
-| `OAUTH_API_PROXY` | HTTP(S) proxy URL |
-| `OAUTH_API_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `OAUTH_API_BASE_URL` | Override the API base URL | yes |
+| `OAUTH_API_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `OAUTH_API_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `OAUTH_API_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `OAUTH_API_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `OAUTH_API_PROXY` | HTTP(S) proxy URL | no |
+| `OAUTH_API_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `OAUTH_API_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `oauth-api profiles set <profile> OAUTH_API_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

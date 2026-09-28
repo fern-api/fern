@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `OPENAPI_REQUEST_BODY_REF_BASE_URL` | Override the API base URL |
-| `OPENAPI_REQUEST_BODY_REF_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `OPENAPI_REQUEST_BODY_REF_INSECURE=1` | Skip TLS verification (debugging only) |
-| `OPENAPI_REQUEST_BODY_REF_PROXY` | HTTP(S) proxy URL |
-| `OPENAPI_REQUEST_BODY_REF_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `OPENAPI_REQUEST_BODY_REF_BASE_URL` | Override the API base URL | yes |
+| `OPENAPI_REQUEST_BODY_REF_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `OPENAPI_REQUEST_BODY_REF_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `OPENAPI_REQUEST_BODY_REF_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `OPENAPI_REQUEST_BODY_REF_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `OPENAPI_REQUEST_BODY_REF_PROXY` | HTTP(S) proxy URL | no |
+| `OPENAPI_REQUEST_BODY_REF_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `OPENAPI_REQUEST_BODY_REF_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `openapi-request-body-ref profiles set <profile> OPENAPI_REQUEST_BODY_REF_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

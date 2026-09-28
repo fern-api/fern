@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_BASE_URL` | Override the API base URL |
-| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_INSECURE=1` | Skip TLS verification (debugging only) |
-| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_PROXY` | HTTP(S) proxy URL |
-| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_BASE_URL` | Override the API base URL | yes |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_PROXY` | HTTP(S) proxy URL | no |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `DISCRIMINATED_UNION_WITH_NESTED_ONEOF_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `discriminated-union-with-nested-oneof profiles set <profile> DISCRIMINATED_UNION_WITH_NESTED_ONEOF_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

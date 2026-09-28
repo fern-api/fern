@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `SHARED_TYPES_CLI_BASE_URL` | Override the API base URL |
-| `SHARED_TYPES_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `SHARED_TYPES_CLI_INSECURE=1` | Skip TLS verification (debugging only) |
-| `SHARED_TYPES_CLI_PROXY` | HTTP(S) proxy URL |
-| `SHARED_TYPES_CLI_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `SHARED_TYPES_CLI_BASE_URL` | Override the API base URL | yes |
+| `SHARED_TYPES_CLI_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `SHARED_TYPES_CLI_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `SHARED_TYPES_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `SHARED_TYPES_CLI_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `SHARED_TYPES_CLI_PROXY` | HTTP(S) proxy URL | no |
+| `SHARED_TYPES_CLI_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `SHARED_TYPES_CLI_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `shared-types-cli profiles set <profile> SHARED_TYPES_CLI_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

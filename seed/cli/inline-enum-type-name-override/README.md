@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `INLINE_ENUM_TYPE_NAME_OVERRIDE_BASE_URL` | Override the API base URL |
-| `INLINE_ENUM_TYPE_NAME_OVERRIDE_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `INLINE_ENUM_TYPE_NAME_OVERRIDE_INSECURE=1` | Skip TLS verification (debugging only) |
-| `INLINE_ENUM_TYPE_NAME_OVERRIDE_PROXY` | HTTP(S) proxy URL |
-| `INLINE_ENUM_TYPE_NAME_OVERRIDE_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_BASE_URL` | Override the API base URL | yes |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_PROXY` | HTTP(S) proxy URL | no |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `INLINE_ENUM_TYPE_NAME_OVERRIDE_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `inline-enum-type-name-override profiles set <profile> INLINE_ENUM_TYPE_NAME_OVERRIDE_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

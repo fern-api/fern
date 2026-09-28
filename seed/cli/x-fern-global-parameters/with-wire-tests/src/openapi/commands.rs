@@ -116,20 +116,23 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
 pub fn after_help_footer(binary_name: &str) -> String {
-    let prefix = binary_name.to_uppercase().replace('-', "_");
-    // The suffix flag/env names default to `--user-agent-suffix` /
-    // `<NAME>_USER_AGENT_SUFFIX` but can be renamed at generation time.
-    let ua_env = format!("{prefix}{}", crate::user_agent::suffix_env_segment());
-    let ua_flag = crate::user_agent::suffix_flag();
+    let vars = crate::env_surface::runtime_env_vars(binary_name);
+    let width = vars.iter().map(|v| v.name.chars().count()).max().unwrap_or(0);
+    let rows: Vec<String> = vars
+        .iter()
+        .map(|v| {
+            let marker = match v.scope {
+                crate::env_surface::EnvScope::Profile => " [profile]",
+                crate::env_surface::EnvScope::Global => "",
+            };
+            format!("  {:<width$}  {}{marker}", v.name, v.help, width = width)
+        })
+        .collect();
     format!(
-        "Environment variables:\n  \
-         {prefix}_BASE_URL             Override the API base URL\n  \
-         {prefix}_CA_BUNDLE            Path to PEM file with extra trust roots (or SSL_CERT_FILE)\n  \
-         {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
-         {prefix}_PROXY                HTTP(S) proxy URL\n  \
-         {prefix}_TIMEOUT_SECS         Total request timeout\n  \
-         {ua_env}    Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)\n\n\
-         Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
+        "Environment variables:\n{}\n\n\
+         [profile] variables can also be stored per profile with `{binary_name} profiles set`.\n\
+         Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored.",
+        rows.join("\n"),
     )
 }
 
@@ -1413,6 +1416,17 @@ mod tests {
     use crate::cli_args::HELP_HEADING_GLOBAL;
     use crate::openapi::discovery::{FernEnumValue, MethodParameter, RestMethod, RestResource};
     use std::collections::HashMap;
+
+    #[test]
+    fn footer_lists_every_runtime_env_var_and_marks_profile_ones() {
+        let footer = after_help_footer("twilio-cli");
+        for var in crate::env_surface::runtime_env_vars("twilio-cli") {
+            assert!(footer.contains(&var.name), "missing {}:\n{footer}", var.name);
+        }
+        assert!(footer.contains("TWILIO_CLI_RETRIES"));
+        assert!(footer.contains("[profile]"));
+        assert!(footer.contains("twilio-cli profiles set"));
+    }
 
     fn make_doc() -> RestDescription {
         let mut methods = HashMap::new();

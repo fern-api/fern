@@ -119,13 +119,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `ANY_AUTH_CLI_BASE_URL` | Override the API base URL |
-| `ANY_AUTH_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `ANY_AUTH_CLI_INSECURE=1` | Skip TLS verification (debugging only) |
-| `ANY_AUTH_CLI_PROXY` | HTTP(S) proxy URL |
-| `ANY_AUTH_CLI_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `ANY_AUTH_CLI_BASE_URL` | Override the API base URL | yes |
+| `ANY_AUTH_CLI_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `ANY_AUTH_CLI_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `ANY_AUTH_CLI_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `ANY_AUTH_CLI_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `ANY_AUTH_CLI_PROXY` | HTTP(S) proxy URL | no |
+| `ANY_AUTH_CLI_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `ANY_AUTH_CLI_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `any-auth-cli profiles set <profile> ANY_AUTH_CLI_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

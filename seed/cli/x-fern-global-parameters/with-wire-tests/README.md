@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_BASE_URL` | Override the API base URL |
-| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_INSECURE=1` | Skip TLS verification (debugging only) |
-| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_PROXY` | HTTP(S) proxy URL |
-| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_BASE_URL` | Override the API base URL | yes |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_PROXY` | HTTP(S) proxy URL | no |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `test-x-fern-global-parameters-extension profiles set <profile> TEST_X_FERN_GLOBAL_PARAMETERS_EXTENSION_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 

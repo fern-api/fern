@@ -110,13 +110,18 @@ Operations the spec marks as streaming (via `x-fern-streaming`) also accept:
 
 ### Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `X_FERN_DEFAULT_TEST_BASE_URL` | Override the API base URL |
-| `X_FERN_DEFAULT_TEST_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) |
-| `X_FERN_DEFAULT_TEST_INSECURE=1` | Skip TLS verification (debugging only) |
-| `X_FERN_DEFAULT_TEST_PROXY` | HTTP(S) proxy URL |
-| `X_FERN_DEFAULT_TEST_TIMEOUT_SECS` | Total request timeout in seconds |
+| Variable | Description | Per profile |
+|----------|-------------|-------------|
+| `X_FERN_DEFAULT_TEST_BASE_URL` | Override the API base URL | yes |
+| `X_FERN_DEFAULT_TEST_OUTPUT` | Default output format when `--format` is not passed | yes |
+| `X_FERN_DEFAULT_TEST_RETRIES` | Retry attempts for failed requests (`--retries` wins) | yes |
+| `X_FERN_DEFAULT_TEST_CA_BUNDLE` | Path to PEM file with extra trust roots (or `SSL_CERT_FILE`) | no |
+| `X_FERN_DEFAULT_TEST_INSECURE=1` | Skip TLS verification (debugging only) | no |
+| `X_FERN_DEFAULT_TEST_PROXY` | HTTP(S) proxy URL | no |
+| `X_FERN_DEFAULT_TEST_TIMEOUT_SECS` | Total request timeout in seconds | no |
+| `X_FERN_DEFAULT_TEST_CONNECT_TIMEOUT_SECS` | Connection timeout in seconds | no |
+
+Variables marked "yes" can also be stored on a profile with `x-fern-default-test profiles set <profile> X_FERN_DEFAULT_TEST_RETRIES=3`; the others apply to the whole process and are read from the environment only.
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 
