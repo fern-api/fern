@@ -238,6 +238,15 @@ export interface FernCliDistributionConfig {
      * Windows archive.
      */
     scoop?: FernCliScoopConfig;
+
+    /**
+     * Publish a signed APT repository to a GitHub repository branch
+     * (served by GitHub Pages). cargo-dist has no `.deb` support, so the
+     * generator emits its own `publish-apt` job into `release.yml` that
+     * packages the released musl binaries and regenerates the signed
+     * repository metadata.
+     */
+    apt?: FernCliAptConfig;
 }
 
 export interface FernCliHomebrewConfig {
@@ -271,6 +280,48 @@ export interface FernCliScoopConfig {
     /**
      * GitHub Actions secret holding a token with write access to the
      * bucket repo. Defaults to `SCOOP_BUCKET_TOKEN`.
+     */
+    tokenEnvironmentVariable?: string;
+}
+
+export interface FernCliAptConfig {
+    /**
+     * The repository that hosts the APT repository, as `<owner>/<repo>` —
+     * e.g. `acme/apt`. Must already exist and have at least one commit.
+     */
+    repository: string;
+
+    /**
+     * Branch the repository tree is committed to — the branch GitHub
+     * Pages serves. Created as an orphan branch on first publish.
+     * Defaults to `gh-pages`.
+     */
+    branch?: string;
+
+    /**
+     * Public base URL the repository is served from, used in the README's
+     * `sources.list` line. Defaults to the GitHub Pages URL for
+     * `repository` (`https://<owner>.github.io/<repo>`). Set it when the
+     * branch is served from a custom domain or mirrored to a CDN.
+     */
+    url?: string;
+
+    /**
+     * GitHub Actions secret holding the ASCII-armored GPG private key
+     * that signs `InRelease` / `Release.gpg`. Defaults to
+     * `APT_SIGNING_KEY`.
+     */
+    signingKeyEnvironmentVariable?: string;
+
+    /**
+     * GitHub Actions secret holding the signing key's passphrase. Omit
+     * when the key has none.
+     */
+    signingKeyPassphraseEnvironmentVariable?: string;
+
+    /**
+     * GitHub Actions secret holding a token with write access to
+     * `repository`. Defaults to `APT_REPOSITORY_TOKEN`.
      */
     tokenEnvironmentVariable?: string;
 }
@@ -317,6 +368,23 @@ export type ResolvedChannelAuth =
 
 export const DEFAULT_HOMEBREW_TOKEN_ENV_VAR = "HOMEBREW_TAP_TOKEN";
 export const DEFAULT_SCOOP_TOKEN_ENV_VAR = "SCOOP_BUCKET_TOKEN";
+export const DEFAULT_APT_TOKEN_ENV_VAR = "APT_REPOSITORY_TOKEN";
+export const DEFAULT_APT_SIGNING_KEY_ENV_VAR = "APT_SIGNING_KEY";
+export const DEFAULT_APT_BRANCH = "gh-pages";
+
+/**
+ * The URL the APT repository is served from: the configured `url`, else
+ * the GitHub Pages URL for `repository`. A `<owner>.github.io` repository
+ * is a user/organization site, served from the domain root.
+ */
+export function aptRepositoryUrl(apt: FernCliAptConfig): string {
+    if (apt.url != null) {
+        return apt.url;
+    }
+    const [owner = "", repo = ""] = apt.repository.split("/");
+    const host = `${owner.toLowerCase()}.github.io`;
+    return repo.toLowerCase() === host ? `https://${host}` : `https://${host}/${repo}`;
+}
 
 /**
  * Decide how one channel authenticates, most specific first:
@@ -679,6 +747,9 @@ function validateDistribution(raw: unknown): FernCliDistributionConfig {
     if (obj.scoop !== undefined) {
         result.scoop = validateScoop(obj.scoop);
     }
+    if (obj.apt !== undefined) {
+        result.apt = validateApt(obj.apt);
+    }
     return result;
 }
 
@@ -710,6 +781,55 @@ function validateScoop(raw: unknown): FernCliScoopConfig {
     const result: FernCliScoopConfig = {
         bucket: requireRepoSlug(obj.bucket, `${path}.bucket`, "acme/scoop-bucket")
     };
+    const token = optionalSecretName(obj.tokenEnvironmentVariable, `${path}.tokenEnvironmentVariable`);
+    if (token != null) {
+        result.tokenEnvironmentVariable = token;
+    }
+    return result;
+}
+
+/** A git branch name that is safe to interpolate unquoted into YAML and bash. */
+const BRANCH_NAME_PATTERN = /^(?!-)(?!.*\.\.)(?!.*\/\/)[A-Za-z0-9._/-]+(?<![./])$/;
+
+/** An `https://` URL with no trailing slash, query, fragment, or whitespace. */
+const APT_URL_PATTERN = /^https:\/\/[A-Za-z0-9.-]+(?::[0-9]+)?(?:\/[A-Za-z0-9._~%-]+)*$/;
+
+function validateApt(raw: unknown): FernCliAptConfig {
+    const path = "customConfig.distribution.apt";
+    const obj = asConfigObject(raw, path);
+    const result: FernCliAptConfig = {
+        repository: requireRepoSlug(obj.repository, `${path}.repository`, "acme/apt")
+    };
+    if (obj.branch !== undefined) {
+        if (typeof obj.branch !== "string" || !BRANCH_NAME_PATTERN.test(obj.branch)) {
+            throw new Error(
+                `Invalid ${path}.branch: ${JSON.stringify(obj.branch)} is not a valid branch name. ` +
+                    'Use letters, digits, ".", "_", "-" and "/" (e.g. "gh-pages").'
+            );
+        }
+        result.branch = obj.branch;
+    }
+    if (obj.url !== undefined) {
+        const url = typeof obj.url === "string" ? obj.url.replace(/\/+$/, "") : obj.url;
+        if (typeof url !== "string" || !APT_URL_PATTERN.test(url)) {
+            throw new Error(
+                `Invalid ${path}.url: ${JSON.stringify(obj.url)} is not a valid repository URL. ` +
+                    'Provide an https:// URL with no query or fragment (e.g. "https://apt.acme.com").'
+            );
+        }
+        result.url = url;
+    }
+    const signingKey = optionalSecretName(obj.signingKeyEnvironmentVariable, `${path}.signingKeyEnvironmentVariable`);
+    if (signingKey != null) {
+        result.signingKeyEnvironmentVariable = signingKey;
+    }
+    const passphrase = optionalSecretName(
+        obj.signingKeyPassphraseEnvironmentVariable,
+        `${path}.signingKeyPassphraseEnvironmentVariable`
+    );
+    if (passphrase != null) {
+        result.signingKeyPassphraseEnvironmentVariable = passphrase;
+    }
     const token = optionalSecretName(obj.tokenEnvironmentVariable, `${path}.tokenEnvironmentVariable`);
     if (token != null) {
         result.tokenEnvironmentVariable = token;

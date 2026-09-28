@@ -337,6 +337,17 @@ export async function runPipeline(args: {
                               customConfig.packageIdentity?.description ??
                               defaultCrateDescription(ir.apiDisplayName ?? binaryName)
                       }
+                    : undefined,
+            apt:
+                distribution?.apt != null
+                    ? {
+                          binaryName,
+                          apt: distribution.apt,
+                          repoUrl: outputConfig.repoUrl,
+                          description:
+                              customConfig.packageIdentity?.description ??
+                              defaultCrateDescription(ir.apiDisplayName ?? binaryName)
+                      }
                     : undefined
         });
     }

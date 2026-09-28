@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import {
+    DEFAULT_APT_TOKEN_ENV_VAR,
     DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliGitHubAppConfig,
@@ -8,6 +9,7 @@ import {
     type ResolvedChannelAuth,
     resolveChannelAuth
 } from "./customConfig.js";
+import { type AptJobArgs, constructAptJobYaml } from "./emitAptWorkflow.js";
 import { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
 import {
     appTokenExpression,
@@ -44,14 +46,15 @@ export async function emitReleaseWorkflow(args: {
     outputDir: string;
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    apt?: AptJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop, githubApp } = args;
+    const { outputDir, homebrew, scoop, apt, githubApp } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
     await writeFile(
         path.join(workflowsDir, "release.yml"),
-        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
+        constructReleaseWorkflowYaml({ homebrew, scoop, apt, githubApp })
     );
 }
 
@@ -61,9 +64,10 @@ export async function emitReleaseWorkflow(args: {
 export function constructReleaseWorkflowYaml(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    apt?: AptJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): string {
-    const { homebrew, scoop, githubApp } = args;
+    const { homebrew, scoop, apt, githubApp } = args;
 
     const homebrewAuth =
         homebrew != null
@@ -81,6 +85,14 @@ export function constructReleaseWorkflowYaml(args: {
                   defaultTokenSecret: DEFAULT_SCOOP_TOKEN_ENV_VAR
               })
             : undefined;
+    const aptAuth =
+        apt != null
+            ? resolveChannelAuth({
+                  tokenEnvironmentVariable: apt.apt.tokenEnvironmentVariable,
+                  githubApp,
+                  defaultTokenSecret: DEFAULT_APT_TOKEN_ENV_VAR
+              })
+            : undefined;
 
     // Both channels gate on `host`, so `announce` must wait on whichever
     // are enabled — otherwise the announcement can precede a published
@@ -93,7 +105,8 @@ export function constructReleaseWorkflowYaml(args: {
     // identical ones.
     const preflightChecks = mergePreflightChecks([
         ...(homebrewAuth?.type === "githubApp" ? [{ label: "Homebrew tap", app: homebrewAuth.app }] : []),
-        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : [])
+        ...(scoopAuth?.type === "githubApp" ? [{ label: "Scoop bucket", app: scoopAuth.app }] : []),
+        ...(aptAuth?.type === "githubApp" ? [{ label: "APT repository", app: aptAuth.app }] : [])
     ]);
     // Emitted only when a channel actually uses an App, so a PAT-only
     // generation keeps the workflow it has today. PAT secrets are not
@@ -111,6 +124,10 @@ export function constructReleaseWorkflowYaml(args: {
     if (scoop != null && scoopAuth != null) {
         jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
+    }
+    if (apt != null && aptAuth != null) {
+        jobs += constructAptJobYaml({ ...apt, auth: aptAuth, preflightJob });
+        publishJobs.push("publish-apt");
     }
     return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
 }

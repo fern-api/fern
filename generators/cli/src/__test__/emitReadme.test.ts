@@ -589,6 +589,32 @@ describe("emitReadme — distribution channels", () => {
         expect(readme.indexOf("### Shell (macOS / Linux)")).toBeLessThan(readme.indexOf("### Homebrew"));
         expect(readme.indexOf("### Scoop (Windows)")).toBeLessThan(readme.indexOf("### Build from source"));
     });
+    it("renders the signed APT setup from the GitHub Pages URL", async () => {
+        await emitReadme({ outputDir, ...base, distribution: { apt: { repository: "acme/apt" } } });
+        const readme = await readReadme();
+        expect(readme).toContain("### APT (Debian / Ubuntu)");
+        expect(readme).toContain(
+            "curl -fsSL https://acme.github.io/apt/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/acme-cli-archive-keyring.gpg"
+        );
+        expect(readme).toContain(
+            'echo "deb [signed-by=/usr/share/keyrings/acme-cli-archive-keyring.gpg] https://acme.github.io/apt stable main"'
+        );
+        expect(readme).toContain("sudo apt update && sudo apt install acme-cli");
+    });
+
+    it("uses a configured APT url", async () => {
+        await emitReadme({
+            outputDir,
+            ...base,
+            distribution: { apt: { repository: "acme/apt", url: "https://apt.acme.com" } }
+        });
+        expect(await readReadme()).toContain("https://apt.acme.com stable main");
+    });
+
+    it("omits APT when it is not configured", async () => {
+        await emitReadme({ outputDir, ...base });
+        expect(await readReadme()).not.toContain("APT");
+    });
 });
 
 describe("emitReadme — installer URLs", () => {

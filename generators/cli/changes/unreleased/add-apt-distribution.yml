@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `distribution.apt`, which publishes the generated CLI to a signed APT
+    repository on every release tag:
+
+    ```yaml
+    distribution:
+      apt:
+        repository: acme/apt
+    ```
+
+    A new `publish-apt` job in `release.yml` waits on `host` and packages the
+    `amd64` and `arm64` musl archives that cargo-dist already built as `.deb`
+    files. It adds them to a `pool/` on the repository's `gh-pages` branch
+    (configurable with `branch`), then regenerates `Packages` and `Release`.
+    Both `InRelease` and `Release.gpg` are signed with the GPG key in the
+    `APT_SIGNING_KEY` secret. The key can have a passphrase, set with
+    `signingKeyPassphraseEnvironmentVariable`. The public key is published as
+    `gpg.key`. Every version stays in the pool, so users can pin a version.
+    Pushes use `APT_REPOSITORY_TOKEN` or the shared `distribution.githubApp`.
+    The README gains an `apt install` section, which points at the GitHub
+    Pages URL or at `url` if it is set. Omitting `apt` leaves generated
+    output unchanged.
+  type: feat

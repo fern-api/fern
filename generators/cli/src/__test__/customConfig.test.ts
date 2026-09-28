@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCustomConfig, resolveChannelAuth, validateCustomConfig } from "../customConfig.js";
+import { aptRepositoryUrl, getCustomConfig, resolveChannelAuth, validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
     it("returns defaults (customCommands: true) for null/undefined", () => {
@@ -307,6 +307,85 @@ describe("validateCustomConfig — distribution", () => {
         expect(() => validateCustomConfig({ distribution: { scoop: "acme/scoop-bucket" } })).toThrow(
             /distribution\.scoop: expected an object, got string/
         );
+    });
+});
+
+describe("validateCustomConfig — distribution.apt", () => {
+    it("accepts a repository-only block", () => {
+        expect(validateCustomConfig({ distribution: { apt: { repository: "acme/apt" } } })).toEqual({
+            distribution: { apt: { repository: "acme/apt" } }
+        });
+    });
+
+    it("accepts every option and strips a trailing slash from url", () => {
+        expect(
+            validateCustomConfig({
+                distribution: {
+                    apt: {
+                        repository: "acme/apt",
+                        branch: "pages/apt",
+                        url: "https://apt.acme.com/",
+                        signingKeyEnvironmentVariable: "ACME_GPG_KEY",
+                        signingKeyPassphraseEnvironmentVariable: "ACME_GPG_PASSPHRASE",
+                        tokenEnvironmentVariable: "ACME_APT_TOKEN"
+                    }
+                }
+            }).distribution?.apt
+        ).toEqual({
+            repository: "acme/apt",
+            branch: "pages/apt",
+            url: "https://apt.acme.com",
+            signingKeyEnvironmentVariable: "ACME_GPG_KEY",
+            signingKeyPassphraseEnvironmentVariable: "ACME_GPG_PASSPHRASE",
+            tokenEnvironmentVariable: "ACME_APT_TOKEN"
+        });
+    });
+
+    it("rejects a repository that is not owner/repo", () => {
+        expect(() => validateCustomConfig({ distribution: { apt: { repository: "apt" } } })).toThrow(
+            /apt\.repository: "apt" is not a GitHub repository/
+        );
+    });
+
+    it.each(["-main", "a..b", "a b", "pages/", "a//b", 42])("rejects branch %j", (branch) => {
+        expect(() => validateCustomConfig({ distribution: { apt: { repository: "acme/apt", branch } } })).toThrow(
+            /apt\.branch/
+        );
+    });
+
+    it.each([
+        "http://apt.acme.com",
+        "https://apt.acme.com?x=1",
+        "https://apt.acme.com/a b",
+        "apt.acme.com"
+    ])("rejects url %j", (url) => {
+        expect(() => validateCustomConfig({ distribution: { apt: { repository: "acme/apt", url } } })).toThrow(
+            /apt\.url/
+        );
+    });
+
+    it.each([
+        "signingKeyEnvironmentVariable",
+        "signingKeyPassphraseEnvironmentVariable",
+        "tokenEnvironmentVariable"
+    ])("rejects a malformed %s", (field) => {
+        expect(() =>
+            validateCustomConfig({ distribution: { apt: { repository: "acme/apt", [field]: "lower_case" } } })
+        ).toThrow(new RegExp(`apt\\.${field}`));
+    });
+});
+
+describe("aptRepositoryUrl", () => {
+    it("defaults to the GitHub Pages project URL", () => {
+        expect(aptRepositoryUrl({ repository: "Acme/apt" })).toBe("https://acme.github.io/apt");
+    });
+
+    it("serves a <owner>.github.io repository from the domain root", () => {
+        expect(aptRepositoryUrl({ repository: "acme/acme.github.io" })).toBe("https://acme.github.io");
+    });
+
+    it("prefers a configured url", () => {
+        expect(aptRepositoryUrl({ repository: "acme/apt", url: "https://apt.acme.com" })).toBe("https://apt.acme.com");
     });
 });
 
