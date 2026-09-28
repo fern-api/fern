@@ -437,24 +437,87 @@ func TestCallGuardrailContextCanceledBeforeCallSendsNoRequest(t *testing.T) {
 }
 
 // Guardrail: a context canceled while the response body is still in flight
-// must fail the call rather than return a partial response.
+// must fail the call rather than return a partial response, whether or not the
+// endpoint decodes the body.
 func TestCallGuardrailContextCanceledDuringUnfinishedResponseBodyReturnsError(t *testing.T) {
-	release := make(chan struct{})
-	server := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			_, _ = w.Write([]byte(`{"id":`))
-			w.(http.Flusher).Flush()
-			select {
-			case <-release:
-			case <-r.Context().Done():
-			}
-		}),
-	)
-	t.Cleanup(server.Close)
-	t.Cleanup(func() { close(release) })
+	tests := []struct {
+		desc        string
+		statusCode  int
+		partialBody string
+		decode      bool
+	}{
+		{
+			desc:        "incomplete JSON value",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":`,
+			decode:      true,
+		},
+		{
+			desc:        "complete JSON value with unfinished trailing body",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":"123"} `,
+			decode:      true,
+		},
+		{
+			desc:        "endpoint without a response body",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":`,
+		},
+		{
+			desc:        "error response",
+			statusCode:  http.StatusInternalServerError,
+			partialBody: `{"message":`,
+			decode:      true,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.desc, func(t *testing.T) {
+			release := make(chan struct{})
+			server := httptest.NewServer(
+				http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("Content-Type", "application/json")
+					w.WriteHeader(test.statusCode)
+					_, _ = w.Write([]byte(test.partialBody))
+					w.(http.Flusher).Flush()
+					select {
+					case <-release:
+					case <-r.Context().Done():
+					}
+				}),
+			)
+			t.Cleanup(server.Close)
+			t.Cleanup(func() { close(release) })
 
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+
+			caller := NewCaller(
+				&CallerParams{
+					Client: &http.Client{
+						Transport: &cancelAfterRoundTripTransport{
+							base:   server.Client().Transport,
+							cancel: cancel,
+						},
+					},
+				},
+			)
+			var response *InternalTestResponse
+			params := &CallParams{
+				URL:    server.URL,
+				Method: http.MethodGet,
+			}
+			if test.decode {
+				params.Response = &response
+			}
+			callResponse, err := caller.Call(ctx, params)
+			assert.ErrorIs(t, err, context.Canceled)
+			assert.Nil(t, callResponse)
+		})
+	}
+}
+
+func TestCallReturnsBufferedResponseWithoutDecodingWhenContextCanceledAfterResponse(t *testing.T) {
+	server, _ := newJSONTestServer(t, http.StatusOK, `{"id":"123"}`)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -464,22 +527,22 @@ func TestCallGuardrailContextCanceledDuringUnfinishedResponseBodyReturnsError(t 
 				Transport: &cancelAfterRoundTripTransport{
 					base:   server.Client().Transport,
 					cancel: cancel,
+					buffer: true,
 				},
 			},
 		},
 	)
-	var response *InternalTestResponse
 	callResponse, err := caller.Call(
 		ctx,
 		&CallParams{
-			URL:      server.URL,
-			Method:   http.MethodGet,
-			Response: &response,
+			URL:    server.URL,
+			Method: http.MethodPost,
 		},
 	)
-	assert.ErrorIs(t, err, context.Canceled)
-	assert.Nil(t, callResponse)
-	assert.Nil(t, response)
+	require.Error(t, ctx.Err(), "precondition: the context must be canceled before the call returns")
+	require.NoError(t, err)
+	require.NotNil(t, callResponse)
+	assert.Equal(t, http.StatusOK, callResponse.StatusCode)
 }
 
 // Guardrail: a context canceled after a retryable response must not cause
