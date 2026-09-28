@@ -13,4 +13,4 @@
     `profiles set`, `profiles create --from-env`, `profiles use`, and a
     profile-scoped `auth login` no longer warn that an exported credential
     will shadow the stored one, since it no longer does.
-  type: break
+  type: feat
