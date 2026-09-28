@@ -1,0 +1,8 @@
+- summary: |
+    The OpenAPI importer no longer drops the `properties` of a schema whose sibling
+    `oneOf` only lists which of those properties must be present (for example
+    `oneOf: [{ required: [domain] }, { required: [phone] }]`). Such a `oneOf` is an
+    "exactly one of" constraint over the declared object, not a set of variants, so
+    the schema is now converted as an object with every declared property preserved.
+    This also applies when the schema is an inline member of an `allOf`.
+  type: fix

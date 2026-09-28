@@ -65,6 +65,7 @@ import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibrary
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
+import { downloadDocsTheme } from "./commands/docs-theme/downloadDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
@@ -135,6 +136,13 @@ if (
         process.kill(process.pid, result.signal);
     }
     process.exit(result.status ?? 1);
+}
+
+// libuv sizes its threadpool (async fs, zlib, dns) lazily on first use, so
+// this takes effect as long as it runs before any async I/O. The default of 4
+// is a bottleneck for the highly concurrent file reads in docs validation.
+if (process.env.UV_THREADPOOL_SIZE == null) {
+    process.env.UV_THREADPOOL_SIZE = "8";
 }
 
 void runCli();
@@ -904,6 +912,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -1050,7 +1064,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
-                    packOnly: argv.packageOnly
+                    packOnly: argv.packageOnly,
+                    includePrivate: argv.private
                 });
             }
             if (argv.docs != null) {
@@ -1081,7 +1096,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    includePrivate: argv.private
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1118,7 +1134,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
-                packOnly: argv.packageOnly
+                packOnly: argv.packageOnly,
+                includePrivate: argv.private
             });
         }
     );
@@ -1998,6 +2015,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
         addDocsThemeDeleteCommand(yargs, cliContext);
+        addDocsThemeDownloadCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
@@ -2027,6 +2045,39 @@ function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
             await deleteDocsTheme({ cliContext, name: argv.name, force: argv.force });
+        }
+    );
+}
+
+function addDocsThemeDownloadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "download",
+        "Download a theme from Fern's cloud into a local theme directory (theme.yml + assets)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to write the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme download --name dark", "Download the theme named 'dark' to ./fern/theme")
+                .example(
+                    "$0 docs theme download --name dark --output ./themes/dark",
+                    "Download to a custom directory, e.g. to vendor into a self-hosted image"
+                ),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme download" });
+            await downloadDocsTheme({ cliContext, name: argv.name, org: argv.org, output: argv.output });
         }
     );
 }
@@ -2311,6 +2362,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description: "Force re-download of the docs preview bundle by deleting the cached bundle"
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2356,7 +2413,8 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
                 backendPort,
-                forceDownload: argv.forceDownload
+                forceDownload: argv.forceDownload,
+                includePrivate: argv.private
             });
         }
     );
@@ -2805,13 +2863,14 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create an SDK Config v1 file from one or more resolved Fern SDK groups",
+        "Create one SDK Config v1 file from one or more compatible Fern SDK groups",
         (yargs) =>
             yargs
                 .option("group", {
                     type: "string",
                     array: true,
-                    description: "An SDK group to migrate; repeat to consolidate compatible groups"
+                    description:
+                        "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
                 })
                 .option("api", {
                     type: "string",

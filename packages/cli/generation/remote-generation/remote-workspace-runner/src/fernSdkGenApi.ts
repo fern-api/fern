@@ -9,10 +9,22 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
-import path from "path";
 import { gunzipSync } from "zlib";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    MAX_PUBLISH_CREDENTIALS_BYTES,
+    resolveFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishUrl,
+    validateFernSdkGenApiPublishTargets as validatePublishTargets
+} from "./directPublishCredentials.js";
+import { getSdkGenApiPreviewOutputDirectoryName } from "./previewOutputDirectory.js";
 import { type PublishTarget } from "./publishTarget.js";
 import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
+import {
+    normalizeSensitiveValues,
+    redactPublicationIdentifier,
+    redactSensitiveValues
+} from "./redactSensitiveValues.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -39,8 +51,6 @@ const MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES = MAX_TOTAL_PAYLOAD_BYTES;
 const MAX_TOTAL_UPLOAD_FILE_BYTES = 50 * 1024 * 1024;
 const MAX_REQUEST_FIELD_BYTES = 1024 * 1024;
 const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
-const MAX_PUBLISH_CREDENTIAL_FIELD_LENGTH = 16 * 1024;
-const MAX_PUBLISH_CREDENTIALS_BYTES = 64 * 1024;
 const UNPINNED_FERN_GENERATOR_VERSION_KEY = "unpinned";
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
@@ -55,7 +65,8 @@ export type FernSdkGenApiPublishRegistry =
     | "rubygems"
     | "crates"
     | "go"
-    | "composer";
+    | "composer"
+    | "postman";
 
 export interface FernSdkGenApiPublishConfig {
     registry: FernSdkGenApiPublishRegistry;
@@ -529,7 +540,7 @@ function getDirectPublishCredential(
     }
     const requestedOutput = mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     if (requestedOutput.type === "publish" && requestedOutput.publish.url != null) {
-        assertSafeDirectPublishUrl(requestedOutput.publish.url);
+        validateFernSdkGenApiPublishUrl(requestedOutput.publish.url);
     }
     if (outputMode.type === "publish") {
         const language = getFernSdkGenApiLanguage(generatorInvocation.name);
@@ -572,6 +583,15 @@ function getDirectPublishCredential(
     }
 }
 
+function getDirectPublishCredentialFromSource(
+    targetId: string,
+    source: FernSdkGenApiPublishCredentialSource,
+    publishUrl?: string,
+    publishRegistry?: string
+): FernSdkGenApiPublishCredential {
+    return { targetId, ...resolveFernSdkGenApiPublishCredentialSource(source, publishUrl, publishRegistry) };
+}
+
 function requirePublishOverride<T>(registry: string, output: T | undefined): T {
     if (output == null) {
         throw new Error(`Direct ${registry} publication through sdk-gen-api is missing its registry configuration`);
@@ -583,15 +603,20 @@ function npmCredential(targetId: string, token: string): FernSdkGenApiPublishCre
     return tokenCredential(targetId, "npm", token);
 }
 
-function tokenCredential(targetId: string, registry: "npm" | "crates", token: string): FernSdkGenApiPublishCredential {
-    assertDirectCredential(registry, "token", token);
-    return { targetId, registry, token };
+function tokenCredential(
+    targetId: string,
+    registry: "npm" | "crates",
+    token: string | undefined
+): FernSdkGenApiPublishCredential {
+    return getDirectPublishCredentialFromSource(targetId, { registry, token });
 }
 
-function pypiCredential(targetId: string, username: string, password: string): FernSdkGenApiPublishCredential {
-    assertDirectCredential("pypi", "username", username);
-    assertDirectCredential("pypi", "password", password);
-    return { targetId, registry: "pypi", username, password };
+function pypiCredential(
+    targetId: string,
+    username: string | undefined,
+    password: string | undefined
+): FernSdkGenApiPublishCredential {
+    return getDirectPublishCredentialFromSource(targetId, { registry: "pypi", username, password });
 }
 
 function mavenCredential(
@@ -599,48 +624,15 @@ function mavenCredential(
     output: {
         username?: string;
         password?: string;
-        signature?: { keyId: string; password: string; secretKey: string } | null;
+        signature?: { keyId?: string; password?: string; secretKey?: string } | null;
     }
 ): FernSdkGenApiPublishCredential {
-    assertDirectCredential("maven", "username", output.username);
-    assertDirectCredential("maven", "password", output.password);
-    const signature = output.signature ?? undefined;
-    if (signature != null) {
-        assertDirectCredential("maven", "signature.keyId", signature.keyId);
-        assertDirectCredential("maven", "signature.password", signature.password);
-        assertDirectCredential("maven", "signature.secretKey", signature.secretKey);
-    }
-    return {
-        targetId,
+    return getDirectPublishCredentialFromSource(targetId, {
         registry: "maven",
         username: output.username,
         password: output.password,
-        ...(signature != null ? { signature } : {})
-    };
-}
-
-function assertDirectCredential(registry: string, field: string, value: string | undefined): asserts value is string {
-    if (value == null || value.trim().length === 0) {
-        throw new Error(`Direct ${registry} publication through sdk-gen-api requires ${field}`);
-    }
-    if (value === "OIDC" || value === "<USE_OIDC>") {
-        throw new Error(`Direct ${registry} publication through sdk-gen-api does not support OIDC credentials`);
-    }
-    if (Buffer.byteLength(value, "utf8") > MAX_PUBLISH_CREDENTIAL_FIELD_LENGTH) {
-        throw new Error(`Direct ${registry} publication through sdk-gen-api ${field} exceeds the 16 KiB field limit`);
-    }
-}
-
-function assertSafeDirectPublishUrl(value: string): void {
-    try {
-        const url = new URL(value);
-        if (url.protocol === "https:" && url.username.length === 0 && url.password.length === 0) {
-            return;
-        }
-    } catch {
-        // Invalid URLs use the same credential-safe diagnostic as other rejected URL forms.
-    }
-    throw new Error("Direct registry URL must use HTTPS and must not contain user information");
+        ...(output.signature == null ? {} : { signature: output.signature })
+    });
 }
 
 function isSupportedDirectRegistry(
@@ -651,14 +643,20 @@ function isSupportedDirectRegistry(
 
 export function createFernSdkGenApiPublishCredentials(
     request: FernSdkGenApiRequest,
-    generatorInvocations: generatorsYml.GeneratorInvocation[]
+    generatorInvocations: generatorsYml.GeneratorInvocation[],
+    credentialSources?: Array<FernSdkGenApiPublishCredentialSource | undefined>
 ): FernSdkGenApiPublishCredentials | undefined {
     const targets = request.targets.flatMap((target, index) => {
         const generatorInvocation = generatorInvocations[index];
         if (generatorInvocation == null) {
             throw new Error(`Cannot pair sdk-gen-api target ${target.targetId} with publish credentials`);
         }
-        const credential = getDirectPublishCredential(target.targetId, generatorInvocation);
+        const source = credentialSources?.[index];
+        const { publishUrl, publishRegistry } = publicationValidationMetadata(target.requestedOutput);
+        const credential =
+            source != null
+                ? getDirectPublishCredentialFromSource(target.targetId, source, publishUrl, publishRegistry)
+                : getDirectPublishCredential(target.targetId, generatorInvocation);
         return credential != null ? [credential] : [];
     });
     if (targets.length === 0) {
@@ -681,6 +679,57 @@ export function validateFernSdkGenApiDirectPublishCredentials(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): void {
     getDirectPublishCredential("preflight", generatorInvocation);
+}
+
+export function validateFernSdkGenApiPublishCredentialSource(
+    source: FernSdkGenApiPublishCredentialSource,
+    publishUrl?: string
+): void {
+    resolveFernSdkGenApiPublishCredentialSource(source, publishUrl);
+}
+
+export function validateFernSdkGenApiPublishCredentialSources(
+    sources: Array<FernSdkGenApiPublishCredentialSource | undefined>
+): void {
+    validatePublishTargets(
+        sources.map((source) => ({
+            publicationRequested: source != null,
+            credentialsRequired: source != null,
+            ...(source == null ? {} : { publishCredential: source })
+        }))
+    );
+}
+
+export function validateFernSdkGenApiPublishTargets(
+    targets: Array<{
+        requestedOutput?: FernSdkGenApiRequestedOutput;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
+    }>
+): void {
+    validatePublishTargets(
+        targets.map((target) => ({
+            publicationRequested:
+                target.requestedOutput?.type === "publish" ||
+                (target.requestedOutput?.type === "github" && target.requestedOutput.publish != null),
+            credentialsRequired: target.requestedOutput?.type === "publish",
+            ...publicationValidationMetadata(target.requestedOutput),
+            ...(target.publishCredential == null ? {} : { publishCredential: target.publishCredential })
+        }))
+    );
+}
+
+function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
+    publishRegistry?: string;
+    publishUrl?: string;
+} {
+    const publish =
+        requestedOutput?.type === "publish" || requestedOutput?.type === "github" ? requestedOutput.publish : undefined;
+    return publish == null
+        ? {}
+        : {
+              publishRegistry: publish.registry,
+              ...(publish.url == null ? {} : { publishUrl: publish.url })
+          };
 }
 
 export interface FernSdkGenApiCandidate {
@@ -714,7 +763,6 @@ export interface FernSdkGenApiPayload {
 
 /** Validated customer SDK Config metadata plus its JSON wire payload for sdk-gen-api. */
 export interface FernSdkConfigV1Payload {
-    body: Buffer;
     sdkName: string;
     sdkVersion: string;
     apiVersion?: string;
@@ -722,6 +770,7 @@ export interface FernSdkConfigV1Payload {
     audiences?: string[];
     clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
     targets: Array<{
+        body: Buffer;
         language: string;
         generatorVersion?: string;
         sdkName?: string;
@@ -731,6 +780,7 @@ export interface FernSdkConfigV1Payload {
         /** Local-only destination for a requested ZIP artifact; never serialized to sdk-gen-api. */
         absolutePathToLocalOutputArchive?: AbsoluteFilePath;
         package?: FernSdkGenApiPackageConfig;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
     }>;
 }
 
@@ -747,6 +797,7 @@ export interface FernSdkGenApiBuildParameters {
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
+    publishCredential?: FernSdkGenApiPublishCredentialSource;
     absolutePathToLocalOutputArchive?: AbsoluteFilePath;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
@@ -1026,12 +1077,14 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             sourceSpecIndexes: participant.sourceSpecIndexes,
             audiences: participant.audiences,
             payload: participant.payload,
-            requestedOutput: participant.requestedOutput
+            requestedOutput: participant.requestedOutput,
+            publishCredential: participant.publishCredential
         }))
     });
     const credentials = createFernSdkGenApiPublishCredentials(
         request,
-        participants.map((participant) => participant.generatorInvocation)
+        participants.map((participant) => participant.generatorInvocation),
+        participants.map((participant) => participant.publishCredential)
     );
     const credentialsBody = credentials != null ? Buffer.from(JSON.stringify(credentials)) : undefined;
     if (credentialsBody != null && credentialsBody.length > MAX_PUBLISH_CREDENTIALS_BYTES) {
@@ -1099,7 +1152,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         origin,
         request,
         form,
-        sensitiveValues: [first.token.value, ...getCredentialSecretValues(credentials)]
+        sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)])
     };
 }
 
@@ -1146,7 +1199,7 @@ async function executeFernSdkGenApiBuild(
                 },
                 timeout: REQUEST_TIMEOUT_MS
             });
-            status = response.data;
+            status = sanitizeFernBuildStatus(response.data, sensitiveValues);
         } catch (error) {
             const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
             return first.context.failAndThrow("Failed to poll sdk-gen-api build", sanitizedError, {
@@ -1237,11 +1290,51 @@ function getCredentialSecretValues(credentials: FernSdkGenApiPublishCredentials 
     });
 }
 
-function redactSensitiveValues(message: string, sensitiveValues: string[]): string {
-    return sensitiveValues.reduce(
-        (redacted, value) => (value.length > 0 ? redacted.replaceAll(value, "[REDACTED]") : redacted),
-        message
-    );
+function sanitizeFernBuildStatus(status: FernBuildStatus, sensitiveValues: string[]): FernBuildStatus {
+    return {
+        ...status,
+        targets: status.targets.map((target) => ({
+            ...target,
+            logs: target.logs.map((log) => ({
+                ...log,
+                message: redactSensitiveValues(log.message, sensitiveValues)
+            })),
+            ...(target.error == null
+                ? {}
+                : { error: { message: redactSensitiveValues(target.error.message, sensitiveValues) } }),
+            ...(target.publication == null
+                ? {}
+                : target.publication.status === "success"
+                  ? {
+                        publication: {
+                            ...target.publication,
+                            publishTarget: {
+                                ...target.publication.publishTarget,
+                                identifier: redactPublicationIdentifier(
+                                    target.publication.publishTarget.identifier,
+                                    sensitiveValues
+                                )
+                            }
+                        }
+                    }
+                  : {
+                        publication: {
+                            ...target.publication,
+                            publishTarget: {
+                                ...target.publication.publishTarget,
+                                identifier: redactPublicationIdentifier(
+                                    target.publication.publishTarget.identifier,
+                                    sensitiveValues
+                                )
+                            },
+                            error: {
+                                ...target.publication.error,
+                                message: redactSensitiveValues(target.publication.error.message, sensitiveValues)
+                            }
+                        }
+                    })
+        }))
+    };
 }
 
 function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildParameters[]): void {
@@ -1568,7 +1661,12 @@ async function finishFernSdkGenApiTarget(
             s3PreSignedReadUrl: target.result.artifactUrl,
             absolutePathToLocalOutput: join(
                 participant.absolutePathToPreview,
-                RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
+                RelativeFilePath.of(
+                    getSdkGenApiPreviewOutputDirectoryName(
+                        participant.generatorInvocation.name,
+                        getSdkConfigTargetIndex(participant.generatorInvocation)
+                    )
+                )
             ),
             context: participant.context,
             skipFernignore: participant.skipFernignore
@@ -1596,6 +1694,10 @@ async function finishFernSdkGenApiTarget(
         noChangesDetected: undefined,
         publishTarget: mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
+}
+
+function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation): number | undefined {
+    return generatorInvocation.sdkConfigTargetIndex;
 }
 
 function mapFernSdkGenApiPublishTarget(
@@ -1688,7 +1790,8 @@ export function createFernSdkGenApiRequest({
     apiVersion,
     specsTarGzBuffer,
     payload,
-    requestedOutput
+    requestedOutput,
+    publishCredential
 }: {
     apiName: string;
     organization: string;
@@ -1701,13 +1804,25 @@ export function createFernSdkGenApiRequest({
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
+    publishCredential?: FernSdkGenApiPublishCredentialSource;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkGenApiRoute, sdkName, sdkVersion, apiVersion, payload, requestedOutput }]
+        targets: [
+            {
+                generatorInvocation,
+                sdkGenApiRoute,
+                sdkName,
+                sdkVersion,
+                apiVersion,
+                payload,
+                requestedOutput,
+                publishCredential
+            }
+        ]
     });
 }
 
@@ -1733,6 +1848,7 @@ export function createFernSdkGenApiBatchRequest({
         audiences?: string[];
         payload: FernSdkGenApiPayload;
         requestedOutput?: FernSdkGenApiRequestedOutput;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -1831,7 +1947,13 @@ export function createFernSdkGenApiBatchRequest({
         payloadHashes,
         sourceHash: createHash("sha256").update(specsTarGzBuffer).digest("hex")
     });
-    const credentialSetId = requestTargets.some((target) => target.requestedOutput.type === "publish")
+    const credentialSetId = requestTargets.some(
+        (target, index) =>
+            target.requestedOutput.type === "publish" ||
+            (target.requestedOutput.type === "github" &&
+                target.requestedOutput.publish != null &&
+                targets[index]?.publishCredential != null)
+    )
         ? deterministicUuid(stableRequestIdentity)
         : undefined;
     const idempotencyKey = createHash("sha256")

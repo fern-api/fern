@@ -27,6 +27,7 @@ export type MapFernGroupToSdkConfig = (args: {
     fernWorkspace: Pick<FernWorkspace, "definition">;
     group: generatorsYml.GeneratorGroup;
     source: SdkConfigV1SourceConfig;
+    replay?: generatorsYml.ReplayConfigSchema;
 }) => SdkConfigMappingResult;
 
 export function formatSdkConfigMappingDiagnostic(diagnostic: FernConfigMappingDiagnostic): string {
@@ -45,17 +46,20 @@ export function prepareFernSdkGenApiSdkConfigPayload({
     workspace,
     generatorInvocation,
     audiences,
+    replay,
     sourceArchive,
     mapFernGroupToSdkConfig
 }: {
     workspace: Pick<FernWorkspace, "definition">;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     audiences: Audiences;
+    replay?: generatorsYml.ReplayConfigSchema;
     sourceArchive: FernSdkGenApiSourceArchive;
     mapFernGroupToSdkConfig: MapFernGroupToSdkConfig;
 }): FernSdkGenApiSdkConfigPayload {
     const mapped = mapFernGroupToSdkConfig({
         fernWorkspace: workspace,
+        replay,
         group: {
             groupName: "sdk-gen-api",
             audiences,

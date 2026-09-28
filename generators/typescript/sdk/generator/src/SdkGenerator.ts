@@ -84,7 +84,7 @@ const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API De
 
 interface WebhookVerificationEntry {
     config: FernIr.WebhookSignatureVerification;
-    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+    webhookNames: FernIr.WebhookName[];
 }
 
 export interface ResolvedNaming {
@@ -1722,7 +1722,22 @@ export class SdkGenerator {
                         components: verification.payloadFormat.components,
                         delimiter: verification.payloadFormat.delimiter,
                         bodySort: verification.payloadFormat.bodySort
-                    }
+                    },
+                    bodyHashBinding:
+                        verification.bodyHashBinding == null
+                            ? null
+                            : {
+                                  algorithm: verification.bodyHashBinding.algorithm,
+                                  encoding: verification.bodyHashBinding.encoding,
+                                  location: verification.bodyHashBinding.location
+                              },
+                    notificationUrlNormalization:
+                        verification.notificationUrlNormalization == null
+                            ? null
+                            : {
+                                  portVariants: verification.notificationUrlNormalization.portVariants,
+                                  legacyQueryEncoding: verification.notificationUrlNormalization.legacyQueryEncoding
+                              }
                 });
             case "asymmetric": {
                 const keySource =
@@ -1757,6 +1772,15 @@ export class SdkGenerator {
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
 
+        // The API-wide scheme (api.settings.webhook-signature) is always the default helper,
+        // even when the definition models no webhooks.
+        const apiWideConfig = this.intermediateRepresentation.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig != null) {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(this.intermediateRepresentation.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification == null) {
@@ -1780,12 +1804,14 @@ export class SdkGenerator {
         }
 
         // Pick the most frequent config as the default (ties broken by insertion order)
-        let defaultEntry: WebhookVerificationEntry | undefined;
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
         let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        if (defaultEntry == null) {
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
@@ -1818,6 +1844,9 @@ export class SdkGenerator {
         // Generate named override helpers
         for (const overrideEntry of overrideEntries) {
             const [firstWebhookName] = overrideEntry.webhookNames;
+            if (firstWebhookName == null) {
+                continue;
+            }
             const className = `${this.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
             const overrideReferencer = new WebhooksHelperDeclarationReferencer({
                 containingDirectory: [],

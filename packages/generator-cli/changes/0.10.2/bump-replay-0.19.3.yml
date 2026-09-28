@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump `@fern-api/replay` to 0.19.3, which replaces the `node-diff3` fallback three-way merge with a
+    vendored binary-search LCS so replay merges of large generated files (e.g. a 23k-line Go SDK file)
+    complete in seconds instead of hanging until the pipeline watchdog kills them.
+  type: fix

@@ -1,4 +1,4 @@
-import type { docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -24,6 +24,13 @@ export async function migrateDocsConfiguration({
     }
 
     const rootDocument = await loadDocument(docsPath);
+    if (usesLegacyOpenApiParser(rootDocument) && sourceSpecs.some((spec) => spec.hasLegacyOnlyDocsImportSettings)) {
+        throw new CliError({
+            message:
+                "Docs migration cannot safely decouple this API while experimental.openapi-parser-v3 is false because the legacy docs parser consumes additional API import settings. Enable the default parser or migrate this API reference manually.",
+            code: CliError.Code.ConfigError
+        });
+    }
     const configurationPaths = [
         docsPath,
         ...collectReferencedNavigationPaths(rootDocument, dirname(docsPath).toString())
@@ -136,20 +143,14 @@ function addReferencedPath(node: unknown, fernDirectory: string, paths: Set<stri
 function serializeDocsSpec(
     spec: ResolvedMigrationSourceSpec,
     docsDirectory: string
-): docsYml.RawSchemas.ApiSpecConfiguration {
+): docsYml.RawSchemas.Serializer.ApiSpecConfiguration.Raw {
     if (spec.type !== "openapi" && spec.type !== "asyncapi" && spec.type !== "graphql") {
         throw new CliError({
             message: `Docs migration does not support direct ${spec.type} API specifications`,
             code: CliError.Code.ConfigError
         });
     }
-    if (spec.hasCustomApiSettings === true || spec.apiImportSettings != null) {
-        throw new CliError({
-            message: `Docs migration cannot preserve custom API import settings for '${spec.absolutePath}' because direct docs.yml specifications do not support them yet. Migrate this API reference manually or remove the custom settings before retrying.`,
-            code: CliError.Code.ConfigError
-        });
-    }
-    return {
+    const configuration: docsYml.RawSchemas.ApiSpecConfiguration = {
         type: spec.type,
         path: relativePath(docsDirectory, spec.absolutePath),
         ...(spec.namespace == null ? {} : { namespace: spec.namespace }),
@@ -158,7 +159,32 @@ function serializeDocsSpec(
             : { overlays: relativePath(docsDirectory, spec.absoluteOverlayPaths[0]) }),
         ...(spec.absoluteOverridePaths.length === 0
             ? {}
-            : { overrides: spec.absoluteOverridePaths.map((override) => relativePath(docsDirectory, override)) })
+            : { overrides: spec.absoluteOverridePaths.map((override) => relativePath(docsDirectory, override)) }),
+        ...(spec.docsImportSettings == null
+            ? {}
+            : { settings: relativizeDocsImportSettings(spec.docsImportSettings, docsDirectory) })
+    };
+    return docsYml.RawSchemas.Serializer.ApiSpecConfiguration.jsonOrThrow(configuration);
+}
+
+function relativizeDocsImportSettings(
+    settings: docsYml.RawSchemas.ApiSpecImportSettings,
+    docsDirectory: string
+): docsYml.RawSchemas.ApiSpecImportSettings {
+    const errorResponses = settings.errorResponses;
+    return {
+        ...settings,
+        ...(errorResponses == null
+            ? {}
+            : {
+                  errorResponses: {
+                      ...errorResponses,
+                      schema:
+                          typeof errorResponses.schema === "string"
+                              ? relativePath(docsDirectory, errorResponses.schema)
+                              : errorResponses.schema
+                  }
+              })
     };
 }
 
@@ -173,6 +199,18 @@ function isApiReferenceSection(map: YAMLMap): boolean {
 
 function scalarString(node: unknown): string | undefined {
     return isScalar(node) && typeof node.value === "string" ? node.value : undefined;
+}
+
+function usesLegacyOpenApiParser(document: YAML.Document.Parsed): boolean {
+    if (!isMap(document.contents)) {
+        return false;
+    }
+    const experimental = document.contents.get("experimental", true);
+    if (!isMap(experimental)) {
+        return false;
+    }
+    const setting = experimental.get("openapi-parser-v3", true);
+    return isScalar(setting) && setting.value === false;
 }
 
 function visitNode(node: Node | null | undefined, visitMap: (map: YAMLMap) => void): void {

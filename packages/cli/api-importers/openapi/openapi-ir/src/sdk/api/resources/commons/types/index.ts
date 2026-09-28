@@ -1,6 +1,7 @@
 export * from "./BasicSecurityScheme.js";
 export * from "./BearerSecurityScheme.js";
 export * from "./Encoding.js";
+export * from "./ErrorStatusCodeKey.js";
 export * from "./HeaderSecurityScheme.js";
 export * from "./Namespace.js";
 export * from "./NamespaceId.js";

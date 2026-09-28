@@ -45,7 +45,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LegacyError"
+                $ref: "#/components/schemas/ServiceErrorResponse"
               example:
                 code: 20001
                 message: Body is required
@@ -86,7 +86,7 @@ components:
       required:
         - sid
         - body
-    LegacyError:
+    ServiceErrorResponse:
       type: object
       properties:
         code:

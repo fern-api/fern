@@ -112,6 +112,57 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         ).resolves.toMatchObject({ actualVersion: "1.2.3" });
         expect(run).toHaveBeenCalledTimes(1);
     });
+
+    it("allows replay.enabled when sdkGenApiRoute is set", async () => {
+        const generatorInvocation = mcpInvocation();
+        const [prepared] = prepareRoute(generatorInvocation);
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned MCP SDK Config route");
+        }
+        const sourceArchive = archive();
+        const run = vi.fn(async () => buildResponse());
+        const replay: generatorsYml.ReplayConfigSchema = { enabled: true };
+
+        await expect(
+            runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: context() as never,
+                generatorInvocation,
+                version: "1.2.3",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay,
+                irVersionOverride: undefined,
+                absolutePathToPreview: undefined,
+                isPreview: true,
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiSourceArchive: sourceArchive,
+                sdkGenApiRoute: prepared.route,
+                sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+                sdkGenApiBatch: { run } as never,
+                sdkGenApiTargetIdSeed: "0",
+                mapFernGroupToSdkConfig: () => ({
+                    diagnostics: [],
+                    sdkConfig: validateSdkConfigV1({
+                        schemaVersion: "sdk-config/v1",
+                        sdkName: "Petstore",
+                        source: { specs: [{ id: "source-0", type: "openapi", path: "fern/specs/openapi0.json" }] },
+                        targets: [{ language: "mcp", output: { delivery: "files" } }]
+                    })
+                })
+            })
+        ).resolves.toMatchObject({ actualVersion: "1.2.3" });
+        expect(run).toHaveBeenCalledTimes(1);
+    });
 });
 
 function prepareRoute(generatorInvocation: generatorsYml.GeneratorInvocation) {

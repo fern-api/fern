@@ -297,17 +297,6 @@ service:
           },
         },
         "types": {
-          "LegacyError": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "code": "optional<integer>",
-              "message": "optional<string>",
-            },
-            "source": {
-              "openapi": "messages.yml",
-            },
-          },
           "Message": {
             "docs": undefined,
             "inline": undefined,
@@ -432,12 +421,6 @@ types:
     properties:
       sid: string
       body: string
-    source:
-      openapi: messages.yml
-  LegacyError:
-    properties:
-      code: optional<integer>
-      message: optional<string>
     source:
       openapi: messages.yml
   ServiceErrorResponseErrorsItem:

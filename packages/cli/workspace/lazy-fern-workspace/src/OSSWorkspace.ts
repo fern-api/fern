@@ -104,6 +104,7 @@ function convertRemoveDiscriminantsFromSchemas(
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
+    public readonly exposesSourceSpecs = true;
     public allSpecs: Spec[];
     public specs: (OpenAPISpec | ProtobufSpec)[];
     public sources: IdentifiableSource[];
@@ -315,19 +316,22 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
      * @internal
      * @owner dsinghvi
      */
-    public async getIntermediateRepresentation({
-        context,
-        audiences,
-        enableUniqueErrorsPerEndpoint,
-        generateV1Examples,
-        logWarnings
-    }: {
-        context: TaskContext;
-        audiences: Audiences;
-        enableUniqueErrorsPerEndpoint: boolean;
-        generateV1Examples: boolean;
-        logWarnings: boolean;
-    }): Promise<IntermediateRepresentation> {
+    public async getIntermediateRepresentation(
+        {
+            context,
+            audiences,
+            enableUniqueErrorsPerEndpoint,
+            generateV1Examples,
+            logWarnings
+        }: {
+            context: TaskContext;
+            audiences: Audiences;
+            enableUniqueErrorsPerEndpoint: boolean;
+            generateV1Examples: boolean;
+            logWarnings: boolean;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<IntermediateRepresentation> {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
@@ -394,7 +398,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
-                        settings: getOpenAPISettings({ options: document.settings }),
+                        settings: getOpenAPISettings({ options: document.settings, overrides: settings }),
                         documentBaseDir: dirname(absoluteFilepathToSpec)
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
@@ -650,6 +654,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cliVersion: this.cliVersion,
             sources: this.sources
         });
+    }
+
+    public async getSourceSpecs(): Promise<Spec[]> {
+        return this.allSpecs;
     }
 
     public async getAllSpecsForGenerator(

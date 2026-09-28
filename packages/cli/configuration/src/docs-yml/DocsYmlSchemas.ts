@@ -100,6 +100,14 @@ export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
+export const SiteSwitcherThemeConfig = z.object({
+    enabled: z.boolean().optional(),
+    order: z.array(z.string()).optional(),
+    hide: z.array(z.string()).optional(),
+    labels: z.record(z.string(), z.string()).optional(),
+    "show-products": z.boolean().optional()
+});
+
 export const FooterNavThemeConfig = z.enum(["default", "minimal"]);
 
 export const TabsThemeConfig = z.enum(["default", "bubble"]);
@@ -295,7 +303,8 @@ export const ThemeConfig = z.object({
     "page-actions": PageActionsThemeConfig.optional(),
     "footer-nav": FooterNavThemeConfig.optional(),
     "language-switcher": LanguageSwitcherThemeConfig.optional(),
-    "product-switcher": ProductSwitcherThemeConfig.optional()
+    "product-switcher": ProductSwitcherThemeConfig.optional(),
+    "site-switcher": SiteSwitcherThemeConfig.optional()
 });
 
 // ===== Layout schemas =====
@@ -825,12 +834,47 @@ export const ApiReferencePackageConfiguration: z.ZodType<unknown> = z.lazy(() =>
 
 export const ApiSpecType = z.enum(["openapi", "asyncapi", "graphql"]);
 
+export const ApiSpecErrorResponseHttpMethod = z.enum([
+    "get",
+    "post",
+    "put",
+    "patch",
+    "delete",
+    "head",
+    "options",
+    "trace"
+]);
+
+export const ApiSpecErrorResponseEnsure = z.object({
+    "status-code": z.number().int().min(400).max(599),
+    methods: z.array(ApiSpecErrorResponseHttpMethod).optional()
+});
+
+export const ApiSpecErrorResponses = z.object({
+    schema: z.union([z.string(), z.record(z.string(), z.unknown())]),
+    name: z.string().optional(),
+    "apply-to": z.enum(["all", "untyped"]).optional(),
+    ensure: z.array(ApiSpecErrorResponseEnsure).optional()
+});
+
+export const ApiSpecImportSettings = z.object({
+    "type-dates-as-strings": z.boolean().optional(),
+    "use-bytes-for-binary-response": z.boolean().optional(),
+    "respect-parameter-content": z.boolean().optional(),
+    "respect-operation-id-word-boundaries": z.boolean().optional(),
+    "infer-forward-compatible": z.boolean().optional(),
+    "preserve-one-of-in-all-of": z.boolean().optional(),
+    "any-of-sibling-properties-as-object": z.boolean().optional(),
+    "error-responses": ApiSpecErrorResponses.optional()
+});
+
 export const ApiSpecConfiguration = z.object({
     type: ApiSpecType,
     path: z.string(),
     namespace: z.string().optional(),
     overlays: z.string().optional(),
-    overrides: z.array(z.string()).optional()
+    overrides: z.array(z.string()).optional(),
+    settings: ApiSpecImportSettings.optional()
 });
 
 export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(

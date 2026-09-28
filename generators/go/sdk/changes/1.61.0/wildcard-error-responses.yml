@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Errors declared with a `4XX` or `5XX` wildcard status code are now decoded into their typed
+    error struct for any status in the 400-499 / 500-599 range. A concrete status code declared
+    alongside a wildcard always wins, and a body that fails to decode as the wildcard error's
+    schema still returns the untyped `*core.APIError`.
+  type: feat

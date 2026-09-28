@@ -658,6 +658,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {

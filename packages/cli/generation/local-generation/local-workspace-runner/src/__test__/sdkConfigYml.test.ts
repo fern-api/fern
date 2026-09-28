@@ -221,6 +221,35 @@ targets:
         }
     });
 
+    it("carries every resolved source and its import settings into SDK Config IR in manifest order", async () => {
+        const built = build(await loadFixture(), {
+            rawSpecsManifest: {
+                specs: [
+                    { type: "openapi", specPath: "/fern/specs/movies.yml" },
+                    {
+                        type: "asyncapi",
+                        specPath: "/fern/specs/events.yml",
+                        namespace: "events",
+                        apiImportSettings: { titleAsSchemaName: true }
+                    }
+                ]
+            }
+        });
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.specs).toEqual([
+                { specUrl: "/fern/specs/movies.yml", specType: "openapi" },
+                {
+                    specUrl: "/fern/specs/events.yml",
+                    specType: "asyncapi",
+                    namespace: "events",
+                    apiImportSettings: { titleAsSchemaName: true }
+                }
+            ]);
+        }
+    });
+
     // `docs` merges key by key, the same as `client` and `package`. Replacing the root wholesale
     // would make setting one target-level docs key silently drop every root-level one.
     it("merges a target's docs over the root rather than replacing it", async () => {
@@ -301,22 +330,33 @@ describe("collectOnPremSourceSpecs", () => {
         });
     });
 
-    // The adapter reads source.specs[0] and ignores the rest, so generating would quietly produce an
-    // SDK covering one spec.
-    it("refuses a workspace with more than one spec rather than covering only the first", () => {
+    it("preserves every supported source in manifest order", () => {
         const collected = collectOnPremSourceSpecs(
             {
                 specs: [
                     { type: "openapi", specPath: "/fern/specs/movies.yml" },
-                    { type: "openapi", specPath: "/fern/specs/users.yml" }
+                    {
+                        type: "asyncapi",
+                        specPath: "/fern/specs/events.yml",
+                        namespace: "events",
+                        apiImportSettings: { titleAsSchemaName: true }
+                    }
                 ]
             },
             context
         );
-        expect(collected.success).toBe(false);
-        if (!collected.success) {
-            expect(collected.message).toContain("movies.yml, /fern/specs/users.yml");
-        }
+        expect(collected).toEqual({
+            success: true,
+            specs: [
+                { specUrl: "/fern/specs/movies.yml", specType: "openapi" },
+                {
+                    specUrl: "/fern/specs/events.yml",
+                    specType: "asyncapi",
+                    namespace: "events",
+                    apiImportSettings: { titleAsSchemaName: true }
+                }
+            ]
+        });
     });
 
     it.each([

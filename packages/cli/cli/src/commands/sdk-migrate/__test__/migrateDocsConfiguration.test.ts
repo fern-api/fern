@@ -142,12 +142,25 @@ describe("migrateDocsConfiguration", () => {
         });
     });
 
-    it("rejects custom API import settings that docs.yml cannot preserve", async () => {
-        const original = "instances: []\nnavigation:\n  - api: API reference\n";
-        await writeFile(docsPath, original);
+    it("preserves docs-relevant import settings and drops SDK-only settings", async () => {
+        await writeFile(docsPath, "instances: []\nnavigation:\n  - api: API reference\n");
         const sourceSpec = createSourceSpec(temporaryDirectory);
         sourceSpec.apiImportSettings = { titleAsSchemaName: true };
-        sourceSpec.hasCustomApiSettings = true;
+        sourceSpec.docsImportSettings = {
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: join(temporaryDirectory, "specs", "problem.yml"),
+                name: "ProblemDetails",
+                applyTo: "untyped",
+                ensure: [{ statusCode: 422, methods: ["post"] }]
+            }
+        };
 
         await expect(
             migrateDocsConfiguration({
@@ -156,7 +169,57 @@ describe("migrateDocsConfiguration", () => {
                 isOnlyApiWorkspace: true,
                 sourceSpecs: [sourceSpec]
             })
-        ).rejects.toThrow("cannot preserve custom API import settings");
+        ).resolves.toBe(1);
+        expect(YAML.parse(await readFile(docsPath, "utf8"))).toMatchObject({
+            navigation: [
+                {
+                    api: "API reference",
+                    specs: [
+                        {
+                            path: "../specs/openapi.yml",
+                            settings: {
+                                "type-dates-as-strings": true,
+                                "use-bytes-for-binary-response": true,
+                                "respect-parameter-content": true,
+                                "respect-operation-id-word-boundaries": true,
+                                "infer-forward-compatible": true,
+                                "preserve-one-of-in-all-of": true,
+                                "any-of-sibling-properties-as-object": true,
+                                "error-responses": {
+                                    schema: "../specs/problem.yml",
+                                    name: "ProblemDetails",
+                                    "apply-to": "untyped",
+                                    ensure: [{ "status-code": 422, methods: ["post"] }]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+    });
+
+    it("rejects legacy-parser migrations when additional import settings affect docs", async () => {
+        const original = [
+            "instances: []",
+            "experimental:",
+            "  openapi-parser-v3: false",
+            "navigation:",
+            "  - api: API reference",
+            ""
+        ].join("\n");
+        await writeFile(docsPath, original);
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.hasLegacyOnlyDocsImportSettings = true;
+
+        await expect(
+            migrateDocsConfiguration({
+                docsPath,
+                workspaceName: undefined,
+                isOnlyApiWorkspace: true,
+                sourceSpecs: [sourceSpec]
+            })
+        ).rejects.toThrow("legacy docs parser consumes additional API import settings");
         expect(await readFile(docsPath, "utf8")).toBe(original);
     });
 
@@ -234,12 +297,17 @@ describe("migrateDocsConfiguration", () => {
         await writeFile(docsPath, rootDocs);
         await writeFile(versionPath, "navigation:\n  - api: API reference\n");
 
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.docsImportSettings = {
+            errorResponses: { schema: join(temporaryDirectory, "specs", "problem.yml") }
+        };
+
         await expect(
             migrateDocsConfiguration({
                 docsPath,
                 workspaceName: "payments",
                 isOnlyApiWorkspace: true,
-                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+                sourceSpecs: [sourceSpec]
             })
         ).resolves.toBe(1);
 
@@ -248,7 +316,13 @@ describe("migrateDocsConfiguration", () => {
             navigation: [
                 {
                     api: "API reference",
-                    specs: [{ type: "openapi", path: "../../specs/openapi.yml" }]
+                    specs: [
+                        {
+                            type: "openapi",
+                            path: "../../specs/openapi.yml",
+                            settings: { "error-responses": { schema: "../../specs/problem.yml" } }
+                        }
+                    ]
                 }
             ]
         });
@@ -261,12 +335,17 @@ describe("migrateDocsConfiguration", () => {
         await writeFile(docsPath, rootDocs);
         await writeFile(productPath, "navigation:\n  - api: API reference\n");
 
+        const sourceSpec = createSourceSpec(temporaryDirectory);
+        sourceSpec.docsImportSettings = {
+            errorResponses: { schema: join(temporaryDirectory, "specs", "problem.yml") }
+        };
+
         await expect(
             migrateDocsConfiguration({
                 docsPath,
                 workspaceName: "payments",
                 isOnlyApiWorkspace: true,
-                sourceSpecs: [createSourceSpec(temporaryDirectory)]
+                sourceSpecs: [sourceSpec]
             })
         ).resolves.toBe(1);
 
@@ -275,7 +354,13 @@ describe("migrateDocsConfiguration", () => {
             navigation: [
                 {
                     api: "API reference",
-                    specs: [{ type: "openapi", path: "../../specs/openapi.yml" }]
+                    specs: [
+                        {
+                            type: "openapi",
+                            path: "../../specs/openapi.yml",
+                            settings: { "error-responses": { schema: "../../specs/problem.yml" } }
+                        }
+                    ]
                 }
             ]
         });

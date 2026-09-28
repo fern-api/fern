@@ -112,7 +112,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${this.case.snakeSafe(this.wrapper.wrapperName)}.rb`,
+            filename: this.context.getFileNameForRequestWrapper(this.wrapper),
             customConfig: this.context.customConfig
         });
     }

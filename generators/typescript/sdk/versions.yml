@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.97.1
+  changelogEntry:
+    - summary: |
+        Fix generated WebSocket socket classes registering their `open`/`message`/`close`/`error`
+        forwarding listeners twice when `connect()` is called after construction (the standard
+        `new Socket(...).connect()` usage). `ReconnectingWebSocket` gains a `hasEventListener(type, listener)`
+        method and `connect()` only registers each forwarding listener if it is not already attached, so
+        every consumer `.on()` callback fires exactly once per event while `close()` followed by
+        `connect()` continues to work.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 3.97.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
 - version: 3.96.3
   changelogEntry:
     - summary: |

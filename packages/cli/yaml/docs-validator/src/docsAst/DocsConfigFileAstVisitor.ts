@@ -30,6 +30,10 @@ export interface DocsConfigFileAstNodeTypes {
         workspace: AbstractAPIWorkspace<unknown>;
         context: TaskContext;
     };
+    unresolvedApiSection: {
+        config: docsYml.RawSchemas.ApiReferenceConfiguration;
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    };
     permissions: docsYml.RawSchemas.WithPermissions;
 }
 

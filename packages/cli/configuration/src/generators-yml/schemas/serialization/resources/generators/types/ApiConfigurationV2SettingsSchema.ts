@@ -11,7 +11,8 @@ export const ApiConfigurationV2SettingsSchema: core.serialization.ObjectSchema<
     GeneratorsYml.ApiConfigurationV2SettingsSchema
 > = core.serialization
     .object({
-        "auto-generate-idempotency-key": core.serialization.unknown().optional()
+        "auto-generate-idempotency-key": core.serialization.unknown().optional(),
+        "webhook-signature": core.serialization.unknown().optional(),
     })
     .extend(OpenApiSettingsSchema)
     .extend(AsyncApiSettingsSchema);
@@ -19,5 +20,6 @@ export const ApiConfigurationV2SettingsSchema: core.serialization.ObjectSchema<
 export declare namespace ApiConfigurationV2SettingsSchema {
     export interface Raw extends OpenApiSettingsSchema.Raw, AsyncApiSettingsSchema.Raw {
         "auto-generate-idempotency-key"?: unknown | null;
+        "webhook-signature"?: unknown | null;
     }
 }

@@ -6,7 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-
+import { FileReadTimer } from "../utils/fileReadTimer.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { validateProductConfigFileSchema } from "./validateProductConfig.js";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
@@ -42,6 +42,7 @@ export async function visitDocsConfigFileYamlAst({
     apiWorkspaces,
     absolutePathToFernFolder
 }: visitDocsConfigFileYamlAst.Args): Promise<void> {
+    const readTimer = new FileReadTimer();
     await visitor.file?.(
         {
             config: contents
@@ -95,7 +96,8 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["navigation"],
                 absoluteFilepathToConfiguration: absoluteFilepath,
                 apiWorkspaces,
-                context
+                context,
+                readTimer
             });
         }
     };
@@ -316,7 +318,8 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["navigation"],
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
-                context
+                context,
+                readTimer
             });
             context.logger.debug(
                 `[docs-ast] Main navigation traversal complete in ${(performance.now() - navStart).toFixed(0)}ms`
@@ -333,7 +336,8 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["changelog"],
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
-                context
+                context,
+                readTimer
             });
         },
         products: async (products) => {
@@ -386,7 +390,8 @@ export async function visitDocsConfigFileYamlAst({
                                 nodePath: ["navigation"],
                                 absoluteFilepathToConfiguration: absoluteFilepath,
                                 apiWorkspaces,
-                                context
+                                context,
+                                readTimer
                             });
                         }
                     }
@@ -463,6 +468,8 @@ export async function visitDocsConfigFileYamlAst({
         globalTheme: noop,
         libraries: noop
     });
+
+    readTimer.logSummary(context.logger, "markdown");
 }
 
 async function visitFontConfig({

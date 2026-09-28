@@ -975,12 +975,20 @@ fn handle_list<W: Write>(
             row.insert("parent".into(), parent.clone().into());
         }
         if let Some(resolved) = &resolved {
+            // The identifier, when we can read it — that is the question a
+            // listing should answer. A profile authenticates as one thing:
+            // the stored basic-auth username (see `stored_account`) or, for
+            // an OAuth grant, its client id. One column, whichever applies;
+            // `show` spells out which is which.
+            let account = resolved
+                .credential
+                .as_ref()
+                .and_then(|credential| stored_account(ctx, credential))
+                .or_else(|| resolved.oauth_client_id.clone());
+            if let Some(account) = account {
+                row.insert("account".into(), truncate_account(&account).into());
+            }
             if let Some(credential) = &resolved.credential {
-                // The identifier, when we can read it — that is the question a
-                // listing should answer. See `stored_account`.
-                if let Some(account) = stored_account(ctx, credential) {
-                    row.insert("account".into(), account.into());
-                }
                 // The *slot* only when it is not this profile's own. Emitting
                 // it unconditionally printed `prod -> prod` on every row: true,
                 // redundant, and it crowded out the columns that carry
@@ -988,9 +996,6 @@ fn handle_list<W: Write>(
                 if credential != &entry.name {
                     row.insert("credentials_from".into(), credential.clone().into());
                 }
-            }
-            if let Some(client_id) = &resolved.oauth_client_id {
-                row.insert("oauth_client_id".into(), client_id.clone().into());
             }
             if let Some(base_url) = &resolved.base_url {
                 row.insert("base_url".into(), base_url.clone().into());
@@ -1152,6 +1157,51 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
     out
 }
 
+/// Render one profile (`show` / `current`) as a fixed-order `key  value`
+/// list: who it is (`profile`, `active`, `selected_by`), what it
+/// authenticates as (`account`, `oauth_client_id`), then the settings,
+/// then prose. The generic formatter orders by JSON key, which put
+/// `account` above `active` for a basic-auth profile but `oauth_client_id`
+/// below it for an OAuth one — the same question answered in two layouts.
+fn render_profile_fields(fields: &serde_json::Value) -> String {
+    const ORDER: &[&str] = &[
+        "profile",
+        "active",
+        "selected_by",
+        "account",
+        "oauth_client_id",
+        "credentials_from",
+        "parent",
+        "base_url",
+        "retries",
+        "format",
+    ];
+    fn rank(key: &str) -> usize {
+        if let Some(index) = ORDER.iter().position(|candidate| *candidate == key) {
+            return index;
+        }
+        match key {
+            "note" | "error" => ORDER.len() + 2,
+            _ if key.starts_with("credential_") => ORDER.len() + 1,
+            _ => ORDER.len(),
+        }
+    }
+
+    let mut pairs = flatten_row(fields);
+    pairs.sort_by(|(a, _), (b, _)| rank(a).cmp(&rank(b)).then_with(|| a.cmp(b)));
+    let width = pairs
+        .iter()
+        .map(|(k, _)| k.chars().count())
+        .max()
+        .unwrap_or(0);
+    let mut out = String::new();
+    for (key, value) in &pairs {
+        out.push_str(format!("{key:<width$}  {value}").trim_end());
+        out.push('\n');
+    }
+    out
+}
+
 /// Flatten one row to `(dotted.key, cell)` pairs, so `parameters.AccountSid`
 /// becomes a column the same way the generic table formatter would.
 fn flatten_row(row: &serde_json::Value) -> Vec<(String, String)> {
@@ -1221,7 +1271,7 @@ fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String>
             .ok()
             .and_then(|v| v.get("username")?.as_str().map(str::to_string));
         if let Some(username) = username.filter(|u| !u.is_empty()) {
-            return Some(truncate_account(&username));
+            return Some(username);
         }
     }
     None
@@ -1243,9 +1293,10 @@ fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::Resol
     })
 }
 
-/// Shorten a long identifier for a table cell, keeping the leading characters
-/// that distinguish accounts (`AC1234…`). Twilio SIDs are 34 characters, which
-/// would dominate the row.
+/// Shorten a long identifier for a `list` table cell, keeping the leading
+/// characters that distinguish accounts (`AC1234…`). Twilio SIDs are 34
+/// characters, which would dominate the row. `show` and `current` print the
+/// full value: one profile at a time, and the point is to read it.
 fn truncate_account(value: &str) -> String {
     const KEEP: usize = 10;
     if value.chars().count() <= KEEP + 1 {
@@ -1942,6 +1993,9 @@ fn resolved_profile_fields(
             map.insert("credentials_from".into(), credential.clone().into());
         }
     }
+    if let Some(client_id) = &profile.oauth_client_id {
+        map.insert("oauth_client_id".into(), client_id.clone().into());
+    }
     if let Some(base_url) = &profile.base_url {
         map.insert("base_url".into(), base_url.clone().into());
     }
@@ -2025,9 +2079,14 @@ fn handle_show<W: Write>(
     // inspecting.
     map.insert("active".into(), (store.active() == Some(name.as_str())).into());
 
-    pipeline
-        .emit(out, &serde_json::Value::Object(map), false, true)
-        .map_err(|e| CliError::Other(e.into()))?;
+    let payload = serde_json::Value::Object(map);
+    if pipeline.format.is_machine_readable() {
+        pipeline
+            .emit(out, &payload, false, true)
+            .map_err(|e| CliError::Other(e.into()))?;
+    } else {
+        write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
+    }
     Ok(())
 }
 
@@ -2079,9 +2138,7 @@ fn handle_current<W: Write>(
     let mut stderr = std::io::stderr();
     match selected {
         Some(_) => {
-            pipeline
-                .emit(out, &payload, false, true)
-                .map_err(|e| CliError::Other(e.into()))?;
+            write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
         }
         None => {
             let _ = writeln!(

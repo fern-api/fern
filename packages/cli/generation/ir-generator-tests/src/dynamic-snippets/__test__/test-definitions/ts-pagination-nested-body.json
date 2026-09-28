@@ -1,0 +1,1634 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_users:User": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "User",
+                    "camelCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user",
+                        "safeName": "user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER",
+                        "safeName": "USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "User",
+                        "safeName": "User"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_users:ListUsersResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ListUsersResponse",
+                    "camelCase": {
+                        "unsafeName": "listUsersResponse",
+                        "safeName": "listUsersResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_users_response",
+                        "safeName": "list_users_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_USERS_RESPONSE",
+                        "safeName": "LIST_USERS_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListUsersResponse",
+                        "safeName": "ListUsersResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "total_count",
+                        "name": {
+                            "originalName": "total_count",
+                            "camelCase": {
+                                "unsafeName": "totalCount",
+                                "safeName": "totalCount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "total_count",
+                                "safeName": "total_count"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TOTAL_COUNT",
+                                "safeName": "TOTAL_COUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TotalCount",
+                                "safeName": "TotalCount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "data",
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_users:User"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_users:ListUsersCursorResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ListUsersCursorResponse",
+                    "camelCase": {
+                        "unsafeName": "listUsersCursorResponse",
+                        "safeName": "listUsersCursorResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_users_cursor_response",
+                        "safeName": "list_users_cursor_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_USERS_CURSOR_RESPONSE",
+                        "safeName": "LIST_USERS_CURSOR_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListUsersCursorResponse",
+                        "safeName": "ListUsersCursorResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "next_cursor",
+                        "name": {
+                            "originalName": "next_cursor",
+                            "camelCase": {
+                                "unsafeName": "nextCursor",
+                                "safeName": "nextCursor"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "next_cursor",
+                                "safeName": "next_cursor"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NEXT_CURSOR",
+                                "safeName": "NEXT_CURSOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NextCursor",
+                                "safeName": "NextCursor"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "data",
+                        "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "list",
+                        "value": {
+                            "type": "named",
+                            "value": "type_users:User"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_users:PageOptions": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PageOptions",
+                    "camelCase": {
+                        "unsafeName": "pageOptions",
+                        "safeName": "pageOptions"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "page_options",
+                        "safeName": "page_options"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAGE_OPTIONS",
+                        "safeName": "PAGE_OPTIONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PageOptions",
+                        "safeName": "PageOptions"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "offset",
+                        "name": {
+                            "originalName": "offset",
+                            "camelCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OFFSET",
+                                "safeName": "OFFSET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Offset",
+                                "safeName": "Offset"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "count",
+                        "name": {
+                            "originalName": "count",
+                            "camelCase": {
+                                "unsafeName": "count",
+                                "safeName": "count"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "count",
+                                "safeName": "count"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COUNT",
+                                "safeName": "COUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Count",
+                                "safeName": "Count"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_users:CursorOptions": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CursorOptions",
+                    "camelCase": {
+                        "unsafeName": "cursorOptions",
+                        "safeName": "cursorOptions"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "cursor_options",
+                        "safeName": "cursor_options"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CURSOR_OPTIONS",
+                        "safeName": "CURSOR_OPTIONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CursorOptions",
+                        "safeName": "CursorOptions"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "cursor",
+                        "name": {
+                            "originalName": "cursor",
+                            "camelCase": {
+                                "unsafeName": "cursor",
+                                "safeName": "cursor"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "cursor",
+                                "safeName": "cursor"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CURSOR",
+                                "safeName": "CURSOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Cursor",
+                                "safeName": "Cursor"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_users:NestedCursorOptions": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NestedCursorOptions",
+                    "camelCase": {
+                        "unsafeName": "nestedCursorOptions",
+                        "safeName": "nestedCursorOptions"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_cursor_options",
+                        "safeName": "nested_cursor_options"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_CURSOR_OPTIONS",
+                        "safeName": "NESTED_CURSOR_OPTIONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedCursorOptions",
+                        "safeName": "NestedCursorOptions"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "pagination",
+                        "name": {
+                            "originalName": "pagination",
+                            "camelCase": {
+                                "unsafeName": "pagination",
+                                "safeName": "pagination"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "pagination",
+                                "safeName": "pagination"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAGINATION",
+                                "safeName": "PAGINATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Pagination",
+                                "safeName": "Pagination"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_users:CursorOptions"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_users.listWithNestedOffset": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithNestedOffset",
+                    "camelCase": {
+                        "unsafeName": "listWithNestedOffset",
+                        "safeName": "listWithNestedOffset"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_nested_offset",
+                        "safeName": "list_with_nested_offset"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_NESTED_OFFSET",
+                        "safeName": "LIST_WITH_NESTED_OFFSET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithNestedOffset",
+                        "safeName": "ListWithNestedOffset"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/nested-offset"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListUsersNestedOffsetRequest",
+                        "camelCase": {
+                            "unsafeName": "listUsersNestedOffsetRequest",
+                            "safeName": "listUsersNestedOffsetRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_users_nested_offset_request",
+                            "safeName": "list_users_nested_offset_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERS_NESTED_OFFSET_REQUEST",
+                            "safeName": "LIST_USERS_NESTED_OFFSET_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsersNestedOffsetRequest",
+                            "safeName": "ListUsersNestedOffsetRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "users",
+                                "camelCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USERS",
+                                    "safeName": "USERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Users",
+                                    "safeName": "Users"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "filter",
+                                "name": {
+                                    "originalName": "filter",
+                                    "camelCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILTER",
+                                        "safeName": "FILTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Filter",
+                                        "safeName": "Filter"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "options",
+                                "name": {
+                                    "originalName": "options",
+                                    "camelCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPTIONS",
+                                        "safeName": "OPTIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Options",
+                                        "safeName": "Options"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_users:PageOptions"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_users.listWithNestedOffsetAndStep": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithNestedOffsetAndStep",
+                    "camelCase": {
+                        "unsafeName": "listWithNestedOffsetAndStep",
+                        "safeName": "listWithNestedOffsetAndStep"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_nested_offset_and_step",
+                        "safeName": "list_with_nested_offset_and_step"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_NESTED_OFFSET_AND_STEP",
+                        "safeName": "LIST_WITH_NESTED_OFFSET_AND_STEP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithNestedOffsetAndStep",
+                        "safeName": "ListWithNestedOffsetAndStep"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/nested-offset-step"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListUsersNestedOffsetStepRequest",
+                        "camelCase": {
+                            "unsafeName": "listUsersNestedOffsetStepRequest",
+                            "safeName": "listUsersNestedOffsetStepRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_users_nested_offset_step_request",
+                            "safeName": "list_users_nested_offset_step_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERS_NESTED_OFFSET_STEP_REQUEST",
+                            "safeName": "LIST_USERS_NESTED_OFFSET_STEP_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsersNestedOffsetStepRequest",
+                            "safeName": "ListUsersNestedOffsetStepRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "users",
+                                "camelCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USERS",
+                                    "safeName": "USERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Users",
+                                    "safeName": "Users"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "filter",
+                                "name": {
+                                    "originalName": "filter",
+                                    "camelCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILTER",
+                                        "safeName": "FILTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Filter",
+                                        "safeName": "Filter"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "options",
+                                "name": {
+                                    "originalName": "options",
+                                    "camelCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPTIONS",
+                                        "safeName": "OPTIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Options",
+                                        "safeName": "Options"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_users:PageOptions"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_users.listWithNestedCursor": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithNestedCursor",
+                    "camelCase": {
+                        "unsafeName": "listWithNestedCursor",
+                        "safeName": "listWithNestedCursor"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_nested_cursor",
+                        "safeName": "list_with_nested_cursor"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_NESTED_CURSOR",
+                        "safeName": "LIST_WITH_NESTED_CURSOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithNestedCursor",
+                        "safeName": "ListWithNestedCursor"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/nested-cursor"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListUsersNestedCursorRequest",
+                        "camelCase": {
+                            "unsafeName": "listUsersNestedCursorRequest",
+                            "safeName": "listUsersNestedCursorRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_users_nested_cursor_request",
+                            "safeName": "list_users_nested_cursor_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERS_NESTED_CURSOR_REQUEST",
+                            "safeName": "LIST_USERS_NESTED_CURSOR_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsersNestedCursorRequest",
+                            "safeName": "ListUsersNestedCursorRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "users",
+                                "camelCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USERS",
+                                    "safeName": "USERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Users",
+                                    "safeName": "Users"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "filter",
+                                "name": {
+                                    "originalName": "filter",
+                                    "camelCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILTER",
+                                        "safeName": "FILTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Filter",
+                                        "safeName": "Filter"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "options",
+                                "name": {
+                                    "originalName": "options",
+                                    "camelCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPTIONS",
+                                        "safeName": "OPTIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Options",
+                                        "safeName": "Options"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_users:CursorOptions"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_users.listWithDeeplyNestedCursor": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listWithDeeplyNestedCursor",
+                    "camelCase": {
+                        "unsafeName": "listWithDeeplyNestedCursor",
+                        "safeName": "listWithDeeplyNestedCursor"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_with_deeply_nested_cursor",
+                        "safeName": "list_with_deeply_nested_cursor"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_WITH_DEEPLY_NESTED_CURSOR",
+                        "safeName": "LIST_WITH_DEEPLY_NESTED_CURSOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListWithDeeplyNestedCursor",
+                        "safeName": "ListWithDeeplyNestedCursor"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/deeply-nested-cursor"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListUsersDeeplyNestedCursorRequest",
+                        "camelCase": {
+                            "unsafeName": "listUsersDeeplyNestedCursorRequest",
+                            "safeName": "listUsersDeeplyNestedCursorRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_users_deeply_nested_cursor_request",
+                            "safeName": "list_users_deeply_nested_cursor_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERS_DEEPLY_NESTED_CURSOR_REQUEST",
+                            "safeName": "LIST_USERS_DEEPLY_NESTED_CURSOR_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsersDeeplyNestedCursorRequest",
+                            "safeName": "ListUsersDeeplyNestedCursorRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "users",
+                                "camelCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USERS",
+                                    "safeName": "USERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Users",
+                                    "safeName": "Users"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "filter",
+                                "name": {
+                                    "originalName": "filter",
+                                    "camelCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILTER",
+                                        "safeName": "FILTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Filter",
+                                        "safeName": "Filter"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "options",
+                                "name": {
+                                    "originalName": "options",
+                                    "camelCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "options",
+                                        "safeName": "options"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "OPTIONS",
+                                        "safeName": "OPTIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Options",
+                                        "safeName": "Options"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_users:NestedCursorOptions"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

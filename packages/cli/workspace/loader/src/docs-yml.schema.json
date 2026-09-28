@@ -1875,6 +1875,204 @@
         "graphql"
       ]
     },
+    "docs.ApiSpecErrorResponseSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "docs.ApiSpecErrorResponseApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "docs.ApiSpecErrorResponseHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "docs.ApiSpecErrorResponseEnsure": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecErrorResponses": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/docs.ApiSpecErrorResponseSchemaSource"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponseApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseEnsure"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecImportSettings": {
+      "type": "object",
+      "properties": {
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponses"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Import settings that affect the API definition rendered by Fern Docs."
+    },
     "docs.ApiSpecConfiguration": {
       "type": "object",
       "properties": {
@@ -1919,6 +2117,17 @@
             }
           ],
           "description": "Paths to Fern override documents, relative to docs.yml."
+        },
+        "settings": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecImportSettings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Import settings that affect the rendered API reference."
         }
       },
       "required": [
@@ -6802,6 +7011,76 @@
         "tabs"
       ]
     },
+    "docs.SiteSwitcherThemeConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Render the site switcher. Defaults to false."
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
+        },
+        "hide": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to omit, including any sites nested beneath them."
+        },
+        "labels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display label overrides keyed by basepath."
+        },
+        "show-products": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List each site's products indented beneath it. Defaults to false."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -6874,6 +7153,17 @@
               "type": "null"
             }
           ]
+        },
+        "site-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SiteSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
         }
       },
       "additionalProperties": false

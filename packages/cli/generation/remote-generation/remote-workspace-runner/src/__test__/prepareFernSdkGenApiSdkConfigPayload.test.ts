@@ -120,6 +120,33 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
         );
     });
 
+    it("passes generators.yml replay settings through to the SDK Config mapper", () => {
+        const mapFernGroupToSdkConfig = vi.fn(
+            ({ replay, source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "weather",
+                    source,
+                    ...(replay == null ? {} : { replay }),
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
+                })
+            })
+        );
+
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            replay: { enabled: true },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig
+        });
+
+        expect(mapFernGroupToSdkConfig).toHaveBeenCalledWith(expect.objectContaining({ replay: { enabled: true } }));
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({ replay: { enabled: true } });
+    });
+
     it("synthesizes an unpinned MCP payload without serializing latest", () => {
         const payload = prepareFernSdkGenApiSdkConfigPayload({
             workspace: { definition: definition() },

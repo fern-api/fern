@@ -1095,7 +1095,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
                         return {
-                            name: errorDeclaration.statusCode.toString(),
+                            name: this.context.getErrorCodesKey({ errorDeclaration, writer }),
                             value: go.TypeInstantiation.reference(
                                 go.func({
                                     parameters: [

@@ -14,4 +14,4 @@ export { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "./getBas
 export { isOpenAPIV2 } from "./isOpenAPIV2.js";
 export { isOpenAPIV3 } from "./isOpenAPIV3.js";
 export { isOpenAPIV3_1 } from "./isOpenAPIV3_1.js";
-export { getOpenAPISettings, type OpenAPISettings } from "./OpenAPISettings.js";
+export { getOpenAPISettings, type OpenAPISettings, type VisibilityFilter } from "./OpenAPISettings.js";

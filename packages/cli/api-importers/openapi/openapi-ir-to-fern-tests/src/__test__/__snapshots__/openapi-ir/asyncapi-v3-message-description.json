@@ -1,0 +1,155 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "garden": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "garden"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "plantStatus",
+          "description": "Current moisture level of a plant",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "plantStatusMoisture",
+                "key": "moisture",
+                "schema": {
+                  "schema": {
+                    "type": "double"
+                  },
+                  "generatedName": "PlantStatusMoisture",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "PlantStatus",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          }
+        },
+        {
+          "origin": "client",
+          "name": "waterPlant",
+          "description": "Request that the server water the specified plant.",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "waterPlantPlantId",
+                "key": "plantId",
+                "schema": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "WaterPlantPlantId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "WaterPlant",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/ws/garden",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "waterPlant",
+              "payload": {
+                "properties": {
+                  "plantId": {
+                    "value": {
+                      "value": "plantId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "plantStatus",
+              "payload": {
+                "properties": {
+                  "moisture": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

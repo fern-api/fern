@@ -1206,6 +1206,30 @@ types:
       footer-nav: optional<FooterNavThemeConfig>
       language-switcher: optional<LanguageSwitcherThemeConfig>
       product-switcher: optional<ProductSwitcherThemeConfig>
+      site-switcher:
+        type: optional<SiteSwitcherThemeConfig>
+        docs: |
+          Header switcher listing the other docs sites published to the same
+          domain under different basepaths. Membership is discovered
+          automatically at publish time; this only controls presentation.
+
+  SiteSwitcherThemeConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Render the site switcher. Defaults to false.
+      order:
+        type: optional<list<string>>
+        docs: Basepaths to pin first, in this order. Remaining sites follow alphabetically.
+      hide:
+        type: optional<list<string>>
+        docs: Basepaths to omit, including any sites nested beneath them.
+      labels:
+        type: optional<map<string, string>>
+        docs: Display label overrides keyed by basepath.
+      show-products:
+        type: optional<boolean>
+        docs: List each site's products indented beneath it. Defaults to false.
 
   ProductSwitcherThemeConfig:
     enum:
@@ -1580,6 +1604,58 @@ types:
       - asyncapi
       - graphql
 
+  ApiSpecErrorResponseHttpMethod:
+    enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      - trace
+
+  ApiSpecErrorResponseEnsure:
+    properties:
+      status-code:
+        type: integer
+        docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
+      methods: optional<list<ApiSpecErrorResponseHttpMethod>>
+
+  ApiSpecErrorResponses:
+    properties:
+      schema: ApiSpecErrorResponseSchemaSource
+      name: optional<string>
+      apply-to:
+        type: optional<ApiSpecErrorResponseApplyTo>
+      ensure: optional<list<ApiSpecErrorResponseEnsure>>
+
+  ApiSpecErrorResponseSchemaSource:
+    discriminated: false
+    union:
+      - string
+      - map<string, unknown>
+
+  ApiSpecErrorResponseApplyTo:
+    enum:
+      - all
+      - untyped
+
+  ApiSpecImportSettings:
+    docs: Import settings that affect the API definition rendered by Fern Docs.
+    properties:
+      type-dates-as-strings: optional<boolean>
+      use-bytes-for-binary-response: optional<boolean>
+      respect-parameter-content: optional<boolean>
+      respect-operation-id-word-boundaries: optional<boolean>
+      infer-forward-compatible: optional<boolean>
+      preserve-one-of-in-all-of: optional<boolean>
+      any-of-sibling-properties-as-object: optional<boolean>
+      error-responses: optional<ApiSpecErrorResponses>
+
   ApiSpecConfiguration:
     docs: A source API specification referenced directly by docs.yml.
     properties:
@@ -1594,6 +1670,9 @@ types:
       overrides:
         type: optional<list<string>>
         docs: Paths to Fern override documents, relative to docs.yml.
+      settings:
+        type: optional<ApiSpecImportSettings>
+        docs: Import settings that affect the rendered API reference.
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]

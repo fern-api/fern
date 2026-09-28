@@ -1,0 +1,3 @@
+dependencies:
+  users: ../users-api
+  payments: ../payments-api

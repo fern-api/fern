@@ -157,68 +157,50 @@ export function buildObjectTypeDeclaration({
 }): ConvertedTypeDeclaration {
     const shouldSkipReadonly = skipReadonlyProperties === true || variant === "write";
 
-    let readOnlyPropertyPresent = false;
-    const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+    const readOnlyPropertyPresent = schema.properties.some((property) => property.readonly);
     const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
-        if (property.readonly) {
-            readOnlyPropertyPresent = true;
-        }
-
         if (shouldSkipReadonly && property.readonly) {
             continue;
         }
-
-        if (Object.keys(property.conflict).length > 0) {
-            const parentHasIdentiticalProperty = Object.entries(property.conflict).every(([_, conflict]) => {
-                return !conflict.differentSchema;
-            });
-            if (parentHasIdentiticalProperty) {
-                continue; // just use the parent property instead of redefining
-            } else {
-                Object.entries(property.conflict).forEach(([schemaId]) => {
-                    const parentSchemasToInline = getAllParentSchemasToInline({
-                        property: property.key,
-                        schemaId,
-                        context,
-                        namespace
-                    });
-                    parentSchemasToInline.forEach((schemaToInline) => {
-                        schemasToInline.add(schemaToInline);
-                    });
-                });
+        const conflicts = Object.entries(property.conflict);
+        if (conflicts.every(([_, conflict]) => !conflict.differentSchema)) {
+            continue;
+        }
+        for (const [schemaId] of conflicts) {
+            for (const schemaToInline of getAllParentSchemasToInline({
+                property: property.key,
+                schemaId,
+                context,
+                namespace
+            })) {
+                schemasToInline.add(schemaToInline);
             }
         }
-        const typeReference = buildTypeReference({
-            schema: property.schema,
+    }
+
+    const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+    for (const property of schema.properties) {
+        if (shouldSkipReadonly && property.readonly) {
+            continue;
+        }
+        const parentHasIdenticalProperty =
+            Object.keys(property.conflict).length > 0 &&
+            Object.values(property.conflict).every((conflict) => !conflict.differentSchema);
+        if (parentHasIdenticalProperty) {
+            continue; // just use the parent property instead of redefining
+        }
+        properties[property.key] = buildObjectPropertyDefinition({
+            property,
             context,
-            fileContainingReference: declarationFile,
+            declarationFile,
             namespace,
-            declarationDepth: declarationDepth + 1,
+            declarationDepth,
             variant
         });
-
-        const audiences = property.audiences;
-        const name = property.nameOverride;
-        const availability = convertAvailability(property.availability);
-        const propertyAccess = getPropertyAccess(property);
-        const encoding = property.xml != null ? convertXmlPropertyToEncodingSchema(property.xml) : undefined;
-        properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
-            typeReference,
-            audiences,
-            name,
-            availability,
-            propertyAccess,
-            encoding
-        });
     }
-    const propertiesToSetToUnknown: Set<string> = new Set<string>();
-
     for (const allOfPropertyConflict of schema.allOfPropertyConflicts) {
         allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
-        if (allOfPropertyConflict.conflictingTypeSignatures) {
-            propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
-        }
     }
 
     const extendedSchemas: string[] = [];
@@ -244,19 +226,20 @@ export function buildObjectTypeDeclaration({
     for (const inlineSchemaId of schemasToInline) {
         const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
-            if (properties[propertyToInline.key] == null) {
-                if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                    properties[propertyToInline.key] = "unknown";
-                }
-                properties[propertyToInline.key] = buildTypeReference({
-                    schema: propertyToInline.schema,
-                    context,
-                    fileContainingReference: declarationFile,
-                    namespace,
-                    declarationDepth: declarationDepth + 1,
-                    variant
-                });
+            if (properties[propertyToInline.key] != null) {
+                continue;
             }
+            if (shouldSkipReadonly && propertyToInline.readonly) {
+                continue;
+            }
+            properties[propertyToInline.key] = buildObjectPropertyDefinition({
+                property: propertyToInline,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth,
+                variant
+            });
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             if (schemasToInline.has(extendedSchema.schema)) {
@@ -330,7 +313,7 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllParentSchemasToInline({
+export function getAllParentSchemasToInline({
     property,
     schemaId,
     context,
@@ -345,11 +328,12 @@ function getAllParentSchemasToInline({
     if (schema == null) {
         return [];
     }
-    if (schema.type === "reference") {
-        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace });
+    const unwrapped = schema.type === "nullable" ? schema.value : schema;
+    if (unwrapped.type === "reference") {
+        return getAllParentSchemasToInline({ property, schemaId: unwrapped.schema, context, namespace });
     }
-    if (schema.type === "object") {
-        const { properties, allOf } = getProperties(context, schemaId, namespace);
+    if (unwrapped.type === "object") {
+        const { properties, allOf } = getPropertiesFromSchema(context, unwrapped, namespace);
         const hasProperty = properties.some((p) => {
             return p.key === property;
         });
@@ -798,6 +782,39 @@ export function getSchemaIdOfResolvedType({
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema, namespace });
     }
     return schema;
+}
+
+function buildObjectPropertyDefinition({
+    property,
+    context,
+    declarationFile,
+    namespace,
+    declarationDepth,
+    variant
+}: {
+    property: ObjectProperty;
+    context: OpenApiIrConverterContext;
+    declarationFile: RelativeFilePath;
+    namespace: string | undefined;
+    declarationDepth: number;
+    variant?: "read" | "write";
+}): RawSchemas.ObjectPropertySchema {
+    const typeReference = buildTypeReference({
+        schema: property.schema,
+        context,
+        fileContainingReference: declarationFile,
+        namespace,
+        declarationDepth: declarationDepth + 1,
+        variant
+    });
+    return convertPropertyTypeReferenceToTypeDefinition({
+        typeReference,
+        audiences: property.audiences,
+        name: property.nameOverride,
+        availability: convertAvailability(property.availability),
+        propertyAccess: getPropertyAccess(property),
+        encoding: property.xml != null ? convertXmlPropertyToEncodingSchema(property.xml) : undefined
+    });
 }
 
 function convertPropertyTypeReferenceToTypeDefinition({

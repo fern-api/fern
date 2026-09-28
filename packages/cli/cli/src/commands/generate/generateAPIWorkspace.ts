@@ -1,3 +1,4 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
@@ -62,7 +63,8 @@ export async function generateWorkspace({
     automation,
     pack,
     packMode,
-    packOnly
+    packOnly,
+    includePrivate
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -109,6 +111,11 @@ export async function generateWorkspace({
     packMode?: PackMode;
     /** Keep only the fern-dist/ artifact in the output directory, removing the generated SDK source. */
     packOnly?: boolean;
+    /**
+     * Include OpenAPI elements marked `x-twilio.libraryVisibility: private` in the generated SDK
+     * (`fern generate --private`). Elements marked `hidden` are excluded regardless.
+     */
+    includePrivate?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -121,6 +128,7 @@ export async function generateWorkspace({
     }
 
     const { ai, replay } = workspace.generatorsConfiguration;
+    const libraryVisibility: VisibilityFilter = includePrivate ? "private" : "public";
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
@@ -214,7 +222,8 @@ export async function generateWorkspace({
                         generateTests,
                         generateFullProject: pack,
                         verify,
-                        disableTelemetry: isTelemetryDisabled()
+                        disableTelemetry: isTelemetryDisabled(),
+                        libraryVisibility
                     });
                 } else if (token != null) {
                     const getSpecsTarGz = createFernSourceArchiveResolver({
@@ -254,7 +263,8 @@ export async function generateWorkspace({
                         getSpecsTarGzBuffer: getSpecsTarGz,
                         sdkConfigV1,
                         mapFernGroupToSdkConfig,
-                        generateFullProject: pack
+                        generateFullProject: pack,
+                        libraryVisibility
                     });
                 }
                 if (pack) {

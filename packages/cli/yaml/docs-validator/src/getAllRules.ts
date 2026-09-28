@@ -1,6 +1,7 @@
 import { Rule } from "./Rule.js";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js";
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
+import { ApiSectionHasDefinitionRule } from "./rules/api-section-has-definition/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NavigationConflicts } from "./rules/navigation-conflicts/index.js";
@@ -29,6 +30,7 @@ import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js"
 const allRules = [
     ValidRedirectsFilesRule, // Report redirects files that could not be read
     FilepathsExistRule,
+    ApiSectionHasDefinitionRule, // Every `api:` navigation item must resolve to a loadable API definition
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
     ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
