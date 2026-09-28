@@ -1,5 +1,5 @@
+import { exposesSourceSpecs } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import {
     createGroupedSpecsTarGzArchiveSettled,
     createSpecsTarGzArchive,
@@ -34,7 +34,7 @@ export function createFernSourceArchiveResolver({
                   : ({ type: "select", audiences: sdkConfigV1.audiences } as const);
         const sourceArchives: FernSourceArchiveResolution["sourceArchives"] = new Map();
         const errors = new Map<number, unknown>();
-        if (!(workspace instanceof OSSWorkspace)) {
+        if (!exposesSourceSpecs(workspace)) {
             for (const request of requests) {
                 if (requestRequiresSourceArchive(request)) {
                     errors.set(
@@ -99,7 +99,7 @@ export function createFernSourceArchiveResolver({
         if (rootRequests.length > 0) {
             try {
                 const archive = await createSpecsTarGzArchive({
-                    specs: workspace.allSpecs,
+                    specs: await workspace.getSourceSpecs(),
                     context,
                     audiences
                 });

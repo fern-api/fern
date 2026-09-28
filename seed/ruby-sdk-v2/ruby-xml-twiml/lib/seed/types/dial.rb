@@ -23,6 +23,7 @@ module Seed
       #
       # @param phone_number [String, Number, nil] the text content
       # @param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes
+      # @option attributes [String, nil] :send_digits
       # @return [Number]
       def add_number(phone_number = nil, **attributes)
         child = phone_number.is_a?(Seed::Types::Number) ? phone_number : Seed::Types::Number.new(**attributes, phone_number: phone_number)

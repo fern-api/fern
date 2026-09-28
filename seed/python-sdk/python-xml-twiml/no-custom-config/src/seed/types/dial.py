@@ -61,6 +61,18 @@ class Dial(UniversalBaseModel):
         numbers: typing.Optional[typing.List[Number]] = None,
         **extra_attributes: str,
     ) -> None:
+        """
+        Parameters
+        ----------
+        number : typing.Optional[str]
+
+        status_callback_event : typing.Optional[typing.List[str]]
+
+        numbers : typing.Optional[typing.List[Number]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
         super().__init__(
             **dict(number=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
         )
@@ -109,6 +121,15 @@ class Dial(UniversalBaseModel):
     ) -> Number:
         """
         Appends a `<Number>` child element and returns it.
+
+        Parameters
+        ----------
+        phone_number : typing.Optional[str]
+
+        send_digits : typing.Optional[str]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Number(phone_number=phone_number, send_digits=send_digits, **extra_attributes)
         append_xml_child(self, "numbers", child)

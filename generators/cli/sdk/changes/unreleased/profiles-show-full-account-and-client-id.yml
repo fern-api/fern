@@ -1,0 +1,14 @@
+- summary: |
+    `profiles show` and `profiles current` now print the full stored account
+    identifier (e.g. the complete Twilio Account SID) instead of the truncated
+    form used in the `profiles list` table, and include the profile's
+    `oauth_client_id` when one is set. `profiles list` folds the OAuth client
+    id into the `ACCOUNT` column (shown when the profile stores no basic-auth
+    account) instead of a separate `OAUTH_CLIENT_ID` column.
+  type: fix
+- summary: |
+    `profiles show` and `profiles current` human output now lists fields in a
+    fixed order (`profile`, `active`/`selected_by`, `account`/`oauth_client_id`,
+    then settings) instead of alphabetically, so the identifier sits in the
+    same place for basic-auth and OAuth profiles.
+  type: fix

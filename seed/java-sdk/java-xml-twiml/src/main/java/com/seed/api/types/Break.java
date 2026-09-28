@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.Optional;
 import org.w3c.dom.Element;
 
+/**
+ * <p>Adding a Pause in &lt;Say&gt;</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Break.Builder.class)
 public final class Break implements XmlSerializable {
@@ -48,11 +51,17 @@ public final class Break implements XmlSerializable {
         this.additionalChildren = additionalChildren;
     }
 
+    /**
+     * @return Set a pause based on strength
+     */
     @JsonProperty("strength")
     public Optional<BreakStrength> getStrength() {
         return strength;
     }
 
+    /**
+     * @return Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+     */
     @JsonProperty("time")
     public Optional<String> getTime() {
         return time;
@@ -143,23 +152,35 @@ public final class Break implements XmlSerializable {
             return this;
         }
 
+        /**
+         * <p>Set a pause based on strength</p>
+         */
         @JsonSetter(value = "strength", nulls = Nulls.SKIP)
         public Builder strength(Optional<BreakStrength> strength) {
             this.strength = strength;
             return this;
         }
 
+        /**
+         * <p>Set a pause based on strength</p>
+         */
         public Builder strength(BreakStrength strength) {
             this.strength = Optional.ofNullable(strength);
             return this;
         }
 
+        /**
+         * <p>Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms</p>
+         */
         @JsonSetter(value = "time", nulls = Nulls.SKIP)
         public Builder time(Optional<String> time) {
             this.time = time;
             return this;
         }
 
+        /**
+         * <p>Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms</p>
+         */
         public Builder time(String time) {
             this.time = Optional.ofNullable(time);
             return this;

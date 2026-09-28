@@ -25,6 +25,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
+            documentConstructorKeys: xml != null,
             parentClassReference:
                 xml != null
                     ? this.context.getXmlSerializableTypeClassReference()

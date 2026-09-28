@@ -272,7 +272,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             const setterName = takenNames.has(property.key) ? `set${context.case.pascalSafe(property.key)}` : key;
             takenNames.add(property.key);
             takenNames.add(setterName);
-            methods.push({
+            const setter: OptionalKind<MethodDeclarationStructure> = {
                 name: setterName,
                 parameters: [
                     {
@@ -282,7 +282,9 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 ],
                 returnType: "this",
                 statements: [`this.${target}.${key} = ${property.key};`, "return this;"]
-            });
+            };
+            maybeAddDocsStructure(setter, property.irProperty.docs);
+            methods.push(setter);
         }
 
         for (const property of elementProperties) {
@@ -410,11 +412,16 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const append = property.isList
             ? `this.elements.${key} = [...(this.elements.${key} ?? []), builder];`
             : `this.elements.${key} = builder;`;
+        const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} and returns its builder.`;
         return {
             name,
             docs: [
                 {
-                    description: `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} and returns its builder.`
+                    description: childType.docs != null ? `${summary}\n\n${childType.docs}` : summary,
+                    tags: [
+                        { tagName: "param", text: `fields initial \`<${childXml.name}>\` attributes and children` },
+                        { tagName: "returns", text: `the \`${childRef}.${BUILDER_CLASS}\` appended to this element` }
+                    ]
                 }
             ],
             parameters: [{ name: "fields", type: `Partial<${childRef}.${FIELDS_INTERFACE}>`, hasQuestionToken: true }],

@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.34.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) models now carry inline documentation on their user-facing APIs: the
+        `__init__` of text-bearing models and every fluent child method (`say.break_(...)`) document
+        each parameter from the API definition's property descriptions, plus `**extra_attributes`.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.33.2
+  changelogEntry:
+    - summary: |
+        Also emit the SPDX `license` in `[tool.poetry]` alongside the PEP 639 `[project]` license. Poetry 1.x
+        (including the `poetry` version pinned in the generated publish workflow) ignores the `[project]`
+        table, so since 5.32.0 packages built with it were published to PyPI without any license metadata.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
 - version: 5.33.1
   changelogEntry:
     - summary: |

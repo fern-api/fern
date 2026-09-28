@@ -84,28 +84,48 @@ export namespace Response {
             return this;
         }
 
-        /** Adds a `<Say>` child and returns its builder. */
+        /**
+         * Adds a `<Say>` child and returns its builder.
+         *
+         * <Say> TwiML Verb
+         * @param fields initial `<Say>` attributes and children
+         * @returns the `SeedApi.Say.Builder` appended to this element
+         */
         say(fields?: Partial<SeedApi.Say.Fields>): SeedApi.Say.Builder {
             const builder = new SeedApi.Say.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
             return builder;
         }
 
-        /** Adds a `<Dial>` child and returns its builder. */
+        /**
+         * Adds a `<Dial>` child and returns its builder.
+         * @param fields initial `<Dial>` attributes and children
+         * @returns the `SeedApi.Dial.Builder` appended to this element
+         */
         dial(fields?: Partial<SeedApi.Dial.Fields>): SeedApi.Dial.Builder {
             const builder = new SeedApi.Dial.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
             return builder;
         }
 
-        /** Adds a `<Pause>` child and returns its builder. */
+        /**
+         * Adds a `<Pause>` child and returns its builder.
+         *
+         * XML element without an explicit xml.name; falls back to the schema name.
+         * @param fields initial `<Pause>` attributes and children
+         * @returns the `SeedApi.Pause.Builder` appended to this element
+         */
         pause(fields?: Partial<SeedApi.Pause.Fields>): SeedApi.Pause.Builder {
             const builder = new SeedApi.Pause.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
             return builder;
         }
 
-        /** Adds a `<Hangup>` child and returns its builder. */
+        /**
+         * Adds a `<Hangup>` child and returns its builder.
+         * @param fields initial `<Hangup>` attributes and children
+         * @returns the `SeedApi.Hangup.Builder` appended to this element
+         */
         hangup(fields?: Partial<SeedApi.Hangup.Fields>): SeedApi.Hangup.Builder {
             const builder = new SeedApi.Hangup.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];

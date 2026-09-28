@@ -10,6 +10,7 @@ from ..object_generator import (
     ObjectProperty,
 )
 from fern_python.codegen import AST, SourceFile
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
@@ -399,6 +400,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                     return_type=AST.TypeHint.none(),
                 ),
                 body=AST.CodeWriter(write_body),
+                docstring=_docstring_with_parameters(
+                    None, [self._parameter(pydantic_model, p) for p in [text_property, *keyword_properties]]
+                ),
             )
         )
 
@@ -407,6 +411,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
     ) -> AST.NamedFunctionParameter:
         return AST.NamedFunctionParameter(
             name=_field_name(property),
+            docs=property.docs,
             type_hint=pydantic_model.get_type_hint_for_type_reference(property.value_type),
             initializer=self._context.get_initializer_for_type_reference(property.value_type),
         )
@@ -576,29 +581,72 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             writer.write_line(f"(self, {_quote(field_name)}, child)")
             writer.write_line("return child")
 
-        docstring = f"Appends a `<{child_tag}>` child element and returns it." if child_tag is not None else None
+        summary = f"Appends a `<{child_tag}>` child element and returns it." if child_tag is not None else None
         if child_declaration.docs is not None:
-            docstring = f"{docstring}\n\n{child_declaration.docs}" if docstring is not None else child_declaration.docs
+            summary = f"{summary}\n\n{child_declaration.docs}" if summary is not None else child_declaration.docs
 
+        positional_parameters = [self._parameter(pydantic_model, text_property)] if text_property is not None else []
+        named_parameters = [self._parameter(pydantic_model, p) for p in ordered_keyword_properties]
         pydantic_model.add_method_unsafe(
             AST.FunctionDeclaration(
                 name=method_name,
                 signature=AST.FunctionSignature(
-                    parameters=[self._parameter(pydantic_model, text_property)] if text_property is not None else [],
-                    named_parameters=[self._parameter(pydantic_model, p) for p in ordered_keyword_properties],
+                    parameters=positional_parameters,
+                    named_parameters=named_parameters,
                     include_kwargs=True,
                     kwargs_name=_EXTRA_ATTRIBUTES,
                     kwargs_type_hint=AST.TypeHint.str_(),
                     return_type=AST.TypeHint(type=child_class),
                 ),
                 body=AST.CodeWriter(write_body),
-                docstring=AST.CodeWriter(docstring) if docstring is not None else None,
+                docstring=_docstring_with_parameters(summary, [*positional_parameters, *named_parameters]),
             )
         )
 
 
 _EXTRA_ATTRIBUTES = "extra_attributes"
 _ADDITIONAL_CHILDREN = "_additional_children"
+
+
+def _docstring_with_parameters(
+    summary: Optional[str], parameters: Sequence[AST.NamedFunctionParameter]
+) -> Optional[AST.CodeWriter]:
+    """numpydoc-style docstring: optional summary followed by a `Parameters` section (same layout as endpoint methods)."""
+    if summary is None and len(parameters) == 0:
+        return None
+
+    def write(writer: AST.NodeWriter) -> None:
+        if summary is not None:
+            writer.write_line(escape_docstring(summary))
+        if len(parameters) == 0:
+            return
+        if summary is not None:
+            writer.write_line()
+        writer.write_line("Parameters")
+        writer.write_line("----------")
+        for i, parameter in enumerate(parameters):
+            if i > 0:
+                writer.write_line()
+                writer.write_line()
+            writer.write(f"{parameter.name} : ")
+            if parameter.type_hint is not None:
+                writer.write_node(parameter.type_hint)
+            if parameter.docs is not None:
+                lines = parameter.docs.split("\n")
+                with writer.indent():
+                    for j, line in enumerate(lines):
+                        writer.write(escape_docstring(line))
+                        if j < len(lines) - 1:
+                            writer.write_line()
+        writer.write_line()
+        writer.write_line()
+        writer.write(f"**{_EXTRA_ATTRIBUTES} : str")
+        with writer.indent():
+            writer.write("Additional XML attributes not declared in the API definition.")
+        writer.write_line()
+
+    return AST.CodeWriter(write)
+
 
 # Builder method names that would shadow generated or pydantic model API.
 _RESERVED_METHOD_NAMES = {"to_xml", "from_xml", "append", "add_child"} | BASE_MODEL_PROPERTIES

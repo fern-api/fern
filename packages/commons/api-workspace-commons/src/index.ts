@@ -10,5 +10,6 @@ export { getOriginGitCommit, getOriginGitCommitIsDirty } from "./getOriginGitCom
 export * from "./openapi/index.js";
 export * from "./RawSpecs.js";
 export * from "./Source.js";
+export * from "./SourceSpecExposingWorkspace.js";
 export * from "./Spec.js";
 export * from "./utils/index.js";

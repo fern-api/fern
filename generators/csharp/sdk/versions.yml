@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.86.0
+  changelogEntry:
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`, `say.Break(...)`)
+        now carry `<param>` documentation for every argument, taken from the child type's property
+        descriptions, and include the child type's own description in the method summary.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 2.85.0
   changelogEntry:
     - summary: |

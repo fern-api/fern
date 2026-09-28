@@ -60,6 +60,7 @@ class PyProjectToml:
             classifiers=PyPIClassifierMetadataGenerator.create_classifiers(python_version=python_version),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
+            license_expression=self._get_license_expression(),
         )
         self._dependency_manager = dependency_manager
         self._path = path
@@ -80,23 +81,31 @@ class PyProjectToml:
         filename = cast(CustomLicense, license_union).filename
         return detect_spdx_license_from_file(os.path.join(path, filename), DOCKER_LICENSE_PATH)
 
+    def _get_license_expression(self) -> Optional[str]:
+        if self._license is None:
+            return None
+        license_union = self._license.get_as_union()
+        if license_union.type == "basic":
+            return SPDX_IDS.get(cast(BasicLicense, license_union).id)
+        if license_union.type == "custom":
+            return self._detected_spdx_license
+        return None
+
     def _get_project_license(self) -> str:
         """PEP 639 license metadata for the [project] table."""
         if self._license is None:
             return ""
+        expression = self._get_license_expression()
+        license_line = f'license = "{expression}"\n' if expression is not None else ""
         license_union = self._license.get_as_union()
         if license_union.type == "basic":
-            spdx_id = SPDX_IDS.get(cast(BasicLicense, license_union).id)
-            if spdx_id is None:
+            if expression is None:
                 return ""
-            return f'license = "{spdx_id}"\nlicense-files = ["{LICENSE_FILENAME}"]\n'
+            return f'{license_line}license-files = ["{LICENSE_FILENAME}"]\n'
         if license_union.type == "custom":
             filename = cast(CustomLicense, license_union).filename
             escaped = filename.replace("\\", "\\\\").replace('"', '\\"')
-            expression = (
-                f'license = "{self._detected_spdx_license}"\n' if self._detected_spdx_license is not None else ""
-            )
-            return f'{expression}license-files = ["{escaped}"]\n'
+            return f'{license_line}license-files = ["{escaped}"]\n'
         return ""
 
     def write(self) -> None:
@@ -148,6 +157,7 @@ dynamic = ["version"]
         classifiers: List[str]
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
+        license_expression: Optional[str] = None
 
         def to_string(self) -> str:
             s = f'''[tool.poetry]
@@ -186,7 +196,10 @@ name = "{self.name}"'''
 description = "{description}"
 readme = "README.md"
 authors = {json.dumps(authors, indent=4)}
-keywords = {json.dumps(keywords, indent=4)}
+keywords = {json.dumps(keywords, indent=4)}"""
+            if self.license_expression is not None:
+                s += f'\nlicense = "{self.license_expression}"'
+            s += f"""
 classifiers = {json.dumps(self.classifiers, indent=4)}"""
             if self.package._from is not None:
                 s += f"""
