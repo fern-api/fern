@@ -234,10 +234,9 @@ export async function parseDocsConfiguration({
 
     warnOnUnconfiguredExternalSitemapLocales({
         externalSitemaps: experimental?.externalSitemaps,
-        siteLocales:
-            rawDocsConfiguration.translations?.map(
-                (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
-            ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        siteLocales: rawDocsConfiguration.translations?.map(
+            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
         context
     });
 
