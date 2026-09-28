@@ -90,16 +90,23 @@ class Response extends XmlSerializableType
     /**
      * Adds a <Say> child element and returns it (for nesting further children).
      *
+     * <Say> TwiML Verb
+     *
      * @param (
      *    Say
      *   |string
      *   |null
-     * ) $message The <Say> to add, or its text content.
+     * ) $message The <Say> to add, or its text content (Message to say).
+     * $attributes: Properties of the new <Say> (ignored when a Say is given).
+     * - `voice`: Voice to use
+     * - `loop`: Times to loop message
+     * - `children`: Nested TwiML elements, rendered in order.
+     *
      * @param array{
      *   voice?: ?string,
      *   loop?: ?int,
      *   children?: ?array<Break_>,
-     * } $attributes Properties of the new <Say> (ignored when a Say is given).
+     * } $attributes
      * @return Say
      */
     public function say(Say|string|null $message = null, array $attributes = []): Say
@@ -133,6 +140,8 @@ class Response extends XmlSerializableType
 
     /**
      * Adds a <Pause> child element and returns it (for nesting further children).
+     *
+     * XML element without an explicit xml.name; falls back to the schema name.
      *
      * @param (
      *    Pause
@@ -168,6 +177,8 @@ class Response extends XmlSerializableType
 
     /**
      * Adds a <Redirect> child element and returns it (for nesting further children).
+     *
+     * Text element with a required attribute.
      *
      * @param (
      *    Redirect

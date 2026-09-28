@@ -717,6 +717,8 @@ class Wide extends XmlSerializableType
     /**
      * Adds a <Pause> child element and returns it (for nesting further children).
      *
+     * XML element without an explicit xml.name; falls back to the schema name.
+     *
      * @param (
      *    Pause
      *   |array{

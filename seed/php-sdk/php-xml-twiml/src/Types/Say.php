@@ -9,33 +9,42 @@ use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
 use InvalidArgumentException;
 
+/**
+ * <Say> TwiML Verb
+ */
 class Say extends XmlSerializableType
 {
     /**
-     * @var ?string $message
+     * @var ?string $message Message to say
      */
     #[JsonProperty('message')]
     public ?string $message;
 
     /**
-     * @var ?string $voice
+     * @var ?string $voice Voice to use
      */
     #[JsonProperty('voice')]
     public ?string $voice;
 
     /**
-     * @var ?int $loop
+     * @var ?int $loop Times to loop message
      */
     #[JsonProperty('loop')]
     public ?int $loop;
 
     /**
-     * @var ?array<Break_> $children
+     * @var ?array<Break_> $children Nested TwiML elements, rendered in order.
      */
     #[JsonProperty('children'), ArrayType([Break_::class])]
     public ?array $children;
 
     /**
+     * $values keys:
+     * - `message`: Message to say
+     * - `voice`: Voice to use
+     * - `loop`: Times to loop message
+     * - `children`: Nested TwiML elements, rendered in order.
+     *
      * @param array{
      *   message?: ?string,
      *   voice?: ?string,
@@ -104,13 +113,19 @@ class Say extends XmlSerializableType
     /**
      * Adds a <break> child element and returns it (for nesting further children).
      *
+     * Adding a Pause in <Say>
+     *
+     * $child: The <break> to add, or the properties to construct it with.
+     * - `strength`: Set a pause based on strength
+     * - `time`: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+     *
      * @param (
      *    Break_
      *   |array{
      *   strength?: ?value-of<BreakStrength>,
      *   time?: ?string,
      * }
-     * ) $child The <break> to add, or the properties to construct it with.
+     * ) $child
      * @return Break_
      */
     public function break(Break_|array $child = []): Break_

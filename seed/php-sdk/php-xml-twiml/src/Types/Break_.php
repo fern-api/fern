@@ -8,21 +8,28 @@ use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
 use InvalidArgumentException;
 
+/**
+ * Adding a Pause in <Say>
+ */
 class Break_ extends XmlSerializableType
 {
     /**
-     * @var ?value-of<BreakStrength> $strength
+     * @var ?value-of<BreakStrength> $strength Set a pause based on strength
      */
     #[JsonProperty('strength')]
     public ?string $strength;
 
     /**
-     * @var ?string $time
+     * @var ?string $time Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
      */
     #[JsonProperty('time')]
     public ?string $time;
 
     /**
+     * $values keys:
+     * - `strength`: Set a pause based on strength
+     * - `time`: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+     *
      * @param array{
      *   strength?: ?value-of<BreakStrength>,
      *   time?: ?string,

@@ -16,6 +16,8 @@ const CONSTRUCTOR_PARAMETER_NAME = "values";
 export declare namespace DataClass {
     interface Args extends Class.Args {
         constructorAccess?: Access;
+        /* Whether to render each documented field as a bullet above the constructor's `$values` @param */
+        documentConstructorKeys?: boolean;
     }
 }
 
@@ -23,13 +25,24 @@ export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     private readonly constructorAccess: Access;
+    private readonly documentConstructorKeys: boolean;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
+    constructor({
+        name,
+        namespace,
+        abstract,
+        docs,
+        parentClassReference,
+        traits,
+        constructorAccess,
+        documentConstructorKeys
+    }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.constructorAccess = constructorAccess ?? "public";
+        this.documentConstructorKeys = documentConstructorKeys ?? false;
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
@@ -93,8 +106,32 @@ export class DataClass extends AstNode {
                         multiline: true
                     }
                 ),
-                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined
+                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined,
+                docs: this.documentConstructorKeys
+                    ? getFieldKeyDocs({ header: `$${CONSTRUCTOR_PARAMETER_NAME} keys:`, fields: orderedFields })
+                    : undefined
             })
         ];
     }
+}
+
+export function getFieldKeyDocs({
+    header,
+    fields
+}: {
+    header: string;
+    fields: { name: string; docs?: string }[];
+}): string | undefined {
+    const lines = fields.flatMap((field) => {
+        const docs = field.docs?.trim();
+        if (docs == null || docs === "") {
+            return [];
+        }
+        return [`- \`${field.name}\`: ${docs.split(/\r?\n/).join(" ")}`];
+    });
+    if (lines.length === 0) {
+        return undefined;
+    }
+    // Multi-line tag docs are rendered above the @param line by Comment.writeTag.
+    return [header, ...lines].join("\n");
 }

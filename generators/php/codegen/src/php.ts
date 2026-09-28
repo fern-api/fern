@@ -141,6 +141,7 @@ export {
     CodeBlock,
     type ConstructorField,
     DataClass,
+    getFieldKeyDocs,
     Enum,
     Field,
     Interface,
