@@ -1324,7 +1324,7 @@ fn list_folds_the_oauth_client_id_into_the_account_column() {
         .as_array()
         .and_then(|rows| rows.iter().find(|r| r["profile"] == "oauth"))
         .unwrap_or_else(|| panic!("{rows:#?}"));
-    assert_eq!(row["account"], "OQpubliccl\u{2026}", "{row:#?}");
+    assert_eq!(row["account"], "OQpublicclientid1234567890", "{row:#?}");
     assert!(row.get("oauth_client_id").is_none(), "{row:#?}");
 }
 

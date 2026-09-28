@@ -279,9 +279,9 @@ fn list_shows_the_stored_account_not_the_slot_name() {
         let prod = rows.iter().find(|r| r["profile"] == "prod").expect("prod");
         let acme = rows.iter().find(|r| r["profile"] == "acme").expect("acme");
 
-        // Truncated, so the column cannot dominate the row.
-        assert_eq!(prod["account"], "AC11111111\u{2026}", "{prod:#?}");
-        assert_eq!(acme["account"], "AC99999999\u{2026}", "{acme:#?}");
+        // The full identifier: a listing is where you copy it from.
+        assert_eq!(prod["account"], "AC1111111111111111", "{prod:#?}");
+        assert_eq!(acme["account"], "AC9999999999999999", "{acme:#?}");
 
         // And neither names a slot — each owns its own.
         assert!(prod.get("credentials_from").is_none(), "{prod:#?}");
@@ -292,8 +292,8 @@ fn list_shows_the_stored_account_not_the_slot_name() {
 #[test]
 #[serial]
 fn show_prints_the_full_stored_account() {
-    // `list` truncates so the column fits; `show` is one profile at a time
-    // and the point of asking is to read the whole identifier.
+    // `show` is one profile at a time and the point of asking is to read
+    // the whole identifier.
     with_clean_env(|_home| {
         std::env::set_var("BSC_USERNAME", "AC56534d6b579feeba83f0563ca7fa7075");
         std::env::set_var("BSC_PASSWORD", "prodtok");

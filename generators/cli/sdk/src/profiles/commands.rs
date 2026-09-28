@@ -978,7 +978,7 @@ fn handle_list<W: Write>(
                 .and_then(|credential| stored_account(ctx, credential))
                 .or_else(|| resolved.oauth_client_id.clone());
             if let Some(account) = account {
-                row.insert("account".into(), truncate_account(&account).into());
+                row.insert("account".into(), account.into());
             }
             if let Some(credential) = &resolved.credential {
                 // The *slot* only when it is not this profile's own. Emitting
@@ -1283,19 +1283,6 @@ fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::Resol
             Ok(Some(_))
         )
     })
-}
-
-/// Shorten a long identifier for a `list` table cell, keeping the leading
-/// characters that distinguish accounts (`AC1234…`). Twilio SIDs are 34
-/// characters, which would dominate the row. `show` and `current` print the
-/// full value: one profile at a time, and the point is to read it.
-fn truncate_account(value: &str) -> String {
-    const KEEP: usize = 10;
-    if value.chars().count() <= KEEP + 1 {
-        return value.to_string();
-    }
-    let head: String = value.chars().take(KEEP).collect();
-    format!("{head}\u{2026}")
 }
 
 /// Warn about a variable that is set, looks like one of this CLI's credential
