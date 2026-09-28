@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.139.3
+  changelogEntry:
+    - summary: |
+        Allow replay to be enabled for SDK generators routed through sdk-gen-api.
+        Previously, generators with both sdkGenApiRoute and replay.enabled: true failed
+        with a configuration error.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
 - version: 5.139.2
   changelogEntry:
     - summary: |
