@@ -3,7 +3,8 @@
     spec instead of a static string: it lists `<PREFIX>_PROFILE`,
     `<PREFIX>_OUTPUT`, `<PREFIX>_RETRIES`, and one `<PREFIX>_<VAR>` entry per
     `servers[].variables` (e.g. `TWILIO_CLI_REGION`), alongside the existing
-    runtime-only knobs. Entries that `profiles set` can also persist are
-    marked with `*`, so the footer and that command's validation error
+    runtime-only knobs. A closing legend names the entries `profiles set`
+    cannot persist ("All of the above except <PREFIX>_PROFILE, … can also be
+    stored per profile"), so the footer and that command's validation error
     describe the same surface.
   type: fix

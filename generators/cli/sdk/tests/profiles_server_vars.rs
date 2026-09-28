@@ -120,18 +120,13 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
             .nth(1)
             .unwrap_or_else(|| panic!("no env footer in:\n{output}"));
 
-        // Spec-derived server variable, plus the profile-storable knobs the
-        // `profiles set` error already advertises — all marked `*`.
+        // Spec-derived server variable, the profile-storable knobs the
+        // `profiles set` error already advertises, and the runtime-only ones.
         for var in [
-            "REGIONAL_REGION*",
-            "REGIONAL_BASE_URL*",
-            "REGIONAL_OUTPUT*",
-            "REGIONAL_RETRIES*",
-        ] {
-            assert!(footer.contains(var), "missing `{var}` in:\n{footer}");
-        }
-        // Runtime-only knobs are listed without the marker.
-        for var in [
+            "REGIONAL_REGION ",
+            "REGIONAL_BASE_URL ",
+            "REGIONAL_OUTPUT ",
+            "REGIONAL_RETRIES ",
             "REGIONAL_PROFILE ",
             "REGIONAL_TIMEOUT_SECS ",
             "REGIONAL_PROXY ",
@@ -142,13 +137,20 @@ fn the_help_footer_lists_profile_settable_and_runtime_env_vars() {
         }
         assert!(
             footer.lines().any(|line| line
-                == "  REGIONAL_REGION*             Value for the {region} URL template variable (--region wins)"),
+                == "  REGIONAL_REGION             Value for the {region} URL template variable (--region wins)"),
             "{footer}"
         );
+        // The legend names the vars `profiles set` rejects, rather than
+        // marking the ones it accepts.
         assert!(
-            footer.contains("regional profiles set <name> VAR=value"),
+            footer.contains(
+                "All of the above except REGIONAL_PROFILE, REGIONAL_CA_BUNDLE, REGIONAL_INSECURE, \
+                 REGIONAL_PROXY, REGIONAL_TIMEOUT_SECS and REGIONAL_USER_AGENT_SUFFIX can also be \
+                 stored per profile:\n  regional profiles set <name> VAR=value"
+            ),
             "{footer}"
         );
+        assert!(!footer.contains('*'), "{footer}");
         assert_eq!(
             output.matches("Environment variables:").count(),
             1,

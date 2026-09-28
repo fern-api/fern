@@ -116,8 +116,9 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
 ///
-/// Rows marked `*` are the settings `profiles set` also accepts, so the
-/// footer and that command's validation error describe the same surface.
+/// Each row records whether `profiles set` also accepts the variable; the
+/// closing legend names the exceptions, so the footer and that command's
+/// validation error describe the same surface.
 /// Server variables come from the spec (`servers[].variables`), which is
 /// where `<PREFIX>_REGION`-style vars originate.
 pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
@@ -190,19 +191,34 @@ pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
 
     let width = rows
         .iter()
-        .map(|(name, _, _)| name.chars().count() + 1)
+        .map(|(name, _, _)| name.chars().count())
         .max()
         .unwrap_or(0);
     let mut out = String::from("Environment variables:\n");
-    for (name, on_profile, help) in &rows {
-        let marker = if *on_profile { "*" } else { " " };
-        let pad = width.saturating_sub(name.chars().count() + 1);
-        out.push_str(&format!("  {name}{marker}{:pad$}  {help}\n", ""));
+    for (name, _, help) in &rows {
+        out.push_str(&format!("  {name:<width$}  {help}\n"));
     }
-    out.push_str(&format!(
-        "\n* can also be stored per profile: `{binary_name} profiles set <name> VAR=value`.\n\
-         Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
-    ));
+    out.push('\n');
+    if rows.iter().any(|(_, on_profile, _)| *on_profile) {
+        let exceptions: Vec<&str> = rows
+            .iter()
+            .filter(|(_, on_profile, _)| !on_profile)
+            .map(|(name, _, _)| name.split('=').next().unwrap_or(name))
+            .collect();
+        let scope = match exceptions.as_slice() {
+            [] => "All of the above".to_string(),
+            [only] => format!("All of the above except {only}"),
+            [init @ .., last] => {
+                format!("All of the above except {} and {last}", init.join(", "))
+            }
+        };
+        out.push_str(&format!(
+            "{scope} can also be stored per profile:\n  {binary_name} profiles set <name> VAR=value\n"
+        ));
+    }
+    out.push_str(
+        "Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored.",
+    );
     out
 }
 
