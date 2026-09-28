@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Return a completed HTTP response instead of discarding it when the request
+    context is canceled after the response arrives but before it is decoded.
+    `Caller.Call` previously re-checked `ctx.Err()` at that point and returned
+    `context.Canceled` / `context.DeadlineExceeded` with a nil response, which
+    dropped valid responses that had already been buffered (for example by a
+    logging `http.RoundTripper` that ends its scope before returning). Calls
+    canceled before the request is sent, and calls whose response body is
+    still being read when the context ends, continue to fail with the
+    context's error, and a canceled context still never triggers a retry.
+  type: fix
