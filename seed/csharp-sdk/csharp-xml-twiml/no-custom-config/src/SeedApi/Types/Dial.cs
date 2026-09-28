@@ -116,6 +116,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     /// <summary>
     /// Adds a <c>&lt;Number&gt;</c> child element and returns this instance for chaining.
     /// </summary>
+    /// <param name="number">The <c>&lt;Number&gt;</c> element to add.</param>
     public Dial AddNumber(Number number)
     {
         Numbers = XmlUtils.Append<Number>(Numbers, number);

@@ -708,6 +708,43 @@ export class XmlObjectGenerator {
         return name;
     }
 
+    /**
+     * Doc block for a fluent child method: the summary, the child type's own description,
+     * and a `<param>` entry for every documented parameter.
+     */
+    private childBuilderDoc({
+        summary,
+        childType,
+        parameters
+    }: {
+        summary: string;
+        childType: TypeDeclaration;
+        parameters: { name: string; docs: string | undefined }[];
+    }): (writer: ast.XmlDocWriter) => void {
+        const childDocs = childType.docs?.trim();
+        const documented = parameters.filter(
+            (parameter): parameter is { name: string; docs: string } =>
+                parameter.docs != null && parameter.docs.trim() !== ""
+        );
+        return (writer) => {
+            writer.writeLine("<summary>");
+            writer.writeLine(summary);
+            if (childDocs != null && childDocs !== "") {
+                writer.writeLine("<para>");
+                writer.writeMultilineWithEscaping(childDocs);
+                writer.writeLine("</para>");
+            }
+            writer.writeLine("</summary>");
+            for (const parameter of documented) {
+                writer.writePrefix();
+                writer.write(`<param name="${parameter.name}">`);
+                writer.writeWithEscaping(parameter.docs.trim().split("\n").join(" "));
+                writer.write("</param>");
+                writer.writeNewLineIfLastLineNot();
+            }
+        };
+    }
+
     private addChildBuilderMethod(property: XmlProperty, childType: TypeDeclaration, name: string): void {
         const childReference = this.context.csharpTypeMapper.convertToClassReference(childType);
         const parameterName = this.context.case.camelSafe(childReference.name);
@@ -717,7 +754,11 @@ export class XmlObjectGenerator {
             access: ast.Access.Public,
             return_: this.class_.reference,
             parameters: [this.csharp.parameter({ name: parameterName, type: childReference })],
-            summary: `Adds a <c>&lt;${xmlName}&gt;</c> child element and returns this instance for chaining.`,
+            doc: this.childBuilderDoc({
+                summary: `Adds a <c>&lt;${xmlName}&gt;</c> child element and returns this instance for chaining.`,
+                childType,
+                parameters: [{ name: parameterName, docs: `The <c>&lt;${xmlName}&gt;</c> element to add.` }]
+            }),
             body: this.csharp.codeblock((writer) => {
                 writer.write(`${property.field.name} = `);
                 if (property.isList) {
@@ -739,7 +780,8 @@ export class XmlObjectGenerator {
             this.csharp.parameter({
                 name: this.context.case.camelSafe(scalar.field.name),
                 type: this.isRequiredValue(scalar) ? scalar.field.type : this.asNullable(scalar.field.type),
-                initializer: this.isRequiredValue(scalar) ? undefined : "null"
+                initializer: this.isRequiredValue(scalar) ? undefined : "null",
+                docs: scalar.irProperty.docs
             })
         );
         this.class_.addMethod({
@@ -747,7 +789,11 @@ export class XmlObjectGenerator {
             access: ast.Access.Public,
             return_: this.class_.reference,
             parameters,
-            summary: `Adds a <c>&lt;${xmlName}&gt;</c> child element built from the given values and returns this instance for chaining.`,
+            doc: this.childBuilderDoc({
+                summary: `Adds a <c>&lt;${xmlName}&gt;</c> child element built from the given values and returns this instance for chaining.`,
+                childType,
+                parameters: parameters.map((parameter) => ({ name: parameter.name, docs: parameter.docs }))
+            }),
             body: this.csharp.codeblock((writer) => {
                 writer.write(`return ${name}(new ${this.qualifiedTypeName(childType)}`);
                 if (parameters.length === 0) {

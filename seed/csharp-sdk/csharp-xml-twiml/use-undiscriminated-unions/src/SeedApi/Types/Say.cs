@@ -5,6 +5,9 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+/// <summary>
+/// &lt;Say&gt; TwiML Verb
+/// </summary>
 [Serializable]
 public record Say : IJsonOnDeserialized, IXmlNode
 {
@@ -12,15 +15,27 @@ public record Say : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Message to say
+    /// </summary>
     [JsonPropertyName("message")]
     public string? Message { get; set; }
 
+    /// <summary>
+    /// Voice to use
+    /// </summary>
     [JsonPropertyName("voice")]
     public string? Voice { get; set; }
 
+    /// <summary>
+    /// Times to loop message
+    /// </summary>
     [JsonPropertyName("loop")]
     public int? Loop { get; set; }
 
+    /// <summary>
+    /// Nested TwiML elements, rendered in order.
+    /// </summary>
     [JsonPropertyName("children")]
     public IEnumerable<Break>? Children { get; set; }
 
@@ -96,7 +111,11 @@ public record Say : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;break&gt;</c> child element and returns this instance for chaining.
+    /// <para>
+    /// Adding a Pause in &lt;Say&gt;
+    /// </para>
     /// </summary>
+    /// <param name="break_">The <c>&lt;break&gt;</c> element to add.</param>
     public Say Break(Break break_)
     {
         Children = XmlUtils.Append<Break>(Children, break_);
@@ -105,7 +124,12 @@ public record Say : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;break&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// Adding a Pause in &lt;Say&gt;
+    /// </para>
     /// </summary>
+    /// <param name="strength">Set a pause based on strength</param>
+    /// <param name="time">Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms</param>
     public Say Break(BreakStrength? strength = null, string? time = null)
     {
         return Break(new global::SeedApi.Break { Strength = strength, Time = time });
