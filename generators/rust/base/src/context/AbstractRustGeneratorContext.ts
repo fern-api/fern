@@ -153,7 +153,52 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("base64", "0.22");
         }
 
+        this.addWebhookSignatureDependencies();
+
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+    }
+
+    /**
+     * Dependencies for the generated webhook signature helpers (HMAC + digest crates and
+     * `url` for notification-URL parsing; `url` is already in the tree via reqwest). Only
+     * added when at least one webhook declares HMAC signature verification.
+     */
+    private addWebhookSignatureDependencies(): void {
+        const configs = this.getHmacWebhookVerifications();
+        if (configs.length === 0) {
+            return;
+        }
+        this.dependencyManager.add("hmac", "0.12");
+        this.dependencyManager.add("sha1", "0.10");
+        this.dependencyManager.add("sha2", "0.10");
+        this.dependencyManager.add("url", "2.5");
+        const needsIso8601 = configs.some(
+            (config) => config.timestamp != null && config.timestamp.format === "ISO8601"
+        );
+        if (needsIso8601 && !this.usesDateTime()) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+    }
+
+    /**
+     * Every HMAC signature-verification config declared on a webhook in the IR.
+     * Asymmetric verification is out of scope for the generated helpers.
+     */
+    public getHmacWebhookVerifications(): FernIr.HmacSignatureVerification[] {
+        const configs: FernIr.HmacSignatureVerification[] = [];
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                const verification = webhook.signatureVerification;
+                if (verification != null && verification.type === "hmac") {
+                    configs.push(verification);
+                }
+            }
+        }
+        return configs;
+    }
+
+    public hasHmacWebhookSignatureVerification(): boolean {
+        return this.cachedFeature("hasHmacWebhookSignatureVerification", () => this.getHmacWebhookVerifications().length > 0);
     }
 
     /**
