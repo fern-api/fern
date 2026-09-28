@@ -656,6 +656,13 @@ export const IntegrationsConfig = z.object({
 
 // ===== Experimental =====
 
+export const ExternalSitemapConfigSchema = z.object({
+    url: z.string(),
+    locale: z.string().optional()
+});
+
+export const ExternalSitemapSchema = z.union([z.string(), ExternalSitemapConfigSchema]);
+
 export const ExperimentalConfig = z.object({
     "mdx-components": z.array(z.string()).optional(),
     "disable-stream-toggle": z.boolean().optional(),
@@ -666,7 +673,7 @@ export const ExperimentalConfig = z.object({
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
     "basepath-aware": z.boolean().optional(),
-    "external-sitemaps": z.array(z.string()).optional()
+    "external-sitemaps": z.array(ExternalSitemapSchema).optional()
 });
 
 // ===== Library schemas =====

@@ -38,4 +38,23 @@ describe("parseDocsConfiguration — experimental.external-sitemaps", () => {
             "https://help.example.com/sitemap.xml"
         ]);
     });
+
+    it("accepts object entries with a url and optional locale", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            experimental: {
+                "external-sitemaps": [
+                    "https://blog.example.com/sitemap.xml",
+                    { url: "https://help.example.com/nl/sitemap.xml", locale: "nl" },
+                    { url: "https://help.example.com/sitemap.xml" }
+                ]
+            }
+        });
+        expect(parsed.experimental?.externalSitemaps).toEqual([
+            "https://blog.example.com/sitemap.xml",
+            { url: "https://help.example.com/nl/sitemap.xml", locale: "nl" },
+            { url: "https://help.example.com/sitemap.xml" }
+        ]);
+    });
 });

@@ -3055,7 +3055,7 @@ export class DocsDefinitionResolver {
         const settings = this.parsedDocsConfig.settings;
         const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
         if (externalSitemaps == null || externalSitemaps.length === 0) {
-            return settings;
+            return settings as DocsV1Write.DocsConfig["settings"];
         }
         return {
             ...settings,

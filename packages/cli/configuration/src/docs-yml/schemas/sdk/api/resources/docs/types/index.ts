@@ -55,6 +55,8 @@ export * from "./EditThisPageConfig.js";
 export * from "./EditThisPageLaunch.js";
 export * from "./EmbeddingConfig.js";
 export * from "./ExperimentalConfig.js";
+export * from "./ExternalSitemap.js";
+export * from "./ExternalSitemapConfig.js";
 export * from "./ExternalProduct.js";
 export * from "./FeatureFlag.js";
 export * from "./FeatureFlagConfiguration.js";
