@@ -7,17 +7,19 @@ import {
     VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import {
-    assertNever,
-    extractErrorMessage,
-    isNonNullish,
-    replaceEnvVariables,
-    visitDiscriminatedUnion
-} from "@fern-api/core-utils";
+    createPageSubstituters,
+    docsYml,
+    type GetPageSubstituter,
+    parseAudiences,
+    parseDocsConfiguration,
+    WithoutQuestionMarks
+} from "@fern-api/configuration-loader";
+import { assertNever, extractErrorMessage, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     collectCodeSrcUrls,
     isValidRelativeSlug,
+    loadReferencedMarkdown,
     parseImagePaths,
     prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
@@ -190,6 +192,11 @@ export interface DocsDefinitionResolverArgs {
      */
     buildRefVersions?: boolean;
     /**
+     * Preview mode for page substitutions (`fern docs dev`): an unresolved `${name}` becomes
+     * an empty string instead of failing. Defaults to false.
+     */
+    previewSubstitutions?: boolean;
+    /**
      * CLI version used to load API workspaces for git-ref-backed versions. Required for
      * `api:` sections in ref-backed versions; the publish/preview paths pass it through.
      */
@@ -211,6 +218,9 @@ export class DocsDefinitionResolver {
     private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
     private buildRefVersions: boolean;
+    private previewSubstitutions: boolean;
+    /** One substituter per version, built once after the docs configuration is parsed. */
+    private getPageSubstituter: GetPageSubstituter | undefined;
     private cliVersion?: string;
     private cliName: string;
     /**
@@ -236,6 +246,7 @@ export class DocsDefinitionResolver {
         docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
         buildRefVersions = true,
+        previewSubstitutions = false,
         cliVersion,
         cliName = "fern"
     }: DocsDefinitionResolverArgs) {
@@ -251,6 +262,7 @@ export class DocsDefinitionResolver {
         this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
         this.buildRefVersions = buildRefVersions;
+        this.previewSubstitutions = previewSubstitutions;
         this.cliVersion = cliVersion;
         this.cliName = cliName;
     }
@@ -474,7 +486,8 @@ export class DocsDefinitionResolver {
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig,
-            buildRefVersions: this.buildRefVersions
+            buildRefVersions: this.buildRefVersions,
+            preview: this.previewSubstitutions
         });
         const parseTime = performance.now() - parseStart;
         const pageCount = Object.keys(this.parsedDocsConfig.pages).length;
@@ -484,6 +497,18 @@ export class DocsDefinitionResolver {
         if (this.targetAudiences && this.targetAudiences.length > 0) {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
         }
+
+        this.getPageSubstituter = createPageSubstituters({
+            navigation: this.parsedDocsConfig.navigation,
+            siteConfig: this.docsWorkspace.config,
+            context: {
+                onError: (e) =>
+                    this.previewSubstitutions
+                        ? this.taskContext.logger.error(e ?? "Unknown error during text substitution")
+                        : this.taskContext.failAndThrow(e, undefined, { code: CliError.Code.ConfigError })
+            },
+            preview: this.previewSubstitutions
+        });
 
         // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
@@ -515,9 +540,10 @@ export class DocsDefinitionResolver {
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
-                            this.parsedDocsConfig.pages[relativePath] = file.contents;
+                            const contents = this.pageSubstituter()(file.contents);
+                            this.parsedDocsConfig.pages[relativePath] = contents;
                             // Also store raw content for changelog files, stripping MDX comments
-                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(file.contents);
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(contents);
                         });
                     }
                 },
@@ -560,13 +586,18 @@ export class DocsDefinitionResolver {
             );
         }
 
+        // Included files take the substitutions of the page that includes them, so every
+        // `${name}` in a page (own text or inlined include) is resolved exactly once.
         for (const [relativePath, markdown] of pageEntries) {
+            const absolutePathToMarkdownFile = this.resolveFilepath(relativePath);
+            const substituteInclude = this.pageSubstituter(absolutePathToMarkdownFile);
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                absolutePathToMarkdownFile,
+                context: this.taskContext,
+                markdownLoader: async (filepath) => substituteInclude(await loadReferencedMarkdown(filepath))
             });
             // Collect referenced markdown files (deduplicated by absolute path using Set for O(1) lookup)
             for (const refFile of result.referencedFiles) {
@@ -578,8 +609,9 @@ export class DocsDefinitionResolver {
             const codeReplacedMarkdown = await replaceReferencedCode({
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile,
                 context: this.taskContext,
+                fileLoader: async (filepath) => substituteInclude(await readFile(filepath, "utf-8")),
                 urlCache
             });
 
@@ -2064,22 +2096,13 @@ export class DocsDefinitionResolver {
             }
         }
 
-        // Apply environment variable substitution to the IR if enabled in docs.yml settings
-        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
-        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
-            ir = replaceEnvVariables(
-                ir,
-                {
-                    onError: (e) =>
-                        this.taskContext.failAndThrow(
-                            `Error substituting environment variables in API spec: ${e}`,
-                            undefined,
-                            { code: CliError.Code.EnvironmentError }
-                        )
-                },
-                { substituteAsEmpty: false }
-            );
-        }
+        // Apply docs.yml substitutions to the IR so ${name} patterns in OpenAPI specs and Fern definitions are replaced
+        ir = docsYml.applyDocsSubstitutions(this.docsWorkspace.config, ir, {
+            onError: (e) =>
+                this.taskContext.failAndThrow(`Error substituting text in API spec: ${e}`, undefined, {
+                    code: CliError.Code.EnvironmentError
+                })
+        });
 
         // Resolve the workspace for GraphQL extraction: prefer the already-resolved
         // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
@@ -2141,20 +2164,7 @@ export class DocsDefinitionResolver {
             const filename = absolutePath.split("/").pop() || absolutePath;
             const relativePath = RelativeFilePath.of(filename);
 
-            // Apply environment variable substitution if enabled
-            let processedContent = content;
-            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
-                processedContent = replaceEnvVariables(
-                    content,
-                    {
-                        onError: (e) =>
-                            this.taskContext.logger.error(
-                                `Error in tag description environment variable substitution: ${e}`
-                            )
-                    },
-                    { substituteAsEmpty: false }
-                );
-            }
+            const processedContent = this.pageSubstituter()(content);
 
             // Add to both collections so the file appears in the final pages output
             this.rawMarkdownFiles[relativePath] = stripMdxComments(processedContent);
@@ -2505,8 +2515,21 @@ export class DocsDefinitionResolver {
         }
         const relPath = relative(this.docsWorkspace.absoluteFilePath, absolutePath);
         const content = await readFile(absolutePath, "utf-8");
-        this.parsedDocsConfig.pages[relPath] = content;
+        this.parsedDocsConfig.pages[relPath] = this.pageSubstituter()(content);
         return FernNavigation.PageId(relPath);
+    }
+
+    /**
+     * The `${name}` substituter for page text. Pages listed in the navigation are substituted
+     * as they load in `parseDocsConfiguration`; this covers everything else: includes take the
+     * including page's sources, and content outside any version (changelogs, library pages,
+     * API tag descriptions) takes the site's.
+     */
+    private pageSubstituter(page?: AbsoluteFilePath): docsYml.PageSubstituter {
+        if (this.getPageSubstituter == null) {
+            throw new CliError({ message: "page substituters are not set", code: CliError.Code.InternalError });
+        }
+        return this.getPageSubstituter(page);
     }
 
     /**

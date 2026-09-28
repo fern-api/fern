@@ -3,7 +3,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
+import { MediaType } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
@@ -822,16 +822,15 @@ export async function publishDocs({
         let docsDefinition = await resolver.resolve();
         const resolveTime = performance.now() - resolveStart;
 
-        if (docsWorkspace.config.settings?.substituteEnvVars) {
-            context.logger.debug("Applying environment variable substitution to docs definition...");
-            // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
-            const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
-            const substitutedDocs = replaceEnvVariables(
-                docsWithoutJsFiles,
-                { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: false }
-            );
-            docsDefinition = { ...substitutedDocs, jsFiles };
+        if (docsYml.hasDocsSubstitutions(docsWorkspace.config)) {
+            context.logger.debug("Applying text substitution to docs definition...");
+            // Exclude jsFiles (JS/TS template literals) and pages, which the resolver already
+            // substituted once with their version's sources
+            const { jsFiles, pages, ...docsWithoutPages } = docsDefinition;
+            const substitutedDocs = docsYml.applyDocsSubstitutions(docsWorkspace.config, docsWithoutPages, {
+                onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError })
+            });
+            docsDefinition = { ...substitutedDocs, jsFiles, pages };
         }
 
         const pageCount = Object.keys(docsDefinition.pages).length;

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@fern-api/auth": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",

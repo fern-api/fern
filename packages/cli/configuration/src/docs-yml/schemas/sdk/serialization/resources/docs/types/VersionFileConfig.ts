@@ -15,6 +15,7 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
     tabs: core.serialization.record(TabId, TabConfig).optional(),
     landingPage: core.serialization.property("landing-page", PageConfiguration.optional()),
     navigation: NavigationConfig,
+    substitutions: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
 });
 
 export declare namespace VersionFileConfig {
@@ -22,5 +23,6 @@ export declare namespace VersionFileConfig {
         tabs?: Record<TabId.Raw, TabConfig.Raw> | null;
         "landing-page"?: PageConfiguration.Raw | null;
         navigation: NavigationConfig.Raw;
+        substitutions?: Record<string, string> | null;
     }
 }

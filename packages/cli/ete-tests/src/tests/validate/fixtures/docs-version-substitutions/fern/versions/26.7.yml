@@ -1,0 +1,7 @@
+substitutions:
+  version: v26.7.0
+  minor_version: "26.7"
+
+navigation:
+  - page: Getting Started
+    path: 26.7/pages/getting-started.mdx

@@ -14,8 +14,8 @@ export interface ReplaceReferencedMarkdownResult {
     referencedFiles: ReferencedMarkdownFile[];
 }
 
-async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
-    // strip frontmatter from the referenced markdown
+/** Reads a `<Markdown src="..."/>` include, stripping its frontmatter. */
+export async function loadReferencedMarkdown(filepath: AbsoluteFilePath): Promise<string> {
     const { content } = grayMatter(await readFile(filepath));
     return content;
 }
@@ -89,7 +89,7 @@ export async function replaceReferencedMarkdown({
     absolutePathToMarkdownFile,
     context,
     // allow for custom markdown loader for testing
-    markdownLoader = defaultMarkdownLoader,
+    markdownLoader = loadReferencedMarkdown,
     // track ancestor files to detect circular references
     ancestorFiles = new Set<string>(),
     // collect referenced files for tracking

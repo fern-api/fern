@@ -26,6 +26,10 @@ export interface ResolvedRefContentRoot {
     navigation: docsYml.RawSchemas.NavigationConfig;
     absoluteFilepathToConfig: AbsoluteFilePath;
     rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> | undefined;
+    /** The `substitutions` map of the selected version file at the ref, if any. */
+    versionFileSubstitutions: Record<string, string> | undefined;
+    /** The substitution configuration of the docs.yml at the ref. */
+    docsSubstitutionConfig: docsYml.DocsSubstitutionConfig;
 }
 
 async function loadYamlFile(absoluteFilepath: AbsoluteFilePath, context: TaskContext): Promise<unknown> {
@@ -47,10 +51,12 @@ async function loadYamlFile(absoluteFilepath: AbsoluteFilePath, context: TaskCon
 async function readVersionFile({
     absoluteFilepathToConfig,
     rawLibraries,
+    docsSubstitutionConfig,
     context
 }: {
     absoluteFilepathToConfig: AbsoluteFilePath;
     rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> | undefined;
+    docsSubstitutionConfig: docsYml.DocsSubstitutionConfig;
     context: TaskContext;
 }): Promise<ResolvedRefContentRoot> {
     const parsed = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(
@@ -61,7 +67,9 @@ async function readVersionFile({
         landingPage: parsed.landingPage,
         navigation: parsed.navigation,
         absoluteFilepathToConfig,
-        rawLibraries
+        rawLibraries,
+        versionFileSubstitutions: parsed.substitutions,
+        docsSubstitutionConfig
     };
 }
 
@@ -123,6 +131,10 @@ export async function resolveRefContentRoot({
         await loadYamlFile(refDocsConfigPath, context)
     );
     const rawLibraries = refDocsConfig.libraries;
+    const docsSubstitutionConfig: docsYml.DocsSubstitutionConfig = {
+        substitutions: refDocsConfig.substitutions,
+        settings: refDocsConfig.settings
+    };
 
     const describeRef = `git ref '${materialized.ref}' (${materialized.sha})`;
 
@@ -175,6 +187,7 @@ export async function resolveRefContentRoot({
         return readVersionFile({
             absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(siteVersionPath)),
             rawLibraries,
+            docsSubstitutionConfig,
             context
         });
     }
@@ -185,7 +198,9 @@ export async function resolveRefContentRoot({
             landingPage: undefined,
             navigation: refDocsConfig.navigation,
             absoluteFilepathToConfig: refDocsConfigPath,
-            rawLibraries
+            rawLibraries,
+            versionFileSubstitutions: undefined,
+            docsSubstitutionConfig
         };
     }
 

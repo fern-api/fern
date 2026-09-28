@@ -69,6 +69,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    substitutions: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
@@ -113,6 +114,7 @@ export declare namespace DocsConfiguration {
         agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectsConfiguration.Raw | null;
+        substitutions?: Record<string, string> | null;
         check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;

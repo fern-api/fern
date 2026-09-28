@@ -100,6 +100,22 @@ export interface DocsConfiguration {
     agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectsConfiguration;
+    /**
+     * Text substitutions applied across the docs bundle (docs.yml, markdown/MDX pages
+     * including code blocks, and API specs). Each `${name}` expression is replaced with
+     * the value for `name`. Values defined here take precedence over environment
+     * variables; set `settings.substitute-env-vars: true` to also resolve names from the
+     * environment. An expression whose name is not defined by any source fails the build.
+     * Use \$\{name\} to escape and output literal ${name} without substitution.
+     *
+     * Example:
+     * ```yaml
+     * substitutions:
+     *   version: v26.7.0
+     *   minor_version: "26.7"
+     * ```
+     */
+    substitutions?: Record<string, string>;
     check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Version files (`versions/<name>.yml`) accept an optional `substitutions` map that applies to that
+    version's pages ahead of the top-level docs.yml `substitutions`, with environment variables last when
+    `settings.substitute-env-vars` is enabled. Versions built from a git `ref` resolve against the
+    version file and docs.yml at that ref, never the current branch's docs.yml.
+  type: feat

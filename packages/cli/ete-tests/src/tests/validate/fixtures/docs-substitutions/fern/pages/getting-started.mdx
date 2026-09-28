@@ -1,0 +1,19 @@
+---
+title: Getting Started
+---
+
+This page documents GPU Operator **${minor_version}** (release `${version}`).
+The recommended driver version is ${recommended}.
+
+```bash
+helm install --wait gpu-operator \
+  nvidia/gpu-operator \
+  --version=${version} \
+  --set driver.version=${recommended}
+```
+
+Substitutions also apply inside code blocks. To keep a literal shell variable, escape it:
+
+```bash
+export KUBECONFIG=\$\{HOME\}/.kube/config
+```

@@ -171,6 +171,16 @@ jobs:
           pnpm fern:build
           pnpm jsonschema
 
+      - name: Upload CLI package
+        uses: actions/upload-artifact@v7
+        with:
+          name: fern-cli-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            packages/cli/cli/dist/prod/cli.cjs
+            packages/cli/cli/dist/prod/cli.cjs.map
+            packages/cli/cli/dist/prod/package.json
+          if-no-files-found: error
+
       - name: Generate docs SDK
         run: pnpm docs:generate
 

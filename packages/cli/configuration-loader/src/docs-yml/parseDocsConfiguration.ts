@@ -9,7 +9,7 @@ import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
-import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { createPageSubstituters, getAllPages, loadAllPages, type TransformPageContent } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
@@ -47,7 +47,8 @@ export async function parseDocsConfiguration({
     absolutePathToFernFolder,
     absoluteFilepathToDocsConfig,
     context,
-    buildRefVersions = true
+    buildRefVersions = true,
+    preview = false
 }: {
     rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -58,6 +59,11 @@ export async function parseDocsConfiguration({
      * Set by `fern docs dev`, which previews only the working-tree version.
      */
     buildRefVersions?: boolean;
+    /**
+     * Preview mode for page substitutions: a `${name}` no source resolves becomes an empty
+     * string instead of failing the build (see {@link docsYml.DocsSubstitutionOptions}).
+     */
+    preview?: boolean;
 }): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
     const {
         instances,
@@ -117,11 +123,28 @@ export async function parseDocsConfiguration({
         buildRefVersions
     });
 
-    const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
-        loadAllPages({
-            files: getAllPages({ navigation: convertedNavigation, landingPage }),
-            absolutePathToFernFolder
-        })
+    const transformPageContentPromise = convertedNavigationPromise.then((convertedNavigation): TransformPageContent => {
+        const getPageSubstituter = createPageSubstituters({
+            navigation: convertedNavigation,
+            siteConfig: rawDocsConfiguration,
+            context: {
+                onError: (message) =>
+                    preview
+                        ? context.logger.error(message ?? "Unknown error during text substitution")
+                        : context.failAndThrow(message, undefined, { code: CliError.Code.ConfigError })
+            },
+            preview
+        });
+        return (file, content) => getPageSubstituter(file)(content);
+    });
+
+    const pagesPromise = Promise.all([convertedNavigationPromise, transformPageContentPromise]).then(
+        ([convertedNavigation, transformContent]) =>
+            loadAllPages({
+                files: getAllPages({ navigation: convertedNavigation, landingPage }),
+                absolutePathToFernFolder,
+                transformContent
+            })
     );
 
     const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
@@ -173,14 +196,16 @@ export async function parseDocsConfiguration({
         (rawDocsConfiguration.translations?.[0] != null
             ? docsYml.DocsYmlSchemas.normalizeTranslationConfig(rawDocsConfiguration.translations[0]).lang
             : undefined);
-    const translationPagesPromise = pagesPromise.then((resolvedPages) =>
-        loadTranslationPages({
-            translations: rawDocsConfiguration.translations,
-            defaultLocale,
-            pages: resolvedPages,
-            absolutePathToFernFolder,
-            context
-        })
+    const translationPagesPromise = Promise.all([pagesPromise, transformPageContentPromise]).then(
+        ([resolvedPages, transformContent]) =>
+            loadTranslationPages({
+                translations: rawDocsConfiguration.translations,
+                defaultLocale,
+                pages: resolvedPages,
+                absolutePathToFernFolder,
+                transformContent,
+                context
+            })
     );
 
     const translationNavigationOverlaysPromise = loadTranslationNavigationOverlays({
@@ -836,7 +861,8 @@ async function loadWorkingTreeVersion({
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
         announcement: version.announcement,
-        contentSource: undefined
+        contentSource: undefined,
+        substitutions: { versionFile: versionResult.substitutions, docsConfig: undefined, ref: undefined }
     };
 }
 
@@ -883,6 +909,11 @@ async function loadRefVersion({
             sha: materialized.sha,
             absolutePathToFernFolder: materialized.absolutePathToFernFolder,
             libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
+        },
+        substitutions: {
+            versionFile: contentRoot.versionFileSubstitutions,
+            docsConfig: contentRoot.docsSubstitutionConfig,
+            ref: materialized.ref
         }
     };
 }
@@ -2311,12 +2342,15 @@ async function loadTranslationPages({
     defaultLocale,
     pages,
     absolutePathToFernFolder,
+    transformContent,
     context
 }: {
     translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
     defaultLocale: string | undefined;
     pages: Record<RelativeFilePath, string>;
     absolutePathToFernFolder: AbsoluteFilePath;
+    /** Applied to each translated page, keyed by the primary page it translates. */
+    transformContent: TransformPageContent;
     context: TaskContext;
 }): Promise<Record<string, Record<RelativeFilePath, string>> | undefined> {
     if (translations == null || translations.length === 0) {
@@ -2360,7 +2394,10 @@ async function loadTranslationPages({
                 (Object.keys(pages) as RelativeFilePath[]).map(async (relativeFilePath) => {
                     const translatedFilePath = path.join(langDir, relativeFilePath) as AbsoluteFilePath;
                     if (await doesPathExist(translatedFilePath)) {
-                        localePages[relativeFilePath] = await readFile(translatedFilePath, "utf-8");
+                        localePages[relativeFilePath] = transformContent(
+                            resolve(absolutePathToFernFolder, relativeFilePath),
+                            await readFile(translatedFilePath, "utf-8")
+                        );
                     } else {
                         missingFiles.push(relativeFilePath);
                     }

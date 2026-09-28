@@ -1,5 +1,5 @@
 import { logViolations } from "@fern-api/api-workspace-validator";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { docsYml } from "@fern-api/configuration";
 import { getRuleNamesConfiguredAsErrors, validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -27,12 +27,9 @@ export async function collectDocsWorkspaceViolations({
     errorOnBrokenLinks?: boolean;
     excludeRules?: string[];
 }): Promise<CollectedDocsViolations> {
-    // Apply env var substitution if settings.substitute-env-vars is enabled
-    if (workspace.config.settings?.substituteEnvVars) {
-        workspace.config = replaceEnvVariables(workspace.config, {
-            onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
-        });
-    }
+    workspace.config = docsYml.applyDocsSubstitutions(workspace.config, workspace.config, {
+        onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
+    });
 
     const startTime = performance.now();
     const violations = await validateDocsWorkspace(
@@ -76,14 +73,11 @@ export async function validateDocsWorkspaceWithoutExiting({
     logSummary?: boolean;
     excludeRules?: string[];
 }): Promise<{ hasErrors: boolean }> {
-    // Apply env var substitution if settings.substitute-env-vars is enabled
-    // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
+    // This matches the behavior of `fern generate --docs` which throws errors for missing substitutions
     // The entire config including instances (with custom domains) goes through substitution
-    if (workspace.config.settings?.substituteEnvVars) {
-        workspace.config = replaceEnvVariables(workspace.config, {
-            onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
-        });
-    }
+    workspace.config = docsYml.applyDocsSubstitutions(workspace.config, workspace.config, {
+        onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
+    });
 
     const startTime = performance.now();
     const violations = await validateDocsWorkspace(

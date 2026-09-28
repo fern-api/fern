@@ -1,4 +1,4 @@
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { docsYml } from "@fern-api/configuration";
 import type { ValidationViolation } from "@fern-api/docs-validator";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import type { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -50,7 +50,7 @@ export class DocsWorkspaceValidator {
     /**
      * Validate a DocsWorkspace.
      *
-     * Substitutes environment variables if configured, then runs all docs
+     * Applies docs.yml substitutions (and environment variables) if configured, then runs all docs
      * validation rules against the workspace.
      */
     public async validate({
@@ -66,11 +66,9 @@ export class DocsWorkspaceValidator {
     }): Promise<DocsWorkspaceValidator.Result> {
         const startTime = performance.now();
 
-        if (workspace.config.settings?.substituteEnvVars) {
-            workspace.config = replaceEnvVariables(workspace.config, {
-                onError: (error) => this.taskContext.failAndThrow(error, undefined, { code: CliError.Code.ConfigError })
-            });
-        }
+        workspace.config = docsYml.applyDocsSubstitutions(workspace.config, workspace.config, {
+            onError: (error) => this.taskContext.failAndThrow(error, undefined, { code: CliError.Code.ConfigError })
+        });
 
         const violations = await validateDocsWorkspace(
             workspace,

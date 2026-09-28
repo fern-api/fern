@@ -86,6 +86,8 @@ export interface DocsSettingsConfig {
     /**
      * When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
      * including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+     * Static values can be declared with the top-level `substitutions` map instead; entries there take
+     * precedence over environment variables.
      * Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
      *
      * @default: false

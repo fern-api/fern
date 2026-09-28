@@ -1,5 +1,6 @@
 import { getUserToken } from "@fern-api/auth";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { docsYml } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -359,6 +360,7 @@ export async function getPreviewDocsDefinition({
         apiWorkspaces,
         taskContext: context,
         editThisPage: undefined,
+        previewSubstitutions: true,
         uploadFiles: async (files) =>
             files.map((file) => {
                 const fileId = uuidv4();
@@ -417,15 +419,17 @@ export async function getPreviewDocsDefinition({
         id: undefined
     };
 
-    if (docsWorkspace.config.settings?.substituteEnvVars) {
-        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
-        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
-        const substitutedDocs = replaceEnvVariables(
-            docsWithoutJsFiles,
-            { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
-            { substituteAsEmpty: true }
+    if (docsYml.hasDocsSubstitutions(docsWorkspace.config)) {
+        // Exclude jsFiles (JS/TS template literals) and pages, which the resolver already
+        // substituted once with their version's sources
+        const { jsFiles, pages, ...docsWithoutPages } = docsDefinition;
+        const substitutedDocs = docsYml.applyDocsSubstitutions(
+            docsWorkspace.config,
+            docsWithoutPages,
+            { onError: (e) => context.logger.error(e ?? "Unknown error during text substitution") },
+            { preview: true }
         );
-        docsDefinition = { ...substitutedDocs, jsFiles };
+        docsDefinition = { ...substitutedDocs, jsFiles, pages };
     }
 
     // Get translation pages, navigation overlays, and collected file IDs for building translated definitions

@@ -284,6 +284,7 @@ export async function visitDocsConfigFileYamlAst({
             }
         },
         settings: noop,
+        substitutions: noop,
         logo: async () => {
             if (contents.logo?.dark != null) {
                 await visitFilepath({

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a top-level `substitutions` map to docs.yml. Each `${name}` in docs.yml, markdown/MDX pages
+    (including code blocks), and API specs is replaced with the configured value at build time, without
+    requiring environment variables. Values in `substitutions` take precedence over environment variables
+    when `settings.substitute-env-vars` is enabled. Internally, environment-variable substitution is now
+    built on a general `substituteText` helper; `replaceEnvVariables` remains as a compatible wrapper.
+  type: feat

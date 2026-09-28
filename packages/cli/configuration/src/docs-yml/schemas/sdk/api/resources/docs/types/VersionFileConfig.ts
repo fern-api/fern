@@ -6,4 +6,24 @@ export interface VersionFileConfig {
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     landingPage?: FernDocsConfig.PageConfiguration;
     navigation: FernDocsConfig.NavigationConfig;
+    /**
+     * Text substitutions for the markdown/MDX pages of this version, including code
+     * blocks. Each `${name}` expression is replaced with the value for `name`. A page
+     * resolves names in this order: this map, then the top-level `substitutions` map
+     * of docs.yml, then environment variables when `settings.substitute-env-vars` is
+     * true. An expression whose name is not defined by any source fails the build.
+     * Use \$\{name\} to escape and output literal ${name} without substitution.
+     *
+     * For a version built from a git `ref`, the version file and docs.yml at that ref
+     * supply the values; the current branch's docs.yml is not consulted, so a tagged
+     * release keeps the values it shipped with.
+     *
+     * Example:
+     * ```yaml
+     * substitutions:
+     *   version: v26.3.1
+     *   recommended: "580.65.06"
+     * ```
+     */
+    substitutions?: Record<string, string>;
 }

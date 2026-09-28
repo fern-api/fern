@@ -1,0 +1,13 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+title: GPU Operator ${minor_version}
+
+substitutions:
+  version: v26.7.0
+  minor_version: "26.7"
+  recommended: "595.91.07"
+
+navigation:
+  - page: Getting Started
+    path: pages/getting-started.mdx

@@ -1,0 +1,14 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+title: GPU Operator
+
+substitutions:
+  product: GPU Operator
+  recommended: "595.91.07"
+
+versions:
+  - display-name: "26.7"
+    path: versions/26.7.yml
+  - display-name: "26.3"
+    path: versions/26.3.yml

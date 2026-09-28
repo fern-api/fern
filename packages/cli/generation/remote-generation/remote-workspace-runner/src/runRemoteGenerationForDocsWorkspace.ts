@@ -1,6 +1,6 @@
 import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { docsYml } from "@fern-api/configuration";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
@@ -63,26 +63,22 @@ export async function runRemoteGenerationForDocsWorkspace({
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
     docsVisibility?: VisibilityFilter;
 }): Promise<string | undefined> {
-    // Substitute templated environment variables:
-    // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
-    // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
-    //
-    // If substitute-env-vars is not enabled but the run is a preview, we'll substitute
-    // ALL environment variables as empty strings.
+    // Apply docs.yml `substitutions` (and environment variables when substitute-env-vars is enabled).
+    // In preview mode without substitute-env-vars, names that are not defined become empty strings
+    // instead of failing the run.
     //
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
-    // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
-    const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.substituteEnvVars;
-    docsWorkspace.config = replaceEnvVariables(
+    docsWorkspace.config = docsYml.applyDocsSubstitutions(
+        docsWorkspace.config,
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
         { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-        { substituteAsEmpty: shouldSubstituteAsEmpty }
+        { preview }
     );
 
-    // Get instances after env var substitution has been applied to the config
-    // This ensures the full instance object including custom domains goes through env var replacement
+    // Get instances after substitution has been applied to the config
+    // This ensures the full instance object including custom domains goes through substitution
     const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {

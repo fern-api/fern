@@ -54,6 +54,14 @@ export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
+export {
+    chainSubstitutionSources,
+    ENV_SUBSTITUTION_SOURCE,
+    mapSubstitutionSource,
+    type SubstituteTextOptions,
+    type SubstitutionSource,
+    substituteText
+} from "./substituteText.js";
 export { titleCase } from "./titleCase.js";
 export { tokenizeOperationId } from "./tokenizeOperationId.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";

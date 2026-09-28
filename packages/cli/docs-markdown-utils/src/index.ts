@@ -11,6 +11,7 @@ export {
 export { parseMarkdownBodyToTree, parseMarkdownToTree } from "./parseMarkdownToTree.js";
 export { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "./replaceReferencedCode.js";
 export {
+    loadReferencedMarkdown,
     type ReferencedMarkdownFile,
     type ReplaceReferencedMarkdownResult,
     replaceReferencedMarkdown

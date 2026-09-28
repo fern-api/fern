@@ -50,6 +50,102 @@ describe("validate", () => {
     itFixture("no-api");
     itFixture("no-generator");
 
+    it("check resolves docs.yml substitutions", async ({ signal }) => {
+        const { exitCode, stdout } = await runFernCli(["check"], {
+            cwd: path.join(FIXTURES_DIR, "docs-substitutions"),
+            reject: false,
+            signal
+        });
+
+        expect(exitCode).toBe(0);
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 90_000);
+
+    it("check resolves version-file substitutions ahead of docs.yml", async ({ signal }) => {
+        const { exitCode, stdout } = await runFernCli(["check"], {
+            cwd: path.join(FIXTURES_DIR, "docs-version-substitutions"),
+            reject: false,
+            signal
+        });
+
+        expect(exitCode).toBe(0);
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 90_000);
+
+    it("check fails when a version page uses a name defined in neither the version file nor docs.yml", async ({
+        signal
+    }) => {
+        const fixture = await createTempFixture({
+            "fern/fern.config.json": FERN_CONFIG_JSON,
+            "fern/docs.yml": `instances:
+  - url: test.docs.buildwithfern.com
+
+title: Release
+
+versions:
+  - display-name: "1.0"
+    path: versions/1.0.yml
+`,
+            "fern/versions/1.0.yml": `substitutions:
+  version: v1.0.0
+
+navigation:
+  - page: Home
+    path: home.mdx
+`,
+            "fern/versions/home.mdx": "# Home \${version} \${codename}\n"
+        });
+
+        try {
+            const { exitCode, stdout, stderr } = await runFernCli(["check"], {
+                cwd: fixture.path,
+                reject: false,
+                signal
+            });
+
+            expect(exitCode).not.toBe(0);
+            expect(stripAnsi(stdout + stderr)).toContain(
+                "Substitution codename is not defined in the version file or docs.yml."
+            );
+        } finally {
+            await fixture.cleanup();
+        }
+    }, 90_000);
+
+    it("check fails when a docs.yml substitution is not defined", async ({ signal }) => {
+        const fixture = await createTempFixture({
+            "fern/fern.config.json": FERN_CONFIG_JSON,
+            "fern/docs.yml": `instances:
+  - url: test.docs.buildwithfern.com
+
+title: Release \${version}
+
+substitutions:
+  minor_version: "26.7"
+
+navigation:
+  - page: Home
+    path: home.mdx
+`,
+            "fern/home.mdx": "# Home\n"
+        });
+
+        try {
+            const { exitCode, stdout, stderr } = await runFernCli(["check"], {
+                cwd: fixture.path,
+                reject: false,
+                signal
+            });
+
+            expect(exitCode).not.toBe(0);
+            expect(stripAnsi(stdout + stderr)).toContain(
+                "Substitution version is not defined in docs.yml substitutions."
+            );
+        } finally {
+            await fixture.cleanup();
+        }
+    }, 90_000);
+
     it("check with --api resolves all APIs referenced by docs", async ({ signal }) => {
         const fixture = await createTempFixture({
             "fern/fern.config.json": FERN_CONFIG_JSON,

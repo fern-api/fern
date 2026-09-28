@@ -1,0 +1,11 @@
+---
+title: Getting Started
+---
+
+This page documents ${product} **${minor_version}** (release `${version}`).
+The recommended driver version is ${recommended}.
+
+```bash
+helm install --wait gpu-operator nvidia/gpu-operator --version=${version}
+export KUBECONFIG=\$\{HOME\}/.kube/config
+```

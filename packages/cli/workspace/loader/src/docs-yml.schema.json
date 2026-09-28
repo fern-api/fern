@@ -293,6 +293,20 @@
         }
       ]
     },
+    "substitutions": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Text substitutions applied across the docs bundle (docs.yml, markdown/MDX pages\nincluding code blocks, and API specs). Each `${name}` expression is replaced with\nthe value for `name`. Values defined here take precedence over environment\nvariables; set `settings.substitute-env-vars: true` to also resolve names from the\nenvironment. An expression whose name is not defined by any source fails the build.\nUse \\$\\{name\\} to escape and output literal ${name} without substitution.\n\nExample:\n```yaml\nsubstitutions:\n  version: v26.7.0\n  minor_version: \"26.7\"\n```"
+    },
     "check": {
       "oneOf": [
         {
@@ -6904,7 +6918,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,\nincluding markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.\nUse \\$\\{VAR\\} to escape and output literal ${VAR} without substitution.\n\n@default: false"
+          "description": "When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,\nincluding markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.\nStatic values can be declared with the top-level `substitutions` map instead; entries there take\nprecedence over environment variables.\nUse \\$\\{VAR\\} to escape and output literal ${VAR} without substitution.\n\n@default: false"
         },
         "websocket-oneof-display": {
           "oneOf": [
