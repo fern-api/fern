@@ -17,9 +17,12 @@ var (
 	breakFieldTime     = big.NewInt(1 << 1)
 )
 
+// Adding a Pause in <Say>
 type Break struct {
+	// Set a pause based on strength
 	Strength *BreakStrength `json:"strength,omitempty" url:"strength,omitempty"`
-	Time     *string        `json:"time,omitempty" url:"time,omitempty"`
+	// Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+	Time *string `json:"time,omitempty" url:"time,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -202,6 +205,7 @@ func (b *Break) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Set a pause based on strength
 type BreakStrength string
 
 const (
@@ -330,7 +334,7 @@ func (d *Dial) AddChild(child core.XmlNode) *Dial {
 	return d
 }
 
-// AddNumber appends a child element and returns the Dial.
+// AddNumber appends a <Number> child element and returns the Dial.
 func (d *Dial) AddNumber(child *Number) *Dial {
 	d.Numbers = append(d.Numbers, child)
 	return d
@@ -867,11 +871,11 @@ func (n *Number) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// XML element without an explicit xml.name; falls back to the schema name.
 var (
 	pauseFieldLength = big.NewInt(1 << 0)
 )
 
+// XML element without an explicit xml.name; falls back to the schema name.
 type Pause struct {
 	Length *int `json:"length,omitempty" url:"length,omitempty"`
 
@@ -1036,11 +1040,11 @@ func (p *Pause) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Not XML-encoded; properties must not carry xml metadata.
 var (
 	plainObjectFieldID = big.NewInt(1 << 0)
 )
 
+// Not XML-encoded; properties must not carry xml metadata.
 type PlainObject struct {
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 
@@ -1123,11 +1127,11 @@ func (p *PlainObject) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Root TwiML element.
 var (
 	responseFieldChildren = big.NewInt(1 << 0)
 )
 
+// Root TwiML element.
 type Response struct {
 	Children []*ResponseChildrenItem `json:"children,omitempty" url:"children,omitempty"`
 
@@ -1185,25 +1189,29 @@ func (r *Response) AddChild(child core.XmlNode) *Response {
 	return r
 }
 
-// Say appends a child element and returns the Response.
+// Say appends a <Say> child element and returns the Response.
+//
+// <Say> TwiML Verb
 func (r *Response) Say(child *Say) *Response {
 	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Say", Say: child})
 	return r
 }
 
-// Dial appends a child element and returns the Response.
+// Dial appends a <Dial> child element and returns the Response.
 func (r *Response) Dial(child *Dial) *Response {
 	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Dial", Dial: child})
 	return r
 }
 
-// Pause appends a child element and returns the Response.
+// Pause appends a <Pause> child element and returns the Response.
+//
+// XML element without an explicit xml.name; falls back to the schema name.
 func (r *Response) Pause(child *Pause) *Response {
 	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Pause", Pause: child})
 	return r
 }
 
-// Hangup appends a child element and returns the Response.
+// Hangup appends a <Hangup> child element and returns the Response.
 func (r *Response) Hangup(child *Hangup) *Response {
 	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Hangup", Hangup: child})
 	return r
@@ -1483,10 +1491,15 @@ var (
 	sayFieldChildren = big.NewInt(1 << 3)
 )
 
+// <Say> TwiML Verb
 type Say struct {
-	Message  *string  `json:"message,omitempty" url:"message,omitempty"`
-	Voice    *string  `json:"voice,omitempty" url:"voice,omitempty"`
-	Loop     *int     `json:"loop,omitempty" url:"loop,omitempty"`
+	// Message to say
+	Message *string `json:"message,omitempty" url:"message,omitempty"`
+	// Voice to use
+	Voice *string `json:"voice,omitempty" url:"voice,omitempty"`
+	// Times to loop message
+	Loop *int `json:"loop,omitempty" url:"loop,omitempty"`
+	// Nested TwiML elements, rendered in order.
 	Children []*Break `json:"children,omitempty" url:"children,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1552,7 +1565,9 @@ func (s *Say) AddChild(child core.XmlNode) *Say {
 	return s
 }
 
-// Break appends a child element and returns the Say.
+// Break appends a <break> child element and returns the Say.
+//
+// Adding a Pause in <Say>
 func (s *Say) Break(child *Break) *Say {
 	s.Children = append(s.Children, child)
 	return s
@@ -1724,7 +1739,6 @@ func (s *Say) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-// Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.
 var (
 	wideFieldAttr1    = big.NewInt(1 << 0)
 	wideFieldAttr2    = big.NewInt(1 << 1)
@@ -1985,6 +1999,7 @@ var (
 	wideFieldChildren = big.NewInt(0).Lsh(big.NewInt(1), 256)
 )
 
+// Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.
 type Wide struct {
 	Attr1    *string  `json:"attr1,omitempty" url:"attr1,omitempty"`
 	Attr2    *string  `json:"attr2,omitempty" url:"attr2,omitempty"`
@@ -3066,7 +3081,9 @@ func (w *Wide) AddChild(child core.XmlNode) *Wide {
 	return w
 }
 
-// Pause appends a child element and returns the Wide.
+// Pause appends a <Pause> child element and returns the Wide.
+//
+// XML element without an explicit xml.name; falls back to the schema name.
 func (w *Wide) Pause(child *Pause) *Wide {
 	w.Children = append(w.Children, child)
 	return w
