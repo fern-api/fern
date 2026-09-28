@@ -198,10 +198,7 @@ pub fn get_query_parameter(url: &str, name: &str) -> Option<String> {
 /// Return the explicit port from the raw URL string, if any. `url::Url` fills in the
 /// scheme default, so the raw authority has to be inspected instead.
 fn explicit_port(url: &str) -> Option<&str> {
-    let rest = url.split_once("://")?.1;
-    let authority = rest.split(['/', '?', '#']).next()?;
-    let host_and_port = authority.rsplit('@').next()?;
-    let (_, port) = host_and_port.rsplit_once(':')?;
+    let (_, port) = raw_authority(url)?.rsplit_once(':')?;
     if !port.is_empty() && port.bytes().all(|b| b.is_ascii_digit()) {
         Some(port)
     } else {
@@ -209,23 +206,25 @@ fn explicit_port(url: &str) -> Option<&str> {
     }
 }
 
+/// The raw authority (`user:pass@host:port`) exactly as written in the URL string.
+fn raw_authority(url: &str) -> Option<&str> {
+    let rest = url.split_once("://")?.1;
+    rest.split(['/', '?', '#']).next()
+}
+
 /// Reassemble a URL from its parsed components, substituting the given port (or omitting
-/// it for `None`). Emitted component by component so the result is byte-comparable to
-/// what the provider signed.
-fn reassemble_url(parsed: &url::Url, port: Option<&str>) -> String {
+/// it for `None`). The authority is copied verbatim from the raw URL (minus any port) so
+/// host casing is preserved and the result is byte-comparable to what the provider signed.
+fn reassemble_url(url: &str, parsed: &url::Url, port: Option<&str>) -> String {
     let mut out = String::new();
     out.push_str(parsed.scheme());
     out.push_str("://");
-    if !parsed.username().is_empty() {
-        out.push_str(parsed.username());
-        if let Some(password) = parsed.password() {
-            out.push(':');
-            out.push_str(password);
-        }
-        out.push('@');
-    }
-    if let Some(host) = parsed.host_str() {
-        out.push_str(host);
+    if let Some(authority) = raw_authority(url) {
+        let authority_without_port = match explicit_port(url) {
+            Some(port) => &authority[..authority.len() - port.len() - 1],
+            None => authority,
+        };
+        out.push_str(authority_without_port);
     }
     if let Some(port) = port {
         out.push(':');
@@ -288,10 +287,10 @@ pub fn notification_url_candidates(
 
     let port_forms: Vec<String> = if port_variants {
         let with_port = match explicit_port(url) {
-            Some(port) => reassemble_url(&parsed, Some(port)),
-            None => reassemble_url(&parsed, standard_port(parsed.scheme())),
+            Some(port) => reassemble_url(url, &parsed, Some(port)),
+            None => reassemble_url(url, &parsed, standard_port(parsed.scheme())),
         };
-        vec![reassemble_url(&parsed, None), with_port]
+        vec![reassemble_url(url, &parsed, None), with_port]
     } else {
         vec![url.to_string()]
     };
@@ -383,6 +382,18 @@ mod tests {
         );
         assert_eq!(get_query_parameter("https://x.test/h?a=1", "bodySHA256"), None);
         assert_eq!(get_query_parameter("not a url", "a"), None);
+    }
+
+    #[test]
+    fn url_candidates_preserve_host_casing() {
+        let candidates = notification_url_candidates("https://MyCompany.com:8443/Hook", true, false);
+        assert_eq!(
+            candidates,
+            vec![
+                "https://MyCompany.com:8443/Hook".to_string(),
+                "https://MyCompany.com/Hook".to_string(),
+            ]
+        );
     }
 
     #[test]
