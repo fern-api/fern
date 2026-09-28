@@ -8,6 +8,7 @@ import {
     type ResolvedChannelAuth,
     resolveChannelAuth
 } from "./customConfig.js";
+import { constructDockerJobYaml, type DockerJobArgs } from "./emitDockerWorkflow.js";
 import { constructScoopJobYaml, type ScoopJobArgs } from "./emitScoopWorkflow.js";
 import {
     appTokenExpression,
@@ -44,14 +45,15 @@ export async function emitReleaseWorkflow(args: {
     outputDir: string;
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    docker?: DockerJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop, githubApp } = args;
+    const { outputDir, homebrew, scoop, docker, githubApp } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
     await writeFile(
         path.join(workflowsDir, "release.yml"),
-        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
+        constructReleaseWorkflowYaml({ homebrew, scoop, docker, githubApp })
     );
 }
 
@@ -61,9 +63,10 @@ export async function emitReleaseWorkflow(args: {
 export function constructReleaseWorkflowYaml(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
+    docker?: DockerJobArgs;
     githubApp?: FernCliGitHubAppConfig;
 }): string {
-    const { homebrew, scoop, githubApp } = args;
+    const { homebrew, scoop, docker, githubApp } = args;
 
     const homebrewAuth =
         homebrew != null
@@ -111,6 +114,12 @@ export function constructReleaseWorkflowYaml(args: {
     if (scoop != null && scoopAuth != null) {
         jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
+    }
+    // Pushes with registry credentials, never the GitHub App, so it takes
+    // no part in the preflight.
+    if (docker != null) {
+        jobs += constructDockerJobYaml(docker);
+        publishJobs.push("publish-docker");
     }
     return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
 }

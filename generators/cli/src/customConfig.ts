@@ -238,6 +238,14 @@ export interface FernCliDistributionConfig {
      * Windows archive.
      */
     scoop?: FernCliScoopConfig;
+
+    /**
+     * Publish a multi-arch (`linux/amd64`, `linux/arm64`) container image
+     * to an OCI registry. The image wraps the static musl binaries
+     * cargo-dist already builds, so it adds no build leg — only a
+     * `publish-docker` job in `release.yml`.
+     */
+    docker?: FernCliDockerConfig;
 }
 
 export interface FernCliHomebrewConfig {
@@ -271,6 +279,29 @@ export interface FernCliScoopConfig {
     /**
      * GitHub Actions secret holding a token with write access to the
      * bucket repo. Defaults to `SCOOP_BUCKET_TOKEN`.
+     */
+    tokenEnvironmentVariable?: string;
+}
+
+export interface FernCliDockerConfig {
+    /**
+     * Fully qualified image repository without a tag, e.g.
+     * `ghcr.io/acme/acme-cli` or `docker.io/acme/acme-cli`. The registry
+     * host is required so the login step never has to guess it.
+     */
+    image: string;
+
+    /**
+     * GitHub Actions secret holding the registry username. Must be set
+     * together with `tokenEnvironmentVariable`. When both are omitted the
+     * image must live on `ghcr.io`, and the job pushes with the workflow's
+     * built-in `GITHUB_TOKEN` (`packages: write`).
+     */
+    usernameEnvironmentVariable?: string;
+
+    /**
+     * GitHub Actions secret holding a registry password or access token
+     * with push access to `image`.
      */
     tokenEnvironmentVariable?: string;
 }
@@ -679,6 +710,9 @@ function validateDistribution(raw: unknown): FernCliDistributionConfig {
     if (obj.scoop !== undefined) {
         result.scoop = validateScoop(obj.scoop);
     }
+    if (obj.docker !== undefined) {
+        result.docker = validateDocker(obj.docker);
+    }
     return result;
 }
 
@@ -715,6 +749,55 @@ function validateScoop(raw: unknown): FernCliScoopConfig {
         result.tokenEnvironmentVariable = token;
     }
     return result;
+}
+
+/**
+ * `<registry-host>[:port]/<path>` with no tag or digest. The path follows
+ * the OCI distribution spec's repository-name grammar (lowercase
+ * components separated by `/`); the host must contain a `.` or a port,
+ * or be `localhost`, which is how Docker itself tells a host apart from a
+ * Docker Hub namespace.
+ */
+const DOCKER_IMAGE_PATTERN =
+    /^(?:[a-z0-9-]+(?:\.[a-z0-9-]+)+(?::[0-9]+)?|localhost(?::[0-9]+)?|[a-z0-9-]+:[0-9]+)(?:\/[a-z0-9]+(?:(?:[._]|__|-+)[a-z0-9]+)*)+$/;
+
+function validateDocker(raw: unknown): FernCliDockerConfig {
+    const path = "customConfig.distribution.docker";
+    const obj = asConfigObject(raw, path);
+    if (typeof obj.image !== "string" || !DOCKER_IMAGE_PATTERN.test(obj.image)) {
+        throw new Error(
+            `Invalid ${path}.image: ${JSON.stringify(obj.image)} is not a fully qualified image repository. ` +
+                'Provide "<registry>/<namespace>/<name>" in lowercase with no tag or digest ' +
+                '(e.g. "ghcr.io/acme/acme-cli" or "docker.io/acme/acme-cli").'
+        );
+    }
+    const result: FernCliDockerConfig = { image: obj.image };
+    const username = optionalSecretName(obj.usernameEnvironmentVariable, `${path}.usernameEnvironmentVariable`);
+    const token = optionalSecretName(obj.tokenEnvironmentVariable, `${path}.tokenEnvironmentVariable`);
+    if ((username == null) !== (token == null)) {
+        throw new Error(
+            `Invalid ${path}: usernameEnvironmentVariable and tokenEnvironmentVariable must be set together.`
+        );
+    }
+    if (username == null && dockerRegistryHost(obj.image) !== GHCR_HOST) {
+        throw new Error(
+            `Missing ${path}.usernameEnvironmentVariable / tokenEnvironmentVariable: only ghcr.io images can ` +
+                "push with the workflow's built-in GITHUB_TOKEN. Name the Actions secrets holding the " +
+                `registry username and access token for ${obj.image}.`
+        );
+    }
+    if (username != null && token != null) {
+        result.usernameEnvironmentVariable = username;
+        result.tokenEnvironmentVariable = token;
+    }
+    return result;
+}
+
+export const GHCR_HOST = "ghcr.io";
+
+/** The registry host of an already-validated `distribution.docker.image`. */
+export function dockerRegistryHost(image: string): string {
+    return image.split("/")[0] ?? image;
 }
 
 /**
