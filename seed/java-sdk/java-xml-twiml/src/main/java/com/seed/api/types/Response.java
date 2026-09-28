@@ -28,6 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>Root TwiML element.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response implements XmlSerializable {
@@ -172,7 +175,10 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Say> child element.
+         * Appends a &lt;Say&gt; child element.
+         * <p>&lt;Say&gt; TwiML Verb</p>
+         * @param say the &lt;Say&gt; element to append
+         * @return this builder
          */
         public Builder say(Say say) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -182,7 +188,9 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Dial> child element.
+         * Appends a &lt;Dial&gt; child element.
+         * @param dial the &lt;Dial&gt; element to append
+         * @return this builder
          */
         public Builder dial(Dial dial) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -192,7 +200,10 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Pause> child element.
+         * Appends a &lt;Pause&gt; child element.
+         * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+         * @param pause the &lt;Pause&gt; element to append
+         * @return this builder
          */
         public Builder pause(Pause pause) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
@@ -202,7 +213,9 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Hangup> child element.
+         * Appends a &lt;Hangup&gt; child element.
+         * @param hangup the &lt;Hangup&gt; element to append
+         * @return this builder
          */
         public Builder hangup(Hangup hangup) {
             List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
