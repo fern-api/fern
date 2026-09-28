@@ -58,7 +58,9 @@ export function createDocsConfigFileAstVisitorForRules({
                     }
                     addViolations(
                         ruleViolations.map((violation) => ({
-                            name: violation.name ?? ruleName,
+                            // Violations of a rule with a configured severity are attributed to the
+                            // rule itself so callers can match them against `check.rules`.
+                            name: severityOverride != null ? ruleName : (violation.name ?? ruleName),
                             severity: severityOverride ?? violation.severity,
                             relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath: violation.nodePath ?? nodePath,
