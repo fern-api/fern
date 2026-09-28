@@ -26,10 +26,30 @@ from .break_strength import BreakStrength
 
 
 class Say(UniversalBaseModel):
-    message: typing.Optional[str] = None
-    voice: typing.Optional[str] = None
-    loop: typing.Optional[int] = None
-    children: typing.Optional[typing.List[Break]] = None
+    """
+    <Say> TwiML Verb
+    """
+
+    message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Message to say
+    """
+
+    voice: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Voice to use
+    """
+
+    loop: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Times to loop message
+    """
+
+    children: typing.Optional[typing.List[Break]] = pydantic.Field(default=None)
+    """
+    Nested TwiML elements, rendered in order.
+    """
+
     _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
@@ -63,6 +83,24 @@ class Say(UniversalBaseModel):
         children: typing.Optional[typing.List[Break]] = None,
         **extra_attributes: str,
     ) -> None:
+        """
+        Parameters
+        ----------
+        message : typing.Optional[str]
+            Message to say
+
+        voice : typing.Optional[str]
+            Voice to use
+
+        loop : typing.Optional[int]
+            Times to loop message
+
+        children : typing.Optional[typing.List[Break]]
+            Nested TwiML elements, rendered in order.
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
         super().__init__(**dict(message=message, voice=voice, loop=loop, children=children), **extra_attributes)
 
     @classmethod
@@ -110,6 +148,19 @@ class Say(UniversalBaseModel):
     ) -> Break:
         """
         Appends a `<break>` child element and returns it.
+
+        Adding a Pause in <Say>
+
+        Parameters
+        ----------
+        strength : typing.Optional[BreakStrength]
+            Set a pause based on strength
+
+        time : typing.Optional[str]
+            Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Break(strength=strength, time=time, **extra_attributes)
         append_xml_child(self, "children", child)
