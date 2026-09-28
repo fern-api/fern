@@ -404,7 +404,7 @@ public final class XmlObjectMethodsGenerator {
                         ? CodeBlock.of("$T.of($L)", shape.itemTypeName, variant.parameterName)
                         : CodeBlock.of("$L", variant.parameterName);
                 MethodSpec.Builder method = MethodSpec.methodBuilder(methodName)
-                        .addJavadoc("Appends a <$L> child element.\n", variant.elementName)
+                        .addJavadoc("Appends a &lt;$L&gt; child element.\n", variant.elementName)
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(variant.typeName, variant.parameterName)
                         .returns(objectClassName.nestedClass(BUILDER_CLASS_NAME));
@@ -412,7 +412,7 @@ public final class XmlObjectMethodsGenerator {
                     method.addJavadoc(JavaDocUtils.render(variant.docs.get()));
                 }
                 method.addJavadoc(JavaDocUtils.getParameterJavadoc(
-                        variant.parameterName, "the <" + variant.elementName + "> element to append"));
+                        variant.parameterName, "the &lt;" + variant.elementName + "&gt; element to append"));
                 method.addJavadoc(JavaDocUtils.getReturnDocs("this builder"));
                 if (shape.optional) {
                     method.addStatement(

@@ -255,8 +255,8 @@ public final class Dial implements XmlSerializable {
         }
 
         /**
-         * Appends a <Number> child element.
-         * @param number the <Number> element to append
+         * Appends a &lt;Number&gt; child element.
+         * @param number the &lt;Number&gt; element to append
          * @return this builder
          */
         public Builder addNumber(Number number) {

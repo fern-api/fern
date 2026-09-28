@@ -4,7 +4,7 @@
     - summary: |
         XML-encoded (TwiML) types now carry inline Javadoc on their user-facing API: the class itself gets the
         type description, every `Builder` setter overload gets the property description, and child appenders
-        (`say.ssmlBreak(...)`) document the child element plus `@param`/`@return`.
+        (`say.break_(...)`, `response.say(...)`) document the child element plus `@param`/`@return`.
       type: feat
   createdAt: "2026-09-25"
   irVersion: 67

@@ -175,9 +175,9 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Say> child element.
+         * Appends a &lt;Say&gt; child element.
          * <p>&lt;Say&gt; TwiML Verb</p>
-         * @param say the <Say> element to append
+         * @param say the &lt;Say&gt; element to append
          * @return this builder
          */
         public Builder say(Say say) {
@@ -188,8 +188,8 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Dial> child element.
-         * @param dial the <Dial> element to append
+         * Appends a &lt;Dial&gt; child element.
+         * @param dial the &lt;Dial&gt; element to append
          * @return this builder
          */
         public Builder dial(Dial dial) {
@@ -200,9 +200,9 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Pause> child element.
+         * Appends a &lt;Pause&gt; child element.
          * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
-         * @param pause the <Pause> element to append
+         * @param pause the &lt;Pause&gt; element to append
          * @return this builder
          */
         public Builder pause(Pause pause) {
@@ -213,8 +213,8 @@ public final class Response implements XmlSerializable {
         }
 
         /**
-         * Appends a <Hangup> child element.
-         * @param hangup the <Hangup> element to append
+         * Appends a &lt;Hangup&gt; child element.
+         * @param hangup the &lt;Hangup&gt; element to append
          * @return this builder
          */
         public Builder hangup(Hangup hangup) {

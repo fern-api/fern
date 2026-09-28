@@ -6863,9 +6863,9 @@ public final class Wide implements XmlSerializable {
         }
 
         /**
-         * Appends a <Pause> child element.
+         * Appends a &lt;Pause&gt; child element.
          * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
-         * @param pause the <Pause> element to append
+         * @param pause the &lt;Pause&gt; element to append
          * @return this builder
          */
         public Builder pause(Pause pause) {

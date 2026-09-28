@@ -289,9 +289,9 @@ public final class Say implements XmlSerializable {
         }
 
         /**
-         * Appends a <break> child element.
+         * Appends a &lt;break&gt; child element.
          * <p>Adding a Pause in &lt;Say&gt;</p>
-         * @param _break the <break> element to append
+         * @param _break the &lt;break&gt; element to append
          * @return this builder
          */
         public Builder break_(Break _break) {
