@@ -71,10 +71,43 @@ describe("resolveRemoteCss", () => {
         expect(css).toContain(".base { background: url(https://cdn.example.com/other/bg.png); }");
     });
 
-    it("keeps layer/supports-conditioned imports as absolute @imports", async () => {
-        mockFetch({ "https://cdn.example.com/main.css": '@import url("x.css") layer(base);' });
+    it("inlines layer/supports/media-conditioned imports inside matching at-rule blocks", async () => {
+        mockFetch({
+            "https://cdn.example.com/main.css":
+                '@import url("x.css") layer(base) supports(display: grid) screen;\n@import "y.css" layer;',
+            "https://cdn.example.com/x.css": ".x {}",
+            "https://cdn.example.com/y.css": ".y {}"
+        });
         const css = await resolveRemoteCss("https://cdn.example.com/main.css");
-        expect(css).toBe('@import url("https://cdn.example.com/x.css") layer(base);');
+        expect(css).not.toContain("@import");
+        expect(css).toContain("@media screen {\n@supports (display: grid) {\n@layer base {\n.x {}\n}\n}\n}");
+        expect(css).toContain("@layer {\n.y {}\n}");
+    });
+
+    it("ignores commented-out imports", async () => {
+        mockFetch({ "https://cdn.example.com/main.css": '/* @import "missing.css"; */\n.main {}' });
+        const css = await resolveRemoteCss("https://cdn.example.com/main.css");
+        expect(css.trim()).toBe(".main {}");
+    });
+
+    it("resolves relative references against the final URL after redirects", async () => {
+        vi.stubGlobal(
+            "fetch",
+            vi.fn(async (url: string) => {
+                if (url === "https://cdn.example.com/latest/style.css") {
+                    const response = new Response('@import "base.css";\n.a { background: url(bg.png); }');
+                    Object.defineProperty(response, "url", { value: "https://assets.example.com/v2/style.css" });
+                    return response;
+                }
+                if (url === "https://assets.example.com/v2/base.css") {
+                    return new Response(".base {}");
+                }
+                return new Response("not found", { status: 404, statusText: "Not Found" });
+            })
+        );
+        const css = await resolveRemoteCss("https://cdn.example.com/latest/style.css");
+        expect(css).toContain(".base {}");
+        expect(css).toContain("url(https://assets.example.com/v2/bg.png)");
     });
 
     it("does not loop on circular imports", async () => {
@@ -89,7 +122,7 @@ describe("resolveRemoteCss", () => {
 
     it("throws a descriptive error when the stylesheet cannot be fetched", async () => {
         mockFetch({});
-        await expect(resolveRemoteCss("https://cdn.example.com/missing.css")).rejects.toThrow(
+        await expect(resolveRemoteCss("https://cdn.example.com/missing.css?token=secret")).rejects.toThrow(
             "Failed to fetch CSS from https://cdn.example.com/missing.css: 404 Not Found"
         );
     });
