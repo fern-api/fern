@@ -103,8 +103,14 @@ export async function loadProjectFromDirectory({
     ]);
 
     if (
-        !skipApiWorkspaces &&
-        (apisExists || defExists || genExists || genAltExists || legacyGenExists || openapiExists || asyncapiExists)
+        apisExists ||
+        defExists ||
+        genExists ||
+        genAltExists ||
+        legacyGenExists ||
+        openapiExists ||
+        asyncapiExists ||
+        (skipApiWorkspaces && sdkConfigExists)
     ) {
         apiWorkspaces = await loadApis({
             cliName,
@@ -113,11 +119,16 @@ export async function loadProjectFromDirectory({
             context,
             commandLineApiWorkspace,
             defaultToAllApiWorkspaces,
-            sdkConfigWorkspaceCollector: sdkConfigWorkspaces
+            sdkConfigWorkspaceCollector: sdkConfigWorkspaces,
+            skipLegacyWorkspaceLoading: skipApiWorkspaces
         });
     }
 
-    if (!skipApiWorkspaces && sdkConfigExists && apiWorkspaces.length === 0 && sdkConfigWorkspaces.length === 0) {
+    if (
+        sdkConfigExists &&
+        commandLineApiWorkspace == null &&
+        (apisExists || (!skipApiWorkspaces && apiWorkspaces.length === 0 && sdkConfigWorkspaces.length === 0))
+    ) {
         sdkConfigWorkspaces.push({ absoluteFilePath: absolutePathToFernDirectory, workspaceName: undefined });
     }
 
@@ -168,7 +179,8 @@ export async function loadApis({
     cliVersion,
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
-    sdkConfigWorkspaceCollector
+    sdkConfigWorkspaceCollector,
+    skipLegacyWorkspaceLoading = false
 }: {
     cliName: string;
     fernDirectory: AbsoluteFilePath;
@@ -176,8 +188,10 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | string[] | undefined;
     defaultToAllApiWorkspaces: boolean;
-    /** Collect SDK Config-only directories without passing them through legacy workspace parsing. */
+    /** Collect SDK Config owners, including selected owners whose legacy parsing is explicitly skipped. */
     sdkConfigWorkspaceCollector?: SdkConfigWorkspace[];
+    /** Discover selected API owners without parsing legacy specifications or generators. */
+    skipLegacyWorkspaceLoading?: boolean;
 }): Promise<AbstractAPIWorkspace<unknown>[]> {
     // Normalize `--api` input. `undefined` means no filter; a single string or an array of
     // strings narrows to the named workspace(s). Passing `--api` multiple times produces an
@@ -236,6 +250,13 @@ export async function loadApis({
         await Promise.all(
             filteredWorkspaces.map(async (workspaceDirectoryName) => {
                 const absolutePathToWorkspace = join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName));
+                if (skipLegacyWorkspaceLoading) {
+                    sdkConfigWorkspaceCollector?.push({
+                        absoluteFilePath: absolutePathToWorkspace,
+                        workspaceName: workspaceDirectoryName
+                    });
+                    return;
+                }
                 if (sdkConfigWorkspaceCollector != null && (await isSdkConfigOnlyWorkspace(absolutePathToWorkspace))) {
                     sdkConfigWorkspaceCollector.push({
                         absoluteFilePath: absolutePathToWorkspace,
@@ -259,6 +280,11 @@ export async function loadApis({
         );
 
         return apiWorkspaces;
+    }
+
+    if (skipLegacyWorkspaceLoading) {
+        sdkConfigWorkspaceCollector?.push({ absoluteFilePath: fernDirectory, workspaceName: undefined });
+        return [];
     }
 
     const workspace = await loadAPIWorkspace({

@@ -123,6 +123,20 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledTimes(2);
     });
 
+    it("runs only legacy generation when --local is used without selectors", async () => {
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: undefined,
+            useLocalDocker: true
+        });
+
+        const calls = vi.mocked(generateWorkspace).mock.calls;
+        expect(calls).toHaveLength(1);
+        expect(calls[0]?.[0].sdkConfigV1).toBeUndefined();
+    });
+
     it("rejects a language selected by both legacy and SDK Config before generation starts", async () => {
         await writeFile(
             path.join(temporaryDirectory, "sdk-config.yml"),
@@ -267,7 +281,8 @@ async function runGenerate({
     groupNames,
     targetNames,
     sdkConfigPath,
-    generatorName
+    generatorName,
+    useLocalDocker = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -275,6 +290,7 @@ async function runGenerate({
     targetNames: string[] | undefined;
     sdkConfigPath?: string;
     generatorName?: string;
+    useLocalDocker?: boolean;
 }): Promise<void> {
     await generateAPIWorkspaces({
         project,
@@ -286,7 +302,7 @@ async function runGenerate({
         generatorIndex: undefined,
         shouldLogS3Url: false,
         keepDocker: false,
-        useLocalDocker: false,
+        useLocalDocker,
         preview: false,
         mode: undefined,
         force: true,

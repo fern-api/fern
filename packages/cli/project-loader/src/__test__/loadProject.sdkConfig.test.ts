@@ -78,4 +78,54 @@ describe("loadProjectFromDirectory — caller-owned SDK Config workspace", () =>
             { absoluteFilePath: AbsoluteFilePath.of(apiDirectory), workspaceName: "payments" }
         ]);
     });
+
+    it("discovers a root SDK Config alongside named API workspaces", async () => {
+        const fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-root-and-named-"));
+        temporaryDirectories.push(fernDirectory);
+        const apiDirectory = path.join(fernDirectory, "apis", "payments");
+        await mkdir(apiDirectory, { recursive: true });
+        await writeFile(path.join(fernDirectory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
+        await writeFile(path.join(fernDirectory, "sdk-config.yml"), "schemaVersion: sdk-config/v1\n");
+        await writeFile(path.join(apiDirectory, "sdk-config.yml"), "schemaVersion: sdk-config/v1\n");
+
+        const project = await loadProjectFromDirectory({
+            absolutePathToFernDirectory: AbsoluteFilePath.of(fernDirectory),
+            cliName: "fern",
+            cliVersion: "0.0.0",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: false,
+            context: createMockTaskContext()
+        });
+
+        expect(project.sdkConfigWorkspaces).toEqual(
+            expect.arrayContaining([
+                { absoluteFilePath: AbsoluteFilePath.of(fernDirectory), workspaceName: undefined },
+                { absoluteFilePath: AbsoluteFilePath.of(apiDirectory), workspaceName: "payments" }
+            ])
+        );
+    });
+
+    it("discovers an explicit SDK Config owner without parsing its legacy workspace", async () => {
+        const fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-explicit-owner-"));
+        temporaryDirectories.push(fernDirectory);
+        const apiDirectory = path.join(fernDirectory, "apis", "payments");
+        await mkdir(apiDirectory, { recursive: true });
+        await writeFile(path.join(fernDirectory, "fern.config.json"), '{"organization":"test","version":"*"}\n');
+        await writeFile(path.join(apiDirectory, "generators.yml"), "this is intentionally invalid: [\n");
+
+        const project = await loadProjectFromDirectory({
+            absolutePathToFernDirectory: AbsoluteFilePath.of(fernDirectory),
+            cliName: "fern",
+            cliVersion: "0.0.0",
+            commandLineApiWorkspace: "payments",
+            defaultToAllApiWorkspaces: false,
+            skipApiWorkspaces: true,
+            context: createMockTaskContext()
+        });
+
+        expect(project.apiWorkspaces).toEqual([]);
+        expect(project.sdkConfigWorkspaces).toEqual([
+            { absoluteFilePath: AbsoluteFilePath.of(apiDirectory), workspaceName: "payments" }
+        ]);
+    });
 });

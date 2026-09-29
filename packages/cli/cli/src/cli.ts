@@ -1065,7 +1065,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false,
-                        skipApiWorkspaces: argv.sdkConfig != null && argv.group == null && argv.api == null
+                        skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                     }),
                     cliContext,
                     version: argv.version,
@@ -1136,7 +1136,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false,
-                    skipApiWorkspaces: argv.sdkConfig != null && argv.group == null && argv.api == null
+                    skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                 }),
                 cliContext,
                 version: argv.version,
@@ -1522,7 +1522,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 });
 
-                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                if (
+                    argv.api != null &&
+                    !project.apiWorkspaces.some((workspace) => workspace.workspaceName === argv.api) &&
+                    !project.sdkConfigWorkspaces?.some((workspace) => workspace.workspaceName === argv.api)
+                ) {
                     cliContext.instrumentPostHogEvent({
                         command: "fern check",
                         properties: {

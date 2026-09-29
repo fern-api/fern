@@ -322,7 +322,7 @@ async function prepareSdkConfigGenerations({
     const shouldUseSdkConfig =
         sdkConfigPath != null ||
         targetNames != null ||
-        (groupNames == null && generatorName == null && generatorIndex == null);
+        (!useLocalDocker && groupNames == null && generatorName == null && generatorIndex == null);
     if (!shouldUseSdkConfig) {
         return [];
     }
@@ -333,14 +333,16 @@ async function prepareSdkConfigGenerations({
     ];
     const candidates: Array<{ path: string; owner?: SdkConfigWorkspaceOwner }> = [];
     if (sdkConfigPath != null) {
-        if (sdkConfigWorkspaceOwners.length > 1) {
+        const configDirectory = dirname(AbsoluteFilePath.of(resolve(cwd(), sdkConfigPath)));
+        const matchingOwner = sdkConfigWorkspaceOwners.find((owner) => owner.absoluteFilePath === configDirectory);
+        if (sdkConfigWorkspaceOwners.length > 1 && matchingOwner == null) {
             return cliContext.failAndThrow(
                 `--sdk-config selects one file, but ${sdkConfigWorkspaceOwners.length} API workspaces are selected. Use --api to select exactly one API.`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
         }
-        candidates.push({ path: sdkConfigPath, owner: sdkConfigWorkspaceOwners[0] });
+        candidates.push({ path: sdkConfigPath, owner: matchingOwner ?? sdkConfigWorkspaceOwners[0] });
     } else {
         for (const workspace of sdkConfigWorkspaceOwners) {
             const defaultPath = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
