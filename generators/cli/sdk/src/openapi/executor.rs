@@ -16,7 +16,9 @@ use futures_util::StreamExt;
 use serde_json::{json, Map, Value};
 use tokio::io::AsyncWriteExt;
 
-use crate::auth::{handle_error_response, DynAuthProvider, EndpointAuthMetadata};
+use crate::auth::{
+    ensure_credentials_for, handle_error_response, DynAuthProvider, EndpointAuthMetadata,
+};
 use crate::error::CliError;
 use crate::openapi::discovery::{
     BodyEncoding, MethodParameter, PaginationConfig as EndpointPagination, RestDescription,
@@ -937,6 +939,22 @@ fn endpoint_metadata_for(
         security_requirements: method.security_requirements.clone(),
         base_url_override: base_url_override.map(str::to_string),
     }
+}
+
+/// Whether the caller already supplies an auth header themselves, as a
+/// declared header parameter: `Authorization`, or the header an `apiKey`
+/// scheme reads.
+fn carries_spec_auth_header(doc: &RestDescription, header_params: &[(String, String)]) -> bool {
+    header_params.iter().any(|(name, _)| {
+        name.eq_ignore_ascii_case("authorization")
+            || doc.security_schemes.values().any(|scheme| {
+                matches!(
+                    scheme,
+                    crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name: key }
+                        if key.eq_ignore_ascii_case(name)
+                )
+            })
+    })
 }
 
 /// Pagination loop state tracked across page fetches.
@@ -2276,6 +2294,9 @@ pub async fn execute_method(
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method, base_url_override);
+    if !carries_spec_auth_header(doc, &input.header_params) {
+        ensure_credentials_for(auth_provider.as_ref(), &auth_metadata)?;
+    }
 
     // Spawn an external pager when --page-all is active on a TTY.
     let fallback_label = format!(
@@ -13587,4 +13608,105 @@ fn test_global_param_multiple_locations() {
     );
     let body = input.body.expect("body should have currency");
     assert_eq!(body["currency"], "EUR");
+}
+
+/// Run a `GET /things` against a local server with a bearer provider reading
+/// `token_env`, returning the result and how many requests reached the server.
+#[cfg(test)]
+async fn execute_against_mock(
+    security_requirements: Option<Vec<HashMap<String, Vec<String>>>>,
+    token_env: &str,
+    debug: bool,
+) -> (Result<Option<Value>, CliError>, usize) {
+    use wiremock::matchers::method as wm_method;
+    use wiremock::{Mock, MockServer, ResponseTemplate};
+
+    let server = MockServer::start().await;
+    Mock::given(wm_method("GET"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!({"ok": true})))
+        .mount(&server)
+        .await;
+
+    let doc = RestDescription {
+        root_url: format!("{}/", server.uri()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        security_requirements,
+        ..Default::default()
+    };
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+        "bearer",
+        crate::auth::AuthCredentialSource::from_env(token_env),
+    ));
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let result = execute_method(
+        &doc,
+        &method,
+        None,
+        None,
+        &provider,
+        None,
+        None,
+        None,
+        None,
+        false,
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true,
+        None,
+        &http_config,
+        false,
+        false,
+        false,
+        debug,
+        &[],
+        &[],
+    )
+    .await;
+    let hits = server.received_requests().await.unwrap().len();
+    (result, hits)
+}
+
+#[cfg(test)]
+fn bearer_required() -> Option<Vec<HashMap<String, Vec<String>>>> {
+    Some(vec![HashMap::from([("bearer".to_string(), Vec::new())])])
+}
+
+#[tokio::test]
+async fn test_required_auth_without_credentials_is_not_sent() {
+    std::env::remove_var("__FERN_TEST_EXEC_UNSET_TOKEN");
+    for debug in [false, true] {
+        let (result, hits) =
+            execute_against_mock(bearer_required(), "__FERN_TEST_EXEC_UNSET_TOKEN", debug).await;
+        match result {
+            Err(CliError::Auth(msg)) => {
+                assert!(msg.contains("__FERN_TEST_EXEC_UNSET_TOKEN"), "got: {msg}")
+            }
+            other => panic!("expected Auth (debug={debug}), got: {other:?}"),
+        }
+        assert_eq!(hits, 0, "no request may reach the server (debug={debug})");
+    }
+}
+
+#[tokio::test]
+async fn test_required_auth_with_credentials_is_sent() {
+    std::env::set_var("__FERN_TEST_EXEC_SET_TOKEN", "t");
+    let (result, hits) =
+        execute_against_mock(bearer_required(), "__FERN_TEST_EXEC_SET_TOKEN", false).await;
+    std::env::remove_var("__FERN_TEST_EXEC_SET_TOKEN");
+    assert!(result.is_ok(), "got: {result:?}");
+    assert_eq!(hits, 1);
+}
+
+#[tokio::test]
+async fn test_undeclared_auth_without_credentials_is_still_sent() {
+    std::env::remove_var("__FERN_TEST_EXEC_UNDECLARED_TOKEN");
+    let (result, hits) =
+        execute_against_mock(None, "__FERN_TEST_EXEC_UNDECLARED_TOKEN", false).await;
+    assert!(result.is_ok(), "got: {result:?}");
+    assert_eq!(hits, 1);
 }
