@@ -13693,11 +13693,12 @@ async fn test_required_auth_without_credentials_is_not_sent() {
 }
 
 #[tokio::test]
+#[serial_test::serial]
 async fn test_required_auth_with_credentials_is_sent() {
-    std::env::set_var("__FERN_TEST_EXEC_SET_TOKEN", "t");
+    let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+    guard.set_env("__FERN_TEST_EXEC_SET_TOKEN", "t");
     let (result, hits) =
         execute_against_mock(bearer_required(), "__FERN_TEST_EXEC_SET_TOKEN", false).await;
-    std::env::remove_var("__FERN_TEST_EXEC_SET_TOKEN");
     assert!(result.is_ok(), "got: {result:?}");
     assert_eq!(hits, 1);
 }
