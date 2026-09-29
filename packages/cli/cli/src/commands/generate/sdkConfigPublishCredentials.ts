@@ -74,17 +74,10 @@ function sanitizeOutput(value: unknown): { output: unknown } {
 }
 
 function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredentialSource | undefined {
-    if (
-        !isRecord(output) ||
-        (output.delivery !== "files" && output.delivery !== "zip" && output.delivery !== "github") ||
-        !isRecord(output.publish)
-    ) {
+    if (!isRecord(output) || (output.delivery !== "files" && output.delivery !== "zip") || !isRecord(output.publish)) {
         return undefined;
     }
     const publish = output.publish;
-    if (output.delivery === "github" && !hasPublishCredentialFields(publish)) {
-        return undefined;
-    }
     const fields = credentialFields(publish);
     const registry = publish.registry;
     if (typeof registry !== "string") {
@@ -130,19 +123,6 @@ function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredenti
         default:
             return undefined;
     }
-}
-
-function hasPublishCredentialFields(publish: Record<string, unknown>): boolean {
-    return (
-        publish.credentials != null ||
-        publish.token != null ||
-        publish.username != null ||
-        publish.password != null ||
-        publish.apiKey != null ||
-        publish.signature != null ||
-        publish.keyId != null ||
-        publish.secretKey != null
-    );
 }
 
 export function resolveSdkConfigPublishCredential(

@@ -20,10 +20,12 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
+    mapFernSdkGenApiOutput,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
@@ -208,6 +210,13 @@ export async function runRemoteGenerationForAPIWorkspace({
         skipIfNoDiff,
         autoMerge
     });
+    for (const result of routePreparation) {
+        if (result.fallbackReason != null) {
+            context.logger.debug(
+                `${result.generatorInvocation.name} ${result.generatorInvocation.version} is falling back to Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
+            );
+        }
+    }
     const sdkGenApiRoutes = routePreparation.map((result) => result.route);
     const resolvedGenerators = routePreparation.map((result) => result.generatorInvocation);
     const routeErrors = routePreparation.map((result) => result.error);
@@ -396,6 +405,7 @@ export function prepareFernSdkGenApiRoutes({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
     error: unknown;
+    fallbackReason?: string;
     sdkConfigTargetIndex?: number;
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
@@ -492,20 +502,31 @@ export function prepareFernSdkGenApiRoutes({
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
                 } catch (error) {
                     if (route.configKind === "legacy-fern") {
-                        return { generatorInvocation: resolved, route: undefined, error: undefined };
+                        return {
+                            generatorInvocation: resolved,
+                            route: undefined,
+                            error: undefined,
+                            fallbackReason: extractErrorMessage(error)
+                        };
                     }
                     throw error;
                 }
             }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
+                requestedOutput: configuredTarget?.requestedOutput,
                 verify,
                 skipIfNoDiff,
                 autoMerge
             });
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
-                    return { generatorInvocation: resolved, route: undefined, error: undefined };
+                    return {
+                        generatorInvocation: resolved,
+                        route: undefined,
+                        error: undefined,
+                        fallbackReason: unsupportedOutput
+                    };
                 }
                 throw new Error(
                     `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
@@ -541,30 +562,24 @@ function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInv
 
 function getFernSdkGenApiUnsupportedOutput({
     generatorInvocation,
+    requestedOutput,
     verify,
     skipIfNoDiff,
     autoMerge
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
     verify?: boolean;
     skipIfNoDiff?: boolean;
     autoMerge?: boolean;
 }): string | undefined {
+    const resolvedRequestedOutput = requestedOutput ?? mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     const unsupported: string[] = [];
-    if (
-        generatorInvocation.outputMode.type !== "downloadFiles" &&
-        generatorInvocation.outputMode.type !== "publish" &&
-        generatorInvocation.outputMode.type !== "publishV2"
-    ) {
-        unsupported.push(
-            `${generatorInvocation.outputMode.type} delivery requires Fern-managed GitHub or registry credentials that sdk-gen-api cannot resolve`
-        );
+    if (verify === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("verify=true is not implemented by sdk-gen-api for non-GitHub output");
     }
-    if (verify === true) {
-        unsupported.push("verify=true is not implemented by sdk-gen-api");
-    }
-    if (skipIfNoDiff === true) {
-        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api");
+    if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
     }
     if (autoMerge === true) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");

@@ -669,7 +669,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
-    it("keeps pre-cutover GitHub delivery on Fiddle", () => {
+    it("routes GitHub push delivery with registry publication through sdk-gen-api when enabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
                 invocation({
@@ -678,7 +678,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                         FernFiddle.GithubOutputModeV2.push({
                             owner: "acme",
                             repo: "sdk",
-                            branch: "main"
+                            branch: "main",
+                            publishInfo: FernFiddle.GithubPublishInfo.npm({
+                                registryUrl: "https://registry.npmjs.org",
+                                packageName: "@acme/sdk"
+                            })
                         })
                     )
                 })
@@ -688,7 +692,42 @@ describe("isEligibleForFernSdkGenApi", () => {
             isPreview: false
         });
 
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("keeps non-GitHub verification on Fiddle for legacy targets", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "3.999.999" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
         expect(result?.route).toBeUndefined();
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("allows SDK Config GitHub verification through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode: "pull-request"
+                }
+            }),
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
+        expect(result?.route?.payloadKind).toBe("sdk-config-v1");
         expect(result?.error).toBeUndefined();
     });
 
@@ -699,7 +738,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
-            verify: true
+            autoMerge: true
         });
 
         expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
@@ -707,18 +746,6 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it.each([
-        [
-            "GitHub delivery",
-            {
-                outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner: "acme",
-                        repo: "sdk",
-                        branch: "main"
-                    })
-                )
-            }
-        ],
         [
             "registry publication",
             {
@@ -976,6 +1003,41 @@ describe("isEligibleForFernSdkGenApi", () => {
                 })
             ).toBe(true);
         }
+    });
+
+    it("includes sdk-gen-api GitHub output options in the wire request", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: "acme",
+                        repo: "sdk",
+                        branch: "main"
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle),
+            githubOptions: {
+                replay: { enabled: true },
+                verify: true,
+                skipIfNoDiff: true
+            }
+        });
+
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            branch: "main",
+            mode: "push",
+            replay: { enabled: true },
+            verify: true,
+            skipIfNoDiff: true
+        });
     });
 
     it.each([
@@ -3089,6 +3151,11 @@ describe("fernapi/fern-mcp-server target", () => {
                 repository: "acme/sdk",
                 mode: "pull-request",
                 publish: { registry: "npm" }
+            },
+            githubOptions: {
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
 
@@ -3098,7 +3165,10 @@ describe("fernapi/fern-mcp-server target", () => {
                 type: "github",
                 repository: "acme/sdk",
                 mode: "pull-request",
-                publish: { registry: "npm" }
+                publish: { registry: "npm" },
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
     });

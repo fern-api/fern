@@ -437,7 +437,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(firstCredentials?.targets[0]).toMatchObject({ token: "first-secret" });
     });
 
-    it("correlates GitHub registry publication credentials without changing GitHub delivery", () => {
+    it("omits direct publish credentials for GitHub registry publication", () => {
         const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
         const publishCredential = { registry: "npm" as const, token: "github-publish-secret" };
         const request = createFernSdkGenApiRequest({
@@ -464,17 +464,8 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             mode: "pull-request",
             publish: { registry: "npm", url: "https://npm.buildwithfern.com" }
         });
-        expect(request.credentialSetId).toBeDefined();
-        expect(credentials).toMatchObject({
-            credentialSetId: request.credentialSetId,
-            targets: [
-                {
-                    targetId: request.targets[0]?.targetId,
-                    registry: "npm",
-                    token: "github-publish-secret"
-                }
-            ]
-        });
+        expect(request.credentialSetId).toBeUndefined();
+        expect(credentials).toBeUndefined();
         expect(JSON.stringify(request)).not.toContain("github-publish-secret");
     });
 

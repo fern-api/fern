@@ -518,8 +518,7 @@ describe("loadSdkConfigV1", () => {
         });
     });
 
-    it("preserves GitHub delivery while extracting registry publication credentials", async () => {
-        vi.stubEnv("NPM_TOKEN", "github-publish-secret");
+    it("preserves GitHub delivery while omitting registry publication credentials", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",
             package: { packageName: "@acme/sdk" },
@@ -543,10 +542,9 @@ describe("loadSdkConfigV1", () => {
                 repository: "acme/sdk",
                 mode: "pull-request",
                 publish: { registry: "npm", url: "https://npm.buildwithfern.com" }
-            },
-            publishCredential: { registry: "npm", token: "github-publish-secret" }
+            }
         });
-        expect(serialized).not.toContain("github-publish-secret");
+        expect(loaded.payload.targets[0]).not.toHaveProperty("publishCredential");
         expect(serialized).not.toContain("NPM_TOKEN");
     });
 

@@ -38,6 +38,7 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
     isEligibleForFernSdkGenApi,
@@ -337,6 +338,7 @@ export async function runRemoteGenerationForGenerator({
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }
                         : {}),
+                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                     absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
@@ -410,6 +412,7 @@ export async function runRemoteGenerationForGenerator({
                     targetIdSeed: sdkGenApiTargetIdSeed,
                     sourceSpecIndexes: sdkGenApiSourceArchive.specIndexes,
                     audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                     skipFernignore
                 };
             } else {
@@ -614,6 +617,7 @@ export async function runRemoteGenerationForGenerator({
                       targetIdSeed: sdkGenApiTargetIdSeed,
                       sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
                       audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                      githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                       skipFernignore
                   };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
@@ -737,6 +741,27 @@ export async function detectFdrAirGappedMode({
     logger: InteractiveTaskContext["logger"];
 }): Promise<boolean> {
     return requiresFdrRegistration ? await detectAirGappedMode(`${fdrOrigin}/health`, logger) : false;
+}
+
+function getFernSdkGenApiGithubOptions({
+    replay,
+    verify,
+    skipIfNoDiff,
+    noReplay
+}: {
+    replay: generatorsYml.ReplayConfigSchema | undefined;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+    noReplay?: boolean;
+}): FernSdkGenApiGithubOptions | undefined {
+    const effectiveReplay =
+        noReplay === true ? { enabled: false } : replay != null ? { enabled: replay.enabled === true } : undefined;
+    const options: FernSdkGenApiGithubOptions = {
+        ...(effectiveReplay != null ? { replay: effectiveReplay } : {}),
+        ...(verify === true ? { verify: true } : {}),
+        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {})
+    };
+    return Object.keys(options).length > 0 ? options : undefined;
 }
 
 export function getPublishConfig({
