@@ -27,6 +27,7 @@ export interface LoadedSdkConfigV1 {
 interface SdkConfigTargetSelection {
     generatorName?: string;
     generatorIndex?: number;
+    targetNames?: string[];
 }
 
 /** Reads and validates a customer SDK Config YAML or JSON document for SDK Generation API transport. */
@@ -52,6 +53,7 @@ export async function loadSdkConfigV1(
         if (document.targets.length !== credentials.length || parsed.targets.length !== credentials.length) {
             throw new Error("SDK Config v1 target count changed during validation");
         }
+        const targetIndexes = getTargetIndexes(parsed, selection.targetNames);
         const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(parsed.targets);
         const selectedTargetIndexes = getSelectedTargetIndexes(parsed, selection, isPreview);
         const payload: FernSdkConfigV1Payload = {
@@ -62,7 +64,11 @@ export async function loadSdkConfigV1(
             ...(parsed.client.pathParameterStyle != null
                 ? { clientPathParameterStyle: parsed.client.pathParameterStyle }
                 : {}),
-            targets: parsed.targets.map((target, index) => {
+            targets: targetIndexes.map((index) => {
+                const target = parsed.targets[index];
+                if (target == null) {
+                    throw new Error(`SDK Config v1 target ${index} is missing after validation`);
+                }
                 const documentTarget = document.targets[index];
                 if (documentTarget == null) {
                     throw new Error(`SDK Config v1 target ${index} is missing after validation`);
@@ -98,8 +104,8 @@ export async function loadSdkConfigV1(
             })
         };
         validateFernSdkGenApiPublishTargets(
-            payload.targets.flatMap((target, index) =>
-                selectedTargetIndexes.has(index)
+            payload.targets.flatMap((target, payloadIndex) =>
+                selectedTargetIndexes.has(targetIndexes[payloadIndex] ?? -1)
                     ? [
                           {
                               publicationRequested:
@@ -117,7 +123,16 @@ export async function loadSdkConfigV1(
         );
         return {
             absolutePath,
-            config: parsed,
+            config: {
+                ...parsed,
+                targets: targetIndexes.map((index) => {
+                    const target = parsed.targets[index];
+                    if (target == null) {
+                        throw new Error(`SDK Config v1 target ${index} is missing after validation`);
+                    }
+                    return target;
+                })
+            },
             payload
         };
     } catch (error) {
@@ -136,6 +151,9 @@ function getSelectedTargetIndexes(
     if (isPreview) {
         return new Set();
     }
+    if (selection.targetNames != null && selection.targetNames.length > 0) {
+        return new Set(getTargetIndexes(config, selection.targetNames));
+    }
     if (selection.generatorIndex != null) {
         if (selection.generatorIndex < 0 || selection.generatorIndex >= config.targets.length) {
             throw new Error(
@@ -152,6 +170,21 @@ function getSelectedTargetIndexes(
         );
     }
     return new Set(config.targets.map((_, index) => index));
+}
+
+function getTargetIndexes(config: SdkConfigV1, targetNames: string[] | undefined): number[] {
+    if (targetNames == null || targetNames.length === 0) {
+        return config.targets.map((_, index) => index);
+    }
+    const requested = [...new Set(targetNames)];
+    const available = config.targets.map((target) => target.language);
+    const missing = requested.filter((name) => !available.includes(name as (typeof available)[number]));
+    if (missing.length > 0) {
+        throw new Error(
+            `SDK Config target${missing.length === 1 ? "" : "s"} ${missing.map((name) => `'${name}'`).join(", ")} not found. Available targets: ${available.join(", ")}`
+        );
+    }
+    return config.targets.flatMap((target, index) => (requested.includes(target.language) ? [index] : []));
 }
 
 function validateAndParseSdkConfigV1(input: unknown): {

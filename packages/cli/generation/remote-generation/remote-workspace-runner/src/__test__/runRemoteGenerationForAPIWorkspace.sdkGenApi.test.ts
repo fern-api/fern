@@ -49,12 +49,14 @@ async function runMixedFailure(
     recordSuccess: ReturnType<typeof vi.fn>;
     recordFailure: ReturnType<typeof vi.fn>;
     failWithoutThrowing: ReturnType<typeof vi.fn>;
+    taskNames: string[];
 }> {
     const typescript = invocation("fernapi/fern-typescript-sdk", "typescript", "3.999.999");
     const python = invocation("fernapi/fern-python-sdk", "python", failure === "route" ? "not-semver" : "5.999.999");
     const recordSuccess = vi.fn();
     const recordFailure = vi.fn();
     const failWithoutThrowing = vi.fn();
+    const taskNames: string[] = [];
     runGenerator.mockImplementation(async (parameters) => {
         await parameters.sdkGenApiPreparationBatch.ready(parameters.sdkGenApiTargetIdSeed);
         if (failure === "post-barrier" && parameters.generatorInvocation.name === python.name) {
@@ -77,7 +79,8 @@ async function runMixedFailure(
     };
     const context = {
         logger: { warn: vi.fn() },
-        runInteractiveTask: async (_options: unknown, run: (taskContext: never) => Promise<void>) => {
+        runInteractiveTask: async (options: { name: string }, run: (taskContext: never) => Promise<void>) => {
+            taskNames.push(options.name);
             await run(interactiveContext as never);
             return true;
         }
@@ -132,7 +135,7 @@ async function runMixedFailure(
         })
     });
 
-    return { typescript, python, recordSuccess, recordFailure, failWithoutThrowing };
+    return { typescript, python, recordSuccess, recordFailure, failWithoutThrowing, taskNames };
 }
 
 describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
@@ -161,6 +164,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             expect.objectContaining({ generatorName: result.python.name })
         );
         expect(result.failWithoutThrowing).toHaveBeenCalledTimes(1);
+        expect(result.taskNames).toEqual([result.typescript.name, result.python.name]);
     });
 
     it("fails a legacy cutover target before source preparation or target work", async () => {
@@ -267,6 +271,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             noChangesDetected: undefined,
             publishTarget: undefined
         });
+        const taskNames: string[] = [];
 
         await runRemoteGenerationForAPIWorkspace({
             projectConfig: { organization: "acme" } as never,
@@ -281,7 +286,8 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             } as never,
             context: {
                 logger: { warn: vi.fn() },
-                runInteractiveTask: async (_options: unknown, run: (taskContext: never) => Promise<void>) => {
+                runInteractiveTask: async (options: { name: string }, run: (taskContext: never) => Promise<void>) => {
+                    taskNames.push(options.name);
                     await run({ logger: { warn: vi.fn(), debug: vi.fn(), info: vi.fn() } } as never);
                     return true;
                 }
@@ -327,6 +333,7 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(runGenerator).toHaveBeenCalledWith(
             expect.objectContaining({ sdkGenApiTargetIdSeed: "1", sdkGenApiRoute: expect.objectContaining({}) })
         );
+        expect(taskNames).toEqual(["TypeScript SDK"]);
     });
 
     it.each([

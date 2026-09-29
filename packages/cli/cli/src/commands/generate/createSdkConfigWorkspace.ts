@@ -25,11 +25,13 @@ export async function createSdkConfigWorkspace({
     sdkConfig,
     absolutePathToConfig,
     cliVersion,
+    workspaceName,
     context
 }: {
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
     cliVersion: string;
+    workspaceName?: string;
     context: TaskContext;
 }): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
@@ -89,7 +91,7 @@ export async function createSdkConfigWorkspace({
             allSpecs: specs,
             specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
             generatorsConfiguration,
-            workspaceName: undefined,
+            workspaceName,
             cliVersion,
             absoluteFilePath: AbsoluteFilePath.of(configDirectory)
         });

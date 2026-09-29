@@ -1,3 +1,4 @@
+import { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
@@ -11,7 +12,7 @@ import yaml from "js-yaml";
  * and lands this file next to it, so a workspace mid-migration has both on disk and the presence of
  * this one is what selects the new configuration.
  */
-export const SDK_CONFIG_FILENAME = "sdk-config.yml";
+export { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
 
 /** `.yaml` is accepted on read only. The migration writes `.yml`, matching every other Fern file. */
 const SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];

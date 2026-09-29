@@ -1,3 +1,4 @@
+import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
@@ -23,8 +24,6 @@ export interface SdkMigrateArgs {
     output?: string;
     strict: boolean;
 }
-
-const DEFAULT_SDK_CONFIG_FILENAME = RelativeFilePath.of("sdk-config.yml");
 
 export async function sdkMigrate({
     project,
@@ -114,7 +113,7 @@ function resolveOutputPath(
         return undefined;
     }
     if (requestedOutput == null) {
-        return join(workspaceDirectory, DEFAULT_SDK_CONFIG_FILENAME);
+        return join(workspaceDirectory, RelativeFilePath.of(SDK_CONFIG_FILENAME));
     }
     return resolve(cwd(), requestedOutput);
 }

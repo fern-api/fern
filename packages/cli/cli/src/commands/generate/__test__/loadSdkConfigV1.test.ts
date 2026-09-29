@@ -257,6 +257,29 @@ describe("loadSdkConfigV1", () => {
         ).toEqual([{ packageName: "@acme/first" }, { packageName: "@acme/second" }]);
     });
 
+    it("selects SDK Config targets by language", async () => {
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            { language: "typescript", output: { delivery: "files" } },
+            { language: "python", output: { delivery: "files" } },
+            { language: "java", output: { delivery: "files" }, package: { groupId: "com.acme", artifactId: "sdk" } }
+        ]);
+
+        const loaded = await loadSdkConfigV1(configPath, false, { targetNames: ["java", "typescript"] });
+
+        expect(loaded.config.targets.map((target) => target.language)).toEqual(["typescript", "java"]);
+        expect(loaded.payload.targets.map((target) => target.language)).toEqual(["typescript", "java"]);
+    });
+
+    it("rejects an SDK Config target that does not exist", async () => {
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            { language: "typescript", output: { delivery: "files" } }
+        ]);
+
+        await expect(loadSdkConfigV1(configPath, false, { targetNames: ["python"] })).rejects.toThrow(
+            "SDK Config target 'python' not found. Available targets: typescript"
+        );
+    });
+
     it.each([-1, 2])("rejects out-of-range generator index %s without exposing credentials", async (generatorIndex) => {
         const configPath = await writeSdkConfigTargets(temporaryDirectories, [
             {

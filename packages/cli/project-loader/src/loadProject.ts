@@ -9,8 +9,10 @@ import {
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     generatorsYml,
     getFernDirectory,
+    LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     loadProjectConfig,
-    OPENAPI_DIRECTORY
+    OPENAPI_DIRECTORY,
+    SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -19,7 +21,7 @@ import chalk from "chalk";
 import { readdir } from "fs/promises";
 
 import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
-import { Project } from "./Project.js";
+import { Project, SdkConfigWorkspace } from "./Project.js";
 
 export declare namespace loadProject {
     export interface Args {
@@ -76,21 +78,33 @@ export async function loadProjectFromDirectory({
     context
 }: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
     let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
+    const sdkConfigWorkspaces: SdkConfigWorkspace[] = [];
 
-    const [apisExists, defExists, genExists, genAltExists, openapiExists, asyncapiExists] = await Promise.all([
+    const [
+        apisExists,
+        defExists,
+        genExists,
+        genAltExists,
+        legacyGenExists,
+        sdkConfigExists,
+        openapiExists,
+        asyncapiExists
+    ] = await Promise.all([
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY))),
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))),
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
         doesPathExist(
             join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
         ),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME))),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(SDK_CONFIG_FILENAME))),
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))),
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
     ]);
 
     if (
         !skipApiWorkspaces &&
-        (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists)
+        (apisExists || defExists || genExists || genAltExists || legacyGenExists || openapiExists || asyncapiExists)
     ) {
         apiWorkspaces = await loadApis({
             cliName,
@@ -98,13 +112,24 @@ export async function loadProjectFromDirectory({
             cliVersion,
             context,
             commandLineApiWorkspace,
-            defaultToAllApiWorkspaces
+            defaultToAllApiWorkspaces,
+            sdkConfigWorkspaceCollector: sdkConfigWorkspaces
         });
+    }
+
+    if (!skipApiWorkspaces && sdkConfigExists && apiWorkspaces.length === 0 && sdkConfigWorkspaces.length === 0) {
+        sdkConfigWorkspaces.push({ absoluteFilePath: absolutePathToFernDirectory, workspaceName: undefined });
     }
 
     const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
 
-    if (apiWorkspaces.length === 0 && docsWorkspaces == null && !skipApiWorkspaces) {
+    if (
+        apiWorkspaces.length === 0 &&
+        sdkConfigWorkspaces.length === 0 &&
+        docsWorkspaces == null &&
+        !skipApiWorkspaces &&
+        !sdkConfigExists
+    ) {
         return context.failAndThrow(
             `No SDK specifications or docs specifications found. Please ensure one of the following .yml (not .yaml) files is present:\n` +
                 ` › ${GENERATORS_CONFIGURATION_FILENAME}\n` +
@@ -125,6 +150,7 @@ export async function loadProjectFromDirectory({
     return {
         config: await loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
+        sdkConfigWorkspaces,
         docsWorkspaces,
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {
             if (name == null) {
@@ -141,7 +167,8 @@ export async function loadApis({
     context,
     cliVersion,
     commandLineApiWorkspace,
-    defaultToAllApiWorkspaces
+    defaultToAllApiWorkspaces,
+    sdkConfigWorkspaceCollector
 }: {
     cliName: string;
     fernDirectory: AbsoluteFilePath;
@@ -149,6 +176,8 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | string[] | undefined;
     defaultToAllApiWorkspaces: boolean;
+    /** Collect SDK Config-only directories without passing them through legacy workspace parsing. */
+    sdkConfigWorkspaceCollector?: SdkConfigWorkspace[];
 }): Promise<AbstractAPIWorkspace<unknown>[]> {
     // Normalize `--api` input. `undefined` means no filter; a single string or an array of
     // strings narrows to the named workspace(s). Passing `--api` multiple times produces an
@@ -206,8 +235,16 @@ export async function loadApis({
 
         await Promise.all(
             filteredWorkspaces.map(async (workspaceDirectoryName) => {
+                const absolutePathToWorkspace = join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName));
+                if (sdkConfigWorkspaceCollector != null && (await isSdkConfigOnlyWorkspace(absolutePathToWorkspace))) {
+                    sdkConfigWorkspaceCollector.push({
+                        absoluteFilePath: absolutePathToWorkspace,
+                        workspaceName: workspaceDirectoryName
+                    });
+                    return;
+                }
                 const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
+                    absolutePathToWorkspace,
                     context,
                     cliVersion,
                     workspaceName: workspaceDirectoryName
@@ -236,4 +273,16 @@ export async function loadApis({
         handleFailedWorkspaceParserResult(workspace, context.logger);
         return [];
     }
+}
+
+async function isSdkConfigOnlyWorkspace(absolutePathToWorkspace: AbsoluteFilePath): Promise<boolean> {
+    const [sdkConfigExists, generatorsYmlExists, generatorsYamlExists, legacyGeneratorsExists] = await Promise.all([
+        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME))),
+        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
+        doesPathExist(
+            join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
+        ),
+        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME)))
+    ]);
+    return sdkConfigExists && !generatorsYmlExists && !generatorsYamlExists && !legacyGeneratorsExists;
 }
