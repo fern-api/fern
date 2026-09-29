@@ -17,6 +17,7 @@ use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::auth::keyring_store::active_store;
 use crate::auth::login::{self, DynLoginFlow};
+use crate::auth::oauth2::CLIENT_ID_FIELD;
 use crate::auth::{AuthCredentialSource, SchemeBinding};
 use crate::error::CliError;
 use crate::profiles::selection::{self, PROFILE_FLAG};
@@ -974,7 +975,10 @@ fn handle_list<W: Write>(
             let account = resolved
                 .credential
                 .as_ref()
-                .and_then(|credential| stored_account(ctx, credential))
+                .and_then(|credential| {
+                    stored_account(ctx, credential)
+                        .or_else(|| stored_oauth_client_id(ctx, credential))
+                })
                 .or_else(|| resolved.oauth_client_id.clone());
             if let Some(account) = account {
                 row.insert("account".into(), account.into());
@@ -1249,23 +1253,49 @@ fn insert_map(
 /// That last case is deliberate: `profiles list` must never error or block on
 /// a locked keychain just to render a column.
 fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    for (scheme, binding) in ctx.auth_bindings {
-        if !matches!(binding, SchemeBinding::Basic { .. }) {
-            continue;
-        }
+    let basic = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
+        .map(|(scheme, _)| scheme.as_str());
+    stored_keyring_field(ctx, credential, basic, "username")
+}
+
+/// The OAuth2 client id stored in the keyring for `credential` — what
+/// `profiles set <name> <CLIENT_ID_VAR>=…` and `auth login --with-token`
+/// write. A client id is public (RFC 6749 §2.2), so it is as safe to print
+/// as a basic-auth username. Same never-block rule as [`stored_account`].
+fn stored_oauth_client_id(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
+    let oauth = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(scheme, _)| {
+            login::scheme_credential_fields(scheme, ctx.auth_bindings)
+                .is_some_and(|fields| fields.contains(&CLIENT_ID_FIELD))
+        })
+        .map(|(scheme, _)| scheme.as_str());
+    stored_keyring_field(ctx, credential, oauth, CLIENT_ID_FIELD)
+}
+
+/// The first non-empty `field` of a multi-field keyring entry stored under
+/// `credential` for any of `schemes`.
+fn stored_keyring_field<'a>(
+    ctx: &ProfilesContext<'_>,
+    credential: &str,
+    schemes: impl IntoIterator<Item = &'a str>,
+    field: &str,
+) -> Option<String> {
+    schemes.into_iter().find_map(|scheme| {
         let account = super::keyring_account_for(scheme, credential);
         let Ok(Some(raw)) = crate::auth::keyring_store::active_store().get(ctx.cli_name, &account)
         else {
-            continue;
+            return None;
         };
-        let username = serde_json::from_str::<serde_json::Value>(&raw)
+        serde_json::from_str::<serde_json::Value>(&raw)
             .ok()
-            .and_then(|v| v.get("username")?.as_str().map(str::to_string));
-        if let Some(username) = username.filter(|u| !u.is_empty()) {
-            return Some(username);
-        }
-    }
-    None
+            .and_then(|v| v.get(field)?.as_str().map(str::to_string))
+            .filter(|value| !value.is_empty())
+    })
 }
 
 /// Whether any scheme has a keyring entry under this profile's credential
@@ -1953,8 +1983,14 @@ fn resolved_profile_fields(
             map.insert("credentials_from".into(), credential.clone().into());
         }
     }
-    if let Some(client_id) = &profile.oauth_client_id {
-        map.insert("oauth_client_id".into(), client_id.clone().into());
+    // Keyring before plaintext: the order the OAuth2 provider resolves them in.
+    let client_id = profile
+        .credential
+        .as_ref()
+        .and_then(|credential| stored_oauth_client_id(ctx, credential))
+        .or_else(|| profile.oauth_client_id.clone());
+    if let Some(client_id) = client_id {
+        map.insert("oauth_client_id".into(), client_id.into());
     }
     insert_settings(&mut map, profile);
     map
