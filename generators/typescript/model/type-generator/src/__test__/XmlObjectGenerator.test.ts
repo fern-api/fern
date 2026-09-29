@@ -270,7 +270,34 @@ const collectionsDeclaration = xmlObjectDeclaration(
     { name: "Collections", namespace: undefined, prefix: undefined }
 );
 
+const labelDeclaration = xmlObjectDeclaration(
+    "Label",
+    [
+        xmlProperty("font-size", optional(STRING), { kind: "ATTRIBUTE" }),
+        xmlProperty("text-align", STRING, { kind: "ATTRIBUTE" }),
+        xmlProperty("default", optional(STRING), { kind: "ATTRIBUTE" }),
+        xmlProperty("line-break", optional(list(createNamedTypeReference("Break"))), { kind: "ELEMENT" }),
+        xmlProperty("inner-text", optional(STRING), { kind: "TEXT" })
+    ],
+    { name: "label", namespace: undefined, prefix: undefined }
+);
+
+function syntaxErrors(source: string): string[] {
+    const project = new Project({ useInMemoryFileSystem: true });
+    const sourceFile = project.createSourceFile("check.ts", source);
+    return sourceFile
+        .getPreEmitDiagnostics()
+        .filter((diagnostic) => diagnostic.getCategory() === ts.DiagnosticCategory.Error && diagnostic.getCode() < 2000)
+        .map((diagnostic) => `${diagnostic.getLineNumber()}: ${diagnostic.getMessageText()}`);
+}
+
 describe("XmlObjectGenerator", () => {
+    it("uses bracket access and safe locals for property keys that are not identifiers", () => {
+        const output = generate(labelDeclaration, [breakDeclaration], false);
+        expect(syntaxErrors(output)).toEqual([]);
+        expect(output).toMatchSnapshot();
+    });
+
     it("generates a root element with text, attributes and typed children", () => {
         expect(generate(sayDeclaration, [breakDeclaration], true)).toMatchSnapshot();
     });
