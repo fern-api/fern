@@ -30,6 +30,13 @@ var (
 	reportFieldTitle        = big.NewInt(1 << 4)
 )
 
+// reportNullableFields maps the wire names of Report's nullable fields (required or optional) to their field bits.
+var reportNullableFields = map[string]*big.Int{
+	"fraud_date":    reportFieldFraudDate,
+	"resolved_date": reportFieldResolvedDate,
+	"description":   reportFieldDescription,
+}
+
 type Report struct {
 	CreatedDate  Iso8601Date             `json:"created_date" url:"created_date" format:"date"`
 	FraudDate    Iso8601DateNullable     `json:"fraud_date,omitempty" url:"fraud_date,omitempty" format:"date"`
@@ -87,10 +94,12 @@ func (r *Report) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Report) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetCreatedDate sets the CreatedDate field and marks it as non-optional;
@@ -150,6 +159,13 @@ func (r *Report) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, reportNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
