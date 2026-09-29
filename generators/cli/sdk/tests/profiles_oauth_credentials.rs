@@ -241,3 +241,53 @@ fn an_unprofiled_credential_still_resolves() {
         assert!(logged_in(None));
     });
 }
+
+fn json(args: &[&str]) -> serde_json::Value {
+    let (code, output) = run(args);
+    assert_eq!(code, 0, "{output}");
+    serde_json::from_str(&output).expect("json")
+}
+
+#[test]
+#[serial]
+fn a_keyring_client_id_is_shown_by_list_show_and_current() {
+    // `profiles set <name> OA_CLIENT_ID=…` writes the id to the keyring, not
+    // to `oauth_client_id` in profiles.toml, so every reporting surface has
+    // to read it from there the way it reads a basic-auth username.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--use"]);
+        let (code, output) = run(&[
+            "oa", "profiles", "set", "prod", "OA_CLIENT_ID=keyring-id", "OA_CLIENT_SECRET=s",
+        ]);
+        assert_eq!(code, 0, "{output}");
+
+        let rows = json(&["oa", "profiles", "list", "--format", "json"]);
+        let prod = rows
+            .as_array()
+            .expect("array")
+            .iter()
+            .find(|r| r["profile"] == "prod")
+            .expect("prod");
+        assert_eq!(prod["account"], "keyring-id", "{prod:#?}");
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
+
+        let current = json(&["oa", "profiles", "current", "--format", "json"]);
+        assert_eq!(current["oauth_client_id"], "keyring-id", "{current:#?}");
+    });
+}
+
+#[test]
+#[serial]
+fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
+    // Reported in the order the provider resolves them, so `show` names the
+    // id a request will actually send.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "plain-id", "--use"]);
+        store("prod", "keyring-id", "s");
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
+    });
+}
