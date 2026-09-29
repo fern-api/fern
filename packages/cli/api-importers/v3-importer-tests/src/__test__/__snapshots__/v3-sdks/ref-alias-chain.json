@@ -76,15 +76,17 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "format": "uuid"
+              },
+              "type": "string"
+            }
           },
-          "name": "UUID",
-          "typeId": "UUID",
-          "inline": false,
-          "displayName": "UUID",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },
@@ -121,15 +123,17 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "format": "uuid"
+              },
+              "type": "string"
+            }
           },
-          "name": "ResourceId",
-          "typeId": "ResourceId",
-          "inline": false,
-          "displayName": "ResourceId",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },
@@ -213,15 +217,16 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$"
+              },
+              "type": "string"
+            }
           },
-          "name": "LocalDateTime",
-          "typeId": "LocalDateTime",
-          "inline": false,
-          "displayName": "LocalDateTime",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },
@@ -259,15 +264,17 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "format": "uuid"
+              },
+              "type": "string"
+            }
           },
-          "name": "UUID",
-          "typeId": "UUID",
-          "inline": false,
-          "displayName": "UUID",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },
@@ -462,14 +469,15 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "name": {
+            "typeId": "CycleB",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": "CycleB"
           },
-          "name": "CycleB",
-          "typeId": "CycleB",
-          "inline": false,
-          "displayName": "CycleB",
+          "shape": "OBJECT",
           "type": "named"
         },
         "type": "alias"

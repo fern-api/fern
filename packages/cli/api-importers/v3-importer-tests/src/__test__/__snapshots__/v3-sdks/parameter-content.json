@@ -204,15 +204,14 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
           },
-          "name": "Region",
-          "typeId": "Region",
-          "inline": false,
-          "displayName": "Region",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },

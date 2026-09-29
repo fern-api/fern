@@ -48,6 +48,23 @@ describe("component schemas that are a $ref to another schema", () => {
         );
     });
 
+    it("should resolve alias chains to the terminal type", async () => {
+        const ir = await getIRForFixture("ref-alias-chain");
+
+        const resolvedTypeOf = (name: string) => {
+            const type = Object.values(ir.types).find((type) => getOriginalName(type.name.name) === name);
+            return type?.shape.type === "alias" ? type.shape.resolvedType : undefined;
+        };
+
+        for (const name of ["AgreementId", "ResourceId", "PlainAlias"]) {
+            expect(resolvedTypeOf(name)).toMatchObject({
+                type: "primitive",
+                primitive: { v1: "STRING", v2: { type: "string", validation: { format: "uuid" } } }
+            });
+        }
+        expect(resolvedTypeOf("EffectiveDate")).toMatchObject({ type: "primitive", primitive: { v1: "STRING" } });
+    });
+
     it("should not produce an alias cycle for a $ref cycle between component schemas", async () => {
         const ir = await getIRForFixture("ref-alias-chain");
 

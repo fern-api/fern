@@ -116,15 +116,14 @@
           "type": "named"
         },
         "resolvedType": {
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "primitive": {
+            "v1": "STRING",
+            "v2": {
+              "validation": {},
+              "type": "string"
+            }
           },
-          "name": "DeprecatedParam",
-          "typeId": "DeprecatedParam",
-          "inline": false,
-          "displayName": "DeprecatedParam",
-          "type": "named"
+          "type": "primitive"
         },
         "type": "alias"
       },

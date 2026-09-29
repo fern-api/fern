@@ -1,5 +1,6 @@
 import {
     anyOfIsPresenceConstraint,
+    assertNever,
     oneOfIsPresenceConstraint,
     requiredByPresenceConstraint
 } from "@fern-api/core-utils";
@@ -194,8 +195,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 typeDeclaration: this.createTypeDeclaration({
                     shape: FernIr.Type.alias({
                         aliasOf: response.reference,
-                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                        resolvedType: response.reference as any
+                        resolvedType:
+                            this.resolveReferenceAliasType(reference) ?? FernIr.ResolvedTypeReference.unknown()
                     }),
                     referencedTypes
                 }),
@@ -204,6 +205,44 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             },
             inlinedTypes: response.inlinedTypes ?? {}
         };
+    }
+
+    private resolveReferenceAliasType(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): FernIr.ResolvedTypeReference | undefined {
+        const typeId = this.context.getTypeIdFromSchemaReference(reference);
+        const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+            reference,
+            skipErrorCollector: true
+        });
+        if (typeId == null || !resolved.resolved) {
+            return undefined;
+        }
+        const target = new SchemaConverter({
+            context: this.context,
+            breadcrumbs: reference.$ref.replace(/^#\//, "").split("/"),
+            schema: resolved.value,
+            id: typeId,
+            visitedRefs: new Set([...this.visitedRefs, `#/components/schemas/${this.id}`])
+        }).convert();
+        if (target == null) {
+            return undefined;
+        }
+        const { name, shape } = target.convertedSchema.typeDeclaration;
+        switch (shape.type) {
+            case "alias":
+                return shape.resolvedType;
+            case "enum":
+                return FernIr.ResolvedTypeReference.named({ name, shape: FernIr.ShapeType.Enum });
+            case "object":
+                return FernIr.ResolvedTypeReference.named({ name, shape: FernIr.ShapeType.Object });
+            case "union":
+                return FernIr.ResolvedTypeReference.named({ name, shape: FernIr.ShapeType.Union });
+            case "undiscriminatedUnion":
+                return FernIr.ResolvedTypeReference.named({ name, shape: FernIr.ShapeType.UndiscriminatedUnion });
+            default:
+                assertNever(shape);
+        }
     }
 
     private isReferenceAliasCycle(reference: OpenAPIV3_1.ReferenceObject): boolean {
