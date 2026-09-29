@@ -137,6 +137,60 @@ describe("maybeBundleMdxComponent", () => {
         }
     }, 120_000);
 
+    it("bundles relative imports inside packages and routes CommonJS requires of renderer-provided modules through imports", async () => {
+        const { path: projectDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
+        try {
+            const barrelDir = path.join(projectDir, "node_modules", "fake-barrel-lib");
+            await mkdir(path.join(barrelDir, "dist", "Button"), { recursive: true });
+            await writeFile(
+                path.join(barrelDir, "package.json"),
+                JSON.stringify({ name: "fake-barrel-lib", version: "1.0.0", type: "module", module: "./dist/index.js" })
+            );
+            await writeFile(path.join(barrelDir, "dist", "index.js"), `export * from "./Button/index.js";`);
+            await writeFile(
+                path.join(barrelDir, "dist", "Button", "index.js"),
+                `import { useMemoCache } from "fake-cjs-runtime";\nexport function Button() { return "MARKER_FROM_BARREL " + useMemoCache(); }`
+            );
+
+            const cjsDir = path.join(projectDir, "node_modules", "fake-cjs-runtime");
+            await mkdir(cjsDir, { recursive: true });
+            await writeFile(
+                path.join(cjsDir, "package.json"),
+                JSON.stringify({ name: "fake-cjs-runtime", version: "1.0.0", main: "index.js" })
+            );
+            await writeFile(
+                path.join(cjsDir, "index.js"),
+                `const React = require("react");\nexports.useMemoCache = () => "MARKER_FROM_CJS " + typeof React.useMemo;`
+            );
+
+            const componentsDir = path.join(projectDir, "components");
+            await mkdir(componentsDir, { recursive: true });
+            const componentPath = path.join(componentsDir, "Widget.tsx");
+            const contents = [
+                `import { Button } from "fake-barrel-lib";`,
+                `import { LOCAL_CONSTANT } from "./constants";`,
+                `export const Widget = () => <div>{Button()} {LOCAL_CONSTANT}</div>;`
+            ].join("\n");
+            await writeFile(componentPath, contents);
+
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath: AbsoluteFilePath.of(componentPath),
+                contents,
+                context
+            });
+
+            expect(bundled).toBeDefined();
+            expect(bundled).toContain("MARKER_FROM_BARREL");
+            expect(bundled).toContain("MARKER_FROM_CJS");
+            expect(bundled).not.toMatch(/from\s+["'][^"']*node_modules/);
+            expect(bundled).not.toMatch(/require\(\s*["']react["']\s*\)/);
+            expect(bundled).toMatch(/from\s+["']react["']/);
+            expect(bundled).toContain("./constants");
+        } finally {
+            await cleanup();
+        }
+    }, 120_000);
+
     it("reuses a cached bundle instead of running rolldown again", async () => {
         const { path: projectDir, cleanup: cleanupProject } = await tmp.dir({ unsafeCleanup: true });
         const { path: cacheDir, cleanup: cleanupCache } = await tmp.dir({ unsafeCleanup: true });

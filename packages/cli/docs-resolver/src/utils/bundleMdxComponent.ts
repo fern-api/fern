@@ -34,6 +34,12 @@ const BUNDLE_CACHE_DIR_ENV_VAR = "FERN_MDX_BUNDLE_CACHE_DIR";
 const ROLLDOWN_VERSION = "1.1.4";
 
 /**
+ * Bumped whenever the generated rolldown config changes the bundle output, so
+ * bundles cached by an older config are not reused.
+ */
+const BUNDLE_CONFIG_VERSION = "2";
+
+/**
  * Matches the specifier of static imports/re-exports, dynamic imports, and requires.
  */
 const IMPORT_SPECIFIER_REGEX =
@@ -97,7 +103,13 @@ export function getBundleCacheDir(): string | undefined {
  * (and the rolldown version producing it) is unchanged.
  */
 function getBundleCacheFilePath(cacheDir: string, contents: string): string {
-    const hash = createHash("sha256").update(ROLLDOWN_VERSION).update("\u0000").update(contents).digest("hex");
+    const hash = createHash("sha256")
+        .update(ROLLDOWN_VERSION)
+        .update("\u0000")
+        .update(BUNDLE_CONFIG_VERSION)
+        .update("\u0000")
+        .update(contents)
+        .digest("hex");
     return path.join(cacheDir, `${hash}.js`);
 }
 
@@ -203,34 +215,74 @@ function buildRolldownConfig({
     absoluteFilePath: AbsoluteFilePath;
     outputFilePath: string;
 }): string {
-    return `const RENDERER_PROVIDED_MODULES = ${JSON.stringify(RENDERER_PROVIDED_MODULES)};
+    return `import path from "node:path";
+
+const INPUT = ${JSON.stringify(absoluteFilePath)};
+const RENDERER_PROVIDED_MODULES = ${JSON.stringify(RENDERER_PROVIDED_MODULES)};
 const NODE_BUILTIN_MODULES = ${JSON.stringify(builtinModules)};
+const RENDERER_PROVIDED_REQUIRE_PREFIX = "\\0renderer-provided-require:";
 
 function getModuleName(specifier) {
     const parts = specifier.split("/");
     return specifier.startsWith("@") ? parts.slice(0, 2).join("/") : (parts[0] ?? specifier);
 }
 
+function isRendererProvidedModule(specifier) {
+    return RENDERER_PROVIDED_MODULES.includes(getModuleName(specifier));
+}
+
+function isEntry(importer) {
+    return importer != null && path.resolve(importer) === path.resolve(INPUT);
+}
+
 export default {
-    input: ${JSON.stringify(absoluteFilePath)},
+    input: INPUT,
     platform: "browser",
     logLevel: "silent",
     // Don't auto-discover a tsconfig — a parent tsconfig.json (e.g. in a
     // monorepo) may extend configs that aren't installed in the docs project.
     tsconfig: false,
-    // Relative imports resolve against the other uploaded component files in
-    // the docs renderer, and renderer-provided modules (and their subpaths,
-    // e.g. react/jsx-runtime) are supplied by the renderer itself. Node
-    // builtins can't be bundled for the browser and are left as-is.
-    external: (id) =>
-        id.startsWith(".") ||
-        RENDERER_PROVIDED_MODULES.includes(getModuleName(id)) ||
+    plugins: [
+        {
+            // Renderer-provided modules (and their subpaths, e.g.
+            // react/jsx-runtime) are supplied by the renderer itself. An ESM
+            // bundle can only reach an external through an import statement, so
+            // require() calls from bundled CommonJS dependencies are routed
+            // through a virtual ESM module that re-exports the external.
+            name: "fern-renderer-provided-modules",
+            resolveId: {
+                order: "pre",
+                handler(source, _importer, extraOptions) {
+                    if (!isRendererProvidedModule(source)) {
+                        return null;
+                    }
+                    if (extraOptions.kind === "require-call") {
+                        return { id: RENDERER_PROVIDED_REQUIRE_PREFIX + source };
+                    }
+                    return { id: source, external: true };
+                }
+            },
+            load(id) {
+                if (!id.startsWith(RENDERER_PROVIDED_REQUIRE_PREFIX)) {
+                    return null;
+                }
+                const source = JSON.stringify(id.slice(RENDERER_PROVIDED_REQUIRE_PREFIX.length));
+                return "export * from " + source + ";\\nimport * as mod from " + source + ";\\nexport default mod;\\n";
+            }
+        }
+    ],
+    // Relative imports in the component itself resolve against the other
+    // uploaded component files in the docs renderer. Relative imports inside
+    // bundled packages are bundled along with the package. Node builtins can't
+    // be bundled for the browser and are left as-is.
+    external: (id, importer) =>
+        (id.startsWith(".") && isEntry(importer)) ||
         NODE_BUILTIN_MODULES.includes(getModuleName(id)) ||
         id.startsWith("node:"),
     output: {
         file: ${JSON.stringify(outputFilePath)},
         format: "esm",
-        inlineDynamicImports: true,
+        codeSplitting: false,
         minify: false,
         sourcemap: false
     }
