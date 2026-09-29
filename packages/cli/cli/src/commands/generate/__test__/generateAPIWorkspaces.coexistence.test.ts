@@ -5,7 +5,7 @@ import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import type { fernConfigJson, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
@@ -121,6 +121,69 @@ describe("generateAPIWorkspaces coexistence", () => {
         const sdkCall = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
         expect(sdkCall?.sdkConfigV1?.sdkName).toBe("internal-payments");
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledTimes(2);
+    });
+
+    it("rejects an explicit SDK Config with a pre-cutover generator version", async () => {
+        const configPath = path.join(temporaryDirectory, "pre-cutover-sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                targets: [
+                    {
+                        language: "typescript",
+                        generatorVersion: "3.99.0",
+                        output: { delivery: "files" }
+                    }
+                ]
+            })
+        );
+
+        await expect(
+            runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                sdkConfigPath: configPath
+            })
+        ).rejects.toBeDefined();
+
+        expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(
+            "--sdk-config cannot be used with fernapi/fern-typescript-sdk 3.99.0 because SDK Config support starts at 4.0.0. Use 4.0.0 or later, or remove --sdk-config and configure the pre-cutover generator in generators.yml.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
+    });
+
+    it("does not validate a pre-cutover target excluded by --generator-index", async () => {
+        const configPath = path.join(temporaryDirectory, "mixed-sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                targets: [
+                    { language: "typescript", generatorVersion: "3.99.0", output: { delivery: "files" } },
+                    { language: "python", generatorVersion: "6.0.0", output: { delivery: "files" } }
+                ]
+            })
+        );
+
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: undefined,
+            generatorIndex: 1,
+            sdkConfigPath: configPath
+        });
+
+        expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
     });
 
     it("runs only legacy generation when --local is used without selectors", async () => {
@@ -282,6 +345,7 @@ async function runGenerate({
     targetNames,
     sdkConfigPath,
     generatorName,
+    generatorIndex,
     useLocalDocker = false
 }: {
     project: Project;
@@ -290,6 +354,7 @@ async function runGenerate({
     targetNames: string[] | undefined;
     sdkConfigPath?: string;
     generatorName?: string;
+    generatorIndex?: number;
     useLocalDocker?: boolean;
 }): Promise<void> {
     await generateAPIWorkspaces({
@@ -299,7 +364,7 @@ async function runGenerate({
         groupNames,
         targetNames,
         generatorName,
-        generatorIndex: undefined,
+        generatorIndex,
         shouldLogS3Url: false,
         keepDocker: false,
         useLocalDocker,
