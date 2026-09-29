@@ -6,6 +6,7 @@ import {
 import * as FernIr from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { collectNamedTypeIdsFromTypeReference } from "../../utils/ConvertProperties.js";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
 import { ExampleConverter } from "../ExampleConverter.js";
 import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
@@ -89,6 +90,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedFernTypeDeclaration;
         }
 
+        const maybeConvertedReferenceSchema = this.tryConvertReferenceSchema();
+        if (maybeConvertedReferenceSchema != null) {
+            return maybeConvertedReferenceSchema;
+        }
+
         const maybeConvertedEnumSchema = this.tryConvertEnumSchema();
         if (maybeConvertedEnumSchema != null) {
             return maybeConvertedEnumSchema;
@@ -159,6 +165,62 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             path: this.breadcrumbs
         });
         return undefined;
+    }
+
+    /**
+     * Converts a schema that is itself a `$ref` (e.g. `AgreementId: { $ref: ResourceId }`)
+     * into an alias of the referenced named type, so alias chains resolve instead of
+     * degrading to `unknown`. Sibling keys such as `description` stay on the alias.
+     */
+    private tryConvertReferenceSchema(): SchemaConverter.Output | undefined {
+        if (!this.context.isReferenceObject(this.schema)) {
+            return undefined;
+        }
+        const reference: OpenAPIV3_1.ReferenceObject = this.schema;
+        if (this.isReferenceAliasCycle(reference)) {
+            return undefined;
+        }
+        const response = this.context.convertReferenceToTypeReference({
+            reference,
+            breadcrumbs: this.breadcrumbs
+        });
+        if (!response.ok) {
+            return undefined;
+        }
+        const referencedTypes = new Set<string>();
+        collectNamedTypeIdsFromTypeReference(response.reference, referencedTypes);
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: FernIr.Type.alias({
+                        aliasOf: response.reference,
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                        resolvedType: response.reference as any
+                    }),
+                    referencedTypes
+                }),
+                audiences: this.audiences,
+                propertiesByAudience: {}
+            },
+            inlinedTypes: response.inlinedTypes ?? {}
+        };
+    }
+
+    private isReferenceAliasCycle(reference: OpenAPIV3_1.ReferenceObject): boolean {
+        const seenRefs = new Set<string>([...this.visitedRefs, `#/components/schemas/${this.id}`]);
+        let current: unknown = reference;
+        while (this.context.isReferenceObject(current)) {
+            if (seenRefs.has(current.$ref)) {
+                return true;
+            }
+            seenRefs.add(current.$ref);
+            const resolved = this.context.resolveReference<unknown>({ reference: current, skipErrorCollector: true });
+            if (!resolved.resolved) {
+                return false;
+            }
+            current = resolved.value;
+        }
+        return false;
     }
 
     private tryConvertEnumSchema(): SchemaConverter.Output | undefined {

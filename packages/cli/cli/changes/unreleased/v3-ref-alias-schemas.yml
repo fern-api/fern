@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve OpenAPI component schemas that are themselves a `$ref` to another schema (for example `AgreementId: { $ref: ResourceId }`, optionally with sibling `description`/`nullable`/extensions) as aliases of the referenced type, instead of `unknown`. API reference docs now render these properties and parameters with the underlying type (e.g. `string` with its format and pattern) rather than `any`.
+  type: fix
