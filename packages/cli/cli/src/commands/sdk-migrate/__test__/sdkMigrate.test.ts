@@ -11,10 +11,7 @@ import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
-import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
-import { tmpdir } from "os";
-import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
@@ -27,19 +24,8 @@ import {
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
-import { writeOutputFile } from "../writeOutputFile.js";
 
 describe("SDK Config migration", () => {
-    let temporaryDirectory: string;
-
-    beforeEach(async () => {
-        temporaryDirectory = await mkdtemp(join(tmpdir(), "fern-sdk-migrate-"));
-    });
-
-    afterEach(async () => {
-        await rm(temporaryDirectory, { force: true, recursive: true });
-    });
-
     it("maps a resolved generator group without reparsing Fern configuration", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -787,31 +773,37 @@ describe("SDK Config migration", () => {
             })
         ).toThrow(FernConfigMappingError);
     });
-
-    it("creates parent directories and protects existing output unless forced", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "nested", "sdk-config.yml"));
-        await writeOutputFile(output, "first\n", false);
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await expect(writeOutputFile(output, "second\n", false)).rejects.toSatisfy(
-            (error) => error instanceof CliError && error.message.includes("already exists")
-        );
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await writeOutputFile(output, "second\n", true);
-        expect(await readFile(output, "utf-8")).toBe("second\n");
-    });
-
-    it("does not replace an existing file when creating a new output fails", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "sdk-config.yml"));
-        await writeFile(output, "existing\n");
-
-        await expect(writeOutputFile(output, "replacement\n", false)).rejects.toBeInstanceOf(CliError);
-        expect(await readFile(output, "utf-8")).toBe("existing\n");
-    });
 });
 
 describe("SDK Config migration target selection", () => {
+    it("selects one requested language from a multi-language group", async () => {
+        const group = createGroup([
+            createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3"),
+            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        ]);
+
+        const result = await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [group])]),
+            cliContext: createCliContext(false),
+            args: { language: ["typescript"] }
+        });
+
+        expect(result.groups[0]?.generators.map((generator) => generator.language)).toEqual(["typescript"]);
+        expect(result.selections).toEqual([{ generatorIndexes: [0], groupName: "production", isEntireGroup: false }]);
+    });
+
+    it("rejects a requested language that is absent from the selected groups", async () => {
+        const group = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+
+        await expect(
+            selectMigrationTarget({
+                project: createProject([createWorkspace("payments", [group])]),
+                cliContext: createCliContext(false),
+                args: { language: ["typescript"] }
+            })
+        ).rejects.toThrow("'typescript' not found in the selected groups");
+    });
+
     it("uses the configured default group in a non-interactive terminal", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";

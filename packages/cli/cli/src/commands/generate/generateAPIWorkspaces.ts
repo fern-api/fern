@@ -1,3 +1,4 @@
+import path from "node:path";
 import { createOrganizationIfDoesNotExist, FernToken, getToken } from "@fern-api/auth";
 import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
@@ -51,6 +52,7 @@ interface PreparedSdkConfigGeneration extends WorkspaceGeneration {
 interface SdkConfigWorkspaceOwner {
     absoluteFilePath: AbsoluteFilePath;
     workspaceName: string | undefined;
+    getAbsoluteFilePaths?: () => AbsoluteFilePath[];
 }
 
 export async function generateAPIWorkspaces({
@@ -423,6 +425,7 @@ async function prepareSdkConfigGenerations({
                 createSdkConfigWorkspace({
                     sdkConfig: loaded.config,
                     absolutePathToConfig: loaded.absolutePath,
+                    sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
                     cliVersion: cliContext.environment.packageVersion,
                     workspaceName: candidate.owner?.workspaceName,
                     context
@@ -453,6 +456,39 @@ async function prepareSdkConfigGenerations({
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
     }
+}
+
+function resolveSourceRoot(
+    owner: SdkConfigWorkspaceOwner | undefined,
+    absolutePathToConfig: string
+): string | undefined {
+    if (owner?.getAbsoluteFilePaths == null) {
+        return undefined;
+    }
+    return owner
+        .getAbsoluteFilePaths()
+        .reduce<string>(
+            (boundary, absoluteFilePath) => commonAncestor(boundary, absoluteFilePath),
+            path.dirname(path.resolve(absolutePathToConfig))
+        );
+}
+
+function commonAncestor(candidateRoot: string, candidatePath: string): string {
+    const resolvedPath = path.resolve(candidatePath);
+    let root = path.resolve(candidateRoot);
+    while (!isWithin(root, resolvedPath)) {
+        const parent = path.dirname(root);
+        if (parent === root) {
+            return root;
+        }
+        root = parent;
+    }
+    return root;
+}
+
+function isWithin(directory: string, candidate: string): boolean {
+    const relativePath = path.relative(directory, candidate);
+    return relativePath === "" || (!relativePath.startsWith(`..${path.sep}`) && relativePath !== "..");
 }
 
 function validateUniqueLanguageOwnership({

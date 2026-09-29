@@ -11,7 +11,14 @@ import type { SdkMigrateArgs } from "./sdkMigrate.js";
 
 export interface MigrationTarget {
     groups: generatorsYml.GeneratorGroup[];
+    selections: MigrationGroupSelection[];
     workspace: AbstractAPIWorkspace<unknown>;
+}
+
+export interface MigrationGroupSelection {
+    generatorIndexes: number[];
+    groupName: string;
+    isEntireGroup: boolean;
 }
 
 export async function selectMigrationTarget({
@@ -21,7 +28,7 @@ export async function selectMigrationTarget({
 }: {
     project: Project;
     cliContext: CliContext;
-    args: Pick<SdkMigrateArgs, "api" | "group">;
+    args: Pick<SdkMigrateArgs, "api" | "group" | "language">;
 }): Promise<MigrationTarget> {
     const workspace = await selectWorkspace(project, cliContext, args.api);
     const configuration = workspace.generatorsConfiguration;
@@ -31,9 +38,65 @@ export async function selectMigrationTarget({
             code: CliError.Code.ConfigError
         });
     }
-    const groups = await selectGroups(configuration, cliContext, args.group);
+    const selectedGroups = await selectGroups(configuration, cliContext, args.group);
+    const { groups, selections } = selectLanguages(selectedGroups, args.language, cliContext);
     assertUniqueTargetLanguages(groups);
-    return { workspace, groups };
+    return { workspace, groups, selections };
+}
+
+function selectLanguages(
+    groups: generatorsYml.GeneratorGroup[],
+    requestedLanguages: string[] | undefined,
+    cliContext: CliContext
+): Pick<MigrationTarget, "groups" | "selections"> {
+    const languages = requestedLanguages == null ? undefined : [...new Set(requestedLanguages)];
+    const availableLanguages = new Set(groups.flatMap(targetLanguages));
+    const missingLanguages = languages?.filter((language) => !availableLanguages.has(language)) ?? [];
+    if (missingLanguages.length > 0) {
+        throw new CliError({
+            message: `SDK language${missingLanguages.length === 1 ? "" : "s"} ${missingLanguages.map((language) => `'${language}'`).join(", ")} not found in the selected groups. Available languages: ${[...availableLanguages].join(", ") || "none"}. The requested language may already be migrated.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+
+    const selections: MigrationGroupSelection[] = [];
+    const filteredGroups: generatorsYml.GeneratorGroup[] = [];
+    for (const group of groups) {
+        const generatorIndexes = group.generators.flatMap((generator, index) => {
+            const language = targetLanguage(generator);
+            if (language == null) {
+                if (languages == null) {
+                    cliContext.stderr.warn(
+                        `Skipping incompatible generator '${generator.name}' in group '${group.groupName}'.`
+                    );
+                }
+                return [];
+            }
+            return languages == null || languages.includes(language) ? [index] : [];
+        });
+        if (generatorIndexes.length === 0) {
+            continue;
+        }
+        filteredGroups.push({
+            ...group,
+            generators: generatorIndexes.flatMap((index) => {
+                const generator = group.generators[index];
+                return generator == null ? [] : [generator];
+            })
+        });
+        selections.push({
+            generatorIndexes,
+            groupName: group.groupName,
+            isEntireGroup: generatorIndexes.length === group.generators.length
+        });
+    }
+    if (filteredGroups.length === 0) {
+        throw new CliError({
+            message: "None of the selected groups contain compatible SDK generators.",
+            code: CliError.Code.ConfigError
+        });
+    }
+    return { groups: filteredGroups, selections };
 }
 
 async function selectWorkspace(
@@ -187,9 +250,13 @@ async function promptGroupSelection({
 
 function targetLanguages(group: generatorsYml.GeneratorGroup): string[] {
     return group.generators.flatMap((generator) => {
-        const language = generator.language ?? getFernSdkGenApiLanguage(generator.name);
+        const language = targetLanguage(generator);
         return language == null ? [] : [language];
     });
+}
+
+function targetLanguage(generator: generatorsYml.GeneratorInvocation): string | undefined {
+    return generator.language ?? getFernSdkGenApiLanguage(generator.name);
 }
 
 function targetLanguageLabel(group: generatorsYml.GeneratorGroup): string {

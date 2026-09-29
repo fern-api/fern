@@ -391,7 +391,7 @@ describe("resolveSdkConfigIr", () => {
             if (!resolved.success) {
                 expect(resolved.message).toContain("fernapi/fern-typescript-sdk@4.0.0");
                 expect(resolved.message).toContain("fern sdk migrate");
-                expect(resolved.message).toContain("generators.archived.yml");
+                expect(resolved.message).toContain("generators.legacy.yml");
             }
         });
     });

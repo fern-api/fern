@@ -8,9 +8,9 @@ import yaml from "js-yaml";
 /**
  * The migrated external configuration, written by `fern sdk migrate` beside `fern.config.json`.
  *
- * `generators.yml` is not replaced in place: the migration archives it as `generators.archived.yml`
- * and lands this file next to it, so a workspace mid-migration has both on disk and the presence of
- * this one is what selects the new configuration.
+ * `generators.yml` is not replaced in place: the migration renames it to the centrally configured
+ * legacy filename, comments migrated declarations for rollback, and lands this file next to it.
+ * A workspace mid-migration therefore has both active legacy generators and SDK Config targets.
  */
 export { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
 

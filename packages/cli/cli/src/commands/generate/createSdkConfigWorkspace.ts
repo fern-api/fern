@@ -24,17 +24,20 @@ export interface CreatedSdkConfigWorkspace {
 export async function createSdkConfigWorkspace({
     sdkConfig,
     absolutePathToConfig,
+    sourceRoot,
     cliVersion,
     workspaceName,
     context
 }: {
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
+    sourceRoot?: string;
     cliVersion: string;
     workspaceName?: string;
     context: TaskContext;
 }): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
+    const sourceDirectory = path.resolve(sourceRoot ?? configDirectory);
     const temporaryDirectories: string[] = [];
     const cleanup = async () => {
         await Promise.all(
@@ -44,7 +47,7 @@ export async function createSdkConfigWorkspace({
     try {
         const specs: Spec[] = [];
         for (const spec of sdkConfig.source.specs) {
-            specs.push(await createSpec({ spec, sdkConfig, configDirectory, context, temporaryDirectories }));
+            specs.push(await createSpec({ spec, sdkConfig, sourceDirectory, context, temporaryDirectories }));
         }
         const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(sdkConfig.targets);
         const group: generatorsYml.GeneratorGroup = {
@@ -156,13 +159,13 @@ function createGeneratorInvocation({
 async function createSpec({
     spec,
     sdkConfig,
-    configDirectory,
+    sourceDirectory,
     context,
     temporaryDirectories
 }: {
     spec: SdkConfigV1SourceSpec;
     sdkConfig: SdkConfigV1;
-    configDirectory: string;
+    sourceDirectory: string;
     context: TaskContext;
     temporaryDirectories: string[];
 }): Promise<Spec> {
@@ -173,8 +176,8 @@ async function createSpec({
             { code: CliError.Code.ConfigError }
         );
     }
-    const absoluteFilepath = await resolveSourcePath(spec, configDirectory, context, temporaryDirectories);
-    const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, configDirectory));
+    const absoluteFilepath = await resolveSourcePath(spec, sourceDirectory, context, temporaryDirectories);
+    const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, sourceDirectory));
     if (spec.type === "graphql") {
         return {
             type: "graphql",
@@ -191,7 +194,7 @@ async function createSpec({
         absoluteFilepath,
         absoluteFilepathToOverrides,
         absoluteFilepathToOverlays:
-            spec.overlays?.[0] == null ? undefined : resolveTransformPath(spec.overlays[0], configDirectory),
+            spec.overlays?.[0] == null ? undefined : resolveTransformPath(spec.overlays[0], sourceDirectory),
         namespace: spec.namespace,
         settings: getOpenAPISettings({
             overrides: {
@@ -211,12 +214,12 @@ async function createSpec({
 
 async function resolveSourcePath(
     spec: SdkConfigV1SourceSpec,
-    configDirectory: string,
+    sourceDirectory: string,
     context: TaskContext,
     temporaryDirectories: string[]
 ): Promise<AbsoluteFilePath> {
     if ("path" in spec) {
-        return AbsoluteFilePath.of(path.resolve(configDirectory, spec.path));
+        return AbsoluteFilePath.of(path.resolve(sourceDirectory, spec.path));
     }
     if (spec.type !== "openapi") {
         return context.failAndThrow(
@@ -244,8 +247,8 @@ async function resolveSourcePath(
     return AbsoluteFilePath.of(absolutePath);
 }
 
-function resolveTransformPath(value: string, configDirectory: string): AbsoluteFilePath {
-    return AbsoluteFilePath.of(path.resolve(configDirectory, value));
+function resolveTransformPath(value: string, sourceDirectory: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(path.resolve(sourceDirectory, value));
 }
 
 function sanitizeFilename(value: string): string {
