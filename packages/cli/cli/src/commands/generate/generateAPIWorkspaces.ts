@@ -7,7 +7,8 @@ import { Project } from "@fern-api/project-loader";
 import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
-    getFernSdkGenApiLanguage
+    getFernSdkGenApiLanguage,
+    selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -18,10 +19,11 @@ import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
-import { loadSdkConfigV1 } from "./loadSdkConfigV1.js";
+import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
@@ -388,6 +390,35 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            if (sdkConfigPath != null) {
+                const selectedTargetIndexes =
+                    targetNames != null
+                        ? new Set(loaded.config.targets.map((_, index) => index))
+                        : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
+                const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
+                for (const target of selectedTargets) {
+                    if (target.generatorVersion == null) {
+                        continue;
+                    }
+                    const generatorId = getSdkConfigGeneratorName(target.language);
+                    const language = generatorId == null ? undefined : getFernSdkGenApiLanguage(generatorId);
+                    if (generatorId == null || language == null) {
+                        continue;
+                    }
+                    const route = selectGeneratorConfigRoute({
+                        generatorId,
+                        language,
+                        requestedVersion: target.generatorVersion
+                    });
+                    if (route.configKind === "legacy-fern") {
+                        return cliContext.failAndThrow(
+                            `--sdk-config cannot be used with ${generatorId} ${target.generatorVersion} because SDK Config support starts at ${route.cutoverVersion}. Use ${route.cutoverVersion} or later, or remove --sdk-config and configure the pre-cutover generator in generators.yml.`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                }
+            }
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: loaded.config,
