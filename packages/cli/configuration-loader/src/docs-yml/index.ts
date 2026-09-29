@@ -10,3 +10,4 @@ export {
     loadRedirects,
     resolveRedirects
 } from "./resolveRedirects.js";
+export { isRemoteCssUrl } from "./resolveRemoteCss.js";

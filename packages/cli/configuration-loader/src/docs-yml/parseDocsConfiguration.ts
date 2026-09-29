@@ -15,6 +15,7 @@ import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
+import { isRemoteCssUrl, resolveRemoteCss } from "./resolveRemoteCss.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -375,6 +376,9 @@ async function convertCssConfig(
     return {
         inline: await Promise.all(
             cssFilePaths.map(async (cssFilePath) => {
+                if (isRemoteCssUrl(cssFilePath)) {
+                    return resolveRemoteCss(cssFilePath);
+                }
                 const content = await readFile(resolveFilepath(cssFilePath, absoluteFilepathToDocsConfig));
                 return content.toString();
             })

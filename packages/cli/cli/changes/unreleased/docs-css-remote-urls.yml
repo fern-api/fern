@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `css` in `docs.yml` now accepts `http(s)` URLs (e.g. a stylesheet hosted on a CDN) alongside local file paths.
+    Remote stylesheets are fetched at generation time and inlined; nested `@import`s are inlined and relative
+    `url(...)` references are rewritten to absolute URLs so fonts and images keep resolving against the CDN.
+  type: feat
