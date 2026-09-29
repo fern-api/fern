@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.140.1
+  changelogEntry:
+    - summary: |
+        Fix custom MDX components that import third-party packages failing to render with
+        `Could not resolve "../node_modules/..."`. Relative imports inside bundled packages
+        (e.g. barrel files like `export * from "./Button/index.js"`) are now bundled instead of
+        left external, and `require("react")` calls from bundled CommonJS dependencies no longer
+        throw `Dynamic require of "react" is not supported` in the docs renderer.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 5.140.0
   changelogEntry:
     - summary: |
