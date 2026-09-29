@@ -659,16 +659,20 @@ export class XmlObjectGenerator<Context extends BaseContext> {
 
     private getXmlProperties(context: Context): XmlProperty[] {
         const getTypeDeclaration = (name: FernIr.DeclaredTypeName) => context.type.getTypeDeclaration(name);
-        return [...this.shape.properties, ...(this.shape.extendedProperties ?? [])].map((irProperty) => {
+        const irProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+        const keyed = irProperties.map((irProperty) => ({ irProperty, key: this.getPropertyKey(irProperty) }));
+        const localNames = new Set(keyed.map(({ key }) => key).filter(isIdentifier));
+        return keyed.map(({ irProperty, key }) => {
             const typeNode = this.getTypeForObjectProperty(context, irProperty);
             const valueShape = getXmlValueShape(irProperty.valueType, getTypeDeclaration);
             const kind = getXmlPropertyKind(irProperty);
             const childTypes =
                 kind === "ELEMENT" ? getXmlChildObjectTypes(irProperty.valueType, getTypeDeclaration) : [];
-            const key = this.getPropertyKey(irProperty);
             return {
                 key,
-                localName: toIdentifier(key, context.case.camelUnsafe(irProperty.name)),
+                localName: isIdentifier(key)
+                    ? key
+                    : uniqueIdentifier(context.case.camelUnsafe(irProperty.name), localNames),
                 irProperty,
                 kind,
                 wireName: irProperty.xml?.name ?? getWireValue(irProperty.name),
@@ -699,16 +703,28 @@ function accessProperty(receiver: string, key: string): string {
     return propertyKey === key ? `${receiver}.${key}` : `${receiver}[${propertyKey}]`;
 }
 
-function toIdentifier(key: string, camelCased: string): string {
-    if (getPropertyKey(key) === key) {
-        return key;
+/**
+ * Whether `key` can be used as-is as a binding name. `getPropertyKey` leaves only valid, non-reserved
+ * identifiers unquoted (reserved words like `default` are quoted), so an unchanged key is a safe binding.
+ */
+function isIdentifier(key: string): boolean {
+    return getPropertyKey(key) === key;
+}
+
+/** Returns `name` (prefixed with `_` if reserved), suffixed with a number if already in `taken`, and adds it to `taken`. */
+function uniqueIdentifier(name: string, taken: Set<string>): string {
+    const base = isIdentifier(name) ? name : `_${name}`;
+    let candidate = base;
+    for (let i = 1; taken.has(candidate); i++) {
+        candidate = `${base}${i}`;
     }
-    return getPropertyKey(camelCased) === camelCased ? camelCased : `_${camelCased}`;
+    taken.add(candidate);
+    return candidate;
 }
 
 /** `key: value` in an object literal, using shorthand when possible. */
 function propertyAssignment(key: string, value: string): string {
-    return key === value ? key : `${getPropertyKey(key)}: ${value}`;
+    return key === value && isIdentifier(key) ? key : `${getPropertyKey(key)}: ${value}`;
 }
 
 function destructureProperty(property: XmlProperty): string {

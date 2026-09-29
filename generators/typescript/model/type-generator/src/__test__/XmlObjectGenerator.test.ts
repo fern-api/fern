@@ -277,7 +277,10 @@ const labelDeclaration = xmlObjectDeclaration(
         xmlProperty("text-align", STRING, { kind: "ATTRIBUTE" }),
         xmlProperty("default", optional(STRING), { kind: "ATTRIBUTE" }),
         xmlProperty("line-break", optional(list(createNamedTypeReference("Break"))), { kind: "ELEMENT" }),
-        xmlProperty("inner-text", optional(STRING), { kind: "TEXT" })
+        xmlProperty("inner-text", optional(STRING), { kind: "TEXT" }),
+        xmlProperty("fontSize", optional(STRING), { kind: "ATTRIBUTE" }),
+        xmlProperty("textAlign", STRING, { kind: "ATTRIBUTE" }),
+        xmlProperty("lineBreak", optional(list(createNamedTypeReference("Break"))), { kind: "ELEMENT" })
     ],
     { name: "label", namespace: undefined, prefix: undefined }
 );
@@ -292,7 +295,7 @@ function syntaxErrors(source: string): string[] {
 }
 
 describe("XmlObjectGenerator", () => {
-    it("uses bracket access and safe locals for property keys that are not identifiers", () => {
+    it("uses bracket access and unique safe locals for property keys that are not identifiers", () => {
         const output = generate(labelDeclaration, [breakDeclaration], false);
         expect(syntaxErrors(output)).toEqual([]);
         expect(output).toMatchSnapshot();

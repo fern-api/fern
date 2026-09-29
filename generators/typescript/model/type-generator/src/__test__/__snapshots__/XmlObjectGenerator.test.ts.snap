@@ -541,13 +541,16 @@ exports[`XmlObjectGenerator > leaves non-xml objects as interfaces 1`] = `
 "
 `;
 
-exports[`XmlObjectGenerator > uses bracket access and safe locals for property keys that are not identifiers 1`] = `
+exports[`XmlObjectGenerator > uses bracket access and unique safe locals for property keys that are not identifiers 1`] = `
 "export class Label implements core.xml.XmlSerializable {
     "font-size"?: string;
     "text-align": string;
     "default"?: string;
     "line-break"?: Break[];
     "inner-text"?: string;
+    fontSize?: string;
+    textAlign: string;
+    lineBreak?: Break[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
     /** Child elements not declared in the API definition. */
@@ -559,6 +562,9 @@ exports[`XmlObjectGenerator > uses bracket access and safe locals for property k
         this["default"] = fields["default"];
         this["line-break"] = fields["line-break"];
         this["inner-text"] = fields["inner-text"];
+        this.fontSize = fields.fontSize;
+        this.textAlign = fields.textAlign;
+        this.lineBreak = fields.lineBreak;
         this.additionalAttributes = fields.additionalAttributes ?? {};
         this.additionalChildren = fields.additionalChildren ?? [];
     }
@@ -576,13 +582,16 @@ exports[`XmlObjectGenerator > uses bracket access and safe locals for property k
             "default": core.xml.xmlScalar(core.xml.xmlAttribute(node, "default"), core.xml.xmlString, "label.default"),
             "line-break": core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
             "inner-text": core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "label.inner-text"),
-            additionalAttributes: core.xml.xmlExtraAttributes(node, ["font-size", "text-align", "default"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break"]),
+            fontSize: core.xml.xmlScalar(core.xml.xmlAttribute(node, "fontSize"), core.xml.xmlString, "label.fontSize"),
+            textAlign: core.xml.xmlRequired(core.xml.xmlScalar(core.xml.xmlAttribute(node, "textAlign"), core.xml.xmlString, "label.textAlign"), "label.textAlign"),
+            lineBreak: core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
+            additionalAttributes: core.xml.xmlExtraAttributes(node, ["font-size", "text-align", "default", "fontSize", "textAlign"]),
+            additionalChildren: core.xml.xmlUnknownChildren(node, ["break", "break"]),
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [{ name: "line-break", value: this["line-break"] }], additionalChildren: this.additionalChildren });
+        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, { name: "fontSize", value: this.fontSize }, { name: "textAlign", value: this.textAlign }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [{ name: "line-break", value: this["line-break"] }, { name: "lineBreak", value: this.lineBreak }], additionalChildren: this.additionalChildren });
     }
 
     toString(): string {
@@ -597,18 +606,21 @@ export namespace Label {
         "default"?: string;
         "line-break"?: Break[];
         "inner-text"?: string;
+        fontSize?: string;
+        textAlign: string;
+        lineBreak?: Break[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Label> {
         private readonly fields: Partial<Label.Fields>;
-        private readonly elements: { "line-break"?: (Break | core.xml.XmlBuilder<Break>)[] };
+        private readonly elements: { "line-break"?: (Break | core.xml.XmlBuilder<Break>)[]; lineBreak?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Label.Fields> = {}) {
-            const { "line-break": lineBreak, ...rest } = fields;
+            const { "line-break": lineBreak1, lineBreak, ...rest } = fields;
             this.fields = rest;
-            this.elements = { "line-break": lineBreak };
+            this.elements = { "line-break": lineBreak1, lineBreak };
         }
 
         /** Parses a \`<label>\` element into a builder. */
@@ -616,13 +628,13 @@ export namespace Label {
             return new Label.Builder(Label.fromXml(xml));
         }
 
-        "font-size"(fontSize: string | undefined): this {
-            this.fields["font-size"] = fontSize;
+        "font-size"(fontSize1: string | undefined): this {
+            this.fields["font-size"] = fontSize1;
             return this;
         }
 
-        "text-align"(textAlign: string): this {
-            this.fields["text-align"] = textAlign;
+        "text-align"(textAlign1: string): this {
+            this.fields["text-align"] = textAlign1;
             return this;
         }
 
@@ -631,13 +643,28 @@ export namespace Label {
             return this;
         }
 
-        "line-break"(lineBreak: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
-            this.elements["line-break"] = lineBreak;
+        "line-break"(lineBreak1: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.elements["line-break"] = lineBreak1;
             return this;
         }
 
         "inner-text"(innerText: string | undefined): this {
             this.fields["inner-text"] = innerText;
+            return this;
+        }
+
+        fontSize(fontSize: string | undefined): this {
+            this.fields.fontSize = fontSize;
+            return this;
+        }
+
+        textAlign(textAlign: string): this {
+            this.fields.textAlign = textAlign;
+            return this;
+        }
+
+        lineBreak(lineBreak: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.elements.lineBreak = lineBreak;
             return this;
         }
 
@@ -649,6 +676,17 @@ export namespace Label {
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements["line-break"] = [...(this.elements["line-break"] ?? []), builder];
+            return builder;
+        }
+
+        /**
+         * Adds a \`<break>\` child and returns its builder.
+         * @param fields initial \`<break>\` attributes and children
+         * @returns the \`Break.Builder\` appended to this element
+         */
+        addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
+            const builder = new Break.Builder(fields);
+            this.elements.lineBreak = [...(this.elements.lineBreak ?? []), builder];
             return builder;
         }
 
@@ -665,10 +703,12 @@ export namespace Label {
         }
 
         build(): Label {
-            const { "text-align": textAlign } = this.fields;
-            if (textAlign === undefined) { throw new Error("Label.text-align is required"); }
+            const { "text-align": textAlign1, textAlign } = this.fields;
+            if (textAlign1 === undefined) { throw new Error("Label.text-align is required"); }
 
-            return new Label({ ...this.fields, "text-align": textAlign, "line-break": core.xml.xmlBuildAll(this.elements["line-break"]) });
+            if (textAlign === undefined) { throw new Error("Label.textAlign is required"); }
+
+            return new Label({ ...this.fields, "text-align": textAlign1, textAlign, "line-break": core.xml.xmlBuildAll(this.elements["line-break"]), lineBreak: core.xml.xmlBuildAll(this.elements.lineBreak) });
         }
 
         toXml(): string {
