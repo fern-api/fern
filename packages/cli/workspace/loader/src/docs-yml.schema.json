@@ -4912,6 +4912,40 @@
       },
       "additionalProperties": false
     },
+    "docs.ExternalSitemapConfig": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Absolute URL of the external sitemap (`sitemap.xml` or sitemap index)."
+        },
+        "locale": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the\nsite's default language or one of its `translations`. Overrides per-URL language detection."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ExternalSitemap": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/docs.ExternalSitemapConfig"
+        }
+      ]
+    },
     "docs.ExperimentalConfig": {
       "type": "object",
       "properties": {
@@ -5022,14 +5056,14 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/docs.ExternalSitemap"
               }
             },
             {
               "type": "null"
             }
           ],
-          "description": "Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation."
+          "description": "Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead."
         }
       },
       "additionalProperties": false
