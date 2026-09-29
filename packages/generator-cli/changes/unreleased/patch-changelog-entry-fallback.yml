@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Auto-versioned PATCH bumps now get a `changelog.md` entry instead of a version-only
+    `## [x.y.z]` block. When the AI analysis returns an empty `changelog_entry` for a PATCH,
+    AutoVersionStep falls back to the PR description, version bump reason, or commit message
+    body, the same fallback MAJOR/MINOR bumps already use.
+  type: fix

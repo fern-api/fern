@@ -527,7 +527,7 @@ export class LocalTaskHandler {
 
             const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
-            // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
+            // undefined when the AI returns an empty entry (NO_CHANGE or a PATCH with no consumer-visible effect)
             const changelogEntry = finalChangelogEntry?.trim()
                 ? sanitizeChangelogEntry(finalChangelogEntry.trim())
                 : undefined;
