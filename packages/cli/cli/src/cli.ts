@@ -2899,7 +2899,7 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create one SDK Config v1 file from one or more compatible Fern SDK groups",
+        "Migrate legacy Fern SDK generator groups to SDK Config v1",
         (yargs) =>
             yargs
                 .option("group", {
@@ -2907,6 +2907,12 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     array: true,
                     description:
                         "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
+                })
+                .option("language", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "SDK language to migrate from the selected groups; repeat --language to migrate multiple languages, or omit to migrate every compatible language"
                 })
                 .option("api", {
                     type: "string",
@@ -2917,12 +2923,12 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     alias: "o",
                     nargs: 1,
                     description:
-                        'Path to write SDK Config v1 YAML; defaults to sdk-config.yml beside generators.yml, or use "-" for stdout'
+                        "SDK Config v1 path to create or merge; defaults to sdk-config.yml beside the legacy generators configuration"
                 })
-                .option("force", {
+                .option("dry-run", {
                     type: "boolean",
                     default: false,
-                    description: "Replace an existing output file"
+                    description: "Validate and display the proposed file operations without changing files"
                 })
                 .option("strict", {
                     type: "boolean",
@@ -2940,8 +2946,9 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext,
                 args: {
                     api: argv.api,
-                    force: argv.force,
+                    dryRun: argv.dryRun,
                     group: argv.group,
+                    language: argv.language,
                     output: argv.output,
                     strict: argv.strict
                 }

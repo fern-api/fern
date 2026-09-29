@@ -1,381 +1,223 @@
+import { access, cp, readFile, rename, unlink, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import path from "path";
 import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
+const CLI_ENV = { FERN_NO_VERSION_REDIRECTION: "true" };
 
 describe("fern sdk migrate", () => {
-    it("runs from the published CLI command tree and writes only YAML to stdout", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+    it("migrates one language, preserves rollback YAML, and leaves docs.yml unchanged", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
-        const originalGenerators = await readFile(generatorsPath, "utf-8");
-        const expectedSdkConfig = yaml.load(
-            await readFile(join(directory, RelativeFilePath.of("sdk-config.yml")), "utf-8")
-        );
-
-        const result = await runFernCli(["sdk", "migrate", "--api", "default", "-o", "-", "--log-level", "debug"], {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
-            signal,
-            stripFinalNewline: false
-        });
-
-        expect(result.stdout.endsWith("\n")).toBe(true);
-        expect(result.stdout.trimStart()).not.toMatch(/^\{/);
-        const sdkConfig = yaml.load(result.stdout);
-        expect(sdkConfig).toEqual(expectedSdkConfig);
-        expect(await readFile(generatorsPath, "utf-8")).toBe(originalGenerators);
-        await temporaryDirectory.cleanup();
-    });
-
-    it("writes sdk-config.yml without modifying generators.yml or changing unflagged generation", async ({
-        signal
-    }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        const output = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
         const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
-        const originalGenerators = await readFile(generators, "utf-8");
+        const legacy = join(directory, RelativeFilePath.of("fern/generators.legacy.yml"));
+        const sdkConfig = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
+        const docs = join(directory, RelativeFilePath.of("fern/docs.yml"));
+        const originalDocs = await readFile(docs, "utf8");
 
-        const migration = await runFernCli(["sdk", "migrate", "--api", "default"], {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
-            signal
-        });
+        const command = ["sdk", "migrate", "--api", "default", "--group", "production", "--language", "typescript"];
+        const result = await runFernCli(command, { cwd: directory, env: CLI_ENV, signal });
 
-        expect(yaml.load(await readFile(output, "utf-8"))).toMatchObject({
-            schemaVersion: "sdk-config/v1",
-            source: { specs: [{ path: "./openapi.yml" }] }
-        });
-        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
+        await expect(access(generators)).rejects.toMatchObject({ code: "ENOENT" });
+        const activeLegacy = yaml.load(await readFile(legacy, "utf8")) as {
+            groups: { production: { generators: Array<{ name: string; version: string }> } };
+        };
+        expect(activeLegacy.groups.production.generators).toEqual([
             {
-                navigation: [
-                    {
-                        api: "API reference",
-                        specs: [{ type: "openapi", path: "./openapi.yml" }]
-                    }
-                ]
+                name: "fernapi/fern-python-sdk",
+                version: "4.3.10",
+                config: {},
+                output: expect.any(Object)
             }
-        );
-        expect(await readFile(generators, "utf-8")).toBe(originalGenerators);
-        expect(migration.stderr).toContain(
-            "Next: review the migrated file, then pass its path to fern generate --sdk-config."
-        );
+        ]);
+        const legacyText = await readFile(legacy, "utf8");
+        expect(legacyText).toContain("# Migrated to ./sdk-config.yml.");
+        expect(legacyText).toContain("# version: 3.63.3");
+        expect(
+            (yaml.load(await readFile(sdkConfig, "utf8")) as { targets: Array<{ language: string }> }).targets
+        ).toMatchObject([{ language: "typescript" }]);
+        expect(await readFile(docs, "utf8")).toBe(originalDocs);
+        expect(result.stderr).toContain("Rollback instructions:");
 
-        const legacyGeneration = await runFernCli(
-            ["generate", "--api", "default", "--group", "missing", "--local", "--no-prompt"],
-            {
-                cwd: directory,
-                env: { FERN_NO_VERSION_REDIRECTION: "true" },
-                reject: false,
-                signal
-            }
-        );
-        expect(legacyGeneration.exitCode).not.toBe(0);
-        const generationOutput = `${legacyGeneration.stdout}\n${legacyGeneration.stderr}`;
-        expect(generationOutput).toContain("'missing' is not a valid group or alias");
-        expect(generationOutput).not.toContain("SDK Config");
+        const beforeRepeat = { legacy: await readFile(legacy, "utf8"), sdkConfig: await readFile(sdkConfig, "utf8") };
+        const repeated = await runFernCli(command, { cwd: directory, env: CLI_ENV, reject: false, signal });
+        expect(repeated.exitCode).not.toBe(0);
+        expect(await readFile(legacy, "utf8")).toBe(beforeRepeat.legacy);
+        expect(await readFile(sdkConfig, "utf8")).toBe(beforeRepeat.sdkConfig);
         await temporaryDirectory.cleanup();
     });
 
-    it("preserves AsyncAPI source types in sdk-config.yml and docs.yml", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+    it("merges a later language into the existing SDK Config", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
+        const common = ["sdk", "migrate", "--group", "production", "--language"];
         const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
-        const generators = await readFile(generatorsPath, "utf-8");
-        await writeFile(generatorsPath, generators.replace("- openapi: ./openapi.yml", "- asyncapi: ./asyncapi.yml"));
-
-        const result = await runFernCli(["sdk", "migrate", "--api", "default", "--output", "-"], {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
-            signal
-        });
-
-        expect(yaml.load(result.stdout)).toMatchObject({
-            source: { specs: [{ type: "asyncapi", path: "./fern/asyncapi.yml" }] }
-        });
-        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
-            {
-                navigation: [
-                    {
-                        api: "API reference",
-                        specs: [{ type: "asyncapi", path: "./asyncapi.yml" }]
-                    }
-                ]
-            }
+        const generators = await readFile(generatorsPath, "utf8");
+        await writeFile(
+            generatorsPath,
+            generators.replace(
+                "              config: {}\n              output:\n                  location: local-file-system\n                  path: ./generated/python",
+                "              config:\n                  client_class_name: ExampleSDK\n              output:\n                  location: local-file-system\n                  path: ./generated/python"
+            )
         );
+
+        await runFernCli([...common, "typescript"], { cwd: directory, env: CLI_ENV, signal });
+        await runFernCli([...common, "python"], { cwd: directory, env: CLI_ENV, signal });
+
+        const sdkConfig = yaml.load(
+            await readFile(join(directory, RelativeFilePath.of("fern/sdk-config.yml")), "utf8")
+        ) as {
+            generation: { naming: { clientName: string } };
+            targets: Array<{ language: string }>;
+        };
+        expect(sdkConfig.targets.map((target) => target.language)).toEqual(["typescript", "python"]);
+        expect(sdkConfig.generation.naming.clientName).toBe("ExampleSDK");
+        const legacy = await readFile(join(directory, RelativeFilePath.of("fern/generators.legacy.yml")), "utf8");
+        expect(legacy).toContain("# version: 3.63.3");
+        expect(legacy).toContain("# version: 4.3.10");
         await temporaryDirectory.cleanup();
     });
 
-    it("rejects an unknown API in a single unnamed workspace", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+    it("supports duplicate languages in separate SDK Config files", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
+        const internal = join(directory, RelativeFilePath.of("fern/configs/internal-sdk-config.yml"));
 
-        const result = await runFernCli(["sdk", "migrate", "--api", "typo", "--output", "-"], {
+        await runFernCli(["sdk", "migrate", "--group", "typescript-only", "--output", internal], {
             cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            env: CLI_ENV,
+            signal
+        });
+        await runFernCli(["sdk", "migrate", "--group", "npm"], {
+            cwd: directory,
+            env: CLI_ENV,
+            signal
+        });
+
+        const internalTargets = (yaml.load(await readFile(internal, "utf8")) as { targets: unknown[] }).targets;
+        const defaultTargets = (
+            yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/sdk-config.yml")), "utf8")) as {
+                targets: unknown[];
+            }
+        ).targets;
+        expect(internalTargets).toHaveLength(1);
+        expect(defaultTargets).toHaveLength(1);
+        await temporaryDirectory.cleanup();
+    });
+
+    it("dry-runs the complete migration without changing any file", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
+        const original = await readFile(generators, "utf8");
+
+        const result = await runFernCli(
+            ["sdk", "migrate", "--group", "production", "--language", "typescript", "--dry-run"],
+            { cwd: directory, env: CLI_ENV, signal }
+        );
+
+        expect(result.stderr).toContain("Dry run: no files were changed.");
+        expect(await readFile(generators, "utf8")).toBe(original);
+        await expect(access(join(directory, RelativeFilePath.of("fern/generators.legacy.yml")))).rejects.toMatchObject({
+            code: "ENOENT"
+        });
+        await expect(access(join(directory, RelativeFilePath.of("fern/sdk-config.yml")))).rejects.toMatchObject({
+            code: "ENOENT"
+        });
+        await temporaryDirectory.cleanup();
+    });
+
+    it("fails before writing when an existing SDK Config has incompatible root settings", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
+        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
+        const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
+        const sdkConfig = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
+        const originalGenerators = await readFile(generators, "utf8");
+        const incompatible = `schemaVersion: sdk-config/v1
+sdkName: another-api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+api:
+  audiences: []
+targets:
+  - language: java
+    output:
+      delivery: zip
+`;
+        await writeFile(sdkConfig, incompatible);
+
+        const result = await runFernCli(["sdk", "migrate", "--group", "typescript-only"], {
+            cwd: directory,
+            env: CLI_ENV,
             reject: false,
             signal
         });
 
         expect(result.exitCode).not.toBe(0);
-        expect(result.stderr).toContain("API 'typo' not found");
+        expect(await readFile(generators, "utf8")).toBe(originalGenerators);
+        expect(await readFile(sdkConfig, "utf8")).toBe(incompatible);
         await temporaryDirectory.cleanup();
     });
 
-    it("protects an existing file and supports force replacement", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+    it("preserves enough source YAML to restore the original legacy generator", async ({ signal }) => {
+        const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        const output = join(directory, RelativeFilePath.of("output/sdk-config.yml"));
-        const command = ["sdk", "migrate", "--output", output];
-        const options = {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
-            signal
+        const generators = join(directory, RelativeFilePath.of("fern/generators.yml"));
+        const legacy = join(directory, RelativeFilePath.of("fern/generators.legacy.yml"));
+        const sdkConfig = join(directory, RelativeFilePath.of("fern/sdk-config.yml"));
+        const original = yaml.load(await readFile(generators, "utf8")) as {
+            groups: Record<string, unknown>;
         };
 
-        await runFernCli(command, options);
-        const first = await readFile(output, "utf-8");
-        const rejected = await runFernCli(command, { ...options, reject: false });
-        expect(rejected.exitCode).not.toBe(0);
-        expect(await readFile(output, "utf-8")).toBe(first);
-
-        await runFernCli([...command, "--force"], options);
-        expect(yaml.load(await readFile(output, "utf-8"))).toMatchObject({
-            schemaVersion: "sdk-config/v1",
-            source: { specs: [{ path: "./fern/openapi.yml" }] }
-        });
-        await temporaryDirectory.cleanup();
-    });
-
-    it("maps credential-free registry publication in strict mode", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-
-        const result = await runFernCli(["sdk", "migrate", "--group", "npm", "--output", "-", "--strict"], {
+        await runFernCli(["sdk", "migrate", "--group", "typescript-only"], {
             cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            env: CLI_ENV,
             signal
         });
+        await writeFile(legacy, restoreCommentedGroup(await readFile(legacy, "utf8"), "typescript-only"));
+        await unlink(sdkConfig);
+        await rename(legacy, generators);
 
-        expect(yaml.load(result.stdout)).toMatchObject({
-            targets: [
-                {
-                    language: "typescript",
-                    package: { packageName: "@acme/sdk" },
-                    output: { delivery: "zip", publish: { registry: "npm" } }
-                }
-            ]
-        });
-        await temporaryDirectory.cleanup();
-    });
+        const restored = yaml.load(await readFile(generators, "utf8")) as {
+            groups: Record<string, unknown>;
+        };
+        expect(restored.groups["typescript-only"]).toEqual(original.groups["typescript-only"]);
 
-    it("consolidates repeated compatible groups into one SDK Config", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-
-        const result = await runFernCli(
-            ["sdk", "migrate", "--group", "typescript-only", "--group", "python-only", "--output", "-"],
-            {
-                cwd: directory,
-                env: { FERN_NO_VERSION_REDIRECTION: "true" },
-                signal
-            }
-        );
-
-        const targets = (yaml.load(result.stdout) as { targets: Array<Record<string, unknown>> }).targets;
-        expect(targets).toMatchObject([{ language: "typescript" }, { language: "python" }]);
-        expect(targets).toHaveLength(2);
-        expect(targets.every((target) => !("generatorVersion" in target))).toBe(true);
-        await temporaryDirectory.cleanup();
-    });
-
-    it.each([
-        "API-level",
-        "per-spec"
-    ])("resolves %s error response schema paths before docs migration", async (settingsLevel) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        const generatorsPath = join(directory, RelativeFilePath.of("fern/generators.yml"));
-        const generators = yaml.load(await readFile(generatorsPath, "utf-8")) as Record<string, unknown>;
-        const errorResponses = { "error-responses": { schema: "./problem.yml" } };
-        generators.api =
-            settingsLevel === "API-level"
-                ? { settings: errorResponses, specs: [{ openapi: "./openapi.yml" }] }
-                : { specs: [{ openapi: "./openapi.yml", settings: errorResponses }] };
-        await writeFile(generatorsPath, yaml.dump(generators));
-        await writeFile(
-            join(directory, RelativeFilePath.of("fern/problem.yml")),
-            "type: object\nproperties:\n  message:\n    type: string\n"
-        );
-
-        await runFernCli(["sdk", "migrate", "--group", "typescript-only", "--output", "-"], {
+        const validated = await runFernCli(["sdk", "migrate", "--group", "typescript-only", "--dry-run"], {
             cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" }
-        });
-
-        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
-            {
-                navigation: [
-                    {
-                        api: "API reference",
-                        specs: [
-                            {
-                                settings: { "error-responses": { schema: "./problem.yml" } }
-                            }
-                        ]
-                    }
-                ]
-            }
-        );
-        await temporaryDirectory.cleanup();
-    });
-
-    it("preserves portable settings and completes docs migration", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        await cp(
-            join(directory, RelativeFilePath.of("portable-settings-generators.yml")),
-            join(directory, RelativeFilePath.of("fern/generators.yml"))
-        );
-        const result = await runFernCli(
-            ["sdk", "migrate", "--group", "ts-sdk", "--group", "php-sdk", "--group", "python-sdk", "--output", "-"],
-            {
-                cwd: directory,
-                env: { FERN_NO_VERSION_REDIRECTION: "true" },
-                signal
-            }
-        );
-
-        expect(result.stderr).not.toContain("FERN_CONFIG_FIELD_UNSUPPORTED");
-        expect(result.stderr).not.toContain("FERN_DOCS_IMPORT_SETTINGS_UNSUPPORTED");
-        expect(yaml.load(result.stdout)).toMatchObject({
-            source: {
-                apiImportSettings: {
-                    ignoreTags: true,
-                    disambiguateRequestNames: false
-                }
-            },
-            targets: [
-                {
-                    language: "typescript",
-                    package: {
-                        description: "Example SDK for Node.js.",
-                        authors: [{ name: "Example SDKs", email: "sdk@example.com", url: "https://example.com" }]
-                    },
-                    generation: { httpClient: { name: "fetch" } },
-                    docs: {
-                        readme: { customSections: [{ title: "Node.js", content: "Run npm install." }] }
-                    }
-                },
-                {
-                    language: "php",
-                    package: {
-                        packageName: "acme/example-sdk",
-                        description: "Example SDK for PHP.",
-                        authors: [{ name: "Example SDKs", email: "sdk@example.com", url: "https://example.com" }],
-                        license: { type: "MIT" }
-                    },
-                    docs: {
-                        readme: { customSections: [{ title: "PHP", content: "Run composer require." }] }
-                    }
-                },
-                {
-                    language: "python",
-                    client: { responseValidation: false },
-                    generation: { additionalInitExports: [{ from: "types", imports: ["ApiError"] }] },
-                    docs: {
-                        readme: { customSections: [{ title: "Python", content: "Run pip install." }] }
-                    }
-                }
-            ]
-        });
-        expect(yaml.load(await readFile(join(directory, RelativeFilePath.of("fern/docs.yml")), "utf-8"))).toMatchObject(
-            {
-                navigation: [{ api: "API reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }]
-            }
-        );
-        await temporaryDirectory.cleanup();
-    });
-
-    it("rejects repeated groups with different audience schemas", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-
-        const result = await runFernCli(
-            ["sdk", "migrate", "--group", "typescript-only", "--group", "maven", "--output", "-"],
-            {
-                cwd: directory,
-                env: { FERN_NO_VERSION_REDIRECTION: "true" },
-                reject: false,
-                signal
-            }
-        );
-
-        expect(result.exitCode).not.toBe(0);
-        expect(result.stdout).toBe("");
-        expect(result.stderr).toContain("resolve to different API sources, schemas, import settings, or audiences");
-        await temporaryDirectory.cleanup();
-    });
-
-    it("normalizes Maven coordinates", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-
-        const result = await runFernCli(["sdk", "migrate", "--group", "maven", "--output", "-"], {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
+            env: CLI_ENV,
             signal
         });
-
-        expect(yaml.load(result.stdout)).toMatchObject({
-            targets: [
-                {
-                    language: "java",
-                    package: { artifactId: "sdk", groupId: "com.acme" },
-                    output: {
-                        delivery: "github",
-                        github: { repository: "acme/sdk", mode: "pull-request" },
-                        publish: { registry: "maven" }
-                    }
-                }
-            ]
-        });
+        expect(validated.exitCode).toBe(0);
         await temporaryDirectory.cleanup();
     });
+});
 
-    it("does not write output when strict mode encounters a diagnostic", async ({ signal }) => {
-        const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
-        const directory = AbsoluteFilePath.of(temporaryDirectory.path);
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-        const output = join(directory, RelativeFilePath.of("output/strict.yml"));
+async function createFixture(): Promise<tmp.DirectoryResult> {
+    const temporaryDirectory = await tmp.dir({ unsafeCleanup: true });
+    await cp(FIXTURES_DIR, temporaryDirectory.path, { recursive: true });
+    return temporaryDirectory;
+}
 
-        const result = await runFernCli(["sdk", "migrate", "--group", "warning", "--output", output, "--strict"], {
-            cwd: directory,
-            env: { FERN_NO_VERSION_REDIRECTION: "true" },
-            reject: false,
-            signal
-        });
-
-        expect(result.exitCode).not.toBe(0);
-        expect(result.stderr).toContain("[warning] [FERN_RESOLVED_FIELD_UNSUPPORTED]");
-        await expect(readFile(output, "utf-8")).rejects.toMatchObject({ code: "ENOENT" });
-        await temporaryDirectory.cleanup();
-    });
-}, 60_000);
+function restoreCommentedGroup(contents: string, groupName: string): string {
+    const lines = contents.split("\n");
+    const headerStart = lines.findIndex((line) => line.includes(`# Group '${groupName}' migrated to `));
+    if (headerStart < 0) {
+        throw new Error(`Migration comment for group '${groupName}' was not found.`);
+    }
+    const blockStart = headerStart + 4;
+    let blockEnd = blockStart;
+    while (blockEnd < lines.length && !/^ {4}[^#\s].*:/.test(lines[blockEnd] ?? "")) {
+        blockEnd++;
+    }
+    const restored = lines.slice(blockStart, blockEnd).map((line) => line.replace(/^(\s*)# ?/, "$1"));
+    lines.splice(headerStart, blockEnd - headerStart, ...restored);
+    return lines.join("\n");
+}

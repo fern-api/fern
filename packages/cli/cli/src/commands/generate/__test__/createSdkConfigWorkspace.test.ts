@@ -132,6 +132,45 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    it("resolves migrated source paths from their shared project root", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        const configDirectory = path.join(directory, "build_configs", "fern", "airweave", "fern");
+        const specPath = path.join(directory, "specs", "airweave", "openapi.yml");
+        const overridesPath = path.join(configDirectory, "definition", "overrides.yml");
+        await mkdir(path.dirname(specPath), { recursive: true });
+        await mkdir(path.dirname(overridesPath), { recursive: true });
+        await writeFile(specPath, "openapi: 3.0.0\ninfo:\n  title: Airweave\n  version: 1.0.0\npaths: {}\n");
+        await writeFile(overridesPath, "{}\n");
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "airweave",
+                source: {
+                    specs: [
+                        {
+                            id: "airweave",
+                            type: "openapi",
+                            path: "./specs/airweave/openapi.yml",
+                            overrides: ["./build_configs/fern/airweave/fern/definition/overrides.yml"]
+                        }
+                    ]
+                },
+                targets: [{ language: "typescript", output: { delivery: "files" } }]
+            }),
+            absolutePathToConfig: path.join(configDirectory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            absoluteFilepath: specPath,
+            absoluteFilepathToOverrides: [overridesPath]
+        });
+        await cleanup();
+    });
+
     it("preserves an explicitly pinned generator version without resolving latest", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
