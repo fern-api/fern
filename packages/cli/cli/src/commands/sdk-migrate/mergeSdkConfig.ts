@@ -1,7 +1,7 @@
 import { isDeepStrictEqual } from "node:util";
 import { CliError } from "@fern-api/task-context";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
-import YAML, { type Document, isSeq } from "yaml";
+import YAML, { isSeq } from "yaml";
 
 import type { MappingResult } from "./mapFernGroupToSdkConfig.js";
 
@@ -40,7 +40,7 @@ export function mergeSdkConfig({
             `Cannot merge into ${outputPath}: the following shared settings differ from the selected legacy generators: ${rootConflicts.join(", ")}.`
         );
     }
-    addMissingRootSettings(document, existingRoot, migratedRoot);
+    const migratedTargets = scopeMissingRootSettings(existingRoot, migratedRoot, mapped.sdkConfig.targets);
 
     const duplicatedExistingLanguages = duplicateValues(existing.targets.map((target) => target.language));
     if (duplicatedExistingLanguages.length > 0) {
@@ -62,7 +62,7 @@ export function mergeSdkConfig({
     if (!isSeq(targets)) {
         throw configError(`Existing SDK Config at ${outputPath} must contain a targets list.`);
     }
-    for (const target of mapped.sdkConfig.targets) {
+    for (const target of migratedTargets) {
         targets.add(target);
     }
     try {
@@ -90,7 +90,8 @@ function withoutTargets(config: ReturnType<typeof validateSdkConfigV1>): unknown
     return root;
 }
 
-const STRICT_ROOT_KEYS = new Set(["api", "replay", "schemaVersion", "sdkName", "source"]);
+const STRICT_ROOT_KEYS = new Set(["api", "apiVersion", "replay", "schemaVersion", "sdkName", "sdkVersion", "source"]);
+const TARGET_SCOPED_ROOT_KEYS = ["client", "docs", "generation", "output", "package"] as const;
 
 function findRootConflicts(existing: unknown, migrated: unknown): string[] {
     if (!isRecord(existing) || !isRecord(migrated)) {
@@ -128,28 +129,50 @@ function collectConflicts(
     conflicts.push(path.join("."));
 }
 
-function addMissingRootSettings(document: Document, existing: unknown, migrated: unknown): void {
+function scopeMissingRootSettings<Target extends Record<string, unknown>>(
+    existing: unknown,
+    migrated: unknown,
+    targets: Target[]
+): Target[] {
     if (!isRecord(existing) || !isRecord(migrated)) {
-        return;
+        return targets;
     }
-    addMissingValues(document, existing, migrated, []);
+    return targets.map((target) => {
+        const scopedTarget: Record<string, unknown> = { ...target };
+        for (const key of TARGET_SCOPED_ROOT_KEYS) {
+            const migratedValue = migrated[key];
+            if (!hasMissingValue(existing[key], migratedValue)) {
+                continue;
+            }
+            const effectiveRootValue = mergeValues(existing[key], migratedValue);
+            scopedTarget[key] = mergeValues(effectiveRootValue, scopedTarget[key]);
+        }
+        return scopedTarget as Target;
+    });
 }
 
-function addMissingValues(
-    document: Document,
-    existing: Record<string, unknown>,
-    migrated: Record<string, unknown>,
-    path: string[]
-): void {
-    for (const [key, migratedValue] of Object.entries(migrated)) {
-        const existingValue = existing[key];
-        const valuePath = [...path, key];
-        if (existingValue === undefined) {
-            document.setIn(valuePath, migratedValue);
-        } else if (isRecord(existingValue) && isRecord(migratedValue)) {
-            addMissingValues(document, existingValue, migratedValue, valuePath);
-        }
+function hasMissingValue(existing: unknown, migrated: unknown): boolean {
+    if (migrated === undefined) {
+        return false;
     }
+    if (existing === undefined) {
+        return true;
+    }
+    if (!isRecord(existing) || !isRecord(migrated)) {
+        return false;
+    }
+    return Object.entries(migrated).some(([key, value]) => hasMissingValue(existing[key], value));
+}
+
+function mergeValues(base: unknown, override: unknown): unknown {
+    if (!isRecord(base) || !isRecord(override)) {
+        return override ?? base;
+    }
+    const merged: Record<string, unknown> = { ...base };
+    for (const [key, value] of Object.entries(override)) {
+        merged[key] = mergeValues(base[key], value);
+    }
+    return merged;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

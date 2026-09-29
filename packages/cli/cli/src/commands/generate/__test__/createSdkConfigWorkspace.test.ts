@@ -138,10 +138,24 @@ describe("createSdkConfigWorkspace", () => {
         const configDirectory = path.join(directory, "build_configs", "fern", "airweave", "fern");
         const specPath = path.join(directory, "specs", "airweave", "openapi.yml");
         const overridesPath = path.join(configDirectory, "definition", "overrides.yml");
+        const duplicateSpecPath = path.join(configDirectory, "specs", "airweave", "openapi.yml");
+        const duplicateOverridesPath = path.join(
+            configDirectory,
+            "build_configs",
+            "fern",
+            "airweave",
+            "fern",
+            "definition",
+            "overrides.yml"
+        );
         await mkdir(path.dirname(specPath), { recursive: true });
         await mkdir(path.dirname(overridesPath), { recursive: true });
+        await mkdir(path.dirname(duplicateSpecPath), { recursive: true });
+        await mkdir(path.dirname(duplicateOverridesPath), { recursive: true });
         await writeFile(specPath, "openapi: 3.0.0\ninfo:\n  title: Airweave\n  version: 1.0.0\npaths: {}\n");
         await writeFile(overridesPath, "{}\n");
+        await writeFile(duplicateSpecPath, "openapi: 3.0.0\ninfo:\n  title: Wrong API\n  version: 1.0.0\npaths: {}\n");
+        await writeFile(duplicateOverridesPath, "wrong: true\n");
 
         const { workspace, cleanup } = await createSdkConfigWorkspace({
             sdkConfig: parseSdkConfigV1({
@@ -160,6 +174,7 @@ describe("createSdkConfigWorkspace", () => {
                 targets: [{ language: "typescript", output: { delivery: "files" } }]
             }),
             absolutePathToConfig: path.join(configDirectory, "sdk-config.yml"),
+            sourceRoot: directory,
             cliVersion: "0.0.0",
             context: createMockTaskContext()
         });
@@ -167,6 +182,38 @@ describe("createSdkConfigWorkspace", () => {
         expect(workspace.allSpecs[0]).toMatchObject({
             absoluteFilepath: specPath,
             absoluteFilepathToOverrides: [overridesPath]
+        });
+        await cleanup();
+    });
+
+    it("keeps missing sources anchored to the owning project source root", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        const projectDirectory = path.join(directory, "project");
+        const configDirectory = path.join(projectDirectory, "fern");
+        const coincidentalSpecPath = path.join(directory, "specs", "openapi.yml");
+        await mkdir(path.dirname(coincidentalSpecPath), { recursive: true });
+        await mkdir(configDirectory, { recursive: true });
+        await writeFile(
+            coincidentalSpecPath,
+            "openapi: 3.0.0\ninfo:\n  title: Wrong API\n  version: 1.0.0\npaths: {}\n"
+        );
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./specs/openapi.yml" }] },
+                targets: [{ language: "typescript", output: { delivery: "files" } }]
+            }),
+            absolutePathToConfig: path.join(configDirectory, "sdk-config.yml"),
+            sourceRoot: projectDirectory,
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            absoluteFilepath: path.join(projectDirectory, "specs", "openapi.yml")
         });
         await cleanup();
     });

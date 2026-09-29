@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { access, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
@@ -127,7 +127,7 @@ targets:
         expect((YAML.parse(merged) as { targets: unknown[] }).targets).toHaveLength(2);
     });
 
-    it("adds compatible root settings contributed by a later language", () => {
+    it("scopes compatible settings contributed by a later language to its target", () => {
         const existing = YAML.stringify({
             ...root,
             generation: { naming: { smartCasing: false } },
@@ -147,8 +147,14 @@ targets:
         });
 
         expect(YAML.parse(merged)).toMatchObject({
-            generation: { naming: { clientName: "AirweaveSDK", smartCasing: false } },
-            targets: [{ language: "typescript" }, { language: "python" }]
+            generation: { naming: { smartCasing: false } },
+            targets: [
+                { language: "typescript" },
+                {
+                    language: "python",
+                    generation: { naming: { clientName: "AirweaveSDK", smartCasing: false } }
+                }
+            ]
         });
     });
 
@@ -207,6 +213,43 @@ describe("migration file transaction", () => {
         await expect(readFile(original, "utf8")).rejects.toMatchObject({ code: "ENOENT" });
         await expect(readFile(legacy, "utf8")).resolves.toBe("commented\n");
         await expect(readFile(sdkConfig, "utf8")).resolves.toBe("sdk config\n");
+        await rm(directory, { force: true, recursive: true });
+    });
+
+    it("removes output directories created before a failed commit", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-migration-files-"));
+        const nestedOutput = path.join(directory, "configs", "generated", "sdk-config.yml");
+        const blockingFile = path.join(directory, "blocking-file");
+        await writeFile(blockingFile, "unchanged\n");
+
+        await expect(
+            commitMigrationFiles({
+                files: [
+                    { contents: "sdk config\n", path: nestedOutput },
+                    { contents: "cannot be written\n", path: path.join(blockingFile, "sdk-config.yml") }
+                ],
+                remove: []
+            })
+        ).rejects.toBeDefined();
+
+        await expect(access(path.join(directory, "configs"))).rejects.toMatchObject({ code: "ENOENT" });
+        await expect(readFile(blockingFile, "utf8")).resolves.toBe("unchanged\n");
+        await rm(directory, { force: true, recursive: true });
+    });
+
+    it("removes a prepared temporary file when final preparation fails", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-migration-files-"));
+        const output = path.join(directory, "sdk-config.yml");
+
+        await expect(
+            commitMigrationFiles({
+                files: [{ contents: "sdk config\n", mode: -1, path: output }],
+                remove: []
+            })
+        ).rejects.toBeDefined();
+
+        await expect(access(output)).rejects.toMatchObject({ code: "ENOENT" });
+        await expect(readdir(directory)).resolves.toEqual([]);
         await rm(directory, { force: true, recursive: true });
     });
 });

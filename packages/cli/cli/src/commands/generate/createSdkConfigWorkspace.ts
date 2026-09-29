@@ -1,4 +1,4 @@
-import { access, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
@@ -24,18 +24,20 @@ export interface CreatedSdkConfigWorkspace {
 export async function createSdkConfigWorkspace({
     sdkConfig,
     absolutePathToConfig,
+    sourceRoot,
     cliVersion,
     workspaceName,
     context
 }: {
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
+    sourceRoot?: string;
     cliVersion: string;
     workspaceName?: string;
     context: TaskContext;
 }): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
-    const sourceDirectory = await resolveSourceDirectory(sdkConfig, configDirectory);
+    const sourceDirectory = path.resolve(sourceRoot ?? configDirectory);
     const temporaryDirectories: string[] = [];
     const cleanup = async () => {
         await Promise.all(
@@ -247,46 +249,6 @@ async function resolveSourcePath(
 
 function resolveTransformPath(value: string, sourceDirectory: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.resolve(sourceDirectory, value));
-}
-
-async function resolveSourceDirectory(sdkConfig: SdkConfigV1, configDirectory: string): Promise<string> {
-    // SDK Config paths are relative to the source archive root and cannot contain `..`. A migrated
-    // config may live below its legacy specs, so use the nearest ancestor that contains every
-    // declared local source and transform. Native configs beside their sources resolve immediately.
-    const localPaths = sdkConfig.source.specs.flatMap((spec) => [
-        ...(spec.overlays ?? []),
-        ...(spec.overrides ?? []),
-        ...("path" in spec ? [spec.path] : [])
-    ]);
-    if (localPaths.length === 0) {
-        return configDirectory;
-    }
-
-    let candidate = path.resolve(configDirectory);
-    while (true) {
-        if (await allPathsExist(candidate, localPaths)) {
-            return candidate;
-        }
-        const parent = path.dirname(candidate);
-        if (parent === candidate) {
-            return configDirectory;
-        }
-        candidate = parent;
-    }
-}
-
-async function allPathsExist(directory: string, relativePaths: string[]): Promise<boolean> {
-    const results = await Promise.all(
-        relativePaths.map(async (relativePath) => {
-            try {
-                await access(path.resolve(directory, relativePath));
-                return true;
-            } catch {
-                return false;
-            }
-        })
-    );
-    return results.every(Boolean);
 }
 
 function sanitizeFilename(value: string): string {

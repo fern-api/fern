@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { access, chmod, mkdir, open, rename, stat, unlink } from "node:fs/promises";
+import { access, chmod, mkdir, open, rename, rmdir, stat, unlink } from "node:fs/promises";
 import { dirname } from "node:path";
 import { CliError } from "@fern-api/task-context";
 
@@ -29,11 +29,13 @@ export async function commitMigrationFiles({
     const temporaryFiles = new Map<string, string>();
     const backups = new Map<string, string>();
     const published = new Set<string>();
+    const createdDirectories = new Set<string>();
     try {
         for (const file of files) {
-            await mkdir(dirname(file.path), { recursive: true });
+            await ensureDirectory(dirname(file.path), createdDirectories);
             const temporaryPath = `${file.path}.fern-migrate-${transactionId}.tmp`;
             const handle = await open(temporaryPath, "wx");
+            temporaryFiles.set(file.path, temporaryPath);
             try {
                 await handle.writeFile(file.contents, "utf8");
                 await handle.sync();
@@ -43,7 +45,6 @@ export async function commitMigrationFiles({
             if (file.mode != null) {
                 await chmod(temporaryPath, file.mode);
             }
-            temporaryFiles.set(file.path, temporaryPath);
         }
 
         for (const path of new Set([...files.map((file) => file.path), ...remove])) {
@@ -65,7 +66,7 @@ export async function commitMigrationFiles({
             published.add(file.path);
         }
     } catch (error) {
-        await rollback({ backups, published, temporaryFiles });
+        await rollback({ backups, published, temporaryFiles, createdDirectories });
         throw error;
     }
 
@@ -89,11 +90,13 @@ export async function fileMode(path: string): Promise<number | undefined> {
 async function rollback({
     backups,
     published,
-    temporaryFiles
+    temporaryFiles,
+    createdDirectories
 }: {
     backups: Map<string, string>;
     published: Set<string>;
     temporaryFiles: Map<string, string>;
+    createdDirectories: Set<string>;
 }): Promise<void> {
     const rollbackErrors: unknown[] = [];
     for (const path of published) {
@@ -121,8 +124,40 @@ async function rollback({
             }
         }
     }
+    for (const directory of [...createdDirectories].reverse()) {
+        try {
+            await rmdir(directory);
+        } catch (error) {
+            if (!isMissing(error)) {
+                rollbackErrors.push(error);
+            }
+        }
+    }
     if (rollbackErrors.length > 0) {
         throw new AggregateError(rollbackErrors, "SDK migration failed and could not restore every original file.");
+    }
+}
+
+async function ensureDirectory(directory: string, createdDirectories: Set<string>): Promise<void> {
+    const missingDirectories: string[] = [];
+    let candidate = directory;
+    while (!(await exists(candidate))) {
+        missingDirectories.push(candidate);
+        const parent = dirname(candidate);
+        if (parent === candidate) {
+            break;
+        }
+        candidate = parent;
+    }
+    for (const missingDirectory of missingDirectories.reverse()) {
+        try {
+            await mkdir(missingDirectory);
+            createdDirectories.add(missingDirectory);
+        } catch (error) {
+            if (!isAlreadyExists(error)) {
+                throw error;
+            }
+        }
     }
 }
 
@@ -140,6 +175,10 @@ async function exists(path: string): Promise<boolean> {
 
 function isMissing(error: unknown): boolean {
     return typeof error === "object" && error != null && "code" in error && error.code === "ENOENT";
+}
+
+function isAlreadyExists(error: unknown): boolean {
+    return typeof error === "object" && error != null && "code" in error && error.code === "EEXIST";
 }
 
 function configError(message: string): CliError {
