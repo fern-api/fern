@@ -157,7 +157,7 @@ export async function visitDocsConfigFileYamlAst({
                 await Promise.all(
                     css.map((stylesheet, idx) =>
                         isRemoteCssUrl(stylesheet)
-                            ? undefined
+                            ? Promise.resolve()
                             : visitFilepath({
                                   absoluteFilepathToConfiguration,
                                   rawUnresolvedFilepath: stylesheet,

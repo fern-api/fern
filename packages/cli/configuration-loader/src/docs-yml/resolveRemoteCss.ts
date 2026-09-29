@@ -1,6 +1,7 @@
 import { CliError } from "@fern-api/task-context";
 
 const MAX_IMPORT_DEPTH = 10;
+const FETCH_TIMEOUT_MS = 30_000;
 
 const IMPORT_REGEX = /@import\s+(?:url\(\s*(['"]?)([^'")]+)\1\s*\)|(['"])([^'"]+)\3)\s*([^;]*);/g;
 const URL_REGEX = /url\(\s*(['"]?)([^'")]+)\1\s*\)/g;
@@ -26,37 +27,41 @@ async function resolveRemoteCssRecursive(url: string, visited: Set<string>, dept
     }
     visited.add(url);
 
-    const css = await fetchCss(url);
+    const css = absolutizeUrls(await fetchCss(url), url);
 
-    const imports: { statement: string; href: string; condition: string }[] = [];
+    let resolved = "";
+    let lastIndex = 0;
     for (const match of css.matchAll(IMPORT_REGEX)) {
         const href = match[2] ?? match[4];
         if (href == null) {
             continue;
         }
-        imports.push({
-            statement: match[0],
-            href: new URL(href.trim(), url).toString(),
-            condition: match[5]?.trim() ?? ""
+        const condition = match[5]?.trim() ?? "";
+        const absoluteHref = resolveUrl(href.trim(), url);
+        const replacement = /^(layer|supports)\b/i.test(condition)
+            ? `@import url("${absoluteHref}") ${condition};`
+            : wrapInMedia(await resolveRemoteCssRecursive(absoluteHref, visited, depth + 1), condition);
+        resolved += css.slice(lastIndex, match.index) + replacement;
+        lastIndex = match.index + match[0].length;
+    }
+    return resolved + css.slice(lastIndex);
+}
+
+function resolveUrl(href: string, baseUrl: string): string {
+    try {
+        return new URL(href, baseUrl).toString();
+    } catch {
+        throw new CliError({
+            message: `Invalid @import URL "${href}" in CSS from ${baseUrl}`,
+            code: CliError.Code.ConfigError
         });
     }
-
-    let resolved = css;
-    for (const { statement, href, condition } of imports) {
-        const canInline = condition === "" || !/^(layer|supports)\b/i.test(condition);
-        const replacement = canInline
-            ? wrapInMedia(await resolveRemoteCssRecursive(href, visited, depth + 1), condition)
-            : `@import url("${href}") ${condition};`;
-        resolved = resolved.replace(statement, () => replacement);
-    }
-
-    return absolutizeUrls(resolved, url);
 }
 
 async function fetchCss(url: string): Promise<string> {
     let response: Response;
     try {
-        response = await fetch(url);
+        response = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
     } catch (error) {
         throw new CliError({
             message: `Failed to fetch CSS from ${url}: ${error instanceof Error ? error.message : String(error)}`,

@@ -61,6 +61,22 @@ describe("resolveRemoteCss", () => {
         expect(css).toContain(".main { color: red; }");
     });
 
+    it("inlines every occurrence of a repeated @import and resolves nested urls against their own stylesheet", async () => {
+        mockFetch({
+            "https://cdn.example.com/main.css": '@import "other/base.css";\n.main {}\n@import "other/base.css";',
+            "https://cdn.example.com/other/base.css": ".base { background: url(bg.png); }"
+        });
+        const css = await resolveRemoteCss("https://cdn.example.com/main.css");
+        expect(css).not.toContain("@import");
+        expect(css).toContain(".base { background: url(https://cdn.example.com/other/bg.png); }");
+    });
+
+    it("keeps layer/supports-conditioned imports as absolute @imports", async () => {
+        mockFetch({ "https://cdn.example.com/main.css": '@import url("x.css") layer(base);' });
+        const css = await resolveRemoteCss("https://cdn.example.com/main.css");
+        expect(css).toBe('@import url("https://cdn.example.com/x.css") layer(base);');
+    });
+
     it("does not loop on circular imports", async () => {
         mockFetch({
             "https://cdn.example.com/a.css": '@import "b.css";\n.a {}',
