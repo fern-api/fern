@@ -506,9 +506,7 @@ export class GithubStep extends BaseStep {
     private async ensureChangelogFile(resolved: ResolvedPrFields): Promise<boolean> {
         const entry = resolved.changelogEntry?.trim() ?? "";
         const version = resolved.newVersion ?? resolved.previousVersion;
-        // A version-only entry (empty description) is only recorded for runs that produced a
-        // new version (e.g. an explicit `--version X.Y.Z`).
-        if (entry.length === 0 && resolved.newVersion == null) {
+        if (!shouldWriteChangelogBlock(resolved)) {
             return false;
         }
         const changelogPath = join(this.outputDir, "changelog.md");
@@ -578,6 +576,24 @@ export interface ResolvedPrFields {
     breakingChangesSummary: string | undefined;
     /** Why autoversion fell back to PATCH without an FAI analysis, if it did. */
     analysisWarning: string | undefined;
+    /** True when the new version was computed by AutoVersionStep rather than passed explicitly. */
+    isAutoVersioned: boolean;
+}
+
+/**
+ * A version-only `changelog.md` block (empty description) is only recorded for explicit
+ * `--version X.Y.Z` runs. An AUTO run with an empty entry means the analysis found no
+ * consumer-visible change, so no block is written.
+ *
+ * Exported for testing.
+ */
+export function shouldWriteChangelogBlock(
+    resolved: Pick<ResolvedPrFields, "changelogEntry" | "newVersion" | "isAutoVersioned">
+): boolean {
+    if ((resolved.changelogEntry?.trim() ?? "").length > 0) {
+        return true;
+    }
+    return resolved.newVersion != null && !resolved.isAutoVersioned;
 }
 
 /**
@@ -613,7 +629,8 @@ export function resolvePrFields(
         versionBump: config.versionBump ?? autoVersion?.versionBump,
         hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
         breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription,
-        analysisWarning: autoVersion?.analysisWarning
+        analysisWarning: autoVersion?.analysisWarning,
+        isAutoVersioned: config.newVersion == null && autoVersion?.version != null
     };
 }
 

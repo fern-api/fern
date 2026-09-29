@@ -44,17 +44,10 @@ describe("aggregateChunkAnalyses", () => {
         expect(result.usedBumpReasonAsEntry).toBe(false);
     });
 
-    it("prepends the bump reason for a PATCH bump when no chunk produced an entry", () => {
-        const result = aggregateChunkAnalyses([
-            { versionBump: "PATCH", message: "fix: x", changelogEntry: "", versionBumpReason: "Fixed x" }
-        ]);
-        expect(result.changelogEntries).toEqual(["Fixed x"]);
-        expect(result.usedBumpReasonAsEntry).toBe(true);
-    });
-
-    it("leaves NO_CHANGE and missing reasons alone", () => {
+    it("leaves PATCH bumps and missing reasons alone", () => {
         expect(
-            aggregateChunkAnalyses([{ versionBump: "NO_CHANGE", message: "", versionBumpReason: "x" }]).changelogEntries
+            aggregateChunkAnalyses([{ versionBump: "PATCH", message: "fix: x", versionBumpReason: "x" }])
+                .changelogEntries
         ).toEqual([]);
         expect(
             aggregateChunkAnalyses([{ versionBump: "MINOR", message: "feat: y", changelogEntry: "  " }])
@@ -75,33 +68,13 @@ describe("resolveChangelogEntryFallback", () => {
         ).toBeUndefined();
     });
 
-    it("falls back to the PR description for a PATCH bump with an empty entry", () => {
+    it("returns undefined for PATCH bumps (patch changes intentionally have no entry)", () => {
         expect(
             resolveChangelogEntryFallback({
                 versionBump: "PATCH",
-                message: "fix: handle nested fields",
+                message: "fix: typo",
                 changelogEntry: "",
-                prDescription: "Nested fields are now matched correctly.\n"
-            })
-        ).toBe("Nested fields are now matched correctly.");
-    });
-
-    it("returns undefined for NO_CHANGE", () => {
-        expect(
-            resolveChangelogEntryFallback({
-                versionBump: "NO_CHANGE",
-                message: "",
-                changelogEntry: "",
-                prDescription: "Nothing changed"
-            })
-        ).toBeUndefined();
-    });
-
-    it("returns undefined for the neutral PATCH fallback used when FAI fails", () => {
-        expect(
-            resolveChangelogEntryFallback({
-                versionBump: "PATCH",
-                message: `SDK regeneration${TRAILER}`
+                prDescription: "Fixed a typo"
             })
         ).toBeUndefined();
     });

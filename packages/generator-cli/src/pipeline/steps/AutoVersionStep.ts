@@ -933,7 +933,7 @@ export class AutoVersionStep extends BaseStep {
     }
 
     /**
-     * Version bumps should ship a changelog entry. FAI occasionally returns a
+     * MAJOR/MINOR bumps must ship a changelog entry. FAI occasionally returns a
      * bump with a populated `pr_description` / `version_bump_reason` but an empty
      * `changelog_entry`; reuse that text rather than writing a version-only block.
      */
@@ -1255,7 +1255,7 @@ interface AggregatedChunkAnalyses {
 
 /**
  * Picks the highest bump across chunks and collects every non-empty changelog entry.
- * If no chunk at the winning bump level produced an entry, the winning chunk's
+ * If no chunk at the winning (MAJOR/MINOR) level produced an entry, the winning chunk's
  * `versionBumpReason` is prepended so the changelog still describes the change that
  * drove the bump instead of only the lower-severity ones.
  */
@@ -1280,7 +1280,7 @@ export function aggregateChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): Aggregat
 
     const changelogEntries = entries.map((entry) => entry.text);
     const hasEntryAtBestBump = entries.some((entry) => entry.bump === bestBump);
-    const usedBumpReasonAsEntry = bestBump !== "NO_CHANGE" && !hasEntryAtBestBump && hasText(bestVersionBumpReason);
+    const usedBumpReasonAsEntry = bestBump !== "PATCH" && !hasEntryAtBestBump && hasText(bestVersionBumpReason);
     if (usedBumpReasonAsEntry && bestVersionBumpReason != null) {
         changelogEntries.unshift(bestVersionBumpReason.trim());
     }
@@ -1307,7 +1307,7 @@ interface ChangelogEntryFallback {
 }
 
 function resolveChangelogEntryFallbackWithSource(analysis: FAIAnalysis): ChangelogEntryFallback | undefined {
-    if (hasText(analysis.changelogEntry) || analysis.versionBump === "NO_CHANGE") {
+    if (hasText(analysis.changelogEntry) || analysis.versionBump === "PATCH") {
         return undefined;
     }
     const candidates: Array<[ChangelogEntryFallback["source"], string | undefined]> = [
@@ -1324,8 +1324,8 @@ function resolveChangelogEntryFallbackWithSource(analysis: FAIAnalysis): Changel
 }
 
 /**
- * Returns replacement changelog text for a MAJOR/MINOR/PATCH analysis whose `changelogEntry`
- * is empty, or `undefined` when no fallback applies (entry present, NO_CHANGE, or
+ * Returns replacement changelog text for a MAJOR/MINOR analysis whose `changelogEntry`
+ * is empty, or `undefined` when no fallback applies (entry present, PATCH bump, or
  * nothing usable in the other fields).
  */
 export function resolveChangelogEntryFallback(analysis: FAIAnalysis): string | undefined {
