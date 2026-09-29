@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.140.2
+  changelogEntry:
+    - summary: |
+        Stop uploading direct publish credentials for SDK Config GitHub outputs. GitHub
+        delivery with registry publication now omits the sdk-gen-api credentials
+        multipart file, matching server expectations for GitHub/Actions-based publishing.
+      type: fix
+    - summary: |
+        Forward GitHub output options (`replay`, `verify`, and `skipIfNoDiff`) in
+        sdk-gen-api requests. Previously, GitHub generations routed through sdk-gen-api
+        could submit without replay settings from generators.yml.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 5.140.1
   changelogEntry:
     - summary: |
