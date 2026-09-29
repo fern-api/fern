@@ -180,7 +180,7 @@ catalog:
   husky: ^9.1.7
   image-size: ^2.0.3
   is-ci: ^3.0.1
-  js-yaml: ^4.3.2
+  js-yaml: ^5.2.2
   js-yaml-source-map: ^0.2.2
   json-schema: ^0.4.0
   json-stream-stringify: ^3.1.4
@@ -247,7 +247,7 @@ catalog:
   turbo: ^2.9.14
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.28.0
+  undici: ^6.28.1
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
