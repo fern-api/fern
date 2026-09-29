@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, rm, writeFile } from "fs/promises";
+import { mkdir, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -187,6 +187,50 @@ describe("maybeBundleMdxComponent", () => {
             expect(bundled).toMatch(/from\s+["']react["']/);
             expect(bundled).toContain("./constants");
         } finally {
+            await cleanup();
+        }
+    }, 120_000);
+
+    it("keeps the component's own relative imports external when the component path is a symlink", async () => {
+        const { path: projectDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
+        const { path: linkParent, cleanup: cleanupLink } = await tmp.dir({ unsafeCleanup: true });
+        try {
+            const libDir = path.join(projectDir, "node_modules", "fake-lib");
+            await mkdir(libDir, { recursive: true });
+            await writeFile(
+                path.join(libDir, "package.json"),
+                JSON.stringify({ name: "fake-lib", version: "1.0.0", type: "module", module: "./index.js" })
+            );
+            await writeFile(path.join(libDir, "index.js"), `export const LIB = "MARKER_FROM_LIB";`);
+
+            const componentsDir = path.join(projectDir, "components");
+            await mkdir(componentsDir, { recursive: true });
+            await writeFile(
+                path.join(componentsDir, "constants.ts"),
+                `export const LOCAL_CONSTANT = "MARKER_FROM_LOCAL";`
+            );
+            const contents = [
+                `import { LIB } from "fake-lib";`,
+                `import { LOCAL_CONSTANT } from "./constants";`,
+                `export const Widget = () => <div>{LIB} {LOCAL_CONSTANT}</div>;`
+            ].join("\n");
+            await writeFile(path.join(componentsDir, "Widget.tsx"), contents);
+
+            const linkedProjectDir = path.join(linkParent, "linked-project");
+            await symlink(projectDir, linkedProjectDir, "dir");
+
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath: AbsoluteFilePath.of(path.join(linkedProjectDir, "components", "Widget.tsx")),
+                contents,
+                context
+            });
+
+            expect(bundled).toBeDefined();
+            expect(bundled).toContain("MARKER_FROM_LIB");
+            expect(bundled).toContain("./constants");
+            expect(bundled).not.toContain("MARKER_FROM_LOCAL");
+        } finally {
+            await cleanupLink();
             await cleanup();
         }
     }, 120_000);

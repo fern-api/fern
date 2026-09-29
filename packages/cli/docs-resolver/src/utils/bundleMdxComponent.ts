@@ -215,7 +215,8 @@ function buildRolldownConfig({
     absoluteFilePath: AbsoluteFilePath;
     outputFilePath: string;
 }): string {
-    return `import path from "node:path";
+    return `import fs from "node:fs";
+import path from "node:path";
 
 const INPUT = ${JSON.stringify(absoluteFilePath)};
 const RENDERER_PROVIDED_MODULES = ${JSON.stringify(RENDERER_PROVIDED_MODULES)};
@@ -231,8 +232,18 @@ function isRendererProvidedModule(specifier) {
     return RENDERER_PROVIDED_MODULES.includes(getModuleName(specifier));
 }
 
+function toRealPath(filePath) {
+    try {
+        return fs.realpathSync(filePath);
+    } catch {
+        return path.resolve(filePath);
+    }
+}
+
+const INPUT_REAL_PATH = toRealPath(INPUT);
+
 function isEntry(importer) {
-    return importer != null && path.resolve(importer) === path.resolve(INPUT);
+    return importer != null && toRealPath(importer) === INPUT_REAL_PATH;
 }
 
 export default {
