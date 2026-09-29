@@ -754,7 +754,8 @@ function getFernSdkGenApiGithubOptions({
     skipIfNoDiff?: boolean;
     noReplay?: boolean;
 }): FernSdkGenApiGithubOptions | undefined {
-    const effectiveReplay = noReplay === true ? { enabled: false } : replay != null ? { enabled: replay.enabled === true } : undefined;
+    const effectiveReplay =
+        noReplay === true ? { enabled: false } : replay != null ? { enabled: replay.enabled === true } : undefined;
     const options: FernSdkGenApiGithubOptions = {
         ...(effectiveReplay != null ? { replay: effectiveReplay } : {}),
         ...(verify === true ? { verify: true } : {}),

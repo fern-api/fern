@@ -74,11 +74,7 @@ function sanitizeOutput(value: unknown): { output: unknown } {
 }
 
 function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredentialSource | undefined {
-    if (
-        !isRecord(output) ||
-        (output.delivery !== "files" && output.delivery !== "zip") ||
-        !isRecord(output.publish)
-    ) {
+    if (!isRecord(output) || (output.delivery !== "files" && output.delivery !== "zip") || !isRecord(output.publish)) {
         return undefined;
     }
     const publish = output.publish;
