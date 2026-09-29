@@ -62,6 +62,8 @@ vi.mock("@fern-api/ir-migrations", () => ({
 beforeEach(() => {
     contextLogger.debug.mockReset();
     contextLogger.info.mockReset();
+    contextLogger.warn.mockReset();
+    contextLogger.error.mockReset();
     migrationMocks.getIrVersionForGenerator.mockReset().mockResolvedValue(undefined);
     migrationMocks.migrateForGenerator.mockReset().mockImplementation(({ intermediateRepresentation }) =>
         Promise.resolve({
@@ -99,7 +101,7 @@ function invocation(overrides: Record<string, unknown> = {}): generatorsYml.Gene
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
-const contextLogger = { debug: vi.fn(), info: vi.fn() };
+const contextLogger = { debug: vi.fn(), info: vi.fn(), warn: vi.fn(), error: vi.fn() };
 const context = {
     logger: contextLogger,
     failAndThrow: (message: string) => {
@@ -2250,7 +2252,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: expectedRequest.targets[0]?.targetId,
                         status: "succeeded",
-                        logs: [{ level: "error", message: "Publisher exposed npm-secret" }],
+                        logs: [
+                            { level: "info", message: "Generating SDK" },
+                            { level: "warn", message: "Schema warning" },
+                            { level: "error", message: "Publisher exposed multipart-npm-secret" }
+                        ],
                         result: {
                             artifactUrl: "https://example.test/sdk.zip",
                             actualVersion: "1.2.4"
@@ -2313,6 +2319,9 @@ describe("isEligibleForFernSdkGenApi", () => {
             identifier: "https://registry.example.com/packages/@acme/sdk/1.2.4",
             url: "https://registry.example.com/packages/@acme/sdk/1.2.4"
         });
+        expect(contextLogger.info).toHaveBeenCalledWith("Generating SDK");
+        expect(contextLogger.warn).toHaveBeenCalledWith("Schema warning");
+        expect(contextLogger.error).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
     it("keeps a package identifier out of the publication URL field", async () => {
@@ -2576,7 +2585,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 context
             })
         ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed with [REDACTED]");
-        expect(contextLogger.info).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
+        expect(contextLogger.error).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
     it("stops polling when the build fails before a target reaches a terminal state", async () => {

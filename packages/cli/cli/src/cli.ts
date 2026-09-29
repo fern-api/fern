@@ -727,7 +727,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Generate all generators in the specified group",
+        "Generate SDKs or docs from legacy generator groups and SDK Config targets",
         (yargs) =>
             yargs
                 .option("api", {
@@ -758,11 +758,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     array: true,
                     description:
-                        "The group to generate. Pass --group multiple times to generate for several groups at once."
+                        "A legacy group from generators.yml or generators.legacy.yml. Pass --group multiple times to generate several groups."
+                })
+                .option("target", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "A target language from sdk-config.yml or --sdk-config. Pass --target multiple times to generate several targets."
                 })
                 .option("generator", {
                     type: "string",
-                    description: "The name of a specific generator to run"
+                    description:
+                        "A specific generator within selected legacy groups. With --sdk-config and no --target, filters the explicit SDK Config for backward compatibility."
                 })
                 .option("mode", {
                     choices: Object.values(GenerationMode),
@@ -780,7 +787,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("local", {
                     boolean: true,
                     default: false,
-                    description: "Run the generator(s) locally, using Docker"
+                    description:
+                        "Run legacy generator groups locally using Docker (SDK Config targets require remote generation)"
                 })
                 .option("keepDocker", {
                     boolean: true,
@@ -820,7 +828,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("sdk-config", {
                     type: "string",
-                    description: "Path to an SDK Config v1 YAML or JSON document"
+                    description:
+                        "Path to the SDK Config v1 YAML or JSON file to use instead of sdk-config.yml discovered for the selected API"
                 })
                 .option("disable-dynamic-snippets", {
                     boolean: true,
@@ -918,7 +927,21 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
-                }),
+                })
+                .example(
+                    "$0 generate --api my-api",
+                    "Generate the legacy default group and every target in the API's default sdk-config.yml"
+                )
+                .example("$0 generate --api my-api --group python-sdk", "Generate one legacy group")
+                .example("$0 generate --api my-api --target typescript", "Generate one SDK Config target")
+                .example(
+                    "$0 generate --api my-api --group python-sdk --target typescript",
+                    "Generate legacy and SDK Config selections together"
+                )
+                .example(
+                    "$0 generate --api my-api --sdk-config ./internal-sdk-config.yml --target typescript",
+                    "Generate a target from an alternate SDK Config file"
+                ),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
@@ -1027,6 +1050,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.target != null && argv.target.length > 0 && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --target flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
@@ -1035,11 +1065,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false,
-                        skipApiWorkspaces: argv.sdkConfig != null
+                        skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                     }),
                     cliContext,
                     version: argv.version,
                     groupNames: argv.group,
+                    targetNames: argv.target,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -1105,11 +1136,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false,
-                    skipApiWorkspaces: argv.sdkConfig != null
+                    skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                 }),
                 cliContext,
                 version: argv.version,
                 groupNames: argv.group,
+                targetNames: argv.target,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
@@ -1490,7 +1522,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 });
 
-                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                if (
+                    argv.api != null &&
+                    !project.apiWorkspaces.some((workspace) => workspace.workspaceName === argv.api) &&
+                    !project.sdkConfigWorkspaces?.some((workspace) => workspace.workspaceName === argv.api)
+                ) {
                     cliContext.instrumentPostHogEvent({
                         command: "fern check",
                         properties: {

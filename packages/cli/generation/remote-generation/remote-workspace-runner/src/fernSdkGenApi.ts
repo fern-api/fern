@@ -1260,7 +1260,7 @@ async function executeFernSdkGenApiBuild(
             }
             const logged = loggedByTarget.get(target.targetId) ?? 0;
             for (const log of target.logs.slice(logged)) {
-                context.logger.info(log.message);
+                logFernSdkGenApiMessage(context, log);
             }
             loggedByTarget.set(target.targetId, target.logs.length);
         }
@@ -1394,6 +1394,27 @@ function serializeSdkGenApiDebugValue(value: unknown, sensitiveValues: string[])
     return redacted.length > MAX_DEBUG_LOG_BYTES
         ? `${redacted.slice(0, MAX_DEBUG_LOG_BYTES)}... [truncated ${redacted.length - MAX_DEBUG_LOG_BYTES} bytes]`
         : redacted;
+}
+
+function logFernSdkGenApiMessage(
+    context: InteractiveTaskContext,
+    log: FernBuildStatus["targets"][number]["logs"][number]
+): void {
+    switch (log.level.toLowerCase()) {
+        case "error":
+            context.logger.error(log.message);
+            return;
+        case "warn":
+        case "warning":
+            context.logger.warn(log.message);
+            return;
+        case "debug":
+        case "trace":
+            context.logger.debug(log.message);
+            return;
+        default:
+            context.logger.info(log.message);
+    }
 }
 
 function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: string[]): FernSdkGenApiSubmissionError {

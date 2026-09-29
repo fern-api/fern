@@ -45,6 +45,7 @@ import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
+    type GeneratorLanguage,
     selectGeneratorConfigRoute,
     selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
@@ -66,6 +67,21 @@ export interface FernSourceArchiveResolution {
     sourceArchives: Map<number, FernSdkGenApiSourceArchive>;
     errors: Map<number, unknown>;
 }
+
+const SDK_CONFIG_TARGET_DISPLAY_NAMES: Record<GeneratorLanguage, string> = {
+    typescript: "TypeScript SDK",
+    python: "Python SDK",
+    java: "Java SDK",
+    kotlin: "Kotlin SDK",
+    go: "Go SDK",
+    csharp: "C# SDK",
+    php: "PHP SDK",
+    ruby: "Ruby SDK",
+    rust: "Rust SDK",
+    swift: "Swift SDK",
+    cli: "CLI",
+    mcp: "MCP server"
+};
 
 export async function runRemoteGenerationForAPIWorkspace({
     projectConfig,
@@ -282,59 +298,63 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation, generatorIndex) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, (interactiveTaskContext) =>
-                generateOne({
-                    generatorInvocation,
-                    resolvedGeneratorInvocation: resolvedGenerators[generatorIndex] ?? generatorInvocation,
-                    interactiveTaskContext,
-                    // Closed-over state + params passed through to the per-generator worker.
-                    projectConfig,
-                    organization,
-                    workspace,
-                    context,
-                    generatorGroup,
-                    version,
-                    shouldLogS3Url,
-                    token,
-                    whitelabel,
-                    replay,
-                    absolutePathToPreview,
-                    isPreview,
-                    fiddlePreview,
-                    pushPreviewBranch,
-                    mode,
-                    fernignorePath,
-                    skipFernignore,
-                    dynamicIrOnly,
-                    validateWorkspace,
-                    retryRateLimited,
-                    requireEnvVars,
-                    automationMode,
-                    autoMerge,
-                    skipIfNoDiff,
-                    verify,
-                    noReplay,
-                    disableTelemetry,
-                    automation,
-                    generatorsYmlAbsolutePath,
-                    occurrenceTracker: effectiveOccurrenceTracker,
-                    loginCommand,
-                    specsTarGzArchive: sourceArchives[generatorIndex],
-                    sdkGenApiPreflightError: preflightErrors[generatorIndex],
-                    sdkGenApiRoute: sdkGenApiRoutes[generatorIndex],
-                    sdkConfigV1,
-                    sdkGenApiPreparationBatch: sdkGenApiCandidateIndexes.has(generatorIndex)
-                        ? sdkGenApiPreparationBatch
-                        : undefined,
-                    sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
-                    sdkGenApiTargetIdSeed: (
-                        routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
-                    ).toString(),
-                    generateFullProject,
-                    libraryVisibility,
-                    mapFernGroupToSdkConfig,
-                    onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
-                })
+            context.runInteractiveTask(
+                {
+                    name: getGenerationTaskName(generatorInvocation, sdkGenApiRoutes[generatorIndex])
+                },
+                (interactiveTaskContext) =>
+                    generateOne({
+                        generatorInvocation,
+                        resolvedGeneratorInvocation: resolvedGenerators[generatorIndex] ?? generatorInvocation,
+                        interactiveTaskContext,
+                        // Closed-over state + params passed through to the per-generator worker.
+                        projectConfig,
+                        organization,
+                        workspace,
+                        context,
+                        generatorGroup,
+                        version,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel,
+                        replay,
+                        absolutePathToPreview,
+                        isPreview,
+                        fiddlePreview,
+                        pushPreviewBranch,
+                        mode,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        validateWorkspace,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        skipIfNoDiff,
+                        verify,
+                        noReplay,
+                        disableTelemetry,
+                        automation,
+                        generatorsYmlAbsolutePath,
+                        occurrenceTracker: effectiveOccurrenceTracker,
+                        loginCommand,
+                        specsTarGzArchive: sourceArchives[generatorIndex],
+                        sdkGenApiPreflightError: preflightErrors[generatorIndex],
+                        sdkGenApiRoute: sdkGenApiRoutes[generatorIndex],
+                        sdkConfigV1,
+                        sdkGenApiPreparationBatch: sdkGenApiCandidateIndexes.has(generatorIndex)
+                            ? sdkGenApiPreparationBatch
+                            : undefined,
+                        sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
+                        sdkGenApiTargetIdSeed: (
+                            routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
+                        ).toString(),
+                        generateFullProject,
+                        libraryVisibility,
+                        mapFernGroupToSdkConfig,
+                        onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
+                    })
             )
         )
     );
@@ -349,6 +369,16 @@ export async function runRemoteGenerationForAPIWorkspace({
     return {
         snippetsProducedBy
     };
+}
+
+function getGenerationTaskName(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    sdkGenApiRoute: GenerationConfigRoute | undefined
+): string {
+    if (sdkGenApiRoute?.payloadKind !== "sdk-config-v1") {
+        return generatorInvocation.name;
+    }
+    return SDK_CONFIG_TARGET_DISPLAY_NAMES[sdkGenApiRoute.language];
 }
 
 /**
