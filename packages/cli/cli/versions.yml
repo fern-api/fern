@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.141.2
+  changelogEntry:
+    - summary: |
+        Reject `fern generate --sdk-config` when a selected target pins a generator version from before that language's SDK Config cutover.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 5.141.1
   changelogEntry:
     - summary: |
