@@ -950,7 +950,7 @@ func (f *fileWriter) WriteOptionalNullableRoundTripTests(typeName string, wireNa
 	f.writeNullableRoundTripTests("TestOptionalNullableRoundTrip", "optionalNullableKeys", "optional nullable", typeName, wireNames)
 }
 
-func (f *fileWriter) writeNullableRoundTripTests(testPrefix string, keysName string, fieldKind string, typeName string, wireNames []string) {
+func (f *fileWriter) writeNullableRoundTripTests(testPrefix, keysName, fieldKind, typeName string, wireNames []string) {
 	var nullInput strings.Builder
 	nullInput.WriteString("{")
 	for i, wireName := range wireNames {
