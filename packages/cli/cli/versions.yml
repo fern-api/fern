@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.141.0
+  changelogEntry:
+    - summary: |
+        Support selecting SDK Config targets with `fern generate --target`, including mixed generation with legacy `--group` selections, per-API `sdk-config.yml` discovery, explicit `--sdk-config` overrides, and the provisional `generators.legacy.yml` filename. With no selectors, generation runs the legacy default group and every target in the default SDK Config, while `--local` continues to run legacy generation only. SDK Config generation is labeled by target (for example, `Python SDK`) instead of exposing the internal legacy-style generator identifier, and `fern check` validates SDK Config-only API sources.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 5.140.2
   changelogEntry:
     - summary: |
