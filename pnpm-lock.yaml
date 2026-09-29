@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.10.1
-      version: 0.10.1
+      specifier: 0.10.3
+      version: 0.10.3
     '@fern-api/venus-api-sdk':
       specifier: 5.0.0
       version: 5.0.0
@@ -633,7 +633,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.10.1
+        version: 0.10.3
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.1.3
@@ -702,7 +702,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.10.1
+        version: 0.10.3
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2511,7 +2511,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.10.1
+        version: 0.10.3
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9603,13 +9603,8 @@ packages:
   '@fern-api/fdr-sdk@1.2.148-232aa748f1':
     resolution: {integrity: sha512-5/ZdFf/IvA1kMUox1Ez/05ZbFwLCJvkAgjA/o+TiJ0OaOpD6k4GWk8l2kf2iUvy1O/EtS851yJHJ6byFBUWYSA==}
 
-  '@fern-api/generator-cli@0.10.1':
-    resolution: {integrity: sha512-y9RpKc1udPnSLRGJk2zR5JAdnwtX0EXvBEVkGLyBApEuEcqt2R8ghWG7Ddophch4SGdsRCZdJJJUmwdTGf+DLQ==}
-    hasBin: true
-
-  '@fern-api/replay@0.19.2':
-    resolution: {integrity: sha512-mpdjoVRI6Jjr96AUgPD2zZt6E92YE5hqd5erEvyO9rjjma5wy1sioqvKlkQFow0UPH1aeiNIVrAuu+2Az73e8w==}
-    engines: {node: '>=18'}
+  '@fern-api/generator-cli@0.10.3':
+    resolution: {integrity: sha512-6mudHwUZMdE4RLfRsJYZhnWqBDKLBk3S2QxhB9wyeefNlD4ddJTEqZTQsa2KP15tfWHnnRUfLiSZnMNQQuV7oA==}
     hasBin: true
 
   '@fern-api/replay@0.19.3':
@@ -13585,10 +13580,6 @@ packages:
     peerDependencies:
       react: '>=16'
 
-  node-diff3@3.2.0:
-    resolution: {integrity: sha512-vLh2xJFSyniBLYDEDbXKqD32fQ5vAxmYT4hco8t0EHQ4CQ4BDHhshi7kdvDc6Y1MwGSi1Mhl4unUukPbCayZdw==}
-    engines: {bun: '>=1.3.0', node: '>=18'}
-
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
@@ -16604,23 +16595,14 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.10.1':
+  '@fern-api/generator-cli@0.10.3':
     dependencies:
       '@boundaryml/baml': 0.219.0
-      '@fern-api/replay': 0.19.2
+      '@fern-api/replay': 0.19.3
       '@octokit/rest': 22.0.1
       es-toolkit: 1.45.1
       semver: 7.8.4
       tmp-promise: 3.0.3
-    transitivePeerDependencies:
-      - supports-color
-
-  '@fern-api/replay@0.19.2':
-    dependencies:
-      minimatch: 10.2.5
-      node-diff3: 3.2.0
-      simple-git: 3.36.0
-      yaml: 2.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -21088,8 +21070,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
-
-  node-diff3@3.2.0: {}
 
   node-domexception@1.0.0: {}
 

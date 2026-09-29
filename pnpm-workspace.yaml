@@ -66,7 +66,7 @@ catalog:
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.2.148-232aa748f1
-  "@fern-api/generator-cli": 0.10.1
+  "@fern-api/generator-cli": 0.10.3
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 5.0.0
   "@fern-fern/docs-config": 0.0.80
