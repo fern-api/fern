@@ -1,0 +1,6 @@
+- summary: |
+    Fix broken submodule links in generated Python library documentation. A module page listed a link
+    for every submodule, including submodules that document nothing and therefore get no page, so
+    `fern check` reported those links as broken. Such submodules are now omitted from the Submodules
+    listing.
+  type: fix

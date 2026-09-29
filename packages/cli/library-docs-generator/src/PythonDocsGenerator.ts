@@ -13,6 +13,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { renderModulePage } from "./renderers/ModuleRenderer.js";
+import { getPagedSubmodules, hasPage } from "./utils/modulePages.js";
 import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
@@ -62,7 +63,7 @@ export function generate(options: GenerateOptions): GenerateResult {
     // Stage 3: Build navigation tree
     const navigation = buildNavigation(ir.rootModule, slug);
     const rootPageId =
-        ir.rootModule.submodules.length > 0
+        getPagedSubmodules(ir.rootModule).length > 0
             ? `${slug}/${ir.rootModule.name}/index.mdx`
             : `${slug}/${ir.rootModule.name}.mdx`;
 
@@ -93,24 +94,21 @@ function renderModuleTree(
 ): void {
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 
-    const hasDirectContent =
-        module.classes.length > 0 ||
-        module.functions.length > 0 ||
-        module.attributes.length > 0 ||
-        module.docstring != null;
-
-    const hasSubmodules = module.submodules.length > 0;
+    const pagedSubmodules = getPagedSubmodules(module);
 
     // Generate page if module has any documentable content.
     // Modules with submodules write to <path>/index.mdx so the folder scanner
     // picks them up as section overview pages (not sibling duplicates).
-    if (hasDirectContent || hasSubmodules) {
-        const pageKey = hasSubmodules ? `${ctx.baseSlug}/${modulePath}/index.mdx` : `${ctx.baseSlug}/${modulePath}.mdx`;
+    if (hasPage(module)) {
+        const pageKey =
+            pagedSubmodules.length > 0
+                ? `${ctx.baseSlug}/${modulePath}/index.mdx`
+                : `${ctx.baseSlug}/${modulePath}.mdx`;
         const content = renderModulePage(module, ctx, parentPath);
         writer.writePage(pageKey, content);
     }
 
-    for (const submodule of module.submodules) {
+    for (const submodule of pagedSubmodules) {
         renderModuleTree(submodule, ctx, writer, modulePath);
     }
 }
