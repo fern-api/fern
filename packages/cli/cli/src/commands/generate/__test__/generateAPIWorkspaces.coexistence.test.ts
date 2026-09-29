@@ -186,6 +186,32 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
     });
 
+    it("does not validate a pre-cutover target excluded by --target", async () => {
+        const configPath = path.join(temporaryDirectory, "mixed-sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "payments",
+                source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                targets: [
+                    { language: "typescript", generatorVersion: "3.99.0", output: { delivery: "files" } },
+                    { language: "python", generatorVersion: "6.0.0", output: { delivery: "files" } }
+                ]
+            })
+        );
+
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: ["python"],
+            sdkConfigPath: configPath
+        });
+
+        expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+    });
+
     it("runs only legacy generation when --local is used without selectors", async () => {
         await runGenerate({
             project,
