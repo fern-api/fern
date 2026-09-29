@@ -163,7 +163,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     /**
      * Converts error examples from the media type object, using the summary field
      * as the example name when available (similar to how endpoint examples work).
-     * An unnamed `example` is named after the response description.
+     * An unnamed `example` is named after the first line of the response description.
      */
     private convertErrorExamples({
         mediaTypeObject
@@ -174,7 +174,8 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             mediaTypeObject,
             breadcrumbs: this.breadcrumbs,
             defaultExampleName:
-                this.responseError.description?.trim() || `${[...this.group, this.method].join("_")}_error_example`
+                this.responseError.description?.trim().split("\n")[0]?.trim() ||
+                `${[...this.group, this.method].join("_")}_error_example`
         });
 
         if (examples.length === 0) {

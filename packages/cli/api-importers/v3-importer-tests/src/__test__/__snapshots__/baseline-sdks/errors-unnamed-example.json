@@ -90,7 +90,7 @@
         "errorId": "error_:BadRequestError"
       },
       "discriminantValue": "BadRequestError",
-      "docs": "Bad Request - The request was missing required parameters.",
+      "docs": "Bad Request - The request was missing required parameters.\n\nSee the problem details for more information.",
       "statusCode": 400,
       "type": {
         "name": "Problem",

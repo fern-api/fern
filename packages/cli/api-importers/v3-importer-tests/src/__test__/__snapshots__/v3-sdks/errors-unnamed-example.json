@@ -149,7 +149,7 @@
                 },
                 "errorId": "BadRequestError"
               },
-              "docs": "Bad Request - The request was missing required parameters."
+              "docs": "Bad Request - The request was missing required parameters.\n\nSee the problem details for more information.\n"
             },
             {
               "error": {
@@ -727,7 +727,7 @@
         "type": "named"
       },
       "statusCode": 400,
-      "docs": "Bad Request - The request was missing required parameters.",
+      "docs": "Bad Request - The request was missing required parameters.\n\nSee the problem details for more information.\n",
       "examples": [],
       "v2Examples": {
         "userSpecifiedExamples": {

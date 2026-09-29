@@ -15,7 +15,10 @@ components:
           type: integer
   responses:
     BadRequest:
-      description: Bad Request - The request was missing required parameters.
+      description: |
+        Bad Request - The request was missing required parameters.
+
+        See the problem details for more information.
       content:
         application/problem+json:
           schema:
