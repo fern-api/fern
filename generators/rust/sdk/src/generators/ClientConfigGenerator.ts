@@ -10,22 +10,30 @@ import {
     rust,
     UseStatement
 } from "@fern-api/rust-codegen";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ClientConfigGenerator {
     private readonly context: SdkGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
+        this.environmentGenerator = new EnvironmentGenerator({ context });
     }
 
     public generate(): RustFile {
         const clientConfigStruct = this.generateClientConfigStruct();
         const defaultImpl = this.generateDefaultImpl();
 
+        const rawDeclarations = [clientConfigStruct.toString(), defaultImpl.toString()];
+        if (this.context.hasMultipleBaseUrls()) {
+            rawDeclarations.push(this.generateServiceUrlImpl());
+        }
+
         const module = rust.module({
             useStatements: this.generateImports(),
-            rawDeclarations: [clientConfigStruct.toString(), defaultImpl.toString()]
+            rawDeclarations
         });
 
         return new RustFile({
@@ -50,11 +58,20 @@ export class ClientConfigGenerator {
     }
 
     private generateClientConfigStruct() {
+        const isMultiUrl = this.context.hasMultipleBaseUrls();
         const fields = [
             rust.field({
                 name: "base_url",
                 type: rust.Type.string(),
-                visibility: PUBLIC
+                visibility: PUBLIC,
+                docs: isMultiUrl
+                    ? new DocComment({
+                          summary: [
+                              "An explicit URL for every request. Left at its default, requests route per",
+                              "service through `environment`; see `service_url`."
+                          ].join("\n")
+                      })
+                    : undefined
             }),
             rust.field({
                 name: "api_key",
@@ -133,13 +150,19 @@ export class ClientConfigGenerator {
             })
         ];
 
-        if (this.context.hasMultipleBaseUrls()) {
+        if (isMultiUrl) {
             const environmentEnumName = this.context.getEnvironmentEnumName();
             fields.push(
                 rust.field({
                     name: "environment",
                     type: rust.Type.option(rust.Type.reference(rust.reference({ name: environmentEnumName }))),
-                    visibility: PUBLIC
+                    visibility: PUBLIC,
+                    docs: new DocComment({
+                        summary: [
+                            "The environment whose URLs requests go to, per service, unless `base_url` was",
+                            "set explicitly; see `service_url`."
+                        ].join("\n")
+                    })
                 })
             );
         }
@@ -155,7 +178,7 @@ export class ClientConfigGenerator {
     private generateDefaultImpl() {
         const userAgent = `${this.context.case.pascalSafe(this.context.ir.apiName)} Rust SDK`;
         const environmentEnumName = this.context.getEnvironmentEnumName();
-        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
+        const hasDefaultEnvironment = this.hasDefaultEnvironment();
 
         // Platform headers for Fern SDK identification
         const sdkName = this.context.getCrateName();
@@ -271,6 +294,57 @@ export class ClientConfigGenerator {
             traitName: "Default",
             methods: [defaultMethod]
         });
+    }
+
+    /**
+     * Multi-URL environments resolve each request's URL at call time. `base_url` is a `String`
+     * that `Default` fills with the default environment's URL, so a caller who set it explicitly
+     * (`ClientConfig { base_url, ..Default::default() }`) can only be told apart by value: anything
+     * other than one of the configured environment's URLs, or the default environment's URL, is an
+     * explicit override and wins over the environment. Without that rule the environment always won
+     * and an explicit `base_url` was silently ignored.
+     */
+    private generateServiceUrlImpl(): string {
+        const environmentEnumName = this.context.getEnvironmentEnumName();
+        const knownUrls = this.environmentGenerator
+            .getMultiUrlGetterMethodNames()
+            .map((getter) => `environment.${getter}()`);
+        const defaultEnvironmentUrl = this.environmentGenerator.getMultiUrlDefaultEnvironmentUrl();
+        if (defaultEnvironmentUrl != null) {
+            knownUrls.push(JSON.stringify(defaultEnvironmentUrl));
+        }
+        const knownUrlsList = knownUrls.map((url) => `\n                ${url},`).join("");
+
+        return `impl ClientConfig {
+    /// Resolves the URL a request goes to.
+    ///
+    /// An explicit \`base_url\` wins: when it is anything other than one of the configured
+    /// \`environment\`'s URLs (or the default environment's URL that \`Default\` fills in),
+    /// every request goes there. Otherwise the request goes to the environment's URL for its
+    /// service, which \`url_for\` picks (\`|environment| environment.<service>_url()\`).
+    ///
+    /// The decision is by value, since \`base_url\` is a plain \`String\` that \`Default\` fills
+    /// in: a \`base_url\` equal to one of the environment's URLs cannot be told apart from the
+    /// default and routes per service. To send every request to one of those URLs, set
+    /// \`environment\` to \`None\`.
+    pub fn service_url<'a>(&'a self, url_for: impl FnOnce(&'a ${environmentEnumName}) -> &'a str) -> &'a str {
+        match &self.environment {
+            Some(environment) if !self.overrides_environment(environment) => url_for(environment),
+            _ => &self.base_url,
+        }
+    }
+
+    fn overrides_environment(&self, environment: &${environmentEnumName}) -> bool {
+        !self.base_url.is_empty()
+            && ![${knownUrlsList}
+            ]
+            .contains(&self.base_url.as_str())
+    }
+}`;
+    }
+
+    private hasDefaultEnvironment(): boolean {
+        return this.context.ir.environments?.defaultEnvironment != null;
     }
 
     private buildOAuthTokenExchangeExpr(exchange: OAuthTokenExchange): string {
