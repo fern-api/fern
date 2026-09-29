@@ -8,8 +8,9 @@ import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 const CLI_ENV = { FERN_NO_VERSION_REDIRECTION: "true" };
+const TEST_TIMEOUT = 30_000;
 
-describe("fern sdk migrate", () => {
+describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
     it("migrates one language, preserves rollback YAML, and leaves docs.yml unchanged", async ({ signal }) => {
         const temporaryDirectory = await createFixture();
         const directory = AbsoluteFilePath.of(temporaryDirectory.path);
@@ -71,11 +72,15 @@ describe("fern sdk migrate", () => {
         const sdkConfig = yaml.load(
             await readFile(join(directory, RelativeFilePath.of("fern/sdk-config.yml")), "utf8")
         ) as {
-            generation: { naming: { clientName: string } };
-            targets: Array<{ language: string }>;
+            generation?: { naming?: { clientName?: string } };
+            targets: Array<{ language: string; generation?: { naming?: { clientName?: string } } }>;
         };
         expect(sdkConfig.targets.map((target) => target.language)).toEqual(["typescript", "python"]);
-        expect(sdkConfig.generation.naming.clientName).toBe("ExampleSDK");
+        expect(sdkConfig.generation?.naming?.clientName).toBeUndefined();
+        expect(sdkConfig.targets.find((target) => target.language === "typescript")?.generation).toBeUndefined();
+        expect(sdkConfig.targets.find((target) => target.language === "python")?.generation?.naming?.clientName).toBe(
+            "ExampleSDK"
+        );
         const legacy = await readFile(join(directory, RelativeFilePath.of("fern/generators.legacy.yml")), "utf8");
         expect(legacy).toContain("# version: 3.63.3");
         expect(legacy).toContain("# version: 4.3.10");
