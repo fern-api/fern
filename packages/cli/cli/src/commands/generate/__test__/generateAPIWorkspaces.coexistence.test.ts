@@ -50,7 +50,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         const taskContext = createMockTaskContext();
         cliContext = {
             environment: { packageVersion: "0.0.0" },
-            failAndThrow: taskContext.failAndThrow.bind(taskContext),
+            failAndThrow: vi.fn(taskContext.failAndThrow.bind(taskContext)),
             instrumentPostHogEvent: vi.fn(),
             logger: taskContext.logger,
             runTask: vi.fn(async (task) => task(taskContext)),
@@ -176,6 +176,31 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(call?.workspace.workspaceName).toBe("my-api");
         expect(call?.sdkConfigV1?.targets.map((target) => target.language)).toEqual(["typescript"]);
     });
+
+    it("explains that --generator does not select a discovered SDK Config", async () => {
+        await expect(
+            runGenerate({
+                project: {
+                    ...project,
+                    apiWorkspaces: [],
+                    sdkConfigWorkspaces: [
+                        { absoluteFilePath: AbsoluteFilePath.of(temporaryDirectory), workspaceName: "my-api" }
+                    ]
+                },
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                generatorName: "fernapi/fern-typescript-sdk"
+            })
+        ).rejects.toBeDefined();
+
+        expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(
+            expect.stringContaining("--generator only filters generators in selected legacy groups"),
+            undefined,
+            expect.anything()
+        );
+        expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
+    });
 });
 
 function createProject(directory: string): Project {
@@ -241,13 +266,15 @@ async function runGenerate({
     cliContext,
     groupNames,
     targetNames,
-    sdkConfigPath
+    sdkConfigPath,
+    generatorName
 }: {
     project: Project;
     cliContext: CliContext;
     groupNames: string[] | undefined;
     targetNames: string[] | undefined;
     sdkConfigPath?: string;
+    generatorName?: string;
 }): Promise<void> {
     await generateAPIWorkspaces({
         project,
@@ -255,7 +282,7 @@ async function runGenerate({
         version: undefined,
         groupNames,
         targetNames,
-        generatorName: undefined,
+        generatorName,
         generatorIndex: undefined,
         shouldLogS3Url: false,
         keepDocker: false,

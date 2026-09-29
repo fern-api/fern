@@ -768,7 +768,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("generator", {
                     type: "string",
-                    description: "The name of a specific generator to run"
+                    description:
+                        "A specific generator within selected legacy groups. With --sdk-config and no --target, filters the explicit SDK Config for backward compatibility."
                 })
                 .option("mode", {
                     choices: Object.values(GenerationMode),

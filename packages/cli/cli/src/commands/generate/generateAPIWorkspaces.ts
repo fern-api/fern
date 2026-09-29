@@ -148,13 +148,26 @@ export async function generateAPIWorkspaces({
             automation,
             cliContext
         });
-        const generations: WorkspaceGeneration[] = legacyProject.apiWorkspaces.map((workspace) => ({
+        const legacyGenerations: WorkspaceGeneration[] = legacyProject.apiWorkspaces.map((workspace) => ({
             kind: "legacy",
             workspace,
             resolvedGroupNames: resolvedGroupNamesByWorkspace.get(workspace) ?? [],
             generatorName,
             generatorIndex
         }));
+        const generations = [...legacyGenerations];
+
+        if (
+            (generatorName != null || generatorIndex != null) &&
+            legacyGenerations.length === 0 &&
+            (targetNames != null || sdkConfigPath == null)
+        ) {
+            return cliContext.failAndThrow(
+                "--generator only filters generators in selected legacy groups. Add --group (and adjust --api if needed), or use --target to select an SDK Config target.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
 
         const sdkConfigGenerations = await prepareSdkConfigGenerations({
             project,
@@ -178,7 +191,7 @@ export async function generateAPIWorkspaces({
 
         if (generations.length === 0) {
             return cliContext.failAndThrow(
-                "No generation configuration was selected. Add a legacy generators configuration or an sdk-config.yml target.",
+                "No generation configuration was selected. Check the --api selection and confirm the workspace contains generators.yml, generators.legacy.yml, or sdk-config.yml; use --group for a legacy group or --target for an SDK Config target.",
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
@@ -368,10 +381,11 @@ async function prepareSdkConfigGenerations({
     const prepared: PreparedSdkConfigGeneration[] = [];
     try {
         for (const candidate of candidates) {
-            const loaded = await loadSdkConfigV1(candidate.path, preview, {
-                targetNames,
-                ...(targetNames == null && sdkConfigPath != null ? { generatorName, generatorIndex } : {})
-            });
+            const loaded = await loadSdkConfigV1(
+                candidate.path,
+                preview,
+                targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
+            );
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: loaded.config,
@@ -383,6 +397,7 @@ async function prepareSdkConfigGenerations({
             );
             const sdkConfigGroup = created.workspace.generatorsConfiguration?.defaultGroup;
             if (sdkConfigGroup == null) {
+                // This candidate has not entered `prepared`; clean it here, then let the catch clean earlier candidates.
                 await created.cleanup();
                 return cliContext.failAndThrow("SDK Config workspace has no generation targets", undefined, {
                     code: CliError.Code.ConfigError

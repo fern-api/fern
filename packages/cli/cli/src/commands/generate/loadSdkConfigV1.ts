@@ -24,11 +24,15 @@ export interface LoadedSdkConfigV1 {
     payload: FernSdkConfigV1Payload;
 }
 
-interface SdkConfigTargetSelection {
+interface SdkConfigGeneratorSelection {
     generatorName?: string;
     generatorIndex?: number;
-    targetNames?: string[];
+    targetNames?: never;
 }
+
+type SdkConfigTargetSelection =
+    | SdkConfigGeneratorSelection
+    | { targetNames: string[]; generatorName?: never; generatorIndex?: never };
 
 /** Reads and validates a customer SDK Config YAML or JSON document for SDK Generation API transport. */
 export async function loadSdkConfigV1(
@@ -55,7 +59,11 @@ export async function loadSdkConfigV1(
         }
         const targetIndexes = getTargetIndexes(parsed, selection.targetNames);
         const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(parsed.targets);
-        const selectedTargetIndexes = getSelectedTargetIndexes(parsed, selection, isPreview);
+        const selectedTargetIndexes = isPreview
+            ? new Set<number>()
+            : selection.targetNames != null
+              ? new Set(targetIndexes)
+              : getGeneratorSelectedTargetIndexes(parsed, selection);
         const payload: FernSdkConfigV1Payload = {
             sdkName: parsed.sdkName,
             sdkVersion: parsed.sdkVersion,
@@ -143,17 +151,7 @@ export async function loadSdkConfigV1(
     }
 }
 
-function getSelectedTargetIndexes(
-    config: SdkConfigV1,
-    selection: SdkConfigTargetSelection,
-    isPreview: boolean
-): Set<number> {
-    if (isPreview) {
-        return new Set();
-    }
-    if (selection.targetNames != null && selection.targetNames.length > 0) {
-        return new Set(getTargetIndexes(config, selection.targetNames));
-    }
+function getGeneratorSelectedTargetIndexes(config: SdkConfigV1, selection: SdkConfigGeneratorSelection): Set<number> {
     if (selection.generatorIndex != null) {
         if (selection.generatorIndex < 0 || selection.generatorIndex >= config.targets.length) {
             throw new Error(
@@ -178,7 +176,7 @@ function getTargetIndexes(config: SdkConfigV1, targetNames: string[] | undefined
     }
     const requested = [...new Set(targetNames)];
     const available = config.targets.map((target) => target.language);
-    const missing = requested.filter((name) => !available.includes(name as (typeof available)[number]));
+    const missing = requested.filter((name) => !available.some((language) => language === name));
     if (missing.length > 0) {
         throw new Error(
             `SDK Config target${missing.length === 1 ? "" : "s"} ${missing.map((name) => `'${name}'`).join(", ")} not found. Available targets: ${available.join(", ")}`
