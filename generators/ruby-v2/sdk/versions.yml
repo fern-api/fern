@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Enum values (and other screaming-snake constants) named `begin` or `end` are now emitted
+        as `BEGIN_` / `END_`, since `BEGIN` and `END` are Ruby reserved words and `END = "end"`
+        is a syntax error.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 1.28.0
   changelogEntry:
     - summary: |
