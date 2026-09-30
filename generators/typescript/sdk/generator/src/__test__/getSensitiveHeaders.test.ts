@@ -204,7 +204,11 @@ describe("isCredentialHeaderName", () => {
         "X-Refresh-Token",
         "X-Auth",
         "X-Credentials",
-        "X-Password"
+        "X-Password",
+        "X-AccessToken",
+        "X-ClientId",
+        "X-APIKey",
+        "PartnerSecret"
     ])("treats %s as a credential", (headerName) => {
         expect(isCredentialHeaderName(headerName)).toBe(true);
     });
@@ -219,7 +223,9 @@ describe("isCredentialHeaderName", () => {
         "X-Fern-SDK-Version",
         "X-Request-Id",
         "Idempotency-Key",
-        "X-Tokenizer-Mode"
+        "X-Tokenizer-Mode",
+        "X-RequestId",
+        "X-ApiVersion"
     ])("does not treat %s as a credential", (headerName) => {
         expect(isCredentialHeaderName(headerName)).toBe(false);
     });

@@ -59,7 +59,11 @@ function getAuthSchemeHeaders(scheme: FernIr.AuthScheme): string[] {
 }
 
 export function isCredentialHeaderName(headerName: string): boolean {
-    const tokens = headerName.toLowerCase().split(/[^a-z0-9]+/);
+    const tokens = headerName
+        .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+        .toLowerCase()
+        .split(/[^a-z0-9]+/);
     if (tokens.some((token) => CREDENTIAL_NAME_TOKENS.has(token))) {
         return true;
     }
