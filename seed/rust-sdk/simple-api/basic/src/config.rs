@@ -42,7 +42,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "seed_simple_api".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "SimpleApi Rust SDK".to_string(),
+            user_agent: "fern_simple-api/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

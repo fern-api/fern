@@ -44,7 +44,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "InferredAuthImplicit Rust SDK".to_string(),
+            user_agent: "fern_inferred-auth-implicit-reference/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

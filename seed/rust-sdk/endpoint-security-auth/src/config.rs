@@ -57,7 +57,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "EndpointSecurityAuth Rust SDK".to_string(),
+            user_agent: "fern_endpoint-security-auth/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

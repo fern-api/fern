@@ -41,7 +41,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "seed_no_retries".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "NoRetries Rust SDK".to_string(),
+            user_agent: "fern_no-retries/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

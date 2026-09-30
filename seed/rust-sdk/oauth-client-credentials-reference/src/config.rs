@@ -51,7 +51,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "OauthClientCredentialsReference Rust SDK".to_string(),
+            user_agent: "fern_oauth-client-credentials-reference/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

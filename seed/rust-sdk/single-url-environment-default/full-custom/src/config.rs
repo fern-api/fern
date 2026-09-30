@@ -42,7 +42,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "full_custom_sdk".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "1.0.0".to_string()),
             ]),
-            user_agent: "SingleUrlEnvironmentDefault Rust SDK".to_string(),
+            user_agent: "fern_single-url-environment-default/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

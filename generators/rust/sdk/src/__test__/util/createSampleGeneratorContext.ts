@@ -6,6 +6,7 @@ const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: 
 
 interface CreateSampleGeneratorContextArgs {
     environments?: FernIr.EnvironmentsConfig;
+    sdkConfig?: FernIr.SdkConfig;
 }
 
 export function createSampleGeneratorContext(args: CreateSampleGeneratorContextArgs = {}): SdkGeneratorContext {
@@ -19,6 +20,7 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
         },
         apiVersion: "1.0.0",
         environments: args.environments,
+        sdkConfig: args.sdkConfig,
         errors: {},
         types: {},
         services: {},

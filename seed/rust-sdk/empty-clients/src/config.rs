@@ -44,7 +44,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "EmptyClients Rust SDK".to_string(),
+            user_agent: "fern_empty-clients/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

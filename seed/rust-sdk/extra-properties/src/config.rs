@@ -44,7 +44,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "ExtraProperties Rust SDK".to_string(),
+            user_agent: "fern_extra-properties/0.0.1".to_string(),
             reqwest_client: None,
         }
     }

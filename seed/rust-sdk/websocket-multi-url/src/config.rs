@@ -50,7 +50,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "WebsocketMultiUrl Rust SDK".to_string(),
+            user_agent: "fern_websocket-multi-url/0.0.1".to_string(),
             reqwest_client: None,
             environment: Some(Environment::default()),
         }
