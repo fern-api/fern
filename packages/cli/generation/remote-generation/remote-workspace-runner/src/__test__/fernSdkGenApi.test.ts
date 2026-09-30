@@ -1802,7 +1802,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             intermediateRepresentation: {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
-                publishConfig: { type: "filesystem" }
+                publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                }
             } as never,
             irVersionOverride: undefined,
             context
@@ -1817,6 +1821,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 customConfig: { packageJson: { name: "@acme/sdk" } },
                 output: {
                     path: "/fern/output",
+                    snippetFilepath: "/tmp/fern-runtime/snippet.json",
                     mode: {
                         type: "github",
                         version: "1.2.3"
@@ -1830,6 +1835,10 @@ describe("isEligibleForFernSdkGenApi", () => {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
                 publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                },
                 migrated: "generator"
             }
         });
