@@ -88,6 +88,38 @@ func (a *AliasedObjectUnion) GetAliasedLeafB() AliasedLeafB {
 }
 
 func (a *AliasedObjectUnion) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"onlyInA", "sharedNumber"}, []string{"onlyInA", "sharedNumber"}) {
+		var valueAliasedLeafA AliasedLeafA
+		if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
+			a.typ = "AliasedLeafA"
+			a.AliasedLeafA = valueAliasedLeafA
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"onlyInB"}, []string{"onlyInB"}) {
+		var valueAliasedLeafB AliasedLeafB
+		if err := json.Unmarshal(data, &valueAliasedLeafB); err == nil {
+			a.typ = "AliasedLeafB"
+			a.AliasedLeafB = valueAliasedLeafB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"onlyInA", "sharedNumber"}) {
+		var valueAliasedLeafA AliasedLeafA
+		if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
+			a.typ = "AliasedLeafA"
+			a.AliasedLeafA = valueAliasedLeafA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"onlyInB"}) {
+		var valueAliasedLeafB AliasedLeafB
+		if err := json.Unmarshal(data, &valueAliasedLeafB); err == nil {
+			a.typ = "AliasedLeafB"
+			a.AliasedLeafB = valueAliasedLeafB
+			return nil
+		}
+	}
 	var valueAliasedLeafA AliasedLeafA
 	if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
 		a.typ = "AliasedLeafA"
@@ -721,6 +753,14 @@ func (m *MetadataUnion) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	if internal.HasObjectKeys(data, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			m.typ = "NamedMetadata"
+			m.NamedMetadata = valueNamedMetadata
+			return nil
+		}
+	}
 	valueNamedMetadata := new(NamedMetadata)
 	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
 		m.typ = "NamedMetadata"
@@ -1038,6 +1078,22 @@ func (n *NestedObjectUnion) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if internal.MatchesObjectKeys(data, []string{"gamma"}, []string{"gamma"}) {
+		valueLeafTypeB := new(LeafTypeB)
+		if err := json.Unmarshal(data, &valueLeafTypeB); err == nil {
+			n.typ = "LeafTypeB"
+			n.LeafTypeB = valueLeafTypeB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"alpha", "beta"}) {
+		valueLeafTypeA := new(LeafTypeA)
+		if err := json.Unmarshal(data, &valueLeafTypeA); err == nil {
+			n.typ = "LeafTypeA"
+			n.LeafTypeA = valueLeafTypeA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"gamma"}) {
 		valueLeafTypeB := new(LeafTypeB)
 		if err := json.Unmarshal(data, &valueLeafTypeB); err == nil {
 			n.typ = "LeafTypeB"
@@ -1398,6 +1454,14 @@ func (o *OuterNestedUnion) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	if internal.HasObjectKeys(data, []string{"inner", "label"}) {
+		valueWrapperObject := new(WrapperObject)
+		if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
+			o.typ = "WrapperObject"
+			o.WrapperObject = valueWrapperObject
+			return nil
+		}
+	}
 	valueWrapperObject := new(WrapperObject)
 	if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
 		o.typ = "WrapperObject"
@@ -1465,6 +1529,22 @@ func (p *PaymentMethodUnion) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if internal.MatchesObjectKeys(data, []string{"method", "tokenId"}, []string{"method", "tokenId"}) {
+		valueConvertToken := new(ConvertToken)
+		if err := json.Unmarshal(data, &valueConvertToken); err == nil {
+			p.typ = "ConvertToken"
+			p.ConvertToken = valueConvertToken
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "cardNumber"}) {
+		valueTokenizeCard := new(TokenizeCard)
+		if err := json.Unmarshal(data, &valueTokenizeCard); err == nil {
+			p.typ = "TokenizeCard"
+			p.TokenizeCard = valueTokenizeCard
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "tokenId"}) {
 		valueConvertToken := new(ConvertToken)
 		if err := json.Unmarshal(data, &valueConvertToken); err == nil {
 			p.typ = "ConvertToken"
@@ -1817,6 +1897,14 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 		u.typ = "OptionalMetadata"
 		u.OptionalMetadata = valueOptionalMetadata
 		return nil
+	}
+	if internal.HasObjectKeys(data, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			u.typ = "NamedMetadata"
+			u.NamedMetadata = valueNamedMetadata
+			return nil
+		}
 	}
 	valueNamedMetadata := new(NamedMetadata)
 	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {

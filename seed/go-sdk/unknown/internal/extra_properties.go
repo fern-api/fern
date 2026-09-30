@@ -92,15 +92,27 @@ func MatchesObjectKeys(data []byte, known []string, required []string) bool {
 			return false
 		}
 	}
+	knownKeys := make(map[string]struct{}, len(known))
+	for _, key := range known {
+		knownKeys[key] = struct{}{}
+	}
 	for key := range object {
-		isKnown := false
-		for _, knownKey := range known {
-			if key == knownKey {
-				isKnown = true
-				break
-			}
+		if _, ok := knownKeys[key]; !ok {
+			return false
 		}
-		if !isKnown {
+	}
+	return true
+}
+
+// HasObjectKeys reports whether the given data is a JSON object that includes
+// every key in required.
+func HasObjectKeys(data []byte, required []string) bool {
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err != nil || object == nil {
+		return false
+	}
+	for _, key := range required {
+		if _, ok := object[key]; !ok {
 			return false
 		}
 	}

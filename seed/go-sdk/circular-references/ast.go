@@ -780,6 +780,22 @@ func (t *TorU) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueT := new(T)
+		if err := json.Unmarshal(data, &valueT); err == nil {
+			t.typ = "T"
+			t.T = valueT
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueU := new(U)
+		if err := json.Unmarshal(data, &valueU); err == nil {
+			t.typ = "U"
+			t.U = valueU
+			return nil
+		}
+	}
 	valueT := new(T)
 	if err := json.Unmarshal(data, &valueT); err == nil {
 		t.typ = "T"

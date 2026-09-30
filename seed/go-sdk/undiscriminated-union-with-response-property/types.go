@@ -66,6 +66,30 @@ func (m *MyUnion) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	if internal.HasObjectKeys(data, []string{"type", "valueA"}) {
+		valueVariantA := new(VariantA)
+		if err := json.Unmarshal(data, &valueVariantA); err == nil {
+			m.typ = "VariantA"
+			m.VariantA = valueVariantA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "valueB"}) {
+		valueVariantB := new(VariantB)
+		if err := json.Unmarshal(data, &valueVariantB); err == nil {
+			m.typ = "VariantB"
+			m.VariantB = valueVariantB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "valueC"}) {
+		valueVariantC := new(VariantC)
+		if err := json.Unmarshal(data, &valueVariantC); err == nil {
+			m.typ = "VariantC"
+			m.VariantC = valueVariantC
+			return nil
+		}
+	}
 	valueVariantA := new(VariantA)
 	if err := json.Unmarshal(data, &valueVariantA); err == nil {
 		m.typ = "VariantA"

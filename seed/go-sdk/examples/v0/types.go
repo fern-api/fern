@@ -887,6 +887,30 @@ func (c *CastMember) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	if internal.HasObjectKeys(data, []string{"name", "id"}) {
+		valueActor := new(Actor)
+		if err := json.Unmarshal(data, &valueActor); err == nil {
+			c.typ = "Actor"
+			c.Actor = valueActor
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"name", "id"}) {
+		valueActress := new(Actress)
+		if err := json.Unmarshal(data, &valueActress); err == nil {
+			c.typ = "Actress"
+			c.Actress = valueActress
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"name", "actorOrActressId"}) {
+		valueStuntDouble := new(StuntDouble)
+		if err := json.Unmarshal(data, &valueStuntDouble); err == nil {
+			c.typ = "StuntDouble"
+			c.StuntDouble = valueStuntDouble
+			return nil
+		}
+	}
 	valueActor := new(Actor)
 	if err := json.Unmarshal(data, &valueActor); err == nil {
 		c.typ = "Actor"
