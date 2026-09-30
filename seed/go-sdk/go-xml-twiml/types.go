@@ -1366,6 +1366,38 @@ func (r *ResponseChildrenItem) GetHangup() *Hangup {
 }
 
 func (r *ResponseChildrenItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"message", "voice", "loop", "children"}, []string{}) {
+		valueSay := new(Say)
+		if err := json.Unmarshal(data, &valueSay); err == nil {
+			r.typ = "Say"
+			r.Say = valueSay
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"number", "status_callback_event", "record", "numbers"}, []string{}) {
+		valueDial := new(Dial)
+		if err := json.Unmarshal(data, &valueDial); err == nil {
+			r.typ = "Dial"
+			r.Dial = valueDial
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"length"}, []string{}) {
+		valuePause := new(Pause)
+		if err := json.Unmarshal(data, &valuePause); err == nil {
+			r.typ = "Pause"
+			r.Pause = valuePause
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{}, []string{}) {
+		valueHangup := new(Hangup)
+		if err := json.Unmarshal(data, &valueHangup); err == nil {
+			r.typ = "Hangup"
+			r.Hangup = valueHangup
+			return nil
+		}
+	}
 	valueSay := new(Say)
 	if err := json.Unmarshal(data, &valueSay); err == nil {
 		r.typ = "Say"

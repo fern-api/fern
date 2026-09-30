@@ -1,8 +1,10 @@
 import {
     FERN_DIRECTORY,
     getFernDirectory,
+    isValidProjectConfigVersion,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
+    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_VERSION_REQUIREMENT
 } from "@fern-api/configuration-loader";
 import { CliError } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
@@ -33,6 +35,13 @@ export async function downgrade({
         return cliContext.failAndThrow("Please specify a version to downgrade to using --version", undefined, {
             code: CliError.Code.ConfigError
         });
+    }
+    if (!isValidProjectConfigVersion(targetVersion)) {
+        return cliContext.failAndThrow(
+            `Invalid version "${targetVersion}": must be ${PROJECT_CONFIG_VERSION_REQUIREMENT}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 
     const fernDirectory = await getFernDirectory();

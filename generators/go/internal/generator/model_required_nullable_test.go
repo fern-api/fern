@@ -8,18 +8,18 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir/common"
 )
 
-func TestWriteRequiredNullableFieldsEmitsExplicitTable(t *testing.T) {
+func TestWriteNullableFieldsEmitsExplicitTable(t *testing.T) {
 	writer := newRequireTestWriter(nil)
-	name := writeRequiredNullableFields(writer, "AccountBalance", []requiredNullableProperty{
+	name := writeNullableFields(writer, "AccountBalance", []nullableProperty{
 		{wireValue: "limit", constantName: fieldBitConstantName("AccountBalance", "Limit")},
 		{wireValue: "unofficial_currency_code", constantName: fieldBitConstantName("AccountBalance", "UnofficialCurrencyCode")},
 	})
-	if name != "accountBalanceRequiredNullableFields" {
+	if name != "accountBalanceNullableFields" {
 		t.Fatalf("unexpected variable name %q", name)
 	}
 	src := writer.buffer.String()
 	for _, want := range []string{
-		"var accountBalanceRequiredNullableFields = map[string]*big.Int{",
+		"var accountBalanceNullableFields = map[string]*big.Int{",
 		`"limit": accountBalanceFieldLimit,`,
 		`"unofficial_currency_code": accountBalanceFieldUnofficialCurrencyCode,`,
 	} {
@@ -29,9 +29,9 @@ func TestWriteRequiredNullableFieldsEmitsExplicitTable(t *testing.T) {
 	}
 }
 
-func TestWriteRequiredNullableFieldsSkipsTypesWithoutNullableProperties(t *testing.T) {
+func TestWriteNullableFieldsSkipsTypesWithoutNullableProperties(t *testing.T) {
 	writer := newRequireTestWriter(nil)
-	if name := writeRequiredNullableFields(writer, "AccountsResponse", nil); name != "" {
+	if name := writeNullableFields(writer, "AccountsResponse", nil); name != "" {
 		t.Fatalf("expected no variable name, got %q", name)
 	}
 	if writer.buffer.Len() != 0 {
@@ -45,10 +45,10 @@ func TestWriteRequiredNullableFieldsSkipsTypesWithoutNullableProperties(t *testi
 
 func TestWriteRequireFieldsFromJSON(t *testing.T) {
 	writer := newRequireTestWriter(nil)
-	writeRequireFieldsFromJSON(writer, "a", "accountBalanceRequiredNullableFields")
+	writeRequireFieldsFromJSON(writer, "a", "accountBalanceNullableFields")
 	src := writer.buffer.String()
 	for _, want := range []string{
-		"presentFields, err := internal.ExplicitFieldsFromJSON(data, accountBalanceRequiredNullableFields)",
+		"presentFields, err := internal.ExplicitFieldsFromJSON(data, accountBalanceNullableFields)",
 		"a.require(presentFields)",
 	} {
 		if !strings.Contains(src, want) {

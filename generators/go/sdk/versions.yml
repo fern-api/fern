@@ -1,4 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.64.2
+  changelogEntry:
+    - summary: |
+        Return a completed HTTP response instead of discarding it when the request
+        context is canceled after the response has been fully received but before
+        it is decoded. `Caller.Call` previously re-checked `ctx.Err()` at that point
+        and returned `context.Canceled` / `context.DeadlineExceeded` with a nil
+        response, which dropped valid responses that had already been buffered (for
+        example by a logging `http.RoundTripper` that ends its scope before
+        returning). Calls canceled before the request is sent, and calls whose
+        response body cannot be read to completion once the context ends, continue
+        to fail with the context's error, and a canceled context still never
+        triggers a retry.
+      type: fix
+    - summary: |
+        Fix undiscriminated union deserialization so JSON objects are matched to the correct object
+        member. Previously, the first object member always won because object `UnmarshalJSON` accepts
+        unknown keys and doesn't enforce required keys, so values like `{"ends_with": [...]}` were
+        decoded as an earlier member and silently corrupted on re-serialization. Object members
+        (including aliases to objects) that don't allow extra properties are now only selected when
+        the JSON keys are a subset of the member's properties and include all of its required
+        properties, and permissive object members no longer shadow a later member that matches
+        exactly. If no member matches exactly, object members whose required keys are present are
+        tried next, and the previous behavior is kept as the final fallback.
+      type: fix
+    - summary: |
+        Preserve explicit `null` on optional nullable (`optional<nullable<T>>`) object
+        properties across a JSON decode/re-encode round trip. Previously only required
+        nullable properties were tracked on decode, so a response field such as
+        `"holder_category": null` was dropped when the value was marshaled again.
+        Fields absent from the input remain absent, and plain `optional<T>` fields are
+        unaffected. The generated `<type>RequiredNullableFields` map is renamed to
+        `<type>NullableFields`, and generated SDKs now include an optional-nullable
+        round-trip test for each affected type.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
 - version: 1.64.1
   changelogEntry:
     - summary: |

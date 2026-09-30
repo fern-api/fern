@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.2
+  changelogEntry:
+    - summary: |
+        `fern.config.json` now rejects a `version` that is not an exact semver version, `*`, or `latest`.
+        Previously any string was accepted and forwarded to `npx fern-api@<version>` during version
+        redirection, so specs like `file:`, `npm:`, git, or URL specs could make the CLI install and run
+        an arbitrary package.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
 - version: 5.143.1
   changelogEntry:
     - summary: |
