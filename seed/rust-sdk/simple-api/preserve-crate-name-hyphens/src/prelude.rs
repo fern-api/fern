@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use {{CRATE_NAME}}::prelude::*;`
+//! Import it with: `use seed_simple_api_sdk::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;
@@ -11,8 +11,8 @@ pub use crate::error::{ApiError, BuildError};
 // Main client and resource clients
 pub use crate::api::*;
 
-// Re-export commonly used external types{{CHRONO_EXPORTS}}{{ORDERED_FLOAT_EXPORTS}}
+// Re-export commonly used external types
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};
-pub use std::fmt;{{UUID_EXPORTS}}
+pub use std::fmt;
