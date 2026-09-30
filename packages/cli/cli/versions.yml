@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.1
+  changelogEntry:
+    - summary: |
+        Make `fern generate --package` / `--package-only` more reliable for Java SDKs on restricted networks.
+        Docker mode now gives the `gradle` toolchain container a persistent dependency cache
+        (`~/.fern/gradle-docker-home`), layers in the host's `gradle.properties` and `init.d` (from
+        `GRADLE_USER_HOME` or `~/.gradle`) and forwards `HTTP(S)_PROXY`/`NO_PROXY`; the Java build consults a
+        Maven Central mirror before Maven Central / the Gradle plugin portal to avoid HTTP 429 rate limits
+        (override with `FERN_MAVEN_CENTRAL_MIRROR=<url>` or disable with `FERN_MAVEN_CENTRAL_MIRROR=off`);
+        host mode prefers the generated `./gradlew` wrapper over a global `gradle`. Packaging now fails
+        instead of silently doing nothing when no generator in the group writes to `local-file-system`.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
 - version: 5.143.0
   changelogEntry:
     - summary: |
