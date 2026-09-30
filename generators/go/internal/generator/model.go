@@ -1049,6 +1049,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		isList     bool
 		date       *date
 
+		// Optional; only applies to object members that disallow extra properties.
+		strictKeys *strictObjectKeys
+
 		// Optional; only applies to date[-time] values.
 		valueMarshalerValue          string
 		valueUnmarshalerTypeName     string
@@ -1056,6 +1059,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 	var members []*member
 	var hasLiteral bool
+	var hasStrictObject bool
 	for _, unionMember := range union.Members {
 		field := typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types, scope)
 		var typeName string
@@ -1084,6 +1088,12 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			valueUnmarshalerTypeName     = ""
 			valueUnmarshalerMethodSuffix = ""
 		)
+		var strictKeys *strictObjectKeys
+		if typeName != "" {
+			strictKeys = getStrictObjectKeys(typeName, t.writer.types)
+		}
+		hasStrictObject = hasStrictObject || strictKeys != nil
+
 		if date != nil {
 			valueMarshalerValue = fmt.Sprintf("%s(%s.%s)", date.Constructor, receiver, field)
 			valueUnmarshalerTypeName = date.TypeDeclaration
@@ -1106,6 +1116,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				isOptional:                   isOptional,
 				isList:                       isList,
 				date:                         date,
+				strictKeys:                   strictKeys,
 				valueMarshalerValue:          valueMarshalerValue,
 				valueUnmarshalerTypeName:     valueUnmarshalerTypeName,
 				valueUnmarshalerMethodSuffix: valueUnmarshalerMethodSuffix,
@@ -1147,8 +1158,13 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 
 	// Implement the json.Unmarshaler interface.
+	//
+	// Object members that disallow extra properties are first only considered when
+	// the JSON object's keys match the member's properties, so that the first object
+	// member doesn't absorb every JSON object. If no member matches, the object members
+	// are tried again without the key check.
 	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-	for _, member := range members {
+	writeMemberUnmarshal := func(member *member, strict bool) {
 		value := member.value
 		if member.valueUnmarshalerTypeName != "" {
 			value = member.valueUnmarshalerTypeName
@@ -1157,6 +1173,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
 			format = member.variable + " := new(%s)"
 			value = strings.TrimLeft(value, "*")
+		}
+		if strict {
+			t.writer.P("if internal.MatchesObjectKeys(data, ", stringSliceLiteral(member.strictKeys.known), ", ", stringSliceLiteral(member.strictKeys.required), ") {")
 		}
 		t.writer.P(fmt.Sprintf(format, value))
 		t.writer.P("if err := json.Unmarshal(data, &", member.variable, "); err == nil {")
@@ -1170,7 +1189,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("}")
 			t.writer.P("return nil")
 			t.writer.P("}")
-			continue
+			return
 		}
 		variable := member.variable
 		if member.valueUnmarshalerMethodSuffix != "" {
@@ -1180,6 +1199,19 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P(receiver, ".", member.field, " = ", variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
+		if strict {
+			t.writer.P("}")
+		}
+	}
+	for _, member := range members {
+		writeMemberUnmarshal(member, member.strictKeys != nil)
+	}
+	if hasStrictObject {
+		for _, member := range members {
+			if member.strictKeys != nil {
+				writeMemberUnmarshal(member, false)
+			}
+		}
 	}
 	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, `, receiver, ")")
 	t.writer.P("}")
@@ -1493,6 +1525,66 @@ func resolveObjectTypeDeclaration(
 		}
 		return nil
 	}
+}
+
+// strictObjectKeys holds the JSON keys an object type accepts, and the subset it requires.
+type strictObjectKeys struct {
+	known    []string
+	required []string
+}
+
+// getStrictObjectKeys returns the JSON keys for the given object type (including the properties it
+// extends), or nil if the type isn't an object or allows extra properties.
+func getStrictObjectKeys(
+	typeId common.TypeId,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *strictObjectKeys {
+	typeDeclaration, ok := types[typeId]
+	if !ok || typeDeclaration == nil || typeDeclaration.Shape.Object == nil {
+		return nil
+	}
+	keys := &strictObjectKeys{}
+	if !collectStrictObjectKeys(typeDeclaration.Shape.Object, types, keys, make(map[*ir.ObjectTypeDeclaration]struct{})) {
+		return nil
+	}
+	return keys
+}
+
+func collectStrictObjectKeys(
+	object *ir.ObjectTypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
+	keys *strictObjectKeys,
+	seen map[*ir.ObjectTypeDeclaration]struct{},
+) bool {
+	if _, ok := seen[object]; ok {
+		return true
+	}
+	seen[object] = struct{}{}
+	if object.ExtraProperties {
+		return false
+	}
+	for _, extend := range object.Extends {
+		extendedObject := resolveObjectTypeDeclaration(extend.TypeId, types)
+		if extendedObject == nil || !collectStrictObjectKeys(extendedObject, types, keys, seen) {
+			return false
+		}
+	}
+	for _, property := range object.Properties {
+		keys.known = append(keys.known, property.Name.WireValue)
+		if !isOptionalType(property.ValueType, types) {
+			keys.required = append(keys.required, property.Name.WireValue)
+		}
+	}
+	return true
+}
+
+// stringSliceLiteral returns the Go source for a []string literal containing the given values.
+func stringSliceLiteral(values []string) string {
+	quoted := make([]string, len(values))
+	for i, value := range values {
+		quoted[i] = fmt.Sprintf("%q", value)
+	}
+	return "[]string{" + strings.Join(quoted, ", ") + "}"
 }
 
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with

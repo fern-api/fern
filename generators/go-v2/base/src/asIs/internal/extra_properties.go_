@@ -80,6 +80,33 @@ func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[str
 	return extraProperties, nil
 }
 
+// MatchesObjectKeys reports whether the given data is a JSON object that only
+// contains keys from known and includes every key in required.
+func MatchesObjectKeys(data []byte, known []string, required []string) bool {
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err != nil || object == nil {
+		return false
+	}
+	for _, key := range required {
+		if _, ok := object[key]; !ok {
+			return false
+		}
+	}
+	for key := range object {
+		isKnown := false
+		for _, knownKey := range known {
+			if key == knownKey {
+				isKnown = true
+				break
+			}
+		}
+		if !isKnown {
+			return false
+		}
+	}
+	return true
+}
+
 // getKeys returns the keys associated with the given value. The value must be a
 // a struct or a map with string keys.
 func getKeys(value any) ([]string, error) {

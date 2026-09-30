@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix undiscriminated union deserialization so JSON objects are matched to the correct object
+    member. Previously, the first object member always won because object `UnmarshalJSON` accepts
+    unknown keys and doesn't enforce required keys, so values like `{"ends_with": [...]}` were
+    decoded as an earlier member and silently corrupted on re-serialization. Object members that
+    don't allow extra properties are now only selected when the JSON keys are a subset of the
+    member's properties and include all of its required properties; the previous behavior is kept
+    as a fallback when no member matches.
+  type: fix
