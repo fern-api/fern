@@ -232,9 +232,10 @@ export async function parseDocsConfiguration({
         );
     }
 
-    const siteLocales = rawDocsConfiguration.translations?.map(
-        (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
-    ) ?? [rawDocsConfiguration.settings?.language ?? "en"];
+    const translationLocales =
+        rawDocsConfiguration.translations?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang) ?? [];
+    const siteLocales =
+        translationLocales.length > 0 ? translationLocales : [rawDocsConfiguration.settings?.language ?? "en"];
     warnOnUnconfiguredExternalSitemapLocales({
         externalSitemaps: experimental?.externalSitemaps,
         siteLocales,

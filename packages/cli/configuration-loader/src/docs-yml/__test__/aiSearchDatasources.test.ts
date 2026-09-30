@@ -66,4 +66,17 @@ describe("parseDocsConfiguration — ai-search.datasources", () => {
         expect(warnings[0]).toContain("ai-search.datasources: locale 'nl'");
         expect(warnings[0]).toContain("https://help.example.com/nl");
     });
+
+    it("falls back to settings.language when translations is empty", async () => {
+        const { warnings } = await parseWithWarnings({
+            instances: [],
+            navigation: [],
+            translations: [],
+            settings: { language: "ja" },
+            "ai-search": {
+                datasources: [{ url: "https://help.example.com/ja-jp", locale: "ja" }]
+            }
+        });
+        expect(warnings).toHaveLength(0);
+    });
 });
