@@ -54,7 +54,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "seed_any_auth".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_any-auth/0.0.1".to_string(),
+            user_agent: "AnyAuth Rust SDK".to_string(),
             reqwest_client: None,
         }
     }

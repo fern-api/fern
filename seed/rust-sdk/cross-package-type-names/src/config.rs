@@ -44,7 +44,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_cross-package-type-names/0.0.1".to_string(),
+            user_agent: "CrossPackageTypeNames Rust SDK".to_string(),
             reqwest_client: None,
         }
     }

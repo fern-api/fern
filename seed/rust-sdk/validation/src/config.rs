@@ -41,7 +41,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "seed_validation".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_validation/0.0.1".to_string(),
+            user_agent: "Validation Rust SDK".to_string(),
             reqwest_client: None,
         }
     }

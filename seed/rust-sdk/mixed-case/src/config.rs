@@ -41,7 +41,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Name".to_string(), "seed_mixed_case".to_string()),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_mixed-case/0.0.1".to_string(),
+            user_agent: "MixedCase Rust SDK".to_string(),
             reqwest_client: None,
         }
     }

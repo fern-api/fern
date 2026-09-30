@@ -50,7 +50,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_multi-url-environment-no-default/0.0.1".to_string(),
+            user_agent: "MultiUrlEnvironmentNoDefault Rust SDK".to_string(),
             reqwest_client: None,
             environment: None,
         }

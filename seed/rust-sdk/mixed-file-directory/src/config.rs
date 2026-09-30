@@ -44,7 +44,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "fern_mixed-file-directory/0.0.1".to_string(),
+            user_agent: "MixedFileDirectory Rust SDK".to_string(),
             reqwest_client: None,
         }
     }

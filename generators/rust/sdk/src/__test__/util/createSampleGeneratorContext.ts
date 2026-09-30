@@ -1,5 +1,6 @@
 import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkCustomConfigSchema } from "../../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
@@ -7,6 +8,7 @@ const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: 
 interface CreateSampleGeneratorContextArgs {
     environments?: FernIr.EnvironmentsConfig;
     sdkConfig?: FernIr.SdkConfig;
+    customConfig?: Partial<SdkCustomConfigSchema>;
 }
 
 export function createSampleGeneratorContext(args: CreateSampleGeneratorContextArgs = {}): SdkGeneratorContext {
@@ -45,7 +47,7 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
         getApiClientBuilderClientName: () => "TestClient",
         getCrateName: () => "test_api",
         getCrateVersion: () => "0.1.0",
-        customConfig: {},
+        customConfig: args.customConfig ?? {},
         hasEnvironments: () => mockIR.environments?.environments != null,
         hasMultipleBaseUrls: () => mockIR.environments?.environments?.type === "multipleBaseUrls",
         getEnvironmentEnumName: () => "Environment",
