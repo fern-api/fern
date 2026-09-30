@@ -34,6 +34,7 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
             case "PRE_RELEASE":
                 return AvailabilityStatus.PreRelease;
             case "GENERAL_AVAILABILITY":
+            case "GENERALLY_AVAILABLE":
             case "GA":
             case "STABLE":
                 return AvailabilityStatus.GeneralAvailability;
