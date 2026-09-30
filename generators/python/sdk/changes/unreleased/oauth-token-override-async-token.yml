@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Accept an `async_token` callable on the async root client when OAuth client credentials are
+    configured with a token override. Previously only a synchronous `token` callable could be
+    supplied in token mode, so resolving the token blocked the event loop on every request. The
+    async client now exposes `async_token: Optional[Callable[[], Awaitable[str]]]`, adds a
+    constructor overload for it, and forwards it to `AsyncClientWrapper`.
+  type: fix
