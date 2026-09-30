@@ -97,6 +97,22 @@ class Response(UniversalBaseModel):
     ) -> Say:
         """
         Appends a `<Say>` child element and returns it.
+
+        <Say> TwiML Verb
+
+        Parameters
+        ----------
+        message : typing.Optional[str]
+            Message to say
+
+        voice : typing.Optional[str]
+            Voice to use
+
+        loop : typing.Optional[int]
+            Times to loop message
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Say(message=message, voice=voice, loop=loop, children=None, **extra_attributes)
         append_xml_child(self, "children", child)
@@ -111,6 +127,15 @@ class Response(UniversalBaseModel):
     ) -> Dial:
         """
         Appends a `<Dial>` child element and returns it.
+
+        Parameters
+        ----------
+        number : typing.Optional[str]
+
+        status_callback_event : typing.Optional[typing.List[str]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Dial(number=number, status_callback_event=status_callback_event, numbers=None, **extra_attributes)
         append_xml_child(self, "children", child)
@@ -121,6 +146,13 @@ class Response(UniversalBaseModel):
         Appends a `<Pause>` child element and returns it.
 
         XML element without an explicit xml.name; falls back to the schema name.
+
+        Parameters
+        ----------
+        length : typing.Optional[int]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Pause(length=length, **extra_attributes)
         append_xml_child(self, "children", child)

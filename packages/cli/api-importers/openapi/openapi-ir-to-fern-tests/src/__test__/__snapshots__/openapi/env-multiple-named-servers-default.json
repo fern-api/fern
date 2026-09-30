@@ -111,6 +111,7 @@
           "messages": {
             "converse": {
               "body": "string",
+              "docs": "Agent conversation request.",
               "origin": "client",
             },
           },
@@ -126,6 +127,7 @@
     converse:
       origin: client
       body: string
+      docs: Agent conversation request.
   examples:
     - messages:
         - type: converse
@@ -150,6 +152,7 @@
           "messages": {
             "transcribe": {
               "body": "string",
+              "docs": "Transcription request.",
               "origin": "client",
             },
           },
@@ -165,6 +168,7 @@
     transcribe:
       origin: client
       body: string
+      docs: Transcription request.
   examples:
     - messages:
         - type: transcribe

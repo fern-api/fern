@@ -1,12 +1,30 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 import { readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
-import { loadAndUpdateGenerators } from "../upgradeGenerator.js";
+import { compareGeneratorVersions } from "../getSdkGenApiGeneratorVersions.js";
+import { loadAndUpdateGenerators, upgradeGenerator } from "../upgradeGenerator.js";
+
+const sdkGenApiHelpers = vi.hoisted(() => ({
+    getOrigin: vi.fn(() => process.env.FERN_SDK_GEN_API_ORIGIN),
+    getLanguage: vi.fn((generatorId: string) => {
+        if (generatorId.includes("typescript")) {
+            return "typescript";
+        }
+        if (generatorId === "fernapi/fern-go-sdk") {
+            return "go";
+        }
+        return undefined;
+    }),
+    isEnabled: vi.fn(() => process.env.FERN_USE_SDK_GEN_API === "true"),
+    askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
+}));
+const getSdkGenApiToken = sdkGenApiHelpers.askToLogin;
 
 vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),
@@ -38,6 +56,12 @@ vi.mock("@fern-api/configuration-loader", () => ({
 }));
 
 vi.mock("fs/promises");
+vi.mock("@fern-api/login", () => ({ askToLogin: sdkGenApiHelpers.askToLogin }));
+vi.mock("@fern-api/remote-workspace-runner", () => ({
+    getFernSdkGenApiOrigin: sdkGenApiHelpers.getOrigin,
+    getFernSdkGenApiLanguage: sdkGenApiHelpers.getLanguage,
+    isFernSdkGenApiEnabled: sdkGenApiHelpers.isEnabled
+}));
 vi.mock("../migrations", () => ({
     loadAndRunMigrations: vi.fn()
 }));
@@ -48,6 +72,8 @@ describe("upgradeGenerator - YAML formatting preservation", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.unstubAllEnvs();
+        vi.unstubAllGlobals();
 
         testYamlPath = join(tmpdir(), `generators-${Date.now()}.yml`);
 
@@ -62,6 +88,22 @@ describe("upgradeGenerator - YAML formatting preservation", () => {
                 throw new Error(message);
             })
         } as unknown as TaskContext;
+    });
+
+    it.each([
+        ["1.2.3-1-gabc", "1.2.3", 1],
+        ["1.2.3", "1.2.3-1-gabc", -1],
+        ["2.0.0", "latest", -1],
+        ["latest", "2.0.0", 1],
+        ["latest", "latest", 0]
+    ])("compares generator version %s against %s", (candidateVersion, currentVersion, expected) => {
+        expect(
+            compareGeneratorVersions({
+                generatorId: "fernapi/fern-typescript-sdk",
+                candidateVersion,
+                currentVersion
+            })
+        ).toBe(expected);
     });
 
     it("should preserve YAML comments when applying migrations", async () => {
@@ -124,7 +166,8 @@ groups:
             includeMajor: false,
             skipAutoreleaseDisabled: false,
             channel: undefined,
-            cliVersion: "1.0.0"
+            cliVersion: "1.0.0",
+            organization: "test-org"
         });
 
         // Verify writeFile was called with updated content
@@ -206,7 +249,8 @@ groups:
             includeMajor: false,
             skipAutoreleaseDisabled: false,
             channel: undefined,
-            cliVersion: "1.0.0"
+            cliVersion: "1.0.0",
+            organization: "test-org"
         });
 
         expect(result.updatedConfiguration).toBeDefined();
@@ -260,7 +304,8 @@ groups:
             includeMajor: false,
             skipAutoreleaseDisabled: false,
             channel: undefined,
-            cliVersion: "1.0.0"
+            cliVersion: "1.0.0",
+            organization: "test-org"
         });
 
         expect(result.updatedConfiguration).toBeDefined();
@@ -323,7 +368,8 @@ groups:
             includeMajor: false,
             skipAutoreleaseDisabled: false,
             channel: undefined,
-            cliVersion: "1.0.0"
+            cliVersion: "1.0.0",
+            organization: "test-org"
         });
 
         expect(result.updatedConfiguration).toBeDefined();
@@ -338,5 +384,403 @@ groups:
         expect(nameIndex).toBeLessThan(versionIndex);
         expect(versionIndex).toBeLessThan(outputIndex);
         expect(outputIndex).toBeLessThan(configIndex);
+    });
+
+    it.each([
+        ["1.0.0", false],
+        ["0.9.0", true],
+        ["1.0.0-beta.1", true]
+    ])("does not mutate or migrate for a non-ahead candidate %s", async (candidate, stale) => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: 1.0.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue(candidate);
+        const { loadAndRunMigrations } = await import("../migrations");
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: true,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org"
+        });
+
+        expect(result.updatedConfiguration).toContain("version: 1.0.0");
+        expect(result.appliedUpgrades).toEqual([]);
+        expect(loadAndRunMigrations).not.toHaveBeenCalled();
+        if (stale) {
+            expect(mockContext.logger.warn).toHaveBeenCalledWith(expect.stringContaining("stale FDR candidate"));
+            expect(result.alreadyUpToDate).toEqual([]);
+            expect(result.staleCandidates).toEqual([
+                expect.objectContaining({ candidateVersion: candidate, currentVersion: "1.0.0", backend: "FDR" })
+            ]);
+        } else {
+            expect(mockContext.logger.warn).not.toHaveBeenCalled();
+            expect(result.alreadyUpToDate).toHaveLength(1);
+            expect(result.staleCandidates).toEqual([]);
+        }
+    });
+
+    it("preserves the current version for withheld-major reporting when the candidate is older", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: 1.0.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: async () => ({
+                    targets: [
+                        {
+                            targetId: "generator",
+                            state: "RESOLVED",
+                            compatibleVersion: "0.9.0",
+                            withheldMajorVersion: "2.0.0"
+                        }
+                    ]
+                })
+            })
+        );
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org",
+            getSdkGenApiToken
+        });
+
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(mockContext.logger.warn).toHaveBeenCalledWith(expect.stringContaining("stale SDK Gen API candidate"));
+        expect(result.alreadyUpToDate).toEqual([]);
+        expect(result.staleCandidates).toEqual([
+            expect.objectContaining({
+                candidateVersion: "0.9.0",
+                currentVersion: "1.0.0",
+                backend: "SDK Gen API"
+            })
+        ]);
+        expect(result.updatedConfiguration).toContain("version: 1.0.0");
+        expect(result.skippedMajorUpgrades).toEqual([
+            {
+                generatorName: "fernapi/fern-typescript-sdk",
+                currentVersion: "1.0.0",
+                latestMajorVersion: "2.0.0"
+            }
+        ]);
+    });
+
+    it("summarizes stale candidates instead of reporting no generators found", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: 1.0.0\n`;
+        const { getLatestGeneratorVersion, getPathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } =
+            await import("@fern-api/configuration-loader");
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(loadRawGeneratorsConfiguration).mockResolvedValue({ groups: {} });
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("0.9.0");
+        const logger = {
+            info: vi.fn(),
+            error: vi.fn(),
+            warn: vi.fn(),
+            debug: vi.fn()
+        };
+        const cliContext = {
+            environment: { packageVersion: "1.0.0" },
+            logger,
+            runTaskForWorkspace: vi.fn(async (_workspace: unknown, run: (context: TaskContext) => Promise<void>) =>
+                run(mockContext)
+            )
+        };
+
+        await upgradeGenerator({
+            cliContext: cliContext as never,
+            generator: undefined,
+            group: undefined,
+            project: {
+                apiWorkspaces: [{ absoluteFilePath: "/test", workspaceName: undefined }],
+                config: { organization: "test-org" }
+            } as never,
+            includeMajor: true,
+            skipAutoreleaseDisabled: false,
+            channel: undefined
+        });
+
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Ignored stale generator candidates"));
+        expect(logger.info).not.toHaveBeenCalledWith(expect.stringContaining("No generators found"));
+    });
+
+    it("uses SDK Gen API discovery without an FDR fallback and preserves the TypeScript Node identity", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-node-sdk\n        version: 0.40.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion, normalizeGeneratorName } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(normalizeGeneratorName).mockReturnValue("fernapi/fern-typescript-sdk");
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com/control-plane/");
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                targets: [
+                    {
+                        targetId: "generator",
+                        state: "RESOLVED",
+                        compatibleVersion: "0.51.7",
+                        withheldMajorVersion: "1.2.0"
+                    }
+                ]
+            })
+        });
+        vi.stubGlobal("fetch", fetchMock);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org",
+            getSdkGenApiToken
+        });
+
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(fetchMock).toHaveBeenCalledOnce();
+        expect(fetchMock.mock.calls[0]?.[0].toString()).toBe(
+            "https://sdk-gen.example.com/control-plane/v1/fern/generator-versions/discover"
+        );
+        expect(fetchMock.mock.calls[0]?.[1]?.headers).toEqual({
+            Authorization: "Bearer test-token",
+            "X-Fern-Organization-Id": "test-org",
+            "content-type": "application/json"
+        });
+        expect(JSON.parse(fetchMock.mock.calls[0]?.[1]?.body as string)).toEqual({
+            targets: [
+                {
+                    targetId: "generator",
+                    generatorId: "fernapi/fern-typescript-node-sdk",
+                    language: "typescript",
+                    currentVersion: "0.40.0",
+                    includeMajor: false
+                }
+            ]
+        });
+        expect(result.updatedConfiguration).toContain("version: 0.51.7");
+        expect(result.skippedMajorUpgrades).toEqual([
+            {
+                generatorName: "fernapi/fern-typescript-node-sdk",
+                currentVersion: "0.51.7",
+                latestMajorVersion: "1.2.0"
+            }
+        ]);
+    });
+
+    it("adds SDK Gen API context to network errors", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("connection refused")));
+        const { getSdkGenApiGeneratorVersions } = await import("../getSdkGenApiGeneratorVersions.js");
+
+        await expect(
+            getSdkGenApiGeneratorVersions({
+                generatorId: "fernapi/fern-go-sdk",
+                currentVersion: "0.30.0",
+                includeMajor: false,
+                organization: "test-org",
+                getToken: getSdkGenApiToken,
+                context: mockContext
+            })
+        ).rejects.toThrow(
+            "SDK Gen API version discovery failed for fernapi/fern-go-sdk@0.30.0 because the API could not be reached"
+        );
+    });
+
+    it("reports unresolved SDK Gen API coordinates without falling back to FDR", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-go-sdk\n        version: 0.30.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: async () => ({
+                    targets: [
+                        {
+                            targetId: "generator",
+                            state: "UNAVAILABLE",
+                            reason: "VERSION_UNAVAILABLE"
+                        }
+                    ]
+                })
+            })
+        );
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org",
+            getSdkGenApiToken
+        });
+
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(mockContext.logger.error).toHaveBeenCalledWith(expect.stringContaining("VERSION_UNAVAILABLE"));
+        expect(result.updatedConfiguration).toContain("version: 0.30.0");
+    });
+
+    it("rejects an SDK Gen API upgrade channel before making any lookup", async () => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-go-sdk\n        version: 0.30.0\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        await expect(
+            loadAndUpdateGenerators({
+                absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+                context: mockContext,
+                generatorFilter: undefined,
+                groupFilter: undefined,
+                includeMajor: false,
+                skipAutoreleaseDisabled: false,
+                channel: "beta" as FernRegistry.generators.ReleaseType,
+                cliVersion: "1.0.0",
+                organization: "test-org",
+                getSdkGenApiToken
+            })
+        ).rejects.toThrow("does not support the requested upgrade channel");
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(sdkGenApiHelpers.getOrigin).not.toHaveBeenCalled();
+        expect(sdkGenApiHelpers.getLanguage).not.toHaveBeenCalled();
+    });
+
+    it.each([
+        ["non-exact semver", { targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "1.2" }] }],
+        ["null version", { targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: null }] }],
+        [
+            "unknown result field",
+            { targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "1.2.3", runtime: "fern" }] }
+        ],
+        [
+            "unknown response field",
+            { targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "1.2.3" }], internal: true }
+        ]
+    ])("rejects an SDK Gen API response with %s", async (_name, body) => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: async () => body
+            })
+        );
+        const { getSdkGenApiGeneratorVersions } = await import("../getSdkGenApiGeneratorVersions.js");
+
+        await expect(
+            getSdkGenApiGeneratorVersions({
+                generatorId: "fernapi/fern-go-sdk",
+                currentVersion: "0.30.0",
+                includeMajor: false,
+                organization: "test-org",
+                getToken: getSdkGenApiToken,
+                context: mockContext
+            })
+        ).rejects.toThrow("SDK Gen API returned");
+    });
+
+    it.each([
+        "1.2.3+build.4",
+        "1.2.3-preview.1"
+    ])("upgrades to valid broader SemVer candidate %s", async (candidate) => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: 1.2.2\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue(candidate);
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: true,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org"
+        });
+
+        expect(result.updatedConfiguration).toContain(`version: ${candidate}`);
+        expect(result.appliedUpgrades).toHaveLength(1);
+    });
+
+    it.each([
+        ["configured", "not-a-version", "1.2.3"],
+        ["candidate", "1.2.3", "not-a-version"],
+        ["candidate with latest configured", "latest", "not-a-version"],
+        ["equal malformed", "not-a-version", "not-a-version"]
+    ])("fails actionably for malformed %s version", async (_kind, currentVersion, candidateVersion) => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: ${currentVersion}\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue(candidateVersion);
+
+        await expect(
+            loadAndUpdateGenerators({
+                absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+                context: mockContext,
+                generatorFilter: undefined,
+                groupFilter: undefined,
+                includeMajor: true,
+                skipAutoreleaseDisabled: false,
+                channel: undefined,
+                cliVersion: "1.0.0",
+                organization: "test-org"
+            })
+        ).rejects.toThrow(`configured version "${currentVersion}", candidate version "${candidateVersion}"`);
     });
 });

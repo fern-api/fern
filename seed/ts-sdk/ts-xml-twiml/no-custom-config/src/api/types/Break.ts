@@ -2,8 +2,17 @@
 
 import * as core from "../../core/index.js";
 
+/**
+ * Adding a Pause in <Say>
+ */
 export class Break implements core.xml.XmlSerializable {
+    /**
+     * Set a pause based on strength
+     */
     strength?: Break.Strength;
+    /**
+     * Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+     */
     time?: string;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
@@ -55,6 +64,7 @@ export class Break implements core.xml.XmlSerializable {
 }
 
 export namespace Break {
+    /** Set a pause based on strength */
     export const Strength = {
         None: "none",
         XWeak: "x-weak",
@@ -66,7 +76,13 @@ export namespace Break {
     export type Strength = (typeof Strength)[keyof typeof Strength];
 
     export interface Fields {
+        /**
+         * Set a pause based on strength
+         */
         strength?: Break.Strength;
+        /**
+         * Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+         */
         time?: string;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
@@ -84,11 +100,17 @@ export namespace Break {
             return new Break.Builder(Break.fromXml(xml));
         }
 
+        /**
+         * Set a pause based on strength
+         */
         strength(strength: Break.Strength | undefined): this {
             this.fields.strength = strength;
             return this;
         }
 
+        /**
+         * Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+         */
         time(time: string | undefined): this {
             this.fields.time = time;
             return this;

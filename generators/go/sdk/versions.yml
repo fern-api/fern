@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.64.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.64.0
+  changelogEntry:
+    - summary: |
+        Object type descriptions are now written directly above the `type X struct` declaration
+        so `go doc` and editors attach them to the type. Previously the comment landed above the
+        internal field-bitmask `var (...)` block emitted before the struct.
+      type: fix
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`,
+        `dial.AddNumber(...)`) now name the appended element and include the child type's
+        description in their doc comment.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.63.0
+  changelogEntry:
+    - summary: |
+        Generated error types that carry a body now expose a nil-safe `GetBody()` accessor that
+        returns the same type as the `Body` field. This lets callers handle every status-specific
+        error through a single interface-based `errors.As`, e.g.
+        `type bodyProvider interface{ GetBody() *ErrorBody }`. Errors without a body are unchanged.
+      type: feat
+    - summary: |
+        `reference.md` now documents enum-typed query parameters, headers, and inlined request body
+        properties (including lists of enums) with the same value types used on the generated request
+        structs (e.g. `[]acme.CountryCode` instead of `[]*acme.CountryCode`).
+      type: fix
+    - summary: |
+        Generated request types with `date` or `datetime` properties now decode those properties
+        through `internal.Date` / `internal.DateTime` in `UnmarshalJSON`, matching what their
+        `MarshalJSON` already emits. Previously `json.Unmarshal` into such a request type rejected
+        date-only values (e.g. `{"start_date":"2026-01-02"}`) that the type itself had produced.
+        Request types without date properties are unchanged.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.62.1
+  changelogEntry:
+    - summary: |
+        Point the "Neither an import path nor a module path was specified" warning at the
+        Go generator README in the fern monorepo; the old `fern-api/fern-go` link now 404s.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 1.62.0
   changelogEntry:
     - summary: |

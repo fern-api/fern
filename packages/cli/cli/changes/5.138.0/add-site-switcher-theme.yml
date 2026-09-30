@@ -1,0 +1,5 @@
+- summary: |
+    Add `theme.site-switcher` to docs.yml and global themes. When enabled, docs sites
+    published to the same domain under different basepaths are listed in a header
+    site switcher; `order`, `hide`, `labels`, and `show-products` control presentation.
+  type: feat

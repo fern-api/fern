@@ -251,8 +251,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         // Make the root client AutoCloseable so callers can release the OkHttpClient the SDK created for them
-        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which only tears anything
-        // down when the client owns the OkHttpClient — a client supplied via Builder.httpClient(...) is left running,
+        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which first disconnects any
+        // WebSocket clients still connected through these options (so they stop reconnecting), then only tears the
+        // HTTP client down when the client owns it — a client supplied via Builder.httpClient(...) is left running,
         // since the caller owns its lifecycle.
         result.getClientImpl()
                 .addSuperinterface(AutoCloseable.class)
@@ -260,8 +261,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addAnnotation(Override.class)
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc(
-                                "Releases resources owned by this client. See {@code ClientOptions.close()} for what is\n"
-                                        + "and is not released.\n")
+                                "Releases resources owned by this client: any WebSocket clients still connected through\n"
+                                        + "it are disconnected first, then the SDK-owned HTTP client is shut down. See\n"
+                                        + "{@code ClientOptions.close()} for what is and is not released.\n")
                         .addStatement("this.clientOptions.close()")
                         .build());
 

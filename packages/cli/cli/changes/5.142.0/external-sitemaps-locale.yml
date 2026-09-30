@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `experimental.external-sitemaps` entries may now be objects with a `url` and an
+    optional `locale`, e.g. `- url: https://help.example.com/sitemap.xml` /
+    `locale: nl`. When set, every page in that sitemap is indexed into the search
+    index of that site locale instead of relying on per-URL language detection.
+  type: feat

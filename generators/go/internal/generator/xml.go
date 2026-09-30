@@ -48,12 +48,15 @@ type xmlValue struct {
 	childNames []string
 	// members are the xml-encoded members of a union item.
 	members []*xmlUnionMember
+	// docs is the description of the object item's type declaration.
+	docs *string
 }
 
 type xmlUnionMember struct {
 	field   string
 	goType  string
 	xmlName string
+	docs    *string
 }
 
 // xmlProperty is a property of an xml-encoded object and how it is serialized.
@@ -170,6 +173,7 @@ func (r *xmlResolver) resolveItem(typeReference *ir.TypeReference, value *xmlVal
 			value.typeId = typeId
 			value.xmlName = xml.Name
 			value.childNames = []string{xml.Name}
+			value.docs = declaration.Docs
 			return nil
 		case "undiscriminatedUnion":
 			value.kind = xmlValueUnion
@@ -215,6 +219,7 @@ func (r *xmlResolver) unionMembers(declaration *ir.TypeDeclaration) ([]*xmlUnion
 			field:   field,
 			goType:  strings.TrimPrefix(r.goType(member.Type), "*"),
 			xmlName: xml.Name,
+			docs:    memberDeclaration.Docs,
 		})
 	}
 	return members, nil
@@ -696,7 +701,7 @@ func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlPropert
 		switch value.kind {
 		case xmlValueObject:
 			name := xmlBuilderName(value.goType, used)
-			t.writer.P("// ", name, " appends a child element and returns the ", t.typeName, ".")
+			t.writeXmlBuilderDocs(name, value.xmlName, value.docs)
 			t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", value.goType, ") *", t.typeName, " {")
 			t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", child)")
 			t.writer.P("return ", receiver)
@@ -705,7 +710,7 @@ func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlPropert
 		case xmlValueUnion:
 			for _, member := range value.members {
 				name := xmlBuilderName(member.goType, used)
-				t.writer.P("// ", name, " appends a child element and returns the ", t.typeName, ".")
+				t.writeXmlBuilderDocs(name, member.xmlName, member.docs)
 				t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", member.goType, ") *", t.typeName, " {")
 				t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", ", xmlUnionConstructor(value.goType, member, "child"), ")")
 				t.writer.P("return ", receiver)
@@ -713,6 +718,16 @@ func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlPropert
 				t.writer.P()
 			}
 		}
+	}
+}
+
+// writeXmlBuilderDocs writes the doc comment for a fluent child method, including the
+// child type's description when it has one.
+func (t *typeVisitor) writeXmlBuilderDocs(name string, xmlName string, docs *string) {
+	t.writer.P("// ", name, " appends a <", xmlName, "> child element and returns the ", t.typeName, ".")
+	if docs != nil && strings.TrimSpace(*docs) != "" {
+		t.writer.P("//")
+		t.writer.WriteDocs(docs)
 	}
 }
 

@@ -67,7 +67,6 @@ func (g *GetAccountsRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An account with a nested model that also has required-nullable fields.
 var (
 	accountFieldAccountID    = big.NewInt(1 << 0)
 	accountFieldBalances     = big.NewInt(1 << 1)
@@ -87,6 +86,7 @@ var accountRequiredNullableFields = map[string]*big.Int{
 	"owner":         accountFieldOwner,
 }
 
+// An account with a nested model that also has required-nullable fields.
 type Account struct {
 	AccountID    string          `json:"account_id" url:"account_id"`
 	Balances     *AccountBalance `json:"balances" url:"balances"`
@@ -281,9 +281,6 @@ func (a *Account) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-// Balance information with required-nullable scalars. A required-nullable
-// field that arrives as null must be re-encoded as null; a field that is
-// absent must stay absent.
 var (
 	accountBalanceFieldAvailable              = big.NewInt(1 << 0)
 	accountBalanceFieldCurrent                = big.NewInt(1 << 1)
@@ -300,6 +297,9 @@ var accountBalanceRequiredNullableFields = map[string]*big.Int{
 	"unofficial_currency_code": accountBalanceFieldUnofficialCurrencyCode,
 }
 
+// Balance information with required-nullable scalars. A required-nullable
+// field that arrives as null must be re-encoded as null; a field that is
+// absent must stay absent.
 type AccountBalance struct {
 	Available              float64    `json:"available" url:"available"`
 	Current                float64    `json:"current" url:"current"`

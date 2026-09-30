@@ -17,6 +17,7 @@ use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::auth::keyring_store::active_store;
 use crate::auth::login::{self, DynLoginFlow};
+use crate::auth::oauth2::CLIENT_ID_FIELD;
 use crate::auth::{AuthCredentialSource, SchemeBinding};
 use crate::error::CliError;
 use crate::profiles::selection::{self, PROFILE_FLAG};
@@ -393,10 +394,9 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
              invocation. Select one for a single command with `--profile <name>` \
              (`-p`), for a shell with the <NAME>_PROFILE environment variable, or \
              persistently with `profiles use <name>`.\n\n\
-             Precedence per value is: explicit flag, then environment variable, \
-             then profile, then the spec's own default. Environment variables sit \
-             above profiles so a CI pipeline is never silently overridden by a \
-             developer's stored profile.",
+             Precedence per value is: explicit flag, then the selected profile, \
+             then environment variable, then the spec's own default. Environment \
+             variables fill in only what the selected profile leaves unset.",
         )
         .arg_required_else_help(true)
         .subcommand(create)
@@ -775,14 +775,6 @@ fn handle_create(
                 active_store().backend_label(),
             )),
         );
-        // The same warning `auth login --with-token` emits, and for a sharper
-        // reason: `--from-env` *reads* the env var, so without this the user
-        // is told the capture succeeded and never learns that the variable
-        // they captured from will keep winning over the copy they just made.
-        login::warn_if_env_shadows(
-            &mut stderr,
-            &login::shadowing_env_vars(ctx.cli_name, &scheme, ctx.auth_bindings),
-        );
     }
 
     store.upsert(&entry);
@@ -975,12 +967,23 @@ fn handle_list<W: Write>(
             row.insert("parent".into(), parent.clone().into());
         }
         if let Some(resolved) = &resolved {
+            // The identifier, when we can read it — that is the question a
+            // listing should answer. A profile authenticates as one thing:
+            // the stored basic-auth username (see `stored_account`) or, for
+            // an OAuth grant, its client id. One column, whichever applies;
+            // `show` spells out which is which.
+            let account = resolved
+                .credential
+                .as_ref()
+                .and_then(|credential| {
+                    stored_account(ctx, credential)
+                        .or_else(|| stored_oauth_client_id(ctx, credential))
+                })
+                .or_else(|| resolved.oauth_client_id.clone());
+            if let Some(account) = account {
+                row.insert("account".into(), account.into());
+            }
             if let Some(credential) = &resolved.credential {
-                // The identifier, when we can read it — that is the question a
-                // listing should answer. See `stored_account`.
-                if let Some(account) = stored_account(ctx, credential) {
-                    row.insert("account".into(), account.into());
-                }
                 // The *slot* only when it is not this profile's own. Emitting
                 // it unconditionally printed `prod -> prod` on every row: true,
                 // redundant, and it crowded out the columns that carry
@@ -989,20 +992,7 @@ fn handle_list<W: Write>(
                     row.insert("credentials_from".into(), credential.clone().into());
                 }
             }
-            if let Some(client_id) = &resolved.oauth_client_id {
-                row.insert("oauth_client_id".into(), client_id.clone().into());
-            }
-            if let Some(base_url) = &resolved.base_url {
-                row.insert("base_url".into(), base_url.clone().into());
-            }
-            if let Some(retries) = resolved.retries {
-                row.insert("retries".into(), retries.into());
-            }
-            if let Some(format) = &resolved.format {
-                row.insert("format".into(), format.clone().into());
-            }
-            insert_map(&mut row, "parameters", &resolved.parameters);
-            insert_map(&mut row, "server_variables", &resolved.server_variables);
+            insert_settings(&mut row, resolved);
         } else {
             // A profile whose parent chain is broken still has to appear —
             // otherwise the user cannot see the entry they need to fix.
@@ -1011,9 +1001,10 @@ fn handle_list<W: Write>(
         rows.push(serde_json::Value::Object(row));
     }
 
-    // The `[env]` pseudo-row: env credentials outrank every profile, so a
-    // listing that omitted them would answer "which account am I about to
-    // hit?" wrongly whenever one is exported. This is a rendering of what
+    // The `[env]` pseudo-row: env credentials are what an unprofiled run
+    // (or a profile with nothing stored) authenticates with, so a listing
+    // that omitted them would answer "which account am I about to hit?"
+    // wrongly whenever one is exported. This is a rendering of what
     // `auth status` already detects, not new detection.
     if let Some(row) = env_pseudo_row(ctx) {
         rows.push(row);
@@ -1071,6 +1062,11 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
         "base_url",
         "retries",
         "format",
+        "ca_bundle",
+        "insecure",
+        "proxy",
+        "timeout_secs",
+        "user_agent_suffix",
     ];
     fn rank(key: &str) -> usize {
         if let Some(index) = EARLY.iter().position(|candidate| *candidate == key) {
@@ -1151,6 +1147,56 @@ fn render_profiles_table(rows: &[serde_json::Value]) -> String {
     out
 }
 
+/// Render one profile (`show` / `current`) as a fixed-order `key  value`
+/// list: who it is (`profile`, `active`, `selected_by`), what it
+/// authenticates as (`account`, `oauth_client_id`), then the settings,
+/// then prose. The generic formatter orders by JSON key, which put
+/// `account` above `active` for a basic-auth profile but `oauth_client_id`
+/// below it for an OAuth one — the same question answered in two layouts.
+fn render_profile_fields(fields: &serde_json::Value) -> String {
+    const ORDER: &[&str] = &[
+        "profile",
+        "active",
+        "selected_by",
+        "account",
+        "oauth_client_id",
+        "credentials_from",
+        "parent",
+        "base_url",
+        "retries",
+        "format",
+        "ca_bundle",
+        "insecure",
+        "proxy",
+        "timeout_secs",
+        "user_agent_suffix",
+    ];
+    fn rank(key: &str) -> usize {
+        if let Some(index) = ORDER.iter().position(|candidate| *candidate == key) {
+            return index;
+        }
+        match key {
+            "note" | "error" => ORDER.len() + 2,
+            _ if key.starts_with("credential_") => ORDER.len() + 1,
+            _ => ORDER.len(),
+        }
+    }
+
+    let mut pairs = flatten_row(fields);
+    pairs.sort_by(|(a, _), (b, _)| rank(a).cmp(&rank(b)).then_with(|| a.cmp(b)));
+    let width = pairs
+        .iter()
+        .map(|(k, _)| k.chars().count())
+        .max()
+        .unwrap_or(0);
+    let mut out = String::new();
+    for (key, value) in &pairs {
+        out.push_str(format!("{key:<width$}  {value}").trim_end());
+        out.push('\n');
+    }
+    out
+}
+
 /// Flatten one row to `(dotted.key, cell)` pairs, so `parameters.AccountSid`
 /// becomes a column the same way the generic table formatter would.
 fn flatten_row(row: &serde_json::Value) -> Vec<(String, String)> {
@@ -1207,35 +1253,65 @@ fn insert_map(
 /// That last case is deliberate: `profiles list` must never error or block on
 /// a locked keychain just to render a column.
 fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    for (scheme, binding) in ctx.auth_bindings {
-        if !matches!(binding, SchemeBinding::Basic { .. }) {
-            continue;
-        }
+    let basic = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
+        .map(|(scheme, _)| scheme.as_str());
+    stored_keyring_field(ctx, credential, basic, "username")
+}
+
+/// The OAuth2 client id stored in the keyring for `credential` — what
+/// `profiles set <name> <CLIENT_ID_VAR>=…` and `auth login --with-token`
+/// write. A client id is public (RFC 6749 §2.2), so it is as safe to print
+/// as a basic-auth username. Same never-block rule as [`stored_account`].
+fn stored_oauth_client_id(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
+    let oauth = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(scheme, _)| {
+            login::scheme_credential_fields(scheme, ctx.auth_bindings)
+                .is_some_and(|fields| fields.contains(&CLIENT_ID_FIELD))
+        })
+        .map(|(scheme, _)| scheme.as_str());
+    stored_keyring_field(ctx, credential, oauth, CLIENT_ID_FIELD)
+}
+
+/// The first non-empty `field` of a multi-field keyring entry stored under
+/// `credential` for any of `schemes`.
+fn stored_keyring_field<'a>(
+    ctx: &ProfilesContext<'_>,
+    credential: &str,
+    schemes: impl IntoIterator<Item = &'a str>,
+    field: &str,
+) -> Option<String> {
+    schemes.into_iter().find_map(|scheme| {
         let account = super::keyring_account_for(scheme, credential);
         let Ok(Some(raw)) = crate::auth::keyring_store::active_store().get(ctx.cli_name, &account)
         else {
-            continue;
+            return None;
         };
-        let username = serde_json::from_str::<serde_json::Value>(&raw)
+        serde_json::from_str::<serde_json::Value>(&raw)
             .ok()
-            .and_then(|v| v.get("username")?.as_str().map(str::to_string));
-        if let Some(username) = username.filter(|u| !u.is_empty()) {
-            return Some(truncate_account(&username));
-        }
-    }
-    None
+            .and_then(|v| v.get(field)?.as_str().map(str::to_string))
+            .filter(|value| !value.is_empty())
+    })
 }
 
-/// Shorten a long identifier for a table cell, keeping the leading characters
-/// that distinguish accounts (`AC1234…`). Twilio SIDs are 34 characters, which
-/// would dominate the row.
-fn truncate_account(value: &str) -> String {
-    const KEEP: usize = 10;
-    if value.chars().count() <= KEEP + 1 {
-        return value.to_string();
-    }
-    let head: String = value.chars().take(KEEP).collect();
-    format!("{head}\u{2026}")
+/// Whether any scheme has a keyring entry under this profile's credential
+/// slot. A locked or failing keyring counts as "nothing stored", mirroring
+/// [`stored_account`]: reporting must never block on the keychain.
+fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::ResolvedProfile) -> bool {
+    let Some(credential) = &profile.credential else {
+        return false;
+    };
+    ctx.auth_bindings.iter().any(|(scheme, _)| {
+        let account = super::keyring_account_for(scheme, credential);
+        matches!(
+            crate::auth::keyring_store::active_store().get(ctx.cli_name, &account),
+            Ok(Some(_))
+        )
+    })
 }
 
 /// Warn about a variable that is set, looks like one of this CLI's credential
@@ -1283,27 +1359,9 @@ fn warn_about_near_miss_env_vars(ctx: &ProfilesContext<'_>) {
     }
 }
 
-/// Whether environment variables alone fully satisfy at least one scheme.
-///
-/// Distinguishes "env is what will be sent" from "env supplies one half of a
-/// two-value credential and nothing authenticates". Both states involve env
-/// vars outranking the keyring; only the first is an override.
-fn env_satisfies_a_scheme(ctx: &ProfilesContext<'_>) -> bool {
-    ctx.auth_bindings.iter().any(|(scheme, binding)| {
-        let slots = login::expand_slots(scheme, binding, ctx.login_flows, ctx.cli_name);
-        !slots.required.is_empty()
-            && slots.required.iter().all(|slot| {
-                slot.iter().any(|source| {
-                    matches!(source, AuthCredentialSource::Env(_)) && source.resolve().is_some()
-                })
-            })
-    })
-}
-
 /// A synthetic `[env]` row when environment variables currently supply a
-/// credential — which wins over an *ambiently* selected profile
-/// (`<BIN>_PROFILE`, `profiles use`) but not over an explicitly named
-/// `--profile`, whose stored credentials outrank it.
+/// credential — which is what an unprofiled invocation authenticates with,
+/// and what a selected profile falls back to when it has nothing stored.
 fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     let mut sources: Vec<String> = Vec::new();
     for (scheme, binding) in ctx.auth_bindings {
@@ -1339,18 +1397,14 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     Some(serde_json::Value::Object(row))
 }
 
-/// The `[env]` row's note. It states a precedence rule, so it has to track the
-/// one the request path actually applies: under an explicitly named
-/// `--profile`, that profile's stored credentials are preferred when a scheme
-/// is chosen, and telling the reader env "overrides" them would be exactly
-/// backwards. This row is what a user diagnosing a precedence surprise reads
-/// first, so a stale claim here costs more than it looks.
+/// The `[env]` row's note. It states a precedence rule, so it has to match
+/// the one the request path applies (`outranks_env`): a selected profile's
+/// stored credential is preferred however the profile was chosen, and env
+/// fills in only when the profile has none. This row is what a user
+/// diagnosing a precedence surprise reads first, so a stale claim here costs
+/// more than it looks.
 fn env_row_note() -> &'static str {
-    if crate::profiles::outranks_env() {
-        "supplies the credential, but the named profile's stored one is preferred"
-    } else {
-        "supplies the credential; overrides the active profile's stored one"
-    }
+    "supplies the credential when no profile is selected or the selected profile has none stored"
 }
 
 // ── set ─────────────────────────────────────────────────────────────────
@@ -1364,8 +1418,30 @@ enum SetTarget {
     Retries,
     BaseUrl,
     Format,
+    TimeoutSecs,
+    Proxy,
+    CaBundle,
+    Insecure,
+    UserAgentSuffix,
     ServerVariable(String),
     Parameter(String),
+}
+
+/// `<PREFIX>_<suffix>` suffixes of the fixed (non-spec) profile-storable env
+/// vars, in the order `--help` and the `set` error list them. The user-agent
+/// one is generation-configurable, hence computed.
+pub fn fixed_profile_env_suffixes() -> Vec<String> {
+    let ua = crate::user_agent::suffix_env_segment();
+    vec![
+        "BASE_URL".to_string(),
+        "CA_BUNDLE".to_string(),
+        "INSECURE".to_string(),
+        "OUTPUT".to_string(),
+        "PROXY".to_string(),
+        "RETRIES".to_string(),
+        "TIMEOUT_SECS".to_string(),
+        ua.trim_start_matches('_').to_string(),
+    ]
 }
 
 /// Every (scheme, field) pair that reads `var`.
@@ -1406,10 +1482,19 @@ fn classify_key(key: &str, ctx: &ProfilesContext<'_>) -> Result<SetTarget, CliEr
 
     let prefix = format!("{}_", crate::text::env_var_prefix(ctx.cli_name));
     if let Some(rest) = key.strip_prefix(&prefix) {
+        // The configured suffix flag names this env var; it is checked first
+        // so a custom flag name is routed the way the user configured it.
+        if format!("_{rest}") == crate::user_agent::suffix_env_segment() {
+            return Ok(SetTarget::UserAgentSuffix);
+        }
         match rest {
             "RETRIES" => return Ok(SetTarget::Retries),
             "BASE_URL" => return Ok(SetTarget::BaseUrl),
             "OUTPUT" => return Ok(SetTarget::Format),
+            "TIMEOUT_SECS" => return Ok(SetTarget::TimeoutSecs),
+            "PROXY" => return Ok(SetTarget::Proxy),
+            "CA_BUNDLE" => return Ok(SetTarget::CaBundle),
+            "INSECURE" => return Ok(SetTarget::Insecure),
             _ => {
                 // `<PREFIX>_<SERVER_VAR>` — the env rung a server variable
                 // already reads, so the spelling is one the user has seen.
@@ -1447,7 +1532,7 @@ fn unsettable_key(key: &str, ctx: &ProfilesContext<'_>) -> CliError {
             &(scheme.clone(), binding.clone()),
         )));
     }
-    for suffix in ["RETRIES", "BASE_URL", "OUTPUT"] {
+    for suffix in fixed_profile_env_suffixes() {
         known.push(format!("{prefix}_{suffix}"));
     }
     for variable in &ctx.vocabulary.server_variables {
@@ -1556,6 +1641,56 @@ fn handle_set(
                 entry.format = Some(value);
                 notes.push(format!("{key} \u{2192} format"));
             }
+            SetTarget::TimeoutSecs => {
+                let parsed: u64 = value
+                    .parse()
+                    .ok()
+                    .filter(|n| i64::try_from(*n).is_ok())
+                    .ok_or_else(|| {
+                        CliError::Validation(format!(
+                            "`{key}` expects a non-negative integer no larger than {}, got `{value}`",
+                            i64::MAX
+                        ))
+                    })?;
+                entry.transport.timeout_secs = Some(parsed);
+                notes.push(format!("{key} \u{2192} timeout_secs"));
+            }
+            SetTarget::Proxy => {
+                crate::output::reject_dangerous_chars(&value, &key)?;
+                reqwest::Proxy::all(&value).map_err(|e| {
+                    CliError::Validation(format!("`{key}` is not a valid proxy URL: {e}"))
+                })?;
+                entry.transport.proxy = Some(value);
+                notes.push(format!("{key} \u{2192} proxy"));
+            }
+            SetTarget::CaBundle => {
+                crate::output::reject_dangerous_chars(&value, &key)?;
+                entry.transport.ca_bundle = Some(value);
+                notes.push(format!("{key} \u{2192} ca_bundle"));
+            }
+            SetTarget::Insecure => {
+                let parsed = match value.to_ascii_lowercase().as_str() {
+                    "1" | "true" | "yes" | "on" => true,
+                    "0" | "false" | "no" | "off" => false,
+                    _ => {
+                        return Err(CliError::Validation(format!(
+                            "`{key}` expects a boolean (1/0, true/false), got `{value}`"
+                        )))
+                    }
+                };
+                entry.transport.insecure = Some(parsed);
+                notes.push(format!("{key} \u{2192} insecure"));
+            }
+            SetTarget::UserAgentSuffix => {
+                let trimmed = value.trim().to_string();
+                if trimmed.is_empty() || reqwest::header::HeaderValue::from_str(&trimmed).is_err() {
+                    return Err(CliError::Validation(format!(
+                        "`{key}` must be a non-empty product token valid as HTTP header content, got `{value}`"
+                    )));
+                }
+                entry.transport.user_agent_suffix = Some(trimmed);
+                notes.push(format!("{key} \u{2192} user_agent_suffix"));
+            }
             SetTarget::ServerVariable(variable) => {
                 entry.server_variables.insert(variable.clone(), value);
                 notes.push(format!("{key} \u{2192} server_variables.{variable}"));
@@ -1615,13 +1750,6 @@ fn handle_set(
             credential_schemes.join(", "),
         );
     }
-    if !credential_schemes.is_empty() {
-        let candidates: Vec<String> = credential_schemes
-            .iter()
-            .flat_map(|scheme| login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings))
-            .collect();
-        login::warn_if_env_shadows(&mut stderr, &candidates);
-    }
     Ok(())
 }
 
@@ -1676,9 +1804,10 @@ fn handle_use(
     Ok(())
 }
 
-/// Warn when `<BIN>_PROFILE` or credential env vars will win over the
-/// profile the user just selected — the "I switched but nothing changed"
-/// footgun, same shape as `auth login`'s shadow warning (ADR-0008).
+/// Warn when `<BIN>_PROFILE` will win over the profile the user just
+/// selected — the "I switched but nothing changed" footgun. Credential env
+/// vars need no warning: a selected profile's stored credential outranks
+/// them (ADR-0011).
 fn warn_if_env_overrides<W: Write>(out: &mut W, ctx: &ProfilesContext<'_>) {
     let env_var = selection::profile_env_var(ctx.cli_name);
     if std::env::var(&env_var).is_ok_and(|v| !v.trim().is_empty()) {
@@ -1689,18 +1818,6 @@ fn warn_if_env_overrides<W: Write>(out: &mut W, ctx: &ProfilesContext<'_>) {
                 "⚠ Warning: `{env_var}` is set; it selects the profile regardless of \
                  this setting. Unset it to use the active profile."
             )),
-        );
-        return;
-    }
-    if env_pseudo_row(ctx).is_some() {
-        let _ = writeln!(
-            out,
-            "{}",
-            login::yellow(
-                "⚠ Warning: credential environment variables are set; they take \
-                 precedence over this profile's stored credential. Run `auth status` \
-                 to see which."
-            ),
         );
     }
 }
@@ -1866,6 +1983,26 @@ fn resolved_profile_fields(
             map.insert("credentials_from".into(), credential.clone().into());
         }
     }
+    // Keyring before plaintext: the order the OAuth2 provider resolves them in.
+    let client_id = profile
+        .credential
+        .as_ref()
+        .and_then(|credential| stored_oauth_client_id(ctx, credential))
+        .or_else(|| profile.oauth_client_id.clone());
+    if let Some(client_id) = client_id {
+        map.insert("oauth_client_id".into(), client_id.into());
+    }
+    insert_settings(&mut map, profile);
+    map
+}
+
+/// Every non-identity setting a profile stores, in the shape `list`, `show`
+/// and `current` all print: one place, so a field cannot appear in one
+/// listing and be missing from another.
+fn insert_settings(
+    map: &mut serde_json::Map<String, serde_json::Value>,
+    profile: &store::ResolvedProfile,
+) {
     if let Some(base_url) = &profile.base_url {
         map.insert("base_url".into(), base_url.clone().into());
     }
@@ -1875,9 +2012,24 @@ fn resolved_profile_fields(
     if let Some(format) = &profile.format {
         map.insert("format".into(), format.clone().into());
     }
-    insert_map(&mut map, "parameters", &profile.parameters);
-    insert_map(&mut map, "server_variables", &profile.server_variables);
-    map
+    let transport = &profile.transport;
+    if let Some(secs) = transport.timeout_secs {
+        map.insert("timeout_secs".into(), secs.into());
+    }
+    if let Some(proxy) = &transport.proxy {
+        map.insert("proxy".into(), proxy.clone().into());
+    }
+    if let Some(path) = &transport.ca_bundle {
+        map.insert("ca_bundle".into(), path.clone().into());
+    }
+    if let Some(insecure) = transport.insecure {
+        map.insert("insecure".into(), insecure.into());
+    }
+    if let Some(suffix) = &transport.user_agent_suffix {
+        map.insert("user_agent_suffix".into(), suffix.clone().into());
+    }
+    insert_map(map, "parameters", &profile.parameters);
+    insert_map(map, "server_variables", &profile.server_variables);
 }
 
 /// `profiles show <name>` — inspect a named profile without selecting it.
@@ -1933,9 +2085,14 @@ fn handle_show<W: Write>(
     // inspecting.
     map.insert("active".into(), (store.active() == Some(name.as_str())).into());
 
-    pipeline
-        .emit(out, &serde_json::Value::Object(map), false, true)
-        .map_err(|e| CliError::Other(e.into()))?;
+    let payload = serde_json::Value::Object(map);
+    if pipeline.format.is_machine_readable() {
+        pipeline
+            .emit(out, &payload, false, true)
+            .map_err(|e| CliError::Other(e.into()))?;
+    } else {
+        write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
+    }
     Ok(())
 }
 
@@ -1958,22 +2115,16 @@ fn handle_current<W: Write>(
             let profile = &selection.profile;
             let mut map = resolved_profile_fields(profile, ctx);
             // `selected_by`, not `source`: this answers *why* this profile is in
-            // play, and the answer changes precedence — only a profile named
-            // with the flag outranks credential env vars (`outranks_env`).
+            // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
-            if let Some(env_row) = env_pseudo_row(ctx) {
-                // Only claim an *override* when the env vars actually satisfy
-                // a scheme. With one half of a two-value credential set, the
-                // variable is consulted and does outrank the keyring for that
-                // field — but nothing authenticates, so saying "overridden by
-                // env" while `auth status` reports `logged_in: false` reads as
-                // a contradiction. Report the partial case as partial.
-                let key = if env_satisfies_a_scheme(ctx) {
-                    "credential_overridden_by_env"
-                } else {
-                    "credential_partially_shadowed_by_env"
-                };
-                map.insert(key.into(), env_row["variables"].clone());
+            // Exported credential env vars never override a selected
+            // profile's stored credential; they are consulted only when the
+            // profile has none stored. Name them only in that case, so the
+            // field never contradicts `auth status` when the keyring wins.
+            if !profile_stores_a_credential(ctx, profile) {
+                if let Some(env_row) = env_pseudo_row(ctx) {
+                    map.insert("credential_env_fallback".into(), env_row["variables"].clone());
+                }
             }
             serde_json::Value::Object(map)
         }
@@ -1993,9 +2144,7 @@ fn handle_current<W: Write>(
     let mut stderr = std::io::stderr();
     match selected {
         Some(_) => {
-            pipeline
-                .emit(out, &payload, false, true)
-                .map_err(|e| CliError::Other(e.into()))?;
+            write!(out, "{}", render_profile_fields(&payload)).map_err(|e| CliError::Other(e.into()))?;
         }
         None => {
             let _ = writeln!(
@@ -2040,33 +2189,14 @@ mod tests {
 
     // ── [env] row note ──────────────────────────────────────────────────
 
-    /// The note asserts who wins, so it must flip with the selection source.
-    /// Saying env "overrides" a profile the request path actually prefers is
-    /// the exact wrong turn for someone debugging a precedence surprise.
+    /// The note asserts who wins. Saying env "overrides" a profile the
+    /// request path actually prefers is the exact wrong turn for someone
+    /// debugging a precedence surprise.
     #[test]
-    #[serial_test::serial]
-    fn env_row_note_tracks_selection_source() {
-        use crate::auth::test_helpers::GlobalAuthStateGuard;
-        use crate::profiles::SelectionSource;
-
-        {
-            let mut guard = GlobalAuthStateGuard::new();
-            guard.install_profile("prod", SelectionSource::Flag);
-            assert!(
-                env_row_note().contains("named profile's stored one is preferred"),
-                "got: {}",
-                env_row_note()
-            );
-        }
-        {
-            let mut guard = GlobalAuthStateGuard::new();
-            guard.install_profile("prod", SelectionSource::Active);
-            assert!(
-                env_row_note().contains("overrides the active profile"),
-                "got: {}",
-                env_row_note()
-            );
-        }
+    fn env_row_note_never_claims_to_override_a_profile() {
+        let note = env_row_note();
+        assert!(!note.contains("overrides"), "got: {note}");
+        assert!(note.contains("no profile is selected"), "got: {note}");
     }
 
     // ── name validation ─────────────────────────────────────────────────

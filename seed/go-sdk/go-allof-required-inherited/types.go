@@ -83,12 +83,22 @@ func (e *ExternalPaymentScheduleRequest) SetDescription(description *string) {
 }
 
 func (e *ExternalPaymentScheduleRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExternalPaymentScheduleRequest
-	var body unmarshaler
+	type embed ExternalPaymentScheduleRequest
+	var body = struct {
+		embed
+		StartDate         *internal.Date `json:"start_date"`
+		EndDate           *internal.Date `json:"end_date,omitempty"`
+		AdjustedStartDate *internal.Date `json:"adjusted_start_date,omitempty"`
+	}{
+		embed: embed(*e),
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*e = ExternalPaymentScheduleRequest(body)
+	*e = ExternalPaymentScheduleRequest(body.embed)
+	e.StartDate = body.StartDate.Time()
+	e.EndDate = body.EndDate.TimePtr()
+	e.AdjustedStartDate = body.AdjustedStartDate.TimePtr()
 	return nil
 }
 
@@ -223,7 +233,6 @@ func (t *TransactionsGetRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// Nullable parent with `additionalProperties`; nothing is required here.
 var (
 	externalPaymentScheduleBaseFieldInterval             = big.NewInt(1 << 0)
 	externalPaymentScheduleBaseFieldIntervalExecutionDay = big.NewInt(1 << 1)
@@ -233,6 +242,7 @@ var (
 	externalPaymentScheduleBaseFieldDescription          = big.NewInt(1 << 5)
 )
 
+// Nullable parent with `additionalProperties`; nothing is required here.
 type ExternalPaymentScheduleBase struct {
 	Interval             *PaymentScheduleInterval `json:"interval,omitempty" url:"interval,omitempty"`
 	IntervalExecutionDay *int                     `json:"interval_execution_day,omitempty" url:"interval_execution_day,omitempty"`
@@ -407,8 +417,6 @@ func (e *ExternalPaymentScheduleBase) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Nullable schema whose `required` sits at the top level (not inside a branch),
-// with an empty `type: object` branch, naming only parent-defined properties.
 var (
 	externalPaymentScheduleGetFieldAdjustedStartDate    = big.NewInt(1 << 0)
 	externalPaymentScheduleGetFieldEndDate              = big.NewInt(1 << 1)
@@ -424,6 +432,8 @@ var externalPaymentScheduleGetRequiredNullableFields = map[string]*big.Int{
 	"end_date":            externalPaymentScheduleGetFieldEndDate,
 }
 
+// Nullable schema whose `required` sits at the top level (not inside a branch),
+// with an empty `type: object` branch, naming only parent-defined properties.
 type ExternalPaymentScheduleGet struct {
 	AdjustedStartDate    *time.Time              `json:"adjusted_start_date,omitempty" url:"adjusted_start_date,omitempty" format:"date"`
 	EndDate              *time.Time              `json:"end_date,omitempty" url:"end_date,omitempty" format:"date"`
@@ -744,7 +754,6 @@ func (p PaymentScheduleInterval) Ptr() *PaymentScheduleInterval {
 	return &p
 }
 
-// Middle of a three-level allOf chain; defines nothing required.
 var (
 	plantBaseFieldID                = big.NewInt(1 << 0)
 	plantBaseFieldExternalRef       = big.NewInt(1 << 1)
@@ -753,6 +762,7 @@ var (
 	plantBaseFieldWateringFrequency = big.NewInt(1 << 4)
 )
 
+// Middle of a three-level allOf chain; defines nothing required.
 type PlantBase struct {
 	ID                string  `json:"id" url:"id"`
 	ExternalRef       *string `json:"external_ref,omitempty" url:"external_ref,omitempty"`
@@ -1049,16 +1059,16 @@ func (p *PlantDetails) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Parent with a readOnly property and property-level metadata. Inlined into
-// `PlantCreate` (request body) and `PlantDetails` (response type) because the
-// child requires `nickname`; the metadata must survive and `created_at` must
-// stay out of the write request body.
 var (
 	plantMetadataFieldCreatedAt = big.NewInt(1 << 0)
 	plantMetadataFieldNickname  = big.NewInt(1 << 1)
 	plantMetadataFieldLegacyTag = big.NewInt(1 << 2)
 )
 
+// Parent with a readOnly property and property-level metadata. Inlined into
+// `PlantCreate` (request body) and `PlantDetails` (response type) because the
+// child requires `nickname`; the metadata must survive and `created_at` must
+// stay out of the write request body.
 type PlantMetadata struct {
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	Nickname  *string    `json:"nickname,omitempty" url:"nickname,omitempty"`
@@ -1179,8 +1189,6 @@ func (p *PlantMetadata) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Grandchild requiring `external_ref` (defined on the grandparent) and
-// `species` (defined on the parent). `note` and `watering_frequency` stay optional.
 var (
 	plantRecordFieldExternalRef       = big.NewInt(1 << 0)
 	plantRecordFieldSpecies           = big.NewInt(1 << 1)
@@ -1196,6 +1204,8 @@ var plantRecordRequiredNullableFields = map[string]*big.Int{
 	"species":      plantRecordFieldSpecies,
 }
 
+// Grandchild requiring `external_ref` (defined on the grandparent) and
+// `species` (defined on the parent). `note` and `watering_frequency` stay optional.
 type PlantRecord struct {
 	ExternalRef       *string    `json:"external_ref,omitempty" url:"external_ref,omitempty"`
 	Species           *string    `json:"species,omitempty" url:"species,omitempty"`
@@ -1368,9 +1378,6 @@ func (p *PlantRecord) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Requires `account_owner` and `pending_transaction_id` without defining them;
-// both are defined (nullable, not required) on `TransactionBase`.
-// `merchant_name` is required in no branch and stays optional.
 var (
 	transactionFieldAccountOwner         = big.NewInt(1 << 0)
 	transactionFieldPendingTransactionID = big.NewInt(1 << 1)
@@ -1393,6 +1400,9 @@ var transactionRequiredNullableFields = map[string]*big.Int{
 	"iso_currency_code":      transactionFieldIsoCurrencyCode,
 }
 
+// Requires `account_owner` and `pending_transaction_id` without defining them;
+// both are defined (nullable, not required) on `TransactionBase`.
+// `merchant_name` is required in no branch and stays optional.
 type Transaction struct {
 	AccountOwner         *string    `json:"account_owner,omitempty" url:"account_owner,omitempty"`
 	PendingTransactionID *string    `json:"pending_transaction_id,omitempty" url:"pending_transaction_id,omitempty"`
@@ -1629,7 +1639,6 @@ func (t *Transaction) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
-// Defines nullable properties without requiring them.
 var (
 	transactionBaseFieldTransactionID        = big.NewInt(1 << 0)
 	transactionBaseFieldPending              = big.NewInt(1 << 1)
@@ -1645,6 +1654,7 @@ var transactionBaseRequiredNullableFields = map[string]*big.Int{
 	"iso_currency_code": transactionBaseFieldIsoCurrencyCode,
 }
 
+// Defines nullable properties without requiring them.
 type TransactionBase struct {
 	TransactionID        string    `json:"transaction_id" url:"transaction_id"`
 	Pending              bool      `json:"pending" url:"pending"`

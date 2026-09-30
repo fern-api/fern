@@ -1,3 +1,4 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
 import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
@@ -19,10 +20,12 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
+    mapFernSdkGenApiOutput,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
@@ -42,6 +45,7 @@ import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
+    type GeneratorLanguage,
     selectGeneratorConfigRoute,
     selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
@@ -63,6 +67,21 @@ export interface FernSourceArchiveResolution {
     sourceArchives: Map<number, FernSdkGenApiSourceArchive>;
     errors: Map<number, unknown>;
 }
+
+const SDK_CONFIG_TARGET_DISPLAY_NAMES: Record<GeneratorLanguage, string> = {
+    typescript: "TypeScript SDK",
+    python: "Python SDK",
+    java: "Java SDK",
+    kotlin: "Kotlin SDK",
+    go: "Go SDK",
+    csharp: "C# SDK",
+    php: "PHP SDK",
+    ruby: "Ruby SDK",
+    rust: "Rust SDK",
+    swift: "Swift SDK",
+    cli: "CLI",
+    mcp: "MCP server"
+};
 
 export async function runRemoteGenerationForAPIWorkspace({
     projectConfig,
@@ -98,6 +117,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     getSpecsTarGzBuffer,
     sdkConfigV1,
     generateFullProject,
+    libraryVisibility,
     mapFernGroupToSdkConfig
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -171,6 +191,11 @@ export async function runRemoteGenerationForAPIWorkspace({
      * Set by `fern generate --pack` so the emitted SDK can be built into a package artifact.
      */
     generateFullProject?: boolean;
+    /**
+     * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
+     * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
+     */
+    libraryVisibility?: VisibilityFilter;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -201,6 +226,13 @@ export async function runRemoteGenerationForAPIWorkspace({
         skipIfNoDiff,
         autoMerge
     });
+    for (const result of routePreparation) {
+        if (result.fallbackReason != null) {
+            context.logger.debug(
+                `${result.generatorInvocation.name} ${result.generatorInvocation.version} is falling back to Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
+            );
+        }
+    }
     const sdkGenApiRoutes = routePreparation.map((result) => result.route);
     const resolvedGenerators = routePreparation.map((result) => result.generatorInvocation);
     const routeErrors = routePreparation.map((result) => result.error);
@@ -266,58 +298,63 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation, generatorIndex) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, (interactiveTaskContext) =>
-                generateOne({
-                    generatorInvocation,
-                    resolvedGeneratorInvocation: resolvedGenerators[generatorIndex] ?? generatorInvocation,
-                    interactiveTaskContext,
-                    // Closed-over state + params passed through to the per-generator worker.
-                    projectConfig,
-                    organization,
-                    workspace,
-                    context,
-                    generatorGroup,
-                    version,
-                    shouldLogS3Url,
-                    token,
-                    whitelabel,
-                    replay,
-                    absolutePathToPreview,
-                    isPreview,
-                    fiddlePreview,
-                    pushPreviewBranch,
-                    mode,
-                    fernignorePath,
-                    skipFernignore,
-                    dynamicIrOnly,
-                    validateWorkspace,
-                    retryRateLimited,
-                    requireEnvVars,
-                    automationMode,
-                    autoMerge,
-                    skipIfNoDiff,
-                    verify,
-                    noReplay,
-                    disableTelemetry,
-                    automation,
-                    generatorsYmlAbsolutePath,
-                    occurrenceTracker: effectiveOccurrenceTracker,
-                    loginCommand,
-                    specsTarGzArchive: sourceArchives[generatorIndex],
-                    sdkGenApiPreflightError: preflightErrors[generatorIndex],
-                    sdkGenApiRoute: sdkGenApiRoutes[generatorIndex],
-                    sdkConfigV1,
-                    sdkGenApiPreparationBatch: sdkGenApiCandidateIndexes.has(generatorIndex)
-                        ? sdkGenApiPreparationBatch
-                        : undefined,
-                    sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
-                    sdkGenApiTargetIdSeed: (
-                        routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
-                    ).toString(),
-                    generateFullProject,
-                    mapFernGroupToSdkConfig,
-                    onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
-                })
+            context.runInteractiveTask(
+                {
+                    name: getGenerationTaskName(generatorInvocation, sdkGenApiRoutes[generatorIndex])
+                },
+                (interactiveTaskContext) =>
+                    generateOne({
+                        generatorInvocation,
+                        resolvedGeneratorInvocation: resolvedGenerators[generatorIndex] ?? generatorInvocation,
+                        interactiveTaskContext,
+                        // Closed-over state + params passed through to the per-generator worker.
+                        projectConfig,
+                        organization,
+                        workspace,
+                        context,
+                        generatorGroup,
+                        version,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel,
+                        replay,
+                        absolutePathToPreview,
+                        isPreview,
+                        fiddlePreview,
+                        pushPreviewBranch,
+                        mode,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        validateWorkspace,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        skipIfNoDiff,
+                        verify,
+                        noReplay,
+                        disableTelemetry,
+                        automation,
+                        generatorsYmlAbsolutePath,
+                        occurrenceTracker: effectiveOccurrenceTracker,
+                        loginCommand,
+                        specsTarGzArchive: sourceArchives[generatorIndex],
+                        sdkGenApiPreflightError: preflightErrors[generatorIndex],
+                        sdkGenApiRoute: sdkGenApiRoutes[generatorIndex],
+                        sdkConfigV1,
+                        sdkGenApiPreparationBatch: sdkGenApiCandidateIndexes.has(generatorIndex)
+                            ? sdkGenApiPreparationBatch
+                            : undefined,
+                        sdkGenApiBatch: sdkGenApiCandidateIndexes.has(generatorIndex) ? sdkGenApiBatch : undefined,
+                        sdkGenApiTargetIdSeed: (
+                            routePreparation[generatorIndex]?.sdkConfigTargetIndex ?? generatorIndex
+                        ).toString(),
+                        generateFullProject,
+                        libraryVisibility,
+                        mapFernGroupToSdkConfig,
+                        onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
+                    })
             )
         )
     );
@@ -332,6 +369,16 @@ export async function runRemoteGenerationForAPIWorkspace({
     return {
         snippetsProducedBy
     };
+}
+
+function getGenerationTaskName(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    sdkGenApiRoute: GenerationConfigRoute | undefined
+): string {
+    if (sdkGenApiRoute?.payloadKind !== "sdk-config-v1") {
+        return generatorInvocation.name;
+    }
+    return SDK_CONFIG_TARGET_DISPLAY_NAMES[sdkGenApiRoute.language];
 }
 
 /**
@@ -388,6 +435,7 @@ export function prepareFernSdkGenApiRoutes({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
     error: unknown;
+    fallbackReason?: string;
     sdkConfigTargetIndex?: number;
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
@@ -484,20 +532,31 @@ export function prepareFernSdkGenApiRoutes({
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
                 } catch (error) {
                     if (route.configKind === "legacy-fern") {
-                        return { generatorInvocation: resolved, route: undefined, error: undefined };
+                        return {
+                            generatorInvocation: resolved,
+                            route: undefined,
+                            error: undefined,
+                            fallbackReason: extractErrorMessage(error)
+                        };
                     }
                     throw error;
                 }
             }
             const unsupportedOutput = getFernSdkGenApiUnsupportedOutput({
                 generatorInvocation: resolved,
+                requestedOutput: configuredTarget?.requestedOutput,
                 verify,
                 skipIfNoDiff,
                 autoMerge
             });
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
-                    return { generatorInvocation: resolved, route: undefined, error: undefined };
+                    return {
+                        generatorInvocation: resolved,
+                        route: undefined,
+                        error: undefined,
+                        fallbackReason: unsupportedOutput
+                    };
                 }
                 throw new Error(
                     `Cannot route ${resolved.name} ${route.requestedVersion ?? "(unpinned)"} through sdk-gen-api: ${unsupportedOutput}. This generator version requires SDK Config v1, so Fern cannot fall back to legacy Fiddle generation.`
@@ -533,30 +592,24 @@ function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInv
 
 function getFernSdkGenApiUnsupportedOutput({
     generatorInvocation,
+    requestedOutput,
     verify,
     skipIfNoDiff,
     autoMerge
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    requestedOutput?: FernSdkGenApiRequestedOutput;
     verify?: boolean;
     skipIfNoDiff?: boolean;
     autoMerge?: boolean;
 }): string | undefined {
+    const resolvedRequestedOutput = requestedOutput ?? mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     const unsupported: string[] = [];
-    if (
-        generatorInvocation.outputMode.type !== "downloadFiles" &&
-        generatorInvocation.outputMode.type !== "publish" &&
-        generatorInvocation.outputMode.type !== "publishV2"
-    ) {
-        unsupported.push(
-            `${generatorInvocation.outputMode.type} delivery requires Fern-managed GitHub or registry credentials that sdk-gen-api cannot resolve`
-        );
+    if (verify === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("verify=true is not implemented by sdk-gen-api for non-GitHub output");
     }
-    if (verify === true) {
-        unsupported.push("verify=true is not implemented by sdk-gen-api");
-    }
-    if (skipIfNoDiff === true) {
-        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api");
+    if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
+        unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
     }
     if (autoMerge === true) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
@@ -661,6 +714,7 @@ async function generateOne({
     sdkGenApiBatch,
     sdkGenApiTargetIdSeed,
     generateFullProject,
+    libraryVisibility,
     mapFernGroupToSdkConfig,
     onSnippetsProduced
 }: {
@@ -706,6 +760,7 @@ async function generateOne({
     sdkGenApiBatch: FernSdkGenApiBatch | undefined;
     sdkGenApiTargetIdSeed: string;
     generateFullProject: boolean | undefined;
+    libraryVisibility: VisibilityFilter | undefined;
     mapFernGroupToSdkConfig: MapFernGroupToSdkConfig | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
@@ -715,7 +770,10 @@ async function generateOne({
         if (sdkGenApiPreflightError != null) {
             throw sdkGenApiPreflightError;
         }
-        const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(resolvedGeneratorInvocation);
+        const settings = {
+            ...getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(resolvedGeneratorInvocation),
+            libraryVisibility
+        };
 
         const fernWorkspace = await workspace.toFernWorkspace(
             { context },

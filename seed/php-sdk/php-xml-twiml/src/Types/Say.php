@@ -9,28 +9,31 @@ use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
 use InvalidArgumentException;
 
+/**
+ * <Say> TwiML Verb
+ */
 class Say extends XmlSerializableType
 {
     /**
-     * @var ?string $message
+     * @var ?string $message Message to say
      */
     #[JsonProperty('message')]
     public ?string $message;
 
     /**
-     * @var ?string $voice
+     * @var ?string $voice Voice to use
      */
     #[JsonProperty('voice')]
     public ?string $voice;
 
     /**
-     * @var ?int $loop
+     * @var ?int $loop Times to loop message
      */
     #[JsonProperty('loop')]
     public ?int $loop;
 
     /**
-     * @var ?array<Break_> $children
+     * @var ?array<Break_> $children Nested TwiML elements, rendered in order.
      */
     #[JsonProperty('children'), ArrayType([Break_::class])]
     public ?array $children;
@@ -42,6 +45,10 @@ class Say extends XmlSerializableType
      *   loop?: ?int,
      *   children?: ?array<Break_>,
      * } $values
+     *   - `message`: Message to say
+     *   - `voice`: Voice to use
+     *   - `loop`: Times to loop message
+     *   - `children`: Nested TwiML elements, rendered in order.
      */
     public function __construct(
         array $values = [],
@@ -103,6 +110,8 @@ class Say extends XmlSerializableType
 
     /**
      * Adds a <break> child element and returns it (for nesting further children).
+     *
+     * Adding a Pause in <Say>
      *
      * @param (
      *    Break_

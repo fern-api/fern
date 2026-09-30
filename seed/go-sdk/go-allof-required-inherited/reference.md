@@ -153,7 +153,7 @@ client.CreatePaymentSchedule(
 <dl>
 <dd>
 
-**interval:** `*fern.PaymentScheduleInterval` 
+**interval:** `fern.PaymentScheduleInterval` 
     
 </dd>
 </dl>

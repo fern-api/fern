@@ -1,4 +1,4 @@
-import type { generatorsYml } from "@fern-api/configuration";
+import { type generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
@@ -79,7 +79,8 @@ function migrationRequiredMessage(generatorInvocation: generatorsYml.GeneratorIn
         `${generatorInvocation.name}@${generatorInvocation.version} is configured by ${SDK_CONFIG_FILENAME}, ` +
         `which this workspace does not have. Migrate your generator configuration:\n\n` +
         `    fern sdk migrate\n\n` +
-        `That writes ${SDK_CONFIG_FILENAME} and archives your generators.yml as generators.archived.yml. ` +
-        `Your other generators keep running from generators.yml either way.`
+        `That writes ${SDK_CONFIG_FILENAME}, renames generators.yml to ${LEGACY_GENERATORS_CONFIGURATION_FILENAME}, ` +
+        `and preserves the migrated configuration as rollback comments. Your unmigrated generators keep running ` +
+        `from ${LEGACY_GENERATORS_CONFIGURATION_FILENAME}.`
     );
 }

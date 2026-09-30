@@ -50,6 +50,8 @@ const RESERVED_BUILDER_METHODS = ["build", "toXml", "toString", "attribute", "ad
 
 interface XmlProperty {
     key: string;
+    /** A valid identifier for the property value, used for parameters and destructured locals. */
+    localName: string;
     irProperty: FernIr.ObjectProperty;
     kind: FernIr.XmlPropertyKind;
     /** The attribute or element name on the wire. */
@@ -128,7 +130,10 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 {
                     parameters: [this.fieldsParameter(properties)],
                     statements: [
-                        ...properties.map((property) => `this.${property.key} = fields.${property.key};`),
+                        ...properties.map(
+                            (property) =>
+                                `${accessProperty("this", property.key)} = ${accessProperty("fields", property.key)};`
+                        ),
                         `this.${ADDITIONAL_ATTRIBUTES} = fields.${ADDITIONAL_ATTRIBUTES} ?? {};`,
                         `this.${ADDITIONAL_CHILDREN} = fields.${ADDITIONAL_CHILDREN} ?? [];`
                     ]
@@ -239,14 +244,14 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const constructorStatements: string[] = [];
         if (elementProperties.length > 0) {
             constructorStatements.push(
-                `const { ${elementProperties.map((property) => getPropertyKey(property.key)).join(", ")}, ...rest } = fields;`,
+                `const { ${elementProperties.map(destructureProperty).join(", ")}, ...rest } = fields;`,
                 "this.fields = rest;",
                 `this.elements = { ${elementProperties
                     .map((property) => {
-                        const key = getPropertyKey(property.key);
+                        const local = property.localName;
                         return isSetTypeNode(property.valueType)
-                            ? `${key}: ${key} == null ? ${key} : Array.from(${key})`
-                            : key;
+                            ? `${getPropertyKey(property.key)}: ${local} == null ? ${local} : Array.from(${local})`
+                            : propertyAssignment(property.key, local);
                     })
                     .join(", ")} };`
             );
@@ -268,21 +273,23 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const takenNames = new Set<string>(RESERVED_BUILDER_METHODS);
         for (const property of properties) {
             const key = getPropertyKey(property.key);
-            const target = elementKeys.has(property.key) ? "elements" : "fields";
+            const target = elementKeys.has(property.key) ? "this.elements" : "this.fields";
             const setterName = takenNames.has(property.key) ? `set${context.case.pascalSafe(property.key)}` : key;
             takenNames.add(property.key);
             takenNames.add(setterName);
-            methods.push({
+            const setter: OptionalKind<MethodDeclarationStructure> = {
                 name: setterName,
                 parameters: [
                     {
-                        name: property.key,
+                        name: property.localName,
                         type: `${elementKeys.has(property.key) ? this.builderValueType(context, property) : getTextOfTsNode(property.valueType)}${property.isOptional ? " | undefined" : ""}`
                     }
                 ],
                 returnType: "this",
-                statements: [`this.${target}.${key} = ${property.key};`, "return this;"]
-            });
+                statements: [`${accessProperty(target, property.key)} = ${property.localName};`, "return this;"]
+            };
+            maybeAddDocsStructure(setter, property.irProperty.docs);
+            methods.push(setter);
         }
 
         for (const property of elementProperties) {
@@ -294,28 +301,27 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const requiredKeys = properties.filter((property) => !property.isOptional && !elementKeys.has(property.key));
         const buildStatements: string[] = [];
         if (requiredKeys.length > 0) {
-            buildStatements.push(
-                `const { ${requiredKeys.map((property) => getPropertyKey(property.key)).join(", ")} } = this.fields;`
-            );
+            buildStatements.push(`const { ${requiredKeys.map(destructureProperty).join(", ")} } = this.fields;`);
             for (const property of requiredKeys) {
                 buildStatements.push(
-                    `if (${getPropertyKey(property.key)} === undefined) { throw new Error("${this.typeName}.${property.key} is required"); }`
+                    `if (${property.localName} === undefined) { throw new Error("${this.typeName}.${property.key} is required"); }`
                 );
             }
         }
         const builtElements = elementProperties.map((property) => {
             const key = getPropertyKey(property.key);
-            const built = `${this.xmlRef(context, "xmlBuildAll")}(this.elements.${key})`;
+            const element = accessProperty("this.elements", property.key);
+            const built = `${this.xmlRef(context, "xmlBuildAll")}(${element})`;
             const value = property.isList
                 ? isSetTypeNode(property.valueType)
                     ? `${this.xmlRef(context, "xmlToSet")}(${built})`
                     : built
-                : `this.elements.${key} == null ? this.elements.${key} : ${this.xmlRef(context, "xmlBuild")}(this.elements.${key})`;
+                : `${element} == null ? ${element} : ${this.xmlRef(context, "xmlBuild")}(${element})`;
             return `${key}: ${this.requireValue(context, property, value, `"${this.typeName}.${property.key}"`)}`;
         });
         buildStatements.push(
             `return new ${this.typeName}({ ...this.fields, ${[
-                ...requiredKeys.map((property) => getPropertyKey(property.key)),
+                ...requiredKeys.map((property) => propertyAssignment(property.key, property.localName)),
                 ...builtElements
             ].join(", ")} });`
         );
@@ -406,15 +412,18 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         takenNames.add(name);
 
         const childRef = getTextOfTsNode(context.type.getReferenceToNamedType(childType.name).getExpression());
-        const key = getPropertyKey(property.key);
-        const append = property.isList
-            ? `this.elements.${key} = [...(this.elements.${key} ?? []), builder];`
-            : `this.elements.${key} = builder;`;
+        const element = accessProperty("this.elements", property.key);
+        const append = property.isList ? `${element} = [...(${element} ?? []), builder];` : `${element} = builder;`;
+        const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} and returns its builder.`;
         return {
             name,
             docs: [
                 {
-                    description: `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} and returns its builder.`
+                    description: childType.docs != null ? `${summary}\n\n${childType.docs}` : summary,
+                    tags: [
+                        { tagName: "param", text: `fields initial \`<${childXml.name}>\` attributes and children` },
+                        { tagName: "returns", text: `the \`${childRef}.${BUILDER_CLASS}\` appended to this element` }
+                    ]
                 }
             ],
             parameters: [{ name: "fields", type: `Partial<${childRef}.${FIELDS_INTERFACE}>`, hasQuestionToken: true }],
@@ -610,7 +619,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             .filter((property) => property.kind === "ATTRIBUTE")
             .map((property) => {
                 const separator = property.irProperty.xml?.listSeparator;
-                return `{ name: ${JSON.stringify(property.wireName)}, value: this.${getPropertyKey(property.key)}${
+                return `{ name: ${JSON.stringify(property.wireName)}, value: ${accessProperty("this", property.key)}${
                     separator != null ? `, separator: ${JSON.stringify(separator)}` : ""
                 } }`;
             });
@@ -619,7 +628,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             .filter((property) => property.kind === "ELEMENT")
             .map(
                 (property) =>
-                    `{ name: ${JSON.stringify(property.wireName)}, value: this.${getPropertyKey(property.key)}${
+                    `{ name: ${JSON.stringify(property.wireName)}, value: ${accessProperty("this", property.key)}${
                         property.wrapped ? ", wrapped: true" : ""
                     } }`
             );
@@ -634,7 +643,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             `attributes: [${[...attributes, `...${this.xmlRef(context, "extraXmlAttributes")}(this.${ADDITIONAL_ATTRIBUTES})`].join(", ")}]`
         );
         if (text != null) {
-            args.push(`text: this.${getPropertyKey(text.key)}`);
+            args.push(`text: ${accessProperty("this", text.key)}`);
             const separator = text.irProperty.xml?.listSeparator;
             if (separator != null) {
                 args.push(`textSeparator: ${JSON.stringify(separator)}`);
@@ -650,14 +659,20 @@ export class XmlObjectGenerator<Context extends BaseContext> {
 
     private getXmlProperties(context: Context): XmlProperty[] {
         const getTypeDeclaration = (name: FernIr.DeclaredTypeName) => context.type.getTypeDeclaration(name);
-        return [...this.shape.properties, ...(this.shape.extendedProperties ?? [])].map((irProperty) => {
+        const irProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+        const keyed = irProperties.map((irProperty) => ({ irProperty, key: this.getPropertyKey(irProperty) }));
+        const localNames = new Set(keyed.map(({ key }) => key).filter(isIdentifier));
+        return keyed.map(({ irProperty, key }) => {
             const typeNode = this.getTypeForObjectProperty(context, irProperty);
             const valueShape = getXmlValueShape(irProperty.valueType, getTypeDeclaration);
             const kind = getXmlPropertyKind(irProperty);
             const childTypes =
                 kind === "ELEMENT" ? getXmlChildObjectTypes(irProperty.valueType, getTypeDeclaration) : [];
             return {
-                key: this.getPropertyKey(irProperty),
+                key,
+                localName: isIdentifier(key)
+                    ? key
+                    : uniqueIdentifier(context.case.camelUnsafe(irProperty.name), localNames),
                 irProperty,
                 kind,
                 wireName: irProperty.xml?.name ?? getWireValue(irProperty.name),
@@ -680,6 +695,40 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private xmlType(context: Context, name: XmlExport): string {
         return getTextOfTsNode(context.coreUtilities.xml.getReferenceToExport(name).getTypeNode());
     }
+}
+
+/** `receiver.key`, or `receiver["key"]` when the key is not a valid identifier. */
+function accessProperty(receiver: string, key: string): string {
+    const propertyKey = getPropertyKey(key);
+    return propertyKey === key ? `${receiver}.${key}` : `${receiver}[${propertyKey}]`;
+}
+
+/**
+ * Whether `key` can be used as-is as a binding name. `getPropertyKey` leaves only valid, non-reserved
+ * identifiers unquoted (reserved words like `default` are quoted), so an unchanged key is a safe binding.
+ */
+function isIdentifier(key: string): boolean {
+    return getPropertyKey(key) === key;
+}
+
+/** Returns `name` (prefixed with `_` if reserved), suffixed with a number if already in `taken`, and adds it to `taken`. */
+function uniqueIdentifier(name: string, taken: Set<string>): string {
+    const base = isIdentifier(name) ? name : `_${name}`;
+    let candidate = base;
+    for (let i = 1; taken.has(candidate); i++) {
+        candidate = `${base}${i}`;
+    }
+    taken.add(candidate);
+    return candidate;
+}
+
+/** `key: value` in an object literal, using shorthand when possible. */
+function propertyAssignment(key: string, value: string): string {
+    return key === value && isIdentifier(key) ? key : `${getPropertyKey(key)}: ${value}`;
+}
+
+function destructureProperty(property: XmlProperty): string {
+    return propertyAssignment(property.key, property.localName);
 }
 
 /** Strips `T[]`, `Array<T>`, `Set<T>` and `| undefined | null` wrappers to get the element type node. */

@@ -3,10 +3,25 @@
 import * as core from "../../core/index.js";
 import * as SeedApi from "../index.js";
 
+/**
+ * <Say> TwiML Verb
+ */
 export class Say implements core.xml.XmlSerializable {
+    /**
+     * Message to say
+     */
     message?: string;
+    /**
+     * Voice to use
+     */
     voice?: string;
+    /**
+     * Times to loop message
+     */
     loop?: number;
+    /**
+     * Nested TwiML elements, rendered in order.
+     */
     children?: SeedApi.Break[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
@@ -60,9 +75,21 @@ export class Say implements core.xml.XmlSerializable {
 
 export namespace Say {
     export interface Fields {
+        /**
+         * Message to say
+         */
         message?: string;
+        /**
+         * Voice to use
+         */
         voice?: string;
+        /**
+         * Times to loop message
+         */
         loop?: number;
+        /**
+         * Nested TwiML elements, rendered in order.
+         */
         children?: SeedApi.Break[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
@@ -83,27 +110,45 @@ export namespace Say {
             return new Say.Builder(Say.fromXml(xml));
         }
 
+        /**
+         * Message to say
+         */
         message(message: string | undefined): this {
             this.fields.message = message;
             return this;
         }
 
+        /**
+         * Voice to use
+         */
         voice(voice: string | undefined): this {
             this.fields.voice = voice;
             return this;
         }
 
+        /**
+         * Times to loop message
+         */
         loop(loop: number | undefined): this {
             this.fields.loop = loop;
             return this;
         }
 
+        /**
+         * Nested TwiML elements, rendered in order.
+         */
         children(children: (SeedApi.Break | core.xml.XmlBuilder<SeedApi.Break>)[] | undefined): this {
             this.elements.children = children;
             return this;
         }
 
-        /** Adds a `<break>` child and returns its builder. */
+        /**
+         * Adds a `<break>` child and returns its builder.
+         *
+         * Adding a Pause in <Say>
+         * @param fields initial `<break>` attributes and children
+         * @returns the `SeedApi.Break.Builder` appended to this element
+         */
         addBreak(fields?: Partial<SeedApi.Break.Fields>): SeedApi.Break.Builder {
             const builder = new SeedApi.Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];

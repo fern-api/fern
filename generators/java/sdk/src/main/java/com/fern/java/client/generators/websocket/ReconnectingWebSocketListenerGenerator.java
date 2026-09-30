@@ -1,5 +1,6 @@
 package com.fern.java.client.generators.websocket;
 
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.*;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
@@ -142,12 +144,17 @@ public class ReconnectingWebSocketListenerGenerator {
                                 "connectionSupplier",
                                 Modifier.PRIVATE,
                                 Modifier.FINAL)
+                        .build(),
+
+                // Signals that the owning client has been closed; no further connect attempts are made once true
+                FieldSpec.builder(BooleanSupplier.class, "closedCheck", Modifier.PRIVATE, Modifier.FINAL)
                         .build());
     }
 
     private Iterable<MethodSpec> generateMethods() {
         List<MethodSpec> methods = new ArrayList<>();
         methods.add(generateConstructor());
+        methods.add(generateConstructorWithClosedCheck());
         methods.add(generateConnect());
         methods.add(generateDisconnect());
         methods.add(generateSend());
@@ -182,12 +189,34 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "\n"
                         + "@param options Reconnection configuration options\n"
                         + "@param connectionSupplier Supplier that creates new WebSocket connections\n")
+                .addStatement("this(options, connectionSupplier, () -> false)")
+                .build();
+    }
+
+    private MethodSpec generateConstructorWithClosedCheck() {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(ClassName.get(corePackageName, CLASS_NAME + ".ReconnectOptions"), "options")
+                .addParameter(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Supplier.class),
+                                WildcardTypeName.subtypeOf(ClassName.get("okhttp3", "WebSocket"))),
+                        "connectionSupplier")
+                .addParameter(BooleanSupplier.class, "closedCheck")
+                .addJavadoc("Creates a new reconnecting WebSocket listener.\n"
+                        + "\n"
+                        + "@param options Reconnection configuration options\n"
+                        + "@param connectionSupplier Supplier that creates new WebSocket connections\n"
+                        + "@param closedCheck Returns true once the owning client has been closed; connect and\n"
+                        + "    reconnect attempts made after that point fail with an {@link IllegalStateException}\n"
+                        + "    instead of being retried\n")
                 .addStatement("this.minReconnectionDelayMs = options.minReconnectionDelayMs")
                 .addStatement("this.maxReconnectionDelayMs = options.maxReconnectionDelayMs")
                 .addStatement("this.reconnectionDelayGrowFactor = options.reconnectionDelayGrowFactor")
                 .addStatement("this.maxRetries = options.maxRetries")
                 .addStatement("this.maxEnqueuedMessages = options.maxEnqueuedMessages")
                 .addStatement("this.connectionSupplier = connectionSupplier")
+                .addStatement("this.closedCheck = closedCheck")
                 .build();
     }
 
@@ -205,8 +234,18 @@ public class ReconnectingWebSocketListenerGenerator {
                         + "Error handling:\n"
                         + "- TimeoutException: Includes retry attempt context\n"
                         + "- InterruptedException: Preserves thread interruption status\n"
-                        + "- ExecutionException: Extracts actual cause and adds context\n")
+                        + "- ExecutionException: Extracts actual cause and adds context\n"
+                        + "- Owning client closed: reports an IllegalStateException once and stops reconnecting\n")
                 .beginControlFlow("if (!connectLock.compareAndSet(false, true))")
+                .addStatement("return")
+                .endControlFlow()
+                .beginControlFlow("if (closedCheck.getAsBoolean())")
+                .addStatement("shouldReconnect.set(false)")
+                .addStatement("connectLock.set(false)")
+                .addStatement(
+                        "onWebSocketFailure(null, new $T($S), null)",
+                        IllegalStateException.class,
+                        ClientOptionsGenerator.CLOSED_MESSAGE)
                 .addStatement("return")
                 .endControlFlow()
                 .beginControlFlow("if (retryCount.get() >= maxRetries)")
@@ -614,7 +653,12 @@ public class ReconnectingWebSocketListenerGenerator {
                 .addModifiers(Modifier.PRIVATE)
                 .returns(TypeName.VOID)
                 .addJavadoc("Schedules a reconnection attempt with appropriate delay.\n"
-                        + "Increments retry count and uses exponential backoff.\n")
+                        + "Increments retry count and uses exponential backoff.\n"
+                        + "Does nothing once the owning client has been closed.\n")
+                .beginControlFlow("if (closedCheck.getAsBoolean())")
+                .addStatement("shouldReconnect.set(false)")
+                .addStatement("return")
+                .endControlFlow()
                 .addStatement("retryCount.incrementAndGet()")
                 .addStatement("long delay = getNextDelay()")
                 .addStatement("reconnectExecutor.schedule(this::connect, delay, MILLISECONDS)")

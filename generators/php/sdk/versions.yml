@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 2.24.0
+  changelogEntry:
+    - summary: |
+        Inline documentation on XML-encoded (TwiML) types: constructors list every documented
+        `$values` key with its description, fluent child methods carry the child type's
+        description and per-key docs for the `$attributes`/child array shape, and text
+        parameters include the text property's description.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
 - version: 2.23.0
   changelogEntry:
     - summary: |

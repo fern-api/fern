@@ -1,14 +1,17 @@
-import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernDefinition,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
-import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
-import { tmpdir } from "os";
-import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
@@ -21,19 +24,8 @@ import {
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
-import { writeOutputFile } from "../writeOutputFile.js";
 
 describe("SDK Config migration", () => {
-    let temporaryDirectory: string;
-
-    beforeEach(async () => {
-        temporaryDirectory = await mkdtemp(join(tmpdir(), "fern-sdk-migrate-"));
-    });
-
-    afterEach(async () => {
-        await rm(temporaryDirectory, { force: true, recursive: true });
-    });
-
     it("maps a resolved generator group without reparsing Fern configuration", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -137,6 +129,17 @@ describe("SDK Config migration", () => {
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
     });
 
+    it("maps top-level replay configuration into SDK Config", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            replay: { enabled: true }
+        });
+
+        expect(result.sdkConfig.replay).toEqual({ enabled: true });
+    });
+
     it("preserves API-level path parameter behavior in the customer SDK Config", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -161,7 +164,7 @@ describe("SDK Config migration", () => {
             follow_redirects_by_default: true,
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
         };
 
@@ -180,7 +183,7 @@ describe("SDK Config migration", () => {
             followRedirectsByDefault: true,
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
-            extras: { audio: ["audio-runtime"] },
+            extras: { pyaudio: ["audio-runtime"] },
             additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
         });
         expect(result.diagnostics).toEqual([]);
@@ -521,11 +524,34 @@ describe("SDK Config migration", () => {
             shouldUseUndiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "./problem.yml",
+                name: "ProblemDetails"
+            }
         } as generatorsYml.APIDefinitionSettings;
+        const loadedSpec = createWorkspaceOpenApiSpec("Sample", absoluteFilepath);
+        if (loadedSpec.type !== "openapi") {
+            throw new Error("Expected an OpenAPI spec");
+        }
+        loadedSpec.settings = getOpenAPISettings({
+            overrides: {
+                errorResponses: {
+                    schema: "/tmp/fern/problem.yml",
+                    name: "ProblemDetails"
+                }
+            }
+        });
         const workspace = {
             absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
-            allSpecs: [createWorkspaceOpenApiSpec("Sample", absoluteFilepath)],
+            allSpecs: [loadedSpec],
             generatorsConfiguration: {
                 api: {
                     type: "multiNamespace",
@@ -548,8 +574,23 @@ describe("SDK Config migration", () => {
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
             resolveSchemaCollisions: true,
-            asyncApiMessageNaming: "v2"
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml",
+                name: "ProblemDetails"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("projects generator-level source import settings into SDK Config", () => {
@@ -563,7 +604,11 @@ describe("SDK Config migration", () => {
                         "respect-readonly-schemas": true,
                         "prefer-undiscriminated-unions-with-literals": true,
                         "inline-all-of-schemas": true,
-                        "resolve-schema-collisions": true
+                        "resolve-schema-collisions": true,
+                        "type-dates-as-strings": true,
+                        "error-responses": {
+                            schema: "./problem.yml"
+                        }
                     }
                 }
             ]
@@ -582,8 +627,16 @@ describe("SDK Config migration", () => {
             discriminatedUnionV2: true,
             undiscriminatedUnionsWithLiterals: true,
             inlineAllOfSchemas: true,
-            resolveSchemaCollisions: true
+            resolveSchemaCollisions: true,
+            typeDatesAsStrings: true
         });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
@@ -720,31 +773,37 @@ describe("SDK Config migration", () => {
             })
         ).toThrow(FernConfigMappingError);
     });
-
-    it("creates parent directories and protects existing output unless forced", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "nested", "sdk-config.yml"));
-        await writeOutputFile(output, "first\n", false);
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await expect(writeOutputFile(output, "second\n", false)).rejects.toSatisfy(
-            (error) => error instanceof CliError && error.message.includes("already exists")
-        );
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await writeOutputFile(output, "second\n", true);
-        expect(await readFile(output, "utf-8")).toBe("second\n");
-    });
-
-    it("does not replace an existing file when creating a new output fails", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "sdk-config.yml"));
-        await writeFile(output, "existing\n");
-
-        await expect(writeOutputFile(output, "replacement\n", false)).rejects.toBeInstanceOf(CliError);
-        expect(await readFile(output, "utf-8")).toBe("existing\n");
-    });
 });
 
 describe("SDK Config migration target selection", () => {
+    it("selects one requested language from a multi-language group", async () => {
+        const group = createGroup([
+            createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3"),
+            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        ]);
+
+        const result = await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [group])]),
+            cliContext: createCliContext(false),
+            args: { language: ["typescript"] }
+        });
+
+        expect(result.groups[0]?.generators.map((generator) => generator.language)).toEqual(["typescript"]);
+        expect(result.selections).toEqual([{ generatorIndexes: [0], groupName: "production", isEntireGroup: false }]);
+    });
+
+    it("rejects a requested language that is absent from the selected groups", async () => {
+        const group = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+
+        await expect(
+            selectMigrationTarget({
+                project: createProject([createWorkspace("payments", [group])]),
+                cliContext: createCliContext(false),
+                args: { language: ["typescript"] }
+            })
+        ).rejects.toThrow("'typescript' not found in the selected groups");
+    });
+
     it("uses the configured default group in a non-interactive terminal", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";

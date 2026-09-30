@@ -227,6 +227,26 @@ describe("mergeThemeOverride", () => {
         });
     });
 
+    it("camelCases theme keys but preserves basepath keys in site-switcher labels", () => {
+        const globalTheme = {
+            theme: {
+                "site-switcher": {
+                    enabled: true,
+                    "show-products": true,
+                    labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+                }
+            }
+        };
+        const result = mergeThemeOverride({} as never, globalTheme) as unknown as Record<string, unknown>;
+        expect(result.theme).toEqual({
+            siteSwitcher: {
+                enabled: true,
+                showProducts: true,
+                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+            }
+        });
+    });
+
     it("global scalar replaces local scalar (favicon)", () => {
         const local = { favicon: "local-favicon.ico" } as never;
         const result = mergeThemeOverride(local, { favicon: "global-favicon.ico" }) as unknown as Record<

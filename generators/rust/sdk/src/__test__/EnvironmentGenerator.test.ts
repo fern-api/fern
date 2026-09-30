@@ -349,6 +349,92 @@ describe("EnvironmentGenerator", () => {
             expect(result?.fileContents).toContain("use serde::{Deserialize, Serialize};");
         });
 
+        it("should embed every environment's URLs and expose a constructor per environment", () => {
+            const baseUrls = [createEnvironmentBaseUrl("api", "api"), createEnvironmentBaseUrl("auth", "auth")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment("Production", {
+                    api: "https://api.example.com",
+                    auth: "https://auth.example.com"
+                }),
+                createMultipleBaseUrlsEnvironment("Staging", {
+                    api: "https://staging-api.example.com",
+                    auth: "https://staging-auth.example.com"
+                })
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const contents = generator.generate()?.fileContents ?? "";
+            expect(contents).toContain("impl Default for StagingUrls");
+            expect(contents).toContain('api: "https://staging-api.example.com".to_string()');
+            expect(contents).toContain('auth: "https://staging-auth.example.com".to_string()');
+            expect(contents).toContain("pub fn production() -> Self");
+            expect(contents).toContain("pub fn staging() -> Self");
+            expect(contents).toContain("Self::Staging(StagingUrls::default())");
+            expect(contents).toContain("Self::Production(ProductionUrls::default())");
+            expect(generator.getMultiUrlEnvironmentSelector("StagingId")).toBe("Environment::staging()");
+            expect(generator.getMultiUrlGetterMethodNames()).toEqual(["api_url", "auth_url"]);
+        });
+
+        it("should skip a constructor whose name would collide with a URL getter", () => {
+            const baseUrls = [createEnvironmentBaseUrl("api", "api")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment("Production", { api: "https://api.example.com" }),
+                createMultipleBaseUrlsEnvironment("Url", { api: "https://url.example.com" })
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const contents = generator.generate()?.fileContents ?? "";
+            expect(contents).toContain("pub fn production() -> Self");
+            expect(contents).not.toContain("pub fn url() -> Self");
+            expect(contents).toContain("impl Default for UrlUrls");
+            expect(generator.getMultiUrlEnvironmentSelector("UrlId")).toBe("Environment::Url(UrlUrls::default())");
+        });
+
+        it("should not give an environment named Default a constructor that shadows Default::default", () => {
+            const baseUrls = [createEnvironmentBaseUrl("api", "api")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment("Production", { api: "https://api.example.com" }),
+                createMultipleBaseUrlsEnvironment("Default", { api: "https://default.example.com" })
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const contents = generator.generate()?.fileContents ?? "";
+            expect(contents).toContain("pub fn production() -> Self");
+            expect(contents).not.toContain("pub fn default() -> Self");
+            expect(contents).toContain("impl Default for DefaultUrls");
+            expect(contents).toContain("impl Default for Environment {\n    fn default() -> Self {\n    Self::Production(ProductionUrls::default())");
+            expect(generator.getMultiUrlEnvironmentSelector("DefaultId")).toBe(
+                "Environment::Default(DefaultUrls::default())"
+            );
+        });
+
         it("should generate multiple URLs environment with mixed protocols", async () => {
             const baseUrls = [
                 createEnvironmentBaseUrl("api", "api"),

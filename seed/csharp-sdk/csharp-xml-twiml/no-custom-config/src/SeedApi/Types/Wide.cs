@@ -1622,7 +1622,11 @@ public record Wide : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element and returns this instance for chaining.
+    /// <para>
+    /// XML element without an explicit xml.name; falls back to the schema name.
+    /// </para>
     /// </summary>
+    /// <param name="pause">The <c>&lt;Pause&gt;</c> element to add.</param>
     public Wide Pause(Pause pause)
     {
         Children = XmlUtils.Append<Pause>(Children, pause);
@@ -1631,6 +1635,9 @@ public record Wide : IJsonOnDeserialized, IXmlNode
 
     /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// XML element without an explicit xml.name; falls back to the schema name.
+    /// </para>
     /// </summary>
     public Wide Pause(int? length = null)
     {

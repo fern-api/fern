@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Autoversion on the hosted FAI path (remote generation) now retries chunk-by-chunk when the
+    single full-diff request fails, so a timeout or 5xx on a large diff no longer silently
+    discards the analysis. When analysis is still unavailable, the PATCH fallback carries an
+    `analysisWarning` that GithubStep renders as a "Version bump not verified" notice in the
+    PR body and that disables automerge for that PR.
+  type: fix

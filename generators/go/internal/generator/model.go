@@ -38,8 +38,11 @@ func (f *fileWriter) WriteType(
 		gettersPassByValue:           f.gettersPassByValue,
 		dedupeUnionBaseProperties:    f.dedupeUnionBaseProperties,
 		xml:                          typeDeclaration.Encoding.GetXml(),
+		docs:                         typeDeclaration.Docs,
 	}
-	f.WriteDocs(typeDeclaration.Docs)
+	if typeDeclaration.Shape.Object == nil {
+		f.WriteDocs(typeDeclaration.Docs)
+	}
 	return typeDeclaration.Shape.Accept(visitor)
 }
 
@@ -59,6 +62,10 @@ type typeVisitor struct {
 
 	// xml is set if the type is xml-encoded.
 	xml *ir.XmlEncoding
+
+	// docs is written by VisitObject directly above the struct declaration
+	// so that godoc attaches it to the type.
+	docs *string
 }
 
 // Compile-time assertion.
@@ -191,6 +198,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.WriteStructPropertyBitConstants(t.typeName, propertyNames)
 	requiredNullableFieldsName := writeRequiredNullableFields(t.writer, t.typeName, requiredNullableProperties)
 
+	t.writer.WriteDocs(t.docs)
 	t.writer.P("type ", t.typeName, " struct {")
 	objectProperties := t.visitObjectProperties(
 		object,

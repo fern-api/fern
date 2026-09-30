@@ -6,10 +6,12 @@ import {
     AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
+    ApiSpecImportSettings,
     Availability,
     DocsInstance,
     EmbeddingConfig,
     ExperimentalConfig,
+    ExternalSitemap,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
@@ -44,7 +46,7 @@ export interface ParsedPageActionsConfig {
 }
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
-interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language" | "search"> {
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
@@ -54,7 +56,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
-              externalSitemaps: string[] | undefined;
+              externalSitemaps: ExternalSitemap[] | undefined;
           }
         | undefined;
 }
@@ -496,6 +498,7 @@ export interface ParsedApiSpecConfiguration {
     namespace: string | undefined;
     absoluteOverlayPaths: AbsoluteFilePath[];
     absoluteOverridePaths: AbsoluteFilePath[];
+    settings: ApiSpecImportSettings | undefined;
 }
 
 export type ApiSpecType = "openapi" | "asyncapi" | "graphql";

@@ -232,6 +232,14 @@ export async function parseDocsConfiguration({
         );
     }
 
+    warnOnUnconfiguredExternalSitemapLocales({
+        externalSitemaps: experimental?.externalSitemaps,
+        siteLocales: rawDocsConfiguration.translations?.map(
+            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        context
+    });
+
     return {
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
@@ -329,6 +337,36 @@ export async function parseDocsConfiguration({
 
         experimental
     };
+}
+
+function warnOnUnconfiguredExternalSitemapLocales({
+    externalSitemaps,
+    siteLocales,
+    context
+}: {
+    externalSitemaps: docsYml.RawSchemas.ExternalSitemap[] | undefined;
+    siteLocales: string[];
+    context: TaskContext;
+}): void {
+    if (externalSitemaps == null) {
+        return;
+    }
+    const normalizedSiteLocales = siteLocales.map((l) => l.trim().toLowerCase());
+    for (const sitemap of externalSitemaps) {
+        if (typeof sitemap === "string" || sitemap.locale == null) {
+            continue;
+        }
+        const locale = sitemap.locale.trim().toLowerCase();
+        const language = locale.split(/[-_]/)[0];
+        const matches = normalizedSiteLocales.some(
+            (siteLocale) => siteLocale === locale || siteLocale.split(/[-_]/)[0] === language
+        );
+        if (!matches) {
+            context.logger.warn(
+                `external-sitemaps: locale '${sitemap.locale}' for ${sitemap.url} does not match any site locale (${siteLocales.join(", ")}); this sitemap will not be indexed.`
+            );
+        }
+    }
 }
 
 function convertLogoReference(
@@ -544,7 +582,8 @@ function convertThemeConfig(
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        productSwitcher: theme.productSwitcher ?? "default",
+        siteSwitcher: theme.siteSwitcher
     };
 }
 
@@ -1519,7 +1558,27 @@ async function convertNavigationItem({
                 absoluteOverlayPaths:
                     spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
                 absoluteOverridePaths:
-                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? [],
+                settings:
+                    spec.settings == null
+                        ? undefined
+                        : {
+                              ...spec.settings,
+                              ...(spec.settings.errorResponses == null
+                                  ? {}
+                                  : {
+                                        errorResponses: {
+                                            ...spec.settings.errorResponses,
+                                            schema:
+                                                typeof spec.settings.errorResponses.schema === "string"
+                                                    ? resolveFilepath(
+                                                          spec.settings.errorResponses.schema,
+                                                          absolutePathToConfig
+                                                      )
+                                                    : spec.settings.errorResponses.schema
+                                        }
+                                    })
+                          }
             })),
             audiences:
                 rawConfig.audiences != null

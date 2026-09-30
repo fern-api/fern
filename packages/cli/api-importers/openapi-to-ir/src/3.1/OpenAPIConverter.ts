@@ -1,7 +1,7 @@
 import { isEndpointSecurityAuthSchemes } from "@fern-api/fern-definition-schema";
 import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
-import { stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
+import { applyTwilioVisibility, stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
 import {
     AbstractConverter,
     AbstractSpecConverter,
@@ -41,6 +41,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
+
+        this.context.spec = applyTwilioVisibility({
+            document: this.context.spec,
+            options: this.context.settings,
+            logger: this.context.logger
+        });
 
         validateOpenApiSpec({
             spec: this.context.spec,

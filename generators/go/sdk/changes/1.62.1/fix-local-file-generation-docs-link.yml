@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Point the "Neither an import path nor a module path was specified" warning at the
+    Go generator README in the fern monorepo; the old `fern-api/fern-go` link now 404s.
+  type: fix
