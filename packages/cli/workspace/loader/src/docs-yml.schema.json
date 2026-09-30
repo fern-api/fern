@@ -7126,6 +7126,7 @@
         "github-light-default",
         "github-light-high-contrast",
         "material-theme-darker",
+        "min-dark",
         "min-light"
       ],
       "description": "A supported Shiki syntax-highlighting theme (https://shiki.style/themes)."

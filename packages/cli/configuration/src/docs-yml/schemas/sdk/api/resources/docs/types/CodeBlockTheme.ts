@@ -10,6 +10,7 @@ export const CodeBlockTheme = {
     GithubLightDefault: "github-light-default",
     GithubLightHighContrast: "github-light-high-contrast",
     MaterialThemeDarker: "material-theme-darker",
+    MinDark: "min-dark",
     MinLight: "min-light",
 } as const;
 export type CodeBlockTheme = (typeof CodeBlockTheme)[keyof typeof CodeBlockTheme];

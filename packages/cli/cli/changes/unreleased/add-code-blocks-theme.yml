@@ -3,5 +3,5 @@
     code blocks, with separate `light` and `dark` Shiki themes. Supported themes are
     `github-dark`, `github-dark-default`, `github-dark-dimmed`, `github-dark-high-contrast`,
     `github-light`, `github-light-default`, `github-light-high-contrast`,
-    `material-theme-darker`, and `min-light`.
+    `material-theme-darker`, `min-dark`, and `min-light`.
   type: feat

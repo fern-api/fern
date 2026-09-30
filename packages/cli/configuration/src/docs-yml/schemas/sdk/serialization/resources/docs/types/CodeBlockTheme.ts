@@ -14,6 +14,7 @@ export const CodeBlockTheme: core.serialization.Schema<serializers.CodeBlockThem
         "github-light-default",
         "github-light-high-contrast",
         "material-theme-darker",
+        "min-dark",
         "min-light",
     ]);
 
@@ -27,5 +28,6 @@ export declare namespace CodeBlockTheme {
         | "github-light-default"
         | "github-light-high-contrast"
         | "material-theme-darker"
+        | "min-dark"
         | "min-light";
 }

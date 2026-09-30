@@ -109,6 +109,7 @@ export const CodeBlockTheme = z.enum([
     "github-light-default",
     "github-light-high-contrast",
     "material-theme-darker",
+    "min-dark",
     "min-light"
 ]);
 

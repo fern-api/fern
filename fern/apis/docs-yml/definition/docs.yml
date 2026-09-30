@@ -1247,6 +1247,8 @@ types:
         name: github_light_high_contrast
       - value: material-theme-darker
         name: material_theme_darker
+      - value: min-dark
+        name: min_dark
       - value: min-light
         name: min_light
 
