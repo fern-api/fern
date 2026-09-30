@@ -2204,38 +2204,29 @@ fn resolve_missing_profile(
     Ok(choice)
 }
 
-/// With a similar existing profile, offer to use it, create `name`, or
-/// cancel; otherwise a plain `[y/N]` to create. Anything unrecognised,
-/// including EOF, cancels.
+/// With a similar existing profile, first ask whether that one was meant,
+/// then whether to create `name`; otherwise only the create question.
+/// Anything but `y`/`yes`, including EOF, is a no.
 fn ask_missing_profile(
     name: &str,
     suggestion: Option<&str>,
     input: &mut impl std::io::BufRead,
     out: &mut impl Write,
 ) -> Result<MissingProfile, CliError> {
-    let Some(existing) = suggestion else {
-        let question = format!("Profile `{name}` doesn't exist. Would you like to create it?");
-        return Ok(if confirm(&question, input, out)? {
-            MissingProfile::Create
-        } else {
-            MissingProfile::Cancel
-        });
+    let create_question = match suggestion {
+        Some(existing) => {
+            let question = format!("Profile `{name}` doesn't exist. Did you mean `{existing}`?");
+            if confirm(&question, input, out)? {
+                return Ok(MissingProfile::Use(existing.to_string()));
+            }
+            format!("Create profile `{name}`?")
+        }
+        None => format!("Profile `{name}` doesn't exist. Create it?"),
     };
-    let _ = write!(
-        out,
-        "Profile `{name}` doesn't exist. Did you mean `{existing}`?\n  \
-         [u] Use `{existing}`\n  [c] Create `{name}`\n  [N] Cancel\n\
-         Choice [u/c/N]: "
-    );
-    let _ = out.flush();
-    let mut answer = String::new();
-    input
-        .read_line(&mut answer)
-        .map_err(|e| CliError::Other(e.into()))?;
-    Ok(match answer.trim().to_ascii_lowercase().as_str() {
-        "u" | "use" => MissingProfile::Use(existing.to_string()),
-        "c" | "create" => MissingProfile::Create,
-        _ => MissingProfile::Cancel,
+    Ok(if confirm(&create_question, input, out)? {
+        MissingProfile::Create
+    } else {
+        MissingProfile::Cancel
     })
 }
 
@@ -2589,25 +2580,28 @@ mod tests {
     }
 
     #[test]
-    fn ask_missing_profile_offers_the_similar_profile() {
-        for (answer, expected) in [
-            ("u\n", MissingProfile::Use("basicAuthTest".to_string())),
-            ("USE\n", MissingProfile::Use("basicAuthTest".to_string())),
-            ("c\n", MissingProfile::Create),
-            ("create\n", MissingProfile::Create),
-            ("\n", MissingProfile::Cancel),
-            ("y\n", MissingProfile::Cancel),
-            ("", MissingProfile::Cancel),
+    fn ask_missing_profile_offers_the_similar_profile_then_creation() {
+        let both = "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] \
+                    Create profile `basicAuth`? [y/N] ";
+        for (answers, expected, prompt) in [
+            ("y\n", MissingProfile::Use("basicAuthTest".to_string()),
+             "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] "),
+            ("n\ny\n", MissingProfile::Create, both),
+            ("\nyes\n", MissingProfile::Create, both),
+            ("n\nn\n", MissingProfile::Cancel, both),
+            ("n\n", MissingProfile::Cancel, both),
+            ("", MissingProfile::Cancel, both),
         ] {
             let mut out: Vec<u8> = Vec::new();
-            let got =
-                ask_missing_profile("basicAuth", Some("basicAuthTest"), &mut answer.as_bytes(), &mut out)
-                    .unwrap();
-            assert_eq!(got, expected, "answer {answer:?}");
-            let prompt = String::from_utf8(out).unwrap();
-            assert!(prompt.contains("Did you mean `basicAuthTest`?"), "{prompt}");
-            assert!(prompt.contains("[u] Use `basicAuthTest`"), "{prompt}");
-            assert!(prompt.contains("[c] Create `basicAuth`"), "{prompt}");
+            let got = ask_missing_profile(
+                "basicAuth",
+                Some("basicAuthTest"),
+                &mut answers.as_bytes(),
+                &mut out,
+            )
+            .unwrap();
+            assert_eq!(got, expected, "answers {answers:?}");
+            assert_eq!(String::from_utf8(out).unwrap(), prompt, "answers {answers:?}");
         }
     }
 
@@ -2619,7 +2613,7 @@ mod tests {
             assert_eq!(got, expected, "answer {answer:?}");
             assert_eq!(
                 String::from_utf8(out).unwrap(),
-                "Profile `sandbox` doesn't exist. Would you like to create it? [y/N] "
+                "Profile `sandbox` doesn't exist. Create it? [y/N] "
             );
         }
     }
