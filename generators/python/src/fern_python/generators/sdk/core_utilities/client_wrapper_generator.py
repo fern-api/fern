@@ -117,6 +117,8 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     # header auth scheme). Used to skip flat auth-header emission in endpoint
     # security mode, where auth headers are routed per-endpoint instead.
     is_auth: bool = False
+    # True for the bearer/OAuth token parameter, which async clients may replace with `async_token`.
+    is_token: bool = False
     raw_header_value_for_empty_prefix: bool = False
 
 
@@ -147,6 +149,7 @@ class ClientWrapperGenerator:
     BASE_CLIENT_WRAPPER_CLASS_NAME = "BaseClientWrapper"
 
     GET_HEADERS_METHOD_NAME = "get_headers"
+    INCLUDE_TOKEN_PARAMETER_NAME = "include_token"
     GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME = "get_auth_headers_for_endpoint"
     ASYNC_GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME = "async_get_auth_headers_for_endpoint"
     ENDPOINT_SECURITY_PARAMETER_NAME = "security"
@@ -387,7 +390,18 @@ class ClientWrapperGenerator:
             AST.FunctionDeclaration(
                 name=ClientWrapperGenerator.GET_HEADERS_METHOD_NAME,
                 signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
+                    named_parameters=(
+                        [
+                            AST.NamedFunctionParameter(
+                                name=ClientWrapperGenerator.INCLUDE_TOKEN_PARAMETER_NAME,
+                                type_hint=AST.TypeHint.bool_(),
+                                initializer=AST.Expression("True"),
+                            )
+                        ]
+                        if self._has_flat_token_header(constructor_parameters=constructor_parameters)
+                        else []
+                    ),
+                    return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
                 ),
                 body=AST.CodeWriter(
                     self._get_write_get_headers_body(
@@ -539,7 +553,9 @@ class ClientWrapperGenerator:
                 signature=AST.FunctionSignature(
                     return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
                 ),
-                body=AST.CodeWriter(self._get_write_async_get_headers_body()),
+                body=AST.CodeWriter(
+                    self._get_write_async_get_headers_body(constructor_parameters=constructor_parameters)
+                ),
                 is_async=True,
             )
         )
@@ -564,9 +580,26 @@ class ClientWrapperGenerator:
 
         return class_declaration
 
-    def _get_write_async_get_headers_body(self) -> CodeWriterFunction:
+    def _has_flat_token_header(self, *, constructor_parameters: List[ConstructorParameter]) -> bool:
+        return not self.is_endpoint_security() and any(
+            param.is_token and param.header_key is not None for param in constructor_parameters
+        )
+
+    def _get_write_async_get_headers_body(
+        self, *, constructor_parameters: List[ConstructorParameter]
+    ) -> CodeWriterFunction:
+        has_flat_token_header = self._has_flat_token_header(constructor_parameters=constructor_parameters)
+
         def _write_async_get_headers_body(writer: AST.NodeWriter) -> None:
-            writer.write_line("headers = self.get_headers()")
+            # When an async token is supplied, skip resolving the synchronous token so a blocking
+            # token callable never runs on the event loop.
+            if has_flat_token_header:
+                writer.write_line(
+                    f"headers = self.get_headers({ClientWrapperGenerator.INCLUDE_TOKEN_PARAMETER_NAME}="
+                    f"self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is None)"
+                )
+            else:
+                writer.write_line("headers = self.get_headers()")
             # In endpoint-security mode, auth headers are routed per-endpoint, so the
             # async base headers must not inject any auth headers either.
             emit_flat_auth = not self.is_endpoint_security()
@@ -1100,6 +1133,9 @@ class ClientWrapperGenerator:
                     continue
                 if param.is_auth and not emit_flat_auth:
                     continue
+                if param.is_token and param.header_key is not None:
+                    writer.write_line(f"if {ClientWrapperGenerator.INCLUDE_TOKEN_PARAMETER_NAME}:")
+                    writer.indent()
                 if param.header_key is not None:
                     header_key = json.dumps(param.header_key)
                     if param.header_prefix is not None:
@@ -1166,6 +1202,8 @@ class ClientWrapperGenerator:
                             )
                             if param.type_hint.is_optional:
                                 writer.outdent()
+                if param.is_token and param.header_key is not None:
+                    writer.outdent()
             for literal_header in literal_headers:
                 private_member_name = literal_header.private_member_name
                 writer.write(
@@ -1541,6 +1579,7 @@ class ClientWrapperGenerator:
                     header_key=token_header,
                     header_prefix=token_prefix,
                     is_auth=True,
+                    is_token=True,
                     raw_header_value_for_empty_prefix=self._has_oauth(),
                     environment_variable=(
                         bearer_auth_scheme.token_env_var if bearer_auth_scheme.token_env_var is not None else None
