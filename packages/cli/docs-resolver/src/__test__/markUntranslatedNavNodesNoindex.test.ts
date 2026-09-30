@@ -75,3 +75,20 @@ describe("markUntranslatedNavNodesNoindex", () => {
         expect(root).toEqual(snapshot);
     });
 });
+
+describe("markUntranslatedNavNodesNoindex node type gating", () => {
+    it("only marks known markdown and API leaf node types", () => {
+        const tree = asRoot({
+            type: "root",
+            child: {
+                type: "sidebarRoot",
+                children: [
+                    { type: "page", pageId: "pages/untranslated.mdx", children: [] },
+                    { type: "unknownKind", pageId: "pages/untranslated.mdx", children: [] }
+                ]
+            }
+        });
+        const result = markUntranslatedNavNodesNoindex(tree, { translatedPageIds: new Set() });
+        expect(sidebarChildren(result).map((child) => child.noindex)).toEqual([true, undefined]);
+    });
+});

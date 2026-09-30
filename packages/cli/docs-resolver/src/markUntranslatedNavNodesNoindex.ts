@@ -1,5 +1,14 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 
+const MARKDOWN_NODE_TYPES = new Set([
+    "page",
+    "landingPage",
+    "changelogEntry",
+    "section",
+    "apiReference",
+    "apiPackage",
+    "changelog"
+]);
 const API_LEAF_TYPES = new Set(["endpoint", "webSocket", "webhook", "grpc", "graphql", "graphqlType"]);
 
 /**
@@ -39,6 +48,9 @@ function walkNode(
     if (Array.isArray(node)) {
         return node.map((item) => walkNode(item, translatedPageIds, translatedApiDefinitionIds));
     }
+    if (Object.getPrototypeOf(node) !== Object.prototype) {
+        return node;
+    }
 
     const updated: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(node)) {
@@ -46,14 +58,16 @@ function walkNode(
     }
 
     const type = updated["type"];
+    if (typeof type !== "string") {
+        return updated;
+    }
     const pageId = updated["pageId"] ?? updated["overviewPageId"];
-    if (typeof pageId === "string") {
+    if (MARKDOWN_NODE_TYPES.has(type) && typeof pageId === "string") {
         if (translatedPageIds != null && !translatedPageIds.has(pageId)) {
             updated["noindex"] = true;
         }
     } else if (
         translatedApiDefinitionIds != null &&
-        typeof type === "string" &&
         API_LEAF_TYPES.has(type) &&
         typeof updated["apiDefinitionId"] === "string" &&
         !translatedApiDefinitionIds.has(updated["apiDefinitionId"])

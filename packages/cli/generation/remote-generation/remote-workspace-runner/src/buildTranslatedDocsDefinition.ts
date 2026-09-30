@@ -130,7 +130,7 @@ export async function buildTranslatedDocsDefinition({
                         editThisPageUrl,
                         editThisPageLaunch: basePage?.editThisPageLaunch
                     }
-                ];
+                ] as const;
             } catch (pageError) {
                 context.logger.warn(
                     `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
@@ -166,7 +166,7 @@ export async function buildTranslatedDocsDefinition({
     }
 
     updatedRoot = markUntranslatedNavNodesNoindex(updatedRoot, {
-        translatedPageIds: new Set(successfulTranslatedPageEntries.map(([path]) => String(path)))
+        translatedPageIds: new Set(successfulTranslatedPageEntries.map(([path]) => path))
     });
 
     return {
