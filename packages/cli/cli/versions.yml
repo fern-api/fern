@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.3
+  changelogEntry:
+    - summary: |
+        `fern docs preview delete --id` now loads the docs workspace and deletes the preview at each
+        `instances[].url` basepath, so previews built from a docs.yml instance with a path
+        (e.g. `acme.docs.buildwithfern.com/reference`) no longer fail with "Domain not registered".
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
 - version: 5.143.2
   changelogEntry:
     - summary: |
