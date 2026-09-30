@@ -1721,7 +1721,8 @@ fn handle_set(
     // is caught before anything is written and a "yes" never meets a
     // rejected value. Non-TTY stdin keeps creating silently: a script or an
     // agent cannot answer, and prompting there would hang (the M17 contract).
-    if !existed && !matches.get_flag("yes") && std::io::stdin().is_terminal() {
+    let stdin = std::io::stdin();
+    if !existed && !matches.get_flag("yes") && stdin.is_terminal() {
         let known = store.names();
         let known = if known.is_empty() {
             String::new()
@@ -1731,7 +1732,7 @@ fn handle_set(
         let question = format!(
             "Profile `{name}` doesn't exist.{known} Would you like to create it?"
         );
-        if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
+        if !confirm(&question, &mut stdin.lock(), &mut stderr)? {
             let _ = writeln!(
                 stderr,
                 "Aborted. Nothing was changed. Create it with `{} {} create {name}`.",
