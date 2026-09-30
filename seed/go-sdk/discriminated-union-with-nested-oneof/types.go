@@ -449,6 +449,22 @@ func (a *AstllmNode) GetAstllmNodeWithPrompt() *AstllmNodeWithPrompt {
 }
 
 func (a *AstllmNode) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"type", "model", "value_schema"}, []string{"type", "model", "value_schema"}) {
+		valueAstllmNodeWithSchema := new(AstllmNodeWithSchema)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithSchema); err == nil {
+			a.typ = "AstllmNodeWithSchema"
+			a.AstllmNodeWithSchema = valueAstllmNodeWithSchema
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"type", "model", "prompt"}, []string{"type", "model", "prompt"}) {
+		valueAstllmNodeWithPrompt := new(AstllmNodeWithPrompt)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithPrompt); err == nil {
+			a.typ = "AstllmNodeWithPrompt"
+			a.AstllmNodeWithPrompt = valueAstllmNodeWithPrompt
+			return nil
+		}
+	}
 	valueAstllmNodeWithSchema := new(AstllmNodeWithSchema)
 	if err := json.Unmarshal(data, &valueAstllmNodeWithSchema); err == nil {
 		a.typ = "AstllmNodeWithSchema"

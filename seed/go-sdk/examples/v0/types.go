@@ -863,6 +863,30 @@ func (c *CastMember) GetStuntDouble() *StuntDouble {
 }
 
 func (c *CastMember) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"name", "id"}, []string{"name", "id"}) {
+		valueActor := new(Actor)
+		if err := json.Unmarshal(data, &valueActor); err == nil {
+			c.typ = "Actor"
+			c.Actor = valueActor
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "id"}, []string{"name", "id"}) {
+		valueActress := new(Actress)
+		if err := json.Unmarshal(data, &valueActress); err == nil {
+			c.typ = "Actress"
+			c.Actress = valueActress
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "actorOrActressId"}, []string{"name", "actorOrActressId"}) {
+		valueStuntDouble := new(StuntDouble)
+		if err := json.Unmarshal(data, &valueStuntDouble); err == nil {
+			c.typ = "StuntDouble"
+			c.StuntDouble = valueStuntDouble
+			return nil
+		}
+	}
 	valueActor := new(Actor)
 	if err := json.Unmarshal(data, &valueActor); err == nil {
 		c.typ = "Actor"

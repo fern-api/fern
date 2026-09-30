@@ -755,6 +755,38 @@ func (r *ResourceList) GetScript() *Script {
 }
 
 func (r *ResourceList) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name", "patient", "practitioner"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueAccount := new(Account)
+		if err := json.Unmarshal(data, &valueAccount); err == nil {
+			r.typ = "Account"
+			r.Account = valueAccount
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name", "scripts"}, []string{"id", "related_resources", "memo", "resource_type", "name", "scripts"}) {
+		valuePatient := new(Patient)
+		if err := json.Unmarshal(data, &valuePatient); err == nil {
+			r.typ = "Patient"
+			r.Patient = valuePatient
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valuePractitioner := new(Practitioner)
+		if err := json.Unmarshal(data, &valuePractitioner); err == nil {
+			r.typ = "Practitioner"
+			r.Practitioner = valuePractitioner
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueScript := new(Script)
+		if err := json.Unmarshal(data, &valueScript); err == nil {
+			r.typ = "Script"
+			r.Script = valueScript
+			return nil
+		}
+	}
 	valueAccount := new(Account)
 	if err := json.Unmarshal(data, &valueAccount); err == nil {
 		r.typ = "Account"
