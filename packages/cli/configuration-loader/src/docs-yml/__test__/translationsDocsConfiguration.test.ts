@@ -244,6 +244,8 @@ describe("parseDocsConfiguration — translation navigation overlay docs.yml loc
                 "              contents:",
                 "                - endpoint: POST /agents",
                 "                  title: エージェント作成",
+                "          - tabb:",
+                "              display-name: typo",
                 "          - link: ステータス"
             ].join("\n") + "\n"
         );

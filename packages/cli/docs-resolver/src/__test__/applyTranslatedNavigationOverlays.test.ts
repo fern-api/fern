@@ -733,6 +733,93 @@ describe("applyTranslatedNavigationOverlays", () => {
         const endpoints = apiChildren[0]?.children as Array<Record<string, unknown>>;
         expect(endpoints.map((e) => e.title)).toEqual(["エージェント作成", "エージェント一覧"]);
     });
+
+    it("does not reuse a package overlay matched by name for a later package", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "apiReference",
+                title: "API",
+                slug: "api",
+                children: [
+                    { type: "apiPackage", title: "Billing", slug: "api/invoices", children: [] },
+                    { type: "apiPackage", title: "Agents", slug: "api/agents", children: [] }
+                ]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "apiReference",
+                    title: undefined,
+                    slug: undefined,
+                    layout: [
+                        {
+                            type: "apiPackage",
+                            packageName: "agents",
+                            title: "エージェント",
+                            slug: undefined,
+                            contents: undefined
+                        },
+                        {
+                            type: "apiPackage",
+                            packageName: "billing",
+                            title: "請求",
+                            slug: undefined,
+                            contents: undefined
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        const packages = (children[0] as Record<string, unknown>).children as Array<Record<string, unknown>>;
+        expect(packages.map((p) => p.title)).toEqual(["請求", "エージェント"]);
+    });
+
+    it("applies API layout section overlays to their apiPackage nodes", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "apiReference",
+                title: "API",
+                slug: "api",
+                children: [
+                    {
+                        type: "apiPackage",
+                        title: "Authentication",
+                        slug: "api/authentication",
+                        children: [{ type: "endpoint", title: "Get token", slug: "api/authentication/get-token" }]
+                    }
+                ]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "apiReference",
+                    title: undefined,
+                    slug: undefined,
+                    layout: [
+                        {
+                            type: "section",
+                            title: "認証",
+                            slug: undefined,
+                            contents: [
+                                { type: "endpoint", endpoint: "POST /token", title: "トークン取得", slug: undefined }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        const pkg = ((children[0] as Record<string, unknown>).children as Array<Record<string, unknown>>)[0];
+        expect(pkg?.title).toBe("認証");
+        expect((pkg?.children as Array<Record<string, unknown>>)[0]?.title).toBe("トークン取得");
+    });
 });
 
 function sidebarRootFixture(children: unknown[]): unknown {

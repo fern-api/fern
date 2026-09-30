@@ -1362,7 +1362,7 @@ export class DocsDefinitionResolver {
                             { docsVisibility: this.docsVisibility }
                         );
                     } catch (error) {
-                        this.taskContext.logger.debug(
+                        this.taskContext.logger.warn(
                             `v3 parser failed for translated API definition (locale "${locale}"): ${extractErrorMessage(
                                 error
                             )}. Falling back to the v2 parser.`
@@ -2115,17 +2115,17 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Resolve the workspace for GraphQL extraction: prefer the already-resolved
-        // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
-        let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
-        if (graphqlWorkspace == null) {
+        // Resolve the OSS workspace for GraphQL extraction and translated API builds: prefer the
+        // already-resolved openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
+        let resolvedOssWorkspace: OSSWorkspace | undefined = openapiWorkspace;
+        if (resolvedOssWorkspace == null) {
             try {
-                graphqlWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                resolvedOssWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
             } catch {
                 // expected for Fern Definition APIs (no OSS workspace)
             }
         }
-        const graphqlData = await this.extractGraphQLData(graphqlWorkspace, {
+        const graphqlData = await this.extractGraphQLData(resolvedOssWorkspace, {
             failOnError: directApiWorkspace != null
         });
 
@@ -2197,11 +2197,11 @@ export class DocsDefinitionResolver {
 
         const apiReferenceNode = node.get();
 
-        // Only the v3 (OpenAPI) parser path supports translated API IRs, since it needs
-        // an OSS workspace whose spec file paths can be remapped to the translated dir.
+        // Translated API IRs need an OSS workspace whose spec file paths can be remapped to the
+        // translated dir; they're built with the same parser (v3, or v2) as the base locale.
         let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
-        if (this.buildTranslatedApiDefinitions && openapiWorkspace != null) {
-            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, openapiWorkspace);
+        if (this.buildTranslatedApiDefinitions && resolvedOssWorkspace != null) {
+            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, resolvedOssWorkspace);
         }
 
         // Store pending registration for deferred processing after markdownFilesToPathName is available

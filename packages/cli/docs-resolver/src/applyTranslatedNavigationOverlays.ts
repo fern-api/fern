@@ -15,9 +15,10 @@ import { kebabCase } from "lodash-es";
  * - Versions: matched positionally against the overlay's versions array
  * - Tabs (including changelog tabs): matched by looking up the tab slug in the overlay's `tabs` map
  * - Sections/Pages/API references/endpoints: matched by explicit slug (last segment) first,
- *   otherwise positionally among the slugless overlay entries of the same kind
+ *   otherwise positionally among the remaining slugless overlay entries of the same kind
  * - Links: matched positionally among sibling links
- * - API packages: matched by package name (or explicit slug), otherwise positionally
+ * - API packages (including API layout sections): matched by explicit slug or package name,
+ *   otherwise positionally among the remaining slugless package/section overlays
  */
 export function applyTranslatedNavigationOverlays(
     root: FernNavigation.V1.RootNode | undefined,
@@ -420,70 +421,78 @@ function applySidebarChildOverlays(
     navOverlays: docsYml.NavigationItemOverlay[],
     overlay: docsYml.TranslationNavigationOverlay
 ): unknown[] {
-    const sectionOverlays = navOverlays.filter(
-        (item): item is docsYml.NavigationItemOverlay.Section => item.type === "section"
+    const nodesOfType = (...types: string[]): IndexedNode[] =>
+        children.flatMap((child, index) => {
+            const childObj = child as Record<string, unknown> | null;
+            return childObj != null && typeof childObj === "object" && types.includes(childObj["type"] as string)
+                ? [{ index, node: childObj }]
+                : [];
+        });
+    const overlaysOfType = <T extends docsYml.NavigationItemOverlay>(...types: T["type"][]): T[] =>
+        navOverlays.filter((item): item is T => (types as string[]).includes(item.type));
+
+    const sectionMatches = assignOverlays(
+        nodesOfType("section"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Section>("section"),
+        matchesExplicitSlug,
+        hasNoSlug
     );
-    const pageOverlays = navOverlays.filter((item): item is docsYml.NavigationItemOverlay.Page => item.type === "page");
-    const linkOverlays = navOverlays.filter((item): item is docsYml.NavigationItemOverlay.Link => item.type === "link");
-    const apiOverlays = navOverlays.filter(
-        (item): item is docsYml.NavigationItemOverlay.ApiReference => item.type === "apiReference"
+    const pageMatches = assignOverlays(
+        nodesOfType("page", "landingPage"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Page>("page"),
+        matchesExplicitSlug,
+        hasNoSlug
     );
-    const packageOverlays = navOverlays.filter(
-        (item): item is docsYml.NavigationItemOverlay.ApiPackage => item.type === "apiPackage"
+    const linkMatches = assignOverlays(
+        nodesOfType("link"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Link>("link"),
+        () => false,
+        () => true
     );
-    const endpointOverlays = navOverlays.filter(
-        (item): item is docsYml.NavigationItemOverlay.Endpoint => item.type === "endpoint"
+    const apiMatches = assignOverlays(
+        nodesOfType("apiReference"),
+        overlaysOfType<docsYml.NavigationItemOverlay.ApiReference>("apiReference"),
+        matchesExplicitSlug,
+        hasNoSlug
+    );
+    // API layout packages and sections both resolve to `apiPackage` nodes.
+    const packageMatches = assignOverlays(
+        nodesOfType("apiPackage"),
+        overlaysOfType<docsYml.NavigationItemOverlay.ApiPackage | docsYml.NavigationItemOverlay.Section>(
+            "apiPackage",
+            "section"
+        ),
+        matchesPackageOverlay,
+        hasNoSlug
+    );
+    const endpointMatches = assignOverlays(
+        nodesOfType("endpoint", "webSocket", "webhook"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Endpoint>("endpoint"),
+        matchesExplicitSlug,
+        hasNoSlug
     );
 
-    // Positional counters only advance for base siblings that were NOT matched
-    // by an explicit slug, so an overlay that copies explicit slugs from the base
-    // does not shift the positional matching of the slugless siblings after it.
-    const sectionPos = { index: 0 };
-    const pagePos = { index: 0 };
-    const linkPos = { index: 0 };
-    const apiPos = { index: 0 };
-    const packagePos = { index: 0 };
-    const endpointPos = { index: 0 };
-
-    return children.map((child) => {
-        const childObj = child as Record<string, unknown> | null;
-        if (childObj == null || typeof childObj !== "object") {
-            return walkAndApply(child, overlay);
+    return children.map((child, index) => {
+        const section = sectionMatches.get(index);
+        if (section != null) {
+            return applyContainerOverlay(child, overlay, section.title, section.contents);
         }
-
-        const childType = childObj["type"] as string | undefined;
-
-        if (childType === "section") {
-            const matched = matchSluggedOverlay(childObj, sectionOverlays, sectionPos);
-            return applyContainerOverlay(child, overlay, matched?.title, matched?.contents);
+        const page = pageMatches.get(index) ?? linkMatches.get(index);
+        if (page != null) {
+            return applyTitleOverlay(child, overlay, page.title);
         }
-
-        if (childType === "page" || childType === "landingPage") {
-            const matched = matchSluggedOverlay(childObj, pageOverlays, pagePos);
-            return applyTitleOverlay(child, overlay, matched?.title);
+        const api = apiMatches.get(index);
+        if (api != null) {
+            return applyContainerOverlay(child, overlay, api.title, api.layout);
         }
-
-        if (childType === "link") {
-            const matched = linkOverlays[linkPos.index];
-            linkPos.index++;
-            return applyTitleOverlay(child, overlay, matched?.title);
+        const pkg = packageMatches.get(index);
+        if (pkg != null) {
+            return applyContainerOverlay(child, overlay, pkg.title, pkg.contents);
         }
-
-        if (childType === "apiReference") {
-            const matched = matchSluggedOverlay(childObj, apiOverlays, apiPos);
-            return applyContainerOverlay(child, overlay, matched?.title, matched?.layout);
+        const endpoint = endpointMatches.get(index);
+        if (endpoint != null) {
+            return applyTitleOverlay(child, overlay, endpoint.title);
         }
-
-        if (childType === "apiPackage") {
-            const matched = matchPackageOverlay(childObj, packageOverlays, packagePos);
-            return applyContainerOverlay(child, overlay, matched?.title, matched?.contents);
-        }
-
-        if (childType === "endpoint" || childType === "webSocket" || childType === "webhook") {
-            const matched = matchSluggedOverlay(childObj, endpointOverlays, endpointPos);
-            return applyTitleOverlay(child, overlay, matched?.title);
-        }
-
         return walkAndApply(child, overlay);
     });
 }
@@ -519,59 +528,74 @@ function applyContainerOverlay(
     return walked;
 }
 
-interface PositionalCounter {
+interface IndexedNode {
     index: number;
+    node: Record<string, unknown>;
 }
 
 /**
- * Matches a base node against overlays of the same kind: first by explicit slug
- * (comparing the last slug segment on both sides, so multi-segment explicit slugs
- * such as `customization/voice` match), then positionally among the slugless
- * overlays. The positional counter is advanced only when no slug match occurred.
+ * Assigns overlays to sibling nodes of the same kind in two passes: first every node
+ * takes the first unused overlay that explicitly identifies it, then the remaining
+ * nodes take the remaining positional-eligible overlays in order. An overlay is used
+ * at most once, so an explicit match never shifts or duplicates positional matches.
  */
-function matchSluggedOverlay<T extends { slug: string | undefined }>(
-    node: Record<string, unknown>,
+function assignOverlays<T>(
+    nodes: IndexedNode[],
     overlays: T[],
-    position: PositionalCounter
-): T | undefined {
-    const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
-    if (nodeSlug != null) {
-        const bySlug = overlays.find((o) => o.slug != null && extractLastSlugSegment(o.slug) === nodeSlug);
-        if (bySlug != null) {
-            return bySlug;
+    isExplicitMatch: (node: Record<string, unknown>, overlay: T) => boolean,
+    isPositional: (overlay: T) => boolean
+): Map<number, T> {
+    const assigned = new Map<number, T>();
+    const used = new Set<T>();
+    for (const { index, node } of nodes) {
+        const match = overlays.find((o) => !used.has(o) && isExplicitMatch(node, o));
+        if (match != null) {
+            assigned.set(index, match);
+            used.add(match);
         }
     }
+    const positional = overlays.filter((o) => !used.has(o) && isPositional(o));
+    for (const { index } of nodes) {
+        if (!assigned.has(index)) {
+            const next = positional.shift();
+            if (next == null) {
+                break;
+            }
+            assigned.set(index, next);
+        }
+    }
+    return assigned;
+}
 
-    const noSlugOverlays = overlays.filter((o) => o.slug == null);
-    const matched = noSlugOverlays[position.index];
-    position.index++;
-    return matched;
+function hasNoSlug(overlay: { slug: string | undefined }): boolean {
+    return overlay.slug == null;
 }
 
 /**
- * Matches an `apiPackage` node against package overlays by explicit slug or by
- * the package name (whose kebab-case form is the default package url slug),
- * falling back to position among the remaining package overlays.
+ * Compares the last slug segment on both sides, so multi-segment explicit slugs
+ * such as `customization/voice` match.
  */
-function matchPackageOverlay(
-    node: Record<string, unknown>,
-    overlays: docsYml.NavigationItemOverlay.ApiPackage[],
-    position: PositionalCounter
-): docsYml.NavigationItemOverlay.ApiPackage | undefined {
+function matchesExplicitSlug(node: Record<string, unknown>, overlay: { slug: string | undefined }): boolean {
     const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
-    if (nodeSlug != null) {
-        const byName = overlays.find((o) => {
-            const overlaySlug = o.slug != null ? extractLastSlugSegment(o.slug) : kebabCase(o.packageName);
-            return overlaySlug === nodeSlug;
-        });
-        if (byName != null) {
-            return byName;
-        }
-    }
+    return nodeSlug != null && overlay.slug != null && extractLastSlugSegment(overlay.slug) === nodeSlug;
+}
 
-    const matched = overlays[position.index];
-    position.index++;
-    return matched;
+/**
+ * Package overlays also match by package name, whose kebab-case form is the default
+ * package url slug.
+ */
+function matchesPackageOverlay(
+    node: Record<string, unknown>,
+    overlay: docsYml.NavigationItemOverlay.ApiPackage | docsYml.NavigationItemOverlay.Section
+): boolean {
+    if (matchesExplicitSlug(node, overlay)) {
+        return true;
+    }
+    if (overlay.type !== "apiPackage" || overlay.slug != null) {
+        return false;
+    }
+    const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
+    return nodeSlug != null && kebabCase(overlay.packageName) === nodeSlug;
 }
 
 function extractLastSlugSegment(slug: string | undefined): string | undefined {

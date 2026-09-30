@@ -2842,7 +2842,7 @@ function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOv
         const entries = Object.entries(obj);
         if (entries.length === 1 && entries[0] != null) {
             const [packageName, value] = entries[0];
-            if (isPlainObject(value)) {
+            if (isPlainObject(value) && ("title" in value || "slug" in value || "contents" in value)) {
                 const pkg = value as Record<string, unknown>;
                 const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
                     type: "apiPackage",
