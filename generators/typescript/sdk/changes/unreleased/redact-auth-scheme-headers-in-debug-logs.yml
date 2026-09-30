@@ -2,7 +2,7 @@
     Redact the API's own credential headers in debug request logs. The generated `SENSITIVE_HEADERS`
     set in `core/fetcher/Fetcher.ts` now also includes every header an auth scheme writes to (custom
     header auth names such as `PLAID-SECRET`, custom OAuth token headers, and inferred-auth headers),
-    plus global and service headers whose names identify them as credentials (e.g. `PLAID-CLIENT-ID`).
+    plus global, service, and endpoint headers whose names identify them as credentials (e.g. `PLAID-CLIENT-ID`).
     Previously only a static list of conventional names (`Authorization`, `X-API-Key`, ...) was redacted,
     so custom-named auth headers, including request-level overrides, were logged in plaintext when debug
     logging was enabled.

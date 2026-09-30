@@ -355,7 +355,10 @@ export class SdkGenerator {
                 auth: this.intermediateRepresentation.auth,
                 headers: [
                     ...this.intermediateRepresentation.headers,
-                    ...Object.values(this.intermediateRepresentation.services).flatMap((service) => service.headers)
+                    ...Object.values(this.intermediateRepresentation.services).flatMap((service) => [
+                        ...service.headers,
+                        ...service.endpoints.flatMap((endpoint) => endpoint.headers)
+                    ])
                 ]
             })
         });
