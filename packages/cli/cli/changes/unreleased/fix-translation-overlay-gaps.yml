@@ -4,7 +4,8 @@
     `api` reference titles, API package titles and endpoint titles (via the api
     node's `layout`); positional matching of sections/pages no longer shifts after
     a sibling that was matched by an explicit slug; API layout `section` overlays
-    now apply to their API package nodes; and multi-segment explicit overlay slugs
+    now apply to their API package nodes; endpoint overlays match by HTTP method
+    when it is unique among siblings; and multi-segment explicit overlay slugs
     (e.g. `customization/voice`) now match.
   type: fix
 - summary: |

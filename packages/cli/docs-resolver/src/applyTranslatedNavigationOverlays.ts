@@ -465,10 +465,13 @@ function applySidebarChildOverlays(
         matchesPackageOverlay,
         hasNoSlug
     );
+    const endpointNodes = nodesOfType("endpoint", "webSocket", "webhook");
+    const endpointOverlays = overlaysOfType<docsYml.NavigationItemOverlay.Endpoint>("endpoint");
+    const matchesUniqueMethod = uniqueMethodMatcher(endpointNodes, endpointOverlays);
     const endpointMatches = assignOverlays(
-        nodesOfType("endpoint", "webSocket", "webhook"),
-        overlaysOfType<docsYml.NavigationItemOverlay.Endpoint>("endpoint"),
-        matchesExplicitSlug,
+        endpointNodes,
+        endpointOverlays,
+        (node, o) => matchesExplicitSlug(node, o) || matchesUniqueMethod(node, o),
         hasNoSlug
     );
 
@@ -578,6 +581,44 @@ function hasNoSlug(overlay: { slug: string | undefined }): boolean {
 function matchesExplicitSlug(node: Record<string, unknown>, overlay: { slug: string | undefined }): boolean {
     const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
     return nodeSlug != null && overlay.slug != null && extractLastSlugSegment(overlay.slug) === nodeSlug;
+}
+
+/**
+ * Navigation endpoint nodes carry their HTTP method but not their path, so an
+ * overlay's `METHOD /path` locator identifies a sibling only when that method
+ * occurs exactly once among both the sibling nodes and the overlays.
+ */
+function uniqueMethodMatcher(
+    nodes: IndexedNode[],
+    overlays: docsYml.NavigationItemOverlay.Endpoint[]
+): (node: Record<string, unknown>, overlay: docsYml.NavigationItemOverlay.Endpoint) => boolean {
+    const countBy = (methods: (string | undefined)[]) => {
+        const counts = new Map<string, number>();
+        for (const method of methods) {
+            if (method != null) {
+                counts.set(method, (counts.get(method) ?? 0) + 1);
+            }
+        }
+        return counts;
+    };
+    const nodeMethod = (node: Record<string, unknown>) =>
+        typeof node["method"] === "string" ? node["method"].toUpperCase() : undefined;
+    const nodeCounts = countBy(nodes.map(({ node }) => nodeMethod(node)));
+    const overlayCounts = countBy(overlays.map(overlayEndpointMethod));
+    return (node, overlay) => {
+        const method = nodeMethod(node);
+        return (
+            method != null &&
+            overlayEndpointMethod(overlay) === method &&
+            nodeCounts.get(method) === 1 &&
+            overlayCounts.get(method) === 1
+        );
+    };
+}
+
+function overlayEndpointMethod(overlay: docsYml.NavigationItemOverlay.Endpoint): string | undefined {
+    const [method, path] = overlay.endpoint.trim().split(/\s+/);
+    return method != null && path != null ? method.toUpperCase() : undefined;
 }
 
 /**

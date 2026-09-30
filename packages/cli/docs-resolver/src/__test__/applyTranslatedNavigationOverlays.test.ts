@@ -734,6 +734,38 @@ describe("applyTranslatedNavigationOverlays", () => {
         expect(endpoints.map((e) => e.title)).toEqual(["エージェント作成", "エージェント一覧"]);
     });
 
+    it("matches reordered endpoint overlays by unique HTTP method", () => {
+        const root = sidebarRootFixture([
+            {
+                type: "apiReference",
+                title: "API",
+                slug: "api",
+                children: [
+                    { type: "endpoint", title: "Create agent", slug: "api/create", method: "POST" },
+                    { type: "endpoint", title: "List agents", slug: "api/list", method: "GET" }
+                ]
+            }
+        ]);
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                {
+                    type: "apiReference",
+                    title: undefined,
+                    slug: undefined,
+                    layout: [
+                        { type: "endpoint", endpoint: "GET /agents", title: "エージェント一覧", slug: undefined },
+                        { type: "endpoint", endpoint: "POST /agents", title: "エージェント作成", slug: undefined }
+                    ]
+                }
+            ]
+        };
+
+        const children = getSidebarChildren(applyTranslatedNavigationOverlays(asRoot(root), overlay));
+        const endpoints = (children[0] as Record<string, unknown>).children as Array<Record<string, unknown>>;
+        expect(endpoints.map((e) => e.title)).toEqual(["エージェント作成", "エージェント一覧"]);
+    });
+
     it("does not reuse a package overlay matched by name for a later package", () => {
         const root = sidebarRootFixture([
             {
