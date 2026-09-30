@@ -390,9 +390,10 @@ function warnOnUnconfiguredAiSearchDatasourceLocales({
 function matchesSiteLocale(locale: string, siteLocales: string[]): boolean {
     const normalized = locale.trim().toLowerCase();
     const language = normalized.split(/[-_]/)[0];
-    return siteLocales
-        .map((siteLocale) => siteLocale.trim().toLowerCase())
-        .some((siteLocale) => siteLocale === normalized || siteLocale.split(/[-_]/)[0] === language);
+    return siteLocales.some((siteLocale) => {
+        const normalizedSiteLocale = siteLocale.trim().toLowerCase();
+        return normalizedSiteLocale === normalized || normalizedSiteLocale.split(/[-_]/)[0] === language;
+    });
 }
 
 function convertLogoReference(
