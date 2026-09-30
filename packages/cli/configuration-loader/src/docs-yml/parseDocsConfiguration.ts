@@ -232,11 +232,17 @@ export async function parseDocsConfiguration({
         );
     }
 
+    const siteLocales = rawDocsConfiguration.translations?.map(
+        (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+    ) ?? [rawDocsConfiguration.settings?.language ?? "en"];
     warnOnUnconfiguredExternalSitemapLocales({
         externalSitemaps: experimental?.externalSitemaps,
-        siteLocales: rawDocsConfiguration.translations?.map(
-            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
-        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        siteLocales,
+        context
+    });
+    warnOnUnconfiguredAiSearchDatasourceLocales({
+        datasources: (aiSearch ?? aiChat)?.datasources,
+        siteLocales,
         context
     });
 
@@ -351,22 +357,42 @@ function warnOnUnconfiguredExternalSitemapLocales({
     if (externalSitemaps == null) {
         return;
     }
-    const normalizedSiteLocales = siteLocales.map((l) => l.trim().toLowerCase());
     for (const sitemap of externalSitemaps) {
         if (typeof sitemap === "string" || sitemap.locale == null) {
             continue;
         }
-        const locale = sitemap.locale.trim().toLowerCase();
-        const language = locale.split(/[-_]/)[0];
-        const matches = normalizedSiteLocales.some(
-            (siteLocale) => siteLocale === locale || siteLocale.split(/[-_]/)[0] === language
-        );
-        if (!matches) {
+        if (!matchesSiteLocale(sitemap.locale, siteLocales)) {
             context.logger.warn(
                 `external-sitemaps: locale '${sitemap.locale}' for ${sitemap.url} does not match any site locale (${siteLocales.join(", ")}); this sitemap will not be indexed.`
             );
         }
     }
+}
+
+function warnOnUnconfiguredAiSearchDatasourceLocales({
+    datasources,
+    siteLocales,
+    context
+}: {
+    datasources: docsYml.RawSchemas.AiChatDatasource[] | undefined;
+    siteLocales: string[];
+    context: TaskContext;
+}): void {
+    for (const datasource of datasources ?? []) {
+        if (datasource.locale != null && !matchesSiteLocale(datasource.locale, siteLocales)) {
+            context.logger.warn(
+                `ai-search.datasources: locale '${datasource.locale}' for ${datasource.url} does not match any site locale (${siteLocales.join(", ")}); this website will not be indexed.`
+            );
+        }
+    }
+}
+
+function matchesSiteLocale(locale: string, siteLocales: string[]): boolean {
+    const normalized = locale.trim().toLowerCase();
+    const language = normalized.split(/[-_]/)[0];
+    return siteLocales
+        .map((siteLocale) => siteLocale.trim().toLowerCase())
+        .some((siteLocale) => siteLocale === normalized || siteLocale.split(/[-_]/)[0] === language);
 }
 
 function convertLogoReference(
