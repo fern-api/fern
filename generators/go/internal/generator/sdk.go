@@ -5181,6 +5181,24 @@ func isNullableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir
 	return typeReference.Container != nil && typeReference.Container.Nullable != nil
 }
 
+// isOptionalNullableType returns true if the given type reference is an optional
+// type whose value is itself nullable (e.g. optional<nullable<T>>), resolving
+// through any alias indirection. A plain optional<T> is not nullable.
+func isOptionalNullableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if typeReference == nil {
+		return false
+	}
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		return typeDeclaration != nil && typeDeclaration.Shape.Alias != nil && isOptionalNullableType(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	if typeReference.Container == nil || typeReference.Container.Optional == nil {
+		return false
+	}
+	inner := typeReference.Container.Optional
+	return isNullableType(inner, types) || isOptionalNullableType(inner, types)
+}
+
 // maybeIterableType returns the given type reference's iterable type, if any.
 func maybeIterableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
 	if typeReference.Named != nil {
