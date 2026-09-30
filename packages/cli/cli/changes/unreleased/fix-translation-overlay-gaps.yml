@@ -6,7 +6,9 @@
     a sibling that was matched by an explicit slug; API layout `section` overlays
     now apply to their API package nodes; endpoint overlays match by HTTP method
     when it is unique among siblings; and multi-segment explicit overlay slugs
-    (e.g. `customization/voice`) now match.
+    (e.g. `customization/voice`) now match. Overlay endpoint titles are no longer
+    reverted to the translated spec's endpoint name when that name is unchanged
+    from the default locale.
   type: fix
 - summary: |
     Translated OpenAPI specs now fall back to the v2 parser when the v3 parser
