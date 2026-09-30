@@ -1,0 +1,7 @@
+- summary: |
+    Add `theme.code-blocks` to docs.yml to choose the syntax-highlighting color scheme for
+    code blocks, with separate `light` and `dark` Shiki themes. Supported themes are
+    `github-dark`, `github-dark-default`, `github-dark-dimmed`, `github-dark-high-contrast`,
+    `github-light`, `github-light-default`, `github-light-high-contrast`,
+    `material-theme-darker`, and `min-light`.
+  type: feat

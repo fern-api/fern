@@ -1212,6 +1212,43 @@ types:
           Header switcher listing the other docs sites published to the same
           domain under different basepaths. Membership is discovered
           automatically at publish time; this only controls presentation.
+      code-blocks:
+        type: optional<CodeBlocksThemeConfig>
+        docs: |
+          Syntax-highlighting color schemes for code blocks, set separately
+          for light and dark mode. Defaults to `min-light` and
+          `material-theme-darker`.
+
+  CodeBlocksThemeConfig:
+    properties:
+      light:
+        type: optional<CodeBlockTheme>
+        docs: Code block theme used in light mode. Defaults to `min-light`.
+      dark:
+        type: optional<CodeBlockTheme>
+        docs: Code block theme used in dark mode. Defaults to `material-theme-darker`.
+
+  CodeBlockTheme:
+    docs: A supported Shiki syntax-highlighting theme (https://shiki.style/themes).
+    enum:
+      - value: github-dark
+        name: github_dark
+      - value: github-dark-default
+        name: github_dark_default
+      - value: github-dark-dimmed
+        name: github_dark_dimmed
+      - value: github-dark-high-contrast
+        name: github_dark_high_contrast
+      - value: github-light
+        name: github_light
+      - value: github-light-default
+        name: github_light_default
+      - value: github-light-high-contrast
+        name: github_light_high_contrast
+      - value: material-theme-darker
+        name: material_theme_darker
+      - value: min-light
+        name: min_light
 
   SiteSwitcherThemeConfig:
     properties:

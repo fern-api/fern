@@ -7115,6 +7115,49 @@
       },
       "additionalProperties": false
     },
+    "docs.CodeBlockTheme": {
+      "type": "string",
+      "enum": [
+        "github-dark",
+        "github-dark-default",
+        "github-dark-dimmed",
+        "github-dark-high-contrast",
+        "github-light",
+        "github-light-default",
+        "github-light-high-contrast",
+        "material-theme-darker",
+        "min-light"
+      ],
+      "description": "A supported Shiki syntax-highlighting theme (https://shiki.style/themes)."
+    },
+    "docs.CodeBlocksThemeConfig": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in light mode. Defaults to `min-light`."
+        },
+        "dark": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in dark mode. Defaults to `material-theme-darker`."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -7198,6 +7241,17 @@
             }
           ],
           "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
+        },
+        "code-blocks": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlocksThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Syntax-highlighting color schemes for code blocks, set separately\nfor light and dark mode. Defaults to `min-light` and\n`material-theme-darker`."
         }
       },
       "additionalProperties": false
