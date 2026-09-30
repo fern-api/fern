@@ -44,10 +44,19 @@ function getChildAvailability(
     switch (child.type) {
         case "endpointPair":
             return child.nonStream.availability;
+        case "apiPackage":
+        case "endpoint":
+        case "webSocket":
+        case "webhook":
+        case "grpc":
+        case "graphql":
+        case "graphqlType":
+        case "page":
+            return child.availability;
         case "link":
             return undefined;
         default:
-            return child.availability;
+            return assertNever(child);
     }
 }
 
@@ -71,7 +80,8 @@ export function sortChildrenByAvailability(
             order.push(tier);
         }
     }
+    const rankByTier = new Map(order.map((tier, index) => [tier, index]));
     const rank = (child: FernNavigation.V1.ApiPackageChild) =>
-        order.indexOf(toAvailabilityTier(getChildAvailability(child)));
+        rankByTier.get(toAvailabilityTier(getChildAvailability(child))) ?? order.length;
     return [...children].sort((a, b) => rank(a) - rank(b));
 }
