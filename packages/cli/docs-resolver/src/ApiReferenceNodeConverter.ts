@@ -50,6 +50,7 @@ import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/e
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
+import { sortChildrenByAvailability } from "./utils/sortChildrenByAvailability.js";
 import {
     stringifyEndpointPathParts,
     stringifyEndpointPathPartsWithMethod
@@ -1181,6 +1182,10 @@ export class ApiReferenceNodeConverter {
                 const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title;
                 return aTitle.localeCompare(bTitle);
             });
+        }
+
+        if (this.apiSection.sortByAvailability != null && this.apiSection.sortByAvailability.length > 0) {
+            additionalChildren = sortChildrenByAvailability(additionalChildren, this.apiSection.sortByAvailability);
         }
 
         return additionalChildren;
