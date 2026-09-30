@@ -31,7 +31,7 @@ class BaseClientWrapper:
         self._logging = logging
         self._version = version
 
-    def get_headers(self) -> typing.Dict[str, str]:
+    def get_headers(self, *, include_token: bool = True) -> typing.Dict[str, str]:
         import platform
 
         headers: typing.Dict[str, str] = {
@@ -43,7 +43,8 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["Authorization"] = f"Bearer {self._get_api_key()}"
+        if include_token:
+            headers["Authorization"] = f"Bearer {self._get_api_key()}"
         headers["X-API-Version"] = self._version if self._version is not None else "1.0.0"
         return headers
 
@@ -147,7 +148,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         )
 
     async def async_get_headers(self) -> typing.Dict[str, str]:
-        headers = self.get_headers()
+        headers = self.get_headers(include_token=self._async_token is None)
         if self._async_token is not None:
             token = await self._async_token()
             headers["Authorization"] = f"Bearer {token}"
