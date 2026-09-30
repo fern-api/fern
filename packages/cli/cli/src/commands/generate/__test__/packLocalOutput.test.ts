@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, mkdtemp, readdir, stat, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, stat, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -31,6 +31,13 @@ function createGenerator({
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
+async function writeJavaBuildOutput(outputDir: AbsoluteFilePath): Promise<void> {
+    await mkdir(path.join(outputDir, "build", "libs"), { recursive: true });
+    await writeFile(path.join(outputDir, "build", "libs", "acme-sdk.jar"), "jar-bytes");
+    await mkdir(path.join(outputDir, "build", "publications", "fernLocalPack"), { recursive: true });
+    await writeFile(path.join(outputDir, "build", "publications", "fernLocalPack", "pom-default.xml"), "<project />");
+}
+
 describe("packLocalOutputForGroup", () => {
     let outputDir: AbsoluteFilePath;
 
@@ -39,7 +46,7 @@ describe("packLocalOutputForGroup", () => {
         outputDir = AbsoluteFilePath.of(await mkdtemp(path.join(tmpdir(), "fern-pack-test-")));
     });
 
-    it("skips generators without local-file-system output", async () => {
+    it("fails loudly when no generator in the group writes to the local file system", async () => {
         const group = {
             groupName: "test",
             audiences: { type: "all" },
@@ -48,8 +55,28 @@ describe("packLocalOutputForGroup", () => {
             ]
         } as unknown as generatorsYml.GeneratorGroup;
 
+        const context = createMockTaskContext();
+        const failAndThrow = vi.spyOn(context, "failAndThrow");
+        await expect(packLocalOutputForGroup({ group, context, packOnly: true })).rejects.toThrow();
+        expect(failAndThrow).toHaveBeenCalledWith(
+            expect.stringMatching(/Nothing to package in group 'test'.*--package-only.*fernapi\/fern-python-sdk/)
+        );
+        expect(loggingExecaMock).not.toHaveBeenCalled();
+    });
+
+    it("skips generators without local-file-system output when another generator is packagable", async () => {
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-python-sdk", language: "python", outputPath: undefined }),
+                createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
         expect(loggingExecaMock).not.toHaveBeenCalled();
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual([`${path.basename(outputDir)}-source.zip`]);
     });
 
     it("runs pip wheel for python generators", async () => {
@@ -213,6 +240,116 @@ describe("packLocalOutputForGroup", () => {
         expect(distFiles).toEqual(["acme-sdk.jar", "acme-sdk.pom"]);
         // the init script is temporary and must not linger in the output directory
         expect(await readdir(outputDir)).not.toContain(".fern-pack-pom-init.gradle");
+    });
+
+    it("prefers the generated gradle wrapper over a global gradle in host mode", async () => {
+        await writeJavaBuildOutput(outputDir);
+        await writeFile(path.join(outputDir, "gradlew"), "#!/bin/sh\n");
+        await mkdir(path.join(outputDir, "gradle", "wrapper"), { recursive: true });
+        await writeFile(path.join(outputDir, "gradle", "wrapper", "gradle-wrapper.jar"), "jar-bytes");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        expect([command, args?.[0], args?.[1]]).toEqual(["sh", "gradlew", "--init-script"]);
+        expect(args).toContain("jar");
+    });
+
+    it("puts a Maven Central mirror ahead of gradle repositories and derives proxy settings in the java init script", async () => {
+        await writeJavaBuildOutput(outputDir);
+        let initScript: string | undefined;
+        loggingExecaMock.mockImplementationOnce(async () => {
+            initScript = await readFile(path.join(outputDir, ".fern-pack-pom-init.gradle"), "utf8");
+            return { stdout: "", stderr: "" } as never;
+        });
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect(initScript).toContain(
+            'def fernMirrorUrl = "https://maven-central.storage-download.googleapis.com/maven2/"'
+        );
+        expect(initScript).toContain("settings.pluginManagement.repositories");
+        expect(initScript).toContain("fernPrependMirror(project.repositories)");
+        expect(initScript).toContain('System.getenv("HTTPS_PROXY")');
+        expect(initScript).toContain("MavenPublication");
+    });
+
+    it("honors FERN_MAVEN_CENTRAL_MIRROR to override or disable the mirror", async () => {
+        await writeJavaBuildOutput(outputDir);
+        const scripts: string[] = [];
+        loggingExecaMock.mockImplementation(async () => {
+            scripts.push(await readFile(path.join(outputDir, ".fern-pack-pom-init.gradle"), "utf8"));
+            return { stdout: "", stderr: "" } as never;
+        });
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        try {
+            process.env.FERN_MAVEN_CENTRAL_MIRROR = "https://artifactory.example.com/maven-remote/";
+            await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+            process.env.FERN_MAVEN_CENTRAL_MIRROR = "off";
+            await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+        } finally {
+            delete process.env.FERN_MAVEN_CENTRAL_MIRROR;
+            loggingExecaMock.mockReset();
+            loggingExecaMock.mockImplementation(async () => ({ stdout: "", stderr: "" }) as never);
+        }
+
+        expect(scripts[0]).toContain('def fernMirrorUrl = "https://artifactory.example.com/maven-remote/"');
+        expect(scripts[1]).not.toContain("fernMirrorUrl");
+        expect(scripts[1]).toContain("fernApplyProxy");
+    });
+
+    it("mounts the host gradle user home and forwards proxy variables in docker mode for java", async () => {
+        await writeJavaBuildOutput(outputDir);
+        const gradleUserHome = await mkdtemp(path.join(tmpdir(), "fern-gradle-home-"));
+        const previous = {
+            GRADLE_USER_HOME: process.env.GRADLE_USER_HOME,
+            HTTPS_PROXY: process.env.HTTPS_PROXY,
+            NO_PROXY: process.env.NO_PROXY
+        };
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-java-sdk", language: "java", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        try {
+            process.env.GRADLE_USER_HOME = gradleUserHome;
+            process.env.HTTPS_PROXY = "http://proxy.example.com:8080";
+            delete process.env.NO_PROXY;
+            await packLocalOutputForGroup({ group, context: createMockTaskContext(), mode: "docker" });
+        } finally {
+            for (const [name, value] of Object.entries(previous)) {
+                if (value == null) {
+                    delete process.env[name];
+                } else {
+                    process.env[name] = value;
+                }
+            }
+        }
+
+        const [, command, args = []] = loggingExecaMock.mock.calls[0] ?? [];
+        expect(command).toBe("docker");
+        expect(args).toContain(`${gradleUserHome}:/fern-gradle-home`);
+        expect(args).toContain("GRADLE_USER_HOME=/fern-gradle-home");
+        expect(args.join(" ")).toContain("-e HTTPS_PROXY");
+        expect(args.join(" ")).not.toContain("-e NO_PROXY");
+        expect(args).toContain("gradle:8-jdk17");
+        expect(args[args.indexOf("gradle:8-jdk17") + 1]).toBe("gradle");
     });
 
     it("names the POM after the main jar, not sources/javadoc jars", async () => {
