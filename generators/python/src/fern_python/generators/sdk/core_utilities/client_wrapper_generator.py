@@ -586,9 +586,9 @@ class ClientWrapperGenerator:
         )
 
     def _get_write_async_get_headers_body(
-        self, *, constructor_parameters: List[ConstructorParameter]
+        self, *, constructor_parameters: Optional[List[ConstructorParameter]] = None
     ) -> CodeWriterFunction:
-        has_flat_token_header = self._has_flat_token_header(constructor_parameters=constructor_parameters)
+        has_flat_token_header = self._has_flat_token_header(constructor_parameters=constructor_parameters or [])
 
         def _write_async_get_headers_body(writer: AST.NodeWriter) -> None:
             # When an async token is supplied, skip resolving the synchronous token so a blocking
