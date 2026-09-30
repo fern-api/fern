@@ -1184,7 +1184,7 @@ export class ApiReferenceNodeConverter {
             });
         }
 
-        if (this.apiSection.sortByAvailability != null && this.apiSection.sortByAvailability.length > 0) {
+        if (this.apiSection.sortByAvailability != null) {
             additionalChildren = sortChildrenByAvailability(additionalChildren, this.apiSection.sortByAvailability);
         }
 
