@@ -1,0 +1,4 @@
+- summary: |
+    Honor SDK Config `generation.generateFullProject` when routing targets through
+    sdk-gen-api, and forward `--package` full-project intent to sdk-gen-api builds.
+  type: feat

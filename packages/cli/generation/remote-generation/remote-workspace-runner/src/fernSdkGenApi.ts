@@ -181,6 +181,7 @@ export interface FernSdkGenApiRequest {
             apiOverride?: Record<string, unknown>;
         };
         requestedOutput: FernSdkGenApiRequestedOutput;
+        generateFullProject?: boolean;
     }>;
 }
 
@@ -795,12 +796,16 @@ export interface FernSdkConfigV1Payload {
     sdkName: string;
     sdkVersion: string;
     apiVersion?: string;
+    /** When true, SDKs should be generated as full, packageable projects instead of source-only output. */
+    generateFullProject?: boolean;
     /** Undefined selects all audiences; a present empty array selects only untagged API elements. */
     audiences?: string[];
     clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
     targets: Array<{
         body: Buffer;
         language: string;
+        /** Effective value after applying root generation settings and target overrides. */
+        generateFullProject?: boolean;
         generatorVersion?: string;
         sdkName?: string;
         sdkVersion?: string;
@@ -834,6 +839,8 @@ export interface FernSdkGenApiBuildParameters {
     targetIdSeed?: string;
     sourceSpecIndexes?: number[];
     audiences?: string[];
+    /** Generate a full, packageable project even when the payload does not encode that preference. */
+    generateFullProject?: boolean;
     skipFernignore?: boolean;
 }
 
@@ -1109,7 +1116,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             payload: participant.payload,
             requestedOutput: participant.requestedOutput,
             publishCredential: participant.publishCredential,
-            githubOptions: participant.githubOptions
+            githubOptions: participant.githubOptions,
+            generateFullProject: participant.generateFullProject
         }))
     });
     const credentials = createFernSdkGenApiPublishCredentials(
@@ -1332,6 +1340,7 @@ function logFernSdkGenApiSubmissionDebug({
                         payloadKind: target.payloadKind,
                         package: target.package,
                         requestedOutput: target.requestedOutput,
+                        generateFullProject: target.generateFullProject,
                         invocation: {
                             customConfigKeys: Object.keys(target.invocation.customConfig).sort(),
                             keywords: target.invocation.keywords,
@@ -1964,7 +1973,8 @@ export function createFernSdkGenApiRequest({
     payload,
     requestedOutput,
     publishCredential,
-    githubOptions
+    githubOptions,
+    generateFullProject
 }: {
     apiName: string;
     organization: string;
@@ -1979,6 +1989,7 @@ export function createFernSdkGenApiRequest({
     requestedOutput?: FernSdkGenApiRequestedOutput;
     publishCredential?: FernSdkGenApiPublishCredentialSource;
     githubOptions?: FernSdkGenApiGithubOptions;
+    generateFullProject?: boolean;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
@@ -1995,7 +2006,8 @@ export function createFernSdkGenApiRequest({
                 payload,
                 requestedOutput,
                 publishCredential,
-                githubOptions
+                githubOptions,
+                generateFullProject
             }
         ]
     });
@@ -2025,6 +2037,7 @@ export function createFernSdkGenApiBatchRequest({
         requestedOutput?: FernSdkGenApiRequestedOutput;
         publishCredential?: FernSdkGenApiPublishCredentialSource;
         githubOptions?: FernSdkGenApiGithubOptions;
+        generateFullProject?: boolean;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -2054,7 +2067,8 @@ export function createFernSdkGenApiBatchRequest({
                 audiences,
                 payload,
                 requestedOutput,
-                githubOptions
+                githubOptions,
+                generateFullProject
             },
             index
         ) => {
@@ -2114,7 +2128,8 @@ export function createFernSdkGenApiBatchRequest({
                           }
                         : {})
                 },
-                requestedOutput: targetRequestedOutput
+                requestedOutput: targetRequestedOutput,
+                ...(generateFullProject === true ? { generateFullProject: true } : {})
             };
         }
     );

@@ -210,6 +210,9 @@ export async function runRemoteGenerationForGenerator({
         sdkGenApiRoute?.payloadKind === "sdk-config-v1"
             ? resolveSdkConfigTarget(sdkConfigV1, sdkGenApiTargetIdSeed)
             : undefined;
+    const sdkConfigGenerateFullProject =
+        sdkConfigTarget?.generateFullProject ?? sdkConfigV1?.generateFullProject ?? false;
+    const effectiveGenerateFullProject = generateFullProject === true || sdkConfigGenerateFullProject;
     const configuredSdkVersion = sdkConfigTarget?.sdkVersion ?? sdkConfigV1?.sdkVersion;
     const resolvedVersion =
         version ?? configuredSdkVersion ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
@@ -286,13 +289,6 @@ export async function runRemoteGenerationForGenerator({
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
-        if (generateFullProject === true) {
-            return interactiveTaskContext.failAndThrow(
-                "sdk-gen-api does not yet support full-project generation",
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
@@ -344,6 +340,7 @@ export async function runRemoteGenerationForGenerator({
                     context: interactiveTaskContext,
                     targetIdSeed: sdkGenApiTargetIdSeed,
                     sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
+                    generateFullProject: effectiveGenerateFullProject,
                     skipFernignore
                 };
             } else if (synthesizesSdkConfig(candidate.generatorInvocation.name)) {
@@ -413,6 +410,7 @@ export async function runRemoteGenerationForGenerator({
                     sourceSpecIndexes: sdkGenApiSourceArchive.specIndexes,
                     audiences: audiences.type === "select" ? audiences.audiences : undefined,
                     githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
+                    generateFullProject: effectiveGenerateFullProject,
                     skipFernignore
                 };
             } else {
@@ -570,7 +568,7 @@ export async function runRemoteGenerationForGenerator({
             userProvidedVersion: version,
             packageName,
             selfHosted: ir.selfHosted ?? false,
-            generateFullProject,
+            generateFullProject: effectiveGenerateFullProject,
             context: interactiveTaskContext
         })
     };
@@ -618,6 +616,7 @@ export async function runRemoteGenerationForGenerator({
                       sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
                       audiences: audiences.type === "select" ? audiences.audiences : undefined,
                       githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
+                      generateFullProject: effectiveGenerateFullProject,
                       skipFernignore
                   };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));

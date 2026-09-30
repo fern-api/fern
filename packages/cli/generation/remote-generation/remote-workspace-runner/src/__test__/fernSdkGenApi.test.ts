@@ -2132,7 +2132,8 @@ describe("isEligibleForFernSdkGenApi", () => {
                     sdkVersion: "1.2.3",
                     targetIdSeed: "10",
                     sourceSpecIndexes: [1, 2],
-                    payload: { payloadKind: "sdk-config-v1", body: pythonSdkConfig }
+                    payload: { payloadKind: "sdk-config-v1", body: pythonSdkConfig },
+                    generateFullProject: true
                 }
             ]
         });
@@ -2169,7 +2170,8 @@ describe("isEligibleForFernSdkGenApi", () => {
             generatorInvocation: python,
             payload: { payloadKind: "sdk-config-v1", body: pythonSdkConfig },
             targetIdSeed: "10",
-            sourceSpecIndexes: [1, 2]
+            sourceSpecIndexes: [1, 2],
+            generateFullProject: true
         });
         const typescriptResult = batch.run({
             ...common,
@@ -2206,6 +2208,9 @@ describe("isEligibleForFernSdkGenApi", () => {
             "fern-runtime-bundle",
             "sdk-config-v1"
         ]);
+        expect(
+            submittedRequest.targets.map((target: { generateFullProject?: boolean }) => target.generateFullProject)
+        ).toEqual([undefined, true]);
         expect(submittedRequest.idempotencyKey).toBe(request.idempotencyKey);
         expect(multipartBody.match(/name="sources"/g)).toHaveLength(1);
         expect(multipartBody).toContain('name="sources"; filename="specs.tar.gz"');

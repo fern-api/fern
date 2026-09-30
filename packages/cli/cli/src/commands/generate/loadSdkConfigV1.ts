@@ -68,6 +68,7 @@ export async function loadSdkConfigV1(
             sdkName: parsed.sdkName,
             sdkVersion: parsed.sdkVersion,
             ...(parsed.apiVersion != null ? { apiVersion: parsed.apiVersion } : {}),
+            generateFullProject: parsed.generation.generateFullProject,
             ...(parsed.api.audiences != null ? { audiences: parsed.api.audiences } : {}),
             ...(parsed.client.pathParameterStyle != null
                 ? { clientPathParameterStyle: parsed.client.pathParameterStyle }
@@ -86,6 +87,8 @@ export async function loadSdkConfigV1(
                 return {
                     body: Buffer.from(`${JSON.stringify({ ...document, targets: [documentTarget] })}\n`),
                     language: target.language,
+                    generateFullProject:
+                        target.generation?.generateFullProject ?? parsed.generation.generateFullProject,
                     ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
                     ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
                     ...(target.sdkVersion != null ? { sdkVersion: target.sdkVersion } : {}),

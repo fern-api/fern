@@ -1,4 +1,4 @@
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -451,6 +451,7 @@ describe("loadSdkConfigV1", () => {
         expect(loaded.payload).toMatchObject({
             sdkName: "petstore",
             sdkVersion: "1.0.0",
+            generateFullProject: false,
             audiences: [],
             clientPathParameterStyle: "wrapped",
             targets: [
@@ -460,11 +461,44 @@ describe("loadSdkConfigV1", () => {
                     sdkName: "petstore-node",
                     sdkVersion: "2.0.0",
                     clientPathParameterStyle: "language-default",
+                    generateFullProject: false,
                     requestedOutput: { type: "download" },
                     absolutePathToLocalOutputArchive: join(directory, "generated", "typescript.zip")
                 }
             ]
         });
+    });
+
+    it("carries generation.generateFullProject into target payloads with target overrides", async () => {
+        const configPath = await writeSdkConfigTargets(temporaryDirectories, [
+            {
+                language: "typescript",
+                package: { packageName: "@acme/typescript" },
+                output: { delivery: "zip" }
+            },
+            {
+                language: "python",
+                package: { packageName: "acme-python" },
+                generation: { generateFullProject: false },
+                output: { delivery: "zip" }
+            }
+        ]);
+        const raw = YAML.parse(await readFile(configPath, "utf8"));
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                ...raw,
+                generation: { generateFullProject: true }
+            })
+        );
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const bodies = loaded.payload.targets.map((target) => JSON.parse(target.body.toString("utf8")));
+
+        expect(loaded.payload.generateFullProject).toBe(true);
+        expect(loaded.payload.targets.map((target) => target.generateFullProject)).toEqual([true, false]);
+        expect(bodies.map((body) => body.generation.generateFullProject)).toEqual([true, true]);
+        expect(bodies.map((body) => body.targets[0].generation?.generateFullProject)).toEqual([undefined, false]);
     });
 
     it("rejects invalid SDK Config input with the resolved path", async () => {
