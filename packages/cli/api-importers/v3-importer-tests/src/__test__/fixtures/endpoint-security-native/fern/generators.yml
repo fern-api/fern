@@ -1,0 +1,4 @@
+api:
+  auth: endpoint-security
+  specs:
+    - openapi: ../openapi.yml

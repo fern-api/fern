@@ -1,0 +1,9 @@
+auth-schemes:
+  SecretHeader:
+    header: X-Overridden-Secret
+    name: secret
+api:
+  auth:
+    endpoint-security: {}
+  specs:
+    - openapi: ../../endpoint-security-native/openapi.yml

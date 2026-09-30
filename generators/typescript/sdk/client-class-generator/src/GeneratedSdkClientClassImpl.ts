@@ -432,7 +432,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             FernIr.AuthScheme._visit<AuthProviderInstance>(authScheme, {
                 basic: (scheme) => new BasicAuthProviderInstance(scheme),
                 bearer: (scheme) => new BearerAuthProviderInstance(scheme),
-                header: (scheme) => new HeaderAuthProviderInstance(scheme),
+                header: (scheme) => new HeaderAuthProviderInstance(intermediateRepresentation, scheme),
                 oauth: () => new OAuthAuthProviderInstance(),
                 inferred: () => new InferredAuthProviderInstance(),
                 _other: () => {

@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Native endpoint security
+  version: 1.0.0
+components:
+  securitySchemes:
+    SecretHeader:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+    PublicHeader:
+      type: apiKey
+      in: header
+      name: X-Public-Key
+    Bearer:
+      type: http
+      scheme: bearer
+security:
+  - Bearer: []
+paths:
+  /inherited:
+    get:
+      operationId: inherited
+      responses:
+        '204':
+          description: Success
+  /anonymous:
+    get:
+      operationId: anonymous
+      security: []
+      responses:
+        '204':
+          description: Success
+  /either:
+    get:
+      operationId: either
+      security:
+        - SecretHeader: []
+        - PublicHeader: []
+      responses:
+        '204':
+          description: Success
+  /both:
+    get:
+      operationId: both
+      security:
+        - SecretHeader: []
+          PublicHeader: []
+      responses:
+        '204':
+          description: Success
+  /same:
+    get:
+      operationId: same
+      security:
+        - Bearer: []
+      responses:
+        '204':
+          description: Success

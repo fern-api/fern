@@ -11,8 +11,8 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { getHeaderAuthProviderClassName } from "./getHeaderAuthProviderClassName.js";
 import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace HeaderAuthProviderGenerator {
@@ -27,12 +27,11 @@ export declare namespace HeaderAuthProviderGenerator {
     }
 }
 
-const CLASS_NAME = "HeaderAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
-    public static readonly CLASS_NAME = CLASS_NAME;
+    private readonly className: string;
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.HeaderAuthScheme;
@@ -45,6 +44,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
         this.ir = init.ir;
+        this.className = getHeaderAuthProviderClassName(init.ir, init.authScheme);
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
@@ -78,24 +78,24 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ],
             file: {
-                nameOnDisk: `${CLASS_NAME}.ts`,
+                nameOnDisk: `${this.className}.ts`,
                 exportDeclaration: {
-                    namedExports: [CLASS_NAME]
+                    namedExports: [this.className]
                 }
             }
         };
     }
 
     public getAuthProviderClassType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(CLASS_NAME);
+        return ts.factory.createTypeReferenceNode(this.className);
     }
 
     public getOptionsType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+        return ts.factory.createTypeReferenceNode(`${this.className}.${OPTIONS_TYPE_NAME}`);
     }
 
     public getAuthOptionsType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+        return ts.factory.createTypeReferenceNode(`${this.className}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
     public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
@@ -127,7 +127,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(this.className), "createInstance"),
             undefined,
             constructorArgs
         );
@@ -167,13 +167,13 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
     private writeClass(context: FileContext): void {
         context.sourceFile.addClass({
-            name: CLASS_NAME,
+            name: this.className,
             isExported: true,
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
                     name: "options",
-                    type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`,
+                    type: `${this.className}.${OPTIONS_TYPE_NAME}`,
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -188,7 +188,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: `Partial<${CLASS_NAME}.${OPTIONS_TYPE_NAME}>`
+                            type: `Partial<${this.className}.${OPTIONS_TYPE_NAME}>`
                         }
                     ],
                     returnType: "boolean",
@@ -228,7 +228,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`
+                            type: `${this.className}.${OPTIONS_TYPE_NAME}`
                         }
                     ],
                     statements: [`this.options = options;`]
@@ -310,7 +310,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const ${headerVar} = ${envFallback};
         if (${headerVar} == null) {
             throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
+                message: ${this.className}.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
@@ -370,12 +370,12 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 isExported: true,
                 parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
                 returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
-                statements: `return new ${CLASS_NAME}(options);`
+                statements: `return new ${this.className}(options);`
             }
         );
 
         context.sourceFile.addModule({
-            name: CLASS_NAME,
+            name: this.className,
             isExported: true,
             kind: StructureKind.Module,
             statements

@@ -1,0 +1,5 @@
+api:
+  auth:
+    endpoint-security: {}
+  specs:
+    - openapi: ../../endpoint-security-native/openapi.yml
