@@ -58,6 +58,10 @@ fixtures:
     - customConfig:
         userAgentFromPlatformHeaders: true
       outputFolder: user-agent-from-platform-headers
+    - customConfig:
+        crateName: seed-simple-api-sdk
+        preserveCrateNameHyphens: true
+      outputFolder: preserve-crate-name-hyphens
   imdb:
     - customConfig:
         clientName: ImdbClient
