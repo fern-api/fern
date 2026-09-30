@@ -20,8 +20,22 @@ func TestGetStrictObjectKeys(t *testing.T) {
 	alias := &ir.TypeDeclaration{Shape: &ir.Type{Alias: &ir.AliasTypeDeclaration{
 		AliasOf: &ir.TypeReference{Named: &ir.NamedType{TypeId: "Base"}},
 	}}}
+	aliasOfAlias := &ir.TypeDeclaration{Shape: &ir.Type{Alias: &ir.AliasTypeDeclaration{
+		AliasOf: &ir.TypeReference{Named: &ir.NamedType{TypeId: "Alias"}},
+	}}}
+	permissiveAlias := &ir.TypeDeclaration{Shape: &ir.Type{Alias: &ir.AliasTypeDeclaration{
+		AliasOf: &ir.TypeReference{Named: &ir.NamedType{TypeId: "Permissive"}},
+	}}}
+	withUnknown := objectType(objectProperty("Id"))
+	withUnknown.Shape.Object.Properties = append(withUnknown.Shape.Object.Properties, &ir.ObjectProperty{
+		Name:      nameAndWireValue("Metadata"),
+		ValueType: &ir.TypeReference{Type: "unknown", Unknown: map[string]interface{}{}},
+	})
 	types := map[common.TypeId]*ir.TypeDeclaration{
 		"Base":              base,
+		"AliasOfAlias":      aliasOfAlias,
+		"PermissiveAlias":   permissiveAlias,
+		"WithUnknown":       withUnknown,
 		"Fern":              fern,
 		"Permissive":        permissive,
 		"ExtendsPermissive": extendsPermissive,
@@ -35,7 +49,18 @@ func TestGetStrictObjectKeys(t *testing.T) {
 
 	assert.Nil(t, getStrictObjectKeys("Permissive", types))
 	assert.Nil(t, getStrictObjectKeys("ExtendsPermissive", types))
-	assert.Nil(t, getStrictObjectKeys("Alias", types))
+	for _, typeId := range []common.TypeId{"Alias", "AliasOfAlias"} {
+		aliasKeys := getStrictObjectKeys(typeId, types)
+		require.NotNil(t, aliasKeys)
+		assert.Equal(t, []string{"Genus"}, aliasKeys.known)
+		assert.Equal(t, []string{"Genus"}, aliasKeys.required)
+	}
+	assert.Nil(t, getStrictObjectKeys("PermissiveAlias", types))
+
+	unknownKeys := getStrictObjectKeys("WithUnknown", types)
+	require.NotNil(t, unknownKeys)
+	assert.Equal(t, []string{"Id", "Metadata"}, unknownKeys.known)
+	assert.Equal(t, []string{"Id"}, unknownKeys.required)
 	assert.Nil(t, getStrictObjectKeys("Missing", types))
 }
 
