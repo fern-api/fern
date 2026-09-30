@@ -2,7 +2,7 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, mkdtemp, readdir, readFile, stat, writeFile } from "fs/promises";
-import { tmpdir } from "os";
+import { homedir, tmpdir } from "os";
 import path from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -62,6 +62,21 @@ describe("packLocalOutputForGroup", () => {
             expect.stringMatching(/Nothing to package in group 'test'.*--package-only.*fernapi\/fern-python-sdk/)
         );
         expect(loggingExecaMock).not.toHaveBeenCalled();
+    });
+
+    it("fails loudly when every local-output generator has an unknown language", async () => {
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-mystery-sdk", language: undefined, outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        const context = createMockTaskContext();
+        const failAndThrow = vi.spyOn(context, "failAndThrow");
+        await expect(packLocalOutputForGroup({ group, context })).rejects.toThrow();
+        expect(failAndThrow).toHaveBeenCalledWith(expect.stringMatching(/Nothing to package in group 'test'/));
     });
 
     it("skips generators without local-file-system output when another generator is packagable", async () => {
@@ -313,9 +328,10 @@ describe("packLocalOutputForGroup", () => {
         expect(scripts[1]).toContain("fernApplyProxy");
     });
 
-    it("mounts the host gradle user home and forwards proxy variables in docker mode for java", async () => {
+    it("mounts a persistent gradle home plus host gradle config and forwards proxy variables in docker mode for java", async () => {
         await writeJavaBuildOutput(outputDir);
         const gradleUserHome = await mkdtemp(path.join(tmpdir(), "fern-gradle-home-"));
+        await writeFile(path.join(gradleUserHome, "gradle.properties"), "org.gradle.jvmargs=-Xmx1g\n");
         const previous = {
             GRADLE_USER_HOME: process.env.GRADLE_USER_HOME,
             HTTPS_PROXY: process.env.HTTPS_PROXY,
@@ -344,8 +360,12 @@ describe("packLocalOutputForGroup", () => {
 
         const [, command, args = []] = loggingExecaMock.mock.calls[0] ?? [];
         expect(command).toBe("docker");
-        expect(args).toContain(`${gradleUserHome}:/fern-gradle-home`);
+        expect(args).toContain(`${path.join(homedir(), ".fern", "gradle-docker-home")}:/fern-gradle-home`);
         expect(args).toContain("GRADLE_USER_HOME=/fern-gradle-home");
+        expect(args).toContain(
+            `${path.join(gradleUserHome, "gradle.properties")}:/fern-gradle-home/gradle.properties:ro`
+        );
+        expect(args.join(" ")).not.toContain("init.d");
         expect(args.join(" ")).toContain("-e HTTPS_PROXY");
         expect(args.join(" ")).not.toContain("-e NO_PROXY");
         expect(args).toContain("gradle:8-jdk17");
