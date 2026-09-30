@@ -67,6 +67,7 @@ import { VersionDeclarationReferencer } from "./declaration-referencers/VersionD
 import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/WebhooksHelperDeclarationReferencer.js";
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { getSensitiveHeaders } from "./getSensitiveHeaders.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
@@ -350,13 +351,13 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             customPagerName: config.customPagerName,
             maxRetries: config.maxRetries ?? undefined,
-            additionalSensitiveHeaders: this.intermediateRepresentation.auth.schemes.flatMap((scheme) =>
-                scheme.type === "oauth" &&
-                scheme.configuration.type === "clientCredentials" &&
-                scheme.configuration.tokenHeader != null
-                    ? [scheme.configuration.tokenHeader]
-                    : []
-            )
+            additionalSensitiveHeaders: getSensitiveHeaders({
+                auth: this.intermediateRepresentation.auth,
+                headers: [
+                    ...this.intermediateRepresentation.headers,
+                    ...Object.values(this.intermediateRepresentation.services).flatMap((service) => service.headers)
+                ]
+            })
         });
 
         const apiDirectory: ExportedDirectory[] = [
