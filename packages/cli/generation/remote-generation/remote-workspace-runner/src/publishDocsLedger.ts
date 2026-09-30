@@ -718,7 +718,11 @@ export async function buildAllTranslationInputs({
                     const rewritableApiIds = new Set(
                         Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
                     );
-                    translatedApiDefinitionIds = rewritableApiIds;
+                    translatedApiDefinitionIds = new Set(
+                        Array.from(rewritableApiIds).filter(
+                            (apiId) => localeApiDefinitions.get(apiId) !== apiDefinitions.get(apiId)
+                        )
+                    );
 
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
