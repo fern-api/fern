@@ -1728,14 +1728,11 @@ fn handle_set(
         && stdin.is_terminal()
         && std::io::stderr().is_terminal()
     {
-        let known = store.names();
-        let known = if known.is_empty() {
-            String::new()
-        } else {
-            format!(" Existing profiles: {}.", known.join(", "))
-        };
+        let suggestion = similar_profile(&name, store.names())
+            .map(|candidate| format!(" Did you mean `{candidate}`?"))
+            .unwrap_or_default();
         let question = format!(
-            "Profile `{name}` doesn't exist.{known} Would you like to create it?"
+            "Profile `{name}` doesn't exist.{suggestion} Would you like to create it?"
         );
         if !confirm(&question, &mut stdin.lock(), &mut stderr)? {
             let _ = writeln!(
@@ -2187,6 +2184,26 @@ fn handle_current<W: Write>(
     Ok(())
 }
 
+/// The existing profile `name` was most likely meant to be: the nearest by
+/// edit distance, else one that `name` is a prefix of (or that is a prefix of
+/// `name`), since dropping a suffix (`prod` for `prod-eu`) is the commonest
+/// slip and too long an edit for [`crate::text::nearest`] to accept.
+fn similar_profile(name: &str, candidates: Vec<String>) -> Option<String> {
+    crate::text::nearest(name, candidates.iter().cloned()).or_else(|| {
+        let wanted = crate::text::normalize_identifier(name);
+        if wanted.chars().count() < 3 {
+            return None;
+        }
+        candidates
+            .into_iter()
+            .filter(|candidate| {
+                let candidate = crate::text::normalize_identifier(candidate);
+                candidate.starts_with(&wanted) || wanted.starts_with(&candidate)
+            })
+            .min_by(|a, b| a.len().cmp(&b.len()).then_with(|| a.cmp(b)))
+    })
+}
+
 /// Ask a `[y/N]` question on `out` and read one line of `input`. Anything
 /// but `y`/`yes` (case-insensitive), including EOF, is a no.
 fn confirm(
@@ -2498,6 +2515,22 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn similar_profile_suggests_one_close_name() {
+        let names = || {
+            ["basicAuthTest", "dev", "prod", "prod-eu", "staging"]
+                .map(String::from)
+                .to_vec()
+        };
+        assert_eq!(similar_profile("basicAuth", names()).as_deref(), Some("basicAuthTest"));
+        assert_eq!(similar_profile("prd", names()).as_deref(), Some("prod"));
+        assert_eq!(similar_profile("stagign", names()).as_deref(), Some("staging"));
+        assert_eq!(similar_profile("stag", names()).as_deref(), Some("staging"));
+        assert_eq!(similar_profile("sandbox", names()), None);
+        assert_eq!(similar_profile("d", names()), None);
+        assert_eq!(similar_profile("anything", Vec::new()), None);
     }
 
     #[test]

@@ -179,9 +179,9 @@ to the OS keyring** under that profile's slot; everything else to
 before creating it, so a mistyped name is caught before anything is written:
 
 ```
-$ acme profiles set prdo ACME_RETRIES=3
-Profile `prdo` doesn't exist. Existing profiles: prod. Would you like to create it? [y/N] n
-Aborted. Nothing was changed. Create it with `acme profiles create prdo`.
+$ acme profiles set prd ACME_RETRIES=3
+Profile `prd` doesn't exist. Did you mean `prod`? Would you like to create it? [y/N] n
+Aborted. Nothing was changed. Create it with `acme profiles create prd`.
 ```
 
 Pass `--yes` to create it without asking. When stdin or stderr is not a terminal (a
