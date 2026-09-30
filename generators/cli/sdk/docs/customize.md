@@ -175,17 +175,23 @@ acme profiles set prod \
 setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
 `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
 to the OS keyring** under that profile's slot; everything else to
-`profiles.toml`. If the profile does not exist, an interactive terminal asks
-before creating it, so a mistyped name is caught before anything is written:
+`profiles.toml`. If the profile does not exist, `set` asks before creating
+it, so a mistyped name is caught before anything is written. When an existing
+profile has a similar name it offers that one instead:
 
 ```
 $ acme profiles set prd ACME_RETRIES=3
-Profile `prd` doesn't exist. Did you mean `prod`? Would you like to create it? [y/N] n
-Aborted. Nothing was changed. Create it with `acme profiles create prd`.
+Profile `prd` doesn't exist. Did you mean `prod`?
+  [u] Use `prod`
+  [c] Create `prd`
+  [N] Cancel
+Choice [u/c/N]:
 ```
 
-Pass `--yes` to create it without asking. When stdin or stderr is not a terminal (a
-script or an agent), the profile is created without a prompt.
+Otherwise it asks `Would you like to create it? [y/N]`. Pass `--yes` to create
+it without asking. When stdin or stderr is not a terminal (a script or an
+agent), nobody can answer, so `set` on a missing profile fails unless `--yes`
+is passed.
 
 One assignment reaches **every scheme that declares the variable**. When a
 vendor spec plus a layered auth block produces several schemes sharing one

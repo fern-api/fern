@@ -1,9 +1,9 @@
 - summary: |
-    `profiles set <name> …` now asks "Profile `<name>` doesn't exist. Would you
-    like to create it? [y/N]" when the profile is missing and stdin and stderr are
-    terminals. If an existing profile has a similar name, the question adds
-    "Did you mean `<closest>`?" so a mistyped name is caught before anything is
-    written. Answering no changes nothing. `--yes` skips the question; when stdin
-    or stderr is not a terminal (scripts, agents) the profile is still created
-    without a prompt.
+    `profiles set <name> …` no longer creates a missing profile silently. In a
+    terminal it asks first: when an existing profile has a similar name it offers
+    "Did you mean `<closest>`?" with `[u]` use it, `[c]` create `<name>`, or
+    `[N]` cancel; otherwise "Would you like to create it? [y/N]". Cancelling
+    changes nothing. When stdin or stderr is not a terminal (scripts, CI,
+    agents), `set` on a missing profile now fails with a hint instead of
+    creating it; pass `--yes` to create it without asking.
   type: feat
