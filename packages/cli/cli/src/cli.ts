@@ -914,7 +914,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     choices: ["host", "docker"] as const,
                     default: "host" as const,
                     description:
-                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed. Docker mode forwards HTTP(S)_PROXY/NO_PROXY and, for Java, gives Gradle a persistent cache under ~/.fern/gradle-docker-home plus the host's gradle.properties and init.d (from GRADLE_USER_HOME or ~/.gradle)."
                 })
                 .option("package-only", {
                     boolean: true,
