@@ -1785,6 +1785,10 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("creates a generator-compatible gzip bundle with enriched IR and no publish secrets", async () => {
         const generatorInvocation = invocation({
             config: { packageJson: { name: "@acme/sdk" } },
+            readme: {
+                apiName: "Petstore SDK",
+                introduction: "Use this SDK to call the Petstore API."
+            },
             outputMode: FernFiddle.OutputMode.publishV2(
                 FernFiddle.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -1971,6 +1975,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             generateOauthClients: true,
             generatePaginatedClients: true
         });
+        expect(bundle.config.output.snippetFilepath).toBeNull();
     });
 
     it("preserves trusted OIDC markers while omitting actual GitHub publish credentials", () => {

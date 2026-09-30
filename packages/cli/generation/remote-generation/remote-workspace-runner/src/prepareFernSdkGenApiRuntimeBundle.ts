@@ -43,13 +43,14 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         context,
         irVersionOverride
     });
+    const runtimeSnippetPath = generatorInvocation.readme != null ? RUNTIME_SNIPPET_PATH : undefined;
     const config = getGeneratorConfig({
         workspaceName: apiName,
         organization,
         outputVersion: sdkVersion,
         customConfig: stripCliConfigKeys(generatorInvocation.config),
         generatorInvocation,
-        absolutePathToSnippet: RUNTIME_SNIPPET_PATH,
+        absolutePathToSnippet: runtimeSnippetPath,
         absolutePathToSnippetTemplates: undefined,
         absolutePathToFernConfig: undefined,
         writeUnitTests,
@@ -58,7 +59,7 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         publishToRegistry: false,
         omitPublishCredentials: true,
         paths: {
-            snippetPath: RUNTIME_SNIPPET_PATH,
+            snippetPath: runtimeSnippetPath,
             snippetTemplatePath: undefined,
             irPath: RUNTIME_IR_PATH,
             outputDirectory: RUNTIME_OUTPUT_PATH
