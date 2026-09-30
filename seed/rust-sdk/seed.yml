@@ -55,6 +55,9 @@ fixtures:
         clientClassName: CustomSimpleClient
         enableWireTests: true
       outputFolder: basic-custom-config
+    - customConfig:
+        userAgentFromPlatformHeaders: true
+      outputFolder: user-agent-from-platform-headers
   imdb:
     - customConfig:
         clientName: ImdbClient
