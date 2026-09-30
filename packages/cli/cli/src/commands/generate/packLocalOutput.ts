@@ -592,10 +592,20 @@ settingsEvaluated { settings ->
         pluginRepositories.gradlePluginPortal()
     }
     fernPrependMirror(pluginRepositories)
+    def centralRepositories = settings.dependencyResolutionManagement.repositories
+    if (!centralRepositories.isEmpty()) {
+        fernPrependMirror(centralRepositories)
+    }
 }
 allprojects { project ->
     fernPrependMirror(project.buildscript.repositories)
-    fernPrependMirror(project.repositories)
+    // Only mirror project repositories the build declares itself: adding one to a build that
+    // centralizes repositories in settings (RepositoriesMode.FAIL_ON_PROJECT_REPOS) would fail it.
+    project.afterEvaluate {
+        if (!project.repositories.isEmpty()) {
+            fernPrependMirror(project.repositories)
+        }
+    }
 }
 `;
     return `${mirrorScript}def fernApplyProxy = { String scheme, String value ->
