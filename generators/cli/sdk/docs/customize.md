@@ -184,7 +184,7 @@ Profile `prdo` doesn't exist. Existing profiles: prod. Would you like to create 
 Aborted. Nothing was changed. Create it with `acme profiles create prdo`.
 ```
 
-Pass `--yes` to create it without asking. When stdin is not a terminal (a
+Pass `--yes` to create it without asking. When stdin or stderr is not a terminal (a
 script or an agent), the profile is created without a prompt.
 
 One assignment reaches **every scheme that declares the variable**. When a

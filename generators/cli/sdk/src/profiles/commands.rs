@@ -1719,10 +1719,15 @@ fn handle_set(
 
     // Asked only now, once every assignment has validated, so a typo'd name
     // is caught before anything is written and a "yes" never meets a
-    // rejected value. Non-TTY stdin keeps creating silently: a script or an
-    // agent cannot answer, and prompting there would hang (the M17 contract).
+    // rejected value. Without a terminal on both stdin and stderr it keeps
+    // creating silently: a script or an agent cannot answer, and a prompt it
+    // cannot see or answer would hang (the M17 contract).
     let stdin = std::io::stdin();
-    if !existed && !matches.get_flag("yes") && stdin.is_terminal() {
+    if !existed
+        && !matches.get_flag("yes")
+        && stdin.is_terminal()
+        && std::io::stderr().is_terminal()
+    {
         let known = store.names();
         let known = if known.is_empty() {
             String::new()
