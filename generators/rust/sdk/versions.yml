@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `preserveCrateNameHyphens` config option (default `false`). When enabled, hyphens in `crateName`
+        are kept in the generated `Cargo.toml` package name (e.g. `my-sdk` instead of `my_sdk`), as well as in the
+        docs.rs link, README install snippet, and default crates.io publish package name. Rust `use` paths keep
+        the underscored name (`use my_sdk::prelude::*`), matching how Cargo maps hyphenated package names.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
 - version: 0.50.0
   changelogEntry:
     - summary: |
