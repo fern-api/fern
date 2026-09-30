@@ -434,7 +434,14 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                     Arg::new("name")
                         .value_name("NAME")
                         .required(true)
-                        .help("Profile to modify; created if it does not exist"),
+                        .help("Profile to modify; asks before creating it if it does not exist"),
+                )
+                .arg(
+                    Arg::new("yes")
+                        .long("yes")
+                        .short('y')
+                        .action(ArgAction::SetTrue)
+                        .help("Create the profile without asking if it does not exist"),
                 )
                 .arg(
                     Arg::new("assignments")
@@ -1710,6 +1717,30 @@ fn handle_set(
         entry.credential = Some(name.clone());
     }
 
+    // Asked only now, once every assignment has validated, so a typo'd name
+    // is caught before anything is written and a "yes" never meets a
+    // rejected value. Non-TTY stdin keeps creating silently: a script or an
+    // agent cannot answer, and prompting there would hang (the M17 contract).
+    if !existed && !matches.get_flag("yes") && std::io::stdin().is_terminal() {
+        let known = store.names();
+        let known = if known.is_empty() {
+            String::new()
+        } else {
+            format!(" Existing profiles: {}.", known.join(", "))
+        };
+        let question = format!(
+            "Profile `{name}` doesn't exist.{known} Would you like to create it?"
+        );
+        if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
+            let _ = writeln!(
+                stderr,
+                "Aborted. Nothing was changed. Create it with `{} {} create {name}`.",
+                ctx.cli_name, ctx.command_name,
+            );
+            return Ok(());
+        }
+    }
+
     store.upsert(&entry);
     let resolved = store::resolve(store, &name)?;
     let account_owner = resolved.credential.clone().unwrap_or_else(|| name.clone());
@@ -1862,15 +1893,8 @@ async fn handle_remove(
                  Pass --yes when stdin is not a terminal."
             )));
         }
-        let _ = write!(
-            stderr,
-            "Remove profile `{name}` and its stored credentials? [y/N] ",
-        );
-        let _ = stderr.flush();
-        let mut answer = String::new();
-        std::io::BufRead::read_line(&mut std::io::stdin().lock(), &mut answer)
-            .map_err(|e| CliError::Other(e.into()))?;
-        if !matches!(answer.trim().to_ascii_lowercase().as_str(), "y" | "yes") {
+        let question = format!("Remove profile `{name}` and its stored credentials?");
+        if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
             let _ = writeln!(stderr, "Aborted.");
             return Ok(());
         }
@@ -2155,6 +2179,22 @@ fn handle_current<W: Write>(
         }
     }
     Ok(())
+}
+
+/// Ask a `[y/N]` question on `out` and read one line of `input`. Anything
+/// but `y`/`yes` (case-insensitive), including EOF, is a no.
+fn confirm(
+    question: &str,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<bool, CliError> {
+    let _ = write!(out, "{question} [y/N] ");
+    let _ = out.flush();
+    let mut answer = String::new();
+    input
+        .read_line(&mut answer)
+        .map_err(|e| CliError::Other(e.into()))?;
+    Ok(matches!(answer.trim().to_ascii_lowercase().as_str(), "y" | "yes"))
 }
 
 #[cfg(test)]
@@ -2451,6 +2491,24 @@ mod tests {
                     "alias `{alias}` is not in BUILTIN_SUBCOMMANDS",
                 );
             }
+        }
+    }
+
+    #[test]
+    fn confirm_accepts_only_yes() {
+        for (answer, expected) in [
+            ("y\n", true),
+            ("YES\n", true),
+            (" yes \n", true),
+            ("n\n", false),
+            ("\n", false),
+            ("", false),
+            ("sure\n", false),
+        ] {
+            let mut out: Vec<u8> = Vec::new();
+            let got = confirm("Create it?", &mut answer.as_bytes(), &mut out).unwrap();
+            assert_eq!(got, expected, "answer {answer:?}");
+            assert_eq!(String::from_utf8(out).unwrap(), "Create it? [y/N] ");
         }
     }
 }

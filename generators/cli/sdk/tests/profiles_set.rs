@@ -236,3 +236,17 @@ fn env_credentials_are_reported_as_fallback_never_as_an_override() {
         assert!(stored.get("credential_overridden_by_env").is_none(), "{stored}");
     });
 }
+
+#[test]
+#[serial]
+fn yes_creates_a_missing_profile_without_asking() {
+    with_clean_env(|| {
+        let (code, output) = run(&[
+            "multi", "profiles", "set", "prod", "--yes",
+            "MULTI_ACCOUNT_SID=AC1111",
+            "MULTI_AUTH_TOKEN=tok1",
+        ]);
+        assert_eq!(code, 0, "{output}");
+        assert_eq!(logged_in("prod"), vec![true, true, true]);
+    });
+}

@@ -175,7 +175,17 @@ acme profiles set prod \
 setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
 `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
 to the OS keyring** under that profile's slot; everything else to
-`profiles.toml`. The profile is created if it does not exist.
+`profiles.toml`. If the profile does not exist, an interactive terminal asks
+before creating it, so a mistyped name is caught before anything is written:
+
+```
+$ acme profiles set prdo ACME_RETRIES=3
+Profile `prdo` doesn't exist. Existing profiles: prod. Would you like to create it? [y/N] n
+Aborted. Nothing was changed. Create it with `acme profiles create prdo`.
+```
+
+Pass `--yes` to create it without asking. When stdin is not a terminal (a
+script or an agent), the profile is created without a prompt.
 
 One assignment reaches **every scheme that declares the variable**. When a
 vendor spec plus a layered auth block produces several schemes sharing one

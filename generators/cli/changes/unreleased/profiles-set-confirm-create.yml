@@ -1,0 +1,8 @@
+- summary: |
+    `profiles set <name> …` now asks "Profile `<name>` doesn't exist. Would you
+    like to create it? [y/N]" when the profile is missing and stdin is a
+    terminal, listing the existing profiles so a mistyped name is caught before
+    anything is written. Answering no changes nothing. `--yes` skips the
+    question; when stdin is not a terminal (scripts, agents) the profile is
+    still created without a prompt.
+  type: feat
