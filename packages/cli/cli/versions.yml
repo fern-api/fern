@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.5
+  changelogEntry:
+    - summary: |
+        Preserve distinct PyPI usernames and passwords when configuring generator publishing credentials.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.143.4
   changelogEntry:
     - summary: |
