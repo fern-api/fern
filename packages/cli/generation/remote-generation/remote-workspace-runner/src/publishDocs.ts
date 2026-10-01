@@ -1,4 +1,4 @@
-import { VisibilityFilter } from "@fern-api/api-workspace-commons";
+import { VisibilityFilter, resolveSnippetPackageName } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
@@ -34,6 +34,7 @@ import {
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import type { DocsPublishGitInput, FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
+import { dynamic } from "@fern-api/ir-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIRUpload = APIV1Write.DynamicIRUpload;
@@ -1642,6 +1643,53 @@ async function checkAndDownloadExistingSdkDynamicIRs({
 function normalizeGoPackageForLookup(repository: string): string {
     return repository.replace(/^https:\/\//, "");
 }
+
+/**
+ * Resolves the package name a generator contributes snippets under, for matching
+ * against `docs.yml` `snippets:` entries. Prefers the shared resolver (publish
+ * target, then raw generator config); falls back to the dynamic generator output
+ * config for repo-URL-keyed languages (go, swift).
+ */
+export function getDocsSnippetPackageName({
+    generatorInvocation,
+    dynamicGeneratorConfig
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
+}): string | undefined {
+    let packageName = resolveSnippetPackageName(generatorInvocation);
+
+    if (packageName == null && dynamicGeneratorConfig?.outputConfig.type === "publish") {
+        const publishInfo = dynamicGeneratorConfig.outputConfig.value;
+        switch (publishInfo.type) {
+            case "npm":
+            case "nuget":
+            case "pypi":
+            case "rubygems":
+            case "crates":
+                packageName = publishInfo.packageName;
+                break;
+            case "maven":
+                packageName = publishInfo.coordinate;
+                break;
+            case "go":
+            case "swift":
+                packageName = publishInfo.repoUrl;
+                break;
+        }
+    }
+
+    if (packageName == null || packageName === "") {
+        return undefined;
+    }
+
+    // Normalize Go package names to strip https:// prefix,
+    // matching how snippetConfiguration values are normalized
+    if (generatorInvocation.language === "go") {
+        return normalizeGoPackageForLookup(packageName);
+    }
+    return packageName;
+}
 async function buildSnippetConfigurationWithVersions({
     fdr,
     workspace,
@@ -1788,7 +1836,7 @@ async function computeSemanticVersionForLanguage({
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
                 if (generatorInvocation.language === language) {
-                    const pkgName = generatorsYml.getPackageName({ generatorInvocation });
+                    const pkgName = resolveSnippetPackageName(generatorInvocation);
                     if (pkgName) {
                         candidatePackages.push(pkgName);
                     }
@@ -1805,7 +1853,9 @@ async function computeSemanticVersionForLanguage({
     }
 
     if (!generatorPackage) {
-        context.logger.debug(`[SDK Dynamic IR] ${language}: no generator found with a package name`);
+        context.logger.debug(
+            `[SDK Dynamic IR] ${language}: no ${language} generator in generators.yml resolved a package name (checked publish target and generator config)`
+        );
         return undefined;
     }
 
@@ -1861,51 +1911,12 @@ async function generateLanguageSpecificDynamicIRs({
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
-                let dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
                     apiName: workspace.workspaceName ?? "",
                     organization,
                     generatorInvocation
                 });
-                let packageName = "";
-
-                if (dynamicGeneratorConfig?.outputConfig.type === "publish") {
-                    switch (dynamicGeneratorConfig.outputConfig.value.type) {
-                        case "npm":
-                        case "nuget":
-                        case "pypi":
-                        case "rubygems":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
-                            break;
-                        case "maven":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
-                            break;
-                        case "go":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
-                            break;
-                        case "swift":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
-                            break;
-                        case "crates":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
-                            break;
-                    }
-                }
-
-                // construct a generatorConfig for php since it is not parsed by getDynamicGeneratorConfig
-                if (
-                    generatorInvocation.language === "php" &&
-                    generatorInvocation.config &&
-                    typeof generatorInvocation.config === "object" &&
-                    "packageName" in generatorInvocation.config
-                ) {
-                    packageName = (generatorInvocation.config as { packageName?: string }).packageName ?? "";
-                }
-
-                // Normalize Go package names to strip https:// prefix,
-                // matching how snippetConfiguration values are normalized
-                if (generatorInvocation.language === "go" && packageName) {
-                    packageName = normalizeGoPackageForLookup(packageName);
-                }
+                const packageName = getDocsSnippetPackageName({ generatorInvocation, dynamicGeneratorConfig });
 
                 if (!generatorInvocation.language) {
                     continue;
@@ -1919,50 +1930,62 @@ async function generateLanguageSpecificDynamicIRs({
                     continue;
                 }
 
+                const requestedPackage = snippetConfiguration[generatorInvocation.language];
+                if (requestedPackage == null) {
+                    continue;
+                }
+                if (packageName == null) {
+                    context.logger.debug(
+                        `[SDK Dynamic IR] ${generatorInvocation.language}: generator "${generatorInvocation.name}" has no resolvable package name (publish target or generator config), cannot match snippets package "${requestedPackage}"`
+                    );
+                    continue;
+                }
+                if (requestedPackage !== packageName) {
+                    context.logger.debug(
+                        `[SDK Dynamic IR] ${generatorInvocation.language}: generator "${generatorInvocation.name}" package "${packageName}" does not match snippets package "${requestedPackage}"`
+                    );
+                    continue;
+                }
+
                 // generate a dynamic IR for configuration that matches the requested api snippet
-                if (
-                    generatorInvocation.language &&
-                    snippetConfiguration[generatorInvocation.language] === packageName
-                ) {
-                    const irForDynamicSnippets = generateIntermediateRepresentation({
-                        workspace,
-                        generationLanguage: generatorInvocation.language,
-                        keywords: undefined,
-                        smartCasing: generatorInvocation.smartCasing,
-                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-                        exampleGeneration: {
-                            disabled: true,
-                            skipAutogenerationIfManualExamplesExist: true,
-                            skipErrorAutogenerationIfManualErrorExamplesExist: true
-                        },
-                        audiences: {
-                            type: "all"
-                        },
-                        readme: undefined,
-                        packageName: packageName,
-                        version: undefined,
-                        context,
-                        sourceResolver: new SourceResolverImpl(context, workspace),
-                        dynamicGeneratorConfig
-                    });
+                const irForDynamicSnippets = generateIntermediateRepresentation({
+                    workspace,
+                    generationLanguage: generatorInvocation.language,
+                    keywords: undefined,
+                    smartCasing: generatorInvocation.smartCasing,
+                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                    exampleGeneration: {
+                        disabled: true,
+                        skipAutogenerationIfManualExamplesExist: true,
+                        skipErrorAutogenerationIfManualErrorExamplesExist: true
+                    },
+                    audiences: {
+                        type: "all"
+                    },
+                    readme: undefined,
+                    packageName: packageName,
+                    version: undefined,
+                    context,
+                    sourceResolver: new SourceResolverImpl(context, workspace),
+                    dynamicGeneratorConfig
+                });
 
-                    const dynamicIR = convertIrToDynamicSnippetsIr({
-                        ir: irForDynamicSnippets,
-                        disableExamples: true,
-                        smartCasing: generatorInvocation.smartCasing,
-                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-                        generationLanguage: generatorInvocation.language,
-                        generatorConfig: dynamicGeneratorConfig
-                    });
+                const dynamicIR = convertIrToDynamicSnippetsIr({
+                    ir: irForDynamicSnippets,
+                    disableExamples: true,
+                    smartCasing: generatorInvocation.smartCasing,
+                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                    generationLanguage: generatorInvocation.language,
+                    generatorConfig: dynamicGeneratorConfig
+                });
 
-                    // include metadata along with the dynamic IR
-                    if (dynamicIR) {
-                        languageSpecificIRs[generatorInvocation.language] = {
-                            dynamicIR
-                        };
-                    } else {
-                        context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
-                    }
+                // include metadata along with the dynamic IR
+                if (dynamicIR) {
+                    languageSpecificIRs[generatorInvocation.language] = {
+                        dynamicIR
+                    };
+                } else {
+                    context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
                 }
             }
         }

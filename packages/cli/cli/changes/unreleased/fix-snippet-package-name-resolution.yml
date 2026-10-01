@@ -1,0 +1,8 @@
+- summary: |
+    SDK dynamic IR upload and docs snippet matching now resolve a generator's package name
+    from the generator config (`config.package_name`, `output.package-name`, etc.) when there is
+    no registry publish target. Previously github-output-only SDKs (e.g. `github: mode: pull-request`
+    with PyPI publishing handled externally) silently never uploaded dynamic IR and docs
+    `snippets:` entries for them were reported as an unknown package. Skip paths now log the
+    reason at debug level.
+  type: fix

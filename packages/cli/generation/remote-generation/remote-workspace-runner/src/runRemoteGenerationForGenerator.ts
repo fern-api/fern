@@ -9,7 +9,8 @@ import {
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
     getUserAgentTemplateFromGeneratorConfig,
-    getWebhookSignatureFromGeneratorConfig
+    getWebhookSignatureFromGeneratorConfig,
+    resolveSnippetPackageName
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -181,6 +182,9 @@ export async function runRemoteGenerationForGenerator({
         (generatorInvocation.outputMode.type === "downloadFiles"
             ? getPackageNameFromGeneratorConfig(generatorInvocation)
             : undefined);
+    // Resolved separately from `packageName` (which drives version resolution) so that
+    // github-output-only SDKs still key their dynamic IR upload by package name.
+    const snippetPackageName = resolveSnippetPackageName(generatorInvocation);
 
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
     const resolvedWhitelabel =
@@ -522,7 +526,7 @@ export async function runRemoteGenerationForGenerator({
             return undefined;
         }
 
-        if (packageName == null) {
+        if (snippetPackageName == null) {
             interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode", undefined, {
                 code: CliError.Code.ConfigError
             });
@@ -535,7 +539,7 @@ export async function runRemoteGenerationForGenerator({
                 organization,
                 version,
                 language: generatorInvocation.language,
-                packageName,
+                packageName: snippetPackageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
@@ -701,12 +705,22 @@ export async function runRemoteGenerationForGenerator({
     // use the actual version from the generation result, fallback to pre-computed version
     const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
 
-    if (
+    const dynamicIrUploadSkipReason = getDynamicIrUploadSkipReason({
+        hasResult: result != null,
+        version: actualVersionForUpload,
+        language: generatorInvocation.language,
+        packageName: snippetPackageName,
+        isPreview
+    });
+    if (dynamicIrUploadSkipReason != null) {
+        interactiveTaskContext.logger.debug(
+            `Skipping dynamic IR upload for ${generatorInvocation.name}: ${dynamicIrUploadSkipReason}`
+        );
+    } else if (
         result != null &&
         actualVersionForUpload != null &&
         generatorInvocation.language != null &&
-        packageName != null &&
-        !isPreview
+        snippetPackageName != null
     ) {
         try {
             await uploadDynamicIRForSdkGeneration({
@@ -714,7 +728,7 @@ export async function runRemoteGenerationForGenerator({
                 organization,
                 version: actualVersionForUpload,
                 language: generatorInvocation.language,
-                packageName,
+                packageName: snippetPackageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
@@ -858,6 +872,37 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+export function getDynamicIrUploadSkipReason({
+    hasResult,
+    version,
+    language,
+    packageName,
+    isPreview
+}: {
+    hasResult: boolean;
+    version: string | undefined;
+    language: string | undefined;
+    packageName: string | undefined;
+    isPreview: boolean;
+}): string | undefined {
+    if (!hasResult) {
+        return "generation did not produce a result";
+    }
+    if (version == null) {
+        return "no SDK version was resolved";
+    }
+    if (language == null) {
+        return "generator has no language";
+    }
+    if (packageName == null) {
+        return "no package name could be resolved from publish target or generator config";
+    }
+    if (isPreview) {
+        return "preview generation";
+    }
+    return undefined;
+}
 
 async function uploadDynamicIRForSdkGeneration({
     fdr,
