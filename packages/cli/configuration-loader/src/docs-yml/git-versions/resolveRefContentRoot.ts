@@ -166,6 +166,7 @@ export async function resolveRefContentRoot({
             return readVersionFile({
                 absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(productVersionPath)),
                 rawLibraries,
+                docsSubstitutionConfig,
                 context
             });
         }
@@ -178,7 +179,9 @@ export async function resolveRefContentRoot({
             landingPage: productFile.landingPage,
             navigation: productFile.navigation,
             absoluteFilepathToConfig: absoluteFilepathToProductFile,
-            rawLibraries
+            rawLibraries,
+            versionFileSubstitutions: undefined,
+            docsSubstitutionConfig
         };
     }
 

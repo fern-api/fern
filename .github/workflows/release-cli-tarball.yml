@@ -1,0 +1,83 @@
+name: Release CLI tarball
+
+# Builds the production CLI from the pushed ref and attaches it as an npm
+# tarball to a GitHub Release, so a patched CLI can be consumed with
+#   npm i -g https://github.com/<owner>/fern/releases/download/<tag>/fern-api-<version>.tgz
+# without merging to main or publishing to npm.
+on:
+  push:
+    tags:
+      - "v*-nvidia.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "CLI version to stamp into the package (e.g. 5.143.2-nvidia.1)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+  POSTHOG_API_KEY: ""
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Resolve version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            version="${{ inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Build CLI
+        run: pnpm turbo run dist:cli:prod --filter @fern-api/cli -- "${{ steps.version.outputs.version }}"
+
+      - name: Pack tarball
+        id: pack
+        working-directory: packages/cli/cli/dist/prod
+        run: |
+          node -e 'const p=require("./package.json"); if (p.name !== "fern-api") process.exit(1)'
+          tarball="$(npm pack --silent)"
+          echo "tarball=${tarball}" >> "$GITHUB_OUTPUT"
+          sha256sum "${tarball}" > "${tarball}.sha256"
+
+      - name: Create tag for manual run
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git tag "${{ steps.version.outputs.tag }}" "${GITHUB_SHA}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: packages/cli/cli/dist/prod
+        run: |
+          tarball="${{ steps.pack.outputs.tarball }}"
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "${tarball}" "${tarball}.sha256" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --prerelease \
+            --title "fern-api ${{ steps.version.outputs.version }}" \
+            --notes "Patched Fern CLI built from ${GITHUB_SHA}.
+
+Install:
+    npm i -g https://github.com/${GITHUB_REPOSITORY}/releases/download/${{ steps.version.outputs.tag }}/${tarball}
+Run:
+    FERN_NO_VERSION_REDIRECTION=true fern --version"
