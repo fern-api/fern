@@ -3,6 +3,39 @@
 module Seed
   module Internal
     module Xml
+      # A text segment inside an element's content. Used alongside child elements to keep mixed
+      # content (text interleaved with elements) in document order.
+      class Text
+        # @return [String]
+        attr_accessor :value
+
+        # @param value [String]
+        def initialize(value)
+          @value = value.to_s
+        end
+
+        # @return [String]
+        def to_s
+          @value
+        end
+
+        # @return [Boolean]
+        def ==(other)
+          other.is_a?(Text) && value == other.value
+        end
+        alias eql? ==
+
+        # @return [Integer]
+        def hash
+          [Text, value].hash
+        end
+
+        # @return [String]
+        def inspect
+          "#<#{self.class.name} #{value.inspect}>"
+        end
+      end
+
       # A generic XML element tree. Used to carry unknown child elements through a
       # round trip and as the intermediate form typed models serialize to and parse from.
       class Element
@@ -14,9 +47,9 @@ module Seed
         attr_accessor :prefix
         # @return [Hash<String, String>] attributes keyed by qualified name (excluding xmlns declarations)
         attr_reader :attributes
-        # @return [String, nil] text content
+        # @return [String, nil] text content written before the children
         attr_accessor :text
-        # @return [Array<Element, Serializable>] child elements, in document order
+        # @return [Array<Element, Serializable, Text>] child elements and text segments, in document order
         attr_reader :children
         # @return [Hash<String, String>] namespace declarations keyed by prefix ("" for the default namespace)
         attr_reader :namespace_declarations
@@ -50,29 +83,40 @@ module Seed
           @attributes[name.to_s]
         end
 
-        # Appends a child element (an {Element} or any model responding to `to_xml_element`).
+        # Appends a child element (an {Element} or any model responding to `to_xml_element`) or a
+        # {Text} segment after the children added so far.
         #
-        # @param child [Element, Serializable]
+        # @param child [Element, Serializable, Text]
         # @return [self]
         def add_child(child)
           @children << child
           self
         end
 
+        # Appends a text segment after the children added so far (for mixed content).
+        #
+        # @param text [String]
+        # @return [self]
+        def add_text(text)
+          @children << Text.new(text)
+          self
+        end
+
+        # @return [Array<Element>] the child elements (text segments excluded), in document order
+        def child_elements
+          @children.grep_v(Text).map(&:to_xml_element)
+        end
+
         # @param name [String]
         # @return [Element, nil] the first child element with the given local name
         def child(name)
-          @children.each do |child|
-            element = child.to_xml_element
-            return element if element.name == name
-          end
-          nil
+          child_elements.find { |element| element.name == name }
         end
 
         # @param name [String]
         # @return [Array<Element>] child elements with the given local name
         def children_named(name)
-          @children.map(&:to_xml_element).select { |element| element.name == name }
+          child_elements.select { |element| element.name == name }
         end
 
         # @return [self]
@@ -98,13 +142,18 @@ module Seed
             namespace == other.namespace &&
             attributes == other.attributes &&
             text == other.text &&
-            children.map(&:to_xml_element) == other.children.map(&:to_xml_element)
+            comparable_children == other.comparable_children
         end
         alias eql? ==
 
         # @return [Integer]
         def hash
-          [name, namespace, attributes, text, children.map(&:to_xml_element)].hash
+          [name, namespace, attributes, text, comparable_children].hash
+        end
+
+        # @api private
+        def comparable_children
+          children.map { |child| child.is_a?(Text) ? child : child.to_xml_element }
         end
 
         # @return [String]

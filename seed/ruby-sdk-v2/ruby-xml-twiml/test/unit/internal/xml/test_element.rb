@@ -5,6 +5,7 @@ require "test_helper"
 describe Seed::Internal::Xml::Element do
   XmlTestElement = Seed::Internal::Xml::Element
   XmlTestUtils = Seed::Internal::Xml::Utils
+  XmlTestText = Seed::Internal::Xml::Text
 
   describe "#to_xml" do
     it "serializes attributes, text and children with escaping" do
@@ -58,6 +59,76 @@ describe Seed::Internal::Xml::Element do
       assert_raises(ArgumentError) { XmlTestUtils.parse_root("<Dial/>", "Response") }
       assert_raises(ArgumentError) { XmlTestUtils.parse_root("<Response xmlns=\"urn:other\"/>", "Response", "urn:twiml") }
       assert_equal "Response", XmlTestUtils.parse_root("<Response/>", "Response", "urn:twiml").name
+    end
+  end
+
+  describe "mixed content" do
+    it "writes text segments and children in insertion order" do
+      say = XmlTestElement.new("Say", text: "Hi ")
+      say.add_child(XmlTestElement.new("break", attributes: { "strength" => "weak" }))
+      say.add_text(" world")
+
+      assert_equal "<Say>Hi <break strength=\"weak\"/> world</Say>", say.to_xml
+    end
+
+    it "parses text between and after children in document order and round-trips it" do
+      xml = "<Response><Say>Hi <break strength=\"weak\"/> world</Say><Custom/><Say>b</Say>tail</Response>"
+      element = XmlTestUtils.parse_document(xml)
+
+      assert_nil element.text
+      assert_equal %w[Say Custom Say], element.child_elements.map(&:name)
+      assert_kind_of XmlTestText, element.children.last
+      assert_equal "tail", element.children.last.value
+      assert_equal "Hi ", element.child("Say").text
+      assert_equal xml, element.to_xml
+    end
+
+    it "drops indentation between children when parsing" do
+      element = XmlTestUtils.parse_document("<Response>\n  <Say>a</Say>\n  <Say>b</Say>\n</Response>")
+
+      assert_equal "<Response><Say>a</Say><Say>b</Say></Response>", element.to_xml
+    end
+
+    it "add_content follows the content order and appends missing typed children" do
+      a = XmlTestElement.new("Say", text: "a")
+      b = XmlTestElement.new("Say", text: "b")
+      custom = XmlTestElement.new("Custom")
+      late = XmlTestElement.new("Say", text: "c")
+      element = XmlTestElement.new("Response")
+      XmlTestUtils.add_content(element, [a, custom, b, XmlTestText.new("x")], [a, b, late], {}, [custom])
+
+      assert_equal "<Response><Say>a</Say><Custom/><Say>b</Say>x<Say>c</Say></Response>", element.to_xml
+    end
+
+    it "add_content places a wrapped list where its first item or wrapper appears" do
+      number = XmlTestElement.new("Number", text: "1")
+      custom = XmlTestElement.new("Custom")
+      element = XmlTestElement.new("Dial")
+      XmlTestUtils.add_content(element, [number, custom], [], { "Numbers" => [number] }, [custom])
+
+      assert_equal "<Dial><Numbers><Number>1</Number></Numbers><Custom/></Dial>", element.to_xml
+
+      parsed = XmlTestUtils.parse_document("<Dial><Numbers><Number>1</Number></Numbers><Unknown/></Dial>")
+      additional = XmlTestUtils.additional_children(parsed, [], { "Numbers" => ["Number"] })
+      content = XmlTestUtils.content(parsed, [], additional, ["Numbers"])
+      rebuilt = XmlTestElement.new("Dial")
+      XmlTestUtils.add_content(rebuilt, content, [], { "Numbers" => [XmlTestElement.new("Number", text: "1")] }, additional)
+
+      assert_equal "<Dial><Numbers><Number>1</Number></Numbers><Unknown/></Dial>", rebuilt.to_xml
+    end
+
+    it "content matches typed children to parsed elements in document order" do
+      parsed = XmlTestUtils.parse_document("<Response><Say>a</Say><Custom/><Say>b</Say>tail</Response>")
+      additional = XmlTestUtils.additional_children(parsed, ["Say"])
+      first = XmlTestElement.new("Say", text: "A")
+      second = XmlTestElement.new("Say", text: "B")
+      content = XmlTestUtils.content(parsed, [[["Say"], [first, second]]], additional)
+
+      assert_equal 4, content.length
+      assert_same first, content[0]
+      assert_same additional[0], content[1]
+      assert_same second, content[2]
+      assert_equal "tail", content[3].value
     end
   end
 
