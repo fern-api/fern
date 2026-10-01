@@ -11,6 +11,7 @@ export type XmlExport =
     | "xmlBuildContent"
     | "xmlInitialContent"
     | "orderXmlContent"
+    | "replaceXmlContent"
     | "xmlLeadingText"
     | "xmlContent"
     | "xmlContentElements"

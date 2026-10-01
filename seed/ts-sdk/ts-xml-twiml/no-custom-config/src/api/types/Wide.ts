@@ -2911,6 +2911,7 @@ export namespace Wide {
         }
 
         children(children: (SeedApi.Pause | core.xml.XmlBuilder<SeedApi.Pause>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }

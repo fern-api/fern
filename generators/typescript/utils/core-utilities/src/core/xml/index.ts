@@ -41,4 +41,4 @@ export {
     serializeXmlElement,
 } from "./serialize";
 export { XmlElement } from "./XmlElement";
-export { orderXmlContent } from "./content";
+export { orderXmlContent, replaceXmlContent } from "./content";

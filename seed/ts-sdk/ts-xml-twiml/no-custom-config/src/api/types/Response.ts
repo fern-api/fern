@@ -110,6 +110,7 @@ export namespace Response {
         }
 
         children(children: (Response.Children.Item | core.xml.XmlBuilder<Response.Children.Item>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }

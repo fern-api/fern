@@ -106,6 +106,7 @@ export namespace Response {
         children(
             children: (SeedApi.ResponseChildrenItem | core.xml.XmlBuilder<SeedApi.ResponseChildrenItem>)[] | undefined,
         ): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }

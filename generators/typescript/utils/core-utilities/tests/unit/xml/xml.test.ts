@@ -2,6 +2,7 @@ import {
     XmlElement,
     XmlParseError,
     orderXmlContent,
+    replaceXmlContent,
     parseXml,
     serializeXmlElement,
     xmlAttribute,
@@ -180,6 +181,43 @@ describe("ordered content", () => {
         expect(xmlWrapperFragments(node, { Numbers: ["Number"] })).toEqual([]);
     });
 
+    it("keeps wrapper elements as position markers and renders wrapped lists in place", () => {
+        const node = parseXml(
+            '<Dial><Custom/><Numbers priority="1"><Number>+1</Number><Extra/></Numbers><Other/></Dial>',
+        );
+        const content = xmlContent(node, { wrappers: { Numbers: ["Number"] } });
+        expect(content.map((item) => (typeof item === "string" ? item : item.toXml()))).toEqual([
+            "<Custom />",
+            '<Numbers priority="1"><Extra /></Numbers>',
+            "<Other />",
+        ]);
+        expect(
+            serializeXmlElement({
+                name: "Dial",
+                children: [{ name: "Numbers", value: [new XmlElement({ name: "Number", text: "+1" })], wrapped: true }],
+                content,
+            }),
+        ).toBe('<Dial><Custom /><Numbers priority="1"><Number>+1</Number><Extra /></Numbers><Other /></Dial>');
+        expect(
+            serializeXmlElement({
+                name: "Dial",
+                children: [{ name: "Numbers", value: [new XmlElement({ name: "Number", text: "+1" })], wrapped: true }],
+                content: [new XmlElement({ name: "Custom" })],
+            }),
+        ).toBe("<Dial><Numbers><Number>+1</Number></Numbers><Custom /></Dial>");
+    });
+
+    it("round-trips mixed content inside undeclared elements", () => {
+        const xml = "<Custom>Hi <b>there</b> world</Custom>";
+        const element = XmlElement.fromXml(xml);
+        expect(element.toXml()).toBe(xml);
+        expect(element.text).toBe("Hi  world");
+        expect(element.children.map((child) => child.name)).toEqual(["b"]);
+        expect(new XmlElement({ name: "A", text: "t", children: [new XmlElement({ name: "B" })] }).toXml()).toBe(
+            "<A>t<B /></A>",
+        );
+    });
+
     it("serializes content in order and reconciles it with typed children", () => {
         const a = new Say("a");
         const b = new Say("b");
@@ -189,8 +227,10 @@ describe("ordered content", () => {
             "<Response><Say>a</Say><Custom /><Say>a</Say>tail<Say>b</Say></Response>",
         );
         expect(serializeXmlElement({ name: "Response", content: orderXmlContent([a, "x"], []) })).toBe(
-            "<Response>x</Response>",
+            "<Response><Say>a</Say>x</Response>",
         );
+        expect(replaceXmlContent([a, custom, a, "tail"], [a, a], [b, custom])).toEqual([custom, "tail", b]);
+        expect(replaceXmlContent([a], undefined, [a, b])).toEqual([a, b]);
     });
 
     it("builds builders in content once and shares the instances with typed children", () => {

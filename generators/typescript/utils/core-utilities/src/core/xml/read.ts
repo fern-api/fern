@@ -119,8 +119,14 @@ export function xmlLeadingText(node: XmlNode): string | undefined {
 export interface XmlContentOptions {
     /** Skip the text before the first child element (it is read separately as the text property). */
     skipLeadingText?: boolean;
-    /** (Prefix-less) names of child elements read separately, e.g. wrapper elements. */
+    /** (Prefix-less) names of child elements read separately (e.g. scalar-valued elements). */
     skip?: readonly string[];
+    /**
+     * Wrapper elements of wrapped lists (prefix-less wrapper name -> known item names). A wrapper is
+     * kept in the content as an `XmlElement` carrying only its attributes and undeclared children,
+     * which marks the wrapper's position and is merged back into it by `serializeXmlElement`.
+     */
+    wrappers?: Record<string, readonly string[]>;
     /** Parses a known child element; return undefined to keep the child as a generic `XmlElement`. */
     parse?: (child: XmlNode) => XmlSerializable | undefined;
 }
@@ -129,7 +135,10 @@ export interface XmlContentOptions {
  * Reads the element's text segments and child elements in document order. Known children are
  * parsed with `parse`; any other child is kept verbatim as an `XmlElement`.
  */
-export function xmlContent(node: XmlNode, { skipLeadingText = false, skip = [], parse }: XmlContentOptions = {}): XmlContent[] {
+export function xmlContent(
+    node: XmlNode,
+    { skipLeadingText = false, skip = [], wrappers = {}, parse }: XmlContentOptions = {},
+): XmlContent[] {
     const content: XmlContent[] = [];
     let beforeFirstElement = true;
     for (const item of node.content) {
@@ -140,7 +149,19 @@ export function xmlContent(node: XmlNode, { skipLeadingText = false, skip = [], 
             continue;
         }
         beforeFirstElement = false;
-        if (skip.includes(localName(item.name))) {
+        const name = localName(item.name);
+        if (skip.includes(name)) {
+            continue;
+        }
+        const wrapperItems = wrappers[name];
+        if (wrapperItems != null) {
+            content.push(
+                new XmlElement({
+                    name: item.name,
+                    attributes: { ...item.attributes },
+                    content: xmlContent(item, { skip: wrapperItems }),
+                }),
+            );
             continue;
         }
         content.push(parse?.(item) ?? XmlElement.fromXml(item));

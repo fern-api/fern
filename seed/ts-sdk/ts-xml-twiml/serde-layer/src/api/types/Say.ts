@@ -160,6 +160,7 @@ export namespace Say {
          * Nested TwiML elements, rendered in order.
          */
         children(children: (SeedApi.Break | core.xml.XmlBuilder<SeedApi.Break>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }

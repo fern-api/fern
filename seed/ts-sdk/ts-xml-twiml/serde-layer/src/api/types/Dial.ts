@@ -24,7 +24,10 @@ export class Dial implements core.xml.XmlSerializable {
 
     /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
     get additionalChildren(): core.xml.XmlElement[] {
-        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
+        return this.content.filter(
+            (item): item is core.xml.XmlElement =>
+                item instanceof core.xml.XmlElement && !["Numbers"].includes(core.xml.localName(item.name)),
+        );
     }
 
     static builder(fields: Dial.Fields = {}): Dial.Builder {
@@ -34,7 +37,7 @@ export class Dial implements core.xml.XmlSerializable {
     /** Parses a `<Dial>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Dial {
         const node = core.xml.parseXml(xml, "Dial");
-        const content = core.xml.xmlContent(node, { skipLeadingText: true, skip: ["Numbers"] });
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, wrappers: { Numbers: ["Number"] } });
         return new Dial({
             number: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Dial.number"),
             statusCallbackEvent: core.xml.xmlScalarList(
@@ -55,7 +58,6 @@ export class Dial implements core.xml.XmlSerializable {
                 { wrapper: "Numbers" },
             ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["statusCallbackEvent", "record"]),
-            additionalChildren: core.xml.xmlWrapperFragments(node, { Numbers: ["Number"] }),
             content,
         });
     }
