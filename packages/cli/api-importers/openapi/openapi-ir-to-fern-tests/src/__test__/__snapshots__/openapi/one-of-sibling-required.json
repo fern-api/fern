@@ -1,0 +1,426 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "AddInboundRoute": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "key": "key",
+                    "url": "url",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/inbound/add-route",
+              "request": {
+                "body": {
+                  "extends": [
+                    "ApiKey",
+                  ],
+                  "properties": {
+                    "domain": "optional<string>",
+                    "pattern": "optional<string>",
+                    "phone": "optional<string>",
+                    "url": {
+                      "type": "string",
+                      "validation": {
+                        "format": "uri",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "InboundAddRouteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "ListInboundRoutes": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "key": "key",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/inbound/routes",
+              "request": {
+                "body": {
+                  "extends": [
+                    "ApiKey",
+                  ],
+                  "properties": {
+                    "domain": {
+                      "docs": "The domain to list routes for.",
+                      "type": "optional<string>",
+                    },
+                    "phone": {
+                      "docs": "The phone number to list routes for.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "InboundRoutesRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "PostShapes": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/shapes",
+              "request": {
+                "body": {
+                  "properties": {
+                    "addsProperty": "optional<OneOfBranchAddsProperty>",
+                    "contact": "optional<Contact>",
+                    "narrowsProperty": "optional<OneOfBranchNarrowsProperty>",
+                    "singleBranch": "optional<OneOfSingleBranch>",
+                    "withNot": "optional<OneOfBranchWithNot>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostShapesRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ApiKey": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "key": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Contact": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "email": "optional<string>",
+              "phone": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchAddsProperty": {
+            "base-properties": {
+              "a": "optional<boolean>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "unknown",
+              "OneOfBranchAddsPropertyB",
+            ],
+          },
+          "OneOfBranchAddsPropertyB": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "b": "boolean",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchNarrowsProperty": {
+            "base-properties": {
+              "kind": "optional<string>",
+              "value": "optional<string>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "OneOfBranchNarrowsPropertyZero",
+              "OneOfBranchNarrowsPropertyOne",
+            ],
+          },
+          "OneOfBranchNarrowsPropertyOne": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "OneOfBranchNarrowsPropertyOneKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchNarrowsPropertyOneKind": {
+            "enum": [
+              "b",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchNarrowsPropertyZero": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "kind": "OneOfBranchNarrowsPropertyZeroKind",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchNarrowsPropertyZeroKind": {
+            "enum": [
+              "a",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OneOfBranchWithNot": {
+            "base-properties": {
+              "a": "optional<string>",
+              "b": "optional<string>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "unknown",
+            ],
+          },
+          "OneOfSingleBranch": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "a": "string",
+              "b": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    ListInboundRoutes:
+      path: /inbound/routes
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: InboundRoutesRequest
+        body:
+          properties:
+            domain:
+              type: optional<string>
+              docs: The domain to list routes for.
+            phone:
+              type: optional<string>
+              docs: The phone number to list routes for.
+          extends:
+            - ApiKey
+        content-type: application/json
+      examples:
+        - request:
+            key: key
+    AddInboundRoute:
+      path: /inbound/add-route
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: InboundAddRouteRequest
+        body:
+          properties:
+            domain: optional<string>
+            phone: optional<string>
+            pattern: optional<string>
+            url:
+              type: string
+              validation:
+                format: uri
+          extends:
+            - ApiKey
+        content-type: application/json
+      examples:
+        - request:
+            key: key
+            url: url
+    PostShapes:
+      path: /shapes
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PostShapesRequest
+        body:
+          properties:
+            contact: optional<Contact>
+            narrowsProperty: optional<OneOfBranchNarrowsProperty>
+            addsProperty: optional<OneOfBranchAddsProperty>
+            singleBranch: optional<OneOfSingleBranch>
+            withNot: optional<OneOfBranchWithNot>
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  ApiKey:
+    properties:
+      key: string
+    source:
+      openapi: ../openapi.yml
+  Contact:
+    properties:
+      email: optional<string>
+      phone: optional<string>
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchNarrowsPropertyZeroKind:
+    enum:
+      - a
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchNarrowsPropertyZero:
+    properties:
+      kind: OneOfBranchNarrowsPropertyZeroKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  OneOfBranchNarrowsPropertyOneKind:
+    enum:
+      - b
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchNarrowsPropertyOne:
+    properties:
+      kind: OneOfBranchNarrowsPropertyOneKind
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  OneOfBranchNarrowsProperty:
+    discriminated: false
+    base-properties:
+      kind: optional<string>
+      value: optional<string>
+    union:
+      - OneOfBranchNarrowsPropertyZero
+      - OneOfBranchNarrowsPropertyOne
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchAddsPropertyB:
+    properties:
+      b: boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  OneOfBranchAddsProperty:
+    discriminated: false
+    base-properties:
+      a: optional<boolean>
+    union:
+      - unknown
+      - OneOfBranchAddsPropertyB
+    source:
+      openapi: ../openapi.yml
+  OneOfSingleBranch:
+    properties:
+      a: string
+      b: optional<string>
+    source:
+      openapi: ../openapi.yml
+  OneOfBranchWithNot:
+    discriminated: false
+    base-properties:
+      a: optional<string>
+      b: optional<string>
+    union:
+      - unknown
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test spec for a oneOf that only marks sibling properties as required.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test spec for a oneOf that only marks sibling properties as required.
+",
+  },
+  "specVersion": "1.0.0",
+}

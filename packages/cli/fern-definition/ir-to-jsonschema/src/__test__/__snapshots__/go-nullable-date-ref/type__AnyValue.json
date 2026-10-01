@@ -1,0 +1,12 @@
+{
+  "type": [
+    "string",
+    "number",
+    "boolean",
+    "object",
+    "array",
+    "null"
+  ],
+  "description": "An arbitrary value.",
+  "definitions": {}
+}

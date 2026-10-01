@@ -12,7 +12,7 @@ import com.seed.oauthClientCredentialsWithVariables.resources.service.ServiceCli
 import com.seed.oauthClientCredentialsWithVariables.resources.simple.SimpleClient;
 import java.util.function.Supplier;
 
-public class SeedOauthClientCredentialsWithVariablesClient {
+public class SeedOauthClientCredentialsWithVariablesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AuthClient> authClient;
@@ -52,6 +52,15 @@ public class SeedOauthClientCredentialsWithVariablesClient {
 
     public SimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -232,6 +232,54 @@ describe("generateCpp()", () => {
         const filenames = mdxFiles.map((f) => f.split("/").pop());
         expect(filenames).toContain("BlockReduce.mdx");
         expect(filenames).toContain("BlockScan.mdx");
+    });
+
+    it("keeps the .fern metadata written into the output dir before generation", () => {
+        const outputDir = join(tmpDir, "generated", "c");
+        mkdirSync(join(outputDir, ".fern"), { recursive: true });
+        writeFileSync(join(outputDir, ".fern", "library-ir.json"), "{}");
+
+        generateCpp({
+            ir: makeIr(
+                makeNamespace({ name: "cub", path: "cub", classes: [makeClass({ name: "A", path: "cub::A" })] })
+            ),
+            outputDir,
+            slug: "reference/cub"
+        });
+
+        expect(readFileSync(join(outputDir, ".fern", "library-ir.json"), "utf8")).toBe("{}");
+        expect(readdirSync(join(tmpDir, "generated"))).toEqual(["c"]);
+    });
+
+    it("replaces the previous output tree so pages for removed entities do not linger", () => {
+        const outputDir = join(tmpDir, "generated", "c");
+        const irBefore = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [
+                    makeClass({ name: "BlockReduce", path: "cub::BlockReduce" }),
+                    makeClass({ name: "BlockScan", path: "cub::BlockScan" })
+                ]
+            })
+        );
+        generateCpp({ ir: irBefore, outputDir, slug: "reference/cub" });
+        expect(collectMdxFiles(outputDir).map((f) => f.split("/").pop())).toContain("BlockScan.mdx");
+
+        const irAfter = makeIr(
+            makeNamespace({
+                name: "cub",
+                path: "cub",
+                classes: [makeClass({ name: "BlockReduce", path: "cub::BlockReduce" })]
+            })
+        );
+        const result = generateCpp({ ir: irAfter, outputDir, slug: "reference/cub" });
+
+        expect(result.pageCount).toBe(1);
+        const filenames = collectMdxFiles(outputDir).map((f) => f.split("/").pop());
+        expect(filenames).toEqual(["BlockReduce.mdx"]);
+        expect(result.writtenFiles.every((file) => file.startsWith(outputDir))).toBe(true);
+        expect(readdirSync(join(tmpDir, "generated"))).toEqual(["c"]);
     });
 
     // ------------------------------------------------------------------

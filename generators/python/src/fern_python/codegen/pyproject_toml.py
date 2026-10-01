@@ -13,13 +13,15 @@ from fern_python.codegen.ast.dependency.dependency import (
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.license_detector import DOCKER_LICENSE_PATH, detect_spdx_license_from_file
+from fern_python.codegen.license_texts import LICENSE_FILENAME, SPDX_IDS
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 from fern.generator_exec import (
     BasicLicense,
+    CustomLicense,
     GithubOutputMode,
     LicenseConfig,
-    LicenseId,
     PypiMetadata,
 )
 
@@ -49,17 +51,16 @@ class PyProjectToml:
         mypy_exclude: Optional[List[str]] = None,
     ):
         self._name = name
+        self._license = license_
+        self._detected_spdx_license = PyProjectToml._detect_custom_license(license_, path)
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
             package=package,
-            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(
-                python_version=python_version,
-                license_=license_,
-            ),
+            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(python_version=python_version),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
-            license_=license_,
+            license_expression=self._get_license_expression(),
         )
         self._dependency_manager = dependency_manager
         self._path = path
@@ -68,6 +69,44 @@ class PyProjectToml:
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
         self._mypy_exclude = mypy_exclude
+
+    @staticmethod
+    def _detect_custom_license(license_: Optional[LicenseConfig], path: str) -> Optional[str]:
+        """SPDX id recognized from the custom license file, mirroring the Java generator's heuristics."""
+        if license_ is None:
+            return None
+        license_union = license_.get_as_union()
+        if license_union.type != "custom":
+            return None
+        filename = cast(CustomLicense, license_union).filename
+        return detect_spdx_license_from_file(os.path.join(path, filename), DOCKER_LICENSE_PATH)
+
+    def _get_license_expression(self) -> Optional[str]:
+        if self._license is None:
+            return None
+        license_union = self._license.get_as_union()
+        if license_union.type == "basic":
+            return SPDX_IDS.get(cast(BasicLicense, license_union).id)
+        if license_union.type == "custom":
+            return self._detected_spdx_license
+        return None
+
+    def _get_project_license(self) -> str:
+        """PEP 639 license metadata for the [project] table."""
+        if self._license is None:
+            return ""
+        expression = self._get_license_expression()
+        license_line = f'license = "{expression}"\n' if expression is not None else ""
+        license_union = self._license.get_as_union()
+        if license_union.type == "basic":
+            if expression is None:
+                return ""
+            return f'{license_line}license-files = ["{LICENSE_FILENAME}"]\n'
+        if license_union.type == "custom":
+            filename = cast(CustomLicense, license_union).filename
+            escaped = filename.replace("\\", "\\\\").replace('"', '\\"')
+            return f'{license_line}license-files = ["{escaped}"]\n'
+        return ""
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -84,7 +123,7 @@ class PyProjectToml:
         content = f"""[project]
 name = "{self._name}"
 dynamic = ["version"]
-
+{self._get_project_license()}
 """
 
         for block in blocks:
@@ -118,7 +157,7 @@ dynamic = ["version"]
         classifiers: List[str]
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
-        license_: Optional[LicenseConfig]
+        license_expression: Optional[str] = None
 
         def to_string(self) -> str:
             s = f'''[tool.poetry]
@@ -131,7 +170,6 @@ name = "{self.name}"'''
             keywords: List[str] = []
             project_urls: List[str] = []
 
-            license_evaluated = ""
             if self.pypi_metadata is not None:
                 description = (
                     self.pypi_metadata.description if self.pypi_metadata.description is not None else description
@@ -147,15 +185,6 @@ name = "{self.name}"'''
                 if self.pypi_metadata.homepage_link is not None:
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
-            if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on its side
-                if self.license_.get_as_union().type == "basic":
-                    license_id = cast(BasicLicense, self.license_.get_as_union()).id
-                    if license_id == LicenseId.MIT:
-                        license_evaluated = 'license = "MIT"'
-                    elif license_id == LicenseId.APACHE_2:
-                        license_evaluated = 'license = "Apache-2.0"'
-
             if self.github_output_mode is not None:
                 project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
 
@@ -167,8 +196,10 @@ name = "{self.name}"'''
 description = "{description}"
 readme = "README.md"
 authors = {json.dumps(authors, indent=4)}
-keywords = {json.dumps(keywords, indent=4)}
-{license_evaluated}
+keywords = {json.dumps(keywords, indent=4)}"""
+            if self.license_expression is not None:
+                s += f'\nlicense = "{self.license_expression}"'
+            s += f"""
 classifiers = {json.dumps(self.classifiers, indent=4)}"""
             if self.package._from is not None:
                 s += f"""

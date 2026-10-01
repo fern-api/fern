@@ -14,7 +14,8 @@ export async function previewDocsWorkspace({
     brokenLinks,
     legacyPreview,
     backendPort,
-    forceDownload
+    forceDownload,
+    includePrivate = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -24,6 +25,8 @@ export async function previewDocsWorkspace({
     legacyPreview?: boolean;
     backendPort: number;
     forceDownload?: boolean;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -80,7 +83,8 @@ export async function previewDocsWorkspace({
                 },
                 context,
                 port,
-                bundlePath
+                bundlePath,
+                includePrivate
             });
         });
     }
@@ -130,7 +134,8 @@ export async function previewDocsWorkspace({
             port,
             bundlePath,
             backendPort,
-            forceDownload
+            forceDownload,
+            includePrivate
         });
     });
 

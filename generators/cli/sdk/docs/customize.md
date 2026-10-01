@@ -155,12 +155,12 @@ no global state, so parallel invocations cannot race:
 for tenant in prod acme; do acme messages list -p "$tenant" --format json; done
 ```
 
-CI keeps using environment variables and ignores profiles entirely.
+CI with no profile selected keeps using environment variables exactly as before.
 
-**Precedence per value** is `explicit flag → environment variable → profile →
-the spec's own default`. Environment variables sit above profiles deliberately,
-so a pipeline that exports them is never silently overridden by a profile a
-developer stored on the same machine.
+**Precedence per value** is `explicit flag → selected profile → environment
+variable → the spec's own default`. Whenever a profile is in play — `-p`,
+`<NAME>_PROFILE`, or the active one from `profiles use` — its stored values
+win; environment variables fill in only what the profile leaves unset.
 
 **The quickest way in is `profiles set`,** which takes the names you already
 use — no scheme names, no stdin piping:
@@ -175,7 +175,21 @@ acme profiles set prod \
 setting like `<NAME>_RETRIES` / `<NAME>_BASE_URL` / `<NAME>_OUTPUT` /
 `<NAME>_<SERVER_VAR>` — or an API parameter by its spec name. **Credentials go
 to the OS keyring** under that profile's slot; everything else to
-`profiles.toml`. The profile is created if it does not exist.
+`profiles.toml`. If the profile does not exist, `set` asks before creating
+it, so a mistyped name is caught before anything is written. When an existing
+profile has a similar name it first offers that one:
+
+```
+$ acme profiles set prd ACME_RETRIES=3
+Profile `prd` doesn't exist. Did you mean `prod`? [y/N] n
+Create profile `prd`? [y/N] y
+```
+
+Answering yes to the first question writes to `prod`; no to both changes
+nothing. Without a similar profile it only asks `Create it? [y/N]`. Pass
+`--yes` to create it without asking. When stdin or stderr is not a terminal (a
+script or an agent), nobody can answer, so `set` on a missing profile fails
+unless `--yes` is passed.
 
 One assignment reaches **every scheme that declares the variable**. When a
 vendor spec plus a layered auth block produces several schemes sharing one
@@ -215,7 +229,7 @@ stored and silently ignored.
 
 **Retries are per profile.** `--retries <N>` counts attempts *after* the first,
 so `--retries 0` is the same as `--no-retry`. It overrides `x-fern-retries` for
-the operation and resolves `flag > <PREFIX>_RETRIES > profile > spec`:
+the operation and resolves `flag > profile > <PREFIX>_RETRIES > spec`:
 
 ```bash
 acme profiles create flaky-sandbox --retries 6
@@ -260,18 +274,16 @@ tenant-sub   AC12345678…  us1     2        sierra-prod
 ```
 
 `ACCOUNT` is the identifier behind the stored credential — the username half of
-a basic credential — truncated, and absent for schemes that have no username
-(bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
+a basic credential, or the OAuth client id when that is all the profile has —
+and absent for schemes that have no username (bearer, API key). Columns between `PROFILE` and `ACTIVE` are discovered from
 what your profiles actually set, so a CLI with no regions shows no `REGION`
 column. `CREDENTIALS_FROM` appears only when a profile borrows another's
 credential. Add `--format json` for the machine-readable form.
 
 **When environment variables are in play,** `profiles current` says so.
-A *complete* env credential outranks an ambient profile's stored one and is
-reported as `credential_overridden_by_env`; env vars supplying only part of a
-multi-value credential are reported as `credential_partially_shadowed_by_env`,
-because nothing authenticates in that state and calling it an override would
-contradict `auth status`. `profiles list` also warns about a variable that is
+Credential env vars never override a selected profile's stored credential;
+they are consulted only for what the profile has not stored, and are listed as
+`credential_env_fallback`. `profiles list` also warns about a variable that is
 set, closely resembles one this CLI reads, and is not read:
 
 ```

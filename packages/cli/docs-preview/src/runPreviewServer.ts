@@ -77,7 +77,8 @@ export async function runPreviewServer({
     context,
     port,
     bundlePath,
-    cacheDir
+    cacheDir,
+    includePrivate
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -86,6 +87,8 @@ export async function runPreviewServer({
     port: number;
     bundlePath?: string;
     cacheDir?: AbsoluteFilePath;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -335,7 +338,8 @@ export async function runPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                includePrivate
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newPreviewResult;

@@ -8,7 +8,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.BulkUpdateTasksRequest;
 import com.seed.api.types.BulkUpdateTasksResponse;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -39,6 +39,15 @@ public class SeedApiClient {
 
     public BulkUpdateTasksResponse bulkUpdateTasks(BulkUpdateTasksRequest request, RequestOptions requestOptions) {
         return this.rawClient.bulkUpdateTasks(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

@@ -1,16 +1,12 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add the build-time `<LibrarySymbol library="..." name="..." />` component for library docs.
-    Authors can include a single generated Python or C/C++ symbol (function, class, method, typedef, macro, ...)
-    in hand-written MDX pages, with optional `heading` level and `members` allowlist for classes.
-    `fern docs md generate` now persists the library IR to `<output.path>/.fern/library-ir.json`, which
-    `<LibrarySymbol />` reads during docs resolution, preview and publish (no network re-fetch).
-    Adds `libraries.<name>.output.pages: false` to skip generated pages and navigation while still
-    persisting the IR for hand-composed pages.
-    Type references in embedded symbols (parameter, return and member types) link to the library's
-    generated reference pages wherever the library is mounted in the navigation.
-    Python symbols may be referenced by their public re-export path (e.g. `pkg.Client` for a class
-    defined in `pkg._impl` and re-exported from `pkg/__init__.py`).
-    Typedefs embedded from a plain-C library use `typedef` syntax, matching the generated pages.
+    Add `<LibrarySymbol library="..." name="..." />` to embed a generated Python or C/C++ symbol
+    in authored MDX pages (optional `heading` and `members`), with type references linked to the
+    generated reference pages. `fern docs md generate` persists the library IR to
+    `<output.path>/.fern/library-ir.json`; `output.pages: false` keeps the IR without generating pages.
   type: feat
+- summary: |
+    `<Code src="..." />` handles files containing backticks, keeps processing other tags when one
+    file is missing, and reports the referencing file and line in errors.
+  type: fix

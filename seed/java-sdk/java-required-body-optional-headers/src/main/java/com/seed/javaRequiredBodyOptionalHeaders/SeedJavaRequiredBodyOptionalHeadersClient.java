@@ -16,7 +16,7 @@ import com.seed.javaRequiredBodyOptionalHeaders.types.User;
 import com.seed.javaRequiredBodyOptionalHeaders.types.UserData;
 import java.util.List;
 
-public class SeedJavaRequiredBodyOptionalHeadersClient {
+public class SeedJavaRequiredBodyOptionalHeadersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedJavaRequiredBodyOptionalHeadersClient rawClient;
@@ -190,6 +190,15 @@ public class SeedJavaRequiredBodyOptionalHeadersClient {
      */
     public User createUserInlined(CreateUserInlinedRequest request, RequestOptions requestOptions) {
         return this.rawClient.createUserInlined(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaRequiredBodyOptionalHeadersClientBuilder builder() {

@@ -8,7 +8,7 @@ import com.seed.javaOptionalNullableQueryParams.core.RequestOptions;
 import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
 import com.seed.javaOptionalNullableQueryParams.types.SearchResponse;
 
-public class SeedJavaOptionalNullableQueryParamsClient {
+public class SeedJavaOptionalNullableQueryParamsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedJavaOptionalNullableQueryParamsClient rawClient;
@@ -51,6 +51,15 @@ public class SeedJavaOptionalNullableQueryParamsClient {
      */
     public SearchResponse search(SearchRequest request, RequestOptions requestOptions) {
         return this.rawClient.search(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaOptionalNullableQueryParamsClientBuilder builder() {

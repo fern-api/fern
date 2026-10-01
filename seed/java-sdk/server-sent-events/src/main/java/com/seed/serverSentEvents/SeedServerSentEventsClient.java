@@ -8,7 +8,7 @@ import com.seed.serverSentEvents.core.Suppliers;
 import com.seed.serverSentEvents.resources.completions.CompletionsClient;
 import java.util.function.Supplier;
 
-public class SeedServerSentEventsClient {
+public class SeedServerSentEventsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<CompletionsClient> completionsClient;
@@ -20,6 +20,15 @@ public class SeedServerSentEventsClient {
 
     public CompletionsClient completions() {
         return this.completionsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedServerSentEventsClientBuilder builder() {

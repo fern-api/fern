@@ -26,10 +26,12 @@ type FilterByRoleRequest struct {
 }
 
 func (f *FilterByRoleRequest) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetRole sets the Role field and marks it as non-optional;
@@ -69,10 +71,12 @@ type SearchRequest struct {
 }
 
 func (s *SearchRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -135,10 +139,12 @@ type ListUsersRequest struct {
 }
 
 func (l *ListUsersRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
@@ -187,10 +193,12 @@ type SearchUsersRequest struct {
 }
 
 func (s *SearchUsersRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -221,7 +229,6 @@ func (s *SearchUsersRequest) SetIsActive(isActive *bool) {
 	s.require(searchUsersRequestFieldIsActive)
 }
 
-// Nested object for testing
 var (
 	addressFieldStreet     = big.NewInt(1 << 0)
 	addressFieldCity       = big.NewInt(1 << 1)
@@ -232,6 +239,14 @@ var (
 	addressFieldTenantID   = big.NewInt(1 << 6)
 )
 
+// addressNullableFields maps the wire names of Address's nullable fields (required or optional) to their field bits.
+var addressNullableFields = map[string]*big.Int{
+	"city":       addressFieldCity,
+	"country":    addressFieldCountry,
+	"buildingId": addressFieldBuildingID,
+}
+
+// Nested object for testing
 type Address struct {
 	Street     string         `json:"street" url:"street"`
 	City       *string        `json:"city,omitempty" url:"city,omitempty"`
@@ -305,10 +320,12 @@ func (a *Address) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Address) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetStreet sets the Street field and marks it as non-optional;
@@ -372,6 +389,13 @@ func (a *Address) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, addressNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		a.require(presentFields)
+	}
 	a.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -402,7 +426,6 @@ func (a *Address) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-// Test object with nullable enums, unions, and arrays
 var (
 	complexProfileFieldID                           = big.NewInt(1 << 0)
 	complexProfileFieldNullableRole                 = big.NewInt(1 << 1)
@@ -425,6 +448,23 @@ var (
 	complexProfileFieldOptionalMapOfEnums           = big.NewInt(1 << 18)
 )
 
+// complexProfileNullableFields maps the wire names of ComplexProfile's nullable fields (required or optional) to their field bits.
+var complexProfileNullableFields = map[string]*big.Int{
+	"nullableRole":                 complexProfileFieldNullableRole,
+	"optionalNullableRole":         complexProfileFieldOptionalNullableRole,
+	"nullableStatus":               complexProfileFieldNullableStatus,
+	"optionalNullableStatus":       complexProfileFieldOptionalNullableStatus,
+	"nullableNotification":         complexProfileFieldNullableNotification,
+	"optionalNullableNotification": complexProfileFieldOptionalNullableNotification,
+	"nullableSearchResult":         complexProfileFieldNullableSearchResult,
+	"nullableArray":                complexProfileFieldNullableArray,
+	"optionalNullableArray":        complexProfileFieldOptionalNullableArray,
+	"nullableListOfNullables":      complexProfileFieldNullableListOfNullables,
+	"nullableMapOfNullables":       complexProfileFieldNullableMapOfNullables,
+	"nullableListOfUnions":         complexProfileFieldNullableListOfUnions,
+}
+
+// Test object with nullable enums, unions, and arrays
 type ComplexProfile struct {
 	ID                           string                `json:"id" url:"id"`
 	NullableRole                 *UserRole             `json:"nullableRole,omitempty" url:"nullableRole,omitempty"`
@@ -594,10 +634,12 @@ func (c *ComplexProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ComplexProfile) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -745,6 +787,13 @@ func (c *ComplexProfile) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, complexProfileNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -781,6 +830,12 @@ var (
 	createUserRequestFieldPhone    = big.NewInt(1 << 2)
 	createUserRequestFieldAddress  = big.NewInt(1 << 3)
 )
+
+// createUserRequestNullableFields maps the wire names of CreateUserRequest's nullable fields (required or optional) to their field bits.
+var createUserRequestNullableFields = map[string]*big.Int{
+	"email":   createUserRequestFieldEmail,
+	"address": createUserRequestFieldAddress,
+}
 
 type CreateUserRequest struct {
 	Username string   `json:"username" url:"username"`
@@ -831,10 +886,12 @@ func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateUserRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -877,6 +934,13 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createUserRequestNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -907,7 +971,6 @@ func (c *CreateUserRequest) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Request body for testing deserialization of null values
 var (
 	deserializationTestRequestFieldRequiredString         = big.NewInt(1 << 0)
 	deserializationTestRequestFieldNullableString         = big.NewInt(1 << 1)
@@ -923,6 +986,18 @@ var (
 	deserializationTestRequestFieldOptionalObject         = big.NewInt(1 << 11)
 )
 
+// deserializationTestRequestNullableFields maps the wire names of DeserializationTestRequest's nullable fields (required or optional) to their field bits.
+var deserializationTestRequestNullableFields = map[string]*big.Int{
+	"nullableString":         deserializationTestRequestFieldNullableString,
+	"optionalNullableString": deserializationTestRequestFieldOptionalNullableString,
+	"nullableEnum":           deserializationTestRequestFieldNullableEnum,
+	"nullableUnion":          deserializationTestRequestFieldNullableUnion,
+	"nullableList":           deserializationTestRequestFieldNullableList,
+	"nullableMap":            deserializationTestRequestFieldNullableMap,
+	"nullableObject":         deserializationTestRequestFieldNullableObject,
+}
+
+// Request body for testing deserialization of null values
 type DeserializationTestRequest struct {
 	RequiredString         string              `json:"requiredString" url:"requiredString"`
 	NullableString         *string             `json:"nullableString,omitempty" url:"nullableString,omitempty"`
@@ -1036,10 +1111,12 @@ func (d *DeserializationTestRequest) GetExtraProperties() map[string]interface{}
 }
 
 func (d *DeserializationTestRequest) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetRequiredString sets the RequiredString field and marks it as non-optional;
@@ -1138,6 +1215,13 @@ func (d *DeserializationTestRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	d.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, deserializationTestRequestNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		d.require(presentFields)
+	}
 	d.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1168,7 +1252,6 @@ func (d *DeserializationTestRequest) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
-// Response for deserialization test
 var (
 	deserializationTestResponseFieldEcho               = big.NewInt(1 << 0)
 	deserializationTestResponseFieldProcessedAt        = big.NewInt(1 << 1)
@@ -1176,6 +1259,7 @@ var (
 	deserializationTestResponseFieldPresentFieldsCount = big.NewInt(1 << 3)
 )
 
+// Response for deserialization test
 type DeserializationTestResponse struct {
 	Echo               *DeserializationTestRequest `json:"echo" url:"echo"`
 	ProcessedAt        time.Time                   `json:"processedAt" url:"processedAt"`
@@ -1225,10 +1309,12 @@ func (d *DeserializationTestResponse) GetExtraProperties() map[string]interface{
 }
 
 func (d *DeserializationTestResponse) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetEcho sets the Echo field and marks it as non-optional;
@@ -1317,6 +1403,11 @@ var (
 	documentFieldTags    = big.NewInt(1 << 4)
 )
 
+// documentNullableFields maps the wire names of Document's nullable fields (required or optional) to their field bits.
+var documentNullableFields = map[string]*big.Int{
+	"author": documentFieldAuthor,
+}
+
 type Document struct {
 	ID      string   `json:"id" url:"id"`
 	Title   string   `json:"title" url:"title"`
@@ -1374,10 +1465,12 @@ func (d *Document) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *Document) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1427,6 +1520,13 @@ func (d *Document) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	d.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, documentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		d.require(presentFields)
+	}
 	d.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1504,10 +1604,12 @@ func (e *EmailNotification) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailNotification) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmailAddress sets the EmailAddress field and marks it as non-optional;
@@ -1737,6 +1839,11 @@ var (
 	organizationFieldEmployeeCount = big.NewInt(1 << 3)
 )
 
+// organizationNullableFields maps the wire names of Organization's nullable fields (required or optional) to their field bits.
+var organizationNullableFields = map[string]*big.Int{
+	"domain": organizationFieldDomain,
+}
+
 type Organization struct {
 	ID            string  `json:"id" url:"id"`
 	Name          string  `json:"name" url:"name"`
@@ -1786,10 +1893,12 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *Organization) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1832,6 +1941,13 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, organizationNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		o.require(presentFields)
+	}
 	o.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1918,10 +2034,12 @@ func (p *PushNotification) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PushNotification) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetDeviceToken sets the DeviceToken field and marks it as non-optional;
@@ -2192,10 +2310,12 @@ func (s *SmsNotification) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SmsNotification) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
@@ -2261,7 +2381,6 @@ func (s *SmsNotification) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-// For testing PATCH operations
 var (
 	updateUserRequestFieldUsername = big.NewInt(1 << 0)
 	updateUserRequestFieldEmail    = big.NewInt(1 << 1)
@@ -2269,6 +2388,13 @@ var (
 	updateUserRequestFieldAddress  = big.NewInt(1 << 3)
 )
 
+// updateUserRequestNullableFields maps the wire names of UpdateUserRequest's nullable fields (required or optional) to their field bits.
+var updateUserRequestNullableFields = map[string]*big.Int{
+	"email":   updateUserRequestFieldEmail,
+	"address": updateUserRequestFieldAddress,
+}
+
+// For testing PATCH operations
 type UpdateUserRequest struct {
 	Username *string  `json:"username,omitempty" url:"username,omitempty"`
 	Email    *string  `json:"email,omitempty" url:"email,omitempty"`
@@ -2318,10 +2444,12 @@ func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateUserRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -2364,6 +2492,13 @@ func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateUserRequestNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2394,7 +2529,6 @@ func (u *UpdateUserRequest) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Test object with nullable and optional fields
 var (
 	userProfileFieldID                     = big.NewInt(1 << 0)
 	userProfileFieldUsername               = big.NewInt(1 << 1)
@@ -2416,6 +2550,20 @@ var (
 	userProfileFieldOptionalNullableObject = big.NewInt(1 << 17)
 )
 
+// userProfileNullableFields maps the wire names of UserProfile's nullable fields (required or optional) to their field bits.
+var userProfileNullableFields = map[string]*big.Int{
+	"nullableString":         userProfileFieldNullableString,
+	"nullableInteger":        userProfileFieldNullableInteger,
+	"nullableBoolean":        userProfileFieldNullableBoolean,
+	"nullableDate":           userProfileFieldNullableDate,
+	"nullableObject":         userProfileFieldNullableObject,
+	"nullableList":           userProfileFieldNullableList,
+	"nullableMap":            userProfileFieldNullableMap,
+	"optionalNullableString": userProfileFieldOptionalNullableString,
+	"optionalNullableObject": userProfileFieldOptionalNullableObject,
+}
+
+// Test object with nullable and optional fields
 type UserProfile struct {
 	ID                     string            `json:"id" url:"id"`
 	Username               string            `json:"username" url:"username"`
@@ -2577,10 +2725,12 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfile) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2729,6 +2879,13 @@ func (u *UserProfile) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, userProfileNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2772,6 +2929,12 @@ var (
 	userResponseFieldUpdatedAt = big.NewInt(1 << 5)
 	userResponseFieldAddress   = big.NewInt(1 << 6)
 )
+
+// userResponseNullableFields maps the wire names of UserResponse's nullable fields (required or optional) to their field bits.
+var userResponseNullableFields = map[string]*big.Int{
+	"email":     userResponseFieldEmail,
+	"updatedAt": userResponseFieldUpdatedAt,
+}
 
 type UserResponse struct {
 	ID        string     `json:"id" url:"id"`
@@ -2846,10 +3009,12 @@ func (u *UserResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2921,6 +3086,13 @@ func (u *UserResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, userResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -3033,10 +3205,12 @@ type UpdateComplexProfileRequest struct {
 }
 
 func (u *UpdateComplexProfileRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetNullableRole sets the NullableRole field and marks it as non-optional;
@@ -3111,10 +3285,12 @@ type UpdateTagsRequest struct {
 }
 
 func (u *UpdateTagsRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetTags sets the Tags field and marks it as non-optional;

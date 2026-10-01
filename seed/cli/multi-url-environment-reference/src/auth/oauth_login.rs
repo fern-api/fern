@@ -1421,6 +1421,18 @@ impl AuthProvider for OAuth2KeyringProvider {
             .unwrap_or(false)
     }
 
+    /// Every credential this provider can offer is one `auth login` stored in
+    /// the profile-namespaced keyring account — there is no env/flag rung — so
+    /// "has credentials" and "has *stored* credentials" are the same question.
+    /// Without this override the trait default (`false`) hid OAuth login
+    /// tokens from the `--profile` preference pass in
+    /// [`AnyAuthProvider`](crate::auth::AnyAuthProvider) /
+    /// [`RoutingAuthProvider`](crate::auth::RoutingAuthProvider), which then
+    /// picked an earlier env-backed scheme.
+    fn has_stored_credentials(&self) -> bool {
+        self.has_credentials()
+    }
+
     fn credential_hints(&self) -> Vec<String> {
         vec![format!(
             "keyring entry {}:{} (populated by `{} auth login`)",
@@ -1742,6 +1754,76 @@ mod tests {
         set_active_store(Arc::new(MockKeyringStore::new()));
         let p = OAuth2KeyringProvider::new("OAuth2", "my-cli", "https://x", "c");
         assert!(!p.has_credentials());
+    }
+
+    /// Every rung this provider reads is the profile's keyring account, so the
+    /// stored-credentials predicate has to track `has_credentials` exactly.
+    /// Inheriting the trait default (`false`) made OAuth login tokens invisible
+    /// to the `--profile` preference pass.
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn provider_stored_credentials_tracks_keyring_presence() {
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("my-cli", "OAuth2", "anything").unwrap();
+        set_active_store(mock);
+        let p = OAuth2KeyringProvider::new("OAuth2", "my-cli", "https://x", "c");
+        assert!(p.has_stored_credentials());
+
+        set_active_store(Arc::new(MockKeyringStore::new()));
+        assert!(!p.has_stored_credentials());
+    }
+
+    /// The end-to-end shape of the bug: a CLI offering env-backed basic auth
+    /// first and an OAuth login flow second. Under `--profile` the stored login
+    /// token must win; under ambient selection spec order still does.
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn named_profile_prefers_login_token_over_env_scheme() {
+        use crate::auth::compose::AnyAuthProvider;
+        use crate::auth::credential::AuthCredentialSource;
+        use crate::auth::provider::EndpointAuthMetadata;
+        use crate::auth::schemes::BasicAuthProvider;
+        use crate::auth::test_helpers::{auth_header, req, GlobalAuthStateGuard};
+        use crate::profiles::SelectionSource;
+
+        let composed = || {
+            let basic: DynAuthProvider = Arc::new(BasicAuthProvider::new(
+                "basic",
+                AuthCredentialSource::from_env("FERN_LOGIN_PRECEDENCE_USER"),
+                AuthCredentialSource::from_env("FERN_LOGIN_PRECEDENCE_PASSWORD"),
+            ));
+            let login: DynAuthProvider = Arc::new(OAuth2KeyringProvider::new(
+                "OAuth2",
+                "my-cli",
+                "https://x",
+                "c",
+            ));
+            AnyAuthProvider::new(vec![basic, login])
+        };
+        let state = |source| {
+            let mut guard = GlobalAuthStateGuard::new();
+            guard
+                .install_profile("prod", source)
+                .install_keyring("my-cli", &crate::profiles::keyring_account("OAuth2"), "tok")
+                .set_env("FERN_LOGIN_PRECEDENCE_USER", "user")
+                .set_env("FERN_LOGIN_PRECEDENCE_PASSWORD", "password");
+            guard
+        };
+
+        {
+            let _flag = state(SelectionSource::Flag);
+            let out = composed()
+                .apply(req(), &EndpointAuthMetadata::unspecified())
+                .unwrap();
+            assert_eq!(auth_header(out).as_deref(), Some("Bearer tok"));
+        }
+        {
+            let _active = state(SelectionSource::Active);
+            let out = composed()
+                .apply(req(), &EndpointAuthMetadata::unspecified())
+                .unwrap();
+            assert!(auth_header(out).unwrap().starts_with("Basic "));
+        }
     }
 
     // ---------- Login-flow → request-time provider wiring ----------

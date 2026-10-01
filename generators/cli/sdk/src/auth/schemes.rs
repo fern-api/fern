@@ -52,6 +52,10 @@ impl AuthProvider for BearerAuthProvider {
         self.token.resolve().is_some()
     }
 
+    fn has_stored_credentials(&self) -> bool {
+        self.token.has_stored_value()
+    }
+
     fn credential_hints(&self) -> Vec<String> {
         self.token.credential_hints()
     }
@@ -175,6 +179,16 @@ impl AuthProvider for BasicAuthProvider {
         }
     }
 
+    fn has_stored_credentials(&self) -> bool {
+        match self.mode {
+            BasicAuthMode::Full => {
+                self.username.has_stored_value() && self.password.has_stored_value()
+            }
+            BasicAuthMode::UsernameOnly => self.username.has_stored_value(),
+            BasicAuthMode::PasswordOnly => self.password.has_stored_value(),
+        }
+    }
+
     fn credential_hints(&self) -> Vec<String> {
         let mut hints = self.username.credential_hints();
         hints.extend(self.password.credential_hints());
@@ -266,6 +280,10 @@ impl AuthProvider for HeaderAuthProvider {
 
     fn has_credentials(&self) -> bool {
         self.token.resolve().is_some()
+    }
+
+    fn has_stored_credentials(&self) -> bool {
+        self.token.has_stored_value()
     }
 
     fn credential_hints(&self) -> Vec<String> {

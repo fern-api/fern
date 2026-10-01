@@ -30,6 +30,13 @@ func (b *BadRequestError) Unwrap() error {
 	return b.APIError
 }
 
+func (b *BadRequestError) GetBody() *ErrorBody {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}
+
 type InternalServerError struct {
 	*core.APIError
 	Body *ErrorBody
@@ -51,6 +58,13 @@ func (i *InternalServerError) MarshalJSON() ([]byte, error) {
 
 func (i *InternalServerError) Unwrap() error {
 	return i.APIError
+}
+
+func (i *InternalServerError) GetBody() *ErrorBody {
+	if i == nil {
+		return nil
+	}
+	return i.Body
 }
 
 type NotFoundError struct {
@@ -76,6 +90,13 @@ func (n *NotFoundError) Unwrap() error {
 	return n.APIError
 }
 
+func (n *NotFoundError) GetBody() *ErrorBody {
+	if n == nil {
+		return nil
+	}
+	return n.Body
+}
+
 type FooTooLittle struct {
 	*core.APIError
 	Body *ErrorBody
@@ -99,6 +120,13 @@ func (f *FooTooLittle) Unwrap() error {
 	return f.APIError
 }
 
+func (f *FooTooLittle) GetBody() *ErrorBody {
+	if f == nil {
+		return nil
+	}
+	return f.Body
+}
+
 type FooTooMuch struct {
 	*core.APIError
 	Body *ErrorBody
@@ -120,4 +148,11 @@ func (f *FooTooMuch) MarshalJSON() ([]byte, error) {
 
 func (f *FooTooMuch) Unwrap() error {
 	return f.APIError
+}
+
+func (f *FooTooMuch) GetBody() *ErrorBody {
+	if f == nil {
+		return nil
+	}
+	return f.Body
 }

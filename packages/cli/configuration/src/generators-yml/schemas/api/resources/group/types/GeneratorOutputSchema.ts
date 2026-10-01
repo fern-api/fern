@@ -8,6 +8,7 @@ export type GeneratorOutputSchema =
     | GeneratorsYml.GeneratorOutputSchema.Pypi
     | GeneratorsYml.GeneratorOutputSchema.Postman
     | GeneratorsYml.GeneratorOutputSchema.LocalFileSystem
+    | GeneratorsYml.GeneratorOutputSchema.FernHosted
     | GeneratorsYml.GeneratorOutputSchema.Nuget
     | GeneratorsYml.GeneratorOutputSchema.Rubygems
     | GeneratorsYml.GeneratorOutputSchema.Crates;
@@ -31,6 +32,10 @@ export namespace GeneratorOutputSchema {
 
     export interface LocalFileSystem extends GeneratorsYml.LocalFileSystemOutputLocationSchema {
         location: "local-file-system";
+    }
+
+    export interface FernHosted extends GeneratorsYml.FernHostedOutputLocationSchema {
+        location: "fern-hosted";
     }
 
     export interface Nuget extends GeneratorsYml.NugetOutputLocationSchema {

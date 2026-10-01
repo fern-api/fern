@@ -8,7 +8,7 @@ import com.seed.clientSideParams.core.Suppliers;
 import com.seed.clientSideParams.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
-public class SeedClientSideParamsClient {
+public class SeedClientSideParamsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class SeedClientSideParamsClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedClientSideParamsClientBuilder builder() {

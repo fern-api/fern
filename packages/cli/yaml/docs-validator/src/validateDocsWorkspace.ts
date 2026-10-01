@@ -64,6 +64,16 @@ function buildSeverityOverrides(
     return severityOverrides;
 }
 
+export function getRuleNamesConfiguredAsErrors(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): Set<string> {
+    const ruleNames = new Set<string>();
+    for (const [ruleName, severity] of buildSeverityOverrides(checkConfig)) {
+        if (severity === "error") {
+            ruleNames.add(ruleName);
+        }
+    }
+    return ruleNames;
+}
+
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
     context: TaskContext,

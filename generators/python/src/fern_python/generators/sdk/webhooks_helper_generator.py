@@ -82,6 +82,8 @@ class WebhooksHelperGenerator:
         root_exports.append("WebhooksHelper")
 
         for entry in override_entries:
+            if len(entry.webhook_names) == 0:
+                continue
             first_webhook_name = entry.webhook_names[0]
             class_name = f"{_webhook_name_to_pascal(first_webhook_name)}WebhooksHelper"
             self._write_helper(
@@ -101,6 +103,20 @@ class WebhooksHelperGenerator:
         self,
     ) -> Tuple[Optional[_WebhookVerificationEntry], List[_WebhookVerificationEntry]]:
         grouped: "dict[str, _WebhookVerificationEntry]" = {}
+
+        # The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        # default WebhooksHelper, even when the definition models no webhooks.
+        api_wide_entry: Optional[_WebhookVerificationEntry] = None
+        api_wide_verification = self._context.ir.sdk_config.webhook_signature_verification
+        if api_wide_verification is not None:
+            api_wide_config = api_wide_verification.visit(
+                hmac=lambda hmac: hmac,
+                asymmetric=lambda _: None,
+            )
+            if api_wide_config is not None:
+                api_wide_entry = _WebhookVerificationEntry(config=api_wide_config, webhook_names=[])
+                grouped[self._compute_verification_key(api_wide_config)] = api_wide_entry
+
         for webhook_group in self._context.ir.webhook_groups.values():
             for webhook in webhook_group:
                 verification = webhook.signature_verification
@@ -122,13 +138,15 @@ class WebhooksHelperGenerator:
         if len(grouped) == 0:
             return None, []
 
-        # The most frequent config becomes the default WebhooksHelper (ties broken by insertion order).
-        default_entry: Optional[_WebhookVerificationEntry] = None
-        max_count = 0
-        for entry in grouped.values():
-            if len(entry.webhook_names) > max_count:
-                max_count = len(entry.webhook_names)
-                default_entry = entry
+        # Without an API-wide scheme, the most frequent config becomes the default WebhooksHelper
+        # (ties broken by insertion order).
+        default_entry: Optional[_WebhookVerificationEntry] = api_wide_entry
+        if default_entry is None:
+            max_count = 0
+            for entry in grouped.values():
+                if len(entry.webhook_names) > max_count:
+                    max_count = len(entry.webhook_names)
+                    default_entry = entry
 
         override_entries = [entry for entry in grouped.values() if entry is not default_entry]
         return default_entry, override_entries

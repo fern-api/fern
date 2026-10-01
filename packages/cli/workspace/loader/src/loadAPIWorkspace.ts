@@ -232,6 +232,24 @@ export async function loadSingleNamespaceAPIWorkspace({
             };
         }
         const apiSettings = getAPIDefinitionSettings(definition.settings);
+        const errorResponses = apiSettings.errorResponses;
+        if (errorResponses != null && typeof errorResponses.schema === "string") {
+            const absoluteFilepathToErrorResponsesSchema = join(
+                absolutePathToWorkspace,
+                RelativeFilePath.of(errorResponses.schema)
+            );
+            if (!(await doesPathExist(absoluteFilepathToErrorResponsesSchema))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(errorResponses.schema)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            apiSettings.errorResponses = { ...errorResponses, schema: absoluteFilepathToErrorResponsesSchema };
+        }
         specs.push({
             type: "openapi",
             absoluteFilepath,

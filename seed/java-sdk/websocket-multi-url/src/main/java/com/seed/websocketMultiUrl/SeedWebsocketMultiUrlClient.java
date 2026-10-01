@@ -8,7 +8,7 @@ import com.seed.websocketMultiUrl.core.Suppliers;
 import com.seed.websocketMultiUrl.resources.realtime.RealtimeClient;
 import java.util.function.Supplier;
 
-public class SeedWebsocketMultiUrlClient {
+public class SeedWebsocketMultiUrlClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<RealtimeClient> realtimeClient;
@@ -20,6 +20,15 @@ public class SeedWebsocketMultiUrlClient {
 
     public RealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedWebsocketMultiUrlClientBuilder builder() {

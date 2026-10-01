@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../openapi.yml
+  environments:
+    Production:
+      url: https://api.acme.com
+      audiences:
+        - public
+    Internal:
+      url: https://internal.acme.com
+      audiences: []
+    Legacy:
+      url: https://legacy.acme.com
+  default-environment: Production

@@ -134,9 +134,17 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 
 `fern check`: validate your API definition and Fern configuration.
 
-`fern generate`: run the generators specified in `generators.yml` in the cloud.
+`fern generate`: generate the default legacy group and all targets in the default `sdk-config.yml` in the cloud.
 
-`fern generate --local`: run the generators specified in `generators.yml` in docker locally.
+`fern generate --group <name>`: generate a legacy group from `generators.yml` or `generators.legacy.yml`.
+
+`fern generate --target <language>`: generate a language target from `sdk-config.yml`.
+
+`fern generate --group <name> --target <language>`: generate legacy and SDK Config selections together.
+
+`fern generate --sdk-config <path> --target <language>`: generate from an alternate SDK Config file.
+
+`fern generate --local`: run legacy generator groups in Docker locally. SDK Config targets use remote generation.
 
 `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 

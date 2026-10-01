@@ -21,6 +21,16 @@ import {
     WriterFunction
 } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
+import { XmlObjectGenerator } from "./XmlObjectGenerator.js";
+
+export declare namespace GeneratedObjectTypeImpl {
+    export interface Init<Context extends BaseContext>
+        extends AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context> {
+        xml?: FernIr.XmlEncoding;
+        isXmlRoot?: boolean;
+        useBigInt?: boolean;
+    }
+}
 
 interface Property {
     name: string;
@@ -39,10 +49,26 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     implements GeneratedObjectType<Context>
 {
     private readonly allObjectProperties: FernIr.ObjectProperty[];
+    private readonly xmlGenerator: XmlObjectGenerator<Context> | undefined;
     public readonly type = "object";
-    constructor(init: AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context>) {
+    constructor({ xml, isXmlRoot = false, useBigInt = false, ...init }: GeneratedObjectTypeImpl.Init<Context>) {
         super(init);
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+        this.xmlGenerator =
+            xml != null
+                ? new XmlObjectGenerator({
+                      typeName: this.typeName,
+                      docs: init.docs,
+                      shape: this.shape,
+                      xml,
+                      isXmlRoot,
+                      useBigInt,
+                      includeSerdeLayer: this.includeSerdeLayer,
+                      noOptionalProperties: this.noOptionalProperties,
+                      getPropertyKey: (property) => this.getPropertyKeyFromProperty(property),
+                      getTypeForObjectProperty: (context, property) => this.getTypeForObjectProperty(context, property)
+                  })
+                : undefined;
     }
 
     /**
@@ -93,7 +119,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)];
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            this.xmlGenerator?.generateClass(context) ?? this.generateInterface(context)
+        ];
         const iModule = this.generateModule(context);
         if (iModule) {
             statements.push(iModule);
@@ -447,7 +475,11 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const inlineTypeStatements = this.generateInlineTypeModuleStatements(context);
         const requestResponseStatements = this.generateRequestResponseModuleStatements(context);
 
-        const moduleStatements = [...inlineTypeStatements, ...requestResponseStatements];
+        const moduleStatements = [
+            ...inlineTypeStatements,
+            ...requestResponseStatements,
+            ...(this.xmlGenerator?.generateModuleStatements(context) ?? [])
+        ];
         if (moduleStatements.length === 0) {
             return undefined;
         }

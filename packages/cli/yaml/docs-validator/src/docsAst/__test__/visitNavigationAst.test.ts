@@ -5,6 +5,7 @@ import os from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
 
+import { FileReadTimer } from "../../utils/fileReadTimer.js";
 import { visitNavigationAst } from "../visitNavigationAst.js";
 
 describe("visitNavigationAst", () => {
@@ -32,7 +33,8 @@ describe("visitNavigationAst", () => {
                 nodePath: [],
                 absoluteFilepathToConfiguration: docsConfig,
                 apiWorkspaces: [],
-                context: createMockTaskContext()
+                context: createMockTaskContext(),
+                readTimer: new FileReadTimer()
             });
         } finally {
             await rm(fernFolder, { recursive: true, force: true });

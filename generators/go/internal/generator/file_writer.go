@@ -116,6 +116,9 @@ type fileWriter struct {
 	// requiredNullableRoundTripTests maps type names to the wire names of their
 	// required-nullable fields, for JSON round-trip test generation.
 	requiredNullableRoundTripTests map[string][]string
+	// optionalNullableRoundTripTests maps type names to the wire names of their
+	// optional-nullable fields, for JSON round-trip test generation.
+	optionalNullableRoundTripTests map[string][]string
 }
 
 // GetterSetterTestConfig contains configuration for generating getter/setter tests
@@ -175,6 +178,7 @@ func newFileWriter(
 	scope.AddImport("net/http")
 	scope.AddImport("net/url")
 	scope.AddImport("os")
+	scope.AddImport("sort")
 	scope.AddImport("strconv")
 	scope.AddImport("strings")
 	scope.AddImport("testing")
@@ -431,6 +435,18 @@ func (f *fileWriter) AddRequiredNullableRoundTripTest(typeName string, wireNames
 	f.requiredNullableRoundTripTests[typeName] = wireNames
 }
 
+// AddOptionalNullableRoundTripTest marks a type for optional-nullable JSON
+// round-trip test generation, given the wire names of its optional-nullable fields.
+func (f *fileWriter) AddOptionalNullableRoundTripTest(typeName string, wireNames []string) {
+	if len(wireNames) == 0 {
+		return
+	}
+	if f.optionalNullableRoundTripTests == nil {
+		f.optionalNullableRoundTripTests = make(map[string][]string)
+	}
+	f.optionalNullableRoundTripTests[typeName] = wireNames
+}
+
 // AddStringMethodTest marks a type for String() method test generation.
 func (f *fileWriter) AddStringMethodTest(typeName string) {
 	if f.stringMethodTests == nil {
@@ -462,7 +478,8 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		len(f.stringMethodTests) == 0 &&
 		len(f.enumTests) == 0 &&
 		len(f.extraPropertiesTests) == 0 &&
-		len(f.requiredNullableRoundTripTests) == 0 {
+		len(f.requiredNullableRoundTripTests) == 0 &&
+		len(f.optionalNullableRoundTripTests) == 0 {
 		return nil, nil
 	}
 
@@ -632,6 +649,16 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	sort.Strings(requiredNullableTestNames)
 	for _, typeName := range requiredNullableTestNames {
 		testWriter.WriteRequiredNullableRoundTripTests(typeName, f.requiredNullableRoundTripTests[typeName])
+	}
+
+	// Write optional-nullable round-trip tests for types that have them (sorted for deterministic output)
+	optionalNullableTestNames := make([]string, 0, len(f.optionalNullableRoundTripTests))
+	for typeName := range f.optionalNullableRoundTripTests {
+		optionalNullableTestNames = append(optionalNullableTestNames, typeName)
+	}
+	sort.Strings(optionalNullableTestNames)
+	for _, typeName := range optionalNullableTestNames {
+		testWriter.WriteOptionalNullableRoundTripTests(typeName, f.optionalNullableRoundTripTests[typeName])
 	}
 
 	// Write String() method tests for types that have them (sorted for deterministic output)
@@ -913,6 +940,17 @@ func (f *fileWriter) WriteJSONMarshalingTests(typeName string, hasLiterals bool)
 // fields survive a JSON decode/encode round-trip: a field present as null stays null,
 // an absent field stays absent, and a freshly constructed value omits the field.
 func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNames []string) {
+	f.writeNullableRoundTripTests("TestRequiredNullableRoundTrip", "requiredNullableKeys", "required nullable", typeName, wireNames)
+}
+
+// WriteOptionalNullableRoundTripTests generates tests asserting that optional-nullable
+// fields survive a JSON decode/encode round-trip: a field present as null stays null,
+// an absent field stays absent, and a freshly constructed value omits the field.
+func (f *fileWriter) WriteOptionalNullableRoundTripTests(typeName string, wireNames []string) {
+	f.writeNullableRoundTripTests("TestOptionalNullableRoundTrip", "optionalNullableKeys", "optional nullable", typeName, wireNames)
+}
+
+func (f *fileWriter) writeNullableRoundTripTests(testPrefix, keysName, fieldKind, typeName string, wireNames []string) {
 	var nullInput strings.Builder
 	nullInput.WriteString("{")
 	for i, wireName := range wireNames {
@@ -923,8 +961,8 @@ func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNa
 	}
 	nullInput.WriteString("}")
 
-	f.P("func TestRequiredNullableRoundTrip", typeName, "(t *testing.T) {")
-	f.P("\trequiredNullableKeys := []string{")
+	f.P("func ", testPrefix, typeName, "(t *testing.T) {")
+	f.P("\t", keysName, " := []string{")
 	for _, wireName := range wireNames {
 		f.P("\t\t", fmt.Sprintf("%q", wireName), ",")
 	}
@@ -942,10 +980,10 @@ func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNa
 	f.P("\t\tvar obj ", typeName)
 	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`", nullInput.String(), "`), &obj))")
 	f.P("\t\tresult := marshalToMap(t, &obj)")
-	f.P("\t\tfor _, key := range requiredNullableKeys {")
+	f.P("\t\tfor _, key := range ", keysName, " {")
 	f.P("\t\t\tvalue, ok := result[key]")
-	f.P("\t\t\trequire.True(t, ok, \"required nullable field %q received as null should be present in the output\", key)")
-	f.P("\t\t\tassert.Equal(t, \"null\", string(value), \"required nullable field %q received as null should be null in the output\", key)")
+	f.P("\t\t\trequire.True(t, ok, \"", fieldKind, " field %q received as null should be present in the output\", key)")
+	f.P("\t\t\tassert.Equal(t, \"null\", string(value), \"", fieldKind, " field %q received as null should be null in the output\", key)")
 	f.P("\t\t}")
 	f.P("\t})")
 	f.P()
@@ -954,16 +992,16 @@ func (f *fileWriter) WriteRequiredNullableRoundTripTests(typeName string, wireNa
 	f.P("\t\tvar obj ", typeName)
 	f.P("\t\trequire.NoError(t, json.Unmarshal([]byte(`{}`), &obj))")
 	f.P("\t\tresult := marshalToMap(t, &obj)")
-	f.P("\t\tfor _, key := range requiredNullableKeys {")
-	f.P("\t\t\tassert.NotContains(t, result, key, \"required nullable field %q absent from the input should be absent from the output\", key)")
+	f.P("\t\tfor _, key := range ", keysName, " {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"", fieldKind, " field %q absent from the input should be absent from the output\", key)")
 	f.P("\t\t}")
 	f.P("\t})")
 	f.P()
 	f.P("\tt.Run(\"FreshValueOmits\", func(t *testing.T) {")
 	f.P("\t\tt.Parallel()")
 	f.P("\t\tresult := marshalToMap(t, &", typeName, "{})")
-	f.P("\t\tfor _, key := range requiredNullableKeys {")
-	f.P("\t\t\tassert.NotContains(t, result, key, \"required nullable field %q should be omitted from a freshly constructed value\", key)")
+	f.P("\t\tfor _, key := range ", keysName, " {")
+	f.P("\t\t\tassert.NotContains(t, result, key, \"", fieldKind, " field %q should be omitted from a freshly constructed value\", key)")
 	f.P("\t\t}")
 	f.P("\t})")
 	f.P("}")

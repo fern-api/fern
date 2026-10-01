@@ -13,6 +13,8 @@
  */
 
 import { CliError } from "@fern-api/task-context";
+import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
+import { dirname, join, relative } from "path";
 import type { CompoundMeta } from "../cpp/src/context.js";
 import {
     clearEntityRegistry,
@@ -112,9 +114,15 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     const registry = buildEntityRegistry(pageEntries);
     setEntityRegistry(registry);
     setTypedefSyntax(isPlainCLibrary(ir.rootNamespace) ? "c" : "cpp");
+    // The generator owns the whole output tree, so pages are rendered into a sibling
+    // staging directory and swapped in wholesale once every page has been written;
+    // otherwise entities removed from the headers would leave stale pages behind.
+    mkdirSync(dirname(outputDir), { recursive: true });
+    const stagingDir = mkdtempSync(join(dirname(outputDir), ".library-docs-"));
+    const backupDir = `${stagingDir}.previous`;
     try {
         // Stage 3: Render & write sequentially (global state requires sequential processing)
-        const writer = new MdxFileWriter(outputDir);
+        const writer = new MdxFileWriter(stagingDir);
         for (const entry of pageEntries) {
             const slugPath = pageKeyToSlugPath(entry.pageKey);
             setCurrentPageSlugPath(slugPath);
@@ -148,12 +156,72 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         // Stage 5: Generate pages for the library's Doxygen groups
         generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
-        return writer.result();
+        const result = writer.result();
+        swapIntoPlace(stagingDir, outputDir, backupDir);
+        rmSync(backupDir, { recursive: true, force: true });
+        return {
+            writtenFiles: result.writtenFiles.map((file) => join(outputDir, relative(stagingDir, file))),
+            pageCount: result.pageCount
+        };
     } finally {
+        rmSync(stagingDir, { recursive: true, force: true });
         clearEntityRegistry();
         setCurrentPageSlugPath(undefined);
         setTypedefSyntax("cpp");
     }
+}
+
+/**
+ * Replace `target` with `staged` without a window where neither exists: the previous
+ * tree is renamed aside to `backup` (same filesystem), its `.fern/` metadata (the
+ * persisted library IR written before page generation) carried over, and the staged tree
+ * renamed in. If anything after the first rename fails, the previous tree is always
+ * restored to `target`. On success the caller owns `backup` and may delete it; if the
+ * restore itself fails, `backup` is left in place as the only copy of the previous pages
+ * and the thrown error names it. (The `.fern/` IR is rewritten on every run, so it is
+ * never the only copy of anything.)
+ */
+function swapIntoPlace(staged: string, target: string, backup: string): void {
+    if (!existsSync(target)) {
+        renameSync(staged, target);
+        return;
+    }
+    renameSync(target, backup);
+    const previousMetadata = join(backup, METADATA_DIR);
+    const stagedMetadata = join(staged, METADATA_DIR);
+    try {
+        if (existsSync(previousMetadata)) {
+            renameSync(previousMetadata, stagedMetadata);
+        }
+        renameSync(staged, target);
+    } catch (error) {
+        const restoreErrors: string[] = [];
+        if (existsSync(stagedMetadata)) {
+            try {
+                renameSync(stagedMetadata, previousMetadata);
+            } catch (metadataError) {
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
+            }
+        }
+        try {
+            renameSync(backup, target);
+        } catch (pagesError) {
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+        }
+        if (restoreErrors.length > 0) {
+            throw new Error(
+                `Failed to replace ${target} and could not fully restore the previous output. ` +
+                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+            );
+        }
+        throw error;
+    }
+}
+
+const METADATA_DIR = ".fern";
+
+function errorMessage(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
 }
 
 /**

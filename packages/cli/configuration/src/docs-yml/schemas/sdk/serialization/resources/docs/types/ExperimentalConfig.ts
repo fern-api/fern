@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ExternalSitemap } from "./ExternalSitemap.js";
 
 export const ExperimentalConfig: core.serialization.ObjectSchema<
     serializers.ExperimentalConfig.Raw,
@@ -25,7 +26,7 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     basepathAware: core.serialization.property("basepath-aware", core.serialization.boolean().optional()),
     externalSitemaps: core.serialization.property(
         "external-sitemaps",
-        core.serialization.list(core.serialization.string()).optional(),
+        core.serialization.list(ExternalSitemap).optional(),
     ),
 });
 
@@ -40,6 +41,6 @@ export declare namespace ExperimentalConfig {
         "ai-example-style-instructions"?: string | null;
         "exclude-apis"?: boolean | null;
         "basepath-aware"?: boolean | null;
-        "external-sitemaps"?: string[] | null;
+        "external-sitemaps"?: ExternalSitemap.Raw[] | null;
     }
 }

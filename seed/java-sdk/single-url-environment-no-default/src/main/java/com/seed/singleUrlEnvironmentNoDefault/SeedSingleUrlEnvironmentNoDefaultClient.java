@@ -8,7 +8,7 @@ import com.seed.singleUrlEnvironmentNoDefault.core.Suppliers;
 import com.seed.singleUrlEnvironmentNoDefault.resources.dummy.DummyClient;
 import java.util.function.Supplier;
 
-public class SeedSingleUrlEnvironmentNoDefaultClient {
+public class SeedSingleUrlEnvironmentNoDefaultClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<DummyClient> dummyClient;
@@ -20,6 +20,15 @@ public class SeedSingleUrlEnvironmentNoDefaultClient {
 
     public DummyClient dummy() {
         return this.dummyClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedSingleUrlEnvironmentNoDefaultClientBuilder builder() {

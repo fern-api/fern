@@ -16,6 +16,13 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
+    },
+    "./direct-publish-credentials": {
+      "development": "./src/directPublishCredentials.ts",
+      "source": "./src/directPublishCredentials.ts",
+      "types": "./lib/directPublishCredentials.d.ts",
+      "import": "./lib/directPublishCredentials.js",
+      "default": "./lib/directPublishCredentials.js"
     }
   },
   "main": "lib/index.js",
@@ -61,6 +68,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generator-exec-sdk": "catalog:",
+    "@postman/sdk-config": "catalog:",
     "axios": "catalog:",
     "chalk": "catalog:",
     "form-data": "catalog:",

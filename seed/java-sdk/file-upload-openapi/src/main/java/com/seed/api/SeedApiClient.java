@@ -8,7 +8,7 @@ import com.seed.api.core.Suppliers;
 import com.seed.api.resources.fileuploadexample.FileUploadExampleClient;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<FileUploadExampleClient> fileUploadExampleClient;
@@ -20,6 +20,15 @@ public class SeedApiClient {
 
     public FileUploadExampleClient fileUploadExample() {
         return this.fileUploadExampleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

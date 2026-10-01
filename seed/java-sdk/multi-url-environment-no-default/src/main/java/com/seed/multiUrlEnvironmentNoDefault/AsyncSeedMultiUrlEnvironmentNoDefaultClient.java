@@ -9,7 +9,7 @@ import com.seed.multiUrlEnvironmentNoDefault.resources.ec2.AsyncEc2Client;
 import com.seed.multiUrlEnvironmentNoDefault.resources.s3.AsyncS3Client;
 import java.util.function.Supplier;
 
-public class AsyncSeedMultiUrlEnvironmentNoDefaultClient {
+public class AsyncSeedMultiUrlEnvironmentNoDefaultClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncEc2Client> ec2Client;
@@ -28,6 +28,15 @@ public class AsyncSeedMultiUrlEnvironmentNoDefaultClient {
 
     public AsyncS3Client s3() {
         return this.s3Client.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedMultiUrlEnvironmentNoDefaultClientBuilder builder() {

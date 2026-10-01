@@ -28,10 +28,12 @@ func (s *StreamXFernStreamingConditionRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingConditionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -83,10 +85,12 @@ func (s *StreamXFernStreamingConditionStreamRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingConditionStreamRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -138,10 +142,12 @@ func (s *StreamXFernStreamingNullableConditionRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingNullableConditionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -193,10 +199,12 @@ func (s *StreamXFernStreamingNullableConditionStreamRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingNullableConditionStreamRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -251,10 +259,12 @@ func (s *StreamXFernStreamingSharedSchemaRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingSharedSchemaRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPrompt sets the Prompt field and marks it as non-optional;
@@ -316,10 +326,12 @@ func (s *StreamXFernStreamingSharedSchemaStreamRequest) Stream() bool {
 }
 
 func (s *StreamXFernStreamingSharedSchemaStreamRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPrompt sets the Prompt field and marks it as non-optional;
@@ -360,12 +372,12 @@ func (s *StreamXFernStreamingSharedSchemaStreamRequest) MarshalJSON() ([]byte, e
 	return json.Marshal(explicitMarshaler)
 }
 
-// Full response returned when streaming is disabled.
 var (
 	completionFullResponseFieldAnswer       = big.NewInt(1 << 0)
 	completionFullResponseFieldFinishReason = big.NewInt(1 << 1)
 )
 
+// Full response returned when streaming is disabled.
 type CompletionFullResponse struct {
 	// The complete generated answer.
 	Answer *string `json:"answer,omitempty" url:"answer,omitempty"`
@@ -401,10 +413,12 @@ func (c *CompletionFullResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CompletionFullResponse) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAnswer sets the Answer field and marks it as non-optional;
@@ -529,10 +543,12 @@ func (c *CompletionRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CompletionRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -591,12 +607,12 @@ func (c *CompletionRequest) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// A single chunk in a streamed completion response.
 var (
 	completionStreamChunkFieldDelta  = big.NewInt(1 << 0)
 	completionStreamChunkFieldTokens = big.NewInt(1 << 1)
 )
 
+// A single chunk in a streamed completion response.
 type CompletionStreamChunk struct {
 	// The incremental text chunk.
 	Delta *string `json:"delta,omitempty" url:"delta,omitempty"`
@@ -632,10 +648,12 @@ func (c *CompletionStreamChunk) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CompletionStreamChunk) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDelta sets the Delta field and marks it as non-optional;
@@ -741,10 +759,12 @@ func (d *DataContextEntityEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DataContextEntityEvent) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetEntityID sets the EntityID field and marks it as non-optional;
@@ -847,10 +867,12 @@ func (d *DataContextHeartbeat) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DataContextHeartbeat) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetTimestamp sets the Timestamp field and marks it as non-optional;
@@ -957,10 +979,12 @@ func (e *EntityEventPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EntityEventPayload) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEntityID sets the EntityID field and marks it as non-optional;
@@ -1118,10 +1142,12 @@ func (e *Event) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *Event) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1223,10 +1249,12 @@ func (h *HeartbeatPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *HeartbeatPayload) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetTimestamp sets the Timestamp field and marks it as non-optional;
@@ -1291,6 +1319,11 @@ var (
 	nullableStreamRequestFieldStream = big.NewInt(1 << 1)
 )
 
+// nullableStreamRequestNullableFields maps the wire names of NullableStreamRequest's nullable fields (required or optional) to their field bits.
+var nullableStreamRequestNullableFields = map[string]*big.Int{
+	"stream": nullableStreamRequestFieldStream,
+}
+
 type NullableStreamRequest struct {
 	// The prompt or query to complete.
 	Query string `json:"query" url:"query"`
@@ -1326,10 +1359,12 @@ func (n *NullableStreamRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NullableStreamRequest) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -1358,6 +1393,13 @@ func (n *NullableStreamRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	n.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, nullableStreamRequestNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		n.require(presentFields)
+	}
 	n.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1436,10 +1478,12 @@ func (o *ObjectPayloadWithEventField) GetExtraProperties() map[string]interface{
 }
 
 func (o *ObjectPayloadWithEventField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1534,10 +1578,12 @@ func (p *ProtocolCollisionObjectEvent) GetExtraProperties() map[string]interface
 }
 
 func (p *ProtocolCollisionObjectEvent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1606,10 +1652,12 @@ func (p *ProtocolHeartbeat) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProtocolHeartbeat) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 func (p *ProtocolHeartbeat) UnmarshalJSON(data []byte) error {
@@ -1683,10 +1731,12 @@ func (p *ProtocolNumberEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProtocolNumberEvent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1767,10 +1817,12 @@ func (p *ProtocolObjectEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProtocolObjectEvent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1851,10 +1903,12 @@ func (p *ProtocolStringEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProtocolStringEvent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -1944,10 +1998,12 @@ func (s *StatusPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StatusPayload) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -2943,10 +2999,12 @@ func (s *StreamRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StreamRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -3326,13 +3384,13 @@ func (s *StreamXFernStreamingUnionStreamRequest) validate() error {
 	return nil
 }
 
-// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
 var (
 	unionStreamCompactVariantFieldStreamResponse = big.NewInt(1 << 0)
 	unionStreamCompactVariantFieldPrompt         = big.NewInt(1 << 1)
 	unionStreamCompactVariantFieldData           = big.NewInt(1 << 2)
 )
 
+// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
 type UnionStreamCompactVariant struct {
 	// Whether to stream the response.
 	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
@@ -3377,10 +3435,12 @@ func (u *UnionStreamCompactVariant) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UnionStreamCompactVariant) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetStreamResponse sets the StreamResponse field and marks it as non-optional;
@@ -3446,12 +3506,12 @@ func (u *UnionStreamCompactVariant) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Cancels the current operation. Inherits stream_response from base.
 var (
 	unionStreamInterruptVariantFieldStreamResponse = big.NewInt(1 << 0)
 	unionStreamInterruptVariantFieldPrompt         = big.NewInt(1 << 1)
 )
 
+// Cancels the current operation. Inherits stream_response from base.
 type UnionStreamInterruptVariant struct {
 	// Whether to stream the response.
 	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
@@ -3487,10 +3547,12 @@ func (u *UnionStreamInterruptVariant) GetExtraProperties() map[string]interface{
 }
 
 func (u *UnionStreamInterruptVariant) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetStreamResponse sets the StreamResponse field and marks it as non-optional;
@@ -3549,13 +3611,13 @@ func (u *UnionStreamInterruptVariant) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// A user input message. Inherits stream_response from base via allOf.
 var (
 	unionStreamMessageVariantFieldStreamResponse = big.NewInt(1 << 0)
 	unionStreamMessageVariantFieldPrompt         = big.NewInt(1 << 1)
 	unionStreamMessageVariantFieldMessage        = big.NewInt(1 << 2)
 )
 
+// A user input message. Inherits stream_response from base via allOf.
 type UnionStreamMessageVariant struct {
 	// Whether to stream the response.
 	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
@@ -3600,10 +3662,12 @@ func (u *UnionStreamMessageVariant) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UnionStreamMessageVariant) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetStreamResponse sets the StreamResponse field and marks it as non-optional;
@@ -3820,12 +3884,12 @@ func (u *UnionStreamRequest) validate() error {
 	return nil
 }
 
-// Base schema for union stream requests. Contains the stream_response field that is inherited by all oneOf variants via allOf. This schema is also referenced directly by a non-streaming endpoint to ensure it is not excluded from the context.
 var (
 	unionStreamRequestBaseFieldStreamResponse = big.NewInt(1 << 0)
 	unionStreamRequestBaseFieldPrompt         = big.NewInt(1 << 1)
 )
 
+// Base schema for union stream requests. Contains the stream_response field that is inherited by all oneOf variants via allOf. This schema is also referenced directly by a non-streaming endpoint to ensure it is not excluded from the context.
 type UnionStreamRequestBase struct {
 	// Whether to stream the response.
 	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
@@ -3861,10 +3925,12 @@ func (u *UnionStreamRequestBase) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UnionStreamRequestBase) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetStreamResponse sets the StreamResponse field and marks it as non-optional;
@@ -3952,10 +4018,12 @@ func (v *ValidateUnionRequestResponse) GetExtraProperties() map[string]interface
 }
 
 func (v *ValidateUnionRequestResponse) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetValid sets the Valid field and marks it as non-optional;
@@ -4026,10 +4094,12 @@ type SharedCompletionRequest struct {
 }
 
 func (s *SharedCompletionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPrompt sets the Prompt field and marks it as non-optional;

@@ -6,7 +6,7 @@ package com.seed.literalUserAgent;
 import com.seed.literalUserAgent.core.ClientOptions;
 import com.seed.literalUserAgent.core.RequestOptions;
 
-public class SeedLiteralUserAgentClient {
+public class SeedLiteralUserAgentClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedLiteralUserAgentClient rawClient;
@@ -29,6 +29,15 @@ public class SeedLiteralUserAgentClient {
 
     public String ping(RequestOptions requestOptions) {
         return this.rawClient.ping(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedLiteralUserAgentClientBuilder builder() {

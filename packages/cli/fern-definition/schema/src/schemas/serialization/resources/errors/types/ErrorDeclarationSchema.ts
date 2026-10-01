@@ -5,13 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
 import { ExampleTypeSchema } from "../../examples/types/ExampleTypeSchema.js";
+import { ErrorStatusCodeSchema } from "./ErrorStatusCodeSchema.js";
 
 export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
     serializers.ErrorDeclarationSchema.Raw,
     FernDefinition.ErrorDeclarationSchema
 > = core.serialization
     .object({
-        "status-code": core.serialization.number(),
+        "status-code": ErrorStatusCodeSchema,
         type: core.serialization.string().optional(),
         examples: core.serialization.list(ExampleTypeSchema).optional(),
     })
@@ -19,7 +20,7 @@ export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
 
 export declare namespace ErrorDeclarationSchema {
     export interface Raw extends WithDocsSchema.Raw {
-        "status-code": number;
+        "status-code": ErrorStatusCodeSchema.Raw;
         type?: string | null;
         examples?: ExampleTypeSchema.Raw[] | null;
     }

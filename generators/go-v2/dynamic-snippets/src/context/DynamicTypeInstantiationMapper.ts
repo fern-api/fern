@@ -51,16 +51,29 @@ export class DynamicTypeInstantiationMapper {
             }
             case "nullable": {
                 const inner = args.typeReference.value;
+                // Nested optional/nullable wrappers collapse to a single Go pointer.
+                if (inner.type === "optional" || inner.type === "nullable") {
+                    return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                }
                 // Special case: nullable + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
                 // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
+                    // The alias already renders as a Go pointer, so its own instantiation is the field value.
+                    if (this.context.dynamicTypeMapper.isAliasToPointerType(inner.value)) {
+                        return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                    }
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                    const aliasTarget = named?.type === "alias" ? this.resolveAliasTarget(named) : undefined;
+                    if (
+                        named?.type === "alias" &&
+                        aliasTarget != null &&
+                        ["list", "set", "map"].includes(aliasTarget.type)
+                    ) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
+                            typeReference: aliasTarget,
                             value: args.value,
                             as: args.as
                         });
@@ -75,6 +88,9 @@ export class DynamicTypeInstantiationMapper {
                             aliasName,
                             aliasImportPath
                         });
+                    }
+                    if (named?.type === "alias" && aliasTarget?.type === "unknown") {
+                        return this.convertUnknownAliasPointer({ alias: named, value: args.value });
                     }
                     // Special case: nullable + alias-of-literal
                     // For fields like `SortField *SortField` where `type SortField = string` with literal value,
@@ -96,16 +112,29 @@ export class DynamicTypeInstantiationMapper {
             }
             case "optional": {
                 const inner = args.typeReference.value;
+                // Nested optional/nullable wrappers collapse to a single Go pointer.
+                if (inner.type === "optional" || inner.type === "nullable") {
+                    return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                }
                 // Special case: optional + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
                 // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
+                    // The alias already renders as a Go pointer, so its own instantiation is the field value.
+                    if (this.context.dynamicTypeMapper.isAliasToPointerType(inner.value)) {
+                        return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                    }
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                    const aliasTarget = named?.type === "alias" ? this.resolveAliasTarget(named) : undefined;
+                    if (
+                        named?.type === "alias" &&
+                        aliasTarget != null &&
+                        ["list", "set", "map"].includes(aliasTarget.type)
+                    ) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
+                            typeReference: aliasTarget,
                             value: args.value,
                             as: args.as
                         });
@@ -120,6 +149,9 @@ export class DynamicTypeInstantiationMapper {
                             aliasName,
                             aliasImportPath
                         });
+                    }
+                    if (named?.type === "alias" && aliasTarget?.type === "unknown") {
+                        return this.convertUnknownAliasPointer({ alias: named, value: args.value });
                     }
                     // Special case: optional + alias-of-literal
                     // For fields like `SortField *SortField` where `type SortField = string` with literal value,
@@ -148,6 +180,65 @@ export class DynamicTypeInstantiationMapper {
             default:
                 assertNever(args.typeReference);
         }
+    }
+
+    /**
+     * Follows alias-of-alias hops (e.g. `type B = A`) and unwraps optional/nullable wrappers to
+     * find the type an alias ultimately renders as.
+     */
+    private resolveAliasTarget(alias: FernIr.dynamic.NamedType.Alias): FernIr.dynamic.TypeReference {
+        const seen = new Set<FernIr.dynamic.TypeId>();
+        let reference = alias.typeReference;
+        while (reference.type === "named" && !seen.has(reference.value)) {
+            seen.add(reference.value);
+            const next = this.context.resolveNamedType({ typeId: reference.value });
+            if (next?.type !== "alias") {
+                return reference;
+            }
+            reference = next.typeReference;
+        }
+        return this.unwrapOptionalOrNullable(reference);
+    }
+
+    /**
+     * Go cannot take the address of an `any` value directly, so a pointer to an
+     * unknown alias is materialized through a local variable.
+     */
+    private convertUnknownAliasPointer({
+        alias,
+        value
+    }: {
+        alias: FernIr.dynamic.NamedType.Alias;
+        value: unknown;
+    }): go.TypeInstantiation {
+        const aliasTypeReference = go.typeReference({
+            name: this.context.getTypeName(alias.declaration.name),
+            importPath: this.context.getImportPath(alias.declaration.fernFilepath)
+        });
+        return go.TypeInstantiation.reference(
+            go.codeblock((writer) => {
+                writer.write("func() *");
+                writer.writeNode(aliasTypeReference);
+                writer.writeLine(" {");
+                writer.indent();
+                writer.write("var value ");
+                writer.writeNode(aliasTypeReference);
+                writer.write(" = ");
+                writer.writeNode(this.convertUnknown({ value }));
+                writer.newLine();
+                writer.writeLine("return &value");
+                writer.dedent();
+                writer.write("}()");
+            })
+        );
+    }
+
+    private unwrapOptionalOrNullable(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+        let current = typeReference;
+        while (current.type === "optional" || current.type === "nullable") {
+            current = current.value;
+        }
+        return current;
     }
 
     public convertToPointerIfPossible(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {

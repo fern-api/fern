@@ -138,6 +138,47 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.rootNamespace}\\Tests\\Core`;
     }
 
+    public getCoreXmlNamespace(): string {
+        return `${this.getCoreNamespace()}\\Xml`;
+    }
+
+    public hasXmlTypes(): boolean {
+        return Object.values(this.ir.types).some((type) => type.encoding?.xml != null);
+    }
+
+    public getCoreXmlAsIsFiles(): string[] {
+        return this.hasXmlTypes()
+            ? [AsIsFiles.XmlNode, AsIsFiles.XmlElement, AsIsFiles.XmlSerializableType, AsIsFiles.XmlUtils]
+            : [];
+    }
+
+    public getCoreXmlTestAsIsFiles(): string[] {
+        return this.hasXmlTypes() ? [AsIsFiles.XmlElementTest] : [];
+    }
+
+    public getCoreXmlClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreXmlNamespace()
+        });
+    }
+
+    public getXmlSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlSerializableType");
+    }
+
+    public getXmlElementClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlElement");
+    }
+
+    public getXmlNodeClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlNode");
+    }
+
+    public getXmlUtilsClassReference(): php.ClassReference {
+        return this.getCoreXmlClassReference("XmlUtils");
+    }
+
     public getUtilsTypesNamespace(): string {
         return `${this.rootNamespace}\\Utils`;
     }

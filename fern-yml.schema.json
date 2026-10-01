@@ -1761,7 +1761,26 @@
             "external-sitemaps": {
               "type": "array",
               "items": {
-                "type": "string"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
               }
             }
           },
@@ -2931,6 +2950,15 @@
             },
             "show-nav-availability-badges": {
               "type": "boolean"
+            },
+            "breadcrumbs": {
+              "type": "object",
+              "properties": {
+                "current-page": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -3019,6 +3047,21 @@
                 "flat",
                 "grouped"
               ]
+            },
+            "embedding": {
+              "type": "object",
+              "properties": {
+                "allowed-origins": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "allowed-origins"
+              ],
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -3075,6 +3118,39 @@
                 "toggle",
                 "tabs"
               ]
+            },
+            "site-switcher": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "order": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hide": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "labels": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "show-products": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -4084,6 +4160,72 @@
                       },
                       "namespaced-errors": {
                         "type": "boolean"
+                      },
+                      "errorResponses": {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "applyTo": {
+                            "type": "string",
+                            "enum": [
+                              "all",
+                              "untyped"
+                            ]
+                          },
+                          "ensure": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "statusCode": {
+                                  "type": "integer",
+                                  "minimum": 400,
+                                  "maximum": 599
+                                },
+                                "methods": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "get",
+                                      "post",
+                                      "put",
+                                      "patch",
+                                      "delete",
+                                      "head",
+                                      "options",
+                                      "trace"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "statusCode"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "additionalProperties": false
@@ -4685,6 +4827,72 @@
                         },
                         "namespaced-errors": {
                           "type": "boolean"
+                        },
+                        "errorResponses": {
+                          "type": "object",
+                          "properties": {
+                            "schema": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "object",
+                                  "propertyNames": {
+                                    "type": "string"
+                                  },
+                                  "additionalProperties": {}
+                                }
+                              ]
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "applyTo": {
+                              "type": "string",
+                              "enum": [
+                                "all",
+                                "untyped"
+                              ]
+                            },
+                            "ensure": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "statusCode": {
+                                    "type": "integer",
+                                    "minimum": 400,
+                                    "maximum": 599
+                                  },
+                                  "methods": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "get",
+                                        "post",
+                                        "put",
+                                        "patch",
+                                        "delete",
+                                        "head",
+                                        "options",
+                                        "trace"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "statusCode"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "schema"
+                          ],
+                          "additionalProperties": false
                         }
                       },
                       "additionalProperties": false
@@ -5360,6 +5568,99 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "settings": {
+                    "type": "object",
+                    "properties": {
+                      "type-dates-as-strings": {
+                        "type": "boolean"
+                      },
+                      "use-bytes-for-binary-response": {
+                        "type": "boolean"
+                      },
+                      "respect-parameter-content": {
+                        "type": "boolean"
+                      },
+                      "respect-operation-id-word-boundaries": {
+                        "type": "boolean"
+                      },
+                      "infer-forward-compatible": {
+                        "type": "boolean"
+                      },
+                      "preserve-one-of-in-all-of": {
+                        "type": "boolean"
+                      },
+                      "any-of-sibling-properties-as-object": {
+                        "type": "boolean"
+                      },
+                      "error-responses": {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "apply-to": {
+                            "type": "string",
+                            "enum": [
+                              "all",
+                              "untyped"
+                            ]
+                          },
+                          "ensure": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "status-code": {
+                                  "type": "integer",
+                                  "minimum": 400,
+                                  "maximum": 599
+                                },
+                                "methods": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "get",
+                                      "post",
+                                      "put",
+                                      "patch",
+                                      "delete",
+                                      "head",
+                                      "options",
+                                      "trace"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status-code"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 },
                 "required": [

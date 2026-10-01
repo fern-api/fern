@@ -1,0 +1,3 @@
+- summary: |
+    Preserve omitted SDK Config generator versions so sdk-gen-api can resolve the latest generator server-side.
+  type: fix

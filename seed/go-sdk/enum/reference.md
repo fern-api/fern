@@ -38,7 +38,7 @@ client.Headers.Send(
 <dl>
 <dd>
 
-**operand:** `*fern.Operand` 
+**operand:** `fern.Operand` 
     
 </dd>
 </dl>
@@ -112,7 +112,7 @@ client.InlinedRequest.Send(
 <dl>
 <dd>
 
-**operand:** `*fern.Operand` 
+**operand:** `fern.Operand` 
     
 </dd>
 </dl>
@@ -242,7 +242,7 @@ client.QueryParam.Send(
 <dl>
 <dd>
 
-**operand:** `*fern.Operand` 
+**operand:** `fern.Operand` 
     
 </dd>
 </dl>
@@ -327,7 +327,7 @@ client.QueryParam.SendList(
 <dl>
 <dd>
 
-**operand:** `*fern.Operand` 
+**operand:** `fern.Operand` 
     
 </dd>
 </dl>

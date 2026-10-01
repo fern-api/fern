@@ -22,11 +22,13 @@ import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.XmlEncoding;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
+import com.fern.java.generators.object.XmlObjectMethodsGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
@@ -61,6 +63,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
     private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private final List<ImplementsInterface> implementsInterfaces;
     private final List<EnrichedObjectProperty> extendedPropertyGetters;
+    private Optional<XmlObjectEncoding> xmlObjectEncoding = Optional.empty();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -156,6 +159,15 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 .build();
     }
 
+    /**
+     * Marks this object as an xml element so that {@code toXml()}/{@code fromXml()} and child builder methods are
+     * generated.
+     */
+    public ObjectGenerator withXmlEncoding(TypeId typeId, XmlEncoding xmlEncoding) {
+        this.xmlObjectEncoding = Optional.of(new XmlObjectEncoding(typeId, xmlEncoding));
+        return this;
+    }
+
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
         return new ArrayList<>(overriddenTypeDeclarations(
@@ -176,8 +188,37 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 generatorContext.deserializeWithAdditionalProperties(),
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
-                generatorContext.builderNotNullChecks());
-        return genericObjectGenerator.generate();
+                generatorContext.builderNotNullChecks(),
+                xmlObjectEncoding.map(_encoding -> XmlCoreGenerator.getXmlElementClassName(generatorContext)));
+        TypeSpec typeSpec = genericObjectGenerator.generate();
+        if (xmlObjectEncoding.isEmpty()) {
+            return typeSpec;
+        }
+        XmlObjectMethodsGenerator xmlMethodsGenerator = new XmlObjectMethodsGenerator(
+                generatorContext,
+                className,
+                xmlObjectEncoding.get().typeId,
+                xmlObjectEncoding.get().xmlEncoding,
+                genericObjectGenerator.getAllEnrichedProperties(),
+                genericObjectGenerator.getAdditionalPropertiesFieldNameIfSupported(),
+                genericObjectGenerator
+                        .getAdditionalChildrenFieldNameIfSupported()
+                        .get(),
+                genericObjectGenerator
+                        .getAdditionalChildrenGetterNameIfSupported()
+                        .get(),
+                genericObjectGenerator.usesBuilderConstructor());
+        return xmlMethodsGenerator.addXmlSupport(typeSpec);
+    }
+
+    private static final class XmlObjectEncoding {
+        private final TypeId typeId;
+        private final XmlEncoding xmlEncoding;
+
+        private XmlObjectEncoding(TypeId typeId, XmlEncoding xmlEncoding) {
+            this.typeId = typeId;
+            this.xmlEncoding = xmlEncoding;
+        }
     }
 
     public GeneratedObject generateObject() {

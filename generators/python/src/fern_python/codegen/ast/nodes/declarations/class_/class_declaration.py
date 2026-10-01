@@ -68,6 +68,8 @@ class ClassDeclaration(AstNode):
                 return_type=signature.return_type,
                 include_args=signature.include_args,
                 include_kwargs=signature.include_kwargs,
+                kwargs_name=signature.kwargs_name,
+                kwargs_type_hint=signature.kwargs_type_hint,
             )
 
         decorators = (

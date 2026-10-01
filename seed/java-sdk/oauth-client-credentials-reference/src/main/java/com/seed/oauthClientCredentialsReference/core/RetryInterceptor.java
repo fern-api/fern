@@ -10,9 +10,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Random;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okio.AsyncTimeout;
+import okio.Timeout;
 
 public class RetryInterceptor implements Interceptor {
 
@@ -78,13 +82,28 @@ public class RetryInterceptor implements Interceptor {
         ExponentialBackoff backoff = new ExponentialBackoff(maxRetries);
         Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
+            response = bufferResponse(response);
+            Optional<AsyncTimeout> callTimeout = suspendCallTimeout(chain);
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
             } catch (InterruptedException e) {
+                response.close();
                 throw new IOException("Interrupted while trying request", e);
+            } finally {
+                callTimeout.ifPresent(AsyncTimeout::enter);
+            }
+            Response nextResponse;
+            try {
+                nextResponse = chain.proceed(chain.request());
+            } catch (IOException e) {
+                // A retry attempt failed with a transport error (connection reset, unreachable host, ...). The
+                // error is intentionally dropped: the response already received from the API is more actionable.
+                // Note that a call-timeout expiry or an explicit cancel() also ends up here, but OkHttp then
+                // discards whatever the interceptor chain returns and reports the cancellation itself.
+                return response;
             }
             response.close();
-            response = chain.proceed(chain.request());
+            response = nextResponse;
             if (shouldRetry(response.code())) {
                 nextBackoff = backoff.nextBackoff(response);
             } else {
@@ -93,6 +112,51 @@ public class RetryInterceptor implements Interceptor {
         }
 
         return response;
+    }
+
+    /**
+     * Pauses the OkHttp call timeout so that it applies to each attempt individually rather than to the whole
+     * retry loop: the backoff wait (e.g. a {@code Retry-After} the size of the call timeout) does not consume the
+     * budget of the next attempt, and each attempt starts with a fresh budget once {@link AsyncTimeout#enter()}
+     * is called again.
+     *
+     * <p>{@link AsyncTimeout#exit()} and {@link AsyncTimeout#enter()} must stay strictly paired: {@code exit()} on
+     * a timeout that is not armed is a no-op, but {@code enter()} on one that is already armed throws
+     * {@code IllegalStateException}. Every caller must re-enter the returned timeout exactly once, on all paths.
+     */
+    private static Optional<AsyncTimeout> suspendCallTimeout(Chain chain) {
+        Call call = chain.call();
+        if (call == null) {
+            return Optional.empty();
+        }
+        Timeout timeout = call.timeout();
+        if (!(timeout instanceof AsyncTimeout)) {
+            return Optional.empty();
+        }
+        AsyncTimeout callTimeout = (AsyncTimeout) timeout;
+        callTimeout.exit();
+        return Optional.of(callTimeout);
+    }
+
+    /**
+     * Reads the body into memory so the response stays usable after the underlying connection
+     * is released or cancelled by a later attempt.
+     */
+    private static Response bufferResponse(Response response) {
+        ResponseBody body = response.body();
+        if (body == null) {
+            return response;
+        }
+        try {
+            byte[] bytes = body.bytes();
+            Response buffered = response.newBuilder()
+                    .body(ResponseBody.create(bytes, body.contentType()))
+                    .build();
+            response.close();
+            return buffered;
+        } catch (IOException e) {
+            return response;
+        }
     }
 
     /**

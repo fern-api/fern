@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve API import settings that affect documentation when `fern sdk migrate` decouples docs.yml from generators.yml.
+  type: fix

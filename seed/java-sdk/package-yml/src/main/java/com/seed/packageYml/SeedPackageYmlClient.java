@@ -10,7 +10,7 @@ import com.seed.packageYml.resources.service.ServiceClient;
 import com.seed.packageYml.types.EchoRequest;
 import java.util.function.Supplier;
 
-public class SeedPackageYmlClient {
+public class SeedPackageYmlClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedPackageYmlClient rawClient;
@@ -40,6 +40,15 @@ public class SeedPackageYmlClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedPackageYmlClientBuilder builder() {

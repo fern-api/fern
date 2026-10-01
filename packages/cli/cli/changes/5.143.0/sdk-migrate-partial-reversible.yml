@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Make `fern sdk migrate` apply reversible group and language level migrations, preserve rollback YAML in `generators.legacy.yml`, merge compatible SDK Config targets, and support dry runs.
+  type: feat

@@ -8,7 +8,7 @@ import com.seed.objectsWithImports.core.Suppliers;
 import com.seed.objectsWithImports.resources.optional.OptionalClient;
 import java.util.function.Supplier;
 
-public class SeedObjectsWithImportsClient {
+public class SeedObjectsWithImportsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<OptionalClient> optionalClient;
@@ -20,6 +20,15 @@ public class SeedObjectsWithImportsClient {
 
     public OptionalClient optional() {
         return this.optionalClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedObjectsWithImportsClientBuilder builder() {

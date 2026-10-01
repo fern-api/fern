@@ -115,6 +115,38 @@ func (a *Animal) GetDog() *Dog {
 }
 
 func (a *Animal) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"fruit"}, []string{"fruit"}) {
+		valueCat := new(Cat)
+		if err := json.Unmarshal(data, &valueCat); err == nil {
+			a.typ = "Cat"
+			a.Cat = valueCat
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"fruit"}, []string{"fruit"}) {
+		valueDog := new(Dog)
+		if err := json.Unmarshal(data, &valueDog); err == nil {
+			a.typ = "Dog"
+			a.Dog = valueDog
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"fruit"}) {
+		valueCat := new(Cat)
+		if err := json.Unmarshal(data, &valueCat); err == nil {
+			a.typ = "Cat"
+			a.Cat = valueCat
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"fruit"}) {
+		valueDog := new(Dog)
+		if err := json.Unmarshal(data, &valueDog); err == nil {
+			a.typ = "Dog"
+			a.Dog = valueDog
+			return nil
+		}
+	}
 	valueCat := new(Cat)
 	if err := json.Unmarshal(data, &valueCat); err == nil {
 		a.typ = "Cat"
@@ -911,6 +943,38 @@ func (f *Fruit) GetFig() *Fig {
 }
 
 func (f *Fruit) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"animal"}, []string{"animal"}) {
+		valueAcai := new(Acai)
+		if err := json.Unmarshal(data, &valueAcai); err == nil {
+			f.typ = "Acai"
+			f.Acai = valueAcai
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"animal"}, []string{"animal"}) {
+		valueFig := new(Fig)
+		if err := json.Unmarshal(data, &valueFig); err == nil {
+			f.typ = "Fig"
+			f.Fig = valueFig
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"animal"}) {
+		valueAcai := new(Acai)
+		if err := json.Unmarshal(data, &valueAcai); err == nil {
+			f.typ = "Acai"
+			f.Acai = valueAcai
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"animal"}) {
+		valueFig := new(Fig)
+		if err := json.Unmarshal(data, &valueFig); err == nil {
+			f.typ = "Fig"
+			f.Fig = valueFig
+			return nil
+		}
+	}
 	valueAcai := new(Acai)
 	if err := json.Unmarshal(data, &valueAcai); err == nil {
 		f.typ = "Acai"
@@ -1038,6 +1102,30 @@ func (n *Node) GetLeafNode() *LeafNode {
 }
 
 func (n *Node) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"children"}, []string{"children"}) {
+		valueBranchNode := new(BranchNode)
+		if err := json.Unmarshal(data, &valueBranchNode); err == nil {
+			n.typ = "BranchNode"
+			n.BranchNode = valueBranchNode
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{}, []string{}) {
+		valueLeafNode := new(LeafNode)
+		if err := json.Unmarshal(data, &valueLeafNode); err == nil {
+			n.typ = "LeafNode"
+			n.LeafNode = valueLeafNode
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"children"}) {
+		valueBranchNode := new(BranchNode)
+		if err := json.Unmarshal(data, &valueBranchNode); err == nil {
+			n.typ = "BranchNode"
+			n.BranchNode = valueBranchNode
+			return nil
+		}
+	}
 	valueBranchNode := new(BranchNode)
 	if err := json.Unmarshal(data, &valueBranchNode); err == nil {
 		n.typ = "BranchNode"

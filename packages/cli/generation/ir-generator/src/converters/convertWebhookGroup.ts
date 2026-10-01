@@ -389,7 +389,7 @@ function convertWebhookJsonResponse(
     );
 }
 
-function convertWebhookSignatureSchema({
+export function convertWebhookSignatureSchema({
     signature,
     file
 }: {

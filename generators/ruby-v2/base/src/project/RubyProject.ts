@@ -392,9 +392,12 @@ class GemspecFile {
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-        this.baseDependencies = hasBasicAuth(context.ir)
-            ? [...BASE_DEPENDENCIES, { name: "base64" }]
-            : BASE_DEPENDENCIES;
+        this.baseDependencies = [
+            ...BASE_DEPENDENCIES,
+            ...(hasBasicAuth(context.ir) ? [{ name: "base64" }] : []),
+            // rexml is a bundled (not default) gem since Ruby 3.0, so it must be declared explicitly.
+            ...(context.hasXmlTypes() ? [{ name: "rexml", versionConstraint: ">= 3.3.9" }] : [])
+        ];
     }
 
     public async toString(): Promise<string> {
@@ -728,6 +731,9 @@ class ModuleFile {
         const requires = ['"json"', '"net/http"', '"securerandom"'];
         if (hasBasicAuth) {
             requires.push('"base64"');
+        }
+        if (this.context.hasXmlTypes()) {
+            requires.push('"rexml/document"');
         }
         return dedent`
             # frozen_string_literal: true

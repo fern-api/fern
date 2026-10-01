@@ -7,9 +7,11 @@ package com.test.sdk;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.Suppliers;
 import com.test.sdk.resources.service.AsyncServiceClient;
+import java.lang.AutoCloseable;
+import java.lang.Override;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
   protected final ClientOptions clientOptions;
 
   protected final Supplier<AsyncServiceClient> serviceClient;
@@ -21,6 +23,15 @@ public class AsyncSeedApiClient {
 
   public AsyncServiceClient service() {
     return this.serviceClient.get();
+  }
+
+  /**
+   * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+   * and is not released.
+   */
+  @Override
+  public void close() {
+    this.clientOptions.close();
   }
 
   public static AsyncSeedApiClientBuilder builder() {

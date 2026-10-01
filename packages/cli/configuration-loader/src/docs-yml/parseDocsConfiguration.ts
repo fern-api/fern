@@ -232,6 +232,14 @@ export async function parseDocsConfiguration({
         );
     }
 
+    warnOnUnconfiguredExternalSitemapLocales({
+        externalSitemaps: experimental?.externalSitemaps,
+        siteLocales: rawDocsConfiguration.translations?.map(
+            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        context
+    });
+
     return {
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
@@ -271,7 +279,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
-        settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -329,6 +337,36 @@ export async function parseDocsConfiguration({
 
         experimental
     };
+}
+
+function warnOnUnconfiguredExternalSitemapLocales({
+    externalSitemaps,
+    siteLocales,
+    context
+}: {
+    externalSitemaps: docsYml.RawSchemas.ExternalSitemap[] | undefined;
+    siteLocales: string[];
+    context: TaskContext;
+}): void {
+    if (externalSitemaps == null) {
+        return;
+    }
+    const normalizedSiteLocales = siteLocales.map((l) => l.trim().toLowerCase());
+    for (const sitemap of externalSitemaps) {
+        if (typeof sitemap === "string" || sitemap.locale == null) {
+            continue;
+        }
+        const locale = sitemap.locale.trim().toLowerCase();
+        const language = locale.split(/[-_]/)[0];
+        const matches = normalizedSiteLocales.some(
+            (siteLocale) => siteLocale === locale || siteLocale.split(/[-_]/)[0] === language
+        );
+        if (!matches) {
+            context.logger.warn(
+                `external-sitemaps: locale '${sitemap.locale}' for ${sitemap.url} does not match any site locale (${siteLocales.join(", ")}); this sitemap will not be indexed.`
+            );
+        }
+    }
 }
 
 function convertLogoReference(
@@ -544,15 +582,24 @@ function convertThemeConfig(
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        productSwitcher: theme.productSwitcher ?? "default",
+        siteSwitcher: theme.siteSwitcher
     };
 }
 
 function convertSettingsConfig(
-    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined,
+    context: TaskContext
 ): docsYml.ParsedDocsConfiguration["settings"] {
     if (settings == null) {
         return undefined;
+    }
+
+    if (settings.embedding != null) {
+        const embeddingErrors = docsYml.getEmbeddingOriginErrors(settings.embedding.allowedOrigins);
+        if (embeddingErrors.length > 0) {
+            context.failAndThrow(embeddingErrors.join("\n"));
+        }
     }
 
     // The legacy `default-search-filters` setting is preserved as an alias for
@@ -579,6 +626,7 @@ function convertSettingsConfig(
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding,
         showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
@@ -693,6 +741,11 @@ function convertLayoutConfig(
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when `breadcrumbs.current-page` is true the current page is appended to
+        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -1505,7 +1558,27 @@ async function convertNavigationItem({
                 absoluteOverlayPaths:
                     spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
                 absoluteOverridePaths:
-                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? []
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? [],
+                settings:
+                    spec.settings == null
+                        ? undefined
+                        : {
+                              ...spec.settings,
+                              ...(spec.settings.errorResponses == null
+                                  ? {}
+                                  : {
+                                        errorResponses: {
+                                            ...spec.settings.errorResponses,
+                                            schema:
+                                                typeof spec.settings.errorResponses.schema === "string"
+                                                    ? resolveFilepath(
+                                                          spec.settings.errorResponses.schema,
+                                                          absolutePathToConfig
+                                                      )
+                                                    : spec.settings.errorResponses.schema
+                                        }
+                                    })
+                          }
             })),
             audiences:
                 rawConfig.audiences != null

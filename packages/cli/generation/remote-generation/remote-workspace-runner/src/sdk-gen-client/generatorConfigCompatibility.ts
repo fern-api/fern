@@ -30,15 +30,34 @@ export interface ValidateGeneratorConfigCompatibilityInput {
 
 export type SelectGeneratorConfigRouteInput = Omit<ValidateGeneratorConfigCompatibilityInput, "configKind">;
 
-/** Validated route and payload kind that the caller should submit for generation. */
-export interface GenerationConfigRoute {
+interface GenerationConfigRouteBase {
     generatorId: string;
     language: GeneratorLanguage;
-    requestedVersion: string;
     cutoverVersion: string;
-    configKind: GenerationConfigKind;
-    payloadKind: GenerationPayloadKind;
 }
+
+/** Validated route and payload kind that the caller should submit for generation. */
+export type GenerationConfigRoute =
+    | (GenerationConfigRouteBase & {
+          requestedVersion: string;
+          configKind: GenerationConfigKind;
+          payloadKind: GenerationPayloadKind;
+      })
+    | (GenerationConfigRouteBase &
+          (
+              | {
+                    requestedVersion?: never;
+                    versionSource: "fern-latest";
+                    configKind: "legacy-fern";
+                    payloadKind: "fern-runtime-bundle";
+                }
+              | {
+                    requestedVersion?: never;
+                    versionSource: "fern-latest" | "sdk-config-omitted";
+                    configKind: "sdk-config-v1";
+                    payloadKind: "sdk-config-v1";
+                }
+          ));
 
 export type GeneratorConfigCompatibilityErrorCode =
     | "UNKNOWN_GENERATOR"
@@ -180,6 +199,63 @@ export function selectGeneratorConfigRoute(input: SelectGeneratorConfigRouteInpu
         configKind: expectedConfigKind,
         payloadKind: isBeforeCutover ? "fern-runtime-bundle" : "sdk-config-v1"
     };
+}
+
+/** Selects the supplied config flavor for an unpinned target without applying a version cutover. */
+export function selectUnpinnedGeneratorConfigRoute({
+    generatorId,
+    language,
+    configKind,
+    versionSource
+}: Omit<SelectGeneratorConfigRouteInput, "requestedVersion"> & {
+    configKind: GenerationConfigKind;
+    versionSource: "fern-latest" | "sdk-config-omitted";
+}): GenerationConfigRoute {
+    const policy = getGeneratorPolicy(generatorId);
+    if (policy === undefined) {
+        throw compatibilityError(
+            { generatorId, language, requestedVersion: "unpinned" },
+            {
+                code: "UNKNOWN_GENERATOR",
+                message: `Unknown first-party generator: ${generatorId}`,
+                cutoverVersion: null,
+                expectedLanguage: null,
+                expectedConfigKind: null,
+                recommendedAction: "USE_KNOWN_GENERATOR_ID"
+            }
+        );
+    }
+    if (policy.language !== language) {
+        throw compatibilityError(
+            { generatorId, language, requestedVersion: "unpinned" },
+            {
+                code: "GENERATOR_LANGUAGE_MISMATCH",
+                message: `Generator ${generatorId} targets ${policy.language}, not ${language}`,
+                cutoverVersion: policy.cutoverVersion,
+                expectedLanguage: policy.language,
+                expectedConfigKind: null,
+                recommendedAction: "USE_GENERATOR_LANGUAGE"
+            }
+        );
+    }
+    const base = { generatorId, language, cutoverVersion: policy.cutoverVersion };
+    if (configKind === "legacy-fern") {
+        if (versionSource !== "fern-latest") {
+            throw new Error("Legacy Fern unpinned routes must use fern-latest as their version source");
+        }
+        return { ...base, versionSource, configKind, payloadKind: "fern-runtime-bundle" };
+    }
+    return { ...base, versionSource, configKind, payloadKind: "sdk-config-v1" };
+}
+
+export function selectUnpinnedSdkConfigRoute(
+    input: Omit<SelectGeneratorConfigRouteInput, "requestedVersion">
+): GenerationConfigRoute {
+    return selectUnpinnedGeneratorConfigRoute({
+        ...input,
+        configKind: "sdk-config-v1",
+        versionSource: "sdk-config-omitted"
+    });
 }
 
 function compatibilityError(

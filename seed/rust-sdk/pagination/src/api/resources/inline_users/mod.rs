@@ -1,4 +1,3 @@
-use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod inline_users;

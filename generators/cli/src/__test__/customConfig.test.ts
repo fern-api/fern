@@ -172,6 +172,44 @@ describe("validateCustomConfig", () => {
         expect(validateCustomConfig({ packageIdentity })).toEqual({ packageIdentity });
     });
 
+    it("accepts extraDependencies as version strings or dependency tables", () => {
+        const extraDependencies = {
+            "google-cloud-auth": "1.16",
+            "google-cloud-iam-credentials-v1": { version: "1.12", features: ["default"], defaultFeatures: false }
+        };
+        const extraDevDependencies = { mockall: "0.11" };
+        expect(validateCustomConfig({ extraDependencies, extraDevDependencies })).toEqual({
+            extraDependencies,
+            extraDevDependencies
+        });
+    });
+
+    it("throws on malformed extraDependencies", () => {
+        expect(() => validateCustomConfig({ extraDependencies: { "bad crate!": "1" } })).toThrow(
+            /not a valid cargo crate name/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: "" } })).toThrow(/must not be empty/);
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: 1 } })).toThrow(
+            /expected a version string or a dependency table, got number/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: { features: ["full"] } } })).toThrow(
+            /at least one of `version`, `path`, or `git`/
+        );
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { tokio: { version: "1", features: "full" } } })
+        ).toThrow(/extraDevDependencies.tokio.features: expected an array of strings/);
+        expect(() =>
+            validateCustomConfig({ extraDependencies: { tokio: { version: "1", defaultfeatures: false } } })
+        ).toThrow(/extraDependencies.tokio: unknown field\(s\) `defaultfeatures`/);
+        expect(() => validateCustomConfig({ extraDependencies: ["tokio"] })).toThrow(/expected an object, got array/);
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { mockall: { version: "0.11", optional: true } } })
+        ).toThrow(/extraDevDependencies.mockall.optional: cargo does not allow optional dev-dependencies/);
+        expect(validateCustomConfig({ extraDependencies: { mockall: { version: "0.11", optional: true } } })).toEqual({
+            extraDependencies: { mockall: { version: "0.11", optional: true } }
+        });
+    });
+
     it("throws on a packageIdentity name that cargo would reject", () => {
         expect(() => validateCustomConfig({ packageIdentity: { name: "agent mail!" } })).toThrow(
             /not a valid cargo crate name/

@@ -374,6 +374,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  go-xml-twiml:
+    - outputFolder: .
+      customConfig: null
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:

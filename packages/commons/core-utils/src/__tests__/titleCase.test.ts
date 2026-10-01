@@ -72,4 +72,11 @@ describe("titleCase", () => {
     it("handles real-world subpackage name: segmentsForAShopperProfile", () => {
         expect(titleCase("segmentsForAShopperProfile")).toBe("Segments for a Shopper Profile");
     });
+
+    it("does not uppercase Map", () => {
+        expect(titleCase("map")).toBe("Map");
+        expect(titleCase("mapTest")).toBe("Map Test");
+        expect(titleCase("map_test")).toBe("Map Test");
+        expect(titleCase("fiMapService")).toBe("Fi Map Service");
+    });
 });

@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportsManager,
     getTextOfTsNode,
+    getXmlEncoding,
     ImportsManager,
     NpmPackage,
     Reference,
@@ -226,7 +227,9 @@ export class TypeContextImpl implements TypeContext {
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            inline: typeDeclaration.inline ?? false
+            inline: typeDeclaration.inline ?? false,
+            xml: getXmlEncoding(typeDeclaration),
+            isXmlRoot: getXmlEncoding(typeDeclaration) != null && !this.typeResolver.isXmlChildType(typeName)
         });
     }
 

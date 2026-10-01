@@ -51,4 +51,31 @@ export const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     511: "NetworkAuthenticationRequiredError"
 };
 
-export const ERROR_NAMES = new Set<string>(Object.values(ERROR_NAMES_BY_STATUS_CODE));
+export const CLIENT_ERROR_WILDCARD = "4XX";
+export const SERVER_ERROR_WILDCARD = "5XX";
+
+/**
+ * Names for wildcard error responses, keyed by the first status code of the range.
+ * These intentionally do not appear in ERROR_NAMES_BY_STATUS_CODE so they can never
+ * collide with a concrete status error declared on the same endpoint.
+ */
+export const WILDCARD_ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
+    400: "ClientRequestError",
+    500: "ServerError"
+};
+
+export const ERROR_NAMES = new Set<string>([
+    ...Object.values(ERROR_NAMES_BY_STATUS_CODE),
+    ...Object.values(WILDCARD_ERROR_NAMES_BY_STATUS_CODE)
+]);
+
+export function parseWildcardStatusCode(statusCode: string): number | undefined {
+    switch (statusCode.toUpperCase()) {
+        case CLIENT_ERROR_WILDCARD:
+            return 400;
+        case SERVER_ERROR_WILDCARD:
+            return 500;
+        default:
+            return undefined;
+    }
+}

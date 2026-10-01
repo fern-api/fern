@@ -12,7 +12,7 @@ import com.seed.api.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -59,6 +59,15 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<TokenResponse> getToken(TokenRequest request, RequestOptions requestOptions) {
         return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {
