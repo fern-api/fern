@@ -100,6 +100,21 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
       assert_equal "<Response><Say>a</Say><Custom/><Say>b</Say>x<Say>c</Say></Response>", element.to_xml
     end
 
+    it "add_content merges a raw wrapper element into the wrapped list's wrapper" do
+      number = XmlTestElement.new("Number", text: "1")
+      raw = XmlTestElement.new("Numbers", attributes: { "kind" => "x" })
+      raw.add_child(XmlTestElement.new("Other"))
+      element = XmlTestElement.new("Dial")
+      XmlTestUtils.add_content(element, [number, raw], [], { "Numbers" => [number] }, [raw])
+
+      assert_equal '<Dial><Numbers kind="x"><Number>1</Number><Other/></Numbers></Dial>', element.to_xml
+
+      element = XmlTestElement.new("Dial")
+      XmlTestUtils.add_content(element, [raw, number], [], { "Numbers" => [number] }, [raw])
+
+      assert_equal '<Dial><Numbers kind="x"><Number>1</Number><Other/></Numbers></Dial>', element.to_xml
+    end
+
     it "add_content places a wrapped list where its first item or wrapper appears" do
       number = XmlTestElement.new("Number", text: "1")
       custom = XmlTestElement.new("Custom")

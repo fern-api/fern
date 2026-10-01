@@ -150,10 +150,7 @@ module <%= gem_namespace %>
               if child.is_a?(Element) && wrapper_names.include?(child.name)
                 wrapper = element.child(child.name)
                 unless wrapper.nil?
-                  child.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
-                  child.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
-                  wrapper.text ||= child.text
-                  child.children.each { |grand_child| wrapper.add_child(grand_child) }
+                  merge_wrapper!(wrapper, child)
                   next
                 end
               end
@@ -165,7 +162,8 @@ module <%= gem_namespace %>
           # content order. `content` decides the order; typed or additional children missing from it
           # are appended after it (typed first), so directly assigned properties still render. Wrapped
           # lists render as one wrapper element, placed where the first wrapper of that name or the
-          # first item of that list appears in `content`. Nodes in `content` that are neither typed,
+          # first item of that list appears in `content`; a raw wrapper element added with `add_child`
+          # is merged into it rather than written as a second wrapper. Nodes in `content` that are neither typed,
           # additional nor text are not written.
           #
           # @param element [Element]
@@ -187,7 +185,12 @@ module <%= gem_namespace %>
                 element.add_child(node)
               elsif (remaining[node] || 0).positive?
                 remaining[node] -= 1
-                element.add_child(node)
+                if node.is_a?(Element) && wrapped.key?(node.name)
+                  emit_wrapper.call(node.name)
+                  merge_wrapper!(wrappers[node.name], node)
+                else
+                  element.add_child(node)
+                end
               elsif wrapper_of.key?(node)
                 emit_wrapper.call(wrapper_of[node])
               elsif node.is_a?(Element) && wrapped.key?(node.name)
@@ -207,6 +210,13 @@ module <%= gem_namespace %>
               keep
             end
             add_additional(element, attributes, leftover, wrapped.keys)
+          end
+
+          private def merge_wrapper!(wrapper, raw)
+            raw.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
+            raw.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
+            wrapper.text ||= raw.text
+            raw.children.each { |grand_child| wrapper.add_child(grand_child) }
           end
 
           private def emit_wrapper!(element, name, wrapped, wrappers)
