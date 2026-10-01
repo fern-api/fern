@@ -612,11 +612,14 @@ export async function runRemoteGenerationForGenerator({
                 organization,
                 token
             });
+        }
+        const runtimeGeneratorVersion = sdkGenApiRoute.requestedVersion ?? resolvedRuntimeGeneratorVersion;
+        if (sdkGenApiRoute.payloadKind === "fern-runtime-bundle" && runtimeGeneratorVersion != null) {
             try {
                 validateGeneratorConfigCompatibility({
                     generatorId: sdkGenApiRoute.generatorId,
                     language: sdkGenApiRoute.language,
-                    requestedVersion: resolvedRuntimeGeneratorVersion,
+                    requestedVersion: runtimeGeneratorVersion,
                     configKind: sdkGenApiRoute.configKind
                 });
             } catch (error) {
