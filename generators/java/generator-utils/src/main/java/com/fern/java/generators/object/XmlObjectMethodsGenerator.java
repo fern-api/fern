@@ -100,9 +100,9 @@ public final class XmlObjectMethodsGenerator {
     }
 
     public TypeSpec addXmlSupport(TypeSpec typeSpec) {
-        TypeSpec.Builder builder = typeSpec.toBuilder().addSuperinterface(xmlSerializableClassName);
-        builder.methodSpecs.removeIf(method -> method.name.equals("toString") && method.parameters.isEmpty());
-        builder.addMethod(generateToString())
+        TypeSpec.Builder builder = typeSpec.toBuilder()
+                .addSuperinterface(xmlSerializableClassName)
+                .addMethod(generateToString())
                 .addMethod(generateToXml())
                 .addMethod(generateToXmlWithDeclaration())
                 .addMethod(generateFromXmlString(objectClassName))

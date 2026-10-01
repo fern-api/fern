@@ -137,7 +137,9 @@ public final class ObjectTypeSpecGenerator {
 
         equalsMethod.getEqualToMethodSpec().ifPresent(typeSpecBuilder::addMethod);
         generateHashCode().ifPresent(typeSpecBuilder::addMethod);
-        typeSpecBuilder.addMethod(generateToString());
+        if (!additionalChildrenItemType.isPresent()) {
+            typeSpecBuilder.addMethod(generateToString());
+        }
         if (maybeObjectBuilder.isPresent()) {
             ObjectBuilder objectBuilder = maybeObjectBuilder.get();
             typeSpecBuilder.addMethod(objectBuilder.getBuilderStaticMethod());
