@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.6
+  changelogEntry:
+    - summary: |
+        Docs `snippets:` entries and SDK dynamic IR uploads now resolve a generator's package name
+        from its generator config (`config.package_name`, `config.packageName`, `config["package-name"]`,
+        `config.module.path`) when there is no registry publish target, so github-only SDKs
+        (`github: mode: pull-request` with no `output: pypi/npm` block) are matched instead of being
+        reported as an unknown package. The config lookup previously only read the raw YAML, which
+        is not populated on the normal loader path; it now reads the resolved config first. This also
+        makes `--local`, `sdk-preview` and the "version already exists" check see config-only package
+        names they previously missed. Docs snippet matching now also considers generators from the
+        other API workspaces in the fern folder when the referenced API workspace has no SDK
+        generators (e.g. docs point at a docs-only `api-name` while SDKs are generated from a
+        sibling workspace). Docs snippet version lookup selects the generator whose package matches
+        the `snippets:` entry instead of the first generator for the language. Skip paths log the
+        reason at debug level.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.143.5
   changelogEntry:
     - summary: |
