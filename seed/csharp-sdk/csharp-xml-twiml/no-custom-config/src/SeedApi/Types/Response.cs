@@ -99,9 +99,10 @@ public record Response : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Serializes this value to an XML string.
+    /// Serializes this value to an XML document, prefixed with the XML declaration by default.
     /// </summary>
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml(bool xmlDeclaration = true) =>
+        XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Adds a <c>&lt;Say&gt;</c> child element and returns this instance for chaining.
@@ -217,9 +218,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
         return this;
     }
 
-    /// <inheritdoc />
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
+    /// <summary>
+    /// Returns the XML representation of this value.
+    /// </summary>
+    public override string ToString() => ToXml();
 }

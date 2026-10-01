@@ -93,6 +93,7 @@ export class XmlObjectGenerator {
         this.addAdditionalFields();
         this.addToXElement();
         this.addToXml();
+        this.addToString();
         this.addFromXml();
         this.addFromXElement();
         this.addChildItemParsers();
@@ -421,12 +422,34 @@ export class XmlObjectGenerator {
             name: "ToXml",
             access: ast.Access.Public,
             return_: this.context.Primitive.string,
-            parameters: [],
-            summary: "Serializes this value to an XML string.",
+            parameters: [
+                this.csharp.parameter({
+                    name: "xmlDeclaration",
+                    type: this.context.Primitive.boolean,
+                    initializer: "true",
+                    docs: "Whether to prefix the output with the XML declaration."
+                })
+            ],
+            summary: "Serializes this value to an XML document, prefixed with the XML declaration by default.",
             bodyType: ast.Method.BodyType.Expression,
             body: this.csharp.codeblock((writer) => {
                 this.utils(writer, "Serialize");
-                writer.write("(ToXElement())");
+                writer.write("(ToXElement(), xmlDeclaration)");
+            })
+        });
+    }
+
+    private addToString(): void {
+        this.class_.addMethod({
+            name: "ToString",
+            access: ast.Access.Public,
+            override: true,
+            return_: this.context.Primitive.string,
+            parameters: [],
+            summary: "Returns the XML representation of this value.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                writer.write("ToXml()");
             })
         });
     }

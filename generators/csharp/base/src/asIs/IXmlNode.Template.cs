@@ -13,7 +13,8 @@ public interface IXmlNode
     XElement ToXElement();
 
     /// <summary>
-    /// Serializes this value to an XML string (no XML declaration).
+    /// Serializes this value to an XML string, optionally prefixed with the XML declaration.
+    /// Generated element types default to including it; <see cref="XmlElement"/> defaults to omitting it.
     /// </summary>
-    string ToXml();
+    string ToXml(bool xmlDeclaration);
 }

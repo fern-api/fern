@@ -96,7 +96,7 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
         return element;
     }
 
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml(bool xmlDeclaration = false) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Parses an XML document into an <see cref="XmlElement"/>.
