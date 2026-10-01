@@ -69,7 +69,7 @@ export namespace Collections {
 
     export class Builder implements core.xml.XmlBuilder<Collections> {
         private readonly fields: Partial<Collections.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { breaks?: (Break | core.xml.XmlBuilder<Break>)[]; pause?: Break | core.xml.XmlBuilder<Break> | null };
 
         constructor(fields: Partial<Collections.Fields> = {}) {
@@ -234,7 +234,7 @@ export namespace Dial {
 
     export class Builder implements core.xml.XmlBuilder<Dial> {
         private readonly fields: Partial<Dial.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { numbers?: (Number | core.xml.XmlBuilder<Number>)[] };
 
         constructor(fields: Partial<Dial.Fields> = {}) {
@@ -375,7 +375,7 @@ export namespace Say {
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
@@ -523,7 +523,7 @@ export namespace Say {
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
@@ -694,7 +694,7 @@ export namespace Label {
 
     export class Builder implements core.xml.XmlBuilder<Label> {
         private readonly fields: Partial<Label.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { "line-break"?: (Break | core.xml.XmlBuilder<Break>)[]; lineBreak?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Label.Fields> = {}) {
