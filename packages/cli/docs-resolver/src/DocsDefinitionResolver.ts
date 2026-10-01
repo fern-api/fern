@@ -2418,8 +2418,13 @@ export class DocsDefinitionResolver {
         }
 
         const sectionTitle = item.title ?? item.libraryName;
+        const rootFullSlug =
+            item.slug == null && libraryConfig.output.slug != null
+                ? navNodes[0]?.slug.split("/").slice(0, -1)
+                : undefined;
         const sectionSlug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(sectionTitle)
+            urlSlug: item.slug ?? kebabCase(sectionTitle),
+            fullSlug: rootFullSlug != null && rootFullSlug.length > 0 ? rootFullSlug : undefined
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 

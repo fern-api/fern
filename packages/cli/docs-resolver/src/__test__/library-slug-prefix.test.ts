@@ -63,7 +63,7 @@ describe("library section with a slug prefix that differs from its file layout",
         expect(collectLibraryNodes(root)).toEqual([
             {
                 type: "section",
-                slug: "python-api-reference",
+                slug: "api-reference/python/prismo",
                 overviewPageId: "static/prismo/prismo/index.mdx"
             },
             {
