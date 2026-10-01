@@ -16,7 +16,13 @@ export const SdkCustomConfigSchema = BaseRustCustomConfigSchema.extend({
      * as an item index and advances it by the number of items the page returned. `"page-index"`
      * treats it as a page number and advances it by one.
      */
-    offsetSemantics: z.enum(["item-index", "page-index"]).optional().default("item-index")
+    offsetSemantics: z.enum(["item-index", "page-index"]).optional().default("item-index"),
+    /**
+     * When true, the default `ClientConfig.user_agent` is the IR's platform `User-Agent` value
+     * (`<package-name>/<version>`, or the `user-agent` template), matching the other SDK generators.
+     * When false (the default), it is `<ApiName> Rust SDK`.
+     */
+    userAgentFromPlatformHeaders: z.boolean().optional().default(false)
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

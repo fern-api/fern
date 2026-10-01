@@ -1,0 +1,6 @@
+- summary: |
+    Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+    setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+    emitted even when the API definition models no webhooks; webhook-specific signature
+    overrides still produce their own named helpers.
+  type: feat

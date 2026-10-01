@@ -8,7 +8,7 @@ import com.seed._extends.core.RequestOptions;
 import com.seed._extends.requests.Inlined;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedExtendsClient {
+public class AsyncSeedExtendsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedExtendsClient rawClient;
@@ -31,6 +31,15 @@ public class AsyncSeedExtendsClient {
 
     public CompletableFuture<Void> extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {
         return this.rawClient.extendedInlineRequestBody(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedExtendsClientBuilder builder() {

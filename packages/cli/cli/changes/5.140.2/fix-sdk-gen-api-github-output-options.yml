@@ -1,0 +1,5 @@
+- summary: |
+    Forward GitHub output options (`replay`, `verify`, and `skipIfNoDiff`) in
+    sdk-gen-api requests. Previously, GitHub generations routed through sdk-gen-api
+    could submit without replay settings from generators.yml.
+  type: fix

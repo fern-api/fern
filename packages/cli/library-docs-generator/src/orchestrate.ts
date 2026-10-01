@@ -36,6 +36,7 @@ export interface LibraryDocsClient {
             title?: string | null;
             slug?: string | null;
             doxyfileContent?: string | null;
+            includeUndocumentedMacros?: boolean | null;
         } | null;
     }): Promise<{ jobId: string }>;
     getLibraryDocsGenerationStatus(input: { jobId: string }): Promise<{
@@ -258,6 +259,13 @@ async function generateSingleLibrary({
             code: CliError.Code.ConfigError
         });
     }
+    if (config.config?.includeUndocumentedMacros != null && config.lang !== "cpp") {
+        throw new CliError({
+            message: `Library '${name}': 'include-undocumented-macros' config is only valid for lang: cpp`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
@@ -284,9 +292,28 @@ async function generateSingleLibrary({
 
     let ir: unknown;
     if (local) {
-        ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
+        ir = await generateIrLocally({
+            context,
+            name,
+            config,
+            docsDirectoryPath,
+            language,
+            doxyfileContent,
+            includeUndocumentedMacros,
+            wrapStep
+        });
     } else if (client != null) {
-        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep, context });
+        ir = await generateIrRemotely({
+            client,
+            name,
+            config,
+            language,
+            orgId,
+            doxyfileContent,
+            includeUndocumentedMacros,
+            wrapStep,
+            context
+        });
     } else {
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
@@ -336,6 +363,7 @@ async function generateIrRemotely({
     language,
     orgId,
     doxyfileContent,
+    includeUndocumentedMacros,
     wrapStep,
     context
 }: {
@@ -345,6 +373,7 @@ async function generateIrRemotely({
     language: LibraryLanguage;
     orgId: string;
     doxyfileContent: string | undefined;
+    includeUndocumentedMacros: boolean | undefined;
     wrapStep: StepWrapper;
     context: TaskContext;
 }): Promise<unknown> {
@@ -366,7 +395,8 @@ async function generateIrRemotely({
                 language,
                 packagePath: gitInput.subpath,
                 ref: gitInput.ref,
-                doxyfileContent
+                doxyfileContent,
+                includeUndocumentedMacros
             })
     });
 
@@ -393,6 +423,7 @@ async function generateIrLocally({
     docsDirectoryPath,
     language,
     doxyfileContent,
+    includeUndocumentedMacros,
     wrapStep
 }: {
     context: TaskContext;
@@ -401,6 +432,7 @@ async function generateIrLocally({
     docsDirectoryPath: AbsoluteFilePath;
     language: LibraryLanguage;
     doxyfileContent: string | undefined;
+    includeUndocumentedMacros: boolean | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
     let sourcePath: AbsoluteFilePath;
@@ -425,11 +457,12 @@ async function generateIrLocally({
             packagePath: gitInput.subpath,
             sourceUrl: gitInput.git,
             branch: gitInput.ref,
-            doxyfileContent
+            doxyfileContent,
+            includeUndocumentedMacros
         };
     } else {
         sourcePath = resolve(docsDirectoryPath, config.input.path);
-        parserConfig = { doxyfileContent };
+        parserConfig = { doxyfileContent, includeUndocumentedMacros };
     }
 
     const result = await wrapStep({
@@ -451,6 +484,7 @@ async function startGeneration(
         packagePath?: string;
         ref?: string;
         doxyfileContent?: string;
+        includeUndocumentedMacros?: boolean;
     }
 ): Promise<string> {
     try {
@@ -464,7 +498,8 @@ async function startGeneration(
                 packagePath: opts.packagePath,
                 title: opts.name,
                 slug: opts.name,
-                doxyfileContent: opts.doxyfileContent
+                doxyfileContent: opts.doxyfileContent,
+                includeUndocumentedMacros: opts.includeUndocumentedMacros
             }
         });
         return result.jobId;

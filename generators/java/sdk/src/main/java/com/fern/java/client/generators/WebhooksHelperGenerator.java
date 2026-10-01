@@ -66,6 +66,14 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
 
     public static List<GeneratedJavaFile> generateFiles(ClientGeneratorContext context) {
         LinkedHashMap<HmacSignatureVerification, WebhookVerificationEntry> grouped = new LinkedHashMap<>();
+        // The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        // default WebhooksHelper, even when the definition models no webhooks.
+        WebhookVerificationEntry apiWideEntry = context.getIr()
+                .getSdkConfig()
+                .getWebhookSignatureVerification()
+                .flatMap(verification -> verification.getHmac())
+                .map(hmac -> grouped.computeIfAbsent(hmac, ignored -> new WebhookVerificationEntry(hmac)))
+                .orElse(null);
         for (com.fern.ir.model.webhooks.WebhookGroup webhookGroup :
                 context.getIr().getWebhookGroups().values()) {
             for (Webhook webhook : webhookGroup.get()) {
@@ -83,12 +91,14 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             return List.of();
         }
 
-        WebhookVerificationEntry defaultEntry = null;
-        int maxCount = -1;
-        for (WebhookVerificationEntry entry : grouped.values()) {
-            if (entry.webhookNames.size() > maxCount) {
-                defaultEntry = entry;
-                maxCount = entry.webhookNames.size();
+        WebhookVerificationEntry defaultEntry = apiWideEntry;
+        if (defaultEntry == null) {
+            int maxCount = -1;
+            for (WebhookVerificationEntry entry : grouped.values()) {
+                if (entry.webhookNames.size() > maxCount) {
+                    defaultEntry = entry;
+                    maxCount = entry.webhookNames.size();
+                }
             }
         }
 
@@ -96,7 +106,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         generatedFiles.add(
                 new WebhooksHelperGenerator(context, DEFAULT_HELPER_NAME, defaultEntry.config).generateFile());
         for (WebhookVerificationEntry entry : grouped.values()) {
-            if (entry == defaultEntry) {
+            if (entry == defaultEntry || entry.webhookNames.isEmpty()) {
                 continue;
             }
             String className = webhookNameToPascal(entry.webhookNames.get(0)) + DEFAULT_HELPER_NAME;
@@ -106,6 +116,15 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     }
 
     public static boolean requiresBodyHashUtility(ClientGeneratorContext context) {
+        boolean apiWidePresent = context.getIr()
+                .getSdkConfig()
+                .getWebhookSignatureVerification()
+                .flatMap(verification -> verification.getHmac())
+                .flatMap(HmacSignatureVerification::getBodyHashBinding)
+                .isPresent();
+        if (apiWidePresent) {
+            return true;
+        }
         for (com.fern.ir.model.webhooks.WebhookGroup webhookGroup :
                 context.getIr().getWebhookGroups().values()) {
             for (Webhook webhook : webhookGroup.get()) {

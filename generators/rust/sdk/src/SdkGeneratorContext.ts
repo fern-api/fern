@@ -124,6 +124,10 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         if (!this.hasWebSocketChannels()) {
             files = files.filter((file) => file.filename !== "websocket.rs");
         }
+        // Only include webhook_signature.rs when a webhook declares HMAC signature verification
+        if (!this.hasHmacWebhookSignatureVerification()) {
+            files = files.filter((file) => file !== AsIsFiles.WebhookSignature);
+        }
         // Only include bigint_string.rs when big integer types are used
         if (!this.usesBigInteger()) {
             files = files.filter((file) => file.filename !== "bigint_string.rs");

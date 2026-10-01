@@ -1,4 +1,439 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.7
+  changelogEntry:
+    - summary: |
+        Stop auto-uppercasing "Map" in generated titles. API Reference navigation
+        subpackages without an explicit display-name (e.g. groups created via
+        `x-fern-sdk-group-name`), webhook ids, GraphQL namespace titles, and
+        tag-description-page headings now render "Map"/"Map Test" instead of
+        "MAP"/"MAP Test".
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.6
+  changelogEntry:
+    - summary: |
+        Docs `snippets:` entries and SDK dynamic IR uploads now resolve a generator's package name
+        from its generator config (`config.package_name`, `config.packageName`, `config["package-name"]`,
+        `config.module.path`) when there is no registry publish target, so github-only SDKs
+        (`github: mode: pull-request` with no `output: pypi/npm` block) are matched instead of being
+        reported as an unknown package. The config lookup previously only read the raw YAML, which
+        is not populated on the normal loader path; it now reads the resolved config first. This also
+        makes `--local`, `sdk-preview` and the "version already exists" check see config-only package
+        names they previously missed. Docs snippet matching now also considers generators from the
+        other API workspaces in the fern folder when the referenced API workspace has no SDK
+        generators (e.g. docs point at a docs-only `api-name` while SDKs are generated from a
+        sibling workspace). Docs snippet version lookup selects the generator whose package matches
+        the `snippets:` entry instead of the first generator for the language. Skip paths log the
+        reason at debug level.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.5
+  changelogEntry:
+    - summary: |
+        Preserve distinct PyPI usernames and passwords when configuring generator publishing credentials.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.4
+  changelogEntry:
+    - summary: |
+        Generate configured README and API reference files for legacy SDK generators routed through SDK Gen API.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.3
+  changelogEntry:
+    - summary: |
+        `fern docs preview delete --id` now loads the docs workspace and deletes the preview at each
+        `instances[].url` basepath, so previews built from a docs.yml instance with a path
+        (e.g. `acme.docs.buildwithfern.com/reference`) no longer fail with "Domain not registered".
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.2
+  changelogEntry:
+    - summary: |
+        `fern.config.json` now rejects a `version` that is not an exact semver version, `*`, or `latest`.
+        Previously any string was accepted and forwarded to `npx fern-api@<version>` during version
+        redirection, so specs like `file:`, `npm:`, git, or URL specs could make the CLI install and run
+        an arbitrary package.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.1
+  changelogEntry:
+    - summary: |
+        Make `fern generate --package` / `--package-only` more reliable for Java SDKs on restricted networks.
+        Docker mode now gives the `gradle` toolchain container a persistent dependency cache
+        (`~/.fern/gradle-docker-home`), layers in the host's `gradle.properties` and `init.d` (from
+        `GRADLE_USER_HOME` or `~/.gradle`) and forwards `HTTP(S)_PROXY`/`NO_PROXY`; the Java build consults a
+        Maven Central mirror before Maven Central / the Gradle plugin portal to avoid HTTP 429 rate limits
+        (override with `FERN_MAVEN_CENTRAL_MIRROR=<url>` or disable with `FERN_MAVEN_CENTRAL_MIRROR=off`);
+        host mode prefers the generated `./gradlew` wrapper over a global `gradle`. Packaging now fails
+        instead of silently doing nothing when no generator in the group writes to `local-file-system`.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.0
+  changelogEntry:
+    - summary: |
+        Make `fern sdk migrate` apply reversible group and language level migrations, preserve rollback YAML in `generators.legacy.yml`, merge compatible SDK Config targets, and support dry runs.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.142.0
+  changelogEntry:
+    - summary: |
+        `experimental.external-sitemaps` entries may now be objects with a `url` and an
+        optional `locale`, e.g. `- url: https://help.example.com/sitemap.xml` /
+        `locale: nl`. When set, every page in that sitemap is indexed into the search
+        index of that site locale instead of relying on per-URL language detection.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.141.2
+  changelogEntry:
+    - summary: |
+        Reject `fern generate --sdk-config` when a selected target pins a generator version from before that language's SDK Config cutover.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.141.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.141.0
+  changelogEntry:
+    - summary: |
+        Support selecting SDK Config targets with `fern generate --target`, including mixed generation with legacy `--group` selections, per-API `sdk-config.yml` discovery, explicit `--sdk-config` overrides, and the provisional `generators.legacy.yml` filename. With no selectors, generation runs the legacy default group and every target in the default SDK Config, while `--local` continues to run legacy generation only. SDK Config generation is labeled by target (for example, `Python SDK`) instead of exposing the internal legacy-style generator identifier, and `fern check` validates SDK Config-only API sources.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.140.2
+  changelogEntry:
+    - summary: |
+        Stop uploading direct publish credentials for SDK Config GitHub outputs. GitHub
+        delivery with registry publication now omits the sdk-gen-api credentials
+        multipart file, matching server expectations for GitHub/Actions-based publishing.
+      type: fix
+    - summary: |
+        Forward GitHub output options (`replay`, `verify`, and `skipIfNoDiff`) in
+        sdk-gen-api requests. Previously, GitHub generations routed through sdk-gen-api
+        could submit without replay settings from generators.yml.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.140.1
+  changelogEntry:
+    - summary: |
+        Fix custom MDX components that import third-party packages failing to render with
+        `Could not resolve "../node_modules/..."`. Relative imports inside bundled packages
+        (e.g. barrel files like `export * from "./Button/index.js"`) are now bundled instead of
+        left external, and `require("react")` calls from bundled CommonJS dependencies no longer
+        throw `Dynamic require of "react" is not supported` in the docs renderer.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.140.0
+  changelogEntry:
+    - summary: |
+        Support generating from a composed workspace. A workspace that declares no specs of its own and
+        composes sibling workspaces through dependencies.yml now exposes those dependencies' specs,
+        namespaced by the directory of the package marker that exports them, so it can produce a source
+        archive instead of failing with "workspace type fern does not expose source specs".
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.139.4
+  changelogEntry:
+    - summary: |
+        `fern export` now emits `anyOf` (instead of `oneOf`) for undiscriminated unions. Undiscriminated
+        union members can overlap (e.g. a set of string literals alongside `string`), so `oneOf` caused
+        strict JSON Schema validators to reject values that matched more than one member.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.139.3
+  changelogEntry:
+    - summary: |
+        Allow replay to be enabled for SDK generators routed through sdk-gen-api.
+        Previously, generators with both sdkGenApiRoute and replay.enabled: true failed
+        with a configuration error.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.139.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now fails when a rule configured as `error` in `docs.yml` `check.rules`
+        (e.g. `broken-links: error`) reports a violation, matching the behavior of `fern check`.
+        Previously the violation was logged but docs were still published.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.139.1
+  changelogEntry:
+    - summary: |
+        Propagate AsyncAPI message `description`/`summary` to WebSocket channel message docs so they appear in the API reference and generated SDK docstrings. Previously only the payload schema's description survived import.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 5.139.0
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now honors `x-twilio.libraryVisibility` (`public` | `private` | `hidden`) during SDK
+        generation. Visibility is read from the operation, path item, or `info` object (most specific wins), and from
+        parameters, schemas, and object properties. `fern generate` keeps only `public` elements; the new
+        `fern generate --private` flag also keeps `private` elements. `hidden` elements are never generated.
+        Other commands (`fern check`, `fern generate-ir`) are unaffected.
+      type: feat
+    - summary: |
+        Docs generation now honors `x-twilio.docsVisibility` (`public` | `private` | `hidden`) with the same
+        resolution rules, independently of `libraryVisibility`. `fern generate --docs` and `fern docs dev` publish
+        only `public` elements in API references; `--private` also includes `private` elements. `hidden` elements
+        never appear in docs.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 5.138.1
+  changelogEntry:
+    - summary: |
+        Add a pre-prod CLI build target that uses Postman-hosted production sdk-gen service origins
+        (sdk-gen.postman.co and related service domains) ahead of DNS cutover.
+      type: chore
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 5.138.0
+  changelogEntry:
+    - summary: |
+        Add `theme.site-switcher` to docs.yml and global themes. When enabled, docs sites
+        published to the same domain under different basepaths are listed in a header
+        site switcher; `order`, `hide`, `labels`, and `show-products` control presentation.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 5.137.2
+  changelogEntry:
+    - summary: |
+        Preserve API import settings that affect documentation when `fern sdk migrate` decouples docs.yml from generators.yml.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.137.1
+  changelogEntry:
+    - summary: |
+        An explicitly empty array in an OpenAPI overrides file (e.g. `security: []` to opt an
+        endpoint out of global auth) now replaces the original array instead of being ignored.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.137.0
+  changelogEntry:
+    - summary: |
+        Add `api.settings.webhook-signature` to `generators.yml`. Declares an API-wide webhook
+        signature scheme (same shape as a webhook `signature` block) once, outside the API
+        definition, and compiles it into `sdkConfig.webhookSignatureVerification` in the IR so
+        every SDK generator emits the shared webhook verification helper without any webhooks or
+        `x-fern-*` extensions in the spec.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.136.0
+  changelogEntry:
+    - summary: |
+        Support secure SDK Config v1 direct publishing to npm, Maven, PyPI, and crates.io through sdk-gen-api.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.135.1
+  changelogEntry:
+    - summary: |
+        Hosted MCP deploys now fail fast, before uploading anything, when a generated tool name is longer than 64 characters or contains disallowed characters, and suggest an `x-fern-mcp-name` overlay for the operation (method + path). Deploy errors from the registry now include each validation issue instead of only the headline message.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.135.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs theme download --name <name> [--org <org>] [--output <dir>]`, which fetches an
+        org-level theme from Fern's cloud and writes it as a local theme directory (theme.yml plus its
+        logo/font/css/js assets with relative paths). The inverse of `fern docs theme upload`; useful for
+        vendoring a theme into a self-hosted docs image so `global-theme` resolves without network access.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.134.3
+  changelogEntry:
+    - summary: |
+        Docs validation no longer logs a "Slow file read" debug line for every markdown page when many
+        files are read concurrently (the timing included threadpool queue time, not disk speed). It now
+        logs one summary per validation run and only flags reads that are outliers relative to the batch.
+      type: fix
+    - summary: |
+        The CLI now defaults `UV_THREADPOOL_SIZE` to 8 (from Node's default of 4) so concurrent file
+        reads spend less time queued behind the libuv threadpool. Set the variable explicitly to override.
+      type: fix
+    - summary: |
+        The OpenAPI importer no longer drops the `properties` of a schema whose sibling
+        `oneOf` only lists which of those properties must be present (for example
+        `oneOf: [{ required: [domain] }, { required: [phone] }]`). Such a `oneOf` is an
+        "exactly one of" constraint over the declared object, not a set of variants, so
+        the schema is now converted as an object with every declared property preserved.
+        This also applies when the schema is an inline member of an `allOf`.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.134.2
+  changelogEntry:
+    - summary: |
+        Fix environments defined in `generators.yml` disappearing from docs (`GET ///path`, empty Try It base URL)
+        when an `api:` navigation block uses `audiences:`. Environments that don't declare audiences are now
+        retained under audience filtering, matching the Fern Definition behavior.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 5.134.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI `error-responses` setting now replaces a pre-existing `components.schemas` entry of
+        the same `name` when nothing references it anymore once the 4xx/5xx responses have been rewritten
+        (the common case: a legacy error body under `apply-to: all`), so specs that ship their own
+        `TwilioServiceErrorResponse`-style schema no longer need a per-spec overlay to remove it first.
+        If the legacy schema is still referenced (a 2xx body, another schema, `apply-to: untyped`), the
+        error now lists the offending JSON Pointers.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.134.0
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI `allOf` required-ness when a branch lists a property in `required` that is defined
+        only by another (parent) branch. The property is now required on the composed type, so a
+        `nullable: true` property becomes required-nullable and round-trips `null` in generated SDKs.
+        Multi-level `allOf` chains are handled; properties required in no branch stay optional.
+      type: fix
+    - summary: |
+        When an OpenAPI `allOf` parent is inlined into a type or request body because of a property
+        conflict, the inlined properties now keep their metadata (`readOnly` filtering on write
+        request bodies, `x-fern-property-name`, `x-fern-audiences`, `deprecated`, access, and XML
+        encoding) instead of being copied as bare type references.
+      type: fix
+    - summary: |
+        Fix `fern check` reporting duplicate properties when an OpenAPI schema with a `nullable: true`
+        `allOf` parent lists parent-defined properties in its own top-level `required`. The nullable
+        parent is now inlined (instead of being kept in `extends` alongside the redeclared property).
+      type: fix
+    - summary: |
+        The OpenAPI importer used for SDK generation now honors `4XX` and `5XX` wildcard error
+        responses instead of silently dropping them. Wildcards are imported as `ClientRequestError`
+        (covers 400-499) and `ServerError` (covers 500-599), and a concrete status code declared
+        alongside a wildcard always takes precedence. Fern Definition `errors` now accept
+        `status-code: 4XX` / `status-code: 5XX` as well.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.133.0
+  changelogEntry:
+    - summary: |
+        The CLI now sends an `X-Fern-Agent` header on every FDR, Venus and Fiddle request
+        (and tags its own telemetry events with `agent`) when run from a coding agent
+        (Claude Code, Cursor, Codex, Devin, Gemini CLI), so agent-driven usage such as
+        docs publishes can be measured separately from human usage.
+      type: internal
+    - summary: |
+        `fern init --docs` now produces a project that builds with no further edits. When no API
+        definition exists in the fern folder, it scaffolds `pages/welcome.mdx` and points the
+        navigation at it instead of emitting an `api:` item with nothing to render. `fern check`
+        also reports a new `api-section-has-definition` error when an `api:` navigation item does
+        not resolve to any API definition, instead of passing and then failing at build time.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.132.0
+  changelogEntry:
+    - summary: |
+        Add an `error-responses` OpenAPI setting that applies a single error body schema (e.g. RFC 9457
+        Problem Details) to the 4xx/5xx responses of every operation in a spec, so per-spec overlays are no
+        longer needed to type error responses.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                error-responses:
+                  schema: errors/problem_details.yml   # file path or inline schema
+                  name: ProblemDetails                 # generated type name (defaults to the schema title)
+                  apply-to: all                        # `all` (default) or `untyped`
+                  ensure:
+                    - status-code: 422
+                      methods: [post, put, patch]
+        ```
+
+        `apply-to: all` replaces the body of every error response; `untyped` only fills in responses that
+        declare no body schema. `ensure` adds the listed status codes to operations that do not declare them.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 5.131.3
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 5.131.2
+  changelogEntry:
+    - summary: |
+        Route generators.yml `version: latest` through sdk-gen-api as an unpinned Fern generator request.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 5.131.1
+  changelogEntry:
+    - summary: |
+        Preserve omitted SDK Config generator versions so sdk-gen-api can resolve the latest generator server-side.
+      type: fix
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.131.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.current-page` docs.yml setting. When set to true,
+        the current page is appended to the breadcrumb trail above the page title as a
+        non-clickable item. Defaults to false.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.130.0
+  changelogEntry:
+    - summary: |
+        Add `output: { location: fern-hosted, slug: <slug> }` to `generators.yml` for
+        `fernapi/fern-mcp-server`. `fern generate` builds the MCP server through sdk-gen-api,
+        deploys it to Fern's hosted MCP platform, and prints the server URL. `slug` is optional
+        (default `mcp`) and supports `${ENV_VAR}` substitution.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 5.129.0
+  changelogEntry:
+    - summary: |
+        Add `settings.embedding.allowed-origins` to docs.yml. Origins listed there may embed the
+        docs site in an iframe (they are appended to the `frame-ancestors` directive of the
+        Content-Security-Policy header). By default only the site itself may frame it.
+      type: feat
+  createdAt: "2026-09-18"
+  irVersion: 67
 - version: 5.128.4
   changelogEntry:
     - summary: |

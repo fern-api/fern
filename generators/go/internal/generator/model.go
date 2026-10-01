@@ -37,8 +37,12 @@ func (f *fileWriter) WriteType(
 		includeRawJSON:               includeRawJSON,
 		gettersPassByValue:           f.gettersPassByValue,
 		dedupeUnionBaseProperties:    f.dedupeUnionBaseProperties,
+		xml:                          typeDeclaration.Encoding.GetXml(),
+		docs:                         typeDeclaration.Docs,
 	}
-	f.WriteDocs(typeDeclaration.Docs)
+	if typeDeclaration.Shape.Object == nil {
+		f.WriteDocs(typeDeclaration.Docs)
+	}
 	return typeDeclaration.Shape.Accept(visitor)
 }
 
@@ -55,6 +59,13 @@ type typeVisitor struct {
 	alwaysSendRequiredProperties bool
 	gettersPassByValue           bool
 	dedupeUnionBaseProperties    bool
+
+	// xml is set if the type is xml-encoded.
+	xml *ir.XmlEncoding
+
+	// docs is written by VisitObject directly above the struct declaration
+	// so that godoc attaches it to the type.
+	docs *string
 }
 
 // Compile-time assertion.
@@ -148,7 +159,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	var propertyNames []string
 	var propertyTypes []string
 	var propertySafeNames []string
-	var requiredNullableProperties []requiredNullableProperty
+	var nullableProperties []nullableProperty
+	var requiredNullableWireNames []string
+	var optionalNullableWireNames []string
 
 	// Collect property names and types from extended objects recursively
 	var collectProperties func(*ir.ObjectTypeDeclaration)
@@ -171,11 +184,19 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
 				propertyTypes = append(propertyTypes, goType)
-				if isNullableType(property.ValueType, t.writer.types) {
-					requiredNullableProperties = append(requiredNullableProperties, requiredNullableProperty{
+				isRequiredNullable := isNullableType(property.ValueType, t.writer.types)
+				isOptionalNullable := !isRequiredNullable && isOptionalNullableType(property.ValueType, t.writer.types)
+				if isRequiredNullable || isOptionalNullable {
+					nullableProperties = append(nullableProperties, nullableProperty{
 						wireValue:    property.Name.WireValue,
 						constantName: fieldBitConstantName(t.typeName, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)),
 					})
+				}
+				if isRequiredNullable {
+					requiredNullableWireNames = append(requiredNullableWireNames, property.Name.WireValue)
+				}
+				if isOptionalNullable {
+					optionalNullableWireNames = append(optionalNullableWireNames, property.Name.WireValue)
 				}
 			}
 		}
@@ -185,8 +206,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 	// Write bigint constants for struct properties
 	t.writer.WriteStructPropertyBitConstants(t.typeName, propertyNames)
-	requiredNullableFieldsName := writeRequiredNullableFields(t.writer, t.typeName, requiredNullableProperties)
+	nullableFieldsName := writeNullableFields(t.writer, t.typeName, nullableProperties)
 
+	t.writer.WriteDocs(t.docs)
 	t.writer.P("type ", t.typeName, " struct {")
 	objectProperties := t.visitObjectProperties(
 		object,
@@ -218,10 +240,27 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	if t.includeRawJSON {
 		t.writer.P("rawJSON json.RawMessage")
 	}
+	if t.xml != nil {
+		t.writer.P()
+		t.writer.P("// ", xmlExtraAttributesField, " holds XML attributes not declared in the API definition.")
+		t.writer.P(xmlExtraAttributesField, " map[string]string `json:\"-\" url:\"-\"`")
+		t.writer.P("// ", xmlExtraChildrenField, " holds XML child elements not declared in the API definition.")
+		t.writer.P(xmlExtraChildrenField, " []core.XmlNode `json:\"-\" url:\"-\"`")
+	}
 	t.writer.P("}")
 	t.writer.P()
 
 	receiver := typeNameToReceiver(t.typeName)
+
+	if t.xml != nil {
+		fieldNames := make(map[string]struct{}, len(propertyNames))
+		for _, propertyName := range propertyNames {
+			fieldNames[propertyName] = struct{}{}
+		}
+		if err := t.writeXmlObjectMethods(object, t.xml, fieldNames); err != nil {
+			return err
+		}
+	}
 
 	// Implement the getter methods.
 	typeFields := t.getTypeFieldsForObject(object)
@@ -287,12 +326,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.AddStringMethodTest(t.typeName)
 	if len(objectProperties.literals) == 0 {
 		// Literal fields must be present with a specific value, so the round-trip
-		// inputs (which only contain the required-nullable keys) can't be decoded.
-		requiredNullableWireNames := make([]string, 0, len(requiredNullableProperties))
-		for _, property := range requiredNullableProperties {
-			requiredNullableWireNames = append(requiredNullableWireNames, property.wireValue)
-		}
+		// inputs (which only contain the nullable keys) can't be decoded.
 		t.writer.AddRequiredNullableRoundTripTest(t.typeName, requiredNullableWireNames)
+		t.writer.AddOptionalNullableRoundTripTest(t.typeName, optionalNullableWireNames)
 	}
 
 	// Objects always have GetExtraProperties method, add tests for it
@@ -309,7 +345,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P("}")
 		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
-		writeRequireFieldsFromJSON(t.writer, receiver, requiredNullableFieldsName)
+		writeRequireFieldsFromJSON(t.writer, receiver, nullableFieldsName)
 		if t.includeRawJSON {
 			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
@@ -347,7 +383,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = unmarshaler.", literal.Name.Name.PascalCase.UnsafeName)
 		}
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
-		writeRequireFieldsFromJSON(t.writer, receiver, requiredNullableFieldsName)
+		writeRequireFieldsFromJSON(t.writer, receiver, nullableFieldsName)
 		if t.includeRawJSON {
 			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
@@ -1020,6 +1056,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		isList     bool
 		date       *date
 
+		// Optional; only applies to object members that disallow extra properties.
+		strictKeys *strictObjectKeys
+		// isPermissiveObject is true for object members that accept unknown keys.
+		isPermissiveObject bool
+
 		// Optional; only applies to date[-time] values.
 		valueMarshalerValue          string
 		valueUnmarshalerTypeName     string
@@ -1027,6 +1068,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 	var members []*member
 	var hasLiteral bool
+	var hasStrictObject bool
 	for _, unionMember := range union.Members {
 		field := typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types, scope)
 		var typeName string
@@ -1055,6 +1097,16 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			valueUnmarshalerTypeName     = ""
 			valueUnmarshalerMethodSuffix = ""
 		)
+		var (
+			strictKeys         *strictObjectKeys
+			isPermissiveObject bool
+		)
+		if typeName != "" {
+			strictKeys = getStrictObjectKeys(typeName, t.writer.types)
+			isPermissiveObject = strictKeys == nil && resolveObjectTypeDeclaration(typeName, t.writer.types) != nil
+		}
+		hasStrictObject = hasStrictObject || strictKeys != nil
+
 		if date != nil {
 			valueMarshalerValue = fmt.Sprintf("%s(%s.%s)", date.Constructor, receiver, field)
 			valueUnmarshalerTypeName = date.TypeDeclaration
@@ -1077,6 +1129,8 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				isOptional:                   isOptional,
 				isList:                       isList,
 				date:                         date,
+				strictKeys:                   strictKeys,
+				isPermissiveObject:           isPermissiveObject,
 				valueMarshalerValue:          valueMarshalerValue,
 				valueUnmarshalerTypeName:     valueUnmarshalerTypeName,
 				valueUnmarshalerMethodSuffix: valueUnmarshalerMethodSuffix,
@@ -1118,8 +1172,15 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 
 	// Implement the json.Unmarshaler interface.
+	//
+	// Members are tried in order, and the first one that decodes wins. Object members that
+	// disallow extra properties are only tried when the JSON object's keys match the member's
+	// properties, and permissive object members are skipped when a later strict member matches,
+	// so that an earlier object member doesn't absorb every JSON object. If no member decodes,
+	// strict object members are retried when their required keys are present, and finally
+	// without any key check.
 	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-	for _, member := range members {
+	writeMemberUnmarshal := func(member *member, guard string) {
 		value := member.value
 		if member.valueUnmarshalerTypeName != "" {
 			value = member.valueUnmarshalerTypeName
@@ -1128,6 +1189,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
 			format = member.variable + " := new(%s)"
 			value = strings.TrimLeft(value, "*")
+		}
+		if guard != "" {
+			t.writer.P("if ", guard, " {")
 		}
 		t.writer.P(fmt.Sprintf(format, value))
 		t.writer.P("if err := json.Unmarshal(data, &", member.variable, "); err == nil {")
@@ -1141,16 +1205,51 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("}")
 			t.writer.P("return nil")
 			t.writer.P("}")
-			continue
+		} else {
+			variable := member.variable
+			if member.valueUnmarshalerMethodSuffix != "" {
+				variable += member.valueUnmarshalerMethodSuffix
+			}
+			t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
+			t.writer.P(receiver, ".", member.field, " = ", variable)
+			t.writer.P("return nil")
+			t.writer.P("}")
 		}
-		variable := member.variable
-		if member.valueUnmarshalerMethodSuffix != "" {
-			variable += member.valueUnmarshalerMethodSuffix
+		if guard != "" {
+			t.writer.P("}")
 		}
-		t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
-		t.writer.P(receiver, ".", member.field, " = ", variable)
-		t.writer.P("return nil")
-		t.writer.P("}")
+	}
+	matchesObjectKeys := func(keys *strictObjectKeys) string {
+		return "internal.MatchesObjectKeys(data, " + stringSliceLiteral(keys.known) + ", " + stringSliceLiteral(keys.required) + ")"
+	}
+	var fallbackMembers []*member
+	for i, member := range members {
+		var guard string
+		switch {
+		case member.strictKeys != nil:
+			guard = matchesObjectKeys(member.strictKeys)
+			fallbackMembers = append(fallbackMembers, member)
+		case member.isPermissiveObject:
+			var laterMatches []string
+			for _, later := range members[i+1:] {
+				if later.strictKeys != nil {
+					laterMatches = append(laterMatches, matchesObjectKeys(later.strictKeys))
+				}
+			}
+			if len(laterMatches) > 0 {
+				guard = "!(" + strings.Join(laterMatches, " || ") + ")"
+				fallbackMembers = append(fallbackMembers, member)
+			}
+		}
+		writeMemberUnmarshal(member, guard)
+	}
+	for _, member := range fallbackMembers {
+		if member.strictKeys != nil && len(member.strictKeys.required) > 0 {
+			writeMemberUnmarshal(member, "internal.HasObjectKeys(data, "+stringSliceLiteral(member.strictKeys.required)+")")
+		}
+	}
+	for _, member := range fallbackMembers {
+		writeMemberUnmarshal(member, "")
 	}
 	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, `, receiver, ")")
 	t.writer.P("}")
@@ -1308,7 +1407,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		})
 	}
 
-	return nil
+	return t.writeXmlUnionMethods(union)
 }
 
 // undiscriminatedUnionTypeReferenceVisitor retrieves the string representation of type references
@@ -1464,6 +1563,68 @@ func resolveObjectTypeDeclaration(
 		}
 		return nil
 	}
+}
+
+// strictObjectKeys holds the JSON keys an object type accepts, and the subset it requires.
+type strictObjectKeys struct {
+	known    []string
+	required []string
+}
+
+// getStrictObjectKeys returns the JSON keys for the given object type or alias to an object type
+// (including the properties it extends), or nil if the type isn't an object or allows extra properties.
+func getStrictObjectKeys(
+	typeId common.TypeId,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *strictObjectKeys {
+	object := resolveObjectTypeDeclaration(typeId, types)
+	if object == nil {
+		return nil
+	}
+	keys := &strictObjectKeys{}
+	if !collectStrictObjectKeys(object, types, keys, make(map[*ir.ObjectTypeDeclaration]struct{})) {
+		return nil
+	}
+	return keys
+}
+
+func collectStrictObjectKeys(
+	object *ir.ObjectTypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
+	keys *strictObjectKeys,
+	seen map[*ir.ObjectTypeDeclaration]struct{},
+) bool {
+	// Each object is visited once, so an object that is extended through multiple paths
+	// (or cyclically) only contributes its keys once.
+	if _, ok := seen[object]; ok {
+		return true
+	}
+	seen[object] = struct{}{}
+	if object.ExtraProperties {
+		return false
+	}
+	for _, extend := range object.Extends {
+		extendedObject := resolveObjectTypeDeclaration(extend.TypeId, types)
+		if extendedObject == nil || !collectStrictObjectKeys(extendedObject, types, keys, seen) {
+			return false
+		}
+	}
+	for _, property := range object.Properties {
+		keys.known = append(keys.known, property.Name.WireValue)
+		if property.ValueType.Unknown == nil && !isOptionalType(property.ValueType, types) {
+			keys.required = append(keys.required, property.Name.WireValue)
+		}
+	}
+	return true
+}
+
+// stringSliceLiteral returns the Go source for a []string literal containing the given values.
+func stringSliceLiteral(values []string) string {
+	quoted := make([]string, len(values))
+	for i, value := range values {
+		quoted[i] = fmt.Sprintf("%q", value)
+	}
+	return "[]string{" + strings.Join(quoted, ", ") + "}"
 }
 
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
@@ -2348,27 +2509,28 @@ func singleUnionTypePropertiesToInitializer(
 	return visitor.value
 }
 
-// requiredNullableProperty is a required, nullable object property whose
-// presence in incoming JSON must be tracked so that an explicit null survives
-// a decode/encode round-trip.
-type requiredNullableProperty struct {
+// nullableProperty is a nullable object property (either required, e.g.
+// nullable<T>, or optional, e.g. optional<nullable<T>>) whose presence in
+// incoming JSON must be tracked so that an explicit null survives a
+// decode/encode round-trip.
+type nullableProperty struct {
 	wireValue    string
 	constantName string
 }
 
-// writeRequiredNullableFields writes the wire name to field bit mapping for
-// the given type's required-nullable properties, and returns the variable name.
-// Returns an empty string if the type has no required-nullable properties.
-func writeRequiredNullableFields(
+// writeNullableFields writes the wire name to field bit mapping for the given
+// type's nullable properties, and returns the variable name. Returns an empty
+// string if the type has no nullable properties.
+func writeNullableFields(
 	f *fileWriter,
 	typeName string,
-	properties []requiredNullableProperty,
+	properties []nullableProperty,
 ) string {
 	if len(properties) == 0 {
 		return ""
 	}
-	variableName := strings.ToLower(typeName[:1]) + typeName[1:] + "RequiredNullableFields"
-	f.P("// ", variableName, " maps the wire names of ", typeName, "'s required, nullable fields to their field bits.")
+	variableName := strings.ToLower(typeName[:1]) + typeName[1:] + "NullableFields"
+	f.P("// ", variableName, " maps the wire names of ", typeName, "'s nullable fields (required or optional) to their field bits.")
 	f.P("var ", variableName, " = map[string]*big.Int{")
 	for _, property := range properties {
 		f.P(fmt.Sprintf("%q: %s,", property.wireValue, property.constantName))
@@ -2379,17 +2541,18 @@ func writeRequiredNullableFields(
 }
 
 // writeRequireFieldsFromJSON writes the UnmarshalJSON logic that marks every
-// required-nullable field present in the incoming JSON as explicitly set, so
-// that a null value is preserved when the value is marshaled again.
+// nullable field present in the incoming JSON as explicitly set, so that a
+// null value is preserved when the value is marshaled again. Fields absent
+// from the incoming JSON are left unset, and so remain omitted.
 func writeRequireFieldsFromJSON(
 	f *fileWriter,
 	receiver string,
-	requiredNullableFieldsName string,
+	nullableFieldsName string,
 ) {
-	if requiredNullableFieldsName == "" {
+	if nullableFieldsName == "" {
 		return
 	}
-	f.P("presentFields, err := internal.ExplicitFieldsFromJSON(data, ", requiredNullableFieldsName, ")")
+	f.P("presentFields, err := internal.ExplicitFieldsFromJSON(data, ", nullableFieldsName, ")")
 	f.P("if err != nil {")
 	f.P("return err")
 	f.P("}")
@@ -2498,8 +2661,17 @@ func isAliasToPointerType(typeId common.TypeId, types map[common.TypeId]*ir.Type
 			return false
 		}
 		aliasOf := td.Shape.Alias.AliasOf
-		if aliasOf.Container != nil && (aliasOf.Container.Optional != nil || aliasOf.Container.Nullable != nil) {
-			return true
+		if inner := getOptionalOrNullableContainer(aliasOf); inner != nil {
+			// Lists, maps, sets, and unknown values are already nil-able, so an
+			// optional/nullable alias of them renders without a pointer.
+			for {
+				next := getOptionalOrNullableContainer(inner)
+				if next == nil {
+					break
+				}
+				inner = next
+			}
+			return isTypeReferencePointerRequired(inner)
 		}
 		if aliasOf.Named != nil {
 			typeId = aliasOf.Named.TypeId

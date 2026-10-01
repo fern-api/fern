@@ -44,9 +44,10 @@ export interface Endpoint
     response: FernOpenapiIr.Response | undefined;
     /**
      * Expected error status codes for this endpoint, and their corresponding schema and examples.
+     * Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
      * SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
      */
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
+    errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpError>;
     servers: FernOpenapiIr.HttpEndpointServer[];
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;

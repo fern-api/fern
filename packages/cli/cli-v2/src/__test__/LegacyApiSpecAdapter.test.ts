@@ -127,6 +127,28 @@ describe("LegacyApiSpecAdapter", () => {
             });
         });
 
+        it("maps errorResponses settings with camelCase to kebab-case conversion", () => {
+            const spec: OpenApiSpec = {
+                openapi: AbsoluteFilePath.of("/test/path/openapi.yml"),
+                settings: {
+                    errorResponses: {
+                        schema: "/test/path/errors/problem_details.yml",
+                        name: "ProblemDetails",
+                        applyTo: "untyped",
+                        ensure: [{ statusCode: 422, methods: ["post", "put"] }, { statusCode: 401 }]
+                    }
+                }
+            };
+
+            const result = convertOpenApi(spec);
+            expect(result.settings?.errorResponses).toEqual({
+                schema: "/test/path/errors/problem_details.yml",
+                name: "ProblemDetails",
+                "apply-to": "untyped",
+                ensure: [{ "status-code": 422, methods: ["post", "put"] }, { "status-code": 401 }]
+            });
+        });
+
         it("maps resolveAliases boolean correctly", () => {
             const spec: OpenApiSpec = {
                 openapi: AbsoluteFilePath.of("/test/path/openapi.yml"),

@@ -8,7 +8,7 @@ import com.seed.multiLineDocs.core.Suppliers;
 import com.seed.multiLineDocs.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedMultiLineDocsClient {
+public class AsyncSeedMultiLineDocsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUserClient> userClient;
@@ -20,6 +20,15 @@ public class AsyncSeedMultiLineDocsClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedMultiLineDocsClientBuilder builder() {

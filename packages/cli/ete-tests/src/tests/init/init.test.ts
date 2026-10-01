@@ -6,7 +6,7 @@ import {
     join,
     RelativeFilePath
 } from "@fern-api/fs-utils";
-import { copyFile } from "fs/promises";
+import { copyFile, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
@@ -193,6 +193,45 @@ describe("fern init", () => {
         await runFernCli(["init", "--docs", "--organization", "fern"], { cwd: pathOfDirectory, signal });
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
+    }, 180_000);
+
+    it.concurrent("init docs in an empty directory builds without edits", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+
+        await runFernCli(["init", "--docs", "--organization", "fern"], { cwd: pathOfDirectory, signal });
+        await runFernCli(["check"], { cwd: pathOfDirectory, signal });
+        await runFernCli(["write-docs-definition", "docs-definition.json"], { cwd: pathOfDirectory, signal });
+
+        expect(
+            await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("fern"), RelativeFilePath.of("docs.yml")))
+        ).toBe(true);
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("docs-definition.json")))).toBe(true);
+        expect(
+            await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
+        ).toMatchSnapshot();
+    }, 180_000);
+
+    it.concurrent("check fails when docs reference an api that does not exist", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+
+        await runFernCli(["init", "--docs", "--organization", "fern"], { cwd: pathOfDirectory, signal });
+        await writeFile(
+            join(pathOfDirectory, RelativeFilePath.of("fern"), RelativeFilePath.of("docs.yml")),
+            [
+                "instances:",
+                "  - url: https://fern.docs.buildwithfern.com",
+                "title: Fern | Documentation",
+                "navigation:",
+                "  - api: API Reference",
+                ""
+            ].join("\n")
+        );
+
+        const result = await runFernCli(["check"], { cwd: pathOfDirectory, reject: false, signal });
+        expect(result.exitCode).not.toBe(0);
+        expect(result.stdout + result.stderr).toContain("does not resolve to an API definition");
     }, 180_000);
 
     it.concurrent("init mintlify", async ({ expect, signal }) => {

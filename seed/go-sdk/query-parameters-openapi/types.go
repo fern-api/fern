@@ -329,17 +329,21 @@ func (s *SearchRequestNeighbor) GetInteger() int {
 }
 
 func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
-	valueUser := new(User)
-	if err := json.Unmarshal(data, &valueUser); err == nil {
-		s.typ = "User"
-		s.User = valueUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "tags"}, []string{}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			s.typ = "User"
+			s.User = valueUser
+			return nil
+		}
 	}
-	valueNestedUser := new(NestedUser)
-	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
-		s.typ = "NestedUser"
-		s.NestedUser = valueNestedUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "user"}, []string{}) {
+		valueNestedUser := new(NestedUser)
+		if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+			s.typ = "NestedUser"
+			s.NestedUser = valueNestedUser
+			return nil
+		}
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
@@ -351,6 +355,18 @@ func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
 		s.typ = "Integer"
 		s.Integer = valueInteger
+		return nil
+	}
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
@@ -456,17 +472,21 @@ func (s *SearchRequestNeighborRequired) GetInteger() int {
 }
 
 func (s *SearchRequestNeighborRequired) UnmarshalJSON(data []byte) error {
-	valueUser := new(User)
-	if err := json.Unmarshal(data, &valueUser); err == nil {
-		s.typ = "User"
-		s.User = valueUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "tags"}, []string{}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			s.typ = "User"
+			s.User = valueUser
+			return nil
+		}
 	}
-	valueNestedUser := new(NestedUser)
-	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
-		s.typ = "NestedUser"
-		s.NestedUser = valueNestedUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "user"}, []string{}) {
+		valueNestedUser := new(NestedUser)
+		if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+			s.typ = "NestedUser"
+			s.NestedUser = valueNestedUser
+			return nil
+		}
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
@@ -478,6 +498,18 @@ func (s *SearchRequestNeighborRequired) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
 		s.typ = "Integer"
 		s.Integer = valueInteger
+		return nil
+	}
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)

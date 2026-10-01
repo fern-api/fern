@@ -7,7 +7,7 @@ import com.seed.license.core.ClientOptions;
 import com.seed.license.core.RequestOptions;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedLicenseClient {
+public class AsyncSeedLicenseClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedLicenseClient rawClient;
@@ -30,6 +30,15 @@ public class AsyncSeedLicenseClient {
 
     public CompletableFuture<Void> get(RequestOptions requestOptions) {
         return this.rawClient.get(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedLicenseClientBuilder builder() {

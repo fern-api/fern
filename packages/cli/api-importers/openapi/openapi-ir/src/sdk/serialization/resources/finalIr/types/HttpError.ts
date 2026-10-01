@@ -11,6 +11,7 @@ import { ErrorExample } from "./ErrorExample.js";
 export const HttpError: core.serialization.ObjectSchema<serializers.HttpError.Raw, FernOpenapiIr.HttpError> =
     core.serialization
         .objectWithoutOptionalProperties({
+            isWildcardStatusCode: core.serialization.boolean().optional(),
             schema: core.serialization.lazy(() => serializers.Schema).optional(),
             examples: core.serialization.list(ErrorExample).optional(),
             namespace: core.serialization.string().optional(),
@@ -21,6 +22,7 @@ export const HttpError: core.serialization.ObjectSchema<serializers.HttpError.Ra
 
 export declare namespace HttpError {
     export interface Raw extends WithDescription.Raw, WithName.Raw, WithSource.Raw {
+        isWildcardStatusCode?: boolean | null;
         schema?: serializers.Schema.Raw | null;
         examples?: ErrorExample.Raw[] | null;
         namespace?: string | null;

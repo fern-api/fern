@@ -9,7 +9,7 @@ import com.seed.websocketAuth.resources.auth.AsyncAuthClient;
 import com.seed.websocketAuth.resources.realtime.AsyncRealtimeClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedWebsocketAuthClient {
+public class AsyncSeedWebsocketAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -28,6 +28,15 @@ public class AsyncSeedWebsocketAuthClient {
 
     public AsyncRealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedWebsocketAuthClientBuilder builder() {

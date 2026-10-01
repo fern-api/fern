@@ -14,4 +14,6 @@ export interface ApiSpecConfiguration {
     overlays?: string;
     /** Paths to Fern override documents, relative to docs.yml. */
     overrides?: string[];
+    /** Import settings that affect the rendered API reference. */
+    settings?: FernDocsConfig.ApiSpecImportSettings;
 }

@@ -9,7 +9,7 @@ import com.seed.validation.requests.CreateRequest;
 import com.seed.validation.requests.GetRequest;
 import com.seed.validation.types.Type;
 
-public class SeedValidationClient {
+public class SeedValidationClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedValidationClient rawClient;
@@ -40,6 +40,15 @@ public class SeedValidationClient {
 
     public Type get(GetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedValidationClientBuilder builder() {

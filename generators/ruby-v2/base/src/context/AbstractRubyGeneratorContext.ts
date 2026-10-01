@@ -69,6 +69,29 @@ export abstract class AbstractRubyGeneratorContext<
         return this.ir.types[typeId];
     }
 
+    /**
+     * Whether any object type is xml-encoded; controls inclusion of the XML runtime and its `rexml` dependency.
+     */
+    public hasXmlTypes(): boolean {
+        return Object.values(this.ir.types).some(
+            (typeDeclaration) => typeDeclaration.shape.type === "object" && typeDeclaration.encoding?.xml != null
+        );
+    }
+
+    public getXmlSerializableReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Serializable",
+            modules: [this.getRootModuleName(), "Internal", "Xml"]
+        });
+    }
+
+    public getXmlElementReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Element",
+            modules: [this.getRootModuleName(), "Internal", "Xml"]
+        });
+    }
+
     public getRootFolderName(): string {
         // Use custom config moduleName if set, otherwise snake_case the organization name
         // Note: packageName from publish config is NOT used here - it's only for the gemspec name

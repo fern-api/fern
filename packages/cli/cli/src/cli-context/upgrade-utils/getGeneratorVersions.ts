@@ -7,12 +7,17 @@ import {
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
-import { isVersionAhead } from "@fern-api/semver-utils";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
-
+import {
+    compareGeneratorVersions,
+    createSdkGenApiTokenProvider,
+    GetSdkGenApiToken,
+    getSdkGenApiGeneratorVersions
+} from "../../commands/upgrade/getSdkGenApiGeneratorVersions.js";
 import { CliContext } from "../CliContext.js";
 
 export interface FernGeneratorUpgradeInfo {
@@ -44,7 +49,7 @@ export type GeneratorVersions = MultiApiWorkspaceGeneratorVersions | SingleApiWo
 
 export async function getLatestGeneratorVersions({
     cliContext,
-    project: { apiWorkspaces },
+    project,
     generatorFilter,
     groupFilter,
     channel,
@@ -57,6 +62,8 @@ export async function getLatestGeneratorVersions({
     channel?: ReleaseType;
     includeMajor?: boolean;
 }): Promise<GeneratorVersions> {
+    const { apiWorkspaces } = project;
+    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
     if (apiWorkspaces.length === 1) {
         const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} };
         await processGeneratorsYml({
@@ -73,12 +80,15 @@ export async function getLatestGeneratorVersions({
                     return;
                 }
 
-                const latestVersion = await getLatestGeneratorVersion({
-                    generatorName: normalizedGeneratorName,
+                const latestVersion = await lookupLatestGeneratorVersion({
+                    generatorName: generator.name,
+                    normalizedGeneratorName,
                     cliVersion: cliContext.environment.packageVersion,
                     currentGeneratorVersion: generator.version,
                     channel,
                     includeMajor,
+                    organization: project.config.organization,
+                    getSdkGenApiToken,
                     context
                 });
 
@@ -120,12 +130,15 @@ export async function getLatestGeneratorVersions({
                 return;
             }
 
-            const latestVersion = await getLatestGeneratorVersion({
-                generatorName: normalizedGeneratorName,
+            const latestVersion = await lookupLatestGeneratorVersion({
+                generatorName: generator.name,
+                normalizedGeneratorName,
                 cliVersion: cliContext.environment.packageVersion,
                 currentGeneratorVersion: generator.version,
                 channel,
                 includeMajor,
+                organization: project.config.organization,
+                getSdkGenApiToken,
                 context
             });
 
@@ -203,15 +216,12 @@ export function processGeneratorGroups(
     for (const [groupName, group] of Object.entries(groups)) {
         for (const [generatorName, generatorVersions] of Object.entries(group)) {
             logger.debug(`Checking if ${generatorName} in group ${groupName} has an upgrade available...`);
-            let isUpgradeAvailable: boolean;
-            try {
-                isUpgradeAvailable = isVersionAhead(generatorVersions.latestVersion, generatorVersions.previousVersion);
-            } catch {
-                throw new CliError({
-                    message: `Generator "${generatorName}" has an invalid version "${generatorVersions.previousVersion}" in generators.yml. Use an exact version like 1.2.3.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
+            const isUpgradeAvailable =
+                compareGeneratorVersions({
+                    generatorId: generatorName,
+                    candidateVersion: generatorVersions.latestVersion,
+                    currentVersion: generatorVersions.previousVersion
+                }) === 1;
 
             logger.debug(
                 `Latest version: ${generatorVersions.latestVersion}. ` +
@@ -229,6 +239,53 @@ export function processGeneratorGroups(
         }
     }
     return upgradeInfo;
+}
+
+async function lookupLatestGeneratorVersion({
+    generatorName,
+    normalizedGeneratorName,
+    cliVersion,
+    currentGeneratorVersion,
+    channel,
+    includeMajor,
+    organization,
+    getSdkGenApiToken,
+    context
+}: {
+    generatorName: string;
+    normalizedGeneratorName: string;
+    cliVersion: string;
+    currentGeneratorVersion: string;
+    channel?: ReleaseType;
+    includeMajor?: boolean;
+    organization: string;
+    getSdkGenApiToken?: GetSdkGenApiToken;
+    context: TaskContext;
+}): Promise<string | undefined> {
+    if (isFernSdkGenApiEnabled()) {
+        if (getSdkGenApiToken == null) {
+            throw new Error("SDK Gen API generator version discovery requires authentication");
+        }
+        return (
+            await getSdkGenApiGeneratorVersions({
+                generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
+                currentVersion: currentGeneratorVersion,
+                includeMajor: includeMajor ?? false,
+                channel,
+                organization,
+                getToken: getSdkGenApiToken,
+                context
+            })
+        ).compatibleVersion;
+    }
+    return getLatestGeneratorVersion({
+        generatorName: normalizedGeneratorName,
+        cliVersion,
+        currentGeneratorVersion,
+        channel,
+        includeMajor,
+        context
+    });
 }
 
 export async function getProjectGeneratorUpgrades({

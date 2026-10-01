@@ -24,6 +24,7 @@ import { UrlUtilsImpl } from "./UrlUtils.js";
 import { UtilsImpl } from "./Utils.js";
 import { WebhookCryptoImpl } from "./WebhookCrypto.js";
 import { WebsocketImpl } from "./Websocket.js";
+import { XmlImpl } from "./Xml.js";
 import { ZurgImpl } from "./Zurg.js";
 
 export declare namespace CoreUtilitiesManager {
@@ -147,6 +148,10 @@ export class CoreUtilitiesManager {
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
             webhookCrypto: new WebhookCryptoImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            xml: new XmlImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             })

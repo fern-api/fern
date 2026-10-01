@@ -5,11 +5,20 @@ package com.seed.manyProperties;
 
 import com.seed.manyProperties.core.ClientOptions;
 
-public class AsyncSeedManyPropertiesClient {
+public class AsyncSeedManyPropertiesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public AsyncSeedManyPropertiesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedManyPropertiesClientBuilder builder() {

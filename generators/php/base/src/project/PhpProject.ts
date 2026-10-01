@@ -362,6 +362,7 @@ class ComposerJson {
             require: {
                 php: "^8.1",
                 "ext-json": "*",
+                ...(this.context.hasXmlTypes() ? { "ext-dom": "*", "ext-libxml": "*" } : {}),
                 "psr/http-client": "^1.0",
                 "psr/http-client-implementation": "^1.0",
                 "psr/http-factory": "^1.0",

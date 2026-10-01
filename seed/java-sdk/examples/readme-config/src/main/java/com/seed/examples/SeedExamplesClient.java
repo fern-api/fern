@@ -13,7 +13,7 @@ import com.seed.examples.types.Identifier;
 import com.seed.examples.types.Type;
 import java.util.function.Supplier;
 
-public class SeedExamplesClient {
+public class SeedExamplesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedExamplesClient rawClient;
@@ -65,6 +65,15 @@ public class SeedExamplesClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedExamplesClientBuilder builder() {

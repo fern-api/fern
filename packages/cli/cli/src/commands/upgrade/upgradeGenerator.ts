@@ -7,6 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
@@ -16,6 +17,12 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import {
+    compareGeneratorVersions,
+    createSdkGenApiTokenProvider,
+    GetSdkGenApiToken,
+    getSdkGenApiGeneratorVersions
+} from "./getSdkGenApiGeneratorVersions.js";
 import { loadAndRunMigrations } from "./migrations/index.js";
 
 interface SkippedMajorUpgrade {
@@ -37,6 +44,14 @@ interface AlreadyUpToDate {
     generatorName: string;
     groupName: string;
     version: string;
+}
+
+interface StaleCandidate {
+    generatorName: string;
+    groupName: string;
+    currentVersion: string;
+    candidateVersion: string;
+    backend: "SDK Gen API" | "FDR";
 }
 
 interface SkippedAutoreleaseDisabled {
@@ -68,7 +83,9 @@ export async function loadAndUpdateGenerators({
     includeMajor,
     skipAutoreleaseDisabled,
     channel,
-    cliVersion
+    cliVersion,
+    organization,
+    getSdkGenApiToken
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -78,11 +95,14 @@ export async function loadAndUpdateGenerators({
     skipAutoreleaseDisabled: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
+    organization: string;
+    getSdkGenApiToken?: GetSdkGenApiToken;
 }): Promise<{
     updatedConfiguration: string | undefined;
     skippedMajorUpgrades: SkippedMajorUpgrade[];
     appliedUpgrades: AppliedUpgrade[];
     alreadyUpToDate: AlreadyUpToDate[];
+    staleCandidates: StaleCandidate[];
     skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[];
 }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
@@ -94,6 +114,7 @@ export async function loadAndUpdateGenerators({
             skippedMajorUpgrades: [],
             appliedUpgrades: [],
             alreadyUpToDate: [],
+            staleCandidates: [],
             skippedAutoreleaseDisabled: []
         };
     }
@@ -111,6 +132,7 @@ export async function loadAndUpdateGenerators({
             skippedMajorUpgrades: [],
             appliedUpgrades: [],
             alreadyUpToDate: [],
+            staleCandidates: [],
             skippedAutoreleaseDisabled: []
         };
     }
@@ -123,6 +145,7 @@ export async function loadAndUpdateGenerators({
             skippedMajorUpgrades: [],
             appliedUpgrades: [],
             alreadyUpToDate: [],
+            staleCandidates: [],
             skippedAutoreleaseDisabled: []
         };
     }
@@ -131,6 +154,7 @@ export async function loadAndUpdateGenerators({
     const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const appliedUpgrades: AppliedUpgrade[] = [];
     const alreadyUpToDate: AlreadyUpToDate[] = [];
+    const staleCandidates: StaleCandidate[] = [];
     const skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[] = [];
 
     for (const groupBlock of generatorGroups.items) {
@@ -220,21 +244,48 @@ export async function loadAndUpdateGenerators({
             }
 
             const currentGeneratorVersion = generator.get("version") as string;
+            const useSdkGenApi = isFernSdkGenApiEnabled();
+            if (useSdkGenApi && getSdkGenApiToken == null) {
+                throw new Error("SDK Gen API generator version discovery requires authentication");
+            }
+            let sdkGenApiVersions: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>> | undefined;
+            if (useSdkGenApi && getSdkGenApiToken != null) {
+                sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
+                    // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
+                    generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
+                    currentVersion: currentGeneratorVersion,
+                    includeMajor,
+                    channel,
+                    organization,
+                    getToken: getSdkGenApiToken,
+                    context
+                });
+            }
+            const latestVersion = useSdkGenApi
+                ? sdkGenApiVersions?.compatibleVersion
+                : await getLatestGeneratorVersion({
+                      generatorName: normalizedGeneratorName,
+                      cliVersion,
+                      currentGeneratorVersion,
+                      channel,
+                      includeMajor,
+                      context
+                  });
 
-            const latestVersion = await getLatestGeneratorVersion({
-                generatorName: normalizedGeneratorName,
-                cliVersion,
-                currentGeneratorVersion,
-                channel,
-                includeMajor,
-                context
-            });
-
-            // Use the latest version if available, otherwise use the current version
-            const versionToUse = latestVersion ?? currentGeneratorVersion;
+            const versionComparison =
+                latestVersion == null
+                    ? undefined
+                    : compareGeneratorVersions({
+                          generatorId: normalizedGeneratorName,
+                          candidateVersion: latestVersion,
+                          currentVersion: currentGeneratorVersion
+                      });
+            const upgradeAvailable = versionComparison === 1;
+            const candidateIsOlder = versionComparison === -1;
+            const versionToUse = upgradeAvailable && latestVersion != null ? latestVersion : currentGeneratorVersion;
 
             if (latestVersion != null) {
-                if (latestVersion !== currentGeneratorVersion) {
+                if (upgradeAvailable) {
                     context.logger.debug(
                         chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
                     );
@@ -292,6 +343,19 @@ export async function loadAndUpdateGenerators({
                         migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
                         migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
+                } else if (candidateIsOlder) {
+                    const backend = useSdkGenApi ? "SDK Gen API" : "FDR";
+                    staleCandidates.push({
+                        generatorName,
+                        groupName,
+                        currentVersion: currentGeneratorVersion,
+                        candidateVersion: latestVersion,
+                        backend
+                    });
+                    context.logger.warn(
+                        `Ignoring stale ${backend} candidate ${latestVersion} for ${generatorName}; ` +
+                            `the configured version ${currentGeneratorVersion} is newer.`
+                    );
                 } else {
                     // Generator is already on the latest version
                     context.logger.debug(
@@ -306,14 +370,16 @@ export async function loadAndUpdateGenerators({
             }
 
             if (!includeMajor) {
-                const latestMajorVersion = await getLatestGeneratorVersion({
-                    generatorName: normalizedGeneratorName,
-                    cliVersion,
-                    currentGeneratorVersion: versionToUse,
-                    channel,
-                    includeMajor: true,
-                    context
-                });
+                const latestMajorVersion = useSdkGenApi
+                    ? sdkGenApiVersions?.withheldMajorVersion
+                    : await getLatestGeneratorVersion({
+                          generatorName: normalizedGeneratorName,
+                          cliVersion,
+                          currentGeneratorVersion: versionToUse,
+                          channel,
+                          includeMajor: true,
+                          context
+                      });
 
                 if (latestMajorVersion != null) {
                     const currentParsed = semver.parse(versionToUse);
@@ -336,6 +402,7 @@ export async function loadAndUpdateGenerators({
         skippedMajorUpgrades,
         appliedUpgrades,
         alreadyUpToDate,
+        staleCandidates,
         skippedAutoreleaseDisabled
     };
 }
@@ -344,7 +411,7 @@ export async function upgradeGenerator({
     cliContext,
     generator,
     group,
-    project: { apiWorkspaces },
+    project,
     includeMajor,
     skipAutoreleaseDisabled,
     channel
@@ -357,9 +424,12 @@ export async function upgradeGenerator({
     skipAutoreleaseDisabled: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
+    const { apiWorkspaces } = project;
+    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
     const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];
+    const allStaleCandidates: Array<{ workspace: string | undefined; stale: StaleCandidate[] }> = [];
     const allSkippedAutoreleaseDisabled: Array<{
         workspace: string | undefined;
         skipped: SkippedAutoreleaseDisabled[];
@@ -394,7 +464,9 @@ export async function upgradeGenerator({
                     includeMajor,
                     skipAutoreleaseDisabled,
                     channel,
-                    cliVersion: cliContext.environment.packageVersion
+                    cliVersion: cliContext.environment.packageVersion,
+                    organization: project.config.organization,
+                    getSdkGenApiToken
                 });
 
                 const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({
@@ -416,6 +488,12 @@ export async function upgradeGenerator({
                     allAlreadyUpToDate.push({
                         workspace: workspace.workspaceName,
                         upToDate: result.alreadyUpToDate
+                    });
+                }
+                if (result.staleCandidates.length > 0) {
+                    allStaleCandidates.push({
+                        workspace: workspace.workspaceName,
+                        stale: result.staleCandidates
                     });
                 }
                 if (result.skippedAutoreleaseDisabled.length > 0) {
@@ -491,7 +569,23 @@ export async function upgradeGenerator({
         }
     }
 
-    if (allAppliedUpgrades.length === 0 && allAlreadyUpToDate.length === 0) {
+    if (allStaleCandidates.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.yellow("Ignored stale generator candidates:"));
+        for (const { workspace, stale } of allStaleCandidates) {
+            const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+            for (const item of stale) {
+                cliContext.logger.info(
+                    chalk.yellow(
+                        `  - ${workspacePrefix}${item.generatorName}: ${item.candidateVersion} from ${item.backend} ` +
+                            `(configured: ${item.currentVersion})`
+                    )
+                );
+            }
+        }
+    }
+
+    if (allAppliedUpgrades.length === 0 && allAlreadyUpToDate.length === 0 && allStaleCandidates.length === 0) {
         const filterMessage =
             group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
         cliContext.logger.info("");

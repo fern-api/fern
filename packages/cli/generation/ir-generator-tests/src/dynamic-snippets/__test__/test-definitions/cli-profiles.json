@@ -1,0 +1,488 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_messages:ListMessagesRequestDirection": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "ListMessagesRequestDirection",
+                    "camelCase": {
+                        "unsafeName": "listMessagesRequestDirection",
+                        "safeName": "listMessagesRequestDirection"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_messages_request_direction",
+                        "safeName": "list_messages_request_direction"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_MESSAGES_REQUEST_DIRECTION",
+                        "safeName": "LIST_MESSAGES_REQUEST_DIRECTION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListMessagesRequestDirection",
+                        "safeName": "ListMessagesRequestDirection"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "messages",
+                            "camelCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGES",
+                                "safeName": "MESSAGES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Messages",
+                                "safeName": "Messages"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "messages",
+                        "camelCase": {
+                            "unsafeName": "messages",
+                            "safeName": "messages"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "messages",
+                            "safeName": "messages"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MESSAGES",
+                            "safeName": "MESSAGES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Messages",
+                            "safeName": "Messages"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "inbound",
+                    "name": {
+                        "originalName": "inbound",
+                        "camelCase": {
+                            "unsafeName": "inbound",
+                            "safeName": "inbound"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inbound",
+                            "safeName": "inbound"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INBOUND",
+                            "safeName": "INBOUND"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inbound",
+                            "safeName": "Inbound"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "outbound",
+                    "name": {
+                        "originalName": "outbound",
+                        "camelCase": {
+                            "unsafeName": "outbound",
+                            "safeName": "outbound"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "outbound",
+                            "safeName": "outbound"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OUTBOUND",
+                            "safeName": "OUTBOUND"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Outbound",
+                            "safeName": "Outbound"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:Message": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Message",
+                    "camelCase": {
+                        "unsafeName": "message",
+                        "safeName": "message"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "message",
+                        "safeName": "message"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MESSAGE",
+                        "safeName": "MESSAGE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Message",
+                        "safeName": "Message"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "sid",
+                        "name": {
+                            "originalName": "sid",
+                            "camelCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "sid",
+                                "safeName": "sid"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SID",
+                                "safeName": "SID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Sid",
+                                "safeName": "Sid"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "body",
+                        "name": {
+                            "originalName": "body",
+                            "camelCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BODY",
+                                "safeName": "BODY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Body",
+                                "safeName": "Body"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_messages.list": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
+                "wrapperProperty": null
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "list",
+                    "camelCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST",
+                        "safeName": "LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "List",
+                        "safeName": "List"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "messages",
+                            "camelCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGES",
+                                "safeName": "MESSAGES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Messages",
+                                "safeName": "Messages"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "messages",
+                        "camelCase": {
+                            "unsafeName": "messages",
+                            "safeName": "messages"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "messages",
+                            "safeName": "messages"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MESSAGES",
+                            "safeName": "MESSAGES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Messages",
+                            "safeName": "Messages"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/accounts/{AccountSid}/messages"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListMessagesRequest",
+                        "camelCase": {
+                            "unsafeName": "listMessagesRequest",
+                            "safeName": "listMessagesRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_messages_request",
+                            "safeName": "list_messages_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_MESSAGES_REQUEST",
+                            "safeName": "LIST_MESSAGES_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListMessagesRequest",
+                            "safeName": "ListMessagesRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "messages",
+                                "camelCase": {
+                                    "unsafeName": "messages",
+                                    "safeName": "messages"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "messages",
+                                    "safeName": "messages"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MESSAGES",
+                                    "safeName": "MESSAGES"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Messages",
+                                    "safeName": "Messages"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "messages",
+                            "camelCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "messages",
+                                "safeName": "messages"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGES",
+                                "safeName": "MESSAGES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Messages",
+                                "safeName": "Messages"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "AccountSid",
+                                "camelCase": {
+                                    "unsafeName": "accountSid",
+                                    "safeName": "accountSid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "account_sid",
+                                    "safeName": "account_sid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCOUNT_SID",
+                                    "safeName": "ACCOUNT_SID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccountSid",
+                                    "safeName": "AccountSid"
+                                }
+                            },
+                            "wireValue": "AccountSid"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "direction",
+                            "name": {
+                                "originalName": "direction",
+                                "camelCase": {
+                                    "unsafeName": "direction",
+                                    "safeName": "direction"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "direction",
+                                    "safeName": "direction"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DIRECTION",
+                                    "safeName": "DIRECTION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Direction",
+                                    "safeName": "Direction"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_messages:ListMessagesRequestDirection"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://us1.api.example.com",
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

@@ -127,6 +127,7 @@ types:
       pypi: PypiOutputLocationSchema
       postman: PostmanOutputLocationSchema
       local-file-system: LocalFileSystemOutputLocationSchema
+      fern-hosted: FernHostedOutputLocationSchema
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
       crates: CratesOutputLocationSchema
@@ -258,6 +259,13 @@ types:
   LocalFileSystemOutputLocationSchema:
     properties:
       path: string
+
+  FernHostedOutputLocationSchema:
+    docs: Deploys the generated MCP server to Fern's hosted platform.
+    properties:
+      slug:
+        type: optional<string>
+        docs: Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to "mcp".
 
   NugetOutputLocationSchema:
     properties:

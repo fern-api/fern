@@ -58,6 +58,60 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/repo/output");
     });
 
+    it("fern-hosted maps to a download output mode and carries the slug", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    mcp: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-mcp-server",
+                                version: "0.0.1",
+                                output: {
+                                    location: "fern-hosted",
+                                    slug: "petstore"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const invocation = converted.groups[0]?.generators[0];
+        expect(invocation?.fernHostedOutput).toEqual({ slug: "petstore" });
+        expect(invocation?.absolutePathToLocalOutput).toBeUndefined();
+        expect(invocation?.outputMode.type).toEqual("downloadFiles");
+    });
+
+    it("fern-hosted slug is optional", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    mcp: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-mcp-server",
+                                version: "0.0.1",
+                                output: {
+                                    location: "fern-hosted"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        expect(converted.groups[0]?.generators[0]?.fernHostedOutput).toEqual({ slug: undefined });
+    });
+
     it("MIT license", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
@@ -304,6 +358,56 @@ describe("convertGeneratorsConfiguration", () => {
         ).toEqual(true);
     });
 
+    it("maps PyPI credentials", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    python: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-credentials",
+                                    username: "pypi-user",
+                                    password: "pypi-password"
+                                }
+                            },
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-token",
+                                    token: "pypi-token"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const credentialsOutput = converted.groups[0]?.generators[0]?.outputMode;
+        const credentials =
+            credentialsOutput?.type === "publishV2" && credentialsOutput.publishV2.type === "pypiOverride"
+                ? credentialsOutput.publishV2.pypiOverride
+                : undefined;
+        expect(credentials?.username).toBe("pypi-user");
+        expect(credentials?.password).toBe("pypi-password");
+
+        const tokenOutput = converted.groups[0]?.generators[1]?.outputMode;
+        const tokenCredentials =
+            tokenOutput?.type === "publishV2" && tokenOutput.publishV2.type === "pypiOverride"
+                ? tokenOutput.publishV2.pypiOverride
+                : undefined;
+        expect(tokenCredentials?.username).toBe("__token__");
+        expect(tokenCredentials?.password).toBe("pypi-token");
+    });
+
     it("logs deprecation warnings for deprecated generators yml configuration", async () => {
         const mockLogger: Logger = {
             trace: vi.fn(),
@@ -497,6 +601,30 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
             expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
             expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+        });
+
+        it("api-level error-responses are inherited by every spec", async () => {
+            const context = createMockTaskContext();
+            const errorResponses = {
+                schema: "errors/problem_details.yml",
+                name: "ServiceError",
+                "apply-to": "all" as const,
+                ensure: [{ "status-code": 422, methods: ["post" as const] }]
+            };
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        settings: { "error-responses": errorResponses },
+                        specs: [{ openapi: "path/to/spec1.yml" }, { openapi: "path/to/spec2.yml" }]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.errorResponses).toEqual(errorResponses);
+            expect(converted.api.definitions[1]?.settings?.errorResponses).toEqual(errorResponses);
         });
 
         it("spec settings override api-level settings", async () => {

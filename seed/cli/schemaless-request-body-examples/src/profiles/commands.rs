@@ -1301,7 +1301,9 @@ fn env_satisfies_a_scheme(ctx: &ProfilesContext<'_>) -> bool {
 }
 
 /// A synthetic `[env]` row when environment variables currently supply a
-/// credential — which wins over any profile.
+/// credential — which wins over an *ambiently* selected profile
+/// (`<BIN>_PROFILE`, `profiles use`) but not over an explicitly named
+/// `--profile`, whose stored credentials outrank it.
 fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     let mut sources: Vec<String> = Vec::new();
     for (scheme, binding) in ctx.auth_bindings {
@@ -1333,11 +1335,22 @@ fn env_pseudo_row(ctx: &ProfilesContext<'_>) -> Option<serde_json::Value> {
     // that every real profile row then left blank. The profile rows' own
     // identifier column is `account`; their slot pointer is `credentials_from`.
     row.insert("variables".into(), sources.join(", ").into());
-    row.insert(
-        "note".into(),
-        "supplies the credential; overrides the active profile\'s stored one".into(),
-    );
+    row.insert("note".into(), env_row_note().into());
     Some(serde_json::Value::Object(row))
+}
+
+/// The `[env]` row's note. It states a precedence rule, so it has to track the
+/// one the request path actually applies: under an explicitly named
+/// `--profile`, that profile's stored credentials are preferred when a scheme
+/// is chosen, and telling the reader env "overrides" them would be exactly
+/// backwards. This row is what a user diagnosing a precedence surprise reads
+/// first, so a stale claim here costs more than it looks.
+fn env_row_note() -> &'static str {
+    if crate::profiles::outranks_env() {
+        "supplies the credential, but the named profile's stored one is preferred"
+    } else {
+        "supplies the credential; overrides the active profile's stored one"
+    }
 }
 
 // ── set ─────────────────────────────────────────────────────────────────
@@ -2023,6 +2036,37 @@ mod tests {
             .subcommand_matches("create")
             .expect("create must match")
             .clone()
+    }
+
+    // ── [env] row note ──────────────────────────────────────────────────
+
+    /// The note asserts who wins, so it must flip with the selection source.
+    /// Saying env "overrides" a profile the request path actually prefers is
+    /// the exact wrong turn for someone debugging a precedence surprise.
+    #[test]
+    #[serial_test::serial]
+    fn env_row_note_tracks_selection_source() {
+        use crate::auth::test_helpers::GlobalAuthStateGuard;
+        use crate::profiles::SelectionSource;
+
+        {
+            let mut guard = GlobalAuthStateGuard::new();
+            guard.install_profile("prod", SelectionSource::Flag);
+            assert!(
+                env_row_note().contains("named profile's stored one is preferred"),
+                "got: {}",
+                env_row_note()
+            );
+        }
+        {
+            let mut guard = GlobalAuthStateGuard::new();
+            guard.install_profile("prod", SelectionSource::Active);
+            assert!(
+                env_row_note().contains("overrides the active profile"),
+                "got: {}",
+                env_row_note()
+            );
+        }
     }
 
     // ── name validation ─────────────────────────────────────────────────

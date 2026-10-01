@@ -8,7 +8,7 @@ import com.seed.noEnvironment.core.Suppliers;
 import com.seed.noEnvironment.resources.dummy.AsyncDummyClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedNoEnvironmentClient {
+public class AsyncSeedNoEnvironmentClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncDummyClient> dummyClient;
@@ -20,6 +20,15 @@ public class AsyncSeedNoEnvironmentClient {
 
     public AsyncDummyClient dummy() {
         return this.dummyClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedNoEnvironmentClientBuilder builder() {

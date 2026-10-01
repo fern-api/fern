@@ -1,0 +1,11 @@
+- type: feat
+  summary: |
+    `config.extraDependencies` and `config.extraDevDependencies` declare additional
+    crates in the generated root `Cargo.toml`, so code kept in `.fernignore` (custom
+    command handlers, custom auth) no longer needs a post-generation script to re-add
+    the crates it imports. Each entry is a version requirement string or a full
+    dependency table (`version`, `features`, `optional`, `defaultFeatures`, `package`,
+    `path`, `git`, `branch`, `rev`, `registry`), matching the Rust SDK generator's
+    option of the same name. A crate the CLI runtime already depends on is rejected
+    rather than silently overridden. `Cargo.lock` is not re-resolved at generation
+    time; the first `cargo build` after generation records the new crates.

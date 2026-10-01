@@ -700,6 +700,17 @@
             }
           ],
           "description": "Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.\nWhen provided, the backend uses this Doxyfile instead of auto-generating one.\nOnly valid when lang is cpp."
+        },
+        "include-undocumented-macros": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
@@ -1875,6 +1886,204 @@
         "graphql"
       ]
     },
+    "docs.ApiSpecErrorResponseSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "docs.ApiSpecErrorResponseApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "docs.ApiSpecErrorResponseHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "docs.ApiSpecErrorResponseEnsure": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecErrorResponses": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/docs.ApiSpecErrorResponseSchemaSource"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponseApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseEnsure"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecImportSettings": {
+      "type": "object",
+      "properties": {
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponses"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Import settings that affect the API definition rendered by Fern Docs."
+    },
     "docs.ApiSpecConfiguration": {
       "type": "object",
       "properties": {
@@ -1919,6 +2128,17 @@
             }
           ],
           "description": "Paths to Fern override documents, relative to docs.yml."
+        },
+        "settings": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecImportSettings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Import settings that affect the rendered API reference."
         }
       },
       "required": [
@@ -4703,6 +4923,40 @@
       },
       "additionalProperties": false
     },
+    "docs.ExternalSitemapConfig": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Absolute URL of the external sitemap (`sitemap.xml` or sitemap index)."
+        },
+        "locale": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the\nsite's default language or one of its `translations`. Overrides per-URL language detection."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ExternalSitemap": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/docs.ExternalSitemapConfig"
+        }
+      ]
+    },
     "docs.ExperimentalConfig": {
       "type": "object",
       "properties": {
@@ -4813,14 +5067,14 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/docs.ExternalSitemap"
               }
             },
             {
               "type": "null"
             }
           ],
-          "description": "Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation."
+          "description": "Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead."
         }
       },
       "additionalProperties": false
@@ -6208,6 +6462,23 @@
         "cards"
       ]
     },
+    "docs.BreadcrumbsConfig": {
+      "type": "object",
+      "properties": {
+        "current-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `current-page` is set to true, the current page is appended to the breadcrumb trail\nas a non-clickable item. Defaults to false."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6397,6 +6668,17 @@
             }
           ],
           "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
+        },
+        "breadcrumbs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BreadcrumbsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Configures the breadcrumb trail rendered above the page title."
         }
       },
       "additionalProperties": false
@@ -6463,6 +6745,22 @@
         "flat",
         "grouped"
       ]
+    },
+    "docs.EmbeddingConfig": {
+      "type": "object",
+      "properties": {
+        "allowed-origins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.\nEach entry is added to the `frame-ancestors` directive of the Content-Security-Policy header."
+        }
+      },
+      "required": [
+        "allowed-origins"
+      ],
+      "additionalProperties": false
     },
     "docs.DocsSettingsConfig": {
       "type": "object",
@@ -6630,6 +6928,17 @@
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
         },
+        "embedding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EmbeddingConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Controls which third-party sites may embed your documentation in an iframe.\nBy default only your docs site itself (and the Fern dashboard) may frame it."
+        },
         "show-headers-in-examples": {
           "oneOf": [
             {
@@ -6747,6 +7056,76 @@
         "tabs"
       ]
     },
+    "docs.SiteSwitcherThemeConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Render the site switcher. Defaults to false."
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
+        },
+        "hide": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to omit, including any sites nested beneath them."
+        },
+        "labels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display label overrides keyed by basepath."
+        },
+        "show-products": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List each site's products indented beneath it. Defaults to false."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -6819,6 +7198,17 @@
               "type": "null"
             }
           ]
+        },
+        "site-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SiteSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
         }
       },
       "additionalProperties": false

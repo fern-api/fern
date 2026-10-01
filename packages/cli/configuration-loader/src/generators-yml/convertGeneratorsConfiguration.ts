@@ -80,7 +80,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
-    namespacedErrors: undefined
+    namespacedErrors: undefined,
+    errorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -105,6 +106,10 @@ export async function convertGeneratorsConfiguration({
         apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
             ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
             : undefined;
+    const globalWebhookSignature =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["webhook-signature"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -124,6 +129,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               globalIdempotencyKeyGeneration,
+                              globalWebhookSignature,
                               readme,
                               context
                           })
@@ -197,7 +203,8 @@ export function parseOpenApiDefinitionSettingsSchema(
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
-        namespacedErrors: settings?.["namespaced-errors"]
+        namespacedErrors: settings?.["namespaced-errors"],
+        errorResponses: settings?.["error-responses"]
     };
 }
 
@@ -235,8 +242,15 @@ export function parseBaseApiDefinitionSettingsSchema(
         pathParameterOrder: settings?.["path-parameter-order"],
         resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
         inferForwardCompatible: settings?.["infer-forward-compatible"],
-        coerceConstsTo: settings?.["coerce-consts-to"]
+        coerceConstsTo: settings?.["coerce-consts-to"],
+        errorResponses: hasErrorResponsesSetting(settings) ? settings["error-responses"] : undefined
     };
+}
+
+function hasErrorResponsesSetting(
+    settings: AnySpecSettingsSchema | undefined
+): settings is generatorsYml.OpenApiSettingsSchema {
+    return settings != null && "error-responses" in settings;
 }
 
 function parseRemoveDiscriminantsFromSchemas(
@@ -624,6 +638,7 @@ async function convertGroup({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -634,6 +649,7 @@ async function convertGroup({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -654,6 +670,7 @@ async function convertGroup({
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
                     globalIdempotencyKeyGeneration,
+                    globalWebhookSignature,
                     readme,
                     context
                 })
@@ -741,6 +758,7 @@ async function convertGenerator({
     maybeRootAutomation,
     maybeGroupAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -753,6 +771,7 @@ async function convertGenerator({
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
@@ -764,6 +783,7 @@ async function convertGenerator({
     return {
         raw: generator,
         idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
+        webhookSignatureConfig: globalWebhookSignature,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,
@@ -789,6 +809,7 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        fernHostedOutput: generator.output?.location === "fern-hosted" ? { slug: generator.output.slug } : undefined,
         absolutePathToLocalSnippets:
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
@@ -1014,6 +1035,7 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
+        case "fern-hosted":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
             });
@@ -1056,7 +1078,7 @@ async function convertOutputMode({
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
+                    username: generator.output.token != null ? "__token__" : (generator.output.username ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                     downloadSnippets,
@@ -1140,6 +1162,11 @@ function getGithubPublishInfo(
         case "local-file-system":
             throw new CliError({
                 message: "Cannot use local-file-system with github publishing",
+                code: CliError.Code.ConfigError
+            });
+        case "fern-hosted":
+            throw new CliError({
+                message: "Cannot use fern-hosted with github publishing",
                 code: CliError.Code.ConfigError
             });
         case "npm":

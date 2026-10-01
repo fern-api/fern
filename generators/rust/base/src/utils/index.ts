@@ -54,14 +54,22 @@ export function getName(name: string): string {
     return name;
 }
 
-export function validateAndSanitizeCrateName(crateName: string): string {
+export function validateAndSanitizeCrateName(
+    crateName: string,
+    { preserveHyphens = false }: { preserveHyphens?: boolean } = {}
+): string {
     let sanitized = crateName
         .toLowerCase()
         .replace(/[^a-z0-9_-]/g, "_")
         .replace(/^[0-9]/, "_$&");
 
-    sanitized = sanitized.replace(/[_-]+/g, "_");
-    sanitized = sanitized.replace(/^_+|_+$/g, "");
+    if (preserveHyphens) {
+        sanitized = sanitized.replace(/[_-]+/g, (separators) => separators.charAt(0));
+        sanitized = sanitized.replace(/^[_-]+|[_-]+$/g, "");
+    } else {
+        sanitized = sanitized.replace(/[_-]+/g, "_");
+        sanitized = sanitized.replace(/^_+|_+$/g, "");
+    }
 
     if (!sanitized) {
         sanitized = "rust_sdk";

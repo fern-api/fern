@@ -1,4 +1,113 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.98.3
+  changelogEntry:
+    - summary: |
+        Redact the API's own credential headers in debug request logs. The generated `SENSITIVE_HEADERS`
+        set in `core/fetcher/Fetcher.ts` now also includes every header an auth scheme writes to (custom
+        header auth names such as `PLAID-SECRET`, custom OAuth token headers, and inferred-auth headers),
+        plus global, service, and endpoint headers whose names identify them as credentials (e.g. `PLAID-CLIENT-ID`).
+        Previously only a static list of conventional names (`Authorization`, `X-API-Key`, ...) was redacted,
+        so custom-named auth headers, including request-level overrides, were logged in plaintext when debug
+        logging was enabled.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 3.98.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 3.98.1
+  changelogEntry:
+    - summary: |
+        Fix invalid TypeScript in generated XML (TwiML) classes and builders when a property key is not a
+        valid identifier (e.g. `interpret-as` or `default`). The generator now emits bracket access
+        (`this["interpret-as"]`) and camelCased locals (`interpretAs`) instead of `this.interpret-as`.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 3.98.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now carry inline documentation on their user-facing builder API: every
+        `Builder` setter gets the property description, and child methods (`say.addBreak(...)`, `response.say(...)`)
+        document the child element plus `@param`/`@returns`.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 3.97.1
+  changelogEntry:
+    - summary: |
+        Fix generated WebSocket socket classes registering their `open`/`message`/`close`/`error`
+        forwarding listeners twice when `connect()` is called after construction (the standard
+        `new Socket(...).connect()` usage). `ReconnectingWebSocket` gains a `hasEventListener(type, listener)`
+        method and `connect()` only registers each forwarding listener if it is not already attached, so
+        every consumer `.on()` callback fires exactly once per event while `close()` followed by
+        `connect()` continues to work.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 3.97.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 3.96.3
+  changelogEntry:
+    - summary: |
+        Wire tests for paginated endpoints whose page property is nested in the request body (e.g.
+        `$request.options.offset` or `$request.options.pagination.cursor`) no longer fail on `getNextPage()`.
+        The generated pager creates the parent object (`options`) when the example omits it, and the mock
+        server's `jsonBody` matcher treated that new parent as an unexpected field even though the nested leaf
+        was listed in `ignoredFields`, so the second request never matched the mock and failed with a
+        connection-refused error. The matcher now ignores a parent object that is absent from the expected body
+        when every leaf inside it is an ignored field.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 3.96.2
+  changelogEntry:
+    - summary: |
+        The generated OAuth wire-test mock (`tests/wire/mockAuth.ts`) now expects the `grant_type` the generated
+        `OAuthAuthProvider` actually sends. When the token endpoint models `grant_type` as a plain (optional) string
+        and the example omits it, the provider sends `grant_type: "client_credentials"` but the mock previously only
+        matched the example body, so the token request never matched and every authenticated wire test failed with
+        a connection-refused error.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 3.96.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Object types with XML encoding metadata (e.g. TwiML schemas imported from an OpenAPI `xml` object) are now
+        generated as classes with `toXml()`, a static `fromXml()` parser, and a fluent `Builder` (including
+        `Builder.fromXml(xml).build()` and per-child methods such as `response.say(...)`). Element names,
+        attributes, text bodies, nested/union children, wrapped lists, list separators, namespaces and prefixes
+        are honored; undeclared attributes and child elements are preserved as `additionalAttributes` /
+        `additionalChildren` so documents round-trip. Parsing is strict (root name, scalar/enum validation) and
+        rejects DOCTYPE declarations. Non-XML types are unaffected and the XML runtime is only emitted when needed.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
 - version: 3.95.1
   changelogEntry:
     - summary: |

@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use {{PACKAGE_NAME}}::prelude::*;`
+//! Import it with: `use {{CRATE_NAME}}::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;

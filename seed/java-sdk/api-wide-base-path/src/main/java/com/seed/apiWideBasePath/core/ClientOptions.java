@@ -19,6 +19,8 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private final boolean ownsHttpClient;
+
     private final int timeout;
 
     private final int maxRetries;
@@ -38,6 +40,7 @@ public final class ClientOptions {
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
+            boolean ownsHttpClient,
             int timeout,
             int maxRetries,
             Optional<Long> initialRetryDelayMillis,
@@ -58,6 +61,7 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.ownsHttpClient = ownsHttpClient;
         this.timeout = timeout;
         this.maxRetries = maxRetries;
         this.initialRetryDelayMillis = initialRetryDelayMillis;
@@ -122,6 +126,25 @@ public final class ClientOptions {
         return this.retryJitterFactor;
     }
 
+    /**
+     * Releases resources owned by this client. Only shuts down the underlying OkHttpClient's
+     * dispatcher executor and evicts its connection pool when this client created that
+     * OkHttpClient itself; an OkHttpClient supplied via httpClient is left running, since the
+     * caller owns its lifecycle.
+     * <p>
+     * In-flight calls are not cancelled or awaited, and any request issued after this method
+     * returns fails with a {@code RejectedExecutionException}. Options derived from this one via
+     * {@code Builder.from(...)} share the same dispatcher and connection pool, so closing either
+     * releases them for both. Calling this method more than once has no further effect.
+     */
+    public void close() {
+        if (!this.ownsHttpClient) {
+            return;
+        }
+        this.httpClient.dispatcher().executorService().shutdown();
+        this.httpClient.connectionPool().evictAll();
+    }
+
     public Optional<LogConfig> logging() {
         return this.logging;
     }
@@ -152,6 +175,8 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private boolean ownsHttpClient = true;
 
         private Optional<LogConfig> logging = Optional.empty();
 
@@ -222,8 +247,13 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
+         * close() will not shut down its dispatcher executor or evict its connection pool.
+         */
         public Builder httpClient(OkHttpClient httpClient) {
             this.httpClient = httpClient;
+            this.ownsHttpClient = httpClient == null;
             return this;
         }
 
@@ -275,6 +305,7 @@ public final class ClientOptions {
                     headers,
                     headerSuppliers,
                     httpClient,
+                    this.ownsHttpClient,
                     this.timeout.get(),
                     this.maxRetries,
                     this.initialRetryDelayMillis,
@@ -292,6 +323,7 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.ownsHttpClient = clientOptions.ownsHttpClient;
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();

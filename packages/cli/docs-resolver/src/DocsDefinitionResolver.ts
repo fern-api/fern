@@ -3,7 +3,8 @@ import {
     getOpenAPISettings,
     groupGraphQLSpecsByNamespace,
     type OpenAPISpec,
-    type Spec
+    type Spec,
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
@@ -69,9 +70,10 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations field.
+// DocsV1Write.DocsConfig includes the translations and embedding fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
+    embedding: { allowedOrigins: string[] } | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -170,6 +172,11 @@ export interface DocsDefinitionResolverArgs {
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
     /**
+     * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
+     * Defaults to `public`; `--private` passes `private`.
+     */
+    docsVisibility?: VisibilityFilter;
+    /**
      * When true, also builds per-locale translated API IRs from OpenAPI specs under
      * `translations/<locale>/apis/<apiName>/`, exposed via
      * {@link DocsDefinitionResolver.getTranslatedApiSpecs}. Defaults to false to avoid
@@ -201,6 +208,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
     private buildRefVersions: boolean;
     private cliVersion?: string;
@@ -225,6 +233,7 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
+        docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
         buildRefVersions = true,
         cliVersion,
@@ -239,6 +248,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
         this.buildRefVersions = buildRefVersions;
         this.cliVersion = cliVersion;
@@ -499,7 +509,8 @@ export class DocsDefinitionResolver {
                                 detectGlobalHeaders: false,
                                 preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true
+                                respectReadonlySchemas: true,
+                                docsVisibility: this.docsVisibility
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -1109,6 +1120,10 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
+            embedding:
+                this.parsedDocsConfig.settings?.embedding != null
+                    ? { allowedOrigins: this.parsedDocsConfig.settings.embedding.allowedOrigins }
+                    : undefined,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -1120,7 +1135,8 @@ export class DocsDefinitionResolver {
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
                           "product-switcher": this.parsedDocsConfig.theme
-                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"],
+                          "site-switcher": convertThemeSiteSwitcher(this.parsedDocsConfig.theme.siteSwitcher)
                       }
                     : undefined,
             // deprecated
@@ -1264,7 +1280,18 @@ export class DocsDefinitionResolver {
                 absoluteFilepath: spec.absolutePath,
                 absoluteFilepathToOverrides: spec.absoluteOverridePaths,
                 absoluteFilepathToOverlays: spec.absoluteOverlayPaths[0],
-                settings: getOpenAPISettings(),
+                settings: getOpenAPISettings({
+                    options: {
+                        typeDatesAsStrings: spec.settings?.typeDatesAsStrings,
+                        useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
+                        respectParameterContent: spec.settings?.respectParameterContent,
+                        respectOperationIdWordBoundaries: spec.settings?.respectOperationIdWordBoundaries,
+                        inferForwardCompatible: spec.settings?.inferForwardCompatible,
+                        preserveOneOfInAllOf: spec.settings?.preserveOneOfInAllOf,
+                        anyOfSiblingPropertiesAsObject: spec.settings?.anyOfSiblingPropertiesAsObject,
+                        errorResponses: toOpenApiErrorResponses(spec.settings?.errorResponses)
+                    }
+                }),
                 source: {
                     // AsyncAPI uses the OpenAPISpec container because OSSWorkspace converts
                     // both formats into the same IR. source.type selects the actual parser.
@@ -1320,13 +1347,16 @@ export class DocsDefinitionResolver {
             }
 
             try {
-                const translatedIr = await translatedWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                const translatedIr = await translatedWorkspace.getIntermediateRepresentation(
+                    {
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    },
+                    { docsVisibility: this.docsVisibility }
+                );
                 result.set(locale, translatedIr);
                 this.taskContext.logger.debug(
                     `Built translated API definition for locale "${locale}" (api: ${
@@ -1925,13 +1955,16 @@ export class DocsDefinitionResolver {
         if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
                 openapiWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                ir = await openapiWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                ir = await openapiWorkspace.getIntermediateRepresentation(
+                    {
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    },
+                    { docsVisibility: this.docsVisibility }
+                );
             } catch (error) {
                 openapiError = error;
             }
@@ -1984,7 +2017,8 @@ export class DocsDefinitionResolver {
                     enableUniqueErrorsPerEndpoint: true,
                     detectGlobalHeaders: false,
                     objectQueryParameters: true,
-                    preserveSchemaIds: true
+                    preserveSchemaIds: true,
+                    docsVisibility: this.docsVisibility
                 }
             );
             ir = generateIntermediateRepresentation({
@@ -2017,7 +2051,8 @@ export class DocsDefinitionResolver {
                         enableUniqueErrorsPerEndpoint: true,
                         detectGlobalHeaders: false,
                         objectQueryParameters: true,
-                        preserveSchemaIds: true
+                        preserveSchemaIds: true,
+                        docsVisibility: this.docsVisibility
                     }
                 );
             } catch (error) {
@@ -3052,16 +3087,17 @@ export class DocsDefinitionResolver {
     private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
         const settings = this.parsedDocsConfig.settings;
         const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
-        if (externalSitemaps == null || externalSitemaps.length === 0) {
-            return settings;
+        const search =
+            externalSitemaps == null || externalSitemaps.length === 0
+                ? settings?.search
+                : { ...settings?.search, externalSitemaps };
+        if (settings == null && search == null) {
+            return undefined;
         }
         return {
             ...settings,
-            search: {
-                ...settings?.search,
-                externalSitemaps
-            }
-        } as DocsV1Write.DocsConfig["settings"];
+            search: search as NonNullable<DocsV1Write.DocsConfig["settings"]>["search"]
+        };
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {
@@ -3141,6 +3177,27 @@ export class DocsDefinitionResolver {
     }
 }
 
+function toOpenApiErrorResponses(
+    errorResponses: docsYml.RawSchemas.ApiSpecErrorResponses | undefined
+): NonNullable<ReturnType<typeof getOpenAPISettings>["errorResponses"]> | undefined {
+    if (errorResponses == null) {
+        return undefined;
+    }
+    return {
+        schema: errorResponses.schema,
+        ...(errorResponses.name == null ? {} : { name: errorResponses.name }),
+        ...(errorResponses.applyTo == null ? {} : { "apply-to": errorResponses.applyTo }),
+        ...(errorResponses.ensure == null
+            ? {}
+            : {
+                  ensure: errorResponses.ensure.map((entry) => ({
+                      "status-code": entry.statusCode,
+                      ...(entry.methods == null ? {} : { methods: entry.methods })
+                  }))
+              })
+    };
+}
+
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
@@ -3167,6 +3224,21 @@ export function convertThemeTabs(
         style: tabs.style,
         alignment: tabs.alignment?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["alignment"],
         placement: tabs.placement?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["placement"]
+    };
+}
+
+export function convertThemeSiteSwitcher(
+    siteSwitcher: docsYml.RawSchemas.SiteSwitcherThemeConfig | undefined
+): DocsV1Write.DocsThemeConfig["site-switcher"] | undefined {
+    if (siteSwitcher == null) {
+        return undefined;
+    }
+    return {
+        enabled: siteSwitcher.enabled,
+        order: siteSwitcher.order,
+        hide: siteSwitcher.hide,
+        labels: siteSwitcher.labels,
+        "show-products": siteSwitcher.showProducts
     };
 }
 

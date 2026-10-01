@@ -1,14 +1,17 @@
-import type { AbstractAPIWorkspace, FernDefinition, FernWorkspace, Spec } from "@fern-api/api-workspace-commons";
+import {
+    type AbstractAPIWorkspace,
+    type FernDefinition,
+    type FernWorkspace,
+    getOpenAPISettings,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
-import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
-import { tmpdir } from "os";
-import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
@@ -21,19 +24,8 @@ import {
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
-import { writeOutputFile } from "../writeOutputFile.js";
 
 describe("SDK Config migration", () => {
-    let temporaryDirectory: string;
-
-    beforeEach(async () => {
-        temporaryDirectory = await mkdtemp(join(tmpdir(), "fern-sdk-migrate-"));
-    });
-
-    afterEach(async () => {
-        await rm(temporaryDirectory, { force: true, recursive: true });
-    });
-
     it("maps a resolved generator group without reparsing Fern configuration", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -71,6 +63,83 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.generation).toBeUndefined();
     });
 
+    it("preserves exact publish credential environment expressions and omits literal secrets", () => {
+        const safe = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        safe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://registry.npmjs.org",
+                packageName: "@acme/sdk",
+                token: "${NPM_TOKEN}"
+            })
+        );
+        const unsafe = createGenerator("fernapi/fern-python-sdk", "python", "4.0.0");
+        unsafe.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.pypiOverride({
+                registryUrl: "https://upload.pypi.org/legacy/",
+                coordinate: "acme-sdk",
+                username: "__token__",
+                password: "literal-secret"
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([safe, unsafe]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("username");
+        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE" })
+            ])
+        );
+    });
+
+    it("preserves Maven signing expressions only when the complete signature is safe", () => {
+        const generator = createGenerator("fernapi/fern-java-sdk", "java", "3.0.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://central.sonatype.com",
+                coordinate: "com.acme:sdk",
+                username: "${MAVEN_USERNAME}",
+                password: "${MAVEN_PASSWORD}",
+                signature: {
+                    keyId: "${MAVEN_KEY_ID}",
+                    password: "literal-signing-secret",
+                    secretKey: "${MAVEN_SECRET_KEY}"
+                }
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({
+            username: "${MAVEN_USERNAME}",
+            password: "${MAVEN_PASSWORD}"
+        });
+        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("signature");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
+    });
+
+    it("maps top-level replay configuration into SDK Config", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            replay: { enabled: true }
+        });
+
+        expect(result.sdkConfig.replay).toEqual({ enabled: true });
+    });
+
     it("preserves API-level path parameter behavior in the customer SDK Config", () => {
         const result = mapFernGroupToSdkConfig({
             fernWorkspace: { definition: createDefinition() },
@@ -80,6 +149,136 @@ describe("SDK Config migration", () => {
         });
 
         expect(result.sdkConfig.client?.pathParameterStyle).toBe("wrapped");
+    });
+
+    it("maps supported Python generator settings into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-python-sdk", "python", "4.3.10");
+        generator.config = {
+            client: {
+                class_name: "BaseSdkClient",
+                filename: "base_client.py",
+                exported_class_name: "SdkClient",
+                exported_filename: "client.py"
+            },
+            pydantic_config: { skip_validation: true },
+            follow_redirects_by_default: true,
+            default_bytes_stream_chunk_size: 1024,
+            recursion_limit: 10_000,
+            extras: { pyaudio: ["audio-runtime"] },
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+        };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.client).toMatchObject({ responseValidation: false });
+        expect(result.sdkConfig.generation).toMatchObject({
+            naming: { clientName: "BaseSdkClient", exportedClientName: "SdkClient" }
+        });
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({
+            client: { fileName: "base_client.py", exportedFileName: "client.py" },
+            followRedirectsByDefault: true,
+            defaultBytesStreamChunkSize: 1024,
+            recursionLimit: 10_000,
+            extras: { pyaudio: ["audio-runtime"] },
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+        });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("preserves package metadata and language-specific README sections across SDK targets", () => {
+        const typescript = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
+        typescript.config = {
+            fetchSupport: "native",
+            packageJson: {
+                description: "TypeScript SDK for the Example API.",
+                author: {
+                    name: "Example SDK Team",
+                    url: "https://sdk.example.com",
+                    email: "support@example.com"
+                }
+            }
+        };
+        const php = createGenerator("fernapi/fern-php-sdk", "php", "3.0.0");
+        php.config = {
+            composerJson: {
+                description: "PHP SDK for the Example API.",
+                author: {
+                    name: "Example SDK Team",
+                    url: "https://sdk.example.com",
+                    email: "support@example.com"
+                },
+                license: "MIT"
+            }
+        };
+        const python = createGenerator("fernapi/fern-python-sdk", "python", "6.0.0");
+        python.config = {
+            pydantic_config: { skip_validation: true },
+            additional_init_exports: [{ from: "types", imports: ["SdkError"] }]
+        };
+        const readme: generatorsYml.ReadmeSchema = {
+            apiName: "Example API",
+            customSections: [
+                { title: "TypeScript usage", language: "typescript", content: "TypeScript example." },
+                { title: "PHP usage", language: "php", content: "PHP example." },
+                { title: "Python usage", language: "python", content: "Python example." }
+            ]
+        };
+        typescript.readme = readme;
+        php.readme = readme;
+        python.readme = readme;
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([typescript, php, python]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.docs).toEqual({ readme: { apiName: "Example API" } });
+        expect(result.sdkConfig.targets).toMatchObject([
+            {
+                language: "typescript",
+                docs: { readme: { customSections: [{ title: "TypeScript usage", content: "TypeScript example." }] } },
+                package: {
+                    description: "TypeScript SDK for the Example API.",
+                    authors: [
+                        {
+                            name: "Example SDK Team",
+                            email: "support@example.com",
+                            url: "https://sdk.example.com"
+                        }
+                    ]
+                },
+                generation: { httpClient: { name: "fetch" } }
+            },
+            {
+                language: "php",
+                docs: { readme: { customSections: [{ title: "PHP usage", content: "PHP example." }] } },
+                package: {
+                    description: "PHP SDK for the Example API.",
+                    authors: [
+                        {
+                            name: "Example SDK Team",
+                            email: "support@example.com",
+                            url: "https://sdk.example.com"
+                        }
+                    ],
+                    license: { type: "MIT" }
+                }
+            },
+            {
+                language: "python",
+                client: { responseValidation: false },
+                docs: { readme: { customSections: [{ title: "Python usage", content: "Python example." }] } },
+                generation: {
+                    additionalInitExports: [{ from: "types", imports: ["SdkError"] }]
+                }
+            }
+        ]);
+        expect(result.diagnostics).toEqual([]);
     });
 
     it("maps endpoint-specific header authentication", () => {
@@ -123,7 +322,7 @@ describe("SDK Config migration", () => {
             fernWorkspace: { definition },
             group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
             source: createSource(),
-            sourceDerivedApiFields: { auth: true, environments: true }
+            sourceDerivedApiFields: { auth: true, environments: true, headerNames: [] }
         });
 
         expect(result.sdkConfig.api).toEqual({
@@ -133,14 +332,44 @@ describe("SDK Config migration", () => {
         expect(result.diagnostics).toEqual([]);
     });
 
+    it("omits only global headers that are already represented by the source specification", () => {
+        const definition = createDefinition();
+        definition.rootApiFile.contents.headers = {
+            "X-API-Version": {
+                name: "apiVersion",
+                type: "optional<string>",
+                env: "API_VERSION"
+            },
+            "X-Request-ID": {
+                name: "requestId",
+                type: "optional<string>"
+            }
+        };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]),
+            source: createSource(),
+            sourceDerivedApiFields: {
+                auth: false,
+                environments: false,
+                headerNames: ["x-api-version"]
+            }
+        });
+
+        expect(result.sdkConfig.api?.headers).toEqual([{ name: "requestId" }]);
+    });
+
     it("only identifies API fields as source-derived for OSS workspaces without Fern overrides", () => {
         const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]);
         const sourceOnly = createWorkspace("payments", [group]);
+        const definition = createDefinition(["X-API-Version"]);
         Object.assign(sourceOnly, { type: "oss" });
 
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: true,
-            environments: true
+            environments: true,
+            headerNames: ["X-API-Version"]
         });
 
         const generatorsConfiguration = sourceOnly.generatorsConfiguration;
@@ -155,19 +384,33 @@ describe("SDK Config migration", () => {
                 auth: "ApiKeyAuth",
                 "auth-schemes": { ApiKeyAuth: { header: "x-api-key" } },
                 environments: { Production: "https://api.example.com" },
-                "default-environment": "Production"
+                "default-environment": "Production",
+                headers: { "X-Configured": "string" }
             }
         };
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: false,
-            environments: false
+            environments: false,
+            headerNames: []
         });
 
         Object.assign(sourceOnly, { type: "fern" });
-        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group] })).toEqual({
+        expect(identifySourceDerivedApiFields({ workspace: sourceOnly, groups: [group], definition })).toEqual({
             auth: false,
-            environments: false
+            environments: false,
+            headerNames: []
         });
+    });
+
+    it("fails explicitly when a clone loses global header provenance", () => {
+        const group = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0")]);
+        const workspace = createWorkspace("payments", [group]);
+        Object.assign(workspace, { type: "oss" });
+        const definitionWithoutProvenance = structuredClone(createDefinition(["X-API-Version"]));
+
+        expect(() =>
+            identifySourceDerivedApiFields({ workspace, groups: [group], definition: definitionWithoutProvenance })
+        ).toThrowError(/Could not determine global-header provenance/);
     });
 
     it("keeps generator-level authentication overrides in SDK Config", () => {
@@ -180,7 +423,22 @@ describe("SDK Config migration", () => {
         const workspace = createWorkspace("payments", [group]);
         Object.assign(workspace, { type: "oss" });
 
-        expect(identifySourceDerivedApiFields({ workspace, groups: [group] }).auth).toBe(false);
+        expect(
+            identifySourceDerivedApiFields({ workspace, groups: [group], definition: createDefinition() }).auth
+        ).toBe(false);
+    });
+
+    it("keeps generator-level header overrides in SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
+        generator.apiOverride = {
+            headers: { "X-API-Version": { name: "apiVersion", type: "optional<string>" } }
+        };
+        const group = createGroup([generator]);
+        const workspace = createWorkspace("payments", [group]);
+        const definition = createDefinition(["X-API-Version"]);
+        Object.assign(workspace, { type: "oss" });
+
+        expect(identifySourceDerivedApiFields({ workspace, groups: [group], definition }).headerNames).toEqual([]);
     });
 
     it("hoists API import settings shared by every source spec", () => {
@@ -255,6 +513,130 @@ describe("SDK Config migration", () => {
             { namespace: "First", apiImportSettings: { titleAsSchemaName: true } }
         ]);
         expect(resolveMigrationPathParameterStyle(specs)).toBe("wrapped");
+    });
+
+    it("projects supported Fern API import settings into SDK Config", () => {
+        const absoluteFilepath = AbsoluteFilePath.of("/tmp/specs/sample.yml");
+        const configuredDefinition = createConfiguredOpenApiDefinition("../specs/sample.yml", false, false);
+        configuredDefinition.settings = {
+            ...configuredDefinition.settings,
+            respectReadonlySchemas: true,
+            shouldUseUndiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "./problem.yml",
+                name: "ProblemDetails"
+            }
+        } as generatorsYml.APIDefinitionSettings;
+        const loadedSpec = createWorkspaceOpenApiSpec("Sample", absoluteFilepath);
+        if (loadedSpec.type !== "openapi") {
+            throw new Error("Expected an OpenAPI spec");
+        }
+        loadedSpec.settings = getOpenAPISettings({
+            overrides: {
+                errorResponses: {
+                    schema: "/tmp/fern/problem.yml",
+                    name: "ProblemDetails"
+                }
+            }
+        });
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [loadedSpec],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: { Sample: [configuredDefinition] },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        const [spec] = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace: {} as FernWorkspace,
+            generator: createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        });
+
+        expect(spec?.apiImportSettings).toEqual({
+            titleAsSchemaName: false,
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2",
+            typeDatesAsStrings: true
+        });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            useBytesForBinaryResponse: true,
+            respectParameterContent: true,
+            respectOperationIdWordBoundaries: true,
+            inferForwardCompatible: true,
+            preserveOneOfInAllOf: true,
+            anyOfSiblingPropertiesAsObject: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml",
+                name: "ProblemDetails"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
+    });
+
+    it("projects generator-level source import settings into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-python-sdk", "python", "4.3.10");
+        generator.apiOverride = {
+            specs: [
+                {
+                    openapi: "../specs/sample.yml",
+                    namespace: "Sample",
+                    settings: {
+                        "respect-readonly-schemas": true,
+                        "prefer-undiscriminated-unions-with-literals": true,
+                        "inline-all-of-schemas": true,
+                        "resolve-schema-collisions": true,
+                        "type-dates-as-strings": true,
+                        "error-responses": {
+                            schema: "./problem.yml"
+                        }
+                    }
+                }
+            ]
+        };
+        const workspace = createWorkspace("sample", [createGroup([generator])]);
+        workspace.absoluteFilePath = AbsoluteFilePath.of("/tmp/fern");
+
+        const [spec] = resolveMigrationSourceSpecs({
+            workspace,
+            fernWorkspace: {} as FernWorkspace,
+            generator
+        });
+
+        expect(spec?.apiImportSettings).toEqual({
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            typeDatesAsStrings: true
+        });
+        expect(spec?.docsImportSettings).toEqual({
+            typeDatesAsStrings: true,
+            errorResponses: {
+                schema: "/tmp/fern/problem.yml"
+            }
+        });
+        expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
@@ -391,32 +773,38 @@ describe("SDK Config migration", () => {
             })
         ).toThrow(FernConfigMappingError);
     });
-
-    it("creates parent directories and protects existing output unless forced", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "nested", "sdk-config.yml"));
-        await writeOutputFile(output, "first\n", false);
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await expect(writeOutputFile(output, "second\n", false)).rejects.toSatisfy(
-            (error) => error instanceof CliError && error.message.includes("already exists")
-        );
-        expect(await readFile(output, "utf-8")).toBe("first\n");
-
-        await writeOutputFile(output, "second\n", true);
-        expect(await readFile(output, "utf-8")).toBe("second\n");
-    });
-
-    it("does not replace an existing file when creating a new output fails", async () => {
-        const output = AbsoluteFilePath.of(join(temporaryDirectory, "sdk-config.yml"));
-        await writeFile(output, "existing\n");
-
-        await expect(writeOutputFile(output, "replacement\n", false)).rejects.toBeInstanceOf(CliError);
-        expect(await readFile(output, "utf-8")).toBe("existing\n");
-    });
 });
 
 describe("SDK Config migration target selection", () => {
-    it("uses the configured default group", async () => {
+    it("selects one requested language from a multi-language group", async () => {
+        const group = createGroup([
+            createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3"),
+            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        ]);
+
+        const result = await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [group])]),
+            cliContext: createCliContext(false),
+            args: { language: ["typescript"] }
+        });
+
+        expect(result.groups[0]?.generators.map((generator) => generator.language)).toEqual(["typescript"]);
+        expect(result.selections).toEqual([{ generatorIndexes: [0], groupName: "production", isEntireGroup: false }]);
+    });
+
+    it("rejects a requested language that is absent from the selected groups", async () => {
+        const group = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+
+        await expect(
+            selectMigrationTarget({
+                project: createProject([createWorkspace("payments", [group])]),
+                cliContext: createCliContext(false),
+                args: { language: ["typescript"] }
+            })
+        ).rejects.toThrow("'typescript' not found in the selected groups");
+    });
+
+    it("uses the configured default group in a non-interactive terminal", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";
         const selected = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
@@ -431,7 +819,32 @@ describe("SDK Config migration target selection", () => {
         expect(result.groups).toEqual([selected]);
     });
 
-    it("requires --group for ambiguous non-interactive selection", async () => {
+    it("preselects the configured default group without hiding other interactive choices", async () => {
+        const selected = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
+        selected.groupName = "selected";
+        const additional = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        additional.groupName = "additional";
+        const cliContext = createCliContext(true);
+        vi.mocked(cliContext.checkboxPrompt).mockResolvedValue([selected, additional]);
+
+        const result = await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [selected, additional], "selected")]),
+            cliContext,
+            args: {}
+        });
+
+        expect(result.groups).toEqual([selected, additional]);
+        expect(cliContext.checkboxPrompt).toHaveBeenCalledWith(
+            expect.objectContaining({
+                choices: expect.arrayContaining([
+                    expect.objectContaining({ checked: true, short: "selected" }),
+                    expect.objectContaining({ checked: false, short: "additional" })
+                ])
+            })
+        );
+    });
+
+    it("explains how to select multiple groups in a non-interactive terminal", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";
         const second = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
@@ -444,17 +857,21 @@ describe("SDK Config migration target selection", () => {
                 args: {}
             })
         ).rejects.toSatisfy(
-            (error) => error instanceof CliError && error.message.includes("Use --group to select one")
+            (error) =>
+                error instanceof CliError &&
+                error.message.includes(
+                    "Repeat --group for groups that resolve to the same API and use distinct target languages"
+                )
         );
     });
 
-    it("prompts for an ambiguous group in an interactive terminal", async () => {
+    it("allows one group to be selected interactively", async () => {
         const first = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
         first.groupName = "first";
         const second = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         second.groupName = "second";
         const cliContext = createCliContext(true);
-        vi.mocked(cliContext.selectPrompt).mockResolvedValue(second);
+        vi.mocked(cliContext.checkboxPrompt).mockResolvedValue([second]);
 
         const result = await selectMigrationTarget({
             project: createProject([createWorkspace("payments", [first, second])]),
@@ -463,7 +880,99 @@ describe("SDK Config migration target selection", () => {
         });
 
         expect(result.groups).toEqual([second]);
-        expect(cliContext.selectPrompt).toHaveBeenCalledOnce();
+        expect(cliContext.checkboxPrompt).toHaveBeenCalledWith(
+            expect.objectContaining({
+                message: "Select SDK groups to migrate (same API; one target per language):",
+                required: true,
+                choices: expect.arrayContaining([
+                    expect.objectContaining({
+                        name: expect.stringContaining("[typescript]"),
+                        short: "first"
+                    })
+                ])
+            })
+        );
+    });
+
+    it("allows multiple groups to be selected interactively", async () => {
+        const typescript = createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]);
+        typescript.groupName = "typescript";
+        const python = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        python.groupName = "python";
+        const cliContext = createCliContext(true);
+        vi.mocked(cliContext.checkboxPrompt).mockResolvedValue([typescript, python]);
+
+        const result = await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [typescript, python])]),
+            cliContext,
+            args: {}
+        });
+
+        expect(result.groups).toEqual([typescript, python]);
+        expect(cliContext.checkboxPrompt).toHaveBeenCalledOnce();
+    });
+
+    it("explains same-language conflicts in the interactive selector", async () => {
+        const localPython = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        localPython.groupName = "python-local";
+        const publishedPython = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        publishedPython.groupName = "python-published";
+        const cliContext = createCliContext(true);
+        vi.mocked(cliContext.checkboxPrompt).mockResolvedValue([localPython]);
+
+        await selectMigrationTarget({
+            project: createProject([createWorkspace("payments", [localPython, publishedPython])]),
+            cliContext,
+            args: {}
+        });
+
+        const prompt = vi.mocked(cliContext.checkboxPrompt).mock.calls[0]?.[0];
+        const validation = await prompt?.validate?.([localPython, publishedPython]);
+        expect(validation).toContain("One SDK Config allows one target per language");
+        expect(validation).toContain("python (python-local, python-published)");
+        expect(validation).toContain("sdk-config.<group>.yml");
+    });
+
+    it("rejects repeated flags that select the same target language", async () => {
+        const first = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        first.groupName = "first";
+        const second = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
+        second.groupName = "second";
+
+        await expect(
+            selectMigrationTarget({
+                project: createProject([createWorkspace("payments", [first, second])]),
+                cliContext: createCliContext(false),
+                args: { group: ["first", "second"] }
+            })
+        ).rejects.toSatisfy(
+            (error) =>
+                error instanceof CliError &&
+                error.message.includes("python (first, second)") &&
+                error.message.includes("sdk-config.<group>.yml")
+        );
+    });
+
+    it("explains how to migrate a group containing duplicate target languages", async () => {
+        const combined = createGroup([
+            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10"),
+            createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
+        ]);
+        combined.groupName = "combined";
+
+        await expect(
+            selectMigrationTarget({
+                project: createProject([createWorkspace("payments", [combined])]),
+                cliContext: createCliContext(false),
+                args: {}
+            })
+        ).rejects.toSatisfy(
+            (error) =>
+                error instanceof CliError &&
+                error.message.includes("python (combined ×2)") &&
+                error.message.includes("Split same-language generators into separate Fern groups") &&
+                error.message.includes("sdk-config.<group>.yml")
+        );
     });
 
     it("selects repeated groups and expands multi-group aliases in deterministic order", async () => {
@@ -530,7 +1039,7 @@ describe("SDK Config migration group consolidation", () => {
         const python = createGroup([createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")]);
         python.groupName = "python";
         const definition = createDefinition();
-        const workspace = createLoadableWorkspace([typescript, python], [definition, structuredClone(definition)]);
+        const workspace = createLoadableWorkspace([typescript, python], [definition, cloneDefinition(definition)]);
 
         const result = await loadCompatibleMigrationGroups({
             workspace,
@@ -560,7 +1069,7 @@ describe("SDK Config migration group consolidation", () => {
         const definition = createDefinition();
 
         const result = await loadCompatibleMigrationGroups({
-            workspace: createLoadableWorkspace([typescript, python], [definition, structuredClone(definition)]),
+            workspace: createLoadableWorkspace([typescript, python], [definition, cloneDefinition(definition)]),
             groups: [typescript, python],
             cliContext: createTaskCliContext()
         });
@@ -589,7 +1098,9 @@ describe("SDK Config migration group consolidation", () => {
                 cliContext: createTaskCliContext()
             })
         ).rejects.toSatisfy(
-            (error) => error instanceof CliError && error.message.includes("resolve to different API schemas")
+            (error) =>
+                error instanceof CliError &&
+                error.message.includes("resolve to different API sources, schemas, import settings, or audiences")
         );
     });
 
@@ -606,7 +1117,7 @@ describe("SDK Config migration group consolidation", () => {
             loadCompatibleMigrationGroups({
                 workspace: createLoadableWorkspace(
                     [publicGroup, internalGroup],
-                    [definition, structuredClone(definition)]
+                    [definition, cloneDefinition(definition)]
                 ),
                 groups: [publicGroup, internalGroup],
                 cliContext: createTaskCliContext()
@@ -615,8 +1126,8 @@ describe("SDK Config migration group consolidation", () => {
     });
 });
 
-function createDefinition(): FernDefinition {
-    return {
+function createDefinition(sourceDerivedGlobalHeaderNames: string[] = []): FernDefinition {
+    const definition: FernDefinition = {
         absoluteFilePath: AbsoluteFilePath.of("/tmp/fern/definition"),
         importedDefinitions: {},
         namedDefinitionFiles: {},
@@ -639,6 +1150,24 @@ function createDefinition(): FernDefinition {
         },
         specVersion: "2026-08-31"
     };
+    Object.defineProperty(definition, "sourceDerivedGlobalHeaderNames", {
+        configurable: true,
+        enumerable: false,
+        value: sourceDerivedGlobalHeaderNames,
+        writable: true
+    });
+    return definition;
+}
+
+function cloneDefinition(definition: FernDefinition): FernDefinition {
+    const clone = structuredClone(definition);
+    Object.defineProperty(clone, "sourceDerivedGlobalHeaderNames", {
+        configurable: true,
+        enumerable: false,
+        value: [...(definition.sourceDerivedGlobalHeaderNames ?? [])],
+        writable: true
+    });
+    return clone;
 }
 
 function createSource() {
@@ -773,6 +1302,7 @@ function createTaskCliContext(): CliContext {
 
 function createCliContext(isTTY: boolean): CliContext {
     return {
+        checkboxPrompt: vi.fn(),
         isTTY,
         selectPrompt: vi.fn()
     } as unknown as CliContext;

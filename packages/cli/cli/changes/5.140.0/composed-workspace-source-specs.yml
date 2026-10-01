@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support generating from a composed workspace. A workspace that declares no specs of its own and
+    composes sibling workspaces through dependencies.yml now exposes those dependencies' specs,
+    namespaced by the directory of the package marker that exports them, so it can produce a source
+    archive instead of failing with "workspace type fern does not expose source specs".
+  type: feat

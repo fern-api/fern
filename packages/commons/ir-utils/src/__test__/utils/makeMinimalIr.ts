@@ -57,6 +57,7 @@ export function makeMinimalIr(
             hasPaginatedEndpoints: false,
             hasFileDownloadEndpoints: false,
             idempotencyKeyGeneration: undefined,
+            webhookSignatureVerification: undefined,
             platformHeaders: {
                 language: "X-Fern-Language",
                 sdkName: "X-Fern-SDK-Name",

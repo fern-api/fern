@@ -66,6 +66,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return this.buildTypeFileName(typeDeclaration.name.name);
     }
 
+    public getFileNameForRequestWrapper(wrapper: FernIr.SdkRequestWrapper): string {
+        return this.buildTypeFileName(wrapper.wrapperName);
+    }
+
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
         return Object.values(this.ir.types);
     }
@@ -370,6 +374,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // lockstep and never ship a dangling require.
             ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
 
+            // XML
+            ...(this.hasXmlTypes()
+                ? [AsIsFiles.XmlElement, AsIsFiles.XmlUtils, AsIsFiles.XmlSerializable, AsIsFiles.TestXmlElement]
+                : []),
+
             // Multipart
             AsIsFiles.MultipartEncoder,
             AsIsFiles.MultipartFormDataPart,
@@ -420,6 +429,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
@@ -431,6 +443,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public hasWebhookBodyHashBinding(): boolean {
+        const apiWide = this.ir.sdkConfig.webhookSignatureVerification;
+        if (apiWide?.type === "hmac" && apiWide.bodyHashBinding != null) {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (

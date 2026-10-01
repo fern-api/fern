@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/core-utils";
+import { isNonNullish, requiredByPresenceConstraint } from "@fern-api/core-utils";
 import { Type, TypeId, TypeReference, XmlEncoding } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -246,7 +246,11 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 propertiesByAudience: allOfPropertiesByAudience
             } = convertProperties({
                 properties: mergedProperties,
-                required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
+                required: [
+                    ...(this.schema.required ?? []),
+                    ...(allOfSchema.required ?? []),
+                    ...requiredByPresenceConstraint(allOfSchema)
+                ],
                 breadcrumbs,
                 context: this.context,
                 errorCollector: this.context.errorCollector,

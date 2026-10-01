@@ -1,0 +1,5 @@
+- summary: |
+    Add the `layout.breadcrumbs.current-page` docs.yml setting. When set to true,
+    the current page is appended to the breadcrumb trail above the page title as a
+    non-clickable item. Defaults to false.
+  type: feat

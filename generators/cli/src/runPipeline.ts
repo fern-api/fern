@@ -151,7 +151,9 @@ export async function runPipeline(args: {
             publishesHomebrew: distribution?.homebrew != null,
             repoUrl: outputConfig.repoUrl,
             description: defaultCrateDescription(ir.apiDisplayName ?? binaryName)
-        })
+        }),
+        extraDependencies: customConfig.extraDependencies,
+        extraDevDependencies: customConfig.extraDevDependencies
     });
     await patchDistWorkspaceToml({ outputDir, homebrew: distribution?.homebrew, binaryName });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;

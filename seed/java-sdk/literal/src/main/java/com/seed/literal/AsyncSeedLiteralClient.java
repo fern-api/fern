@@ -12,7 +12,7 @@ import com.seed.literal.resources.query.AsyncQueryClient;
 import com.seed.literal.resources.reference.AsyncReferenceClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedLiteralClient {
+public class AsyncSeedLiteralClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncHeadersClient> headersClient;
@@ -52,6 +52,15 @@ public class AsyncSeedLiteralClient {
 
     public AsyncReferenceClient reference() {
         return this.referenceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedLiteralClientBuilder builder() {

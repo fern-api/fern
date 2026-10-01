@@ -10,7 +10,7 @@ import com.seed.api.resources.files.AsyncFilesClient;
 import com.seed.api.resources.items.AsyncItemsClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncItemsClient> itemsClient;
@@ -36,6 +36,15 @@ public class AsyncSeedApiClient {
 
     public AsyncFilesClient files() {
         return this.filesClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

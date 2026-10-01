@@ -12,7 +12,7 @@ import com.seed.exhaustive.resources.noreqbody.AsyncNoReqBodyClient;
 import com.seed.exhaustive.resources.reqwithheaders.AsyncReqWithHeadersClient;
 import java.util.function.Supplier;
 
-public class AsyncBest {
+public class AsyncBest implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncEndpointsClient> endpointsClient;
@@ -52,6 +52,15 @@ public class AsyncBest {
 
     public AsyncReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncBestBuilder builder() {

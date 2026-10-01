@@ -85,6 +85,7 @@ export abstract class AbstractSpecConverter<
                 hasStreamingEndpoints: false,
                 isAuthMandatory: true,
                 idempotencyKeyGeneration: undefined,
+                webhookSignatureVerification: undefined,
                 platformHeaders: {
                     language: "",
                     sdkName: "",
@@ -458,13 +459,15 @@ export abstract class AbstractSpecConverter<
         if (environmentConfig == null) {
             return;
         }
-        for (const environment of environmentConfig.environments.environments) {
-            const envAudiences = audiences?.[environment.id];
-            if (envAudiences != null) {
-                this.irGraph.markEnvironmentForAudiences(environment, envAudiences);
-            } else {
-                this.irGraph.markEnvironmentForAudiences(environment, [], true);
-            }
+        const environments = environmentConfig.environments.environments;
+        const noEnvironmentDeclaresAudiences =
+            audiences == null || environments.every((environment) => environment.audiences == null);
+        for (const environment of environments) {
+            this.irGraph.markEnvironmentForAudiences(
+                environment,
+                audiences?.[environment.id] ?? [],
+                noEnvironmentDeclaresAudiences
+            );
         }
     }
 

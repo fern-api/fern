@@ -24,7 +24,9 @@ import {
     preflightFernSdkGenApiBuild,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
-    selectFernSdkGenApiRoute
+    selectFernSdkGenApiRoute,
+    validateFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishCredentialSources
 } from "../fernSdkGenApi.js";
 import {
     type FernSdkGenApiSourceArchive,
@@ -39,6 +41,7 @@ import {
     prepareFernSdkGenApiRoutes
 } from "../runRemoteGenerationForAPIWorkspace.js";
 import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
+import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -51,13 +54,16 @@ vi.mock("@fern-api/core", async (importOriginal) => ({
     getIrVersionForGenerator: migrationMocks.getIrVersionForGenerator
 }));
 
-vi.mock("@fern-api/ir-migrations", async (importOriginal) => ({
-    ...(await importOriginal<typeof import("@fern-api/ir-migrations")>()),
+vi.mock("@fern-api/ir-migrations", () => ({
     migrateIntermediateRepresentationForGenerator: migrationMocks.migrateForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator: migrationMocks.migrateToVersionForGenerator
 }));
 
 beforeEach(() => {
+    contextLogger.debug.mockReset();
+    contextLogger.info.mockReset();
+    contextLogger.warn.mockReset();
+    contextLogger.error.mockReset();
     migrationMocks.getIrVersionForGenerator.mockReset().mockResolvedValue(undefined);
     migrationMocks.migrateForGenerator.mockReset().mockImplementation(({ intermediateRepresentation }) =>
         Promise.resolve({
@@ -95,8 +101,9 @@ function invocation(overrides: Record<string, unknown> = {}): generatorsYml.Gene
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
+const contextLogger = { debug: vi.fn(), info: vi.fn(), warn: vi.fn(), error: vi.fn() };
 const context = {
-    logger: { debug: vi.fn(), info: vi.fn() },
+    logger: contextLogger,
     failAndThrow: (message: string) => {
         throw new Error(message);
     }
@@ -114,16 +121,15 @@ function sdkConfigPayload(body: string): FernSdkGenApiPayload {
 }
 
 function sdkConfigV1(
-    target: FernSdkConfigV1Payload["targets"][number] = {
+    target: Omit<FernSdkConfigV1Payload["targets"][number], "body"> & { body?: Buffer } = {
         language: "typescript",
         generatorVersion: "4.0.0"
     }
 ): FernSdkConfigV1Payload {
     return {
-        body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
         sdkName: "petstore",
         sdkVersion: "1.2.3",
-        targets: [target]
+        targets: [{ body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'), ...target }]
     };
 }
 
@@ -195,12 +201,14 @@ function createPreflightBatch({
     payloads,
     specsTarGzBuffer = validSourceArchive,
     generatorInvocation = invocation(),
-    generatorInvocations
+    generatorInvocations,
+    sdkGenApiRoutes
 }: {
     payloads: FernSdkGenApiPayload[];
     specsTarGzBuffer?: Buffer;
     generatorInvocation?: generatorsYml.GeneratorInvocation;
     generatorInvocations?: generatorsYml.GeneratorInvocation[];
+    sdkGenApiRoutes?: Array<GenerationConfigRoute | undefined>;
 }): {
     builds: Array<Promise<unknown>>;
     post: ReturnType<typeof vi.spyOn>;
@@ -216,6 +224,7 @@ function createPreflightBatch({
             organization: "acme",
             cliVersion: "0.0.0",
             generatorInvocation: generatorInvocations?.[index] ?? generatorInvocation,
+            sdkGenApiRoute: sdkGenApiRoutes?.[index],
             sdkVersion: "1.2.3",
             token: { value: "token" } as never,
             specsTarGzBuffer,
@@ -246,6 +255,167 @@ describe("isEligibleForFernSdkGenApi", () => {
             payloadKind: "sdk-config-v1",
             requestedVersion: "4.0.0"
         });
+        if (result?.route == null) {
+            throw new Error("Expected a pinned SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+        expect(request.targets[0]?.fernGenerator).toEqual({
+            id: "fernapi/fern-typescript-sdk",
+            version: "4.0.0"
+        });
+    });
+
+    it("routes an unpinned SDK Config target directly to SDK Config v1", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toEqual({
+            generatorId: "fernapi/fern-typescript-sdk",
+            language: "typescript",
+            cutoverVersion: "4.0.0",
+            versionSource: "sdk-config-omitted",
+            configKind: "sdk-config-v1",
+            payloadKind: "sdk-config-v1"
+        });
+        if (result?.route == null) {
+            throw new Error("Expected an unpinned SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+        expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-typescript-sdk" });
+        expect(JSON.stringify(request)).not.toContain('"version":"latest"');
+    });
+
+    it("rejects an unpinned route paired with a Fern runtime bundle", async () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned SDK Config route");
+        }
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)],
+            generatorInvocation: prepared.generatorInvocation,
+            sdkGenApiRoutes: [prepared.route]
+        });
+
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "selected route payload sdk-config-v1 does not match participant payload fern-runtime-bundle"
+        );
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("rejects unpinned wire serialization without the internal marker", () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned SDK Config route");
+        }
+
+        expect(() =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ version: "latest" }),
+                sdkGenApiRoute: prepared.route,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: sdkConfigPayload("{}")
+            })
+        ).toThrow(
+            'does not match its generator version representation: invocationVersion="latest"; configKind=sdk-config-v1; versionSource=sdk-config-omitted'
+        );
+    });
+
+    it("retains migration guidance for a pinned pre-cutover SDK Config target", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript", generatorVersion: "3.999.999" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("LEGACY_FERN_CONFIG_REQUIRED"));
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("USE_LEGACY_FERN_CONFIG"));
+    });
+
+    it("does not treat an explicit SDK Config generatorVersion latest as omission", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript", generatorVersion: "latest" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("INVALID_GENERATOR_VERSION"));
+    });
+
+    it("rejects SDK Config omission when the invocation lacks the unpinned marker", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("must use the internal unpinned generator marker")
+        );
+    });
+
+    it("rejects the unpinned marker outside SDK Config instead of falling back", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: false,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("cannot be used without SDK Config v1")
+        );
     });
 
     it("rejects an SDK Config that does not contain the selected language", () => {
@@ -263,7 +433,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route).toBeUndefined();
         expect(result?.error).toHaveProperty(
             "message",
-            expect.stringContaining("does not contain a target for typescript")
+            expect.stringContaining("target 0 language python does not match typescript")
         );
     });
 
@@ -300,8 +470,6 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it("routes cutover-1 and rejects legacy configuration at and after cutover", () => {
-        const startTargetWork = vi.fn();
-
         expect(selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }))?.payloadKind).toBe("fern-runtime-bundle");
         for (const version of ["4.0.0", "4.0.1"]) {
             const [result] = prepareFernSdkGenApiRoutes({
@@ -313,11 +481,135 @@ describe("isEligibleForFernSdkGenApi", () => {
             expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
             expect(result?.error).toHaveProperty("message", expect.stringContaining("--sdk-config"));
         }
-        expect(() => {
-            selectFernSdkGenApiRoute(invocation({ version: "latest" }));
-            startTargetWork();
-        }).toThrow("exact semantic version");
-        expect(startTargetWork).not.toHaveBeenCalled();
+    });
+
+    it("routes generators.yml latest as an unpinned Fern runtime bundle", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "latest" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toEqual({
+            generatorId: "fernapi/fern-typescript-sdk",
+            language: "typescript",
+            cutoverVersion: "4.0.0",
+            versionSource: "fern-latest",
+            configKind: "legacy-fern",
+            payloadKind: "fern-runtime-bundle"
+        });
+        if (result?.route == null) {
+            throw new Error("Expected an unpinned Fern route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle)
+        });
+        expect(request.targets[0]).toMatchObject({
+            fernGenerator: { id: "fernapi/fern-typescript-sdk" },
+            payloadKind: "fern-runtime-bundle"
+        });
+        expect(request.targets[0]?.fernGenerator).not.toHaveProperty("version");
+        expect(JSON.stringify(request)).not.toContain('"latest"');
+    });
+
+    it("reports the invocation version and config kind for an unpinned Fern mismatch", () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "latest" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned Fern route");
+        }
+
+        expect(() =>
+            createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION }),
+                sdkGenApiRoute: prepared.route,
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle)
+            })
+        ).toThrow(
+            `invocationVersion="${SDK_CONFIG_UNPINNED_GENERATOR_VERSION}"; configKind=legacy-fern; versionSource=fern-latest`
+        );
+    });
+
+    it("keeps invalid non-semver generators.yml versions invalid", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "not-semver" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("INVALID_GENERATOR_VERSION"));
+    });
+
+    it("routes sdk-gen-api-only generators to SDK Config v1 at cutover without a document", () => {
+        // Hosted MCP servers are configured in generators.yml and have no legacy route, so the
+        // CLI synthesizes their SDK Config instead of asking for `fern sdk migrate`.
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.1.0", language: "mcp" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toMatchObject({ configKind: "sdk-config-v1", payloadKind: "sdk-config-v1" });
+    });
+
+    it("routes MCP latest through synthesized unpinned SDK Config", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", version: "latest", language: "mcp" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.route).toEqual({
+            generatorId: "fernapi/fern-mcp-server",
+            language: "mcp",
+            cutoverVersion: "0.1.0",
+            versionSource: "fern-latest",
+            configKind: "sdk-config-v1",
+            payloadKind: "sdk-config-v1"
+        });
+        if (result?.route == null) {
+            throw new Error("Expected an unpinned synthesized SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: result.generatorInvocation,
+            sdkGenApiRoute: result.route,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+        expect(request.targets[0]).toMatchObject({
+            fernGenerator: { id: "fernapi/fern-mcp-server" },
+            payloadKind: "sdk-config-v1"
+        });
+        expect(request.targets[0]?.fernGenerator).not.toHaveProperty("version");
+        expect(JSON.stringify(request)).not.toContain('"latest"');
     });
 
     it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
@@ -379,7 +671,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
-    it("keeps pre-cutover GitHub delivery on Fiddle", () => {
+    it("routes GitHub push delivery with registry publication through sdk-gen-api when enabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
                 invocation({
@@ -388,7 +680,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                         FernFiddle.GithubOutputModeV2.push({
                             owner: "acme",
                             repo: "sdk",
-                            branch: "main"
+                            branch: "main",
+                            publishInfo: FernFiddle.GithubPublishInfo.npm({
+                                registryUrl: "https://registry.npmjs.org",
+                                packageName: "@acme/sdk"
+                            })
                         })
                     )
                 })
@@ -398,23 +694,60 @@ describe("isEligibleForFernSdkGenApi", () => {
             isPreview: false
         });
 
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("keeps non-GitHub verification on Fiddle for legacy targets", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "3.999.999" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
         expect(result?.route).toBeUndefined();
         expect(result?.error).toBeUndefined();
     });
 
+    it("allows SDK Config GitHub verification through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: "4.0.0" })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode: "pull-request"
+                }
+            }),
+            requireEnvVars: true,
+            isPreview: false,
+            verify: true
+        });
+
+        expect(result?.route?.payloadKind).toBe("sdk-config-v1");
+        expect(result?.error).toBeUndefined();
+    });
+
+    it("renders an omitted SDK Config generator version as unpinned in diagnostics", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "typescript" }),
+            requireEnvVars: true,
+            isPreview: false,
+            autoMerge: true
+        });
+
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
+        expect(result?.error).not.toHaveProperty("message", expect.stringContaining(" latest "));
+    });
+
     it.each([
-        [
-            "GitHub delivery",
-            {
-                outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner: "acme",
-                        repo: "sdk",
-                        branch: "main"
-                    })
-                )
-            }
-        ],
         [
             "registry publication",
             {
@@ -674,6 +1007,41 @@ describe("isEligibleForFernSdkGenApi", () => {
         }
     });
 
+    it("includes sdk-gen-api GitHub output options in the wire request", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: "acme",
+                        repo: "sdk",
+                        branch: "main"
+                    })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle),
+            githubOptions: {
+                replay: { enabled: true },
+                verify: true,
+                skipIfNoDiff: true
+            }
+        });
+
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            branch: "main",
+            mode: "push",
+            replay: { enabled: true },
+            verify: true,
+            skipIfNoDiff: true
+        });
+    });
+
     it.each([
         [
             "npm",
@@ -788,7 +1156,12 @@ describe("isEligibleForFernSdkGenApi", () => {
                 })
             ],
             enabled: true,
-            sdkConfigV1: sdkConfigV1(),
+            sdkConfigV1: sdkConfigV1({
+                language: "typescript",
+                generatorVersion: "4.0.0",
+                requestedOutput: { type: "publish", publish: { registry: "npm", url: registryUrl } },
+                publishCredential: { registry: "npm", token: "npm-secret" }
+            }),
             requireEnvVars: true,
             isPreview: false
         });
@@ -1224,6 +1597,91 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(new Set(request.targets.map((target) => target.targetId)).size).toBe(3);
     });
 
+    it("correlates normalized SDK Config credentials with duplicate-language targets", () => {
+        const invocations = [invocation(), invocation()];
+        const targets = invocations.map((generatorInvocation, index) => ({
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            targetIdSeed: index.toString(),
+            payload: sdkConfigPayload(
+                JSON.stringify({
+                    schemaVersion: "sdk-config/v1",
+                    targets: [{ language: "typescript", output: { delivery: "files", publish: { registry: "npm" } } }]
+                })
+            ),
+            requestedOutput: {
+                type: "publish" as const,
+                publish: {
+                    registry: "npm" as const,
+                    url: index === 0 ? "https://npm.buildwithfern.com" : "https://registry.npmjs.org"
+                }
+            }
+        }));
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets
+        });
+
+        const credentials = createFernSdkGenApiPublishCredentials(request, invocations, [
+            { registry: "npm", token: "first-secret" },
+            { registry: "npm", token: "second-secret" }
+        ]);
+
+        expect(credentials?.targets).toEqual([
+            { targetId: request.targets[0]?.targetId, registry: "npm", token: "first-secret" },
+            { targetId: request.targets[1]?.targetId, registry: "npm", token: "second-secret" }
+        ]);
+        expect(request.targets[0]?.requestedOutput).toEqual({
+            type: "publish",
+            publish: { registry: "npm", url: "https://npm.buildwithfern.com" }
+        });
+        expect(JSON.stringify(request)).not.toContain("first-secret");
+        expect(JSON.stringify(request)).not.toContain("second-secret");
+    });
+
+    it("validates normalized SDK Config credentials with shared direct-publish rules", () => {
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource(
+                { registry: "pypi", username: "user", password: "secret" },
+                "https://pypi.buildwithfern.com"
+            )
+        ).not.toThrow();
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })).toThrow(
+            "requires password"
+        );
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource({
+                registry: "maven",
+                username: "user",
+                password: "secret",
+                signature: { keyId: "key", password: "signing-secret" }
+            })
+        ).toThrow("requires signature.secretKey");
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "npm", token: "OIDC" })).toThrow(
+            "does not support OIDC"
+        );
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "nuget" })).toThrow(
+            "does not support direct nuget"
+        );
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource(
+                { registry: "npm", token: "secret" },
+                "https://user:password@npm.example.com"
+            )
+        ).toThrow("must use HTTPS and must not contain user information");
+    });
+
+    it("applies the shared credential document size limit to normalized SDK Config credentials", () => {
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSources(
+                Array.from({ length: 4 }, () => ({ registry: "npm", token: "x".repeat(16 * 1024) }) as const)
+            )
+        ).toThrow("exceeding the 64 KiB limit");
+    });
+
     it("keeps idempotency stable for equal archive bytes and changes it with request inputs", () => {
         const createRequest = (
             generatorInvocation: generatorsYml.GeneratorInvocation,
@@ -1327,6 +1785,10 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("creates a generator-compatible gzip bundle with enriched IR and no publish secrets", async () => {
         const generatorInvocation = invocation({
             config: { packageJson: { name: "@acme/sdk" } },
+            readme: {
+                apiName: "Petstore SDK",
+                introduction: "Use this SDK to call the Petstore API."
+            },
             outputMode: FernFiddle.OutputMode.publishV2(
                 FernFiddle.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -1344,7 +1806,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             intermediateRepresentation: {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
-                publishConfig: { type: "filesystem" }
+                publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                }
             } as never,
             irVersionOverride: undefined,
             context
@@ -1359,6 +1825,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 customConfig: { packageJson: { name: "@acme/sdk" } },
                 output: {
                     path: "/fern/output",
+                    snippetFilepath: "/tmp/fern-runtime/snippet.json",
                     mode: {
                         type: "github",
                         version: "1.2.3"
@@ -1372,6 +1839,10 @@ describe("isEligibleForFernSdkGenApi", () => {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
                 publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                },
                 migrated: "generator"
             }
         });
@@ -1504,6 +1975,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             generateOauthClients: true,
             generatePaginatedClients: true
         });
+        expect(bundle.config.output.snippetFilepath).toBeNull();
     });
 
     it("preserves trusted OIDC markers while omitting actual GitHub publish credentials", () => {
@@ -1794,7 +2266,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: expectedRequest.targets[0]?.targetId,
                         status: "succeeded",
-                        logs: [],
+                        logs: [
+                            { level: "info", message: "Generating SDK" },
+                            { level: "warn", message: "Schema warning" },
+                            { level: "error", message: "Publisher exposed multipart-npm-secret" }
+                        ],
                         result: {
                             artifactUrl: "https://example.test/sdk.zip",
                             actualVersion: "1.2.4"
@@ -1857,6 +2333,9 @@ describe("isEligibleForFernSdkGenApi", () => {
             identifier: "https://registry.example.com/packages/@acme/sdk/1.2.4",
             url: "https://registry.example.com/packages/@acme/sdk/1.2.4"
         });
+        expect(contextLogger.info).toHaveBeenCalledWith("Generating SDK");
+        expect(contextLogger.warn).toHaveBeenCalledWith("Schema warning");
+        expect(contextLogger.error).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
     it("keeps a package identifier out of the publication URL field", async () => {
@@ -2095,11 +2574,11 @@ describe("isEligibleForFernSdkGenApi", () => {
                     {
                         targetId: request.targets[0]?.targetId,
                         status: "failed",
-                        logs: [],
+                        logs: [{ level: "error", message: "Publisher exposed npm-secret" }],
                         publication: {
                             status: "failure",
                             publishTarget: { type: "npm", identifier: "@acme/sdk" },
-                            error: { code: "publish_failed", message: "SDK publish failed" }
+                            error: { code: "publish_failed", message: "SDK publish failed with npm-secret" }
                         }
                     }
                 ]
@@ -2119,7 +2598,8 @@ describe("isEligibleForFernSdkGenApi", () => {
                 absolutePathToPreview: undefined,
                 context
             })
-        ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed");
+        ).rejects.toThrow("sdk-gen-api publication failed (publish_failed): SDK publish failed with [REDACTED]");
+        expect(contextLogger.error).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
     it("stops polling when the build fails before a target reaches a terminal state", async () => {
@@ -2171,7 +2651,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it.each([
         ["UNKNOWN_GENERATOR", invocation({ name: "fernapi/not-a-generator" })],
         ["GENERATOR_LANGUAGE_MISMATCH", invocation({ language: "python" })],
-        ["INVALID_GENERATOR_VERSION", invocation({ version: "latest" })]
+        ["INVALID_GENERATOR_VERSION", invocation({ version: "not-semver" })]
     ])("rejects %s before submission", async (code, generatorInvocation) => {
         const { builds, post, get } = createPreflightBatch({
             payloads: [runtimePayload(validRuntimeBundle)],
@@ -2640,6 +3120,32 @@ describe("fernapi/fern-mcp-server target", () => {
         expect(target?.requestedOutput).toEqual({ type: "download" });
     });
 
+    it("omits an unpinned SDK Config generator version from the wire request", () => {
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "mcp" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+        if (prepared?.route == null) {
+            throw new Error("Expected an unpinned SDK Config route");
+        }
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: prepared.generatorInvocation,
+            sdkGenApiRoute: prepared.route,
+            sdkVersion: "0.0.1",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+
+        expect(request.targets[0]?.fernGenerator).toEqual({ id: "fernapi/fern-mcp-server" });
+        expect(JSON.stringify(request)).not.toContain(SDK_CONFIG_UNPINNED_GENERATOR_VERSION);
+    });
+
     it("does not include package metadata for download output", () => {
         const request = createFernSdkGenApiRequest({
             apiName: "Petstore",
@@ -2668,6 +3174,11 @@ describe("fernapi/fern-mcp-server target", () => {
                 repository: "acme/sdk",
                 mode: "pull-request",
                 publish: { registry: "npm" }
+            },
+            githubOptions: {
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
 
@@ -2677,7 +3188,10 @@ describe("fernapi/fern-mcp-server target", () => {
                 type: "github",
                 repository: "acme/sdk",
                 mode: "pull-request",
-                publish: { registry: "npm" }
+                publish: { registry: "npm" },
+                replay: { enabled: false },
+                verify: true,
+                skipIfNoDiff: true
             }
         });
     });

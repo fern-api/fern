@@ -8,6 +8,16 @@ types:
     extends:
       - commons.WithDocsSchema
     properties:
-      status-code: integer
+      status-code: ErrorStatusCodeSchema
       type: optional<string>
       examples: optional<list<examples.ExampleTypeSchema>>
+
+  ErrorStatusCodeSchema:
+    discriminated: false
+    docs: |
+      A concrete HTTP status code (e.g. 404), or a wildcard status code pattern
+      ("4XX" or "5XX") that matches every status code in that class not covered
+      by a concrete error on the same endpoint.
+    union:
+      - integer
+      - string

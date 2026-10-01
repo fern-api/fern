@@ -51,6 +51,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         enable-wire-tests: true
+  php-xml-twiml:
+    - outputFolder: .
+      customConfig: null
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null

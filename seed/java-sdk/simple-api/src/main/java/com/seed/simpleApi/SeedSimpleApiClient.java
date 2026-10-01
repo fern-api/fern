@@ -8,7 +8,7 @@ import com.seed.simpleApi.core.Suppliers;
 import com.seed.simpleApi.resources.user.UserClient;
 import java.util.function.Supplier;
 
-public class SeedSimpleApiClient {
+public class SeedSimpleApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<UserClient> userClient;
@@ -20,6 +20,15 @@ public class SeedSimpleApiClient {
 
     public UserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedSimpleApiClientBuilder builder() {

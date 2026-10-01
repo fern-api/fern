@@ -1301,6 +1301,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn inject_keyring_into_single_env_source() {
         let mut bindings = vec![(
             "OAuth2".to_string(),
@@ -1322,6 +1323,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn inject_keyring_appends_to_existing_chain() {
         let mut bindings = vec![(
             "scheme1".to_string(),
@@ -1343,6 +1345,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn inject_keyring_promotes_missing_to_keyring_alone() {
         let mut bindings = vec![(
             "scheme1".to_string(),
@@ -1481,6 +1484,7 @@ mod tests {
     }
 
     #[test]
+    #[serial]
     fn expand_slots_synthesises_keyring_for_oauth_custom_binding() {
         use crate::auth::provider::NoAuthProvider;
         // OAuth flows register their auth provider as Custom; expand_slots

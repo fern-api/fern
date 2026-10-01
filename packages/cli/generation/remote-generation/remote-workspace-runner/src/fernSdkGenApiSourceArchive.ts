@@ -41,7 +41,7 @@ export function validateFernSdkGenApiSourceCompatibility(
         }
         if (!isSupportedSourceType(source.type)) {
             throw new Error(
-                `Generator ${route.generatorId} ${route.requestedVersion} requires SDK Config v1, but selected source ${manifestIndex} cannot be represented downstream: SDK Config generation does not support Fern source type ${source.type} (${source.specPath}). Use an OpenAPI, AsyncAPI, or GraphQL source for this generator version.`
+                `Generator ${route.generatorId} ${route.requestedVersion ?? "(unpinned)"} requires SDK Config v1, but selected source ${manifestIndex} cannot be represented downstream: SDK Config generation does not support Fern source type ${source.type} (${source.specPath}). Use an OpenAPI, AsyncAPI, or GraphQL source for this generator version.`
             );
         }
     }
