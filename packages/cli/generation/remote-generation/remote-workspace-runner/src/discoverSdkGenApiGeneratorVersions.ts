@@ -44,6 +44,7 @@ export async function discoverLatestSdkGenApiGeneratorVersions({
         token,
         generatorId,
         language,
+        currentVersion: "latest",
         includeMajor: true
     });
     latestDiscoveryRequests.set(key, request);
@@ -70,11 +71,11 @@ export async function discoverSdkGenApiGeneratorVersions({
     token: FernToken;
     generatorId: string;
     language: string;
-    currentVersion?: string;
+    currentVersion: string;
     includeMajor: boolean;
 }): Promise<DiscoveryResult | UnavailableResult> {
     const endpoint = new URL("v1/fern/generator-versions/discover", `${origin.replace(/\/+$/, "")}/`);
-    const versionLabel = currentVersion == null ? generatorId : `${generatorId}@${currentVersion}`;
+    const versionLabel = `${generatorId}@${currentVersion}`;
     let response: Response;
     try {
         response = await fetch(endpoint, {
@@ -90,7 +91,7 @@ export async function discoverSdkGenApiGeneratorVersions({
                         targetId: "generator",
                         generatorId,
                         language,
-                        ...(currentVersion == null ? {} : { currentVersion }),
+                        currentVersion,
                         includeMajor
                     }
                 ]

@@ -216,9 +216,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             targetId: "generator",
             generatorId: "fernapi/fern-typescript-sdk",
             language: "typescript",
+            currentVersion: "latest",
             includeMajor: true
         });
-        expect(discoveryRequest.targets[0]).not.toHaveProperty("currentVersion");
         expect(migrateIntermediateRepresentationForInvocation).toHaveBeenCalledWith(
             expect.objectContaining({
                 generatorInvocation: expect.objectContaining({ version: "3.99.4" })
