@@ -33,9 +33,12 @@ type Break struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -125,6 +128,9 @@ func BreakFromXmlElement(element *core.XmlElement) (*Break, error) {
 		result.Content = append(result.Content, core.XmlText(element.Text))
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -285,9 +291,12 @@ type Dial struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -403,6 +412,9 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 		result.Number = &value
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -588,9 +600,12 @@ type Hangup struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -665,6 +680,9 @@ func HangupFromXmlElement(element *core.XmlElement) (*Hangup, error) {
 		result.Content = append(result.Content, core.XmlText(element.Text))
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -758,9 +776,12 @@ type Number struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -845,6 +866,9 @@ func NumberFromXmlElement(element *core.XmlElement) (*Number, error) {
 		result.PhoneNumber = &value
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -965,9 +989,12 @@ type Pause struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -1051,6 +1078,9 @@ func PauseFromXmlElement(element *core.XmlElement) (*Pause, error) {
 		result.Content = append(result.Content, core.XmlText(element.Text))
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -1244,9 +1274,12 @@ type Response struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -1358,6 +1391,9 @@ func ResponseFromXmlElement(element *core.XmlElement) (*Response, error) {
 		result.Content = append(result.Content, core.XmlText(element.Text))
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -1669,9 +1705,12 @@ type Say struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -1775,6 +1814,9 @@ func SayFromXmlElement(element *core.XmlElement) (*Say, error) {
 		result.Message = &value
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue
@@ -2442,9 +2484,12 @@ type Wide struct {
 	// ExtraAttributes holds XML attributes not declared in the API definition.
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
+	// The same nodes also appear in Content, which decides their position;
+	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
 	// Content holds the child elements and text segments in document order,
 	// including the typed children, so mixed content round-trips as written.
+	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
 }
 
@@ -4065,6 +4110,9 @@ func WideFromXmlElement(element *core.XmlElement) (*Wide, error) {
 		result.Content = append(result.Content, core.XmlText(element.Text))
 	}
 	for _, node := range element.Children {
+		if node == nil {
+			continue
+		}
 		if _, ok := node.(core.XmlText); ok {
 			result.Content = append(result.Content, node)
 			continue

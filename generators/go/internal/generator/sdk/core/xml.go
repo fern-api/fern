@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"reflect"
 	"sort"
 	"strconv"
 	"strings"
@@ -165,7 +166,7 @@ func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
 		xmlEscape(buffer, attribute.Value)
 		buffer.WriteByte('"')
 	}
-	if x.Text == "" && !x.hasContent() {
+	if !x.hasContent() {
 		buffer.WriteString(" />")
 		return
 	}
@@ -180,6 +181,9 @@ func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
 }
 
 func (x *XmlElement) hasContent() bool {
+	if x.Text != "" {
+		return true
+	}
 	for _, child := range x.Children {
 		if text, ok := child.(XmlText); ok {
 			if text != "" {
@@ -315,8 +319,17 @@ func isNilXmlNode(node XmlNode) bool {
 	if _, ok := node.(XmlText); ok {
 		return false
 	}
-	// Typed nil pointers format as "<nil>"; generated types return an element for a nil receiver.
-	return fmt.Sprintf("%v", node) == "<nil>"
+	value := reflect.ValueOf(node)
+	switch value.Kind() {
+	case reflect.Ptr, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
+		return value.IsNil()
+	}
+	return false
+}
+
+// isComparableXmlNode reports whether node can be used as a map key.
+func isComparableXmlNode(node XmlNode) bool {
+	return reflect.TypeOf(node).Comparable()
 }
 
 // OrderXmlContent reconciles a type's ordered Content with the nodes its typed
@@ -333,7 +346,9 @@ func OrderXmlContent(content []XmlNode, referenced ...[]XmlNode) []XmlNode {
 				continue
 			}
 			all = append(all, node)
-			remaining[node]++
+			if isComparableXmlNode(node) {
+				remaining[node]++
+			}
 		}
 	}
 	ordered := make([]XmlNode, 0, len(content)+len(all))
@@ -341,7 +356,7 @@ func OrderXmlContent(content []XmlNode, referenced ...[]XmlNode) []XmlNode {
 		if node == nil {
 			continue
 		}
-		if remaining[node] > 0 {
+		if isComparableXmlNode(node) && remaining[node] > 0 {
 			remaining[node]--
 			ordered = append(ordered, node)
 			continue
@@ -355,6 +370,10 @@ func OrderXmlContent(content []XmlNode, referenced ...[]XmlNode) []XmlNode {
 		}
 	}
 	for _, node := range all {
+		if !isComparableXmlNode(node) {
+			ordered = append(ordered, node)
+			continue
+		}
 		if remaining[node] > 0 {
 			remaining[node]--
 			ordered = append(ordered, node)
@@ -393,6 +412,9 @@ func AddXmlContent(element *XmlElement, ordered []XmlNode, wrapped map[string][]
 		take := len(items) - position
 		if index < markerCounts[marker.Name]-1 && marker.WrappedItemCount < take {
 			take = marker.WrappedItemCount
+		}
+		if take < 0 {
+			take = 0
 		}
 		wrapper := &XmlElement{
 			Name:       marker.Name,

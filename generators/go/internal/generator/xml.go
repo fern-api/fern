@@ -545,6 +545,9 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 		t.writer.P("}")
 	}
 	t.writer.P("for _, node := range element.Children {")
+	t.writer.P("if node == nil {")
+	t.writer.P("continue")
+	t.writer.P("}")
 	t.writer.P("if _, ok := node.(core.XmlText); ok {")
 	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", node)")
 	t.writer.P("continue")

@@ -191,3 +191,28 @@ func TestAddXmlContentDealsWrappedItemsToRepeatedWrappers(t *testing.T) {
 type typedNode struct{ name string }
 
 func (n *typedNode) ToXmlElement() *XmlElement { return NewXmlElement(n.name) }
+
+type stringerNode struct{ name string }
+
+func (s *stringerNode) ToXmlElement() *XmlElement {
+	if s == nil {
+		return NewXmlElement("nil")
+	}
+	return NewXmlElement(s.name)
+}
+
+func (s *stringerNode) String() string { return s.ToXmlElement().ToXml() }
+
+func TestXmlNodesDropsTypedNilWithStringer(t *testing.T) {
+	var missing *stringerNode
+	nodes := XmlNodes([]*stringerNode{missing, {name: "A"}})
+	require.Len(t, nodes, 1)
+	assert.Equal(t, "A", nodes[0].ToXmlElement().Name)
+}
+
+func TestAddXmlContentTruncatedWrappedList(t *testing.T) {
+	marker := &XmlElement{Name: "Numbers", WrappedItemCount: 2}
+	element := NewXmlElement("Dial")
+	AddXmlContent(element, []XmlNode{marker, marker}, map[string][]XmlNode{"Numbers": {NewXmlElement("Number")}})
+	assert.Equal(t, `<Dial><Numbers><Number /></Numbers></Dial>`, element.ToXml())
+}
