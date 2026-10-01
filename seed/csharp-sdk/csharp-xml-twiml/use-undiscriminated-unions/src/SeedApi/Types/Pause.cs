@@ -68,10 +68,14 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Serializes this value to an XML document, prefixed with the XML declaration by default.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml(bool xmlDeclaration = true) =>
-        XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+    public string ToXml() => ToXml(true);
+
+    /// <summary>
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.

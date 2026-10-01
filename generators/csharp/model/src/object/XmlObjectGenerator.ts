@@ -422,15 +422,25 @@ export class XmlObjectGenerator {
             name: "ToXml",
             access: ast.Access.Public,
             return_: this.context.Primitive.string,
+            parameters: [],
+            summary: "Serializes this value to an XML document, prefixed with the XML declaration.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                writer.write("ToXml(true)");
+            })
+        });
+        this.class_.addMethod({
+            name: "ToXml",
+            access: ast.Access.Public,
+            return_: this.context.Primitive.string,
             parameters: [
                 this.csharp.parameter({
                     name: "xmlDeclaration",
                     type: this.context.Primitive.boolean,
-                    initializer: "true",
                     docs: "Whether to prefix the output with the XML declaration."
                 })
             ],
-            summary: "Serializes this value to an XML document, prefixed with the XML declaration by default.",
+            summary: "Serializes this value to an XML element, optionally prefixed with the XML declaration.",
             bodyType: ast.Method.BodyType.Expression,
             body: this.csharp.codeblock((writer) => {
                 this.utils(writer, "Serialize");

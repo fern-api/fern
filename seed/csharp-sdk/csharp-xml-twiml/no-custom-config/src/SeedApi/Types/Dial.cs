@@ -109,10 +109,14 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Serializes this value to an XML document, prefixed with the XML declaration by default.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml(bool xmlDeclaration = true) =>
-        XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+    public string ToXml() => ToXml(true);
+
+    /// <summary>
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Adds a <c>&lt;Number&gt;</c> child element and returns this instance for chaining.
