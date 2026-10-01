@@ -3,20 +3,21 @@ import enum
 import uuid
 from typing import List, Optional, Union
 
-import pydantic
 import pytest
 
+import pydantic
 from core_utilities.shared.pydantic_utilities import IS_PYDANTIC_V2
 from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
+    XmlAttribute,
+    XmlChild,
+    XmlContent,
+    XmlElement,
+    XmlNode,
     append_xml_child,
     build_xml_model,
     extra_xml_attributes,
     order_xml_content,
-    XmlAttribute,
-    XmlChild,
-    XmlElement,
-    XmlNode,
     parse_xml,
     serialize_xml_element,
     xml_attribute,
@@ -340,3 +341,57 @@ def test_xml_element_mixed_content_round_trip_and_add_methods() -> None:
     assert element.text == "x  z"
     assert element.children == [XmlElement(name="b", text="y")]
     assert XmlElement.from_xml(element.to_xml()) == element
+
+
+def test_prefixed_wrapper_marker_positions_wrapper_once() -> None:
+    xml = serialize_xml_element(
+        name="Root",
+        children=[XmlChild(name="ns:Items", value=[Say("a")], wrapped=True)],
+        content=[Say("lead"), XmlElement(name="ns:Items"), Say("tail")],
+    )
+    assert xml == "<Root><Say>lead</Say><ns:Items><Say>a</Say></ns:Items><Say>tail</Say></Root>"
+
+
+def test_order_xml_content_drops_children_removed_from_typed_properties() -> None:
+    a, b = Say("a"), Say("b")
+    custom = XmlElement(name="Custom")
+    content: List[XmlContent] = [a, "text", custom, b]
+    assert order_xml_content(content, [b]) == ["text", custom, b]
+    assert order_xml_content(content, [b, a]) == [a, "text", custom, b]
+
+
+def test_repeated_wrappers_keep_their_positions_and_items() -> None:
+    xml = (
+        "<Dial><Numbers><Number>+1</Number></Numbers><Custom/>"
+        '<Numbers kind="b"><Number>+2</Number><Number>+3</Number><Extra/></Numbers></Dial>'
+    )
+    node = parse_xml(xml, "Dial")
+    numbers = xml_children(node, {"Number": str}, wrapper="Numbers")
+    assert numbers == ["+1", "+2", "+3"]
+    content = xml_content(node, wrappers={"Numbers": {"Number"}})
+    assert [item.name for item in content if isinstance(item, XmlElement)] == ["Numbers", "Custom", "Numbers"]
+    rendered = serialize_xml_element(
+        name="Dial",
+        children=[XmlChild(name="Numbers", value=numbers, wrapped=True)],
+        content=content,
+    )
+    assert rendered == (
+        "<Dial><Numbers><Numbers>+1</Numbers></Numbers><Custom />"
+        '<Numbers kind="b"><Numbers>+2</Numbers><Numbers>+3</Numbers><Extra /></Numbers></Dial>'
+    )
+    # items appended to the list afterwards land in the last wrapper
+    rendered = serialize_xml_element(
+        name="Dial",
+        children=[XmlChild(name="Numbers", value=[*numbers, "+4"], wrapped=True)],
+        content=content,
+    )
+    assert rendered.count("<Numbers>+4</Numbers>") == 1 and rendered.index("+4") > rendered.index("+3")
+
+
+def test_whitespace_between_children_is_kept_but_pretty_print_indentation_is_not() -> None:
+    node = parse_xml("<Say><break/> <break/></Say>", "Say")
+    content = xml_content(node)
+    assert [item for item in content if isinstance(item, str)] == [" "]
+    assert serialize_xml_element(name="Say", content=content) == "<Say><break /> <break /></Say>"
+    node = parse_xml("<Say>\n  <break/>\n  <break/>\n</Say>", "Say")
+    assert all(not isinstance(item, str) for item in xml_content(node))
