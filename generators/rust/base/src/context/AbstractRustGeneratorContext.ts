@@ -99,6 +99,7 @@ export abstract class AbstractRustGeneratorContext<
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
+            packageName: this.getPackageName(),
             crateVersion: this.getCrateVersion(),
             clientClassName: this.getClientName()
         });
@@ -983,6 +984,17 @@ export abstract class AbstractRustGeneratorContext<
     public getCrateName(): string {
         const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
         return validateAndSanitizeCrateName(crateName);
+    }
+
+    /**
+     * Get the Cargo package name. Matches getCrateName() unless preserveCrateNameHyphens is set,
+     * in which case hyphens are kept (Cargo maps them to underscores for the library name).
+     */
+    public getPackageName(): string {
+        const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
+        return validateAndSanitizeCrateName(crateName, {
+            preserveHyphens: this.customConfig.preserveCrateNameHyphens ?? false
+        });
     }
 
     /**

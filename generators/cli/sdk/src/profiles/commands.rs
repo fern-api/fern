@@ -434,7 +434,14 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
                     Arg::new("name")
                         .value_name("NAME")
                         .required(true)
-                        .help("Profile to modify; created if it does not exist"),
+                        .help("Profile to modify; asks before creating it if it does not exist"),
+                )
+                .arg(
+                    Arg::new("yes")
+                        .long("yes")
+                        .short('y')
+                        .action(ArgAction::SetTrue)
+                        .help("Create the profile without asking if it does not exist"),
                 )
                 .arg(
                     Arg::new("assignments")
@@ -1563,6 +1570,15 @@ fn handle_set(
         .cloned()
         .expect("clap marks `name` required");
     validate_profile_name(&name)?;
+    let name = if store.entry(&name).is_some() || matches.get_flag("yes") {
+        name
+    } else {
+        match resolve_missing_profile(ctx, store, &name)? {
+            MissingProfile::Create => name,
+            MissingProfile::Use(existing) => existing,
+            MissingProfile::Cancel => return Ok(()),
+        }
+    };
 
     let mut entry = store.entry(&name).unwrap_or(ProfileEntry {
         name: name.clone(),
@@ -1862,15 +1878,8 @@ async fn handle_remove(
                  Pass --yes when stdin is not a terminal."
             )));
         }
-        let _ = write!(
-            stderr,
-            "Remove profile `{name}` and its stored credentials? [y/N] ",
-        );
-        let _ = stderr.flush();
-        let mut answer = String::new();
-        std::io::BufRead::read_line(&mut std::io::stdin().lock(), &mut answer)
-            .map_err(|e| CliError::Other(e.into()))?;
-        if !matches!(answer.trim().to_ascii_lowercase().as_str(), "y" | "yes") {
+        let question = format!("Remove profile `{name}` and its stored credentials?");
+        if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
             let _ = writeln!(stderr, "Aborted.");
             return Ok(());
         }
@@ -2155,6 +2164,106 @@ fn handle_current<W: Write>(
         }
     }
     Ok(())
+}
+
+/// What to do when `profiles set` names a profile that does not exist.
+#[derive(Debug, PartialEq, Eq)]
+enum MissingProfile {
+    Create,
+    Use(String),
+    Cancel,
+}
+
+/// Ask the user whether to create the missing profile `name` or use the
+/// closest existing one. Without a terminal on both stdin and stderr nobody
+/// can see or answer the question, so this fails instead of prompting (the
+/// M17 contract); `--yes` is how a script opts in to creating it.
+fn resolve_missing_profile(
+    ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
+    name: &str,
+) -> Result<MissingProfile, CliError> {
+    let suggestion = similar_profile(name, store.names());
+    let stdin = std::io::stdin();
+    let mut stderr = std::io::stderr();
+    if !stdin.is_terminal() || !stderr.is_terminal() {
+        let hint = suggestion
+            .map(|candidate| format!(" Did you mean `{candidate}`?"))
+            .unwrap_or_default();
+        return Err(CliError::Validation(format!(
+            "profile `{name}` doesn't exist.{hint} Pass --yes to create it \
+             (required when stdin or stderr is not a terminal), or run \
+             `{} {} create {name}` first.",
+            ctx.cli_name, ctx.command_name,
+        )));
+    }
+    let choice = ask_missing_profile(name, suggestion.as_deref(), &mut stdin.lock(), &mut stderr)?;
+    if choice == MissingProfile::Cancel {
+        let _ = writeln!(stderr, "Aborted. Nothing was changed.");
+    }
+    Ok(choice)
+}
+
+/// With a similar existing profile, first ask whether that one was meant,
+/// then whether to create `name`; otherwise only the create question.
+/// Anything but `y`/`yes`, including EOF, is a no.
+fn ask_missing_profile(
+    name: &str,
+    suggestion: Option<&str>,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<MissingProfile, CliError> {
+    let create_question = match suggestion {
+        Some(existing) => {
+            let question = format!("Profile `{name}` doesn't exist. Did you mean `{existing}`?");
+            if confirm(&question, input, out)? {
+                return Ok(MissingProfile::Use(existing.to_string()));
+            }
+            format!("Create profile `{name}`?")
+        }
+        None => format!("Profile `{name}` doesn't exist. Create it?"),
+    };
+    Ok(if confirm(&create_question, input, out)? {
+        MissingProfile::Create
+    } else {
+        MissingProfile::Cancel
+    })
+}
+
+/// The existing profile `name` was most likely meant to be: the nearest by
+/// edit distance, else one that `name` is a prefix of (or that is a prefix of
+/// `name`), since dropping a suffix (`prod` for `prod-eu`) is the commonest
+/// slip and too long an edit for [`crate::text::nearest`] to accept.
+fn similar_profile(name: &str, candidates: Vec<String>) -> Option<String> {
+    crate::text::nearest(name, candidates.iter().cloned()).or_else(|| {
+        let wanted = crate::text::normalize_identifier(name);
+        if wanted.chars().count() < 3 {
+            return None;
+        }
+        candidates
+            .into_iter()
+            .filter(|candidate| {
+                let candidate = crate::text::normalize_identifier(candidate);
+                candidate.starts_with(&wanted) || wanted.starts_with(&candidate)
+            })
+            .min_by(|a, b| a.len().cmp(&b.len()).then_with(|| a.cmp(b)))
+    })
+}
+
+/// Ask a `[y/N]` question on `out` and read one line of `input`. Anything
+/// but `y`/`yes` (case-insensitive), including EOF, is a no.
+fn confirm(
+    question: &str,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<bool, CliError> {
+    let _ = write!(out, "{question} [y/N] ");
+    let _ = out.flush();
+    let mut answer = String::new();
+    input
+        .read_line(&mut answer)
+        .map_err(|e| CliError::Other(e.into()))?;
+    Ok(matches!(answer.trim().to_ascii_lowercase().as_str(), "y" | "yes"))
 }
 
 #[cfg(test)]
@@ -2451,6 +2560,79 @@ mod tests {
                     "alias `{alias}` is not in BUILTIN_SUBCOMMANDS",
                 );
             }
+        }
+    }
+
+    #[test]
+    fn similar_profile_suggests_one_close_name() {
+        let names = || {
+            ["basicAuthTest", "dev", "prod", "prod-eu", "staging"]
+                .map(String::from)
+                .to_vec()
+        };
+        assert_eq!(similar_profile("basicAuth", names()).as_deref(), Some("basicAuthTest"));
+        assert_eq!(similar_profile("prd", names()).as_deref(), Some("prod"));
+        assert_eq!(similar_profile("stagign", names()).as_deref(), Some("staging"));
+        assert_eq!(similar_profile("stag", names()).as_deref(), Some("staging"));
+        assert_eq!(similar_profile("sandbox", names()), None);
+        assert_eq!(similar_profile("d", names()), None);
+        assert_eq!(similar_profile("anything", Vec::new()), None);
+    }
+
+    #[test]
+    fn ask_missing_profile_offers_the_similar_profile_then_creation() {
+        let both = "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] \
+                    Create profile `basicAuth`? [y/N] ";
+        for (answers, expected, prompt) in [
+            ("y\n", MissingProfile::Use("basicAuthTest".to_string()),
+             "Profile `basicAuth` doesn't exist. Did you mean `basicAuthTest`? [y/N] "),
+            ("n\ny\n", MissingProfile::Create, both),
+            ("\nyes\n", MissingProfile::Create, both),
+            ("n\nn\n", MissingProfile::Cancel, both),
+            ("n\n", MissingProfile::Cancel, both),
+            ("", MissingProfile::Cancel, both),
+        ] {
+            let mut out: Vec<u8> = Vec::new();
+            let got = ask_missing_profile(
+                "basicAuth",
+                Some("basicAuthTest"),
+                &mut answers.as_bytes(),
+                &mut out,
+            )
+            .unwrap();
+            assert_eq!(got, expected, "answers {answers:?}");
+            assert_eq!(String::from_utf8(out).unwrap(), prompt, "answers {answers:?}");
+        }
+    }
+
+    #[test]
+    fn ask_missing_profile_without_a_suggestion_asks_to_create() {
+        for (answer, expected) in [("y\n", MissingProfile::Create), ("n\n", MissingProfile::Cancel)] {
+            let mut out: Vec<u8> = Vec::new();
+            let got = ask_missing_profile("sandbox", None, &mut answer.as_bytes(), &mut out).unwrap();
+            assert_eq!(got, expected, "answer {answer:?}");
+            assert_eq!(
+                String::from_utf8(out).unwrap(),
+                "Profile `sandbox` doesn't exist. Create it? [y/N] "
+            );
+        }
+    }
+
+    #[test]
+    fn confirm_accepts_only_yes() {
+        for (answer, expected) in [
+            ("y\n", true),
+            ("YES\n", true),
+            (" yes \n", true),
+            ("n\n", false),
+            ("\n", false),
+            ("", false),
+            ("sure\n", false),
+        ] {
+            let mut out: Vec<u8> = Vec::new();
+            let got = confirm("Create it?", &mut answer.as_bytes(), &mut out).unwrap();
+            assert_eq!(got, expected, "answer {answer:?}");
+            assert_eq!(String::from_utf8(out).unwrap(), "Create it? [y/N] ");
         }
     }
 }

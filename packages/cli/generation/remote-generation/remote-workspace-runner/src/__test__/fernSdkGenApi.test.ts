@@ -1785,6 +1785,10 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("creates a generator-compatible gzip bundle with enriched IR and no publish secrets", async () => {
         const generatorInvocation = invocation({
             config: { packageJson: { name: "@acme/sdk" } },
+            readme: {
+                apiName: "Petstore SDK",
+                introduction: "Use this SDK to call the Petstore API."
+            },
             outputMode: FernFiddle.OutputMode.publishV2(
                 FernFiddle.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -1802,7 +1806,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             intermediateRepresentation: {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
-                publishConfig: { type: "filesystem" }
+                publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                }
             } as never,
             irVersionOverride: undefined,
             context
@@ -1817,6 +1825,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 customConfig: { packageJson: { name: "@acme/sdk" } },
                 output: {
                     path: "/fern/output",
+                    snippetFilepath: "/tmp/fern-runtime/snippet.json",
                     mode: {
                         type: "github",
                         version: "1.2.3"
@@ -1830,6 +1839,10 @@ describe("isEligibleForFernSdkGenApi", () => {
                 apiName: "Petstore",
                 fdrApiDefinitionId: "definition-id",
                 publishConfig: { type: "filesystem" },
+                readmeConfig: {
+                    apiName: "Petstore SDK",
+                    introduction: "Use this SDK to call the Petstore API."
+                },
                 migrated: "generator"
             }
         });
@@ -1962,6 +1975,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             generateOauthClients: true,
             generatePaginatedClients: true
         });
+        expect(bundle.config.output.snippetFilepath).toBeNull();
     });
 
     it("preserves trusted OIDC markers while omitting actual GitHub publish credentials", () => {

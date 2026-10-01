@@ -220,7 +220,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         return {
             registryUrl: "https://crates.io/api/v1/crates",
-            packageName: context.getCrateName(),
+            packageName: context.getPackageName(),
             token: ""
         };
     }
