@@ -1,0 +1,11 @@
+- summary: |
+    Fix `InputStream` upload overloads on multipart endpoints that have
+    non-file form fields. The overloads now take the generated request
+    object and serialize every companion multipart field alongside the
+    streamed file, instead of silently dropping them. The unused
+    `File`-typed parameter (including `Optional<File>`) is also removed
+    from these signatures. When the file property is inlined onto the
+    request object (`inline-file-properties: true`) and companion fields
+    exist, the stream overloads are no longer generated, since the file
+    cannot be separated from the request object.
+  type: fix
