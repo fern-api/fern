@@ -700,6 +700,17 @@
             }
           ],
           "description": "Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.\nWhen provided, the backend uses this Doxyfile instead of auto-generating one.\nOnly valid when lang is cpp."
+        },
+        "include-undocumented-macros": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,

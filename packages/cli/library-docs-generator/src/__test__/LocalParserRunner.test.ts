@@ -73,7 +73,7 @@ describe("runLocalParser", () => {
         });
     });
 
-    it("uses the C++ image and forwards doxyfileContent", async () => {
+    it("uses the C++ image and forwards doxyfileContent and includeUndocumentedMacros", async () => {
         let writtenConfig: unknown;
         (runContainer as Mock).mockImplementation(async ({ binds }: { binds: string[] }) => {
             const configPath = bindFor(binds, ":/input/config.json:ro");
@@ -87,7 +87,11 @@ describe("runLocalParser", () => {
             context: makeContext(),
             sourcePath: AbsoluteFilePath.of("/tmp/cpp"),
             language: "CPP",
-            config: { doxyfileContent: "PROJECT_NAME = acme", sourceUrl: "https://github.com/acme/cpp" }
+            config: {
+                doxyfileContent: "PROJECT_NAME = acme",
+                sourceUrl: "https://github.com/acme/cpp",
+                includeUndocumentedMacros: true
+            }
         });
 
         expect(ir).toEqual({ rootNamespace: { name: "acme" } });
@@ -98,7 +102,8 @@ describe("runLocalParser", () => {
         expect(call.platform).toBe("linux/amd64");
         expect(writtenConfig).toEqual({
             doxyfileContent: "PROJECT_NAME = acme",
-            sourceUrl: "https://github.com/acme/cpp"
+            sourceUrl: "https://github.com/acme/cpp",
+            includeUndocumentedMacros: true
         });
     });
 
