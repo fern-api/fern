@@ -128,21 +128,123 @@ public class XmlElementTests
     }
 
     [Test]
-    public void GetAdditionalChildren_KeepsUnknownWrapperItemsOnly()
+    public void Content_PreservesMixedContentOrder()
+    {
+        var element = new XmlElement("Say", "Hi ")
+            .AddChild(new XmlElement("break").SetAttribute("strength", "weak"))
+            .AddText(" world");
+
+        Assert.That(element.ToXml(), Is.EqualTo("<Say>Hi <break strength=\"weak\" /> world</Say>"));
+        Assert.That(element.Text, Is.EqualTo("Hi  world"));
+
+        var parsed = XmlElement.FromXml(element.ToXml());
+        Assert.That(parsed.Content, Has.Count.EqualTo(3));
+        Assert.That(parsed.Content[0], Is.EqualTo("Hi "));
+        Assert.That(parsed.Content[2], Is.EqualTo(" world"));
+        Assert.That(parsed, Is.EqualTo(element));
+    }
+
+    [Test]
+    public void ReadContent_SkipsIndentationButKeepsInlineWhitespace()
+    {
+        var pretty = XmlUtils.ParseDocument("<Say>\n  <break />\n  <break />\n</Say>");
+        Assert.That(XmlUtils.ReadContent(pretty, null, false, null, null), Has.Count.EqualTo(2));
+
+        var inline = XmlUtils.ParseDocument("<Say><break /> <break /></Say>");
+        var content = XmlUtils.ReadContent(inline, null, false, null, null);
+        Assert.That(content, Has.Count.EqualTo(3));
+        Assert.That(content[1], Is.EqualTo(" "));
+    }
+
+    [Test]
+    public void ReadContent_SkipsLeadingTextAndScalars_KeepsWrapperMarkers()
     {
         var root = XmlUtils.ParseDocument(
-            "<Dial><Numbers x=\"1\"><Number>+1</Number><Extension>2</Extension></Numbers><Other /></Dial>"
+            "<Dial>+1<Numbers x=\"1\"><Number>+1</Number><Extension>2</Extension></Numbers><Timeout>3</Timeout><Other />tail</Dial>"
         );
 
-        var additional = XmlUtils.GetAdditionalChildren(
+        var content = XmlUtils.ReadContent(
             root,
-            new[] { "Numbers" },
+            null,
+            true,
+            new[] { "Timeout" },
             new Dictionary<string, string[]> { { "Numbers", new[] { "Number" } } }
         );
 
+        Assert.That(XmlUtils.GetLeadingText(root), Is.EqualTo("+1"));
+        Assert.That(content, Has.Count.EqualTo(3));
+        var marker = (XmlElement)content[0];
+        Assert.That(marker.Name, Is.EqualTo("Numbers"));
+        Assert.That(marker.Attributes["x"], Is.EqualTo("1"));
         Assert.That(
-            additional.Select(c => c.ToXml()),
-            Is.EqualTo(new[] { "<Numbers x=\"1\"><Extension>2</Extension></Numbers>", "<Other />" })
+            marker.ToXml(),
+            Is.EqualTo("<Numbers x=\"1\"><Extension>2</Extension></Numbers>")
         );
+        Assert.That(((XmlElement)content[1]).Name, Is.EqualTo("Other"));
+        Assert.That(content[2], Is.EqualTo("tail"));
+    }
+
+    [Test]
+    public void OrderContent_KeepsReferencedChildrenDropsStaleAppendsExtra()
+    {
+        var raw = new XmlElement("Raw");
+        var a = new FakeNode("A");
+        var stale = new FakeNode("Stale");
+        var extra = new FakeNode("Extra");
+        var content = new List<object> { "text", a, stale, raw };
+
+        var ordered = XmlUtils.OrderContent(content, new List<FakeNode> { a, extra });
+
+        Assert.That(ordered, Is.EqualTo(new List<object> { "text", a, raw, extra }));
+    }
+
+    [Test]
+    public void AddContent_DealsWrappedItemsOutToRepeatedWrappers()
+    {
+        var root = XmlUtils.ParseDocument(
+            "<Dial><Numbers><Number>+1</Number></Numbers><Custom /><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>"
+        );
+        var wrappers = new Dictionary<string, string[]> { { "Numbers", new[] { "Number" } } };
+        var content = XmlUtils.ReadContent(root, null, false, null, wrappers);
+        var numbers = XmlUtils.ParseChildList<string>(
+            XmlUtils.GetWrapperItems(root, "Numbers"),
+            "Number"
+        );
+
+        var element = new XElement("Dial");
+        XmlUtils.AddContent(
+            element,
+            XmlUtils.OrderContent(content),
+            new Dictionary<string, List<XElement>?>
+            {
+                {
+                    "Numbers",
+                    XmlUtils.RenderWrappedItems(
+                        numbers,
+                        item => XmlUtils.ChildValue("Number", item)
+                    )
+                },
+            }
+        );
+
+        Assert.That(numbers, Is.EqualTo(new[] { "+1", "+2", "+3" }));
+        Assert.That(
+            XmlUtils.Serialize(element, false),
+            Is.EqualTo(XmlUtils.Serialize(root, false))
+        );
+    }
+
+    private sealed class FakeNode : IXmlNode
+    {
+        private readonly string _name;
+
+        public FakeNode(string name)
+        {
+            _name = name;
+        }
+
+        public XElement ToXElement() => new XElement(_name);
+
+        public string ToXml() => ToXElement().ToString(SaveOptions.DisableFormatting);
     }
 }

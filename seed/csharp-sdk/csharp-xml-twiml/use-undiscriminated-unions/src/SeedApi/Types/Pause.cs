@@ -28,10 +28,16 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
 
     /// <summary>
     /// Parses a <c>&lt;Pause&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -44,11 +50,12 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public static Pause FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Pause");
+        var content = XmlUtils.ReadContent(element, null, false, null, null);
         var result = new Pause
         {
             Length = XmlUtils.ParseValue<int?>(XmlUtils.GetAttribute(element, "length")),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(element, "length"),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(element, new string[] { }),
+            Content = content,
         };
         return result;
     }
@@ -63,7 +70,8 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     {
         var element = XmlUtils.CreateElement("Pause", null, null);
         XmlUtils.SetAttribute(element, "length", XmlUtils.ToXmlString(Length));
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren);
+        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content));
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
@@ -73,11 +81,20 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public string ToXml() => XmlUtils.Serialize(ToXElement());
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Pause AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
+        return this;
+    }
+
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Pause AddText(string text)
+    {
+        Content.Add(text);
         return this;
     }
 
