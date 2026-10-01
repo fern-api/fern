@@ -7,6 +7,8 @@
     fields were generated as bare values (`Metadata MetadataAlias`) instead of
     pointers (`Metadata *MetadataAlias`), which was a breaking change for existing
     SDKs. The double-pointer guard now only applies to aliases that actually render
-    as Go pointers (nullable primitives, enums, objects, and unions), and dynamic
-    snippets now render `&Alias{...}` literals for these fields.
+    as Go pointers (nullable primitives, enums, objects, and unions). Dynamic snippets
+    now render `&Alias{...}` literals for these fields (including aliases of such
+    aliases), take the address of `unknown` alias values, and no longer emit `&&` for
+    aliases that already render as pointers.
   type: fix

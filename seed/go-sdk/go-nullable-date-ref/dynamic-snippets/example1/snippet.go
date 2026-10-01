@@ -40,6 +40,27 @@ func do() {
                 "key": "value",
             },
         },
+        TagsAlias: &fern.NullableTags{
+            "tags_alias",
+            "tags_alias",
+        },
+        MetadataAlias: &fern.NullableMetadata{
+            "metadata_alias": map[string]any{
+                "key": "value",
+            },
+        },
+        Extra: func() *fern.AnyValue {
+            var value fern.AnyValue = map[string]any{
+                "key": "value",
+            }
+            return &value
+        }(),
+        NullableExtra: func() *fern.NullableAnyValue {
+            var value fern.NullableAnyValue = map[string]any{
+                "key": "value",
+            }
+            return &value
+        }(),
         Title: "title",
     }
     client.Reports.Create(

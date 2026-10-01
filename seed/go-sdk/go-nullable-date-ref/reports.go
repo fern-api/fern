@@ -10,6 +10,9 @@ import (
 	time "time"
 )
 
+// An arbitrary value.
+type AnyValue = any
+
 // A date in YYYY-MM-DD format.
 type Iso8601Date = time.Time
 
@@ -18,6 +21,11 @@ type Iso8601DateNullable = *time.Time
 
 // A date-time in ISO 8601 format, or null.
 type Iso8601DateTimeNullable = *time.Time
+
+type MetadataAlias = *NullableMetadata
+
+// An arbitrary value, or null.
+type NullableAnyValue = any
 
 // Arbitrary metadata, or null.
 type NullableMetadata = map[string]any
@@ -29,32 +37,43 @@ type NullableString = *string
 type NullableTags = []string
 
 var (
-	reportFieldCreatedDate  = big.NewInt(1 << 0)
-	reportFieldFraudDate    = big.NewInt(1 << 1)
-	reportFieldResolvedDate = big.NewInt(1 << 2)
-	reportFieldDescription  = big.NewInt(1 << 3)
-	reportFieldTags         = big.NewInt(1 << 4)
-	reportFieldMetadata     = big.NewInt(1 << 5)
-	reportFieldTitle        = big.NewInt(1 << 6)
+	reportFieldCreatedDate   = big.NewInt(1 << 0)
+	reportFieldFraudDate     = big.NewInt(1 << 1)
+	reportFieldResolvedDate  = big.NewInt(1 << 2)
+	reportFieldDescription   = big.NewInt(1 << 3)
+	reportFieldTags          = big.NewInt(1 << 4)
+	reportFieldMetadata      = big.NewInt(1 << 5)
+	reportFieldTagsAlias     = big.NewInt(1 << 6)
+	reportFieldMetadataAlias = big.NewInt(1 << 7)
+	reportFieldExtra         = big.NewInt(1 << 8)
+	reportFieldNullableExtra = big.NewInt(1 << 9)
+	reportFieldTitle         = big.NewInt(1 << 10)
 )
 
 // reportNullableFields maps the wire names of Report's nullable fields (required or optional) to their field bits.
 var reportNullableFields = map[string]*big.Int{
-	"fraud_date":    reportFieldFraudDate,
-	"resolved_date": reportFieldResolvedDate,
-	"description":   reportFieldDescription,
-	"tags":          reportFieldTags,
-	"metadata":      reportFieldMetadata,
+	"fraud_date":     reportFieldFraudDate,
+	"resolved_date":  reportFieldResolvedDate,
+	"description":    reportFieldDescription,
+	"tags":           reportFieldTags,
+	"metadata":       reportFieldMetadata,
+	"tags_alias":     reportFieldTagsAlias,
+	"metadata_alias": reportFieldMetadataAlias,
+	"nullable_extra": reportFieldNullableExtra,
 }
 
 type Report struct {
-	CreatedDate  Iso8601Date             `json:"created_date" url:"created_date" format:"date"`
-	FraudDate    Iso8601DateNullable     `json:"fraud_date,omitempty" url:"fraud_date,omitempty" format:"date"`
-	ResolvedDate Iso8601DateTimeNullable `json:"resolved_date,omitempty" url:"resolved_date,omitempty"`
-	Description  NullableString          `json:"description,omitempty" url:"description,omitempty"`
-	Tags         *NullableTags           `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata     *NullableMetadata       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Title        string                  `json:"title" url:"title"`
+	CreatedDate   Iso8601Date             `json:"created_date" url:"created_date" format:"date"`
+	FraudDate     Iso8601DateNullable     `json:"fraud_date,omitempty" url:"fraud_date,omitempty" format:"date"`
+	ResolvedDate  Iso8601DateTimeNullable `json:"resolved_date,omitempty" url:"resolved_date,omitempty"`
+	Description   NullableString          `json:"description,omitempty" url:"description,omitempty"`
+	Tags          *NullableTags           `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata      *NullableMetadata       `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TagsAlias     TagsAlias               `json:"tags_alias,omitempty" url:"tags_alias,omitempty"`
+	MetadataAlias MetadataAlias           `json:"metadata_alias,omitempty" url:"metadata_alias,omitempty"`
+	Extra         *AnyValue               `json:"extra,omitempty" url:"extra,omitempty"`
+	NullableExtra *NullableAnyValue       `json:"nullable_extra,omitempty" url:"nullable_extra,omitempty"`
+	Title         string                  `json:"title" url:"title"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -103,6 +122,34 @@ func (r *Report) GetMetadata() *NullableMetadata {
 		return nil
 	}
 	return r.Metadata
+}
+
+func (r *Report) GetTagsAlias() TagsAlias {
+	if r == nil {
+		return nil
+	}
+	return r.TagsAlias
+}
+
+func (r *Report) GetMetadataAlias() MetadataAlias {
+	if r == nil {
+		return nil
+	}
+	return r.MetadataAlias
+}
+
+func (r *Report) GetExtra() *AnyValue {
+	if r == nil {
+		return nil
+	}
+	return r.Extra
+}
+
+func (r *Report) GetNullableExtra() *NullableAnyValue {
+	if r == nil {
+		return nil
+	}
+	return r.NullableExtra
 }
 
 func (r *Report) GetTitle() string {
@@ -168,6 +215,34 @@ func (r *Report) SetTags(tags *NullableTags) {
 func (r *Report) SetMetadata(metadata *NullableMetadata) {
 	r.Metadata = metadata
 	r.require(reportFieldMetadata)
+}
+
+// SetTagsAlias sets the TagsAlias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetTagsAlias(tagsAlias TagsAlias) {
+	r.TagsAlias = tagsAlias
+	r.require(reportFieldTagsAlias)
+}
+
+// SetMetadataAlias sets the MetadataAlias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetMetadataAlias(metadataAlias MetadataAlias) {
+	r.MetadataAlias = metadataAlias
+	r.require(reportFieldMetadataAlias)
+}
+
+// SetExtra sets the Extra field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetExtra(extra *AnyValue) {
+	r.Extra = extra
+	r.require(reportFieldExtra)
+}
+
+// SetNullableExtra sets the NullableExtra field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetNullableExtra(nullableExtra *NullableAnyValue) {
+	r.NullableExtra = nullableExtra
+	r.require(reportFieldNullableExtra)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -241,3 +316,5 @@ func (r *Report) String() string {
 	}
 	return fmt.Sprintf("%#v", r)
 }
+
+type TagsAlias = *NullableTags

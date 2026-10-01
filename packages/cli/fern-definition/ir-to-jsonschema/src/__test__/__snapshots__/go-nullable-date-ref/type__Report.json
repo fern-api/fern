@@ -54,6 +54,46 @@
         }
       ]
     },
+    "tags_alias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TagsAlias"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metadata_alias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MetadataAlias"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "extra": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AnyValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable_extra": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableAnyValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "title": {
       "type": "string"
     }
@@ -138,6 +178,55 @@
         }
       ],
       "description": "Arbitrary metadata, or null."
+    },
+    "TagsAlias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableTags"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MetadataAlias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AnyValue": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ],
+      "description": "An arbitrary value."
+    },
+    "NullableAnyValue": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "An arbitrary value, or null."
     }
   }
 }

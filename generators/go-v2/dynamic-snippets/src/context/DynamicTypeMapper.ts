@@ -79,7 +79,7 @@ export class DynamicTypeMapper {
      * Checks if a named type is an alias that already generates as a pointer in Go
      * (e.g. a nullable primitive like *time.Time). Traverses alias chains.
      */
-    private isAliasToPointerType(typeId: FernIr.dynamic.TypeId): boolean {
+    public isAliasToPointerType(typeId: FernIr.dynamic.TypeId): boolean {
         const seen = new Set<FernIr.dynamic.TypeId>();
         let currentTypeId = typeId;
         while (true) {
