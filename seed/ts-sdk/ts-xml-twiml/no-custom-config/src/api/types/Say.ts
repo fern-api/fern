@@ -25,8 +25,8 @@ export class Say implements core.xml.XmlSerializable {
     children?: SeedApi.Break[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Say.Fields = {}) {
         this.message = fields.message;
@@ -34,7 +34,12 @@ export class Say implements core.xml.XmlSerializable {
         this.loop = fields.loop;
         this.children = fields.children;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition. */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Say.Fields = {}): Say.Builder {
@@ -44,13 +49,27 @@ export class Say implements core.xml.XmlSerializable {
     /** Parses a `<Say>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Say {
         const node = core.xml.parseXml(xml, "Say");
+        const content = core.xml.xmlContent(node, {
+            skipLeadingText: true,
+            parse: (child) => {
+                switch (core.xml.localName(child.name)) {
+                    case "break":
+                        return SeedApi.Break.fromXml(child);
+                    default:
+                        return undefined;
+                }
+            },
+        });
         return new Say({
-            message: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Say.message"),
+            message: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Say.message"),
             voice: core.xml.xmlScalar(core.xml.xmlAttribute(node, "voice"), core.xml.xmlString, "Say.voice"),
             loop: core.xml.xmlScalar(core.xml.xmlAttribute(node, "loop"), core.xml.xmlInteger, "Say.loop"),
-            children: core.xml.xmlChildren<SeedApi.Break>(node, { break: (child) => SeedApi.Break.fromXml(child) }),
+            children: core.xml.xmlContentElements(
+                content,
+                (item): item is SeedApi.Break => item instanceof SeedApi.Break,
+            ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["voice", "loop"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break"]),
+            content,
         });
     }
 
@@ -63,8 +82,8 @@ export class Say implements core.xml.XmlSerializable {
                 ...core.xml.extraXmlAttributes(this.additionalAttributes),
             ],
             text: this.message,
-            children: [{ name: "children", value: this.children }],
-            additionalChildren: this.additionalChildren,
+            children: [],
+            content: core.xml.orderXmlContent(this.content, this.children),
         });
     }
 
@@ -93,15 +112,18 @@ export namespace Say {
         children?: SeedApi.Break[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
+        private readonly content: core.xml.XmlContent[];
         private readonly elements: { children?: (SeedApi.Break | core.xml.XmlBuilder<SeedApi.Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
-            const { children, ...rest } = fields;
+            const { content, additionalChildren, children, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { children };
         }
 
@@ -143,7 +165,7 @@ export namespace Say {
         }
 
         /**
-         * Adds a `<break>` child and returns its builder.
+         * Adds a `<break>` child after any content added so far and returns its builder.
          *
          * Adding a Pause in <Say>
          * @param fields initial `<break>` attributes and children
@@ -152,6 +174,7 @@ export namespace Say {
         addBreak(fields?: Partial<SeedApi.Break.Fields>): SeedApi.Break.Builder {
             const builder = new SeedApi.Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -161,14 +184,25 @@ export namespace Say {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Say {
-            return new Say({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Say({
+                ...this.fields,
+                children: built.buildAll(this.elements.children),
+                content: built.content,
+            });
         }
 
         toXml(): string {

@@ -1,6 +1,15 @@
-export { isXmlBuilder, type XmlBuilder, xmlBuild, xmlBuildAll } from "./builder.js";
+export {
+    isXmlBuilder,
+    type XmlBuilder,
+    type XmlBuiltContent,
+    xmlBuild,
+    xmlBuildAll,
+    xmlBuildContent,
+    xmlInitialContent,
+} from "./builder.js";
 export { localName, parseXml, type XmlNode, XmlParseError } from "./parse.js";
 export {
+    type XmlContentOptions,
     type XmlNodeParser,
     type XmlScalarParser,
     xmlAttribute,
@@ -8,10 +17,13 @@ export {
     xmlBoolean,
     xmlChild,
     xmlChildren,
+    xmlContent,
+    xmlContentElements,
     xmlDate,
     xmlEnum,
     xmlExtraAttributes,
     xmlInteger,
+    xmlLeadingText,
     xmlNumber,
     xmlRequired,
     xmlScalar,
@@ -21,17 +33,20 @@ export {
     xmlText,
     xmlToSet,
     xmlUnknownChildren,
+    xmlWrapperFragments,
 } from "./read.js";
 export {
     escapeXml,
     extraXmlAttributes,
     formatXmlScalar,
     isXmlSerializable,
+    orderXmlContent,
     type SerializeXmlElementArgs,
     serializeXmlElement,
     XML_DECLARATION,
     type XmlAttribute,
     type XmlChild,
+    type XmlContent,
     type XmlSerializable,
 } from "./serialize.js";
 export { XmlElement } from "./XmlElement.js";

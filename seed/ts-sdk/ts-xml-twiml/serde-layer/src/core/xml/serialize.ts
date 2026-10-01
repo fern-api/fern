@@ -4,6 +4,9 @@ export interface XmlSerializable {
     toXml(): string;
 }
 
+/** One item of an element's ordered content: a text segment or a child element. */
+export type XmlContent = string | XmlSerializable;
+
 export function isXmlSerializable(value: unknown): value is XmlSerializable {
     return (
         typeof value === "object" &&
@@ -63,6 +66,8 @@ export interface SerializeXmlElementArgs {
     text?: unknown;
     textSeparator?: string;
     children?: XmlChild[];
+    /** Text segments and child elements rendered in order after `text` and `children`. */
+    content?: XmlContent[];
     additionalChildren?: XmlSerializable[];
     xmlDeclaration?: boolean;
 }
@@ -77,6 +82,7 @@ export function serializeXmlElement({
     text,
     textSeparator,
     children = [],
+    content = [],
     additionalChildren = [],
     xmlDeclaration = false,
 }: SerializeXmlElementArgs): string {
@@ -95,12 +101,12 @@ export function serializeXmlElement({
 
     const wrapperNames = new Set(children.filter((child) => child.wrapped === true).map((child) => child.name));
     const wrapperFragments: XmlWrapperFragment[] = [];
-    const otherChildren: XmlSerializable[] = [];
-    for (const extra of additionalChildren) {
-        if (isXmlWrapperFragment(extra) && wrapperNames.has(localXmlName(extra.name))) {
-            wrapperFragments.push(extra);
+    const orderedContent: XmlContent[] = [];
+    for (const item of [...content, ...additionalChildren]) {
+        if (typeof item !== "string" && isXmlWrapperFragment(item) && wrapperNames.has(localXmlName(item.name))) {
+            wrapperFragments.push(item);
         } else {
-            otherChildren.push(extra);
+            orderedContent.push(item);
         }
     }
 
@@ -117,8 +123,8 @@ export function serializeXmlElement({
             ),
         );
     }
-    for (const extra of otherChildren) {
-        body.push(extra.toXml());
+    for (const item of orderedContent) {
+        body.push(typeof item === "string" ? escapeXml(item) : item.toXml());
     }
 
     if (body.length === 0) {
@@ -128,6 +134,62 @@ export function serializeXmlElement({
     }
     const element = parts.join("");
     return xmlDeclaration ? `${XML_DECLARATION}${element}` : element;
+}
+
+/**
+ * Reconciles an element's ordered content with its typed child properties. Text segments and
+ * generic elements keep their position; a typed child keeps its position as long as a typed
+ * property still references it (once per reference), and typed children that were set without
+ * going through the content (e.g. by a bulk setter) are appended at the end in property order.
+ */
+export function orderXmlContent(content: readonly XmlContent[], ...typedChildren: unknown[]): XmlContent[] {
+    const typed: XmlSerializable[] = [];
+    for (const value of typedChildren) {
+        collectXmlSerializable(value, typed);
+    }
+    const remaining = new Map<XmlSerializable, number>();
+    for (const child of typed) {
+        remaining.set(child, (remaining.get(child) ?? 0) + 1);
+    }
+    const take = (child: XmlSerializable): boolean => {
+        const count = remaining.get(child) ?? 0;
+        if (count === 0) {
+            return false;
+        }
+        remaining.set(child, count - 1);
+        return true;
+    };
+    const ordered: XmlContent[] = [];
+    for (const item of content) {
+        if (typeof item === "string" || isGenericXmlElement(item) || take(item)) {
+            ordered.push(item);
+        }
+    }
+    for (const child of typed) {
+        if (take(child)) {
+            ordered.push(child);
+        }
+    }
+    return ordered;
+}
+
+/** Generic elements (see `XmlElement`) are never typed children, so they always keep their position. */
+function isGenericXmlElement(value: XmlSerializable): boolean {
+    return "name" in value && typeof value.name === "string" && "attributes" in value && "children" in value;
+}
+
+function collectXmlSerializable(value: unknown, into: XmlSerializable[]): void {
+    if (value == null) {
+        return;
+    }
+    const items = toArray(value);
+    if (items != null) {
+        for (const item of items) {
+            collectXmlSerializable(item, into);
+        }
+    } else if (isXmlSerializable(value)) {
+        into.push(value);
+    }
 }
 
 export function escapeXml(value: string): string {
