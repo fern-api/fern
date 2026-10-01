@@ -358,6 +358,56 @@ describe("convertGeneratorsConfiguration", () => {
         ).toEqual(true);
     });
 
+    it("maps PyPI credentials", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    python: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-credentials",
+                                    username: "pypi-user",
+                                    password: "pypi-password"
+                                }
+                            },
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-token",
+                                    token: "pypi-token"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const credentialsOutput = converted.groups[0]?.generators[0]?.outputMode;
+        const credentials =
+            credentialsOutput?.type === "publishV2" && credentialsOutput.publishV2.type === "pypiOverride"
+                ? credentialsOutput.publishV2.pypiOverride
+                : undefined;
+        expect(credentials?.username).toBe("pypi-user");
+        expect(credentials?.password).toBe("pypi-password");
+
+        const tokenOutput = converted.groups[0]?.generators[1]?.outputMode;
+        const tokenCredentials =
+            tokenOutput?.type === "publishV2" && tokenOutput.publishV2.type === "pypiOverride"
+                ? tokenOutput.publishV2.pypiOverride
+                : undefined;
+        expect(tokenCredentials?.username).toBe("__token__");
+        expect(tokenCredentials?.password).toBe("pypi-token");
+    });
+
     it("logs deprecation warnings for deprecated generators yml configuration", async () => {
         const mockLogger: Logger = {
             trace: vi.fn(),
