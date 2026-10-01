@@ -584,13 +584,16 @@ internal static class XmlUtils
             }
         }
         var positions = new Dictionary<string, int>();
+        var seen = new Dictionary<string, int>();
         foreach (var item in items)
         {
             if (wrapped != null && item is XmlElement marker && markers.TryGetValue(marker.Name, out var list))
             {
                 var rendered = wrapped[marker.Name] ?? new List<XElement>();
                 positions.TryGetValue(marker.Name, out var position);
-                var isLast = ReferenceEquals(list[list.Count - 1], marker);
+                seen.TryGetValue(marker.Name, out var index);
+                seen[marker.Name] = index + 1;
+                var isLast = index == list.Count - 1;
                 var take = isLast
                     ? rendered.Count - position
                     : Math.Min(marker.WrappedItemCount, rendered.Count - position);
