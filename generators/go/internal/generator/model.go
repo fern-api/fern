@@ -2661,8 +2661,17 @@ func isAliasToPointerType(typeId common.TypeId, types map[common.TypeId]*ir.Type
 			return false
 		}
 		aliasOf := td.Shape.Alias.AliasOf
-		if aliasOf.Container != nil && (aliasOf.Container.Optional != nil || aliasOf.Container.Nullable != nil) {
-			return true
+		if inner := getOptionalOrNullableContainer(aliasOf); inner != nil {
+			// Lists, maps, sets, and unknown values are already nil-able, so an
+			// optional/nullable alias of them renders without a pointer.
+			for {
+				next := getOptionalOrNullableContainer(inner)
+				if next == nil {
+					break
+				}
+				inner = next
+			}
+			return isTypeReferencePointerRequired(inner)
 		}
 		if aliasOf.Named != nil {
 			typeId = aliasOf.Named.TypeId

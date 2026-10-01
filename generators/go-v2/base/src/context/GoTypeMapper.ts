@@ -128,7 +128,7 @@ export class GoTypeMapper {
                 aliasOf.type === "container" &&
                 (aliasOf.container.type === "optional" || aliasOf.container.type === "nullable")
             ) {
-                return true;
+                return this.isPointerRequiredForOptionalInner(aliasOf);
             }
             if (aliasOf.type === "named") {
                 currentTypeId = aliasOf.typeId;
@@ -136,6 +136,24 @@ export class GoTypeMapper {
             }
             return false;
         }
+    }
+
+    /**
+     * Lists, maps, sets, and unknown values are already nil-able, so an optional/nullable
+     * wrapper around them renders without a pointer.
+     */
+    private isPointerRequiredForOptionalInner(reference: FernIr.TypeReference): boolean {
+        let inner = reference;
+        while (
+            inner.type === "container" &&
+            (inner.container.type === "optional" || inner.container.type === "nullable")
+        ) {
+            inner = inner.container.type === "optional" ? inner.container.optional : inner.container.nullable;
+        }
+        if (inner.type === "unknown") {
+            return false;
+        }
+        return inner.type !== "container" || inner.container.type === "literal";
     }
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): go.Type {
