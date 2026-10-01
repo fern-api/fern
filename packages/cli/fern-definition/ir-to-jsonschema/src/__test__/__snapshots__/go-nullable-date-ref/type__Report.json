@@ -34,6 +34,26 @@
         }
       ]
     },
+    "tags": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableTags"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NullableMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "title": {
       "type": "string"
     }
@@ -83,6 +103,41 @@
         }
       ],
       "description": "A string or null."
+    },
+    "NullableTags": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A list of tags, or null."
+    },
+    "NullableMetadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Arbitrary metadata, or null."
     }
   }
 }
