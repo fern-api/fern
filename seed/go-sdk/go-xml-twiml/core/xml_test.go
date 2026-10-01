@@ -141,3 +141,53 @@ func TestTakeXmlElementAndMerge(t *testing.T) {
 	assert.Nil(t, none)
 	assert.Len(t, same, 3)
 }
+
+func TestAddTextPreservesMixedContentOrder(t *testing.T) {
+	say := NewXmlElement("Say").SetText("Hi ").AddChild(NewXmlElement("break").SetAttribute("strength", "weak")).AddText(" world")
+	assert.Equal(t, `<Say>Hi <break strength="weak" /> world</Say>`, say.ToXml())
+	parsed, err := ParseXml(say.ToXml())
+	require.NoError(t, err)
+	assert.Equal(t, "Hi ", parsed.Text)
+	require.Len(t, parsed.Children, 2)
+	assert.Equal(t, XmlText(" world"), parsed.Children[1])
+	assert.Equal(t, say.ToXml(), parsed.ToXml())
+}
+
+func TestParseXmlDropsIndentationKeepsInlineWhitespace(t *testing.T) {
+	parsed, err := ParseXml("<R>\n  <A />\n  <B />text <C /> tail</R>")
+	require.NoError(t, err)
+	assert.Equal(t, `<R><A /><B />text <C /> tail</R>`, parsed.ToXml())
+}
+
+func TestOrderXmlContentKeepsReferencedDropsStaleAppendsExtra(t *testing.T) {
+	a, b, c := &typedNode{"A"}, &typedNode{"B"}, &typedNode{"C"}
+	content := []XmlNode{XmlText("t"), a, NewXmlElement("Raw"), b}
+	ordered := OrderXmlContent(content, []XmlNode{a, c, a})
+	assert.Equal(t, []XmlNode{XmlText("t"), a, NewXmlElement("Raw"), a, c}, ordered)
+}
+
+func TestAddXmlContentDealsWrappedItemsToRepeatedWrappers(t *testing.T) {
+	document := `<Dial><Numbers k="v"><Number>+1</Number></Numbers><Custom /><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>`
+	parsed, err := ParseXml(document)
+	require.NoError(t, err)
+	var content, items []XmlNode
+	for _, child := range parsed.ChildElements() {
+		if child.Name != "Numbers" {
+			content = append(content, child)
+			continue
+		}
+		marker := &XmlElement{Name: child.Name, Attributes: child.Attributes}
+		for _, item := range child.ChildElements() {
+			items = append(items, item)
+			marker.WrappedItemCount++
+		}
+		content = append(content, marker)
+	}
+	element := NewXmlElement("Dial")
+	AddXmlContent(element, OrderXmlContent(content), map[string][]XmlNode{"Numbers": items})
+	assert.Equal(t, document, element.ToXml())
+}
+
+type typedNode struct{ name string }
+
+func (n *typedNode) ToXmlElement() *XmlElement { return NewXmlElement(n.name) }

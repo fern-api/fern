@@ -34,6 +34,9 @@ type Break struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Break.
@@ -60,9 +63,10 @@ func (b *Break) ToXmlElement() *core.XmlElement {
 			element.SetAttribute(name, b.ExtraAttributes[name])
 		}
 	}
-	for _, child := range b.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		b.Content,
+		b.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -74,6 +78,13 @@ func (b *Break) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Break.
 func (b *Break) AddChild(child core.XmlNode) *Break {
 	b.ExtraChildren = append(b.ExtraChildren, child)
+	b.Content = append(b.Content, child)
+	return b
+}
+
+// AddText appends a text segment after the children added so far and returns the Break.
+func (b *Break) AddText(text string) *Break {
+	b.Content = append(b.Content, core.XmlText(text))
 	return b
 }
 
@@ -110,10 +121,22 @@ func BreakFromXmlElement(element *core.XmlElement) (*Break, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	for _, child := range element.ChildElements() {
+	if element.Text != "" && !core.IsXmlIndentation(element.Text) {
+		result.Content = append(result.Content, core.XmlText(element.Text))
+	}
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -263,6 +286,9 @@ type Dial struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Dial.
@@ -302,24 +328,12 @@ func (d *Dial) ToXmlElement() *core.XmlElement {
 	if d.Number != nil {
 		element.Text = *d.Number
 	}
-	extraChildren := d.ExtraChildren
-	{
-		wrapper := core.NewXmlElement("Numbers")
-		for _, item := range d.Numbers {
-			if item != nil {
-				wrapper.AddChild(item)
-			}
-		}
-		var unknown *core.XmlElement
-		unknown, extraChildren = core.TakeXmlElement(extraChildren, "Numbers")
-		wrapper.Merge(unknown)
-		if len(wrapper.Children) > 0 || len(wrapper.Attributes) > 0 || wrapper.Text != "" {
-			element.AddChild(wrapper)
-		}
-	}
-	for _, child := range extraChildren {
-		element.AddChild(child)
-	}
+	wrapped := make(map[string][]core.XmlNode)
+	wrapped["Numbers"] = core.XmlNodes(d.Numbers)
+	core.AddXmlContent(element, core.OrderXmlContent(
+		d.Content,
+		d.ExtraChildren,
+	), wrapped)
 	return element
 }
 
@@ -331,6 +345,13 @@ func (d *Dial) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Dial.
 func (d *Dial) AddChild(child core.XmlNode) *Dial {
 	d.ExtraChildren = append(d.ExtraChildren, child)
+	d.Content = append(d.Content, child)
+	return d
+}
+
+// AddText appends a text segment after the children added so far and returns the Dial.
+func (d *Dial) AddText(text string) *Dial {
+	d.Content = append(d.Content, core.XmlText(text))
 	return d
 }
 
@@ -381,11 +402,24 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 		value := element.Text
 		result.Number = &value
 	}
-	for _, child := range element.ChildElements() {
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		case "Numbers":
-			unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}
-			for _, item := range child.ChildElements() {
+			marker := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}
+			for _, wrappedNode := range child.Children {
+				item := wrappedNode.ToXmlElement()
+				if item == nil {
+					marker.Children = append(marker.Children, wrappedNode)
+					continue
+				}
 				switch item.Name {
 				case "Number":
 					value, err := NumberFromXmlElement(item)
@@ -393,15 +427,15 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 						return nil, err
 					}
 					result.Numbers = append(result.Numbers, value)
+					marker.WrappedItemCount++
 				default:
-					unknown.AddChild(item)
+					marker.AddChild(item)
 				}
 			}
-			if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 || unknown.Text != "" {
-				result.ExtraChildren = append(result.ExtraChildren, unknown)
-			}
+			result.Content = append(result.Content, marker)
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -555,6 +589,9 @@ type Hangup struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Hangup.
@@ -575,9 +612,10 @@ func (h *Hangup) ToXmlElement() *core.XmlElement {
 			element.SetAttribute(name, h.ExtraAttributes[name])
 		}
 	}
-	for _, child := range h.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		h.Content,
+		h.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -589,6 +627,13 @@ func (h *Hangup) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Hangup.
 func (h *Hangup) AddChild(child core.XmlNode) *Hangup {
 	h.ExtraChildren = append(h.ExtraChildren, child)
+	h.Content = append(h.Content, child)
+	return h
+}
+
+// AddText appends a text segment after the children added so far and returns the Hangup.
+func (h *Hangup) AddText(text string) *Hangup {
+	h.Content = append(h.Content, core.XmlText(text))
 	return h
 }
 
@@ -616,10 +661,22 @@ func HangupFromXmlElement(element *core.XmlElement) (*Hangup, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	for _, child := range element.ChildElements() {
+	if element.Text != "" && !core.IsXmlIndentation(element.Text) {
+		result.Content = append(result.Content, core.XmlText(element.Text))
+	}
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -702,6 +759,9 @@ type Number struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Number.
@@ -728,9 +788,10 @@ func (n *Number) ToXmlElement() *core.XmlElement {
 	if n.PhoneNumber != nil {
 		element.Text = *n.PhoneNumber
 	}
-	for _, child := range n.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		n.Content,
+		n.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -742,6 +803,13 @@ func (n *Number) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Number.
 func (n *Number) AddChild(child core.XmlNode) *Number {
 	n.ExtraChildren = append(n.ExtraChildren, child)
+	n.Content = append(n.Content, child)
+	return n
+}
+
+// AddText appends a text segment after the children added so far and returns the Number.
+func (n *Number) AddText(text string) *Number {
+	n.Content = append(n.Content, core.XmlText(text))
 	return n
 }
 
@@ -776,10 +844,19 @@ func NumberFromXmlElement(element *core.XmlElement) (*Number, error) {
 		value := element.Text
 		result.PhoneNumber = &value
 	}
-	for _, child := range element.ChildElements() {
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -889,6 +966,9 @@ type Pause struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Pause.
@@ -912,9 +992,10 @@ func (p *Pause) ToXmlElement() *core.XmlElement {
 			element.SetAttribute(name, p.ExtraAttributes[name])
 		}
 	}
-	for _, child := range p.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		p.Content,
+		p.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -926,6 +1007,13 @@ func (p *Pause) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Pause.
 func (p *Pause) AddChild(child core.XmlNode) *Pause {
 	p.ExtraChildren = append(p.ExtraChildren, child)
+	p.Content = append(p.Content, child)
+	return p
+}
+
+// AddText appends a text segment after the children added so far and returns the Pause.
+func (p *Pause) AddText(text string) *Pause {
+	p.Content = append(p.Content, core.XmlText(text))
 	return p
 }
 
@@ -959,10 +1047,22 @@ func PauseFromXmlElement(element *core.XmlElement) (*Pause, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	for _, child := range element.ChildElements() {
+	if element.Text != "" && !core.IsXmlIndentation(element.Text) {
+		result.Content = append(result.Content, core.XmlText(element.Text))
+	}
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -1145,6 +1245,9 @@ type Response struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Response.
@@ -1165,16 +1268,11 @@ func (r *Response) ToXmlElement() *core.XmlElement {
 			element.SetAttribute(name, r.ExtraAttributes[name])
 		}
 	}
-	if len(r.Children) > 0 {
-		for _, item := range r.Children {
-			if item != nil {
-				element.AddChild(item)
-			}
-		}
-	}
-	for _, child := range r.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		r.Content,
+		core.XmlNodes(r.Children),
+		r.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -1186,6 +1284,13 @@ func (r *Response) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Response.
 func (r *Response) AddChild(child core.XmlNode) *Response {
 	r.ExtraChildren = append(r.ExtraChildren, child)
+	r.Content = append(r.Content, child)
+	return r
+}
+
+// AddText appends a text segment after the children added so far and returns the Response.
+func (r *Response) AddText(text string) *Response {
+	r.Content = append(r.Content, core.XmlText(text))
 	return r
 }
 
@@ -1193,13 +1298,17 @@ func (r *Response) AddChild(child core.XmlNode) *Response {
 //
 // <Say> TwiML Verb
 func (r *Response) Say(child *Say) *Response {
-	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Say", Say: child})
+	item := &ResponseChildrenItem{typ: "Say", Say: child}
+	r.Children = append(r.Children, item)
+	r.Content = append(r.Content, item)
 	return r
 }
 
 // Dial appends a <Dial> child element and returns the Response.
 func (r *Response) Dial(child *Dial) *Response {
-	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Dial", Dial: child})
+	item := &ResponseChildrenItem{typ: "Dial", Dial: child}
+	r.Children = append(r.Children, item)
+	r.Content = append(r.Content, item)
 	return r
 }
 
@@ -1207,13 +1316,17 @@ func (r *Response) Dial(child *Dial) *Response {
 //
 // XML element without an explicit xml.name; falls back to the schema name.
 func (r *Response) Pause(child *Pause) *Response {
-	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Pause", Pause: child})
+	item := &ResponseChildrenItem{typ: "Pause", Pause: child}
+	r.Children = append(r.Children, item)
+	r.Content = append(r.Content, item)
 	return r
 }
 
 // Hangup appends a <Hangup> child element and returns the Response.
 func (r *Response) Hangup(child *Hangup) *Response {
-	r.Children = append(r.Children, &ResponseChildrenItem{typ: "Hangup", Hangup: child})
+	item := &ResponseChildrenItem{typ: "Hangup", Hangup: child}
+	r.Children = append(r.Children, item)
+	r.Content = append(r.Content, item)
 	return r
 }
 
@@ -1241,7 +1354,18 @@ func ResponseFromXmlElement(element *core.XmlElement) (*Response, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	for _, child := range element.ChildElements() {
+	if element.Text != "" && !core.IsXmlIndentation(element.Text) {
+		result.Content = append(result.Content, core.XmlText(element.Text))
+	}
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		case "Say", "Dial", "Pause", "Hangup":
 			value, err := ResponseChildrenItemFromXmlElement(child)
@@ -1249,8 +1373,10 @@ func ResponseFromXmlElement(element *core.XmlElement) (*Response, error) {
 				return nil, err
 			}
 			result.Children = append(result.Children, value)
+			result.Content = append(result.Content, value)
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -1544,6 +1670,9 @@ type Say struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Say.
@@ -1573,16 +1702,11 @@ func (s *Say) ToXmlElement() *core.XmlElement {
 	if s.Message != nil {
 		element.Text = *s.Message
 	}
-	if len(s.Children) > 0 {
-		for _, item := range s.Children {
-			if item != nil {
-				element.AddChild(item)
-			}
-		}
-	}
-	for _, child := range s.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		s.Content,
+		core.XmlNodes(s.Children),
+		s.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -1594,6 +1718,13 @@ func (s *Say) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Say.
 func (s *Say) AddChild(child core.XmlNode) *Say {
 	s.ExtraChildren = append(s.ExtraChildren, child)
+	s.Content = append(s.Content, child)
+	return s
+}
+
+// AddText appends a text segment after the children added so far and returns the Say.
+func (s *Say) AddText(text string) *Say {
+	s.Content = append(s.Content, core.XmlText(text))
 	return s
 }
 
@@ -1602,6 +1733,7 @@ func (s *Say) AddChild(child core.XmlNode) *Say {
 // Adding a Pause in <Say>
 func (s *Say) Break(child *Break) *Say {
 	s.Children = append(s.Children, child)
+	s.Content = append(s.Content, child)
 	return s
 }
 
@@ -1642,7 +1774,15 @@ func SayFromXmlElement(element *core.XmlElement) (*Say, error) {
 		value := element.Text
 		result.Message = &value
 	}
-	for _, child := range element.ChildElements() {
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		case "break":
 			value, err := BreakFromXmlElement(child)
@@ -1650,8 +1790,10 @@ func SayFromXmlElement(element *core.XmlElement) (*Say, error) {
 				return nil, err
 			}
 			result.Children = append(result.Children, value)
+			result.Content = append(result.Content, value)
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil
@@ -2301,6 +2443,9 @@ type Wide struct {
 	ExtraAttributes map[string]string `json:"-" url:"-"`
 	// ExtraChildren holds XML child elements not declared in the API definition.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
+	// Content holds the child elements and text segments in document order,
+	// including the typed children, so mixed content round-trips as written.
+	Content []core.XmlNode `json:"-" url:"-"`
 }
 
 // ToXmlElement returns the generic XML representation of the Wide.
@@ -3089,16 +3234,11 @@ func (w *Wide) ToXmlElement() *core.XmlElement {
 			element.SetAttribute(name, w.ExtraAttributes[name])
 		}
 	}
-	if len(w.Children) > 0 {
-		for _, item := range w.Children {
-			if item != nil {
-				element.AddChild(item)
-			}
-		}
-	}
-	for _, child := range w.ExtraChildren {
-		element.AddChild(child)
-	}
+	core.AddXmlContent(element, core.OrderXmlContent(
+		w.Content,
+		core.XmlNodes(w.Children),
+		w.ExtraChildren,
+	), nil)
 	return element
 }
 
@@ -3110,6 +3250,13 @@ func (w *Wide) ToXml() string {
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Wide.
 func (w *Wide) AddChild(child core.XmlNode) *Wide {
 	w.ExtraChildren = append(w.ExtraChildren, child)
+	w.Content = append(w.Content, child)
+	return w
+}
+
+// AddText appends a text segment after the children added so far and returns the Wide.
+func (w *Wide) AddText(text string) *Wide {
+	w.Content = append(w.Content, core.XmlText(text))
 	return w
 }
 
@@ -3118,6 +3265,7 @@ func (w *Wide) AddChild(child core.XmlNode) *Wide {
 // XML element without an explicit xml.name; falls back to the schema name.
 func (w *Wide) Pause(child *Pause) *Wide {
 	w.Children = append(w.Children, child)
+	w.Content = append(w.Content, child)
 	return w
 }
 
@@ -3913,7 +4061,18 @@ func WideFromXmlElement(element *core.XmlElement) (*Wide, error) {
 			result.ExtraAttributes[attribute.Name] = attribute.Value
 		}
 	}
-	for _, child := range element.ChildElements() {
+	if element.Text != "" && !core.IsXmlIndentation(element.Text) {
+		result.Content = append(result.Content, core.XmlText(element.Text))
+	}
+	for _, node := range element.Children {
+		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		child := node.ToXmlElement()
+		if child == nil {
+			continue
+		}
 		switch child.Name {
 		case "Pause":
 			value, err := PauseFromXmlElement(child)
@@ -3921,8 +4080,10 @@ func WideFromXmlElement(element *core.XmlElement) (*Wide, error) {
 				return nil, err
 			}
 			result.Children = append(result.Children, value)
+			result.Content = append(result.Content, value)
 		default:
 			result.ExtraChildren = append(result.ExtraChildren, child)
+			result.Content = append(result.Content, child)
 		}
 	}
 	return result, nil

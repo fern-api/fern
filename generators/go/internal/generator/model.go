@@ -246,6 +246,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P(xmlExtraAttributesField, " map[string]string `json:\"-\" url:\"-\"`")
 		t.writer.P("// ", xmlExtraChildrenField, " holds XML child elements not declared in the API definition.")
 		t.writer.P(xmlExtraChildrenField, " []core.XmlNode `json:\"-\" url:\"-\"`")
+		t.writer.P("// ", xmlContentField, " holds the child elements and text segments in document order,")
+		t.writer.P("// including the typed children, so mixed content round-trips as written.")
+		t.writer.P(xmlContentField, " []core.XmlNode `json:\"-\" url:\"-\"`")
 	}
 	t.writer.P("}")
 	t.writer.P()
