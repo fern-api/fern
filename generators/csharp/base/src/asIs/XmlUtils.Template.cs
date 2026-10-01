@@ -4,7 +4,6 @@ using global::System.Runtime.CompilerServices;
 using global::System.Text.Json;
 using global::System.Xml;
 using global::System.Xml.Linq;
-using OneOf;
 
 namespace <%= namespace%>;
 
@@ -339,10 +338,6 @@ internal static class XmlUtils
 
     internal static XElement ToXElement(object? value)
     {
-        if (value is IOneOf oneOf)
-        {
-            value = oneOf.Value;
-        }
         if (value is IXmlNode node)
         {
             return node.ToXElement();
@@ -493,7 +488,7 @@ internal static class XmlUtils
             {
                 ordered.Add(item);
             }
-            else if (TakeTypedChild(remaining, Unwrap(item)))
+            else if (TakeTypedChild(remaining, item))
             {
                 ordered.Add(item);
             }
@@ -518,17 +513,12 @@ internal static class XmlUtils
         return true;
     }
 
-    private static object Unwrap(object item) => item is IOneOf oneOf ? oneOf.Value : item;
-
     private static void CollectTypedChildren(object? value, List<object> into)
     {
         switch (value)
         {
             case null:
             case string:
-                return;
-            case IOneOf oneOf:
-                CollectTypedChildren(oneOf.Value, into);
                 return;
             case IXmlNode node:
                 into.Add(node);
@@ -618,9 +608,16 @@ internal static class XmlUtils
 
     private static XElement RenderWrapper(string name, List<XElement> items, XmlElement? marker)
     {
-        var wrapper = new XElement(name);
+        var wrapper = CreateElement(name, marker?.Namespace, marker?.Prefix);
         if (marker != null)
         {
+            foreach (var ns in marker.Namespaces)
+            {
+                if (wrapper.GetNamespaceOfPrefix(ns.Key) == null)
+                {
+                    wrapper.Add(new XAttribute(XNamespace.Xmlns + ns.Key, ns.Value));
+                }
+            }
             foreach (var attribute in marker.Attributes)
             {
                 SetAttribute(wrapper, attribute.Key, attribute.Value);

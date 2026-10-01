@@ -112,7 +112,10 @@ public record Response : IJsonOnDeserialized, IXmlNode
     public XElement ToXElement()
     {
         var element = XmlUtils.CreateElement("Response", null, null);
-        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content, Children));
+        XmlUtils.AddContent(
+            element,
+            XmlUtils.OrderContent(Content, Children?.Select(item => item.Value))
+        );
         XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }

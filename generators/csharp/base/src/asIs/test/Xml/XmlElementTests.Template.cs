@@ -222,6 +222,35 @@ public class XmlElementTests
         Assert.That(XmlUtils.Serialize(element, false), Is.EqualTo(XmlUtils.Serialize(root, false)));
     }
 
+    [Test]
+    public void AddContent_KeepsWrapperPrefixedAttributes()
+    {
+        var root = XmlUtils.ParseDocument(
+            "<Dial xmlns:x=\"urn:x\"><Numbers x:kind=\"a\"><Number>+1</Number></Numbers></Dial>"
+        );
+        var wrappers = new Dictionary<string, string[]> { { "Numbers", new[] { "Number" } } };
+        var content = XmlUtils.ReadContent(root, null, false, null, wrappers);
+        var numbers = XmlUtils.ParseChildList<string>(XmlUtils.GetWrapperItems(root, "Numbers"), "Number");
+
+        var element = new XElement("Dial");
+        XmlUtils.AddContent(
+            element,
+            XmlUtils.OrderContent(content),
+            new Dictionary<string, List<XElement>?>
+            {
+                {
+                    "Numbers",
+                    XmlUtils.RenderWrappedItems(numbers, item => XmlUtils.ChildValue("Number", item))
+                },
+            }
+        );
+
+        Assert.That(
+            XmlUtils.Serialize(element, false),
+            Is.EqualTo("<Dial><Numbers xmlns:x=\"urn:x\" x:kind=\"a\"><Number>+1</Number></Numbers></Dial>")
+        );
+    }
+
     private sealed class FakeNode : IXmlNode
     {
         private readonly string _name;

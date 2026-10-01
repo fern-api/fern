@@ -435,7 +435,12 @@ export class XmlObjectGenerator {
         this.utils(writer, "OrderContent");
         writer.write(`(${CONTENT}`);
         for (const property of this.contentProperties) {
-            writer.write(`, ${property.field.name}`);
+            // Content holds the child models themselves; unwrap union items to match them by reference.
+            writer.write(
+                property.isUnion
+                    ? `, ${property.field.name}?.Select(${ITEM_VARIABLE} => ${ITEM_VARIABLE}.Value)`
+                    : `, ${property.field.name}`
+            );
         }
         writer.write(")");
         if (wrapped.length > 0) {
