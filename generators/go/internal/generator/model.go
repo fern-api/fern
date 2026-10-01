@@ -421,7 +421,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
-	// Implement fmt.Stringer.
+	// Implement fmt.Stringer (xml-encoded types implement it in writeXmlObjectMethods).
+	if t.xml != nil {
+		return nil
+	}
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
 	t.writer.P("if ", receiver, " == nil {")
 	t.writer.P("return \"<nil>\"")
