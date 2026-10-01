@@ -422,26 +422,25 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P()
 
 	// Implement fmt.Stringer (xml-encoded types implement it in writeXmlObjectMethods).
-	if t.xml != nil {
-		return nil
-	}
-	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return \"<nil>\"")
-	t.writer.P("}")
-	if t.includeRawJSON {
-		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
-		t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
+	if t.xml == nil {
+		t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return \"<nil>\"")
+		t.writer.P("}")
+		if t.includeRawJSON {
+			t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+			t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
+			t.writer.P("return value")
+			t.writer.P("}")
+			t.writer.P("}")
+		}
+		t.writer.P("if value, err := internal.StringifyJSON(", receiver, "); err == nil {")
 		t.writer.P("return value")
 		t.writer.P("}")
+		t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
 		t.writer.P("}")
+		t.writer.P()
 	}
-	t.writer.P("if value, err := internal.StringifyJSON(", receiver, "); err == nil {")
-	t.writer.P("return value")
-	t.writer.P("}")
-	t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
-	t.writer.P("}")
-	t.writer.P()
 
 	// JSON marshaling and String() tests are already added above (lines 259-260)
 
