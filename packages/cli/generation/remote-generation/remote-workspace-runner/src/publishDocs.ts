@@ -453,6 +453,7 @@ export async function publishDocs({
                 const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
                     fdr,
                     workspace,
+                    apiWorkspaces,
                     organization,
                     context,
                     snippetsConfig
@@ -468,6 +469,7 @@ export async function publishDocs({
 
                 const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
                     workspace,
+                    apiWorkspaces,
                     organization,
                     context,
                     snippetsConfig,
@@ -1569,12 +1571,14 @@ function parseBasePath(domain: string): string | undefined {
 async function checkAndDownloadExistingSdkDynamicIRs({
     fdr,
     workspace,
+    apiWorkspaces,
     organization,
     context,
     snippetsConfig
 }: {
     fdr: FdrClient;
     workspace: FernWorkspace | undefined;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
@@ -1585,7 +1589,7 @@ async function checkAndDownloadExistingSdkDynamicIRs({
 
     const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
         fdr,
-        workspace,
+        generators: collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context }),
         snippetsConfig,
         context
     });
@@ -1692,12 +1696,12 @@ export function getDocsSnippetPackageName({
 }
 async function buildSnippetConfigurationWithVersions({
     fdr,
-    workspace,
+    generators,
     snippetsConfig,
     context
 }: {
     fdr: FdrClient;
-    workspace: FernWorkspace;
+    generators: generatorsYml.GeneratorInvocation[];
     snippetsConfig: SnippetsConfig;
     context: TaskContext;
 }): Promise<Record<string, { packageName: string; version: string | undefined }>> {
@@ -1766,7 +1770,7 @@ async function buildSnippetConfigurationWithVersions({
         if (!version) {
             const versionResult = await computeSemanticVersionForLanguage({
                 fdr,
-                workspace,
+                generators,
                 language: config.language,
                 snippetName: config.snippetName,
                 context
@@ -1804,6 +1808,7 @@ export function selectVersionGeneratorForSnippet({
           generatorPackage: string;
           githubRepository: string | undefined;
           matchesSnippetName: boolean;
+          assumedFromSnippetName?: boolean;
       }
     | undefined {
     const normalize = (pkg: string) => (language === "go" ? normalizeGoPackageForLookup(pkg) : pkg);
@@ -1835,18 +1840,75 @@ export function selectVersionGeneratorForSnippet({
             return toResult(generatorInvocation, pkgName, false);
         }
     }
+    const sole = getSoleUnnamedGenerator(candidates);
+    if (sole != null) {
+        return { ...toResult(sole, snippetName, true), assumedFromSnippetName: true };
+    }
     return undefined;
+}
+
+/**
+ * Generators eligible to supply docs snippets for an API section. The section's own
+ * generators.yml comes first; generators from the other API workspaces in the fern folder
+ * follow, because SDKs are commonly generated from one workspace (e.g. `apis/unified`)
+ * while the docs reference a docs-only workspace (e.g. `apis/waves-v4`) with no groups.
+ */
+export function collectSnippetGeneratorCandidates({
+    workspace,
+    apiWorkspaces,
+    context
+}: {
+    workspace: FernWorkspace;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    context: TaskContext;
+}): generatorsYml.GeneratorInvocation[] {
+    const own = workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? [];
+    const others = apiWorkspaces.filter((candidate) => candidate.workspaceName !== workspace.workspaceName);
+    const borrowed = others.flatMap(
+        (candidate) =>
+            candidate.generatorsConfiguration?.groups.flatMap((group) =>
+                group.generators.map((generatorInvocation) => ({ generatorInvocation, from: candidate.workspaceName }))
+            ) ?? []
+    );
+    if (own.length === 0) {
+        context.logger.debug(
+            `[SDK Dynamic IR] API workspace "${workspace.workspaceName ?? ""}" has no SDK generators in its generators.yml${workspace.generatorsConfiguration == null ? " (none loaded)" : ""}; ${borrowed.length > 0 ? `considering ${borrowed.length} generator(s) from ${[...new Set(borrowed.map((b) => b.from))].join(", ")}` : `no other API workspace in the fern folder has generators either (${others.length} other workspace(s))`}`
+        );
+    }
+    return [...own, ...borrowed.map((b) => b.generatorInvocation)];
+}
+
+/**
+ * When a language has exactly one generator and nothing in its publish target or
+ * config names the package (e.g. a github-only TypeScript SDK — the npm name only
+ * lives in the `output: npm:` block), the docs `snippets:` entry is the only
+ * source of truth for the package name, so that generator is taken as the match.
+ */
+export function getSoleUnnamedGenerator(
+    candidates: generatorsYml.GeneratorInvocation[]
+): generatorsYml.GeneratorInvocation | undefined {
+    const [only] = candidates;
+    if (candidates.length !== 1 || only == null) {
+        return undefined;
+    }
+    return resolveSnippetPackageName(only) == null ? only : undefined;
+}
+
+export function describeGeneratorForSnippetLog(generatorInvocation: generatorsYml.GeneratorInvocation): string {
+    const config = generatorInvocation.config;
+    const configKeys = typeof config === "object" && config !== null ? Object.keys(config).join(",") : "none";
+    return `${generatorInvocation.name} (language=${generatorInvocation.language ?? "unknown"}, output=${generatorInvocation.outputMode.type}, publish-target=${generatorsYml.getPackageName({ generatorInvocation }) ?? "none"}, config keys=[${configKeys}])`;
 }
 
 async function computeSemanticVersionForLanguage({
     fdr,
-    workspace,
+    generators,
     language,
     snippetName,
     context
 }: {
     fdr: FdrClient;
-    workspace: FernWorkspace;
+    generators: generatorsYml.GeneratorInvocation[];
     language: string;
     snippetName: string;
     context: TaskContext;
@@ -1881,19 +1943,20 @@ async function computeSemanticVersionForLanguage({
             return undefined;
     }
 
-    const selected = selectVersionGeneratorForSnippet({
-        generators: workspace.generatorsConfiguration?.groups?.flatMap((group) => group.generators) ?? [],
-        language,
-        snippetName
-    });
+    const selected = selectVersionGeneratorForSnippet({ generators, language, snippetName });
 
     if (selected == null) {
+        const sameLanguage = generators.filter((generatorInvocation) => generatorInvocation.language === language);
         context.logger.debug(
-            `[SDK Dynamic IR] ${language}: no ${language} generator in generators.yml resolved a package name (checked publish target and generator config)`
+            `[SDK Dynamic IR] ${language}: none of ${sameLanguage.length} ${language} generator(s) in generators.yml resolved a package name (checked publish target and generator config): ${sameLanguage.map(describeGeneratorForSnippetLog).join("; ") || "no generators for this language"}`
         );
         return undefined;
     }
-    if (!selected.matchesSnippetName) {
+    if (selected.assumedFromSnippetName) {
+        context.logger.debug(
+            `[SDK Dynamic IR] ${language}: ${selected.generatorName} is the only ${language} generator and has no package name in config; assuming it publishes snippets package "${snippetName}"`
+        );
+    } else if (!selected.matchesSnippetName) {
         context.logger.debug(
             `[SDK Dynamic IR] ${language}: no generator resolved package "${snippetName}"; computing version against publish target "${selected.generatorPackage}" of ${selected.generatorName}`
         );
@@ -1919,12 +1982,14 @@ async function computeSemanticVersionForLanguage({
 
 async function generateLanguageSpecificDynamicIRs({
     workspace,
+    apiWorkspaces,
     organization,
     context,
     snippetsConfig,
     skipLanguages = new Set()
 }: {
     workspace: FernWorkspace | undefined;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
@@ -1949,86 +2014,92 @@ async function generateLanguageSpecificDynamicIRs({
         rust: snippetsConfig.rustSdk?.package
     };
 
-    if (workspace.generatorsConfiguration?.groups) {
-        for (const group of workspace.generatorsConfiguration.groups) {
-            for (const generatorInvocation of group.generators) {
-                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
-                    apiName: workspace.workspaceName ?? "",
-                    organization,
-                    generatorInvocation
-                });
-                const packageName = getDocsSnippetPackageName({ generatorInvocation, dynamicGeneratorConfig });
+    const allGenerators = collectSnippetGeneratorCandidates({ workspace, apiWorkspaces, context });
+    for (const generatorInvocation of allGenerators) {
+        const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+            apiName: workspace.workspaceName ?? "",
+            organization,
+            generatorInvocation
+        });
+        let packageName = getDocsSnippetPackageName({ generatorInvocation, dynamicGeneratorConfig });
 
-                if (!generatorInvocation.language) {
-                    continue;
-                }
+        if (!generatorInvocation.language) {
+            continue;
+        }
 
-                // Skip languages that already have SDK dynamic IRs
-                if (skipLanguages.has(generatorInvocation.language)) {
-                    context.logger.debug(
-                        `Skipping dynamic IR generation for ${generatorInvocation.language} (using existing SDK dynamic IR)`
-                    );
-                    continue;
-                }
+        // Skip languages that already have SDK dynamic IRs
+        if (skipLanguages.has(generatorInvocation.language)) {
+            context.logger.debug(
+                `Skipping dynamic IR generation for ${generatorInvocation.language} (using existing SDK dynamic IR)`
+            );
+            continue;
+        }
 
-                const requestedPackage = snippetConfiguration[generatorInvocation.language];
-                if (requestedPackage == null) {
-                    continue;
-                }
-                if (packageName == null) {
-                    context.logger.debug(
-                        `[SDK Dynamic IR] ${generatorInvocation.language}: generator "${generatorInvocation.name}" has no resolvable package name (publish target or generator config), cannot match snippets package "${requestedPackage}"`
-                    );
-                    continue;
-                }
-                if (requestedPackage !== packageName) {
-                    context.logger.debug(
-                        `[SDK Dynamic IR] ${generatorInvocation.language}: generator "${generatorInvocation.name}" package "${packageName}" does not match snippets package "${requestedPackage}"`
-                    );
-                    continue;
-                }
-
-                // generate a dynamic IR for configuration that matches the requested api snippet
-                const irForDynamicSnippets = generateIntermediateRepresentation({
-                    workspace,
-                    generationLanguage: generatorInvocation.language,
-                    keywords: undefined,
-                    smartCasing: generatorInvocation.smartCasing,
-                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-                    exampleGeneration: {
-                        disabled: true,
-                        skipAutogenerationIfManualExamplesExist: true,
-                        skipErrorAutogenerationIfManualErrorExamplesExist: true
-                    },
-                    audiences: {
-                        type: "all"
-                    },
-                    readme: undefined,
-                    packageName: packageName,
-                    version: undefined,
-                    context,
-                    sourceResolver: new SourceResolverImpl(context, workspace),
-                    dynamicGeneratorConfig
-                });
-
-                const dynamicIR = convertIrToDynamicSnippetsIr({
-                    ir: irForDynamicSnippets,
-                    disableExamples: true,
-                    smartCasing: generatorInvocation.smartCasing,
-                    smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-                    generationLanguage: generatorInvocation.language,
-                    generatorConfig: dynamicGeneratorConfig
-                });
-
-                // include metadata along with the dynamic IR
-                if (dynamicIR) {
-                    languageSpecificIRs[generatorInvocation.language] = {
-                        dynamicIR
-                    };
-                } else {
-                    context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
-                }
+        const requestedPackage = snippetConfiguration[generatorInvocation.language];
+        if (requestedPackage == null) {
+            continue;
+        }
+        if (packageName == null) {
+            const sole = getSoleUnnamedGenerator(
+                allGenerators.filter((candidate) => candidate.language === generatorInvocation.language)
+            );
+            if (sole !== generatorInvocation) {
+                context.logger.debug(
+                    `[SDK Dynamic IR] ${generatorInvocation.language}: ${describeGeneratorForSnippetLog(generatorInvocation)} has no resolvable package name, cannot match snippets package "${requestedPackage}"`
+                );
+                continue;
             }
+            context.logger.debug(
+                `[SDK Dynamic IR] ${generatorInvocation.language}: ${describeGeneratorForSnippetLog(generatorInvocation)} is the only ${generatorInvocation.language} generator and has no package name in config; assuming it publishes snippets package "${requestedPackage}"`
+            );
+            packageName = requestedPackage;
+        }
+        if (requestedPackage !== packageName) {
+            context.logger.debug(
+                `[SDK Dynamic IR] ${generatorInvocation.language}: generator "${generatorInvocation.name}" package "${packageName}" does not match snippets package "${requestedPackage}"`
+            );
+            continue;
+        }
+
+        // generate a dynamic IR for configuration that matches the requested api snippet
+        const irForDynamicSnippets = generateIntermediateRepresentation({
+            workspace,
+            generationLanguage: generatorInvocation.language,
+            keywords: undefined,
+            smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+            exampleGeneration: {
+                disabled: true,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            audiences: {
+                type: "all"
+            },
+            readme: undefined,
+            packageName: packageName,
+            version: undefined,
+            context,
+            sourceResolver: new SourceResolverImpl(context, workspace),
+            dynamicGeneratorConfig
+        });
+
+        const dynamicIR = convertIrToDynamicSnippetsIr({
+            ir: irForDynamicSnippets,
+            disableExamples: true,
+            smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+            generationLanguage: generatorInvocation.language,
+            generatorConfig: dynamicGeneratorConfig
+        });
+
+        // include metadata along with the dynamic IR
+        if (dynamicIR) {
+            languageSpecificIRs[generatorInvocation.language] = {
+                dynamicIR
+            };
+        } else {
+            context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
         }
     }
 
@@ -2044,7 +2115,7 @@ async function generateLanguageSpecificDynamicIRs({
                 `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
             );
             context.logger.warn(
-                `Please make sure your ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml has a generator that publishes a ${packageName} package.`
+                `Please make sure a generators.yml in this fern folder (checked ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml and the other ${apiWorkspaces.length} API workspace(s)) has a generator that publishes a ${packageName} package.`
             );
             context.logger.warn();
         }

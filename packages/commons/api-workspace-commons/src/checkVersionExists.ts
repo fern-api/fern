@@ -4,7 +4,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import type { HttpMethod, IdempotencyKeyGeneration } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 /**
- * Resolves the package name from the raw generator configuration.
+ * Resolves the package name from the generator configuration (resolved `config`, falling back to `raw`).
  *
  * This is necessary because `generatorsYml.getPackageName()` returns `undefined`
  * for `publish` / `publishV2` output modes (the package name lives in the raw
@@ -15,7 +15,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
  * Lookup order:
  * 1. `output["package-name"]` — npm, PyPI, NuGet, RubyGems, crates.io
  * 2. `output.coordinate`      — Maven (Java)
- * 3. `config.package_name`    — fallback (some generators)
+ * 3. `config.package_name`    — python-sdk generator
  * 4. `config["package-name"]` — Java SDK generator (kebab-case config key)
  * 5. `config.module.path`     — Go SDK generator
  * 6. `config.packageName`     — PHP SDK generator (camelCase config key)
@@ -39,27 +39,29 @@ export function getPackageNameFromGeneratorConfig(
         }
     }
 
-    // Check config.package_name if output.package-name is not set
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
-        if (packageName != null) {
+    // The resolved config is always populated by the loader; `raw` is only set on some
+    // construction paths (e.g. the cli-v2 adapter omits it), so prefer `config`.
+    const config = generatorInvocation.config ?? generatorInvocation.raw?.config;
+    if (typeof config === "object" && config !== null) {
+        const packageName = (config as { package_name?: unknown }).package_name;
+        if (typeof packageName === "string") {
             return packageName;
         }
 
         // java-sdk generator uses the kebab-case package-name config key
-        const kebabCasePackageName = (generatorInvocation.raw.config as { ["package-name"]?: unknown })["package-name"];
+        const kebabCasePackageName = (config as { ["package-name"]?: unknown })["package-name"];
         if (typeof kebabCasePackageName === "string") {
             return kebabCasePackageName;
         }
 
         // go-sdk generator uses module.path to set the package name
-        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
-        if (modulePath != null) {
+        const modulePath = (config as { module?: { path?: unknown } }).module?.path;
+        if (typeof modulePath === "string") {
             return modulePath;
         }
 
         // php-sdk generator uses the camelCase packageName config key
-        const camelCasePackageName = (generatorInvocation.raw.config as { packageName?: unknown }).packageName;
+        const camelCasePackageName = (config as { packageName?: unknown }).packageName;
         if (typeof camelCasePackageName === "string") {
             return camelCasePackageName;
         }

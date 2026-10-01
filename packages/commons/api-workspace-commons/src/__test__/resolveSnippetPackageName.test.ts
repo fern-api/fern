@@ -35,6 +35,15 @@ describe("resolveSnippetPackageName", () => {
     it("v1 github without publishInfo falls back to config.package_name", () => {
         const gi = invocation({
             outputMode: FernFiddle.OutputMode.github({ ...github, makePr: false }),
+            config: { package_name: "acme" }
+        });
+        expect(resolveSnippetPackageName(gi)).toBe("acme");
+    });
+
+    it("falls back to raw.config when the resolved config is absent", () => {
+        const gi = invocation({
+            outputMode: FernFiddle.OutputMode.github({ owner: github.owner, repo: github.repo }),
+            config: undefined,
             raw: { name: "fernapi/fern-python-sdk", version: "1.0.0", config: { package_name: "acme" } }
         });
         expect(resolveSnippetPackageName(gi)).toBe("acme");
@@ -57,7 +66,7 @@ describe("resolveSnippetPackageName", () => {
     it("githubV2 pull-request without publishInfo falls back to config.package_name", () => {
         const gi = invocation({
             outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
-            raw: { name: "fernapi/fern-python-sdk", version: "1.0.0", config: { package_name: "acme" } }
+            config: { package_name: "acme" }
         });
         expect(resolveSnippetPackageName(gi)).toBe("acme");
     });
@@ -97,7 +106,7 @@ describe("resolveSnippetPackageName", () => {
             language: "php",
             name: "fernapi/fern-php-sdk",
             outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
-            raw: { name: "fernapi/fern-php-sdk", version: "1.0.0", config: { packageName: "acme/acme-php" } }
+            config: { packageName: "acme/acme-php" }
         });
         expect(resolveSnippetPackageName(gi)).toBe("acme/acme-php");
     });

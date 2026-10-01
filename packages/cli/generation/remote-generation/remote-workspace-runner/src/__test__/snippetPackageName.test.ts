@@ -36,7 +36,7 @@ describe("getDocsSnippetPackageName", () => {
     it("matches a python generator that is github-output-only via config.package_name", () => {
         const gi = invocation({
             outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
-            raw: { name: "fernapi/fern-python-sdk", version: "1.0.0", config: { package_name: "acme" } }
+            config: { package_name: "acme" }
         });
         expect(docsPackageName(gi)).toBe("acme");
     });
@@ -68,7 +68,7 @@ describe("getDocsSnippetPackageName", () => {
         const gi = invocation({
             language: "php",
             outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
-            raw: { name: "fernapi/fern-php-sdk", version: "1.0.0", config: { packageName: "acme/acme-php" } }
+            config: { packageName: "acme/acme-php" }
         });
         expect(docsPackageName(gi)).toBe("acme/acme-php");
     });
@@ -148,7 +148,7 @@ describe("selectVersionGeneratorForSnippet", () => {
         invocation({
             name: `gen-${packageName}`,
             outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
-            raw: { name: "fernapi/fern-python-sdk", version: "1.0.0", config: { package_name: packageName } }
+            config: { package_name: packageName }
         });
     const published = (packageName: string) =>
         invocation({
