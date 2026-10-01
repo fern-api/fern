@@ -142,6 +142,87 @@
                 }
             }
         },
+        "type_:NullableTags": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableTags",
+                    "camelCase": {
+                        "unsafeName": "nullableTags",
+                        "safeName": "nullableTags"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_tags",
+                        "safeName": "nullable_tags"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_TAGS",
+                        "safeName": "NULLABLE_TAGS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableTags",
+                        "safeName": "NullableTags"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            }
+        },
+        "type_:NullableMetadata": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableMetadata",
+                    "camelCase": {
+                        "unsafeName": "nullableMetadata",
+                        "safeName": "nullableMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_metadata",
+                        "safeName": "nullable_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_METADATA",
+                        "safeName": "NULLABLE_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableMetadata",
+                        "safeName": "NullableMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "map",
+                    "key": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "value": {
+                        "type": "unknown"
+                    }
+                }
+            }
+        },
         "type_:Report": {
             "type": "object",
             "declaration": {
@@ -303,6 +384,78 @@
                             "value": {
                                 "type": "named",
                                 "value": "type_:NullableString"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "tags",
+                        "name": {
+                            "originalName": "tags",
+                            "camelCase": {
+                                "unsafeName": "tags",
+                                "safeName": "tags"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tags",
+                                "safeName": "tags"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TAGS",
+                                "safeName": "TAGS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Tags",
+                                "safeName": "Tags"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableTags"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableMetadata"
                             }
                         }
                     },
