@@ -77,7 +77,13 @@ export const BaseRubyCustomConfigSchema = z.object({
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents
     // the aliased model. Disabled by default because callers of a published gem may
     // already read that Hash by key.
-    coerceAliasResponses: z.boolean().optional()
+    coerceAliasResponses: z.boolean().optional(),
+    // Opt-in: expose an optional `http_client` client keyword. The object must respond to
+    // `request(url, http_request)` (a URI and a Net::HTTPGenericRequest) and return a
+    // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
+    // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
+    // wrap the custom client. Disabled by default so existing output is byte-identical.
+    allowCustomHttpClient: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

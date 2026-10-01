@@ -15,6 +15,8 @@ import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
+/** Client keyword exposed when `allowCustomHttpClient` is enabled. */
+const HTTP_CLIENT_PARAMETER_NAME = "http_client";
 
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
@@ -34,7 +36,8 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "token",
     "client",
     "request_options",
-    APP_INFO_PARAMETER_NAME
+    APP_INFO_PARAMETER_NAME,
+    HTTP_CLIENT_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -169,6 +172,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                     initializer: ruby.nilValue(),
                     docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
+        // When the opt-in `allowCustomHttpClient` config is enabled, expose an optional
+        // `http_client` keyword that replaces the RawClient's Net::HTTP transport.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitHttpClientOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: HTTP_CLIENT_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.object("Object")),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors."
                 })
             );
         }
@@ -399,6 +416,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // and the RawClient simply resolves no auth headers.
                     writer.writeLine(`auth_provider: @auth_provider,`);
                 }
+                if (this.emitHttpClientOption()) {
+                    writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+                }
                 writer.writeLine(`max_retries: max_retries`);
                 writer.dedent();
                 writer.writeLine(`)`);
@@ -582,7 +602,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.write(`}`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`,`);
+                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+            }
+            writer.newLine();
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -744,7 +769,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.write(`}`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`,`);
+                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+            }
+            writer.newLine();
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -1353,6 +1383,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             !this.context.customConfig.omitFernHeaders &&
             this.context.ir.sdkConfig.platformHeaders.userAgent != null
         );
+    }
+
+    /**
+     * Whether to expose the opt-in `http_client` client keyword and pass it through to
+     * every RawClient the client constructs (including the unauthenticated client used
+     * for OAuth / inferred-auth token requests). Gated on `allowCustomHttpClient` so
+     * flag-off output stays byte-identical.
+     */
+    private emitHttpClientOption(): boolean {
+        return this.context.customConfig.allowCustomHttpClient === true;
     }
 
     /**

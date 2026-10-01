@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `allowCustomHttpClient` config. When enabled, the generated client
+    accepts an `http_client:` keyword — any object responding to
+    `request(url, http_request)` and returning a `Net::HTTPResponse` — that replaces the
+    SDK's built-in `Net::HTTP` transport. This lets callers configure proxies, custom TLS,
+    connection reuse, or request/response interceptors (logging, signing, header
+    injection). Retries still wrap the custom client, and it is also used for OAuth /
+    inferred-auth token requests.
+  type: feat
