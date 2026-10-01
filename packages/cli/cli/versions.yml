@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.143.7
+  changelogEntry:
+    - summary: |
+        Stop auto-uppercasing "Map" in generated titles. API Reference navigation
+        subpackages without an explicit display-name (e.g. groups created via
+        `x-fern-sdk-group-name`), webhook ids, GraphQL namespace titles, and
+        tag-description-page headings now render "Map"/"Map Test" instead of
+        "MAP"/"MAP Test".
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.143.6
   changelogEntry:
     - summary: |
