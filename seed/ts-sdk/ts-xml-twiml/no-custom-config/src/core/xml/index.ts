@@ -7,6 +7,7 @@ export {
     xmlBuildContent,
     xmlInitialContent,
 } from "./builder.js";
+export { orderXmlContent } from "./content.js";
 export { localName, parseXml, type XmlNode, XmlParseError } from "./parse.js";
 export {
     type XmlContentOptions,
@@ -40,7 +41,6 @@ export {
     extraXmlAttributes,
     formatXmlScalar,
     isXmlSerializable,
-    orderXmlContent,
     type SerializeXmlElementArgs,
     serializeXmlElement,
     XML_DECLARATION,

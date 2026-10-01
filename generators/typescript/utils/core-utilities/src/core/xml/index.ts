@@ -38,7 +38,7 @@ export {
     extraXmlAttributes,
     formatXmlScalar,
     isXmlSerializable,
-    orderXmlContent,
     serializeXmlElement,
 } from "./serialize";
 export { XmlElement } from "./XmlElement";
+export { orderXmlContent } from "./content";

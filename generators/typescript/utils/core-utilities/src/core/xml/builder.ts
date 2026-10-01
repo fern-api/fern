@@ -66,8 +66,10 @@ export function xmlInitialContent(
     additionalChildren: readonly XmlSerializable[] | undefined,
 ): XmlContent[] {
     const result: XmlContent[] = [...(content ?? [])];
+    const seen = new Set<XmlContent>(result);
     for (const child of additionalChildren ?? []) {
-        if (!result.includes(child)) {
+        if (!seen.has(child)) {
+            seen.add(child);
             result.push(child);
         }
     }

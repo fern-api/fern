@@ -136,62 +136,6 @@ export function serializeXmlElement({
     return xmlDeclaration ? `${XML_DECLARATION}${element}` : element;
 }
 
-/**
- * Reconciles an element's ordered content with its typed child properties. Text segments and
- * generic elements keep their position; a typed child keeps its position as long as a typed
- * property still references it (once per reference), and typed children that were set without
- * going through the content (e.g. by a bulk setter) are appended at the end in property order.
- */
-export function orderXmlContent(content: readonly XmlContent[], ...typedChildren: unknown[]): XmlContent[] {
-    const typed: XmlSerializable[] = [];
-    for (const value of typedChildren) {
-        collectXmlSerializable(value, typed);
-    }
-    const remaining = new Map<XmlSerializable, number>();
-    for (const child of typed) {
-        remaining.set(child, (remaining.get(child) ?? 0) + 1);
-    }
-    const take = (child: XmlSerializable): boolean => {
-        const count = remaining.get(child) ?? 0;
-        if (count === 0) {
-            return false;
-        }
-        remaining.set(child, count - 1);
-        return true;
-    };
-    const ordered: XmlContent[] = [];
-    for (const item of content) {
-        if (typeof item === "string" || isGenericXmlElement(item) || take(item)) {
-            ordered.push(item);
-        }
-    }
-    for (const child of typed) {
-        if (take(child)) {
-            ordered.push(child);
-        }
-    }
-    return ordered;
-}
-
-/** Generic elements (see `XmlElement`) are never typed children, so they always keep their position. */
-function isGenericXmlElement(value: XmlSerializable): boolean {
-    return "name" in value && typeof value.name === "string" && "attributes" in value && "children" in value;
-}
-
-function collectXmlSerializable(value: unknown, into: XmlSerializable[]): void {
-    if (value == null) {
-        return;
-    }
-    const items = toArray(value);
-    if (items != null) {
-        for (const item of items) {
-            collectXmlSerializable(item, into);
-        }
-    } else if (isXmlSerializable(value)) {
-        into.push(value);
-    }
-}
-
 export function escapeXml(value: string): string {
     return value
         .replace(/&/g, "&amp;")
@@ -225,7 +169,7 @@ export function extraXmlAttributes(attributes: Record<string, string> | undefine
     return Object.entries(attributes).map(([name, value]) => ({ name, value }));
 }
 
-function toArray(value: unknown): unknown[] | undefined {
+export function toArray(value: unknown): unknown[] | undefined {
     if (Array.isArray(value)) {
         return value;
     }

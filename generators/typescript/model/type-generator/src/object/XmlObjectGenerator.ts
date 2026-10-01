@@ -136,7 +136,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 {
                     name: ADDITIONAL_CHILDREN,
                     returnType: `${this.xmlType(context, "XmlElement")}[]`,
-                    docs: [{ description: "Child elements not declared in the API definition." }],
+                    docs: [
+                        {
+                            description:
+                                "Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder)."
+                        }
+                    ],
                     statements: [
                         `return this.${this.contentName(properties)}.filter((item): item is ${this.xmlType(context, "XmlElement")} => item instanceof ${this.xmlRef(context, "XmlElement")});`
                     ]

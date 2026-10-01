@@ -113,8 +113,7 @@ export function xmlLeadingText(node: XmlNode): string | undefined {
         }
         segments.push(item);
     }
-    const joined = segments.join("");
-    return joined.trim().length === 0 ? undefined : joined;
+    return segments.length === 0 ? undefined : segments.join("");
 }
 
 export interface XmlContentOptions {

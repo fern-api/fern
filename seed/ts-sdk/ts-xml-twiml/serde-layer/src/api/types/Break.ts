@@ -27,7 +27,7 @@ export class Break implements core.xml.XmlSerializable {
         this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
     }
 
-    /** Child elements not declared in the API definition. */
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
     get additionalChildren(): core.xml.XmlElement[] {
         return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
