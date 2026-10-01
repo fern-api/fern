@@ -150,6 +150,15 @@ class XmlElementTest extends TestCase
         $this->assertSame('<Dial><Numbers><Number>1</Number></Numbers><Unknown/></Dial>', $rebuilt->toXml());
     }
 
+    public function testAddContentPlacesWrapperAtFirstItem(): void
+    {
+        $number = new XmlElement('Number', '1');
+        $custom = new XmlElement('Custom');
+        $element = new XmlElement('Dial');
+        XmlUtils::addContent($element, [$number, $custom], [], ['Numbers' => [$number]], [$custom]);
+        $this->assertSame('<Dial><Numbers><Number>1</Number></Numbers><Custom/></Dial>', $element->toXml());
+    }
+
     public function testContentMatchesTypedChildrenInDocumentOrder(): void
     {
         $parsed = XmlElement::fromXml('<Response><Say>a</Say><Custom/><Say>b</Say>tail</Response>');

@@ -164,8 +164,8 @@ final class XmlUtils
      * Appends the typed children, the additional children and the text segments to $element in
      * content order. $content decides the order; typed or additional children that are missing from
      * it are appended after it (typed first), so directly assigned properties still render. Wrapped
-     * lists render as one wrapper element, placed where the first wrapper of that name appears in
-     * $content. Elements in $content that are neither typed, additional nor text are not written.
+     * lists render as one wrapper element, placed where the first wrapper of that name or the first
+     * item of that list appears in $content. Elements in $content that are neither typed, additional nor text are not written.
      *
      * @param list<XmlNode|XmlText> $content
      * @param list<XmlNode> $typed Typed child elements, in property order.
@@ -185,6 +185,12 @@ final class XmlUtils
         foreach ([...$typed, ...$additional] as $node) {
             $id = spl_object_id($node);
             $remaining[$id] = ($remaining[$id] ?? 0) + 1;
+        }
+        $wrapperOf = [];
+        foreach ($wrapped as $name => $items) {
+            foreach ($items as $item) {
+                $wrapperOf[spl_object_id($item)] = $name;
+            }
         }
         $wrappers = [];
         $emitWrapper = static function (string $name) use (&$wrappers, $element, $wrapped): void {
@@ -208,7 +214,9 @@ final class XmlUtils
                 $element->addChild($node);
                 continue;
             }
-            if ($node instanceof XmlElement && array_key_exists($node->name, $wrapped)) {
+            if (isset($wrapperOf[$id])) {
+                $emitWrapper($wrapperOf[$id]);
+            } elseif ($node instanceof XmlElement && array_key_exists($node->name, $wrapped)) {
                 $emitWrapper($node->name);
             }
         }
