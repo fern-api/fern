@@ -153,7 +153,6 @@ async function packOutputForLanguage({
     switch (language) {
         case "typescript": {
             await mkdir(distDir, { recursive: true });
-            await stampTypescriptPackageJsonVersion({ outputPath, version, context });
             await run([["npm", "install"]]);
             // Compile the package before packing so the tarball ships runnable JavaScript and
             // consumers can require() it right after npm install, without a post-install build.
@@ -717,37 +716,6 @@ async function findTsconfig(outputPath: AbsoluteFilePath): Promise<string | unde
         }
     }
     return undefined;
-}
-
-async function stampTypescriptPackageJsonVersion({
-    outputPath,
-    version,
-    context
-}: {
-    outputPath: AbsoluteFilePath;
-    version: string | undefined;
-    context: TaskContext;
-}): Promise<void> {
-    if (version == null) {
-        return;
-    }
-    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
-    if (!(await doesPathExist(packageJsonPath))) {
-        return;
-    }
-    const parsed: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
-    if (!isStringKeyedRecord(parsed)) {
-        throw new Error(`Expected ${packageJsonPath} to contain a JSON object.`);
-    }
-    if (parsed.version === version) {
-        return;
-    }
-    await writeFile(packageJsonPath, `${JSON.stringify({ ...parsed, version }, undefined, 2)}\n`);
-    context.logger.debug(`Stamped package.json version ${version}`);
-}
-
-function isStringKeyedRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 async function hasPackageJsonFilesField(outputPath: AbsoluteFilePath): Promise<boolean> {

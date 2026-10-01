@@ -114,28 +114,6 @@ describe("packLocalOutputForGroup", () => {
         expect(options?.env?.GIT_DIR).toBe(path.join(outputDir, ".git"));
     });
 
-    it("stamps the requested version into typescript package.json before packing", async () => {
-        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ name: "acme", version: "" }));
-        const group = {
-            groupName: "test",
-            audiences: { type: "all" },
-            generators: [
-                createGenerator({
-                    name: "fernapi/fern-typescript-node-sdk",
-                    language: "typescript",
-                    outputPath: outputDir
-                })
-            ]
-        } as unknown as generatorsYml.GeneratorGroup;
-
-        await packLocalOutputForGroup({ group, context: createMockTaskContext(), version: "1.2.22" });
-
-        const packageJson = JSON.parse(await readFile(path.join(outputDir, "package.json"), "utf-8")) as {
-            version?: unknown;
-        };
-        expect(packageJson.version).toBe("1.2.22");
-    });
-
     it("runs npm install and npm pack for typescript generators, including build when a build script exists", async () => {
         await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ scripts: { build: "tsc" } }));
         const group = {
