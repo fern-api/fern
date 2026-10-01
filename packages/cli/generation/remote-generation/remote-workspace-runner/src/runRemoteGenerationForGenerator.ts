@@ -36,6 +36,7 @@ import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import { createAndStartJob } from "./createAndStartJob.js";
+import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
@@ -43,6 +44,7 @@ import {
     type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
     getFernSdkGenApiLanguage,
+    getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
@@ -593,6 +595,33 @@ export async function runRemoteGenerationForGenerator({
         if (sdkGenApiCandidate == null) {
             throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
+        const resolvedRuntimeGeneratorVersion =
+            sdkGenApiRoute.payloadKind === "fern-runtime-bundle" &&
+            sdkGenApiRoute.requestedVersion == null &&
+            sdkGenApiRoute.versionSource === "fern-latest"
+                ? await resolveLatestRuntimeGeneratorVersion({
+                      generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                      organization,
+                      token
+                  })
+                : undefined;
+        const runtimeGeneratorInvocation =
+            resolvedRuntimeGeneratorVersion == null
+                ? sdkGenApiCandidate.generatorInvocation
+                : { ...sdkGenApiCandidate.generatorInvocation, version: resolvedRuntimeGeneratorVersion };
+        const runtimeIntermediateRepresentation =
+            resolvedRuntimeGeneratorVersion == null
+                ? enrichedIntermediateRepresentation
+                : {
+                      ...enrichedIntermediateRepresentation,
+                      generationMetadata:
+                          enrichedIntermediateRepresentation.generationMetadata == null
+                              ? undefined
+                              : {
+                                    ...enrichedIntermediateRepresentation.generationMetadata,
+                                    generatorVersion: resolvedRuntimeGeneratorVersion
+                                }
+                  };
         const parameters: FernSdkGenApiBuildParameters =
             sdkGenApiRoute.payloadKind === "sdk-config-v1"
                 ? (sdkConfigBuildParameters ??
@@ -606,6 +635,7 @@ export async function runRemoteGenerationForGenerator({
                       organization,
                       cliVersion: workspace.cliVersion,
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                      resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
@@ -616,9 +646,9 @@ export async function runRemoteGenerationForGenerator({
                           body: await prepareFernSdkGenApiRuntimeBundle({
                               apiName: getOriginalName(ir.apiName),
                               organization,
-                              generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                              generatorInvocation: runtimeGeneratorInvocation,
                               sdkVersion: sdkGenApiCandidate.sdkVersion,
-                              intermediateRepresentation: enrichedIntermediateRepresentation,
+                              intermediateRepresentation: runtimeIntermediateRepresentation,
                               irVersionOverride,
                               generateOauthClients,
                               generatePaginatedClients,
@@ -766,6 +796,39 @@ export async function runRemoteGenerationForGenerator({
     }
 
     return result;
+}
+
+async function resolveLatestRuntimeGeneratorVersion({
+    generatorInvocation,
+    organization,
+    token
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    organization: string;
+    token: FernToken;
+}): Promise<string> {
+    const origin = getFernSdkGenApiOrigin();
+    const language = generatorInvocation.language ?? getFernSdkGenApiLanguage(generatorInvocation.name);
+    if (origin == null) {
+        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true");
+    }
+    if (language == null) {
+        throw new Error(`Cannot discover a generator version for unsupported generator ${generatorInvocation.name}`);
+    }
+    const result = await discoverLatestSdkGenApiGeneratorVersions({
+        origin,
+        organization,
+        token,
+        generatorId: generatorInvocation.name,
+        language
+    });
+    if (result.state === "UNAVAILABLE" || result.compatibleVersion == null) {
+        throw new Error(
+            `SDK Gen API cannot resolve a latest executable version for ${generatorInvocation.name}` +
+                (result.state === "UNAVAILABLE" ? ` (${result.reason})` : "")
+        );
+    }
+    return result.compatibleVersion;
 }
 
 export async function detectFdrAirGappedMode({

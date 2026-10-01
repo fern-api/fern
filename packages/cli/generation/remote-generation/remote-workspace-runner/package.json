@@ -23,6 +23,13 @@
       "types": "./lib/directPublishCredentials.d.ts",
       "import": "./lib/directPublishCredentials.js",
       "default": "./lib/directPublishCredentials.js"
+    },
+    "./sdk-gen-api-version-discovery": {
+      "development": "./src/discoverSdkGenApiGeneratorVersions.ts",
+      "source": "./src/discoverSdkGenApiGeneratorVersions.ts",
+      "types": "./lib/discoverSdkGenApiGeneratorVersions.d.ts",
+      "import": "./lib/discoverSdkGenApiGeneratorVersions.js",
+      "default": "./lib/discoverSdkGenApiGeneratorVersions.js"
     }
   },
   "main": "lib/index.js",
@@ -76,6 +83,7 @@
     "js-yaml": "catalog:",
     "lodash-es": "catalog:",
     "mime-types": "catalog:",
+    "semver": "^7.6.2",
     "terminal-link": "catalog:",
     "tmp-promise": "catalog:",
     "url-join": "catalog:",
@@ -87,6 +95,7 @@
     "@types/lodash-es": "catalog:",
     "@types/mime-types": "catalog:",
     "@types/node": "catalog:",
+    "@types/semver": "catalog:",
     "@types/url-join": "^4.0.3",
     "@types/yauzl": "catalog:",
     "@types/yazl": "catalog:",
