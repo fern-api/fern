@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.144.0
+  changelogEntry:
+    - summary: |
+        C/C++ library docs now render pages for documented preprocessor macros (`#define`),
+        listed under a `macros/` folder and in group pages. Set
+        `config.include-undocumented-macros: true` on a `lang: cpp` library to also render
+        macros without a doc comment (include guards are never emitted, Doxygen drops them).
+      type: feat
+    - summary: |
+        C/C++ library docs: function-pointer typedef pages now list their documented
+        parameters, `@param[in]`/`[out]`/`[in,out]` directions are shown on parameter
+        fields, Doxygen `@verbatim` blocks render as preformatted code, and plain-C
+        libraries use `typedef` declaration syntax instead of C++ `using`. Regenerating
+        replaces the previous C/C++ page tree so pages for removed entities no longer linger.
+      type: fix
+    - summary: |
+        C/C++ library docs: `\ref`, `@see`, `@return` and auto-linked references to functions,
+        typedefs and enums documented inside a Doxygen `\defgroup` now render as links to the
+        generated pages. Previously these group-scoped references were emitted as plain text
+        because their `group__*` refids could not be decoded.
+      type: fix
+    - summary: |
+        C/C++ library docs: unqualified member references inside a namespace now resolve
+        against the enclosing scopes; function-pointer parameters of callback typedefs are
+        documented; and libraries with C++-only root members (`constexpr`, scoped enums,
+        `noexcept`) keep `using` typedef syntax.
+      type: fix
+    - summary: |
+        C/C++ library docs: typedef and enum names referenced inside function, typedef
+        and variable signature code blocks now link to their generated pages (previously
+        only class/struct references and the parameter list were linked).
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.143.7
   changelogEntry:
     - summary: |
