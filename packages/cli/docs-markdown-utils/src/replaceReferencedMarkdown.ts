@@ -107,7 +107,9 @@ export async function replaceReferencedMarkdown({
         return { markdown, referencedFiles: Array.from(collectedFiles.values()) };
     }
 
-    const regex = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
+    // Attribute values are skipped as whole quoted strings or `{...}` expressions so a `>` inside a value
+    // (e.g. `returnType="Promise<void>"`) doesn't end the tag early.
+    const regex = /([ \t]*)<Markdown\s+((?:"[^"]*"|'[^']*'|\{(?:"[^"]*"|'[^']*'|[^}"'])*\}|[^>"'{])+)\/>/g;
 
     let newMarkdown = markdown;
 

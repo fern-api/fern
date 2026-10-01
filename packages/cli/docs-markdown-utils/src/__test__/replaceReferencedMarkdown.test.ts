@@ -214,6 +214,51 @@ describe("replaceReferencedMarkdown", () => {
         `);
     });
 
+    it("should substitute variables whose values contain angle brackets", async () => {
+        const markdown = `
+            <Markdown src="test.md" returnType="Promise<void>" single='Map<string, number>' expr={"Array<T>"} />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "`run(): {{returnType}}`, {{single}}, {{expr}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`run(): Promise<void>\`, Map<string, number>, Array<T>
+        `);
+    });
+
+    it("should replace each tag separately when tags with angle-bracket values share a line", async () => {
+        const markdown = `<Markdown src="a.md" t="A<B>" /> and <Markdown src="b.md" t="C<D>" />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/a.md")) {
+                    return "first {{t}}";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/b.md")) {
+                    return "second {{t}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe("first A<B> and second C<D>");
+    });
+
     it("should leave unreplaced variables as-is when no matching prop exists", async () => {
         const markdown = `
             <Markdown src="test.md" plan="pro" />
