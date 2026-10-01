@@ -31,6 +31,15 @@ func do() {
         Description: fern.String(
             "description",
         ),
+        Tags: &fern.NullableTags{
+            "tags",
+            "tags",
+        },
+        Metadata: &fern.NullableMetadata{
+            "metadata": map[string]any{
+                "key": "value",
+            },
+        },
         Title: "title",
     }
     client.Reports.Create(

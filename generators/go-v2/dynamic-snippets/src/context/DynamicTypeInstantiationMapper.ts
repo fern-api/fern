@@ -51,16 +51,26 @@ export class DynamicTypeInstantiationMapper {
             }
             case "nullable": {
                 const inner = args.typeReference.value;
+                // Nested optional/nullable wrappers collapse to a single Go pointer.
+                if (inner.type === "optional" || inner.type === "nullable") {
+                    return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                }
                 // Special case: nullable + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
                 // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                    const aliasCollection =
+                        named?.type === "alias" ? this.unwrapOptionalOrNullable(named.typeReference) : undefined;
+                    if (
+                        named?.type === "alias" &&
+                        aliasCollection != null &&
+                        ["list", "set", "map"].includes(aliasCollection.type)
+                    ) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
+                            typeReference: aliasCollection,
                             value: args.value,
                             as: args.as
                         });
@@ -96,16 +106,26 @@ export class DynamicTypeInstantiationMapper {
             }
             case "optional": {
                 const inner = args.typeReference.value;
+                // Nested optional/nullable wrappers collapse to a single Go pointer.
+                if (inner.type === "optional" || inner.type === "nullable") {
+                    return this.convert({ typeReference: inner, value: args.value, as: args.as });
+                }
                 // Special case: optional + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
                 // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                    const aliasCollection =
+                        named?.type === "alias" ? this.unwrapOptionalOrNullable(named.typeReference) : undefined;
+                    if (
+                        named?.type === "alias" &&
+                        aliasCollection != null &&
+                        ["list", "set", "map"].includes(aliasCollection.type)
+                    ) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
+                            typeReference: aliasCollection,
                             value: args.value,
                             as: args.as
                         });
@@ -148,6 +168,14 @@ export class DynamicTypeInstantiationMapper {
             default:
                 assertNever(args.typeReference);
         }
+    }
+
+    private unwrapOptionalOrNullable(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+        let current = typeReference;
+        while (current.type === "optional" || current.type === "nullable") {
+            current = current.value;
+        }
+        return current;
     }
 
     public convertToPointerIfPossible(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {

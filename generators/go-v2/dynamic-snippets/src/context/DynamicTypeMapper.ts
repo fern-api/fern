@@ -93,7 +93,7 @@ export class DynamicTypeMapper {
             }
             const aliasOf = namedType.typeReference;
             if (aliasOf.type === "optional" || aliasOf.type === "nullable") {
-                return true;
+                return this.isPointerRequiredForOptionalInner(aliasOf);
             }
             if (aliasOf.type === "named") {
                 currentTypeId = aliasOf.value;
@@ -101,6 +101,18 @@ export class DynamicTypeMapper {
             }
             return false;
         }
+    }
+
+    /**
+     * Lists, maps, sets, and unknown values are already nil-able, so an optional/nullable
+     * wrapper around them renders without a pointer.
+     */
+    private isPointerRequiredForOptionalInner(reference: FernIr.dynamic.TypeReference): boolean {
+        let inner = reference;
+        while (inner.type === "optional" || inner.type === "nullable") {
+            inner = inner.value;
+        }
+        return inner.type !== "list" && inner.type !== "map" && inner.type !== "set" && inner.type !== "unknown";
     }
 
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): go.Type {

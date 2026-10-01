@@ -44,6 +44,19 @@ components:
         - string
         - "null"
       description: A string or null.
+    NullableTags:
+      type:
+        - array
+        - "null"
+      items:
+        type: string
+      description: A list of tags, or null.
+    NullableMetadata:
+      type:
+        - object
+        - "null"
+      additionalProperties: true
+      description: Arbitrary metadata, or null.
     Report:
       type: object
       properties:
@@ -55,6 +68,10 @@ components:
           $ref: "#/components/schemas/ISO8601DateTimeNullable"
         description:
           $ref: "#/components/schemas/NullableString"
+        tags:
+          $ref: "#/components/schemas/NullableTags"
+        metadata:
+          $ref: "#/components/schemas/NullableMetadata"
         title:
           type: string
       required:

@@ -19,15 +19,23 @@ type Iso8601DateNullable = *time.Time
 // A date-time in ISO 8601 format, or null.
 type Iso8601DateTimeNullable = *time.Time
 
+// Arbitrary metadata, or null.
+type NullableMetadata = map[string]any
+
 // A string or null.
 type NullableString = *string
+
+// A list of tags, or null.
+type NullableTags = []string
 
 var (
 	reportFieldCreatedDate  = big.NewInt(1 << 0)
 	reportFieldFraudDate    = big.NewInt(1 << 1)
 	reportFieldResolvedDate = big.NewInt(1 << 2)
 	reportFieldDescription  = big.NewInt(1 << 3)
-	reportFieldTitle        = big.NewInt(1 << 4)
+	reportFieldTags         = big.NewInt(1 << 4)
+	reportFieldMetadata     = big.NewInt(1 << 5)
+	reportFieldTitle        = big.NewInt(1 << 6)
 )
 
 // reportNullableFields maps the wire names of Report's nullable fields (required or optional) to their field bits.
@@ -35,6 +43,8 @@ var reportNullableFields = map[string]*big.Int{
 	"fraud_date":    reportFieldFraudDate,
 	"resolved_date": reportFieldResolvedDate,
 	"description":   reportFieldDescription,
+	"tags":          reportFieldTags,
+	"metadata":      reportFieldMetadata,
 }
 
 type Report struct {
@@ -42,6 +52,8 @@ type Report struct {
 	FraudDate    Iso8601DateNullable     `json:"fraud_date,omitempty" url:"fraud_date,omitempty" format:"date"`
 	ResolvedDate Iso8601DateTimeNullable `json:"resolved_date,omitempty" url:"resolved_date,omitempty"`
 	Description  NullableString          `json:"description,omitempty" url:"description,omitempty"`
+	Tags         *NullableTags           `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata     *NullableMetadata       `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Title        string                  `json:"title" url:"title"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -77,6 +89,20 @@ func (r *Report) GetDescription() NullableString {
 		return nil
 	}
 	return r.Description
+}
+
+func (r *Report) GetTags() *NullableTags {
+	if r == nil {
+		return nil
+	}
+	return r.Tags
+}
+
+func (r *Report) GetMetadata() *NullableMetadata {
+	if r == nil {
+		return nil
+	}
+	return r.Metadata
 }
 
 func (r *Report) GetTitle() string {
@@ -128,6 +154,20 @@ func (r *Report) SetResolvedDate(resolvedDate Iso8601DateTimeNullable) {
 func (r *Report) SetDescription(description NullableString) {
 	r.Description = description
 	r.require(reportFieldDescription)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetTags(tags *NullableTags) {
+	r.Tags = tags
+	r.require(reportFieldTags)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Report) SetMetadata(metadata *NullableMetadata) {
+	r.Metadata = metadata
+	r.require(reportFieldMetadata)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Restore pointer types for optional fields that reference a nullable list, map, or
+    `unknown` alias (for example a `type: [object, "null"]` schema with
+    `additionalProperties`, or a `type: [array, "null"]` schema). Since 1.46.1 these
+    fields were generated as bare values (`Metadata MetadataAlias`) instead of
+    pointers (`Metadata *MetadataAlias`), which was a breaking change for existing
+    SDKs. The double-pointer guard now only applies to aliases that actually render
+    as Go pointers (nullable primitives, enums, objects, and unions), and dynamic
+    snippets now render `&Alias{...}` literals for these fields.
+  type: fix
