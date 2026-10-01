@@ -228,8 +228,7 @@ export class TypeContextImpl implements TypeContext {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             inline: typeDeclaration.inline ?? false,
-            xml: getXmlEncoding(typeDeclaration),
-            isXmlRoot: getXmlEncoding(typeDeclaration) != null && !this.typeResolver.isXmlChildType(typeName)
+            xml: getXmlEncoding(typeDeclaration)
         });
     }
 

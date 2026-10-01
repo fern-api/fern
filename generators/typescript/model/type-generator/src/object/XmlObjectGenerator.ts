@@ -33,7 +33,6 @@ export declare namespace XmlObjectGenerator {
         docs: string | undefined;
         shape: FernIr.ObjectTypeDeclaration;
         xml: FernIr.XmlEncoding;
-        isXmlRoot: boolean;
         useBigInt: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
@@ -84,7 +83,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private readonly docs: string | undefined;
     private readonly shape: FernIr.ObjectTypeDeclaration;
     private readonly xml: FernIr.XmlEncoding;
-    private readonly isXmlRoot: boolean;
     private readonly useBigInt: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly noOptionalProperties: boolean;
@@ -96,7 +94,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         this.docs = init.docs;
         this.shape = init.shape;
         this.xml = init.xml;
-        this.isXmlRoot = init.isXmlRoot;
         this.useBigInt = init.useBigInt;
         this.includeSerdeLayer = init.includeSerdeLayer;
         this.noOptionalProperties = init.noOptionalProperties;
