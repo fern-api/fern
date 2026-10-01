@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { CliError } from "@fern-api/task-context";
 import semver from "semver";
 
 export interface SdkGenApiGeneratorVersions {
@@ -32,7 +33,7 @@ export async function discoverLatestSdkGenApiGeneratorVersions({
     generatorId: string;
     language: string;
 }): Promise<DiscoveryResult | UnavailableResult> {
-    const key = JSON.stringify([origin, organization, generatorId, language]);
+    const key = JSON.stringify([origin, organization, token.value, generatorId, language]);
     const inFlight = latestDiscoveryRequests.get(key);
     if (inFlight != null) {
         return inFlight;
@@ -160,10 +161,12 @@ function optionalExactSemver(value: Record<string, unknown>, key: string): strin
     }
     const version = value[key];
     if (typeof version !== "string" || semver.valid(version) !== version) {
-        throw new Error(
-            `SDK Gen API returned invalid ${key} ${JSON.stringify(version)}. ` +
-                "Expected an exact semantic version such as 1.2.3."
-        );
+        throw new CliError({
+            message:
+                `SDK Gen API returned invalid ${key} ${JSON.stringify(version)}. ` +
+                "Expected an exact semantic version such as 1.2.3.",
+            code: CliError.Code.VersionError
+        });
     }
     return version;
 }

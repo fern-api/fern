@@ -595,16 +595,19 @@ export async function runRemoteGenerationForGenerator({
         if (sdkGenApiCandidate == null) {
             throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
-        const resolvedRuntimeGeneratorVersion =
+        let resolvedRuntimeGeneratorVersion: string | undefined;
+        // Runtime bundles need an exact version before IR migration, even though generators.yml remains unpinned.
+        if (
             sdkGenApiRoute.payloadKind === "fern-runtime-bundle" &&
             sdkGenApiRoute.requestedVersion == null &&
             sdkGenApiRoute.versionSource === "fern-latest"
-                ? await resolveLatestRuntimeGeneratorVersion({
-                      generatorInvocation: sdkGenApiCandidate.generatorInvocation,
-                      organization,
-                      token
-                  })
-                : undefined;
+        ) {
+            resolvedRuntimeGeneratorVersion = await resolveLatestRuntimeGeneratorVersion({
+                generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                organization,
+                token
+            });
+        }
         const runtimeGeneratorInvocation =
             resolvedRuntimeGeneratorVersion == null
                 ? sdkGenApiCandidate.generatorInvocation

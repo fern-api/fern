@@ -480,6 +480,9 @@ catalogs:
     remark-stringify:
       specifier: ^11.0.0
       version: 11.0.0
+    semver:
+      specifier: ^7.6.2
+      version: 7.8.4
     semver-diff:
       specifier: ^4.0.0
       version: 4.0.0
@@ -6463,7 +6466,7 @@ importers:
         specifier: 'catalog:'
         version: 2.1.35
       semver:
-        specifier: ^7.6.2
+        specifier: 'catalog:'
         version: 7.8.4
       terminal-link:
         specifier: 'catalog:'

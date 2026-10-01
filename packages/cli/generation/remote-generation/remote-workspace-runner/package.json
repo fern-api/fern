@@ -83,7 +83,7 @@
     "js-yaml": "catalog:",
     "lodash-es": "catalog:",
     "mime-types": "catalog:",
-    "semver": "^7.6.2",
+    "semver": "catalog:",
     "terminal-link": "catalog:",
     "tmp-promise": "catalog:",
     "url-join": "catalog:",
