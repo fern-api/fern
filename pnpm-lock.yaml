@@ -480,6 +480,9 @@ catalogs:
     remark-stringify:
       specifier: ^11.0.0
       version: 11.0.0
+    semver:
+      specifier: ^7.6.2
+      version: 7.8.4
     semver-diff:
       specifier: ^4.0.0
       version: 4.0.0
@@ -6462,6 +6465,9 @@ importers:
       mime-types:
         specifier: 'catalog:'
         version: 2.1.35
+      semver:
+        specifier: 'catalog:'
+        version: 7.8.4
       terminal-link:
         specifier: 'catalog:'
         version: 3.0.0
@@ -6490,6 +6496,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       '@types/url-join':
         specifier: ^4.0.3
         version: 4.0.3

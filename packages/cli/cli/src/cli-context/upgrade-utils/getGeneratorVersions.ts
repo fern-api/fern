@@ -262,6 +262,9 @@ async function lookupLatestGeneratorVersion({
     getSdkGenApiToken?: GetSdkGenApiToken;
     context: TaskContext;
 }): Promise<string | undefined> {
+    if (currentGeneratorVersion === "latest") {
+        return "latest";
+    }
     if (isFernSdkGenApiEnabled()) {
         if (getSdkGenApiToken == null) {
             throw new Error("SDK Gen API generator version discovery requires authentication");
