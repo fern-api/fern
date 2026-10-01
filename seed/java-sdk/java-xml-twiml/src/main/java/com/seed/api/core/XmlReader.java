@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -111,6 +112,63 @@ public final class XmlReader {
             return Optional.empty();
         }
         return Optional.of(text.toString());
+    }
+
+    /**
+     * Returns the text that precedes the first child element, or empty when there is none (or it is blank). Used for
+     * the text property of mixed-content elements; the remaining text segments are read by {@link #content}.
+     */
+    public static Optional<String> leadingText(Element element) {
+        StringBuilder text = new StringBuilder();
+        NodeList nodes = element.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                break;
+            }
+            if (node.getNodeType() == Node.TEXT_NODE || node.getNodeType() == Node.CDATA_SECTION_NODE) {
+                text.append(node.getNodeValue());
+            }
+        }
+        if (text.toString().trim().isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(text.toString());
+    }
+
+    /**
+     * Reads the element's ordered content: text segments and child elements in document order. Child elements are
+     * converted with {@code typedChild}; when it returns {@code null} the child is preserved as a generic
+     * {@link XmlElement}. Children named in {@code skipNames} (scalar and wrapped-list properties, read separately)
+     * are omitted, as is blank text and, when {@code skipLeadingText} is set, the text before the first child.
+     */
+    public static List<XmlNode> content(
+            Element element,
+            boolean skipLeadingText,
+            Collection<String> skipNames,
+            Function<Element, XmlSerializable> typedChild) {
+        List<XmlNode> content = new ArrayList<>();
+        boolean seenElement = false;
+        NodeList nodes = element.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                seenElement = true;
+                Element child = (Element) node;
+                if (skipNames.contains(localName(child))) {
+                    continue;
+                }
+                XmlSerializable typed = typedChild.apply(child);
+                content.add(XmlNode.element(typed != null ? typed : XmlElement.fromXml(child)));
+            } else if (node.getNodeType() == Node.TEXT_NODE || node.getNodeType() == Node.CDATA_SECTION_NODE) {
+                if ((skipLeadingText && !seenElement)
+                        || node.getNodeValue().trim().isEmpty()) {
+                    continue;
+                }
+                content.add(XmlNode.text(node.getNodeValue()));
+            }
+        }
+        return content;
     }
 
     /**

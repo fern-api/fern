@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 import org.w3c.dom.Element;
 
@@ -42,6 +43,7 @@ public final class XmlObjectMethodsGenerator {
 
     private static final String WRITER_VARIABLE = "writer";
     private static final String ELEMENT_VARIABLE = "element";
+    private static final String CONTENT_VARIABLE = "content";
     private static final String XML_DECLARATION_PARAMETER = "xmlDeclaration";
     private static final String DEFAULT_LIST_SEPARATOR = " ";
     private static final String BUILDER_CLASS_NAME = "Builder";
@@ -58,13 +60,15 @@ public final class XmlObjectMethodsGenerator {
     private final List<EnrichedObjectProperty> properties;
     private final Map<String, String> propertyDocsByFieldName;
     private final Optional<String> additionalPropertiesFieldName;
-    private final String additionalChildrenFieldName;
-    private final String additionalChildrenGetterName;
+    private final String contentFieldName;
+    private final String contentGetterName;
+    private final boolean hasTextProperty;
     private final boolean usesBuilderConstructor;
     private final ClassName builderClassName;
     private final ClassName xmlWriterClassName;
     private final ClassName xmlReaderClassName;
     private final ClassName xmlSerializableClassName;
+    private final ClassName xmlNodeClassName;
 
     public XmlObjectMethodsGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -73,12 +77,12 @@ public final class XmlObjectMethodsGenerator {
             XmlEncoding xmlEncoding,
             List<EnrichedObjectProperty> properties,
             Optional<String> additionalPropertiesFieldName,
-            String additionalChildrenFieldName,
-            String additionalChildrenGetterName,
+            String contentFieldName,
+            String contentGetterName,
             boolean usesBuilderConstructor) {
         this.generatorContext = generatorContext;
-        this.additionalChildrenFieldName = additionalChildrenFieldName;
-        this.additionalChildrenGetterName = additionalChildrenGetterName;
+        this.contentFieldName = contentFieldName;
+        this.contentGetterName = contentGetterName;
         this.usesBuilderConstructor = usesBuilderConstructor;
         this.builderClassName = objectClassName.nestedClass(BUILDER_CLASS_NAME);
         this.typeDeclarations = generatorContext.getTypeDeclarations();
@@ -99,6 +103,11 @@ public final class XmlObjectMethodsGenerator {
         this.xmlWriterClassName = XmlCoreGenerator.getXmlWriterClassName(generatorContext);
         this.xmlReaderClassName = XmlCoreGenerator.getXmlReaderClassName(generatorContext);
         this.xmlSerializableClassName = XmlCoreGenerator.getXmlSerializableClassName(generatorContext);
+        this.xmlNodeClassName = XmlCoreGenerator.getXmlNodeClassName(generatorContext);
+        this.hasTextProperty = this.properties.stream()
+                .anyMatch(property ->
+                        XmlTypeUtils.getPropertyKind(property.objectProperty()).getEnumValue()
+                                == XmlPropertyKind.Value.TEXT);
     }
 
     public TypeSpec addXmlSupport(TypeSpec typeSpec) {
@@ -160,18 +169,30 @@ public final class XmlObjectMethodsGenerator {
                     xmlWriterClassName,
                     xmlEncoding.getName());
         }
+        List<CodeBlock> orderedChildren = new ArrayList<>();
         for (EnrichedObjectProperty property : properties) {
-            method.addStatement(generateWriteProperty(property));
+            PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
+            if (shape.isOrderedContent()) {
+                orderedChildren.add(CodeBlock.of("this.$L", property.fieldSpec().get().name));
+                continue;
+            }
+            method.addStatement(generateWriteProperty(property, shape));
         }
         additionalPropertiesFieldName.ifPresent(
                 fieldName -> method.addStatement("$L.attributes(this.$L)", WRITER_VARIABLE, fieldName));
-        method.addStatement("$L.children(this.$L)", WRITER_VARIABLE, additionalChildrenFieldName);
+        method.addStatement(
+                "$L.content($T.ordered($L))",
+                WRITER_VARIABLE,
+                xmlNodeClassName,
+                CodeBlock.join(
+                        Stream.concat(Stream.of(CodeBlock.of("this.$L", contentFieldName)), orderedChildren.stream())
+                                .collect(Collectors.toList()),
+                        ", "));
         method.addStatement("return $L.toXml($L)", WRITER_VARIABLE, XML_DECLARATION_PARAMETER);
         return method.build();
     }
 
-    private CodeBlock generateWriteProperty(EnrichedObjectProperty property) {
-        PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
+    private CodeBlock generateWriteProperty(EnrichedObjectProperty property, PropertyShape shape) {
         String fieldName = property.fieldSpec().get().name;
         switch (shape.kind.getEnumValue()) {
             case ATTRIBUTE:
@@ -223,7 +244,8 @@ public final class XmlObjectMethodsGenerator {
         List<String> fieldNames = new ArrayList<>();
         List<CodeBlock> values = new ArrayList<>();
         List<String> attributeNames = new ArrayList<>();
-        List<String> childElementNames = new ArrayList<>();
+        List<String> skippedElementNames = new ArrayList<>();
+        List<PropertyShape> orderedShapes = new ArrayList<>();
         for (EnrichedObjectProperty property : properties) {
             PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
             switch (shape.kind.getEnumValue()) {
@@ -231,8 +253,12 @@ public final class XmlObjectMethodsGenerator {
                     attributeNames.add(shape.xmlName);
                     break;
                 case ELEMENT:
-                    childElementNames.addAll(
-                            shape.wrapped ? Collections.singletonList(shape.xmlName) : shape.elementNames());
+                    if (shape.isOrderedContent()) {
+                        orderedShapes.add(shape);
+                    } else {
+                        skippedElementNames.addAll(
+                                shape.wrapped ? Collections.singletonList(shape.xmlName) : shape.elementNames());
+                    }
                     break;
                 default:
                     break;
@@ -240,14 +266,23 @@ public final class XmlObjectMethodsGenerator {
             fieldNames.add(property.fieldSpec().get().name);
             values.add(generateReadProperty(property, shape));
         }
+        method.addStatement(
+                "$T<$T> $L = $T.content($L, $L, $L, $L)",
+                List.class,
+                xmlNodeClassName,
+                CONTENT_VARIABLE,
+                xmlReaderClassName,
+                ELEMENT_VARIABLE,
+                hasTextProperty,
+                stringList(skippedElementNames),
+                generateTypedChildFunction(orderedShapes));
         additionalPropertiesFieldName.ifPresent(fieldName -> {
             fieldNames.add(fieldName);
             values.add(CodeBlock.of(
                     "$T.extraAttributes($L, $L)", xmlReaderClassName, ELEMENT_VARIABLE, stringList(attributeNames)));
         });
-        fieldNames.add(additionalChildrenFieldName);
-        values.add(CodeBlock.of(
-                "$T.unknownChildren($L, $L)", xmlReaderClassName, ELEMENT_VARIABLE, stringList(childElementNames)));
+        fieldNames.add(contentFieldName);
+        values.add(CodeBlock.of("$L", CONTENT_VARIABLE));
         if (!usesBuilderConstructor) {
             method.addStatement("return new $T($L)", objectClassName, CodeBlock.join(values, ",\n"));
             return method.build();
@@ -258,6 +293,42 @@ public final class XmlObjectMethodsGenerator {
         }
         method.addStatement("return new $T(builder)", objectClassName);
         return method.build();
+    }
+
+    /**
+     * A {@code Function<Element, XmlSerializable>} mapping a child element to the typed model it parses into, or
+     * {@code null} for children that are not described by the API (kept as generic {@code XmlElement}s).
+     */
+    private CodeBlock generateTypedChildFunction(List<PropertyShape> orderedShapes) {
+        if (orderedShapes.isEmpty()) {
+            return CodeBlock.of("e -> null");
+        }
+        CodeBlock.Builder function = CodeBlock.builder()
+                .add("e -> {\n")
+                .indent()
+                .beginControlFlow("switch ($T.localName(e))", xmlReaderClassName);
+        Set<String> handled = new HashSet<>();
+        for (PropertyShape shape : orderedShapes) {
+            List<String> names =
+                    shape.elementNames().stream().filter(handled::add).collect(Collectors.toList());
+            if (names.isEmpty()) {
+                continue;
+            }
+            for (String name : names) {
+                function.add("case $S:\n", name);
+            }
+            function.indent()
+                    .add("return $T.$L(e);\n", shape.itemTypeName, FROM_XML_METHOD_NAME)
+                    .unindent();
+        }
+        function.add("default:\n")
+                .indent()
+                .add("return null;\n")
+                .unindent()
+                .endControlFlow()
+                .unindent()
+                .add("}");
+        return function.build();
     }
 
     /** {@code Builder.fromXml(Element)}: parses into the immutable type, then copies everything into a builder. */
@@ -277,7 +348,6 @@ public final class XmlObjectMethodsGenerator {
                 "builder.$L(parsed.$L())",
                 fieldName,
                 fieldName.startsWith("_") ? "_getAdditionalProperties" : "getAdditionalProperties"));
-        method.addStatement("builder.$L(parsed.$L())", additionalChildrenFieldName, additionalChildrenGetterName);
         method.addStatement("return builder");
         return method.build();
     }
@@ -303,11 +373,13 @@ public final class XmlObjectMethodsGenerator {
                 break;
             case TEXT:
                 value = readScalarSource(
-                        CodeBlock.of("$T.text($L)", xmlReaderClassName, ELEMENT_VARIABLE), shape, "text content");
+                        CodeBlock.of("$T.leadingText($L)", xmlReaderClassName, ELEMENT_VARIABLE),
+                        shape,
+                        "text content");
                 break;
             case ELEMENT:
             default:
-                value = readChildElements(shape);
+                value = shape.isOrderedContent() ? readOrderedChildren(shape) : readChildElements(shape);
                 break;
         }
         if (shape.optional && !fieldIsOptional) {
@@ -333,6 +405,19 @@ public final class XmlObjectMethodsGenerator {
         }
         CodeBlock parsed = converter.isEmpty() ? source : CodeBlock.of("$L.map($L)", source, converter);
         return shape.optional ? parsed : required(parsed, xmlEncoding.getName(), description);
+    }
+
+    /** Reads a typed child property back out of the ordered content parsed by {@code XmlReader.content}. */
+    private CodeBlock readOrderedChildren(PropertyShape shape) {
+        CodeBlock elements =
+                CodeBlock.of("$T.elements($L, $T.class)", xmlNodeClassName, CONTENT_VARIABLE, shape.itemTypeName);
+        if (shape.list) {
+            return shape.optional ? CodeBlock.of("$T.optionalList($L)", xmlReaderClassName, elements) : elements;
+        }
+        CodeBlock first = CodeBlock.of("$L.stream().findFirst()", elements);
+        return shape.optional
+                ? first
+                : required(first, xmlEncoding.getName(), "<" + shape.itemElementName() + "> element");
     }
 
     private CodeBlock readChildElements(PropertyShape shape) {
@@ -404,7 +489,9 @@ public final class XmlObjectMethodsGenerator {
                         ? CodeBlock.of("$T.of($L)", shape.itemTypeName, variant.parameterName)
                         : CodeBlock.of("$L", variant.parameterName);
                 MethodSpec.Builder method = MethodSpec.methodBuilder(methodName)
-                        .addJavadoc("Appends a &lt;$L&gt; child element.\n", variant.elementName)
+                        .addJavadoc(
+                                "Appends a &lt;$L&gt; child element after any content added so far.\n",
+                                variant.elementName)
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(variant.typeName, variant.parameterName)
                         .returns(objectClassName.nestedClass(BUILDER_CLASS_NAME));
@@ -414,6 +501,7 @@ public final class XmlObjectMethodsGenerator {
                 method.addJavadoc(JavaDocUtils.getParameterJavadoc(
                         variant.parameterName, "the &lt;" + variant.elementName + "&gt; element to append"));
                 method.addJavadoc(JavaDocUtils.getReturnDocs("this builder"));
+                method.addStatement("$T item = $L", shape.itemTypeName, item);
                 if (shape.optional) {
                     method.addStatement(
                                     "$T<$T> updated = new $T<>(this.$L.orElseGet($T::emptyList))",
@@ -422,11 +510,12 @@ public final class XmlObjectMethodsGenerator {
                                     ArrayList.class,
                                     fieldName,
                                     Collections.class)
-                            .addStatement("updated.add($L)", item)
+                            .addStatement("updated.add(item)")
                             .addStatement("this.$L = $T.of(updated)", fieldName, Optional.class);
                 } else {
-                    method.addStatement("this.$L.add($L)", fieldName, item);
+                    method.addStatement("this.$L.add(item)", fieldName);
                 }
+                method.addStatement("this.$L.add($T.element(item))", contentFieldName, xmlNodeClassName);
                 methods.add(method.addStatement("return this").build());
             }
         }
@@ -558,6 +647,14 @@ public final class XmlObjectMethodsGenerator {
                 Map<TypeId, TypeDeclaration> typeDeclarations,
                 AbstractGeneratorContext<?, ?> generatorContext) {
             return new PropertyShape(property, typeDeclarations, generatorContext);
+        }
+
+        /**
+         * Whether the property's children live in the element's ordered content (typed child elements, as opposed to
+         * scalar elements and wrapped lists which are always written in property order).
+         */
+        boolean isOrderedContent() {
+            return kind.getEnumValue() == XmlPropertyKind.Value.ELEMENT && itemIsElement && !wrapped;
         }
 
         List<String> elementNames() {
