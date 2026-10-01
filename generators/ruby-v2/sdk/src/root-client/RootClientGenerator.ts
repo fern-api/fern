@@ -36,8 +36,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "token",
     "client",
     "request_options",
-    APP_INFO_PARAMETER_NAME,
-    HTTP_CLIENT_PARAMETER_NAME
+    APP_INFO_PARAMETER_NAME
 ]);
 
 interface InferredAuthParameter {
@@ -1455,13 +1454,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
-        const reservedNames = this.context.respectsAuthSchemeNames()
-            ? new Set([
-                  ...RESERVED_OPTION_NAMES,
-                  ...this.getCredentialParameterNames(),
-                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
-              ])
-            : RESERVED_OPTION_NAMES;
+        const reservedNames = new Set(RESERVED_OPTION_NAMES);
+        if (this.emitHttpClientOption()) {
+            reservedNames.add(HTTP_CLIENT_PARAMETER_NAME);
+        }
+        if (this.context.respectsAuthSchemeNames()) {
+            for (const name of this.getCredentialParameterNames()) {
+                reservedNames.add(name);
+            }
+            for (const header of this.getNonLiteralGlobalHeaders()) {
+                reservedNames.add(this.getGlobalHeaderOptionName(header));
+            }
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;
