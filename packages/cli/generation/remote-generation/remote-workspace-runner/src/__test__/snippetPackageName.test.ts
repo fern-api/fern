@@ -3,8 +3,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { describe, expect, it } from "vitest";
 
 import { getDynamicGeneratorConfig } from "../getDynamicGeneratorConfig.js";
-import { getDocsSnippetPackageName } from "../publishDocs.js";
-import { getDynamicIrUploadSkipReason } from "../runRemoteGenerationForGenerator.js";
+import { getDocsSnippetPackageName, selectVersionGeneratorForSnippet } from "../publishDocs.js";
+import { decideDynamicIrUpload } from "../runRemoteGenerationForGenerator.js";
 
 const github = { owner: "acme", repo: "acme-python" };
 
@@ -90,22 +90,132 @@ describe("getDocsSnippetPackageName", () => {
     });
 });
 
-describe("getDynamicIrUploadSkipReason", () => {
-    const ok = { hasResult: true, version: "1.0.0", language: "python", packageName: "acme", isPreview: false };
+describe("decideDynamicIrUpload", () => {
+    const ok = {
+        hasResult: true,
+        version: "1.0.0",
+        language: "python" as const,
+        packageName: "acme",
+        isPreview: false
+    };
 
-    it("returns undefined when upload should proceed", () => {
-        expect(getDynamicIrUploadSkipReason(ok)).toBeUndefined();
+    it("returns the upload inputs when upload should proceed", () => {
+        expect(decideDynamicIrUpload(ok)).toEqual({
+            upload: true,
+            version: "1.0.0",
+            language: "python",
+            packageName: "acme"
+        });
     });
 
     it("names the missing package name", () => {
-        expect(getDynamicIrUploadSkipReason({ ...ok, packageName: undefined })).toMatch(/package name/);
+        const decision = decideDynamicIrUpload({ ...ok, packageName: undefined });
+        expect(decision.upload).toBe(false);
+        expect(!decision.upload && decision.reason).toMatch(/package name/);
     });
 
-    it("names preview runs", () => {
-        expect(getDynamicIrUploadSkipReason({ ...ok, isPreview: true })).toBe("preview generation");
+    it("reports preview before any config-looking condition", () => {
+        const decision = decideDynamicIrUpload({ ...ok, isPreview: true, packageName: undefined, version: undefined });
+        expect(decision).toEqual({ upload: false, reason: "preview generation" });
     });
 
     it("names a missing version", () => {
-        expect(getDynamicIrUploadSkipReason({ ...ok, version: undefined })).toMatch(/version/);
+        const decision = decideDynamicIrUpload({ ...ok, version: undefined });
+        expect(!decision.upload && decision.reason).toMatch(/version/);
+    });
+
+    it("prefers the detailed unresolved-version reason", () => {
+        const decision = decideDynamicIrUpload({
+            ...ok,
+            version: undefined,
+            versionUnresolvedReason: "computed candidate 1.0.1 but the registry reports 1.0.0"
+        });
+        expect(decision).toEqual({
+            upload: false,
+            reason: "computed candidate 1.0.1 but the registry reports 1.0.0"
+        });
+    });
+});
+
+describe("selectVersionGeneratorForSnippet", () => {
+    const pypi = (packageName: string) =>
+        FernFiddle.GithubPublishInfo.pypi({
+            registryUrl: "https://upload.pypi.org/legacy/",
+            packageName,
+            credentials: { username: "__token__", password: "token" }
+        });
+    const githubOnly = (packageName: string) =>
+        invocation({
+            name: `gen-${packageName}`,
+            outputMode: FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest({ ...github })),
+            raw: { name: "fernapi/fern-python-sdk", version: "1.0.0", config: { package_name: packageName } }
+        });
+    const published = (packageName: string) =>
+        invocation({
+            name: `gen-${packageName}`,
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({ ...github, publishInfo: pypi(packageName) })
+            )
+        });
+
+    it("selects the generator whose package matches the docs snippet name, regardless of order", () => {
+        const selected = selectVersionGeneratorForSnippet({
+            generators: [githubOnly("alpha"), published("beta")],
+            language: "python",
+            snippetName: "beta"
+        });
+        expect(selected).toMatchObject({
+            generatorName: "gen-beta",
+            generatorPackage: "beta",
+            matchesSnippetName: true
+        });
+    });
+
+    it("selects a github-output-only generator by config.package_name", () => {
+        const selected = selectVersionGeneratorForSnippet({
+            generators: [githubOnly("acme")],
+            language: "python",
+            snippetName: "acme"
+        });
+        expect(selected).toMatchObject({
+            generatorPackage: "acme",
+            githubRepository: "acme/acme-python",
+            matchesSnippetName: true
+        });
+    });
+
+    it("falls back to the first publish-target package when nothing matches", () => {
+        const selected = selectVersionGeneratorForSnippet({
+            generators: [githubOnly("alpha"), published("beta")],
+            language: "python",
+            snippetName: "gamma"
+        });
+        expect(selected).toMatchObject({ generatorPackage: "beta", matchesSnippetName: false });
+    });
+
+    it("does not fall back to config-only packages when nothing matches", () => {
+        expect(
+            selectVersionGeneratorForSnippet({
+                generators: [githubOnly("alpha")],
+                language: "python",
+                snippetName: "gamma"
+            })
+        ).toBeUndefined();
+    });
+
+    it("normalizes go repo urls on both sides", () => {
+        const go = invocation({
+            name: "gen-go",
+            language: "go",
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "acme-go" })
+            )
+        });
+        const selected = selectVersionGeneratorForSnippet({
+            generators: [go],
+            language: "go",
+            snippetName: "https://github.com/acme/acme-go"
+        });
+        expect(selected?.matchesSnippetName).toBe(true);
     });
 });

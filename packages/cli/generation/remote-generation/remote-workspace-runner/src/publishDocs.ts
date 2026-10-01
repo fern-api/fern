@@ -1784,6 +1784,60 @@ async function buildSnippetConfigurationWithVersions({
     return result;
 }
 
+/**
+ * Picks the generator whose snippet package name matches the docs `snippets:` entry
+ * (`snippetName`), so the semantic version is computed against the package the docs
+ * actually request. When no generator resolves to `snippetName`, falls back to the
+ * first generator with a registry publish target, preserving the historical behavior.
+ */
+export function selectVersionGeneratorForSnippet({
+    generators,
+    language,
+    snippetName
+}: {
+    generators: generatorsYml.GeneratorInvocation[];
+    language: string;
+    snippetName: string;
+}):
+    | {
+          generatorName: string;
+          generatorPackage: string;
+          githubRepository: string | undefined;
+          matchesSnippetName: boolean;
+      }
+    | undefined {
+    const normalize = (pkg: string) => (language === "go" ? normalizeGoPackageForLookup(pkg) : pkg);
+    const toResult = (
+        generatorInvocation: generatorsYml.GeneratorInvocation,
+        generatorPackage: string,
+        matchesSnippetName: boolean
+    ) => ({
+        generatorName: generatorInvocation.name,
+        generatorPackage,
+        githubRepository:
+            generatorInvocation.outputMode.type === "githubV2"
+                ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
+                : undefined,
+        matchesSnippetName
+    });
+
+    const candidates = generators.filter((generatorInvocation) => generatorInvocation.language === language);
+    const target = normalize(snippetName);
+    for (const generatorInvocation of candidates) {
+        const pkgName = resolveSnippetPackageName(generatorInvocation);
+        if (pkgName != null && normalize(pkgName) === target) {
+            return toResult(generatorInvocation, pkgName, true);
+        }
+    }
+    for (const generatorInvocation of candidates) {
+        const pkgName = generatorsYml.getPackageName({ generatorInvocation });
+        if (pkgName != null) {
+            return toResult(generatorInvocation, pkgName, false);
+        }
+    }
+    return undefined;
+}
+
 async function computeSemanticVersionForLanguage({
     fdr,
     workspace,
@@ -1827,37 +1881,24 @@ async function computeSemanticVersionForLanguage({
             return undefined;
     }
 
-    let githubRepository: string | undefined;
-    let generatorPackage: string | undefined;
-    let matchedGeneratorName: string | undefined;
+    const selected = selectVersionGeneratorForSnippet({
+        generators: workspace.generatorsConfiguration?.groups?.flatMap((group) => group.generators) ?? [],
+        language,
+        snippetName
+    });
 
-    if (workspace.generatorsConfiguration?.groups) {
-        const candidatePackages: string[] = [];
-        for (const group of workspace.generatorsConfiguration.groups) {
-            for (const generatorInvocation of group.generators) {
-                if (generatorInvocation.language === language) {
-                    const pkgName = resolveSnippetPackageName(generatorInvocation);
-                    if (pkgName) {
-                        candidatePackages.push(pkgName);
-                    }
-                    if (!generatorPackage && pkgName) {
-                        generatorPackage = pkgName;
-                        matchedGeneratorName = generatorInvocation.name;
-                        if (generatorInvocation.outputMode.type === "githubV2") {
-                            githubRepository = `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (!generatorPackage) {
+    if (selected == null) {
         context.logger.debug(
             `[SDK Dynamic IR] ${language}: no ${language} generator in generators.yml resolved a package name (checked publish target and generator config)`
         );
         return undefined;
     }
+    if (!selected.matchesSnippetName) {
+        context.logger.debug(
+            `[SDK Dynamic IR] ${language}: no generator resolved package "${snippetName}"; computing version against publish target "${selected.generatorPackage}" of ${selected.generatorName}`
+        );
+    }
+    const { generatorPackage, githubRepository } = selected;
 
     try {
         const response = await fdr.sdks.computeSemanticVersion({

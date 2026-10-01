@@ -8,6 +8,7 @@ import {
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
+    getPublishedVersion,
     getUserAgentTemplateFromGeneratorConfig,
     getWebhookSignatureFromGeneratorConfig,
     resolveSnippetPackageName
@@ -217,6 +218,14 @@ export async function runRemoteGenerationForGenerator({
     const configuredSdkVersion = sdkConfigTarget?.sdkVersion ?? sdkConfigV1?.sdkVersion;
     const resolvedVersion =
         version ?? configuredSdkVersion ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+    // Snippet-upload-only version candidate for generators whose package name is known
+    // only from generator config (no publish target). Never sent to Fiddle or embedded in
+    // the IR; it is used after generation only if the registry/GitHub confirms it was released.
+    const snippetVersionCandidate =
+        resolvedVersion == null && snippetPackageName != null && snippetPackageName !== packageName
+            ? await computeSemanticVersion({ packageName: snippetPackageName, generatorInvocation })
+            : undefined;
 
     // Fail fast if the target version already exists on the package registry.
     // Only check when the user explicitly provided a version (not auto-computed).
@@ -703,32 +712,46 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // use the actual version from the generation result, fallback to pre-computed version
-    const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let versionUnresolvedReason: string | undefined;
+    if (actualVersionForUpload == null && result != null && snippetPackageName != null) {
+        if (snippetVersionCandidate == null) {
+            versionUnresolvedReason = `no SDK version was resolved and none could be computed for package ${snippetPackageName}`;
+        } else {
+            const publishedVersion = await getPublishedVersion({
+                packageName: snippetPackageName,
+                generatorInvocation
+            });
+            if (publishedVersion === snippetVersionCandidate) {
+                actualVersionForUpload = publishedVersion;
+            } else {
+                versionUnresolvedReason =
+                    `computed candidate ${snippetVersionCandidate} for package ${snippetPackageName} but the registry/GitHub ` +
+                    `reports ${publishedVersion ?? "no release"}, so the generated SDK version is unconfirmed`;
+            }
+        }
+    }
 
-    const dynamicIrUploadSkipReason = getDynamicIrUploadSkipReason({
+    const uploadDecision = decideDynamicIrUpload({
         hasResult: result != null,
         version: actualVersionForUpload,
+        versionUnresolvedReason,
         language: generatorInvocation.language,
         packageName: snippetPackageName,
         isPreview
     });
-    if (dynamicIrUploadSkipReason != null) {
+    if (!uploadDecision.upload) {
         interactiveTaskContext.logger.debug(
-            `Skipping dynamic IR upload for ${generatorInvocation.name}: ${dynamicIrUploadSkipReason}`
+            `Skipping dynamic IR upload for ${generatorInvocation.name}: ${uploadDecision.reason}`
         );
-    } else if (
-        result != null &&
-        actualVersionForUpload != null &&
-        generatorInvocation.language != null &&
-        snippetPackageName != null
-    ) {
+    } else {
         try {
             await uploadDynamicIRForSdkGeneration({
                 fdr,
                 organization,
-                version: actualVersionForUpload,
-                language: generatorInvocation.language,
-                packageName: snippetPackageName,
+                version: uploadDecision.version,
+                language: uploadDecision.language,
+                packageName: uploadDecision.packageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
@@ -873,35 +896,44 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-export function getDynamicIrUploadSkipReason({
+export type DynamicIrUploadDecision =
+    | { upload: false; reason: string }
+    | { upload: true; version: string; language: generatorsYml.GenerationLanguage; packageName: string };
+
+export function decideDynamicIrUpload({
     hasResult,
     version,
+    versionUnresolvedReason,
     language,
     packageName,
     isPreview
 }: {
     hasResult: boolean;
     version: string | undefined;
-    language: string | undefined;
+    versionUnresolvedReason?: string;
+    language: generatorsYml.GenerationLanguage | undefined;
     packageName: string | undefined;
     isPreview: boolean;
-}): string | undefined {
-    if (!hasResult) {
-        return "generation did not produce a result";
+}): DynamicIrUploadDecision {
+    if (isPreview) {
+        return { upload: false, reason: "preview generation" };
     }
-    if (version == null) {
-        return "no SDK version was resolved";
+    if (!hasResult) {
+        return { upload: false, reason: "generation did not produce a result" };
     }
     if (language == null) {
-        return "generator has no language";
+        return { upload: false, reason: "generator has no language" };
     }
     if (packageName == null) {
-        return "no package name could be resolved from publish target or generator config";
+        return {
+            upload: false,
+            reason: "no package name could be resolved from publish target or generator config"
+        };
     }
-    if (isPreview) {
-        return "preview generation";
+    if (version == null) {
+        return { upload: false, reason: versionUnresolvedReason ?? "no SDK version was resolved" };
     }
-    return undefined;
+    return { upload: true, version, language, packageName };
 }
 
 async function uploadDynamicIRForSdkGeneration({

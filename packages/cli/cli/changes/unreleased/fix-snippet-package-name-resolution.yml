@@ -4,5 +4,6 @@
     no registry publish target. Previously github-output-only SDKs (e.g. `github: mode: pull-request`
     with PyPI publishing handled externally) silently never uploaded dynamic IR and docs
     `snippets:` entries for them were reported as an unknown package. Skip paths now log the
-    reason at debug level.
+    reason at debug level. Docs snippet version lookup now selects the generator whose
+    package matches the `snippets:` entry instead of the first generator for the language.
   type: fix
