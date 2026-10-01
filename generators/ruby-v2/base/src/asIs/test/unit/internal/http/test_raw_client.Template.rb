@@ -209,6 +209,9 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
     end
   end
 
+  # Builds a Net::HTTPResponse without a socket. This leans on net/http's `@body` /
+  # `@read` instance variables, which `Net::HTTPResponse#body` consults once a
+  # response has been read.
   def canned_response(status_code, body: "{}")
     response = Net::HTTPResponse::CODE_TO_OBJ.fetch(status_code.to_s).new("1.1", status_code.to_s, "")
     response.instance_variable_set(:@body, body)

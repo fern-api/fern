@@ -7,5 +7,6 @@
     SDK's built-in `Net::HTTP` transport. This lets callers configure proxies, custom TLS,
     connection reuse, or request/response interceptors (logging, signing, header
     injection). Retries still wrap the custom client, and it is also used for OAuth /
-    inferred-auth token requests.
+    inferred-auth token requests. The custom client owns its own connection settings,
+    including timeouts.
   type: feat

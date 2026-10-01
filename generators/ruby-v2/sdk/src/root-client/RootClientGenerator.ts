@@ -185,7 +185,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     name: HTTP_CLIENT_PARAMETER_NAME,
                     type: ruby.Type.nilable(ruby.Type.object("Object")),
                     initializer: ruby.nilValue(),
-                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors."
+                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors; the transport owns its own timeouts."
                 })
             );
         }

@@ -31,7 +31,9 @@ module Seed
         #   built-in Net::HTTP connection. It must respond to `request(url, http_request)`,
         #   where `url` is a URI and `http_request` a Net::HTTPGenericRequest, and return a
         #   Net::HTTPResponse. Use it to configure proxies, TLS, connection reuse, or to
-        #   intercept requests and responses; retries still wrap each call.
+        #   intercept requests and responses; retries still wrap each call. The transport
+        #   owns its connection settings, including timeouts: `timeout:` only applies to
+        #   the built-in Net::HTTP connection.
         def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil, http_client: nil)
           @base_url = base_url
           @max_retries = max_retries
