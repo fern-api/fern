@@ -27,7 +27,8 @@ class Hangup extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Hangup');
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        $typed = [];
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -55,6 +56,7 @@ class Hangup extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, []));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren()));
         return $result;
     }
 

@@ -48,9 +48,10 @@ class Break_ extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('break');
+        $typed = [];
         $element->setAttribute('strength', $this->strength);
         $element->setAttribute('time', $this->time);
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -80,6 +81,7 @@ class Break_ extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['strength', 'time']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren()));
         return $result;
     }
 

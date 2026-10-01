@@ -5,6 +5,7 @@ namespace <%= namespace%>;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use <%= coreNamespace%>\Xml\XmlElement;
+use <%= coreNamespace%>\Xml\XmlText;
 use <%= coreNamespace%>\Xml\XmlUtils;
 
 class XmlElementTest extends TestCase
@@ -110,5 +111,57 @@ class XmlElementTest extends TestCase
             '<Dial a="1" b="2"><Numbers x="y"><Number>1</Number><Extension>7</Extension></Numbers><Unknown/></Dial>',
             $rebuilt->toXml(),
         );
+    }
+
+    public function testMixedContentOrder(): void
+    {
+        $say = (new XmlElement('Say', 'Hi '))->addChild(new XmlElement('break', attributes: ['strength' => 'weak']))->addText(' world');
+        $this->assertSame('<Say>Hi <break strength="weak"/> world</Say>', $say->toXml());
+
+        $parsed = XmlElement::fromXml("<Response>\n  <Say>Hi <break/> world</Say>\n  <Gather>Press a key, then <Say>one</Say></Gather>\n</Response>");
+        $this->assertCount(2, $parsed->children);
+        $this->assertSame(
+            '<Response><Say>Hi <break/> world</Say><Gather>Press a key, then <Say>one</Say></Gather></Response>',
+            $parsed->toXml(),
+        );
+    }
+
+    public function testAddContentFollowsContentOrder(): void
+    {
+        $a = new XmlElement('Say', 'a');
+        $b = new XmlElement('Say', 'b');
+        $custom = new XmlElement('Custom');
+        $late = new XmlElement('Say', 'c');
+        $element = new XmlElement('Response');
+        XmlUtils::addContent($element, [$a, $custom, $b, new XmlText('x')], [$a, $b, $late], [], [$custom]);
+        $this->assertSame('<Response><Say>a</Say><Custom/><Say>b</Say>x<Say>c</Say></Response>', $element->toXml());
+    }
+
+    public function testAddContentPlacesWrapper(): void
+    {
+        $parsed = XmlElement::fromXml('<Dial><Numbers><Number>1</Number></Numbers><Unknown/></Dial>');
+        $additional = XmlUtils::additionalChildren($parsed, [], ['Numbers' => ['Number']]);
+        $number = new XmlElement('Number', '1');
+        $content = XmlUtils::content($parsed, [], $additional, ['Numbers']);
+        $this->assertCount(2, $content);
+
+        $rebuilt = new XmlElement('Dial');
+        XmlUtils::addContent($rebuilt, $content, [], ['Numbers' => [$number]], $additional);
+        $this->assertSame('<Dial><Numbers><Number>1</Number></Numbers><Unknown/></Dial>', $rebuilt->toXml());
+    }
+
+    public function testContentMatchesTypedChildrenInDocumentOrder(): void
+    {
+        $parsed = XmlElement::fromXml('<Response><Say>a</Say><Custom/><Say>b</Say>tail</Response>');
+        $additional = XmlUtils::additionalChildren($parsed, ['Say']);
+        $content = XmlUtils::content($parsed, [[['Say'], [new XmlElement('Say', 'A'), new XmlElement('Say', 'B')]]], $additional);
+        $this->assertCount(4, $content);
+        $this->assertInstanceOf(XmlElement::class, $content[0]);
+        $this->assertSame('A', $content[0]->text);
+        $this->assertSame($additional[0], $content[1]);
+        $this->assertInstanceOf(XmlElement::class, $content[2]);
+        $this->assertSame('B', $content[2]->text);
+        $this->assertInstanceOf(XmlText::class, $content[3]);
+        $this->assertSame('tail', $content[3]->text);
     }
 }
