@@ -57,6 +57,7 @@ class PydanticModel:
         is_root_model: bool = False,
         coerce_numbers_to_str: bool = False,
         positional_single_property_constructors: bool = False,
+        preserve_child_identity: bool = False,
     ):
         self._source_file = source_file
 
@@ -81,6 +82,7 @@ class PydanticModel:
         self._frozen = frozen
         self._orm_mode = orm_mode
         self._smart_union = smart_union
+        self._preserve_child_identity = preserve_child_identity
         self.name = name
         self._require_optional_fields = require_optional_fields
         self._is_pydantic_v2 = is_pydantic_v2
@@ -675,6 +677,16 @@ class PydanticModel:
                 AST.VariableDeclaration(
                     name="smart_union",
                     initializer=AST.Expression("True"),
+                )
+            )
+
+        # Pydantic v1 shallow-copies nested models during validation by default, which would break
+        # identity-based bookkeeping between a model's typed children and its ordered content.
+        if self._preserve_child_identity:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="copy_on_model_validation",
+                    initializer=AST.Expression('"none"'),
                 )
             )
 

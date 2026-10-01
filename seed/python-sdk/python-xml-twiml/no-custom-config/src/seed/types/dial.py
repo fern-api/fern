@@ -9,17 +9,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
     XmlAttribute,
     XmlChild,
+    XmlContent,
     XmlElement,
     XmlNode,
     append_xml_child,
     build_xml_model,
     extra_xml_attributes,
+    order_xml_content,
     parse_xml,
     serialize_xml_element,
     xml_attribute,
     xml_children,
-    xml_text,
-    xml_unknown_children,
+    xml_content,
+    xml_leading_text,
 )
 from .number import Number
 
@@ -28,7 +30,7 @@ class Dial(UniversalBaseModel):
     number: typing.Optional[str] = None
     status_callback_event: typing.Optional[typing.List[str]] = None
     numbers: typing.Optional[typing.List[Number]] = None
-    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
+    _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         """
@@ -46,7 +48,7 @@ class Dial(UniversalBaseModel):
             children=[
                 XmlChild(name="Numbers", value=self.numbers, wrapped=True),
             ],
-            additional_children=self._additional_children,
+            content=order_xml_content(self._content),
             xml_declaration=xml_declaration,
         )
 
@@ -82,34 +84,42 @@ class Dial(UniversalBaseModel):
         """
         Parses a `<Dial>` XML element from a document string or a parsed node.
 
-        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes; text segments and child elements (declared or not) are preserved in document order.
         """
         node = parse_xml(xml, "Dial")
+        content = xml_content(node, {}, skip_leading_text=True, wrappers={"Numbers": {"Number"}})
         model = build_xml_model(
             cls,
             dict(
-                number=xml_text(node),
+                number=xml_leading_text(node),
                 status_callback_event=xml_attribute(node, "statusCallbackEvent", separator=" "),
                 numbers=xml_children(node, {"Number": Number}, wrapper="Numbers", optional=True),
             ),
             node,
             {"statusCallbackEvent"},
         )
-        model._additional_children.extend(xml_unknown_children(node, {"Numbers", "Number"}))
+        model._content[:] = content
         return model
 
     def add_child(self, child: XmlElement) -> Dial:
         """
-        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        Appends an arbitrary child element (one the schema does not define) after the content added so far and returns this element.
         """
-        self._additional_children.append(child)
+        self._content.append(child)
+        return self
+
+    def add_text(self, text: str) -> Dial:
+        """
+        Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
+        """
+        self._content.append(text)
         return self
 
     def append(self, child: Number) -> Dial:
         """
         Appends a child element and returns this element for chaining.
         """
-        append_xml_child(self, "numbers", child)
+        append_xml_child(self, "numbers", child, inline=False)
         return self
 
     def add_number(
@@ -132,7 +142,7 @@ class Dial(UniversalBaseModel):
             Additional XML attributes not declared in the API definition.
         """
         child = Number(phone_number=phone_number, send_digits=send_digits, **extra_attributes)
-        append_xml_child(self, "numbers", child)
+        append_xml_child(self, "numbers", child, inline=False)
         return child
 
     if IS_PYDANTIC_V2:
@@ -142,4 +152,5 @@ class Dial(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            copy_on_model_validation = "none"
             extra = pydantic.Extra.allow
