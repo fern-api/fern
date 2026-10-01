@@ -149,6 +149,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
+	legacyNullableAliasPointers = g.config.LegacyNullableAliasPointers
 	files, err := g.generate(ir, mode)
 	if err != nil {
 		return nil, err

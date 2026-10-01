@@ -2225,7 +2225,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		// If the collapsed inner type is a named alias that already resolves
 		// to a pointer type, skip adding another pointer to avoid double
 		// pointers (e.g. optional<nullable<named(NullableDateAlias)>>).
-		if optionalOrNullableContainer.Named != nil && isAliasToPointerType(optionalOrNullableContainer.Named.TypeId, c.types) {
+		if optionalOrNullableContainer.Named != nil && omitsPointerForAlias(optionalOrNullableContainer.Named.TypeId, c.types) {
 			c.value = value
 			return nil
 		}
@@ -2236,7 +2236,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 	// If the inner type is a named alias that already resolves to a pointer
 	// type (e.g. nullable<named(ISO8601DateNullable)> where the alias target
 	// is nullable<date> = *time.Time), skip adding another pointer.
-	if optionalOrNullable.Named != nil && isAliasToPointerType(optionalOrNullable.Named.TypeId, c.types) {
+	if optionalOrNullable.Named != nil && omitsPointerForAlias(optionalOrNullable.Named.TypeId, c.types) {
 		c.value = value
 		return nil
 	}
@@ -2643,6 +2643,26 @@ func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	}
 	// Unreachable.
 	return false
+}
+
+// legacyNullableAliasPointers keeps the outer pointer on optional references to
+// aliases that already render as Go pointers (e.g. *Alias where Alias = *string),
+// matching SDKs generated before v1.46.1. It is set from Config at the start of
+// each generation.
+var legacyNullableAliasPointers bool
+
+// omitsPointerForAlias reports whether an optional reference to the given type
+// should omit its outer pointer because the alias already renders as a pointer.
+// Date and datetime aliases always omit it because their fields are marshaled
+// through *time.Time.
+func omitsPointerForAlias(typeId common.TypeId, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	if !isAliasToPointerType(typeId, types) {
+		return false
+	}
+	if !legacyNullableAliasPointers {
+		return true
+	}
+	return maybeDate(&ir.TypeReference{Named: &ir.NamedType{TypeId: typeId}}, false, types) != nil
 }
 
 // isAliasToPointerType checks if a named type is an alias that already
