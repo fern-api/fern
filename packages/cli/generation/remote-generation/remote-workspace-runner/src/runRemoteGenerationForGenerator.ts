@@ -580,7 +580,12 @@ export async function runRemoteGenerationForGenerator({
         publishConfig: getPublishConfig({
             generatorInvocation,
             version: resolvedVersion,
-            userProvidedVersion: version,
+            userProvidedVersion: getUserProvidedVersionForPublishConfig({
+                generatorInvocation,
+                sdkGenApiRoute,
+                resolvedVersion,
+                userProvidedVersion: version
+            }),
             packageName,
             selfHosted: ir.selfHosted ?? false,
             generateFullProject,
@@ -799,6 +804,40 @@ function getFernSdkGenApiGithubOptions({
         ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {})
     };
     return Object.keys(options).length > 0 ? options : undefined;
+}
+
+export function getUserProvidedVersionForPublishConfig({
+    generatorInvocation,
+    sdkGenApiRoute,
+    resolvedVersion,
+    userProvidedVersion
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    sdkGenApiRoute: GenerationConfigRoute | undefined;
+    resolvedVersion: string | undefined;
+    userProvidedVersion: string | undefined;
+}): string | undefined {
+    if (userProvidedVersion != null) {
+        return userProvidedVersion;
+    }
+
+    // Legacy sdk-gen-api runtime-bundle targets are executed from the IR payload.
+    // Older TypeScript generators stamp package.json/version headers from
+    // ir.publishConfig.publishTarget.version, not from the outer sdk-gen-api
+    // target metadata. When the CLI computed a concrete SDK version from the
+    // package registry, mirror that version into the runtime bundle so sdk-gen-api
+    // download/local-file-system generation matches the normal Fiddle path.
+    if (
+        sdkGenApiRoute?.payloadKind === "fern-runtime-bundle" &&
+        generatorInvocation.outputMode.type === "downloadFiles" &&
+        generatorInvocation.language === "typescript" &&
+        resolvedVersion != null &&
+        !isAutoVersion(resolvedVersion)
+    ) {
+        return resolvedVersion;
+    }
+
+    return undefined;
 }
 
 export function getPublishConfig({
