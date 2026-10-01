@@ -97,7 +97,7 @@ export namespace Break {
 
     export class Builder implements core.xml.XmlBuilder<Break> {
         private readonly fields: Partial<Break.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
 
         constructor(fields: Partial<Break.Fields> = {}) {
             const { content, additionalChildren, ...rest } = fields;

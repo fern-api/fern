@@ -65,7 +65,7 @@ export namespace Pause {
 
     export class Builder implements core.xml.XmlBuilder<Pause> {
         private readonly fields: Partial<Pause.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
 
         constructor(fields: Partial<Pause.Fields> = {}) {
             const { content, additionalChildren, ...rest } = fields;

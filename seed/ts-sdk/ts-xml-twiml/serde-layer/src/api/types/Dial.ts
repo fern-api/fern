@@ -96,7 +96,7 @@ export namespace Dial {
 
     export class Builder implements core.xml.XmlBuilder<Dial> {
         private readonly fields: Partial<Dial.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { numbers?: (SeedApi.Number | core.xml.XmlBuilder<SeedApi.Number>)[] };
 
         constructor(fields: Partial<Dial.Fields> = {}) {

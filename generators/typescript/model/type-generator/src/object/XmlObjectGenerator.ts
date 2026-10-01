@@ -453,7 +453,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 kind: StructureKind.Property,
                 name: contentName,
                 scope: Scope.Private,
-                isReadonly: true,
                 type: `${this.xmlType(context, "XmlContent")}[]`
             }
         ];

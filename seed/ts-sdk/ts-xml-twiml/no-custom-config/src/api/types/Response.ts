@@ -92,7 +92,7 @@ export namespace Response {
 
     export class Builder implements core.xml.XmlBuilder<Response> {
         private readonly fields: Partial<Response.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: {
             children?: (Response.Children.Item | core.xml.XmlBuilder<Response.Children.Item>)[];
         };

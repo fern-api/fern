@@ -1615,7 +1615,7 @@ export namespace Wide {
 
     export class Builder implements core.xml.XmlBuilder<Wide> {
         private readonly fields: Partial<Wide.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (SeedApi.Pause | core.xml.XmlBuilder<SeedApi.Pause>)[] };
 
         constructor(fields: Partial<Wide.Fields> = {}) {

@@ -55,7 +55,7 @@ export namespace Hangup {
 
     export class Builder implements core.xml.XmlBuilder<Hangup> {
         private readonly fields: Partial<Hangup.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
 
         constructor(fields: Partial<Hangup.Fields> = {}) {
             const { content, additionalChildren, ...rest } = fields;

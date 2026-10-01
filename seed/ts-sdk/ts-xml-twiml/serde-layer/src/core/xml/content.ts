@@ -64,7 +64,11 @@ export function replaceXmlContent(content: XmlContent[], previous: unknown, next
     }
     const result: XmlContent[] = [];
     for (const item of content) {
-        const count = typeof item === "string" ? 0 : (remaining.get(item) ?? 0);
+        if (typeof item === "string") {
+            result.push(item);
+            continue;
+        }
+        const count = remaining.get(item) ?? 0;
         if (count > 0) {
             remaining.set(item, count - 1);
         } else {

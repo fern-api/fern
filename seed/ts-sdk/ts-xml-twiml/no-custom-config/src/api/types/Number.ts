@@ -71,7 +71,7 @@ export namespace Number {
 
     export class Builder implements core.xml.XmlBuilder<Number> {
         private readonly fields: Partial<Number.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
 
         constructor(fields: Partial<Number.Fields> = {}) {
             const { content, additionalChildren, ...rest } = fields;

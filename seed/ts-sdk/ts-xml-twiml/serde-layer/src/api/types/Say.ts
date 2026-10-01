@@ -117,7 +117,7 @@ export namespace Say {
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
-        private readonly content: core.xml.XmlContent[];
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (SeedApi.Break | core.xml.XmlBuilder<SeedApi.Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
