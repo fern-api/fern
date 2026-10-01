@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.144.1
+  changelogEntry:
+    - summary: |
+        Resolve generators.yml `latest` to an exact generator version before preparing and submitting SDK Gen API runtime bundles.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.144.0
   changelogEntry:
     - summary: |
