@@ -110,7 +110,7 @@ module <%= gem_namespace %>
         # @param name [String]
         # @return [Element, nil] the first child element with the given local name
         def child(name)
-          child_elements.find { |element| element.name == name }
+          @children.lazy.grep_v(Text).map(&:to_xml_element).find { |element| element.name == name }
         end
 
         # @param name [String]

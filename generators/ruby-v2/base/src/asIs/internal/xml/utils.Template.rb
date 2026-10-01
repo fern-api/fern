@@ -344,7 +344,9 @@ module <%= gem_namespace %>
           end
 
           # Appends character data read after a child element. Whitespace-only text spanning a line
-          # break is pretty-print indentation and is dropped; adjacent segments are merged.
+          # break is pretty-print indentation and is dropped; whitespace-only text without a line break
+          # (e.g. a space between two inline children) is significant and kept. Adjacent segments are
+          # merged.
           private def append_parsed_text(element, text)
             return if indentation?(text)
 
