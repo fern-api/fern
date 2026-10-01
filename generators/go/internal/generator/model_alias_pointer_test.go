@@ -79,7 +79,6 @@ func TestOptionalAliasPointerGoType(t *testing.T) {
 		"NullableDate":    alias(nullableTypeReference(primitiveTypeReference(common.PrimitiveTypeV1Date))),
 		"NullableDateRef": alias(named("NullableDate")),
 	}
-	t.Cleanup(func() { legacyNullableAliasPointers = false })
 
 	for _, tc := range []struct {
 		name        string
@@ -96,12 +95,11 @@ func TestOptionalAliasPointerGoType(t *testing.T) {
 		{"chained nullable date alias", optionalTypeReference(named("NullableDateRef")), "NullableDateRef", "NullableDateRef"},
 	} {
 		for _, legacy := range []bool{false, true} {
-			legacyNullableAliasPointers = legacy
 			want := tc.wantDefault
 			if legacy {
 				want = tc.wantLegacy
 			}
-			got := typeReferenceToGoType(tc.reference, types, gospec.NewScope(), baseImportPath, baseImportPath, false)
+			got := typeReferenceToGoType(tc.reference, types, gospec.NewScope(), baseImportPath, baseImportPath, false, legacy)
 			if got != want {
 				t.Errorf("%s (legacyNullableAliasPointers=%v): got %q, want %q", tc.name, legacy, got, want)
 			}
