@@ -53,7 +53,6 @@ public final class XmlObjectMethodsGenerator {
     private final Map<TypeId, TypeDeclaration> typeDeclarations;
     private final ClassName objectClassName;
     private final XmlEncoding xmlEncoding;
-    private final boolean isRoot;
     private final Optional<String> typeDocs;
     private final List<EnrichedObjectProperty> properties;
     private final Map<String, String> propertyDocsByFieldName;
@@ -84,7 +83,6 @@ public final class XmlObjectMethodsGenerator {
         this.typeDeclarations = generatorContext.getTypeDeclarations();
         this.objectClassName = objectClassName;
         this.xmlEncoding = xmlEncoding;
-        this.isRoot = XmlTypeUtils.isRootElement(typeDeclarations, typeId);
         this.typeDocs = Optional.ofNullable(typeDeclarations.get(typeId)).flatMap(TypeDeclaration::getDocs);
         this.properties = properties.stream()
                 .filter(property -> property.fieldSpec().isPresent())
@@ -102,8 +100,9 @@ public final class XmlObjectMethodsGenerator {
     }
 
     public TypeSpec addXmlSupport(TypeSpec typeSpec) {
-        TypeSpec.Builder builder = typeSpec.toBuilder()
-                .addSuperinterface(xmlSerializableClassName)
+        TypeSpec.Builder builder = typeSpec.toBuilder().addSuperinterface(xmlSerializableClassName);
+        builder.methodSpecs.removeIf(method -> method.name.equals("toString") && method.parameters.isEmpty());
+        builder.addMethod(generateToString())
                 .addMethod(generateToXml())
                 .addMethod(generateToXmlWithDeclaration())
                 .addMethod(generateFromXmlString(objectClassName))
@@ -133,7 +132,16 @@ public final class XmlObjectMethodsGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
-                .addStatement("return $L($L)", TO_XML_METHOD_NAME, isRoot)
+                .addStatement("return $L(true)", TO_XML_METHOD_NAME)
+                .build();
+    }
+
+    private MethodSpec generateToString() {
+        return MethodSpec.methodBuilder("toString")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(String.class)
+                .addStatement("return $L()", TO_XML_METHOD_NAME)
                 .build();
     }
 
