@@ -2662,7 +2662,37 @@ func omitsPointerForAlias(typeId common.TypeId, types map[common.TypeId]*ir.Type
 	if !legacyNullableAliasPointers {
 		return true
 	}
-	return maybeDate(&ir.TypeReference{Named: &ir.NamedType{TypeId: typeId}}, false, types) != nil
+	return isAliasToDateType(typeId, types)
+}
+
+// isAliasToDateType reports whether the alias chain starting at typeId resolves
+// to an optional or nullable date or datetime primitive.
+func isAliasToDateType(typeId common.TypeId, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return false
+		}
+		seen[typeId] = struct{}{}
+		td := types[typeId]
+		if td == nil || td.Shape.Alias == nil {
+			return false
+		}
+		aliasOf := td.Shape.Alias.AliasOf
+		for aliasOf.Container != nil && (aliasOf.Container.Optional != nil || aliasOf.Container.Nullable != nil) {
+			if aliasOf.Container.Optional != nil {
+				aliasOf = aliasOf.Container.Optional
+			} else {
+				aliasOf = aliasOf.Container.Nullable
+			}
+		}
+		if aliasOf.Named != nil {
+			typeId = aliasOf.Named.TypeId
+			continue
+		}
+		return aliasOf.Primitive != nil &&
+			(aliasOf.Primitive.V1 == common.PrimitiveTypeV1Date || aliasOf.Primitive.V1 == common.PrimitiveTypeV1DateTime)
+	}
 }
 
 // isAliasToPointerType checks if a named type is an alias that already
