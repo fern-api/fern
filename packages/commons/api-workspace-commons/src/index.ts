@@ -9,6 +9,7 @@ export * from "./getFilesystemPublishTarget.js";
 export { getOriginGitCommit, getOriginGitCommitIsDirty } from "./getOriginGitCommit.js";
 export * from "./openapi/index.js";
 export * from "./RawSpecs.js";
+export * from "./resolveSnippetPackageName.js";
 export * from "./Source.js";
 export * from "./SourceSpecExposingWorkspace.js";
 export * from "./Spec.js";
