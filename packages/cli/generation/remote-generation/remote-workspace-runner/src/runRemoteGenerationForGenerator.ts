@@ -43,6 +43,7 @@ import {
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
+    formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
@@ -61,7 +62,11 @@ import {
 } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
-import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
+import {
+    type GenerationConfigRoute,
+    GeneratorConfigCompatibilityError,
+    validateGeneratorConfigCompatibility
+} from "./sdk-gen-client/index.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({
@@ -607,6 +612,21 @@ export async function runRemoteGenerationForGenerator({
                 organization,
                 token
             });
+            try {
+                validateGeneratorConfigCompatibility({
+                    generatorId: sdkGenApiRoute.generatorId,
+                    language: sdkGenApiRoute.language,
+                    requestedVersion: resolvedRuntimeGeneratorVersion,
+                    configKind: sdkGenApiRoute.configKind
+                });
+            } catch (error) {
+                if (!(error instanceof GeneratorConfigCompatibilityError)) {
+                    throw error;
+                }
+                interactiveTaskContext.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
         }
         const runtimeGeneratorInvocation =
             resolvedRuntimeGeneratorVersion == null

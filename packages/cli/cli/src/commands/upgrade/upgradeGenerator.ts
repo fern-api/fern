@@ -372,7 +372,7 @@ export async function loadAndUpdateGenerators({
                 }
             }
 
-            if (!includeMajor) {
+            if (!includeMajor && !tracksLatest) {
                 const latestMajorVersion = useSdkGenApi
                     ? sdkGenApiVersions?.withheldMajorVersion
                     : await getLatestGeneratorVersion({

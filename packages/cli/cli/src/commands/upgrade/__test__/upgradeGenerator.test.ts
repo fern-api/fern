@@ -597,14 +597,17 @@ groups:
         ]);
     });
 
-    it("treats latest as already up to date without direct upgrade discovery", async () => {
+    it.each([
+        true,
+        false
+    ])("treats latest as already up to date without direct upgrade discovery when SDK Gen API enabled=%s", async (sdkGenApiEnabled) => {
         const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: latest\n`;
         const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
             "@fern-api/configuration-loader"
         );
         vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
         vi.mocked(readFile).mockResolvedValue(yamlContent);
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        vi.stubEnv("FERN_USE_SDK_GEN_API", sdkGenApiEnabled ? "true" : "false");
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
         const fetchMock = vi.fn();
         vi.stubGlobal("fetch", fetchMock);

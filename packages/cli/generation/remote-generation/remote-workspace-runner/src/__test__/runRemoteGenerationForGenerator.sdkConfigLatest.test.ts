@@ -1,5 +1,6 @@
 import { gunzipSync, gzipSync } from "node:zlib";
 import type { generatorsYml } from "@fern-api/configuration";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -225,6 +226,68 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         );
         expect(generatorInvocation.version).toBe("latest");
         expect(intermediateRepresentation.generationMetadata.generatorVersion).toBe("latest");
+    });
+
+    it("rejects latest runtime resolution at the SDK Config cutover before migration or submission", async () => {
+        const generatorInvocation = typescriptInvocation();
+        const [prepared] = prepareRoute(generatorInvocation);
+        if (prepared?.route == null || prepared.route.payloadKind !== "fern-runtime-bundle") {
+            throw new Error("Expected an unpinned Fern runtime bundle route");
+        }
+        const sourceArchive = archive();
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                json: async () => ({
+                    targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "4.0.0" }]
+                })
+            })
+        );
+        const failAndThrow = vi.fn((message: string | undefined, error?: unknown) => {
+            throw error ?? new Error(message);
+        });
+        const run = vi.fn(async () => buildResponse());
+
+        await expect(
+            runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: { ...context(), failAndThrow } as never,
+                generatorInvocation,
+                version: "1.2.3",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                irVersionOverride: undefined,
+                absolutePathToPreview: undefined,
+                isPreview: true,
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiSourceArchive: sourceArchive,
+                sdkGenApiRoute: prepared.route,
+                sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+                sdkGenApiBatch: { run } as never,
+                sdkGenApiTargetIdSeed: "0"
+            })
+        ).rejects.toThrow("Run `fern sdk migrate`");
+        expect(failAndThrow).toHaveBeenCalledWith(
+            expect.stringContaining(
+                "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-typescript-sdk; language=typescript; requestedVersion=4.0.0; cutoverVersion=4.0.0; receivedConfigKind=legacy-fern; expectedConfigKind=sdk-config-v1"
+            ),
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        expect(migrateIntermediateRepresentationForInvocation).not.toHaveBeenCalled();
+        expect(run).not.toHaveBeenCalled();
+        expect(generatorInvocation.version).toBe("latest");
     });
 
     it("shares concurrent latest runtime discovery for the same coordinate", async () => {
