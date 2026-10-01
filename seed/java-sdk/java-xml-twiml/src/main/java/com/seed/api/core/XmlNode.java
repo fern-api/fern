@@ -5,12 +5,11 @@ package com.seed.api.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * One item of an element's ordered content: either a text segment or a child element (a typed model or a generic
@@ -81,27 +80,37 @@ public final class XmlNode {
      *     {@link Optional} and/or {@link Collection}
      */
     public static List<XmlNode> ordered(Collection<XmlNode> content, Object... typedChildren) {
-        Set<XmlSerializable> typed = Collections.newSetFromMap(new IdentityHashMap<>());
         List<XmlSerializable> flattened = new ArrayList<>();
         for (Object value : typedChildren) {
             flatten(value, flattened);
         }
-        typed.addAll(flattened);
-        Set<XmlSerializable> seen = Collections.newSetFromMap(new IdentityHashMap<>());
+        Map<XmlSerializable, Integer> remaining = new IdentityHashMap<>();
+        for (XmlSerializable child : flattened) {
+            remaining.merge(child, 1, Integer::sum);
+        }
         List<XmlNode> ordered = new ArrayList<>();
         for (XmlNode node : content) {
             if (node.element == null || node.element instanceof XmlElement) {
                 ordered.add(node);
-            } else if (typed.contains(node.element) && seen.add(node.element)) {
+            } else if (take(remaining, node.element)) {
                 ordered.add(node);
             }
         }
         for (XmlSerializable child : flattened) {
-            if (seen.add(child)) {
+            if (take(remaining, child)) {
                 ordered.add(element(child));
             }
         }
         return ordered;
+    }
+
+    private static boolean take(Map<XmlSerializable, Integer> remaining, XmlSerializable child) {
+        Integer count = remaining.get(child);
+        if (count == null || count == 0) {
+            return false;
+        }
+        remaining.put(child, count - 1);
+        return true;
     }
 
     private static void flatten(Object value, List<XmlSerializable> into) {
