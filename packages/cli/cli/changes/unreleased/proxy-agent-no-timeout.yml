@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Keep the CLI's disabled HTTP timeouts when `HTTP_PROXY` is set. Previously the proxy dispatcher fell back to undici's 300-second header timeout, so `fern generate --docs` reported `fetch failed` while a long production docs build was still running.
+  type: fix

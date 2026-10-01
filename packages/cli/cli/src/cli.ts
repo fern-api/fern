@@ -182,7 +182,12 @@ async function runCli() {
 
     if (process.env.HTTP_PROXY != null) {
         const { setGlobalDispatcher, ProxyAgent } = await import("undici");
-        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        const proxyAgent = new ProxyAgent({
+            uri: process.env.HTTP_PROXY,
+            connect: { timeout: 2147483647 },
+            bodyTimeout: 0,
+            headersTimeout: 2147483647
+        });
         setGlobalDispatcher(proxyAgent);
     }
 
