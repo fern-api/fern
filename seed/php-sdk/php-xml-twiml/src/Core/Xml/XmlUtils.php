@@ -214,7 +214,7 @@ final class XmlUtils
         }
         foreach ($typed as $node) {
             $id = spl_object_id($node);
-            if ($remaining[$id] > 0) {
+            if (($remaining[$id] ?? 0) > 0) {
                 $remaining[$id]--;
                 $element->addChild($node);
             }
@@ -225,7 +225,7 @@ final class XmlUtils
         $leftover = [];
         foreach ($additional as $node) {
             $id = spl_object_id($node);
-            if ($remaining[$id] > 0) {
+            if (($remaining[$id] ?? 0) > 0) {
                 $remaining[$id]--;
                 $leftover[] = $node;
             }
@@ -507,7 +507,7 @@ final class XmlUtils
     /**
      * Whether $text is whitespace-only and spans a line break (pretty-print indentation).
      */
-    public static function isIndentation(string $text): bool
+    private static function isIndentation(string $text): bool
     {
         return trim($text) === '' && preg_match('/[\r\n]/', $text) === 1;
     }
