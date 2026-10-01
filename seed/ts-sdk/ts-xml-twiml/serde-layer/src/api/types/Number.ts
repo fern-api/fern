@@ -36,7 +36,8 @@ export class Number implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Number>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Number",
             attributes: [
@@ -46,6 +47,7 @@ export class Number implements core.xml.XmlSerializable {
             text: this.phoneNumber,
             children: [],
             additionalChildren: this.additionalChildren,
+            xmlDeclaration,
         });
     }
 
@@ -100,8 +102,8 @@ export namespace Number {
             return new Number({ ...this.fields });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

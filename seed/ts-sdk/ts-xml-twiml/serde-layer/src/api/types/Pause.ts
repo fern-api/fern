@@ -32,7 +32,8 @@ export class Pause implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Pause>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Pause",
             attributes: [
@@ -41,6 +42,7 @@ export class Pause implements core.xml.XmlSerializable {
             ],
             children: [],
             additionalChildren: this.additionalChildren,
+            xmlDeclaration,
         });
     }
 
@@ -89,8 +91,8 @@ export namespace Pause {
             return new Pause({ ...this.fields });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

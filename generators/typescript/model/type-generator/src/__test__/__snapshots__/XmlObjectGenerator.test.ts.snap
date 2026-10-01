@@ -40,8 +40,9 @@ exports[`XmlObjectGenerator > distinguishes nullable from optional and supports 
         });
     }
 
-    toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Collections", attributes: [{ name: "label", value: this.label }, { name: "tags", value: this.tags, separator: "," }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.note, children: [{ name: "breaks", value: this.breaks }, { name: "Pause", value: this.pause }], additionalChildren: this.additionalChildren });
+    /** Serializes this value as a \`<Collections>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`. */
+    toXml(xmlDeclaration: boolean = true): string {
+        return core.xml.serializeXmlElement({ name: "Collections", attributes: [{ name: "label", value: this.label }, { name: "tags", value: this.tags, separator: "," }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.note, children: [{ name: "breaks", value: this.breaks }, { name: "Pause", value: this.pause }], additionalChildren: this.additionalChildren, xmlDeclaration });
     }
 
     toString(): string {
@@ -141,8 +142,8 @@ export namespace Collections {
             return new Collections({ ...this.fields, label, breaks: core.xml.xmlRequired(core.xml.xmlToSet(core.xml.xmlBuildAll(this.elements.breaks)), "Collections.breaks"), pause: (this.elements.pause == null ? this.elements.pause : core.xml.xmlBuild(this.elements.pause)) ?? null });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {
@@ -187,8 +188,9 @@ exports[`XmlObjectGenerator > generates a nested element with namespace, wrapped
         });
     }
 
-    toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw", attributes: [{ name: "statusCallbackEvent", value: this.status_callback_event, separator: " " }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.number, children: [{ name: "Numbers", value: this.numbers, wrapped: true }], additionalChildren: this.additionalChildren });
+    /** Serializes this value as a \`<Dial>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`. */
+    toXml(xmlDeclaration: boolean = true): string {
+        return core.xml.serializeXmlElement({ name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw", attributes: [{ name: "statusCallbackEvent", value: this.status_callback_event, separator: " " }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.number, children: [{ name: "Numbers", value: this.numbers, wrapped: true }], additionalChildren: this.additionalChildren, xmlDeclaration });
     }
 
     toString(): string {
@@ -262,8 +264,8 @@ export namespace Dial {
             return new Dial({ ...this.fields, numbers: core.xml.xmlBuildAll(this.elements.numbers) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {
@@ -311,8 +313,9 @@ exports[`XmlObjectGenerator > generates a root element with text, attributes and
         });
     }
 
-    toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration: true });
+    /** Serializes this value as a \`<Say>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`. */
+    toXml(xmlDeclaration: boolean = true): string {
+        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration });
     }
 
     toString(): string {
@@ -392,8 +395,8 @@ export namespace Say {
             return new Say({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {
@@ -441,8 +444,9 @@ exports[`XmlObjectGenerator > keeps optional keys required when noOptionalProper
         });
     }
 
-    toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration: true });
+    /** Serializes this value as a \`<Say>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`. */
+    toXml(xmlDeclaration: boolean = true): string {
+        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration });
     }
 
     toString(): string {
@@ -522,8 +526,8 @@ export namespace Say {
             return new Say({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {
@@ -590,8 +594,9 @@ exports[`XmlObjectGenerator > uses bracket access and unique safe locals for pro
         });
     }
 
-    toXml(): string {
-        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, { name: "fontSize", value: this.fontSize }, { name: "textAlign", value: this.textAlign }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [{ name: "line-break", value: this["line-break"] }, { name: "lineBreak", value: this.lineBreak }], additionalChildren: this.additionalChildren });
+    /** Serializes this value as a \`<label>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`. */
+    toXml(xmlDeclaration: boolean = true): string {
+        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, { name: "fontSize", value: this.fontSize }, { name: "textAlign", value: this.textAlign }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [{ name: "line-break", value: this["line-break"] }, { name: "lineBreak", value: this.lineBreak }], additionalChildren: this.additionalChildren, xmlDeclaration });
     }
 
     toString(): string {
@@ -711,8 +716,8 @@ export namespace Label {
             return new Label({ ...this.fields, "text-align": textAlign1, textAlign, "line-break": core.xml.xmlBuildAll(this.elements["line-break"]), lineBreak: core.xml.xmlBuildAll(this.elements.lineBreak) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

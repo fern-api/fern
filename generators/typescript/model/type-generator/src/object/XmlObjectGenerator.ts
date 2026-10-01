@@ -157,6 +157,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 },
                 {
                     name: "toXml",
+                    docs: [
+                        {
+                            description: `Serializes this value as a \`<${this.xml.name}>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`.`
+                        }
+                    ],
+                    parameters: [{ name: "xmlDeclaration", type: "boolean", initializer: "true" }],
                     returnType: "string",
                     statements: [`return ${this.generateSerializeExpression(context, properties)};`]
                 },
@@ -351,7 +357,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 ]
             },
             { name: "build", returnType: this.typeName, statements: buildStatements },
-            { name: "toXml", returnType: "string", statements: ["return this.build().toXml();"] },
+            {
+                name: "toXml",
+                parameters: [{ name: "xmlDeclaration", type: "boolean", initializer: "true" }],
+                returnType: "string",
+                statements: ["return this.build().toXml(xmlDeclaration);"]
+            },
             { name: "toString", returnType: "string", statements: ["return this.toXml();"] }
         );
 
@@ -651,9 +662,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         }
         args.push(`children: [${children.join(", ")}]`);
         args.push(`${ADDITIONAL_CHILDREN}: this.${ADDITIONAL_CHILDREN}`);
-        if (this.isXmlRoot) {
-            args.push("xmlDeclaration: true");
-        }
+        args.push("xmlDeclaration");
         return `${this.xmlRef(context, "serializeXmlElement")}({ ${args.join(", ")} })`;
     }
 
