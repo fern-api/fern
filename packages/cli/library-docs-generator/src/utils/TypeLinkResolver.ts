@@ -12,7 +12,10 @@ import { escapeMdx, generateAnchorId } from "./mdx.js";
  * Shared context for rendering, passed to all render functions.
  */
 export interface RenderContext {
+    /** Base slug prefix for page URLs */
     baseSlug: string;
+    /** Directory prefix for page files. Defaults to `baseSlug`. */
+    pathPrefix?: string;
     validPaths: Set<string>;
     /** Maps re-exported paths to their actual definition paths */
     pathAliases: Map<string, string>;

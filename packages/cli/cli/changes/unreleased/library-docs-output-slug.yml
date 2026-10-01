@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `output.slug` to Python library docs configuration in `docs.yml`. Generated pages
+    (frontmatter slugs, cross-links, and `_navigation.yml`) now use this URL prefix instead of
+    the library name, so library docs can live under the section they're placed in, for example
+    `api-reference/python`. Generated files are still written under `output.path/<library-name>/`.
+  type: feat

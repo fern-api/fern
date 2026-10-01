@@ -144,6 +144,70 @@ describe("generate()", () => {
         expect(result.rootPageId).toBe("reference/python/nemo_rl/index.mdx");
     });
 
+    it("separates URL slugs from file paths when pathPrefix is set", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        submodules: [
+                            makeModule({
+                                name: "leaf",
+                                path: "pkg.sub.leaf",
+                                classes: [makeClass({ name: "C", path: "pkg.sub.leaf.C" })]
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({
+            ir,
+            outputDir: tmpDir,
+            slug: "api-reference/python",
+            pathPrefix: "pkg",
+            title: "Pkg"
+        });
+
+        expect(result.rootPageId).toBe("pkg/pkg/index.mdx");
+        expect(result.navigation).toEqual([
+            {
+                type: "section",
+                title: "sub",
+                slug: "api-reference/python/pkg/sub",
+                path: "pkg/pkg/sub",
+                children: [
+                    {
+                        type: "section",
+                        title: "leaf",
+                        slug: "api-reference/python/pkg/sub/leaf",
+                        path: "pkg/pkg/sub/leaf",
+                        children: [
+                            {
+                                type: "page",
+                                title: "leaf",
+                                slug: "api-reference/python/pkg/sub/leaf",
+                                pageId: "pkg/pkg/sub/leaf.mdx"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]);
+
+        const rootPage = readFileSync(join(tmpDir, "pkg/pkg/index.mdx"), "utf-8");
+        expect(rootPage).toContain("slug: api-reference/python/pkg\n");
+        expect(rootPage).toContain("](/api-reference/python/pkg/sub)");
+        const leafPage = readFileSync(join(tmpDir, "pkg/pkg/sub/leaf.mdx"), "utf-8");
+        expect(leafPage).toContain("slug: api-reference/python/pkg/sub/leaf\n");
+        expect(existsSync(join(tmpDir, "api-reference"))).toBe(false);
+    });
+
     it("writes files to correct directory structure", () => {
         const ir = makeIr(
             makeModule({

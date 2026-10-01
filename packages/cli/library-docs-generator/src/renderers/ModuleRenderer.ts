@@ -215,7 +215,7 @@ export function renderAllModulePages(
 
         // Generate page if module has any documentable content
         if (hasDirectContent || hasSubmodules) {
-            const pageKey = `${ctx.baseSlug}/${modulePath}.mdx`;
+            const pageKey = `${ctx.pathPrefix ?? ctx.baseSlug}/${modulePath}.mdx`;
             pages[pageKey] = renderModulePage(module, ctx, parentPath);
         }
 

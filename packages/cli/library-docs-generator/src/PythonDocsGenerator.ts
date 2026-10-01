@@ -24,6 +24,8 @@ export interface GenerateOptions {
     outputDir: string;
     /** Base slug prefix for page URLs (e.g., "reference/python") */
     slug: string;
+    /** Directory prefix for page files within `outputDir`. Defaults to `slug`. */
+    pathPrefix?: string;
     /** Display title for the library section (e.g., "Python SDK Reference") */
     title: string;
 }
@@ -50,21 +52,22 @@ export interface GenerateResult {
  */
 export function generate(options: GenerateOptions): GenerateResult {
     const { ir, outputDir, slug } = options;
+    const pathPrefix = options.pathPrefix ?? slug;
 
     // Stage 1: Build type link data (single-pass IR traversal)
     const { validPaths, pathAliases } = buildTypeLinkData(ir);
-    const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases };
+    const ctx: RenderContext = { baseSlug: slug, pathPrefix, validPaths, pathAliases };
 
     // Stage 2: Render pages and stream to disk
     const writer = new MdxFileWriter(outputDir);
     renderModuleTree(ir.rootModule, ctx, writer, "");
 
     // Stage 3: Build navigation tree
-    const navigation = buildNavigation(ir.rootModule, slug);
+    const navigation = buildNavigation(ir.rootModule, slug, pathPrefix);
     const rootPageId =
         ir.rootModule.submodules.length > 0
-            ? `${slug}/${ir.rootModule.name}/index.mdx`
-            : `${slug}/${ir.rootModule.name}.mdx`;
+            ? `${pathPrefix}/${ir.rootModule.name}/index.mdx`
+            : `${pathPrefix}/${ir.rootModule.name}.mdx`;
 
     // Stage 4: Write navigation YAML
     const navigationFilePath = writeNavigation(outputDir, navigation);
@@ -105,7 +108,8 @@ function renderModuleTree(
     // Modules with submodules write to <path>/index.mdx so the folder scanner
     // picks them up as section overview pages (not sibling duplicates).
     if (hasDirectContent || hasSubmodules) {
-        const pageKey = hasSubmodules ? `${ctx.baseSlug}/${modulePath}/index.mdx` : `${ctx.baseSlug}/${modulePath}.mdx`;
+        const pathPrefix = ctx.pathPrefix ?? ctx.baseSlug;
+        const pageKey = hasSubmodules ? `${pathPrefix}/${modulePath}/index.mdx` : `${pathPrefix}/${modulePath}.mdx`;
         const content = renderModulePage(module, ctx, parentPath);
         writer.writePage(pageKey, content);
     }

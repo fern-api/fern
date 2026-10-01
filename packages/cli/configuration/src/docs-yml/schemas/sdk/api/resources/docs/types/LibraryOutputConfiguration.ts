@@ -9,4 +9,11 @@ export interface LibraryOutputConfiguration {
      * Example: ./static/sdk-docs
      */
     path: string;
+    /**
+     * URL path prefix for the generated pages, relative to the site root (after any basepath,
+     * product, or version slug). Set this to match where the pages appear in your navigation.
+     * Defaults to the library name. Python only.
+     * Example: api-reference/python
+     */
+    slug?: string;
 }

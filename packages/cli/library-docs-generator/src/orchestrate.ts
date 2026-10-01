@@ -259,6 +259,13 @@ async function generateSingleLibrary({
         });
     }
 
+    if (config.output.slug != null && config.lang !== "python") {
+        throw new CliError({
+            message: `Library '${name}': 'output.slug' is only valid for lang: python`,
+            code: CliError.Code.ConfigError
+        });
+    }
+
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
         const doxyfilePath = resolve(docsDirectoryPath, config.config.doxyfile);
@@ -316,7 +323,8 @@ async function generateSingleLibrary({
         const generateResult = generate({
             ir: pythonIr,
             outputDir: resolvedOutputPath,
-            slug: name,
+            slug: config.output.slug ?? name,
+            pathPrefix: name,
             title: name
         });
         context.logger.info(

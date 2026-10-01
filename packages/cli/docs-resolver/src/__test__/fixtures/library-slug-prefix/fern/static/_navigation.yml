@@ -1,0 +1,13 @@
+- type: section
+  title: network
+  slug: api-reference/python/prismo/network
+  path: prismo/prismo/network
+  children:
+    - type: page
+      title: topology
+      slug: api-reference/python/prismo/network/topology
+      pageId: prismo/prismo/network/topology.mdx
+- type: page
+  title: utils
+  slug: api-reference/python/prismo/utils
+  pageId: prismo/prismo/utils.mdx

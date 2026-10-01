@@ -671,6 +671,17 @@
         "path": {
           "type": "string",
           "description": "The output directory where MDX files will be generated.\nExample: ./static/sdk-docs"
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "URL path prefix for the generated pages, relative to the site root (after any basepath,\nproduct, or version slug). Set this to match where the pages appear in your navigation.\nDefaults to the library name. Python only.\nExample: api-reference/python"
         }
       },
       "required": [

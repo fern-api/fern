@@ -394,7 +394,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         absolutePath: AbsoluteFilePath;
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         noindex: boolean | undefined;
         availability: Availability | undefined;
@@ -410,7 +410,7 @@ export declare namespace DocsNavigationItem {
         collapsed: boolean | "open-by-default" | undefined;
         collapsible: boolean | undefined;
         collapsedByDefault: boolean | undefined;
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
@@ -436,7 +436,7 @@ export declare namespace DocsNavigationItem {
         navigation: ParsedApiReferenceLayoutItem[];
         collapsed: boolean | "open-by-default" | undefined;
         hidden: boolean | undefined;
-        slug: string | undefined;
+        slug?: string;
         skipUrlSlug: boolean | undefined;
         alphabetized: boolean;
         flattened: boolean;
@@ -460,7 +460,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
-        slug: string | undefined;
+        slug?: string;
     }
 
     export interface LibrarySection
@@ -472,7 +472,7 @@ export declare namespace DocsNavigationItem {
         /** Override display title for this library reference */
         title: string | undefined;
         /** Override URL slug for this library reference */
-        slug: string | undefined;
+        slug?: string;
     }
 
     export interface VersionedSnippetLanguageConfiguration {
@@ -512,7 +512,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         referencedSubpackages: string[]; // subpackage IDs
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
@@ -530,7 +530,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         package: string; // subpackage ID
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
@@ -545,7 +545,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         endpoint: string; // endpoint locator
         title: string | undefined;
         icon: string | AbsoluteFilePath | undefined;
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
@@ -557,7 +557,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "operation";
         operation: string; // GraphQL operation locator (e.g., "QUERY account" or "QUERY namespace.createUser")
         title: string | undefined;
-        slug: string | undefined;
+        slug?: string;
         hidden: boolean | undefined;
         availability: Availability | undefined;
     }
@@ -609,6 +609,8 @@ export interface ParsedLibraryConfiguration {
     output: {
         /** The output directory where MDX files will be generated */
         path: string;
+        /** URL path prefix for generated pages. Defaults to the library name. */
+        slug?: string;
     };
     /** The programming language of the library source code */
     lang: LibraryLanguage;
@@ -683,12 +685,12 @@ export declare namespace NavigationItemOverlay {
     export interface Page {
         type: "page";
         title: string | undefined;
-        slug: string | undefined;
+        slug?: string;
     }
     export interface Section {
         type: "section";
         title: string | undefined;
-        slug: string | undefined;
+        slug?: string;
         contents: NavigationItemOverlay[] | undefined;
     }
     export interface Tab {
@@ -701,7 +703,7 @@ export declare namespace NavigationItemOverlay {
         type: "variant";
         title: string | undefined;
         subtitle: string | undefined;
-        slug: string | undefined;
+        slug?: string;
     }
 }
 

@@ -1,0 +1,12 @@
+instances: []
+navigation:
+  - library: prismo
+    title: Python API Reference
+libraries:
+  prismo:
+    input:
+      git: https://github.com/acme/prismo
+    output:
+      path: ./static
+      slug: api-reference/python
+    lang: python
