@@ -28,9 +28,11 @@ module <%= gem_namespace %>
         type = types.find { |matcher, _| matcher.is_a?(::Range) ? matcher.cover?(code) : matcher == code }&.last
         return nil if type.nil? || raw_body.to_s.empty?
 
-        type.load(raw_body)
-      rescue StandardError
-        nil
+        begin
+          type.load(raw_body)
+        rescue StandardError
+          nil
+        end
       end
 
       # Returns the most appropriate error class for the given code.
