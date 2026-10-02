@@ -27,3 +27,7 @@ uuid = { version = "1.0", features = ["serde"] }
 [dev-dependencies]
 tokio-test = "0.4"
 
+[features]
+default = ["rustls-tls"]
+native-tls = ["reqwest/default-tls"]
+rustls-tls = ["reqwest/rustls-tls"]
