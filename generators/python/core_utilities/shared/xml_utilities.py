@@ -2,7 +2,7 @@ import datetime as dt
 import enum
 import re
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import (
     Any,
     Collection,
@@ -22,8 +22,9 @@ from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 from xml.sax.saxutils import escape, quoteattr
 
-import pydantic
 from .pydantic_utilities import IS_PYDANTIC_V2
+
+import pydantic
 
 XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -48,6 +49,8 @@ class XmlParsable(Protocol):
 XmlScalar = Union[str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID]
 _SCALAR_TYPES = (str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID)
 XmlAttributeValue = Optional[Union[XmlScalar, Sequence[XmlScalar]]]
+# One item of an element's ordered content: a text segment or a child element (typed model or XmlElement).
+XmlContent = Union[str, XmlSerializable]
 XmlChildValue = Optional[Union[XmlScalar, XmlSerializable, Sequence[Union[XmlScalar, XmlSerializable]]]]
 
 
@@ -76,10 +79,17 @@ def serialize_xml_element(
     text_separator: Optional[str] = None,
     children: Sequence[XmlChild] = (),
     additional_children: Sequence[XmlSerializable] = (),
+    content: Sequence[XmlContent] = (),
     namespace: Optional[str] = None,
     prefix: Optional[str] = None,
     xml_declaration: bool = False,
 ) -> str:
+    """Renders an element. `text` and the `children` without a position marker come first, then `content`
+    (text segments and child elements, in order) followed by `additional_children`.
+
+    An `XmlElement` in the content named after a wrapped child (a *wrapper marker*, as produced by
+    `xml_content`) marks where that wrapped list renders; its attributes and children are merged into the wrapper.
+    """
     tag = f"{prefix}:{name}" if prefix else name
     parts: List[str] = [f"<{tag}"]
     if namespace is not None:
@@ -89,13 +99,32 @@ def serialize_xml_element(
         if rendered is not None:
             parts.append(f" {attribute.name}={quoteattr(rendered)}")
 
+    wrapper_names = {_local_name(child.name) for child in children if child.wrapped}
+    ordered: List[XmlContent] = [*content, *additional_children]
+    markers: Dict[str, List["XmlElement"]] = {}
+    for item in ordered:
+        if isinstance(item, XmlElement) and _local_name(item.name) in wrapper_names:
+            markers.setdefault(_local_name(item.name), []).append(item)
+
     body: List[str] = []
     rendered_text = _join_scalars(text, text_separator)
     if rendered_text is not None:
         body.append(escape(rendered_text))
+    rendered_markers: Dict[int, str] = {}
     for child in children:
-        body.extend(_render_child(child))
-    body.extend(extra.to_xml() for extra in additional_children)
+        child_markers = markers.get(_local_name(child.name))
+        if child_markers is None:
+            body.extend(_render_child(child))
+        else:
+            for marker, rendered in zip(child_markers, _render_wrapped_child(child, child_markers)):
+                rendered_markers[id(marker)] = rendered
+    for item in ordered:
+        if isinstance(item, str):
+            body.append(escape(item))
+        elif isinstance(item, XmlElement) and id(item) in rendered_markers:
+            body.append(rendered_markers[id(item)])
+        else:
+            body.append(item.to_xml())
 
     if not body:
         parts.append(" />")
@@ -108,47 +137,139 @@ def serialize_xml_element(
     return f"{XML_DECLARATION}{element}" if xml_declaration else element
 
 
-def append_xml_child(parent: object, field_name: str, child: object) -> None:
+def append_xml_child(parent: object, field_name: str, child: XmlSerializable, *, inline: bool = True) -> None:
     """Appends `child` to the list-valued `field_name` of `parent`, creating the list if unset.
 
     Bypasses pydantic's frozen-model guard so fluent builder methods can grow a
-    model in place (the mutation is confined to the children list).
+    model in place (the mutation is confined to the children list). Unless `inline` is False
+    (wrapped lists), the child is also appended to the parent's ordered content so it keeps its
+    position relative to text and other children.
     """
     current = parent.__dict__.get(field_name)
     updated = [*current, child] if current is not None else [child]
     object.__setattr__(parent, field_name, updated)
+    if inline:
+        content = xml_model_content(parent)
+        if content is not None:
+            content.append(child)
 
 
-@dataclass
+@runtime_checkable
+class XmlContentHolder(Protocol):
+    """An xml-encoded model keeping its text segments and child elements in document order."""
+
+    _content: List[XmlContent]
+
+
+def xml_model_content(model: object) -> Optional[List[XmlContent]]:
+    """The ordered content list of an xml-encoded model, if it has one."""
+    return model._content if isinstance(model, XmlContentHolder) else None
+
+
+def order_xml_content(content: Sequence[XmlContent], *typed_children: object) -> List[XmlContent]:
+    """Reconciles an element's ordered content with its typed child properties.
+
+    Text segments and undeclared `XmlElement` children keep their position. Typed children keep their
+    position as long as the typed properties still reference them (one position per reference); those
+    no longer referenced are dropped, and extra references (e.g. children passed to the constructor or
+    set on a list property) are appended at the end.
+    """
+    remaining: Dict[int, int] = {}
+    for value in typed_children:
+        for child in _flatten_children(value):
+            remaining[id(child)] = remaining.get(id(child), 0) + 1
+    ordered: List[XmlContent] = []
+    for item in content:
+        if isinstance(item, (str, XmlElement)):
+            ordered.append(item)
+            continue
+        count = remaining.get(id(item), 0)
+        if count > 0:
+            remaining[id(item)] = count - 1
+            ordered.append(item)
+    for value in typed_children:
+        for child in _flatten_children(value):
+            count = remaining.get(id(child), 0)
+            if count > 0:
+                remaining[id(child)] = count - 1
+                ordered.append(child)
+    return ordered
+
+
+def _flatten_children(value: object) -> List[XmlSerializable]:
+    if value is None or isinstance(value, _SCALAR_TYPES):
+        return []
+    if isinstance(value, Sequence):
+        return [child for item in value for child in _flatten_children(item)]
+    if hasattr(value, "to_xml"):
+        return [value]  # type: ignore[list-item]
+    return []
+
+
 class XmlElement:
-    """An arbitrary XML element, used to carry child elements the schema does not know about."""
+    """An arbitrary XML element, used to carry child elements the schema does not know about.
 
-    name: str
-    attributes: Dict[str, str] = field(default_factory=dict)
-    text: Optional[str] = None
-    children: List["XmlElement"] = field(default_factory=list)
+    `content` holds text segments and child elements in order; `text` and `children` are derived views
+    (and constructor shorthands for a leading text segment followed by the children).
+    """
+
+    def __init__(
+        self,
+        name: str,
+        attributes: Optional[Dict[str, str]] = None,
+        text: Optional[str] = None,
+        children: Optional[Sequence["XmlElement"]] = None,
+        content: Optional[Sequence[XmlContent]] = None,
+    ) -> None:
+        self.name = name
+        self.attributes: Dict[str, str] = dict(attributes) if attributes is not None else {}
+        # Number of wrapped-list items this element held when parsed as a wrapper marker.
+        self._wrapped_items = 0
+        if content is not None:
+            self.content: List[XmlContent] = list(content)
+        else:
+            self.content = [*([text] if text is not None else []), *(children or [])]
+
+    @property
+    def text(self) -> Optional[str]:
+        segments = [item for item in self.content if isinstance(item, str)]
+        return "".join(segments) if segments else None
+
+    @property
+    def children(self) -> List["XmlElement"]:
+        return [item for item in self.content if isinstance(item, XmlElement)]
+
+    def add_text(self, text: str) -> "XmlElement":
+        self.content.append(text)
+        return self
+
+    def add_child(self, child: "XmlElement") -> "XmlElement":
+        self.content.append(child)
+        return self
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
         return serialize_xml_element(
             name=self.name,
             attributes=[XmlAttribute(name=key, value=value) for key, value in self.attributes.items()],
-            text=self.text,
-            additional_children=self.children,
+            content=self.content,
             xml_declaration=xml_declaration,
         )
 
     def __str__(self) -> str:
         return self.to_xml()
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, XmlElement):
+            return NotImplemented
+        return (self.name, self.attributes, self.content) == (other.name, other.attributes, other.content)
+
+    def __repr__(self) -> str:
+        return f"XmlElement(name={self.name!r}, attributes={self.attributes!r}, content={self.content!r})"
+
     @classmethod
     def from_xml(cls, xml: Union[str, XmlNode]) -> "XmlElement":
         node = parse_xml(xml)
-        return cls(
-            name=node.tagName,
-            attributes=_attributes(node),
-            text=_direct_text(node),
-            children=[cls.from_xml(child) for child in _child_nodes(node)],
-        )
+        return cls(name=node.tagName, attributes=_attributes(node), content=xml_content(node))
 
 
 def parse_xml(xml: Union[str, XmlNode], name: Optional[str] = None) -> XmlNode:
@@ -188,6 +309,82 @@ def xml_text(node: XmlNode, *, separator: Optional[str] = None) -> Optional[Unio
     return _split(text, separator) if separator is not None else text
 
 
+def xml_leading_text(node: XmlNode, *, separator: Optional[str] = None) -> Optional[Union[str, List[str]]]:
+    """Returns the text before the element's first child element (the legacy text property), if any."""
+    segments: List[str] = []
+    for child in node.childNodes:
+        if child.nodeType == minidom.Node.ELEMENT_NODE:
+            break
+        if child.nodeType in (minidom.Node.TEXT_NODE, minidom.Node.CDATA_SECTION_NODE):
+            segments.append(child.data)
+    text = "".join(segments)
+    if not text.strip():
+        return None
+    return _split(text, separator) if separator is not None else text
+
+
+def xml_content(
+    node: XmlNode,
+    types: Mapping[str, type] = {},
+    *,
+    skip_leading_text: bool = False,
+    skip: Collection[str] = (),
+    wrappers: Mapping[str, Collection[str]] = {},
+) -> List[XmlContent]:
+    """Returns the element's direct content in document order: text segments (whitespace-only ones are
+    kept unless they span a line break, i.e. come from pretty-printing) and child elements.
+
+    Children named in `types` (tag -> xml-encoded model class) are parsed with their `from_xml`; children
+    named in `skip` are left out (they are read separately, e.g. scalar-valued elements); wrapper elements
+    of wrapped lists (`wrappers`: wrapper name -> known item names) become `XmlElement` markers carrying only
+    the wrapper's attributes and undeclared content; every other child is kept as an `XmlElement`.
+    With `skip_leading_text`, text before the first child element is omitted (it is the text property).
+    """
+    content: List[XmlContent] = []
+    before_first_element = True
+    for child in node.childNodes:
+        if child.nodeType in (minidom.Node.TEXT_NODE, minidom.Node.CDATA_SECTION_NODE):
+            if _is_content_text(child.data) and not (skip_leading_text and before_first_element):
+                content.append(child.data)
+            continue
+        if child.nodeType != minidom.Node.ELEMENT_NODE:
+            continue
+        before_first_element = False
+        local_name = _local_name(child.tagName)
+        if local_name in skip:
+            continue
+        wrapper_items = wrappers.get(local_name)
+        if wrapper_items is not None:
+            marker = XmlElement(
+                name=child.tagName, attributes=_attributes(child), content=xml_content(child, skip=wrapper_items)
+            )
+            marker._wrapped_items = sum(1 for item in _child_nodes(child) if _local_name(item.tagName) in wrapper_items)
+            content.append(marker)
+            continue
+        child_type = types.get(local_name)
+        if child_type is not None and issubclass(child_type, XmlParsable):
+            content.append(child_type.from_xml(child))
+        else:
+            content.append(XmlElement.from_xml(child))
+    return content
+
+
+def xml_content_items(
+    content: Sequence[XmlContent], types: Collection[type], *, optional: bool = False
+) -> Optional[List[Any]]:
+    """The typed children (instances of `types`) in `content`, in order; None when `optional` and there are none."""
+    items = [item for item in content if not isinstance(item, str) and isinstance(item, tuple(types))]
+    if optional and not items:
+        return None
+    return items
+
+
+def xml_content_item(content: Sequence[XmlContent], types: Collection[type]) -> Optional[Any]:
+    """The first typed child (instance of `types`) in `content`, if any."""
+    items = xml_content_items(content, types)
+    return items[0] if items else None
+
+
 def xml_children(
     node: XmlNode,
     types: Mapping[str, type],
@@ -198,21 +395,22 @@ def xml_children(
     """Parses the child elements named in `types` (tag -> model class or scalar type), in document order.
 
     Xml-encoded models are built via their `from_xml`; other types receive the child's text and are
-    converted by the parent model's validation. With `wrapper`, children are read from that single
-    wrapper element instead. When `optional`, None is returned if the wrapper (or any child) is absent.
+    converted by the parent model's validation. With `wrapper`, children are read from the wrapper
+    elements of that name instead (in document order). When `optional`, None is returned if the wrapper
+    (or any child) is absent.
     """
-    container = node
+    containers: List[XmlNode] = [node]
     if wrapper is not None:
-        wrapper_node = next((child for child in _child_nodes(node) if _local_name(child.tagName) == wrapper), None)
-        if wrapper_node is None:
+        containers = [child for child in _child_nodes(node) if _local_name(child.tagName) == wrapper]
+        if not containers:
             return None if optional else []
-        container = wrapper_node
     items: List[Any] = []
-    for child in _child_nodes(container):
-        child_type = types.get(_local_name(child.tagName))
-        if child_type is None:
-            continue
-        items.append(child_type.from_xml(child) if issubclass(child_type, XmlParsable) else _direct_text(child))
+    for container in containers:
+        for child in _child_nodes(container):
+            child_type = types.get(_local_name(child.tagName))
+            if child_type is None:
+                continue
+            items.append(child_type.from_xml(child) if issubclass(child_type, XmlParsable) else _direct_text(child))
     if optional and wrapper is None and not items:
         return None
     return items
@@ -301,7 +499,7 @@ def _join_scalars(value: XmlAttributeValue, separator: Optional[str]) -> Optiona
     return (separator or " ").join(items)
 
 
-def _render_child(child: XmlChild) -> Iterable[str]:
+def _render_child_items(child: XmlChild) -> List[str]:
     value = child.value
     if value is None:
         return []
@@ -313,10 +511,50 @@ def _render_child(child: XmlChild) -> Iterable[str]:
         items = value
     else:
         items = [value]
-    rendered = [_render_child_item(child.name, item) for item in items if item is not None]
-    if child.wrapped:
-        return [f"<{child.name}>{''.join(rendered)}</{child.name}>"] if rendered else [f"<{child.name} />"]
-    return rendered
+    return [_render_child_item(child.name, item) for item in items if item is not None]
+
+
+def _render_child(child: XmlChild) -> Iterable[str]:
+    if child.value is None:
+        return []
+    rendered = _render_child_items(child)
+    if not child.wrapped:
+        return rendered
+    return [_render_wrapper(child.name, rendered, None)]
+
+
+def _render_wrapped_child(child: XmlChild, markers: Sequence[XmlElement]) -> List[str]:
+    """Renders one wrapper element per marker (a wrapper element found in the ordered content).
+
+    Items are dealt out to the markers in order, each taking as many as it held when parsed; the last
+    marker takes whatever is left (e.g. items appended to the list property afterwards).
+    """
+    rendered = _render_child_items(child)
+    out: List[str] = []
+    position = 0
+    for index, marker in enumerate(markers):
+        take = (
+            len(rendered) - position
+            if index == len(markers) - 1
+            else min(marker._wrapped_items, len(rendered) - position)
+        )
+        out.append(_render_wrapper(child.name, rendered[position : position + take], marker))
+        position += take
+    return out
+
+
+def _render_wrapper(name: str, items: Sequence[str], marker: Optional[XmlElement]) -> str:
+    body = list(items)
+    attributes: List[str] = []
+    if marker is not None:
+        attributes.extend(f" {key}={quoteattr(value)}" for key, value in marker.attributes.items())
+        body.extend(escape(item) if isinstance(item, str) else item.to_xml() for item in marker.content)
+    open_tag = f"<{name}{''.join(attributes)}"
+    return f"{open_tag}>{''.join(body)}</{name}>" if body else f"{open_tag} />"
+
+
+def _is_content_text(text: str) -> bool:
+    return bool(text.strip()) or ("\n" not in text and "\r" not in text and text != "")
 
 
 def _render_child_item(name: str, item: Union[XmlScalar, XmlSerializable]) -> str:
