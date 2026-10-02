@@ -5,6 +5,7 @@
     `default-features = false`, but the crate exposes `rustls-tls` (enabled by default) and `native-tls`
     Cargo features, so a plain `cargo add <crate>` can make HTTPS calls without redeclaring `reqwest`.
     Use `default-features = false, features = ["native-tls"]` to opt into the platform TLS stack instead.
+    A custom `defaultFeatures` list that names neither TLS feature gets `rustls-tls` appended.
   type: fix
 - summary: |
     The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to

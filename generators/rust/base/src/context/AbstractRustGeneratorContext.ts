@@ -279,7 +279,10 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Apply default features (custom override or auto-detected)
-        const defaultFeatures = this.customConfig.defaultFeatures ?? autoDetectedDefaults;
+        const defaultFeatures = [...(this.customConfig.defaultFeatures ?? autoDetectedDefaults)];
+        if (!defaultFeatures.includes("rustls-tls") && !defaultFeatures.includes("native-tls")) {
+            defaultFeatures.push("rustls-tls");
+        }
         for (const feature of defaultFeatures) {
             this.dependencyManager.enableDefaultFeature(feature);
         }
