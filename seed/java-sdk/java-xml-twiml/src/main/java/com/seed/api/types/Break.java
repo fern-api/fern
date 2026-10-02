@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -38,17 +39,17 @@ public final class Break implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
     private Break(
             Optional<BreakStrength> strength,
             Optional<String> time,
             Map<String, Object> additionalProperties,
-            List<XmlElement> additionalChildren) {
+            List<XmlNode> content) {
         this.strength = strength;
         this.time = time;
         this.additionalProperties = additionalProperties;
-        this.additionalChildren = additionalChildren;
+        this.content = content;
     }
 
     /**
@@ -78,9 +79,20 @@ public final class Break implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Break other) {
@@ -112,7 +124,7 @@ public final class Break implements XmlSerializable {
         writer.attribute("strength", this.strength);
         writer.attribute("time", this.time);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -125,11 +137,12 @@ public final class Break implements XmlSerializable {
 
     public static Break fromXml(Element element) {
         XmlReader.expect(element, "break");
+        List<XmlNode> content = XmlReader.content(element, false, Arrays.asList(), e -> null);
         return new Break(
                 XmlReader.attribute(element, "strength").map(v -> XmlReader.convert(v, BreakStrength.class)),
                 XmlReader.attribute(element, "time"),
                 XmlReader.extraAttributes(element, Arrays.asList("strength", "time")),
-                XmlReader.unknownChildren(element, Arrays.asList()));
+                content);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -142,13 +155,14 @@ public final class Break implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
         public Builder from(Break other) {
             strength(other.getStrength());
             time(other.getTime());
+            content(other.getContent());
             return this;
         }
 
@@ -187,7 +201,7 @@ public final class Break implements XmlSerializable {
         }
 
         public Break build() {
-            return new Break(strength, time, additionalProperties, additionalChildren);
+            return new Break(strength, time, additionalProperties, content);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -201,15 +215,33 @@ public final class Break implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
+            this.content.add(XmlNode.element(child));
+            return this;
+        }
+
+        /**
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
             return this;
         }
 
         public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
             return this;
         }
 
@@ -224,7 +256,6 @@ public final class Break implements XmlSerializable {
             Break parsed = Break.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }
