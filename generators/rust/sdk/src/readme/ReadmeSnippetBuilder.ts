@@ -545,10 +545,7 @@ let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName(
         const writer = new Writer();
 
         // Use prelude for all imports
-        const useStatements = [
-            new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] }),
-            new UseStatement({ path: "futures", items: ["StreamExt"] })
-        ];
+        const useStatements = [new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] })];
 
         // Write use statements
         useStatements.forEach((useStmt) => {
