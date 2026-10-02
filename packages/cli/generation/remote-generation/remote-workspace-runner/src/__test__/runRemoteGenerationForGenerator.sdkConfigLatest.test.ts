@@ -158,6 +158,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             const bundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
             expect(JSON.stringify(bundle)).not.toContain('"latest"');
             expect(bundle.ir.generationMetadata.generatorVersion).toBe("3.99.4");
+            expect(bundle.ir.publishConfig).toMatchObject({ type: "filesystem", generateFullProject: true });
 
             const request = createFernSdkGenApiRequest({
                 apiName: parameters.apiName,
@@ -204,7 +205,8 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             sdkGenApiRoute: prepared.route,
             sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
             sdkGenApiBatch: { run } as never,
-            sdkGenApiTargetIdSeed: "0"
+            sdkGenApiTargetIdSeed: "0",
+            generateFullProject: true
         });
 
         const discoveryCalls = fetchMock.mock.calls.filter(([url]) =>
