@@ -173,16 +173,16 @@ async function runCli() {
         await cliContext.exit();
     };
 
+    const noTimeouts = { connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 };
+
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(
-            new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
-        );
+        setGlobalDispatcher(new Agent(noTimeouts));
     }
 
     if (process.env.HTTP_PROXY != null) {
         const { setGlobalDispatcher, ProxyAgent } = await import("undici");
-        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        const proxyAgent = new ProxyAgent({ uri: process.env.HTTP_PROXY, ...noTimeouts });
         setGlobalDispatcher(proxyAgent);
     }
 
