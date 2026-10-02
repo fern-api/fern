@@ -251,13 +251,13 @@ module Seed
 
         # @param xml_declaration [Boolean] whether to prepend `<?xml version="1.0" encoding="UTF-8"?>`
         # @return [String]
-        def to_xml(xml_declaration: false)
+        def to_xml(xml_declaration: true)
           Utils.serialize(to_xml_element, xml_declaration: xml_declaration)
         end
 
-        # @return [String] the XML, including the declaration for root elements
+        # @return [String] the XML document, including the declaration
         def to_s
-          to_xml(xml_declaration: self.class.xml_root?)
+          to_xml
         end
 
         def ==(other)

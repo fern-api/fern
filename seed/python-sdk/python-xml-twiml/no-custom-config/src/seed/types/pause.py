@@ -27,9 +27,9 @@ class Pause(UniversalBaseModel):
     length: typing.Optional[int] = None
     _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
 
-    def to_xml(self, *, xml_declaration: bool = False) -> str:
+    def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
-        Serializes this object as a `<Pause>` XML element.
+        Serializes this object as a `<Pause>` XML element, prefixed with the XML declaration unless `xml_declaration` is False.
         """
         return serialize_xml_element(
             name="Pause",
