@@ -2,7 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional, Sequence, Tuple
 
-import fern_python.generators.sdk.names as names
+import fern.ir.resources as ir_types
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -16,6 +16,9 @@ from .inferred_auth_token_provider_generator import (
     InferredAuthTokenProviderGenerator,
 )
 from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
+from typing_extensions import Unpack
+
+import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -31,9 +34,6 @@ from fern_python.utils.name_resolver import (
     get_original_name,
     resolve_name,
 )
-from typing_extensions import Unpack
-
-import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -685,31 +685,37 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param.environment_variable is not None and not param.type_hint.is_optional:
                 add_validation = True
                 parm_type_hint = AST.TypeHint.optional(parm_type_hint)
+            uses_explicit_basic_auth_fallback = (
+                self._prefer_explicit_auth_enabled()
+                and param.is_basic
+                and param.environment_variable is not None
+                and parm_type_hint.is_optional
+            )
+            # Environment variables are read when the client is constructed, not when the
+            # module is imported, so the signature default is None.
+            reads_environment_variable = (
+                param.environment_variable is not None and not uses_explicit_basic_auth_fallback
+            )
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
                     initializer=(
                         AST.Expression("None")
-                        if (
-                            self._prefer_explicit_auth_enabled()
-                            and param.is_basic
-                            and param.environment_variable is not None
-                            and parm_type_hint.is_optional
-                        )
+                        if uses_explicit_basic_auth_fallback or reads_environment_variable
                         else self._get_root_client_param_initializer(param)
                     ),
                     docs=param.docs,
                     validation_check=(
                         AST.Expression(
                             AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name=param.constructor_parameter_name,
-                                    environment_variable=param.environment_variable,
+                                self._get_environment_variable_fallback_writer(
+                                    param=param,
+                                    add_validation=add_validation,
                                 )
                             )
                         )
-                        if add_validation and param.environment_variable is not None
+                        if reads_environment_variable
                         else None
                     ),
                 )
@@ -996,6 +1002,24 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if param.client_default is not None:
             return param.client_default
         return None
+
+    def _get_environment_variable_fallback_writer(
+        self, *, param: ConstructorParameter, add_validation: bool
+    ) -> CodeWriterFunction:
+        def _write_environment_variable_fallback(writer: AST.NodeWriter) -> None:
+            initializer = self._get_root_client_param_initializer(param)
+            if initializer is not None:
+                param_name = param.constructor_parameter_name
+                writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
+                writer.write_node(initializer)
+                writer.write_newline_if_last_line_not()
+            if add_validation and param.environment_variable is not None:
+                self._get_parameter_validation_writer(
+                    param_name=param.constructor_parameter_name,
+                    environment_variable=param.environment_variable,
+                )(writer)
+
+        return _write_environment_variable_fallback
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:

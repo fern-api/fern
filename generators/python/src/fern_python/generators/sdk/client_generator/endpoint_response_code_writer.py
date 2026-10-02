@@ -1,6 +1,8 @@
-from typing import Any, Callable, Optional, Sequence, Tuple
+from typing import Any, Callable, List, Optional, Sequence, Tuple
 
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
@@ -31,8 +33,6 @@ from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
 
 
 class EndpointResponseCodeWriter:
@@ -672,31 +672,44 @@ class EndpointResponseCodeWriter:
                     f"await {RESPONSE_VARIABLE}.aread()" if self._is_async else f"{RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._errors:
+            # Concrete status codes take precedence over 4XX/5XX wildcard ranges.
+            sorted_errors = sorted(
+                self._errors,
+                key=lambda e: self._context.ir.errors[e.error.error_id].is_wildcard_status_code is True,
+            )
+            for error in sorted_errors:
                 error_declaration = self._context.ir.errors[error.error.error_id]
+                is_wildcard = error_declaration.is_wildcard_status_code is True
 
-                writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
+                if is_wildcard:
+                    writer.write_line(
+                        f"if {error_declaration.status_code} <= {RESPONSE_VARIABLE}.status_code < {error_declaration.status_code + 100}:"
+                    )
+                else:
+                    writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
                 with writer.indent():
+                    kwargs: List[Tuple[str, AST.Expression]] = [
+                        ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                    ]
+                    if error_declaration.type is not None:
+                        kwargs.append(
+                            (
+                                "body",
+                                self._context.core_utilities.get_construct(
+                                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                        error_declaration.type
+                                    ),
+                                    AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
+                                ),
+                            )
+                        )
+                    if is_wildcard:
+                        kwargs.append(("status_code", AST.Expression(f"{RESPONSE_VARIABLE}.status_code")))
                     writer.write("raise ")
                     writer.write_node(
                         AST.ClassInstantiation(
                             class_=self._context.get_reference_to_error(error.error),
-                            kwargs=[
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                                (
-                                    "body",
-                                    self._context.core_utilities.get_construct(
-                                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                            error_declaration.type
-                                        ),
-                                        AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
-                                    ),
-                                ),
-                            ]
-                            if error_declaration.type is not None
-                            else [
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                            ],
+                            kwargs=kwargs,
                         ),
                     )
                     writer.write_newline_if_last_line_not()

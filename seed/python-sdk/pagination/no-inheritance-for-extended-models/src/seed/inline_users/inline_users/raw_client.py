@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
+from ...core.pagination import AsyncPager, SyncPager, get_nested_page_value, with_nested_page_value
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -401,7 +401,9 @@ class RawInlineUsersClient:
 
                 _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_body_offset_pagination(
-                    pagination=pagination,
+                    pagination=with_nested_page_value(
+                        pagination, ["page"], get_nested_page_value(pagination, ["page"], 1) + 1
+                    ),
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -1147,7 +1149,9 @@ class AsyncRawInlineUsersClient:
 
                 async def _get_next():
                     return await self.list_with_body_offset_pagination(
-                        pagination=pagination,
+                        pagination=with_nested_page_value(
+                            pagination, ["page"], get_nested_page_value(pagination, ["page"], 1) + 1
+                        ),
                         request_options=request_options,
                     )
 

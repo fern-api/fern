@@ -1,7 +1,8 @@
 import typing
 from abc import ABC, abstractmethod
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
+import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import has_xml_types
 from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
@@ -9,15 +10,24 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (
     TypeDeclarationReferencer,
 )
+from fern.generator_exec import GeneratorConfig
+
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
     RootClientDeclarationReferencer,
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+from fern_python.utils import get_wire_value
 
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
+
+def _get_auth_header_names(ir: ir_types.IntermediateRepresentation) -> List[str]:
+    names: List[str] = []
+    for scheme in ir.auth.schemes:
+        scheme_member = scheme.get_as_union()
+        if scheme_member.type == "header":
+            names.append(get_wire_value(scheme_member.name))
+    return names
 
 
 class SdkGeneratorContext(ABC):
@@ -92,6 +102,7 @@ class SdkGeneratorContext(ABC):
             has_webhook_signature_verification=_has_webhook_signature_verification,
             has_streaming_endpoints=_has_streaming_endpoints,
             has_xml_types=has_xml_types(ir),
+            auth_header_names=_get_auth_header_names(ir),
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
