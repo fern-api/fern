@@ -67,13 +67,14 @@ class Say extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Say');
+        $typed = [];
         $element->text = XmlUtils::toXmlString($this->message);
         $element->setAttribute('voice', $this->voice);
         $element->setAttribute('loop', $this->loop);
         foreach ($this->children ?? [] as $item) {
-            $element->addChild($item);
+            $typed[] = $item;
         }
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -105,6 +106,7 @@ class Say extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['voice', 'loop']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['break']));
+        $result->setContent(XmlUtils::content($element, [[['break'], $result->children ?? []]], $result->getAdditionalChildren()));
         return $result;
     }
 
@@ -126,6 +128,7 @@ class Say extends XmlSerializableType
     {
         $childElement = $child instanceof Break_ ? $child : new Break_($child);
         $this->children = [...($this->children ?? []), $childElement];
+        $this->recordContent($childElement);
         return $childElement;
     }
 

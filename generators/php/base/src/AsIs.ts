@@ -84,6 +84,7 @@ export enum AsIsFiles {
     // Core/Xml files.
     XmlElement = "Xml/XmlElement.Template.php",
     XmlNode = "Xml/XmlNode.Template.php",
+    XmlText = "Xml/XmlText.Template.php",
     XmlSerializableType = "Xml/XmlSerializableType.Template.php",
     XmlUtils = "Xml/XmlUtils.Template.php",
     XmlElementTest = "Xml/XmlElementTest.Template.php",

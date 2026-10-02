@@ -52,10 +52,11 @@ class Response extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Response');
+        $typed = [];
         foreach ($this->children ?? [] as $item) {
-            $element->addChild($item);
+            $typed[] = $item;
         }
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -84,6 +85,7 @@ class Response extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, []));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['Say', 'Dial', 'Pause', 'Hangup', 'Redirect']));
+        $result->setContent(XmlUtils::content($element, [[['Say', 'Dial', 'Pause', 'Hangup', 'Redirect'], $result->children ?? []]], $result->getAdditionalChildren()));
         return $result;
     }
 
@@ -108,6 +110,7 @@ class Response extends XmlSerializableType
     {
         $messageElement = $message instanceof Say ? $message : new Say([...$attributes, 'message' => $message]);
         $this->children = [...($this->children ?? []), $messageElement];
+        $this->recordContent($messageElement);
         return $messageElement;
     }
 
@@ -130,6 +133,7 @@ class Response extends XmlSerializableType
     {
         $numberElement = $number instanceof Dial ? $number : new Dial([...$attributes, 'number' => $number]);
         $this->children = [...($this->children ?? []), $numberElement];
+        $this->recordContent($numberElement);
         return $numberElement;
     }
 
@@ -150,6 +154,7 @@ class Response extends XmlSerializableType
     {
         $childElement = $child instanceof Pause ? $child : new Pause($child);
         $this->children = [...($this->children ?? []), $childElement];
+        $this->recordContent($childElement);
         return $childElement;
     }
 
@@ -167,6 +172,7 @@ class Response extends XmlSerializableType
     {
         $childElement = $child instanceof Hangup ? $child : new Hangup($child);
         $this->children = [...($this->children ?? []), $childElement];
+        $this->recordContent($childElement);
         return $childElement;
     }
 
@@ -196,6 +202,7 @@ class Response extends XmlSerializableType
             $urlElement = new Redirect([...$attributes, 'url' => $url]);
         }
         $this->children = [...($this->children ?? []), $urlElement];
+        $this->recordContent($urlElement);
         return $urlElement;
     }
 
