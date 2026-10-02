@@ -28,10 +28,16 @@ public record Number : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
 
     /// <summary>
     /// Parses a <c>&lt;Number&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -44,12 +50,13 @@ public record Number : IJsonOnDeserialized, IXmlNode
     public static Number FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Number");
+        var content = XmlUtils.ReadContent(element, null, true, null, null);
         var result = new Number
         {
-            PhoneNumber = XmlUtils.ParseValue<string?>(XmlUtils.GetText(element)),
+            PhoneNumber = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
             SendDigits = XmlUtils.ParseValue<string?>(XmlUtils.GetAttribute(element, "sendDigits")),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(element, "sendDigits"),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(element, new string[] { }),
+            Content = content,
         };
         return result;
     }
@@ -65,7 +72,8 @@ public record Number : IJsonOnDeserialized, IXmlNode
         var element = XmlUtils.CreateElement("Number", null, null);
         XmlUtils.SetText(element, XmlUtils.ToXmlString(PhoneNumber));
         XmlUtils.SetAttribute(element, "sendDigits", XmlUtils.ToXmlString(SendDigits));
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren);
+        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content));
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
@@ -75,11 +83,20 @@ public record Number : IJsonOnDeserialized, IXmlNode
     public string ToXml() => XmlUtils.Serialize(ToXElement());
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Number AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
+        return this;
+    }
+
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Number AddText(string text)
+    {
+        Content.Add(text);
         return this;
     }
 
