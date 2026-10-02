@@ -35,6 +35,7 @@ module Seed
       def break_(**attributes)
         child = Seed::Types::Break.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
         child
       end
     end
