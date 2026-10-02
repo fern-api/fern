@@ -25,7 +25,5 @@ tokio = { version = "1.0", features = ["full"] }
 tokio-test = "0.4"
 
 [features]
-default = ["rustls-tls", "sse"]
-native-tls = ["reqwest/default-tls"]
-rustls-tls = ["reqwest/rustls-tls"]
+default = ["sse"]
 sse = ["reqwest-sse", "pin-project"]

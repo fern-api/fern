@@ -27,7 +27,3 @@ url = "2.5"
 [dev-dependencies]
 tokio-test = "0.4"
 
-[features]
-default = ["rustls-tls"]
-native-tls = ["reqwest/default-tls"]
-rustls-tls = ["reqwest/rustls-tls"]

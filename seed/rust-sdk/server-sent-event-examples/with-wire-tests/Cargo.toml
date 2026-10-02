@@ -27,7 +27,5 @@ ctor = "0.2"
 tokio-test = "0.4"
 
 [features]
-default = ["rustls-tls", "sse"]
-native-tls = ["reqwest/default-tls"]
-rustls-tls = ["reqwest/rustls-tls"]
+default = ["sse"]
 sse = ["reqwest-sse", "pin-project"]

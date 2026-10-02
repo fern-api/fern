@@ -23,8 +23,6 @@ tokio = { version = "1.0", features = ["full"] }
 tokio-test = "0.4"
 
 [features]
-default = ["experimental", "rustls-tls"]
+default = ["experimental"]
 advanced = ["sse"]
 experimental = ["reqwest/blocking", "tokio/process"]
-native-tls = ["reqwest/default-tls"]
-rustls-tls = ["reqwest/rustls-tls"]

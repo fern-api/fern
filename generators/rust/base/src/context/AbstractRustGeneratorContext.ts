@@ -239,11 +239,6 @@ export abstract class AbstractRustGeneratorContext<
         // Track auto-detected default features
         const autoDetectedDefaults: string[] = [];
 
-        // reqwest is declared with default-features = false, so the crate owns TLS backend selection
-        this.dependencyManager.addFeature("rustls-tls", ["reqwest/rustls-tls"]);
-        this.dependencyManager.addFeature("native-tls", ["reqwest/default-tls"]);
-        autoDetectedDefaults.push("rustls-tls");
-
         // Only declare multipart feature when file upload endpoints exist
         if (hasFileUpload) {
             this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
@@ -279,10 +274,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Apply default features (custom override or auto-detected)
-        const defaultFeatures = [...(this.customConfig.defaultFeatures ?? autoDetectedDefaults)];
-        if (!defaultFeatures.includes("rustls-tls") && !defaultFeatures.includes("native-tls")) {
-            defaultFeatures.push("rustls-tls");
-        }
+        const defaultFeatures = this.customConfig.defaultFeatures ?? autoDetectedDefaults;
         for (const feature of defaultFeatures) {
             this.dependencyManager.enableDefaultFeature(feature);
         }
