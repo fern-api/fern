@@ -1,0 +1,4 @@
+- summary: |
+    Generate distinct providers for multiple API-key header schemes so that each
+    credential remains available to endpoint-level and any-of auth routing.
+  type: fix

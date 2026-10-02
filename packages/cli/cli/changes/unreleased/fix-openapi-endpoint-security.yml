@@ -1,0 +1,5 @@
+- summary: |
+    Honor `api.auth: endpoint-security` and its object form without requiring duplicate
+    auth-schemes declarations. Preserve OpenAPI scheme definitions, explicit Fern
+    overrides, global security inheritance, and anonymous endpoint opt-outs.
+  type: fix

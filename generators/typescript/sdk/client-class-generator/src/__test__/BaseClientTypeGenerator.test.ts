@@ -1,5 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { caseConverter, casingsGenerator, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    casingsGenerator,
+    createHeaderAuthScheme,
+    createMinimalIR,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { StructureKind, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -1837,5 +1843,27 @@ describe("BaseClientTypeGenerator", () => {
                 getNormalizeFunction(withBaseUrlEnvVar(createSingleBaseUrlIR(), "MY_API_BASE_URL"))
             ).toMatchSnapshot();
         });
+    });
+});
+
+describe.each(["ANY", "ENDPOINT_SECURITY"] as const)("multiple header providers with %s auth", (authRequirement) => {
+    it("imports, types and registers both credential providers", () => {
+        const ir = createIR({
+            authRequirement,
+            authSchemes: ["SecretHeader", "PublicHeader"].map((key) =>
+                FernIr.AuthScheme.header(createHeaderAuthScheme({ key, name: "apiKey", wireValue: `X-${key}` }))
+            )
+        });
+        const context = createMockContext();
+        createGenerator({ ir }).writeToFile(context);
+        const source = context._captured.statements.join("\n");
+        expect(source).toContain("HeaderAuthProvider.AuthOptions, HeaderAuthProvider2.AuthOptions");
+        expect(source).toContain("[HeaderAuthProvider, HeaderAuthProvider2]");
+        expect(context._captured.importDeclarations).toEqual(
+            expect.arrayContaining([
+                { moduleSpecifier: "./auth/HeaderAuthProvider", namedImports: ["HeaderAuthProvider"] },
+                { moduleSpecifier: "./auth/HeaderAuthProvider2", namedImports: ["HeaderAuthProvider2"] }
+            ])
+        );
     });
 });

@@ -5,7 +5,7 @@ import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } fr
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator.js";
 import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator.js";
-import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator.js";
+import { getHeaderAuthProviderClassName } from "./getHeaderAuthProviderClassName.js";
 import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator.js";
 import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator.js";
 
@@ -65,7 +65,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     classNames.push(BasicAuthProviderGenerator.CLASS_NAME);
                     break;
                 case "header":
-                    classNames.push(HeaderAuthProviderGenerator.CLASS_NAME);
+                    classNames.push(getHeaderAuthProviderClassName(this.ir, authScheme));
                     break;
                 case "oauth":
                     if (context.generateOAuthClients) {
@@ -126,8 +126,8 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     optionsTypes.push(`${BasicAuthProviderGenerator.CLASS_NAME}.Options`);
                     break;
                 case "header":
-                    authOptionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
-                    optionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.Options`);
+                    authOptionsTypes.push(`${getHeaderAuthProviderClassName(this.ir, authScheme)}.AuthOptions`);
+                    optionsTypes.push(`${getHeaderAuthProviderClassName(this.ir, authScheme)}.Options`);
                     break;
                 case "oauth":
                     if (context.generateOAuthClients) {

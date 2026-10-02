@@ -521,7 +521,7 @@
           "id": "endpoint_.listPublicPlants",
           "name": "listPublicPlants",
           "displayName": "List public plants",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {

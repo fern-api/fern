@@ -1,0 +1,4 @@
+- summary: |
+    Preserve generator iterator types in the Headers fallback so generated source
+    remains compatible with newer DOM types that require disposable iterators.
+  type: fix

@@ -235,3 +235,26 @@ describe("AuthProvidersGenerator", () => {
         });
     });
 });
+
+describe("multiple header auth schemes", () => {
+    it("writes each header provider to a distinct file even when credential names match", () => {
+        const schemes = ["SecretHeader", "PublicHeader"].map((key) =>
+            FernIr.AuthScheme.header(createHeaderAuthScheme({ key, name: "apiKey", wireValue: `X-${key}` }))
+        );
+        const ir = createMinimalIR({ authSchemes: schemes });
+        const paths = schemes.map((authScheme) =>
+            new AuthProvidersGenerator({
+                ir,
+                authScheme,
+                neverThrowErrors: false,
+                includeSerdeLayer: false,
+                shouldUseWrapper: true
+            }).getFilePath()
+        );
+        expect(paths.map((path) => path.file?.nameOnDisk)).toEqual(["HeaderAuthProvider.ts", "HeaderAuthProvider2.ts"]);
+        expect(paths.map((path) => path.file?.exportDeclaration?.namedExports)).toEqual([
+            ["HeaderAuthProvider"],
+            ["HeaderAuthProvider2"]
+        ]);
+    });
+});

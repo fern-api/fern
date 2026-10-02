@@ -4,6 +4,7 @@ import type { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { getHeaderAuthProviderClassName } from "./auth-provider/getHeaderAuthProviderClassName.js";
 import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
@@ -245,7 +246,7 @@ export type BaseClientOptions = {
             case "basic":
                 return "BasicAuthProvider.AuthOptions";
             case "header":
-                return "HeaderAuthProvider.AuthOptions";
+                return `${getHeaderAuthProviderClassName(this.ir, authScheme)}.AuthOptions`;
             case "oauth":
                 if (!context.generateOAuthClients) {
                     return undefined;
@@ -641,10 +642,10 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
                         break;
                     case "header":
                         context.sourceFile.addImportDeclaration({
-                            moduleSpecifier: "./auth/HeaderAuthProvider",
-                            namedImports: ["HeaderAuthProvider"]
+                            moduleSpecifier: `./auth/${getHeaderAuthProviderClassName(this.ir, authScheme)}`,
+                            namedImports: [getHeaderAuthProviderClassName(this.ir, authScheme)]
                         });
-                        providerClassNames.push("HeaderAuthProvider");
+                        providerClassNames.push(getHeaderAuthProviderClassName(this.ir, authScheme));
                         break;
                     case "oauth":
                         context.sourceFile.addImportDeclaration({
@@ -695,10 +696,10 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
                         break;
                     case "header":
                         context.sourceFile.addImportDeclaration({
-                            moduleSpecifier: "./auth/HeaderAuthProvider",
-                            namedImports: ["HeaderAuthProvider"]
+                            moduleSpecifier: `./auth/${getHeaderAuthProviderClassName(this.ir, authScheme)}`,
+                            namedImports: [getHeaderAuthProviderClassName(this.ir, authScheme)]
                         });
-                        providerClassNames.push("HeaderAuthProvider");
+                        providerClassNames.push(getHeaderAuthProviderClassName(this.ir, authScheme));
                         break;
                     case "oauth":
                         context.sourceFile.addImportDeclaration({
@@ -741,10 +742,10 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
                         break;
                     case "header":
                         context.sourceFile.addImportDeclaration({
-                            moduleSpecifier: "./auth/HeaderAuthProvider",
-                            namedImports: ["HeaderAuthProvider"]
+                            moduleSpecifier: `./auth/${getHeaderAuthProviderClassName(this.ir, authScheme)}`,
+                            namedImports: [getHeaderAuthProviderClassName(this.ir, authScheme)]
                         });
-                        authProviderCreation = "new HeaderAuthProvider(normalizedWithNoOpAuthProvider)";
+                        authProviderCreation = `new ${getHeaderAuthProviderClassName(this.ir, authScheme)}(normalizedWithNoOpAuthProvider)`;
                         break;
                     case "oauth":
                         context.sourceFile.addImportDeclaration({

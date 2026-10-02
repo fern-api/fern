@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Endpoint,
     EndpointExample,
@@ -576,6 +576,12 @@ function convertEndpointAuth({
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
 }): boolean | undefined | RawSchemas.HttpEndpointSecurity {
+    const auth = context.authOverrides?.auth;
+    if (auth != null && isEndpointSecurityAuthSchemes(auth)) {
+        const security = endpoint.security ?? context.ir.security;
+        return security != null && security.length > 0 ? security : false;
+    }
+
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;
