@@ -245,7 +245,13 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P("// ", xmlExtraAttributesField, " holds XML attributes not declared in the API definition.")
 		t.writer.P(xmlExtraAttributesField, " map[string]string `json:\"-\" url:\"-\"`")
 		t.writer.P("// ", xmlExtraChildrenField, " holds XML child elements not declared in the API definition.")
+		t.writer.P("// The same nodes also appear in ", xmlContentField, ", which decides their position;")
+		t.writer.P("// a node removed from ", xmlExtraChildrenField, " is no longer rendered.")
 		t.writer.P(xmlExtraChildrenField, " []core.XmlNode `json:\"-\" url:\"-\"`")
+		t.writer.P("// ", xmlContentField, " holds the child elements and text segments in document order,")
+		t.writer.P("// including the typed children, so mixed content round-trips as written.")
+		t.writer.P("// Nodes are shared by reference with the typed fields and ", xmlExtraChildrenField, ".")
+		t.writer.P(xmlContentField, " []core.XmlNode `json:\"-\" url:\"-\"`")
 	}
 	t.writer.P("}")
 	t.writer.P()
