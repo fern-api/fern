@@ -86,6 +86,21 @@ describe("DocsYmlSchemas", () => {
         expect(ThemeConfig.parse({})["site-switcher"]).toBeUndefined();
     });
 
+    it("ThemeConfig accepts supported code-block themes", () => {
+        const parsed = ThemeConfig.parse({
+            "code-blocks": { light: "github-light-default", dark: "github-dark-high-contrast" }
+        });
+        expect(parsed["code-blocks"]).toEqual({ light: "github-light-default", dark: "github-dark-high-contrast" });
+        expect(ThemeConfig.parse({ "code-blocks": { dark: "material-theme-darker" } })["code-blocks"]).toEqual({
+            dark: "material-theme-darker"
+        });
+        expect(ThemeConfig.parse({})["code-blocks"]).toBeUndefined();
+    });
+
+    it("ThemeConfig rejects unsupported code-block themes", () => {
+        expect(ThemeConfig.safeParse({ "code-blocks": { light: "dracula" } }).success).toBe(false);
+    });
+
     it("validates ensured API error response status codes", () => {
         const settings = (statusCode: number) => ({
             "error-responses": {
