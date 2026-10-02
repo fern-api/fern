@@ -143,8 +143,8 @@ export async function generateDocsWorkspace({
         }
     }
 
-    // When --id is provided and we're not in CI and not --force, check if the preview already exists
-    if (previewId != null && !isCI() && !force) {
+    // When --id is provided and we're not in CI, --force, or --no-prompt, check if the preview already exists
+    if (previewId != null && !isCI() && !force && !noPrompt) {
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
