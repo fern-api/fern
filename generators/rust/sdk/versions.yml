@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to
+        iterate SSE streams and paginators without adding `futures` as a direct dependency.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 0.51.0
   changelogEntry:
     - summary: |
