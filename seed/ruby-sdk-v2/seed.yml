@@ -134,6 +134,9 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+    - outputFolder: wrap-invalid-json-responses
+      customConfig:
+        wrapInvalidJsonResponses: true
     - outputFolder: require-paths
       customConfig:
         requirePaths:

@@ -38,11 +38,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          begin
-            (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
-          rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
-          end
+          (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           error_types = {
@@ -83,11 +79,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          begin
-            (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
-          rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
-          end
+          (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           error_types = {
@@ -129,11 +121,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          begin
-            (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
-          rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
-          end
+          (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           error_types = {

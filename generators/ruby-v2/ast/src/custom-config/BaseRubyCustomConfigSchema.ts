@@ -78,11 +78,15 @@ export const BaseRubyCustomConfigSchema = z.object({
     // the aliased model. Disabled by default because callers of a published gem may
     // already read that Hash by key.
     coerceAliasResponses: z.boolean().optional(),
-    // Opt-in: when auth is mandatory, the client constructor raises `ArgumentError` if a
-    // bearer or header credential is neither passed nor set in its environment variable.
-    // Disabled by default because constructing a client without credentials currently
-    // succeeds and only fails once a request reaches the server.
-    requireAuthCredentials: z.boolean().optional()
+    // Opt-in: the client constructor raises `ArgumentError` if a bearer or header
+    // credential is neither passed nor set in its environment variable. Disabled by
+    // default because constructing a client without credentials currently succeeds and
+    // only fails once a request reaches the server.
+    requireAuthCredentials: z.boolean().optional(),
+    // Opt-in: a 2xx response whose body is not valid JSON raises `Errors::ResponseError`
+    // instead of `JSON::ParserError`. Disabled by default because callers may already
+    // rescue `JSON::ParserError`.
+    wrapInvalidJsonResponses: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

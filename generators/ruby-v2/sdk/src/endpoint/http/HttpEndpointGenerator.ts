@@ -610,8 +610,11 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
-        writer.writeLine("begin");
-        writer.indent();
+        const wrapInvalidJson = this.context.customConfig.wrapInvalidJsonResponses === true;
+        if (wrapInvalidJson) {
+            writer.writeLine("begin");
+            writer.indent();
+        }
         if (storeInVariable) {
             writer.write("parsed_response = ");
         }
@@ -623,6 +626,9 @@ export class HttpEndpointGenerator {
             })
         );
         writer.newLine();
+        if (!wrapInvalidJson) {
+            return;
+        }
         writer.dedent();
         writer.writeLine("rescue ::JSON::ParserError");
         writer.indent();

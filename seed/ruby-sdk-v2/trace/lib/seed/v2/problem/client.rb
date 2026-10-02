@@ -39,11 +39,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -78,11 +74,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -119,11 +111,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::V2::Problem::Types::ProblemInfoV2.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::V2::Problem::Types::ProblemInfoV2.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -164,11 +152,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::V2::Problem::Types::ProblemInfoV2.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::V2::Problem::Types::ProblemInfoV2.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

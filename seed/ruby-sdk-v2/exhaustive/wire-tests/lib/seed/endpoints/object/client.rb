@@ -55,11 +55,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -94,11 +90,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -137,11 +129,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithMapOfMap.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithMapOfMap.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -195,11 +183,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithOptionalField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithOptionalField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -257,11 +241,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -334,11 +314,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -375,11 +351,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithUnknownField.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithUnknownField.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -416,11 +388,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -459,11 +427,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::MapOfDocumentedUnknownType.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::MapOfDocumentedUnknownType.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -506,11 +470,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -556,11 +516,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredNestedObject.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredNestedObject.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -602,11 +558,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            begin
-              (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithDatetimeLikeString.load(response.body))
-            rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
-            end
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithDatetimeLikeString.load(response.body))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
