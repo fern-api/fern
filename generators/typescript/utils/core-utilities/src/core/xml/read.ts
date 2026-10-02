@@ -1,4 +1,5 @@
 import { type XmlNode, XmlParseError, localName } from "./parse";
+import { type XmlContent, type XmlSerializable } from "./serialize";
 import { XmlElement } from "./XmlElement";
 
 const DEFAULT_LIST_SEPARATOR = " ";
@@ -101,6 +102,89 @@ export function xmlAttribute(node: XmlNode, name: string): string | undefined {
 /** Returns the element's own text content, if any. */
 export function xmlText(node: XmlNode): string | undefined {
     return node.text;
+}
+
+/** Returns the text that precedes the first child element, if any (and not blank). */
+export function xmlLeadingText(node: XmlNode): string | undefined {
+    const segments: string[] = [];
+    for (const item of node.content) {
+        if (typeof item !== "string") {
+            break;
+        }
+        segments.push(item);
+    }
+    return segments.length === 0 ? undefined : segments.join("");
+}
+
+export interface XmlContentOptions {
+    /** Skip the text before the first child element (it is read separately as the text property). */
+    skipLeadingText?: boolean;
+    /** (Prefix-less) names of child elements read separately (e.g. scalar-valued elements). */
+    skip?: readonly string[];
+    /**
+     * Wrapper elements of wrapped lists (prefix-less wrapper name -> known item names). A wrapper is
+     * kept in the content as an `XmlElement` carrying only its attributes and undeclared children,
+     * which marks the wrapper's position and is merged back into it by `serializeXmlElement`.
+     */
+    wrappers?: Record<string, readonly string[]>;
+    /** Parses a known child element; return undefined to keep the child as a generic `XmlElement`. */
+    parse?: (child: XmlNode) => XmlSerializable | undefined;
+}
+
+/**
+ * Reads the element's text segments and child elements in document order. Known children are
+ * parsed with `parse`; any other child is kept verbatim as an `XmlElement`.
+ */
+export function xmlContent(
+    node: XmlNode,
+    { skipLeadingText = false, skip = [], wrappers = {}, parse }: XmlContentOptions = {},
+): XmlContent[] {
+    const content: XmlContent[] = [];
+    let beforeFirstElement = true;
+    for (const item of node.content) {
+        if (typeof item === "string") {
+            if (!(skipLeadingText && beforeFirstElement)) {
+                content.push(item);
+            }
+            continue;
+        }
+        beforeFirstElement = false;
+        const name = localName(item.name);
+        if (skip.includes(name)) {
+            continue;
+        }
+        const wrapperItems = wrappers[name];
+        if (wrapperItems != null) {
+            content.push(
+                new XmlElement({
+                    name: item.name,
+                    attributes: { ...item.attributes },
+                    content: xmlContent(item, { skip: wrapperItems }),
+                }),
+            );
+            continue;
+        }
+        content.push(parse?.(item) ?? XmlElement.fromXml(item));
+    }
+    return content;
+}
+
+/** The typed children of `content` matching `isItem`, in order, or undefined when there are none. */
+export function xmlContentElements<T extends XmlContent>(
+    content: readonly XmlContent[],
+    isItem: (item: XmlContent) => item is T,
+): T[] | undefined {
+    const items = content.filter(isItem);
+    return items.length === 0 ? undefined : items;
+}
+
+/**
+ * For wrapper elements listed in `wrappers` (wrapper name -> known item names), the wrapper's
+ * attributes and undeclared children preserved as an `XmlElement` named after the wrapper, which
+ * `serializeXmlElement` merges back into the wrapper on output.
+ */
+export function xmlWrapperFragments(node: XmlNode, wrappers: Record<string, readonly string[]>): XmlElement[] {
+    return xmlUnknownChildren(node, [], wrappers).filter((child) => localName(child.name) in wrappers);
 }
 
 /** Builds a node parser for a child element whose text content is a scalar value. */

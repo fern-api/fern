@@ -4,6 +4,9 @@ export interface XmlSerializable {
     toXml(): string;
 }
 
+/** One item of an element's ordered content: a text segment or a child element. */
+export type XmlContent = string | XmlSerializable;
+
 export function isXmlSerializable(value: unknown): value is XmlSerializable {
     return (
         typeof value === "object" &&
@@ -63,6 +66,11 @@ export interface SerializeXmlElementArgs {
     text?: unknown;
     textSeparator?: string;
     children?: XmlChild[];
+    /**
+     * Text segments and child elements rendered in order after `text` and the `children` that have no
+     * position marker. A generic element named after a wrapped child marks where that wrapper renders.
+     */
+    content?: XmlContent[];
     additionalChildren?: XmlSerializable[];
     xmlDeclaration?: boolean;
 }
@@ -77,6 +85,7 @@ export function serializeXmlElement({
     text,
     textSeparator,
     children = [],
+    content = [],
     additionalChildren = [],
     xmlDeclaration = false,
 }: SerializeXmlElementArgs): string {
@@ -95,14 +104,21 @@ export function serializeXmlElement({
 
     const wrapperNames = new Set(children.filter((child) => child.wrapped === true).map((child) => child.name));
     const wrapperFragments: XmlWrapperFragment[] = [];
-    const otherChildren: XmlSerializable[] = [];
-    for (const extra of additionalChildren) {
-        if (isXmlWrapperFragment(extra) && wrapperNames.has(localXmlName(extra.name))) {
-            wrapperFragments.push(extra);
+    const orderedContent: XmlContent[] = [];
+    for (const item of [...content, ...additionalChildren]) {
+        if (typeof item !== "string" && isXmlWrapperFragment(item) && wrapperNames.has(localXmlName(item.name))) {
+            wrapperFragments.push(item);
+            orderedContent.push(item);
         } else {
-            otherChildren.push(extra);
+            orderedContent.push(item);
         }
     }
+    const markedWrappers = new Set(wrapperFragments.map((fragment) => localXmlName(fragment.name)));
+    const renderWrapped = (child: XmlChild): string[] =>
+        renderChild(
+            child,
+            wrapperFragments.filter((fragment) => localXmlName(fragment.name) === child.name),
+        );
 
     const body: string[] = [];
     const renderedText = joinScalars(text, textSeparator);
@@ -110,15 +126,27 @@ export function serializeXmlElement({
         body.push(escapeXml(renderedText));
     }
     for (const child of children) {
-        body.push(
-            ...renderChild(
-                child,
-                wrapperFragments.filter((fragment) => localXmlName(fragment.name) === child.name),
-            ),
-        );
+        if (!markedWrappers.has(child.name)) {
+            body.push(...renderWrapped(child));
+        }
     }
-    for (const extra of otherChildren) {
-        body.push(extra.toXml());
+    const renderedWrappers = new Set<string>();
+    for (const item of orderedContent) {
+        if (typeof item === "string") {
+            body.push(escapeXml(item));
+        } else if (isXmlWrapperFragment(item) && markedWrappers.has(localXmlName(item.name))) {
+            const wrapperName = localXmlName(item.name);
+            if (!renderedWrappers.has(wrapperName)) {
+                renderedWrappers.add(wrapperName);
+                for (const child of children) {
+                    if (child.name === wrapperName) {
+                        body.push(...renderWrapped(child));
+                    }
+                }
+            }
+        } else {
+            body.push(item.toXml());
+        }
     }
 
     if (body.length === 0) {
@@ -163,7 +191,7 @@ export function extraXmlAttributes(attributes: Record<string, string> | undefine
     return Object.entries(attributes).map(([name, value]) => ({ name, value }));
 }
 
-function toArray(value: unknown): unknown[] | undefined {
+export function toArray(value: unknown): unknown[] | undefined {
     if (Array.isArray(value)) {
         return value;
     }

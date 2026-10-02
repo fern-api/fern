@@ -266,8 +266,8 @@ export class Wide implements core.xml.XmlSerializable {
     children?: SeedApi.Pause[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Wide.Fields = {}) {
         this.attr1 = fields.attr1;
@@ -528,7 +528,12 @@ export class Wide implements core.xml.XmlSerializable {
         this.attr256 = fields.attr256;
         this.children = fields.children;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Wide.Fields = {}): Wide.Builder {
@@ -538,6 +543,16 @@ export class Wide implements core.xml.XmlSerializable {
     /** Parses a `<Wide>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Wide {
         const node = core.xml.parseXml(xml, "Wide");
+        const content = core.xml.xmlContent(node, {
+            parse: (child) => {
+                switch (core.xml.localName(child.name)) {
+                    case "Pause":
+                        return SeedApi.Pause.fromXml(child);
+                    default:
+                        return undefined;
+                }
+            },
+        });
         return new Wide({
             attr1: core.xml.xmlScalar(core.xml.xmlAttribute(node, "attr1"), core.xml.xmlString, "Wide.attr1"),
             attr2: core.xml.xmlScalar(core.xml.xmlAttribute(node, "attr2"), core.xml.xmlString, "Wide.attr2"),
@@ -795,7 +810,10 @@ export class Wide implements core.xml.XmlSerializable {
             attr254: core.xml.xmlScalar(core.xml.xmlAttribute(node, "attr254"), core.xml.xmlString, "Wide.attr254"),
             attr255: core.xml.xmlScalar(core.xml.xmlAttribute(node, "attr255"), core.xml.xmlString, "Wide.attr255"),
             attr256: core.xml.xmlScalar(core.xml.xmlAttribute(node, "attr256"), core.xml.xmlString, "Wide.attr256"),
-            children: core.xml.xmlChildren<SeedApi.Pause>(node, { Pause: (child) => SeedApi.Pause.fromXml(child) }),
+            children: core.xml.xmlContentElements(
+                content,
+                (item): item is SeedApi.Pause => item instanceof SeedApi.Pause,
+            ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, [
                 "attr1",
                 "attr2",
@@ -1054,7 +1072,7 @@ export class Wide implements core.xml.XmlSerializable {
                 "attr255",
                 "attr256",
             ]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["Pause"]),
+            content,
         });
     }
 
@@ -1320,8 +1338,8 @@ export class Wide implements core.xml.XmlSerializable {
                 { name: "attr256", value: this.attr256 },
                 ...core.xml.extraXmlAttributes(this.additionalAttributes),
             ],
-            children: [{ name: "children", value: this.children }],
-            additionalChildren: this.additionalChildren,
+            children: [],
+            content: core.xml.orderXmlContent(this.content, this.children),
             xmlDeclaration: true,
         });
     }
@@ -1592,15 +1610,18 @@ export namespace Wide {
         children?: SeedApi.Pause[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Wide> {
         private readonly fields: Partial<Wide.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (SeedApi.Pause | core.xml.XmlBuilder<SeedApi.Pause>)[] };
 
         constructor(fields: Partial<Wide.Fields> = {}) {
-            const { children, ...rest } = fields;
+            const { content, additionalChildren, children, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { children };
         }
 
@@ -2890,12 +2911,13 @@ export namespace Wide {
         }
 
         children(children: (SeedApi.Pause | core.xml.XmlBuilder<SeedApi.Pause>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }
 
         /**
-         * Adds a `<Pause>` child and returns its builder.
+         * Adds a `<Pause>` child after any content added so far and returns its builder.
          *
          * XML element without an explicit xml.name; falls back to the schema name.
          * @param fields initial `<Pause>` attributes and children
@@ -2904,6 +2926,7 @@ export namespace Wide {
         pause(fields?: Partial<SeedApi.Pause.Fields>): SeedApi.Pause.Builder {
             const builder = new SeedApi.Pause.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -2913,14 +2936,25 @@ export namespace Wide {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Wide {
-            return new Wide({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Wide({
+                ...this.fields,
+                children: built.buildAll(this.elements.children),
+                content: built.content,
+            });
         }
 
         toXml(): string {

@@ -10,13 +10,18 @@ export class Response implements core.xml.XmlSerializable {
     children?: Response.Children.Item[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Response.Fields = {}) {
         this.children = fields.children;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Response.Fields = {}): Response.Builder {
@@ -26,15 +31,33 @@ export class Response implements core.xml.XmlSerializable {
     /** Parses a `<Response>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Response {
         const node = core.xml.parseXml(xml, "Response");
+        const content = core.xml.xmlContent(node, {
+            parse: (child) => {
+                switch (core.xml.localName(child.name)) {
+                    case "Say":
+                        return SeedApi.Say.fromXml(child);
+                    case "Dial":
+                        return SeedApi.Dial.fromXml(child);
+                    case "Pause":
+                        return SeedApi.Pause.fromXml(child);
+                    case "Hangup":
+                        return SeedApi.Hangup.fromXml(child);
+                    default:
+                        return undefined;
+                }
+            },
+        });
         return new Response({
-            children: core.xml.xmlChildren<Response.Children.Item>(node, {
-                Say: (child) => SeedApi.Say.fromXml(child),
-                Dial: (child) => SeedApi.Dial.fromXml(child),
-                Pause: (child) => SeedApi.Pause.fromXml(child),
-                Hangup: (child) => SeedApi.Hangup.fromXml(child),
-            }),
+            children: core.xml.xmlContentElements(
+                content,
+                (item): item is Response.Children.Item =>
+                    item instanceof SeedApi.Say ||
+                    item instanceof SeedApi.Dial ||
+                    item instanceof SeedApi.Pause ||
+                    item instanceof SeedApi.Hangup,
+            ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, []),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["Say", "Dial", "Pause", "Hangup"]),
+            content,
         });
     }
 
@@ -42,8 +65,8 @@ export class Response implements core.xml.XmlSerializable {
         return core.xml.serializeXmlElement({
             name: "Response",
             attributes: [...core.xml.extraXmlAttributes(this.additionalAttributes)],
-            children: [{ name: "children", value: this.children }],
-            additionalChildren: this.additionalChildren,
+            children: [],
+            content: core.xml.orderXmlContent(this.content, this.children),
             xmlDeclaration: true,
         });
     }
@@ -64,17 +87,20 @@ export namespace Response {
         children?: Response.Children.Item[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Response> {
         private readonly fields: Partial<Response.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: {
             children?: (Response.Children.Item | core.xml.XmlBuilder<Response.Children.Item>)[];
         };
 
         constructor(fields: Partial<Response.Fields> = {}) {
-            const { children, ...rest } = fields;
+            const { content, additionalChildren, children, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { children };
         }
 
@@ -84,12 +110,13 @@ export namespace Response {
         }
 
         children(children: (Response.Children.Item | core.xml.XmlBuilder<Response.Children.Item>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }
 
         /**
-         * Adds a `<Say>` child and returns its builder.
+         * Adds a `<Say>` child after any content added so far and returns its builder.
          *
          * <Say> TwiML Verb
          * @param fields initial `<Say>` attributes and children
@@ -98,22 +125,24 @@ export namespace Response {
         say(fields?: Partial<SeedApi.Say.Fields>): SeedApi.Say.Builder {
             const builder = new SeedApi.Say.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
         /**
-         * Adds a `<Dial>` child and returns its builder.
+         * Adds a `<Dial>` child after any content added so far and returns its builder.
          * @param fields initial `<Dial>` attributes and children
          * @returns the `SeedApi.Dial.Builder` appended to this element
          */
         dial(fields?: Partial<SeedApi.Dial.Fields>): SeedApi.Dial.Builder {
             const builder = new SeedApi.Dial.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
         /**
-         * Adds a `<Pause>` child and returns its builder.
+         * Adds a `<Pause>` child after any content added so far and returns its builder.
          *
          * XML element without an explicit xml.name; falls back to the schema name.
          * @param fields initial `<Pause>` attributes and children
@@ -122,17 +151,19 @@ export namespace Response {
         pause(fields?: Partial<SeedApi.Pause.Fields>): SeedApi.Pause.Builder {
             const builder = new SeedApi.Pause.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
         /**
-         * Adds a `<Hangup>` child and returns its builder.
+         * Adds a `<Hangup>` child after any content added so far and returns its builder.
          * @param fields initial `<Hangup>` attributes and children
          * @returns the `SeedApi.Hangup.Builder` appended to this element
          */
         hangup(fields?: Partial<SeedApi.Hangup.Fields>): SeedApi.Hangup.Builder {
             const builder = new SeedApi.Hangup.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -142,14 +173,25 @@ export namespace Response {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Response {
-            return new Response({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Response({
+                ...this.fields,
+                children: built.buildAll(this.elements.children),
+                content: built.content,
+            });
         }
 
         toXml(): string {

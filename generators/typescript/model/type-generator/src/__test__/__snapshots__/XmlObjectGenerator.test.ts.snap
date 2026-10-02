@@ -9,8 +9,8 @@ exports[`XmlObjectGenerator > distinguishes nullable from optional and supports 
     pause: Break | null;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Collections.Fields) {
         this.label = fields.label;
@@ -19,7 +19,12 @@ exports[`XmlObjectGenerator > distinguishes nullable from optional and supports 
         this.breaks = fields.breaks;
         this.pause = fields.pause;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through \`content\` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Collections.Fields): Collections.Builder {
@@ -29,19 +34,20 @@ exports[`XmlObjectGenerator > distinguishes nullable from optional and supports 
     /** Parses a \`<Collections>\` element. */
     static fromXml(xml: string | core.xml.XmlNode): Collections {
         const node = core.xml.parseXml(xml, "Collections");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, parse: (child) => { switch (core.xml.localName(child.name)) { case "break": return Break.fromXml(child); case "break": return Break.fromXml(child); default: return undefined; } } });
         return new Collections({
             label: (core.xml.xmlScalar(core.xml.xmlAttribute(node, "label"), core.xml.xmlString, "Collections.label")) ?? null,
-            note: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Collections.note"),
+            note: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Collections.note"),
             tags: core.xml.xmlToSet(core.xml.xmlScalarList(core.xml.xmlAttribute(node, "tags"), ",", core.xml.xmlString, "Collections.tags")),
-            breaks: core.xml.xmlRequired(core.xml.xmlToSet(core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) })), "Collections.breaks"),
-            pause: (core.xml.xmlChild<Break>(node, { "break": (child) => Break.fromXml(child) })) ?? null,
+            breaks: core.xml.xmlRequired(core.xml.xmlToSet(core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break)), "Collections.breaks"),
+            pause: (core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break)?.[0]) ?? null,
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["label", "tags"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break", "break"]),
+            content,
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Collections", attributes: [{ name: "label", value: this.label }, { name: "tags", value: this.tags, separator: "," }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.note, children: [{ name: "breaks", value: this.breaks }, { name: "Pause", value: this.pause }], additionalChildren: this.additionalChildren });
+        return core.xml.serializeXmlElement({ name: "Collections", attributes: [{ name: "label", value: this.label }, { name: "tags", value: this.tags, separator: "," }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.note, children: [], content: core.xml.orderXmlContent(this.content, this.breaks, this.pause) });
     }
 
     toString(): string {
@@ -58,15 +64,18 @@ export namespace Collections {
         pause: Break | null;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Collections> {
         private readonly fields: Partial<Collections.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { breaks?: (Break | core.xml.XmlBuilder<Break>)[]; pause?: Break | core.xml.XmlBuilder<Break> | null };
 
         constructor(fields: Partial<Collections.Fields> = {}) {
-            const { breaks, pause, ...rest } = fields;
+            const { content, additionalChildren, breaks, pause, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { breaks: breaks == null ? breaks : Array.from(breaks), pause };
         }
 
@@ -91,34 +100,38 @@ export namespace Collections {
         }
 
         breaks(breaks: (Break | core.xml.XmlBuilder<Break>)[]): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.breaks, breaks);
             this.elements.breaks = breaks;
             return this;
         }
 
         pause(pause: Break | core.xml.XmlBuilder<Break> | null): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.pause, pause);
             this.elements.pause = pause;
             return this;
         }
 
         /**
-         * Adds a \`<break>\` child and returns its builder.
+         * Adds a \`<break>\` child after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.breaks = [...(this.elements.breaks ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
         /**
-         * Adds a \`<break>\` child (replacing any existing one) and returns its builder.
+         * Adds a \`<break>\` child (replacing any existing one) after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.pause = builder;
+            this.content.push(builder);
             return builder;
         }
 
@@ -128,9 +141,15 @@ export namespace Collections {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
@@ -138,7 +157,8 @@ export namespace Collections {
             const { label } = this.fields;
             if (label === undefined) { throw new Error("Collections.label is required"); }
 
-            return new Collections({ ...this.fields, label, breaks: core.xml.xmlRequired(core.xml.xmlToSet(core.xml.xmlBuildAll(this.elements.breaks)), "Collections.breaks"), pause: (this.elements.pause == null ? this.elements.pause : core.xml.xmlBuild(this.elements.pause)) ?? null });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Collections({ ...this.fields, label, breaks: core.xml.xmlRequired(core.xml.xmlToSet(built.buildAll(this.elements.breaks)), "Collections.breaks"), pause: (this.elements.pause == null ? this.elements.pause : built.build(this.elements.pause)) ?? null, content: built.content });
         }
 
         toXml(): string {
@@ -160,15 +180,20 @@ exports[`XmlObjectGenerator > generates a nested element with namespace, wrapped
     numbers?: Number[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Dial.Fields = {}) {
         this.number = fields.number;
         this.status_callback_event = fields.status_callback_event;
         this.numbers = fields.numbers;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through \`content\` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement && !["Numbers"].includes(core.xml.localName(item.name)));
     }
 
     static builder(fields: Dial.Fields = {}): Dial.Builder {
@@ -178,17 +203,18 @@ exports[`XmlObjectGenerator > generates a nested element with namespace, wrapped
     /** Parses a \`<Dial>\` element. */
     static fromXml(xml: string | core.xml.XmlNode): Dial {
         const node = core.xml.parseXml(xml, "Dial");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, wrappers: { "Numbers": ["Number"] } });
         return new Dial({
-            number: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Dial.number"),
+            number: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Dial.number"),
             status_callback_event: core.xml.xmlScalarList(core.xml.xmlAttribute(node, "statusCallbackEvent"), " ", core.xml.xmlString, "Dial.statusCallbackEvent"),
             numbers: core.xml.xmlChildren<Number>(node, { "Number": (child) => Number.fromXml(child) }, { wrapper: "Numbers" }),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["statusCallbackEvent"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["Numbers"], { "Numbers": ["Number"] }),
+            content,
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw", attributes: [{ name: "statusCallbackEvent", value: this.status_callback_event, separator: " " }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.number, children: [{ name: "Numbers", value: this.numbers, wrapped: true }], additionalChildren: this.additionalChildren });
+        return core.xml.serializeXmlElement({ name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw", attributes: [{ name: "statusCallbackEvent", value: this.status_callback_event, separator: " " }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.number, children: [{ name: "Numbers", value: this.numbers, wrapped: true }], content: core.xml.orderXmlContent(this.content) });
     }
 
     toString(): string {
@@ -203,15 +229,18 @@ export namespace Dial {
         numbers?: Number[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Dial> {
         private readonly fields: Partial<Dial.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { numbers?: (Number | core.xml.XmlBuilder<Number>)[] };
 
         constructor(fields: Partial<Dial.Fields> = {}) {
-            const { numbers, ...rest } = fields;
+            const { content, additionalChildren, numbers, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { numbers };
         }
 
@@ -236,7 +265,7 @@ export namespace Dial {
         }
 
         /**
-         * Adds a \`<Number>\` child and returns its builder.
+         * Adds a \`<Number>\` child after any content added so far and returns its builder.
          * @param fields initial \`<Number>\` attributes and children
          * @returns the \`Number.Builder\` appended to this element
          */
@@ -252,14 +281,21 @@ export namespace Dial {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Dial {
-            return new Dial({ ...this.fields, numbers: core.xml.xmlBuildAll(this.elements.numbers) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Dial({ ...this.fields, numbers: built.buildAll(this.elements.numbers), content: built.content });
         }
 
         toXml(): string {
@@ -282,8 +318,8 @@ exports[`XmlObjectGenerator > generates a root element with text, attributes and
     children?: Break[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Say.Fields = {}) {
         this.message = fields.message;
@@ -291,7 +327,12 @@ exports[`XmlObjectGenerator > generates a root element with text, attributes and
         this.loop = fields.loop;
         this.children = fields.children;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through \`content\` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Say.Fields = {}): Say.Builder {
@@ -301,18 +342,19 @@ exports[`XmlObjectGenerator > generates a root element with text, attributes and
     /** Parses a \`<Say>\` element. */
     static fromXml(xml: string | core.xml.XmlNode): Say {
         const node = core.xml.parseXml(xml, "Say");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, parse: (child) => { switch (core.xml.localName(child.name)) { case "break": return Break.fromXml(child); default: return undefined; } } });
         return new Say({
-            message: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Say.message"),
+            message: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Say.message"),
             voice: core.xml.xmlScalar(core.xml.xmlAttribute(node, "voice"), core.xml.xmlString, "Say.voice"),
             loop: core.xml.xmlScalar(core.xml.xmlAttribute(node, "loop"), core.xml.xmlInteger, "Say.loop"),
-            children: core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
+            children: core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["voice", "loop"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break"]),
+            content,
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration: true });
+        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [], content: core.xml.orderXmlContent(this.content, this.children), xmlDeclaration: true });
     }
 
     toString(): string {
@@ -328,15 +370,18 @@ export namespace Say {
         children?: Break[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
-            const { children, ...rest } = fields;
+            const { content, additionalChildren, children, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { children };
         }
 
@@ -361,18 +406,20 @@ export namespace Say {
         }
 
         children(children: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }
 
         /**
-         * Adds a \`<break>\` child and returns its builder.
+         * Adds a \`<break>\` child after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -382,14 +429,21 @@ export namespace Say {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Say {
-            return new Say({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Say({ ...this.fields, children: built.buildAll(this.elements.children), content: built.content });
         }
 
         toXml(): string {
@@ -412,8 +466,8 @@ exports[`XmlObjectGenerator > keeps optional keys required when noOptionalProper
     children: Break[] | undefined;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Say.Fields = {}) {
         this.message = fields.message;
@@ -421,7 +475,12 @@ exports[`XmlObjectGenerator > keeps optional keys required when noOptionalProper
         this.loop = fields.loop;
         this.children = fields.children;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through \`content\` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Say.Fields = {}): Say.Builder {
@@ -431,18 +490,19 @@ exports[`XmlObjectGenerator > keeps optional keys required when noOptionalProper
     /** Parses a \`<Say>\` element. */
     static fromXml(xml: string | core.xml.XmlNode): Say {
         const node = core.xml.parseXml(xml, "Say");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, parse: (child) => { switch (core.xml.localName(child.name)) { case "break": return Break.fromXml(child); default: return undefined; } } });
         return new Say({
-            message: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Say.message"),
+            message: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Say.message"),
             voice: core.xml.xmlScalar(core.xml.xmlAttribute(node, "voice"), core.xml.xmlString, "Say.voice"),
             loop: core.xml.xmlScalar(core.xml.xmlAttribute(node, "loop"), core.xml.xmlInteger, "Say.loop"),
-            children: core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
+            children: core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["voice", "loop"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break"]),
+            content,
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [{ name: "children", value: this.children }], additionalChildren: this.additionalChildren, xmlDeclaration: true });
+        return core.xml.serializeXmlElement({ name: "Say", attributes: [{ name: "voice", value: this.voice }, { name: "loop", value: this.loop }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this.message, children: [], content: core.xml.orderXmlContent(this.content, this.children), xmlDeclaration: true });
     }
 
     toString(): string {
@@ -458,15 +518,18 @@ export namespace Say {
         children: Break[] | undefined;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Say> {
         private readonly fields: Partial<Say.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { children?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Say.Fields> = {}) {
-            const { children, ...rest } = fields;
+            const { content, additionalChildren, children, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { children };
         }
 
@@ -491,18 +554,20 @@ export namespace Say {
         }
 
         children(children: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
             return this;
         }
 
         /**
-         * Adds a \`<break>\` child and returns its builder.
+         * Adds a \`<break>\` child after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -512,14 +577,21 @@ export namespace Say {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Say {
-            return new Say({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Say({ ...this.fields, children: built.buildAll(this.elements.children), content: built.content });
         }
 
         toXml(): string {
@@ -553,8 +625,8 @@ exports[`XmlObjectGenerator > uses bracket access and unique safe locals for pro
     lineBreak?: Break[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Label.Fields) {
         this["font-size"] = fields["font-size"];
@@ -566,7 +638,12 @@ exports[`XmlObjectGenerator > uses bracket access and unique safe locals for pro
         this.textAlign = fields.textAlign;
         this.lineBreak = fields.lineBreak;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through \`content\` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Label.Fields): Label.Builder {
@@ -576,22 +653,23 @@ exports[`XmlObjectGenerator > uses bracket access and unique safe locals for pro
     /** Parses a \`<label>\` element. */
     static fromXml(xml: string | core.xml.XmlNode): Label {
         const node = core.xml.parseXml(xml, "label");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, parse: (child) => { switch (core.xml.localName(child.name)) { case "break": return Break.fromXml(child); case "break": return Break.fromXml(child); default: return undefined; } } });
         return new Label({
             "font-size": core.xml.xmlScalar(core.xml.xmlAttribute(node, "font-size"), core.xml.xmlString, "label.font-size"),
             "text-align": core.xml.xmlRequired(core.xml.xmlScalar(core.xml.xmlAttribute(node, "text-align"), core.xml.xmlString, "label.text-align"), "label.text-align"),
             "default": core.xml.xmlScalar(core.xml.xmlAttribute(node, "default"), core.xml.xmlString, "label.default"),
-            "line-break": core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
-            "inner-text": core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "label.inner-text"),
+            "line-break": core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break),
+            "inner-text": core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "label.inner-text"),
             fontSize: core.xml.xmlScalar(core.xml.xmlAttribute(node, "fontSize"), core.xml.xmlString, "label.fontSize"),
             textAlign: core.xml.xmlRequired(core.xml.xmlScalar(core.xml.xmlAttribute(node, "textAlign"), core.xml.xmlString, "label.textAlign"), "label.textAlign"),
-            lineBreak: core.xml.xmlChildren<Break>(node, { "break": (child) => Break.fromXml(child) }),
+            lineBreak: core.xml.xmlContentElements(content, (item): item is Break => item instanceof Break),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["font-size", "text-align", "default", "fontSize", "textAlign"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["break", "break"]),
+            content,
         });
     }
 
     toXml(): string {
-        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, { name: "fontSize", value: this.fontSize }, { name: "textAlign", value: this.textAlign }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [{ name: "line-break", value: this["line-break"] }, { name: "lineBreak", value: this.lineBreak }], additionalChildren: this.additionalChildren });
+        return core.xml.serializeXmlElement({ name: "label", attributes: [{ name: "font-size", value: this["font-size"] }, { name: "text-align", value: this["text-align"] }, { name: "default", value: this["default"] }, { name: "fontSize", value: this.fontSize }, { name: "textAlign", value: this.textAlign }, ...core.xml.extraXmlAttributes(this.additionalAttributes)], text: this["inner-text"], children: [], content: core.xml.orderXmlContent(this.content, this["line-break"], this.lineBreak) });
     }
 
     toString(): string {
@@ -611,15 +689,18 @@ export namespace Label {
         lineBreak?: Break[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Label> {
         private readonly fields: Partial<Label.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { "line-break"?: (Break | core.xml.XmlBuilder<Break>)[]; lineBreak?: (Break | core.xml.XmlBuilder<Break>)[] };
 
         constructor(fields: Partial<Label.Fields> = {}) {
-            const { "line-break": lineBreak1, lineBreak, ...rest } = fields;
+            const { content, additionalChildren, "line-break": lineBreak1, lineBreak, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { "line-break": lineBreak1, lineBreak };
         }
 
@@ -644,6 +725,7 @@ export namespace Label {
         }
 
         "line-break"(lineBreak1: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements["line-break"], lineBreak1);
             this.elements["line-break"] = lineBreak1;
             return this;
         }
@@ -664,29 +746,32 @@ export namespace Label {
         }
 
         lineBreak(lineBreak: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
+            this.content = core.xml.replaceXmlContent(this.content, this.elements.lineBreak, lineBreak);
             this.elements.lineBreak = lineBreak;
             return this;
         }
 
         /**
-         * Adds a \`<break>\` child and returns its builder.
+         * Adds a \`<break>\` child after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements["line-break"] = [...(this.elements["line-break"] ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
         /**
-         * Adds a \`<break>\` child and returns its builder.
+         * Adds a \`<break>\` child after any content added so far and returns its builder.
          * @param fields initial \`<break>\` attributes and children
          * @returns the \`Break.Builder\` appended to this element
          */
         addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
             const builder = new Break.Builder(fields);
             this.elements.lineBreak = [...(this.elements.lineBreak ?? []), builder];
+            this.content.push(builder);
             return builder;
         }
 
@@ -696,9 +781,15 @@ export namespace Label {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
@@ -708,7 +799,8 @@ export namespace Label {
 
             if (textAlign === undefined) { throw new Error("Label.textAlign is required"); }
 
-            return new Label({ ...this.fields, "text-align": textAlign1, textAlign, "line-break": core.xml.xmlBuildAll(this.elements["line-break"]), lineBreak: core.xml.xmlBuildAll(this.elements.lineBreak) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Label({ ...this.fields, "text-align": textAlign1, textAlign, "line-break": built.buildAll(this.elements["line-break"]), lineBreak: built.buildAll(this.elements.lineBreak), content: built.content });
         }
 
         toXml(): string {
