@@ -269,10 +269,11 @@ ${clientClassName} client = ${clientClassName}.builder()
             throw GeneratorError.internalError("Could not get default environment ID for README snippet");
         }
 
+        const environmentConstantName = this.getEnvironmentConstantName(defaultEnvironmentId);
         const productionEnvironment = java.codeblock((writer) => {
             writer.writeNode(this.context.getEnvironmentClassReference());
             writer.write(".");
-            writer.write(defaultEnvironmentId);
+            writer.write(environmentConstantName);
         });
 
         const clientInitialization = java.TypeLiteral.builder({
@@ -828,6 +829,16 @@ ${clientClassName} client = ${clientClassName}.builder()
             this.context.ir.environments?.defaultEnvironment ??
             this.context.ir.environments.environments.environments[0]?.id
         );
+    }
+
+    private getEnvironmentConstantName(environmentId: string): string {
+        const environment = this.context.ir.environments?.environments.environments.find(
+            (env: { id: string }) => env.id === environmentId
+        );
+        if (environment == null) {
+            return environmentId;
+        }
+        return this.context.caseConverter.screamingSnakeSafe(environment.name);
     }
 
     private getRootPackageClientName(): string {

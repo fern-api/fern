@@ -87,7 +87,8 @@ public class AsyncRawComplexClient {
         }
         CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -111,7 +112,11 @@ public class AsyncRawComplexClient {
                         List<Conversation> result = parsedResponse.getConversations();
                         future.complete(new SeedPaginationHttpResponse<>(
                                 new SyncPagingIterable<Conversation>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return search(index, nextRequest, requestOptions)
                                                         .get()
@@ -139,6 +144,11 @@ public class AsyncRawComplexClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
