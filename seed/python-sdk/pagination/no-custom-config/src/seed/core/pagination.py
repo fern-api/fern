@@ -3,7 +3,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import AsyncIterator, Awaitable, Callable, Generic, Iterator, List, Optional, TypeVar
+from typing import (
+    Any,
+    AsyncIterator,
+    Awaitable,
+    Callable,
+    Generic,
+    Iterator,
+    List,
+    Mapping,
+    Optional,
+    Sequence,
+    TypeVar,
+)
 
 # Generic to represent the underlying type of the results within a page
 T = TypeVar("T")
@@ -80,3 +92,34 @@ class AsyncPager(Generic[T, R]):
 
     async def next_page(self) -> Optional[AsyncPager[T, R]]:
         return await self.get_next() if self.get_next is not None else None
+
+
+def get_nested_page_value(container: Any, path: Sequence[str], default: Any = None) -> Any:
+    """
+    Read a nested paging value (e.g. `options.offset`) from a request parameter that may be
+    a dict, a model, None, or omitted (`...`). Returns `default` when any segment is missing.
+    """
+    value = container
+    for key in path:
+        if value is None or value is ...:
+            return default
+        value = value.get(key) if isinstance(value, Mapping) else getattr(value, key, None)
+    return default if value is None or value is ... else value
+
+
+def with_nested_page_value(container: Any, path: Sequence[str], value: Any) -> Any:
+    """
+    Return a copy of a request parameter with the nested paging value at `path` replaced,
+    creating intermediate dicts for omitted parameters and keeping every other field.
+    """
+    if len(path) == 0:
+        return value
+    key, rest = path[0], path[1:]
+    if container is None or container is ...:
+        return {key: with_nested_page_value(None, rest, value)}
+    if isinstance(container, Mapping):
+        return {**container, key: with_nested_page_value(container.get(key), rest, value)}
+    updated = with_nested_page_value(getattr(container, key, None), rest, value)
+    if hasattr(container, "model_copy"):
+        return container.model_copy(update={key: updated})
+    return container.copy(update={key: updated})
