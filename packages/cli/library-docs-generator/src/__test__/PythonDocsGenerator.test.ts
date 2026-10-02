@@ -565,4 +565,64 @@ describe("generate()", () => {
         expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(false);
         expect(existsSync(join(tmpDir, "ref/pkg/adapters.mdx"))).toBe(false);
     });
+
+    it("slugPrefix prefixes page slugs and navigation without changing file paths or relative links", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "utils",
+                        path: "pkg.utils",
+                        functions: [makeFunction({ name: "g", path: "pkg.utils.g" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg", slugPrefix: "/api-reference/" });
+
+        expect(result.rootPageId).toBe("ref/pkg/index.mdx");
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/pkg/utils.mdx"))).toBe(true);
+
+        const rootPage = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
+        expect(rootPage).toContain("slug: api-reference/ref/pkg\n");
+        expect(rootPage).toContain("](./utils.mdx)");
+        expect(rootPage).not.toContain("/api-reference/ref/pkg/utils");
+        const leafPage = readFileSync(join(tmpDir, "ref/pkg/utils.mdx"), "utf-8");
+        expect(leafPage).toContain("slug: api-reference/ref/pkg/utils\n");
+
+        expect(result.navigation).toEqual([
+            {
+                type: "section",
+                title: "utils",
+                slug: "api-reference/ref/pkg/utils",
+                children: [
+                    {
+                        type: "page",
+                        title: "utils",
+                        slug: "api-reference/ref/pkg/utils",
+                        pageId: "ref/pkg/utils.mdx"
+                    }
+                ]
+            }
+        ]);
+    });
+
+    it("omitting slugPrefix keeps slugs relative to the library name", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })]
+            })
+        );
+
+        generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        expect(readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8")).toContain("slug: ref/pkg\n");
+    });
 });

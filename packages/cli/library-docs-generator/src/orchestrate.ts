@@ -325,6 +325,9 @@ async function generateSingleLibrary({
 
     if (language === "CPP") {
         const cppIr = ir as CppLibraryDocsIr;
+        if (config.output.slug != null) {
+            context.logger.warn(`Library '${name}': 'output.slug' only applies to Python libraries and is ignored.`);
+        }
         const result = generateCpp({
             ir: cppIr,
             outputDir: resolvedOutputPath,
@@ -344,7 +347,8 @@ async function generateSingleLibrary({
             ir: pythonIr,
             outputDir: resolvedOutputPath,
             slug: name,
-            title: name
+            title: name,
+            slugPrefix: config.output.slug
         });
         context.logger.info(
             chalk.green(`Library '${name}': generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`)

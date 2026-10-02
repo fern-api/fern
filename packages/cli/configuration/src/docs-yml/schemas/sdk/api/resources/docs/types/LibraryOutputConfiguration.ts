@@ -9,4 +9,12 @@ export interface LibraryOutputConfiguration {
      * Example: ./static/sdk-docs
      */
     path: string;
+    /**
+     * URL slug prefix for the generated pages, relative to the docs root.
+     * Generated Python pages set a frontmatter slug, which ignores tab and section slugs;
+     * use this to publish them under a tab or section. Does not change file paths.
+     * Only applies to Python libraries.
+     * Example: api-reference
+     */
+    slug?: string;
 }

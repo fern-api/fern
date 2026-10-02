@@ -14,6 +14,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
+import { withSlugPrefix } from "../utils/mdx.js";
 import { moduleHasContent, moduleIsPackage, moduleIsPrivate } from "../utils/modulePages.js";
 
 /** A navigation node — either a page or a section. */
@@ -50,23 +51,33 @@ export interface NavSectionNode {
  *
  * @param rootModule - The root module from the library IR
  * @param baseSlug - Base slug prefix (e.g., "reference/python")
+ * @param slugPrefix - Optional URL prefix for node slugs that does not affect page IDs (e.g., "api-reference")
  * @returns Navigation items for the root module's children
  */
-export function buildNavigation(rootModule: FdrAPI.libraryDocs.PythonModuleIr, baseSlug: string): NavNode[] {
-    return generateModuleNav(rootModule, "", baseSlug);
+export function buildNavigation(
+    rootModule: FdrAPI.libraryDocs.PythonModuleIr,
+    baseSlug: string,
+    slugPrefix?: string
+): NavNode[] {
+    return generateModuleNav(rootModule, "", baseSlug, slugPrefix);
 }
 
 /**
  * Recursively generate navigation for a module and its children.
  */
-function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath: string, baseSlug: string): NavNode[] {
+function generateModuleNav(
+    module: FdrAPI.libraryDocs.PythonModuleIr,
+    parentPath: string,
+    baseSlug: string,
+    slugPrefix: string | undefined
+): NavNode[] {
     const items: NavNode[] = [];
     if (moduleIsPrivate(module)) {
         return items;
     }
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
-    const slug = `${baseSlug}/${modulePath}`;
-    const pageId = `${slug}.mdx`;
+    const pageId = `${baseSlug}/${modulePath}.mdx`;
+    const slug = withSlugPrefix(`${baseSlug}/${modulePath}`, slugPrefix);
 
     const hasContent = moduleHasContent(module);
     const isRoot = parentPath === "";
@@ -80,7 +91,7 @@ function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath
 
     // Process submodules
     for (const submodule of module.submodules) {
-        const subItems = generateModuleNav(submodule, modulePath, baseSlug);
+        const subItems = generateModuleNav(submodule, modulePath, baseSlug, slugPrefix);
         if (subItems.length === 0) {
             continue;
         }
@@ -89,7 +100,7 @@ function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath
         items.push({
             type: "section",
             title: submodule.name,
-            slug: `${baseSlug}/${submodulePath}`,
+            slug: withSlugPrefix(`${baseSlug}/${submodulePath}`, slugPrefix),
             children: subItems
         });
     }

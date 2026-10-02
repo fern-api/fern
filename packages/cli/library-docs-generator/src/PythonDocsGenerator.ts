@@ -15,6 +15,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
 import { dirname, join, relative } from "path";
 import { moduleHasPage, moduleIsPackage, renderModulePage } from "./renderers/ModuleRenderer.js";
+import { withSlugPrefix } from "./utils/mdx.js";
 import { moduleIsPrivate } from "./utils/modulePages.js";
 import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
@@ -29,6 +30,8 @@ export interface GenerateOptions {
     slug: string;
     /** Display title for the library section (e.g., "Python SDK Reference") */
     title: string;
+    /** URL slug prefix prepended to page slugs and links, but not file paths (e.g., "api-reference") */
+    slugPrefix?: string;
 }
 
 export interface GenerateResult {
@@ -52,11 +55,11 @@ export interface GenerateResult {
  * serves as the section overview, and `navigation` contains child items.
  */
 export function generate(options: GenerateOptions): GenerateResult {
-    const { ir, outputDir, slug } = options;
+    const { ir, outputDir, slug, slugPrefix } = options;
 
     // Stage 1: Build type link data (single-pass IR traversal)
     const { validPaths, pathAliases, publicPaths, packageModules } = buildTypeLinkData(ir);
-    const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
+    const ctx: RenderContext = { baseSlug: withSlugPrefix(slug, slugPrefix), validPaths, pathAliases, publicPaths };
 
     // Stage 2: Render pages into a staging directory, then swap it in. The generator owns
     // the library's page tree, so the previous tree is replaced wholesale (a module that
@@ -66,14 +69,14 @@ export function generate(options: GenerateOptions): GenerateResult {
     const stagingDir = mkdtempSync(join(outputDir, ".library-docs-"));
     const writer = new MdxFileWriter(stagingDir);
     try {
-        renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
+        renderModuleTree(ir.rootModule, ctx, packageModules, writer, "", slug);
         swapIntoPlace(join(stagingDir, slug), join(outputDir, slug), join(stagingDir, ".previous"));
     } finally {
         rmSync(stagingDir, { recursive: true, force: true });
     }
 
     // Stage 3: Build navigation tree
-    const navigation = buildNavigation(ir.rootModule, slug);
+    const navigation = buildNavigation(ir.rootModule, slug, slugPrefix);
     const rootPageId = moduleIsPackage(ir.rootModule)
         ? `${slug}/${ir.rootModule.name}/index.mdx`
         : `${slug}/${ir.rootModule.name}.mdx`;
@@ -129,7 +132,8 @@ function renderModuleTree(
     ctx: RenderContext,
     packageModules: Set<string>,
     writer: MdxFileWriter,
-    parentPath: string
+    parentPath: string,
+    pageKeyBase: string
 ): void {
     if (moduleIsPrivate(module)) {
         return;
@@ -140,19 +144,19 @@ function renderModuleTree(
     // picks them up as section overview pages (not sibling duplicates).
     if (moduleHasPage(module)) {
         const pageKey = moduleIsPackage(module)
-            ? `${ctx.baseSlug}/${modulePath}/index.mdx`
-            : `${ctx.baseSlug}/${modulePath}.mdx`;
+            ? `${pageKeyBase}/${modulePath}/index.mdx`
+            : `${pageKeyBase}/${modulePath}.mdx`;
         // Cross-page links are relative to this page's file so they resolve wherever the
         // generated folder is mounted in the navigation.
         const pageCtx: RenderContext = {
             ...ctx,
-            linkToModuleFile: createModuleFileLinker(pageKey, ctx.baseSlug, packageModules)
+            linkToModuleFile: createModuleFileLinker(pageKey, pageKeyBase, packageModules)
         };
         const content = renderModulePage(module, pageCtx, parentPath);
         writer.writePage(pageKey, content);
     }
 
     for (const submodule of module.submodules) {
-        renderModuleTree(submodule, ctx, packageModules, writer, modulePath);
+        renderModuleTree(submodule, ctx, packageModules, writer, modulePath, pageKeyBase);
     }
 }

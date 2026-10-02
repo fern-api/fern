@@ -515,6 +515,53 @@ describe("runLibraryDocsGeneration", () => {
         );
     });
 
+    it("forwards output.slug to the Python generator as slugPrefix", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                    output: { path: "./docs", slug: "api-reference" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true
+        });
+
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+            expect.objectContaining({ slug: "my-sdk", slugPrefix: "api-reference" })
+        );
+    });
+
+    it("warns that output.slug is ignored for C++ libraries", async () => {
+        const { mockFn } = makeMockFetch({
+            startResponse: { body: { jobId: "job-cpp" } },
+            statusResponses: [{ body: makeStatus("COMPLETED", { jobId: "job-cpp" }) }],
+            irResponse: { ir: mockCppIr }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+        const context = makeContext();
+
+        const promise = runLibraryDocsGeneration({
+            libraries: { "cpp-lib": { ...cppConfig(), output: { path: "./docs", slug: "api-reference" } } },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context
+        });
+        await vi.advanceTimersByTimeAsync(3000);
+        await promise;
+
+        expect(context.logger.warn).toHaveBeenCalledWith(
+            expect.stringContaining("'output.slug' only applies to Python")
+        );
+        expect(CppDocsGenerator.generateCpp).toHaveBeenCalledWith(expect.objectContaining({ slug: "cpp-lib" }));
+    });
+
     it("respects the library filter — only the named library is generated", async () => {
         const { mockFn, startCalls } = makeMockFetch({
             startResponse: { body: { jobId: "job-f" } },

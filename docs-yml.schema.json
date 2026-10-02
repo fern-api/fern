@@ -671,6 +671,17 @@
         "path": {
           "type": "string",
           "description": "The output directory where MDX files will be generated.\nExample: ./static/sdk-docs"
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "URL slug prefix for the generated pages, relative to the docs root.\nGenerated Python pages set a frontmatter slug, which ignores tab and section slugs;\nuse this to publish them under a tab or section. Does not change file paths.\nOnly applies to Python libraries.\nExample: api-reference"
         }
       },
       "required": [

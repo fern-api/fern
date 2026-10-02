@@ -113,3 +113,12 @@ export function createFrontmatter(slug: string, title?: string): string {
 export function escapeTableCell(text: string): string {
     return escapeJsxChars(text.replace(/\|/g, "\\|").replace(/\n/g, " "));
 }
+
+/**
+ * Prepend an optional slug prefix (e.g., "api-reference") to a slug.
+ * Leading and trailing slashes on the prefix are ignored.
+ */
+export function withSlugPrefix(slug: string, slugPrefix: string | undefined): string {
+    const prefix = slugPrefix?.replace(/^\/+|\/+$/g, "") ?? "";
+    return prefix.length > 0 ? `${prefix}/${slug}` : slug;
+}
